@@ -876,45 +876,66 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     }
 
     /**
-     * Retrieves an asset by its GUID, complete with all of its relationships.
-     * The type of the asset will only be determined at runtime.
-     *
-     * @param guid of the asset to retrieve
-     * @return the requested full asset, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link com.atlan.exception.NotFoundException} if the asset does not exist
-     */
-    public static Asset retrieveFull(String guid) throws AtlanException {
-        return retrieveFull(Atlan.getDefaultClient(), guid);
-    }
-
-    /**
-     * Retrieves an asset by its GUID, complete with all of its relationships.
+     * Retrieves an asset by its GUID, optionally complete with all of its relationships.
      * The type of the asset will only be determined at runtime.
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
      * @param guid of the asset to retrieve
-     * @return the requested full asset, complete with all of its relationships
+     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @return the requested full asset, optionally complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link com.atlan.exception.NotFoundException} if the asset does not exist
      */
-    public static Asset retrieveFull(AtlanClient client, String guid) throws AtlanException {
-        AssetResponse response = client.assets.get(guid, false, false);
+    @JsonIgnore
+    public static Asset get(AtlanClient client, String guid, boolean includeRelationships) throws AtlanException {
+        AssetResponse response = client.assets.get(guid, !includeRelationships, !includeRelationships);
         Asset asset = response.getAsset();
-        if (asset != null) {
+        if (asset != null && includeRelationships) {
             asset.setCompleteObject();
         }
         return asset;
     }
 
     /**
+     * Retrieves an asset by its GUID, complete with all of its relationships.
+     * The type of the asset will only be determined at runtime.
+     *
+     * @param guid of the asset to retrieve
+     * @return the requested full asset, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link com.atlan.exception.NotFoundException} if the asset does not exist
+     * @deprecated see {@link #get(String, boolean)} instead
+     */
+    @Deprecated
+    public static Asset retrieveFull(String guid) throws AtlanException {
+        return get(Atlan.getDefaultClient(), guid, true);
+    }
+
+    /**
+     * Retrieves an asset by its GUID, complete with all of its relationships.
+     * The type of the asset will only be determined at runtime.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param guid of the asset to retrieve
+     * @return the requested full asset, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link com.atlan.exception.NotFoundException} if the asset does not exist
+     * @deprecated see {@link #get(AtlanClient, String, boolean)} instead
+     */
+    @Deprecated
+    public static Asset retrieveFull(AtlanClient client, String guid) throws AtlanException {
+        return get(client, guid, true);
+    }
+
+    /**
      * Retrieves a minimal asset by its GUID, without its relationships.
      * The type of the asset will only be determined at runtime.
      *
      * @param guid of the asset to retrieve
      * @return the requested minimal asset, without its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link com.atlan.exception.NotFoundException} if the asset does not exist
+     * @deprecated see {@link #get(String, boolean)} instead
      */
+    @Deprecated
     public static Asset retrieveMinimal(String guid) throws AtlanException {
-        return retrieveMinimal(Atlan.getDefaultClient(), guid);
+        return get(Atlan.getDefaultClient(), guid, false);
     }
 
     /**
@@ -925,14 +946,38 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
      * @param guid of the asset to retrieve
      * @return the requested minimal asset, without its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link com.atlan.exception.NotFoundException} if the asset does not exist
+     * @deprecated see {@link #get(AtlanClient, String, boolean)} instead
      */
+    @Deprecated
     public static Asset retrieveMinimal(AtlanClient client, String guid) throws AtlanException {
-        AssetResponse response = client.assets.get(guid, true, true);
-        return response.getAsset();
+        return get(client, guid, false);
     }
 
     /**
-     * Retrieves an asset by its qualifiedName, complete with all of its relationships.
+     * Retrieves an asset by its qualifiedName, optionally complete with all of its relationships.
+     * The type of the asset will only be determined at runtime.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param typeName the type of the asset to retrieve
+     * @param qualifiedName the unique name of the asset to retrieve
+     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @return the requested full asset, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link com.atlan.exception.NotFoundException} if the asset does not exist
+     */
+    @JsonIgnore
+    protected static Asset get(AtlanClient client, String typeName, String qualifiedName, boolean includeRelationships)
+            throws AtlanException {
+        AssetResponse response =
+                client.assets.get(typeName, qualifiedName, !includeRelationships, !includeRelationships);
+        Asset asset = response.getAsset();
+        if (asset != null && includeRelationships) {
+            asset.setCompleteObject();
+        }
+        return asset;
+    }
+
+    /**
+     * Retrieves an asset by its qualifiedName, optionally complete with all of its relationships.
      * The type of the asset will only be determined at runtime.
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
@@ -940,15 +985,12 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
      * @param qualifiedName the unique name of the asset to retrieve
      * @return the requested full asset, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link com.atlan.exception.NotFoundException} if the asset does not exist
+     * @deprecated see {@link #get(AtlanClient, String, boolean)} instead
      */
+    @Deprecated
     protected static Asset retrieveFull(AtlanClient client, String typeName, String qualifiedName)
             throws AtlanException {
-        AssetResponse response = client.assets.get(typeName, qualifiedName, false, false);
-        Asset asset = response.getAsset();
-        if (asset != null) {
-            asset.setCompleteObject();
-        }
-        return asset;
+        return get(client, typeName, qualifiedName, true);
     }
 
     /**
@@ -959,9 +1001,11 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
      * @param qualifiedName the unique name of the asset to retrieve
      * @return the requested minimal asset, without its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link com.atlan.exception.NotFoundException} if the asset does not exist
+     * @deprecated see {@link #get(String, String, boolean)} instead
      */
+    @Deprecated
     public static Asset retrieveMinimal(String typeName, String qualifiedName) throws AtlanException {
-        return retrieveMinimal(Atlan.getDefaultClient(), typeName, qualifiedName);
+        return get(Atlan.getDefaultClient(), typeName, qualifiedName, false);
     }
 
     /**
@@ -973,11 +1017,12 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
      * @param qualifiedName the unique name of the asset to retrieve
      * @return the requested minimal asset, without its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link com.atlan.exception.NotFoundException} if the asset does not exist
+     * @deprecated see {@link #get(AtlanClient, String, String, boolean)} instead
      */
+    @Deprecated
     public static Asset retrieveMinimal(AtlanClient client, String typeName, String qualifiedName)
             throws AtlanException {
-        AssetResponse response = client.assets.get(typeName, qualifiedName, true, true);
-        return response.getAsset();
+        return get(client, typeName, qualifiedName, false);
     }
 
     /**

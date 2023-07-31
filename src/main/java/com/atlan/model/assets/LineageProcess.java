@@ -176,10 +176,25 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
      */
     @JsonIgnore
     public static LineageProcess get(AtlanClient client, String id) throws AtlanException {
+        return get(client, id, true);
+    }
+
+    /**
+     * Retrieves a LineageProcess by one of its identifiers, optionally complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the LineageProcess to retrieve, either its GUID or its full qualifiedName
+     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @return the requested full LineageProcess, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the LineageProcess does not exist or the provided GUID is not a LineageProcess
+     */
+    @JsonIgnore
+    public static LineageProcess get(AtlanClient client, String id, boolean includeRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
-            Asset asset = Asset.retrieveFull(client, id);
+            Asset asset = Asset.get(client, id, includeRelationships);
             if (asset == null) {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
             } else if (asset instanceof LineageProcess) {
@@ -188,7 +203,7 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
                 throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "LineageProcess");
             }
         } else {
-            Asset asset = Asset.retrieveFull(client, TYPE_NAME, id);
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
             if (asset instanceof LineageProcess) {
                 return (LineageProcess) asset;
             } else {
@@ -207,7 +222,7 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
      */
     @Deprecated
     public static LineageProcess retrieveByGuid(String guid) throws AtlanException {
-        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+        return get(Atlan.getDefaultClient(), guid);
     }
 
     /**
@@ -221,14 +236,7 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
      */
     @Deprecated
     public static LineageProcess retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof LineageProcess) {
-            return (LineageProcess) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "LineageProcess");
-        }
+        return get(client, guid);
     }
 
     /**
@@ -241,7 +249,7 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
      */
     @Deprecated
     public static LineageProcess retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+        return get(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -256,12 +264,7 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
     @Deprecated
     public static LineageProcess retrieveByQualifiedName(AtlanClient client, String qualifiedName)
             throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
-        if (asset instanceof LineageProcess) {
-            return (LineageProcess) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "LineageProcess");
-        }
+        return get(client, qualifiedName);
     }
 
     /**

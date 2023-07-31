@@ -181,10 +181,24 @@ public class LookerModel extends Asset implements ILookerModel, ILooker, IBI, IC
      */
     @JsonIgnore
     public static LookerModel get(AtlanClient client, String id) throws AtlanException {
+        return get(client, id, true);
+    }
+
+    /**
+     * Retrieves a LookerModel by one of its identifiers, optionally complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the LookerModel to retrieve, either its GUID or its full qualifiedName
+     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @return the requested full LookerModel, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the LookerModel does not exist or the provided GUID is not a LookerModel
+     */
+    @JsonIgnore
+    public static LookerModel get(AtlanClient client, String id, boolean includeRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
-            Asset asset = Asset.retrieveFull(client, id);
+            Asset asset = Asset.get(client, id, includeRelationships);
             if (asset == null) {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
             } else if (asset instanceof LookerModel) {
@@ -193,7 +207,7 @@ public class LookerModel extends Asset implements ILookerModel, ILooker, IBI, IC
                 throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "LookerModel");
             }
         } else {
-            Asset asset = Asset.retrieveFull(client, TYPE_NAME, id);
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
             if (asset instanceof LookerModel) {
                 return (LookerModel) asset;
             } else {
@@ -212,7 +226,7 @@ public class LookerModel extends Asset implements ILookerModel, ILooker, IBI, IC
      */
     @Deprecated
     public static LookerModel retrieveByGuid(String guid) throws AtlanException {
-        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+        return get(Atlan.getDefaultClient(), guid);
     }
 
     /**
@@ -226,14 +240,7 @@ public class LookerModel extends Asset implements ILookerModel, ILooker, IBI, IC
      */
     @Deprecated
     public static LookerModel retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof LookerModel) {
-            return (LookerModel) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "LookerModel");
-        }
+        return get(client, guid);
     }
 
     /**
@@ -246,7 +253,7 @@ public class LookerModel extends Asset implements ILookerModel, ILooker, IBI, IC
      */
     @Deprecated
     public static LookerModel retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+        return get(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -260,12 +267,7 @@ public class LookerModel extends Asset implements ILookerModel, ILooker, IBI, IC
      */
     @Deprecated
     public static LookerModel retrieveByQualifiedName(AtlanClient client, String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
-        if (asset instanceof LookerModel) {
-            return (LookerModel) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "LookerModel");
-        }
+        return get(client, qualifiedName);
     }
 
     /**

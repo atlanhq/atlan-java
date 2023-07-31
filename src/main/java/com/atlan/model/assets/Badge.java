@@ -151,10 +151,24 @@ public class Badge extends Asset implements IBadge, IAsset, IReferenceable {
      */
     @JsonIgnore
     public static Badge get(AtlanClient client, String id) throws AtlanException {
+        return get(client, id, true);
+    }
+
+    /**
+     * Retrieves a Badge by one of its identifiers, optionally complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the Badge to retrieve, either its GUID or its full qualifiedName
+     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @return the requested full Badge, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Badge does not exist or the provided GUID is not a Badge
+     */
+    @JsonIgnore
+    public static Badge get(AtlanClient client, String id, boolean includeRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
-            Asset asset = Asset.retrieveFull(client, id);
+            Asset asset = Asset.get(client, id, includeRelationships);
             if (asset == null) {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
             } else if (asset instanceof Badge) {
@@ -163,7 +177,7 @@ public class Badge extends Asset implements IBadge, IAsset, IReferenceable {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "Badge");
             }
         } else {
-            Asset asset = Asset.retrieveFull(client, TYPE_NAME, id);
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
             if (asset instanceof Badge) {
                 return (Badge) asset;
             } else {
@@ -182,7 +196,7 @@ public class Badge extends Asset implements IBadge, IAsset, IReferenceable {
      */
     @Deprecated
     public static Badge retrieveByGuid(String guid) throws AtlanException {
-        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+        return get(Atlan.getDefaultClient(), guid);
     }
 
     /**
@@ -196,14 +210,7 @@ public class Badge extends Asset implements IBadge, IAsset, IReferenceable {
      */
     @Deprecated
     public static Badge retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof Badge) {
-            return (Badge) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "Badge");
-        }
+        return get(client, guid);
     }
 
     /**
@@ -216,7 +223,7 @@ public class Badge extends Asset implements IBadge, IAsset, IReferenceable {
      */
     @Deprecated
     public static Badge retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+        return get(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -230,12 +237,7 @@ public class Badge extends Asset implements IBadge, IAsset, IReferenceable {
      */
     @Deprecated
     public static Badge retrieveByQualifiedName(AtlanClient client, String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
-        if (asset instanceof Badge) {
-            return (Badge) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "Badge");
-        }
+        return get(client, qualifiedName);
     }
 
     /**

@@ -196,10 +196,25 @@ public class LookerDashboard extends Asset implements ILookerDashboard, ILooker,
      */
     @JsonIgnore
     public static LookerDashboard get(AtlanClient client, String id) throws AtlanException {
+        return get(client, id, true);
+    }
+
+    /**
+     * Retrieves a LookerDashboard by one of its identifiers, optionally complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the LookerDashboard to retrieve, either its GUID or its full qualifiedName
+     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @return the requested full LookerDashboard, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the LookerDashboard does not exist or the provided GUID is not a LookerDashboard
+     */
+    @JsonIgnore
+    public static LookerDashboard get(AtlanClient client, String id, boolean includeRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
-            Asset asset = Asset.retrieveFull(client, id);
+            Asset asset = Asset.get(client, id, includeRelationships);
             if (asset == null) {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
             } else if (asset instanceof LookerDashboard) {
@@ -208,7 +223,7 @@ public class LookerDashboard extends Asset implements ILookerDashboard, ILooker,
                 throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "LookerDashboard");
             }
         } else {
-            Asset asset = Asset.retrieveFull(client, TYPE_NAME, id);
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
             if (asset instanceof LookerDashboard) {
                 return (LookerDashboard) asset;
             } else {
@@ -227,7 +242,7 @@ public class LookerDashboard extends Asset implements ILookerDashboard, ILooker,
      */
     @Deprecated
     public static LookerDashboard retrieveByGuid(String guid) throws AtlanException {
-        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+        return get(Atlan.getDefaultClient(), guid);
     }
 
     /**
@@ -241,14 +256,7 @@ public class LookerDashboard extends Asset implements ILookerDashboard, ILooker,
      */
     @Deprecated
     public static LookerDashboard retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof LookerDashboard) {
-            return (LookerDashboard) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "LookerDashboard");
-        }
+        return get(client, guid);
     }
 
     /**
@@ -261,7 +269,7 @@ public class LookerDashboard extends Asset implements ILookerDashboard, ILooker,
      */
     @Deprecated
     public static LookerDashboard retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+        return get(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -276,12 +284,7 @@ public class LookerDashboard extends Asset implements ILookerDashboard, ILooker,
     @Deprecated
     public static LookerDashboard retrieveByQualifiedName(AtlanClient client, String qualifiedName)
             throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
-        if (asset instanceof LookerDashboard) {
-            return (LookerDashboard) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "LookerDashboard");
-        }
+        return get(client, qualifiedName);
     }
 
     /**

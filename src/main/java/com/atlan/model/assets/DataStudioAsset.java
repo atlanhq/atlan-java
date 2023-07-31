@@ -209,10 +209,25 @@ public class DataStudioAsset extends Asset
      */
     @JsonIgnore
     public static DataStudioAsset get(AtlanClient client, String id) throws AtlanException {
+        return get(client, id, true);
+    }
+
+    /**
+     * Retrieves a DataStudioAsset by one of its identifiers, optionally complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the DataStudioAsset to retrieve, either its GUID or its full qualifiedName
+     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @return the requested full DataStudioAsset, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DataStudioAsset does not exist or the provided GUID is not a DataStudioAsset
+     */
+    @JsonIgnore
+    public static DataStudioAsset get(AtlanClient client, String id, boolean includeRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
-            Asset asset = Asset.retrieveFull(client, id);
+            Asset asset = Asset.get(client, id, includeRelationships);
             if (asset == null) {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
             } else if (asset instanceof DataStudioAsset) {
@@ -221,7 +236,7 @@ public class DataStudioAsset extends Asset
                 throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "DataStudioAsset");
             }
         } else {
-            Asset asset = Asset.retrieveFull(client, TYPE_NAME, id);
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
             if (asset instanceof DataStudioAsset) {
                 return (DataStudioAsset) asset;
             } else {
@@ -240,7 +255,7 @@ public class DataStudioAsset extends Asset
      */
     @Deprecated
     public static DataStudioAsset retrieveByGuid(String guid) throws AtlanException {
-        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+        return get(Atlan.getDefaultClient(), guid);
     }
 
     /**
@@ -254,14 +269,7 @@ public class DataStudioAsset extends Asset
      */
     @Deprecated
     public static DataStudioAsset retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof DataStudioAsset) {
-            return (DataStudioAsset) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "DataStudioAsset");
-        }
+        return get(client, guid);
     }
 
     /**
@@ -274,7 +282,7 @@ public class DataStudioAsset extends Asset
      */
     @Deprecated
     public static DataStudioAsset retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+        return get(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -289,12 +297,7 @@ public class DataStudioAsset extends Asset
     @Deprecated
     public static DataStudioAsset retrieveByQualifiedName(AtlanClient client, String qualifiedName)
             throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
-        if (asset instanceof DataStudioAsset) {
-            return (DataStudioAsset) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "DataStudioAsset");
-        }
+        return get(client, qualifiedName);
     }
 
     /**

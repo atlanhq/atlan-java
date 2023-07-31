@@ -301,8 +301,10 @@ public class AssetEndpoint extends AtlasEndpoint {
                         bulk_endpoint, replaceAtlanTags));
         BulkEntityRequest beq =
                 BulkEntityRequest.builder().entities(List.of(value)).build();
-        return ApiResource.request(
+        ConnectionCreationResponse response = ApiResource.request(
                 client, ApiResource.RequestMethod.POST, url, beq, ConnectionCreationResponse.class, options);
+        response.setClient(client);
+        return response;
     }
 
     /**
@@ -353,8 +355,10 @@ public class AssetEndpoint extends AtlasEndpoint {
                 String url = String.format(
                         "%s%s",
                         getBaseUrl(), String.format("%s?%s&deleteType=%s", bulk_endpoint, guidList, deleteType));
-                return ApiResource.request(
+                AssetDeletionResponse response = ApiResource.request(
                         client, ApiResource.RequestMethod.DELETE, url, "", AssetDeletionResponse.class, options);
+                response.setClient(client);
+                return response;
             }
         }
         throw new InvalidRequestException(ErrorCode.MISSING_GUID_FOR_DELETE);

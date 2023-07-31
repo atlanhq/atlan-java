@@ -200,10 +200,25 @@ public class SigmaDataElement extends Asset
      */
     @JsonIgnore
     public static SigmaDataElement get(AtlanClient client, String id) throws AtlanException {
+        return get(client, id, true);
+    }
+
+    /**
+     * Retrieves a SigmaDataElement by one of its identifiers, optionally complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the SigmaDataElement to retrieve, either its GUID or its full qualifiedName
+     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @return the requested full SigmaDataElement, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SigmaDataElement does not exist or the provided GUID is not a SigmaDataElement
+     */
+    @JsonIgnore
+    public static SigmaDataElement get(AtlanClient client, String id, boolean includeRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
-            Asset asset = Asset.retrieveFull(client, id);
+            Asset asset = Asset.get(client, id, includeRelationships);
             if (asset == null) {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
             } else if (asset instanceof SigmaDataElement) {
@@ -212,7 +227,7 @@ public class SigmaDataElement extends Asset
                 throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "SigmaDataElement");
             }
         } else {
-            Asset asset = Asset.retrieveFull(client, TYPE_NAME, id);
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
             if (asset instanceof SigmaDataElement) {
                 return (SigmaDataElement) asset;
             } else {
@@ -231,7 +246,7 @@ public class SigmaDataElement extends Asset
      */
     @Deprecated
     public static SigmaDataElement retrieveByGuid(String guid) throws AtlanException {
-        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+        return get(Atlan.getDefaultClient(), guid);
     }
 
     /**
@@ -245,14 +260,7 @@ public class SigmaDataElement extends Asset
      */
     @Deprecated
     public static SigmaDataElement retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof SigmaDataElement) {
-            return (SigmaDataElement) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "SigmaDataElement");
-        }
+        return get(client, guid);
     }
 
     /**
@@ -265,7 +273,7 @@ public class SigmaDataElement extends Asset
      */
     @Deprecated
     public static SigmaDataElement retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+        return get(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -280,12 +288,7 @@ public class SigmaDataElement extends Asset
     @Deprecated
     public static SigmaDataElement retrieveByQualifiedName(AtlanClient client, String qualifiedName)
             throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
-        if (asset instanceof SigmaDataElement) {
-            return (SigmaDataElement) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "SigmaDataElement");
-        }
+        return get(client, qualifiedName);
     }
 
     /**

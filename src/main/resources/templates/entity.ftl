@@ -255,10 +255,24 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
      */
     @JsonIgnore
     public static ${className} get(AtlanClient client, String id) throws AtlanException {
+        return get(client, id, true);
+    }
+
+    /**
+     * Retrieves a ${className} by one of its identifiers, optionally complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the ${className} to retrieve, either its GUID or its full qualifiedName
+     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @return the requested full ${className}, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ${className} does not exist or the provided GUID is not a ${className}
+     */
+    @JsonIgnore
+    public static ${className} get(AtlanClient client, String id, boolean includeRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
-            Asset asset = Asset.retrieveFull(client, id);
+            Asset asset = Asset.get(client, id, includeRelationships);
             if (asset == null) {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
             } else if (asset instanceof ${className}) {
@@ -267,7 +281,7 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
                 throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "${className}");
             }
         } else {
-            Asset asset = Asset.retrieveFull(client, TYPE_NAME, id);
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
             if (asset instanceof ${className}) {
                 return (${className}) asset;
             } else {
@@ -286,7 +300,7 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
      */
     @Deprecated
     public static ${className} retrieveByGuid(String guid) throws AtlanException {
-        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+        return get(Atlan.getDefaultClient(), guid);
     }
 
     /**
@@ -300,14 +314,7 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
      */
     @Deprecated
     public static ${className} retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof ${className}) {
-            return (${className}) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "${className}");
-        }
+        return get(client, guid);
     }
 
     /**
@@ -320,7 +327,7 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
      */
     @Deprecated
     public static ${className} retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+        return get(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -334,12 +341,7 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
      */
     @Deprecated
     public static ${className} retrieveByQualifiedName(AtlanClient client, String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
-        if (asset instanceof ${className}) {
-            return (${className}) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "${className}");
-        }
+        return get(client, qualifiedName);
     }
 
     /**

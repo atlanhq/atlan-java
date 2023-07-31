@@ -206,10 +206,24 @@ public class QlikDataset extends Asset implements IQlikDataset, IQlik, IBI, ICat
      */
     @JsonIgnore
     public static QlikDataset get(AtlanClient client, String id) throws AtlanException {
+        return get(client, id, true);
+    }
+
+    /**
+     * Retrieves a QlikDataset by one of its identifiers, optionally complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the QlikDataset to retrieve, either its GUID or its full qualifiedName
+     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @return the requested full QlikDataset, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the QlikDataset does not exist or the provided GUID is not a QlikDataset
+     */
+    @JsonIgnore
+    public static QlikDataset get(AtlanClient client, String id, boolean includeRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
-            Asset asset = Asset.retrieveFull(client, id);
+            Asset asset = Asset.get(client, id, includeRelationships);
             if (asset == null) {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
             } else if (asset instanceof QlikDataset) {
@@ -218,7 +232,7 @@ public class QlikDataset extends Asset implements IQlikDataset, IQlik, IBI, ICat
                 throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "QlikDataset");
             }
         } else {
-            Asset asset = Asset.retrieveFull(client, TYPE_NAME, id);
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
             if (asset instanceof QlikDataset) {
                 return (QlikDataset) asset;
             } else {
@@ -237,7 +251,7 @@ public class QlikDataset extends Asset implements IQlikDataset, IQlik, IBI, ICat
      */
     @Deprecated
     public static QlikDataset retrieveByGuid(String guid) throws AtlanException {
-        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+        return get(Atlan.getDefaultClient(), guid);
     }
 
     /**
@@ -251,14 +265,7 @@ public class QlikDataset extends Asset implements IQlikDataset, IQlik, IBI, ICat
      */
     @Deprecated
     public static QlikDataset retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof QlikDataset) {
-            return (QlikDataset) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "QlikDataset");
-        }
+        return get(client, guid);
     }
 
     /**
@@ -271,7 +278,7 @@ public class QlikDataset extends Asset implements IQlikDataset, IQlik, IBI, ICat
      */
     @Deprecated
     public static QlikDataset retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+        return get(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -285,12 +292,7 @@ public class QlikDataset extends Asset implements IQlikDataset, IQlik, IBI, ICat
      */
     @Deprecated
     public static QlikDataset retrieveByQualifiedName(AtlanClient client, String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
-        if (asset instanceof QlikDataset) {
-            return (QlikDataset) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "QlikDataset");
-        }
+        return get(client, qualifiedName);
     }
 
     /**

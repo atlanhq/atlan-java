@@ -53,7 +53,8 @@ public abstract class AbstractLambdaHandler implements RequestStreamHandler {
         }
         if (proceed) {
             try {
-                Asset current = handler.getCurrentState(event.getPayload().getAsset(), log);
+                Asset current = handler.getCurrentState(
+                        Atlan.getDefaultClient(), event.getPayload().getAsset(), log);
                 Collection<Asset> updated = handler.calculateChanges(current, log);
                 if (!updated.isEmpty()) {
                     handler.saveChanges(Atlan.getDefaultClient(), updated, log);

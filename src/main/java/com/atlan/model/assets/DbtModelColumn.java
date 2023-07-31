@@ -257,10 +257,25 @@ public class DbtModelColumn extends Asset implements IDbtModelColumn, IDbt, ICat
      */
     @JsonIgnore
     public static DbtModelColumn get(AtlanClient client, String id) throws AtlanException {
+        return get(client, id, true);
+    }
+
+    /**
+     * Retrieves a DbtModelColumn by one of its identifiers, optionally complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the DbtModelColumn to retrieve, either its GUID or its full qualifiedName
+     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @return the requested full DbtModelColumn, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DbtModelColumn does not exist or the provided GUID is not a DbtModelColumn
+     */
+    @JsonIgnore
+    public static DbtModelColumn get(AtlanClient client, String id, boolean includeRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
-            Asset asset = Asset.retrieveFull(client, id);
+            Asset asset = Asset.get(client, id, includeRelationships);
             if (asset == null) {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
             } else if (asset instanceof DbtModelColumn) {
@@ -269,7 +284,7 @@ public class DbtModelColumn extends Asset implements IDbtModelColumn, IDbt, ICat
                 throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "DbtModelColumn");
             }
         } else {
-            Asset asset = Asset.retrieveFull(client, TYPE_NAME, id);
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
             if (asset instanceof DbtModelColumn) {
                 return (DbtModelColumn) asset;
             } else {
@@ -288,7 +303,7 @@ public class DbtModelColumn extends Asset implements IDbtModelColumn, IDbt, ICat
      */
     @Deprecated
     public static DbtModelColumn retrieveByGuid(String guid) throws AtlanException {
-        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+        return get(Atlan.getDefaultClient(), guid);
     }
 
     /**
@@ -302,14 +317,7 @@ public class DbtModelColumn extends Asset implements IDbtModelColumn, IDbt, ICat
      */
     @Deprecated
     public static DbtModelColumn retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof DbtModelColumn) {
-            return (DbtModelColumn) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "DbtModelColumn");
-        }
+        return get(client, guid);
     }
 
     /**
@@ -322,7 +330,7 @@ public class DbtModelColumn extends Asset implements IDbtModelColumn, IDbt, ICat
      */
     @Deprecated
     public static DbtModelColumn retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+        return get(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -337,12 +345,7 @@ public class DbtModelColumn extends Asset implements IDbtModelColumn, IDbt, ICat
     @Deprecated
     public static DbtModelColumn retrieveByQualifiedName(AtlanClient client, String qualifiedName)
             throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
-        if (asset instanceof DbtModelColumn) {
-            return (DbtModelColumn) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "DbtModelColumn");
-        }
+        return get(client, qualifiedName);
     }
 
     /**

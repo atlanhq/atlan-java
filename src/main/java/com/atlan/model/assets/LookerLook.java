@@ -210,10 +210,24 @@ public class LookerLook extends Asset implements ILookerLook, ILooker, IBI, ICat
      */
     @JsonIgnore
     public static LookerLook get(AtlanClient client, String id) throws AtlanException {
+        return get(client, id, true);
+    }
+
+    /**
+     * Retrieves a LookerLook by one of its identifiers, optionally complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the LookerLook to retrieve, either its GUID or its full qualifiedName
+     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @return the requested full LookerLook, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the LookerLook does not exist or the provided GUID is not a LookerLook
+     */
+    @JsonIgnore
+    public static LookerLook get(AtlanClient client, String id, boolean includeRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
-            Asset asset = Asset.retrieveFull(client, id);
+            Asset asset = Asset.get(client, id, includeRelationships);
             if (asset == null) {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
             } else if (asset instanceof LookerLook) {
@@ -222,7 +236,7 @@ public class LookerLook extends Asset implements ILookerLook, ILooker, IBI, ICat
                 throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "LookerLook");
             }
         } else {
-            Asset asset = Asset.retrieveFull(client, TYPE_NAME, id);
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
             if (asset instanceof LookerLook) {
                 return (LookerLook) asset;
             } else {
@@ -241,7 +255,7 @@ public class LookerLook extends Asset implements ILookerLook, ILooker, IBI, ICat
      */
     @Deprecated
     public static LookerLook retrieveByGuid(String guid) throws AtlanException {
-        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+        return get(Atlan.getDefaultClient(), guid);
     }
 
     /**
@@ -255,14 +269,7 @@ public class LookerLook extends Asset implements ILookerLook, ILooker, IBI, ICat
      */
     @Deprecated
     public static LookerLook retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof LookerLook) {
-            return (LookerLook) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "LookerLook");
-        }
+        return get(client, guid);
     }
 
     /**
@@ -275,7 +282,7 @@ public class LookerLook extends Asset implements ILookerLook, ILooker, IBI, ICat
      */
     @Deprecated
     public static LookerLook retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+        return get(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -289,12 +296,7 @@ public class LookerLook extends Asset implements ILookerLook, ILooker, IBI, ICat
      */
     @Deprecated
     public static LookerLook retrieveByQualifiedName(AtlanClient client, String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
-        if (asset instanceof LookerLook) {
-            return (LookerLook) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "LookerLook");
-        }
+        return get(client, qualifiedName);
     }
 
     /**

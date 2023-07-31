@@ -187,10 +187,24 @@ public class LookerExplore extends Asset implements ILookerExplore, ILooker, IBI
      */
     @JsonIgnore
     public static LookerExplore get(AtlanClient client, String id) throws AtlanException {
+        return get(client, id, true);
+    }
+
+    /**
+     * Retrieves a LookerExplore by one of its identifiers, optionally complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the LookerExplore to retrieve, either its GUID or its full qualifiedName
+     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @return the requested full LookerExplore, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the LookerExplore does not exist or the provided GUID is not a LookerExplore
+     */
+    @JsonIgnore
+    public static LookerExplore get(AtlanClient client, String id, boolean includeRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
-            Asset asset = Asset.retrieveFull(client, id);
+            Asset asset = Asset.get(client, id, includeRelationships);
             if (asset == null) {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
             } else if (asset instanceof LookerExplore) {
@@ -199,7 +213,7 @@ public class LookerExplore extends Asset implements ILookerExplore, ILooker, IBI
                 throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "LookerExplore");
             }
         } else {
-            Asset asset = Asset.retrieveFull(client, TYPE_NAME, id);
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
             if (asset instanceof LookerExplore) {
                 return (LookerExplore) asset;
             } else {
@@ -218,7 +232,7 @@ public class LookerExplore extends Asset implements ILookerExplore, ILooker, IBI
      */
     @Deprecated
     public static LookerExplore retrieveByGuid(String guid) throws AtlanException {
-        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+        return get(Atlan.getDefaultClient(), guid);
     }
 
     /**
@@ -232,14 +246,7 @@ public class LookerExplore extends Asset implements ILookerExplore, ILooker, IBI
      */
     @Deprecated
     public static LookerExplore retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof LookerExplore) {
-            return (LookerExplore) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "LookerExplore");
-        }
+        return get(client, guid);
     }
 
     /**
@@ -252,7 +259,7 @@ public class LookerExplore extends Asset implements ILookerExplore, ILooker, IBI
      */
     @Deprecated
     public static LookerExplore retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+        return get(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -267,12 +274,7 @@ public class LookerExplore extends Asset implements ILookerExplore, ILooker, IBI
     @Deprecated
     public static LookerExplore retrieveByQualifiedName(AtlanClient client, String qualifiedName)
             throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
-        if (asset instanceof LookerExplore) {
-            return (LookerExplore) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "LookerExplore");
-        }
+        return get(client, qualifiedName);
     }
 
     /**
