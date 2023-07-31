@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class TableauWorkbookTest {
 
-    private static final TableauWorkbook full = TableauWorkbook.builder()
+    private static final TableauWorkbook full = TableauWorkbook._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

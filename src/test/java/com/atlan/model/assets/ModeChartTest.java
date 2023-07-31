@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class ModeChartTest {
 
-    private static final ModeChart full = ModeChart.builder()
+    private static final ModeChart full = ModeChart._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

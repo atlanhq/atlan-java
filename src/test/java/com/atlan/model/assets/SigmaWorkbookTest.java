@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class SigmaWorkbookTest {
 
-    private static final SigmaWorkbook full = SigmaWorkbook.builder()
+    private static final SigmaWorkbook full = SigmaWorkbook._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

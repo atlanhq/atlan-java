@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class KafkaTopicTest {
 
-    private static final KafkaTopic full = KafkaTopic.builder()
+    private static final KafkaTopic full = KafkaTopic._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class ADLSAccountTest {
 
-    private static final ADLSAccount full = ADLSAccount.builder()
+    private static final ADLSAccount full = ADLSAccount._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

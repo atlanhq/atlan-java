@@ -25,7 +25,7 @@
     public static BadgeBuilder<?, ?> creator(AtlanClient client, String name, String cmName, String cmAttribute) throws AtlanException {
         String cmId = client.getCustomMetadataCache().getIdForName(cmName);
         String cmAttrId = client.getCustomMetadataCache().getAttrIdForName(cmName, cmAttribute);
-        return Badge.builder()
+        return Badge._internal()
                 .qualifiedName(generateQualifiedName(client, cmName, cmAttribute))
                 .name(name)
                 .badgeMetadataAttribute(cmId + "." + cmAttrId);
@@ -66,7 +66,7 @@
      * @return the minimal request necessary to update the Badge, as a builder
      */
     public static BadgeBuilder<?, ?> updater(String qualifiedName, String name) {
-        return Badge.builder().qualifiedName(qualifiedName).name(name);
+        return Badge._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**

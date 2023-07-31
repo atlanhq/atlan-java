@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class ModeWorkspaceTest {
 
-    private static final ModeWorkspace full = ModeWorkspace.builder()
+    private static final ModeWorkspace full = ModeWorkspace._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -224,7 +224,7 @@ public class DbtColumnProcess extends Asset
      * @return reference to a DbtColumnProcess that can be used for defining a relationship to a DbtColumnProcess
      */
     public static DbtColumnProcess refByGuid(String guid) {
-        return DbtColumnProcess.builder().guid(guid).build();
+        return DbtColumnProcess._internal().guid(guid).build();
     }
 
     /**
@@ -234,7 +234,7 @@ public class DbtColumnProcess extends Asset
      * @return reference to a DbtColumnProcess that can be used for defining a relationship to a DbtColumnProcess
      */
     public static DbtColumnProcess refByQualifiedName(String qualifiedName) {
-        return DbtColumnProcess.builder()
+        return DbtColumnProcess._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -381,7 +381,7 @@ public class DbtColumnProcess extends Asset
      * @return the minimal request necessary to update the DbtColumnProcess, as a builder
      */
     public static DbtColumnProcessBuilder<?, ?> updater(String qualifiedName, String name) {
-        return DbtColumnProcess.builder().qualifiedName(qualifiedName).name(name);
+        return DbtColumnProcess._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -513,7 +513,7 @@ public class DbtColumnProcess extends Asset
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (DbtColumnProcess)
-                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -572,7 +572,7 @@ public class DbtColumnProcess extends Asset
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (DbtColumnProcess)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

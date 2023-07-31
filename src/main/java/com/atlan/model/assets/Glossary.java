@@ -42,7 +42,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -152,7 +152,7 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
      * @return reference to a Glossary that can be used for defining a relationship to a Glossary
      */
     public static Glossary refByGuid(String guid) {
-        return Glossary.builder().guid(guid).build();
+        return Glossary._internal().guid(guid).build();
     }
 
     /**
@@ -162,7 +162,7 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
      * @return reference to a Glossary that can be used for defining a relationship to a Glossary
      */
     public static Glossary refByQualifiedName(String qualifiedName) {
-        return Glossary.builder()
+        return Glossary._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -326,7 +326,7 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
      * @return the minimal object necessary to create the Glossary, as a builder
      */
     public static GlossaryBuilder<?, ?> creator(String name) {
-        return Glossary.builder().qualifiedName(name).name(name);
+        return Glossary._internal().qualifiedName(name).name(name);
     }
 
     /**
@@ -337,7 +337,7 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
      * @return the minimal object necessary to update the Glossary, as a builder
      */
     public static GlossaryBuilder<?, ?> updater(String guid, String name) {
-        return Glossary.builder().guid(guid).qualifiedName(name).name(name);
+        return Glossary._internal().guid(guid).qualifiedName(name).name(name);
     }
 
     /**
@@ -619,7 +619,7 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
     public static Glossary removeDescription(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (Glossary) Asset.removeDescription(
-                client, builder().qualifiedName(qualifiedName).name(name));
+                client, _internal().qualifiedName(qualifiedName).name(name));
     }
 
     /**
@@ -646,7 +646,7 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
     public static Glossary removeUserDescription(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (Glossary) Asset.removeUserDescription(
-                client, builder().qualifiedName(qualifiedName).name(name));
+                client, _internal().qualifiedName(qualifiedName).name(name));
     }
 
     /**
@@ -672,7 +672,7 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
      */
     public static Glossary removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (Glossary) Asset.removeOwners(
-                client, builder().qualifiedName(qualifiedName).name(name));
+                client, _internal().qualifiedName(qualifiedName).name(name));
     }
 
     /**
@@ -705,7 +705,7 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
             AtlanClient client, String qualifiedName, String name, CertificateStatus certificate, String message)
             throws AtlanException {
         return (Glossary)
-                Asset.updateCertificate(client, builder().name(name), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal().name(name), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -732,7 +732,7 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
     public static Glossary removeCertificate(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (Glossary) Asset.removeCertificate(
-                client, builder().qualifiedName(qualifiedName).name(name));
+                client, _internal().qualifiedName(qualifiedName).name(name));
     }
 
     /**
@@ -772,8 +772,8 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
             String title,
             String message)
             throws AtlanException {
-        return (Glossary)
-                Asset.updateAnnouncement(client, builder().name(name), TYPE_NAME, qualifiedName, type, title, message);
+        return (Glossary) Asset.updateAnnouncement(
+                client, _internal().name(name), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -800,7 +800,7 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
     public static Glossary removeAnnouncement(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (Glossary) Asset.removeAnnouncement(
-                client, builder().qualifiedName(qualifiedName).name(name));
+                client, _internal().qualifiedName(qualifiedName).name(name));
     }
 
     /**

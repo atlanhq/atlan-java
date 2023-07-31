@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class SnowflakeTagTest {
 
-    private static final SnowflakeTag full = SnowflakeTag.builder()
+    private static final SnowflakeTag full = SnowflakeTag._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

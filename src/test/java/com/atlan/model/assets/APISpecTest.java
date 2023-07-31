@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class APISpecTest {
 
-    private static final APISpec full = APISpec.builder()
+    private static final APISpec full = APISpec._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

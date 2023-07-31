@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -161,7 +161,7 @@ public class QlikStream extends Asset implements IQlikStream, IQlikSpace, IQlik,
      * @return reference to a QlikStream that can be used for defining a relationship to a QlikStream
      */
     public static QlikStream refByGuid(String guid) {
-        return QlikStream.builder().guid(guid).build();
+        return QlikStream._internal().guid(guid).build();
     }
 
     /**
@@ -171,7 +171,7 @@ public class QlikStream extends Asset implements IQlikStream, IQlikSpace, IQlik,
      * @return reference to a QlikStream that can be used for defining a relationship to a QlikStream
      */
     public static QlikStream refByQualifiedName(String qualifiedName) {
-        return QlikStream.builder()
+        return QlikStream._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -317,7 +317,7 @@ public class QlikStream extends Asset implements IQlikStream, IQlikSpace, IQlik,
      * @return the minimal request necessary to update the QlikStream, as a builder
      */
     public static QlikStreamBuilder<?, ?> updater(String qualifiedName, String name) {
-        return QlikStream.builder().qualifiedName(qualifiedName).name(name);
+        return QlikStream._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -447,7 +447,8 @@ public class QlikStream extends Asset implements IQlikStream, IQlikSpace, IQlik,
     public static QlikStream updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (QlikStream) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return (QlikStream)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -505,7 +506,8 @@ public class QlikStream extends Asset implements IQlikStream, IQlikSpace, IQlik,
     public static QlikStream updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (QlikStream) Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+        return (QlikStream)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

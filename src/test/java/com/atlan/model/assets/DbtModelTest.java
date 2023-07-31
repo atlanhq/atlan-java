@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class DbtModelTest {
 
-    private static final DbtModel full = DbtModel.builder()
+    private static final DbtModel full = DbtModel._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

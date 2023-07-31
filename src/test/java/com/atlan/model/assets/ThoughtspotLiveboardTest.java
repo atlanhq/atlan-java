@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class ThoughtspotLiveboardTest {
 
-    private static final ThoughtspotLiveboard full = ThoughtspotLiveboard.builder()
+    private static final ThoughtspotLiveboard full = ThoughtspotLiveboard._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

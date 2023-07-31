@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class TableauDatasourceFieldTest {
 
-    private static final TableauDatasourceField full = TableauDatasourceField.builder()
+    private static final TableauDatasourceField full = TableauDatasourceField._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

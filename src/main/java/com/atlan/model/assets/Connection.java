@@ -37,7 +37,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -210,7 +210,7 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
      * @return reference to a Connection that can be used for defining a relationship to a Connection
      */
     public static Connection refByGuid(String guid) {
-        return Connection.builder().guid(guid).build();
+        return Connection._internal().guid(guid).build();
     }
 
     /**
@@ -220,7 +220,7 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
      * @return reference to a Connection that can be used for defining a relationship to a Connection
      */
     public static Connection refByQualifiedName(String qualifiedName) {
-        return Connection.builder()
+        return Connection._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -431,7 +431,7 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
             List<String> adminUsers)
             throws AtlanException {
         boolean adminFound = false;
-        ConnectionBuilder<?, ?> builder = Connection.builder()
+        ConnectionBuilder<?, ?> builder = Connection._internal()
                 .name(name)
                 .qualifiedName(generateQualifiedName(connectorType.getValue()))
                 .category(connectorType.getCategory())
@@ -616,7 +616,7 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
      * @return the minimal request necessary to update the Connection, as a builder
      */
     public static ConnectionBuilder<?, ?> updater(String qualifiedName, String name) {
-        return Connection.builder().qualifiedName(qualifiedName).name(name);
+        return Connection._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -802,7 +802,8 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
     public static Connection updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (Connection) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return (Connection)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -860,7 +861,8 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
     public static Connection updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (Connection) Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+        return (Connection)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

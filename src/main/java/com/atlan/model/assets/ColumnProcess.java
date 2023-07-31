@@ -29,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -138,7 +138,7 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
      * @return reference to a ColumnProcess that can be used for defining a relationship to a ColumnProcess
      */
     public static ColumnProcess refByGuid(String guid) {
-        return ColumnProcess.builder().guid(guid).build();
+        return ColumnProcess._internal().guid(guid).build();
     }
 
     /**
@@ -148,7 +148,7 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
      * @return reference to a ColumnProcess that can be used for defining a relationship to a ColumnProcess
      */
     public static ColumnProcess refByQualifiedName(String qualifiedName) {
-        return ColumnProcess.builder()
+        return ColumnProcess._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -307,7 +307,7 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
             LineageProcess parent) {
         AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         String connectionName = StringUtils.getNameFromQualifiedName(connectionQualifiedName);
-        return ColumnProcess.builder()
+        return ColumnProcess._internal()
                 .qualifiedName(LineageProcess.generateQualifiedName(
                         name, connectionQualifiedName, id, inputs, outputs, parent))
                 .name(name)
@@ -326,7 +326,7 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
      * @return the minimal request necessary to update the ColumnProcess, as a builder
      */
     public static ColumnProcessBuilder<?, ?> updater(String qualifiedName, String name) {
-        return ColumnProcess.builder().qualifiedName(qualifiedName).name(name);
+        return ColumnProcess._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -458,7 +458,7 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (ColumnProcess)
-                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -517,7 +517,7 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (ColumnProcess)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

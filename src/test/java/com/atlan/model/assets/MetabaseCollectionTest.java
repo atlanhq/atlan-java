@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class MetabaseCollectionTest {
 
-    private static final MetabaseCollection full = MetabaseCollection.builder()
+    private static final MetabaseCollection full = MetabaseCollection._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

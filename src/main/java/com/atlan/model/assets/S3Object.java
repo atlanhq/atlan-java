@@ -30,7 +30,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -204,7 +204,7 @@ public class S3Object extends Asset
      * @return reference to a S3Object that can be used for defining a relationship to a S3Object
      */
     public static S3Object refByGuid(String guid) {
-        return S3Object.builder().guid(guid).build();
+        return S3Object._internal().guid(guid).build();
     }
 
     /**
@@ -214,7 +214,7 @@ public class S3Object extends Asset
      * @return reference to a S3Object that can be used for defining a relationship to a S3Object
      */
     public static S3Object refByQualifiedName(String qualifiedName) {
-        return S3Object.builder()
+        return S3Object._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -364,7 +364,7 @@ public class S3Object extends Asset
     public static S3ObjectBuilder<?, ?> creator(
             String name, String bucketQualifiedName, String bucketName, String awsArn) {
         String connectionQualifiedName = StringUtils.getConnectionQualifiedName(bucketQualifiedName);
-        return S3Object.builder()
+        return S3Object._internal()
                 .qualifiedName(IS3.generateQualifiedName(connectionQualifiedName, awsArn))
                 .name(name)
                 .connectionQualifiedName(connectionQualifiedName)
@@ -383,7 +383,7 @@ public class S3Object extends Asset
      * @return the minimal request necessary to update the S3Object, as a builder
      */
     public static S3ObjectBuilder<?, ?> updater(String qualifiedName, String name) {
-        return S3Object.builder().qualifiedName(qualifiedName).name(name);
+        return S3Object._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -513,7 +513,7 @@ public class S3Object extends Asset
     public static S3Object updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (S3Object) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return (S3Object) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -571,7 +571,7 @@ public class S3Object extends Asset
     public static S3Object updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (S3Object) Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+        return (S3Object) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

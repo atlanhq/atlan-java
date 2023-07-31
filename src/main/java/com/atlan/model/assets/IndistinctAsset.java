@@ -18,7 +18,7 @@ import lombok.experimental.SuperBuilder;
  * available.
  */
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class IndistinctAsset extends Asset {
@@ -37,7 +37,7 @@ public class IndistinctAsset extends Asset {
      * @return the minimal request necessary to update the asset, as a builder
      */
     public static IndistinctAssetBuilder<?, ?> updater(String qualifiedName, String name) {
-        return IndistinctAsset.builder().qualifiedName(qualifiedName).name(name);
+        return IndistinctAsset._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**

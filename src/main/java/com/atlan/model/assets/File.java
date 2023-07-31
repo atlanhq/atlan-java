@@ -30,7 +30,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -148,7 +148,7 @@ public class File extends Asset implements IFile, IResource, ICatalog, IAsset, I
      * @return reference to a File that can be used for defining a relationship to a File
      */
     public static File refByGuid(String guid) {
-        return File.builder().guid(guid).build();
+        return File._internal().guid(guid).build();
     }
 
     /**
@@ -158,7 +158,7 @@ public class File extends Asset implements IFile, IResource, ICatalog, IAsset, I
      * @return reference to a File that can be used for defining a relationship to a File
      */
     public static File refByQualifiedName(String qualifiedName) {
-        return File.builder()
+        return File._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -305,7 +305,7 @@ public class File extends Asset implements IFile, IResource, ICatalog, IAsset, I
      * @return the minimal request necessary to update the File, as a builder
      */
     public static FileBuilder<?, ?> creator(String name, String connectionQualifiedName, FileType type) {
-        return File.builder()
+        return File._internal()
                 .connectionQualifiedName(connectionQualifiedName)
                 .name(name)
                 .qualifiedName(generateQualifiedName(connectionQualifiedName, name))
@@ -331,7 +331,7 @@ public class File extends Asset implements IFile, IResource, ICatalog, IAsset, I
      * @return the minimal request necessary to update the File, as a builder
      */
     public static FileBuilder<?, ?> updater(String qualifiedName, String name) {
-        return File.builder().qualifiedName(qualifiedName).name(name);
+        return File._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -460,7 +460,7 @@ public class File extends Asset implements IFile, IResource, ICatalog, IAsset, I
     public static File updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (File) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return (File) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -517,7 +517,7 @@ public class File extends Asset implements IFile, IResource, ICatalog, IAsset, I
     public static File updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (File) Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+        return (File) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

@@ -10,7 +10,7 @@
         String[] tokens = workspaceQualifiedName.split("/");
         AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(tokens);
         String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(workspaceQualifiedName);
-        return PresetDashboard.builder()
+        return PresetDashboard._internal()
                 .name(name)
                 .qualifiedName(workspaceQualifiedName + "/" + name)
                 .connectorType(connectorType)
@@ -27,7 +27,7 @@
      * @return the minimal request necessary to update the PresetDashboard, as a builder
      */
     public static PresetDashboardBuilder<?, ?> updater(String qualifiedName, String name) {
-        return PresetDashboard.builder().qualifiedName(qualifiedName).name(name);
+        return PresetDashboard._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**

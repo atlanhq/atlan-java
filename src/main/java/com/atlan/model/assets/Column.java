@@ -33,7 +33,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -474,7 +474,7 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
      * @return reference to a Column that can be used for defining a relationship to a Column
      */
     public static Column refByGuid(String guid) {
-        return Column.builder().guid(guid).build();
+        return Column._internal().guid(guid).build();
     }
 
     /**
@@ -484,7 +484,7 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
      * @return reference to a Column that can be used for defining a relationship to a Column
      */
     public static Column refByQualifiedName(String qualifiedName) {
-        return Column.builder()
+        return Column._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -666,7 +666,7 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
         String databaseQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(schemaQualifiedName);
         String databaseName = StringUtils.getNameFromQualifiedName(databaseQualifiedName);
         String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(databaseQualifiedName);
-        ColumnBuilder<?, ?> builder = Column.builder()
+        ColumnBuilder<?, ?> builder = Column._internal()
                 .name(name)
                 .qualifiedName(generateQualifiedName(name, parentQualifiedName))
                 .connectorType(connectorType)
@@ -720,7 +720,7 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
      * @return the minimal request necessary to update the Column, as a builder
      */
     public static ColumnBuilder<?, ?> updater(String qualifiedName, String name) {
-        return Column.builder().qualifiedName(qualifiedName).name(name);
+        return Column._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -850,7 +850,7 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
     public static Column updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (Column) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return (Column) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -908,7 +908,7 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
     public static Column updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (Column) Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+        return (Column) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

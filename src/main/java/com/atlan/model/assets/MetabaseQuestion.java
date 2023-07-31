@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -145,7 +145,7 @@ public class MetabaseQuestion extends Asset
      * @return reference to a MetabaseQuestion that can be used for defining a relationship to a MetabaseQuestion
      */
     public static MetabaseQuestion refByGuid(String guid) {
-        return MetabaseQuestion.builder().guid(guid).build();
+        return MetabaseQuestion._internal().guid(guid).build();
     }
 
     /**
@@ -155,7 +155,7 @@ public class MetabaseQuestion extends Asset
      * @return reference to a MetabaseQuestion that can be used for defining a relationship to a MetabaseQuestion
      */
     public static MetabaseQuestion refByQualifiedName(String qualifiedName) {
-        return MetabaseQuestion.builder()
+        return MetabaseQuestion._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -302,7 +302,7 @@ public class MetabaseQuestion extends Asset
      * @return the minimal request necessary to update the MetabaseQuestion, as a builder
      */
     public static MetabaseQuestionBuilder<?, ?> updater(String qualifiedName, String name) {
-        return MetabaseQuestion.builder().qualifiedName(qualifiedName).name(name);
+        return MetabaseQuestion._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -434,7 +434,7 @@ public class MetabaseQuestion extends Asset
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (MetabaseQuestion)
-                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -493,7 +493,7 @@ public class MetabaseQuestion extends Asset
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (MetabaseQuestion)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

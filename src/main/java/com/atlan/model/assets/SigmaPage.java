@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -152,7 +152,7 @@ public class SigmaPage extends Asset implements ISigmaPage, ISigma, IBI, ICatalo
      * @return reference to a SigmaPage that can be used for defining a relationship to a SigmaPage
      */
     public static SigmaPage refByGuid(String guid) {
-        return SigmaPage.builder().guid(guid).build();
+        return SigmaPage._internal().guid(guid).build();
     }
 
     /**
@@ -162,7 +162,7 @@ public class SigmaPage extends Asset implements ISigmaPage, ISigma, IBI, ICatalo
      * @return reference to a SigmaPage that can be used for defining a relationship to a SigmaPage
      */
     public static SigmaPage refByQualifiedName(String qualifiedName) {
-        return SigmaPage.builder()
+        return SigmaPage._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -308,7 +308,7 @@ public class SigmaPage extends Asset implements ISigmaPage, ISigma, IBI, ICatalo
      * @return the minimal request necessary to update the SigmaPage, as a builder
      */
     public static SigmaPageBuilder<?, ?> updater(String qualifiedName, String name) {
-        return SigmaPage.builder().qualifiedName(qualifiedName).name(name);
+        return SigmaPage._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -438,7 +438,7 @@ public class SigmaPage extends Asset implements ISigmaPage, ISigma, IBI, ICatalo
     public static SigmaPage updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (SigmaPage) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return (SigmaPage) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -496,7 +496,8 @@ public class SigmaPage extends Asset implements ISigmaPage, ISigma, IBI, ICatalo
     public static SigmaPage updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (SigmaPage) Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+        return (SigmaPage)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

@@ -28,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -173,7 +173,7 @@ public class PresetWorkspace extends Asset implements IPresetWorkspace, IPreset,
      * @return reference to a PresetWorkspace that can be used for defining a relationship to a PresetWorkspace
      */
     public static PresetWorkspace refByGuid(String guid) {
-        return PresetWorkspace.builder().guid(guid).build();
+        return PresetWorkspace._internal().guid(guid).build();
     }
 
     /**
@@ -183,7 +183,7 @@ public class PresetWorkspace extends Asset implements IPresetWorkspace, IPreset,
      * @return reference to a PresetWorkspace that can be used for defining a relationship to a PresetWorkspace
      */
     public static PresetWorkspace refByQualifiedName(String qualifiedName) {
-        return PresetWorkspace.builder()
+        return PresetWorkspace._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -330,7 +330,7 @@ public class PresetWorkspace extends Asset implements IPresetWorkspace, IPreset,
      * @return the minimal object necessary to create the workspace, as a builder
      */
     public static PresetWorkspaceBuilder<?, ?> creator(String name, String connectionQualifiedName) {
-        return PresetWorkspace.builder()
+        return PresetWorkspace._internal()
                 .qualifiedName(generateQualifiedName(connectionQualifiedName, name))
                 .name(name)
                 .connectionQualifiedName(connectionQualifiedName)
@@ -345,7 +345,7 @@ public class PresetWorkspace extends Asset implements IPresetWorkspace, IPreset,
      * @return the minimal request necessary to update the PresetWorkspace, as a builder
      */
     public static PresetWorkspaceBuilder<?, ?> updater(String qualifiedName, String name) {
-        return PresetWorkspace.builder().qualifiedName(qualifiedName).name(name);
+        return PresetWorkspace._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -488,7 +488,7 @@ public class PresetWorkspace extends Asset implements IPresetWorkspace, IPreset,
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (PresetWorkspace)
-                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -547,7 +547,7 @@ public class PresetWorkspace extends Asset implements IPresetWorkspace, IPreset,
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (PresetWorkspace)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

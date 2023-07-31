@@ -29,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -155,7 +155,7 @@ public class QuickSightFolder extends Asset
      * @return reference to a QuickSightFolder that can be used for defining a relationship to a QuickSightFolder
      */
     public static QuickSightFolder refByGuid(String guid) {
-        return QuickSightFolder.builder().guid(guid).build();
+        return QuickSightFolder._internal().guid(guid).build();
     }
 
     /**
@@ -165,7 +165,7 @@ public class QuickSightFolder extends Asset
      * @return reference to a QuickSightFolder that can be used for defining a relationship to a QuickSightFolder
      */
     public static QuickSightFolder refByQualifiedName(String qualifiedName) {
-        return QuickSightFolder.builder()
+        return QuickSightFolder._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -312,7 +312,7 @@ public class QuickSightFolder extends Asset
      * @return the minimal request necessary to update the QuickSightFolder, as a builder
      */
     public static QuickSightFolderBuilder<?, ?> updater(String qualifiedName, String name) {
-        return QuickSightFolder.builder().qualifiedName(qualifiedName).name(name);
+        return QuickSightFolder._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -444,7 +444,7 @@ public class QuickSightFolder extends Asset
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (QuickSightFolder)
-                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -503,7 +503,7 @@ public class QuickSightFolder extends Asset
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (QuickSightFolder)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

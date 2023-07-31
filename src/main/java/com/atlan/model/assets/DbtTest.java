@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -240,7 +240,7 @@ public class DbtTest extends Asset implements IDbtTest, IDbt, ICatalog, IAsset, 
      * @return reference to a DbtTest that can be used for defining a relationship to a DbtTest
      */
     public static DbtTest refByGuid(String guid) {
-        return DbtTest.builder().guid(guid).build();
+        return DbtTest._internal().guid(guid).build();
     }
 
     /**
@@ -250,7 +250,7 @@ public class DbtTest extends Asset implements IDbtTest, IDbt, ICatalog, IAsset, 
      * @return reference to a DbtTest that can be used for defining a relationship to a DbtTest
      */
     public static DbtTest refByQualifiedName(String qualifiedName) {
-        return DbtTest.builder()
+        return DbtTest._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -396,7 +396,7 @@ public class DbtTest extends Asset implements IDbtTest, IDbt, ICatalog, IAsset, 
      * @return the minimal request necessary to update the DbtTest, as a builder
      */
     public static DbtTestBuilder<?, ?> updater(String qualifiedName, String name) {
-        return DbtTest.builder().qualifiedName(qualifiedName).name(name);
+        return DbtTest._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -526,7 +526,7 @@ public class DbtTest extends Asset implements IDbtTest, IDbt, ICatalog, IAsset, 
     public static DbtTest updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (DbtTest) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return (DbtTest) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -584,7 +584,7 @@ public class DbtTest extends Asset implements IDbtTest, IDbt, ICatalog, IAsset, 
     public static DbtTest updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (DbtTest) Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+        return (DbtTest) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

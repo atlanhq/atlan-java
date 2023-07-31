@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class PowerBITileTest {
 
-    private static final PowerBITile full = PowerBITile.builder()
+    private static final PowerBITile full = PowerBITile._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

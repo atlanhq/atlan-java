@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class TableauDashboardTest {
 
-    private static final TableauDashboard full = TableauDashboard.builder()
+    private static final TableauDashboard full = TableauDashboard._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

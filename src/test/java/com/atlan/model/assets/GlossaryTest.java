@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class GlossaryTest {
 
-    private static final Glossary full = Glossary.builder()
+    private static final Glossary full = Glossary._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

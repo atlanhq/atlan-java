@@ -8,7 +8,7 @@
      * @return the minimal object necessary to create the Link and attach it to the asset, as a builder
      */
     public static LinkBuilder<?, ?> creator(Asset reference, String title, String url) {
-        return Link.builder()
+        return Link._internal()
                 .qualifiedName(generateQualifiedName())
                 .name(title)
                 .link(url)
@@ -23,7 +23,7 @@
      * @return the minimal request necessary to update the Link, as a builder
      */
     public static LinkBuilder<?, ?> updater(String qualifiedName, String name) {
-        return Link.builder().qualifiedName(qualifiedName).name(name);
+        return Link._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**

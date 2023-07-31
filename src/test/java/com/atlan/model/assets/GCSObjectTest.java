@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class GCSObjectTest {
 
-    private static final GCSObject full = GCSObject.builder()
+    private static final GCSObject full = GCSObject._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

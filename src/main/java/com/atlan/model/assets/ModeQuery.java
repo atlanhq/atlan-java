@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -168,7 +168,7 @@ public class ModeQuery extends Asset implements IModeQuery, IMode, IBI, ICatalog
      * @return reference to a ModeQuery that can be used for defining a relationship to a ModeQuery
      */
     public static ModeQuery refByGuid(String guid) {
-        return ModeQuery.builder().guid(guid).build();
+        return ModeQuery._internal().guid(guid).build();
     }
 
     /**
@@ -178,7 +178,7 @@ public class ModeQuery extends Asset implements IModeQuery, IMode, IBI, ICatalog
      * @return reference to a ModeQuery that can be used for defining a relationship to a ModeQuery
      */
     public static ModeQuery refByQualifiedName(String qualifiedName) {
-        return ModeQuery.builder()
+        return ModeQuery._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -324,7 +324,7 @@ public class ModeQuery extends Asset implements IModeQuery, IMode, IBI, ICatalog
      * @return the minimal request necessary to update the ModeQuery, as a builder
      */
     public static ModeQueryBuilder<?, ?> updater(String qualifiedName, String name) {
-        return ModeQuery.builder().qualifiedName(qualifiedName).name(name);
+        return ModeQuery._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -454,7 +454,7 @@ public class ModeQuery extends Asset implements IModeQuery, IMode, IBI, ICatalog
     public static ModeQuery updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (ModeQuery) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return (ModeQuery) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -512,7 +512,8 @@ public class ModeQuery extends Asset implements IModeQuery, IMode, IBI, ICatalog
     public static ModeQuery updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (ModeQuery) Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+        return (ModeQuery)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

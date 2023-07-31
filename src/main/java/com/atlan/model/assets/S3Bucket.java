@@ -29,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -176,7 +176,7 @@ public class S3Bucket extends Asset
      * @return reference to a S3Bucket that can be used for defining a relationship to a S3Bucket
      */
     public static S3Bucket refByGuid(String guid) {
-        return S3Bucket.builder().guid(guid).build();
+        return S3Bucket._internal().guid(guid).build();
     }
 
     /**
@@ -186,7 +186,7 @@ public class S3Bucket extends Asset
      * @return reference to a S3Bucket that can be used for defining a relationship to a S3Bucket
      */
     public static S3Bucket refByQualifiedName(String qualifiedName) {
-        return S3Bucket.builder()
+        return S3Bucket._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -333,7 +333,7 @@ public class S3Bucket extends Asset
      * @return the minimal object necessary to create the S3 bucket, as a builder
      */
     public static S3BucketBuilder<?, ?> creator(String name, String connectionQualifiedName, String awsArn) {
-        return S3Bucket.builder()
+        return S3Bucket._internal()
                 .qualifiedName(IS3.generateQualifiedName(connectionQualifiedName, awsArn))
                 .name(name)
                 .connectionQualifiedName(connectionQualifiedName)
@@ -349,7 +349,7 @@ public class S3Bucket extends Asset
      * @return the minimal request necessary to update the S3Bucket, as a builder
      */
     public static S3BucketBuilder<?, ?> updater(String qualifiedName, String name) {
-        return S3Bucket.builder().qualifiedName(qualifiedName).name(name);
+        return S3Bucket._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -479,7 +479,7 @@ public class S3Bucket extends Asset
     public static S3Bucket updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (S3Bucket) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return (S3Bucket) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -537,7 +537,7 @@ public class S3Bucket extends Asset
     public static S3Bucket updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (S3Bucket) Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+        return (S3Bucket) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

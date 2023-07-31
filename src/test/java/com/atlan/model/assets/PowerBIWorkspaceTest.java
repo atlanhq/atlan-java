@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class PowerBIWorkspaceTest {
 
-    private static final PowerBIWorkspace full = PowerBIWorkspace.builder()
+    private static final PowerBIWorkspace full = PowerBIWorkspace._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

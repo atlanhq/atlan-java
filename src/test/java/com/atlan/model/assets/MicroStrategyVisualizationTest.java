@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class MicroStrategyVisualizationTest {
 
-    private static final MicroStrategyVisualization full = MicroStrategyVisualization.builder()
+    private static final MicroStrategyVisualization full = MicroStrategyVisualization._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

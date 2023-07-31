@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class AuthServiceTest {
 
-    private static final AuthService full = AuthService.builder()
+    private static final AuthService full = AuthService._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

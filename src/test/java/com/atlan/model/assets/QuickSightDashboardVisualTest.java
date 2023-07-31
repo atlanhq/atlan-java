@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class QuickSightDashboardVisualTest {
 
-    private static final QuickSightDashboardVisual full = QuickSightDashboardVisual.builder()
+    private static final QuickSightDashboardVisual full = QuickSightDashboardVisual._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

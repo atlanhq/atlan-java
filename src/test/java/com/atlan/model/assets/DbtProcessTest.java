@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class DbtProcessTest {
 
-    private static final DbtProcess full = DbtProcess.builder()
+    private static final DbtProcess full = DbtProcess._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

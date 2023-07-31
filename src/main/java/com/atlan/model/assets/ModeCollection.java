@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -168,7 +168,7 @@ public class ModeCollection extends Asset implements IModeCollection, IMode, IBI
      * @return reference to a ModeCollection that can be used for defining a relationship to a ModeCollection
      */
     public static ModeCollection refByGuid(String guid) {
-        return ModeCollection.builder().guid(guid).build();
+        return ModeCollection._internal().guid(guid).build();
     }
 
     /**
@@ -178,7 +178,7 @@ public class ModeCollection extends Asset implements IModeCollection, IMode, IBI
      * @return reference to a ModeCollection that can be used for defining a relationship to a ModeCollection
      */
     public static ModeCollection refByQualifiedName(String qualifiedName) {
-        return ModeCollection.builder()
+        return ModeCollection._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -325,7 +325,7 @@ public class ModeCollection extends Asset implements IModeCollection, IMode, IBI
      * @return the minimal request necessary to update the ModeCollection, as a builder
      */
     public static ModeCollectionBuilder<?, ?> updater(String qualifiedName, String name) {
-        return ModeCollection.builder().qualifiedName(qualifiedName).name(name);
+        return ModeCollection._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -457,7 +457,7 @@ public class ModeCollection extends Asset implements IModeCollection, IMode, IBI
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (ModeCollection)
-                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -516,7 +516,7 @@ public class ModeCollection extends Asset implements IModeCollection, IMode, IBI
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (ModeCollection)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

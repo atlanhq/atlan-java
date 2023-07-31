@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class PowerBIDashboardTest {
 
-    private static final PowerBIDashboard full = PowerBIDashboard.builder()
+    private static final PowerBIDashboard full = PowerBIDashboard._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

@@ -11,7 +11,7 @@
         AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(tokens);
         String databaseName = StringUtils.getNameFromQualifiedName(databaseQualifiedName);
         String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(databaseQualifiedName);
-        return Schema.builder()
+        return Schema._internal()
                 .name(name)
                 .qualifiedName(generateQualifiedName(name, databaseQualifiedName))
                 .connectorType(connectorType)
@@ -40,7 +40,7 @@
      * @return the minimal request necessary to update the Schema, as a builder
      */
     public static SchemaBuilder<?, ?> updater(String qualifiedName, String name) {
-        return Schema.builder().qualifiedName(qualifiedName).name(name);
+        return Schema._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**

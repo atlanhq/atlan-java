@@ -29,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -149,7 +149,7 @@ public class PresetDataset extends Asset implements IPresetDataset, IPreset, IBI
      * @return reference to a PresetDataset that can be used for defining a relationship to a PresetDataset
      */
     public static PresetDataset refByGuid(String guid) {
-        return PresetDataset.builder().guid(guid).build();
+        return PresetDataset._internal().guid(guid).build();
     }
 
     /**
@@ -159,7 +159,7 @@ public class PresetDataset extends Asset implements IPresetDataset, IPreset, IBI
      * @return reference to a PresetDataset that can be used for defining a relationship to a PresetDataset
      */
     public static PresetDataset refByQualifiedName(String qualifiedName) {
-        return PresetDataset.builder()
+        return PresetDataset._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -310,7 +310,7 @@ public class PresetDataset extends Asset implements IPresetDataset, IPreset, IBI
         AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(tokens);
         String workspaceQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(collectionQualifiedName);
         String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(workspaceQualifiedName);
-        return PresetDataset.builder()
+        return PresetDataset._internal()
                 .name(name)
                 .qualifiedName(collectionQualifiedName + "/" + name)
                 .connectorType(connectorType)
@@ -328,7 +328,7 @@ public class PresetDataset extends Asset implements IPresetDataset, IPreset, IBI
      * @return the minimal request necessary to update the PresetDataset, as a builder
      */
     public static PresetDatasetBuilder<?, ?> updater(String qualifiedName, String name) {
-        return PresetDataset.builder().qualifiedName(qualifiedName).name(name);
+        return PresetDataset._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -460,7 +460,7 @@ public class PresetDataset extends Asset implements IPresetDataset, IPreset, IBI
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (PresetDataset)
-                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -519,7 +519,7 @@ public class PresetDataset extends Asset implements IPresetDataset, IPreset, IBI
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (PresetDataset)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

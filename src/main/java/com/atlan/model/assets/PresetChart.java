@@ -30,7 +30,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -148,7 +148,7 @@ public class PresetChart extends Asset implements IPresetChart, IPreset, IBI, IC
      * @return reference to a PresetChart that can be used for defining a relationship to a PresetChart
      */
     public static PresetChart refByGuid(String guid) {
-        return PresetChart.builder().guid(guid).build();
+        return PresetChart._internal().guid(guid).build();
     }
 
     /**
@@ -158,7 +158,7 @@ public class PresetChart extends Asset implements IPresetChart, IPreset, IBI, IC
      * @return reference to a PresetChart that can be used for defining a relationship to a PresetChart
      */
     public static PresetChart refByQualifiedName(String qualifiedName) {
-        return PresetChart.builder()
+        return PresetChart._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -308,7 +308,7 @@ public class PresetChart extends Asset implements IPresetChart, IPreset, IBI, IC
         AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(tokens);
         String workspaceQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(collectionQualifiedName);
         String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(workspaceQualifiedName);
-        return PresetChart.builder()
+        return PresetChart._internal()
                 .name(name)
                 .qualifiedName(collectionQualifiedName + "/" + name)
                 .connectorType(connectorType)
@@ -326,7 +326,7 @@ public class PresetChart extends Asset implements IPresetChart, IPreset, IBI, IC
      * @return the minimal request necessary to update the PresetChart, as a builder
      */
     public static PresetChartBuilder<?, ?> updater(String qualifiedName, String name) {
-        return PresetChart.builder().qualifiedName(qualifiedName).name(name);
+        return PresetChart._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -457,7 +457,8 @@ public class PresetChart extends Asset implements IPresetChart, IPreset, IBI, IC
     public static PresetChart updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (PresetChart) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return (PresetChart)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -516,7 +517,7 @@ public class PresetChart extends Asset implements IPresetChart, IPreset, IBI, IC
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (PresetChart)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

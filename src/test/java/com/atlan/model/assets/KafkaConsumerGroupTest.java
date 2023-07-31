@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class KafkaConsumerGroupTest {
 
-    private static final KafkaConsumerGroup full = KafkaConsumerGroup.builder()
+    private static final KafkaConsumerGroup full = KafkaConsumerGroup._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

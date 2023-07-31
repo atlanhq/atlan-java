@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -128,7 +128,7 @@ public class LookerView extends Asset implements ILookerView, ILooker, IBI, ICat
      * @return reference to a LookerView that can be used for defining a relationship to a LookerView
      */
     public static LookerView refByGuid(String guid) {
-        return LookerView.builder().guid(guid).build();
+        return LookerView._internal().guid(guid).build();
     }
 
     /**
@@ -138,7 +138,7 @@ public class LookerView extends Asset implements ILookerView, ILooker, IBI, ICat
      * @return reference to a LookerView that can be used for defining a relationship to a LookerView
      */
     public static LookerView refByQualifiedName(String qualifiedName) {
-        return LookerView.builder()
+        return LookerView._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -284,7 +284,7 @@ public class LookerView extends Asset implements ILookerView, ILooker, IBI, ICat
      * @return the minimal request necessary to update the LookerView, as a builder
      */
     public static LookerViewBuilder<?, ?> updater(String qualifiedName, String name) {
-        return LookerView.builder().qualifiedName(qualifiedName).name(name);
+        return LookerView._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -414,7 +414,8 @@ public class LookerView extends Asset implements ILookerView, ILooker, IBI, ICat
     public static LookerView updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (LookerView) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return (LookerView)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -472,7 +473,8 @@ public class LookerView extends Asset implements ILookerView, ILooker, IBI, ICat
     public static LookerView updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (LookerView) Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+        return (LookerView)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

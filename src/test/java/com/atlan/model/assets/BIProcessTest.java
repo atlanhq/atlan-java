@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class BIProcessTest {
 
-    private static final BIProcess full = BIProcess.builder()
+    private static final BIProcess full = BIProcess._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

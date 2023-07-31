@@ -28,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -158,7 +158,7 @@ public class TableauWorkbook extends Asset
      * @return reference to a TableauWorkbook that can be used for defining a relationship to a TableauWorkbook
      */
     public static TableauWorkbook refByGuid(String guid) {
-        return TableauWorkbook.builder().guid(guid).build();
+        return TableauWorkbook._internal().guid(guid).build();
     }
 
     /**
@@ -168,7 +168,7 @@ public class TableauWorkbook extends Asset
      * @return reference to a TableauWorkbook that can be used for defining a relationship to a TableauWorkbook
      */
     public static TableauWorkbook refByQualifiedName(String qualifiedName) {
-        return TableauWorkbook.builder()
+        return TableauWorkbook._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -315,7 +315,7 @@ public class TableauWorkbook extends Asset
      * @return the minimal request necessary to update the TableauWorkbook, as a builder
      */
     public static TableauWorkbookBuilder<?, ?> updater(String qualifiedName, String name) {
-        return TableauWorkbook.builder().qualifiedName(qualifiedName).name(name);
+        return TableauWorkbook._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -447,7 +447,7 @@ public class TableauWorkbook extends Asset
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (TableauWorkbook)
-                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -506,7 +506,7 @@ public class TableauWorkbook extends Asset
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (TableauWorkbook)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

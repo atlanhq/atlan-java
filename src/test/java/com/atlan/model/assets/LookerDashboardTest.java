@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class LookerDashboardTest {
 
-    private static final LookerDashboard full = LookerDashboard.builder()
+    private static final LookerDashboard full = LookerDashboard._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -148,7 +148,7 @@ public class SigmaDataset extends Asset implements ISigmaDataset, ISigma, IBI, I
      * @return reference to a SigmaDataset that can be used for defining a relationship to a SigmaDataset
      */
     public static SigmaDataset refByGuid(String guid) {
-        return SigmaDataset.builder().guid(guid).build();
+        return SigmaDataset._internal().guid(guid).build();
     }
 
     /**
@@ -158,7 +158,7 @@ public class SigmaDataset extends Asset implements ISigmaDataset, ISigma, IBI, I
      * @return reference to a SigmaDataset that can be used for defining a relationship to a SigmaDataset
      */
     public static SigmaDataset refByQualifiedName(String qualifiedName) {
-        return SigmaDataset.builder()
+        return SigmaDataset._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -304,7 +304,7 @@ public class SigmaDataset extends Asset implements ISigmaDataset, ISigma, IBI, I
      * @return the minimal request necessary to update the SigmaDataset, as a builder
      */
     public static SigmaDatasetBuilder<?, ?> updater(String qualifiedName, String name) {
-        return SigmaDataset.builder().qualifiedName(qualifiedName).name(name);
+        return SigmaDataset._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -436,7 +436,7 @@ public class SigmaDataset extends Asset implements ISigmaDataset, ISigma, IBI, I
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (SigmaDataset)
-                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -495,7 +495,7 @@ public class SigmaDataset extends Asset implements ISigmaDataset, ISigma, IBI, I
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (SigmaDataset)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

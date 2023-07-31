@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -167,7 +167,7 @@ public class QlikDataset extends Asset implements IQlikDataset, IQlik, IBI, ICat
      * @return reference to a QlikDataset that can be used for defining a relationship to a QlikDataset
      */
     public static QlikDataset refByGuid(String guid) {
-        return QlikDataset.builder().guid(guid).build();
+        return QlikDataset._internal().guid(guid).build();
     }
 
     /**
@@ -177,7 +177,7 @@ public class QlikDataset extends Asset implements IQlikDataset, IQlik, IBI, ICat
      * @return reference to a QlikDataset that can be used for defining a relationship to a QlikDataset
      */
     public static QlikDataset refByQualifiedName(String qualifiedName) {
-        return QlikDataset.builder()
+        return QlikDataset._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -323,7 +323,7 @@ public class QlikDataset extends Asset implements IQlikDataset, IQlik, IBI, ICat
      * @return the minimal request necessary to update the QlikDataset, as a builder
      */
     public static QlikDatasetBuilder<?, ?> updater(String qualifiedName, String name) {
-        return QlikDataset.builder().qualifiedName(qualifiedName).name(name);
+        return QlikDataset._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -454,7 +454,8 @@ public class QlikDataset extends Asset implements IQlikDataset, IQlik, IBI, ICat
     public static QlikDataset updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (QlikDataset) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return (QlikDataset)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -513,7 +514,7 @@ public class QlikDataset extends Asset implements IQlikDataset, IQlik, IBI, ICat
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (QlikDataset)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

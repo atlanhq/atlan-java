@@ -9,7 +9,7 @@
      * @return the minimal request necessary to create the term, as a builder
      */
     public static GlossaryTermBuilder<?, ?> creator(String name, String glossaryGuid, String glossaryQualifiedName) {
-        return GlossaryTerm.builder()
+        return GlossaryTerm._internal()
                 .qualifiedName(name)
                 .name(name)
                 .anchor(Glossary.anchorLink(glossaryGuid, glossaryQualifiedName));
@@ -26,7 +26,7 @@
     public static GlossaryTermBuilder<?, ?> updater(String qualifiedName, String name, String glossaryGuid) {
         // Turns out that updating a term requires the glossary GUID, and will not work
         // with the qualifiedName of the glossary
-        return GlossaryTerm.builder()
+        return GlossaryTerm._internal()
                 .qualifiedName(qualifiedName)
                 .name(name)
                 .anchor(Glossary.anchorLink(glossaryGuid, null));

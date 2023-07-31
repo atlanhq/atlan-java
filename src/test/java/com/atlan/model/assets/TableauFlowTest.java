@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class TableauFlowTest {
 
-    private static final TableauFlow full = TableauFlow.builder()
+    private static final TableauFlow full = TableauFlow._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

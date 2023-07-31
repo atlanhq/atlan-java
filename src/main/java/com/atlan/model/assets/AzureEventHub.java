@@ -29,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -155,7 +155,7 @@ public class AzureEventHub extends Asset
      * @return reference to a AzureEventHub that can be used for defining a relationship to a AzureEventHub
      */
     public static AzureEventHub refByGuid(String guid) {
-        return AzureEventHub.builder().guid(guid).build();
+        return AzureEventHub._internal().guid(guid).build();
     }
 
     /**
@@ -165,7 +165,7 @@ public class AzureEventHub extends Asset
      * @return reference to a AzureEventHub that can be used for defining a relationship to a AzureEventHub
      */
     public static AzureEventHub refByQualifiedName(String qualifiedName) {
-        return AzureEventHub.builder()
+        return AzureEventHub._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -312,7 +312,7 @@ public class AzureEventHub extends Asset
      * @return the minimal request necessary to update the AzureEventHub, as a builder
      */
     public static AzureEventHubBuilder<?, ?> updater(String qualifiedName, String name) {
-        return AzureEventHub.builder().qualifiedName(qualifiedName).name(name);
+        return AzureEventHub._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -444,7 +444,7 @@ public class AzureEventHub extends Asset
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (AzureEventHub)
-                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -503,7 +503,7 @@ public class AzureEventHub extends Asset
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (AzureEventHub)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

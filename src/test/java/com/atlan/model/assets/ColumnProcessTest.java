@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class ColumnProcessTest {
 
-    private static final ColumnProcess full = ColumnProcess.builder()
+    private static final ColumnProcess full = ColumnProcess._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

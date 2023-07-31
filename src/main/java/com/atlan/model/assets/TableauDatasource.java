@@ -28,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -187,7 +187,7 @@ public class TableauDatasource extends Asset
      * @return reference to a TableauDatasource that can be used for defining a relationship to a TableauDatasource
      */
     public static TableauDatasource refByGuid(String guid) {
-        return TableauDatasource.builder().guid(guid).build();
+        return TableauDatasource._internal().guid(guid).build();
     }
 
     /**
@@ -197,7 +197,7 @@ public class TableauDatasource extends Asset
      * @return reference to a TableauDatasource that can be used for defining a relationship to a TableauDatasource
      */
     public static TableauDatasource refByQualifiedName(String qualifiedName) {
-        return TableauDatasource.builder()
+        return TableauDatasource._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -344,7 +344,7 @@ public class TableauDatasource extends Asset
      * @return the minimal request necessary to update the TableauDatasource, as a builder
      */
     public static TableauDatasourceBuilder<?, ?> updater(String qualifiedName, String name) {
-        return TableauDatasource.builder().qualifiedName(qualifiedName).name(name);
+        return TableauDatasource._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -476,7 +476,7 @@ public class TableauDatasource extends Asset
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (TableauDatasource)
-                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -535,7 +535,7 @@ public class TableauDatasource extends Asset
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (TableauDatasource)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

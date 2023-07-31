@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class SigmaPageTest {
 
-    private static final SigmaPage full = SigmaPage.builder()
+    private static final SigmaPage full = SigmaPage._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

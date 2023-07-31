@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class ReadmeTemplateTest {
 
-    private static final ReadmeTemplate full = ReadmeTemplate.builder()
+    private static final ReadmeTemplate full = ReadmeTemplate._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

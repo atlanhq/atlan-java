@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class SalesforceDashboardTest {
 
-    private static final SalesforceDashboard full = SalesforceDashboard.builder()
+    private static final SalesforceDashboard full = SalesforceDashboard._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

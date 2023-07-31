@@ -7,7 +7,7 @@
      * @return the minimal object necessary to create the API spec, as a builder
      */
     public static APISpecBuilder<?, ?> creator(String name, String connectionQualifiedName) {
-        return APISpec.builder()
+        return APISpec._internal()
                 .qualifiedName(connectionQualifiedName + "/" + name)
                 .name(name)
                 .connectionQualifiedName(connectionQualifiedName)
@@ -22,7 +22,7 @@
      * @return the minimal request necessary to update the APISpec, as a builder
      */
     public static APISpecBuilder<?, ?> updater(String qualifiedName, String name) {
-        return APISpec.builder().qualifiedName(qualifiedName).name(name);
+        return APISpec._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**

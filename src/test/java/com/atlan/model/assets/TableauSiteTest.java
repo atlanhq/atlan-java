@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class TableauSiteTest {
 
-    private static final TableauSite full = TableauSite.builder()
+    private static final TableauSite full = TableauSite._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

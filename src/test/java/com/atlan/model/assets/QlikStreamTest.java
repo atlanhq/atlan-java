@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class QlikStreamTest {
 
-    private static final QlikStream full = QlikStream.builder()
+    private static final QlikStream full = QlikStream._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class ADLSContainerTest {
 
-    private static final ADLSContainer full = ADLSContainer.builder()
+    private static final ADLSContainer full = ADLSContainer._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

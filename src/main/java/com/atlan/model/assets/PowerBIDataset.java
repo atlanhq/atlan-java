@@ -28,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -169,7 +169,7 @@ public class PowerBIDataset extends Asset implements IPowerBIDataset, IPowerBI, 
      * @return reference to a PowerBIDataset that can be used for defining a relationship to a PowerBIDataset
      */
     public static PowerBIDataset refByGuid(String guid) {
-        return PowerBIDataset.builder().guid(guid).build();
+        return PowerBIDataset._internal().guid(guid).build();
     }
 
     /**
@@ -179,7 +179,7 @@ public class PowerBIDataset extends Asset implements IPowerBIDataset, IPowerBI, 
      * @return reference to a PowerBIDataset that can be used for defining a relationship to a PowerBIDataset
      */
     public static PowerBIDataset refByQualifiedName(String qualifiedName) {
-        return PowerBIDataset.builder()
+        return PowerBIDataset._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -326,7 +326,7 @@ public class PowerBIDataset extends Asset implements IPowerBIDataset, IPowerBI, 
      * @return the minimal request necessary to update the PowerBIDataset, as a builder
      */
     public static PowerBIDatasetBuilder<?, ?> updater(String qualifiedName, String name) {
-        return PowerBIDataset.builder().qualifiedName(qualifiedName).name(name);
+        return PowerBIDataset._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -458,7 +458,7 @@ public class PowerBIDataset extends Asset implements IPowerBIDataset, IPowerBI, 
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (PowerBIDataset)
-                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -517,7 +517,7 @@ public class PowerBIDataset extends Asset implements IPowerBIDataset, IPowerBI, 
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (PowerBIDataset)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

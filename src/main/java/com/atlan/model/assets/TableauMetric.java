@@ -28,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -138,7 +138,7 @@ public class TableauMetric extends Asset implements ITableauMetric, ITableau, IB
      * @return reference to a TableauMetric that can be used for defining a relationship to a TableauMetric
      */
     public static TableauMetric refByGuid(String guid) {
-        return TableauMetric.builder().guid(guid).build();
+        return TableauMetric._internal().guid(guid).build();
     }
 
     /**
@@ -148,7 +148,7 @@ public class TableauMetric extends Asset implements ITableauMetric, ITableau, IB
      * @return reference to a TableauMetric that can be used for defining a relationship to a TableauMetric
      */
     public static TableauMetric refByQualifiedName(String qualifiedName) {
-        return TableauMetric.builder()
+        return TableauMetric._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -295,7 +295,7 @@ public class TableauMetric extends Asset implements ITableauMetric, ITableau, IB
      * @return the minimal request necessary to update the TableauMetric, as a builder
      */
     public static TableauMetricBuilder<?, ?> updater(String qualifiedName, String name) {
-        return TableauMetric.builder().qualifiedName(qualifiedName).name(name);
+        return TableauMetric._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -427,7 +427,7 @@ public class TableauMetric extends Asset implements ITableauMetric, ITableau, IB
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (TableauMetric)
-                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -486,7 +486,7 @@ public class TableauMetric extends Asset implements ITableauMetric, ITableau, IB
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (TableauMetric)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

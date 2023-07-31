@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class QuickSightFolderTest {
 
-    private static final QuickSightFolder full = QuickSightFolder.builder()
+    private static final QuickSightFolder full = QuickSightFolder._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

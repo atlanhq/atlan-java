@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class SnowflakeStreamTest {
 
-    private static final SnowflakeStream full = SnowflakeStream.builder()
+    private static final SnowflakeStream full = SnowflakeStream._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

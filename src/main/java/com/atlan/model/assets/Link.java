@@ -28,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -146,7 +146,7 @@ public class Link extends Asset implements ILink, IResource, ICatalog, IAsset, I
      * @return reference to a Link that can be used for defining a relationship to a Link
      */
     public static Link refByGuid(String guid) {
-        return Link.builder().guid(guid).build();
+        return Link._internal().guid(guid).build();
     }
 
     /**
@@ -156,7 +156,7 @@ public class Link extends Asset implements ILink, IResource, ICatalog, IAsset, I
      * @return reference to a Link that can be used for defining a relationship to a Link
      */
     public static Link refByQualifiedName(String qualifiedName) {
-        return Link.builder()
+        return Link._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -303,7 +303,7 @@ public class Link extends Asset implements ILink, IResource, ICatalog, IAsset, I
      * @return the minimal object necessary to create the Link and attach it to the asset, as a builder
      */
     public static LinkBuilder<?, ?> creator(Asset reference, String title, String url) {
-        return Link.builder()
+        return Link._internal()
                 .qualifiedName(generateQualifiedName())
                 .name(title)
                 .link(url)
@@ -318,7 +318,7 @@ public class Link extends Asset implements ILink, IResource, ICatalog, IAsset, I
      * @return the minimal request necessary to update the Link, as a builder
      */
     public static LinkBuilder<?, ?> updater(String qualifiedName, String name) {
-        return Link.builder().qualifiedName(qualifiedName).name(name);
+        return Link._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**

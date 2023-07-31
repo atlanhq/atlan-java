@@ -35,7 +35,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -146,7 +146,7 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
      * @return reference to a GlossaryCategory that can be used for defining a relationship to a GlossaryCategory
      */
     public static GlossaryCategory refByGuid(String guid) {
-        return GlossaryCategory.builder().guid(guid).build();
+        return GlossaryCategory._internal().guid(guid).build();
     }
 
     /**
@@ -156,7 +156,7 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
      * @return reference to a GlossaryCategory that can be used for defining a relationship to a GlossaryCategory
      */
     public static GlossaryCategory refByQualifiedName(String qualifiedName) {
-        return GlossaryCategory.builder()
+        return GlossaryCategory._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -306,7 +306,7 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
      */
     public static GlossaryCategoryBuilder<?, ?> creator(
             String name, String glossaryGuid, String glossaryQualifiedName) {
-        return GlossaryCategory.builder()
+        return GlossaryCategory._internal()
                 .qualifiedName(name)
                 .name(name)
                 .anchor(Glossary.anchorLink(glossaryGuid, glossaryQualifiedName));
@@ -323,7 +323,7 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
     public static GlossaryCategoryBuilder<?, ?> updater(String qualifiedName, String name, String glossaryGuid) {
         // Turns out that updating a category requires the glossary GUID, and will not work
         // with the qualifiedName of the glossary
-        return GlossaryCategory.builder()
+        return GlossaryCategory._internal()
                 .qualifiedName(qualifiedName)
                 .name(name)
                 .anchor(Glossary.anchorLink(glossaryGuid, null));

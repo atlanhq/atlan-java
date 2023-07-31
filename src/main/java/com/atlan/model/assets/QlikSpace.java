@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -161,7 +161,7 @@ public class QlikSpace extends Asset implements IQlikSpace, IQlik, IBI, ICatalog
      * @return reference to a QlikSpace that can be used for defining a relationship to a QlikSpace
      */
     public static QlikSpace refByGuid(String guid) {
-        return QlikSpace.builder().guid(guid).build();
+        return QlikSpace._internal().guid(guid).build();
     }
 
     /**
@@ -171,7 +171,7 @@ public class QlikSpace extends Asset implements IQlikSpace, IQlik, IBI, ICatalog
      * @return reference to a QlikSpace that can be used for defining a relationship to a QlikSpace
      */
     public static QlikSpace refByQualifiedName(String qualifiedName) {
-        return QlikSpace.builder()
+        return QlikSpace._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -317,7 +317,7 @@ public class QlikSpace extends Asset implements IQlikSpace, IQlik, IBI, ICatalog
      * @return the minimal request necessary to update the QlikSpace, as a builder
      */
     public static QlikSpaceBuilder<?, ?> updater(String qualifiedName, String name) {
-        return QlikSpace.builder().qualifiedName(qualifiedName).name(name);
+        return QlikSpace._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -447,7 +447,7 @@ public class QlikSpace extends Asset implements IQlikSpace, IQlik, IBI, ICatalog
     public static QlikSpace updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (QlikSpace) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return (QlikSpace) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -505,7 +505,8 @@ public class QlikSpace extends Asset implements IQlikSpace, IQlik, IBI, ICatalog
     public static QlikSpace updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (QlikSpace) Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+        return (QlikSpace)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -136,7 +136,7 @@ public class QuickSightAnalysisVisual extends Asset
      * @return reference to a QuickSightAnalysisVisual that can be used for defining a relationship to a QuickSightAnalysisVisual
      */
     public static QuickSightAnalysisVisual refByGuid(String guid) {
-        return QuickSightAnalysisVisual.builder().guid(guid).build();
+        return QuickSightAnalysisVisual._internal().guid(guid).build();
     }
 
     /**
@@ -146,7 +146,7 @@ public class QuickSightAnalysisVisual extends Asset
      * @return reference to a QuickSightAnalysisVisual that can be used for defining a relationship to a QuickSightAnalysisVisual
      */
     public static QuickSightAnalysisVisual refByQualifiedName(String qualifiedName) {
-        return QuickSightAnalysisVisual.builder()
+        return QuickSightAnalysisVisual._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -293,7 +293,7 @@ public class QuickSightAnalysisVisual extends Asset
      * @return the minimal request necessary to update the QuickSightAnalysisVisual, as a builder
      */
     public static QuickSightAnalysisVisualBuilder<?, ?> updater(String qualifiedName, String name) {
-        return QuickSightAnalysisVisual.builder().qualifiedName(qualifiedName).name(name);
+        return QuickSightAnalysisVisual._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -426,7 +426,7 @@ public class QuickSightAnalysisVisual extends Asset
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (QuickSightAnalysisVisual)
-                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -485,7 +485,7 @@ public class QuickSightAnalysisVisual extends Asset
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (QuickSightAnalysisVisual)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

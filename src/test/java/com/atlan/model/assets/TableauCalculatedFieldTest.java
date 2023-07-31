@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class TableauCalculatedFieldTest {
 
-    private static final TableauCalculatedField full = TableauCalculatedField.builder()
+    private static final TableauCalculatedField full = TableauCalculatedField._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

@@ -28,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -258,7 +258,7 @@ public class AtlanQuery extends Asset implements IAtlanQuery, ISQL, ICatalog, IA
      * @return reference to a AtlanQuery that can be used for defining a relationship to a AtlanQuery
      */
     public static AtlanQuery refByGuid(String guid) {
-        return AtlanQuery.builder().guid(guid).build();
+        return AtlanQuery._internal().guid(guid).build();
     }
 
     /**
@@ -268,7 +268,7 @@ public class AtlanQuery extends Asset implements IAtlanQuery, ISQL, ICatalog, IA
      * @return reference to a AtlanQuery that can be used for defining a relationship to a AtlanQuery
      */
     public static AtlanQuery refByQualifiedName(String qualifiedName) {
-        return AtlanQuery.builder()
+        return AtlanQuery._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -414,7 +414,7 @@ public class AtlanQuery extends Asset implements IAtlanQuery, ISQL, ICatalog, IA
      * @return the minimal request necessary to update the AtlanQuery, as a builder
      */
     public static AtlanQueryBuilder<?, ?> updater(String qualifiedName, String name) {
-        return AtlanQuery.builder().qualifiedName(qualifiedName).name(name);
+        return AtlanQuery._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -544,7 +544,8 @@ public class AtlanQuery extends Asset implements IAtlanQuery, ISQL, ICatalog, IA
     public static AtlanQuery updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (AtlanQuery) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return (AtlanQuery)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -602,7 +603,8 @@ public class AtlanQuery extends Asset implements IAtlanQuery, ISQL, ICatalog, IA
     public static AtlanQuery updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (AtlanQuery) Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+        return (AtlanQuery)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

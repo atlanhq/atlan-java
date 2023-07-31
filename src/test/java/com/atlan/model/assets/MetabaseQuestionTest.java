@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class MetabaseQuestionTest {
 
-    private static final MetabaseQuestion full = MetabaseQuestion.builder()
+    private static final MetabaseQuestion full = MetabaseQuestion._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

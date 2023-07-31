@@ -25,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -112,7 +112,7 @@ public class Badge extends Asset implements IBadge, IAsset, IReferenceable {
      * @return reference to a Badge that can be used for defining a relationship to a Badge
      */
     public static Badge refByGuid(String guid) {
-        return Badge.builder().guid(guid).build();
+        return Badge._internal().guid(guid).build();
     }
 
     /**
@@ -122,7 +122,7 @@ public class Badge extends Asset implements IBadge, IAsset, IReferenceable {
      * @return reference to a Badge that can be used for defining a relationship to a Badge
      */
     public static Badge refByQualifiedName(String qualifiedName) {
-        return Badge.builder()
+        return Badge._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -287,7 +287,7 @@ public class Badge extends Asset implements IBadge, IAsset, IReferenceable {
             throws AtlanException {
         String cmId = client.getCustomMetadataCache().getIdForName(cmName);
         String cmAttrId = client.getCustomMetadataCache().getAttrIdForName(cmName, cmAttribute);
-        return Badge.builder()
+        return Badge._internal()
                 .qualifiedName(generateQualifiedName(client, cmName, cmAttribute))
                 .name(name)
                 .badgeMetadataAttribute(cmId + "." + cmAttrId);
@@ -329,7 +329,7 @@ public class Badge extends Asset implements IBadge, IAsset, IReferenceable {
      * @return the minimal request necessary to update the Badge, as a builder
      */
     public static BadgeBuilder<?, ?> updater(String qualifiedName, String name) {
-        return Badge.builder().qualifiedName(qualifiedName).name(name);
+        return Badge._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**

@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class AtlanQueryTest {
 
-    private static final AtlanQuery full = AtlanQuery.builder()
+    private static final AtlanQuery full = AtlanQuery._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

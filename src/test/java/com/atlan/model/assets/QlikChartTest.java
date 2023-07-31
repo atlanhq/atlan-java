@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class QlikChartTest {
 
-    private static final QlikChart full = QlikChart.builder()
+    private static final QlikChart full = QlikChart._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

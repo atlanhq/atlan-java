@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class GCSBucketTest {
 
-    private static final GCSBucket full = GCSBucket.builder()
+    private static final GCSBucket full = GCSBucket._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class TableauMetricTest {
 
-    private static final TableauMetric full = TableauMetric.builder()
+    private static final TableauMetric full = TableauMetric._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

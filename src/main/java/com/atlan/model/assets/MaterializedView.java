@@ -31,7 +31,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -261,7 +261,7 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
      * @return reference to a MaterializedView that can be used for defining a relationship to a MaterializedView
      */
     public static MaterializedView refByGuid(String guid) {
-        return MaterializedView.builder().guid(guid).build();
+        return MaterializedView._internal().guid(guid).build();
     }
 
     /**
@@ -271,7 +271,7 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
      * @return reference to a MaterializedView that can be used for defining a relationship to a MaterializedView
      */
     public static MaterializedView refByQualifiedName(String qualifiedName) {
-        return MaterializedView.builder()
+        return MaterializedView._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -424,7 +424,7 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
         String databaseQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(schemaQualifiedName);
         String databaseName = StringUtils.getNameFromQualifiedName(databaseQualifiedName);
         String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(databaseQualifiedName);
-        return MaterializedView.builder()
+        return MaterializedView._internal()
                 .name(name)
                 .qualifiedName(generateQualifiedName(name, schemaQualifiedName))
                 .connectorType(connectorType)
@@ -455,7 +455,7 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
      * @return the minimal request necessary to update the MaterializedView, as a builder
      */
     public static MaterializedViewBuilder<?, ?> updater(String qualifiedName, String name) {
-        return MaterializedView.builder().qualifiedName(qualifiedName).name(name);
+        return MaterializedView._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -587,7 +587,7 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (MaterializedView)
-                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -646,7 +646,7 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (MaterializedView)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

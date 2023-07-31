@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class QlikSheetTest {
 
-    private static final QlikSheet full = QlikSheet.builder()
+    private static final QlikSheet full = QlikSheet._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

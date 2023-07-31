@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class MCMonitorTest {
 
-    private static final MCMonitor full = MCMonitor.builder()
+    private static final MCMonitor full = MCMonitor._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

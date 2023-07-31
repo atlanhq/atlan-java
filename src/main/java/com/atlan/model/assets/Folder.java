@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -127,7 +127,7 @@ public class Folder extends Asset implements IFolder, INamespace, IAsset, IRefer
      * @return reference to a Folder that can be used for defining a relationship to a Folder
      */
     public static Folder refByGuid(String guid) {
-        return Folder.builder().guid(guid).build();
+        return Folder._internal().guid(guid).build();
     }
 
     /**
@@ -137,7 +137,7 @@ public class Folder extends Asset implements IFolder, INamespace, IAsset, IRefer
      * @return reference to a Folder that can be used for defining a relationship to a Folder
      */
     public static Folder refByQualifiedName(String qualifiedName) {
-        return Folder.builder()
+        return Folder._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -283,7 +283,7 @@ public class Folder extends Asset implements IFolder, INamespace, IAsset, IRefer
      * @return the minimal request necessary to update the Folder, as a builder
      */
     public static FolderBuilder<?, ?> updater(String qualifiedName, String name) {
-        return Folder.builder().qualifiedName(qualifiedName).name(name);
+        return Folder._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -413,7 +413,7 @@ public class Folder extends Asset implements IFolder, INamespace, IAsset, IRefer
     public static Folder updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (Folder) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return (Folder) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -471,7 +471,7 @@ public class Folder extends Asset implements IFolder, INamespace, IAsset, IRefer
     public static Folder updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (Folder) Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+        return (Folder) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

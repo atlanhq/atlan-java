@@ -37,7 +37,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -144,7 +144,7 @@ public class Purpose extends Asset implements IPurpose, IAccessControl, IAsset, 
      * @return reference to a Purpose that can be used for defining a relationship to a Purpose
      */
     public static Purpose refByGuid(String guid) {
-        return Purpose.builder().guid(guid).build();
+        return Purpose._internal().guid(guid).build();
     }
 
     /**
@@ -154,7 +154,7 @@ public class Purpose extends Asset implements IPurpose, IAccessControl, IAsset, 
      * @return reference to a Purpose that can be used for defining a relationship to a Purpose
      */
     public static Purpose refByQualifiedName(String qualifiedName) {
-        return Purpose.builder()
+        return Purpose._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -305,7 +305,7 @@ public class Purpose extends Asset implements IPurpose, IAccessControl, IAsset, 
         if (atlanTags == null || atlanTags.isEmpty()) {
             throw new InvalidRequestException(ErrorCode.NO_ATLAN_TAG_FOR_PURPOSE);
         }
-        return Purpose.builder()
+        return Purpose._internal()
                 .qualifiedName(name)
                 .name(name)
                 .displayName(name)
@@ -323,7 +323,7 @@ public class Purpose extends Asset implements IPurpose, IAccessControl, IAsset, 
      * @return the minimal request necessary to update the Purpose, as a builder
      */
     public static PurposeBuilder<?, ?> updater(String qualifiedName, String name, boolean isEnabled) {
-        return Purpose.builder().qualifiedName(qualifiedName).name(name).isAccessControlEnabled(isEnabled);
+        return Purpose._internal().qualifiedName(qualifiedName).name(name).isAccessControlEnabled(isEnabled);
     }
 
     /**

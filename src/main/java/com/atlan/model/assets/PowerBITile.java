@@ -28,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -152,7 +152,7 @@ public class PowerBITile extends Asset implements IPowerBITile, IPowerBI, IBI, I
      * @return reference to a PowerBITile that can be used for defining a relationship to a PowerBITile
      */
     public static PowerBITile refByGuid(String guid) {
-        return PowerBITile.builder().guid(guid).build();
+        return PowerBITile._internal().guid(guid).build();
     }
 
     /**
@@ -162,7 +162,7 @@ public class PowerBITile extends Asset implements IPowerBITile, IPowerBI, IBI, I
      * @return reference to a PowerBITile that can be used for defining a relationship to a PowerBITile
      */
     public static PowerBITile refByQualifiedName(String qualifiedName) {
-        return PowerBITile.builder()
+        return PowerBITile._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -308,7 +308,7 @@ public class PowerBITile extends Asset implements IPowerBITile, IPowerBI, IBI, I
      * @return the minimal request necessary to update the PowerBITile, as a builder
      */
     public static PowerBITileBuilder<?, ?> updater(String qualifiedName, String name) {
-        return PowerBITile.builder().qualifiedName(qualifiedName).name(name);
+        return PowerBITile._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -439,7 +439,8 @@ public class PowerBITile extends Asset implements IPowerBITile, IPowerBI, IBI, I
     public static PowerBITile updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (PowerBITile) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return (PowerBITile)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -498,7 +499,7 @@ public class PowerBITile extends Asset implements IPowerBITile, IPowerBI, IBI, I
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (PowerBITile)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

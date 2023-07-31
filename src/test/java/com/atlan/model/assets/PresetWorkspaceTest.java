@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class PresetWorkspaceTest {
 
-    private static final PresetWorkspace full = PresetWorkspace.builder()
+    private static final PresetWorkspace full = PresetWorkspace._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

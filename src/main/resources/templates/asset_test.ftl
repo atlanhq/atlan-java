@@ -22,7 +22,7 @@ import javax.annotation.processing.Generated;
 @SuppressWarnings("deprecation")
 public class ${className}Test {
 
-    private static final ${className} full = ${className}.builder()
+    private static final ${className} full = ${className}._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

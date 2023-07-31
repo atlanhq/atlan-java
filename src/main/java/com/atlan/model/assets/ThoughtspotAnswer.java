@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -124,7 +124,7 @@ public class ThoughtspotAnswer extends Asset
      * @return reference to a ThoughtspotAnswer that can be used for defining a relationship to a ThoughtspotAnswer
      */
     public static ThoughtspotAnswer refByGuid(String guid) {
-        return ThoughtspotAnswer.builder().guid(guid).build();
+        return ThoughtspotAnswer._internal().guid(guid).build();
     }
 
     /**
@@ -134,7 +134,7 @@ public class ThoughtspotAnswer extends Asset
      * @return reference to a ThoughtspotAnswer that can be used for defining a relationship to a ThoughtspotAnswer
      */
     public static ThoughtspotAnswer refByQualifiedName(String qualifiedName) {
-        return ThoughtspotAnswer.builder()
+        return ThoughtspotAnswer._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -281,7 +281,7 @@ public class ThoughtspotAnswer extends Asset
      * @return the minimal request necessary to update the ThoughtspotAnswer, as a builder
      */
     public static ThoughtspotAnswerBuilder<?, ?> updater(String qualifiedName, String name) {
-        return ThoughtspotAnswer.builder().qualifiedName(qualifiedName).name(name);
+        return ThoughtspotAnswer._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -413,7 +413,7 @@ public class ThoughtspotAnswer extends Asset
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (ThoughtspotAnswer)
-                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -472,7 +472,7 @@ public class ThoughtspotAnswer extends Asset
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (ThoughtspotAnswer)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

@@ -37,7 +37,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -152,7 +152,7 @@ public class Persona extends Asset implements IPersona, IAccessControl, IAsset, 
      * @return reference to a Persona that can be used for defining a relationship to a Persona
      */
     public static Persona refByGuid(String guid) {
-        return Persona.builder().guid(guid).build();
+        return Persona._internal().guid(guid).build();
     }
 
     /**
@@ -162,7 +162,7 @@ public class Persona extends Asset implements IPersona, IAccessControl, IAsset, 
      * @return reference to a Persona that can be used for defining a relationship to a Persona
      */
     public static Persona refByQualifiedName(String qualifiedName) {
-        return Persona.builder()
+        return Persona._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -307,7 +307,7 @@ public class Persona extends Asset implements IPersona, IAccessControl, IAsset, 
      * @return the minimal request necessary to create the Persona, as a builder
      */
     public static PersonaBuilder<?, ?> creator(String name) {
-        return Persona.builder()
+        return Persona._internal()
                 .qualifiedName(name)
                 .name(name)
                 .displayName(name)
@@ -324,7 +324,7 @@ public class Persona extends Asset implements IPersona, IAccessControl, IAsset, 
      * @return the minimal request necessary to update the Persona, as a builder
      */
     public static PersonaBuilder<?, ?> updater(String qualifiedName, String name, boolean isEnabled) {
-        return Persona.builder().qualifiedName(qualifiedName).name(name).isAccessControlEnabled(isEnabled);
+        return Persona._internal().qualifiedName(qualifiedName).name(name).isAccessControlEnabled(isEnabled);
     }
 
     /**

@@ -32,7 +32,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -137,7 +137,7 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
      * @return reference to a LineageProcess that can be used for defining a relationship to a LineageProcess
      */
     public static LineageProcess refByGuid(String guid) {
-        return LineageProcess.builder().guid(guid).build();
+        return LineageProcess._internal().guid(guid).build();
     }
 
     /**
@@ -147,7 +147,7 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
      * @return reference to a LineageProcess that can be used for defining a relationship to a LineageProcess
      */
     public static LineageProcess refByQualifiedName(String qualifiedName) {
-        return LineageProcess.builder()
+        return LineageProcess._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -305,7 +305,7 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
             List<ICatalog> outputs,
             LineageProcess parent) {
         AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
-        return LineageProcess.builder()
+        return LineageProcess._internal()
                 .qualifiedName(generateQualifiedName(name, connectionQualifiedName, id, inputs, outputs, parent))
                 .name(name)
                 .connectorType(connectorType)
@@ -322,7 +322,7 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
      * @return the minimal request necessary to update the LineageProcess, as a builder
      */
     public static LineageProcessBuilder<?, ?> updater(String qualifiedName, String name) {
-        return LineageProcess.builder().qualifiedName(qualifiedName).name(name);
+        return LineageProcess._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -525,7 +525,7 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (LineageProcess)
-                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -584,7 +584,7 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (LineageProcess)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class DataStudioAssetTest {
 
-    private static final DataStudioAsset full = DataStudioAsset.builder()
+    private static final DataStudioAsset full = DataStudioAsset._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

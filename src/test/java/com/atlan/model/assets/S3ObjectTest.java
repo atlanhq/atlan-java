@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class S3ObjectTest {
 
-    private static final S3Object full = S3Object.builder()
+    private static final S3Object full = S3Object._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

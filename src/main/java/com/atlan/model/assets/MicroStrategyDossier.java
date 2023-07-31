@@ -28,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -177,7 +177,7 @@ public class MicroStrategyDossier extends Asset
      * @return reference to a MicroStrategyDossier that can be used for defining a relationship to a MicroStrategyDossier
      */
     public static MicroStrategyDossier refByGuid(String guid) {
-        return MicroStrategyDossier.builder().guid(guid).build();
+        return MicroStrategyDossier._internal().guid(guid).build();
     }
 
     /**
@@ -187,7 +187,7 @@ public class MicroStrategyDossier extends Asset
      * @return reference to a MicroStrategyDossier that can be used for defining a relationship to a MicroStrategyDossier
      */
     public static MicroStrategyDossier refByQualifiedName(String qualifiedName) {
-        return MicroStrategyDossier.builder()
+        return MicroStrategyDossier._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -334,7 +334,7 @@ public class MicroStrategyDossier extends Asset
      * @return the minimal request necessary to update the MicroStrategyDossier, as a builder
      */
     public static MicroStrategyDossierBuilder<?, ?> updater(String qualifiedName, String name) {
-        return MicroStrategyDossier.builder().qualifiedName(qualifiedName).name(name);
+        return MicroStrategyDossier._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -466,7 +466,7 @@ public class MicroStrategyDossier extends Asset
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (MicroStrategyDossier)
-                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -525,7 +525,7 @@ public class MicroStrategyDossier extends Asset
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (MicroStrategyDossier)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

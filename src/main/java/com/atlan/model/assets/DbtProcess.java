@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -219,7 +219,7 @@ public class DbtProcess extends Asset implements IDbtProcess, IDbt, ILineageProc
      * @return reference to a DbtProcess that can be used for defining a relationship to a DbtProcess
      */
     public static DbtProcess refByGuid(String guid) {
-        return DbtProcess.builder().guid(guid).build();
+        return DbtProcess._internal().guid(guid).build();
     }
 
     /**
@@ -229,7 +229,7 @@ public class DbtProcess extends Asset implements IDbtProcess, IDbt, ILineageProc
      * @return reference to a DbtProcess that can be used for defining a relationship to a DbtProcess
      */
     public static DbtProcess refByQualifiedName(String qualifiedName) {
-        return DbtProcess.builder()
+        return DbtProcess._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -375,7 +375,7 @@ public class DbtProcess extends Asset implements IDbtProcess, IDbt, ILineageProc
      * @return the minimal request necessary to update the DbtProcess, as a builder
      */
     public static DbtProcessBuilder<?, ?> updater(String qualifiedName, String name) {
-        return DbtProcess.builder().qualifiedName(qualifiedName).name(name);
+        return DbtProcess._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -505,7 +505,8 @@ public class DbtProcess extends Asset implements IDbtProcess, IDbt, ILineageProc
     public static DbtProcess updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (DbtProcess) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return (DbtProcess)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -563,7 +564,8 @@ public class DbtProcess extends Asset implements IDbtProcess, IDbt, ILineageProc
     public static DbtProcess updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (DbtProcess) Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+        return (DbtProcess)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

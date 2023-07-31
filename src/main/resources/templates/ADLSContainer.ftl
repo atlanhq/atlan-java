@@ -8,7 +8,7 @@
      */
     public static ADLSContainerBuilder<?, ?> creator(String name, String accountQualifiedName) {
         String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(accountQualifiedName);
-        return ADLSContainer.builder()
+        return ADLSContainer._internal()
                 .qualifiedName(generateQualifiedName(name, accountQualifiedName))
                 .name(name)
                 .adlsAccount(ADLSAccount.refByQualifiedName(accountQualifiedName))
@@ -36,7 +36,7 @@
      * @return the minimal request necessary to update the ADLSContainer, as a builder
      */
     public static ADLSContainerBuilder<?, ?> updater(String qualifiedName, String name) {
-        return ADLSContainer.builder().qualifiedName(qualifiedName).name(name);
+        return ADLSContainer._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**

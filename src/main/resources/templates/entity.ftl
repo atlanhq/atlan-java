@@ -114,7 +114,7 @@ import javax.annotation.processing.Generated;
  */
 @Generated(value="${generatorName}")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 <#if className == "Asset">
 @JsonSerialize(using = AssetSerializer.class)
@@ -217,7 +217,7 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
      * @return reference to a ${className} that can be used for defining a relationship to a ${className}
      */
     public static ${className} refByGuid(String guid) {
-        return ${className}.builder().guid(guid).build();
+        return ${className}._internal().guid(guid).build();
     }
 
     /**
@@ -227,7 +227,7 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
      * @return reference to a ${className} that can be used for defining a relationship to a ${className}
      */
     public static ${className} refByQualifiedName(String qualifiedName) {
-        return ${className}.builder()
+        return ${className}._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -378,7 +378,7 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
      * @return the minimal request necessary to update the ${className}, as a builder
      */
     public static ${className}Builder<?, ?> updater(String qualifiedName, String name) {
-        return ${className}.builder().qualifiedName(qualifiedName).name(name);
+        return ${className}._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -509,7 +509,7 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
      */
     public static ${className} updateCertificate(AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (${className}) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return (${className}) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -565,7 +565,7 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
      */
     public static ${className} updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message) throws AtlanException {
-        return (${className}) Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+        return (${className}) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

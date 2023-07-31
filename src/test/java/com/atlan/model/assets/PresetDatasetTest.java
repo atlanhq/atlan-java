@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class PresetDatasetTest {
 
-    private static final PresetDataset full = PresetDataset.builder()
+    private static final PresetDataset full = PresetDataset._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

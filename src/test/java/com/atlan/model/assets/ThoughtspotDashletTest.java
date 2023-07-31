@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class ThoughtspotDashletTest {
 
-    private static final ThoughtspotDashlet full = ThoughtspotDashlet.builder()
+    private static final ThoughtspotDashlet full = ThoughtspotDashlet._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

@@ -7,7 +7,7 @@
      * @return the minimal object necessary to create the GCSBucket, as a builder
      */
     public static GCSBucketBuilder<?, ?> creator(String name, String connectionQualifiedName) {
-        return GCSBucket.builder()
+        return GCSBucket._internal()
                 .qualifiedName(generateQualifiedName(name, connectionQualifiedName))
                 .name(name)
                 .connectionQualifiedName(connectionQualifiedName)
@@ -33,7 +33,7 @@
      * @return the minimal request necessary to update the GCSBucket, as a builder
      */
     public static GCSBucketBuilder<?, ?> updater(String qualifiedName, String name) {
-        return GCSBucket.builder().qualifiedName(qualifiedName).name(name);
+        return GCSBucket._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**

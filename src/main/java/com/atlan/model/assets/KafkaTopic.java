@@ -29,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -154,7 +154,7 @@ public class KafkaTopic extends Asset implements IKafkaTopic, IKafka, IEventStor
      * @return reference to a KafkaTopic that can be used for defining a relationship to a KafkaTopic
      */
     public static KafkaTopic refByGuid(String guid) {
-        return KafkaTopic.builder().guid(guid).build();
+        return KafkaTopic._internal().guid(guid).build();
     }
 
     /**
@@ -164,7 +164,7 @@ public class KafkaTopic extends Asset implements IKafkaTopic, IKafka, IEventStor
      * @return reference to a KafkaTopic that can be used for defining a relationship to a KafkaTopic
      */
     public static KafkaTopic refByQualifiedName(String qualifiedName) {
-        return KafkaTopic.builder()
+        return KafkaTopic._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -310,7 +310,7 @@ public class KafkaTopic extends Asset implements IKafkaTopic, IKafka, IEventStor
      * @return the minimal request necessary to update the KafkaTopic, as a builder
      */
     public static KafkaTopicBuilder<?, ?> updater(String qualifiedName, String name) {
-        return KafkaTopic.builder().qualifiedName(qualifiedName).name(name);
+        return KafkaTopic._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -440,7 +440,8 @@ public class KafkaTopic extends Asset implements IKafkaTopic, IKafka, IEventStor
     public static KafkaTopic updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (KafkaTopic) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return (KafkaTopic)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -498,7 +499,8 @@ public class KafkaTopic extends Asset implements IKafkaTopic, IKafka, IEventStor
     public static KafkaTopic updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (KafkaTopic) Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+        return (KafkaTopic)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

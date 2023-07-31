@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class AzureEventHubTest {
 
-    private static final AzureEventHub full = AzureEventHub.builder()
+    private static final AzureEventHub full = AzureEventHub._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

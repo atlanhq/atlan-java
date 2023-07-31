@@ -29,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -171,7 +171,7 @@ public class PresetDashboard extends Asset implements IPresetDashboard, IPreset,
      * @return reference to a PresetDashboard that can be used for defining a relationship to a PresetDashboard
      */
     public static PresetDashboard refByGuid(String guid) {
-        return PresetDashboard.builder().guid(guid).build();
+        return PresetDashboard._internal().guid(guid).build();
     }
 
     /**
@@ -181,7 +181,7 @@ public class PresetDashboard extends Asset implements IPresetDashboard, IPreset,
      * @return reference to a PresetDashboard that can be used for defining a relationship to a PresetDashboard
      */
     public static PresetDashboard refByQualifiedName(String qualifiedName) {
-        return PresetDashboard.builder()
+        return PresetDashboard._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -331,7 +331,7 @@ public class PresetDashboard extends Asset implements IPresetDashboard, IPreset,
         String[] tokens = workspaceQualifiedName.split("/");
         AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(tokens);
         String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(workspaceQualifiedName);
-        return PresetDashboard.builder()
+        return PresetDashboard._internal()
                 .name(name)
                 .qualifiedName(workspaceQualifiedName + "/" + name)
                 .connectorType(connectorType)
@@ -348,7 +348,7 @@ public class PresetDashboard extends Asset implements IPresetDashboard, IPreset,
      * @return the minimal request necessary to update the PresetDashboard, as a builder
      */
     public static PresetDashboardBuilder<?, ?> updater(String qualifiedName, String name) {
-        return PresetDashboard.builder().qualifiedName(qualifiedName).name(name);
+        return PresetDashboard._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -480,7 +480,7 @@ public class PresetDashboard extends Asset implements IPresetDashboard, IPreset,
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (PresetDashboard)
-                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -539,7 +539,7 @@ public class PresetDashboard extends Asset implements IPresetDashboard, IPreset,
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (PresetDashboard)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

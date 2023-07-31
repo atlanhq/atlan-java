@@ -28,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -151,7 +151,7 @@ public class RedashQuery extends Asset implements IRedashQuery, IRedash, IBI, IC
      * @return reference to a RedashQuery that can be used for defining a relationship to a RedashQuery
      */
     public static RedashQuery refByGuid(String guid) {
-        return RedashQuery.builder().guid(guid).build();
+        return RedashQuery._internal().guid(guid).build();
     }
 
     /**
@@ -161,7 +161,7 @@ public class RedashQuery extends Asset implements IRedashQuery, IRedash, IBI, IC
      * @return reference to a RedashQuery that can be used for defining a relationship to a RedashQuery
      */
     public static RedashQuery refByQualifiedName(String qualifiedName) {
-        return RedashQuery.builder()
+        return RedashQuery._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -307,7 +307,7 @@ public class RedashQuery extends Asset implements IRedashQuery, IRedash, IBI, IC
      * @return the minimal request necessary to update the RedashQuery, as a builder
      */
     public static RedashQueryBuilder<?, ?> updater(String qualifiedName, String name) {
-        return RedashQuery.builder().qualifiedName(qualifiedName).name(name);
+        return RedashQuery._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -438,7 +438,8 @@ public class RedashQuery extends Asset implements IRedashQuery, IRedash, IBI, IC
     public static RedashQuery updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (RedashQuery) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return (RedashQuery)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -497,7 +498,7 @@ public class RedashQuery extends Asset implements IRedashQuery, IRedash, IBI, IC
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (RedashQuery)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

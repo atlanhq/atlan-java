@@ -28,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -154,7 +154,7 @@ public class PowerBIDashboard extends Asset
      * @return reference to a PowerBIDashboard that can be used for defining a relationship to a PowerBIDashboard
      */
     public static PowerBIDashboard refByGuid(String guid) {
-        return PowerBIDashboard.builder().guid(guid).build();
+        return PowerBIDashboard._internal().guid(guid).build();
     }
 
     /**
@@ -164,7 +164,7 @@ public class PowerBIDashboard extends Asset
      * @return reference to a PowerBIDashboard that can be used for defining a relationship to a PowerBIDashboard
      */
     public static PowerBIDashboard refByQualifiedName(String qualifiedName) {
-        return PowerBIDashboard.builder()
+        return PowerBIDashboard._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -311,7 +311,7 @@ public class PowerBIDashboard extends Asset
      * @return the minimal request necessary to update the PowerBIDashboard, as a builder
      */
     public static PowerBIDashboardBuilder<?, ?> updater(String qualifiedName, String name) {
-        return PowerBIDashboard.builder().qualifiedName(qualifiedName).name(name);
+        return PowerBIDashboard._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -443,7 +443,7 @@ public class PowerBIDashboard extends Asset
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (PowerBIDashboard)
-                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -502,7 +502,7 @@ public class PowerBIDashboard extends Asset
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (PowerBIDashboard)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

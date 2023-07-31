@@ -28,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -144,7 +144,7 @@ public class PowerBIPage extends Asset implements IPowerBIPage, IPowerBI, IBI, I
      * @return reference to a PowerBIPage that can be used for defining a relationship to a PowerBIPage
      */
     public static PowerBIPage refByGuid(String guid) {
-        return PowerBIPage.builder().guid(guid).build();
+        return PowerBIPage._internal().guid(guid).build();
     }
 
     /**
@@ -154,7 +154,7 @@ public class PowerBIPage extends Asset implements IPowerBIPage, IPowerBI, IBI, I
      * @return reference to a PowerBIPage that can be used for defining a relationship to a PowerBIPage
      */
     public static PowerBIPage refByQualifiedName(String qualifiedName) {
-        return PowerBIPage.builder()
+        return PowerBIPage._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -300,7 +300,7 @@ public class PowerBIPage extends Asset implements IPowerBIPage, IPowerBI, IBI, I
      * @return the minimal request necessary to update the PowerBIPage, as a builder
      */
     public static PowerBIPageBuilder<?, ?> updater(String qualifiedName, String name) {
-        return PowerBIPage.builder().qualifiedName(qualifiedName).name(name);
+        return PowerBIPage._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -431,7 +431,8 @@ public class PowerBIPage extends Asset implements IPowerBIPage, IPowerBI, IBI, I
     public static PowerBIPage updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (PowerBIPage) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return (PowerBIPage)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -490,7 +491,7 @@ public class PowerBIPage extends Asset implements IPowerBIPage, IPowerBI, IBI, I
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (PowerBIPage)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

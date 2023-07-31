@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -127,7 +127,7 @@ public class AuthService extends Asset implements IAuthService, IAsset, IReferen
      * @return reference to a AuthService that can be used for defining a relationship to a AuthService
      */
     public static AuthService refByGuid(String guid) {
-        return AuthService.builder().guid(guid).build();
+        return AuthService._internal().guid(guid).build();
     }
 
     /**
@@ -137,7 +137,7 @@ public class AuthService extends Asset implements IAuthService, IAsset, IReferen
      * @return reference to a AuthService that can be used for defining a relationship to a AuthService
      */
     public static AuthService refByQualifiedName(String qualifiedName) {
-        return AuthService.builder()
+        return AuthService._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -283,7 +283,7 @@ public class AuthService extends Asset implements IAuthService, IAsset, IReferen
      * @return the minimal request necessary to update the AuthService, as a builder
      */
     public static AuthServiceBuilder<?, ?> updater(String qualifiedName, String name) {
-        return AuthService.builder().qualifiedName(qualifiedName).name(name);
+        return AuthService._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -414,7 +414,8 @@ public class AuthService extends Asset implements IAuthService, IAsset, IReferen
     public static AuthService updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (AuthService) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return (AuthService)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -473,7 +474,7 @@ public class AuthService extends Asset implements IAuthService, IAsset, IReferen
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (AuthService)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

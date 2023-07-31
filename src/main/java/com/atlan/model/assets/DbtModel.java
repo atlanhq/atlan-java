@@ -28,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -266,7 +266,7 @@ public class DbtModel extends Asset implements IDbtModel, IDbt, ICatalog, IAsset
      * @return reference to a DbtModel that can be used for defining a relationship to a DbtModel
      */
     public static DbtModel refByGuid(String guid) {
-        return DbtModel.builder().guid(guid).build();
+        return DbtModel._internal().guid(guid).build();
     }
 
     /**
@@ -276,7 +276,7 @@ public class DbtModel extends Asset implements IDbtModel, IDbt, ICatalog, IAsset
      * @return reference to a DbtModel that can be used for defining a relationship to a DbtModel
      */
     public static DbtModel refByQualifiedName(String qualifiedName) {
-        return DbtModel.builder()
+        return DbtModel._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -422,7 +422,7 @@ public class DbtModel extends Asset implements IDbtModel, IDbt, ICatalog, IAsset
      * @return the minimal request necessary to update the DbtModel, as a builder
      */
     public static DbtModelBuilder<?, ?> updater(String qualifiedName, String name) {
-        return DbtModel.builder().qualifiedName(qualifiedName).name(name);
+        return DbtModel._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -552,7 +552,7 @@ public class DbtModel extends Asset implements IDbtModel, IDbt, ICatalog, IAsset
     public static DbtModel updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (DbtModel) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return (DbtModel) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -610,7 +610,7 @@ public class DbtModel extends Asset implements IDbtModel, IDbt, ICatalog, IAsset
     public static DbtModel updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (DbtModel) Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+        return (DbtModel) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

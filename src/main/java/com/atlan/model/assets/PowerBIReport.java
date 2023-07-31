@@ -28,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -166,7 +166,7 @@ public class PowerBIReport extends Asset implements IPowerBIReport, IPowerBI, IB
      * @return reference to a PowerBIReport that can be used for defining a relationship to a PowerBIReport
      */
     public static PowerBIReport refByGuid(String guid) {
-        return PowerBIReport.builder().guid(guid).build();
+        return PowerBIReport._internal().guid(guid).build();
     }
 
     /**
@@ -176,7 +176,7 @@ public class PowerBIReport extends Asset implements IPowerBIReport, IPowerBI, IB
      * @return reference to a PowerBIReport that can be used for defining a relationship to a PowerBIReport
      */
     public static PowerBIReport refByQualifiedName(String qualifiedName) {
-        return PowerBIReport.builder()
+        return PowerBIReport._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -323,7 +323,7 @@ public class PowerBIReport extends Asset implements IPowerBIReport, IPowerBI, IB
      * @return the minimal request necessary to update the PowerBIReport, as a builder
      */
     public static PowerBIReportBuilder<?, ?> updater(String qualifiedName, String name) {
-        return PowerBIReport.builder().qualifiedName(qualifiedName).name(name);
+        return PowerBIReport._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -455,7 +455,7 @@ public class PowerBIReport extends Asset implements IPowerBIReport, IPowerBI, IB
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (PowerBIReport)
-                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -514,7 +514,7 @@ public class PowerBIReport extends Asset implements IPowerBIReport, IPowerBI, IB
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (PowerBIReport)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -157,7 +157,7 @@ public class LookerDashboard extends Asset implements ILookerDashboard, ILooker,
      * @return reference to a LookerDashboard that can be used for defining a relationship to a LookerDashboard
      */
     public static LookerDashboard refByGuid(String guid) {
-        return LookerDashboard.builder().guid(guid).build();
+        return LookerDashboard._internal().guid(guid).build();
     }
 
     /**
@@ -167,7 +167,7 @@ public class LookerDashboard extends Asset implements ILookerDashboard, ILooker,
      * @return reference to a LookerDashboard that can be used for defining a relationship to a LookerDashboard
      */
     public static LookerDashboard refByQualifiedName(String qualifiedName) {
-        return LookerDashboard.builder()
+        return LookerDashboard._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -314,7 +314,7 @@ public class LookerDashboard extends Asset implements ILookerDashboard, ILooker,
      * @return the minimal request necessary to update the LookerDashboard, as a builder
      */
     public static LookerDashboardBuilder<?, ?> updater(String qualifiedName, String name) {
-        return LookerDashboard.builder().qualifiedName(qualifiedName).name(name);
+        return LookerDashboard._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -446,7 +446,7 @@ public class LookerDashboard extends Asset implements ILookerDashboard, ILooker,
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (LookerDashboard)
-                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -505,7 +505,7 @@ public class LookerDashboard extends Asset implements ILookerDashboard, ILooker,
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (LookerDashboard)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

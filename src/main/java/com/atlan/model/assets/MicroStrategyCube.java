@@ -28,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -185,7 +185,7 @@ public class MicroStrategyCube extends Asset
      * @return reference to a MicroStrategyCube that can be used for defining a relationship to a MicroStrategyCube
      */
     public static MicroStrategyCube refByGuid(String guid) {
-        return MicroStrategyCube.builder().guid(guid).build();
+        return MicroStrategyCube._internal().guid(guid).build();
     }
 
     /**
@@ -195,7 +195,7 @@ public class MicroStrategyCube extends Asset
      * @return reference to a MicroStrategyCube that can be used for defining a relationship to a MicroStrategyCube
      */
     public static MicroStrategyCube refByQualifiedName(String qualifiedName) {
-        return MicroStrategyCube.builder()
+        return MicroStrategyCube._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -342,7 +342,7 @@ public class MicroStrategyCube extends Asset
      * @return the minimal request necessary to update the MicroStrategyCube, as a builder
      */
     public static MicroStrategyCubeBuilder<?, ?> updater(String qualifiedName, String name) {
-        return MicroStrategyCube.builder().qualifiedName(qualifiedName).name(name);
+        return MicroStrategyCube._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -474,7 +474,7 @@ public class MicroStrategyCube extends Asset
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (MicroStrategyCube)
-                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -533,7 +533,7 @@ public class MicroStrategyCube extends Asset
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (MicroStrategyCube)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

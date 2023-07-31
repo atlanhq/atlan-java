@@ -28,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -147,7 +147,7 @@ public class QuickSightDataset extends Asset
      * @return reference to a QuickSightDataset that can be used for defining a relationship to a QuickSightDataset
      */
     public static QuickSightDataset refByGuid(String guid) {
-        return QuickSightDataset.builder().guid(guid).build();
+        return QuickSightDataset._internal().guid(guid).build();
     }
 
     /**
@@ -157,7 +157,7 @@ public class QuickSightDataset extends Asset
      * @return reference to a QuickSightDataset that can be used for defining a relationship to a QuickSightDataset
      */
     public static QuickSightDataset refByQualifiedName(String qualifiedName) {
-        return QuickSightDataset.builder()
+        return QuickSightDataset._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -304,7 +304,7 @@ public class QuickSightDataset extends Asset
      * @return the minimal request necessary to update the QuickSightDataset, as a builder
      */
     public static QuickSightDatasetBuilder<?, ?> updater(String qualifiedName, String name) {
-        return QuickSightDataset.builder().qualifiedName(qualifiedName).name(name);
+        return QuickSightDataset._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -436,7 +436,7 @@ public class QuickSightDataset extends Asset
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (QuickSightDataset)
-                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -495,7 +495,7 @@ public class QuickSightDataset extends Asset
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (QuickSightDataset)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

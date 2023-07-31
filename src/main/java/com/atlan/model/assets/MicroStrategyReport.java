@@ -28,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -181,7 +181,7 @@ public class MicroStrategyReport extends Asset
      * @return reference to a MicroStrategyReport that can be used for defining a relationship to a MicroStrategyReport
      */
     public static MicroStrategyReport refByGuid(String guid) {
-        return MicroStrategyReport.builder().guid(guid).build();
+        return MicroStrategyReport._internal().guid(guid).build();
     }
 
     /**
@@ -191,7 +191,7 @@ public class MicroStrategyReport extends Asset
      * @return reference to a MicroStrategyReport that can be used for defining a relationship to a MicroStrategyReport
      */
     public static MicroStrategyReport refByQualifiedName(String qualifiedName) {
-        return MicroStrategyReport.builder()
+        return MicroStrategyReport._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -338,7 +338,7 @@ public class MicroStrategyReport extends Asset
      * @return the minimal request necessary to update the MicroStrategyReport, as a builder
      */
     public static MicroStrategyReportBuilder<?, ?> updater(String qualifiedName, String name) {
-        return MicroStrategyReport.builder().qualifiedName(qualifiedName).name(name);
+        return MicroStrategyReport._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -470,7 +470,7 @@ public class MicroStrategyReport extends Asset
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (MicroStrategyReport)
-                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -529,7 +529,7 @@ public class MicroStrategyReport extends Asset
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (MicroStrategyReport)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

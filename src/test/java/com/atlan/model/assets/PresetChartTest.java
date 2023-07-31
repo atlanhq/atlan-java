@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class PresetChartTest {
 
-    private static final PresetChart full = PresetChart.builder()
+    private static final PresetChart full = PresetChart._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

@@ -31,7 +31,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -242,7 +242,7 @@ public class GCSObject extends Asset
      * @return reference to a GCSObject that can be used for defining a relationship to a GCSObject
      */
     public static GCSObject refByGuid(String guid) {
-        return GCSObject.builder().guid(guid).build();
+        return GCSObject._internal().guid(guid).build();
     }
 
     /**
@@ -252,7 +252,7 @@ public class GCSObject extends Asset
      * @return reference to a GCSObject that can be used for defining a relationship to a GCSObject
      */
     public static GCSObject refByQualifiedName(String qualifiedName) {
-        return GCSObject.builder()
+        return GCSObject._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -400,7 +400,7 @@ public class GCSObject extends Asset
     public static GCSObjectBuilder<?, ?> creator(String name, String bucketQualifiedName) {
         String connectionQualifiedName = StringUtils.getConnectionQualifiedName(bucketQualifiedName);
         String bucketName = StringUtils.getNameFromQualifiedName(bucketQualifiedName);
-        return GCSObject.builder()
+        return GCSObject._internal()
                 .qualifiedName(generateQualifiedName(name, bucketQualifiedName))
                 .name(name)
                 .connectionQualifiedName(connectionQualifiedName)
@@ -429,7 +429,7 @@ public class GCSObject extends Asset
      * @return the minimal request necessary to update the GCSObject, as a builder
      */
     public static GCSObjectBuilder<?, ?> updater(String qualifiedName, String name) {
-        return GCSObject.builder().qualifiedName(qualifiedName).name(name);
+        return GCSObject._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -559,7 +559,7 @@ public class GCSObject extends Asset
     public static GCSObject updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (GCSObject) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return (GCSObject) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -617,7 +617,8 @@ public class GCSObject extends Asset
     public static GCSObject updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (GCSObject) Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+        return (GCSObject)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class QuickSightAnalysisTest {
 
-    private static final QuickSightAnalysis full = QuickSightAnalysis.builder()
+    private static final QuickSightAnalysis full = QuickSightAnalysis._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class SigmaDataElementTest {
 
-    private static final SigmaDataElement full = SigmaDataElement.builder()
+    private static final SigmaDataElement full = SigmaDataElement._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

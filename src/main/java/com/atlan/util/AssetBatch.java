@@ -142,7 +142,7 @@ public class AssetBatch {
         try {
             tracker.add(candidate.trimToRequired().name(candidate.getName()).build());
         } catch (InvalidRequestException e) {
-            tracker.add(IndistinctAsset.builder()
+            tracker.add(IndistinctAsset._internal()
                     .typeName(candidate.getTypeName())
                     .guid(candidate.getGuid())
                     .qualifiedName(candidate.getQualifiedName())

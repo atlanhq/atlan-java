@@ -28,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -235,7 +235,7 @@ public class DbtMetric extends Asset
      * @return reference to a DbtMetric that can be used for defining a relationship to a DbtMetric
      */
     public static DbtMetric refByGuid(String guid) {
-        return DbtMetric.builder().guid(guid).build();
+        return DbtMetric._internal().guid(guid).build();
     }
 
     /**
@@ -245,7 +245,7 @@ public class DbtMetric extends Asset
      * @return reference to a DbtMetric that can be used for defining a relationship to a DbtMetric
      */
     public static DbtMetric refByQualifiedName(String qualifiedName) {
-        return DbtMetric.builder()
+        return DbtMetric._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -391,7 +391,7 @@ public class DbtMetric extends Asset
      * @return the minimal request necessary to update the DbtMetric, as a builder
      */
     public static DbtMetricBuilder<?, ?> updater(String qualifiedName, String name) {
-        return DbtMetric.builder().qualifiedName(qualifiedName).name(name);
+        return DbtMetric._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -521,7 +521,7 @@ public class DbtMetric extends Asset
     public static DbtMetric updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (DbtMetric) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return (DbtMetric) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -579,7 +579,8 @@ public class DbtMetric extends Asset
     public static DbtMetric updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (DbtMetric) Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+        return (DbtMetric)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

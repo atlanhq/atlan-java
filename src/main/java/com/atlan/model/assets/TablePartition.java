@@ -30,7 +30,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -271,7 +271,7 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
      * @return reference to a TablePartition that can be used for defining a relationship to a TablePartition
      */
     public static TablePartition refByGuid(String guid) {
-        return TablePartition.builder().guid(guid).build();
+        return TablePartition._internal().guid(guid).build();
     }
 
     /**
@@ -281,7 +281,7 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
      * @return reference to a TablePartition that can be used for defining a relationship to a TablePartition
      */
     public static TablePartition refByQualifiedName(String qualifiedName) {
-        return TablePartition.builder()
+        return TablePartition._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -436,7 +436,7 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
         String databaseQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(schemaQualifiedName);
         String databaseName = StringUtils.getNameFromQualifiedName(databaseQualifiedName);
         String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(databaseQualifiedName);
-        return TablePartition.builder()
+        return TablePartition._internal()
                 .name(name)
                 .qualifiedName(generateQualifiedName(name, tableQualifiedName))
                 .connectorType(connectorType)
@@ -469,7 +469,7 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
      * @return the minimal request necessary to update the TablePartition, as a builder
      */
     public static TablePartitionBuilder<?, ?> updater(String qualifiedName, String name) {
-        return TablePartition.builder().qualifiedName(qualifiedName).name(name);
+        return TablePartition._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -601,7 +601,7 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (TablePartition)
-                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -660,7 +660,7 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (TablePartition)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

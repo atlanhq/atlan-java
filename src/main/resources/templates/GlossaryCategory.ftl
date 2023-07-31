@@ -10,7 +10,7 @@
      */
     public static GlossaryCategoryBuilder<?, ?> creator(
             String name, String glossaryGuid, String glossaryQualifiedName) {
-        return GlossaryCategory.builder()
+        return GlossaryCategory._internal()
                 .qualifiedName(name)
                 .name(name)
                 .anchor(Glossary.anchorLink(glossaryGuid, glossaryQualifiedName));
@@ -27,7 +27,7 @@
     public static GlossaryCategoryBuilder<?, ?> updater(String qualifiedName, String name, String glossaryGuid) {
         // Turns out that updating a category requires the glossary GUID, and will not work
         // with the qualifiedName of the glossary
-        return GlossaryCategory.builder()
+        return GlossaryCategory._internal()
                 .qualifiedName(qualifiedName)
                 .name(name)
                 .anchor(Glossary.anchorLink(glossaryGuid, null));

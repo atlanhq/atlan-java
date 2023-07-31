@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class PowerBIDataflowTest {
 
-    private static final PowerBIDataflow full = PowerBIDataflow.builder()
+    private static final PowerBIDataflow full = PowerBIDataflow._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

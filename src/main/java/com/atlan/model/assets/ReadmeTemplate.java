@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -141,7 +141,7 @@ public class ReadmeTemplate extends Asset implements IReadmeTemplate, IResource,
      * @return reference to a ReadmeTemplate that can be used for defining a relationship to a ReadmeTemplate
      */
     public static ReadmeTemplate refByGuid(String guid) {
-        return ReadmeTemplate.builder().guid(guid).build();
+        return ReadmeTemplate._internal().guid(guid).build();
     }
 
     /**
@@ -151,7 +151,7 @@ public class ReadmeTemplate extends Asset implements IReadmeTemplate, IResource,
      * @return reference to a ReadmeTemplate that can be used for defining a relationship to a ReadmeTemplate
      */
     public static ReadmeTemplate refByQualifiedName(String qualifiedName) {
-        return ReadmeTemplate.builder()
+        return ReadmeTemplate._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -298,7 +298,7 @@ public class ReadmeTemplate extends Asset implements IReadmeTemplate, IResource,
      * @return the minimal request necessary to update the ReadmeTemplate, as a builder
      */
     public static ReadmeTemplateBuilder<?, ?> updater(String qualifiedName, String name) {
-        return ReadmeTemplate.builder().qualifiedName(qualifiedName).name(name);
+        return ReadmeTemplate._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**

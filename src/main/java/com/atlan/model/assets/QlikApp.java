@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -176,7 +176,7 @@ public class QlikApp extends Asset implements IQlikApp, IQlik, IBI, ICatalog, IA
      * @return reference to a QlikApp that can be used for defining a relationship to a QlikApp
      */
     public static QlikApp refByGuid(String guid) {
-        return QlikApp.builder().guid(guid).build();
+        return QlikApp._internal().guid(guid).build();
     }
 
     /**
@@ -186,7 +186,7 @@ public class QlikApp extends Asset implements IQlikApp, IQlik, IBI, ICatalog, IA
      * @return reference to a QlikApp that can be used for defining a relationship to a QlikApp
      */
     public static QlikApp refByQualifiedName(String qualifiedName) {
-        return QlikApp.builder()
+        return QlikApp._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -332,7 +332,7 @@ public class QlikApp extends Asset implements IQlikApp, IQlik, IBI, ICatalog, IA
      * @return the minimal request necessary to update the QlikApp, as a builder
      */
     public static QlikAppBuilder<?, ?> updater(String qualifiedName, String name) {
-        return QlikApp.builder().qualifiedName(qualifiedName).name(name);
+        return QlikApp._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -462,7 +462,7 @@ public class QlikApp extends Asset implements IQlikApp, IQlik, IBI, ICatalog, IA
     public static QlikApp updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (QlikApp) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return (QlikApp) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -520,7 +520,7 @@ public class QlikApp extends Asset implements IQlikApp, IQlik, IBI, ICatalog, IA
     public static QlikApp updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (QlikApp) Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+        return (QlikApp) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

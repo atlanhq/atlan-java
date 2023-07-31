@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class MicroStrategyCubeTest {
 
-    private static final MicroStrategyCube full = MicroStrategyCube.builder()
+    private static final MicroStrategyCube full = MicroStrategyCube._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

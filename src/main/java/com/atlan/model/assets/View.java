@@ -31,7 +31,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -250,7 +250,7 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
      * @return reference to a View that can be used for defining a relationship to a View
      */
     public static View refByGuid(String guid) {
-        return View.builder().guid(guid).build();
+        return View._internal().guid(guid).build();
     }
 
     /**
@@ -260,7 +260,7 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
      * @return reference to a View that can be used for defining a relationship to a View
      */
     public static View refByQualifiedName(String qualifiedName) {
-        return View.builder()
+        return View._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -412,7 +412,7 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
         String databaseQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(schemaQualifiedName);
         String databaseName = StringUtils.getNameFromQualifiedName(databaseQualifiedName);
         String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(databaseQualifiedName);
-        return View.builder()
+        return View._internal()
                 .name(name)
                 .qualifiedName(generateQualifiedName(name, schemaQualifiedName))
                 .connectorType(connectorType)
@@ -443,7 +443,7 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
      * @return the minimal request necessary to update the View, as a builder
      */
     public static ViewBuilder<?, ?> updater(String qualifiedName, String name) {
-        return View.builder().qualifiedName(qualifiedName).name(name);
+        return View._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -572,7 +572,7 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
     public static View updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (View) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return (View) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -629,7 +629,7 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
     public static View updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (View) Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+        return (View) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

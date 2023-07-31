@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class APIPathTest {
 
-    private static final APIPath full = APIPath.builder()
+    private static final APIPath full = APIPath._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

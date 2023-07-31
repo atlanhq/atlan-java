@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class PowerBIReportTest {
 
-    private static final PowerBIReport full = PowerBIReport.builder()
+    private static final PowerBIReport full = PowerBIReport._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

@@ -29,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -209,7 +209,7 @@ public class Database extends Asset implements IDatabase, ISQL, ICatalog, IAsset
      * @return reference to a Database that can be used for defining a relationship to a Database
      */
     public static Database refByGuid(String guid) {
-        return Database.builder().guid(guid).build();
+        return Database._internal().guid(guid).build();
     }
 
     /**
@@ -219,7 +219,7 @@ public class Database extends Asset implements IDatabase, ISQL, ICatalog, IAsset
      * @return reference to a Database that can be used for defining a relationship to a Database
      */
     public static Database refByQualifiedName(String qualifiedName) {
-        return Database.builder()
+        return Database._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -367,7 +367,7 @@ public class Database extends Asset implements IDatabase, ISQL, ICatalog, IAsset
     public static DatabaseBuilder<?, ?> creator(String name, String connectionQualifiedName) {
         AtlanConnectorType connectorType =
                 Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName.split("/"));
-        return Database.builder()
+        return Database._internal()
                 .name(name)
                 .qualifiedName(generateQualifiedName(name, connectionQualifiedName))
                 .connectorType(connectorType)
@@ -393,7 +393,7 @@ public class Database extends Asset implements IDatabase, ISQL, ICatalog, IAsset
      * @return the minimal request necessary to update the Database, as a builder
      */
     public static DatabaseBuilder<?, ?> updater(String qualifiedName, String name) {
-        return Database.builder().qualifiedName(qualifiedName).name(name);
+        return Database._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -523,7 +523,7 @@ public class Database extends Asset implements IDatabase, ISQL, ICatalog, IAsset
     public static Database updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (Database) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return (Database) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -581,7 +581,7 @@ public class Database extends Asset implements IDatabase, ISQL, ICatalog, IAsset
     public static Database updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (Database) Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+        return (Database) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

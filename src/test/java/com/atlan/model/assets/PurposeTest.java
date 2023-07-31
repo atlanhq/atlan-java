@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class PurposeTest {
 
-    private static final Purpose full = Purpose.builder()
+    private static final Purpose full = Purpose._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

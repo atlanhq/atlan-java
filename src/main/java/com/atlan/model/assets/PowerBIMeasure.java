@@ -28,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -152,7 +152,7 @@ public class PowerBIMeasure extends Asset implements IPowerBIMeasure, IPowerBI, 
      * @return reference to a PowerBIMeasure that can be used for defining a relationship to a PowerBIMeasure
      */
     public static PowerBIMeasure refByGuid(String guid) {
-        return PowerBIMeasure.builder().guid(guid).build();
+        return PowerBIMeasure._internal().guid(guid).build();
     }
 
     /**
@@ -162,7 +162,7 @@ public class PowerBIMeasure extends Asset implements IPowerBIMeasure, IPowerBI, 
      * @return reference to a PowerBIMeasure that can be used for defining a relationship to a PowerBIMeasure
      */
     public static PowerBIMeasure refByQualifiedName(String qualifiedName) {
-        return PowerBIMeasure.builder()
+        return PowerBIMeasure._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -309,7 +309,7 @@ public class PowerBIMeasure extends Asset implements IPowerBIMeasure, IPowerBI, 
      * @return the minimal request necessary to update the PowerBIMeasure, as a builder
      */
     public static PowerBIMeasureBuilder<?, ?> updater(String qualifiedName, String name) {
-        return PowerBIMeasure.builder().qualifiedName(qualifiedName).name(name);
+        return PowerBIMeasure._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -441,7 +441,7 @@ public class PowerBIMeasure extends Asset implements IPowerBIMeasure, IPowerBI, 
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (PowerBIMeasure)
-                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -500,7 +500,7 @@ public class PowerBIMeasure extends Asset implements IPowerBIMeasure, IPowerBI, 
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (PowerBIMeasure)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

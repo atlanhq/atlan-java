@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class PresetDashboardTest {
 
-    private static final PresetDashboard full = PresetDashboard.builder()
+    private static final PresetDashboard full = PresetDashboard._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class AtlanCollectionTest {
 
-    private static final AtlanCollection full = AtlanCollection.builder()
+    private static final AtlanCollection full = AtlanCollection._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

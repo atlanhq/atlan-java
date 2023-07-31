@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class AuthPolicyTest {
 
-    private static final AuthPolicy full = AuthPolicy.builder()
+    private static final AuthPolicy full = AuthPolicy._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

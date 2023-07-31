@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -115,7 +115,7 @@ public class Insight extends Asset implements IInsight, ICatalog, IAsset, IRefer
      * @return reference to a Insight that can be used for defining a relationship to a Insight
      */
     public static Insight refByGuid(String guid) {
-        return Insight.builder().guid(guid).build();
+        return Insight._internal().guid(guid).build();
     }
 
     /**
@@ -125,7 +125,7 @@ public class Insight extends Asset implements IInsight, ICatalog, IAsset, IRefer
      * @return reference to a Insight that can be used for defining a relationship to a Insight
      */
     public static Insight refByQualifiedName(String qualifiedName) {
-        return Insight.builder()
+        return Insight._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -271,7 +271,7 @@ public class Insight extends Asset implements IInsight, ICatalog, IAsset, IRefer
      * @return the minimal request necessary to update the Insight, as a builder
      */
     public static InsightBuilder<?, ?> updater(String qualifiedName, String name) {
-        return Insight.builder().qualifiedName(qualifiedName).name(name);
+        return Insight._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -401,7 +401,7 @@ public class Insight extends Asset implements IInsight, ICatalog, IAsset, IRefer
     public static Insight updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (Insight) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return (Insight) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -459,7 +459,7 @@ public class Insight extends Asset implements IInsight, ICatalog, IAsset, IRefer
     public static Insight updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (Insight) Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+        return (Insight) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

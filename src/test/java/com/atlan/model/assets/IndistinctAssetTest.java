@@ -14,7 +14,7 @@ import org.testng.annotations.Test;
 
 public class IndistinctAssetTest {
 
-    private static final IndistinctAsset full = IndistinctAsset.builder()
+    private static final IndistinctAsset full = IndistinctAsset._internal()
             .typeName("typeName")
             .guid("guid")
             .displayText("displayText")

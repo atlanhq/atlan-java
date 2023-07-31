@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class MicroStrategyMetricTest {
 
-    private static final MicroStrategyMetric full = MicroStrategyMetric.builder()
+    private static final MicroStrategyMetric full = MicroStrategyMetric._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

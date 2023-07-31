@@ -31,7 +31,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -251,7 +251,7 @@ public class Schema extends Asset implements ISchema, ISQL, ICatalog, IAsset, IR
      * @return reference to a Schema that can be used for defining a relationship to a Schema
      */
     public static Schema refByGuid(String guid) {
-        return Schema.builder().guid(guid).build();
+        return Schema._internal().guid(guid).build();
     }
 
     /**
@@ -261,7 +261,7 @@ public class Schema extends Asset implements ISchema, ISQL, ICatalog, IAsset, IR
      * @return reference to a Schema that can be used for defining a relationship to a Schema
      */
     public static Schema refByQualifiedName(String qualifiedName) {
-        return Schema.builder()
+        return Schema._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -411,7 +411,7 @@ public class Schema extends Asset implements ISchema, ISQL, ICatalog, IAsset, IR
         AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(tokens);
         String databaseName = StringUtils.getNameFromQualifiedName(databaseQualifiedName);
         String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(databaseQualifiedName);
-        return Schema.builder()
+        return Schema._internal()
                 .name(name)
                 .qualifiedName(generateQualifiedName(name, databaseQualifiedName))
                 .connectorType(connectorType)
@@ -440,7 +440,7 @@ public class Schema extends Asset implements ISchema, ISQL, ICatalog, IAsset, IR
      * @return the minimal request necessary to update the Schema, as a builder
      */
     public static SchemaBuilder<?, ?> updater(String qualifiedName, String name) {
-        return Schema.builder().qualifiedName(qualifiedName).name(name);
+        return Schema._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -570,7 +570,7 @@ public class Schema extends Asset implements ISchema, ISQL, ICatalog, IAsset, IR
     public static Schema updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (Schema) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return (Schema) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -628,7 +628,7 @@ public class Schema extends Asset implements ISchema, ISQL, ICatalog, IAsset, IR
     public static Schema updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (Schema) Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+        return (Schema) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

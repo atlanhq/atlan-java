@@ -29,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -209,7 +209,7 @@ public class Procedure extends Asset implements IProcedure, ISQL, ICatalog, IAss
      * @return reference to a Procedure that can be used for defining a relationship to a Procedure
      */
     public static Procedure refByGuid(String guid) {
-        return Procedure.builder().guid(guid).build();
+        return Procedure._internal().guid(guid).build();
     }
 
     /**
@@ -219,7 +219,7 @@ public class Procedure extends Asset implements IProcedure, ISQL, ICatalog, IAss
      * @return reference to a Procedure that can be used for defining a relationship to a Procedure
      */
     public static Procedure refByQualifiedName(String qualifiedName) {
-        return Procedure.builder()
+        return Procedure._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -365,7 +365,7 @@ public class Procedure extends Asset implements IProcedure, ISQL, ICatalog, IAss
      * @return the minimal request necessary to update the Procedure, as a builder
      */
     public static ProcedureBuilder<?, ?> updater(String qualifiedName, String name) {
-        return Procedure.builder().qualifiedName(qualifiedName).name(name);
+        return Procedure._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -495,7 +495,7 @@ public class Procedure extends Asset implements IProcedure, ISQL, ICatalog, IAss
     public static Procedure updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (Procedure) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return (Procedure) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -553,7 +553,8 @@ public class Procedure extends Asset implements IProcedure, ISQL, ICatalog, IAss
     public static Procedure updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (Procedure) Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+        return (Procedure)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

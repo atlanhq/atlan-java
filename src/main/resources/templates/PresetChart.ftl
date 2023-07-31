@@ -11,7 +11,7 @@
         AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(tokens);
         String workspaceQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(collectionQualifiedName);
         String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(workspaceQualifiedName);
-        return PresetChart.builder()
+        return PresetChart._internal()
                 .name(name)
                 .qualifiedName(collectionQualifiedName + "/" + name)
                 .connectorType(connectorType)
@@ -29,7 +29,7 @@
      * @return the minimal request necessary to update the PresetChart, as a builder
      */
     public static PresetChartBuilder<?, ?> updater(String qualifiedName, String name) {
-        return PresetChart.builder().qualifiedName(qualifiedName).name(name);
+        return PresetChart._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**

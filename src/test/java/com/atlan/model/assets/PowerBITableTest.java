@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class PowerBITableTest {
 
-    private static final PowerBITable full = PowerBITable.builder()
+    private static final PowerBITable full = PowerBITable._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

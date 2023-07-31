@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -141,7 +141,7 @@ public class LookerFolder extends Asset implements ILookerFolder, ILooker, IBI, 
      * @return reference to a LookerFolder that can be used for defining a relationship to a LookerFolder
      */
     public static LookerFolder refByGuid(String guid) {
-        return LookerFolder.builder().guid(guid).build();
+        return LookerFolder._internal().guid(guid).build();
     }
 
     /**
@@ -151,7 +151,7 @@ public class LookerFolder extends Asset implements ILookerFolder, ILooker, IBI, 
      * @return reference to a LookerFolder that can be used for defining a relationship to a LookerFolder
      */
     public static LookerFolder refByQualifiedName(String qualifiedName) {
-        return LookerFolder.builder()
+        return LookerFolder._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -297,7 +297,7 @@ public class LookerFolder extends Asset implements ILookerFolder, ILooker, IBI, 
      * @return the minimal request necessary to update the LookerFolder, as a builder
      */
     public static LookerFolderBuilder<?, ?> updater(String qualifiedName, String name) {
-        return LookerFolder.builder().qualifiedName(qualifiedName).name(name);
+        return LookerFolder._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -429,7 +429,7 @@ public class LookerFolder extends Asset implements ILookerFolder, ILooker, IBI, 
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (LookerFolder)
-                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -488,7 +488,7 @@ public class LookerFolder extends Asset implements ILookerFolder, ILooker, IBI, 
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (LookerFolder)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

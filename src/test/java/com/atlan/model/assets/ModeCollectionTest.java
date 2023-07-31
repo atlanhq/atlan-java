@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class ModeCollectionTest {
 
-    private static final ModeCollection full = ModeCollection.builder()
+    private static final ModeCollection full = ModeCollection._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

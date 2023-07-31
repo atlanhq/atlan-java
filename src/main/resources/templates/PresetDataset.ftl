@@ -11,7 +11,7 @@
         AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(tokens);
         String workspaceQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(collectionQualifiedName);
         String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(workspaceQualifiedName);
-        return PresetDataset.builder()
+        return PresetDataset._internal()
                 .name(name)
                 .qualifiedName(collectionQualifiedName + "/" + name)
                 .connectorType(connectorType)
@@ -29,7 +29,7 @@
      * @return the minimal request necessary to update the PresetDataset, as a builder
      */
     public static PresetDatasetBuilder<?, ?> updater(String qualifiedName, String name) {
-        return PresetDataset.builder().qualifiedName(qualifiedName).name(name);
+        return PresetDataset._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**

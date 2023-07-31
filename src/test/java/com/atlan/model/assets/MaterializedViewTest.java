@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class MaterializedViewTest {
 
-    private static final MaterializedView full = MaterializedView.builder()
+    private static final MaterializedView full = MaterializedView._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

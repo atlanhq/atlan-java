@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -218,7 +218,7 @@ public class DbtModelColumn extends Asset implements IDbtModelColumn, IDbt, ICat
      * @return reference to a DbtModelColumn that can be used for defining a relationship to a DbtModelColumn
      */
     public static DbtModelColumn refByGuid(String guid) {
-        return DbtModelColumn.builder().guid(guid).build();
+        return DbtModelColumn._internal().guid(guid).build();
     }
 
     /**
@@ -228,7 +228,7 @@ public class DbtModelColumn extends Asset implements IDbtModelColumn, IDbt, ICat
      * @return reference to a DbtModelColumn that can be used for defining a relationship to a DbtModelColumn
      */
     public static DbtModelColumn refByQualifiedName(String qualifiedName) {
-        return DbtModelColumn.builder()
+        return DbtModelColumn._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -375,7 +375,7 @@ public class DbtModelColumn extends Asset implements IDbtModelColumn, IDbt, ICat
      * @return the minimal request necessary to update the DbtModelColumn, as a builder
      */
     public static DbtModelColumnBuilder<?, ?> updater(String qualifiedName, String name) {
-        return DbtModelColumn.builder().qualifiedName(qualifiedName).name(name);
+        return DbtModelColumn._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -507,7 +507,7 @@ public class DbtModelColumn extends Asset implements IDbtModelColumn, IDbt, ICat
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (DbtModelColumn)
-                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -566,7 +566,7 @@ public class DbtModelColumn extends Asset implements IDbtModelColumn, IDbt, ICat
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (DbtModelColumn)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

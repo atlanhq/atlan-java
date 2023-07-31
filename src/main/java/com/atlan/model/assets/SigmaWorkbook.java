@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -148,7 +148,7 @@ public class SigmaWorkbook extends Asset implements ISigmaWorkbook, ISigma, IBI,
      * @return reference to a SigmaWorkbook that can be used for defining a relationship to a SigmaWorkbook
      */
     public static SigmaWorkbook refByGuid(String guid) {
-        return SigmaWorkbook.builder().guid(guid).build();
+        return SigmaWorkbook._internal().guid(guid).build();
     }
 
     /**
@@ -158,7 +158,7 @@ public class SigmaWorkbook extends Asset implements ISigmaWorkbook, ISigma, IBI,
      * @return reference to a SigmaWorkbook that can be used for defining a relationship to a SigmaWorkbook
      */
     public static SigmaWorkbook refByQualifiedName(String qualifiedName) {
-        return SigmaWorkbook.builder()
+        return SigmaWorkbook._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -305,7 +305,7 @@ public class SigmaWorkbook extends Asset implements ISigmaWorkbook, ISigma, IBI,
      * @return the minimal request necessary to update the SigmaWorkbook, as a builder
      */
     public static SigmaWorkbookBuilder<?, ?> updater(String qualifiedName, String name) {
-        return SigmaWorkbook.builder().qualifiedName(qualifiedName).name(name);
+        return SigmaWorkbook._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -437,7 +437,7 @@ public class SigmaWorkbook extends Asset implements ISigmaWorkbook, ISigma, IBI,
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (SigmaWorkbook)
-                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -496,7 +496,7 @@ public class SigmaWorkbook extends Asset implements ISigmaWorkbook, ISigma, IBI,
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (SigmaWorkbook)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

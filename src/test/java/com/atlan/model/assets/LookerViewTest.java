@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class LookerViewTest {
 
-    private static final LookerView full = LookerView.builder()
+    private static final LookerView full = LookerView._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

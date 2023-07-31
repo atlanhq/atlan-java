@@ -35,7 +35,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -192,7 +192,7 @@ public class AuthPolicy extends Asset implements IAuthPolicy, IAsset, IReference
      * @return reference to a AuthPolicy that can be used for defining a relationship to a AuthPolicy
      */
     public static AuthPolicy refByGuid(String guid) {
-        return AuthPolicy.builder().guid(guid).build();
+        return AuthPolicy._internal().guid(guid).build();
     }
 
     /**
@@ -202,7 +202,7 @@ public class AuthPolicy extends Asset implements IAuthPolicy, IAsset, IReference
      * @return reference to a AuthPolicy that can be used for defining a relationship to a AuthPolicy
      */
     public static AuthPolicy refByQualifiedName(String qualifiedName) {
-        return AuthPolicy.builder()
+        return AuthPolicy._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -354,7 +354,7 @@ public class AuthPolicy extends Asset implements IAuthPolicy, IAsset, IReference
      * @see Purpose#createDataPolicy(String, String, AuthPolicyType, Collection, Collection, boolean)
      */
     public static AuthPolicyBuilder<?, ?> creator(String name) {
-        return AuthPolicy.builder().qualifiedName(name).name(name).displayName("");
+        return AuthPolicy._internal().qualifiedName(name).name(name).displayName("");
     }
 
     /**
@@ -365,7 +365,7 @@ public class AuthPolicy extends Asset implements IAuthPolicy, IAsset, IReference
      * @return the minimal request necessary to update the AuthPolicy, as a builder
      */
     public static AuthPolicyBuilder<?, ?> updater(String qualifiedName, String name) {
-        return AuthPolicy.builder().qualifiedName(qualifiedName).name(name);
+        return AuthPolicy._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -495,7 +495,8 @@ public class AuthPolicy extends Asset implements IAuthPolicy, IAsset, IReference
     public static AuthPolicy updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (AuthPolicy) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return (AuthPolicy)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -553,7 +554,8 @@ public class AuthPolicy extends Asset implements IAuthPolicy, IAsset, IReference
     public static AuthPolicy updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (AuthPolicy) Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+        return (AuthPolicy)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

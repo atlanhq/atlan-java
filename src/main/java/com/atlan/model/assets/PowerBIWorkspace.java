@@ -28,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -173,7 +173,7 @@ public class PowerBIWorkspace extends Asset
      * @return reference to a PowerBIWorkspace that can be used for defining a relationship to a PowerBIWorkspace
      */
     public static PowerBIWorkspace refByGuid(String guid) {
-        return PowerBIWorkspace.builder().guid(guid).build();
+        return PowerBIWorkspace._internal().guid(guid).build();
     }
 
     /**
@@ -183,7 +183,7 @@ public class PowerBIWorkspace extends Asset
      * @return reference to a PowerBIWorkspace that can be used for defining a relationship to a PowerBIWorkspace
      */
     public static PowerBIWorkspace refByQualifiedName(String qualifiedName) {
-        return PowerBIWorkspace.builder()
+        return PowerBIWorkspace._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -330,7 +330,7 @@ public class PowerBIWorkspace extends Asset
      * @return the minimal request necessary to update the PowerBIWorkspace, as a builder
      */
     public static PowerBIWorkspaceBuilder<?, ?> updater(String qualifiedName, String name) {
-        return PowerBIWorkspace.builder().qualifiedName(qualifiedName).name(name);
+        return PowerBIWorkspace._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -462,7 +462,7 @@ public class PowerBIWorkspace extends Asset
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (PowerBIWorkspace)
-                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -521,7 +521,7 @@ public class PowerBIWorkspace extends Asset
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (PowerBIWorkspace)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

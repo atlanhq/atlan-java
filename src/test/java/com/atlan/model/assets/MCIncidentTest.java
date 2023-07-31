@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class MCIncidentTest {
 
-    private static final MCIncident full = MCIncident.builder()
+    private static final MCIncident full = MCIncident._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

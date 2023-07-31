@@ -30,7 +30,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -210,7 +210,7 @@ public class GCSBucket extends Asset
      * @return reference to a GCSBucket that can be used for defining a relationship to a GCSBucket
      */
     public static GCSBucket refByGuid(String guid) {
-        return GCSBucket.builder().guid(guid).build();
+        return GCSBucket._internal().guid(guid).build();
     }
 
     /**
@@ -220,7 +220,7 @@ public class GCSBucket extends Asset
      * @return reference to a GCSBucket that can be used for defining a relationship to a GCSBucket
      */
     public static GCSBucket refByQualifiedName(String qualifiedName) {
-        return GCSBucket.builder()
+        return GCSBucket._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -366,7 +366,7 @@ public class GCSBucket extends Asset
      * @return the minimal object necessary to create the GCSBucket, as a builder
      */
     public static GCSBucketBuilder<?, ?> creator(String name, String connectionQualifiedName) {
-        return GCSBucket.builder()
+        return GCSBucket._internal()
                 .qualifiedName(generateQualifiedName(name, connectionQualifiedName))
                 .name(name)
                 .connectionQualifiedName(connectionQualifiedName)
@@ -392,7 +392,7 @@ public class GCSBucket extends Asset
      * @return the minimal request necessary to update the GCSBucket, as a builder
      */
     public static GCSBucketBuilder<?, ?> updater(String qualifiedName, String name) {
-        return GCSBucket.builder().qualifiedName(qualifiedName).name(name);
+        return GCSBucket._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -522,7 +522,7 @@ public class GCSBucket extends Asset
     public static GCSBucket updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (GCSBucket) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return (GCSBucket) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -580,7 +580,8 @@ public class GCSBucket extends Asset
     public static GCSBucket updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (GCSBucket) Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+        return (GCSBucket)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

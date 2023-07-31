@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class TableauProjectTest {
 
-    private static final TableauProject full = TableauProject.builder()
+    private static final TableauProject full = TableauProject._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

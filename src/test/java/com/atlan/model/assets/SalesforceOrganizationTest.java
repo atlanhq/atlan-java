@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class SalesforceOrganizationTest {
 
-    private static final SalesforceOrganization full = SalesforceOrganization.builder()
+    private static final SalesforceOrganization full = SalesforceOrganization._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

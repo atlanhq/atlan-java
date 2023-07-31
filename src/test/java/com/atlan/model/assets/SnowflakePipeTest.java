@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class SnowflakePipeTest {
 
-    private static final SnowflakePipe full = SnowflakePipe.builder()
+    private static final SnowflakePipe full = SnowflakePipe._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

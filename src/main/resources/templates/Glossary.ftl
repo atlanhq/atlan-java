@@ -25,7 +25,7 @@
      * @return the minimal object necessary to create the Glossary, as a builder
      */
     public static GlossaryBuilder<?, ?> creator(String name) {
-        return Glossary.builder().qualifiedName(name).name(name);
+        return Glossary._internal().qualifiedName(name).name(name);
     }
 
     /**
@@ -36,7 +36,7 @@
      * @return the minimal object necessary to update the Glossary, as a builder
      */
     public static GlossaryBuilder<?, ?> updater(String guid, String name) {
-        return Glossary.builder().guid(guid).qualifiedName(name).name(name);
+        return Glossary._internal().guid(guid).qualifiedName(name).name(name);
     }
 
     /**
@@ -316,7 +316,7 @@
      */
     public static Glossary removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (Glossary)
-                Asset.removeDescription(client, builder().qualifiedName(qualifiedName).name(name));
+                Asset.removeDescription(client, _internal().qualifiedName(qualifiedName).name(name));
     }
 
     /**
@@ -342,7 +342,7 @@
      */
     public static Glossary removeUserDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (Glossary) Asset.removeUserDescription(
-                client, builder().qualifiedName(qualifiedName).name(name));
+                client, _internal().qualifiedName(qualifiedName).name(name));
     }
 
     /**
@@ -368,7 +368,7 @@
      */
     public static Glossary removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (Glossary)
-                Asset.removeOwners(client, builder().qualifiedName(qualifiedName).name(name));
+                Asset.removeOwners(client, _internal().qualifiedName(qualifiedName).name(name));
     }
 
     /**
@@ -401,7 +401,7 @@
     public static Glossary updateCertificate(
             AtlanClient client, String qualifiedName, String name, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (Glossary) Asset.updateCertificate(client, builder().name(name), TYPE_NAME, qualifiedName, certificate, message);
+        return (Glossary) Asset.updateCertificate(client, _internal().name(name), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -427,7 +427,7 @@
      */
     public static Glossary removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (Glossary)
-                Asset.removeCertificate(client, builder().qualifiedName(qualifiedName).name(name));
+                Asset.removeCertificate(client, _internal().qualifiedName(qualifiedName).name(name));
     }
 
     /**
@@ -463,7 +463,7 @@
             AtlanClient client, String qualifiedName, String name, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (Glossary)
-                Asset.updateAnnouncement(client, builder().name(name), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal().name(name), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -489,6 +489,6 @@
      */
     public static Glossary removeAnnouncement(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (Glossary)
-                Asset.removeAnnouncement(client, builder().qualifiedName(qualifiedName).name(name));
+                Asset.removeAnnouncement(client, _internal().qualifiedName(qualifiedName).name(name));
     }
 </#macro>

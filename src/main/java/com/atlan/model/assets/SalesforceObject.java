@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -154,7 +154,7 @@ public class SalesforceObject extends Asset
      * @return reference to a SalesforceObject that can be used for defining a relationship to a SalesforceObject
      */
     public static SalesforceObject refByGuid(String guid) {
-        return SalesforceObject.builder().guid(guid).build();
+        return SalesforceObject._internal().guid(guid).build();
     }
 
     /**
@@ -164,7 +164,7 @@ public class SalesforceObject extends Asset
      * @return reference to a SalesforceObject that can be used for defining a relationship to a SalesforceObject
      */
     public static SalesforceObject refByQualifiedName(String qualifiedName) {
-        return SalesforceObject.builder()
+        return SalesforceObject._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -311,7 +311,7 @@ public class SalesforceObject extends Asset
      * @return the minimal request necessary to update the SalesforceObject, as a builder
      */
     public static SalesforceObjectBuilder<?, ?> updater(String qualifiedName, String name) {
-        return SalesforceObject.builder().qualifiedName(qualifiedName).name(name);
+        return SalesforceObject._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -443,7 +443,7 @@ public class SalesforceObject extends Asset
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (SalesforceObject)
-                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -502,7 +502,7 @@ public class SalesforceObject extends Asset
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (SalesforceObject)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

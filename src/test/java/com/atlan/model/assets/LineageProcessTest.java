@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class LineageProcessTest {
 
-    private static final LineageProcess full = LineageProcess.builder()
+    private static final LineageProcess full = LineageProcess._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class DbtMetricTest {
 
-    private static final DbtMetric full = DbtMetric.builder()
+    private static final DbtMetric full = DbtMetric._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

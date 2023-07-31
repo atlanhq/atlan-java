@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class TablePartitionTest {
 
-    private static final TablePartition full = TablePartition.builder()
+    private static final TablePartition full = TablePartition._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

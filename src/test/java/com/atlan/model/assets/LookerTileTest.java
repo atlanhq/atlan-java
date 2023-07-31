@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class LookerTileTest {
 
-    private static final LookerTile full = LookerTile.builder()
+    private static final LookerTile full = LookerTile._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

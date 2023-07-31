@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -120,7 +120,7 @@ public class TableauSite extends Asset implements ITableauSite, ITableau, IBI, I
      * @return reference to a TableauSite that can be used for defining a relationship to a TableauSite
      */
     public static TableauSite refByGuid(String guid) {
-        return TableauSite.builder().guid(guid).build();
+        return TableauSite._internal().guid(guid).build();
     }
 
     /**
@@ -130,7 +130,7 @@ public class TableauSite extends Asset implements ITableauSite, ITableau, IBI, I
      * @return reference to a TableauSite that can be used for defining a relationship to a TableauSite
      */
     public static TableauSite refByQualifiedName(String qualifiedName) {
-        return TableauSite.builder()
+        return TableauSite._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -276,7 +276,7 @@ public class TableauSite extends Asset implements ITableauSite, ITableau, IBI, I
      * @return the minimal request necessary to update the TableauSite, as a builder
      */
     public static TableauSiteBuilder<?, ?> updater(String qualifiedName, String name) {
-        return TableauSite.builder().qualifiedName(qualifiedName).name(name);
+        return TableauSite._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -407,7 +407,8 @@ public class TableauSite extends Asset implements ITableauSite, ITableau, IBI, I
     public static TableauSite updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (TableauSite) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return (TableauSite)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -466,7 +467,7 @@ public class TableauSite extends Asset implements ITableauSite, ITableau, IBI, I
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (TableauSite)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

@@ -29,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -203,7 +203,7 @@ public class MCMonitor extends Asset
      * @return reference to a MCMonitor that can be used for defining a relationship to a MCMonitor
      */
     public static MCMonitor refByGuid(String guid) {
-        return MCMonitor.builder().guid(guid).build();
+        return MCMonitor._internal().guid(guid).build();
     }
 
     /**
@@ -213,7 +213,7 @@ public class MCMonitor extends Asset
      * @return reference to a MCMonitor that can be used for defining a relationship to a MCMonitor
      */
     public static MCMonitor refByQualifiedName(String qualifiedName) {
-        return MCMonitor.builder()
+        return MCMonitor._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -359,7 +359,7 @@ public class MCMonitor extends Asset
      * @return the minimal request necessary to update the MCMonitor, as a builder
      */
     public static MCMonitorBuilder<?, ?> updater(String qualifiedName, String name) {
-        return MCMonitor.builder().qualifiedName(qualifiedName).name(name);
+        return MCMonitor._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -489,7 +489,7 @@ public class MCMonitor extends Asset
     public static MCMonitor updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (MCMonitor) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return (MCMonitor) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -547,7 +547,8 @@ public class MCMonitor extends Asset
     public static MCMonitor updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (MCMonitor) Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+        return (MCMonitor)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

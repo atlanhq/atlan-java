@@ -29,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -180,7 +180,7 @@ public class APISpec extends Asset implements IAPISpec, IAPI, ICatalog, IAsset, 
      * @return reference to a APISpec that can be used for defining a relationship to a APISpec
      */
     public static APISpec refByGuid(String guid) {
-        return APISpec.builder().guid(guid).build();
+        return APISpec._internal().guid(guid).build();
     }
 
     /**
@@ -190,7 +190,7 @@ public class APISpec extends Asset implements IAPISpec, IAPI, ICatalog, IAsset, 
      * @return reference to a APISpec that can be used for defining a relationship to a APISpec
      */
     public static APISpec refByQualifiedName(String qualifiedName) {
-        return APISpec.builder()
+        return APISpec._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -336,7 +336,7 @@ public class APISpec extends Asset implements IAPISpec, IAPI, ICatalog, IAsset, 
      * @return the minimal object necessary to create the API spec, as a builder
      */
     public static APISpecBuilder<?, ?> creator(String name, String connectionQualifiedName) {
-        return APISpec.builder()
+        return APISpec._internal()
                 .qualifiedName(connectionQualifiedName + "/" + name)
                 .name(name)
                 .connectionQualifiedName(connectionQualifiedName)
@@ -351,7 +351,7 @@ public class APISpec extends Asset implements IAPISpec, IAPI, ICatalog, IAsset, 
      * @return the minimal request necessary to update the APISpec, as a builder
      */
     public static APISpecBuilder<?, ?> updater(String qualifiedName, String name) {
-        return APISpec.builder().qualifiedName(qualifiedName).name(name);
+        return APISpec._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -481,7 +481,7 @@ public class APISpec extends Asset implements IAPISpec, IAPI, ICatalog, IAsset, 
     public static APISpec updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (APISpec) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return (APISpec) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -539,7 +539,7 @@ public class APISpec extends Asset implements IAPISpec, IAPI, ICatalog, IAsset, 
     public static APISpec updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (APISpec) Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+        return (APISpec) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

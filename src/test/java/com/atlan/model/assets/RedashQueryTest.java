@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class RedashQueryTest {
 
-    private static final RedashQuery full = RedashQuery.builder()
+    private static final RedashQuery full = RedashQuery._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class ProcedureTest {
 
-    private static final Procedure full = Procedure.builder()
+    private static final Procedure full = Procedure._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

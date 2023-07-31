@@ -30,7 +30,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -174,7 +174,7 @@ public class APIPath extends Asset implements IAPIPath, IAPI, ICatalog, IAsset, 
      * @return reference to a APIPath that can be used for defining a relationship to a APIPath
      */
     public static APIPath refByGuid(String guid) {
-        return APIPath.builder().guid(guid).build();
+        return APIPath._internal().guid(guid).build();
     }
 
     /**
@@ -184,7 +184,7 @@ public class APIPath extends Asset implements IAPIPath, IAPI, ICatalog, IAsset, 
      * @return reference to a APIPath that can be used for defining a relationship to a APIPath
      */
     public static APIPath refByQualifiedName(String qualifiedName) {
-        return APIPath.builder()
+        return APIPath._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -332,7 +332,7 @@ public class APIPath extends Asset implements IAPIPath, IAPI, ICatalog, IAsset, 
     public static APIPathBuilder<?, ?> creator(String pathURI, String apiSpecQualifiedName) {
         String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(apiSpecQualifiedName);
         String normalizedURI = pathURI.startsWith("/") ? pathURI : "/" + pathURI;
-        return APIPath.builder()
+        return APIPath._internal()
                 .qualifiedName(apiSpecQualifiedName + normalizedURI)
                 .name(normalizedURI)
                 .apiPathRawURI(normalizedURI)
@@ -349,7 +349,7 @@ public class APIPath extends Asset implements IAPIPath, IAPI, ICatalog, IAsset, 
      * @return the minimal request necessary to update the APIPath, as a builder
      */
     public static APIPathBuilder<?, ?> updater(String qualifiedName, String name) {
-        return APIPath.builder().qualifiedName(qualifiedName).name(name);
+        return APIPath._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -479,7 +479,7 @@ public class APIPath extends Asset implements IAPIPath, IAPI, ICatalog, IAsset, 
     public static APIPath updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (APIPath) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return (APIPath) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -537,7 +537,7 @@ public class APIPath extends Asset implements IAPIPath, IAPI, ICatalog, IAsset, 
     public static APIPath updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (APIPath) Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+        return (APIPath) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

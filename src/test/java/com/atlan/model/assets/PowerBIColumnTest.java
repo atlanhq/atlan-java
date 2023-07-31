@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class PowerBIColumnTest {
 
-    private static final PowerBIColumn full = PowerBIColumn.builder()
+    private static final PowerBIColumn full = PowerBIColumn._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

@@ -7,7 +7,7 @@
      * @return the minimal object necessary to create the workspace, as a builder
      */
     public static PresetWorkspaceBuilder<?, ?> creator(String name, String connectionQualifiedName) {
-        return PresetWorkspace.builder()
+        return PresetWorkspace._internal()
                 .qualifiedName(generateQualifiedName(connectionQualifiedName, name))
                 .name(name)
                 .connectionQualifiedName(connectionQualifiedName)
@@ -22,7 +22,7 @@
      * @return the minimal request necessary to update the PresetWorkspace, as a builder
      */
     public static PresetWorkspaceBuilder<?, ?> updater(String qualifiedName, String name) {
-        return PresetWorkspace.builder().qualifiedName(qualifiedName).name(name);
+        return PresetWorkspace._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**

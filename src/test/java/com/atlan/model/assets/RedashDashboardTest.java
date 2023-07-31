@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class RedashDashboardTest {
 
-    private static final RedashDashboard full = RedashDashboard.builder()
+    private static final RedashDashboard full = RedashDashboard._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

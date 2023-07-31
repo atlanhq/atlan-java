@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class DbtColumnProcessTest {
 
-    private static final DbtColumnProcess full = DbtColumnProcess.builder()
+    private static final DbtColumnProcess full = DbtColumnProcess._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

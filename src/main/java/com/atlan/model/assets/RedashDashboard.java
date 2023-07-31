@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -123,7 +123,7 @@ public class RedashDashboard extends Asset implements IRedashDashboard, IRedash,
      * @return reference to a RedashDashboard that can be used for defining a relationship to a RedashDashboard
      */
     public static RedashDashboard refByGuid(String guid) {
-        return RedashDashboard.builder().guid(guid).build();
+        return RedashDashboard._internal().guid(guid).build();
     }
 
     /**
@@ -133,7 +133,7 @@ public class RedashDashboard extends Asset implements IRedashDashboard, IRedash,
      * @return reference to a RedashDashboard that can be used for defining a relationship to a RedashDashboard
      */
     public static RedashDashboard refByQualifiedName(String qualifiedName) {
-        return RedashDashboard.builder()
+        return RedashDashboard._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -280,7 +280,7 @@ public class RedashDashboard extends Asset implements IRedashDashboard, IRedash,
      * @return the minimal request necessary to update the RedashDashboard, as a builder
      */
     public static RedashDashboardBuilder<?, ?> updater(String qualifiedName, String name) {
-        return RedashDashboard.builder().qualifiedName(qualifiedName).name(name);
+        return RedashDashboard._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -412,7 +412,7 @@ public class RedashDashboard extends Asset implements IRedashDashboard, IRedash,
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (RedashDashboard)
-                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -471,7 +471,7 @@ public class RedashDashboard extends Asset implements IRedashDashboard, IRedash,
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (RedashDashboard)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class MetabaseDashboardTest {
 
-    private static final MetabaseDashboard full = MetabaseDashboard.builder()
+    private static final MetabaseDashboard full = MetabaseDashboard._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

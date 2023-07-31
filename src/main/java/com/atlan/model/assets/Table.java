@@ -31,7 +31,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -289,7 +289,7 @@ public class Table extends Asset implements ITable, ISQL, ICatalog, IAsset, IRef
      * @return reference to a Table that can be used for defining a relationship to a Table
      */
     public static Table refByGuid(String guid) {
-        return Table.builder().guid(guid).build();
+        return Table._internal().guid(guid).build();
     }
 
     /**
@@ -299,7 +299,7 @@ public class Table extends Asset implements ITable, ISQL, ICatalog, IAsset, IRef
      * @return reference to a Table that can be used for defining a relationship to a Table
      */
     public static Table refByQualifiedName(String qualifiedName) {
-        return Table.builder()
+        return Table._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -451,7 +451,7 @@ public class Table extends Asset implements ITable, ISQL, ICatalog, IAsset, IRef
         String databaseQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(schemaQualifiedName);
         String databaseName = StringUtils.getNameFromQualifiedName(databaseQualifiedName);
         String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(databaseQualifiedName);
-        return Table.builder()
+        return Table._internal()
                 .name(name)
                 .qualifiedName(generateQualifiedName(name, schemaQualifiedName))
                 .connectorType(connectorType)
@@ -471,7 +471,7 @@ public class Table extends Asset implements ITable, ISQL, ICatalog, IAsset, IRef
      * @return the minimal request necessary to update the Table, as a builder
      */
     public static TableBuilder<?, ?> updater(String qualifiedName, String name) {
-        return Table.builder().qualifiedName(qualifiedName).name(name);
+        return Table._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -611,7 +611,7 @@ public class Table extends Asset implements ITable, ISQL, ICatalog, IAsset, IRef
     public static Table updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (Table) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return (Table) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -668,7 +668,7 @@ public class Table extends Asset implements ITable, ISQL, ICatalog, IAsset, IRef
     public static Table updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (Table) Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+        return (Table) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

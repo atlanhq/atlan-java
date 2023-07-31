@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -160,7 +160,7 @@ public class MCIncident extends Asset
      * @return reference to a MCIncident that can be used for defining a relationship to a MCIncident
      */
     public static MCIncident refByGuid(String guid) {
-        return MCIncident.builder().guid(guid).build();
+        return MCIncident._internal().guid(guid).build();
     }
 
     /**
@@ -170,7 +170,7 @@ public class MCIncident extends Asset
      * @return reference to a MCIncident that can be used for defining a relationship to a MCIncident
      */
     public static MCIncident refByQualifiedName(String qualifiedName) {
-        return MCIncident.builder()
+        return MCIncident._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -316,7 +316,7 @@ public class MCIncident extends Asset
      * @return the minimal request necessary to update the MCIncident, as a builder
      */
     public static MCIncidentBuilder<?, ?> updater(String qualifiedName, String name) {
-        return MCIncident.builder().qualifiedName(qualifiedName).name(name);
+        return MCIncident._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -446,7 +446,8 @@ public class MCIncident extends Asset
     public static MCIncident updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (MCIncident) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return (MCIncident)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -504,7 +505,8 @@ public class MCIncident extends Asset
     public static MCIncident updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (MCIncident) Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+        return (MCIncident)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

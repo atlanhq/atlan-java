@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class SalesforceReportTest {
 
-    private static final SalesforceReport full = SalesforceReport.builder()
+    private static final SalesforceReport full = SalesforceReport._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -150,7 +150,7 @@ public class MetabaseCollection extends Asset
      * @return reference to a MetabaseCollection that can be used for defining a relationship to a MetabaseCollection
      */
     public static MetabaseCollection refByGuid(String guid) {
-        return MetabaseCollection.builder().guid(guid).build();
+        return MetabaseCollection._internal().guid(guid).build();
     }
 
     /**
@@ -160,7 +160,7 @@ public class MetabaseCollection extends Asset
      * @return reference to a MetabaseCollection that can be used for defining a relationship to a MetabaseCollection
      */
     public static MetabaseCollection refByQualifiedName(String qualifiedName) {
-        return MetabaseCollection.builder()
+        return MetabaseCollection._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -307,7 +307,7 @@ public class MetabaseCollection extends Asset
      * @return the minimal request necessary to update the MetabaseCollection, as a builder
      */
     public static MetabaseCollectionBuilder<?, ?> updater(String qualifiedName, String name) {
-        return MetabaseCollection.builder().qualifiedName(qualifiedName).name(name);
+        return MetabaseCollection._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -439,7 +439,7 @@ public class MetabaseCollection extends Asset
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (MetabaseCollection)
-                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -498,7 +498,7 @@ public class MetabaseCollection extends Asset
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (MetabaseCollection)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

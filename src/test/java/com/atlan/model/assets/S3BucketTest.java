@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class S3BucketTest {
 
-    private static final S3Bucket full = S3Bucket.builder()
+    private static final S3Bucket full = S3Bucket._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

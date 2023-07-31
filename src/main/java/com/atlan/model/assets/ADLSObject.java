@@ -36,7 +36,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -220,7 +220,7 @@ public class ADLSObject extends Asset
      * @return reference to a ADLSObject that can be used for defining a relationship to a ADLSObject
      */
     public static ADLSObject refByGuid(String guid) {
-        return ADLSObject.builder().guid(guid).build();
+        return ADLSObject._internal().guid(guid).build();
     }
 
     /**
@@ -230,7 +230,7 @@ public class ADLSObject extends Asset
      * @return reference to a ADLSObject that can be used for defining a relationship to a ADLSObject
      */
     public static ADLSObject refByQualifiedName(String qualifiedName) {
-        return ADLSObject.builder()
+        return ADLSObject._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -378,7 +378,7 @@ public class ADLSObject extends Asset
     public static ADLSObjectBuilder<?, ?> creator(String name, String containerQualifiedName) {
         String accountQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(containerQualifiedName);
         String connectionQualifiedName = StringUtils.getConnectionQualifiedName(containerQualifiedName);
-        return ADLSObject.builder()
+        return ADLSObject._internal()
                 .qualifiedName(generateQualifiedName(name, containerQualifiedName))
                 .name(name)
                 .adlsContainer(ADLSContainer.refByQualifiedName(containerQualifiedName))
@@ -406,7 +406,7 @@ public class ADLSObject extends Asset
      * @return the minimal request necessary to update the ADLSObject, as a builder
      */
     public static ADLSObjectBuilder<?, ?> updater(String qualifiedName, String name) {
-        return ADLSObject.builder().qualifiedName(qualifiedName).name(name);
+        return ADLSObject._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -536,7 +536,8 @@ public class ADLSObject extends Asset
     public static ADLSObject updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (ADLSObject) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return (ADLSObject)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -594,7 +595,8 @@ public class ADLSObject extends Asset
     public static ADLSObject updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (ADLSObject) Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+        return (ADLSObject)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

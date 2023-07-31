@@ -29,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -225,7 +225,7 @@ public class SnowflakeStream extends Asset implements ISnowflakeStream, ISQL, IC
      * @return reference to a SnowflakeStream that can be used for defining a relationship to a SnowflakeStream
      */
     public static SnowflakeStream refByGuid(String guid) {
-        return SnowflakeStream.builder().guid(guid).build();
+        return SnowflakeStream._internal().guid(guid).build();
     }
 
     /**
@@ -235,7 +235,7 @@ public class SnowflakeStream extends Asset implements ISnowflakeStream, ISQL, IC
      * @return reference to a SnowflakeStream that can be used for defining a relationship to a SnowflakeStream
      */
     public static SnowflakeStream refByQualifiedName(String qualifiedName) {
-        return SnowflakeStream.builder()
+        return SnowflakeStream._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -382,7 +382,7 @@ public class SnowflakeStream extends Asset implements ISnowflakeStream, ISQL, IC
      * @return the minimal request necessary to update the SnowflakeStream, as a builder
      */
     public static SnowflakeStreamBuilder<?, ?> updater(String qualifiedName, String name) {
-        return SnowflakeStream.builder().qualifiedName(qualifiedName).name(name);
+        return SnowflakeStream._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -514,7 +514,7 @@ public class SnowflakeStream extends Asset implements ISnowflakeStream, ISQL, IC
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (SnowflakeStream)
-                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -573,7 +573,7 @@ public class SnowflakeStream extends Asset implements ISnowflakeStream, ISQL, IC
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (SnowflakeStream)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

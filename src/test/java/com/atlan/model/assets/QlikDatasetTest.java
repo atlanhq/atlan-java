@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class QlikDatasetTest {
 
-    private static final QlikDataset full = QlikDataset.builder()
+    private static final QlikDataset full = QlikDataset._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

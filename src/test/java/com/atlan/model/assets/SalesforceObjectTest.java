@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class SalesforceObjectTest {
 
-    private static final SalesforceObject full = SalesforceObject.builder()
+    private static final SalesforceObject full = SalesforceObject._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class LookerFolderTest {
 
-    private static final LookerFolder full = LookerFolder.builder()
+    private static final LookerFolder full = LookerFolder._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

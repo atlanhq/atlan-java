@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -159,7 +159,7 @@ public class ModeChart extends Asset implements IModeChart, IMode, IBI, ICatalog
      * @return reference to a ModeChart that can be used for defining a relationship to a ModeChart
      */
     public static ModeChart refByGuid(String guid) {
-        return ModeChart.builder().guid(guid).build();
+        return ModeChart._internal().guid(guid).build();
     }
 
     /**
@@ -169,7 +169,7 @@ public class ModeChart extends Asset implements IModeChart, IMode, IBI, ICatalog
      * @return reference to a ModeChart that can be used for defining a relationship to a ModeChart
      */
     public static ModeChart refByQualifiedName(String qualifiedName) {
-        return ModeChart.builder()
+        return ModeChart._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -315,7 +315,7 @@ public class ModeChart extends Asset implements IModeChart, IMode, IBI, ICatalog
      * @return the minimal request necessary to update the ModeChart, as a builder
      */
     public static ModeChartBuilder<?, ?> updater(String qualifiedName, String name) {
-        return ModeChart.builder().qualifiedName(qualifiedName).name(name);
+        return ModeChart._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -445,7 +445,7 @@ public class ModeChart extends Asset implements IModeChart, IMode, IBI, ICatalog
     public static ModeChart updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (ModeChart) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return (ModeChart) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -503,7 +503,8 @@ public class ModeChart extends Asset implements IModeChart, IMode, IBI, ICatalog
     public static ModeChart updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (ModeChart) Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+        return (ModeChart)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

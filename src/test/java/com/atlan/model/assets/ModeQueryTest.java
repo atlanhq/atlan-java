@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class ModeQueryTest {
 
-    private static final ModeQuery full = ModeQuery.builder()
+    private static final ModeQuery full = ModeQuery._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

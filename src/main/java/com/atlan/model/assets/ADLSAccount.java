@@ -36,7 +36,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -191,7 +191,7 @@ public class ADLSAccount extends Asset
      * @return reference to a ADLSAccount that can be used for defining a relationship to a ADLSAccount
      */
     public static ADLSAccount refByGuid(String guid) {
-        return ADLSAccount.builder().guid(guid).build();
+        return ADLSAccount._internal().guid(guid).build();
     }
 
     /**
@@ -201,7 +201,7 @@ public class ADLSAccount extends Asset
      * @return reference to a ADLSAccount that can be used for defining a relationship to a ADLSAccount
      */
     public static ADLSAccount refByQualifiedName(String qualifiedName) {
-        return ADLSAccount.builder()
+        return ADLSAccount._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -347,7 +347,7 @@ public class ADLSAccount extends Asset
      * @return the minimal object necessary to create the ADLSAccount, as a builder
      */
     public static ADLSAccountBuilder<?, ?> creator(String name, String connectionQualifiedName) {
-        return ADLSAccount.builder()
+        return ADLSAccount._internal()
                 .qualifiedName(generateQualifiedName(name, connectionQualifiedName))
                 .name(name)
                 .connectionQualifiedName(connectionQualifiedName)
@@ -373,7 +373,7 @@ public class ADLSAccount extends Asset
      * @return the minimal request necessary to update the ADLSAccount, as a builder
      */
     public static ADLSAccountBuilder<?, ?> updater(String qualifiedName, String name) {
-        return ADLSAccount.builder().qualifiedName(qualifiedName).name(name);
+        return ADLSAccount._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -504,7 +504,8 @@ public class ADLSAccount extends Asset
     public static ADLSAccount updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (ADLSAccount) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return (ADLSAccount)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -563,7 +564,7 @@ public class ADLSAccount extends Asset
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (ADLSAccount)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

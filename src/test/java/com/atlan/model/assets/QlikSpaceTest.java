@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class QlikSpaceTest {
 
-    private static final QlikSpace full = QlikSpace.builder()
+    private static final QlikSpace full = QlikSpace._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

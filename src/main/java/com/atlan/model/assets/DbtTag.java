@@ -29,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -209,7 +209,7 @@ public class DbtTag extends Asset implements IDbtTag, IDbt, ITag, ICatalog, IAss
      * @return reference to a DbtTag that can be used for defining a relationship to a DbtTag
      */
     public static DbtTag refByGuid(String guid) {
-        return DbtTag.builder().guid(guid).build();
+        return DbtTag._internal().guid(guid).build();
     }
 
     /**
@@ -219,7 +219,7 @@ public class DbtTag extends Asset implements IDbtTag, IDbt, ITag, ICatalog, IAss
      * @return reference to a DbtTag that can be used for defining a relationship to a DbtTag
      */
     public static DbtTag refByQualifiedName(String qualifiedName) {
-        return DbtTag.builder()
+        return DbtTag._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -365,7 +365,7 @@ public class DbtTag extends Asset implements IDbtTag, IDbt, ITag, ICatalog, IAss
      * @return the minimal request necessary to update the DbtTag, as a builder
      */
     public static DbtTagBuilder<?, ?> updater(String qualifiedName, String name) {
-        return DbtTag.builder().qualifiedName(qualifiedName).name(name);
+        return DbtTag._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -495,7 +495,7 @@ public class DbtTag extends Asset implements IDbtTag, IDbt, ITag, ICatalog, IAss
     public static DbtTag updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (DbtTag) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return (DbtTag) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -553,7 +553,7 @@ public class DbtTag extends Asset implements IDbtTag, IDbt, ITag, ICatalog, IAss
     public static DbtTag updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (DbtTag) Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+        return (DbtTag) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

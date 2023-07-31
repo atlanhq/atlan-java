@@ -28,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -153,7 +153,7 @@ public class TableauFlow extends Asset implements ITableauFlow, ITableau, IBI, I
      * @return reference to a TableauFlow that can be used for defining a relationship to a TableauFlow
      */
     public static TableauFlow refByGuid(String guid) {
-        return TableauFlow.builder().guid(guid).build();
+        return TableauFlow._internal().guid(guid).build();
     }
 
     /**
@@ -163,7 +163,7 @@ public class TableauFlow extends Asset implements ITableauFlow, ITableau, IBI, I
      * @return reference to a TableauFlow that can be used for defining a relationship to a TableauFlow
      */
     public static TableauFlow refByQualifiedName(String qualifiedName) {
-        return TableauFlow.builder()
+        return TableauFlow._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -309,7 +309,7 @@ public class TableauFlow extends Asset implements ITableauFlow, ITableau, IBI, I
      * @return the minimal request necessary to update the TableauFlow, as a builder
      */
     public static TableauFlowBuilder<?, ?> updater(String qualifiedName, String name) {
-        return TableauFlow.builder().qualifiedName(qualifiedName).name(name);
+        return TableauFlow._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -440,7 +440,8 @@ public class TableauFlow extends Asset implements ITableauFlow, ITableau, IBI, I
     public static TableauFlow updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (TableauFlow) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return (TableauFlow)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -499,7 +500,7 @@ public class TableauFlow extends Asset implements ITableauFlow, ITableau, IBI, I
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (TableauFlow)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

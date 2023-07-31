@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class QuickSightDatasetFieldTest {
 
-    private static final QuickSightDatasetField full = QuickSightDatasetField.builder()
+    private static final QuickSightDatasetField full = QuickSightDatasetField._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

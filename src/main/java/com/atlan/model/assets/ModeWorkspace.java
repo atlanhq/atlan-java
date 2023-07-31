@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -160,7 +160,7 @@ public class ModeWorkspace extends Asset implements IModeWorkspace, IMode, IBI, 
      * @return reference to a ModeWorkspace that can be used for defining a relationship to a ModeWorkspace
      */
     public static ModeWorkspace refByGuid(String guid) {
-        return ModeWorkspace.builder().guid(guid).build();
+        return ModeWorkspace._internal().guid(guid).build();
     }
 
     /**
@@ -170,7 +170,7 @@ public class ModeWorkspace extends Asset implements IModeWorkspace, IMode, IBI, 
      * @return reference to a ModeWorkspace that can be used for defining a relationship to a ModeWorkspace
      */
     public static ModeWorkspace refByQualifiedName(String qualifiedName) {
-        return ModeWorkspace.builder()
+        return ModeWorkspace._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -317,7 +317,7 @@ public class ModeWorkspace extends Asset implements IModeWorkspace, IMode, IBI, 
      * @return the minimal request necessary to update the ModeWorkspace, as a builder
      */
     public static ModeWorkspaceBuilder<?, ?> updater(String qualifiedName, String name) {
-        return ModeWorkspace.builder().qualifiedName(qualifiedName).name(name);
+        return ModeWorkspace._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -449,7 +449,7 @@ public class ModeWorkspace extends Asset implements IModeWorkspace, IMode, IBI, 
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (ModeWorkspace)
-                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -508,7 +508,7 @@ public class ModeWorkspace extends Asset implements IModeWorkspace, IMode, IBI, 
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (ModeWorkspace)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

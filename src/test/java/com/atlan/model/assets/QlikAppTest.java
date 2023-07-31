@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class QlikAppTest {
 
-    private static final QlikApp full = QlikApp.builder()
+    private static final QlikApp full = QlikApp._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

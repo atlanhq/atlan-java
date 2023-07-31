@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -167,7 +167,7 @@ public class QlikChart extends Asset implements IQlikChart, IQlik, IBI, ICatalog
      * @return reference to a QlikChart that can be used for defining a relationship to a QlikChart
      */
     public static QlikChart refByGuid(String guid) {
-        return QlikChart.builder().guid(guid).build();
+        return QlikChart._internal().guid(guid).build();
     }
 
     /**
@@ -177,7 +177,7 @@ public class QlikChart extends Asset implements IQlikChart, IQlik, IBI, ICatalog
      * @return reference to a QlikChart that can be used for defining a relationship to a QlikChart
      */
     public static QlikChart refByQualifiedName(String qualifiedName) {
-        return QlikChart.builder()
+        return QlikChart._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
@@ -323,7 +323,7 @@ public class QlikChart extends Asset implements IQlikChart, IQlik, IBI, ICatalog
      * @return the minimal request necessary to update the QlikChart, as a builder
      */
     public static QlikChartBuilder<?, ?> updater(String qualifiedName, String name) {
-        return QlikChart.builder().qualifiedName(qualifiedName).name(name);
+        return QlikChart._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -453,7 +453,7 @@ public class QlikChart extends Asset implements IQlikChart, IQlik, IBI, ICatalog
     public static QlikChart updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (QlikChart) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return (QlikChart) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -511,7 +511,8 @@ public class QlikChart extends Asset implements IQlikChart, IQlik, IBI, ICatalog
     public static QlikChart updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (QlikChart) Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+        return (QlikChart)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

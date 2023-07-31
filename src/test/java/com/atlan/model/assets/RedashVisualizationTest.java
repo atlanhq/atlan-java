@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class RedashVisualizationTest {
 
-    private static final RedashVisualization full = RedashVisualization.builder()
+    private static final RedashVisualization full = RedashVisualization._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

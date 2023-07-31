@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class LookerQueryTest {
 
-    private static final LookerQuery full = LookerQuery.builder()
+    private static final LookerQuery full = LookerQuery._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)

@@ -72,7 +72,7 @@
             List<String> adminUsers)
             throws AtlanException {
         boolean adminFound = false;
-        ConnectionBuilder<?, ?> builder = Connection.builder()
+        ConnectionBuilder<?, ?> builder = Connection._internal()
                 .name(name)
                 .qualifiedName(generateQualifiedName(connectorType.getValue()))
                 .category(connectorType.getCategory())
@@ -260,7 +260,7 @@
      * @return the minimal request necessary to update the Connection, as a builder
      */
     public static ConnectionBuilder<?, ?> updater(String qualifiedName, String name) {
-        return Connection.builder().qualifiedName(qualifiedName).name(name);
+        return Connection._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**

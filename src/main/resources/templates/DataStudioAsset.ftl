@@ -9,7 +9,7 @@
      */
     public static DataStudioAssetBuilder<?, ?> creator(
             String name, String connectionQualifiedName, GoogleDataStudioAssetType assetType) {
-        return DataStudioAsset.builder()
+        return DataStudioAsset._internal()
                 .qualifiedName(connectionQualifiedName + "/" + name)
                 .name(name)
                 .connectionQualifiedName(connectionQualifiedName)
@@ -25,7 +25,7 @@
      * @return the minimal request necessary to update the DataStudioAsset, as a builder
      */
     public static DataStudioAssetBuilder<?, ?> updater(String qualifiedName, String name) {
-        return DataStudioAsset.builder().qualifiedName(qualifiedName).name(name);
+        return DataStudioAsset._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**

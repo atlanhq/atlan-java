@@ -6,7 +6,7 @@
      * @return the minimal request necessary to create the Persona, as a builder
      */
     public static PersonaBuilder<?, ?> creator(String name) {
-        return Persona.builder()
+        return Persona._internal()
                 .qualifiedName(name)
                 .name(name)
                 .displayName(name)
@@ -23,7 +23,7 @@
      * @return the minimal request necessary to update the Persona, as a builder
      */
     public static PersonaBuilder<?, ?> updater(String qualifiedName, String name, boolean isEnabled) {
-        return Persona.builder().qualifiedName(qualifiedName).name(name).isAccessControlEnabled(isEnabled);
+        return Persona._internal().qualifiedName(qualifiedName).name(name).isAccessControlEnabled(isEnabled);
     }
 
     /**
