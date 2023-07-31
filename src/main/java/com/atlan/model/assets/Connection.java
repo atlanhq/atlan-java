@@ -227,12 +227,57 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
     }
 
     /**
+     * Retrieves a Connection by one of its identifiers, complete with all of its relationships.
+     *
+     * @param id of the Connection to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full Connection, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Connection does not exist or the provided GUID is not a Connection
+     */
+    @JsonIgnore
+    public static Connection get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
+    }
+
+    /**
+     * Retrieves a Connection by one of its identifiers, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the Connection to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full Connection, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Connection does not exist or the provided GUID is not a Connection
+     */
+    @JsonIgnore
+    public static Connection get(AtlanClient client, String id) throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (id.startsWith("default")) {
+            Asset asset = Asset.retrieveFull(client, TYPE_NAME, id);
+            if (asset instanceof Connection) {
+                return (Connection) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "Connection");
+            }
+        } else {
+            Asset asset = Asset.retrieveFull(client, id);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof Connection) {
+                return (Connection) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "Connection");
+            }
+        }
+    }
+
+    /**
      * Retrieves a Connection by its GUID, complete with all of its relationships.
      *
      * @param guid of the Connection to retrieve
      * @return the requested full Connection, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Connection does not exist or the provided GUID is not a Connection
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static Connection retrieveByGuid(String guid) throws AtlanException {
         return retrieveByGuid(Atlan.getDefaultClient(), guid);
     }
@@ -244,7 +289,9 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
      * @param guid of the Connection to retrieve
      * @return the requested full Connection, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Connection does not exist or the provided GUID is not a Connection
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static Connection retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
         Asset asset = Asset.retrieveFull(client, guid);
         if (asset == null) {
@@ -262,7 +309,9 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
      * @param qualifiedName of the Connection to retrieve
      * @return the requested full Connection, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Connection does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static Connection retrieveByQualifiedName(String qualifiedName) throws AtlanException {
         return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
     }
@@ -274,7 +323,9 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
      * @param qualifiedName of the Connection to retrieve
      * @return the requested full Connection, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Connection does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static Connection retrieveByQualifiedName(AtlanClient client, String qualifiedName) throws AtlanException {
         Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
         if (asset instanceof Connection) {

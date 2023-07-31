@@ -19,6 +19,7 @@ import com.atlan.model.search.IndexSearchDSL;
 import com.atlan.model.search.IndexSearchRequest;
 import com.atlan.model.search.IndexSearchResponse;
 import com.atlan.util.QueryFactory;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -162,12 +163,57 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
     }
 
     /**
+     * Retrieves a GlossaryCategory by one of its identifiers, complete with all of its relationships.
+     *
+     * @param id of the GlossaryCategory to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full GlossaryCategory, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the GlossaryCategory does not exist or the provided GUID is not a GlossaryCategory
+     */
+    @JsonIgnore
+    public static GlossaryCategory get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
+    }
+
+    /**
+     * Retrieves a GlossaryCategory by one of its identifiers, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the GlossaryCategory to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full GlossaryCategory, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the GlossaryCategory does not exist or the provided GUID is not a GlossaryCategory
+     */
+    @JsonIgnore
+    public static GlossaryCategory get(AtlanClient client, String id) throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (id.startsWith("default")) {
+            Asset asset = Asset.retrieveFull(client, TYPE_NAME, id);
+            if (asset instanceof GlossaryCategory) {
+                return (GlossaryCategory) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "GlossaryCategory");
+            }
+        } else {
+            Asset asset = Asset.retrieveFull(client, id);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof GlossaryCategory) {
+                return (GlossaryCategory) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "GlossaryCategory");
+            }
+        }
+    }
+
+    /**
      * Retrieves a GlossaryCategory by its GUID, complete with all of its relationships.
      *
      * @param guid of the GlossaryCategory to retrieve
      * @return the requested full GlossaryCategory, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the GlossaryCategory does not exist or the provided GUID is not a GlossaryCategory
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static GlossaryCategory retrieveByGuid(String guid) throws AtlanException {
         return retrieveByGuid(Atlan.getDefaultClient(), guid);
     }
@@ -179,7 +225,9 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
      * @param guid of the GlossaryCategory to retrieve
      * @return the requested full GlossaryCategory, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the GlossaryCategory does not exist or the provided GUID is not a GlossaryCategory
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static GlossaryCategory retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
         Asset asset = Asset.retrieveFull(client, guid);
         if (asset == null) {
@@ -197,7 +245,9 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
      * @param qualifiedName of the GlossaryCategory to retrieve
      * @return the requested full GlossaryCategory, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the GlossaryCategory does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static GlossaryCategory retrieveByQualifiedName(String qualifiedName) throws AtlanException {
         return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
     }
@@ -209,7 +259,9 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
      * @param qualifiedName of the GlossaryCategory to retrieve
      * @return the requested full GlossaryCategory, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the GlossaryCategory does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static GlossaryCategory retrieveByQualifiedName(AtlanClient client, String qualifiedName)
             throws AtlanException {
         Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);

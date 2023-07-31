@@ -14,6 +14,7 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.PowerBIEndorsementType;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.QueryFactory;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
@@ -166,12 +167,57 @@ public class PowerBIDataflow extends Asset
     }
 
     /**
+     * Retrieves a PowerBIDataflow by one of its identifiers, complete with all of its relationships.
+     *
+     * @param id of the PowerBIDataflow to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full PowerBIDataflow, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBIDataflow does not exist or the provided GUID is not a PowerBIDataflow
+     */
+    @JsonIgnore
+    public static PowerBIDataflow get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
+    }
+
+    /**
+     * Retrieves a PowerBIDataflow by one of its identifiers, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the PowerBIDataflow to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full PowerBIDataflow, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBIDataflow does not exist or the provided GUID is not a PowerBIDataflow
+     */
+    @JsonIgnore
+    public static PowerBIDataflow get(AtlanClient client, String id) throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (id.startsWith("default")) {
+            Asset asset = Asset.retrieveFull(client, TYPE_NAME, id);
+            if (asset instanceof PowerBIDataflow) {
+                return (PowerBIDataflow) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "PowerBIDataflow");
+            }
+        } else {
+            Asset asset = Asset.retrieveFull(client, id);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof PowerBIDataflow) {
+                return (PowerBIDataflow) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "PowerBIDataflow");
+            }
+        }
+    }
+
+    /**
      * Retrieves a PowerBIDataflow by its GUID, complete with all of its relationships.
      *
      * @param guid of the PowerBIDataflow to retrieve
      * @return the requested full PowerBIDataflow, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBIDataflow does not exist or the provided GUID is not a PowerBIDataflow
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static PowerBIDataflow retrieveByGuid(String guid) throws AtlanException {
         return retrieveByGuid(Atlan.getDefaultClient(), guid);
     }
@@ -183,7 +229,9 @@ public class PowerBIDataflow extends Asset
      * @param guid of the PowerBIDataflow to retrieve
      * @return the requested full PowerBIDataflow, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBIDataflow does not exist or the provided GUID is not a PowerBIDataflow
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static PowerBIDataflow retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
         Asset asset = Asset.retrieveFull(client, guid);
         if (asset == null) {
@@ -201,7 +249,9 @@ public class PowerBIDataflow extends Asset
      * @param qualifiedName of the PowerBIDataflow to retrieve
      * @return the requested full PowerBIDataflow, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBIDataflow does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static PowerBIDataflow retrieveByQualifiedName(String qualifiedName) throws AtlanException {
         return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
     }
@@ -213,7 +263,9 @@ public class PowerBIDataflow extends Asset
      * @param qualifiedName of the PowerBIDataflow to retrieve
      * @return the requested full PowerBIDataflow, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBIDataflow does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static PowerBIDataflow retrieveByQualifiedName(AtlanClient client, String qualifiedName)
             throws AtlanException {
         Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);

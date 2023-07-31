@@ -13,6 +13,7 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.QueryFactory;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -169,12 +170,57 @@ public class TableauFlow extends Asset implements ITableauFlow, ITableau, IBI, I
     }
 
     /**
+     * Retrieves a TableauFlow by one of its identifiers, complete with all of its relationships.
+     *
+     * @param id of the TableauFlow to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full TableauFlow, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TableauFlow does not exist or the provided GUID is not a TableauFlow
+     */
+    @JsonIgnore
+    public static TableauFlow get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
+    }
+
+    /**
+     * Retrieves a TableauFlow by one of its identifiers, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the TableauFlow to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full TableauFlow, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TableauFlow does not exist or the provided GUID is not a TableauFlow
+     */
+    @JsonIgnore
+    public static TableauFlow get(AtlanClient client, String id) throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (id.startsWith("default")) {
+            Asset asset = Asset.retrieveFull(client, TYPE_NAME, id);
+            if (asset instanceof TableauFlow) {
+                return (TableauFlow) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "TableauFlow");
+            }
+        } else {
+            Asset asset = Asset.retrieveFull(client, id);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof TableauFlow) {
+                return (TableauFlow) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "TableauFlow");
+            }
+        }
+    }
+
+    /**
      * Retrieves a TableauFlow by its GUID, complete with all of its relationships.
      *
      * @param guid of the TableauFlow to retrieve
      * @return the requested full TableauFlow, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TableauFlow does not exist or the provided GUID is not a TableauFlow
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static TableauFlow retrieveByGuid(String guid) throws AtlanException {
         return retrieveByGuid(Atlan.getDefaultClient(), guid);
     }
@@ -186,7 +232,9 @@ public class TableauFlow extends Asset implements ITableauFlow, ITableau, IBI, I
      * @param guid of the TableauFlow to retrieve
      * @return the requested full TableauFlow, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TableauFlow does not exist or the provided GUID is not a TableauFlow
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static TableauFlow retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
         Asset asset = Asset.retrieveFull(client, guid);
         if (asset == null) {
@@ -204,7 +252,9 @@ public class TableauFlow extends Asset implements ITableauFlow, ITableau, IBI, I
      * @param qualifiedName of the TableauFlow to retrieve
      * @return the requested full TableauFlow, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TableauFlow does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static TableauFlow retrieveByQualifiedName(String qualifiedName) throws AtlanException {
         return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
     }
@@ -216,7 +266,9 @@ public class TableauFlow extends Asset implements ITableauFlow, ITableau, IBI, I
      * @param qualifiedName of the TableauFlow to retrieve
      * @return the requested full TableauFlow, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TableauFlow does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static TableauFlow retrieveByQualifiedName(AtlanClient client, String qualifiedName) throws AtlanException {
         Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
         if (asset instanceof TableauFlow) {

@@ -17,6 +17,7 @@ import com.atlan.model.structs.GoogleLabel;
 import com.atlan.model.structs.GoogleTag;
 import com.atlan.util.QueryFactory;
 import com.atlan.util.StringUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
@@ -258,12 +259,57 @@ public class GCSObject extends Asset
     }
 
     /**
+     * Retrieves a GCSObject by one of its identifiers, complete with all of its relationships.
+     *
+     * @param id of the GCSObject to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full GCSObject, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the GCSObject does not exist or the provided GUID is not a GCSObject
+     */
+    @JsonIgnore
+    public static GCSObject get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
+    }
+
+    /**
+     * Retrieves a GCSObject by one of its identifiers, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the GCSObject to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full GCSObject, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the GCSObject does not exist or the provided GUID is not a GCSObject
+     */
+    @JsonIgnore
+    public static GCSObject get(AtlanClient client, String id) throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (id.startsWith("default")) {
+            Asset asset = Asset.retrieveFull(client, TYPE_NAME, id);
+            if (asset instanceof GCSObject) {
+                return (GCSObject) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "GCSObject");
+            }
+        } else {
+            Asset asset = Asset.retrieveFull(client, id);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof GCSObject) {
+                return (GCSObject) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "GCSObject");
+            }
+        }
+    }
+
+    /**
      * Retrieves a GCSObject by its GUID, complete with all of its relationships.
      *
      * @param guid of the GCSObject to retrieve
      * @return the requested full GCSObject, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the GCSObject does not exist or the provided GUID is not a GCSObject
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static GCSObject retrieveByGuid(String guid) throws AtlanException {
         return retrieveByGuid(Atlan.getDefaultClient(), guid);
     }
@@ -275,7 +321,9 @@ public class GCSObject extends Asset
      * @param guid of the GCSObject to retrieve
      * @return the requested full GCSObject, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the GCSObject does not exist or the provided GUID is not a GCSObject
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static GCSObject retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
         Asset asset = Asset.retrieveFull(client, guid);
         if (asset == null) {
@@ -293,7 +341,9 @@ public class GCSObject extends Asset
      * @param qualifiedName of the GCSObject to retrieve
      * @return the requested full GCSObject, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the GCSObject does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static GCSObject retrieveByQualifiedName(String qualifiedName) throws AtlanException {
         return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
     }
@@ -305,7 +355,9 @@ public class GCSObject extends Asset
      * @param qualifiedName of the GCSObject to retrieve
      * @return the requested full GCSObject, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the GCSObject does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static GCSObject retrieveByQualifiedName(AtlanClient client, String qualifiedName) throws AtlanException {
         Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
         if (asset instanceof GCSObject) {

@@ -40,6 +40,7 @@ public class AttributeDefOptions extends AtlanObject {
             AtlanQuery.TYPE_NAME,
             AuthPolicy.TYPE_NAME,
             AuthService.TYPE_NAME,
+            AzureEventHub.TYPE_NAME,
             BIProcess.TYPE_NAME,
             Badge.TYPE_NAME,
             Column.TYPE_NAME,

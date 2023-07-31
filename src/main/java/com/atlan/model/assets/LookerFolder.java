@@ -13,6 +13,7 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.QueryFactory;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
@@ -157,12 +158,57 @@ public class LookerFolder extends Asset implements ILookerFolder, ILooker, IBI, 
     }
 
     /**
+     * Retrieves a LookerFolder by one of its identifiers, complete with all of its relationships.
+     *
+     * @param id of the LookerFolder to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full LookerFolder, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the LookerFolder does not exist or the provided GUID is not a LookerFolder
+     */
+    @JsonIgnore
+    public static LookerFolder get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
+    }
+
+    /**
+     * Retrieves a LookerFolder by one of its identifiers, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the LookerFolder to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full LookerFolder, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the LookerFolder does not exist or the provided GUID is not a LookerFolder
+     */
+    @JsonIgnore
+    public static LookerFolder get(AtlanClient client, String id) throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (id.startsWith("default")) {
+            Asset asset = Asset.retrieveFull(client, TYPE_NAME, id);
+            if (asset instanceof LookerFolder) {
+                return (LookerFolder) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "LookerFolder");
+            }
+        } else {
+            Asset asset = Asset.retrieveFull(client, id);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof LookerFolder) {
+                return (LookerFolder) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "LookerFolder");
+            }
+        }
+    }
+
+    /**
      * Retrieves a LookerFolder by its GUID, complete with all of its relationships.
      *
      * @param guid of the LookerFolder to retrieve
      * @return the requested full LookerFolder, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the LookerFolder does not exist or the provided GUID is not a LookerFolder
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static LookerFolder retrieveByGuid(String guid) throws AtlanException {
         return retrieveByGuid(Atlan.getDefaultClient(), guid);
     }
@@ -174,7 +220,9 @@ public class LookerFolder extends Asset implements ILookerFolder, ILooker, IBI, 
      * @param guid of the LookerFolder to retrieve
      * @return the requested full LookerFolder, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the LookerFolder does not exist or the provided GUID is not a LookerFolder
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static LookerFolder retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
         Asset asset = Asset.retrieveFull(client, guid);
         if (asset == null) {
@@ -192,7 +240,9 @@ public class LookerFolder extends Asset implements ILookerFolder, ILooker, IBI, 
      * @param qualifiedName of the LookerFolder to retrieve
      * @return the requested full LookerFolder, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the LookerFolder does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static LookerFolder retrieveByQualifiedName(String qualifiedName) throws AtlanException {
         return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
     }
@@ -204,7 +254,9 @@ public class LookerFolder extends Asset implements ILookerFolder, ILooker, IBI, 
      * @param qualifiedName of the LookerFolder to retrieve
      * @return the requested full LookerFolder, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the LookerFolder does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static LookerFolder retrieveByQualifiedName(AtlanClient client, String qualifiedName) throws AtlanException {
         Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
         if (asset instanceof LookerFolder) {

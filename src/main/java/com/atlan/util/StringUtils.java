@@ -55,7 +55,7 @@ public final class StringUtils {
      * @return the field name
      */
     public static String getFieldNameFromMethodName(String methodName) {
-        if (methodName.startsWith("set") || methodName.startsWith("get")) {
+        if (methodName.length() > 3 && (methodName.startsWith("set") || methodName.startsWith("get"))) {
             StringBuilder sb = new StringBuilder(methodName);
             sb.delete(0, 3);
             sb.replace(0, 1, sb.substring(0, 1).toLowerCase(Locale.ROOT));

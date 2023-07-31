@@ -14,6 +14,7 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.PowerBIEndorsementType;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.QueryFactory;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
@@ -176,12 +177,57 @@ public class PowerBIColumn extends Asset implements IPowerBIColumn, IPowerBI, IB
     }
 
     /**
+     * Retrieves a PowerBIColumn by one of its identifiers, complete with all of its relationships.
+     *
+     * @param id of the PowerBIColumn to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full PowerBIColumn, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBIColumn does not exist or the provided GUID is not a PowerBIColumn
+     */
+    @JsonIgnore
+    public static PowerBIColumn get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
+    }
+
+    /**
+     * Retrieves a PowerBIColumn by one of its identifiers, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the PowerBIColumn to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full PowerBIColumn, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBIColumn does not exist or the provided GUID is not a PowerBIColumn
+     */
+    @JsonIgnore
+    public static PowerBIColumn get(AtlanClient client, String id) throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (id.startsWith("default")) {
+            Asset asset = Asset.retrieveFull(client, TYPE_NAME, id);
+            if (asset instanceof PowerBIColumn) {
+                return (PowerBIColumn) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "PowerBIColumn");
+            }
+        } else {
+            Asset asset = Asset.retrieveFull(client, id);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof PowerBIColumn) {
+                return (PowerBIColumn) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "PowerBIColumn");
+            }
+        }
+    }
+
+    /**
      * Retrieves a PowerBIColumn by its GUID, complete with all of its relationships.
      *
      * @param guid of the PowerBIColumn to retrieve
      * @return the requested full PowerBIColumn, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBIColumn does not exist or the provided GUID is not a PowerBIColumn
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static PowerBIColumn retrieveByGuid(String guid) throws AtlanException {
         return retrieveByGuid(Atlan.getDefaultClient(), guid);
     }
@@ -193,7 +239,9 @@ public class PowerBIColumn extends Asset implements IPowerBIColumn, IPowerBI, IB
      * @param guid of the PowerBIColumn to retrieve
      * @return the requested full PowerBIColumn, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBIColumn does not exist or the provided GUID is not a PowerBIColumn
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static PowerBIColumn retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
         Asset asset = Asset.retrieveFull(client, guid);
         if (asset == null) {
@@ -211,7 +259,9 @@ public class PowerBIColumn extends Asset implements IPowerBIColumn, IPowerBI, IB
      * @param qualifiedName of the PowerBIColumn to retrieve
      * @return the requested full PowerBIColumn, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBIColumn does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static PowerBIColumn retrieveByQualifiedName(String qualifiedName) throws AtlanException {
         return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
     }
@@ -223,7 +273,9 @@ public class PowerBIColumn extends Asset implements IPowerBIColumn, IPowerBI, IB
      * @param qualifiedName of the PowerBIColumn to retrieve
      * @return the requested full PowerBIColumn, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBIColumn does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static PowerBIColumn retrieveByQualifiedName(AtlanClient client, String qualifiedName)
             throws AtlanException {
         Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);

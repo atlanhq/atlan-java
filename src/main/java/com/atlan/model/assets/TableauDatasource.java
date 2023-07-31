@@ -13,6 +13,7 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.QueryFactory;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -203,12 +204,57 @@ public class TableauDatasource extends Asset
     }
 
     /**
+     * Retrieves a TableauDatasource by one of its identifiers, complete with all of its relationships.
+     *
+     * @param id of the TableauDatasource to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full TableauDatasource, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TableauDatasource does not exist or the provided GUID is not a TableauDatasource
+     */
+    @JsonIgnore
+    public static TableauDatasource get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
+    }
+
+    /**
+     * Retrieves a TableauDatasource by one of its identifiers, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the TableauDatasource to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full TableauDatasource, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TableauDatasource does not exist or the provided GUID is not a TableauDatasource
+     */
+    @JsonIgnore
+    public static TableauDatasource get(AtlanClient client, String id) throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (id.startsWith("default")) {
+            Asset asset = Asset.retrieveFull(client, TYPE_NAME, id);
+            if (asset instanceof TableauDatasource) {
+                return (TableauDatasource) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "TableauDatasource");
+            }
+        } else {
+            Asset asset = Asset.retrieveFull(client, id);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof TableauDatasource) {
+                return (TableauDatasource) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "TableauDatasource");
+            }
+        }
+    }
+
+    /**
      * Retrieves a TableauDatasource by its GUID, complete with all of its relationships.
      *
      * @param guid of the TableauDatasource to retrieve
      * @return the requested full TableauDatasource, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TableauDatasource does not exist or the provided GUID is not a TableauDatasource
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static TableauDatasource retrieveByGuid(String guid) throws AtlanException {
         return retrieveByGuid(Atlan.getDefaultClient(), guid);
     }
@@ -220,7 +266,9 @@ public class TableauDatasource extends Asset
      * @param guid of the TableauDatasource to retrieve
      * @return the requested full TableauDatasource, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TableauDatasource does not exist or the provided GUID is not a TableauDatasource
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static TableauDatasource retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
         Asset asset = Asset.retrieveFull(client, guid);
         if (asset == null) {
@@ -238,7 +286,9 @@ public class TableauDatasource extends Asset
      * @param qualifiedName of the TableauDatasource to retrieve
      * @return the requested full TableauDatasource, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TableauDatasource does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static TableauDatasource retrieveByQualifiedName(String qualifiedName) throws AtlanException {
         return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
     }
@@ -250,7 +300,9 @@ public class TableauDatasource extends Asset
      * @param qualifiedName of the TableauDatasource to retrieve
      * @return the requested full TableauDatasource, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TableauDatasource does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static TableauDatasource retrieveByQualifiedName(AtlanClient client, String qualifiedName)
             throws AtlanException {
         Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);

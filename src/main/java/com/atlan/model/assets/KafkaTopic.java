@@ -15,6 +15,7 @@ import com.atlan.model.enums.KafkaTopicCleanupPolicy;
 import com.atlan.model.enums.KafkaTopicCompressionType;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.QueryFactory;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
@@ -170,12 +171,57 @@ public class KafkaTopic extends Asset implements IKafkaTopic, IKafka, IEventStor
     }
 
     /**
+     * Retrieves a KafkaTopic by one of its identifiers, complete with all of its relationships.
+     *
+     * @param id of the KafkaTopic to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full KafkaTopic, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the KafkaTopic does not exist or the provided GUID is not a KafkaTopic
+     */
+    @JsonIgnore
+    public static KafkaTopic get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
+    }
+
+    /**
+     * Retrieves a KafkaTopic by one of its identifiers, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the KafkaTopic to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full KafkaTopic, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the KafkaTopic does not exist or the provided GUID is not a KafkaTopic
+     */
+    @JsonIgnore
+    public static KafkaTopic get(AtlanClient client, String id) throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (id.startsWith("default")) {
+            Asset asset = Asset.retrieveFull(client, TYPE_NAME, id);
+            if (asset instanceof KafkaTopic) {
+                return (KafkaTopic) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "KafkaTopic");
+            }
+        } else {
+            Asset asset = Asset.retrieveFull(client, id);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof KafkaTopic) {
+                return (KafkaTopic) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "KafkaTopic");
+            }
+        }
+    }
+
+    /**
      * Retrieves a KafkaTopic by its GUID, complete with all of its relationships.
      *
      * @param guid of the KafkaTopic to retrieve
      * @return the requested full KafkaTopic, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the KafkaTopic does not exist or the provided GUID is not a KafkaTopic
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static KafkaTopic retrieveByGuid(String guid) throws AtlanException {
         return retrieveByGuid(Atlan.getDefaultClient(), guid);
     }
@@ -187,7 +233,9 @@ public class KafkaTopic extends Asset implements IKafkaTopic, IKafka, IEventStor
      * @param guid of the KafkaTopic to retrieve
      * @return the requested full KafkaTopic, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the KafkaTopic does not exist or the provided GUID is not a KafkaTopic
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static KafkaTopic retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
         Asset asset = Asset.retrieveFull(client, guid);
         if (asset == null) {
@@ -205,7 +253,9 @@ public class KafkaTopic extends Asset implements IKafkaTopic, IKafka, IEventStor
      * @param qualifiedName of the KafkaTopic to retrieve
      * @return the requested full KafkaTopic, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the KafkaTopic does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static KafkaTopic retrieveByQualifiedName(String qualifiedName) throws AtlanException {
         return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
     }
@@ -217,7 +267,9 @@ public class KafkaTopic extends Asset implements IKafkaTopic, IKafka, IEventStor
      * @param qualifiedName of the KafkaTopic to retrieve
      * @return the requested full KafkaTopic, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the KafkaTopic does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static KafkaTopic retrieveByQualifiedName(AtlanClient client, String qualifiedName) throws AtlanException {
         Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
         if (asset instanceof KafkaTopic) {

@@ -267,7 +267,8 @@ public class GeneratorConfig {
                 .doNotGenerateAsset("__internal")
                 .forceNonAbstractAsset("Process")
                 .forceNonAbstractAsset("ColumnProcess")
-                .forceNonAbstractAsset("QlikSpace");
+                .forceNonAbstractAsset("QlikSpace")
+                .forceNonAbstractAsset("KafkaTopic");
     }
 
     /**

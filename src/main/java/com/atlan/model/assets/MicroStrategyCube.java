@@ -13,6 +13,7 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.QueryFactory;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -201,12 +202,57 @@ public class MicroStrategyCube extends Asset
     }
 
     /**
+     * Retrieves a MicroStrategyCube by one of its identifiers, complete with all of its relationships.
+     *
+     * @param id of the MicroStrategyCube to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full MicroStrategyCube, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MicroStrategyCube does not exist or the provided GUID is not a MicroStrategyCube
+     */
+    @JsonIgnore
+    public static MicroStrategyCube get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
+    }
+
+    /**
+     * Retrieves a MicroStrategyCube by one of its identifiers, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the MicroStrategyCube to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full MicroStrategyCube, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MicroStrategyCube does not exist or the provided GUID is not a MicroStrategyCube
+     */
+    @JsonIgnore
+    public static MicroStrategyCube get(AtlanClient client, String id) throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (id.startsWith("default")) {
+            Asset asset = Asset.retrieveFull(client, TYPE_NAME, id);
+            if (asset instanceof MicroStrategyCube) {
+                return (MicroStrategyCube) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "MicroStrategyCube");
+            }
+        } else {
+            Asset asset = Asset.retrieveFull(client, id);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof MicroStrategyCube) {
+                return (MicroStrategyCube) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "MicroStrategyCube");
+            }
+        }
+    }
+
+    /**
      * Retrieves a MicroStrategyCube by its GUID, complete with all of its relationships.
      *
      * @param guid of the MicroStrategyCube to retrieve
      * @return the requested full MicroStrategyCube, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MicroStrategyCube does not exist or the provided GUID is not a MicroStrategyCube
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static MicroStrategyCube retrieveByGuid(String guid) throws AtlanException {
         return retrieveByGuid(Atlan.getDefaultClient(), guid);
     }
@@ -218,7 +264,9 @@ public class MicroStrategyCube extends Asset
      * @param guid of the MicroStrategyCube to retrieve
      * @return the requested full MicroStrategyCube, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MicroStrategyCube does not exist or the provided GUID is not a MicroStrategyCube
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static MicroStrategyCube retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
         Asset asset = Asset.retrieveFull(client, guid);
         if (asset == null) {
@@ -236,7 +284,9 @@ public class MicroStrategyCube extends Asset
      * @param qualifiedName of the MicroStrategyCube to retrieve
      * @return the requested full MicroStrategyCube, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MicroStrategyCube does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static MicroStrategyCube retrieveByQualifiedName(String qualifiedName) throws AtlanException {
         return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
     }
@@ -248,7 +298,9 @@ public class MicroStrategyCube extends Asset
      * @param qualifiedName of the MicroStrategyCube to retrieve
      * @return the requested full MicroStrategyCube, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MicroStrategyCube does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static MicroStrategyCube retrieveByQualifiedName(AtlanClient client, String qualifiedName)
             throws AtlanException {
         Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);

@@ -15,6 +15,7 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.QueryFactory;
 import com.atlan.util.StringUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -190,12 +191,57 @@ public class APIPath extends Asset implements IAPIPath, IAPI, ICatalog, IAsset, 
     }
 
     /**
+     * Retrieves a APIPath by one of its identifiers, complete with all of its relationships.
+     *
+     * @param id of the APIPath to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full APIPath, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the APIPath does not exist or the provided GUID is not a APIPath
+     */
+    @JsonIgnore
+    public static APIPath get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
+    }
+
+    /**
+     * Retrieves a APIPath by one of its identifiers, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the APIPath to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full APIPath, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the APIPath does not exist or the provided GUID is not a APIPath
+     */
+    @JsonIgnore
+    public static APIPath get(AtlanClient client, String id) throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (id.startsWith("default")) {
+            Asset asset = Asset.retrieveFull(client, TYPE_NAME, id);
+            if (asset instanceof APIPath) {
+                return (APIPath) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "APIPath");
+            }
+        } else {
+            Asset asset = Asset.retrieveFull(client, id);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof APIPath) {
+                return (APIPath) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "APIPath");
+            }
+        }
+    }
+
+    /**
      * Retrieves a APIPath by its GUID, complete with all of its relationships.
      *
      * @param guid of the APIPath to retrieve
      * @return the requested full APIPath, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the APIPath does not exist or the provided GUID is not a APIPath
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static APIPath retrieveByGuid(String guid) throws AtlanException {
         return retrieveByGuid(Atlan.getDefaultClient(), guid);
     }
@@ -207,7 +253,9 @@ public class APIPath extends Asset implements IAPIPath, IAPI, ICatalog, IAsset, 
      * @param guid of the APIPath to retrieve
      * @return the requested full APIPath, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the APIPath does not exist or the provided GUID is not a APIPath
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static APIPath retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
         Asset asset = Asset.retrieveFull(client, guid);
         if (asset == null) {
@@ -225,7 +273,9 @@ public class APIPath extends Asset implements IAPIPath, IAPI, ICatalog, IAsset, 
      * @param qualifiedName of the APIPath to retrieve
      * @return the requested full APIPath, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the APIPath does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static APIPath retrieveByQualifiedName(String qualifiedName) throws AtlanException {
         return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
     }
@@ -237,7 +287,9 @@ public class APIPath extends Asset implements IAPIPath, IAPI, ICatalog, IAsset, 
      * @param qualifiedName of the APIPath to retrieve
      * @return the requested full APIPath, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the APIPath does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static APIPath retrieveByQualifiedName(AtlanClient client, String qualifiedName) throws AtlanException {
         Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
         if (asset instanceof APIPath) {

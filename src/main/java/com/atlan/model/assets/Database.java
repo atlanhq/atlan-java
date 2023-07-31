@@ -14,6 +14,7 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.QueryFactory;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -225,12 +226,57 @@ public class Database extends Asset implements IDatabase, ISQL, ICatalog, IAsset
     }
 
     /**
+     * Retrieves a Database by one of its identifiers, complete with all of its relationships.
+     *
+     * @param id of the Database to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full Database, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Database does not exist or the provided GUID is not a Database
+     */
+    @JsonIgnore
+    public static Database get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
+    }
+
+    /**
+     * Retrieves a Database by one of its identifiers, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the Database to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full Database, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Database does not exist or the provided GUID is not a Database
+     */
+    @JsonIgnore
+    public static Database get(AtlanClient client, String id) throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (id.startsWith("default")) {
+            Asset asset = Asset.retrieveFull(client, TYPE_NAME, id);
+            if (asset instanceof Database) {
+                return (Database) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "Database");
+            }
+        } else {
+            Asset asset = Asset.retrieveFull(client, id);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof Database) {
+                return (Database) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "Database");
+            }
+        }
+    }
+
+    /**
      * Retrieves a Database by its GUID, complete with all of its relationships.
      *
      * @param guid of the Database to retrieve
      * @return the requested full Database, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Database does not exist or the provided GUID is not a Database
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static Database retrieveByGuid(String guid) throws AtlanException {
         return retrieveByGuid(Atlan.getDefaultClient(), guid);
     }
@@ -242,7 +288,9 @@ public class Database extends Asset implements IDatabase, ISQL, ICatalog, IAsset
      * @param guid of the Database to retrieve
      * @return the requested full Database, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Database does not exist or the provided GUID is not a Database
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static Database retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
         Asset asset = Asset.retrieveFull(client, guid);
         if (asset == null) {
@@ -260,7 +308,9 @@ public class Database extends Asset implements IDatabase, ISQL, ICatalog, IAsset
      * @param qualifiedName of the Database to retrieve
      * @return the requested full Database, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Database does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static Database retrieveByQualifiedName(String qualifiedName) throws AtlanException {
         return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
     }
@@ -272,7 +322,9 @@ public class Database extends Asset implements IDatabase, ISQL, ICatalog, IAsset
      * @param qualifiedName of the Database to retrieve
      * @return the requested full Database, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Database does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static Database retrieveByQualifiedName(AtlanClient client, String qualifiedName) throws AtlanException {
         Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
         if (asset instanceof Database) {

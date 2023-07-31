@@ -15,6 +15,7 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.QueryFactory;
 import com.atlan.util.StringUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.List;
@@ -266,12 +267,57 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
     }
 
     /**
+     * Retrieves a View by one of its identifiers, complete with all of its relationships.
+     *
+     * @param id of the View to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full View, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the View does not exist or the provided GUID is not a View
+     */
+    @JsonIgnore
+    public static View get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
+    }
+
+    /**
+     * Retrieves a View by one of its identifiers, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the View to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full View, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the View does not exist or the provided GUID is not a View
+     */
+    @JsonIgnore
+    public static View get(AtlanClient client, String id) throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (id.startsWith("default")) {
+            Asset asset = Asset.retrieveFull(client, TYPE_NAME, id);
+            if (asset instanceof View) {
+                return (View) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "View");
+            }
+        } else {
+            Asset asset = Asset.retrieveFull(client, id);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof View) {
+                return (View) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "View");
+            }
+        }
+    }
+
+    /**
      * Retrieves a View by its GUID, complete with all of its relationships.
      *
      * @param guid of the View to retrieve
      * @return the requested full View, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the View does not exist or the provided GUID is not a View
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static View retrieveByGuid(String guid) throws AtlanException {
         return retrieveByGuid(Atlan.getDefaultClient(), guid);
     }
@@ -283,7 +329,9 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
      * @param guid of the View to retrieve
      * @return the requested full View, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the View does not exist or the provided GUID is not a View
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static View retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
         Asset asset = Asset.retrieveFull(client, guid);
         if (asset == null) {
@@ -301,7 +349,9 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
      * @param qualifiedName of the View to retrieve
      * @return the requested full View, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the View does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static View retrieveByQualifiedName(String qualifiedName) throws AtlanException {
         return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
     }
@@ -313,7 +363,9 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
      * @param qualifiedName of the View to retrieve
      * @return the requested full View, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the View does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static View retrieveByQualifiedName(AtlanClient client, String qualifiedName) throws AtlanException {
         Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
         if (asset instanceof View) {

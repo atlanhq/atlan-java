@@ -14,6 +14,7 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.QueryFactory;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -196,12 +197,57 @@ public class APISpec extends Asset implements IAPISpec, IAPI, ICatalog, IAsset, 
     }
 
     /**
+     * Retrieves a APISpec by one of its identifiers, complete with all of its relationships.
+     *
+     * @param id of the APISpec to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full APISpec, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the APISpec does not exist or the provided GUID is not a APISpec
+     */
+    @JsonIgnore
+    public static APISpec get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
+    }
+
+    /**
+     * Retrieves a APISpec by one of its identifiers, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the APISpec to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full APISpec, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the APISpec does not exist or the provided GUID is not a APISpec
+     */
+    @JsonIgnore
+    public static APISpec get(AtlanClient client, String id) throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (id.startsWith("default")) {
+            Asset asset = Asset.retrieveFull(client, TYPE_NAME, id);
+            if (asset instanceof APISpec) {
+                return (APISpec) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "APISpec");
+            }
+        } else {
+            Asset asset = Asset.retrieveFull(client, id);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof APISpec) {
+                return (APISpec) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "APISpec");
+            }
+        }
+    }
+
+    /**
      * Retrieves a APISpec by its GUID, complete with all of its relationships.
      *
      * @param guid of the APISpec to retrieve
      * @return the requested full APISpec, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the APISpec does not exist or the provided GUID is not a APISpec
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static APISpec retrieveByGuid(String guid) throws AtlanException {
         return retrieveByGuid(Atlan.getDefaultClient(), guid);
     }
@@ -213,7 +259,9 @@ public class APISpec extends Asset implements IAPISpec, IAPI, ICatalog, IAsset, 
      * @param guid of the APISpec to retrieve
      * @return the requested full APISpec, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the APISpec does not exist or the provided GUID is not a APISpec
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static APISpec retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
         Asset asset = Asset.retrieveFull(client, guid);
         if (asset == null) {
@@ -231,7 +279,9 @@ public class APISpec extends Asset implements IAPISpec, IAPI, ICatalog, IAsset, 
      * @param qualifiedName of the APISpec to retrieve
      * @return the requested full APISpec, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the APISpec does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static APISpec retrieveByQualifiedName(String qualifiedName) throws AtlanException {
         return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
     }
@@ -243,7 +293,9 @@ public class APISpec extends Asset implements IAPISpec, IAPI, ICatalog, IAsset, 
      * @param qualifiedName of the APISpec to retrieve
      * @return the requested full APISpec, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the APISpec does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static APISpec retrieveByQualifiedName(AtlanClient client, String qualifiedName) throws AtlanException {
         Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
         if (asset instanceof APISpec) {

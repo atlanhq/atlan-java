@@ -13,6 +13,7 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.QueryFactory;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
@@ -168,12 +169,57 @@ public class SigmaDataElementField extends Asset
     }
 
     /**
+     * Retrieves a SigmaDataElementField by one of its identifiers, complete with all of its relationships.
+     *
+     * @param id of the SigmaDataElementField to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full SigmaDataElementField, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SigmaDataElementField does not exist or the provided GUID is not a SigmaDataElementField
+     */
+    @JsonIgnore
+    public static SigmaDataElementField get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
+    }
+
+    /**
+     * Retrieves a SigmaDataElementField by one of its identifiers, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the SigmaDataElementField to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full SigmaDataElementField, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SigmaDataElementField does not exist or the provided GUID is not a SigmaDataElementField
+     */
+    @JsonIgnore
+    public static SigmaDataElementField get(AtlanClient client, String id) throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (id.startsWith("default")) {
+            Asset asset = Asset.retrieveFull(client, TYPE_NAME, id);
+            if (asset instanceof SigmaDataElementField) {
+                return (SigmaDataElementField) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "SigmaDataElementField");
+            }
+        } else {
+            Asset asset = Asset.retrieveFull(client, id);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof SigmaDataElementField) {
+                return (SigmaDataElementField) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "SigmaDataElementField");
+            }
+        }
+    }
+
+    /**
      * Retrieves a SigmaDataElementField by its GUID, complete with all of its relationships.
      *
      * @param guid of the SigmaDataElementField to retrieve
      * @return the requested full SigmaDataElementField, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SigmaDataElementField does not exist or the provided GUID is not a SigmaDataElementField
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static SigmaDataElementField retrieveByGuid(String guid) throws AtlanException {
         return retrieveByGuid(Atlan.getDefaultClient(), guid);
     }
@@ -185,7 +231,9 @@ public class SigmaDataElementField extends Asset
      * @param guid of the SigmaDataElementField to retrieve
      * @return the requested full SigmaDataElementField, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SigmaDataElementField does not exist or the provided GUID is not a SigmaDataElementField
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static SigmaDataElementField retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
         Asset asset = Asset.retrieveFull(client, guid);
         if (asset == null) {
@@ -203,7 +251,9 @@ public class SigmaDataElementField extends Asset
      * @param qualifiedName of the SigmaDataElementField to retrieve
      * @return the requested full SigmaDataElementField, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SigmaDataElementField does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static SigmaDataElementField retrieveByQualifiedName(String qualifiedName) throws AtlanException {
         return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
     }
@@ -215,7 +265,9 @@ public class SigmaDataElementField extends Asset
      * @param qualifiedName of the SigmaDataElementField to retrieve
      * @return the requested full SigmaDataElementField, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SigmaDataElementField does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static SigmaDataElementField retrieveByQualifiedName(AtlanClient client, String qualifiedName)
             throws AtlanException {
         Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);

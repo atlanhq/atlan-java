@@ -16,9 +16,9 @@ import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @SuppressWarnings("deprecation")
-public class ADLSObjectTest {
+public class AzureEventHubTest {
 
-    private static final ADLSObject full = ADLSObject.builder()
+    private static final AzureEventHub full = AzureEventHub.builder()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -59,18 +59,17 @@ public class ADLSObjectTest {
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
                             .build())
-            .adlsAccountQualifiedName("String0")
-            .adlsAccountSecondaryLocation("String0")
-            .azureLocation("String0")
-            .azureResourceId("String0")
-            .azureTag(AzureTag.builder()
-                    .azureTagKey("String0")
-                    .azureTagValue("String0")
-                    .build())
-            .azureTag(AzureTag.builder()
-                    .azureTagKey("String1")
-                    .azureTagValue("String1")
-                    .build())
+            .kafkaConsumerGroup(KafkaConsumerGroup.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .kafkaConsumerGroup(
+                    KafkaConsumerGroup.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .kafkaTopicCleanupPolicy(KafkaTopicCleanupPolicy.COMPACT)
+            .kafkaTopicCompressionType(KafkaTopicCompressionType.UNCOMPRESSED)
+            .kafkaTopicIsInternal(true)
+            .kafkaTopicPartitionsCount(123456789L)
+            .kafkaTopicRecordCount(123456789L)
+            .kafkaTopicReplicationFactor(123456789L)
+            .kafkaTopicSegmentBytes(123456789L)
+            .kafkaTopicSizeInBytes(123456789L)
             .inputToProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .inputToProcess(LineageProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .outputFromProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -362,39 +361,20 @@ public class ADLSObjectTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
-            .adlsContainer(ADLSContainer.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .adlsContainerQualifiedName("String0")
-            .adlsObjectAccessTier(ADLSAccessTier.COOL)
-            .adlsObjectAccessTierLastModifiedTime(123456789L)
-            .adlsObjectArchiveStatus(ADLSObjectArchiveStatus.REHYDRATE_PENDING_TO_HOT)
-            .adlsObjectCacheControl("String0")
-            .adlsObjectContentLanguage("String0")
-            .adlsObjectContentMD5Hash("String0")
-            .adlsObjectContentType("String0")
-            .adlsObjectLeaseState(ADLSLeaseState.AVAILABLE)
-            .adlsObjectLeaseStatus(ADLSLeaseStatus.LOCKED)
-            .putAdlsObjectMetadata("key1", "value1")
-            .putAdlsObjectMetadata("key2", "value2")
-            .adlsObjectServerEncrypted(true)
-            .adlsObjectSize(123456789L)
-            .adlsObjectType(ADLSObjectType.BLOCK_BLOB)
-            .adlsObjectUrl("String0")
-            .adlsObjectVersionId("String0")
-            .adlsObjectVersionLevelImmutabilitySupport(true)
             .build();
 
     private static final int hash = full.hashCode();
-    private static ADLSObject frodo;
+    private static AzureEventHub frodo;
     private static String serialized;
 
-    @Test(groups = {"ADLSObject.builderEquivalency"})
+    @Test(groups = {"AzureEventHub.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"ADLSObject.serialize"},
-            dependsOnGroups = {"ADLSObject.builderEquivalency"})
+            groups = {"AzureEventHub.serialize"},
+            dependsOnGroups = {"AzureEventHub.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson(Atlan.getDefaultClient());
@@ -403,17 +383,17 @@ public class ADLSObjectTest {
     }
 
     @Test(
-            groups = {"ADLSObject.deserialize"},
-            dependsOnGroups = {"ADLSObject.serialize"})
+            groups = {"AzureEventHub.deserialize"},
+            dependsOnGroups = {"AzureEventHub.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = Atlan.getDefaultClient().readValue(serialized, ADLSObject.class);
+        frodo = Atlan.getDefaultClient().readValue(serialized, AzureEventHub.class);
         assertNotNull(frodo);
     }
 
     @Test(
-            groups = {"ADLSObject.equivalency"},
-            dependsOnGroups = {"ADLSObject.serialize", "ADLSObject.deserialize"})
+            groups = {"AzureEventHub.equivalency"},
+            dependsOnGroups = {"AzureEventHub.serialize", "AzureEventHub.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -422,8 +402,8 @@ public class ADLSObjectTest {
     }
 
     @Test(
-            groups = {"ADLSObject.equivalency"},
-            dependsOnGroups = {"ADLSObject.serialize", "ADLSObject.deserialize"})
+            groups = {"AzureEventHub.equivalency"},
+            dependsOnGroups = {"AzureEventHub.serialize", "AzureEventHub.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

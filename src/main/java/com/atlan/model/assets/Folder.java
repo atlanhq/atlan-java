@@ -13,6 +13,7 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.QueryFactory;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
@@ -143,12 +144,57 @@ public class Folder extends Asset implements IFolder, INamespace, IAsset, IRefer
     }
 
     /**
+     * Retrieves a Folder by one of its identifiers, complete with all of its relationships.
+     *
+     * @param id of the Folder to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full Folder, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Folder does not exist or the provided GUID is not a Folder
+     */
+    @JsonIgnore
+    public static Folder get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
+    }
+
+    /**
+     * Retrieves a Folder by one of its identifiers, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the Folder to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full Folder, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Folder does not exist or the provided GUID is not a Folder
+     */
+    @JsonIgnore
+    public static Folder get(AtlanClient client, String id) throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (id.startsWith("default")) {
+            Asset asset = Asset.retrieveFull(client, TYPE_NAME, id);
+            if (asset instanceof Folder) {
+                return (Folder) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "Folder");
+            }
+        } else {
+            Asset asset = Asset.retrieveFull(client, id);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof Folder) {
+                return (Folder) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "Folder");
+            }
+        }
+    }
+
+    /**
      * Retrieves a Folder by its GUID, complete with all of its relationships.
      *
      * @param guid of the Folder to retrieve
      * @return the requested full Folder, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Folder does not exist or the provided GUID is not a Folder
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static Folder retrieveByGuid(String guid) throws AtlanException {
         return retrieveByGuid(Atlan.getDefaultClient(), guid);
     }
@@ -160,7 +206,9 @@ public class Folder extends Asset implements IFolder, INamespace, IAsset, IRefer
      * @param guid of the Folder to retrieve
      * @return the requested full Folder, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Folder does not exist or the provided GUID is not a Folder
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static Folder retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
         Asset asset = Asset.retrieveFull(client, guid);
         if (asset == null) {
@@ -178,7 +226,9 @@ public class Folder extends Asset implements IFolder, INamespace, IAsset, IRefer
      * @param qualifiedName of the Folder to retrieve
      * @return the requested full Folder, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Folder does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static Folder retrieveByQualifiedName(String qualifiedName) throws AtlanException {
         return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
     }
@@ -190,7 +240,9 @@ public class Folder extends Asset implements IFolder, INamespace, IAsset, IRefer
      * @param qualifiedName of the Folder to retrieve
      * @return the requested full Folder, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Folder does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static Folder retrieveByQualifiedName(AtlanClient client, String qualifiedName) throws AtlanException {
         Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
         if (asset instanceof Folder) {

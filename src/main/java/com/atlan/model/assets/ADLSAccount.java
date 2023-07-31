@@ -22,6 +22,7 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.AzureTag;
 import com.atlan.util.QueryFactory;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
@@ -40,7 +41,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 public class ADLSAccount extends Asset
-        implements IADLSAccount, IADLS, IAzure, IObjectStore, ICloud, IAsset, IReferenceable, ICatalog {
+        implements IADLSAccount, IADLS, IObjectStore, IAzure, ICatalog, IAsset, IReferenceable, ICloud {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "ADLSAccount";
@@ -207,12 +208,57 @@ public class ADLSAccount extends Asset
     }
 
     /**
+     * Retrieves a ADLSAccount by one of its identifiers, complete with all of its relationships.
+     *
+     * @param id of the ADLSAccount to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full ADLSAccount, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ADLSAccount does not exist or the provided GUID is not a ADLSAccount
+     */
+    @JsonIgnore
+    public static ADLSAccount get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
+    }
+
+    /**
+     * Retrieves a ADLSAccount by one of its identifiers, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the ADLSAccount to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full ADLSAccount, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ADLSAccount does not exist or the provided GUID is not a ADLSAccount
+     */
+    @JsonIgnore
+    public static ADLSAccount get(AtlanClient client, String id) throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (id.startsWith("default")) {
+            Asset asset = Asset.retrieveFull(client, TYPE_NAME, id);
+            if (asset instanceof ADLSAccount) {
+                return (ADLSAccount) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "ADLSAccount");
+            }
+        } else {
+            Asset asset = Asset.retrieveFull(client, id);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof ADLSAccount) {
+                return (ADLSAccount) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "ADLSAccount");
+            }
+        }
+    }
+
+    /**
      * Retrieves a ADLSAccount by its GUID, complete with all of its relationships.
      *
      * @param guid of the ADLSAccount to retrieve
      * @return the requested full ADLSAccount, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ADLSAccount does not exist or the provided GUID is not a ADLSAccount
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static ADLSAccount retrieveByGuid(String guid) throws AtlanException {
         return retrieveByGuid(Atlan.getDefaultClient(), guid);
     }
@@ -224,7 +270,9 @@ public class ADLSAccount extends Asset
      * @param guid of the ADLSAccount to retrieve
      * @return the requested full ADLSAccount, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ADLSAccount does not exist or the provided GUID is not a ADLSAccount
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static ADLSAccount retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
         Asset asset = Asset.retrieveFull(client, guid);
         if (asset == null) {
@@ -242,7 +290,9 @@ public class ADLSAccount extends Asset
      * @param qualifiedName of the ADLSAccount to retrieve
      * @return the requested full ADLSAccount, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ADLSAccount does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static ADLSAccount retrieveByQualifiedName(String qualifiedName) throws AtlanException {
         return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
     }
@@ -254,7 +304,9 @@ public class ADLSAccount extends Asset
      * @param qualifiedName of the ADLSAccount to retrieve
      * @return the requested full ADLSAccount, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ADLSAccount does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static ADLSAccount retrieveByQualifiedName(AtlanClient client, String qualifiedName) throws AtlanException {
         Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
         if (asset instanceof ADLSAccount) {

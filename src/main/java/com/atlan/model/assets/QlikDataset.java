@@ -13,6 +13,7 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.QueryFactory;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
@@ -183,12 +184,57 @@ public class QlikDataset extends Asset implements IQlikDataset, IQlik, IBI, ICat
     }
 
     /**
+     * Retrieves a QlikDataset by one of its identifiers, complete with all of its relationships.
+     *
+     * @param id of the QlikDataset to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full QlikDataset, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the QlikDataset does not exist or the provided GUID is not a QlikDataset
+     */
+    @JsonIgnore
+    public static QlikDataset get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
+    }
+
+    /**
+     * Retrieves a QlikDataset by one of its identifiers, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the QlikDataset to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full QlikDataset, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the QlikDataset does not exist or the provided GUID is not a QlikDataset
+     */
+    @JsonIgnore
+    public static QlikDataset get(AtlanClient client, String id) throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (id.startsWith("default")) {
+            Asset asset = Asset.retrieveFull(client, TYPE_NAME, id);
+            if (asset instanceof QlikDataset) {
+                return (QlikDataset) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "QlikDataset");
+            }
+        } else {
+            Asset asset = Asset.retrieveFull(client, id);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof QlikDataset) {
+                return (QlikDataset) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "QlikDataset");
+            }
+        }
+    }
+
+    /**
      * Retrieves a QlikDataset by its GUID, complete with all of its relationships.
      *
      * @param guid of the QlikDataset to retrieve
      * @return the requested full QlikDataset, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the QlikDataset does not exist or the provided GUID is not a QlikDataset
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static QlikDataset retrieveByGuid(String guid) throws AtlanException {
         return retrieveByGuid(Atlan.getDefaultClient(), guid);
     }
@@ -200,7 +246,9 @@ public class QlikDataset extends Asset implements IQlikDataset, IQlik, IBI, ICat
      * @param guid of the QlikDataset to retrieve
      * @return the requested full QlikDataset, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the QlikDataset does not exist or the provided GUID is not a QlikDataset
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static QlikDataset retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
         Asset asset = Asset.retrieveFull(client, guid);
         if (asset == null) {
@@ -218,7 +266,9 @@ public class QlikDataset extends Asset implements IQlikDataset, IQlik, IBI, ICat
      * @param qualifiedName of the QlikDataset to retrieve
      * @return the requested full QlikDataset, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the QlikDataset does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static QlikDataset retrieveByQualifiedName(String qualifiedName) throws AtlanException {
         return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
     }
@@ -230,7 +280,9 @@ public class QlikDataset extends Asset implements IQlikDataset, IQlik, IBI, ICat
      * @param qualifiedName of the QlikDataset to retrieve
      * @return the requested full QlikDataset, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the QlikDataset does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static QlikDataset retrieveByQualifiedName(AtlanClient client, String qualifiedName) throws AtlanException {
         Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
         if (asset instanceof QlikDataset) {

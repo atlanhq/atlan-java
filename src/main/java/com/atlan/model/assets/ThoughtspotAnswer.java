@@ -13,6 +13,7 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.QueryFactory;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
@@ -140,12 +141,57 @@ public class ThoughtspotAnswer extends Asset
     }
 
     /**
+     * Retrieves a ThoughtspotAnswer by one of its identifiers, complete with all of its relationships.
+     *
+     * @param id of the ThoughtspotAnswer to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full ThoughtspotAnswer, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ThoughtspotAnswer does not exist or the provided GUID is not a ThoughtspotAnswer
+     */
+    @JsonIgnore
+    public static ThoughtspotAnswer get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
+    }
+
+    /**
+     * Retrieves a ThoughtspotAnswer by one of its identifiers, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the ThoughtspotAnswer to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full ThoughtspotAnswer, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ThoughtspotAnswer does not exist or the provided GUID is not a ThoughtspotAnswer
+     */
+    @JsonIgnore
+    public static ThoughtspotAnswer get(AtlanClient client, String id) throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (id.startsWith("default")) {
+            Asset asset = Asset.retrieveFull(client, TYPE_NAME, id);
+            if (asset instanceof ThoughtspotAnswer) {
+                return (ThoughtspotAnswer) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "ThoughtspotAnswer");
+            }
+        } else {
+            Asset asset = Asset.retrieveFull(client, id);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof ThoughtspotAnswer) {
+                return (ThoughtspotAnswer) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "ThoughtspotAnswer");
+            }
+        }
+    }
+
+    /**
      * Retrieves a ThoughtspotAnswer by its GUID, complete with all of its relationships.
      *
      * @param guid of the ThoughtspotAnswer to retrieve
      * @return the requested full ThoughtspotAnswer, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ThoughtspotAnswer does not exist or the provided GUID is not a ThoughtspotAnswer
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static ThoughtspotAnswer retrieveByGuid(String guid) throws AtlanException {
         return retrieveByGuid(Atlan.getDefaultClient(), guid);
     }
@@ -157,7 +203,9 @@ public class ThoughtspotAnswer extends Asset
      * @param guid of the ThoughtspotAnswer to retrieve
      * @return the requested full ThoughtspotAnswer, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ThoughtspotAnswer does not exist or the provided GUID is not a ThoughtspotAnswer
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static ThoughtspotAnswer retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
         Asset asset = Asset.retrieveFull(client, guid);
         if (asset == null) {
@@ -175,7 +223,9 @@ public class ThoughtspotAnswer extends Asset
      * @param qualifiedName of the ThoughtspotAnswer to retrieve
      * @return the requested full ThoughtspotAnswer, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ThoughtspotAnswer does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static ThoughtspotAnswer retrieveByQualifiedName(String qualifiedName) throws AtlanException {
         return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
     }
@@ -187,7 +237,9 @@ public class ThoughtspotAnswer extends Asset
      * @param qualifiedName of the ThoughtspotAnswer to retrieve
      * @return the requested full ThoughtspotAnswer, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ThoughtspotAnswer does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static ThoughtspotAnswer retrieveByQualifiedName(AtlanClient client, String qualifiedName)
             throws AtlanException {
         Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
