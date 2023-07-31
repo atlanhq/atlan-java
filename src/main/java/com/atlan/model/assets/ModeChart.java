@@ -13,6 +13,7 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.QueryFactory;
+import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
@@ -199,14 +200,7 @@ public class ModeChart extends Asset implements IModeChart, IMode, IBI, ICatalog
     public static ModeChart get(AtlanClient client, String id) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
-        } else if (id.startsWith("default")) {
-            Asset asset = Asset.retrieveFull(client, TYPE_NAME, id);
-            if (asset instanceof ModeChart) {
-                return (ModeChart) asset;
-            } else {
-                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "ModeChart");
-            }
-        } else {
+        } else if (StringUtils.isUUID(id)) {
             Asset asset = Asset.retrieveFull(client, id);
             if (asset == null) {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
@@ -214,6 +208,13 @@ public class ModeChart extends Asset implements IModeChart, IMode, IBI, ICatalog
                 return (ModeChart) asset;
             } else {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "ModeChart");
+            }
+        } else {
+            Asset asset = Asset.retrieveFull(client, TYPE_NAME, id);
+            if (asset instanceof ModeChart) {
+                return (ModeChart) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "ModeChart");
             }
         }
     }

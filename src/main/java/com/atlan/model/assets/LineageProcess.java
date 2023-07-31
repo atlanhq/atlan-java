@@ -14,6 +14,7 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.QueryFactory;
+import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
@@ -177,14 +178,7 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
     public static LineageProcess get(AtlanClient client, String id) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
-        } else if (id.startsWith("default")) {
-            Asset asset = Asset.retrieveFull(client, TYPE_NAME, id);
-            if (asset instanceof LineageProcess) {
-                return (LineageProcess) asset;
-            } else {
-                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "LineageProcess");
-            }
-        } else {
+        } else if (StringUtils.isUUID(id)) {
             Asset asset = Asset.retrieveFull(client, id);
             if (asset == null) {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
@@ -192,6 +186,13 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
                 return (LineageProcess) asset;
             } else {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "LineageProcess");
+            }
+        } else {
+            Asset asset = Asset.retrieveFull(client, TYPE_NAME, id);
+            if (asset instanceof LineageProcess) {
+                return (LineageProcess) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "LineageProcess");
             }
         }
     }

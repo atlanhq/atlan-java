@@ -13,6 +13,7 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.QueryFactory;
+import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
@@ -217,14 +218,7 @@ public class MicroStrategyDossier extends Asset
     public static MicroStrategyDossier get(AtlanClient client, String id) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
-        } else if (id.startsWith("default")) {
-            Asset asset = Asset.retrieveFull(client, TYPE_NAME, id);
-            if (asset instanceof MicroStrategyDossier) {
-                return (MicroStrategyDossier) asset;
-            } else {
-                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "MicroStrategyDossier");
-            }
-        } else {
+        } else if (StringUtils.isUUID(id)) {
             Asset asset = Asset.retrieveFull(client, id);
             if (asset == null) {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
@@ -232,6 +226,13 @@ public class MicroStrategyDossier extends Asset
                 return (MicroStrategyDossier) asset;
             } else {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "MicroStrategyDossier");
+            }
+        } else {
+            Asset asset = Asset.retrieveFull(client, TYPE_NAME, id);
+            if (asset instanceof MicroStrategyDossier) {
+                return (MicroStrategyDossier) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "MicroStrategyDossier");
             }
         }
     }

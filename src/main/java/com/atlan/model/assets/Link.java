@@ -12,6 +12,7 @@ import com.atlan.model.core.AssetFilter;
 import com.atlan.model.enums.IconType;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.QueryFactory;
+import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
@@ -186,14 +187,7 @@ public class Link extends Asset implements ILink, IResource, ICatalog, IAsset, I
     public static Link get(AtlanClient client, String id) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
-        } else if (id.startsWith("default")) {
-            Asset asset = Asset.retrieveFull(client, TYPE_NAME, id);
-            if (asset instanceof Link) {
-                return (Link) asset;
-            } else {
-                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "Link");
-            }
-        } else {
+        } else if (StringUtils.isUUID(id)) {
             Asset asset = Asset.retrieveFull(client, id);
             if (asset == null) {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
@@ -201,6 +195,13 @@ public class Link extends Asset implements ILink, IResource, ICatalog, IAsset, I
                 return (Link) asset;
             } else {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "Link");
+            }
+        } else {
+            Asset asset = Asset.retrieveFull(client, TYPE_NAME, id);
+            if (asset instanceof Link) {
+                return (Link) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "Link");
             }
         }
     }

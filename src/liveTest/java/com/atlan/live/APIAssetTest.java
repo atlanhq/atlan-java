@@ -105,7 +105,7 @@ public class APIAssetTest extends AtlanLiveTest {
             groups = {"api.read.spec"},
             dependsOnGroups = {"api.create.path", "api.update.spec"})
     void retrieveSpec() throws AtlanException {
-        APISpec s = APISpec.retrieveByGuid(spec.getGuid());
+        APISpec s = APISpec.get(spec.getGuid());
         assertNotNull(s);
         assertTrue(s.isComplete());
         assertEquals(s.getGuid(), spec.getGuid());
@@ -211,7 +211,7 @@ public class APIAssetTest extends AtlanLiveTest {
             groups = {"api.delete.path.read"},
             dependsOnGroups = {"api.delete.path"})
     void readDeletedPath() throws AtlanException {
-        APIPath deleted = APIPath.retrieveByGuid(path.getGuid());
+        APIPath deleted = APIPath.get(path.getGuid());
         assertNotNull(deleted);
         assertEquals(deleted.getGuid(), path.getGuid());
         assertEquals(deleted.getQualifiedName(), path.getQualifiedName());
@@ -223,7 +223,7 @@ public class APIAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"api.delete.path.read"})
     void restorePath() throws AtlanException {
         assertTrue(APIPath.restore(path.getQualifiedName()));
-        APIPath restored = APIPath.retrieveByQualifiedName(path.getQualifiedName());
+        APIPath restored = APIPath.get(path.getQualifiedName());
         assertEquals(restored.getGuid(), path.getGuid());
         assertEquals(restored.getQualifiedName(), path.getQualifiedName());
         assertEquals(restored.getStatus(), AtlanStatus.ACTIVE);

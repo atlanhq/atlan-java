@@ -178,14 +178,7 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
     public static ColumnProcess get(AtlanClient client, String id) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
-        } else if (id.startsWith("default")) {
-            Asset asset = Asset.retrieveFull(client, TYPE_NAME, id);
-            if (asset instanceof ColumnProcess) {
-                return (ColumnProcess) asset;
-            } else {
-                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "ColumnProcess");
-            }
-        } else {
+        } else if (StringUtils.isUUID(id)) {
             Asset asset = Asset.retrieveFull(client, id);
             if (asset == null) {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
@@ -193,6 +186,13 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
                 return (ColumnProcess) asset;
             } else {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "ColumnProcess");
+            }
+        } else {
+            Asset asset = Asset.retrieveFull(client, TYPE_NAME, id);
+            if (asset instanceof ColumnProcess) {
+                return (ColumnProcess) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "ColumnProcess");
             }
         }
     }

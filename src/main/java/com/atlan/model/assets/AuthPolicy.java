@@ -20,6 +20,7 @@ import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.AuthPolicyCondition;
 import com.atlan.model.structs.AuthPolicyValiditySchedule;
 import com.atlan.util.QueryFactory;
+import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -232,14 +233,7 @@ public class AuthPolicy extends Asset implements IAuthPolicy, IAsset, IReference
     public static AuthPolicy get(AtlanClient client, String id) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
-        } else if (id.startsWith("default")) {
-            Asset asset = Asset.retrieveFull(client, TYPE_NAME, id);
-            if (asset instanceof AuthPolicy) {
-                return (AuthPolicy) asset;
-            } else {
-                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "AuthPolicy");
-            }
-        } else {
+        } else if (StringUtils.isUUID(id)) {
             Asset asset = Asset.retrieveFull(client, id);
             if (asset == null) {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
@@ -247,6 +241,13 @@ public class AuthPolicy extends Asset implements IAuthPolicy, IAsset, IReference
                 return (AuthPolicy) asset;
             } else {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "AuthPolicy");
+            }
+        } else {
+            Asset asset = Asset.retrieveFull(client, TYPE_NAME, id);
+            if (asset instanceof AuthPolicy) {
+                return (AuthPolicy) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "AuthPolicy");
             }
         }
     }

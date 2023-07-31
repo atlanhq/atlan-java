@@ -138,7 +138,7 @@ public class PurposeTest extends AtlanLiveTest {
             groups = {"purpose.read.purposes.2"},
             dependsOnGroups = {"purpose.update.purposes.policy"})
     void retrievePurposes2() throws AtlanException {
-        Purpose one = Purpose.retrieveByQualifiedName(purpose.getQualifiedName());
+        Purpose one = Purpose.get(purpose.getQualifiedName());
         assertNotNull(one);
         assertEquals(one.getGuid(), purpose.getGuid());
         assertEquals(one.getDescription(), "Now with a description!");
@@ -152,7 +152,7 @@ public class PurposeTest extends AtlanLiveTest {
         for (IAuthPolicy policy : policies) {
             // Need to retrieve the full policy if we want to see any info about it
             // (what comes back on the Purpose itself are just policy references)
-            AuthPolicy full = AuthPolicy.retrieveByGuid(policy.getGuid());
+            AuthPolicy full = AuthPolicy.get(policy.getGuid());
             assertNotNull(full);
             String subCat = full.getPolicySubCategory();
             assertNotNull(subCat);

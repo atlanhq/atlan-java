@@ -369,7 +369,7 @@ public class GlossaryTest extends AtlanLiveTest {
             groups = {"glossary.read.glossary"},
             dependsOnGroups = {"glossary.create.glossary", "glossary.create.hierarchy", "glossary.create.term"})
     void readGlossary() throws AtlanException {
-        Glossary g = Glossary.retrieveByGuid(glossary.getGuid());
+        Glossary g = Glossary.get(glossary.getGuid());
         assertNotNull(g);
         assertTrue(g.isComplete());
         assertEquals(g.getGuid(), glossary.getGuid());
@@ -394,7 +394,7 @@ public class GlossaryTest extends AtlanLiveTest {
             groups = {"glossary.read.term"},
             dependsOnGroups = {"glossary.create.term"})
     void readTerm() throws AtlanException {
-        GlossaryTerm term = GlossaryTerm.retrieveByGuid(term1.getGuid());
+        GlossaryTerm term = GlossaryTerm.get(term1.getGuid());
         assertNotNull(term);
         assertTrue(term.isComplete());
         assertEquals(term.getGuid(), term1.getGuid());
@@ -433,7 +433,7 @@ public class GlossaryTest extends AtlanLiveTest {
             groups = {"glossary.update.category"},
             dependsOnGroups = {"glossary.create.hierarchy"})
     void updateCategory() throws AtlanException {
-        category = GlossaryCategory.retrieveByGuid(leaf1baGuid);
+        category = GlossaryCategory.get(leaf1baGuid);
         GlossaryCategory toUpdate = GlossaryCategory.updater(
                         category.getQualifiedName(),
                         category.getName(),
@@ -605,7 +605,7 @@ public class GlossaryTest extends AtlanLiveTest {
             alwaysRun = true)
     void restoreTerm1() throws AtlanException {
         assertTrue(GlossaryTerm.restore(term1.getQualifiedName()));
-        GlossaryTerm term = GlossaryTerm.retrieveByQualifiedName(term1.getQualifiedName());
+        GlossaryTerm term = GlossaryTerm.get(term1.getQualifiedName());
         assertNotNull(term);
         assertEquals(term.getGuid(), term1.getGuid());
         assertEquals(term.getQualifiedName(), term1.getQualifiedName());
