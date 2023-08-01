@@ -27,8 +27,8 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":9,"i5":9,"i6":9,"i7":10,"i8":10,"i9":10,"i10":9,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":9,"i25":9,"i26":9,"i27":9,"i28":10,"i29":10,"i30":10,"i31":10,"i32":9};
-var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
+var data = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":9,"i5":9,"i6":9,"i7":10,"i8":10,"i9":10,"i10":9,"i11":9,"i12":9,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":9,"i25":9,"i26":10,"i27":10,"i28":41,"i29":41,"i30":41,"i31":41,"i32":10,"i33":10,"i34":10,"i35":10,"i36":9};
+var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -135,9 +135,17 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="description">
 <ul class="blockList">
 <li class="blockList">
+<dl>
+<dt>All Implemented Interfaces:</dt>
+<dd><code>java.io.Serializable</code></dd>
+</dl>
 <hr>
 <pre>public class <span class="typeNameLabel">AtlanGroup</span>
 extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a></pre>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../../serialized-form.html#com.atlan.model.admin.AtlanGroup">Serialized Form</a></dd>
+</dl>
 </li>
 </ul>
 </div>
@@ -210,7 +218,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t6" class="tableTab"><span><a href="javascript:show(32);">Deprecated Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colSecond" scope="col">Method</th>
@@ -289,81 +297,110 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 </td>
 </tr>
 <tr id="i11" class="rowColor">
+<td class="colFirst"><code>static java.util.List&lt;<a href="AtlanGroup.html" title="class in com.atlan.model.admin">AtlanGroup</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#get(com.atlan.AtlanClient,java.lang.String)">get</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+   java.lang.String&nbsp;alias)</code></th>
+<td class="colLast">
+<div class="block">Retrieves all groups with a name that contains the provided string.</div>
+</td>
+</tr>
+<tr id="i12" class="altColor">
+<td class="colFirst"><code>static java.util.List&lt;<a href="AtlanGroup.html" title="class in com.atlan.model.admin">AtlanGroup</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#get(java.lang.String)">get</a></span>&#8203;(java.lang.String&nbsp;alias)</code></th>
+<td class="colLast">
+<div class="block">Retrieves all groups with a name that contains the provided string.</div>
+</td>
+</tr>
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAlias()">getAlias</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Name of the group as it appears in the UI.</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code><a href="AtlanGroup.GroupAttributes.html" title="class in com.atlan.model.admin">AtlanGroup.GroupAttributes</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAttributes()">getAttributes</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Detailed attributes of the group.</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDecentralizedRoles()">getDecentralizedRoles</a></span>()</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getId()">getId</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Unique identifier for the group (GUID).</div>
 </td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getName()">getName</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Unique (internal) name for the group.</div>
 </td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i18" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPath()">getPath</a></span>()</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPersonas()">getPersonas</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Personas the group is associated with.</div>
 </td>
 </tr>
-<tr id="i18" class="altColor">
+<tr id="i20" class="altColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPurposes()">getPurposes</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Purposes the group is associated with.</div>
 </td>
 </tr>
-<tr id="i19" class="rowColor">
+<tr id="i21" class="rowColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getUserCount()">getUserCount</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Number of users in the group.</div>
 </td>
 </tr>
-<tr id="i20" class="altColor">
+<tr id="i22" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i21" class="rowColor">
+<tr id="i23" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isDefault()">isDefault</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Whether this group is a default (auto-assigned to new users) (true), or not (false).</div>
 </td>
 </tr>
-<tr id="i22" class="altColor">
+<tr id="i24" class="altColor">
+<td class="colFirst"><code>static java.util.List&lt;<a href="AtlanGroup.html" title="class in com.atlan.model.admin">AtlanGroup</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#list()">list</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Retrieves all groups currently defined in Atlan.</div>
+</td>
+</tr>
+<tr id="i25" class="rowColor">
+<td class="colFirst"><code>static java.util.List&lt;<a href="AtlanGroup.html" title="class in com.atlan.model.admin">AtlanGroup</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#list(com.atlan.AtlanClient)">list</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)</code></th>
+<td class="colLast">
+<div class="block">Retrieves all groups currently defined in Atlan.</div>
+</td>
+</tr>
+<tr id="i26" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeUsers(com.atlan.AtlanClient,java.util.List)">removeUsers</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
            java.util.List&lt;java.lang.String&gt;&nbsp;userIds)</code></th>
@@ -371,66 +408,74 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <div class="block">Remove one or more users from this group.</div>
 </td>
 </tr>
-<tr id="i23" class="rowColor">
+<tr id="i27" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeUsers(java.util.List)">removeUsers</a></span>&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;userIds)</code></th>
 <td class="colLast">
 <div class="block">Remove one or more users from this group.</div>
 </td>
 </tr>
-<tr id="i24" class="altColor">
+<tr id="i28" class="altColor">
 <td class="colFirst"><code>static java.util.List&lt;<a href="AtlanGroup.html" title="class in com.atlan.model.admin">AtlanGroup</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#retrieveAll()">retrieveAll</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Retrieves all groups currently defined in Atlan.</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">see <a href="#list()"><code>list()</code></a> instead</div>
+</div>
 </td>
 </tr>
-<tr id="i25" class="rowColor">
+<tr id="i29" class="rowColor">
 <td class="colFirst"><code>static java.util.List&lt;<a href="AtlanGroup.html" title="class in com.atlan.model.admin">AtlanGroup</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#retrieveAll(com.atlan.AtlanClient)">retrieveAll</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)</code></th>
 <td class="colLast">
-<div class="block">Retrieves all groups currently defined in Atlan.</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">see <a href="#list(com.atlan.AtlanClient)"><code>list(AtlanClient)</code></a> instead</div>
+</div>
 </td>
 </tr>
-<tr id="i26" class="altColor">
+<tr id="i30" class="altColor">
 <td class="colFirst"><code>static java.util.List&lt;<a href="AtlanGroup.html" title="class in com.atlan.model.admin">AtlanGroup</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#retrieveByName(com.atlan.AtlanClient,java.lang.String)">retrieveByName</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
               java.lang.String&nbsp;alias)</code></th>
 <td class="colLast">
-<div class="block">Retrieves all groups with a name that contains the provided string.</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">see <a href="#get(com.atlan.AtlanClient,java.lang.String)"><code>get(AtlanClient, String)</code></a> instead</div>
+</div>
 </td>
 </tr>
-<tr id="i27" class="rowColor">
+<tr id="i31" class="rowColor">
 <td class="colFirst"><code>static java.util.List&lt;<a href="AtlanGroup.html" title="class in com.atlan.model.admin">AtlanGroup</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#retrieveByName(java.lang.String)">retrieveByName</a></span>&#8203;(java.lang.String&nbsp;alias)</code></th>
 <td class="colLast">
-<div class="block">Retrieves all groups with a name that contains the provided string.</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">see <a href="#get(java.lang.String)"><code>get(String)</code></a> instead</div>
+</div>
 </td>
 </tr>
-<tr id="i28" class="altColor">
+<tr id="i32" class="altColor">
 <td class="colFirst"><code><a href="AtlanGroup.AtlanGroupBuilder.html" title="class in com.atlan.model.admin">AtlanGroup.AtlanGroupBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toBuilder()">toBuilder</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i29" class="rowColor">
+<tr id="i33" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 </tr>
-<tr id="i30" class="altColor">
+<tr id="i34" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#update()">update</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Send this group to Atlan to update the group in Atlan.</div>
 </td>
 </tr>
-<tr id="i31" class="rowColor">
+<tr id="i35" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#update(com.atlan.AtlanClient)">update</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)</code></th>
 <td class="colLast">
 <div class="block">Send this group to Atlan to update the group in Atlan.</div>
 </td>
 </tr>
-<tr id="i32" class="altColor">
+<tr id="i36" class="altColor">
 <td class="colFirst"><code>static <a href="AtlanGroup.AtlanGroupBuilder.html" title="class in com.atlan.model.admin">AtlanGroup.AtlanGroupBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updater(java.lang.String,java.lang.String)">updater</a></span>&#8203;(java.lang.String&nbsp;id,
        java.lang.String&nbsp;path)</code></th>
@@ -658,8 +703,12 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <ul class="blockList">
 <li class="blockList">
 <h4>retrieveAll</h4>
-<pre class="methodSignature">public static&nbsp;java.util.List&lt;<a href="AtlanGroup.html" title="class in com.atlan.model.admin">AtlanGroup</a>&gt;&nbsp;retrieveAll()
+<pre class="methodSignature">@Deprecated
+public static&nbsp;java.util.List&lt;<a href="AtlanGroup.html" title="class in com.atlan.model.admin">AtlanGroup</a>&gt;&nbsp;retrieveAll()
                                               throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">see <a href="#list()"><code>list()</code></a> instead</div>
+</div>
 <div class="block">Retrieves all groups currently defined in Atlan.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -675,8 +724,48 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <ul class="blockList">
 <li class="blockList">
 <h4>retrieveAll</h4>
-<pre class="methodSignature">public static&nbsp;java.util.List&lt;<a href="AtlanGroup.html" title="class in com.atlan.model.admin">AtlanGroup</a>&gt;&nbsp;retrieveAll&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)
+<pre class="methodSignature">@Deprecated
+public static&nbsp;java.util.List&lt;<a href="AtlanGroup.html" title="class in com.atlan.model.admin">AtlanGroup</a>&gt;&nbsp;retrieveAll&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)
                                               throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">see <a href="#list(com.atlan.AtlanClient)"><code>list(AtlanClient)</code></a> instead</div>
+</div>
+<div class="block">Retrieves all groups currently defined in Atlan.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>client</code> - connectivity to the Atlan tenant from which to list the groups</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the list of groups currently defined in Atlan</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any error during API invocation</dd>
+</dl>
+</li>
+</ul>
+<a id="list()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>list</h4>
+<pre class="methodSignature">public static&nbsp;java.util.List&lt;<a href="AtlanGroup.html" title="class in com.atlan.model.admin">AtlanGroup</a>&gt;&nbsp;list()
+                                       throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Retrieves all groups currently defined in Atlan.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the list of groups currently defined in Atlan</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any error during API invocation</dd>
+</dl>
+</li>
+</ul>
+<a id="list(com.atlan.AtlanClient)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>list</h4>
+<pre class="methodSignature">public static&nbsp;java.util.List&lt;<a href="AtlanGroup.html" title="class in com.atlan.model.admin">AtlanGroup</a>&gt;&nbsp;list&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)
+                                       throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
 <div class="block">Retrieves all groups currently defined in Atlan.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -694,8 +783,12 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <ul class="blockList">
 <li class="blockList">
 <h4>retrieveByName</h4>
-<pre class="methodSignature">public static&nbsp;java.util.List&lt;<a href="AtlanGroup.html" title="class in com.atlan.model.admin">AtlanGroup</a>&gt;&nbsp;retrieveByName&#8203;(java.lang.String&nbsp;alias)
+<pre class="methodSignature">@Deprecated
+public static&nbsp;java.util.List&lt;<a href="AtlanGroup.html" title="class in com.atlan.model.admin">AtlanGroup</a>&gt;&nbsp;retrieveByName&#8203;(java.lang.String&nbsp;alias)
                                                  throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">see <a href="#get(java.lang.String)"><code>get(String)</code></a> instead</div>
+</div>
 <div class="block">Retrieves all groups with a name that contains the provided string.
  (This could include a complete group name, in which case there should be at
  most a single item in the returned list, or could be a partial group name
@@ -716,9 +809,59 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <ul class="blockList">
 <li class="blockList">
 <h4>retrieveByName</h4>
-<pre class="methodSignature">public static&nbsp;java.util.List&lt;<a href="AtlanGroup.html" title="class in com.atlan.model.admin">AtlanGroup</a>&gt;&nbsp;retrieveByName&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+<pre class="methodSignature">@Deprecated
+public static&nbsp;java.util.List&lt;<a href="AtlanGroup.html" title="class in com.atlan.model.admin">AtlanGroup</a>&gt;&nbsp;retrieveByName&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
                                                         java.lang.String&nbsp;alias)
                                                  throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">see <a href="#get(com.atlan.AtlanClient,java.lang.String)"><code>get(AtlanClient, String)</code></a> instead</div>
+</div>
+<div class="block">Retrieves all groups with a name that contains the provided string.
+ (This could include a complete group name, in which case there should be at
+ most a single item in the returned list, or could be a partial group name
+ to retrieve all groups with that naming convention.)</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>client</code> - connectivity to the Atlan tenant from which to retrieve the group</dd>
+<dd><code>alias</code> - name (as it appears in the UI) on which to filter the groups</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>all groups whose name (in the UI) contains the provided string</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any error during API invocation</dd>
+</dl>
+</li>
+</ul>
+<a id="get(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>get</h4>
+<pre class="methodSignature">public static&nbsp;java.util.List&lt;<a href="AtlanGroup.html" title="class in com.atlan.model.admin">AtlanGroup</a>&gt;&nbsp;get&#8203;(java.lang.String&nbsp;alias)
+                                      throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Retrieves all groups with a name that contains the provided string.
+ (This could include a complete group name, in which case there should be at
+ most a single item in the returned list, or could be a partial group name
+ to retrieve all groups with that naming convention.)</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>alias</code> - name (as it appears in the UI) on which to filter the groups</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>all groups whose name (in the UI) contains the provided string</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any error during API invocation</dd>
+</dl>
+</li>
+</ul>
+<a id="get(com.atlan.AtlanClient,java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>get</h4>
+<pre class="methodSignature">public static&nbsp;java.util.List&lt;<a href="AtlanGroup.html" title="class in com.atlan.model.admin">AtlanGroup</a>&gt;&nbsp;get&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+                                             java.lang.String&nbsp;alias)
+                                      throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
 <div class="block">Retrieves all groups with a name that contains the provided string.
  (This could include a complete group name, in which case there should be at
  most a single item in the returned list, or could be a partial group name

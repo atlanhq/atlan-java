@@ -194,14 +194,16 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>static <a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCurrentFullAsset(com.atlan.model.events.AtlanEvent)">getCurrentFullAsset</a></span>&#8203;(<a href="../model/events/AtlanEvent.html" title="class in com.atlan.model.events">AtlanEvent</a>&nbsp;event)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCurrentFullAsset(com.atlan.AtlanClient,com.atlan.model.events.AtlanEvent)">getCurrentFullAsset</a></span>&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+                   <a href="../model/events/AtlanEvent.html" title="class in com.atlan.model.events">AtlanEvent</a>&nbsp;event)</code></th>
 <td class="colLast">
 <div class="block">Retrieve the full asset from Atlan, to ensure we have the latest information about it.</div>
 </td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>default <a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCurrentState(com.atlan.model.assets.Asset,org.slf4j.Logger)">getCurrentState</a></span>&#8203;(<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;fromEvent,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCurrentState(com.atlan.AtlanClient,com.atlan.model.assets.Asset,org.slf4j.Logger)">getCurrentState</a></span>&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+               <a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;fromEvent,
                org.slf4j.Logger&nbsp;log)</code></th>
 <td class="colLast">
 <div class="block">Retrieve the current state of the asset, with minimal required info to handle any logic
@@ -210,7 +212,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>static <a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCurrentViewOfAsset(com.atlan.model.assets.Asset,java.util.Collection,boolean,boolean)">getCurrentViewOfAsset</a></span>&#8203;(<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;fromEvent,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCurrentViewOfAsset(com.atlan.AtlanClient,com.atlan.model.assets.Asset,java.util.Collection,boolean,boolean)">getCurrentViewOfAsset</a></span>&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+                     <a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;fromEvent,
                      java.util.Collection&lt;java.lang.String&gt;&nbsp;limitedToAttributes,
                      boolean&nbsp;includeMeanings,
                      boolean&nbsp;includeAtlanTags)</code></th>
@@ -222,7 +225,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>static <a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCurrentViewOfAsset(com.atlan.model.events.AtlanEvent,java.util.Collection,boolean,boolean)">getCurrentViewOfAsset</a></span>&#8203;(<a href="../model/events/AtlanEvent.html" title="class in com.atlan.model.events">AtlanEvent</a>&nbsp;event,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCurrentViewOfAsset(com.atlan.AtlanClient,com.atlan.model.events.AtlanEvent,java.util.Collection,boolean,boolean)">getCurrentViewOfAsset</a></span>&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+                     <a href="../model/events/AtlanEvent.html" title="class in com.atlan.model.events">AtlanEvent</a>&nbsp;event,
                      java.util.Collection&lt;java.lang.String&gt;&nbsp;limitedToAttributes,
                      boolean&nbsp;includeMeanings,
                      boolean&nbsp;includeAtlanTags)</code></th>
@@ -371,13 +375,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dl>
 </li>
 </ul>
-<a id="getCurrentState(com.atlan.model.assets.Asset,org.slf4j.Logger)">
+<a id="getCurrentState(com.atlan.AtlanClient,com.atlan.model.assets.Asset,org.slf4j.Logger)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getCurrentState</h4>
-<pre class="methodSignature">default&nbsp;<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;getCurrentState&#8203;(<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;fromEvent,
+<pre class="methodSignature">default&nbsp;<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;getCurrentState&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+                              <a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;fromEvent,
                               org.slf4j.Logger&nbsp;log)
                        throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
 <div class="block">Retrieve the current state of the asset, with minimal required info to handle any logic
@@ -385,6 +390,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
  This default implementation will only really check that the asset still exists in Atlan.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>client</code> - connectivity to Atlan</dd>
 <dd><code>fromEvent</code> - the asset from the event (which could be stale at this point)</dd>
 <dd><code>log</code> - a logger to log anything you want</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -539,13 +545,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dl>
 </li>
 </ul>
-<a id="getCurrentFullAsset(com.atlan.model.events.AtlanEvent)">
+<a id="getCurrentFullAsset(com.atlan.AtlanClient,com.atlan.model.events.AtlanEvent)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getCurrentFullAsset</h4>
-<pre class="methodSignature">static&nbsp;<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;getCurrentFullAsset&#8203;(<a href="../model/events/AtlanEvent.html" title="class in com.atlan.model.events">AtlanEvent</a>&nbsp;event)
+<pre class="methodSignature">static&nbsp;<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;getCurrentFullAsset&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+                                 <a href="../model/events/AtlanEvent.html" title="class in com.atlan.model.events">AtlanEvent</a>&nbsp;event)
                           throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
 <div class="block">Retrieve the full asset from Atlan, to ensure we have the latest information about it.
  Note: this will be slower than getCurrentViewOfAsset, but does not rely on the eventual
@@ -553,6 +560,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
  asset.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>client</code> - connectivity to Atlan</dd>
 <dd><code>event</code> - containing details about an asset</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the current information about the asset in Atlan, in its entirety</dd>
@@ -561,13 +569,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dl>
 </li>
 </ul>
-<a id="getCurrentViewOfAsset(com.atlan.model.events.AtlanEvent,java.util.Collection,boolean,boolean)">
+<a id="getCurrentViewOfAsset(com.atlan.AtlanClient,com.atlan.model.events.AtlanEvent,java.util.Collection,boolean,boolean)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getCurrentViewOfAsset</h4>
-<pre class="methodSignature">static&nbsp;<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;getCurrentViewOfAsset&#8203;(<a href="../model/events/AtlanEvent.html" title="class in com.atlan.model.events">AtlanEvent</a>&nbsp;event,
+<pre class="methodSignature">static&nbsp;<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;getCurrentViewOfAsset&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+                                   <a href="../model/events/AtlanEvent.html" title="class in com.atlan.model.events">AtlanEvent</a>&nbsp;event,
                                    java.util.Collection&lt;java.lang.String&gt;&nbsp;limitedToAttributes,
                                    boolean&nbsp;includeMeanings,
                                    boolean&nbsp;includeAtlanTags)
@@ -580,6 +589,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
  an asset.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>client</code> - connectivity to Atlan</dd>
 <dd><code>event</code> - containing details about an asset</dd>
 <dd><code>limitedToAttributes</code> - the limited set of attributes to retrieve about the asset</dd>
 <dd><code>includeMeanings</code> - if true, include any assigned terms</dd>
@@ -591,13 +601,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dl>
 </li>
 </ul>
-<a id="getCurrentViewOfAsset(com.atlan.model.assets.Asset,java.util.Collection,boolean,boolean)">
+<a id="getCurrentViewOfAsset(com.atlan.AtlanClient,com.atlan.model.assets.Asset,java.util.Collection,boolean,boolean)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getCurrentViewOfAsset</h4>
-<pre class="methodSignature">static&nbsp;<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;getCurrentViewOfAsset&#8203;(<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;fromEvent,
+<pre class="methodSignature">static&nbsp;<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;getCurrentViewOfAsset&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+                                   <a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;fromEvent,
                                    java.util.Collection&lt;java.lang.String&gt;&nbsp;limitedToAttributes,
                                    boolean&nbsp;includeMeanings,
                                    boolean&nbsp;includeAtlanTags)
@@ -610,6 +621,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
  an asset.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>client</code> - connectivity to Atlan</dd>
 <dd><code>fromEvent</code> - details of the asset in the event</dd>
 <dd><code>limitedToAttributes</code> - the limited set of attributes to retrieve about the asset</dd>
 <dd><code>includeMeanings</code> - if true, include any assigned terms</dd>

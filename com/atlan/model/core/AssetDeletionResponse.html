@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -147,12 +147,16 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><code><a href="AtlanAsyncMutator.html" title="interface in com.atlan.model.core">AtlanAsyncMutator</a></code>, <code><a href="AtlanResponseInterface.html" title="interface in com.atlan.model.core">AtlanResponseInterface</a></code></dd>
+<dd><code><a href="AtlanAsyncMutator.html" title="interface in com.atlan.model.core">AtlanAsyncMutator</a></code>, <code><a href="AtlanResponseInterface.html" title="interface in com.atlan.model.core">AtlanResponseInterface</a></code>, <code>java.io.Serializable</code></dd>
 </dl>
 <hr>
 <pre>public class <span class="typeNameLabel">AssetDeletionResponse</span>
 extends <a href="AssetMutationResponse.html" title="class in com.atlan.model.core">AssetMutationResponse</a>
 implements <a href="AtlanAsyncMutator.html" title="interface in com.atlan.model.core">AtlanAsyncMutator</a></pre>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../../serialized-form.html#com.atlan.model.core.AssetDeletionResponse">Serialized Form</a></dd>
+</dl>
 </li>
 </ul>
 </div>
@@ -254,11 +258,25 @@ implements <a href="AtlanAsyncMutator.html" title="interface in com.atlan.model.
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
+<td class="colFirst"><code><a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getClient()">getClient</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Connectivity to the Atlan tenant where the asset deletion was run.</div>
+</td>
+</tr>
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setClient(com.atlan.AtlanClient)">setClient</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)</code></th>
+<td class="colLast">
+<div class="block">Connectivity to the Atlan tenant where the asset deletion was run.</div>
+</td>
+</tr>
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 </tr>
@@ -346,6 +364,16 @@ implements <a href="AtlanAsyncMutator.html" title="interface in com.atlan.model.
 </dl>
 </li>
 </ul>
+<a id="getClient()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getClient</h4>
+<pre class="methodSignature">public&nbsp;<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;getClient()</pre>
+<div class="block">Connectivity to the Atlan tenant where the asset deletion was run.</div>
+</li>
+</ul>
 <a id="equals(java.lang.Object)">
 <!--   -->
 </a>
@@ -388,7 +416,7 @@ implements <a href="AtlanAsyncMutator.html" title="interface in com.atlan.model.
 <a id="toString()">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>toString</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;toString()</pre>
@@ -397,6 +425,16 @@ implements <a href="AtlanAsyncMutator.html" title="interface in com.atlan.model.
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="AssetMutationResponse.html#toString()">toString</a></code>&nbsp;in class&nbsp;<code><a href="AssetMutationResponse.html" title="class in com.atlan.model.core">AssetMutationResponse</a></code></dd>
 </dl>
+</li>
+</ul>
+<a id="setClient(com.atlan.AtlanClient)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>setClient</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setClient&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)</pre>
+<div class="block">Connectivity to the Atlan tenant where the asset deletion was run.</div>
 </li>
 </ul>
 </li>
