@@ -215,14 +215,14 @@ public class TableauFlow extends Asset implements ITableauFlow, ITableau, IBI, I
             } else if (asset instanceof TableauFlow) {
                 return (TableauFlow) asset;
             } else {
-                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "TableauFlow");
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, TYPE_NAME);
             }
         } else {
             Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
             if (asset instanceof TableauFlow) {
                 return (TableauFlow) asset;
             } else {
-                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "TableauFlow");
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, TYPE_NAME);
             }
         }
     }

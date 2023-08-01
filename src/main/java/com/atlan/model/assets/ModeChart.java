@@ -221,14 +221,14 @@ public class ModeChart extends Asset implements IModeChart, IMode, IBI, ICatalog
             } else if (asset instanceof ModeChart) {
                 return (ModeChart) asset;
             } else {
-                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "ModeChart");
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, TYPE_NAME);
             }
         } else {
             Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
             if (asset instanceof ModeChart) {
                 return (ModeChart) asset;
             } else {
-                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "ModeChart");
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, TYPE_NAME);
             }
         }
     }

@@ -214,14 +214,14 @@ public class PowerBITile extends Asset implements IPowerBITile, IPowerBI, IBI, I
             } else if (asset instanceof PowerBITile) {
                 return (PowerBITile) asset;
             } else {
-                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "PowerBITile");
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, TYPE_NAME);
             }
         } else {
             Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
             if (asset instanceof PowerBITile) {
                 return (PowerBITile) asset;
             } else {
-                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "PowerBITile");
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, TYPE_NAME);
             }
         }
     }

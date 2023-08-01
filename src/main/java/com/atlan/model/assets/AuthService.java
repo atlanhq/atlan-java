@@ -189,14 +189,14 @@ public class AuthService extends Asset implements IAuthService, IAsset, IReferen
             } else if (asset instanceof AuthService) {
                 return (AuthService) asset;
             } else {
-                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "AuthService");
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, TYPE_NAME);
             }
         } else {
             Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
             if (asset instanceof AuthService) {
                 return (AuthService) asset;
             } else {
-                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "AuthService");
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, TYPE_NAME);
             }
         }
     }

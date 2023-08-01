@@ -233,14 +233,14 @@ public class LookerLook extends Asset implements ILookerLook, ILooker, IBI, ICat
             } else if (asset instanceof LookerLook) {
                 return (LookerLook) asset;
             } else {
-                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "LookerLook");
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, TYPE_NAME);
             }
         } else {
             Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
             if (asset instanceof LookerLook) {
                 return (LookerLook) asset;
             } else {
-                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "LookerLook");
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, TYPE_NAME);
             }
         }
     }

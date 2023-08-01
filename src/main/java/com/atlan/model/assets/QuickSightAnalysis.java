@@ -221,14 +221,14 @@ public class QuickSightAnalysis extends Asset
             } else if (asset instanceof QuickSightAnalysis) {
                 return (QuickSightAnalysis) asset;
             } else {
-                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "QuickSightAnalysis");
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, TYPE_NAME);
             }
         } else {
             Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
             if (asset instanceof QuickSightAnalysis) {
                 return (QuickSightAnalysis) asset;
             } else {
-                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "QuickSightAnalysis");
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, TYPE_NAME);
             }
         }
     }

@@ -288,14 +288,14 @@ public class SnowflakeStream extends Asset implements ISnowflakeStream, ISQL, IC
             } else if (asset instanceof SnowflakeStream) {
                 return (SnowflakeStream) asset;
             } else {
-                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "SnowflakeStream");
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, TYPE_NAME);
             }
         } else {
             Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
             if (asset instanceof SnowflakeStream) {
                 return (SnowflakeStream) asset;
             } else {
-                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "SnowflakeStream");
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, TYPE_NAME);
             }
         }
     }

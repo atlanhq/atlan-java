@@ -199,14 +199,14 @@ public class ThoughtspotDashlet extends Asset
             } else if (asset instanceof ThoughtspotDashlet) {
                 return (ThoughtspotDashlet) asset;
             } else {
-                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "ThoughtspotDashlet");
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, TYPE_NAME);
             }
         } else {
             Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
             if (asset instanceof ThoughtspotDashlet) {
                 return (ThoughtspotDashlet) asset;
             } else {
-                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "ThoughtspotDashlet");
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, TYPE_NAME);
             }
         }
     }
