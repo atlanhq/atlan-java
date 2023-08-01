@@ -356,7 +356,7 @@ implements <a href="IAsset.html" title="interface in com.atlan.model.assets">IAs
 </td>
 </tr>
 <tr id="i10" class="altColor">
-<td class="colFirst"><code>protected static <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></code></td>
+<td class="colFirst"><code>static <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#get(com.atlan.AtlanClient,java.lang.String,java.lang.String,boolean)">get</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
    java.lang.String&nbsp;typeName,
    java.lang.String&nbsp;qualifiedName,
@@ -2249,11 +2249,11 @@ public static&nbsp;<a href="Asset.html" title="class in com.atlan.model.assets">
 <ul class="blockList">
 <li class="blockList">
 <h4>get</h4>
-<pre class="methodSignature">protected static&nbsp;<a href="Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;get&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
-                           java.lang.String&nbsp;typeName,
-                           java.lang.String&nbsp;qualifiedName,
-                           boolean&nbsp;includeRelationships)
-                    throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<pre class="methodSignature">public static&nbsp;<a href="Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;get&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+                        java.lang.String&nbsp;typeName,
+                        java.lang.String&nbsp;qualifiedName,
+                        boolean&nbsp;includeRelationships)
+                 throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
 <div class="block">Retrieves an asset by its qualifiedName, optionally complete with all of its relationships.
  The type of the asset will only be determined at runtime.</div>
 <dl>
