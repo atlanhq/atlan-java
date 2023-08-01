@@ -90,6 +90,16 @@ public class SearchFieldGenerator extends TypeGenerator {
                     "GLOSSARY",
                     "__glossary",
                     "Glossary in which the asset is contained, searchable by the qualifiedName of the glossary.",
+                    IndexType.KEYWORD),
+            new FieldDetails(
+                    "CATEGORIES",
+                    "__categories",
+                    "Categories in which the term is organized, searchable by the qualifiedName of the category.",
+                    IndexType.KEYWORD),
+            new FieldDetails(
+                    "PARENT_CATEGORY",
+                    "__parentCategory",
+                    "Parent category in which a subcategory is contained, searchable by the qualifiedName of the category.",
                     IndexType.KEYWORD));
 
     private static final List<FieldDetails> COMMON_TEXT = List.of(
