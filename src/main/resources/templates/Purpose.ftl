@@ -59,6 +59,19 @@
     }
 
     /**
+     * Find a Purpose by its human-readable name. Only the bare minimum set of attributes and no
+     * relationships will be retrieved for the purpose, if found.
+     *
+     * @param name of the Purpose
+     * @return all Purposes with that name, if found
+     * @throws AtlanException on any API problems
+     * @throws NotFoundException if the Purpose does not exist
+     */
+    public static List<Purpose> findByName(String name) throws AtlanException {
+        return findByName(name, null);
+    }
+
+    /**
      * Find a Purpose by its human-readable name.
      *
      * @param name of the Purpose
@@ -70,6 +83,20 @@
     public static List<Purpose> findByName(String name, Collection<String> attributes)
             throws AtlanException {
         return findByName(Atlan.getDefaultClient(), name, attributes);
+    }
+
+    /**
+     * Find a Purpose by its human-readable name. Only the bare minimum set of attributes and no
+     * relationships will be retrieved for the purpose, if found.
+     *
+     * @param client connectivity to the Atlan tenant in which to search for the purpose
+     * @param name of the Purpose
+     * @return all Purposes with that name, if found
+     * @throws AtlanException on any API problems
+     * @throws NotFoundException if the Purpose does not exist
+     */
+    public static List<Purpose> findByName(AtlanClient client, String name) throws AtlanException {
+        return findByName(client, name, null);
     }
 
     /**

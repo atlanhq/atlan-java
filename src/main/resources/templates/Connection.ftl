@@ -298,6 +298,20 @@
     }
 
     /**
+     * Find a connection by its human-readable name and type. Only the bare minimum set of attributes and no
+     * relationships will be retrieved for the connection, if found.
+     *
+     * @param name of the connection
+     * @param type of the connection
+     * @return all connections with that name and type, if found
+     * @throws AtlanException on any API problems
+     * @throws NotFoundException if the connection does not exist
+     */
+    public static List<Connection> findByName(String name, AtlanConnectorType type) throws AtlanException {
+        return findByName(name, type, null);
+    }
+
+    /**
      * Find a connection by its human-readable name and type.
      *
      * @param name of the connection
@@ -308,6 +322,37 @@
      * @throws NotFoundException if the connection does not exist
      */
     public static List<Connection> findByName(String name, AtlanConnectorType type, Collection<String> attributes)
+            throws AtlanException {
+        return findByName(Atlan.getDefaultClient(), name, type, attributes);
+    }
+
+    /**
+     * Find a connection by its human-readable name and type. Only the bare minimum set of attributes and no
+     * relationships will be retrieved for the connection, if found.
+     *
+     * @param client connectivity to the Atlan tenant in which to search for the connection
+     * @param name of the connection
+     * @param type of the connection
+     * @return all connections with that name and type, if found
+     * @throws AtlanException on any API problems
+     * @throws NotFoundException if the connection does not exist
+     */
+    public static List<Connection> findByName(AtlanClient client, String name, AtlanConnectorType type) throws AtlanException {
+        return findByName(client, name, type, null);
+    }
+
+    /**
+     * Find a connection by its human-readable name and type.
+     *
+     * @param client connectivity to the Atlan tenant in which to search for the connection
+     * @param name of the connection
+     * @param type of the connection
+     * @param attributes an optional collection of attributes to retrieve for the connection
+     * @return all connections with that name and type, if found
+     * @throws AtlanException on any API problems
+     * @throws NotFoundException if the connection does not exist
+     */
+    public static List<Connection> findByName(AtlanClient client, String name, AtlanConnectorType type, Collection<String> attributes)
             throws AtlanException {
         Query filter = QueryFactory.CompoundQuery.builder()
                 .must(QueryFactory.beActive())
@@ -321,7 +366,7 @@
             builder.attributes(attributes);
         }
         IndexSearchRequest request = builder.build();
-        IndexSearchResponse response = request.search();
+        IndexSearchResponse response = request.search(client);
         List<Connection> connections = new ArrayList<>();
         if (response != null) {
             List<Asset> results = response.getAssets();

@@ -293,7 +293,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.search.connection"},
             dependsOnGroups = {"asset.create.connection"})
     void findConnection() throws AtlanException {
-        List<Connection> results = Connection.findByName(CONNECTION_NAME, CONNECTOR_TYPE, null);
+        List<Connection> results = Connection.findByName(CONNECTION_NAME, CONNECTOR_TYPE);
         assertNotNull(results);
         assertEquals(results.size(), 1);
         Connection one = results.get(0);

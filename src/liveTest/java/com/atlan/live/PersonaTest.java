@@ -88,7 +88,7 @@ public class PersonaTest extends AtlanLiveTest {
         int count = 0;
         while (list == null && count < Atlan.getMaxNetworkRetries()) {
             try {
-                list = Persona.findByName(PERSONA_NAME, null);
+                list = Persona.findByName(PERSONA_NAME);
             } catch (NotFoundException e) {
                 Thread.sleep(HttpClient.waitTime(count).toMillis());
                 count++;

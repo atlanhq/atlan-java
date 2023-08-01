@@ -92,7 +92,7 @@ public class PurposeTest extends AtlanLiveTest {
         int count = 0;
         while (purposes == null && count < Atlan.getMaxNetworkRetries()) {
             try {
-                purposes = Purpose.findByName(PURPOSE_NAME, null);
+                purposes = Purpose.findByName(PURPOSE_NAME);
                 break;
             } catch (NotFoundException e) {
                 Thread.sleep(HttpClient.waitTime(count).toMillis());
