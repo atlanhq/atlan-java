@@ -23,7 +23,7 @@ public class GroupCache {
 
     private synchronized void refreshCache() throws AtlanException {
         log.debug("Refreshing cache of groups...");
-        List<AtlanGroup> groups = AtlanGroup.retrieveAll();
+        List<AtlanGroup> groups = AtlanGroup.list();
         mapIdToName = new ConcurrentHashMap<>();
         mapNameToId = new ConcurrentHashMap<>();
         mapAliasToId = new ConcurrentHashMap<>();

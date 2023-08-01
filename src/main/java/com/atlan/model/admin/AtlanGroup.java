@@ -131,7 +131,7 @@ public class AtlanGroup extends AtlanObject {
      * @throws AtlanException on any error during API invocation
      */
     public void update(AtlanClient client) throws AtlanException {
-        if (this.id == null || this.id.length() == 0) {
+        if (this.id == null || this.id.isEmpty()) {
             throw new InvalidRequestException(ErrorCode.MISSING_GROUP_ID);
         }
         client.groups.update(this.id, this);
@@ -163,9 +163,34 @@ public class AtlanGroup extends AtlanObject {
      *
      * @return the list of groups currently defined in Atlan
      * @throws AtlanException on any error during API invocation
+     * @deprecated see {@link #list()} instead
      */
+    @Deprecated
     public static List<AtlanGroup> retrieveAll() throws AtlanException {
-        return retrieveAll(Atlan.getDefaultClient());
+        return list();
+    }
+
+    /**
+     * Retrieves all groups currently defined in Atlan.
+     *
+     * @param client connectivity to the Atlan tenant from which to list the groups
+     * @return the list of groups currently defined in Atlan
+     * @throws AtlanException on any error during API invocation
+     * @deprecated see {@link #list(AtlanClient)} instead
+     */
+    @Deprecated
+    public static List<AtlanGroup> retrieveAll(AtlanClient client) throws AtlanException {
+        return list(client);
+    }
+
+    /**
+     * Retrieves all groups currently defined in Atlan.
+     *
+     * @return the list of groups currently defined in Atlan
+     * @throws AtlanException on any error during API invocation
+     */
+    public static List<AtlanGroup> list() throws AtlanException {
+        return list(Atlan.getDefaultClient());
     }
 
     /**
@@ -175,7 +200,7 @@ public class AtlanGroup extends AtlanObject {
      * @return the list of groups currently defined in Atlan
      * @throws AtlanException on any error during API invocation
      */
-    public static List<AtlanGroup> retrieveAll(AtlanClient client) throws AtlanException {
+    public static List<AtlanGroup> list(AtlanClient client) throws AtlanException {
         return client.groups.list();
     }
 
@@ -188,9 +213,43 @@ public class AtlanGroup extends AtlanObject {
      * @param alias name (as it appears in the UI) on which to filter the groups
      * @return all groups whose name (in the UI) contains the provided string
      * @throws AtlanException on any error during API invocation
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static List<AtlanGroup> retrieveByName(String alias) throws AtlanException {
-        return retrieveByName(Atlan.getDefaultClient(), alias);
+        return get(alias);
+    }
+
+    /**
+     * Retrieves all groups with a name that contains the provided string.
+     * (This could include a complete group name, in which case there should be at
+     * most a single item in the returned list, or could be a partial group name
+     * to retrieve all groups with that naming convention.)
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the group
+     * @param alias name (as it appears in the UI) on which to filter the groups
+     * @return all groups whose name (in the UI) contains the provided string
+     * @throws AtlanException on any error during API invocation
+     * @deprecated see {@link #get(AtlanClient, String)} instead
+     */
+    @Deprecated
+    public static List<AtlanGroup> retrieveByName(AtlanClient client, String alias) throws AtlanException {
+        return get(client, alias);
+    }
+
+    /**
+     * Retrieves all groups with a name that contains the provided string.
+     * (This could include a complete group name, in which case there should be at
+     * most a single item in the returned list, or could be a partial group name
+     * to retrieve all groups with that naming convention.)
+     *
+     * @param alias name (as it appears in the UI) on which to filter the groups
+     * @return all groups whose name (in the UI) contains the provided string
+     * @throws AtlanException on any error during API invocation
+     */
+    @JsonIgnore
+    public static List<AtlanGroup> get(String alias) throws AtlanException {
+        return get(Atlan.getDefaultClient(), alias);
     }
 
     /**
@@ -204,7 +263,8 @@ public class AtlanGroup extends AtlanObject {
      * @return all groups whose name (in the UI) contains the provided string
      * @throws AtlanException on any error during API invocation
      */
-    public static List<AtlanGroup> retrieveByName(AtlanClient client, String alias) throws AtlanException {
+    @JsonIgnore
+    public static List<AtlanGroup> get(AtlanClient client, String alias) throws AtlanException {
         return client.groups.get(alias);
     }
 
@@ -226,7 +286,7 @@ public class AtlanGroup extends AtlanObject {
      * @throws AtlanException on any API communication issue
      */
     public void removeUsers(AtlanClient client, List<String> userIds) throws AtlanException {
-        if (this.id == null || this.id.length() == 0) {
+        if (this.id == null || this.id.isEmpty()) {
             throw new InvalidRequestException(ErrorCode.MISSING_GROUP_ID);
         }
         client.groups.removeMembers(this.id, userIds);
@@ -250,7 +310,7 @@ public class AtlanGroup extends AtlanObject {
      * @throws AtlanException on any API communication issue
      */
     public UserResponse fetchUsers(AtlanClient client) throws AtlanException {
-        if (this.id == null || this.id.length() == 0) {
+        if (this.id == null || this.id.isEmpty()) {
             throw new InvalidRequestException(ErrorCode.MISSING_GROUP_ID);
         }
         return client.groups.listMembers(this.id);

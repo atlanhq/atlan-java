@@ -141,7 +141,7 @@ public class AtlanUser extends AtlanObject {
      * @throws AtlanException on any error during API invocation
      */
     public UserMinimalResponse update(AtlanClient client) throws AtlanException {
-        if (this.id == null || this.id.length() == 0) {
+        if (this.id == null || this.id.isEmpty()) {
             throw new InvalidRequestException(ErrorCode.MISSING_USER_ID);
         }
         return client.users.update(this.id, this);
@@ -186,7 +186,7 @@ public class AtlanUser extends AtlanObject {
      * @throws AtlanException on any API communication issue
      */
     public void addToGroups(AtlanClient client, List<String> groupIds) throws AtlanException {
-        if (this.id == null || this.id.length() == 0) {
+        if (this.id == null || this.id.isEmpty()) {
             throw new InvalidRequestException(ErrorCode.MISSING_USER_ID);
         }
         client.users.addToGroups(this.id, groupIds);
@@ -210,7 +210,7 @@ public class AtlanUser extends AtlanObject {
      * @throws AtlanException on any API communication issue
      */
     public GroupResponse fetchGroups(AtlanClient client) throws AtlanException {
-        if (this.id == null || this.id.length() == 0) {
+        if (this.id == null || this.id.isEmpty()) {
             throw new InvalidRequestException(ErrorCode.MISSING_USER_ID);
         }
         return client.users.listGroups(this.id);
@@ -221,9 +221,34 @@ public class AtlanUser extends AtlanObject {
      *
      * @return the list of users currently defined in Atlan
      * @throws AtlanException on any error during API invocation
+     * @deprecated see {@link #list()} instead
      */
+    @Deprecated
     public static List<AtlanUser> retrieveAll() throws AtlanException {
-        return retrieveAll(Atlan.getDefaultClient());
+        return list();
+    }
+
+    /**
+     * Retrieves all users currently defined in Atlan.
+     *
+     * @param client connectivity to the Atlan tenant from which users should be listed
+     * @return the list of users currently defined in Atlan
+     * @throws AtlanException on any error during API invocation
+     * @deprecated see {@link #list(AtlanClient)} instead
+     */
+    @Deprecated
+    public static List<AtlanUser> retrieveAll(AtlanClient client) throws AtlanException {
+        return list(client);
+    }
+
+    /**
+     * Retrieves all users currently defined in Atlan.
+     *
+     * @return the list of users currently defined in Atlan
+     * @throws AtlanException on any error during API invocation
+     */
+    public static List<AtlanUser> list() throws AtlanException {
+        return list(Atlan.getDefaultClient());
     }
 
     /**
@@ -233,7 +258,7 @@ public class AtlanUser extends AtlanObject {
      * @return the list of users currently defined in Atlan
      * @throws AtlanException on any error during API invocation
      */
-    public static List<AtlanUser> retrieveAll(AtlanClient client) throws AtlanException {
+    public static List<AtlanUser> list(AtlanClient client) throws AtlanException {
         return client.users.list();
     }
 
@@ -247,9 +272,45 @@ public class AtlanUser extends AtlanObject {
      * @param email on which to filter the users
      * @return all users whose email addresses contain the provided string
      * @throws AtlanException on any error during API invocation
+     * @deprecated see {@link #getByEmail(String)} instead
      */
+    @Deprecated
     public static List<AtlanUser> retrieveByEmail(String email) throws AtlanException {
-        return retrieveByEmail(Atlan.getDefaultClient(), email);
+        return getByEmail(email);
+    }
+
+    /**
+     * Retrieves all users with email addresses that contain the provided email.
+     * (This could include a complete email address, in which case there should be at
+     * most a single item in the returned list, or could be a partial email address
+     * such as "@example.com" to retrieve all users with that domain in their email
+     * address.)
+     *
+     * @param client connectivity to the Atlan tenant from which to list users
+     * @param email on which to filter the users
+     * @return all users whose email addresses contain the provided string
+     * @throws AtlanException on any error during API invocation
+     * @deprecated see {@link #getByEmail(AtlanClient, String)} instead
+     */
+    @Deprecated
+    public static List<AtlanUser> retrieveByEmail(AtlanClient client, String email) throws AtlanException {
+        return getByEmail(client, email);
+    }
+
+    /**
+     * Retrieves all users with email addresses that contain the provided email.
+     * (This could include a complete email address, in which case there should be at
+     * most a single item in the returned list, or could be a partial email address
+     * such as "@example.com" to retrieve all users with that domain in their email
+     * address.)
+     *
+     * @param email on which to filter the users
+     * @return all users whose email addresses contain the provided string
+     * @throws AtlanException on any error during API invocation
+     */
+    @JsonIgnore
+    public static List<AtlanUser> getByEmail(String email) throws AtlanException {
+        return getByEmail(Atlan.getDefaultClient(), email);
     }
 
     /**
@@ -264,7 +325,8 @@ public class AtlanUser extends AtlanObject {
      * @return all users whose email addresses contain the provided string
      * @throws AtlanException on any error during API invocation
      */
-    public static List<AtlanUser> retrieveByEmail(AtlanClient client, String email) throws AtlanException {
+    @JsonIgnore
+    public static List<AtlanUser> getByEmail(AtlanClient client, String email) throws AtlanException {
         return client.users.getByEmail(email);
     }
 
@@ -275,9 +337,39 @@ public class AtlanUser extends AtlanObject {
      * @param user the username by which to find the user
      * @return the user with that username
      * @throws AtlanException on any error during API invocation
+     * @deprecated see {@link #getByUsername(String)} instead
      */
+    @Deprecated
     public static AtlanUser retrieveByUsername(String user) throws AtlanException {
-        return retrieveByUsername(Atlan.getDefaultClient(), user);
+        return getByUsername(user);
+    }
+
+    /**
+     * Retrieves a user based on the username. (This attempts an exact match on username rather than a
+     * contains search.)
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the user
+     * @param user the username by which to find the user
+     * @return the user with that username
+     * @throws AtlanException on any error during API invocation
+     * @deprecated see {@link #getByUsername(AtlanClient, String)} instead
+     */
+    @Deprecated
+    public static AtlanUser retrieveByUsername(AtlanClient client, String user) throws AtlanException {
+        return getByUsername(client, user);
+    }
+
+    /**
+     * Retrieves a user based on the username. (This attempts an exact match on username rather than a
+     * contains search.)
+     *
+     * @param user the username by which to find the user
+     * @return the user with that username
+     * @throws AtlanException on any error during API invocation
+     */
+    @JsonIgnore
+    public static AtlanUser getByUsername(String user) throws AtlanException {
+        return getByUsername(Atlan.getDefaultClient(), user);
     }
 
     /**
@@ -289,7 +381,8 @@ public class AtlanUser extends AtlanObject {
      * @return the user with that username
      * @throws AtlanException on any error during API invocation
      */
-    public static AtlanUser retrieveByUsername(AtlanClient client, String user) throws AtlanException {
+    @JsonIgnore
+    public static AtlanUser getByUsername(AtlanClient client, String user) throws AtlanException {
         return client.users.getByUsername(user);
     }
 
