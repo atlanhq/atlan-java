@@ -5,6 +5,7 @@ package com.atlan.model.core;
 /* Based on original code from https://github.com/stripe/stripe-java (under MIT license) */
 import com.atlan.AtlanClient;
 import java.io.IOException;
+import java.io.Serializable;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = false)
-public abstract class AtlanObject {
+public abstract class AtlanObject implements Serializable {
+    private static final long serialVersionUID = 2L;
 
     public AtlanObject() {
         // Do nothing - needed for Lombok SuperBuilder generations...

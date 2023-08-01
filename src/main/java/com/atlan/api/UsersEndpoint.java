@@ -484,6 +484,8 @@ public class UsersEndpoint extends HeraclesEndpoint {
     @SuperBuilder
     @EqualsAndHashCode(callSuper = false)
     static final class CreateUserRequest extends AtlanObject {
+        private static final long serialVersionUID = 2L;
+
         @Singular
         List<CreateUser> users;
     }
@@ -493,6 +495,7 @@ public class UsersEndpoint extends HeraclesEndpoint {
     @SuperBuilder
     @EqualsAndHashCode(callSuper = false)
     static final class ChangeRoleRequest extends AtlanObject {
+        private static final long serialVersionUID = 2L;
         String roleId;
     }
 
@@ -500,6 +503,7 @@ public class UsersEndpoint extends HeraclesEndpoint {
     @SuperBuilder
     @EqualsAndHashCode(callSuper = false)
     private static final class CreateUser extends AtlanObject {
+        private static final long serialVersionUID = 2L;
         String email;
         String roleName;
         String roleId;
@@ -510,6 +514,7 @@ public class UsersEndpoint extends HeraclesEndpoint {
     @SuperBuilder
     @EqualsAndHashCode(callSuper = false)
     static final class AddToGroupsRequest extends AtlanObject {
+        private static final long serialVersionUID = 2L;
         List<String> groups;
     }
 }

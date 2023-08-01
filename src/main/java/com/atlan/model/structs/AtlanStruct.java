@@ -45,6 +45,7 @@ import lombok.extern.slf4j.Slf4j;
 })
 @Slf4j
 public abstract class AtlanStruct extends AtlanObject {
+    private static final long serialVersionUID = 2L;
 
     /** Name of the type that defines the struct. */
     String typeName;

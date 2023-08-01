@@ -62,6 +62,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @SuppressWarnings("cast")
 public abstract class Asset extends Reference implements IAsset, IReferenceable {
+    private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "Asset";
 

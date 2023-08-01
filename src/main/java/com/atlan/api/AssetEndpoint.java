@@ -916,6 +916,8 @@ public class AssetEndpoint extends AtlasEndpoint {
      * Request class for handling Atlan tag additions.
      */
     public static class AtlanTagList extends AtlanObject {
+        private static final long serialVersionUID = 2L;
+
         private final List<AtlanTag> tags;
 
         public AtlanTagList(List<AtlanTag> tags) {
@@ -939,6 +941,8 @@ public class AssetEndpoint extends AtlasEndpoint {
     @SuperBuilder
     @EqualsAndHashCode(callSuper = false)
     static class SingleEntityRequest extends AtlanObject {
+        private static final long serialVersionUID = 2L;
+
         /** The asset to update. */
         Asset entity;
     }
@@ -948,6 +952,7 @@ public class AssetEndpoint extends AtlasEndpoint {
      */
     @EqualsAndHashCode(callSuper = false)
     static class CustomMetadataUpdateRequest extends AtlanObject {
+        private static final long serialVersionUID = 2L;
 
         /** Whether to include the custom metadata name as an outer wrapper (true) or not (false). */
         private final transient boolean includeName;
@@ -996,6 +1001,8 @@ public class AssetEndpoint extends AtlasEndpoint {
     @SuperBuilder
     @EqualsAndHashCode(callSuper = false)
     static class BulkEntityRequest extends AtlanObject {
+        private static final long serialVersionUID = 2L;
+
         /** List of assets to operate on in bulk. */
         List<Asset> entities;
     }

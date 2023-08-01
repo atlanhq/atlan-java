@@ -33,7 +33,6 @@ import lombok.experimental.SuperBuilder;
 })
 @ToString(callSuper = true)
 public abstract class AtlanRequest extends AtlanObject {
-
     private static final long serialVersionUID = 2L;
 
     /** Unique identifier for the request (GUID). */

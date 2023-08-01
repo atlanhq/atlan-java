@@ -15,6 +15,7 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public abstract class AbstractPurposePolicy extends AbstractPolicy {
+    private static final long serialVersionUID = 2L;
 
     /** Whether this policy applies to all users (true) or not (false). */
     Boolean allUsers;

@@ -17,6 +17,7 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
 public class EntityFilter extends AtlanObject {
+    private static final long serialVersionUID = 2L;
 
     /** Name of the attribute on which filtering should be applied. */
     String attributeName;

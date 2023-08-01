@@ -18,6 +18,7 @@ import lombok.extern.jackson.Jacksonized;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class AzureTag extends AtlanStruct {
+    private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "AzureTag";
 

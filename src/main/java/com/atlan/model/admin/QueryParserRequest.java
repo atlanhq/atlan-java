@@ -15,6 +15,7 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class QueryParserRequest extends AtlanObject {
+    private static final long serialVersionUID = 2L;
 
     /** SQL query to be parsed. */
     String sql;

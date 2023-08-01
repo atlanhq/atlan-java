@@ -31,6 +31,8 @@ import org.slf4j.MDC;
 @Slf4j
 @ToString(callSuper = true)
 public abstract class ApiResource extends AtlanObject implements AtlanResponseInterface {
+    private static final long serialVersionUID = 2L;
+
     public static final Charset CHARSET = StandardCharsets.UTF_8;
 
     private static final AtlanResponseGetter atlanResponseGetter = new LiveAtlanResponseGetter();

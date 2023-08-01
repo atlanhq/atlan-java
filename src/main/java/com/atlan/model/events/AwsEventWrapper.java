@@ -19,6 +19,7 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class AwsEventWrapper extends AtlanObject {
+    private static final long serialVersionUID = 2L;
 
     @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
     public AwsEventWrapper(
@@ -69,6 +70,7 @@ public class AwsEventWrapper extends AtlanObject {
     @EqualsAndHashCode(callSuper = true)
     @ToString(callSuper = true)
     public static final class AwsRequestContext extends AtlanObject {
+        private static final long serialVersionUID = 2L;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
         public AwsRequestContext(

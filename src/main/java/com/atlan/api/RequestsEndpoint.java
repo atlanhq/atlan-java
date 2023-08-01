@@ -355,6 +355,8 @@ public class RequestsEndpoint extends HeraclesEndpoint {
     @Getter
     @EqualsAndHashCode(callSuper = false)
     private static final class BulkRequest extends ApiResource {
+        private static final long serialVersionUID = 2L;
+
         List<AtlanRequest> requests;
 
         public BulkRequest(List<AtlanRequest> requests) {
@@ -368,6 +370,8 @@ public class RequestsEndpoint extends HeraclesEndpoint {
     @Getter
     @EqualsAndHashCode(callSuper = false)
     private static final class AtlanRequestAction extends ApiResource {
+        private static final long serialVersionUID = 2L;
+
         /** Action to take on the request. */
         AtlanRequestStatus action;
 
@@ -389,6 +393,8 @@ public class RequestsEndpoint extends HeraclesEndpoint {
     @JsonDeserialize(using = WrappedRequestDeserializer.class)
     @EqualsAndHashCode(callSuper = false)
     private static final class WrappedRequest extends ApiResource {
+        private static final long serialVersionUID = 2L;
+
         AtlanRequest request;
 
         public WrappedRequest(AtlanRequest request) {
@@ -454,6 +460,8 @@ public class RequestsEndpoint extends HeraclesEndpoint {
     @JsonDeserialize(using = WrappedStringDeserializer.class)
     @EqualsAndHashCode(callSuper = false)
     private static final class WrappedString extends ApiResource {
+        private static final long serialVersionUID = 2L;
+
         String result;
 
         public WrappedString(String result) {

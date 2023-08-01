@@ -18,6 +18,7 @@ import lombok.experimental.SuperBuilder;
 @ToString(callSuper = true)
 @SuppressWarnings("cast")
 public class CustomMetadataAttributes extends AtlanObject {
+    private static final long serialVersionUID = 2L;
 
     /**
      * Mapping of custom metadata attributes to values, all by human-readable names.

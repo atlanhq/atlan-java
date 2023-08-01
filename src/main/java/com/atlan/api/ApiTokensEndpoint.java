@@ -214,6 +214,8 @@ public class ApiTokensEndpoint extends HeraclesEndpoint {
     @Getter
     @EqualsAndHashCode(callSuper = false)
     private static final class ApiTokenRequest extends ApiResource {
+        private static final long serialVersionUID = 2L;
+
         /** Human-readable name provided when creating the token. */
         String displayName;
 
@@ -252,6 +254,8 @@ public class ApiTokensEndpoint extends HeraclesEndpoint {
     @JsonDeserialize(using = WrappedApiTokenDeserializer.class)
     @EqualsAndHashCode(callSuper = false)
     private static final class WrappedApiToken extends ApiResource {
+        private static final long serialVersionUID = 2L;
+
         ApiToken token;
 
         public WrappedApiToken(ApiToken token) {

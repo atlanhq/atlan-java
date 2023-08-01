@@ -16,6 +16,7 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
 public class AtlanTagPayload extends AtlanRequestPayload {
+    private static final long serialVersionUID = 2L;
 
     /** Name of the Atlan tag. */
     String typeName;

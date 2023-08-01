@@ -16,6 +16,7 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
 public class LineageRequest extends AtlanObject {
+    private static final long serialVersionUID = 2L;
 
     /** Unique identifier of the asset for which to retrieve lineage. */
     String guid;

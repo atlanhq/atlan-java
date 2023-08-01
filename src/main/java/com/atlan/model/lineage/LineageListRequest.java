@@ -22,6 +22,7 @@ import lombok.extern.jackson.Jacksonized;
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
 public class LineageListRequest extends AtlanObject {
+    private static final long serialVersionUID = 2L;
 
     /**
      * Build a lineage list request starting from the provided GUID and using default options.
