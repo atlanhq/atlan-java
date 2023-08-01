@@ -243,6 +243,8 @@ public enum KeywordFields implements AtlanSearchableField {
     BADGE_CONDITIONS("badgeConditions"),
     /** TBC */
     BADGE_METADATA_ATTRIBUTE("badgeMetadataAttribute"),
+    /** Categories in which the term is organized, searchable by the qualifiedName of the category. */
+    CATEGORIES("__categories"),
     /** Type of connection. */
     CATEGORY("category"),
     /** Status of the asset's certification. */
@@ -697,6 +699,8 @@ public enum KeywordFields implements AtlanSearchableField {
     OWNER_USERS("ownerUsers"),
     /** TBC */
     PARAMS("params"),
+    /** Parent category in which a subcategory is contained, searchable by the qualifiedName of the category. */
+    PARENT_CATEGORY("__parentCategory"),
     /** TBC */
     PARENT_COLUMN_NAME("parentColumnName.keyword"),
     /** TBC */
