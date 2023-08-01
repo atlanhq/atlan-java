@@ -106,6 +106,12 @@ import com.atlan.model.assets.IGlossaryTerm;
 import com.atlan.model.assets.I${resolveSuperTypeName(parent)};
 </#if>
 </#list>
+<#if classTemplateFile??>
+<#import classTemplateFile as methods>
+<#if methods.imports??>
+<@methods.imports/>
+</#if>
+</#if>
 
 import javax.annotation.processing.Generated;
 

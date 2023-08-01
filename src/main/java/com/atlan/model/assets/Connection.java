@@ -377,7 +377,7 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
      * @param tokens of the qualifiedName, from which to determine the connector type
      * @return the connector type, or null if the qualifiedName is not for a connected asset
      */
-    protected static AtlanConnectorType getConnectorTypeFromQualifiedName(String[] tokens) {
+    public static AtlanConnectorType getConnectorTypeFromQualifiedName(String[] tokens) {
         if (tokens.length > 1) {
             return AtlanConnectorType.fromValue(tokens[1]);
         }
