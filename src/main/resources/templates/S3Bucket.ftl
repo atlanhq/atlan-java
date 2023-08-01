@@ -8,7 +8,7 @@
      * @return the minimal object necessary to create the S3 bucket, as a builder
      */
     public static S3BucketBuilder<?, ?> creator(String name, String connectionQualifiedName, String awsArn) {
-        return S3Bucket.builder()
+        return S3Bucket._internal()
                 .qualifiedName(IS3.generateQualifiedName(connectionQualifiedName, awsArn))
                 .name(name)
                 .connectionQualifiedName(connectionQualifiedName)
@@ -24,7 +24,7 @@
      * @return the minimal request necessary to update the S3Bucket, as a builder
      */
     public static S3BucketBuilder<?, ?> updater(String qualifiedName, String name) {
-        return S3Bucket.builder().qualifiedName(qualifiedName).name(name);
+        return S3Bucket._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**

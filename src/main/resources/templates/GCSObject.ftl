@@ -9,7 +9,7 @@
     public static GCSObjectBuilder<?, ?> creator(String name, String bucketQualifiedName) {
         String connectionQualifiedName = StringUtils.getConnectionQualifiedName(bucketQualifiedName);
         String bucketName = StringUtils.getNameFromQualifiedName(bucketQualifiedName);
-        return GCSObject.builder()
+        return GCSObject._internal()
                 .qualifiedName(generateQualifiedName(name, bucketQualifiedName))
                 .name(name)
                 .connectionQualifiedName(connectionQualifiedName)
@@ -38,7 +38,7 @@
      * @return the minimal request necessary to update the GCSObject, as a builder
      */
     public static GCSObjectBuilder<?, ?> updater(String qualifiedName, String name) {
-        return GCSObject.builder().qualifiedName(qualifiedName).name(name);
+        return GCSObject._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**

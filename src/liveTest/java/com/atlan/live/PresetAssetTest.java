@@ -171,7 +171,7 @@ public class PresetAssetTest extends AtlanLiveTest {
             groups = {"preset.read.collection"},
             dependsOnGroups = {"preset.create.*", "preset.update.collection"})
     void retrieveCollection() throws AtlanException {
-        PresetDashboard c = PresetDashboard.retrieveByGuid(collection.getGuid());
+        PresetDashboard c = PresetDashboard.get(collection.getGuid());
         assertNotNull(c);
         assertTrue(c.isComplete());
         assertEquals(c.getGuid(), collection.getGuid());
@@ -315,7 +315,7 @@ public class PresetAssetTest extends AtlanLiveTest {
             groups = {"preset.delete.chart.read"},
             dependsOnGroups = {"preset.delete.chart"})
     void readDeletedChart() throws AtlanException {
-        PresetChart deleted = PresetChart.retrieveByGuid(chart.getGuid());
+        PresetChart deleted = PresetChart.get(chart.getGuid());
         assertNotNull(deleted);
         assertEquals(deleted.getGuid(), chart.getGuid());
         assertEquals(deleted.getQualifiedName(), chart.getQualifiedName());
@@ -327,7 +327,7 @@ public class PresetAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"preset.delete.chart.read"})
     void restoreChart() throws AtlanException {
         assertTrue(PresetChart.restore(chart.getQualifiedName()));
-        PresetChart restored = PresetChart.retrieveByQualifiedName(chart.getQualifiedName());
+        PresetChart restored = PresetChart.get(chart.getQualifiedName());
         assertEquals(restored.getGuid(), chart.getGuid());
         assertEquals(restored.getQualifiedName(), chart.getQualifiedName());
         assertEquals(restored.getStatus(), AtlanStatus.ACTIVE);

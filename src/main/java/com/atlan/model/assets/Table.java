@@ -15,6 +15,7 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.QueryFactory;
 import com.atlan.util.StringUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +31,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -288,7 +289,7 @@ public class Table extends Asset implements ITable, ISQL, ICatalog, IAsset, IRef
      * @return reference to a Table that can be used for defining a relationship to a Table
      */
     public static Table refByGuid(String guid) {
-        return Table.builder().guid(guid).build();
+        return Table._internal().guid(guid).build();
     }
 
     /**
@@ -298,21 +299,80 @@ public class Table extends Asset implements ITable, ISQL, ICatalog, IAsset, IRef
      * @return reference to a Table that can be used for defining a relationship to a Table
      */
     public static Table refByQualifiedName(String qualifiedName) {
-        return Table.builder()
+        return Table._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
     }
 
     /**
+     * Retrieves a Table by one of its identifiers, complete with all of its relationships.
+     *
+     * @param id of the Table to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full Table, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Table does not exist or the provided GUID is not a Table
+     */
+    @JsonIgnore
+    public static Table get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
+    }
+
+    /**
+     * Retrieves a Table by one of its identifiers, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the Table to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full Table, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Table does not exist or the provided GUID is not a Table
+     */
+    @JsonIgnore
+    public static Table get(AtlanClient client, String id) throws AtlanException {
+        return get(client, id, true);
+    }
+
+    /**
+     * Retrieves a Table by one of its identifiers, optionally complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the Table to retrieve, either its GUID or its full qualifiedName
+     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @return the requested full Table, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Table does not exist or the provided GUID is not a Table
+     */
+    @JsonIgnore
+    public static Table get(AtlanClient client, String id, boolean includeRelationships) throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (StringUtils.isUUID(id)) {
+            Asset asset = Asset.get(client, id, includeRelationships);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof Table) {
+                return (Table) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "Table");
+            }
+        } else {
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
+            if (asset instanceof Table) {
+                return (Table) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "Table");
+            }
+        }
+    }
+
+    /**
      * Retrieves a Table by its GUID, complete with all of its relationships.
      *
      * @param guid of the Table to retrieve
      * @return the requested full Table, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Table does not exist or the provided GUID is not a Table
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static Table retrieveByGuid(String guid) throws AtlanException {
-        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+        return get(Atlan.getDefaultClient(), guid);
     }
 
     /**
@@ -322,16 +382,11 @@ public class Table extends Asset implements ITable, ISQL, ICatalog, IAsset, IRef
      * @param guid of the Table to retrieve
      * @return the requested full Table, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Table does not exist or the provided GUID is not a Table
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static Table retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof Table) {
-            return (Table) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "Table");
-        }
+        return get(client, guid);
     }
 
     /**
@@ -340,9 +395,11 @@ public class Table extends Asset implements ITable, ISQL, ICatalog, IAsset, IRef
      * @param qualifiedName of the Table to retrieve
      * @return the requested full Table, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Table does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static Table retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+        return get(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -352,14 +409,11 @@ public class Table extends Asset implements ITable, ISQL, ICatalog, IAsset, IRef
      * @param qualifiedName of the Table to retrieve
      * @return the requested full Table, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Table does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static Table retrieveByQualifiedName(AtlanClient client, String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
-        if (asset instanceof Table) {
-            return (Table) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "Table");
-        }
+        return get(client, qualifiedName);
     }
 
     /**
@@ -399,7 +453,7 @@ public class Table extends Asset implements ITable, ISQL, ICatalog, IAsset, IRef
         String databaseQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(schemaQualifiedName);
         String databaseName = StringUtils.getNameFromQualifiedName(databaseQualifiedName);
         String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(databaseQualifiedName);
-        return Table.builder()
+        return Table._internal()
                 .name(name)
                 .qualifiedName(generateQualifiedName(name, schemaQualifiedName))
                 .connectorType(connectorType)
@@ -419,7 +473,7 @@ public class Table extends Asset implements ITable, ISQL, ICatalog, IAsset, IRef
      * @return the minimal request necessary to update the Table, as a builder
      */
     public static TableBuilder<?, ?> updater(String qualifiedName, String name) {
-        return Table.builder().qualifiedName(qualifiedName).name(name);
+        return Table._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -559,7 +613,7 @@ public class Table extends Asset implements ITable, ISQL, ICatalog, IAsset, IRef
     public static Table updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (Table) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return (Table) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -616,7 +670,7 @@ public class Table extends Asset implements ITable, ISQL, ICatalog, IAsset, IRef
     public static Table updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (Table) Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+        return (Table) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

@@ -14,6 +14,8 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.QuickSightDatasetImportMode;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.QueryFactory;
+import com.atlan.util.StringUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
@@ -27,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -146,7 +148,7 @@ public class QuickSightDataset extends Asset
      * @return reference to a QuickSightDataset that can be used for defining a relationship to a QuickSightDataset
      */
     public static QuickSightDataset refByGuid(String guid) {
-        return QuickSightDataset.builder().guid(guid).build();
+        return QuickSightDataset._internal().guid(guid).build();
     }
 
     /**
@@ -156,51 +158,108 @@ public class QuickSightDataset extends Asset
      * @return reference to a QuickSightDataset that can be used for defining a relationship to a QuickSightDataset
      */
     public static QuickSightDataset refByQualifiedName(String qualifiedName) {
-        return QuickSightDataset.builder()
+        return QuickSightDataset._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
     }
 
     /**
-     * Retrieves a QuickSightDataset by its GUID, complete with all of its relationships.
+     * Retrieves a QuickSightDataset by one of its identifiers, complete with all of its relationships.
      *
-     * @param guid of the QuickSightDataset to retrieve
+     * @param id of the QuickSightDataset to retrieve, either its GUID or its full qualifiedName
      * @return the requested full QuickSightDataset, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the QuickSightDataset does not exist or the provided GUID is not a QuickSightDataset
      */
-    public static QuickSightDataset retrieveByGuid(String guid) throws AtlanException {
-        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+    @JsonIgnore
+    public static QuickSightDataset get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
     }
 
     /**
-     * Retrieves a QuickSightDataset by its GUID, complete with all of its relationships.
+     * Retrieves a QuickSightDataset by one of its identifiers, complete with all of its relationships.
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
-     * @param guid of the QuickSightDataset to retrieve
+     * @param id of the QuickSightDataset to retrieve, either its GUID or its full qualifiedName
      * @return the requested full QuickSightDataset, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the QuickSightDataset does not exist or the provided GUID is not a QuickSightDataset
      */
-    public static QuickSightDataset retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof QuickSightDataset) {
-            return (QuickSightDataset) asset;
+    @JsonIgnore
+    public static QuickSightDataset get(AtlanClient client, String id) throws AtlanException {
+        return get(client, id, true);
+    }
+
+    /**
+     * Retrieves a QuickSightDataset by one of its identifiers, optionally complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the QuickSightDataset to retrieve, either its GUID or its full qualifiedName
+     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @return the requested full QuickSightDataset, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the QuickSightDataset does not exist or the provided GUID is not a QuickSightDataset
+     */
+    @JsonIgnore
+    public static QuickSightDataset get(AtlanClient client, String id, boolean includeRelationships)
+            throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (StringUtils.isUUID(id)) {
+            Asset asset = Asset.get(client, id, includeRelationships);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof QuickSightDataset) {
+                return (QuickSightDataset) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "QuickSightDataset");
+            }
         } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "QuickSightDataset");
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
+            if (asset instanceof QuickSightDataset) {
+                return (QuickSightDataset) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "QuickSightDataset");
+            }
         }
     }
 
     /**
+     * Retrieves a QuickSightDataset by its GUID, complete with all of its relationships.
+     *
+     * @param guid of the QuickSightDataset to retrieve
+     * @return the requested full QuickSightDataset, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the QuickSightDataset does not exist or the provided GUID is not a QuickSightDataset
+     * @deprecated see {@link #get(String)} instead
+     */
+    @Deprecated
+    public static QuickSightDataset retrieveByGuid(String guid) throws AtlanException {
+        return get(Atlan.getDefaultClient(), guid);
+    }
+
+    /**
+     * Retrieves a QuickSightDataset by its GUID, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param guid of the QuickSightDataset to retrieve
+     * @return the requested full QuickSightDataset, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the QuickSightDataset does not exist or the provided GUID is not a QuickSightDataset
+     * @deprecated see {@link #get(AtlanClient, String)} instead
+     */
+    @Deprecated
+    public static QuickSightDataset retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
+        return get(client, guid);
+    }
+
+    /**
      * Retrieves a QuickSightDataset by its qualifiedName, complete with all of its relationships.
      *
      * @param qualifiedName of the QuickSightDataset to retrieve
      * @return the requested full QuickSightDataset, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the QuickSightDataset does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static QuickSightDataset retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+        return get(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -210,15 +269,12 @@ public class QuickSightDataset extends Asset
      * @param qualifiedName of the QuickSightDataset to retrieve
      * @return the requested full QuickSightDataset, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the QuickSightDataset does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static QuickSightDataset retrieveByQualifiedName(AtlanClient client, String qualifiedName)
             throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
-        if (asset instanceof QuickSightDataset) {
-            return (QuickSightDataset) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "QuickSightDataset");
-        }
+        return get(client, qualifiedName);
     }
 
     /**
@@ -252,7 +308,7 @@ public class QuickSightDataset extends Asset
      * @return the minimal request necessary to update the QuickSightDataset, as a builder
      */
     public static QuickSightDatasetBuilder<?, ?> updater(String qualifiedName, String name) {
-        return QuickSightDataset.builder().qualifiedName(qualifiedName).name(name);
+        return QuickSightDataset._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -384,7 +440,7 @@ public class QuickSightDataset extends Asset
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (QuickSightDataset)
-                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -443,7 +499,7 @@ public class QuickSightDataset extends Asset
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (QuickSightDataset)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

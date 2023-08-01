@@ -185,6 +185,7 @@ Asset,Base class for all assets.,assetMcIncidentSeverities,TBC
 Asset,Base class for all assets.,assetMcIncidentStates,TBC
 Asset,Base class for all assets.,assetMcLastSyncRunAt,TBC
 Asset,Base class for all assets.,starredBy,Users who have starred this asset.
+Asset,Base class for all assets.,starredDetailsList,List of usernames with extra information of the users who have starred an asset
 Asset,Base class for all assets.,mcMonitors,TBC
 Asset,Base class for all assets.,files,TBC
 Asset,Base class for all assets.,mcIncidents,TBC
@@ -431,6 +432,15 @@ File,Instance of a file in Atlan.,fileAssets,TBC
 Folder,Instance of a folder within a query collection in Atlan.,parentQualifiedName,TBC
 Folder,Instance of a folder within a query collection in Atlan.,collectionQualifiedName,qualifiedName of the collection in which this folder exists.
 Folder,Instance of a folder within a query collection in Atlan.,parent,Namespace in which this folder exists.
+Function,Atlan Function Asset,functionDefinition,Code or set of statements that determine the output of the function.
+Function,Atlan Function Asset,functionReturnType,Data type of the value returned by the function.
+Function,Atlan Function Asset,functionArguments,Arguments that are passed in to the function.
+Function,Atlan Function Asset,functionLanguage,The programming language in which the function is written.
+Function,Atlan Function Asset,functionType,The type of function.
+Function,Atlan Function Asset,functionIsExternal,Determines whether the functions is stored or executed externally.
+Function,Atlan Function Asset,functionIsSecure,Determines whether sensitive information of the function is omitted for unauthorized users.
+Function,Atlan Function Asset,functionIsMemoizable,Determines whether the function must re-compute or not if there are no underlying changes in the values.
+Function,Atlan Function Asset,functionSchema,TBC
 GCS,Base class for Google Cloud Storage assets.,gcsStorageClass,TBC
 GCS,Base class for Google Cloud Storage assets.,gcsEncryptionType,TBC
 GCS,Base class for Google Cloud Storage assets.,gcsETag,"Entity tag for the asset. An entity tag is a hash of the object and represents changes to the contents of an object only, not its metadata."
@@ -1011,6 +1021,7 @@ Schema,Instance of a database schema in Atlan.,tableCount,Number of tables in th
 Schema,Instance of a database schema in Atlan.,viewsCount,Number of views in this schema.
 Schema,Instance of a database schema in Atlan.,snowflakeTags,Tags applied to this schema in Snowflake.
 Schema,Instance of a database schema in Atlan.,materialisedViews,Materialized views that exist within this schema.
+Schema,Instance of a database schema in Atlan.,functions,TBC
 Schema,Instance of a database schema in Atlan.,tables,Tables that exist within this schema.
 Schema,Instance of a database schema in Atlan.,database,Database in which this schema exists.
 Schema,Instance of a database schema in Atlan.,snowflakePipes,Snowflake Pipes that are defined within this schema.
@@ -1270,3 +1281,5 @@ SourceTagAttachmentValue,Detailed information about the value attached to a tag 
 SourceTagAttribute,Detailed information about an attribute attached to a tag in a source system.,tagAttributeKey,"Attribute key, for example ""allowedValues"" or ""enabled""."
 SourceTagAttribute,Detailed information about an attribute attached to a tag in a source system.,tagAttributeValue,"Attribute value, for example [""Private"", ""PII""] for allowedValues, or ""true"" for enabled."
 SourceTagAttribute,Detailed information about an attribute attached to a tag in a source system.,tagAttributeProperties,Properties associated with the attribute.
+StarredDetails,Atlas Type representing records of multiple users for starred assets,assetStarredBy,The username of the user who starred an asset
+StarredDetails,Atlas Type representing records of multiple users for starred assets,assetStarredAt,Latest timestamp of the operation when a user starred an asset

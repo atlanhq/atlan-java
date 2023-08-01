@@ -215,6 +215,7 @@ public class ApiToken extends AtlanObject {
     @EqualsAndHashCode(callSuper = true)
     @ToString(callSuper = true)
     public static final class ApiTokenAttributes extends AtlanObject {
+        private static final long serialVersionUID = 2L;
 
         /** Time, in seconds, from createdAt after which the token will expire. */
         @JsonProperty("access.token.lifespan")
@@ -257,6 +258,7 @@ public class ApiToken extends AtlanObject {
     @EqualsAndHashCode(callSuper = true)
     @ToString(callSuper = true)
     public static final class ApiTokenPersona extends AtlanObject implements Comparable<ApiTokenPersona> {
+        private static final long serialVersionUID = 2L;
 
         private static final Comparator<String> stringComparator = Comparator.nullsFirst(String::compareTo);
         private static final Comparator<ApiTokenPersona> personaComparator = Comparator.comparing(

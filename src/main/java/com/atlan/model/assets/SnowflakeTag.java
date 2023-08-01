@@ -14,6 +14,8 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.SourceTagAttribute;
 import com.atlan.util.QueryFactory;
+import com.atlan.util.StringUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +31,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -224,7 +226,7 @@ public class SnowflakeTag extends Asset implements ISnowflakeTag, ITag, ISQL, IC
      * @return reference to a SnowflakeTag that can be used for defining a relationship to a SnowflakeTag
      */
     public static SnowflakeTag refByGuid(String guid) {
-        return SnowflakeTag.builder().guid(guid).build();
+        return SnowflakeTag._internal().guid(guid).build();
     }
 
     /**
@@ -234,21 +236,80 @@ public class SnowflakeTag extends Asset implements ISnowflakeTag, ITag, ISQL, IC
      * @return reference to a SnowflakeTag that can be used for defining a relationship to a SnowflakeTag
      */
     public static SnowflakeTag refByQualifiedName(String qualifiedName) {
-        return SnowflakeTag.builder()
+        return SnowflakeTag._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
     }
 
     /**
+     * Retrieves a SnowflakeTag by one of its identifiers, complete with all of its relationships.
+     *
+     * @param id of the SnowflakeTag to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full SnowflakeTag, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SnowflakeTag does not exist or the provided GUID is not a SnowflakeTag
+     */
+    @JsonIgnore
+    public static SnowflakeTag get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
+    }
+
+    /**
+     * Retrieves a SnowflakeTag by one of its identifiers, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the SnowflakeTag to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full SnowflakeTag, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SnowflakeTag does not exist or the provided GUID is not a SnowflakeTag
+     */
+    @JsonIgnore
+    public static SnowflakeTag get(AtlanClient client, String id) throws AtlanException {
+        return get(client, id, true);
+    }
+
+    /**
+     * Retrieves a SnowflakeTag by one of its identifiers, optionally complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the SnowflakeTag to retrieve, either its GUID or its full qualifiedName
+     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @return the requested full SnowflakeTag, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SnowflakeTag does not exist or the provided GUID is not a SnowflakeTag
+     */
+    @JsonIgnore
+    public static SnowflakeTag get(AtlanClient client, String id, boolean includeRelationships) throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (StringUtils.isUUID(id)) {
+            Asset asset = Asset.get(client, id, includeRelationships);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof SnowflakeTag) {
+                return (SnowflakeTag) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "SnowflakeTag");
+            }
+        } else {
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
+            if (asset instanceof SnowflakeTag) {
+                return (SnowflakeTag) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "SnowflakeTag");
+            }
+        }
+    }
+
+    /**
      * Retrieves a SnowflakeTag by its GUID, complete with all of its relationships.
      *
      * @param guid of the SnowflakeTag to retrieve
      * @return the requested full SnowflakeTag, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SnowflakeTag does not exist or the provided GUID is not a SnowflakeTag
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static SnowflakeTag retrieveByGuid(String guid) throws AtlanException {
-        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+        return get(Atlan.getDefaultClient(), guid);
     }
 
     /**
@@ -258,16 +319,11 @@ public class SnowflakeTag extends Asset implements ISnowflakeTag, ITag, ISQL, IC
      * @param guid of the SnowflakeTag to retrieve
      * @return the requested full SnowflakeTag, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SnowflakeTag does not exist or the provided GUID is not a SnowflakeTag
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static SnowflakeTag retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof SnowflakeTag) {
-            return (SnowflakeTag) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "SnowflakeTag");
-        }
+        return get(client, guid);
     }
 
     /**
@@ -276,9 +332,11 @@ public class SnowflakeTag extends Asset implements ISnowflakeTag, ITag, ISQL, IC
      * @param qualifiedName of the SnowflakeTag to retrieve
      * @return the requested full SnowflakeTag, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SnowflakeTag does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static SnowflakeTag retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+        return get(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -288,14 +346,11 @@ public class SnowflakeTag extends Asset implements ISnowflakeTag, ITag, ISQL, IC
      * @param qualifiedName of the SnowflakeTag to retrieve
      * @return the requested full SnowflakeTag, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SnowflakeTag does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static SnowflakeTag retrieveByQualifiedName(AtlanClient client, String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
-        if (asset instanceof SnowflakeTag) {
-            return (SnowflakeTag) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "SnowflakeTag");
-        }
+        return get(client, qualifiedName);
     }
 
     /**
@@ -329,7 +384,7 @@ public class SnowflakeTag extends Asset implements ISnowflakeTag, ITag, ISQL, IC
      * @return the minimal request necessary to update the SnowflakeTag, as a builder
      */
     public static SnowflakeTagBuilder<?, ?> updater(String qualifiedName, String name) {
-        return SnowflakeTag.builder().qualifiedName(qualifiedName).name(name);
+        return SnowflakeTag._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -461,7 +516,7 @@ public class SnowflakeTag extends Asset implements ISnowflakeTag, ITag, ISQL, IC
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (SnowflakeTag)
-                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -520,7 +575,7 @@ public class SnowflakeTag extends Asset implements ISnowflakeTag, ITag, ISQL, IC
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (SnowflakeTag)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

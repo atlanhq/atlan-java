@@ -14,6 +14,8 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.PowerBIEndorsementType;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.QueryFactory;
+import com.atlan.util.StringUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +30,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -144,7 +146,7 @@ public class PowerBIDatasource extends Asset
      * @return reference to a PowerBIDatasource that can be used for defining a relationship to a PowerBIDatasource
      */
     public static PowerBIDatasource refByGuid(String guid) {
-        return PowerBIDatasource.builder().guid(guid).build();
+        return PowerBIDatasource._internal().guid(guid).build();
     }
 
     /**
@@ -154,51 +156,108 @@ public class PowerBIDatasource extends Asset
      * @return reference to a PowerBIDatasource that can be used for defining a relationship to a PowerBIDatasource
      */
     public static PowerBIDatasource refByQualifiedName(String qualifiedName) {
-        return PowerBIDatasource.builder()
+        return PowerBIDatasource._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
     }
 
     /**
-     * Retrieves a PowerBIDatasource by its GUID, complete with all of its relationships.
+     * Retrieves a PowerBIDatasource by one of its identifiers, complete with all of its relationships.
      *
-     * @param guid of the PowerBIDatasource to retrieve
+     * @param id of the PowerBIDatasource to retrieve, either its GUID or its full qualifiedName
      * @return the requested full PowerBIDatasource, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBIDatasource does not exist or the provided GUID is not a PowerBIDatasource
      */
-    public static PowerBIDatasource retrieveByGuid(String guid) throws AtlanException {
-        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+    @JsonIgnore
+    public static PowerBIDatasource get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
     }
 
     /**
-     * Retrieves a PowerBIDatasource by its GUID, complete with all of its relationships.
+     * Retrieves a PowerBIDatasource by one of its identifiers, complete with all of its relationships.
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
-     * @param guid of the PowerBIDatasource to retrieve
+     * @param id of the PowerBIDatasource to retrieve, either its GUID or its full qualifiedName
      * @return the requested full PowerBIDatasource, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBIDatasource does not exist or the provided GUID is not a PowerBIDatasource
      */
-    public static PowerBIDatasource retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof PowerBIDatasource) {
-            return (PowerBIDatasource) asset;
+    @JsonIgnore
+    public static PowerBIDatasource get(AtlanClient client, String id) throws AtlanException {
+        return get(client, id, true);
+    }
+
+    /**
+     * Retrieves a PowerBIDatasource by one of its identifiers, optionally complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the PowerBIDatasource to retrieve, either its GUID or its full qualifiedName
+     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @return the requested full PowerBIDatasource, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBIDatasource does not exist or the provided GUID is not a PowerBIDatasource
+     */
+    @JsonIgnore
+    public static PowerBIDatasource get(AtlanClient client, String id, boolean includeRelationships)
+            throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (StringUtils.isUUID(id)) {
+            Asset asset = Asset.get(client, id, includeRelationships);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof PowerBIDatasource) {
+                return (PowerBIDatasource) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "PowerBIDatasource");
+            }
         } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "PowerBIDatasource");
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
+            if (asset instanceof PowerBIDatasource) {
+                return (PowerBIDatasource) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "PowerBIDatasource");
+            }
         }
     }
 
     /**
+     * Retrieves a PowerBIDatasource by its GUID, complete with all of its relationships.
+     *
+     * @param guid of the PowerBIDatasource to retrieve
+     * @return the requested full PowerBIDatasource, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBIDatasource does not exist or the provided GUID is not a PowerBIDatasource
+     * @deprecated see {@link #get(String)} instead
+     */
+    @Deprecated
+    public static PowerBIDatasource retrieveByGuid(String guid) throws AtlanException {
+        return get(Atlan.getDefaultClient(), guid);
+    }
+
+    /**
+     * Retrieves a PowerBIDatasource by its GUID, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param guid of the PowerBIDatasource to retrieve
+     * @return the requested full PowerBIDatasource, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBIDatasource does not exist or the provided GUID is not a PowerBIDatasource
+     * @deprecated see {@link #get(AtlanClient, String)} instead
+     */
+    @Deprecated
+    public static PowerBIDatasource retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
+        return get(client, guid);
+    }
+
+    /**
      * Retrieves a PowerBIDatasource by its qualifiedName, complete with all of its relationships.
      *
      * @param qualifiedName of the PowerBIDatasource to retrieve
      * @return the requested full PowerBIDatasource, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBIDatasource does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static PowerBIDatasource retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+        return get(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -208,15 +267,12 @@ public class PowerBIDatasource extends Asset
      * @param qualifiedName of the PowerBIDatasource to retrieve
      * @return the requested full PowerBIDatasource, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBIDatasource does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static PowerBIDatasource retrieveByQualifiedName(AtlanClient client, String qualifiedName)
             throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
-        if (asset instanceof PowerBIDatasource) {
-            return (PowerBIDatasource) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "PowerBIDatasource");
-        }
+        return get(client, qualifiedName);
     }
 
     /**
@@ -250,7 +306,7 @@ public class PowerBIDatasource extends Asset
      * @return the minimal request necessary to update the PowerBIDatasource, as a builder
      */
     public static PowerBIDatasourceBuilder<?, ?> updater(String qualifiedName, String name) {
-        return PowerBIDatasource.builder().qualifiedName(qualifiedName).name(name);
+        return PowerBIDatasource._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -382,7 +438,7 @@ public class PowerBIDatasource extends Asset
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (PowerBIDatasource)
-                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -441,7 +497,7 @@ public class PowerBIDatasource extends Asset
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (PowerBIDatasource)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

@@ -114,7 +114,7 @@ import javax.annotation.processing.Generated;
  */
 @Generated(value="${generatorName}")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 <#if className == "Asset">
 @JsonSerialize(using = AssetSerializer.class)
@@ -129,7 +129,7 @@ import javax.annotation.processing.Generated;
 @Slf4j
 <#if mapContainers?? || className == "Asset">@SuppressWarnings("cast")</#if>
 public <#if abstract>abstract</#if> class ${className} extends ${parentClassName} implements <#if className == "TableauCalculatedField" || className == "TableauDatasourceField">ITableauField, </#if>I${className}<#list superTypes as parent>, I${resolveSuperTypeName(parent)}</#list> {
-<#if !abstract>    private static final long serialVersionUID = 2L;</#if>
+    private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "${originalName}";
 
@@ -217,7 +217,7 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
      * @return reference to a ${className} that can be used for defining a relationship to a ${className}
      */
     public static ${className} refByGuid(String guid) {
-        return ${className}.builder().guid(guid).build();
+        return ${className}._internal().guid(guid).build();
     }
 
     /**
@@ -227,21 +227,80 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
      * @return reference to a ${className} that can be used for defining a relationship to a ${className}
      */
     public static ${className} refByQualifiedName(String qualifiedName) {
-        return ${className}.builder()
+        return ${className}._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
     }
 
     /**
+     * Retrieves a ${className} by one of its identifiers, complete with all of its relationships.
+     *
+     * @param id of the ${className} to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full ${className}, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ${className} does not exist or the provided GUID is not a ${className}
+     */
+    @JsonIgnore
+    public static ${className} get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
+    }
+
+    /**
+     * Retrieves a ${className} by one of its identifiers, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the ${className} to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full ${className}, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ${className} does not exist or the provided GUID is not a ${className}
+     */
+    @JsonIgnore
+    public static ${className} get(AtlanClient client, String id) throws AtlanException {
+        return get(client, id, true);
+    }
+
+    /**
+     * Retrieves a ${className} by one of its identifiers, optionally complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the ${className} to retrieve, either its GUID or its full qualifiedName
+     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @return the requested full ${className}, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ${className} does not exist or the provided GUID is not a ${className}
+     */
+    @JsonIgnore
+    public static ${className} get(AtlanClient client, String id, boolean includeRelationships) throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (StringUtils.isUUID(id)) {
+            Asset asset = Asset.get(client, id, includeRelationships);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof ${className}) {
+                return (${className}) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "${className}");
+            }
+        } else {
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
+            if (asset instanceof ${className}) {
+                return (${className}) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "${className}");
+            }
+        }
+    }
+
+    /**
      * Retrieves a ${className} by its GUID, complete with all of its relationships.
      *
      * @param guid of the ${className} to retrieve
      * @return the requested full ${className}, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ${className} does not exist or the provided GUID is not a ${className}
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static ${className} retrieveByGuid(String guid) throws AtlanException {
-        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+        return get(Atlan.getDefaultClient(), guid);
     }
 
     /**
@@ -251,16 +310,11 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
      * @param guid of the ${className} to retrieve
      * @return the requested full ${className}, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ${className} does not exist or the provided GUID is not a ${className}
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static ${className} retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof ${className}) {
-            return (${className}) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "${className}");
-        }
+        return get(client, guid);
     }
 
     /**
@@ -269,9 +323,11 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
      * @param qualifiedName of the ${className} to retrieve
      * @return the requested full ${className}, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ${className} does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static ${className} retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+        return get(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -281,14 +337,11 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
      * @param qualifiedName of the ${className} to retrieve
      * @return the requested full ${className}, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ${className} does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static ${className} retrieveByQualifiedName(AtlanClient client, String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
-        if (asset instanceof ${className}) {
-            return (${className}) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "${className}");
-        }
+        return get(client, qualifiedName);
     }
 
     /**
@@ -327,7 +380,7 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
      * @return the minimal request necessary to update the ${className}, as a builder
      */
     public static ${className}Builder<?, ?> updater(String qualifiedName, String name) {
-        return ${className}.builder().qualifiedName(qualifiedName).name(name);
+        return ${className}._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -458,7 +511,7 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
      */
     public static ${className} updateCertificate(AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (${className}) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return (${className}) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -514,7 +567,7 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
      */
     public static ${className} updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message) throws AtlanException {
-        return (${className}) Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+        return (${className}) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

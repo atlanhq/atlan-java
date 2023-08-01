@@ -8,7 +8,7 @@
      * @return the minimal request necessary to update the File, as a builder
      */
     public static FileBuilder<?, ?> creator(String name, String connectionQualifiedName, FileType type) {
-        return File.builder()
+        return File._internal()
                 .connectionQualifiedName(connectionQualifiedName)
                 .name(name)
                 .qualifiedName(generateQualifiedName(connectionQualifiedName, name))
@@ -34,7 +34,7 @@
      * @return the minimal request necessary to update the File, as a builder
      */
     public static FileBuilder<?, ?> updater(String qualifiedName, String name) {
-        return File.builder().qualifiedName(qualifiedName).name(name);
+        return File._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**

@@ -439,6 +439,16 @@ public enum KeywordFields implements AtlanSearchableField {
     FULLY_QUALIFIED_NAME("fullyQualifiedName"),
     /** TBC */
     FULL_NAME("fullName"),
+    /** Arguments that are passed in to the function. */
+    FUNCTION_ARGUMENTS("functionArguments"),
+    /** Code or set of statements that determine the output of the function. */
+    FUNCTION_DEFINITION("functionDefinition"),
+    /** The programming language in which the function is written. */
+    FUNCTION_LANGUAGE("functionLanguage"),
+    /** Data type of the value returned by the function. */
+    FUNCTION_RETURN_TYPE("functionReturnType"),
+    /** The type of function. */
+    FUNCTION_TYPE("functionType"),
     /** TBC */
     GCS_ACCESS_CONTROL("gcsAccessControl"),
     /** Human-readable name of the bucket in which this object exists. */
@@ -1009,6 +1019,8 @@ public enum KeywordFields implements AtlanSearchableField {
     STALENESS("staleness"),
     /** Users who have starred this asset. */
     STARRED_BY("starredBy"),
+    /** List of usernames with extra information of the users who have starred an asset */
+    STARRED_DETAILS("starredDetailsList"),
     /** Asset status in Atlan (active vs deleted). */
     STATE("__state"),
     /** TBC */

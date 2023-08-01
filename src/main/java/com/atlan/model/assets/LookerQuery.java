@@ -13,6 +13,8 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.QueryFactory;
+import com.atlan.util.StringUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
@@ -26,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -145,7 +147,7 @@ public class LookerQuery extends Asset implements ILookerQuery, ILooker, IBI, IC
      * @return reference to a LookerQuery that can be used for defining a relationship to a LookerQuery
      */
     public static LookerQuery refByGuid(String guid) {
-        return LookerQuery.builder().guid(guid).build();
+        return LookerQuery._internal().guid(guid).build();
     }
 
     /**
@@ -155,21 +157,80 @@ public class LookerQuery extends Asset implements ILookerQuery, ILooker, IBI, IC
      * @return reference to a LookerQuery that can be used for defining a relationship to a LookerQuery
      */
     public static LookerQuery refByQualifiedName(String qualifiedName) {
-        return LookerQuery.builder()
+        return LookerQuery._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
     }
 
     /**
+     * Retrieves a LookerQuery by one of its identifiers, complete with all of its relationships.
+     *
+     * @param id of the LookerQuery to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full LookerQuery, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the LookerQuery does not exist or the provided GUID is not a LookerQuery
+     */
+    @JsonIgnore
+    public static LookerQuery get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
+    }
+
+    /**
+     * Retrieves a LookerQuery by one of its identifiers, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the LookerQuery to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full LookerQuery, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the LookerQuery does not exist or the provided GUID is not a LookerQuery
+     */
+    @JsonIgnore
+    public static LookerQuery get(AtlanClient client, String id) throws AtlanException {
+        return get(client, id, true);
+    }
+
+    /**
+     * Retrieves a LookerQuery by one of its identifiers, optionally complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the LookerQuery to retrieve, either its GUID or its full qualifiedName
+     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @return the requested full LookerQuery, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the LookerQuery does not exist or the provided GUID is not a LookerQuery
+     */
+    @JsonIgnore
+    public static LookerQuery get(AtlanClient client, String id, boolean includeRelationships) throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (StringUtils.isUUID(id)) {
+            Asset asset = Asset.get(client, id, includeRelationships);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof LookerQuery) {
+                return (LookerQuery) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "LookerQuery");
+            }
+        } else {
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
+            if (asset instanceof LookerQuery) {
+                return (LookerQuery) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "LookerQuery");
+            }
+        }
+    }
+
+    /**
      * Retrieves a LookerQuery by its GUID, complete with all of its relationships.
      *
      * @param guid of the LookerQuery to retrieve
      * @return the requested full LookerQuery, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the LookerQuery does not exist or the provided GUID is not a LookerQuery
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static LookerQuery retrieveByGuid(String guid) throws AtlanException {
-        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+        return get(Atlan.getDefaultClient(), guid);
     }
 
     /**
@@ -179,16 +240,11 @@ public class LookerQuery extends Asset implements ILookerQuery, ILooker, IBI, IC
      * @param guid of the LookerQuery to retrieve
      * @return the requested full LookerQuery, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the LookerQuery does not exist or the provided GUID is not a LookerQuery
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static LookerQuery retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof LookerQuery) {
-            return (LookerQuery) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "LookerQuery");
-        }
+        return get(client, guid);
     }
 
     /**
@@ -197,9 +253,11 @@ public class LookerQuery extends Asset implements ILookerQuery, ILooker, IBI, IC
      * @param qualifiedName of the LookerQuery to retrieve
      * @return the requested full LookerQuery, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the LookerQuery does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static LookerQuery retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+        return get(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -209,14 +267,11 @@ public class LookerQuery extends Asset implements ILookerQuery, ILooker, IBI, IC
      * @param qualifiedName of the LookerQuery to retrieve
      * @return the requested full LookerQuery, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the LookerQuery does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static LookerQuery retrieveByQualifiedName(AtlanClient client, String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
-        if (asset instanceof LookerQuery) {
-            return (LookerQuery) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "LookerQuery");
-        }
+        return get(client, qualifiedName);
     }
 
     /**
@@ -250,7 +305,7 @@ public class LookerQuery extends Asset implements ILookerQuery, ILooker, IBI, IC
      * @return the minimal request necessary to update the LookerQuery, as a builder
      */
     public static LookerQueryBuilder<?, ?> updater(String qualifiedName, String name) {
-        return LookerQuery.builder().qualifiedName(qualifiedName).name(name);
+        return LookerQuery._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -381,7 +436,8 @@ public class LookerQuery extends Asset implements ILookerQuery, ILooker, IBI, IC
     public static LookerQuery updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (LookerQuery) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return (LookerQuery)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -440,7 +496,7 @@ public class LookerQuery extends Asset implements ILookerQuery, ILooker, IBI, IC
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (LookerQuery)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

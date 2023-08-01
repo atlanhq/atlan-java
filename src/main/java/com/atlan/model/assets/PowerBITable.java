@@ -14,6 +14,8 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.PowerBIEndorsementType;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.QueryFactory;
+import com.atlan.util.StringUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
@@ -27,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -166,7 +168,7 @@ public class PowerBITable extends Asset implements IPowerBITable, IPowerBI, IBI,
      * @return reference to a PowerBITable that can be used for defining a relationship to a PowerBITable
      */
     public static PowerBITable refByGuid(String guid) {
-        return PowerBITable.builder().guid(guid).build();
+        return PowerBITable._internal().guid(guid).build();
     }
 
     /**
@@ -176,21 +178,80 @@ public class PowerBITable extends Asset implements IPowerBITable, IPowerBI, IBI,
      * @return reference to a PowerBITable that can be used for defining a relationship to a PowerBITable
      */
     public static PowerBITable refByQualifiedName(String qualifiedName) {
-        return PowerBITable.builder()
+        return PowerBITable._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
     }
 
     /**
+     * Retrieves a PowerBITable by one of its identifiers, complete with all of its relationships.
+     *
+     * @param id of the PowerBITable to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full PowerBITable, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBITable does not exist or the provided GUID is not a PowerBITable
+     */
+    @JsonIgnore
+    public static PowerBITable get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
+    }
+
+    /**
+     * Retrieves a PowerBITable by one of its identifiers, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the PowerBITable to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full PowerBITable, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBITable does not exist or the provided GUID is not a PowerBITable
+     */
+    @JsonIgnore
+    public static PowerBITable get(AtlanClient client, String id) throws AtlanException {
+        return get(client, id, true);
+    }
+
+    /**
+     * Retrieves a PowerBITable by one of its identifiers, optionally complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the PowerBITable to retrieve, either its GUID or its full qualifiedName
+     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @return the requested full PowerBITable, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBITable does not exist or the provided GUID is not a PowerBITable
+     */
+    @JsonIgnore
+    public static PowerBITable get(AtlanClient client, String id, boolean includeRelationships) throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (StringUtils.isUUID(id)) {
+            Asset asset = Asset.get(client, id, includeRelationships);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof PowerBITable) {
+                return (PowerBITable) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "PowerBITable");
+            }
+        } else {
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
+            if (asset instanceof PowerBITable) {
+                return (PowerBITable) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "PowerBITable");
+            }
+        }
+    }
+
+    /**
      * Retrieves a PowerBITable by its GUID, complete with all of its relationships.
      *
      * @param guid of the PowerBITable to retrieve
      * @return the requested full PowerBITable, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBITable does not exist or the provided GUID is not a PowerBITable
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static PowerBITable retrieveByGuid(String guid) throws AtlanException {
-        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+        return get(Atlan.getDefaultClient(), guid);
     }
 
     /**
@@ -200,16 +261,11 @@ public class PowerBITable extends Asset implements IPowerBITable, IPowerBI, IBI,
      * @param guid of the PowerBITable to retrieve
      * @return the requested full PowerBITable, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBITable does not exist or the provided GUID is not a PowerBITable
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static PowerBITable retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof PowerBITable) {
-            return (PowerBITable) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "PowerBITable");
-        }
+        return get(client, guid);
     }
 
     /**
@@ -218,9 +274,11 @@ public class PowerBITable extends Asset implements IPowerBITable, IPowerBI, IBI,
      * @param qualifiedName of the PowerBITable to retrieve
      * @return the requested full PowerBITable, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBITable does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static PowerBITable retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+        return get(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -230,14 +288,11 @@ public class PowerBITable extends Asset implements IPowerBITable, IPowerBI, IBI,
      * @param qualifiedName of the PowerBITable to retrieve
      * @return the requested full PowerBITable, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBITable does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static PowerBITable retrieveByQualifiedName(AtlanClient client, String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
-        if (asset instanceof PowerBITable) {
-            return (PowerBITable) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "PowerBITable");
-        }
+        return get(client, qualifiedName);
     }
 
     /**
@@ -271,7 +326,7 @@ public class PowerBITable extends Asset implements IPowerBITable, IPowerBI, IBI,
      * @return the minimal request necessary to update the PowerBITable, as a builder
      */
     public static PowerBITableBuilder<?, ?> updater(String qualifiedName, String name) {
-        return PowerBITable.builder().qualifiedName(qualifiedName).name(name);
+        return PowerBITable._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -403,7 +458,7 @@ public class PowerBITable extends Asset implements IPowerBITable, IPowerBI, IBI,
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (PowerBITable)
-                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -462,7 +517,7 @@ public class PowerBITable extends Asset implements IPowerBITable, IPowerBI, IBI,
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (PowerBITable)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

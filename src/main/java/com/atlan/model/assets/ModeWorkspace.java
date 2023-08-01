@@ -13,6 +13,8 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.QueryFactory;
+import com.atlan.util.StringUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
@@ -26,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -159,7 +161,7 @@ public class ModeWorkspace extends Asset implements IModeWorkspace, IMode, IBI, 
      * @return reference to a ModeWorkspace that can be used for defining a relationship to a ModeWorkspace
      */
     public static ModeWorkspace refByGuid(String guid) {
-        return ModeWorkspace.builder().guid(guid).build();
+        return ModeWorkspace._internal().guid(guid).build();
     }
 
     /**
@@ -169,51 +171,107 @@ public class ModeWorkspace extends Asset implements IModeWorkspace, IMode, IBI, 
      * @return reference to a ModeWorkspace that can be used for defining a relationship to a ModeWorkspace
      */
     public static ModeWorkspace refByQualifiedName(String qualifiedName) {
-        return ModeWorkspace.builder()
+        return ModeWorkspace._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
     }
 
     /**
-     * Retrieves a ModeWorkspace by its GUID, complete with all of its relationships.
+     * Retrieves a ModeWorkspace by one of its identifiers, complete with all of its relationships.
      *
-     * @param guid of the ModeWorkspace to retrieve
+     * @param id of the ModeWorkspace to retrieve, either its GUID or its full qualifiedName
      * @return the requested full ModeWorkspace, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ModeWorkspace does not exist or the provided GUID is not a ModeWorkspace
      */
-    public static ModeWorkspace retrieveByGuid(String guid) throws AtlanException {
-        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+    @JsonIgnore
+    public static ModeWorkspace get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
     }
 
     /**
-     * Retrieves a ModeWorkspace by its GUID, complete with all of its relationships.
+     * Retrieves a ModeWorkspace by one of its identifiers, complete with all of its relationships.
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
-     * @param guid of the ModeWorkspace to retrieve
+     * @param id of the ModeWorkspace to retrieve, either its GUID or its full qualifiedName
      * @return the requested full ModeWorkspace, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ModeWorkspace does not exist or the provided GUID is not a ModeWorkspace
      */
-    public static ModeWorkspace retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof ModeWorkspace) {
-            return (ModeWorkspace) asset;
+    @JsonIgnore
+    public static ModeWorkspace get(AtlanClient client, String id) throws AtlanException {
+        return get(client, id, true);
+    }
+
+    /**
+     * Retrieves a ModeWorkspace by one of its identifiers, optionally complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the ModeWorkspace to retrieve, either its GUID or its full qualifiedName
+     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @return the requested full ModeWorkspace, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ModeWorkspace does not exist or the provided GUID is not a ModeWorkspace
+     */
+    @JsonIgnore
+    public static ModeWorkspace get(AtlanClient client, String id, boolean includeRelationships) throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (StringUtils.isUUID(id)) {
+            Asset asset = Asset.get(client, id, includeRelationships);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof ModeWorkspace) {
+                return (ModeWorkspace) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "ModeWorkspace");
+            }
         } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "ModeWorkspace");
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
+            if (asset instanceof ModeWorkspace) {
+                return (ModeWorkspace) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "ModeWorkspace");
+            }
         }
     }
 
     /**
+     * Retrieves a ModeWorkspace by its GUID, complete with all of its relationships.
+     *
+     * @param guid of the ModeWorkspace to retrieve
+     * @return the requested full ModeWorkspace, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ModeWorkspace does not exist or the provided GUID is not a ModeWorkspace
+     * @deprecated see {@link #get(String)} instead
+     */
+    @Deprecated
+    public static ModeWorkspace retrieveByGuid(String guid) throws AtlanException {
+        return get(Atlan.getDefaultClient(), guid);
+    }
+
+    /**
+     * Retrieves a ModeWorkspace by its GUID, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param guid of the ModeWorkspace to retrieve
+     * @return the requested full ModeWorkspace, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ModeWorkspace does not exist or the provided GUID is not a ModeWorkspace
+     * @deprecated see {@link #get(AtlanClient, String)} instead
+     */
+    @Deprecated
+    public static ModeWorkspace retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
+        return get(client, guid);
+    }
+
+    /**
      * Retrieves a ModeWorkspace by its qualifiedName, complete with all of its relationships.
      *
      * @param qualifiedName of the ModeWorkspace to retrieve
      * @return the requested full ModeWorkspace, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ModeWorkspace does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static ModeWorkspace retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+        return get(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -223,15 +281,12 @@ public class ModeWorkspace extends Asset implements IModeWorkspace, IMode, IBI, 
      * @param qualifiedName of the ModeWorkspace to retrieve
      * @return the requested full ModeWorkspace, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ModeWorkspace does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static ModeWorkspace retrieveByQualifiedName(AtlanClient client, String qualifiedName)
             throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
-        if (asset instanceof ModeWorkspace) {
-            return (ModeWorkspace) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "ModeWorkspace");
-        }
+        return get(client, qualifiedName);
     }
 
     /**
@@ -265,7 +320,7 @@ public class ModeWorkspace extends Asset implements IModeWorkspace, IMode, IBI, 
      * @return the minimal request necessary to update the ModeWorkspace, as a builder
      */
     public static ModeWorkspaceBuilder<?, ?> updater(String qualifiedName, String name) {
-        return ModeWorkspace.builder().qualifiedName(qualifiedName).name(name);
+        return ModeWorkspace._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -397,7 +452,7 @@ public class ModeWorkspace extends Asset implements IModeWorkspace, IMode, IBI, 
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (ModeWorkspace)
-                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -456,7 +511,7 @@ public class ModeWorkspace extends Asset implements IModeWorkspace, IMode, IBI, 
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (ModeWorkspace)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

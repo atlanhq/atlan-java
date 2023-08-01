@@ -21,6 +21,7 @@ import lombok.extern.jackson.Jacksonized;
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
 public class EntityAudit extends AtlanObject {
+    private static final long serialVersionUID = 2L;
 
     /** Unique name of the asset. */
     final String entityQualifiedName;

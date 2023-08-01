@@ -82,7 +82,7 @@ public class FileTest extends AtlanLiveTest {
             groups = {"file.read.file"},
             dependsOnGroups = {"file.update.file"})
     void retrieveFile() throws AtlanException {
-        File r = File.retrieveByGuid(file.getGuid());
+        File r = File.get(file.getGuid());
         assertNotNull(r);
         assertTrue(r.isComplete());
         assertEquals(r.getGuid(), file.getGuid());
@@ -188,7 +188,7 @@ public class FileTest extends AtlanLiveTest {
             groups = {"file.delete.file.read"},
             dependsOnGroups = {"file.delete.file"})
     void readDeletedFile() throws AtlanException {
-        File deleted = File.retrieveByGuid(file.getGuid());
+        File deleted = File.get(file.getGuid());
         assertNotNull(deleted);
         assertEquals(deleted.getGuid(), file.getGuid());
         assertEquals(deleted.getQualifiedName(), file.getQualifiedName());
@@ -200,7 +200,7 @@ public class FileTest extends AtlanLiveTest {
             dependsOnGroups = {"file.delete.file.read"})
     void restoreFile() throws AtlanException {
         assertTrue(File.restore(file.getQualifiedName()));
-        File restored = File.retrieveByQualifiedName(file.getQualifiedName());
+        File restored = File.get(file.getQualifiedName());
         assertEquals(restored.getGuid(), file.getGuid());
         assertEquals(restored.getQualifiedName(), file.getQualifiedName());
         assertEquals(restored.getStatus(), AtlanStatus.ACTIVE);

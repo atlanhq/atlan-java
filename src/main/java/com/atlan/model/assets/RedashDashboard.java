@@ -13,6 +13,8 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.QueryFactory;
+import com.atlan.util.StringUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
@@ -26,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -122,7 +124,7 @@ public class RedashDashboard extends Asset implements IRedashDashboard, IRedash,
      * @return reference to a RedashDashboard that can be used for defining a relationship to a RedashDashboard
      */
     public static RedashDashboard refByGuid(String guid) {
-        return RedashDashboard.builder().guid(guid).build();
+        return RedashDashboard._internal().guid(guid).build();
     }
 
     /**
@@ -132,51 +134,108 @@ public class RedashDashboard extends Asset implements IRedashDashboard, IRedash,
      * @return reference to a RedashDashboard that can be used for defining a relationship to a RedashDashboard
      */
     public static RedashDashboard refByQualifiedName(String qualifiedName) {
-        return RedashDashboard.builder()
+        return RedashDashboard._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
     }
 
     /**
-     * Retrieves a RedashDashboard by its GUID, complete with all of its relationships.
+     * Retrieves a RedashDashboard by one of its identifiers, complete with all of its relationships.
      *
-     * @param guid of the RedashDashboard to retrieve
+     * @param id of the RedashDashboard to retrieve, either its GUID or its full qualifiedName
      * @return the requested full RedashDashboard, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the RedashDashboard does not exist or the provided GUID is not a RedashDashboard
      */
-    public static RedashDashboard retrieveByGuid(String guid) throws AtlanException {
-        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+    @JsonIgnore
+    public static RedashDashboard get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
     }
 
     /**
-     * Retrieves a RedashDashboard by its GUID, complete with all of its relationships.
+     * Retrieves a RedashDashboard by one of its identifiers, complete with all of its relationships.
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
-     * @param guid of the RedashDashboard to retrieve
+     * @param id of the RedashDashboard to retrieve, either its GUID or its full qualifiedName
      * @return the requested full RedashDashboard, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the RedashDashboard does not exist or the provided GUID is not a RedashDashboard
      */
-    public static RedashDashboard retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof RedashDashboard) {
-            return (RedashDashboard) asset;
+    @JsonIgnore
+    public static RedashDashboard get(AtlanClient client, String id) throws AtlanException {
+        return get(client, id, true);
+    }
+
+    /**
+     * Retrieves a RedashDashboard by one of its identifiers, optionally complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the RedashDashboard to retrieve, either its GUID or its full qualifiedName
+     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @return the requested full RedashDashboard, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the RedashDashboard does not exist or the provided GUID is not a RedashDashboard
+     */
+    @JsonIgnore
+    public static RedashDashboard get(AtlanClient client, String id, boolean includeRelationships)
+            throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (StringUtils.isUUID(id)) {
+            Asset asset = Asset.get(client, id, includeRelationships);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof RedashDashboard) {
+                return (RedashDashboard) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "RedashDashboard");
+            }
         } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "RedashDashboard");
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
+            if (asset instanceof RedashDashboard) {
+                return (RedashDashboard) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "RedashDashboard");
+            }
         }
     }
 
     /**
+     * Retrieves a RedashDashboard by its GUID, complete with all of its relationships.
+     *
+     * @param guid of the RedashDashboard to retrieve
+     * @return the requested full RedashDashboard, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the RedashDashboard does not exist or the provided GUID is not a RedashDashboard
+     * @deprecated see {@link #get(String)} instead
+     */
+    @Deprecated
+    public static RedashDashboard retrieveByGuid(String guid) throws AtlanException {
+        return get(Atlan.getDefaultClient(), guid);
+    }
+
+    /**
+     * Retrieves a RedashDashboard by its GUID, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param guid of the RedashDashboard to retrieve
+     * @return the requested full RedashDashboard, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the RedashDashboard does not exist or the provided GUID is not a RedashDashboard
+     * @deprecated see {@link #get(AtlanClient, String)} instead
+     */
+    @Deprecated
+    public static RedashDashboard retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
+        return get(client, guid);
+    }
+
+    /**
      * Retrieves a RedashDashboard by its qualifiedName, complete with all of its relationships.
      *
      * @param qualifiedName of the RedashDashboard to retrieve
      * @return the requested full RedashDashboard, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the RedashDashboard does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static RedashDashboard retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+        return get(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -186,15 +245,12 @@ public class RedashDashboard extends Asset implements IRedashDashboard, IRedash,
      * @param qualifiedName of the RedashDashboard to retrieve
      * @return the requested full RedashDashboard, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the RedashDashboard does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static RedashDashboard retrieveByQualifiedName(AtlanClient client, String qualifiedName)
             throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
-        if (asset instanceof RedashDashboard) {
-            return (RedashDashboard) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "RedashDashboard");
-        }
+        return get(client, qualifiedName);
     }
 
     /**
@@ -228,7 +284,7 @@ public class RedashDashboard extends Asset implements IRedashDashboard, IRedash,
      * @return the minimal request necessary to update the RedashDashboard, as a builder
      */
     public static RedashDashboardBuilder<?, ?> updater(String qualifiedName, String name) {
-        return RedashDashboard.builder().qualifiedName(qualifiedName).name(name);
+        return RedashDashboard._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -360,7 +416,7 @@ public class RedashDashboard extends Asset implements IRedashDashboard, IRedash,
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (RedashDashboard)
-                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -419,7 +475,7 @@ public class RedashDashboard extends Asset implements IRedashDashboard, IRedash,
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (RedashDashboard)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

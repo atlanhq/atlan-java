@@ -531,7 +531,7 @@ public class LineageTest extends AtlanLiveTest {
             dependsOnGroups = {"lineage.delete.lineage"})
     void restoreLineage() throws AtlanException {
         assertTrue(LineageProcess.restore(start.getQualifiedName()));
-        LineageProcess restored = LineageProcess.retrieveByGuid(start.getGuid());
+        LineageProcess restored = LineageProcess.get(start.getGuid());
         assertEquals(restored.getGuid(), start.getGuid());
         assertEquals(restored.getQualifiedName(), start.getQualifiedName());
         assertEquals(restored.getStatus(), AtlanStatus.ACTIVE);

@@ -13,7 +13,7 @@
         String databaseQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(schemaQualifiedName);
         String databaseName = StringUtils.getNameFromQualifiedName(databaseQualifiedName);
         String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(databaseQualifiedName);
-        return Table.builder()
+        return Table._internal()
                 .name(name)
                 .qualifiedName(generateQualifiedName(name, schemaQualifiedName))
                 .connectorType(connectorType)
@@ -33,7 +33,7 @@
      * @return the minimal request necessary to update the Table, as a builder
      */
     public static TableBuilder<?, ?> updater(String qualifiedName, String name) {
-        return Table.builder().qualifiedName(qualifiedName).name(name);
+        return Table._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**

@@ -14,6 +14,7 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public abstract class AbstractPersonaPolicy extends AbstractPolicy {
+    private static final long serialVersionUID = 2L;
 
     /** Unique identifier (GUID) of the connection to which this policy applies. */
     String connectionId;

@@ -21,6 +21,7 @@ import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.AzureTag;
 import com.atlan.util.QueryFactory;
 import com.atlan.util.StringUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -35,13 +36,13 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings("cast")
 public class ADLSObject extends Asset
-        implements IADLSObject, IADLS, IAzure, IObjectStore, ICloud, IAsset, IReferenceable, ICatalog {
+        implements IADLSObject, IADLS, IObjectStore, IAzure, ICatalog, IAsset, IReferenceable, ICloud {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "ADLSObject";
@@ -219,7 +220,7 @@ public class ADLSObject extends Asset
      * @return reference to a ADLSObject that can be used for defining a relationship to a ADLSObject
      */
     public static ADLSObject refByGuid(String guid) {
-        return ADLSObject.builder().guid(guid).build();
+        return ADLSObject._internal().guid(guid).build();
     }
 
     /**
@@ -229,21 +230,80 @@ public class ADLSObject extends Asset
      * @return reference to a ADLSObject that can be used for defining a relationship to a ADLSObject
      */
     public static ADLSObject refByQualifiedName(String qualifiedName) {
-        return ADLSObject.builder()
+        return ADLSObject._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
     }
 
     /**
+     * Retrieves a ADLSObject by one of its identifiers, complete with all of its relationships.
+     *
+     * @param id of the ADLSObject to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full ADLSObject, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ADLSObject does not exist or the provided GUID is not a ADLSObject
+     */
+    @JsonIgnore
+    public static ADLSObject get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
+    }
+
+    /**
+     * Retrieves a ADLSObject by one of its identifiers, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the ADLSObject to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full ADLSObject, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ADLSObject does not exist or the provided GUID is not a ADLSObject
+     */
+    @JsonIgnore
+    public static ADLSObject get(AtlanClient client, String id) throws AtlanException {
+        return get(client, id, true);
+    }
+
+    /**
+     * Retrieves a ADLSObject by one of its identifiers, optionally complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the ADLSObject to retrieve, either its GUID or its full qualifiedName
+     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @return the requested full ADLSObject, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ADLSObject does not exist or the provided GUID is not a ADLSObject
+     */
+    @JsonIgnore
+    public static ADLSObject get(AtlanClient client, String id, boolean includeRelationships) throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (StringUtils.isUUID(id)) {
+            Asset asset = Asset.get(client, id, includeRelationships);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof ADLSObject) {
+                return (ADLSObject) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "ADLSObject");
+            }
+        } else {
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
+            if (asset instanceof ADLSObject) {
+                return (ADLSObject) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "ADLSObject");
+            }
+        }
+    }
+
+    /**
      * Retrieves a ADLSObject by its GUID, complete with all of its relationships.
      *
      * @param guid of the ADLSObject to retrieve
      * @return the requested full ADLSObject, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ADLSObject does not exist or the provided GUID is not a ADLSObject
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static ADLSObject retrieveByGuid(String guid) throws AtlanException {
-        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+        return get(Atlan.getDefaultClient(), guid);
     }
 
     /**
@@ -253,16 +313,11 @@ public class ADLSObject extends Asset
      * @param guid of the ADLSObject to retrieve
      * @return the requested full ADLSObject, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ADLSObject does not exist or the provided GUID is not a ADLSObject
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static ADLSObject retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof ADLSObject) {
-            return (ADLSObject) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "ADLSObject");
-        }
+        return get(client, guid);
     }
 
     /**
@@ -271,9 +326,11 @@ public class ADLSObject extends Asset
      * @param qualifiedName of the ADLSObject to retrieve
      * @return the requested full ADLSObject, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ADLSObject does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static ADLSObject retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+        return get(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -283,14 +340,11 @@ public class ADLSObject extends Asset
      * @param qualifiedName of the ADLSObject to retrieve
      * @return the requested full ADLSObject, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ADLSObject does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static ADLSObject retrieveByQualifiedName(AtlanClient client, String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
-        if (asset instanceof ADLSObject) {
-            return (ADLSObject) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "ADLSObject");
-        }
+        return get(client, qualifiedName);
     }
 
     /**
@@ -326,7 +380,7 @@ public class ADLSObject extends Asset
     public static ADLSObjectBuilder<?, ?> creator(String name, String containerQualifiedName) {
         String accountQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(containerQualifiedName);
         String connectionQualifiedName = StringUtils.getConnectionQualifiedName(containerQualifiedName);
-        return ADLSObject.builder()
+        return ADLSObject._internal()
                 .qualifiedName(generateQualifiedName(name, containerQualifiedName))
                 .name(name)
                 .adlsContainer(ADLSContainer.refByQualifiedName(containerQualifiedName))
@@ -354,7 +408,7 @@ public class ADLSObject extends Asset
      * @return the minimal request necessary to update the ADLSObject, as a builder
      */
     public static ADLSObjectBuilder<?, ?> updater(String qualifiedName, String name) {
-        return ADLSObject.builder().qualifiedName(qualifiedName).name(name);
+        return ADLSObject._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -484,7 +538,8 @@ public class ADLSObject extends Asset
     public static ADLSObject updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (ADLSObject) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return (ADLSObject)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -542,7 +597,8 @@ public class ADLSObject extends Asset
     public static ADLSObject updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (ADLSObject) Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+        return (ADLSObject)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

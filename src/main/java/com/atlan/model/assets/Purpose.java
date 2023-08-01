@@ -21,6 +21,8 @@ import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.IndexSearchRequest;
 import com.atlan.model.search.IndexSearchResponse;
 import com.atlan.util.QueryFactory;
+import com.atlan.util.StringUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -36,7 +38,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -143,7 +145,7 @@ public class Purpose extends Asset implements IPurpose, IAccessControl, IAsset, 
      * @return reference to a Purpose that can be used for defining a relationship to a Purpose
      */
     public static Purpose refByGuid(String guid) {
-        return Purpose.builder().guid(guid).build();
+        return Purpose._internal().guid(guid).build();
     }
 
     /**
@@ -153,21 +155,80 @@ public class Purpose extends Asset implements IPurpose, IAccessControl, IAsset, 
      * @return reference to a Purpose that can be used for defining a relationship to a Purpose
      */
     public static Purpose refByQualifiedName(String qualifiedName) {
-        return Purpose.builder()
+        return Purpose._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
     }
 
     /**
+     * Retrieves a Purpose by one of its identifiers, complete with all of its relationships.
+     *
+     * @param id of the Purpose to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full Purpose, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Purpose does not exist or the provided GUID is not a Purpose
+     */
+    @JsonIgnore
+    public static Purpose get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
+    }
+
+    /**
+     * Retrieves a Purpose by one of its identifiers, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the Purpose to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full Purpose, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Purpose does not exist or the provided GUID is not a Purpose
+     */
+    @JsonIgnore
+    public static Purpose get(AtlanClient client, String id) throws AtlanException {
+        return get(client, id, true);
+    }
+
+    /**
+     * Retrieves a Purpose by one of its identifiers, optionally complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the Purpose to retrieve, either its GUID or its full qualifiedName
+     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @return the requested full Purpose, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Purpose does not exist or the provided GUID is not a Purpose
+     */
+    @JsonIgnore
+    public static Purpose get(AtlanClient client, String id, boolean includeRelationships) throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (StringUtils.isUUID(id)) {
+            Asset asset = Asset.get(client, id, includeRelationships);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof Purpose) {
+                return (Purpose) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "Purpose");
+            }
+        } else {
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
+            if (asset instanceof Purpose) {
+                return (Purpose) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "Purpose");
+            }
+        }
+    }
+
+    /**
      * Retrieves a Purpose by its GUID, complete with all of its relationships.
      *
      * @param guid of the Purpose to retrieve
      * @return the requested full Purpose, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Purpose does not exist or the provided GUID is not a Purpose
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static Purpose retrieveByGuid(String guid) throws AtlanException {
-        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+        return get(Atlan.getDefaultClient(), guid);
     }
 
     /**
@@ -177,16 +238,11 @@ public class Purpose extends Asset implements IPurpose, IAccessControl, IAsset, 
      * @param guid of the Purpose to retrieve
      * @return the requested full Purpose, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Purpose does not exist or the provided GUID is not a Purpose
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static Purpose retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof Purpose) {
-            return (Purpose) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "Purpose");
-        }
+        return get(client, guid);
     }
 
     /**
@@ -195,9 +251,11 @@ public class Purpose extends Asset implements IPurpose, IAccessControl, IAsset, 
      * @param qualifiedName of the Purpose to retrieve
      * @return the requested full Purpose, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Purpose does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static Purpose retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+        return get(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -207,14 +265,11 @@ public class Purpose extends Asset implements IPurpose, IAccessControl, IAsset, 
      * @param qualifiedName of the Purpose to retrieve
      * @return the requested full Purpose, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Purpose does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static Purpose retrieveByQualifiedName(AtlanClient client, String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
-        if (asset instanceof Purpose) {
-            return (Purpose) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "Purpose");
-        }
+        return get(client, qualifiedName);
     }
 
     /**
@@ -253,7 +308,7 @@ public class Purpose extends Asset implements IPurpose, IAccessControl, IAsset, 
         if (atlanTags == null || atlanTags.isEmpty()) {
             throw new InvalidRequestException(ErrorCode.NO_ATLAN_TAG_FOR_PURPOSE);
         }
-        return Purpose.builder()
+        return Purpose._internal()
                 .qualifiedName(name)
                 .name(name)
                 .displayName(name)
@@ -271,7 +326,7 @@ public class Purpose extends Asset implements IPurpose, IAccessControl, IAsset, 
      * @return the minimal request necessary to update the Purpose, as a builder
      */
     public static PurposeBuilder<?, ?> updater(String qualifiedName, String name, boolean isEnabled) {
-        return Purpose.builder().qualifiedName(qualifiedName).name(name).isAccessControlEnabled(isEnabled);
+        return Purpose._internal().qualifiedName(qualifiedName).name(name).isAccessControlEnabled(isEnabled);
     }
 
     /**
@@ -301,6 +356,19 @@ public class Purpose extends Asset implements IPurpose, IAccessControl, IAsset, 
     }
 
     /**
+     * Find a Purpose by its human-readable name. Only the bare minimum set of attributes and no
+     * relationships will be retrieved for the purpose, if found.
+     *
+     * @param name of the Purpose
+     * @return all Purposes with that name, if found
+     * @throws AtlanException on any API problems
+     * @throws NotFoundException if the Purpose does not exist
+     */
+    public static List<Purpose> findByName(String name) throws AtlanException {
+        return findByName(name, null);
+    }
+
+    /**
      * Find a Purpose by its human-readable name.
      *
      * @param name of the Purpose
@@ -311,6 +379,20 @@ public class Purpose extends Asset implements IPurpose, IAccessControl, IAsset, 
      */
     public static List<Purpose> findByName(String name, Collection<String> attributes) throws AtlanException {
         return findByName(Atlan.getDefaultClient(), name, attributes);
+    }
+
+    /**
+     * Find a Purpose by its human-readable name. Only the bare minimum set of attributes and no
+     * relationships will be retrieved for the purpose, if found.
+     *
+     * @param client connectivity to the Atlan tenant in which to search for the purpose
+     * @param name of the Purpose
+     * @return all Purposes with that name, if found
+     * @throws AtlanException on any API problems
+     * @throws NotFoundException if the Purpose does not exist
+     */
+    public static List<Purpose> findByName(AtlanClient client, String name) throws AtlanException {
+        return findByName(client, name, null);
     }
 
     /**

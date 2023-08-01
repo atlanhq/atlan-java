@@ -13,6 +13,8 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.QueryFactory;
+import com.atlan.util.StringUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
@@ -26,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -147,7 +149,7 @@ public class SigmaWorkbook extends Asset implements ISigmaWorkbook, ISigma, IBI,
      * @return reference to a SigmaWorkbook that can be used for defining a relationship to a SigmaWorkbook
      */
     public static SigmaWorkbook refByGuid(String guid) {
-        return SigmaWorkbook.builder().guid(guid).build();
+        return SigmaWorkbook._internal().guid(guid).build();
     }
 
     /**
@@ -157,51 +159,107 @@ public class SigmaWorkbook extends Asset implements ISigmaWorkbook, ISigma, IBI,
      * @return reference to a SigmaWorkbook that can be used for defining a relationship to a SigmaWorkbook
      */
     public static SigmaWorkbook refByQualifiedName(String qualifiedName) {
-        return SigmaWorkbook.builder()
+        return SigmaWorkbook._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
     }
 
     /**
-     * Retrieves a SigmaWorkbook by its GUID, complete with all of its relationships.
+     * Retrieves a SigmaWorkbook by one of its identifiers, complete with all of its relationships.
      *
-     * @param guid of the SigmaWorkbook to retrieve
+     * @param id of the SigmaWorkbook to retrieve, either its GUID or its full qualifiedName
      * @return the requested full SigmaWorkbook, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SigmaWorkbook does not exist or the provided GUID is not a SigmaWorkbook
      */
-    public static SigmaWorkbook retrieveByGuid(String guid) throws AtlanException {
-        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+    @JsonIgnore
+    public static SigmaWorkbook get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
     }
 
     /**
-     * Retrieves a SigmaWorkbook by its GUID, complete with all of its relationships.
+     * Retrieves a SigmaWorkbook by one of its identifiers, complete with all of its relationships.
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
-     * @param guid of the SigmaWorkbook to retrieve
+     * @param id of the SigmaWorkbook to retrieve, either its GUID or its full qualifiedName
      * @return the requested full SigmaWorkbook, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SigmaWorkbook does not exist or the provided GUID is not a SigmaWorkbook
      */
-    public static SigmaWorkbook retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof SigmaWorkbook) {
-            return (SigmaWorkbook) asset;
+    @JsonIgnore
+    public static SigmaWorkbook get(AtlanClient client, String id) throws AtlanException {
+        return get(client, id, true);
+    }
+
+    /**
+     * Retrieves a SigmaWorkbook by one of its identifiers, optionally complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the SigmaWorkbook to retrieve, either its GUID or its full qualifiedName
+     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @return the requested full SigmaWorkbook, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SigmaWorkbook does not exist or the provided GUID is not a SigmaWorkbook
+     */
+    @JsonIgnore
+    public static SigmaWorkbook get(AtlanClient client, String id, boolean includeRelationships) throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (StringUtils.isUUID(id)) {
+            Asset asset = Asset.get(client, id, includeRelationships);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof SigmaWorkbook) {
+                return (SigmaWorkbook) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "SigmaWorkbook");
+            }
         } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "SigmaWorkbook");
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
+            if (asset instanceof SigmaWorkbook) {
+                return (SigmaWorkbook) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "SigmaWorkbook");
+            }
         }
     }
 
     /**
+     * Retrieves a SigmaWorkbook by its GUID, complete with all of its relationships.
+     *
+     * @param guid of the SigmaWorkbook to retrieve
+     * @return the requested full SigmaWorkbook, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SigmaWorkbook does not exist or the provided GUID is not a SigmaWorkbook
+     * @deprecated see {@link #get(String)} instead
+     */
+    @Deprecated
+    public static SigmaWorkbook retrieveByGuid(String guid) throws AtlanException {
+        return get(Atlan.getDefaultClient(), guid);
+    }
+
+    /**
+     * Retrieves a SigmaWorkbook by its GUID, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param guid of the SigmaWorkbook to retrieve
+     * @return the requested full SigmaWorkbook, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SigmaWorkbook does not exist or the provided GUID is not a SigmaWorkbook
+     * @deprecated see {@link #get(AtlanClient, String)} instead
+     */
+    @Deprecated
+    public static SigmaWorkbook retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
+        return get(client, guid);
+    }
+
+    /**
      * Retrieves a SigmaWorkbook by its qualifiedName, complete with all of its relationships.
      *
      * @param qualifiedName of the SigmaWorkbook to retrieve
      * @return the requested full SigmaWorkbook, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SigmaWorkbook does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static SigmaWorkbook retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+        return get(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -211,15 +269,12 @@ public class SigmaWorkbook extends Asset implements ISigmaWorkbook, ISigma, IBI,
      * @param qualifiedName of the SigmaWorkbook to retrieve
      * @return the requested full SigmaWorkbook, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SigmaWorkbook does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static SigmaWorkbook retrieveByQualifiedName(AtlanClient client, String qualifiedName)
             throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
-        if (asset instanceof SigmaWorkbook) {
-            return (SigmaWorkbook) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "SigmaWorkbook");
-        }
+        return get(client, qualifiedName);
     }
 
     /**
@@ -253,7 +308,7 @@ public class SigmaWorkbook extends Asset implements ISigmaWorkbook, ISigma, IBI,
      * @return the minimal request necessary to update the SigmaWorkbook, as a builder
      */
     public static SigmaWorkbookBuilder<?, ?> updater(String qualifiedName, String name) {
-        return SigmaWorkbook.builder().qualifiedName(qualifiedName).name(name);
+        return SigmaWorkbook._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -385,7 +440,7 @@ public class SigmaWorkbook extends Asset implements ISigmaWorkbook, ISigma, IBI,
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (SigmaWorkbook)
-                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -444,7 +499,7 @@ public class SigmaWorkbook extends Asset implements ISigmaWorkbook, ISigma, IBI,
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (SigmaWorkbook)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

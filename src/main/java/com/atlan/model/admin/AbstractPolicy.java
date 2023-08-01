@@ -14,6 +14,7 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public abstract class AbstractPolicy extends AtlanObject implements Comparable<AbstractPolicy> {
+    private static final long serialVersionUID = 2L;
 
     // Sort policies in a set based first on their name (mandatory and required to be unique)
     private static final Comparator<String> stringComparator = Comparator.nullsFirst(String::compareTo);

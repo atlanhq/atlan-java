@@ -11,7 +11,7 @@
     public static S3ObjectBuilder<?, ?> creator(
             String name, String bucketQualifiedName, String bucketName, String awsArn) {
         String connectionQualifiedName = StringUtils.getConnectionQualifiedName(bucketQualifiedName);
-        return S3Object.builder()
+        return S3Object._internal()
                 .qualifiedName(IS3.generateQualifiedName(connectionQualifiedName, awsArn))
                 .name(name)
                 .connectionQualifiedName(connectionQualifiedName)
@@ -30,7 +30,7 @@
      * @return the minimal request necessary to update the S3Object, as a builder
      */
     public static S3ObjectBuilder<?, ?> updater(String qualifiedName, String name) {
-        return S3Object.builder().qualifiedName(qualifiedName).name(name);
+        return S3Object._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**

@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class DbtModelTest {
 
-    private static final DbtModel full = DbtModel.builder()
+    private static final DbtModel full = DbtModel._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -361,6 +361,14 @@ public class DbtModelTest {
             .sourceUpdatedBy("String0")
             .addStarredBy("String0")
             .addStarredBy("String1")
+            .starredDetail(StarredDetails.builder()
+                    .assetStarredBy("String0")
+                    .assetStarredAt(123456789L)
+                    .build())
+            .starredDetail(StarredDetails.builder()
+                    .assetStarredBy("String1")
+                    .assetStarredAt(987654321L)
+                    .build())
             .subType("String0")
             .tenantId("String0")
             .userDescription("String0")
@@ -383,14 +391,14 @@ public class DbtModelTest {
             .dbtModelExecutionTime(123.456)
             .dbtModelRunElapsedTime(123.456)
             .dbtModelRunGeneratedAt(123456789L)
-            .dbtModelSqlAsset(TablePartition.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .dbtModelSqlAsset(TablePartition.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .dbtModelSqlAsset(Table.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .dbtModelSqlAsset(Table.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .dbtRawSQL("String0")
             .dbtStats("String0")
             .dbtStatus("String0")
             .dbtTest(DbtTest.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .dbtTest(DbtTest.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .primarySqlAsset(TablePartition.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .primarySqlAsset(Table.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .build();
 
     private static final int hash = full.hashCode();

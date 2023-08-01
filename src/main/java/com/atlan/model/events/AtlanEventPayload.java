@@ -26,6 +26,8 @@ import lombok.experimental.SuperBuilder;
 })
 @ToString(callSuper = true)
 public abstract class AtlanEventPayload extends AtlanObject {
+    private static final long serialVersionUID = 2L;
+
     /** Type of the event payload. */
     String type;
 

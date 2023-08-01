@@ -14,6 +14,8 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.QuickSightFolderType;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.QueryFactory;
+import com.atlan.util.StringUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +30,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -154,7 +156,7 @@ public class QuickSightFolder extends Asset
      * @return reference to a QuickSightFolder that can be used for defining a relationship to a QuickSightFolder
      */
     public static QuickSightFolder refByGuid(String guid) {
-        return QuickSightFolder.builder().guid(guid).build();
+        return QuickSightFolder._internal().guid(guid).build();
     }
 
     /**
@@ -164,51 +166,108 @@ public class QuickSightFolder extends Asset
      * @return reference to a QuickSightFolder that can be used for defining a relationship to a QuickSightFolder
      */
     public static QuickSightFolder refByQualifiedName(String qualifiedName) {
-        return QuickSightFolder.builder()
+        return QuickSightFolder._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
     }
 
     /**
-     * Retrieves a QuickSightFolder by its GUID, complete with all of its relationships.
+     * Retrieves a QuickSightFolder by one of its identifiers, complete with all of its relationships.
      *
-     * @param guid of the QuickSightFolder to retrieve
+     * @param id of the QuickSightFolder to retrieve, either its GUID or its full qualifiedName
      * @return the requested full QuickSightFolder, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the QuickSightFolder does not exist or the provided GUID is not a QuickSightFolder
      */
-    public static QuickSightFolder retrieveByGuid(String guid) throws AtlanException {
-        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+    @JsonIgnore
+    public static QuickSightFolder get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
     }
 
     /**
-     * Retrieves a QuickSightFolder by its GUID, complete with all of its relationships.
+     * Retrieves a QuickSightFolder by one of its identifiers, complete with all of its relationships.
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
-     * @param guid of the QuickSightFolder to retrieve
+     * @param id of the QuickSightFolder to retrieve, either its GUID or its full qualifiedName
      * @return the requested full QuickSightFolder, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the QuickSightFolder does not exist or the provided GUID is not a QuickSightFolder
      */
-    public static QuickSightFolder retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof QuickSightFolder) {
-            return (QuickSightFolder) asset;
+    @JsonIgnore
+    public static QuickSightFolder get(AtlanClient client, String id) throws AtlanException {
+        return get(client, id, true);
+    }
+
+    /**
+     * Retrieves a QuickSightFolder by one of its identifiers, optionally complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the QuickSightFolder to retrieve, either its GUID or its full qualifiedName
+     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @return the requested full QuickSightFolder, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the QuickSightFolder does not exist or the provided GUID is not a QuickSightFolder
+     */
+    @JsonIgnore
+    public static QuickSightFolder get(AtlanClient client, String id, boolean includeRelationships)
+            throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (StringUtils.isUUID(id)) {
+            Asset asset = Asset.get(client, id, includeRelationships);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof QuickSightFolder) {
+                return (QuickSightFolder) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "QuickSightFolder");
+            }
         } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "QuickSightFolder");
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
+            if (asset instanceof QuickSightFolder) {
+                return (QuickSightFolder) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "QuickSightFolder");
+            }
         }
     }
 
     /**
+     * Retrieves a QuickSightFolder by its GUID, complete with all of its relationships.
+     *
+     * @param guid of the QuickSightFolder to retrieve
+     * @return the requested full QuickSightFolder, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the QuickSightFolder does not exist or the provided GUID is not a QuickSightFolder
+     * @deprecated see {@link #get(String)} instead
+     */
+    @Deprecated
+    public static QuickSightFolder retrieveByGuid(String guid) throws AtlanException {
+        return get(Atlan.getDefaultClient(), guid);
+    }
+
+    /**
+     * Retrieves a QuickSightFolder by its GUID, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param guid of the QuickSightFolder to retrieve
+     * @return the requested full QuickSightFolder, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the QuickSightFolder does not exist or the provided GUID is not a QuickSightFolder
+     * @deprecated see {@link #get(AtlanClient, String)} instead
+     */
+    @Deprecated
+    public static QuickSightFolder retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
+        return get(client, guid);
+    }
+
+    /**
      * Retrieves a QuickSightFolder by its qualifiedName, complete with all of its relationships.
      *
      * @param qualifiedName of the QuickSightFolder to retrieve
      * @return the requested full QuickSightFolder, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the QuickSightFolder does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static QuickSightFolder retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+        return get(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -218,15 +277,12 @@ public class QuickSightFolder extends Asset
      * @param qualifiedName of the QuickSightFolder to retrieve
      * @return the requested full QuickSightFolder, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the QuickSightFolder does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static QuickSightFolder retrieveByQualifiedName(AtlanClient client, String qualifiedName)
             throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
-        if (asset instanceof QuickSightFolder) {
-            return (QuickSightFolder) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "QuickSightFolder");
-        }
+        return get(client, qualifiedName);
     }
 
     /**
@@ -260,7 +316,7 @@ public class QuickSightFolder extends Asset
      * @return the minimal request necessary to update the QuickSightFolder, as a builder
      */
     public static QuickSightFolderBuilder<?, ?> updater(String qualifiedName, String name) {
-        return QuickSightFolder.builder().qualifiedName(qualifiedName).name(name);
+        return QuickSightFolder._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -392,7 +448,7 @@ public class QuickSightFolder extends Asset
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (QuickSightFolder)
-                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -451,7 +507,7 @@ public class QuickSightFolder extends Asset
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (QuickSightFolder)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

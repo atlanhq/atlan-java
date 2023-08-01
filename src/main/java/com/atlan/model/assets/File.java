@@ -15,6 +15,7 @@ import com.atlan.model.enums.FileType;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.QueryFactory;
 import com.atlan.util.StringUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +30,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -147,7 +148,7 @@ public class File extends Asset implements IFile, IResource, ICatalog, IAsset, I
      * @return reference to a File that can be used for defining a relationship to a File
      */
     public static File refByGuid(String guid) {
-        return File.builder().guid(guid).build();
+        return File._internal().guid(guid).build();
     }
 
     /**
@@ -157,21 +158,80 @@ public class File extends Asset implements IFile, IResource, ICatalog, IAsset, I
      * @return reference to a File that can be used for defining a relationship to a File
      */
     public static File refByQualifiedName(String qualifiedName) {
-        return File.builder()
+        return File._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
     }
 
     /**
+     * Retrieves a File by one of its identifiers, complete with all of its relationships.
+     *
+     * @param id of the File to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full File, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the File does not exist or the provided GUID is not a File
+     */
+    @JsonIgnore
+    public static File get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
+    }
+
+    /**
+     * Retrieves a File by one of its identifiers, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the File to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full File, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the File does not exist or the provided GUID is not a File
+     */
+    @JsonIgnore
+    public static File get(AtlanClient client, String id) throws AtlanException {
+        return get(client, id, true);
+    }
+
+    /**
+     * Retrieves a File by one of its identifiers, optionally complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the File to retrieve, either its GUID or its full qualifiedName
+     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @return the requested full File, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the File does not exist or the provided GUID is not a File
+     */
+    @JsonIgnore
+    public static File get(AtlanClient client, String id, boolean includeRelationships) throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (StringUtils.isUUID(id)) {
+            Asset asset = Asset.get(client, id, includeRelationships);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof File) {
+                return (File) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "File");
+            }
+        } else {
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
+            if (asset instanceof File) {
+                return (File) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "File");
+            }
+        }
+    }
+
+    /**
      * Retrieves a File by its GUID, complete with all of its relationships.
      *
      * @param guid of the File to retrieve
      * @return the requested full File, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the File does not exist or the provided GUID is not a File
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static File retrieveByGuid(String guid) throws AtlanException {
-        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+        return get(Atlan.getDefaultClient(), guid);
     }
 
     /**
@@ -181,16 +241,11 @@ public class File extends Asset implements IFile, IResource, ICatalog, IAsset, I
      * @param guid of the File to retrieve
      * @return the requested full File, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the File does not exist or the provided GUID is not a File
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static File retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof File) {
-            return (File) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "File");
-        }
+        return get(client, guid);
     }
 
     /**
@@ -199,9 +254,11 @@ public class File extends Asset implements IFile, IResource, ICatalog, IAsset, I
      * @param qualifiedName of the File to retrieve
      * @return the requested full File, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the File does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static File retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+        return get(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -211,14 +268,11 @@ public class File extends Asset implements IFile, IResource, ICatalog, IAsset, I
      * @param qualifiedName of the File to retrieve
      * @return the requested full File, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the File does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static File retrieveByQualifiedName(AtlanClient client, String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
-        if (asset instanceof File) {
-            return (File) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "File");
-        }
+        return get(client, qualifiedName);
     }
 
     /**
@@ -253,7 +307,7 @@ public class File extends Asset implements IFile, IResource, ICatalog, IAsset, I
      * @return the minimal request necessary to update the File, as a builder
      */
     public static FileBuilder<?, ?> creator(String name, String connectionQualifiedName, FileType type) {
-        return File.builder()
+        return File._internal()
                 .connectionQualifiedName(connectionQualifiedName)
                 .name(name)
                 .qualifiedName(generateQualifiedName(connectionQualifiedName, name))
@@ -279,7 +333,7 @@ public class File extends Asset implements IFile, IResource, ICatalog, IAsset, I
      * @return the minimal request necessary to update the File, as a builder
      */
     public static FileBuilder<?, ?> updater(String qualifiedName, String name) {
-        return File.builder().qualifiedName(qualifiedName).name(name);
+        return File._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -408,7 +462,7 @@ public class File extends Asset implements IFile, IResource, ICatalog, IAsset, I
     public static File updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (File) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return (File) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -465,7 +519,7 @@ public class File extends Asset implements IFile, IResource, ICatalog, IAsset, I
     public static File updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (File) Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+        return (File) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

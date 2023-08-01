@@ -13,6 +13,8 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.QueryFactory;
+import com.atlan.util.StringUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +30,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -208,7 +210,7 @@ public class Procedure extends Asset implements IProcedure, ISQL, ICatalog, IAss
      * @return reference to a Procedure that can be used for defining a relationship to a Procedure
      */
     public static Procedure refByGuid(String guid) {
-        return Procedure.builder().guid(guid).build();
+        return Procedure._internal().guid(guid).build();
     }
 
     /**
@@ -218,21 +220,80 @@ public class Procedure extends Asset implements IProcedure, ISQL, ICatalog, IAss
      * @return reference to a Procedure that can be used for defining a relationship to a Procedure
      */
     public static Procedure refByQualifiedName(String qualifiedName) {
-        return Procedure.builder()
+        return Procedure._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
     }
 
     /**
+     * Retrieves a Procedure by one of its identifiers, complete with all of its relationships.
+     *
+     * @param id of the Procedure to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full Procedure, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Procedure does not exist or the provided GUID is not a Procedure
+     */
+    @JsonIgnore
+    public static Procedure get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
+    }
+
+    /**
+     * Retrieves a Procedure by one of its identifiers, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the Procedure to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full Procedure, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Procedure does not exist or the provided GUID is not a Procedure
+     */
+    @JsonIgnore
+    public static Procedure get(AtlanClient client, String id) throws AtlanException {
+        return get(client, id, true);
+    }
+
+    /**
+     * Retrieves a Procedure by one of its identifiers, optionally complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the Procedure to retrieve, either its GUID or its full qualifiedName
+     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @return the requested full Procedure, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Procedure does not exist or the provided GUID is not a Procedure
+     */
+    @JsonIgnore
+    public static Procedure get(AtlanClient client, String id, boolean includeRelationships) throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (StringUtils.isUUID(id)) {
+            Asset asset = Asset.get(client, id, includeRelationships);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof Procedure) {
+                return (Procedure) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "Procedure");
+            }
+        } else {
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
+            if (asset instanceof Procedure) {
+                return (Procedure) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "Procedure");
+            }
+        }
+    }
+
+    /**
      * Retrieves a Procedure by its GUID, complete with all of its relationships.
      *
      * @param guid of the Procedure to retrieve
      * @return the requested full Procedure, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Procedure does not exist or the provided GUID is not a Procedure
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static Procedure retrieveByGuid(String guid) throws AtlanException {
-        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+        return get(Atlan.getDefaultClient(), guid);
     }
 
     /**
@@ -242,16 +303,11 @@ public class Procedure extends Asset implements IProcedure, ISQL, ICatalog, IAss
      * @param guid of the Procedure to retrieve
      * @return the requested full Procedure, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Procedure does not exist or the provided GUID is not a Procedure
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static Procedure retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof Procedure) {
-            return (Procedure) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "Procedure");
-        }
+        return get(client, guid);
     }
 
     /**
@@ -260,9 +316,11 @@ public class Procedure extends Asset implements IProcedure, ISQL, ICatalog, IAss
      * @param qualifiedName of the Procedure to retrieve
      * @return the requested full Procedure, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Procedure does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static Procedure retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+        return get(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -272,14 +330,11 @@ public class Procedure extends Asset implements IProcedure, ISQL, ICatalog, IAss
      * @param qualifiedName of the Procedure to retrieve
      * @return the requested full Procedure, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Procedure does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static Procedure retrieveByQualifiedName(AtlanClient client, String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
-        if (asset instanceof Procedure) {
-            return (Procedure) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "Procedure");
-        }
+        return get(client, qualifiedName);
     }
 
     /**
@@ -313,7 +368,7 @@ public class Procedure extends Asset implements IProcedure, ISQL, ICatalog, IAss
      * @return the minimal request necessary to update the Procedure, as a builder
      */
     public static ProcedureBuilder<?, ?> updater(String qualifiedName, String name) {
-        return Procedure.builder().qualifiedName(qualifiedName).name(name);
+        return Procedure._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -443,7 +498,7 @@ public class Procedure extends Asset implements IProcedure, ISQL, ICatalog, IAss
     public static Procedure updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (Procedure) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return (Procedure) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -501,7 +556,8 @@ public class Procedure extends Asset implements IProcedure, ISQL, ICatalog, IAss
     public static Procedure updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (Procedure) Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+        return (Procedure)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

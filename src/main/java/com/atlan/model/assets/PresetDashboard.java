@@ -15,6 +15,7 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.QueryFactory;
 import com.atlan.util.StringUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
@@ -28,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -170,7 +171,7 @@ public class PresetDashboard extends Asset implements IPresetDashboard, IPreset,
      * @return reference to a PresetDashboard that can be used for defining a relationship to a PresetDashboard
      */
     public static PresetDashboard refByGuid(String guid) {
-        return PresetDashboard.builder().guid(guid).build();
+        return PresetDashboard._internal().guid(guid).build();
     }
 
     /**
@@ -180,51 +181,108 @@ public class PresetDashboard extends Asset implements IPresetDashboard, IPreset,
      * @return reference to a PresetDashboard that can be used for defining a relationship to a PresetDashboard
      */
     public static PresetDashboard refByQualifiedName(String qualifiedName) {
-        return PresetDashboard.builder()
+        return PresetDashboard._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
     }
 
     /**
-     * Retrieves a PresetDashboard by its GUID, complete with all of its relationships.
+     * Retrieves a PresetDashboard by one of its identifiers, complete with all of its relationships.
      *
-     * @param guid of the PresetDashboard to retrieve
+     * @param id of the PresetDashboard to retrieve, either its GUID or its full qualifiedName
      * @return the requested full PresetDashboard, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PresetDashboard does not exist or the provided GUID is not a PresetDashboard
      */
-    public static PresetDashboard retrieveByGuid(String guid) throws AtlanException {
-        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+    @JsonIgnore
+    public static PresetDashboard get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
     }
 
     /**
-     * Retrieves a PresetDashboard by its GUID, complete with all of its relationships.
+     * Retrieves a PresetDashboard by one of its identifiers, complete with all of its relationships.
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
-     * @param guid of the PresetDashboard to retrieve
+     * @param id of the PresetDashboard to retrieve, either its GUID or its full qualifiedName
      * @return the requested full PresetDashboard, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PresetDashboard does not exist or the provided GUID is not a PresetDashboard
      */
-    public static PresetDashboard retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof PresetDashboard) {
-            return (PresetDashboard) asset;
+    @JsonIgnore
+    public static PresetDashboard get(AtlanClient client, String id) throws AtlanException {
+        return get(client, id, true);
+    }
+
+    /**
+     * Retrieves a PresetDashboard by one of its identifiers, optionally complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the PresetDashboard to retrieve, either its GUID or its full qualifiedName
+     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @return the requested full PresetDashboard, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PresetDashboard does not exist or the provided GUID is not a PresetDashboard
+     */
+    @JsonIgnore
+    public static PresetDashboard get(AtlanClient client, String id, boolean includeRelationships)
+            throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (StringUtils.isUUID(id)) {
+            Asset asset = Asset.get(client, id, includeRelationships);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof PresetDashboard) {
+                return (PresetDashboard) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "PresetDashboard");
+            }
         } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "PresetDashboard");
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
+            if (asset instanceof PresetDashboard) {
+                return (PresetDashboard) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "PresetDashboard");
+            }
         }
     }
 
     /**
+     * Retrieves a PresetDashboard by its GUID, complete with all of its relationships.
+     *
+     * @param guid of the PresetDashboard to retrieve
+     * @return the requested full PresetDashboard, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PresetDashboard does not exist or the provided GUID is not a PresetDashboard
+     * @deprecated see {@link #get(String)} instead
+     */
+    @Deprecated
+    public static PresetDashboard retrieveByGuid(String guid) throws AtlanException {
+        return get(Atlan.getDefaultClient(), guid);
+    }
+
+    /**
+     * Retrieves a PresetDashboard by its GUID, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param guid of the PresetDashboard to retrieve
+     * @return the requested full PresetDashboard, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PresetDashboard does not exist or the provided GUID is not a PresetDashboard
+     * @deprecated see {@link #get(AtlanClient, String)} instead
+     */
+    @Deprecated
+    public static PresetDashboard retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
+        return get(client, guid);
+    }
+
+    /**
      * Retrieves a PresetDashboard by its qualifiedName, complete with all of its relationships.
      *
      * @param qualifiedName of the PresetDashboard to retrieve
      * @return the requested full PresetDashboard, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PresetDashboard does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static PresetDashboard retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+        return get(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -234,15 +292,12 @@ public class PresetDashboard extends Asset implements IPresetDashboard, IPreset,
      * @param qualifiedName of the PresetDashboard to retrieve
      * @return the requested full PresetDashboard, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PresetDashboard does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static PresetDashboard retrieveByQualifiedName(AtlanClient client, String qualifiedName)
             throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
-        if (asset instanceof PresetDashboard) {
-            return (PresetDashboard) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "PresetDashboard");
-        }
+        return get(client, qualifiedName);
     }
 
     /**
@@ -279,7 +334,7 @@ public class PresetDashboard extends Asset implements IPresetDashboard, IPreset,
         String[] tokens = workspaceQualifiedName.split("/");
         AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(tokens);
         String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(workspaceQualifiedName);
-        return PresetDashboard.builder()
+        return PresetDashboard._internal()
                 .name(name)
                 .qualifiedName(workspaceQualifiedName + "/" + name)
                 .connectorType(connectorType)
@@ -296,7 +351,7 @@ public class PresetDashboard extends Asset implements IPresetDashboard, IPreset,
      * @return the minimal request necessary to update the PresetDashboard, as a builder
      */
     public static PresetDashboardBuilder<?, ?> updater(String qualifiedName, String name) {
-        return PresetDashboard.builder().qualifiedName(qualifiedName).name(name);
+        return PresetDashboard._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -428,7 +483,7 @@ public class PresetDashboard extends Asset implements IPresetDashboard, IPreset,
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (PresetDashboard)
-                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -487,7 +542,7 @@ public class PresetDashboard extends Asset implements IPresetDashboard, IPreset,
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (PresetDashboard)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

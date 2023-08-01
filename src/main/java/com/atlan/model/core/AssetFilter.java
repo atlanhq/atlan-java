@@ -36,8 +36,7 @@ public class AssetFilter {
     List<SortOptions> sorts;
 
     /** Number of results to retrieve per underlying API request. */
-    @Builder.Default
-    int batch = 50;
+    Integer batch;
 
     /** Attributes to retrieve for each asset. */
     @Singular
@@ -71,7 +70,10 @@ public class AssetFilter {
             if (sorts != null) {
                 dsl.sort(sorts);
             }
-            dsl.size(batch$value);
+            if (batch == null) {
+                batch = 50;
+            }
+            dsl.size(batch);
             IndexSearchRequest.IndexSearchRequestBuilder<?, ?> request = IndexSearchRequest.builder(dsl.build());
             if (attributes != null) {
                 request.attributes(attributes);

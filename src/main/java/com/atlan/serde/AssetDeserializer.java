@@ -87,12 +87,12 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
         String typeName = null;
 
         if (typeNameJson == null || typeNameJson.isNull()) {
-            builder = IndistinctAsset.builder();
+            builder = IndistinctAsset._internal();
         } else {
             typeName = root.get("typeName").asText();
             try {
                 Class<?> typeClass = Serde.getAssetClassForType(typeName);
-                Method method = typeClass.getMethod("builder");
+                Method method = typeClass.getMethod("_internal");
                 Object result = method.invoke(null);
                 builder = (Asset.AssetBuilder<?, ?>) result;
             } catch (ClassNotFoundException
@@ -103,7 +103,7 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
                         "Unable to dynamically retrieve asset for typeName {}, falling back to an IndistinctAsset.",
                         typeName,
                         e);
-                builder = IndistinctAsset.builder();
+                builder = IndistinctAsset._internal();
             }
         }
 

@@ -9,6 +9,7 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
+import com.atlan.model.structs.StarredDetails;
 import com.atlan.serde.AssetDeserializer;
 import com.atlan.serde.AssetSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -369,6 +370,9 @@ public interface IAsset {
 
     /** Users who have starred this asset. */
     SortedSet<String> getStarredBy();
+
+    /** List of usernames with extra information of the users who have starred an asset */
+    List<StarredDetails> getStarredDetails();
 
     /** TBC */
     String getSubType();

@@ -14,6 +14,7 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class AtlanTagRequest extends AtlanRequest {
+    private static final long serialVersionUID = 2L;
 
     public static final String REQUEST_TYPE = "attach_classification";
     public static final String SOURCE_TYPE = "atlas";

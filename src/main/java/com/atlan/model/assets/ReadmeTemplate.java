@@ -12,6 +12,8 @@ import com.atlan.model.core.AssetFilter;
 import com.atlan.model.enums.IconType;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.QueryFactory;
+import com.atlan.util.StringUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -140,7 +142,7 @@ public class ReadmeTemplate extends Asset implements IReadmeTemplate, IResource,
      * @return reference to a ReadmeTemplate that can be used for defining a relationship to a ReadmeTemplate
      */
     public static ReadmeTemplate refByGuid(String guid) {
-        return ReadmeTemplate.builder().guid(guid).build();
+        return ReadmeTemplate._internal().guid(guid).build();
     }
 
     /**
@@ -150,51 +152,108 @@ public class ReadmeTemplate extends Asset implements IReadmeTemplate, IResource,
      * @return reference to a ReadmeTemplate that can be used for defining a relationship to a ReadmeTemplate
      */
     public static ReadmeTemplate refByQualifiedName(String qualifiedName) {
-        return ReadmeTemplate.builder()
+        return ReadmeTemplate._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
     }
 
     /**
-     * Retrieves a ReadmeTemplate by its GUID, complete with all of its relationships.
+     * Retrieves a ReadmeTemplate by one of its identifiers, complete with all of its relationships.
      *
-     * @param guid of the ReadmeTemplate to retrieve
+     * @param id of the ReadmeTemplate to retrieve, either its GUID or its full qualifiedName
      * @return the requested full ReadmeTemplate, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ReadmeTemplate does not exist or the provided GUID is not a ReadmeTemplate
      */
-    public static ReadmeTemplate retrieveByGuid(String guid) throws AtlanException {
-        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+    @JsonIgnore
+    public static ReadmeTemplate get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
     }
 
     /**
-     * Retrieves a ReadmeTemplate by its GUID, complete with all of its relationships.
+     * Retrieves a ReadmeTemplate by one of its identifiers, complete with all of its relationships.
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
-     * @param guid of the ReadmeTemplate to retrieve
+     * @param id of the ReadmeTemplate to retrieve, either its GUID or its full qualifiedName
      * @return the requested full ReadmeTemplate, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ReadmeTemplate does not exist or the provided GUID is not a ReadmeTemplate
      */
-    public static ReadmeTemplate retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof ReadmeTemplate) {
-            return (ReadmeTemplate) asset;
+    @JsonIgnore
+    public static ReadmeTemplate get(AtlanClient client, String id) throws AtlanException {
+        return get(client, id, true);
+    }
+
+    /**
+     * Retrieves a ReadmeTemplate by one of its identifiers, optionally complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the ReadmeTemplate to retrieve, either its GUID or its full qualifiedName
+     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @return the requested full ReadmeTemplate, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ReadmeTemplate does not exist or the provided GUID is not a ReadmeTemplate
+     */
+    @JsonIgnore
+    public static ReadmeTemplate get(AtlanClient client, String id, boolean includeRelationships)
+            throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (StringUtils.isUUID(id)) {
+            Asset asset = Asset.get(client, id, includeRelationships);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof ReadmeTemplate) {
+                return (ReadmeTemplate) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "ReadmeTemplate");
+            }
         } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "ReadmeTemplate");
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
+            if (asset instanceof ReadmeTemplate) {
+                return (ReadmeTemplate) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "ReadmeTemplate");
+            }
         }
     }
 
     /**
+     * Retrieves a ReadmeTemplate by its GUID, complete with all of its relationships.
+     *
+     * @param guid of the ReadmeTemplate to retrieve
+     * @return the requested full ReadmeTemplate, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ReadmeTemplate does not exist or the provided GUID is not a ReadmeTemplate
+     * @deprecated see {@link #get(String)} instead
+     */
+    @Deprecated
+    public static ReadmeTemplate retrieveByGuid(String guid) throws AtlanException {
+        return get(Atlan.getDefaultClient(), guid);
+    }
+
+    /**
+     * Retrieves a ReadmeTemplate by its GUID, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param guid of the ReadmeTemplate to retrieve
+     * @return the requested full ReadmeTemplate, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ReadmeTemplate does not exist or the provided GUID is not a ReadmeTemplate
+     * @deprecated see {@link #get(AtlanClient, String)} instead
+     */
+    @Deprecated
+    public static ReadmeTemplate retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
+        return get(client, guid);
+    }
+
+    /**
      * Retrieves a ReadmeTemplate by its qualifiedName, complete with all of its relationships.
      *
      * @param qualifiedName of the ReadmeTemplate to retrieve
      * @return the requested full ReadmeTemplate, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ReadmeTemplate does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static ReadmeTemplate retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+        return get(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -204,15 +263,12 @@ public class ReadmeTemplate extends Asset implements IReadmeTemplate, IResource,
      * @param qualifiedName of the ReadmeTemplate to retrieve
      * @return the requested full ReadmeTemplate, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ReadmeTemplate does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static ReadmeTemplate retrieveByQualifiedName(AtlanClient client, String qualifiedName)
             throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
-        if (asset instanceof ReadmeTemplate) {
-            return (ReadmeTemplate) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "ReadmeTemplate");
-        }
+        return get(client, qualifiedName);
     }
 
     /**
@@ -246,7 +302,7 @@ public class ReadmeTemplate extends Asset implements IReadmeTemplate, IResource,
      * @return the minimal request necessary to update the ReadmeTemplate, as a builder
      */
     public static ReadmeTemplateBuilder<?, ?> updater(String qualifiedName, String name) {
-        return ReadmeTemplate.builder().qualifiedName(qualifiedName).name(name);
+        return ReadmeTemplate._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**

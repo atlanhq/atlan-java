@@ -6,7 +6,7 @@
      * @return the minimal request necessary to create the Persona, as a builder
      */
     public static PersonaBuilder<?, ?> creator(String name) {
-        return Persona.builder()
+        return Persona._internal()
                 .qualifiedName(name)
                 .name(name)
                 .displayName(name)
@@ -23,7 +23,7 @@
      * @return the minimal request necessary to update the Persona, as a builder
      */
     public static PersonaBuilder<?, ?> updater(String qualifiedName, String name, boolean isEnabled) {
-        return Persona.builder().qualifiedName(qualifiedName).name(name).isAccessControlEnabled(isEnabled);
+        return Persona._internal().qualifiedName(qualifiedName).name(name).isAccessControlEnabled(isEnabled);
     }
 
     /**
@@ -53,6 +53,19 @@
     }
 
     /**
+     * Find a Persona by its human-readable name. Only the bare minimum set of attributes and no
+     * relationships will be retrieved for the persona, if found.
+     *
+     * @param name of the Persona
+     * @return all Personas with that name, if found
+     * @throws AtlanException on any API problems
+     * @throws NotFoundException if the Persona does not exist
+     */
+    public static List<Persona> findByName(String name) throws AtlanException {
+        return findByName(name, null);
+    }
+
+    /**
      * Find a Persona by its human-readable name.
      *
      * @param name of the Persona
@@ -64,6 +77,20 @@
     public static List<Persona> findByName(String name, Collection<String> attributes)
             throws AtlanException {
         return findByName(Atlan.getDefaultClient(), name, attributes);
+    }
+
+    /**
+     * Find a Persona by its human-readable name. Only the bare minimum set of attributes and no
+     * relationships will be retrieved for the persona, if found.
+     *
+     * @param client connectivity to the Atlan tenant in which to search for the Persona
+     * @param name of the Persona
+     * @return all Personas with that name, if found
+     * @throws AtlanException on any API problems
+     * @throws NotFoundException if the Persona does not exist
+     */
+    public static List<Persona> findByName(AtlanClient client, String name) throws AtlanException {
+        return findByName(client, name, null);
     }
 
     /**

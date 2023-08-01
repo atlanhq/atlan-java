@@ -19,6 +19,7 @@ import lombok.experimental.SuperBuilder;
 @JsonDeserialize(using = CustomMetadataAuditDeserializer.class)
 @ToString(callSuper = true)
 public class CustomMetadataAttributesAuditDetail extends CustomMetadataAttributes implements AuditDetail {
+    private static final long serialVersionUID = 2L;
 
     /** Unique name of the custom metadata set (structure). */
     String typeName;

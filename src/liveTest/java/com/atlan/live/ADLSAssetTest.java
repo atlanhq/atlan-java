@@ -134,7 +134,7 @@ public class ADLSAssetTest extends AtlanLiveTest {
             groups = {"adls.read.container"},
             dependsOnGroups = {"adls.create.object", "adls.update.container"})
     void retrieveContainer() throws AtlanException {
-        ADLSContainer b = ADLSContainer.retrieveByGuid(container.getGuid());
+        ADLSContainer b = ADLSContainer.get(container.getGuid());
         assertNotNull(b);
         assertTrue(b.isComplete());
         assertEquals(b.getGuid(), container.getGuid());
@@ -263,7 +263,7 @@ public class ADLSAssetTest extends AtlanLiveTest {
             groups = {"adls.delete.object.read"},
             dependsOnGroups = {"adls.delete.object"})
     void readDeletedObject() throws AtlanException {
-        ADLSObject deleted = ADLSObject.retrieveByGuid(object.getGuid());
+        ADLSObject deleted = ADLSObject.get(object.getGuid());
         assertNotNull(deleted);
         assertEquals(deleted.getGuid(), object.getGuid());
         assertEquals(deleted.getQualifiedName(), object.getQualifiedName());
@@ -275,7 +275,7 @@ public class ADLSAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"adls.delete.object.read"})
     void restoreObject() throws AtlanException {
         assertTrue(ADLSObject.restore(object.getQualifiedName()));
-        ADLSObject restored = ADLSObject.retrieveByQualifiedName(object.getQualifiedName());
+        ADLSObject restored = ADLSObject.get(object.getQualifiedName());
         assertEquals(restored.getGuid(), object.getGuid());
         assertEquals(restored.getQualifiedName(), object.getQualifiedName());
         assertEquals(restored.getStatus(), AtlanStatus.ACTIVE);

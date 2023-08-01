@@ -7,4 +7,6 @@ import lombok.ToString;
 
 /** Base class for all request payloads. */
 @ToString(callSuper = true)
-public abstract class AtlanRequestPayload extends AtlanObject {}
+public abstract class AtlanRequestPayload extends AtlanObject {
+    private static final long serialVersionUID = 2L;
+}

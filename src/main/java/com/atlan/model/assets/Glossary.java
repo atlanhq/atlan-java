@@ -20,6 +20,8 @@ import com.atlan.model.search.IndexSearchDSL;
 import com.atlan.model.search.IndexSearchRequest;
 import com.atlan.model.search.IndexSearchResponse;
 import com.atlan.util.QueryFactory;
+import com.atlan.util.StringUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -41,7 +43,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -151,7 +153,7 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
      * @return reference to a Glossary that can be used for defining a relationship to a Glossary
      */
     public static Glossary refByGuid(String guid) {
-        return Glossary.builder().guid(guid).build();
+        return Glossary._internal().guid(guid).build();
     }
 
     /**
@@ -161,21 +163,80 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
      * @return reference to a Glossary that can be used for defining a relationship to a Glossary
      */
     public static Glossary refByQualifiedName(String qualifiedName) {
-        return Glossary.builder()
+        return Glossary._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
     }
 
     /**
+     * Retrieves a Glossary by one of its identifiers, complete with all of its relationships.
+     *
+     * @param id of the Glossary to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full Glossary, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Glossary does not exist or the provided GUID is not a Glossary
+     */
+    @JsonIgnore
+    public static Glossary get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
+    }
+
+    /**
+     * Retrieves a Glossary by one of its identifiers, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the Glossary to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full Glossary, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Glossary does not exist or the provided GUID is not a Glossary
+     */
+    @JsonIgnore
+    public static Glossary get(AtlanClient client, String id) throws AtlanException {
+        return get(client, id, true);
+    }
+
+    /**
+     * Retrieves a Glossary by one of its identifiers, optionally complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the Glossary to retrieve, either its GUID or its full qualifiedName
+     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @return the requested full Glossary, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Glossary does not exist or the provided GUID is not a Glossary
+     */
+    @JsonIgnore
+    public static Glossary get(AtlanClient client, String id, boolean includeRelationships) throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (StringUtils.isUUID(id)) {
+            Asset asset = Asset.get(client, id, includeRelationships);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof Glossary) {
+                return (Glossary) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "Glossary");
+            }
+        } else {
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
+            if (asset instanceof Glossary) {
+                return (Glossary) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "Glossary");
+            }
+        }
+    }
+
+    /**
      * Retrieves a Glossary by its GUID, complete with all of its relationships.
      *
      * @param guid of the Glossary to retrieve
      * @return the requested full Glossary, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Glossary does not exist or the provided GUID is not a Glossary
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static Glossary retrieveByGuid(String guid) throws AtlanException {
-        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+        return get(Atlan.getDefaultClient(), guid);
     }
 
     /**
@@ -185,16 +246,11 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
      * @param guid of the Glossary to retrieve
      * @return the requested full Glossary, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Glossary does not exist or the provided GUID is not a Glossary
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static Glossary retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof Glossary) {
-            return (Glossary) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "Glossary");
-        }
+        return get(client, guid);
     }
 
     /**
@@ -203,9 +259,11 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
      * @param qualifiedName of the Glossary to retrieve
      * @return the requested full Glossary, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Glossary does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static Glossary retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+        return get(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -215,14 +273,11 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
      * @param qualifiedName of the Glossary to retrieve
      * @return the requested full Glossary, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Glossary does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static Glossary retrieveByQualifiedName(AtlanClient client, String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
-        if (asset instanceof Glossary) {
-            return (Glossary) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "Glossary");
-        }
+        return get(client, qualifiedName);
     }
 
     /**
@@ -274,7 +329,7 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
      * @return the minimal object necessary to create the Glossary, as a builder
      */
     public static GlossaryBuilder<?, ?> creator(String name) {
-        return Glossary.builder().qualifiedName(name).name(name);
+        return Glossary._internal().qualifiedName(name).name(name);
     }
 
     /**
@@ -285,7 +340,7 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
      * @return the minimal object necessary to update the Glossary, as a builder
      */
     public static GlossaryBuilder<?, ?> updater(String guid, String name) {
-        return Glossary.builder().guid(guid).qualifiedName(name).name(name);
+        return Glossary._internal().guid(guid).qualifiedName(name).name(name);
     }
 
     /**
@@ -312,6 +367,18 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
     }
 
     /**
+     * Find a Glossary by its human-readable name. Only the bare minimum set of attributes and no
+     * relationships will be retrieved for the glossary, if found.
+     *
+     * @param name of the Glossary
+     * @return the Glossary, if found
+     * @throws AtlanException on any API problems, or if the Glossary does not exist
+     */
+    public static Glossary findByName(String name) throws AtlanException {
+        return findByName(name, null);
+    }
+
+    /**
      * Find a Glossary by its human-readable name.
      *
      * @param name of the Glossary
@@ -321,6 +388,19 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
      */
     public static Glossary findByName(String name, Collection<String> attributes) throws AtlanException {
         return findByName(Atlan.getDefaultClient(), name, attributes);
+    }
+
+    /**
+     * Find a Glossary by its human-readable name. Only the bare minimum set of attributes and no
+     * relationships will be retrieved for the glossary, if found.
+     *
+     * @param client connectivity to the Atlan tenant on which to search for the Glossary
+     * @param name of the Glossary
+     * @return the Glossary, if found
+     * @throws AtlanException on any API problems, or if the Glossary does not exist
+     */
+    public static Glossary findByName(AtlanClient client, String name) throws AtlanException {
+        return findByName(client, name, null);
     }
 
     /**
@@ -567,7 +647,7 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
     public static Glossary removeDescription(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (Glossary) Asset.removeDescription(
-                client, builder().qualifiedName(qualifiedName).name(name));
+                client, _internal().qualifiedName(qualifiedName).name(name));
     }
 
     /**
@@ -594,7 +674,7 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
     public static Glossary removeUserDescription(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (Glossary) Asset.removeUserDescription(
-                client, builder().qualifiedName(qualifiedName).name(name));
+                client, _internal().qualifiedName(qualifiedName).name(name));
     }
 
     /**
@@ -620,7 +700,7 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
      */
     public static Glossary removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (Glossary) Asset.removeOwners(
-                client, builder().qualifiedName(qualifiedName).name(name));
+                client, _internal().qualifiedName(qualifiedName).name(name));
     }
 
     /**
@@ -653,7 +733,7 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
             AtlanClient client, String qualifiedName, String name, CertificateStatus certificate, String message)
             throws AtlanException {
         return (Glossary)
-                Asset.updateCertificate(client, builder().name(name), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal().name(name), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -680,7 +760,7 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
     public static Glossary removeCertificate(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (Glossary) Asset.removeCertificate(
-                client, builder().qualifiedName(qualifiedName).name(name));
+                client, _internal().qualifiedName(qualifiedName).name(name));
     }
 
     /**
@@ -720,8 +800,8 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
             String title,
             String message)
             throws AtlanException {
-        return (Glossary)
-                Asset.updateAnnouncement(client, builder().name(name), TYPE_NAME, qualifiedName, type, title, message);
+        return (Glossary) Asset.updateAnnouncement(
+                client, _internal().name(name), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -748,7 +828,7 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
     public static Glossary removeAnnouncement(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (Glossary) Asset.removeAnnouncement(
-                client, builder().qualifiedName(qualifiedName).name(name));
+                client, _internal().qualifiedName(qualifiedName).name(name));
     }
 
     /**

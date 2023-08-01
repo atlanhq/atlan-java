@@ -18,7 +18,7 @@ public class AssetCreateTest {
             .msgCreatedBy("msgCreatedBy")
             .msgCreationTime(123456789L)
             .payload(AssetCreatePayload.builder()
-                    .asset(GlossaryTerm.builder()
+                    .asset(GlossaryTerm._internal()
                             .guid("guid1")
                             .qualifiedName("qualifiedName")
                             .anchor(Glossary.refByGuid("guid2"))

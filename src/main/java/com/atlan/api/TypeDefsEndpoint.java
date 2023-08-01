@@ -384,6 +384,8 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
     @JsonDeserialize(using = WrappedTypeDefDeserializer.class)
     @EqualsAndHashCode(callSuper = false)
     private static final class WrappedTypeDef extends ApiResource {
+        private static final long serialVersionUID = 2L;
+
         TypeDef typeDef;
 
         public WrappedTypeDef(TypeDef typeDef) {

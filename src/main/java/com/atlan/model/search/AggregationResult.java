@@ -10,4 +10,6 @@ import lombok.ToString;
 /** Base class for all aggregation results in a search. */
 @JsonDeserialize(using = AggregationResultDeserializer.class)
 @ToString(callSuper = true)
-public abstract class AggregationResult extends AtlanObject {}
+public abstract class AggregationResult extends AtlanObject {
+    private static final long serialVersionUID = 2L;
+}

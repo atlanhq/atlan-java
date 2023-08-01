@@ -19,6 +19,8 @@ import com.atlan.model.search.IndexSearchDSL;
 import com.atlan.model.search.IndexSearchRequest;
 import com.atlan.model.search.IndexSearchResponse;
 import com.atlan.util.QueryFactory;
+import com.atlan.util.StringUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -34,7 +36,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -218,7 +220,7 @@ public class GlossaryTerm extends Asset implements IGlossaryTerm, IAsset, IRefer
      * @return reference to a GlossaryTerm that can be used for defining a relationship to a GlossaryTerm
      */
     public static GlossaryTerm refByGuid(String guid) {
-        return GlossaryTerm.builder().guid(guid).build();
+        return GlossaryTerm._internal().guid(guid).build();
     }
 
     /**
@@ -228,21 +230,80 @@ public class GlossaryTerm extends Asset implements IGlossaryTerm, IAsset, IRefer
      * @return reference to a GlossaryTerm that can be used for defining a relationship to a GlossaryTerm
      */
     public static GlossaryTerm refByQualifiedName(String qualifiedName) {
-        return GlossaryTerm.builder()
+        return GlossaryTerm._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
     }
 
     /**
+     * Retrieves a GlossaryTerm by one of its identifiers, complete with all of its relationships.
+     *
+     * @param id of the GlossaryTerm to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full GlossaryTerm, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the GlossaryTerm does not exist or the provided GUID is not a GlossaryTerm
+     */
+    @JsonIgnore
+    public static GlossaryTerm get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
+    }
+
+    /**
+     * Retrieves a GlossaryTerm by one of its identifiers, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the GlossaryTerm to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full GlossaryTerm, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the GlossaryTerm does not exist or the provided GUID is not a GlossaryTerm
+     */
+    @JsonIgnore
+    public static GlossaryTerm get(AtlanClient client, String id) throws AtlanException {
+        return get(client, id, true);
+    }
+
+    /**
+     * Retrieves a GlossaryTerm by one of its identifiers, optionally complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the GlossaryTerm to retrieve, either its GUID or its full qualifiedName
+     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @return the requested full GlossaryTerm, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the GlossaryTerm does not exist or the provided GUID is not a GlossaryTerm
+     */
+    @JsonIgnore
+    public static GlossaryTerm get(AtlanClient client, String id, boolean includeRelationships) throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (StringUtils.isUUID(id)) {
+            Asset asset = Asset.get(client, id, includeRelationships);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof GlossaryTerm) {
+                return (GlossaryTerm) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "GlossaryTerm");
+            }
+        } else {
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
+            if (asset instanceof GlossaryTerm) {
+                return (GlossaryTerm) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "GlossaryTerm");
+            }
+        }
+    }
+
+    /**
      * Retrieves a GlossaryTerm by its GUID, complete with all of its relationships.
      *
      * @param guid of the GlossaryTerm to retrieve
      * @return the requested full GlossaryTerm, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the GlossaryTerm does not exist or the provided GUID is not a GlossaryTerm
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static GlossaryTerm retrieveByGuid(String guid) throws AtlanException {
-        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+        return get(Atlan.getDefaultClient(), guid);
     }
 
     /**
@@ -252,16 +313,11 @@ public class GlossaryTerm extends Asset implements IGlossaryTerm, IAsset, IRefer
      * @param guid of the GlossaryTerm to retrieve
      * @return the requested full GlossaryTerm, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the GlossaryTerm does not exist or the provided GUID is not a GlossaryTerm
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static GlossaryTerm retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof GlossaryTerm) {
-            return (GlossaryTerm) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "GlossaryTerm");
-        }
+        return get(client, guid);
     }
 
     /**
@@ -270,9 +326,11 @@ public class GlossaryTerm extends Asset implements IGlossaryTerm, IAsset, IRefer
      * @param qualifiedName of the GlossaryTerm to retrieve
      * @return the requested full GlossaryTerm, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the GlossaryTerm does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static GlossaryTerm retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+        return get(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -282,14 +340,11 @@ public class GlossaryTerm extends Asset implements IGlossaryTerm, IAsset, IRefer
      * @param qualifiedName of the GlossaryTerm to retrieve
      * @return the requested full GlossaryTerm, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the GlossaryTerm does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static GlossaryTerm retrieveByQualifiedName(AtlanClient client, String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
-        if (asset instanceof GlossaryTerm) {
-            return (GlossaryTerm) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "GlossaryTerm");
-        }
+        return get(client, qualifiedName);
     }
 
     /**
@@ -325,7 +380,7 @@ public class GlossaryTerm extends Asset implements IGlossaryTerm, IAsset, IRefer
      * @return the minimal request necessary to create the term, as a builder
      */
     public static GlossaryTermBuilder<?, ?> creator(String name, String glossaryGuid, String glossaryQualifiedName) {
-        return GlossaryTerm.builder()
+        return GlossaryTerm._internal()
                 .qualifiedName(name)
                 .name(name)
                 .anchor(Glossary.anchorLink(glossaryGuid, glossaryQualifiedName));
@@ -342,7 +397,7 @@ public class GlossaryTerm extends Asset implements IGlossaryTerm, IAsset, IRefer
     public static GlossaryTermBuilder<?, ?> updater(String qualifiedName, String name, String glossaryGuid) {
         // Turns out that updating a term requires the glossary GUID, and will not work
         // with the qualifiedName of the glossary
-        return GlossaryTerm.builder()
+        return GlossaryTerm._internal()
                 .qualifiedName(qualifiedName)
                 .name(name)
                 .anchor(Glossary.anchorLink(glossaryGuid, null));
@@ -375,6 +430,21 @@ public class GlossaryTerm extends Asset implements IGlossaryTerm, IAsset, IRefer
     }
 
     /**
+     * Find a GlossaryTerm by its human-readable name. Only the bare minimum set of attributes and no
+     * relationships will be retrieved for the term, if found. Note that this operation must run two
+     * separate queries to first resolve the qualifiedName of the glossary, so will be somewhat slower.
+     * If you already have the qualifiedName of the glossary, use findByNameFast instead.
+     *
+     * @param name of the GlossaryTerm
+     * @param glossaryName human-readable name of the Glossary in which the category exists
+     * @return the GlossaryTerm, if found
+     * @throws AtlanException on any API problems, or if the GlossaryTerm does not exist
+     */
+    public static GlossaryTerm findByName(String name, String glossaryName) throws AtlanException {
+        return findByName(name, glossaryName, null);
+    }
+
+    /**
      * Find a GlossaryTerm by its human-readable name. Note that this operation must run two
      * separate queries to first resolve the qualifiedName of the glossary, so will be somewhat slower.
      * If you already have the qualifiedName of the glossary, use findByNameFast instead.
@@ -388,6 +458,22 @@ public class GlossaryTerm extends Asset implements IGlossaryTerm, IAsset, IRefer
     public static GlossaryTerm findByName(String name, String glossaryName, Collection<String> attributes)
             throws AtlanException {
         return findByName(Atlan.getDefaultClient(), name, glossaryName, attributes);
+    }
+
+    /**
+     * Find a GlossaryTerm by its human-readable name. Only the bare minimum set of attributes and no
+     * relationships will be retrieved for the term, if found. Note that this operation must run two
+     * separate queries to first resolve the qualifiedName of the glossary, so will be somewhat slower.
+     * If you already have the qualifiedName of the glossary, use findByNameFast instead.
+     *
+     * @param client connectivity to the Atlan tenant in which to search for the GlossaryTerm
+     * @param name of the GlossaryTerm
+     * @param glossaryName human-readable name of the Glossary in which the category exists
+     * @return the GlossaryTerm, if found
+     * @throws AtlanException on any API problems, or if the GlossaryTerm does not exist
+     */
+    public static GlossaryTerm findByName(AtlanClient client, String name, String glossaryName) throws AtlanException {
+        return findByName(client, name, glossaryName, null);
     }
 
     /**
@@ -409,6 +495,19 @@ public class GlossaryTerm extends Asset implements IGlossaryTerm, IAsset, IRefer
     }
 
     /**
+     * Find a GlossaryTerm by its human-readable name. Only the bare minimum set of attributes and no
+     * relationships will be retrieved for the term, if found.
+     *
+     * @param name of the GlossaryTerm
+     * @param glossaryQualifiedName qualifiedName of the Glossary in which the category exists
+     * @return the GlossaryTerm, if found
+     * @throws AtlanException on any API problems, or if the GlossaryTerm does not exist
+     */
+    public static GlossaryTerm findByNameFast(String name, String glossaryQualifiedName) throws AtlanException {
+        return findByNameFast(name, glossaryQualifiedName, null);
+    }
+
+    /**
      * Find a GlossaryTerm by its human-readable name.
      *
      * @param name of the GlossaryTerm
@@ -420,6 +519,21 @@ public class GlossaryTerm extends Asset implements IGlossaryTerm, IAsset, IRefer
     public static GlossaryTerm findByNameFast(String name, String glossaryQualifiedName, Collection<String> attributes)
             throws AtlanException {
         return findByNameFast(Atlan.getDefaultClient(), name, glossaryQualifiedName, attributes);
+    }
+
+    /**
+     * Find a GlossaryTerm by its human-readable name. Only the bare minimum set of attributes and no
+     * relationships will be retrieved for the term, if found.
+     *
+     * @param client connectivity to the Atlan tenant in which to search for the GlossaryTerm
+     * @param name of the GlossaryTerm
+     * @param glossaryQualifiedName qualifiedName of the Glossary in which the category exists
+     * @return the GlossaryTerm, if found
+     * @throws AtlanException on any API problems, or if the GlossaryTerm does not exist
+     */
+    public static GlossaryTerm findByNameFast(AtlanClient client, String name, String glossaryQualifiedName)
+            throws AtlanException {
+        return findByNameFast(client, name, glossaryQualifiedName, null);
     }
 
     /**

@@ -9,7 +9,7 @@
     public static APIPathBuilder<?, ?> creator(String pathURI, String apiSpecQualifiedName) {
         String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(apiSpecQualifiedName);
         String normalizedURI = pathURI.startsWith("/") ? pathURI : "/" + pathURI;
-        return APIPath.builder()
+        return APIPath._internal()
                 .qualifiedName(apiSpecQualifiedName + normalizedURI)
                 .name(normalizedURI)
                 .apiPathRawURI(normalizedURI)
@@ -26,7 +26,7 @@
      * @return the minimal request necessary to update the APIPath, as a builder
      */
     public static APIPathBuilder<?, ?> updater(String qualifiedName, String name) {
-        return APIPath.builder().qualifiedName(qualifiedName).name(name);
+        return APIPath._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**

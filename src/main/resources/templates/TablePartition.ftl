@@ -15,7 +15,7 @@
         String databaseQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(schemaQualifiedName);
         String databaseName = StringUtils.getNameFromQualifiedName(databaseQualifiedName);
         String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(databaseQualifiedName);
-        return TablePartition.builder()
+        return TablePartition._internal()
                 .name(name)
                 .qualifiedName(generateQualifiedName(name, tableQualifiedName))
                 .connectorType(connectorType)
@@ -48,7 +48,7 @@
      * @return the minimal request necessary to update the TablePartition, as a builder
      */
     public static TablePartitionBuilder<?, ?> updater(String qualifiedName, String name) {
-        return TablePartition.builder().qualifiedName(qualifiedName).name(name);
+        return TablePartition._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**

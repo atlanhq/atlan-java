@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class PowerBITileTest {
 
-    private static final PowerBITile full = PowerBITile.builder()
+    private static final PowerBITile full = PowerBITile._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -346,6 +346,14 @@ public class PowerBITileTest {
             .sourceUpdatedBy("String0")
             .addStarredBy("String0")
             .addStarredBy("String1")
+            .starredDetail(StarredDetails.builder()
+                    .assetStarredBy("String0")
+                    .assetStarredAt(123456789L)
+                    .build())
+            .starredDetail(StarredDetails.builder()
+                    .assetStarredBy("String1")
+                    .assetStarredAt(987654321L)
+                    .build())
             .subType("String0")
             .tenantId("String0")
             .userDescription("String0")

@@ -14,6 +14,8 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.QueryFactory;
+import com.atlan.util.StringUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -31,7 +33,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -136,7 +138,7 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
      * @return reference to a LineageProcess that can be used for defining a relationship to a LineageProcess
      */
     public static LineageProcess refByGuid(String guid) {
-        return LineageProcess.builder().guid(guid).build();
+        return LineageProcess._internal().guid(guid).build();
     }
 
     /**
@@ -146,51 +148,108 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
      * @return reference to a LineageProcess that can be used for defining a relationship to a LineageProcess
      */
     public static LineageProcess refByQualifiedName(String qualifiedName) {
-        return LineageProcess.builder()
+        return LineageProcess._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
     }
 
     /**
-     * Retrieves a LineageProcess by its GUID, complete with all of its relationships.
+     * Retrieves a LineageProcess by one of its identifiers, complete with all of its relationships.
      *
-     * @param guid of the LineageProcess to retrieve
+     * @param id of the LineageProcess to retrieve, either its GUID or its full qualifiedName
      * @return the requested full LineageProcess, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the LineageProcess does not exist or the provided GUID is not a LineageProcess
      */
-    public static LineageProcess retrieveByGuid(String guid) throws AtlanException {
-        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+    @JsonIgnore
+    public static LineageProcess get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
     }
 
     /**
-     * Retrieves a LineageProcess by its GUID, complete with all of its relationships.
+     * Retrieves a LineageProcess by one of its identifiers, complete with all of its relationships.
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
-     * @param guid of the LineageProcess to retrieve
+     * @param id of the LineageProcess to retrieve, either its GUID or its full qualifiedName
      * @return the requested full LineageProcess, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the LineageProcess does not exist or the provided GUID is not a LineageProcess
      */
-    public static LineageProcess retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof LineageProcess) {
-            return (LineageProcess) asset;
+    @JsonIgnore
+    public static LineageProcess get(AtlanClient client, String id) throws AtlanException {
+        return get(client, id, true);
+    }
+
+    /**
+     * Retrieves a LineageProcess by one of its identifiers, optionally complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the LineageProcess to retrieve, either its GUID or its full qualifiedName
+     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @return the requested full LineageProcess, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the LineageProcess does not exist or the provided GUID is not a LineageProcess
+     */
+    @JsonIgnore
+    public static LineageProcess get(AtlanClient client, String id, boolean includeRelationships)
+            throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (StringUtils.isUUID(id)) {
+            Asset asset = Asset.get(client, id, includeRelationships);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof LineageProcess) {
+                return (LineageProcess) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "LineageProcess");
+            }
         } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "LineageProcess");
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
+            if (asset instanceof LineageProcess) {
+                return (LineageProcess) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "LineageProcess");
+            }
         }
     }
 
     /**
+     * Retrieves a LineageProcess by its GUID, complete with all of its relationships.
+     *
+     * @param guid of the LineageProcess to retrieve
+     * @return the requested full LineageProcess, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the LineageProcess does not exist or the provided GUID is not a LineageProcess
+     * @deprecated see {@link #get(String)} instead
+     */
+    @Deprecated
+    public static LineageProcess retrieveByGuid(String guid) throws AtlanException {
+        return get(Atlan.getDefaultClient(), guid);
+    }
+
+    /**
+     * Retrieves a LineageProcess by its GUID, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param guid of the LineageProcess to retrieve
+     * @return the requested full LineageProcess, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the LineageProcess does not exist or the provided GUID is not a LineageProcess
+     * @deprecated see {@link #get(AtlanClient, String)} instead
+     */
+    @Deprecated
+    public static LineageProcess retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
+        return get(client, guid);
+    }
+
+    /**
      * Retrieves a LineageProcess by its qualifiedName, complete with all of its relationships.
      *
      * @param qualifiedName of the LineageProcess to retrieve
      * @return the requested full LineageProcess, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the LineageProcess does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static LineageProcess retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+        return get(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -200,15 +259,12 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
      * @param qualifiedName of the LineageProcess to retrieve
      * @return the requested full LineageProcess, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the LineageProcess does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static LineageProcess retrieveByQualifiedName(AtlanClient client, String qualifiedName)
             throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
-        if (asset instanceof LineageProcess) {
-            return (LineageProcess) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "LineageProcess");
-        }
+        return get(client, qualifiedName);
     }
 
     /**
@@ -253,7 +309,7 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
             List<ICatalog> outputs,
             LineageProcess parent) {
         AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
-        return LineageProcess.builder()
+        return LineageProcess._internal()
                 .qualifiedName(generateQualifiedName(name, connectionQualifiedName, id, inputs, outputs, parent))
                 .name(name)
                 .connectorType(connectorType)
@@ -270,7 +326,7 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
      * @return the minimal request necessary to update the LineageProcess, as a builder
      */
     public static LineageProcessBuilder<?, ?> updater(String qualifiedName, String name) {
-        return LineageProcess.builder().qualifiedName(qualifiedName).name(name);
+        return LineageProcess._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -473,7 +529,7 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (LineageProcess)
-                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -532,7 +588,7 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (LineageProcess)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

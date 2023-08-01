@@ -22,6 +22,8 @@ import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.IndexSearchRequest;
 import com.atlan.model.search.IndexSearchResponse;
 import com.atlan.util.QueryFactory;
+import com.atlan.util.StringUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -36,7 +38,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -151,7 +153,7 @@ public class Persona extends Asset implements IPersona, IAccessControl, IAsset, 
      * @return reference to a Persona that can be used for defining a relationship to a Persona
      */
     public static Persona refByGuid(String guid) {
-        return Persona.builder().guid(guid).build();
+        return Persona._internal().guid(guid).build();
     }
 
     /**
@@ -161,21 +163,80 @@ public class Persona extends Asset implements IPersona, IAccessControl, IAsset, 
      * @return reference to a Persona that can be used for defining a relationship to a Persona
      */
     public static Persona refByQualifiedName(String qualifiedName) {
-        return Persona.builder()
+        return Persona._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
     }
 
     /**
+     * Retrieves a Persona by one of its identifiers, complete with all of its relationships.
+     *
+     * @param id of the Persona to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full Persona, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Persona does not exist or the provided GUID is not a Persona
+     */
+    @JsonIgnore
+    public static Persona get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
+    }
+
+    /**
+     * Retrieves a Persona by one of its identifiers, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the Persona to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full Persona, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Persona does not exist or the provided GUID is not a Persona
+     */
+    @JsonIgnore
+    public static Persona get(AtlanClient client, String id) throws AtlanException {
+        return get(client, id, true);
+    }
+
+    /**
+     * Retrieves a Persona by one of its identifiers, optionally complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the Persona to retrieve, either its GUID or its full qualifiedName
+     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @return the requested full Persona, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Persona does not exist or the provided GUID is not a Persona
+     */
+    @JsonIgnore
+    public static Persona get(AtlanClient client, String id, boolean includeRelationships) throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (StringUtils.isUUID(id)) {
+            Asset asset = Asset.get(client, id, includeRelationships);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof Persona) {
+                return (Persona) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "Persona");
+            }
+        } else {
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
+            if (asset instanceof Persona) {
+                return (Persona) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "Persona");
+            }
+        }
+    }
+
+    /**
      * Retrieves a Persona by its GUID, complete with all of its relationships.
      *
      * @param guid of the Persona to retrieve
      * @return the requested full Persona, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Persona does not exist or the provided GUID is not a Persona
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static Persona retrieveByGuid(String guid) throws AtlanException {
-        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+        return get(Atlan.getDefaultClient(), guid);
     }
 
     /**
@@ -185,16 +246,11 @@ public class Persona extends Asset implements IPersona, IAccessControl, IAsset, 
      * @param guid of the Persona to retrieve
      * @return the requested full Persona, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Persona does not exist or the provided GUID is not a Persona
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static Persona retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof Persona) {
-            return (Persona) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "Persona");
-        }
+        return get(client, guid);
     }
 
     /**
@@ -203,9 +259,11 @@ public class Persona extends Asset implements IPersona, IAccessControl, IAsset, 
      * @param qualifiedName of the Persona to retrieve
      * @return the requested full Persona, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Persona does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static Persona retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+        return get(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -215,14 +273,11 @@ public class Persona extends Asset implements IPersona, IAccessControl, IAsset, 
      * @param qualifiedName of the Persona to retrieve
      * @return the requested full Persona, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Persona does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static Persona retrieveByQualifiedName(AtlanClient client, String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
-        if (asset instanceof Persona) {
-            return (Persona) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "Persona");
-        }
+        return get(client, qualifiedName);
     }
 
     /**
@@ -255,7 +310,7 @@ public class Persona extends Asset implements IPersona, IAccessControl, IAsset, 
      * @return the minimal request necessary to create the Persona, as a builder
      */
     public static PersonaBuilder<?, ?> creator(String name) {
-        return Persona.builder()
+        return Persona._internal()
                 .qualifiedName(name)
                 .name(name)
                 .displayName(name)
@@ -272,7 +327,7 @@ public class Persona extends Asset implements IPersona, IAccessControl, IAsset, 
      * @return the minimal request necessary to update the Persona, as a builder
      */
     public static PersonaBuilder<?, ?> updater(String qualifiedName, String name, boolean isEnabled) {
-        return Persona.builder().qualifiedName(qualifiedName).name(name).isAccessControlEnabled(isEnabled);
+        return Persona._internal().qualifiedName(qualifiedName).name(name).isAccessControlEnabled(isEnabled);
     }
 
     /**
@@ -302,6 +357,19 @@ public class Persona extends Asset implements IPersona, IAccessControl, IAsset, 
     }
 
     /**
+     * Find a Persona by its human-readable name. Only the bare minimum set of attributes and no
+     * relationships will be retrieved for the persona, if found.
+     *
+     * @param name of the Persona
+     * @return all Personas with that name, if found
+     * @throws AtlanException on any API problems
+     * @throws NotFoundException if the Persona does not exist
+     */
+    public static List<Persona> findByName(String name) throws AtlanException {
+        return findByName(name, null);
+    }
+
+    /**
      * Find a Persona by its human-readable name.
      *
      * @param name of the Persona
@@ -312,6 +380,20 @@ public class Persona extends Asset implements IPersona, IAccessControl, IAsset, 
      */
     public static List<Persona> findByName(String name, Collection<String> attributes) throws AtlanException {
         return findByName(Atlan.getDefaultClient(), name, attributes);
+    }
+
+    /**
+     * Find a Persona by its human-readable name. Only the bare minimum set of attributes and no
+     * relationships will be retrieved for the persona, if found.
+     *
+     * @param client connectivity to the Atlan tenant in which to search for the Persona
+     * @param name of the Persona
+     * @return all Personas with that name, if found
+     * @throws AtlanException on any API problems
+     * @throws NotFoundException if the Persona does not exist
+     */
+    public static List<Persona> findByName(AtlanClient client, String name) throws AtlanException {
+        return findByName(client, name, null);
     }
 
     /**

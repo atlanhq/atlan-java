@@ -17,6 +17,7 @@ import com.atlan.model.structs.ColumnValueFrequencyMap;
 import com.atlan.model.structs.Histogram;
 import com.atlan.util.QueryFactory;
 import com.atlan.util.StringUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +33,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -473,7 +474,7 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
      * @return reference to a Column that can be used for defining a relationship to a Column
      */
     public static Column refByGuid(String guid) {
-        return Column.builder().guid(guid).build();
+        return Column._internal().guid(guid).build();
     }
 
     /**
@@ -483,21 +484,80 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
      * @return reference to a Column that can be used for defining a relationship to a Column
      */
     public static Column refByQualifiedName(String qualifiedName) {
-        return Column.builder()
+        return Column._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
     }
 
     /**
+     * Retrieves a Column by one of its identifiers, complete with all of its relationships.
+     *
+     * @param id of the Column to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full Column, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Column does not exist or the provided GUID is not a Column
+     */
+    @JsonIgnore
+    public static Column get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
+    }
+
+    /**
+     * Retrieves a Column by one of its identifiers, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the Column to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full Column, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Column does not exist or the provided GUID is not a Column
+     */
+    @JsonIgnore
+    public static Column get(AtlanClient client, String id) throws AtlanException {
+        return get(client, id, true);
+    }
+
+    /**
+     * Retrieves a Column by one of its identifiers, optionally complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the Column to retrieve, either its GUID or its full qualifiedName
+     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @return the requested full Column, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Column does not exist or the provided GUID is not a Column
+     */
+    @JsonIgnore
+    public static Column get(AtlanClient client, String id, boolean includeRelationships) throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (StringUtils.isUUID(id)) {
+            Asset asset = Asset.get(client, id, includeRelationships);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof Column) {
+                return (Column) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "Column");
+            }
+        } else {
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
+            if (asset instanceof Column) {
+                return (Column) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "Column");
+            }
+        }
+    }
+
+    /**
      * Retrieves a Column by its GUID, complete with all of its relationships.
      *
      * @param guid of the Column to retrieve
      * @return the requested full Column, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Column does not exist or the provided GUID is not a Column
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static Column retrieveByGuid(String guid) throws AtlanException {
-        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+        return get(Atlan.getDefaultClient(), guid);
     }
 
     /**
@@ -507,16 +567,11 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
      * @param guid of the Column to retrieve
      * @return the requested full Column, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Column does not exist or the provided GUID is not a Column
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static Column retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof Column) {
-            return (Column) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "Column");
-        }
+        return get(client, guid);
     }
 
     /**
@@ -525,9 +580,11 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
      * @param qualifiedName of the Column to retrieve
      * @return the requested full Column, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Column does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static Column retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+        return get(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -537,14 +594,11 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
      * @param qualifiedName of the Column to retrieve
      * @return the requested full Column, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Column does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static Column retrieveByQualifiedName(AtlanClient client, String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
-        if (asset instanceof Column) {
-            return (Column) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "Column");
-        }
+        return get(client, qualifiedName);
     }
 
     /**
@@ -614,7 +668,7 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
         String databaseQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(schemaQualifiedName);
         String databaseName = StringUtils.getNameFromQualifiedName(databaseQualifiedName);
         String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(databaseQualifiedName);
-        ColumnBuilder<?, ?> builder = Column.builder()
+        ColumnBuilder<?, ?> builder = Column._internal()
                 .name(name)
                 .qualifiedName(generateQualifiedName(name, parentQualifiedName))
                 .connectorType(connectorType)
@@ -668,7 +722,7 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
      * @return the minimal request necessary to update the Column, as a builder
      */
     public static ColumnBuilder<?, ?> updater(String qualifiedName, String name) {
-        return Column.builder().qualifiedName(qualifiedName).name(name);
+        return Column._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -798,7 +852,7 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
     public static Column updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (Column) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return (Column) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -856,7 +910,7 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
     public static Column updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (Column) Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+        return (Column) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

@@ -14,6 +14,8 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.PowerBIEndorsementType;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.QueryFactory;
+import com.atlan.util.StringUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
@@ -27,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -172,7 +174,7 @@ public class PowerBIWorkspace extends Asset
      * @return reference to a PowerBIWorkspace that can be used for defining a relationship to a PowerBIWorkspace
      */
     public static PowerBIWorkspace refByGuid(String guid) {
-        return PowerBIWorkspace.builder().guid(guid).build();
+        return PowerBIWorkspace._internal().guid(guid).build();
     }
 
     /**
@@ -182,51 +184,108 @@ public class PowerBIWorkspace extends Asset
      * @return reference to a PowerBIWorkspace that can be used for defining a relationship to a PowerBIWorkspace
      */
     public static PowerBIWorkspace refByQualifiedName(String qualifiedName) {
-        return PowerBIWorkspace.builder()
+        return PowerBIWorkspace._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
     }
 
     /**
-     * Retrieves a PowerBIWorkspace by its GUID, complete with all of its relationships.
+     * Retrieves a PowerBIWorkspace by one of its identifiers, complete with all of its relationships.
      *
-     * @param guid of the PowerBIWorkspace to retrieve
+     * @param id of the PowerBIWorkspace to retrieve, either its GUID or its full qualifiedName
      * @return the requested full PowerBIWorkspace, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBIWorkspace does not exist or the provided GUID is not a PowerBIWorkspace
      */
-    public static PowerBIWorkspace retrieveByGuid(String guid) throws AtlanException {
-        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+    @JsonIgnore
+    public static PowerBIWorkspace get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
     }
 
     /**
-     * Retrieves a PowerBIWorkspace by its GUID, complete with all of its relationships.
+     * Retrieves a PowerBIWorkspace by one of its identifiers, complete with all of its relationships.
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
-     * @param guid of the PowerBIWorkspace to retrieve
+     * @param id of the PowerBIWorkspace to retrieve, either its GUID or its full qualifiedName
      * @return the requested full PowerBIWorkspace, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBIWorkspace does not exist or the provided GUID is not a PowerBIWorkspace
      */
-    public static PowerBIWorkspace retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof PowerBIWorkspace) {
-            return (PowerBIWorkspace) asset;
+    @JsonIgnore
+    public static PowerBIWorkspace get(AtlanClient client, String id) throws AtlanException {
+        return get(client, id, true);
+    }
+
+    /**
+     * Retrieves a PowerBIWorkspace by one of its identifiers, optionally complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the PowerBIWorkspace to retrieve, either its GUID or its full qualifiedName
+     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @return the requested full PowerBIWorkspace, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBIWorkspace does not exist or the provided GUID is not a PowerBIWorkspace
+     */
+    @JsonIgnore
+    public static PowerBIWorkspace get(AtlanClient client, String id, boolean includeRelationships)
+            throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (StringUtils.isUUID(id)) {
+            Asset asset = Asset.get(client, id, includeRelationships);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof PowerBIWorkspace) {
+                return (PowerBIWorkspace) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "PowerBIWorkspace");
+            }
         } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "PowerBIWorkspace");
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
+            if (asset instanceof PowerBIWorkspace) {
+                return (PowerBIWorkspace) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "PowerBIWorkspace");
+            }
         }
     }
 
     /**
+     * Retrieves a PowerBIWorkspace by its GUID, complete with all of its relationships.
+     *
+     * @param guid of the PowerBIWorkspace to retrieve
+     * @return the requested full PowerBIWorkspace, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBIWorkspace does not exist or the provided GUID is not a PowerBIWorkspace
+     * @deprecated see {@link #get(String)} instead
+     */
+    @Deprecated
+    public static PowerBIWorkspace retrieveByGuid(String guid) throws AtlanException {
+        return get(Atlan.getDefaultClient(), guid);
+    }
+
+    /**
+     * Retrieves a PowerBIWorkspace by its GUID, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param guid of the PowerBIWorkspace to retrieve
+     * @return the requested full PowerBIWorkspace, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBIWorkspace does not exist or the provided GUID is not a PowerBIWorkspace
+     * @deprecated see {@link #get(AtlanClient, String)} instead
+     */
+    @Deprecated
+    public static PowerBIWorkspace retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
+        return get(client, guid);
+    }
+
+    /**
      * Retrieves a PowerBIWorkspace by its qualifiedName, complete with all of its relationships.
      *
      * @param qualifiedName of the PowerBIWorkspace to retrieve
      * @return the requested full PowerBIWorkspace, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBIWorkspace does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static PowerBIWorkspace retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+        return get(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -236,15 +295,12 @@ public class PowerBIWorkspace extends Asset
      * @param qualifiedName of the PowerBIWorkspace to retrieve
      * @return the requested full PowerBIWorkspace, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBIWorkspace does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static PowerBIWorkspace retrieveByQualifiedName(AtlanClient client, String qualifiedName)
             throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
-        if (asset instanceof PowerBIWorkspace) {
-            return (PowerBIWorkspace) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "PowerBIWorkspace");
-        }
+        return get(client, qualifiedName);
     }
 
     /**
@@ -278,7 +334,7 @@ public class PowerBIWorkspace extends Asset
      * @return the minimal request necessary to update the PowerBIWorkspace, as a builder
      */
     public static PowerBIWorkspaceBuilder<?, ?> updater(String qualifiedName, String name) {
-        return PowerBIWorkspace.builder().qualifiedName(qualifiedName).name(name);
+        return PowerBIWorkspace._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -410,7 +466,7 @@ public class PowerBIWorkspace extends Asset
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (PowerBIWorkspace)
-                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -469,7 +525,7 @@ public class PowerBIWorkspace extends Asset
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (PowerBIWorkspace)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

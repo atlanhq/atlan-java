@@ -11,6 +11,7 @@ import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.ColumnValueFrequencyMap;
 import com.atlan.model.structs.Histogram;
 import com.atlan.model.structs.PopularityInsights;
+import com.atlan.model.structs.StarredDetails;
 import com.atlan.serde.AssetDeserializer;
 import com.atlan.serde.AssetSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -599,6 +600,9 @@ public interface IColumn {
 
     /** TBC */
     SortedSet<String> getStarredBy();
+
+    /** TBC */
+    List<StarredDetails> getStarredDetails();
 
     /** TBC */
     String getSubDataType();

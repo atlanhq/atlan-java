@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class GCSBucketTest {
 
-    private static final GCSBucket full = GCSBucket.builder()
+    private static final GCSBucket full = GCSBucket._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -366,6 +366,14 @@ public class GCSBucketTest {
             .sourceUpdatedBy("String0")
             .addStarredBy("String0")
             .addStarredBy("String1")
+            .starredDetail(StarredDetails.builder()
+                    .assetStarredBy("String0")
+                    .assetStarredAt(123456789L)
+                    .build())
+            .starredDetail(StarredDetails.builder()
+                    .assetStarredBy("String1")
+                    .assetStarredAt(987654321L)
+                    .build())
             .subType("String0")
             .tenantId("String0")
             .userDescription("String0")

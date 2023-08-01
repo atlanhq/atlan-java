@@ -13,6 +13,8 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.QueryFactory;
+import com.atlan.util.StringUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -148,7 +150,7 @@ public class SalesforceReport extends Asset
      * @return reference to a SalesforceReport that can be used for defining a relationship to a SalesforceReport
      */
     public static SalesforceReport refByGuid(String guid) {
-        return SalesforceReport.builder().guid(guid).build();
+        return SalesforceReport._internal().guid(guid).build();
     }
 
     /**
@@ -158,51 +160,108 @@ public class SalesforceReport extends Asset
      * @return reference to a SalesforceReport that can be used for defining a relationship to a SalesforceReport
      */
     public static SalesforceReport refByQualifiedName(String qualifiedName) {
-        return SalesforceReport.builder()
+        return SalesforceReport._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
     }
 
     /**
-     * Retrieves a SalesforceReport by its GUID, complete with all of its relationships.
+     * Retrieves a SalesforceReport by one of its identifiers, complete with all of its relationships.
      *
-     * @param guid of the SalesforceReport to retrieve
+     * @param id of the SalesforceReport to retrieve, either its GUID or its full qualifiedName
      * @return the requested full SalesforceReport, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SalesforceReport does not exist or the provided GUID is not a SalesforceReport
      */
-    public static SalesforceReport retrieveByGuid(String guid) throws AtlanException {
-        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+    @JsonIgnore
+    public static SalesforceReport get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
     }
 
     /**
-     * Retrieves a SalesforceReport by its GUID, complete with all of its relationships.
+     * Retrieves a SalesforceReport by one of its identifiers, complete with all of its relationships.
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
-     * @param guid of the SalesforceReport to retrieve
+     * @param id of the SalesforceReport to retrieve, either its GUID or its full qualifiedName
      * @return the requested full SalesforceReport, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SalesforceReport does not exist or the provided GUID is not a SalesforceReport
      */
-    public static SalesforceReport retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof SalesforceReport) {
-            return (SalesforceReport) asset;
+    @JsonIgnore
+    public static SalesforceReport get(AtlanClient client, String id) throws AtlanException {
+        return get(client, id, true);
+    }
+
+    /**
+     * Retrieves a SalesforceReport by one of its identifiers, optionally complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the SalesforceReport to retrieve, either its GUID or its full qualifiedName
+     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @return the requested full SalesforceReport, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SalesforceReport does not exist or the provided GUID is not a SalesforceReport
+     */
+    @JsonIgnore
+    public static SalesforceReport get(AtlanClient client, String id, boolean includeRelationships)
+            throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (StringUtils.isUUID(id)) {
+            Asset asset = Asset.get(client, id, includeRelationships);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof SalesforceReport) {
+                return (SalesforceReport) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "SalesforceReport");
+            }
         } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "SalesforceReport");
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
+            if (asset instanceof SalesforceReport) {
+                return (SalesforceReport) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "SalesforceReport");
+            }
         }
     }
 
     /**
+     * Retrieves a SalesforceReport by its GUID, complete with all of its relationships.
+     *
+     * @param guid of the SalesforceReport to retrieve
+     * @return the requested full SalesforceReport, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SalesforceReport does not exist or the provided GUID is not a SalesforceReport
+     * @deprecated see {@link #get(String)} instead
+     */
+    @Deprecated
+    public static SalesforceReport retrieveByGuid(String guid) throws AtlanException {
+        return get(Atlan.getDefaultClient(), guid);
+    }
+
+    /**
+     * Retrieves a SalesforceReport by its GUID, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param guid of the SalesforceReport to retrieve
+     * @return the requested full SalesforceReport, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SalesforceReport does not exist or the provided GUID is not a SalesforceReport
+     * @deprecated see {@link #get(AtlanClient, String)} instead
+     */
+    @Deprecated
+    public static SalesforceReport retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
+        return get(client, guid);
+    }
+
+    /**
      * Retrieves a SalesforceReport by its qualifiedName, complete with all of its relationships.
      *
      * @param qualifiedName of the SalesforceReport to retrieve
      * @return the requested full SalesforceReport, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SalesforceReport does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static SalesforceReport retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+        return get(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -212,15 +271,12 @@ public class SalesforceReport extends Asset
      * @param qualifiedName of the SalesforceReport to retrieve
      * @return the requested full SalesforceReport, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SalesforceReport does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static SalesforceReport retrieveByQualifiedName(AtlanClient client, String qualifiedName)
             throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
-        if (asset instanceof SalesforceReport) {
-            return (SalesforceReport) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "SalesforceReport");
-        }
+        return get(client, qualifiedName);
     }
 
     /**
@@ -254,7 +310,7 @@ public class SalesforceReport extends Asset
      * @return the minimal request necessary to update the SalesforceReport, as a builder
      */
     public static SalesforceReportBuilder<?, ?> updater(String qualifiedName, String name) {
-        return SalesforceReport.builder().qualifiedName(qualifiedName).name(name);
+        return SalesforceReport._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -386,7 +442,7 @@ public class SalesforceReport extends Asset
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (SalesforceReport)
-                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -445,7 +501,7 @@ public class SalesforceReport extends Asset
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (SalesforceReport)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

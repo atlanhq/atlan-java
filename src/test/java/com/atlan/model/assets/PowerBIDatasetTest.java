@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class PowerBIDatasetTest {
 
-    private static final PowerBIDataset full = PowerBIDataset.builder()
+    private static final PowerBIDataset full = PowerBIDataset._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -346,6 +346,14 @@ public class PowerBIDatasetTest {
             .sourceUpdatedBy("String0")
             .addStarredBy("String0")
             .addStarredBy("String1")
+            .starredDetail(StarredDetails.builder()
+                    .assetStarredBy("String0")
+                    .assetStarredAt(123456789L)
+                    .build())
+            .starredDetail(StarredDetails.builder()
+                    .assetStarredBy("String1")
+                    .assetStarredAt(987654321L)
+                    .build())
             .subType("String0")
             .tenantId("String0")
             .userDescription("String0")

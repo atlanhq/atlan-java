@@ -33,6 +33,12 @@ public enum BooleanFields implements AtlanSearchableField {
     ASSET_DBT_JOB_LAST_RUN_NOTIFICATIONS_SENT("assetDbtJobLastRunNotificationsSent"),
     /** TBC */
     AUTH_SERVICE_IS_ENABLED("authServiceIsEnabled"),
+    /** Determines whether the functions is stored or executed externally. */
+    FUNCTION_IS_EXTERNAL("functionIsExternal"),
+    /** Determines whether the function must re-compute or not if there are no underlying changes in the values. */
+    FUNCTION_IS_MEMOIZABLE("functionIsMemoizable"),
+    /** Determines whether sensitive information of the function is omitted for unauthorized users. */
+    FUNCTION_IS_SECURE("functionIsSecure"),
     /** TBC */
     GCS_BUCKET_RETENTION_LOCKED("gcsBucketRetentionLocked"),
     /** TBC */

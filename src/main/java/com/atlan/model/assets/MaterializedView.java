@@ -15,6 +15,7 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.QueryFactory;
 import com.atlan.util.StringUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +31,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -260,7 +261,7 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
      * @return reference to a MaterializedView that can be used for defining a relationship to a MaterializedView
      */
     public static MaterializedView refByGuid(String guid) {
-        return MaterializedView.builder().guid(guid).build();
+        return MaterializedView._internal().guid(guid).build();
     }
 
     /**
@@ -270,51 +271,108 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
      * @return reference to a MaterializedView that can be used for defining a relationship to a MaterializedView
      */
     public static MaterializedView refByQualifiedName(String qualifiedName) {
-        return MaterializedView.builder()
+        return MaterializedView._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
     }
 
     /**
-     * Retrieves a MaterializedView by its GUID, complete with all of its relationships.
+     * Retrieves a MaterializedView by one of its identifiers, complete with all of its relationships.
      *
-     * @param guid of the MaterializedView to retrieve
+     * @param id of the MaterializedView to retrieve, either its GUID or its full qualifiedName
      * @return the requested full MaterializedView, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MaterializedView does not exist or the provided GUID is not a MaterializedView
      */
-    public static MaterializedView retrieveByGuid(String guid) throws AtlanException {
-        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+    @JsonIgnore
+    public static MaterializedView get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
     }
 
     /**
-     * Retrieves a MaterializedView by its GUID, complete with all of its relationships.
+     * Retrieves a MaterializedView by one of its identifiers, complete with all of its relationships.
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
-     * @param guid of the MaterializedView to retrieve
+     * @param id of the MaterializedView to retrieve, either its GUID or its full qualifiedName
      * @return the requested full MaterializedView, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MaterializedView does not exist or the provided GUID is not a MaterializedView
      */
-    public static MaterializedView retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof MaterializedView) {
-            return (MaterializedView) asset;
+    @JsonIgnore
+    public static MaterializedView get(AtlanClient client, String id) throws AtlanException {
+        return get(client, id, true);
+    }
+
+    /**
+     * Retrieves a MaterializedView by one of its identifiers, optionally complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the MaterializedView to retrieve, either its GUID or its full qualifiedName
+     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @return the requested full MaterializedView, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MaterializedView does not exist or the provided GUID is not a MaterializedView
+     */
+    @JsonIgnore
+    public static MaterializedView get(AtlanClient client, String id, boolean includeRelationships)
+            throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (StringUtils.isUUID(id)) {
+            Asset asset = Asset.get(client, id, includeRelationships);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof MaterializedView) {
+                return (MaterializedView) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "MaterializedView");
+            }
         } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "MaterializedView");
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
+            if (asset instanceof MaterializedView) {
+                return (MaterializedView) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "MaterializedView");
+            }
         }
     }
 
     /**
+     * Retrieves a MaterializedView by its GUID, complete with all of its relationships.
+     *
+     * @param guid of the MaterializedView to retrieve
+     * @return the requested full MaterializedView, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MaterializedView does not exist or the provided GUID is not a MaterializedView
+     * @deprecated see {@link #get(String)} instead
+     */
+    @Deprecated
+    public static MaterializedView retrieveByGuid(String guid) throws AtlanException {
+        return get(Atlan.getDefaultClient(), guid);
+    }
+
+    /**
+     * Retrieves a MaterializedView by its GUID, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param guid of the MaterializedView to retrieve
+     * @return the requested full MaterializedView, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MaterializedView does not exist or the provided GUID is not a MaterializedView
+     * @deprecated see {@link #get(AtlanClient, String)} instead
+     */
+    @Deprecated
+    public static MaterializedView retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
+        return get(client, guid);
+    }
+
+    /**
      * Retrieves a MaterializedView by its qualifiedName, complete with all of its relationships.
      *
      * @param qualifiedName of the MaterializedView to retrieve
      * @return the requested full MaterializedView, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MaterializedView does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static MaterializedView retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+        return get(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -324,15 +382,12 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
      * @param qualifiedName of the MaterializedView to retrieve
      * @return the requested full MaterializedView, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MaterializedView does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static MaterializedView retrieveByQualifiedName(AtlanClient client, String qualifiedName)
             throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
-        if (asset instanceof MaterializedView) {
-            return (MaterializedView) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "MaterializedView");
-        }
+        return get(client, qualifiedName);
     }
 
     /**
@@ -372,7 +427,7 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
         String databaseQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(schemaQualifiedName);
         String databaseName = StringUtils.getNameFromQualifiedName(databaseQualifiedName);
         String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(databaseQualifiedName);
-        return MaterializedView.builder()
+        return MaterializedView._internal()
                 .name(name)
                 .qualifiedName(generateQualifiedName(name, schemaQualifiedName))
                 .connectorType(connectorType)
@@ -403,7 +458,7 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
      * @return the minimal request necessary to update the MaterializedView, as a builder
      */
     public static MaterializedViewBuilder<?, ?> updater(String qualifiedName, String name) {
-        return MaterializedView.builder().qualifiedName(qualifiedName).name(name);
+        return MaterializedView._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -535,7 +590,7 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (MaterializedView)
-                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -594,7 +649,7 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (MaterializedView)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

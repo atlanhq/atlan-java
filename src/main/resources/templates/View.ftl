@@ -13,7 +13,7 @@
         String databaseQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(schemaQualifiedName);
         String databaseName = StringUtils.getNameFromQualifiedName(databaseQualifiedName);
         String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(databaseQualifiedName);
-        return View.builder()
+        return View._internal()
                 .name(name)
                 .qualifiedName(generateQualifiedName(name, schemaQualifiedName))
                 .connectorType(connectorType)
@@ -44,7 +44,7 @@
      * @return the minimal request necessary to update the View, as a builder
      */
     public static ViewBuilder<?, ?> updater(String qualifiedName, String name) {
-        return View.builder().qualifiedName(qualifiedName).name(name);
+        return View._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**

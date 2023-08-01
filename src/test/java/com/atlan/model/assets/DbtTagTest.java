@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class DbtTagTest {
 
-    private static final DbtTag full = DbtTag.builder()
+    private static final DbtTag full = DbtTag._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -375,6 +375,14 @@ public class DbtTagTest {
             .sourceUpdatedBy("String0")
             .addStarredBy("String0")
             .addStarredBy("String1")
+            .starredDetail(StarredDetails.builder()
+                    .assetStarredBy("String0")
+                    .assetStarredAt(123456789L)
+                    .build())
+            .starredDetail(StarredDetails.builder()
+                    .assetStarredBy("String1")
+                    .assetStarredAt(987654321L)
+                    .build())
             .subType("String0")
             .tenantId("String0")
             .userDescription("String0")

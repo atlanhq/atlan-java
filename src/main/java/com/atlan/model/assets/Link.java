@@ -12,6 +12,8 @@ import com.atlan.model.core.AssetFilter;
 import com.atlan.model.enums.IconType;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.QueryFactory;
+import com.atlan.util.StringUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -145,7 +147,7 @@ public class Link extends Asset implements ILink, IResource, ICatalog, IAsset, I
      * @return reference to a Link that can be used for defining a relationship to a Link
      */
     public static Link refByGuid(String guid) {
-        return Link.builder().guid(guid).build();
+        return Link._internal().guid(guid).build();
     }
 
     /**
@@ -155,21 +157,80 @@ public class Link extends Asset implements ILink, IResource, ICatalog, IAsset, I
      * @return reference to a Link that can be used for defining a relationship to a Link
      */
     public static Link refByQualifiedName(String qualifiedName) {
-        return Link.builder()
+        return Link._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
     }
 
     /**
+     * Retrieves a Link by one of its identifiers, complete with all of its relationships.
+     *
+     * @param id of the Link to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full Link, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Link does not exist or the provided GUID is not a Link
+     */
+    @JsonIgnore
+    public static Link get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
+    }
+
+    /**
+     * Retrieves a Link by one of its identifiers, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the Link to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full Link, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Link does not exist or the provided GUID is not a Link
+     */
+    @JsonIgnore
+    public static Link get(AtlanClient client, String id) throws AtlanException {
+        return get(client, id, true);
+    }
+
+    /**
+     * Retrieves a Link by one of its identifiers, optionally complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the Link to retrieve, either its GUID or its full qualifiedName
+     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @return the requested full Link, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Link does not exist or the provided GUID is not a Link
+     */
+    @JsonIgnore
+    public static Link get(AtlanClient client, String id, boolean includeRelationships) throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (StringUtils.isUUID(id)) {
+            Asset asset = Asset.get(client, id, includeRelationships);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof Link) {
+                return (Link) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "Link");
+            }
+        } else {
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
+            if (asset instanceof Link) {
+                return (Link) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "Link");
+            }
+        }
+    }
+
+    /**
      * Retrieves a Link by its GUID, complete with all of its relationships.
      *
      * @param guid of the Link to retrieve
      * @return the requested full Link, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Link does not exist or the provided GUID is not a Link
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static Link retrieveByGuid(String guid) throws AtlanException {
-        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+        return get(Atlan.getDefaultClient(), guid);
     }
 
     /**
@@ -179,16 +240,11 @@ public class Link extends Asset implements ILink, IResource, ICatalog, IAsset, I
      * @param guid of the Link to retrieve
      * @return the requested full Link, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Link does not exist or the provided GUID is not a Link
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static Link retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof Link) {
-            return (Link) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "Link");
-        }
+        return get(client, guid);
     }
 
     /**
@@ -197,9 +253,11 @@ public class Link extends Asset implements ILink, IResource, ICatalog, IAsset, I
      * @param qualifiedName of the Link to retrieve
      * @return the requested full Link, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Link does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static Link retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+        return get(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -209,14 +267,11 @@ public class Link extends Asset implements ILink, IResource, ICatalog, IAsset, I
      * @param qualifiedName of the Link to retrieve
      * @return the requested full Link, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Link does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static Link retrieveByQualifiedName(AtlanClient client, String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
-        if (asset instanceof Link) {
-            return (Link) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "Link");
-        }
+        return get(client, qualifiedName);
     }
 
     /**
@@ -251,7 +306,7 @@ public class Link extends Asset implements ILink, IResource, ICatalog, IAsset, I
      * @return the minimal object necessary to create the Link and attach it to the asset, as a builder
      */
     public static LinkBuilder<?, ?> creator(Asset reference, String title, String url) {
-        return Link.builder()
+        return Link._internal()
                 .qualifiedName(generateQualifiedName())
                 .name(title)
                 .link(url)
@@ -266,7 +321,7 @@ public class Link extends Asset implements ILink, IResource, ICatalog, IAsset, I
      * @return the minimal request necessary to update the Link, as a builder
      */
     public static LinkBuilder<?, ?> updater(String qualifiedName, String name) {
-        return Link.builder().qualifiedName(qualifiedName).name(name);
+        return Link._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**

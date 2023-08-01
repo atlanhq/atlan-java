@@ -13,6 +13,8 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.QueryFactory;
+import com.atlan.util.StringUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -186,7 +188,7 @@ public class TableauDatasource extends Asset
      * @return reference to a TableauDatasource that can be used for defining a relationship to a TableauDatasource
      */
     public static TableauDatasource refByGuid(String guid) {
-        return TableauDatasource.builder().guid(guid).build();
+        return TableauDatasource._internal().guid(guid).build();
     }
 
     /**
@@ -196,51 +198,108 @@ public class TableauDatasource extends Asset
      * @return reference to a TableauDatasource that can be used for defining a relationship to a TableauDatasource
      */
     public static TableauDatasource refByQualifiedName(String qualifiedName) {
-        return TableauDatasource.builder()
+        return TableauDatasource._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
     }
 
     /**
-     * Retrieves a TableauDatasource by its GUID, complete with all of its relationships.
+     * Retrieves a TableauDatasource by one of its identifiers, complete with all of its relationships.
      *
-     * @param guid of the TableauDatasource to retrieve
+     * @param id of the TableauDatasource to retrieve, either its GUID or its full qualifiedName
      * @return the requested full TableauDatasource, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TableauDatasource does not exist or the provided GUID is not a TableauDatasource
      */
-    public static TableauDatasource retrieveByGuid(String guid) throws AtlanException {
-        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+    @JsonIgnore
+    public static TableauDatasource get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
     }
 
     /**
-     * Retrieves a TableauDatasource by its GUID, complete with all of its relationships.
+     * Retrieves a TableauDatasource by one of its identifiers, complete with all of its relationships.
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
-     * @param guid of the TableauDatasource to retrieve
+     * @param id of the TableauDatasource to retrieve, either its GUID or its full qualifiedName
      * @return the requested full TableauDatasource, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TableauDatasource does not exist or the provided GUID is not a TableauDatasource
      */
-    public static TableauDatasource retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof TableauDatasource) {
-            return (TableauDatasource) asset;
+    @JsonIgnore
+    public static TableauDatasource get(AtlanClient client, String id) throws AtlanException {
+        return get(client, id, true);
+    }
+
+    /**
+     * Retrieves a TableauDatasource by one of its identifiers, optionally complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the TableauDatasource to retrieve, either its GUID or its full qualifiedName
+     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @return the requested full TableauDatasource, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TableauDatasource does not exist or the provided GUID is not a TableauDatasource
+     */
+    @JsonIgnore
+    public static TableauDatasource get(AtlanClient client, String id, boolean includeRelationships)
+            throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (StringUtils.isUUID(id)) {
+            Asset asset = Asset.get(client, id, includeRelationships);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof TableauDatasource) {
+                return (TableauDatasource) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "TableauDatasource");
+            }
         } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "TableauDatasource");
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
+            if (asset instanceof TableauDatasource) {
+                return (TableauDatasource) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "TableauDatasource");
+            }
         }
     }
 
     /**
+     * Retrieves a TableauDatasource by its GUID, complete with all of its relationships.
+     *
+     * @param guid of the TableauDatasource to retrieve
+     * @return the requested full TableauDatasource, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TableauDatasource does not exist or the provided GUID is not a TableauDatasource
+     * @deprecated see {@link #get(String)} instead
+     */
+    @Deprecated
+    public static TableauDatasource retrieveByGuid(String guid) throws AtlanException {
+        return get(Atlan.getDefaultClient(), guid);
+    }
+
+    /**
+     * Retrieves a TableauDatasource by its GUID, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param guid of the TableauDatasource to retrieve
+     * @return the requested full TableauDatasource, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TableauDatasource does not exist or the provided GUID is not a TableauDatasource
+     * @deprecated see {@link #get(AtlanClient, String)} instead
+     */
+    @Deprecated
+    public static TableauDatasource retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
+        return get(client, guid);
+    }
+
+    /**
      * Retrieves a TableauDatasource by its qualifiedName, complete with all of its relationships.
      *
      * @param qualifiedName of the TableauDatasource to retrieve
      * @return the requested full TableauDatasource, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TableauDatasource does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static TableauDatasource retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+        return get(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -250,15 +309,12 @@ public class TableauDatasource extends Asset
      * @param qualifiedName of the TableauDatasource to retrieve
      * @return the requested full TableauDatasource, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TableauDatasource does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static TableauDatasource retrieveByQualifiedName(AtlanClient client, String qualifiedName)
             throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
-        if (asset instanceof TableauDatasource) {
-            return (TableauDatasource) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "TableauDatasource");
-        }
+        return get(client, qualifiedName);
     }
 
     /**
@@ -292,7 +348,7 @@ public class TableauDatasource extends Asset
      * @return the minimal request necessary to update the TableauDatasource, as a builder
      */
     public static TableauDatasourceBuilder<?, ?> updater(String qualifiedName, String name) {
-        return TableauDatasource.builder().qualifiedName(qualifiedName).name(name);
+        return TableauDatasource._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -424,7 +480,7 @@ public class TableauDatasource extends Asset
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (TableauDatasource)
-                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -483,7 +539,7 @@ public class TableauDatasource extends Asset
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (TableauDatasource)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

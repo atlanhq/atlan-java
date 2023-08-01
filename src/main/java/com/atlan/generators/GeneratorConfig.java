@@ -88,7 +88,8 @@ public class GeneratorConfig {
             Map.entry("meanings", "assignedTerms"),
             Map.entry("sqlAsset", "primarySqlAsset"),
             Map.entry("mappedClassificationName", "mappedAtlanTagName"),
-            Map.entry("purposeClassifications", "purposeAtlanTags"));
+            Map.entry("purposeClassifications", "purposeAtlanTags"),
+            Map.entry("starredDetailsList", "starredDetails"));
 
     private static final Map<String, String> DEFAULT_ATTRIBUTE_ENUMS = Map.ofEntries(
             Map.entry("announcementType", "AtlanAnnouncementType"),
@@ -267,7 +268,8 @@ public class GeneratorConfig {
                 .doNotGenerateAsset("__internal")
                 .forceNonAbstractAsset("Process")
                 .forceNonAbstractAsset("ColumnProcess")
-                .forceNonAbstractAsset("QlikSpace");
+                .forceNonAbstractAsset("QlikSpace")
+                .forceNonAbstractAsset("KafkaTopic");
     }
 
     /**

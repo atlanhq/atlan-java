@@ -119,6 +119,7 @@ public class EnumDef extends TypeDef {
     @EqualsAndHashCode(callSuper = false)
     @ToString(callSuper = true)
     public static class ElementDef extends AtlanObject {
+        private static final long serialVersionUID = 2L;
 
         /** Value of the element (the valid value). */
         String value;

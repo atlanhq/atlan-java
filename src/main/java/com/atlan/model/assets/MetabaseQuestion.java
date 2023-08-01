@@ -13,6 +13,8 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.QueryFactory;
+import com.atlan.util.StringUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
@@ -26,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -144,7 +146,7 @@ public class MetabaseQuestion extends Asset
      * @return reference to a MetabaseQuestion that can be used for defining a relationship to a MetabaseQuestion
      */
     public static MetabaseQuestion refByGuid(String guid) {
-        return MetabaseQuestion.builder().guid(guid).build();
+        return MetabaseQuestion._internal().guid(guid).build();
     }
 
     /**
@@ -154,51 +156,108 @@ public class MetabaseQuestion extends Asset
      * @return reference to a MetabaseQuestion that can be used for defining a relationship to a MetabaseQuestion
      */
     public static MetabaseQuestion refByQualifiedName(String qualifiedName) {
-        return MetabaseQuestion.builder()
+        return MetabaseQuestion._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
     }
 
     /**
-     * Retrieves a MetabaseQuestion by its GUID, complete with all of its relationships.
+     * Retrieves a MetabaseQuestion by one of its identifiers, complete with all of its relationships.
      *
-     * @param guid of the MetabaseQuestion to retrieve
+     * @param id of the MetabaseQuestion to retrieve, either its GUID or its full qualifiedName
      * @return the requested full MetabaseQuestion, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MetabaseQuestion does not exist or the provided GUID is not a MetabaseQuestion
      */
-    public static MetabaseQuestion retrieveByGuid(String guid) throws AtlanException {
-        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+    @JsonIgnore
+    public static MetabaseQuestion get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
     }
 
     /**
-     * Retrieves a MetabaseQuestion by its GUID, complete with all of its relationships.
+     * Retrieves a MetabaseQuestion by one of its identifiers, complete with all of its relationships.
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
-     * @param guid of the MetabaseQuestion to retrieve
+     * @param id of the MetabaseQuestion to retrieve, either its GUID or its full qualifiedName
      * @return the requested full MetabaseQuestion, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MetabaseQuestion does not exist or the provided GUID is not a MetabaseQuestion
      */
-    public static MetabaseQuestion retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof MetabaseQuestion) {
-            return (MetabaseQuestion) asset;
+    @JsonIgnore
+    public static MetabaseQuestion get(AtlanClient client, String id) throws AtlanException {
+        return get(client, id, true);
+    }
+
+    /**
+     * Retrieves a MetabaseQuestion by one of its identifiers, optionally complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the MetabaseQuestion to retrieve, either its GUID or its full qualifiedName
+     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @return the requested full MetabaseQuestion, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MetabaseQuestion does not exist or the provided GUID is not a MetabaseQuestion
+     */
+    @JsonIgnore
+    public static MetabaseQuestion get(AtlanClient client, String id, boolean includeRelationships)
+            throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (StringUtils.isUUID(id)) {
+            Asset asset = Asset.get(client, id, includeRelationships);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof MetabaseQuestion) {
+                return (MetabaseQuestion) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "MetabaseQuestion");
+            }
         } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "MetabaseQuestion");
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
+            if (asset instanceof MetabaseQuestion) {
+                return (MetabaseQuestion) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "MetabaseQuestion");
+            }
         }
     }
 
     /**
+     * Retrieves a MetabaseQuestion by its GUID, complete with all of its relationships.
+     *
+     * @param guid of the MetabaseQuestion to retrieve
+     * @return the requested full MetabaseQuestion, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MetabaseQuestion does not exist or the provided GUID is not a MetabaseQuestion
+     * @deprecated see {@link #get(String)} instead
+     */
+    @Deprecated
+    public static MetabaseQuestion retrieveByGuid(String guid) throws AtlanException {
+        return get(Atlan.getDefaultClient(), guid);
+    }
+
+    /**
+     * Retrieves a MetabaseQuestion by its GUID, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param guid of the MetabaseQuestion to retrieve
+     * @return the requested full MetabaseQuestion, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MetabaseQuestion does not exist or the provided GUID is not a MetabaseQuestion
+     * @deprecated see {@link #get(AtlanClient, String)} instead
+     */
+    @Deprecated
+    public static MetabaseQuestion retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
+        return get(client, guid);
+    }
+
+    /**
      * Retrieves a MetabaseQuestion by its qualifiedName, complete with all of its relationships.
      *
      * @param qualifiedName of the MetabaseQuestion to retrieve
      * @return the requested full MetabaseQuestion, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MetabaseQuestion does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static MetabaseQuestion retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+        return get(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -208,15 +267,12 @@ public class MetabaseQuestion extends Asset
      * @param qualifiedName of the MetabaseQuestion to retrieve
      * @return the requested full MetabaseQuestion, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MetabaseQuestion does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static MetabaseQuestion retrieveByQualifiedName(AtlanClient client, String qualifiedName)
             throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
-        if (asset instanceof MetabaseQuestion) {
-            return (MetabaseQuestion) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "MetabaseQuestion");
-        }
+        return get(client, qualifiedName);
     }
 
     /**
@@ -250,7 +306,7 @@ public class MetabaseQuestion extends Asset
      * @return the minimal request necessary to update the MetabaseQuestion, as a builder
      */
     public static MetabaseQuestionBuilder<?, ?> updater(String qualifiedName, String name) {
-        return MetabaseQuestion.builder().qualifiedName(qualifiedName).name(name);
+        return MetabaseQuestion._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -382,7 +438,7 @@ public class MetabaseQuestion extends Asset
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (MetabaseQuestion)
-                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -441,7 +497,7 @@ public class MetabaseQuestion extends Asset
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (MetabaseQuestion)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

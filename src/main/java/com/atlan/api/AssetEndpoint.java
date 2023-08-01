@@ -301,8 +301,10 @@ public class AssetEndpoint extends AtlasEndpoint {
                         bulk_endpoint, replaceAtlanTags));
         BulkEntityRequest beq =
                 BulkEntityRequest.builder().entities(List.of(value)).build();
-        return ApiResource.request(
+        ConnectionCreationResponse response = ApiResource.request(
                 client, ApiResource.RequestMethod.POST, url, beq, ConnectionCreationResponse.class, options);
+        response.setClient(client);
+        return response;
     }
 
     /**
@@ -353,8 +355,10 @@ public class AssetEndpoint extends AtlasEndpoint {
                 String url = String.format(
                         "%s%s",
                         getBaseUrl(), String.format("%s?%s&deleteType=%s", bulk_endpoint, guidList, deleteType));
-                return ApiResource.request(
+                AssetDeletionResponse response = ApiResource.request(
                         client, ApiResource.RequestMethod.DELETE, url, "", AssetDeletionResponse.class, options);
+                response.setClient(client);
+                return response;
             }
         }
         throw new InvalidRequestException(ErrorCode.MISSING_GUID_FOR_DELETE);
@@ -912,6 +916,8 @@ public class AssetEndpoint extends AtlasEndpoint {
      * Request class for handling Atlan tag additions.
      */
     public static class AtlanTagList extends AtlanObject {
+        private static final long serialVersionUID = 2L;
+
         private final List<AtlanTag> tags;
 
         public AtlanTagList(List<AtlanTag> tags) {
@@ -935,6 +941,8 @@ public class AssetEndpoint extends AtlasEndpoint {
     @SuperBuilder
     @EqualsAndHashCode(callSuper = false)
     static class SingleEntityRequest extends AtlanObject {
+        private static final long serialVersionUID = 2L;
+
         /** The asset to update. */
         Asset entity;
     }
@@ -944,6 +952,7 @@ public class AssetEndpoint extends AtlasEndpoint {
      */
     @EqualsAndHashCode(callSuper = false)
     static class CustomMetadataUpdateRequest extends AtlanObject {
+        private static final long serialVersionUID = 2L;
 
         /** Whether to include the custom metadata name as an outer wrapper (true) or not (false). */
         private final transient boolean includeName;
@@ -992,6 +1001,8 @@ public class AssetEndpoint extends AtlasEndpoint {
     @SuperBuilder
     @EqualsAndHashCode(callSuper = false)
     static class BulkEntityRequest extends AtlanObject {
+        private static final long serialVersionUID = 2L;
+
         /** List of assets to operate on in bulk. */
         List<Asset> entities;
     }

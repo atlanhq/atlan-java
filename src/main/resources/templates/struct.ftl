@@ -35,6 +35,7 @@ import javax.annotation.processing.Generated;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class ${className} extends AtlanStruct {
+    private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "${className}";
 

@@ -40,13 +40,14 @@ public interface AtlanEventHandler {
      * the event handler requires to make its decisions.
      * This default implementation will only really check that the asset still exists in Atlan.
      *
+     * @param client connectivity to Atlan
      * @param fromEvent the asset from the event (which could be stale at this point)
      * @param log a logger to log anything you want
      * @return the current state of the asset, as retrieved from Atlan
      * @throws AtlanException if there are any problems retrieving the current state of the asset from Atlan
      */
-    default Asset getCurrentState(Asset fromEvent, Logger log) throws AtlanException {
-        return getCurrentViewOfAsset(fromEvent, null, false, false);
+    default Asset getCurrentState(AtlanClient client, Asset fromEvent, Logger log) throws AtlanException {
+        return getCurrentViewOfAsset(client, fromEvent, null, false, false);
     }
 
     /**
@@ -154,14 +155,15 @@ public interface AtlanEventHandler {
      * consistency of the search index so will have the absolute latest information about an
      * asset.
      *
+     * @param client connectivity to Atlan
      * @param event containing details about an asset
      * @return the current information about the asset in Atlan, in its entirety
      * @throws AtlanException on any issues communicating with the API
      */
-    static Asset getCurrentFullAsset(AtlanEvent event) throws AtlanException {
+    static Asset getCurrentFullAsset(AtlanClient client, AtlanEvent event) throws AtlanException {
         AtlanEventPayload payload = event.getPayload();
         if (payload != null && payload.getAsset() != null) {
-            return Asset.retrieveFull(payload.getAsset().getGuid());
+            return Asset.get(client, payload.getAsset().getGuid(), true);
         }
         return null;
     }
@@ -174,6 +176,7 @@ public interface AtlanEventHandler {
      * consistency of the search index so may not have the absolute latest information about
      * an asset.
      *
+     * @param client connectivity to Atlan
      * @param event containing details about an asset
      * @param limitedToAttributes the limited set of attributes to retrieve about the asset
      * @param includeMeanings if true, include any assigned terms
@@ -182,11 +185,16 @@ public interface AtlanEventHandler {
      * @throws AtlanException on any issues communicating with the API
      */
     static Asset getCurrentViewOfAsset(
-            AtlanEvent event, Collection<String> limitedToAttributes, boolean includeMeanings, boolean includeAtlanTags)
+            AtlanClient client,
+            AtlanEvent event,
+            Collection<String> limitedToAttributes,
+            boolean includeMeanings,
+            boolean includeAtlanTags)
             throws AtlanException {
         AtlanEventPayload payload = event.getPayload();
         if (payload != null && payload.getAsset() != null) {
-            return getCurrentViewOfAsset(payload.getAsset(), limitedToAttributes, includeMeanings, includeAtlanTags);
+            return getCurrentViewOfAsset(
+                    client, payload.getAsset(), limitedToAttributes, includeMeanings, includeAtlanTags);
         }
         return null;
     }
@@ -199,6 +207,7 @@ public interface AtlanEventHandler {
      * consistency of the search index so may not have the absolute latest information about
      * an asset.
      *
+     * @param client connectivity to Atlan
      * @param fromEvent details of the asset in the event
      * @param limitedToAttributes the limited set of attributes to retrieve about the asset
      * @param includeMeanings if true, include any assigned terms
@@ -207,7 +216,11 @@ public interface AtlanEventHandler {
      * @throws AtlanException on any issues communicating with the API
      */
     static Asset getCurrentViewOfAsset(
-            Asset fromEvent, Collection<String> limitedToAttributes, boolean includeMeanings, boolean includeAtlanTags)
+            AtlanClient client,
+            Asset fromEvent,
+            Collection<String> limitedToAttributes,
+            boolean includeMeanings,
+            boolean includeAtlanTags)
             throws AtlanException {
         IndexSearchRequest request = IndexSearchRequest.builder(QueryFactory.CompoundQuery.builder()
                         .must(QueryFactory.beActive())
@@ -223,7 +236,7 @@ public interface AtlanEventHandler {
                 .attribute("awsArn")
                 .relationAttribute("guid")
                 .build();
-        IndexSearchResponse response = request.search();
+        IndexSearchResponse response = request.search(client);
         if (response != null && response.getAssets() != null) {
             if (!response.getAssets().isEmpty()) {
                 return response.getAssets().get(0);

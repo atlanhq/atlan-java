@@ -14,6 +14,8 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.QueryFactory;
+import com.atlan.util.StringUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
@@ -27,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -172,7 +174,7 @@ public class PresetWorkspace extends Asset implements IPresetWorkspace, IPreset,
      * @return reference to a PresetWorkspace that can be used for defining a relationship to a PresetWorkspace
      */
     public static PresetWorkspace refByGuid(String guid) {
-        return PresetWorkspace.builder().guid(guid).build();
+        return PresetWorkspace._internal().guid(guid).build();
     }
 
     /**
@@ -182,51 +184,108 @@ public class PresetWorkspace extends Asset implements IPresetWorkspace, IPreset,
      * @return reference to a PresetWorkspace that can be used for defining a relationship to a PresetWorkspace
      */
     public static PresetWorkspace refByQualifiedName(String qualifiedName) {
-        return PresetWorkspace.builder()
+        return PresetWorkspace._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
     }
 
     /**
-     * Retrieves a PresetWorkspace by its GUID, complete with all of its relationships.
+     * Retrieves a PresetWorkspace by one of its identifiers, complete with all of its relationships.
      *
-     * @param guid of the PresetWorkspace to retrieve
+     * @param id of the PresetWorkspace to retrieve, either its GUID or its full qualifiedName
      * @return the requested full PresetWorkspace, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PresetWorkspace does not exist or the provided GUID is not a PresetWorkspace
      */
-    public static PresetWorkspace retrieveByGuid(String guid) throws AtlanException {
-        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+    @JsonIgnore
+    public static PresetWorkspace get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
     }
 
     /**
-     * Retrieves a PresetWorkspace by its GUID, complete with all of its relationships.
+     * Retrieves a PresetWorkspace by one of its identifiers, complete with all of its relationships.
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
-     * @param guid of the PresetWorkspace to retrieve
+     * @param id of the PresetWorkspace to retrieve, either its GUID or its full qualifiedName
      * @return the requested full PresetWorkspace, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PresetWorkspace does not exist or the provided GUID is not a PresetWorkspace
      */
-    public static PresetWorkspace retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof PresetWorkspace) {
-            return (PresetWorkspace) asset;
+    @JsonIgnore
+    public static PresetWorkspace get(AtlanClient client, String id) throws AtlanException {
+        return get(client, id, true);
+    }
+
+    /**
+     * Retrieves a PresetWorkspace by one of its identifiers, optionally complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the PresetWorkspace to retrieve, either its GUID or its full qualifiedName
+     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @return the requested full PresetWorkspace, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PresetWorkspace does not exist or the provided GUID is not a PresetWorkspace
+     */
+    @JsonIgnore
+    public static PresetWorkspace get(AtlanClient client, String id, boolean includeRelationships)
+            throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (StringUtils.isUUID(id)) {
+            Asset asset = Asset.get(client, id, includeRelationships);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof PresetWorkspace) {
+                return (PresetWorkspace) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "PresetWorkspace");
+            }
         } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "PresetWorkspace");
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
+            if (asset instanceof PresetWorkspace) {
+                return (PresetWorkspace) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "PresetWorkspace");
+            }
         }
     }
 
     /**
+     * Retrieves a PresetWorkspace by its GUID, complete with all of its relationships.
+     *
+     * @param guid of the PresetWorkspace to retrieve
+     * @return the requested full PresetWorkspace, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PresetWorkspace does not exist or the provided GUID is not a PresetWorkspace
+     * @deprecated see {@link #get(String)} instead
+     */
+    @Deprecated
+    public static PresetWorkspace retrieveByGuid(String guid) throws AtlanException {
+        return get(Atlan.getDefaultClient(), guid);
+    }
+
+    /**
+     * Retrieves a PresetWorkspace by its GUID, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param guid of the PresetWorkspace to retrieve
+     * @return the requested full PresetWorkspace, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PresetWorkspace does not exist or the provided GUID is not a PresetWorkspace
+     * @deprecated see {@link #get(AtlanClient, String)} instead
+     */
+    @Deprecated
+    public static PresetWorkspace retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
+        return get(client, guid);
+    }
+
+    /**
      * Retrieves a PresetWorkspace by its qualifiedName, complete with all of its relationships.
      *
      * @param qualifiedName of the PresetWorkspace to retrieve
      * @return the requested full PresetWorkspace, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PresetWorkspace does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static PresetWorkspace retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+        return get(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -236,15 +295,12 @@ public class PresetWorkspace extends Asset implements IPresetWorkspace, IPreset,
      * @param qualifiedName of the PresetWorkspace to retrieve
      * @return the requested full PresetWorkspace, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PresetWorkspace does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static PresetWorkspace retrieveByQualifiedName(AtlanClient client, String qualifiedName)
             throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
-        if (asset instanceof PresetWorkspace) {
-            return (PresetWorkspace) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "PresetWorkspace");
-        }
+        return get(client, qualifiedName);
     }
 
     /**
@@ -278,7 +334,7 @@ public class PresetWorkspace extends Asset implements IPresetWorkspace, IPreset,
      * @return the minimal object necessary to create the workspace, as a builder
      */
     public static PresetWorkspaceBuilder<?, ?> creator(String name, String connectionQualifiedName) {
-        return PresetWorkspace.builder()
+        return PresetWorkspace._internal()
                 .qualifiedName(generateQualifiedName(connectionQualifiedName, name))
                 .name(name)
                 .connectionQualifiedName(connectionQualifiedName)
@@ -293,7 +349,7 @@ public class PresetWorkspace extends Asset implements IPresetWorkspace, IPreset,
      * @return the minimal request necessary to update the PresetWorkspace, as a builder
      */
     public static PresetWorkspaceBuilder<?, ?> updater(String qualifiedName, String name) {
-        return PresetWorkspace.builder().qualifiedName(qualifiedName).name(name);
+        return PresetWorkspace._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -436,7 +492,7 @@ public class PresetWorkspace extends Asset implements IPresetWorkspace, IPreset,
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (PresetWorkspace)
-                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -495,7 +551,7 @@ public class PresetWorkspace extends Asset implements IPresetWorkspace, IPreset,
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (PresetWorkspace)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

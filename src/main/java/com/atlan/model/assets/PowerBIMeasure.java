@@ -14,6 +14,8 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.PowerBIEndorsementType;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.QueryFactory;
+import com.atlan.util.StringUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
@@ -27,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -151,7 +153,7 @@ public class PowerBIMeasure extends Asset implements IPowerBIMeasure, IPowerBI, 
      * @return reference to a PowerBIMeasure that can be used for defining a relationship to a PowerBIMeasure
      */
     public static PowerBIMeasure refByGuid(String guid) {
-        return PowerBIMeasure.builder().guid(guid).build();
+        return PowerBIMeasure._internal().guid(guid).build();
     }
 
     /**
@@ -161,51 +163,108 @@ public class PowerBIMeasure extends Asset implements IPowerBIMeasure, IPowerBI, 
      * @return reference to a PowerBIMeasure that can be used for defining a relationship to a PowerBIMeasure
      */
     public static PowerBIMeasure refByQualifiedName(String qualifiedName) {
-        return PowerBIMeasure.builder()
+        return PowerBIMeasure._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
     }
 
     /**
-     * Retrieves a PowerBIMeasure by its GUID, complete with all of its relationships.
+     * Retrieves a PowerBIMeasure by one of its identifiers, complete with all of its relationships.
      *
-     * @param guid of the PowerBIMeasure to retrieve
+     * @param id of the PowerBIMeasure to retrieve, either its GUID or its full qualifiedName
      * @return the requested full PowerBIMeasure, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBIMeasure does not exist or the provided GUID is not a PowerBIMeasure
      */
-    public static PowerBIMeasure retrieveByGuid(String guid) throws AtlanException {
-        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+    @JsonIgnore
+    public static PowerBIMeasure get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
     }
 
     /**
-     * Retrieves a PowerBIMeasure by its GUID, complete with all of its relationships.
+     * Retrieves a PowerBIMeasure by one of its identifiers, complete with all of its relationships.
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
-     * @param guid of the PowerBIMeasure to retrieve
+     * @param id of the PowerBIMeasure to retrieve, either its GUID or its full qualifiedName
      * @return the requested full PowerBIMeasure, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBIMeasure does not exist or the provided GUID is not a PowerBIMeasure
      */
-    public static PowerBIMeasure retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof PowerBIMeasure) {
-            return (PowerBIMeasure) asset;
+    @JsonIgnore
+    public static PowerBIMeasure get(AtlanClient client, String id) throws AtlanException {
+        return get(client, id, true);
+    }
+
+    /**
+     * Retrieves a PowerBIMeasure by one of its identifiers, optionally complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the PowerBIMeasure to retrieve, either its GUID or its full qualifiedName
+     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @return the requested full PowerBIMeasure, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBIMeasure does not exist or the provided GUID is not a PowerBIMeasure
+     */
+    @JsonIgnore
+    public static PowerBIMeasure get(AtlanClient client, String id, boolean includeRelationships)
+            throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (StringUtils.isUUID(id)) {
+            Asset asset = Asset.get(client, id, includeRelationships);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof PowerBIMeasure) {
+                return (PowerBIMeasure) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "PowerBIMeasure");
+            }
         } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "PowerBIMeasure");
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
+            if (asset instanceof PowerBIMeasure) {
+                return (PowerBIMeasure) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "PowerBIMeasure");
+            }
         }
     }
 
     /**
+     * Retrieves a PowerBIMeasure by its GUID, complete with all of its relationships.
+     *
+     * @param guid of the PowerBIMeasure to retrieve
+     * @return the requested full PowerBIMeasure, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBIMeasure does not exist or the provided GUID is not a PowerBIMeasure
+     * @deprecated see {@link #get(String)} instead
+     */
+    @Deprecated
+    public static PowerBIMeasure retrieveByGuid(String guid) throws AtlanException {
+        return get(Atlan.getDefaultClient(), guid);
+    }
+
+    /**
+     * Retrieves a PowerBIMeasure by its GUID, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param guid of the PowerBIMeasure to retrieve
+     * @return the requested full PowerBIMeasure, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBIMeasure does not exist or the provided GUID is not a PowerBIMeasure
+     * @deprecated see {@link #get(AtlanClient, String)} instead
+     */
+    @Deprecated
+    public static PowerBIMeasure retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
+        return get(client, guid);
+    }
+
+    /**
      * Retrieves a PowerBIMeasure by its qualifiedName, complete with all of its relationships.
      *
      * @param qualifiedName of the PowerBIMeasure to retrieve
      * @return the requested full PowerBIMeasure, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBIMeasure does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static PowerBIMeasure retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+        return get(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -215,15 +274,12 @@ public class PowerBIMeasure extends Asset implements IPowerBIMeasure, IPowerBI, 
      * @param qualifiedName of the PowerBIMeasure to retrieve
      * @return the requested full PowerBIMeasure, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBIMeasure does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static PowerBIMeasure retrieveByQualifiedName(AtlanClient client, String qualifiedName)
             throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
-        if (asset instanceof PowerBIMeasure) {
-            return (PowerBIMeasure) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "PowerBIMeasure");
-        }
+        return get(client, qualifiedName);
     }
 
     /**
@@ -257,7 +313,7 @@ public class PowerBIMeasure extends Asset implements IPowerBIMeasure, IPowerBI, 
      * @return the minimal request necessary to update the PowerBIMeasure, as a builder
      */
     public static PowerBIMeasureBuilder<?, ?> updater(String qualifiedName, String name) {
-        return PowerBIMeasure.builder().qualifiedName(qualifiedName).name(name);
+        return PowerBIMeasure._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -389,7 +445,7 @@ public class PowerBIMeasure extends Asset implements IPowerBIMeasure, IPowerBI, 
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (PowerBIMeasure)
-                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -448,7 +504,7 @@ public class PowerBIMeasure extends Asset implements IPowerBIMeasure, IPowerBI, 
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (PowerBIMeasure)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

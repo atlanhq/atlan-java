@@ -167,6 +167,8 @@ public class WorkflowsEndpoint extends HeraclesEndpoint {
     @SuperBuilder
     @EqualsAndHashCode(callSuper = false)
     static class ReRunRequest extends AtlanObject {
+        private static final long serialVersionUID = 2L;
+
         /** Namespace of the workflow. */
         @Builder.Default
         String namespace = "default";

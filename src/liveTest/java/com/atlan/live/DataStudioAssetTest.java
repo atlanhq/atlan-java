@@ -102,7 +102,7 @@ public class DataStudioAssetTest extends AtlanLiveTest {
             groups = {"gds.read.report"},
             dependsOnGroups = {"gds.update.report"})
     void retrieveReport() throws AtlanException {
-        DataStudioAsset r = DataStudioAsset.retrieveByGuid(report.getGuid());
+        DataStudioAsset r = DataStudioAsset.get(report.getGuid());
         assertNotNull(r);
         assertTrue(r.isComplete());
         assertEquals(r.getGuid(), report.getGuid());
@@ -216,7 +216,7 @@ public class DataStudioAssetTest extends AtlanLiveTest {
             groups = {"gds.delete.source.read"},
             dependsOnGroups = {"gds.delete.source"})
     void readDeletedSource() throws AtlanException {
-        DataStudioAsset deleted = DataStudioAsset.retrieveByGuid(source.getGuid());
+        DataStudioAsset deleted = DataStudioAsset.get(source.getGuid());
         assertNotNull(deleted);
         assertEquals(deleted.getGuid(), source.getGuid());
         assertEquals(deleted.getQualifiedName(), source.getQualifiedName());
@@ -228,7 +228,7 @@ public class DataStudioAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"gds.delete.source.read"})
     void restoreSource() throws AtlanException {
         assertTrue(DataStudioAsset.restore(source.getQualifiedName()));
-        DataStudioAsset restored = DataStudioAsset.retrieveByQualifiedName(source.getQualifiedName());
+        DataStudioAsset restored = DataStudioAsset.get(source.getQualifiedName());
         assertEquals(restored.getGuid(), source.getGuid());
         assertEquals(restored.getQualifiedName(), source.getQualifiedName());
         assertEquals(restored.getStatus(), AtlanStatus.ACTIVE);

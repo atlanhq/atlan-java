@@ -87,7 +87,7 @@ public class ResourceTest extends AtlanLiveTest {
             groups = {"resources.read.term"},
             dependsOnGroups = {"resources.create.*"})
     void retrieveTerm() throws AtlanException {
-        GlossaryTerm t = GlossaryTerm.retrieveByQualifiedName(term.getQualifiedName());
+        GlossaryTerm t = GlossaryTerm.get(term.getQualifiedName());
         assertNotNull(t);
         assertTrue(t.isComplete());
         IReadme r = t.getReadme();

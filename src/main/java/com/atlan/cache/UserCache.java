@@ -23,7 +23,7 @@ public class UserCache {
 
     private synchronized void refreshCache() throws AtlanException {
         log.debug("Refreshing cache of users...");
-        List<AtlanUser> users = AtlanUser.retrieveAll();
+        List<AtlanUser> users = AtlanUser.list();
         mapIdToName = new ConcurrentHashMap<>();
         mapNameToId = new ConcurrentHashMap<>();
         mapEmailToId = new ConcurrentHashMap<>();

@@ -13,6 +13,8 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.QueryFactory;
+import com.atlan.util.StringUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
@@ -26,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -151,7 +153,7 @@ public class SigmaPage extends Asset implements ISigmaPage, ISigma, IBI, ICatalo
      * @return reference to a SigmaPage that can be used for defining a relationship to a SigmaPage
      */
     public static SigmaPage refByGuid(String guid) {
-        return SigmaPage.builder().guid(guid).build();
+        return SigmaPage._internal().guid(guid).build();
     }
 
     /**
@@ -161,21 +163,80 @@ public class SigmaPage extends Asset implements ISigmaPage, ISigma, IBI, ICatalo
      * @return reference to a SigmaPage that can be used for defining a relationship to a SigmaPage
      */
     public static SigmaPage refByQualifiedName(String qualifiedName) {
-        return SigmaPage.builder()
+        return SigmaPage._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
     }
 
     /**
+     * Retrieves a SigmaPage by one of its identifiers, complete with all of its relationships.
+     *
+     * @param id of the SigmaPage to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full SigmaPage, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SigmaPage does not exist or the provided GUID is not a SigmaPage
+     */
+    @JsonIgnore
+    public static SigmaPage get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
+    }
+
+    /**
+     * Retrieves a SigmaPage by one of its identifiers, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the SigmaPage to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full SigmaPage, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SigmaPage does not exist or the provided GUID is not a SigmaPage
+     */
+    @JsonIgnore
+    public static SigmaPage get(AtlanClient client, String id) throws AtlanException {
+        return get(client, id, true);
+    }
+
+    /**
+     * Retrieves a SigmaPage by one of its identifiers, optionally complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the SigmaPage to retrieve, either its GUID or its full qualifiedName
+     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @return the requested full SigmaPage, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SigmaPage does not exist or the provided GUID is not a SigmaPage
+     */
+    @JsonIgnore
+    public static SigmaPage get(AtlanClient client, String id, boolean includeRelationships) throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (StringUtils.isUUID(id)) {
+            Asset asset = Asset.get(client, id, includeRelationships);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof SigmaPage) {
+                return (SigmaPage) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "SigmaPage");
+            }
+        } else {
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
+            if (asset instanceof SigmaPage) {
+                return (SigmaPage) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "SigmaPage");
+            }
+        }
+    }
+
+    /**
      * Retrieves a SigmaPage by its GUID, complete with all of its relationships.
      *
      * @param guid of the SigmaPage to retrieve
      * @return the requested full SigmaPage, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SigmaPage does not exist or the provided GUID is not a SigmaPage
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static SigmaPage retrieveByGuid(String guid) throws AtlanException {
-        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+        return get(Atlan.getDefaultClient(), guid);
     }
 
     /**
@@ -185,16 +246,11 @@ public class SigmaPage extends Asset implements ISigmaPage, ISigma, IBI, ICatalo
      * @param guid of the SigmaPage to retrieve
      * @return the requested full SigmaPage, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SigmaPage does not exist or the provided GUID is not a SigmaPage
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static SigmaPage retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof SigmaPage) {
-            return (SigmaPage) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "SigmaPage");
-        }
+        return get(client, guid);
     }
 
     /**
@@ -203,9 +259,11 @@ public class SigmaPage extends Asset implements ISigmaPage, ISigma, IBI, ICatalo
      * @param qualifiedName of the SigmaPage to retrieve
      * @return the requested full SigmaPage, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SigmaPage does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static SigmaPage retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+        return get(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -215,14 +273,11 @@ public class SigmaPage extends Asset implements ISigmaPage, ISigma, IBI, ICatalo
      * @param qualifiedName of the SigmaPage to retrieve
      * @return the requested full SigmaPage, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SigmaPage does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static SigmaPage retrieveByQualifiedName(AtlanClient client, String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
-        if (asset instanceof SigmaPage) {
-            return (SigmaPage) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "SigmaPage");
-        }
+        return get(client, qualifiedName);
     }
 
     /**
@@ -256,7 +311,7 @@ public class SigmaPage extends Asset implements ISigmaPage, ISigma, IBI, ICatalo
      * @return the minimal request necessary to update the SigmaPage, as a builder
      */
     public static SigmaPageBuilder<?, ?> updater(String qualifiedName, String name) {
-        return SigmaPage.builder().qualifiedName(qualifiedName).name(name);
+        return SigmaPage._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -386,7 +441,7 @@ public class SigmaPage extends Asset implements ISigmaPage, ISigma, IBI, ICatalo
     public static SigmaPage updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (SigmaPage) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return (SigmaPage) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -444,7 +499,8 @@ public class SigmaPage extends Asset implements ISigmaPage, ISigma, IBI, ICatalo
     public static SigmaPage updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (SigmaPage) Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+        return (SigmaPage)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

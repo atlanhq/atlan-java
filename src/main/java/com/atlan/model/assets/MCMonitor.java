@@ -15,6 +15,8 @@ import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.MCRuleComparison;
 import com.atlan.model.structs.MCRuleSchedule;
 import com.atlan.util.QueryFactory;
+import com.atlan.util.StringUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
@@ -28,7 +30,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -202,7 +204,7 @@ public class MCMonitor extends Asset
      * @return reference to a MCMonitor that can be used for defining a relationship to a MCMonitor
      */
     public static MCMonitor refByGuid(String guid) {
-        return MCMonitor.builder().guid(guid).build();
+        return MCMonitor._internal().guid(guid).build();
     }
 
     /**
@@ -212,21 +214,80 @@ public class MCMonitor extends Asset
      * @return reference to a MCMonitor that can be used for defining a relationship to a MCMonitor
      */
     public static MCMonitor refByQualifiedName(String qualifiedName) {
-        return MCMonitor.builder()
+        return MCMonitor._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
     }
 
     /**
+     * Retrieves a MCMonitor by one of its identifiers, complete with all of its relationships.
+     *
+     * @param id of the MCMonitor to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full MCMonitor, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MCMonitor does not exist or the provided GUID is not a MCMonitor
+     */
+    @JsonIgnore
+    public static MCMonitor get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
+    }
+
+    /**
+     * Retrieves a MCMonitor by one of its identifiers, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the MCMonitor to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full MCMonitor, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MCMonitor does not exist or the provided GUID is not a MCMonitor
+     */
+    @JsonIgnore
+    public static MCMonitor get(AtlanClient client, String id) throws AtlanException {
+        return get(client, id, true);
+    }
+
+    /**
+     * Retrieves a MCMonitor by one of its identifiers, optionally complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the MCMonitor to retrieve, either its GUID or its full qualifiedName
+     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @return the requested full MCMonitor, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MCMonitor does not exist or the provided GUID is not a MCMonitor
+     */
+    @JsonIgnore
+    public static MCMonitor get(AtlanClient client, String id, boolean includeRelationships) throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (StringUtils.isUUID(id)) {
+            Asset asset = Asset.get(client, id, includeRelationships);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof MCMonitor) {
+                return (MCMonitor) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "MCMonitor");
+            }
+        } else {
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
+            if (asset instanceof MCMonitor) {
+                return (MCMonitor) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "MCMonitor");
+            }
+        }
+    }
+
+    /**
      * Retrieves a MCMonitor by its GUID, complete with all of its relationships.
      *
      * @param guid of the MCMonitor to retrieve
      * @return the requested full MCMonitor, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MCMonitor does not exist or the provided GUID is not a MCMonitor
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static MCMonitor retrieveByGuid(String guid) throws AtlanException {
-        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+        return get(Atlan.getDefaultClient(), guid);
     }
 
     /**
@@ -236,16 +297,11 @@ public class MCMonitor extends Asset
      * @param guid of the MCMonitor to retrieve
      * @return the requested full MCMonitor, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MCMonitor does not exist or the provided GUID is not a MCMonitor
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static MCMonitor retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof MCMonitor) {
-            return (MCMonitor) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "MCMonitor");
-        }
+        return get(client, guid);
     }
 
     /**
@@ -254,9 +310,11 @@ public class MCMonitor extends Asset
      * @param qualifiedName of the MCMonitor to retrieve
      * @return the requested full MCMonitor, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MCMonitor does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static MCMonitor retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+        return get(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -266,14 +324,11 @@ public class MCMonitor extends Asset
      * @param qualifiedName of the MCMonitor to retrieve
      * @return the requested full MCMonitor, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MCMonitor does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static MCMonitor retrieveByQualifiedName(AtlanClient client, String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
-        if (asset instanceof MCMonitor) {
-            return (MCMonitor) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "MCMonitor");
-        }
+        return get(client, qualifiedName);
     }
 
     /**
@@ -307,7 +362,7 @@ public class MCMonitor extends Asset
      * @return the minimal request necessary to update the MCMonitor, as a builder
      */
     public static MCMonitorBuilder<?, ?> updater(String qualifiedName, String name) {
-        return MCMonitor.builder().qualifiedName(qualifiedName).name(name);
+        return MCMonitor._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -437,7 +492,7 @@ public class MCMonitor extends Asset
     public static MCMonitor updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (MCMonitor) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return (MCMonitor) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -495,7 +550,8 @@ public class MCMonitor extends Asset
     public static MCMonitor updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (MCMonitor) Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+        return (MCMonitor)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

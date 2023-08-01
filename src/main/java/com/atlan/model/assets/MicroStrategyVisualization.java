@@ -13,6 +13,8 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.QueryFactory;
+import com.atlan.util.StringUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -182,7 +184,7 @@ public class MicroStrategyVisualization extends Asset
      * @return reference to a MicroStrategyVisualization that can be used for defining a relationship to a MicroStrategyVisualization
      */
     public static MicroStrategyVisualization refByGuid(String guid) {
-        return MicroStrategyVisualization.builder().guid(guid).build();
+        return MicroStrategyVisualization._internal().guid(guid).build();
     }
 
     /**
@@ -192,51 +194,108 @@ public class MicroStrategyVisualization extends Asset
      * @return reference to a MicroStrategyVisualization that can be used for defining a relationship to a MicroStrategyVisualization
      */
     public static MicroStrategyVisualization refByQualifiedName(String qualifiedName) {
-        return MicroStrategyVisualization.builder()
+        return MicroStrategyVisualization._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
     }
 
     /**
-     * Retrieves a MicroStrategyVisualization by its GUID, complete with all of its relationships.
+     * Retrieves a MicroStrategyVisualization by one of its identifiers, complete with all of its relationships.
      *
-     * @param guid of the MicroStrategyVisualization to retrieve
+     * @param id of the MicroStrategyVisualization to retrieve, either its GUID or its full qualifiedName
      * @return the requested full MicroStrategyVisualization, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MicroStrategyVisualization does not exist or the provided GUID is not a MicroStrategyVisualization
      */
-    public static MicroStrategyVisualization retrieveByGuid(String guid) throws AtlanException {
-        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+    @JsonIgnore
+    public static MicroStrategyVisualization get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
     }
 
     /**
-     * Retrieves a MicroStrategyVisualization by its GUID, complete with all of its relationships.
+     * Retrieves a MicroStrategyVisualization by one of its identifiers, complete with all of its relationships.
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
-     * @param guid of the MicroStrategyVisualization to retrieve
+     * @param id of the MicroStrategyVisualization to retrieve, either its GUID or its full qualifiedName
      * @return the requested full MicroStrategyVisualization, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MicroStrategyVisualization does not exist or the provided GUID is not a MicroStrategyVisualization
      */
-    public static MicroStrategyVisualization retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof MicroStrategyVisualization) {
-            return (MicroStrategyVisualization) asset;
+    @JsonIgnore
+    public static MicroStrategyVisualization get(AtlanClient client, String id) throws AtlanException {
+        return get(client, id, true);
+    }
+
+    /**
+     * Retrieves a MicroStrategyVisualization by one of its identifiers, optionally complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the MicroStrategyVisualization to retrieve, either its GUID or its full qualifiedName
+     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @return the requested full MicroStrategyVisualization, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MicroStrategyVisualization does not exist or the provided GUID is not a MicroStrategyVisualization
+     */
+    @JsonIgnore
+    public static MicroStrategyVisualization get(AtlanClient client, String id, boolean includeRelationships)
+            throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (StringUtils.isUUID(id)) {
+            Asset asset = Asset.get(client, id, includeRelationships);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof MicroStrategyVisualization) {
+                return (MicroStrategyVisualization) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "MicroStrategyVisualization");
+            }
         } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "MicroStrategyVisualization");
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
+            if (asset instanceof MicroStrategyVisualization) {
+                return (MicroStrategyVisualization) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "MicroStrategyVisualization");
+            }
         }
     }
 
     /**
+     * Retrieves a MicroStrategyVisualization by its GUID, complete with all of its relationships.
+     *
+     * @param guid of the MicroStrategyVisualization to retrieve
+     * @return the requested full MicroStrategyVisualization, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MicroStrategyVisualization does not exist or the provided GUID is not a MicroStrategyVisualization
+     * @deprecated see {@link #get(String)} instead
+     */
+    @Deprecated
+    public static MicroStrategyVisualization retrieveByGuid(String guid) throws AtlanException {
+        return get(Atlan.getDefaultClient(), guid);
+    }
+
+    /**
+     * Retrieves a MicroStrategyVisualization by its GUID, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param guid of the MicroStrategyVisualization to retrieve
+     * @return the requested full MicroStrategyVisualization, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MicroStrategyVisualization does not exist or the provided GUID is not a MicroStrategyVisualization
+     * @deprecated see {@link #get(AtlanClient, String)} instead
+     */
+    @Deprecated
+    public static MicroStrategyVisualization retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
+        return get(client, guid);
+    }
+
+    /**
      * Retrieves a MicroStrategyVisualization by its qualifiedName, complete with all of its relationships.
      *
      * @param qualifiedName of the MicroStrategyVisualization to retrieve
      * @return the requested full MicroStrategyVisualization, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MicroStrategyVisualization does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static MicroStrategyVisualization retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+        return get(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -246,15 +305,12 @@ public class MicroStrategyVisualization extends Asset
      * @param qualifiedName of the MicroStrategyVisualization to retrieve
      * @return the requested full MicroStrategyVisualization, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MicroStrategyVisualization does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static MicroStrategyVisualization retrieveByQualifiedName(AtlanClient client, String qualifiedName)
             throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
-        if (asset instanceof MicroStrategyVisualization) {
-            return (MicroStrategyVisualization) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "MicroStrategyVisualization");
-        }
+        return get(client, qualifiedName);
     }
 
     /**
@@ -288,7 +344,9 @@ public class MicroStrategyVisualization extends Asset
      * @return the minimal request necessary to update the MicroStrategyVisualization, as a builder
      */
     public static MicroStrategyVisualizationBuilder<?, ?> updater(String qualifiedName, String name) {
-        return MicroStrategyVisualization.builder().qualifiedName(qualifiedName).name(name);
+        return MicroStrategyVisualization._internal()
+                .qualifiedName(qualifiedName)
+                .name(name);
     }
 
     /**
@@ -422,7 +480,7 @@ public class MicroStrategyVisualization extends Asset
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (MicroStrategyVisualization)
-                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -482,7 +540,7 @@ public class MicroStrategyVisualization extends Asset
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (MicroStrategyVisualization)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

@@ -71,43 +71,45 @@ public class AssetTestGenerator extends AssetGenerator {
                 MappedType type = attribute.getType();
                 boolean multiValued = attribute.getSingular() != null;
                 String renamedAttr = attribute.getRenamed();
-                String builderMethod = renamedAttr;
-                if (multiValued) {
-                    // If the attribute can be multivalued, figure out the singular form of the
-                    // attribute's name
-                    if (attribute.getSingular().length() == 0) {
-                        builderMethod = Singulars.autoSingularize(renamedAttr);
-                    } else {
-                        builderMethod = attribute.getSingular();
-                    }
-                }
-                builder.builderMethod(builderMethod)
-                        .inherited(fromSuperType)
-                        .searchFields(cache.getCachedSearchFields(
-                                assetGenerator.getOriginalName(), attribute.getOriginalName()));
-                switch (type.getType()) {
-                    case PRIMITIVE:
-                        addPrimitive(builder, multiValued, type.getName(), type.getContainer());
-                        break;
-                    case ENUM:
-                        addEnum(builder, multiValued, type.getName());
-                        break;
-                    case ASSET:
-                        if (!attribute.getRetyped()) {
-                            addAssetRef(builder, multiValued, type.getName());
+                if (!renamedAttr.equals("serialVersionUID")) {
+                    String builderMethod = renamedAttr;
+                    if (multiValued) {
+                        // If the attribute can be multivalued, figure out the singular form of the
+                        // attribute's name
+                        if (attribute.getSingular().isEmpty()) {
+                            builderMethod = Singulars.autoSingularize(renamedAttr);
                         } else {
-                            // If the attribute was retyped, use the original base type for
-                            // generating test values, or we'll end up with a non-existent
-                            // abstract class for the test
-                            addAssetRef(builder, multiValued, type.getOriginalBase());
+                            builderMethod = attribute.getSingular();
                         }
-                        break;
-                    case STRUCT:
-                        addStructRef(builder, multiValued, type.getName());
-                        break;
-                    default:
-                        log.warn("Unhandled testing type {} - skipping.", type.getType());
-                        break;
+                    }
+                    builder.builderMethod(builderMethod)
+                            .inherited(fromSuperType)
+                            .searchFields(cache.getCachedSearchFields(
+                                    assetGenerator.getOriginalName(), attribute.getOriginalName()));
+                    switch (type.getType()) {
+                        case PRIMITIVE:
+                            addPrimitive(builder, multiValued, type.getName(), type.getContainer());
+                            break;
+                        case ENUM:
+                            addEnum(builder, multiValued, type.getName());
+                            break;
+                        case ASSET:
+                            if (!attribute.getRetyped()) {
+                                addAssetRef(builder, multiValued, type.getName());
+                            } else {
+                                // If the attribute was retyped, use the original base type for
+                                // generating test values, or we'll end up with a non-existent
+                                // abstract class for the test
+                                addAssetRef(builder, multiValued, type.getOriginalBase());
+                            }
+                            break;
+                        case STRUCT:
+                            addStructRef(builder, multiValued, type.getName());
+                            break;
+                        default:
+                            log.warn("Unhandled testing type {} - skipping.", type.getType());
+                            break;
+                    }
                 }
             }
         } else if (!assetGenerator.getOriginalName().equals("Referenceable")) {
@@ -386,7 +388,9 @@ public class AssetTestGenerator extends AssetGenerator {
                 Class<?> fieldType = field.getType();
                 String fieldName = field.getName();
                 // Exclude the embedded type details for structs used for deserialization
-                if (!fieldName.equals("TYPE_NAME") && !fieldName.equals("typeName")) {
+                if (!fieldName.equals("TYPE_NAME")
+                        && !fieldName.equals("typeName")
+                        && !fieldName.equals("serialVersionUID")) {
                     sb.append(".").append(fieldName).append("(");
                     if (isPrimitive(fieldType)) {
                         sb.append(getPrimitiveValue(null, fieldType.getSimpleName(), count));

@@ -19,6 +19,8 @@ import java.util.regex.Pattern;
 public final class StringUtils {
     private static final Pattern whitespacePattern = Pattern.compile("\\s");
     private static final Pattern connectionQNPrefix = Pattern.compile("(default/[a-z0-9-]+/[0-9]{10})/.*");
+    private static final Pattern uuidPattern =
+            Pattern.compile("^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$");
 
     /**
      * Checks whether a string contains any whitespace characters or not.
@@ -55,7 +57,7 @@ public final class StringUtils {
      * @return the field name
      */
     public static String getFieldNameFromMethodName(String methodName) {
-        if (methodName.startsWith("set") || methodName.startsWith("get")) {
+        if (methodName.length() > 3 && (methodName.startsWith("set") || methodName.startsWith("get"))) {
             StringBuilder sb = new StringBuilder(methodName);
             sb.delete(0, 3);
             sb.replace(0, 1, sb.substring(0, 1).toLowerCase(Locale.ROOT));
@@ -147,5 +149,16 @@ public final class StringUtils {
             }
             return toTrim;
         }
+    }
+
+    /**
+     * Checks whether a string is a valid UUID(v4) or not.
+     *
+     * @param str the string to check.
+     * @return {@code true} if the string is a valid UUID(v4); otherwise, {@code
+     *     false}.
+     */
+    public static boolean isUUID(String str) {
+        return uuidPattern.matcher(str).find();
     }
 }

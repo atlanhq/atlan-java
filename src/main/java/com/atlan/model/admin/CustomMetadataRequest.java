@@ -13,6 +13,7 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class CustomMetadataRequest extends AtlanRequest {
+    private static final long serialVersionUID = 2L;
 
     public static final String REQUEST_TYPE = "bm_attribute";
     public static final String SOURCE_TYPE = "static";

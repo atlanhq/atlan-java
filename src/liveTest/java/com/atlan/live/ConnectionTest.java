@@ -32,7 +32,7 @@ public class ConnectionTest extends AtlanLiveTest {
 
     private static final String PREFIX = makeUnique("CONN");
 
-    private static AtomicInteger retryCount = new AtomicInteger(0);
+    private static final AtomicInteger retryCount = new AtomicInteger(0);
 
     /**
      * Create a new connection with a unique name.

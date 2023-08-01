@@ -9,7 +9,7 @@
     public static DatabaseBuilder<?, ?> creator(String name, String connectionQualifiedName) {
         AtlanConnectorType connectorType =
                 Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName.split("/"));
-        return Database.builder()
+        return Database._internal()
                 .name(name)
                 .qualifiedName(generateQualifiedName(name, connectionQualifiedName))
                 .connectorType(connectorType)
@@ -35,7 +35,7 @@
      * @return the minimal request necessary to update the Database, as a builder
      */
     public static DatabaseBuilder<?, ?> updater(String qualifiedName, String name) {
-        return Database.builder().qualifiedName(qualifiedName).name(name);
+        return Database._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**

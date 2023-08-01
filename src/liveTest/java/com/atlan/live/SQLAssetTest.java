@@ -293,7 +293,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.search.connection"},
             dependsOnGroups = {"asset.create.connection"})
     void findConnection() throws AtlanException {
-        List<Connection> results = Connection.findByName(CONNECTION_NAME, CONNECTOR_TYPE, null);
+        List<Connection> results = Connection.findByName(CONNECTION_NAME, CONNECTOR_TYPE);
         assertNotNull(results);
         assertEquals(results.size(), 1);
         Connection one = results.get(0);
@@ -536,7 +536,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.read.column.5"},
             dependsOnGroups = {"asset.create.column.5"})
     void readColumn5() throws AtlanException {
-        Column byGuid = Column.retrieveByGuid(column5.getGuid());
+        Column byGuid = Column.get(column5.getGuid());
         assertNotNull(byGuid);
         assertTrue(byGuid.isComplete());
         assertEquals(byGuid.getGuid(), column5.getGuid());
@@ -546,7 +546,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertNotNull(one);
         assertEquals(one.getTypeName(), MaterializedView.TYPE_NAME);
         assertEquals(one.getGuid(), mview.getGuid());
-        Column byQN = Column.retrieveByQualifiedName(column5.getQualifiedName());
+        Column byQN = Column.get(column5.getQualifiedName());
         assertNotNull(byQN);
         assertTrue(byQN.isComplete());
         assertEquals(byQN.getGuid(), column5.getGuid());
@@ -563,7 +563,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.read.column.7"},
             dependsOnGroups = {"asset.create.column.7"})
     void readColumn7() throws AtlanException {
-        Column byGuid = Column.retrieveByGuid(column7.getGuid());
+        Column byGuid = Column.get(column7.getGuid());
         assertNotNull(byGuid);
         assertTrue(byGuid.isComplete());
         assertEquals(byGuid.getGuid(), column7.getGuid());
@@ -573,7 +573,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertNotNull(one);
         assertEquals(one.getTypeName(), TablePartition.TYPE_NAME);
         assertEquals(one.getGuid(), partition.getGuid());
-        Column byQN = Column.retrieveByQualifiedName(column7.getQualifiedName());
+        Column byQN = Column.get(column7.getQualifiedName());
         assertNotNull(byQN);
         assertTrue(byQN.isComplete());
         assertEquals(byQN.getGuid(), column7.getGuid());
@@ -943,7 +943,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"asset.update.column.atlantag.x"})
     void updateColumnAddAtlanTags() throws AtlanException {
         Column.appendAtlanTags(column5.getQualifiedName(), List.of(ATLAN_TAG_NAME1, ATLAN_TAG_NAME2));
-        Column column = Column.retrieveByGuid(column5.getGuid());
+        Column column = Column.get(column5.getGuid());
         validateCompleteColumn(column);
         validateHasAtlanTags(column, Set.of(ATLAN_TAG_NAME1, ATLAN_TAG_NAME2));
     }
@@ -963,7 +963,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"asset.update.column.addAtlanTagDuplicate"})
     void updateColumnRemoveAtlanTag() throws AtlanException {
         Column.removeAtlanTag(column5.getQualifiedName(), ATLAN_TAG_NAME2);
-        Column column = Column.retrieveByGuid(column5.getGuid());
+        Column column = Column.get(column5.getGuid());
         validateCompleteColumn(column);
         validateHasAtlanTags(column, Set.of(ATLAN_TAG_NAME1));
     }
@@ -982,7 +982,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"asset.update.column.removeAtlanTagNonexistent"})
     void updateColumnAddAtlanTagsAgain() throws AtlanException {
         Column.appendAtlanTags(column5.getQualifiedName(), List.of(ATLAN_TAG_NAME2));
-        Column column = Column.retrieveByGuid(column5.getGuid());
+        Column column = Column.get(column5.getGuid());
         validateCompleteColumn(column);
         validateHasAtlanTags(column, Set.of(ATLAN_TAG_NAME1, ATLAN_TAG_NAME2));
     }
@@ -1116,7 +1116,7 @@ public class SQLAssetTest extends AtlanLiveTest {
                 assertEquals(term.getGuid(), term1.getGuid());
             }
         }
-        Column updated = Column.retrieveByQualifiedName(column5.getQualifiedName());
+        Column updated = Column.get(column5.getQualifiedName());
         validateCompleteColumn(updated);
         validateHasTerms(updated, Set.of(term1));
     }
@@ -1143,7 +1143,7 @@ public class SQLAssetTest extends AtlanLiveTest {
                 assertEquals(term.getGuid(), term1.getGuid());
             }
         }
-        Column updated = Column.retrieveByQualifiedName(column5.getQualifiedName());
+        Column updated = Column.get(column5.getQualifiedName());
         validateCompleteColumn(updated);
         validateHasTerms(updated, Collections.emptySet());
     }
@@ -1154,7 +1154,7 @@ public class SQLAssetTest extends AtlanLiveTest {
     void updateColumnAppendTerms() throws AtlanException {
         Column column = Column.appendTerms(column5.getQualifiedName(), List.of(term1, term2));
         validateUpdatedColumn(column);
-        column = Column.retrieveByGuid(column5.getGuid());
+        column = Column.get(column5.getGuid());
         validateCompleteColumn(column);
         validateHasTerms(column, Set.of(term1, term2));
     }
@@ -1165,7 +1165,7 @@ public class SQLAssetTest extends AtlanLiveTest {
     void updateColumnRemoveTerm() throws AtlanException {
         Column column = Column.removeTerms(column5.getQualifiedName(), List.of(term2));
         validateUpdatedColumn(column);
-        column = Column.retrieveByGuid(column5.getGuid());
+        column = Column.get(column5.getGuid());
         validateCompleteColumn(column);
         validateHasTerms(column, Set.of(term1));
     }
@@ -1176,7 +1176,7 @@ public class SQLAssetTest extends AtlanLiveTest {
     void updateColumnAppendTermsAgain() throws AtlanException {
         Column column = Column.appendTerms(column5.getQualifiedName(), List.of(term2));
         validateUpdatedColumn(column);
-        column = Column.retrieveByGuid(column5.getGuid());
+        column = Column.get(column5.getGuid());
         validateCompleteColumn(column);
         validateHasTerms(column, Set.of(term1, term2));
     }
@@ -1187,7 +1187,7 @@ public class SQLAssetTest extends AtlanLiveTest {
     void updateColumnRemoveTermAgain() throws AtlanException {
         Column column = Column.removeTerms(column5.getQualifiedName(), List.of(term1));
         validateUpdatedColumn(column);
-        column = Column.retrieveByGuid(column5.getGuid());
+        column = Column.get(column5.getGuid());
         validateCompleteColumn(column);
         validateHasTerms(column, Set.of(term2));
     }
@@ -1198,7 +1198,7 @@ public class SQLAssetTest extends AtlanLiveTest {
     void updateColumnReplaceTerms() throws AtlanException {
         Column column = Column.replaceTerms(column5.getQualifiedName(), COLUMN_NAME5, List.of(term1));
         validateUpdatedColumn(column);
-        column = Column.retrieveByGuid(column5.getGuid());
+        column = Column.get(column5.getGuid());
         validateCompleteColumn(column);
         validateHasTerms(column, Set.of(term1));
     }
@@ -1300,7 +1300,7 @@ public class SQLAssetTest extends AtlanLiveTest {
     void updateColumnRemoveTerms() throws AtlanException {
         Column column = Column.replaceTerms(column5.getQualifiedName(), COLUMN_NAME5, null);
         validateUpdatedColumn(column);
-        column = Column.retrieveByQualifiedName(column5.getQualifiedName());
+        column = Column.get(column5.getQualifiedName());
         validateCompleteColumn(column);
         validateHasTerms(column, Collections.emptySet());
     }
@@ -1779,7 +1779,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.delete.column.read"},
             dependsOnGroups = {"asset.delete.column"})
     void readDeletedColumn() throws AtlanException {
-        Column deleted = Column.retrieveByGuid(column5.getGuid());
+        Column deleted = Column.get(column5.getGuid());
         validateUpdatedColumn(deleted);
         assertEquals(deleted.getStatus(), AtlanStatus.DELETED);
     }
@@ -1789,7 +1789,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"asset.delete.column.read"})
     void restoreColumn() throws AtlanException {
         assertTrue(Column.restore(column5.getQualifiedName()));
-        Column restored = Column.retrieveByGuid(column5.getGuid());
+        Column restored = Column.get(column5.getGuid());
         validateUpdatedColumn(restored);
         assertEquals(restored.getStatus(), AtlanStatus.ACTIVE);
     }
@@ -1815,7 +1815,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.purge.column.read"},
             dependsOnGroups = {"asset.purge.column"})
     void readPurgedColumn() {
-        assertThrows(NotFoundException.class, () -> Column.retrieveByGuid(column5.getGuid()));
+        assertThrows(NotFoundException.class, () -> Column.get(column5.getGuid()));
     }
 
     @Test(

@@ -15,6 +15,7 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.QueryFactory;
 import com.atlan.util.StringUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +30,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -270,7 +271,7 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
      * @return reference to a TablePartition that can be used for defining a relationship to a TablePartition
      */
     public static TablePartition refByGuid(String guid) {
-        return TablePartition.builder().guid(guid).build();
+        return TablePartition._internal().guid(guid).build();
     }
 
     /**
@@ -280,51 +281,108 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
      * @return reference to a TablePartition that can be used for defining a relationship to a TablePartition
      */
     public static TablePartition refByQualifiedName(String qualifiedName) {
-        return TablePartition.builder()
+        return TablePartition._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
     }
 
     /**
-     * Retrieves a TablePartition by its GUID, complete with all of its relationships.
+     * Retrieves a TablePartition by one of its identifiers, complete with all of its relationships.
      *
-     * @param guid of the TablePartition to retrieve
+     * @param id of the TablePartition to retrieve, either its GUID or its full qualifiedName
      * @return the requested full TablePartition, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TablePartition does not exist or the provided GUID is not a TablePartition
      */
-    public static TablePartition retrieveByGuid(String guid) throws AtlanException {
-        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+    @JsonIgnore
+    public static TablePartition get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
     }
 
     /**
-     * Retrieves a TablePartition by its GUID, complete with all of its relationships.
+     * Retrieves a TablePartition by one of its identifiers, complete with all of its relationships.
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
-     * @param guid of the TablePartition to retrieve
+     * @param id of the TablePartition to retrieve, either its GUID or its full qualifiedName
      * @return the requested full TablePartition, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TablePartition does not exist or the provided GUID is not a TablePartition
      */
-    public static TablePartition retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof TablePartition) {
-            return (TablePartition) asset;
+    @JsonIgnore
+    public static TablePartition get(AtlanClient client, String id) throws AtlanException {
+        return get(client, id, true);
+    }
+
+    /**
+     * Retrieves a TablePartition by one of its identifiers, optionally complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the TablePartition to retrieve, either its GUID or its full qualifiedName
+     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @return the requested full TablePartition, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TablePartition does not exist or the provided GUID is not a TablePartition
+     */
+    @JsonIgnore
+    public static TablePartition get(AtlanClient client, String id, boolean includeRelationships)
+            throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (StringUtils.isUUID(id)) {
+            Asset asset = Asset.get(client, id, includeRelationships);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof TablePartition) {
+                return (TablePartition) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "TablePartition");
+            }
         } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "TablePartition");
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
+            if (asset instanceof TablePartition) {
+                return (TablePartition) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "TablePartition");
+            }
         }
     }
 
     /**
+     * Retrieves a TablePartition by its GUID, complete with all of its relationships.
+     *
+     * @param guid of the TablePartition to retrieve
+     * @return the requested full TablePartition, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TablePartition does not exist or the provided GUID is not a TablePartition
+     * @deprecated see {@link #get(String)} instead
+     */
+    @Deprecated
+    public static TablePartition retrieveByGuid(String guid) throws AtlanException {
+        return get(Atlan.getDefaultClient(), guid);
+    }
+
+    /**
+     * Retrieves a TablePartition by its GUID, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param guid of the TablePartition to retrieve
+     * @return the requested full TablePartition, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TablePartition does not exist or the provided GUID is not a TablePartition
+     * @deprecated see {@link #get(AtlanClient, String)} instead
+     */
+    @Deprecated
+    public static TablePartition retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
+        return get(client, guid);
+    }
+
+    /**
      * Retrieves a TablePartition by its qualifiedName, complete with all of its relationships.
      *
      * @param qualifiedName of the TablePartition to retrieve
      * @return the requested full TablePartition, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TablePartition does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static TablePartition retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+        return get(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -334,15 +392,12 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
      * @param qualifiedName of the TablePartition to retrieve
      * @return the requested full TablePartition, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TablePartition does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static TablePartition retrieveByQualifiedName(AtlanClient client, String qualifiedName)
             throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
-        if (asset instanceof TablePartition) {
-            return (TablePartition) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "TablePartition");
-        }
+        return get(client, qualifiedName);
     }
 
     /**
@@ -384,7 +439,7 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
         String databaseQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(schemaQualifiedName);
         String databaseName = StringUtils.getNameFromQualifiedName(databaseQualifiedName);
         String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(databaseQualifiedName);
-        return TablePartition.builder()
+        return TablePartition._internal()
                 .name(name)
                 .qualifiedName(generateQualifiedName(name, tableQualifiedName))
                 .connectorType(connectorType)
@@ -417,7 +472,7 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
      * @return the minimal request necessary to update the TablePartition, as a builder
      */
     public static TablePartitionBuilder<?, ?> updater(String qualifiedName, String name) {
-        return TablePartition.builder().qualifiedName(qualifiedName).name(name);
+        return TablePartition._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -549,7 +604,7 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (TablePartition)
-                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -608,7 +663,7 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (TablePartition)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

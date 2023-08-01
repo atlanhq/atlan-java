@@ -12,6 +12,8 @@ import com.atlan.model.core.AssetFilter;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.BadgeCondition;
 import com.atlan.util.QueryFactory;
+import com.atlan.util.StringUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
@@ -24,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -111,7 +113,7 @@ public class Badge extends Asset implements IBadge, IAsset, IReferenceable {
      * @return reference to a Badge that can be used for defining a relationship to a Badge
      */
     public static Badge refByGuid(String guid) {
-        return Badge.builder().guid(guid).build();
+        return Badge._internal().guid(guid).build();
     }
 
     /**
@@ -121,21 +123,80 @@ public class Badge extends Asset implements IBadge, IAsset, IReferenceable {
      * @return reference to a Badge that can be used for defining a relationship to a Badge
      */
     public static Badge refByQualifiedName(String qualifiedName) {
-        return Badge.builder()
+        return Badge._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
     }
 
     /**
+     * Retrieves a Badge by one of its identifiers, complete with all of its relationships.
+     *
+     * @param id of the Badge to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full Badge, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Badge does not exist or the provided GUID is not a Badge
+     */
+    @JsonIgnore
+    public static Badge get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
+    }
+
+    /**
+     * Retrieves a Badge by one of its identifiers, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the Badge to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full Badge, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Badge does not exist or the provided GUID is not a Badge
+     */
+    @JsonIgnore
+    public static Badge get(AtlanClient client, String id) throws AtlanException {
+        return get(client, id, true);
+    }
+
+    /**
+     * Retrieves a Badge by one of its identifiers, optionally complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the Badge to retrieve, either its GUID or its full qualifiedName
+     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @return the requested full Badge, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Badge does not exist or the provided GUID is not a Badge
+     */
+    @JsonIgnore
+    public static Badge get(AtlanClient client, String id, boolean includeRelationships) throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (StringUtils.isUUID(id)) {
+            Asset asset = Asset.get(client, id, includeRelationships);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof Badge) {
+                return (Badge) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "Badge");
+            }
+        } else {
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
+            if (asset instanceof Badge) {
+                return (Badge) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "Badge");
+            }
+        }
+    }
+
+    /**
      * Retrieves a Badge by its GUID, complete with all of its relationships.
      *
      * @param guid of the Badge to retrieve
      * @return the requested full Badge, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Badge does not exist or the provided GUID is not a Badge
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static Badge retrieveByGuid(String guid) throws AtlanException {
-        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+        return get(Atlan.getDefaultClient(), guid);
     }
 
     /**
@@ -145,16 +206,11 @@ public class Badge extends Asset implements IBadge, IAsset, IReferenceable {
      * @param guid of the Badge to retrieve
      * @return the requested full Badge, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Badge does not exist or the provided GUID is not a Badge
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static Badge retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof Badge) {
-            return (Badge) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "Badge");
-        }
+        return get(client, guid);
     }
 
     /**
@@ -163,9 +219,11 @@ public class Badge extends Asset implements IBadge, IAsset, IReferenceable {
      * @param qualifiedName of the Badge to retrieve
      * @return the requested full Badge, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Badge does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static Badge retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+        return get(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -175,14 +233,11 @@ public class Badge extends Asset implements IBadge, IAsset, IReferenceable {
      * @param qualifiedName of the Badge to retrieve
      * @return the requested full Badge, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Badge does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static Badge retrieveByQualifiedName(AtlanClient client, String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
-        if (asset instanceof Badge) {
-            return (Badge) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "Badge");
-        }
+        return get(client, qualifiedName);
     }
 
     /**
@@ -235,7 +290,7 @@ public class Badge extends Asset implements IBadge, IAsset, IReferenceable {
             throws AtlanException {
         String cmId = client.getCustomMetadataCache().getIdForName(cmName);
         String cmAttrId = client.getCustomMetadataCache().getAttrIdForName(cmName, cmAttribute);
-        return Badge.builder()
+        return Badge._internal()
                 .qualifiedName(generateQualifiedName(client, cmName, cmAttribute))
                 .name(name)
                 .badgeMetadataAttribute(cmId + "." + cmAttrId);
@@ -277,7 +332,7 @@ public class Badge extends Asset implements IBadge, IAsset, IReferenceable {
      * @return the minimal request necessary to update the Badge, as a builder
      */
     public static BadgeBuilder<?, ?> updater(String qualifiedName, String name) {
-        return Badge.builder().qualifiedName(qualifiedName).name(name);
+        return Badge._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**

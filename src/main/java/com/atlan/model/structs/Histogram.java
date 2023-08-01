@@ -16,6 +16,7 @@ import lombok.extern.jackson.Jacksonized;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 public class Histogram extends AtlanStruct {
+    private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "Histogram";
 

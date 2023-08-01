@@ -19,6 +19,7 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
 public class FilterList extends AtlanObject {
+    private static final long serialVersionUID = 2L;
 
     /** Whether the criteria must all match (AND) or any matching is sufficient (OR). */
     String condition;

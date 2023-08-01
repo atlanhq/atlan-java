@@ -11,6 +11,8 @@ import com.atlan.exception.NotFoundException;
 import com.atlan.model.core.AssetFilter;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.QueryFactory;
+import com.atlan.util.StringUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -140,7 +142,7 @@ public class Readme extends Asset implements IReadme, IResource, ICatalog, IAsse
      * @return reference to a Readme that can be used for defining a relationship to a Readme
      */
     public static Readme refByGuid(String guid) {
-        return Readme.builder().guid(guid).build();
+        return Readme._internal().guid(guid).build();
     }
 
     /**
@@ -150,21 +152,80 @@ public class Readme extends Asset implements IReadme, IResource, ICatalog, IAsse
      * @return reference to a Readme that can be used for defining a relationship to a Readme
      */
     public static Readme refByQualifiedName(String qualifiedName) {
-        return Readme.builder()
+        return Readme._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
     }
 
     /**
+     * Retrieves a Readme by one of its identifiers, complete with all of its relationships.
+     *
+     * @param id of the Readme to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full Readme, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Readme does not exist or the provided GUID is not a Readme
+     */
+    @JsonIgnore
+    public static Readme get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
+    }
+
+    /**
+     * Retrieves a Readme by one of its identifiers, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the Readme to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full Readme, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Readme does not exist or the provided GUID is not a Readme
+     */
+    @JsonIgnore
+    public static Readme get(AtlanClient client, String id) throws AtlanException {
+        return get(client, id, true);
+    }
+
+    /**
+     * Retrieves a Readme by one of its identifiers, optionally complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the Readme to retrieve, either its GUID or its full qualifiedName
+     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @return the requested full Readme, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Readme does not exist or the provided GUID is not a Readme
+     */
+    @JsonIgnore
+    public static Readme get(AtlanClient client, String id, boolean includeRelationships) throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (StringUtils.isUUID(id)) {
+            Asset asset = Asset.get(client, id, includeRelationships);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof Readme) {
+                return (Readme) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "Readme");
+            }
+        } else {
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
+            if (asset instanceof Readme) {
+                return (Readme) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "Readme");
+            }
+        }
+    }
+
+    /**
      * Retrieves a Readme by its GUID, complete with all of its relationships.
      *
      * @param guid of the Readme to retrieve
      * @return the requested full Readme, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Readme does not exist or the provided GUID is not a Readme
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static Readme retrieveByGuid(String guid) throws AtlanException {
-        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+        return get(Atlan.getDefaultClient(), guid);
     }
 
     /**
@@ -174,16 +235,11 @@ public class Readme extends Asset implements IReadme, IResource, ICatalog, IAsse
      * @param guid of the Readme to retrieve
      * @return the requested full Readme, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Readme does not exist or the provided GUID is not a Readme
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static Readme retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof Readme) {
-            return (Readme) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "Readme");
-        }
+        return get(client, guid);
     }
 
     /**
@@ -192,9 +248,11 @@ public class Readme extends Asset implements IReadme, IResource, ICatalog, IAsse
      * @param qualifiedName of the Readme to retrieve
      * @return the requested full Readme, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Readme does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static Readme retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+        return get(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -204,14 +262,11 @@ public class Readme extends Asset implements IReadme, IResource, ICatalog, IAsse
      * @param qualifiedName of the Readme to retrieve
      * @return the requested full Readme, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Readme does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static Readme retrieveByQualifiedName(AtlanClient client, String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
-        if (asset instanceof Readme) {
-            return (Readme) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "Readme");
-        }
+        return get(client, qualifiedName);
     }
 
     /**
@@ -246,7 +301,7 @@ public class Readme extends Asset implements IReadme, IResource, ICatalog, IAsse
      * @return the minimal object necessary to create the README and attach it to the asset, as a builder
      */
     public static ReadmeBuilder<?, ?> creator(Asset reference, String assetName, String content) {
-        return Readme.builder()
+        return Readme._internal()
                 .qualifiedName(generateQualifiedName(reference.getGuid()))
                 .name(generateName(assetName))
                 .description(content)
@@ -261,7 +316,9 @@ public class Readme extends Asset implements IReadme, IResource, ICatalog, IAsse
      * @return the minimal request necessary to update the Readme, as a builder
      */
     public static ReadmeBuilder<?, ?> updater(String assetGuid, String assetName) {
-        return Readme.builder().qualifiedName(generateQualifiedName(assetGuid)).name(generateName(assetName));
+        return Readme._internal()
+                .qualifiedName(generateQualifiedName(assetGuid))
+                .name(generateName(assetName));
     }
 
     /**
@@ -284,7 +341,7 @@ public class Readme extends Asset implements IReadme, IResource, ICatalog, IAsse
             throw new InvalidRequestException(
                     ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "Readme", String.join(",", missing));
         }
-        return Readme.builder().qualifiedName(this.getQualifiedName()).name(this.getName());
+        return Readme._internal().qualifiedName(this.getQualifiedName()).name(this.getName());
     }
 
     /**

@@ -16,6 +16,7 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
 public class CustomMetadataPayload extends AtlanRequestPayload {
+    private static final long serialVersionUID = 2L;
 
     /** Custom metadata properties and their values. */
     CustomMetadataAttributes attributes;

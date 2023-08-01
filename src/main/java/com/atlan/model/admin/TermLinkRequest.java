@@ -14,6 +14,7 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class TermLinkRequest extends AtlanRequest {
+    private static final long serialVersionUID = 2L;
 
     public static final String REQUEST_TYPE = "term_link";
     public static final String SOURCE_TYPE = "atlas";

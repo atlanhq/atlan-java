@@ -13,6 +13,8 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.QueryFactory;
+import com.atlan.util.StringUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -180,7 +182,7 @@ public class MicroStrategyReport extends Asset
      * @return reference to a MicroStrategyReport that can be used for defining a relationship to a MicroStrategyReport
      */
     public static MicroStrategyReport refByGuid(String guid) {
-        return MicroStrategyReport.builder().guid(guid).build();
+        return MicroStrategyReport._internal().guid(guid).build();
     }
 
     /**
@@ -190,51 +192,108 @@ public class MicroStrategyReport extends Asset
      * @return reference to a MicroStrategyReport that can be used for defining a relationship to a MicroStrategyReport
      */
     public static MicroStrategyReport refByQualifiedName(String qualifiedName) {
-        return MicroStrategyReport.builder()
+        return MicroStrategyReport._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
     }
 
     /**
-     * Retrieves a MicroStrategyReport by its GUID, complete with all of its relationships.
+     * Retrieves a MicroStrategyReport by one of its identifiers, complete with all of its relationships.
      *
-     * @param guid of the MicroStrategyReport to retrieve
+     * @param id of the MicroStrategyReport to retrieve, either its GUID or its full qualifiedName
      * @return the requested full MicroStrategyReport, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MicroStrategyReport does not exist or the provided GUID is not a MicroStrategyReport
      */
-    public static MicroStrategyReport retrieveByGuid(String guid) throws AtlanException {
-        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+    @JsonIgnore
+    public static MicroStrategyReport get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
     }
 
     /**
-     * Retrieves a MicroStrategyReport by its GUID, complete with all of its relationships.
+     * Retrieves a MicroStrategyReport by one of its identifiers, complete with all of its relationships.
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
-     * @param guid of the MicroStrategyReport to retrieve
+     * @param id of the MicroStrategyReport to retrieve, either its GUID or its full qualifiedName
      * @return the requested full MicroStrategyReport, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MicroStrategyReport does not exist or the provided GUID is not a MicroStrategyReport
      */
-    public static MicroStrategyReport retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof MicroStrategyReport) {
-            return (MicroStrategyReport) asset;
+    @JsonIgnore
+    public static MicroStrategyReport get(AtlanClient client, String id) throws AtlanException {
+        return get(client, id, true);
+    }
+
+    /**
+     * Retrieves a MicroStrategyReport by one of its identifiers, optionally complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the MicroStrategyReport to retrieve, either its GUID or its full qualifiedName
+     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @return the requested full MicroStrategyReport, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MicroStrategyReport does not exist or the provided GUID is not a MicroStrategyReport
+     */
+    @JsonIgnore
+    public static MicroStrategyReport get(AtlanClient client, String id, boolean includeRelationships)
+            throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (StringUtils.isUUID(id)) {
+            Asset asset = Asset.get(client, id, includeRelationships);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof MicroStrategyReport) {
+                return (MicroStrategyReport) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "MicroStrategyReport");
+            }
         } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "MicroStrategyReport");
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
+            if (asset instanceof MicroStrategyReport) {
+                return (MicroStrategyReport) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "MicroStrategyReport");
+            }
         }
     }
 
     /**
+     * Retrieves a MicroStrategyReport by its GUID, complete with all of its relationships.
+     *
+     * @param guid of the MicroStrategyReport to retrieve
+     * @return the requested full MicroStrategyReport, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MicroStrategyReport does not exist or the provided GUID is not a MicroStrategyReport
+     * @deprecated see {@link #get(String)} instead
+     */
+    @Deprecated
+    public static MicroStrategyReport retrieveByGuid(String guid) throws AtlanException {
+        return get(Atlan.getDefaultClient(), guid);
+    }
+
+    /**
+     * Retrieves a MicroStrategyReport by its GUID, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param guid of the MicroStrategyReport to retrieve
+     * @return the requested full MicroStrategyReport, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MicroStrategyReport does not exist or the provided GUID is not a MicroStrategyReport
+     * @deprecated see {@link #get(AtlanClient, String)} instead
+     */
+    @Deprecated
+    public static MicroStrategyReport retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
+        return get(client, guid);
+    }
+
+    /**
      * Retrieves a MicroStrategyReport by its qualifiedName, complete with all of its relationships.
      *
      * @param qualifiedName of the MicroStrategyReport to retrieve
      * @return the requested full MicroStrategyReport, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MicroStrategyReport does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static MicroStrategyReport retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+        return get(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -244,15 +303,12 @@ public class MicroStrategyReport extends Asset
      * @param qualifiedName of the MicroStrategyReport to retrieve
      * @return the requested full MicroStrategyReport, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MicroStrategyReport does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static MicroStrategyReport retrieveByQualifiedName(AtlanClient client, String qualifiedName)
             throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
-        if (asset instanceof MicroStrategyReport) {
-            return (MicroStrategyReport) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "MicroStrategyReport");
-        }
+        return get(client, qualifiedName);
     }
 
     /**
@@ -286,7 +342,7 @@ public class MicroStrategyReport extends Asset
      * @return the minimal request necessary to update the MicroStrategyReport, as a builder
      */
     public static MicroStrategyReportBuilder<?, ?> updater(String qualifiedName, String name) {
-        return MicroStrategyReport.builder().qualifiedName(qualifiedName).name(name);
+        return MicroStrategyReport._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -418,7 +474,7 @@ public class MicroStrategyReport extends Asset
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (MicroStrategyReport)
-                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -477,7 +533,7 @@ public class MicroStrategyReport extends Asset
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (MicroStrategyReport)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

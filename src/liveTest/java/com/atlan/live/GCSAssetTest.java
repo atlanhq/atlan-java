@@ -108,7 +108,7 @@ public class GCSAssetTest extends AtlanLiveTest {
             groups = {"gcs.read.bucket"},
             dependsOnGroups = {"gcs.create.object", "gcs.update.bucket"})
     void retrieveBucket() throws AtlanException {
-        GCSBucket b = GCSBucket.retrieveByGuid(bucket.getGuid());
+        GCSBucket b = GCSBucket.get(bucket.getGuid());
         assertNotNull(b);
         assertTrue(b.isComplete());
         assertEquals(b.getGuid(), bucket.getGuid());
@@ -228,7 +228,7 @@ public class GCSAssetTest extends AtlanLiveTest {
             groups = {"gcs.delete.object.read"},
             dependsOnGroups = {"gcs.delete.object"})
     void readDeletedObject() throws AtlanException {
-        GCSObject deleted = GCSObject.retrieveByGuid(object.getGuid());
+        GCSObject deleted = GCSObject.get(object.getGuid());
         assertNotNull(deleted);
         assertEquals(deleted.getGuid(), object.getGuid());
         assertEquals(deleted.getQualifiedName(), object.getQualifiedName());
@@ -240,7 +240,7 @@ public class GCSAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"gcs.delete.object.read"})
     void restoreObject() throws AtlanException {
         assertTrue(GCSObject.restore(object.getQualifiedName()));
-        GCSObject restored = GCSObject.retrieveByQualifiedName(object.getQualifiedName());
+        GCSObject restored = GCSObject.get(object.getQualifiedName());
         assertEquals(restored.getGuid(), object.getGuid());
         assertEquals(restored.getQualifiedName(), object.getQualifiedName());
         assertEquals(restored.getStatus(), AtlanStatus.ACTIVE);

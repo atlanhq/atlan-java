@@ -14,6 +14,8 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.SourceTagAttribute;
 import com.atlan.util.QueryFactory;
+import com.atlan.util.StringUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +30,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -208,7 +210,7 @@ public class DbtTag extends Asset implements IDbtTag, IDbt, ITag, ICatalog, IAss
      * @return reference to a DbtTag that can be used for defining a relationship to a DbtTag
      */
     public static DbtTag refByGuid(String guid) {
-        return DbtTag.builder().guid(guid).build();
+        return DbtTag._internal().guid(guid).build();
     }
 
     /**
@@ -218,21 +220,80 @@ public class DbtTag extends Asset implements IDbtTag, IDbt, ITag, ICatalog, IAss
      * @return reference to a DbtTag that can be used for defining a relationship to a DbtTag
      */
     public static DbtTag refByQualifiedName(String qualifiedName) {
-        return DbtTag.builder()
+        return DbtTag._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
     }
 
     /**
+     * Retrieves a DbtTag by one of its identifiers, complete with all of its relationships.
+     *
+     * @param id of the DbtTag to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full DbtTag, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DbtTag does not exist or the provided GUID is not a DbtTag
+     */
+    @JsonIgnore
+    public static DbtTag get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
+    }
+
+    /**
+     * Retrieves a DbtTag by one of its identifiers, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the DbtTag to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full DbtTag, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DbtTag does not exist or the provided GUID is not a DbtTag
+     */
+    @JsonIgnore
+    public static DbtTag get(AtlanClient client, String id) throws AtlanException {
+        return get(client, id, true);
+    }
+
+    /**
+     * Retrieves a DbtTag by one of its identifiers, optionally complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the DbtTag to retrieve, either its GUID or its full qualifiedName
+     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @return the requested full DbtTag, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DbtTag does not exist or the provided GUID is not a DbtTag
+     */
+    @JsonIgnore
+    public static DbtTag get(AtlanClient client, String id, boolean includeRelationships) throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (StringUtils.isUUID(id)) {
+            Asset asset = Asset.get(client, id, includeRelationships);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof DbtTag) {
+                return (DbtTag) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "DbtTag");
+            }
+        } else {
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
+            if (asset instanceof DbtTag) {
+                return (DbtTag) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "DbtTag");
+            }
+        }
+    }
+
+    /**
      * Retrieves a DbtTag by its GUID, complete with all of its relationships.
      *
      * @param guid of the DbtTag to retrieve
      * @return the requested full DbtTag, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DbtTag does not exist or the provided GUID is not a DbtTag
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static DbtTag retrieveByGuid(String guid) throws AtlanException {
-        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+        return get(Atlan.getDefaultClient(), guid);
     }
 
     /**
@@ -242,16 +303,11 @@ public class DbtTag extends Asset implements IDbtTag, IDbt, ITag, ICatalog, IAss
      * @param guid of the DbtTag to retrieve
      * @return the requested full DbtTag, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DbtTag does not exist or the provided GUID is not a DbtTag
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static DbtTag retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof DbtTag) {
-            return (DbtTag) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "DbtTag");
-        }
+        return get(client, guid);
     }
 
     /**
@@ -260,9 +316,11 @@ public class DbtTag extends Asset implements IDbtTag, IDbt, ITag, ICatalog, IAss
      * @param qualifiedName of the DbtTag to retrieve
      * @return the requested full DbtTag, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DbtTag does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static DbtTag retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+        return get(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -272,14 +330,11 @@ public class DbtTag extends Asset implements IDbtTag, IDbt, ITag, ICatalog, IAss
      * @param qualifiedName of the DbtTag to retrieve
      * @return the requested full DbtTag, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DbtTag does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static DbtTag retrieveByQualifiedName(AtlanClient client, String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
-        if (asset instanceof DbtTag) {
-            return (DbtTag) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "DbtTag");
-        }
+        return get(client, qualifiedName);
     }
 
     /**
@@ -313,7 +368,7 @@ public class DbtTag extends Asset implements IDbtTag, IDbt, ITag, ICatalog, IAss
      * @return the minimal request necessary to update the DbtTag, as a builder
      */
     public static DbtTagBuilder<?, ?> updater(String qualifiedName, String name) {
-        return DbtTag.builder().qualifiedName(qualifiedName).name(name);
+        return DbtTag._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -443,7 +498,7 @@ public class DbtTag extends Asset implements IDbtTag, IDbt, ITag, ICatalog, IAss
     public static DbtTag updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (DbtTag) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return (DbtTag) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -501,7 +556,7 @@ public class DbtTag extends Asset implements IDbtTag, IDbt, ITag, ICatalog, IAss
     public static DbtTag updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (DbtTag) Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+        return (DbtTag) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

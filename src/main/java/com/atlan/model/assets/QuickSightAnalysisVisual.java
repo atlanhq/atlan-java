@@ -13,6 +13,8 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.QueryFactory;
+import com.atlan.util.StringUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
@@ -26,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -135,7 +137,7 @@ public class QuickSightAnalysisVisual extends Asset
      * @return reference to a QuickSightAnalysisVisual that can be used for defining a relationship to a QuickSightAnalysisVisual
      */
     public static QuickSightAnalysisVisual refByGuid(String guid) {
-        return QuickSightAnalysisVisual.builder().guid(guid).build();
+        return QuickSightAnalysisVisual._internal().guid(guid).build();
     }
 
     /**
@@ -145,51 +147,108 @@ public class QuickSightAnalysisVisual extends Asset
      * @return reference to a QuickSightAnalysisVisual that can be used for defining a relationship to a QuickSightAnalysisVisual
      */
     public static QuickSightAnalysisVisual refByQualifiedName(String qualifiedName) {
-        return QuickSightAnalysisVisual.builder()
+        return QuickSightAnalysisVisual._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
     }
 
     /**
-     * Retrieves a QuickSightAnalysisVisual by its GUID, complete with all of its relationships.
+     * Retrieves a QuickSightAnalysisVisual by one of its identifiers, complete with all of its relationships.
      *
-     * @param guid of the QuickSightAnalysisVisual to retrieve
+     * @param id of the QuickSightAnalysisVisual to retrieve, either its GUID or its full qualifiedName
      * @return the requested full QuickSightAnalysisVisual, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the QuickSightAnalysisVisual does not exist or the provided GUID is not a QuickSightAnalysisVisual
      */
-    public static QuickSightAnalysisVisual retrieveByGuid(String guid) throws AtlanException {
-        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+    @JsonIgnore
+    public static QuickSightAnalysisVisual get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
     }
 
     /**
-     * Retrieves a QuickSightAnalysisVisual by its GUID, complete with all of its relationships.
+     * Retrieves a QuickSightAnalysisVisual by one of its identifiers, complete with all of its relationships.
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
-     * @param guid of the QuickSightAnalysisVisual to retrieve
+     * @param id of the QuickSightAnalysisVisual to retrieve, either its GUID or its full qualifiedName
      * @return the requested full QuickSightAnalysisVisual, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the QuickSightAnalysisVisual does not exist or the provided GUID is not a QuickSightAnalysisVisual
      */
-    public static QuickSightAnalysisVisual retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof QuickSightAnalysisVisual) {
-            return (QuickSightAnalysisVisual) asset;
+    @JsonIgnore
+    public static QuickSightAnalysisVisual get(AtlanClient client, String id) throws AtlanException {
+        return get(client, id, true);
+    }
+
+    /**
+     * Retrieves a QuickSightAnalysisVisual by one of its identifiers, optionally complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the QuickSightAnalysisVisual to retrieve, either its GUID or its full qualifiedName
+     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @return the requested full QuickSightAnalysisVisual, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the QuickSightAnalysisVisual does not exist or the provided GUID is not a QuickSightAnalysisVisual
+     */
+    @JsonIgnore
+    public static QuickSightAnalysisVisual get(AtlanClient client, String id, boolean includeRelationships)
+            throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (StringUtils.isUUID(id)) {
+            Asset asset = Asset.get(client, id, includeRelationships);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof QuickSightAnalysisVisual) {
+                return (QuickSightAnalysisVisual) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "QuickSightAnalysisVisual");
+            }
         } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "QuickSightAnalysisVisual");
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
+            if (asset instanceof QuickSightAnalysisVisual) {
+                return (QuickSightAnalysisVisual) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "QuickSightAnalysisVisual");
+            }
         }
     }
 
     /**
+     * Retrieves a QuickSightAnalysisVisual by its GUID, complete with all of its relationships.
+     *
+     * @param guid of the QuickSightAnalysisVisual to retrieve
+     * @return the requested full QuickSightAnalysisVisual, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the QuickSightAnalysisVisual does not exist or the provided GUID is not a QuickSightAnalysisVisual
+     * @deprecated see {@link #get(String)} instead
+     */
+    @Deprecated
+    public static QuickSightAnalysisVisual retrieveByGuid(String guid) throws AtlanException {
+        return get(Atlan.getDefaultClient(), guid);
+    }
+
+    /**
+     * Retrieves a QuickSightAnalysisVisual by its GUID, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param guid of the QuickSightAnalysisVisual to retrieve
+     * @return the requested full QuickSightAnalysisVisual, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the QuickSightAnalysisVisual does not exist or the provided GUID is not a QuickSightAnalysisVisual
+     * @deprecated see {@link #get(AtlanClient, String)} instead
+     */
+    @Deprecated
+    public static QuickSightAnalysisVisual retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
+        return get(client, guid);
+    }
+
+    /**
      * Retrieves a QuickSightAnalysisVisual by its qualifiedName, complete with all of its relationships.
      *
      * @param qualifiedName of the QuickSightAnalysisVisual to retrieve
      * @return the requested full QuickSightAnalysisVisual, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the QuickSightAnalysisVisual does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static QuickSightAnalysisVisual retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+        return get(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -199,15 +258,12 @@ public class QuickSightAnalysisVisual extends Asset
      * @param qualifiedName of the QuickSightAnalysisVisual to retrieve
      * @return the requested full QuickSightAnalysisVisual, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the QuickSightAnalysisVisual does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static QuickSightAnalysisVisual retrieveByQualifiedName(AtlanClient client, String qualifiedName)
             throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
-        if (asset instanceof QuickSightAnalysisVisual) {
-            return (QuickSightAnalysisVisual) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "QuickSightAnalysisVisual");
-        }
+        return get(client, qualifiedName);
     }
 
     /**
@@ -241,7 +297,7 @@ public class QuickSightAnalysisVisual extends Asset
      * @return the minimal request necessary to update the QuickSightAnalysisVisual, as a builder
      */
     public static QuickSightAnalysisVisualBuilder<?, ?> updater(String qualifiedName, String name) {
-        return QuickSightAnalysisVisual.builder().qualifiedName(qualifiedName).name(name);
+        return QuickSightAnalysisVisual._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -374,7 +430,7 @@ public class QuickSightAnalysisVisual extends Asset
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (QuickSightAnalysisVisual)
-                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -433,7 +489,7 @@ public class QuickSightAnalysisVisual extends Asset
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (QuickSightAnalysisVisual)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

@@ -13,6 +13,8 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.QueryFactory;
+import com.atlan.util.StringUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
@@ -26,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -159,7 +161,7 @@ public class MCIncident extends Asset
      * @return reference to a MCIncident that can be used for defining a relationship to a MCIncident
      */
     public static MCIncident refByGuid(String guid) {
-        return MCIncident.builder().guid(guid).build();
+        return MCIncident._internal().guid(guid).build();
     }
 
     /**
@@ -169,21 +171,80 @@ public class MCIncident extends Asset
      * @return reference to a MCIncident that can be used for defining a relationship to a MCIncident
      */
     public static MCIncident refByQualifiedName(String qualifiedName) {
-        return MCIncident.builder()
+        return MCIncident._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
     }
 
     /**
+     * Retrieves a MCIncident by one of its identifiers, complete with all of its relationships.
+     *
+     * @param id of the MCIncident to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full MCIncident, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MCIncident does not exist or the provided GUID is not a MCIncident
+     */
+    @JsonIgnore
+    public static MCIncident get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
+    }
+
+    /**
+     * Retrieves a MCIncident by one of its identifiers, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the MCIncident to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full MCIncident, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MCIncident does not exist or the provided GUID is not a MCIncident
+     */
+    @JsonIgnore
+    public static MCIncident get(AtlanClient client, String id) throws AtlanException {
+        return get(client, id, true);
+    }
+
+    /**
+     * Retrieves a MCIncident by one of its identifiers, optionally complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the MCIncident to retrieve, either its GUID or its full qualifiedName
+     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @return the requested full MCIncident, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MCIncident does not exist or the provided GUID is not a MCIncident
+     */
+    @JsonIgnore
+    public static MCIncident get(AtlanClient client, String id, boolean includeRelationships) throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (StringUtils.isUUID(id)) {
+            Asset asset = Asset.get(client, id, includeRelationships);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof MCIncident) {
+                return (MCIncident) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "MCIncident");
+            }
+        } else {
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
+            if (asset instanceof MCIncident) {
+                return (MCIncident) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "MCIncident");
+            }
+        }
+    }
+
+    /**
      * Retrieves a MCIncident by its GUID, complete with all of its relationships.
      *
      * @param guid of the MCIncident to retrieve
      * @return the requested full MCIncident, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MCIncident does not exist or the provided GUID is not a MCIncident
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static MCIncident retrieveByGuid(String guid) throws AtlanException {
-        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+        return get(Atlan.getDefaultClient(), guid);
     }
 
     /**
@@ -193,16 +254,11 @@ public class MCIncident extends Asset
      * @param guid of the MCIncident to retrieve
      * @return the requested full MCIncident, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MCIncident does not exist or the provided GUID is not a MCIncident
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static MCIncident retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof MCIncident) {
-            return (MCIncident) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "MCIncident");
-        }
+        return get(client, guid);
     }
 
     /**
@@ -211,9 +267,11 @@ public class MCIncident extends Asset
      * @param qualifiedName of the MCIncident to retrieve
      * @return the requested full MCIncident, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MCIncident does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static MCIncident retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+        return get(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -223,14 +281,11 @@ public class MCIncident extends Asset
      * @param qualifiedName of the MCIncident to retrieve
      * @return the requested full MCIncident, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MCIncident does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static MCIncident retrieveByQualifiedName(AtlanClient client, String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
-        if (asset instanceof MCIncident) {
-            return (MCIncident) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "MCIncident");
-        }
+        return get(client, qualifiedName);
     }
 
     /**
@@ -264,7 +319,7 @@ public class MCIncident extends Asset
      * @return the minimal request necessary to update the MCIncident, as a builder
      */
     public static MCIncidentBuilder<?, ?> updater(String qualifiedName, String name) {
-        return MCIncident.builder().qualifiedName(qualifiedName).name(name);
+        return MCIncident._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -394,7 +449,8 @@ public class MCIncident extends Asset
     public static MCIncident updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (MCIncident) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return (MCIncident)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -452,7 +508,8 @@ public class MCIncident extends Asset
     public static MCIncident updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (MCIncident) Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+        return (MCIncident)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

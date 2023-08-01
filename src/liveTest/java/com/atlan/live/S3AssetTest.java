@@ -114,7 +114,7 @@ public class S3AssetTest extends AtlanLiveTest {
             groups = {"s3.read.bucket"},
             dependsOnGroups = {"s3.create.object", "s3.update.bucket"})
     void retrieveBucket() throws AtlanException {
-        S3Bucket b = S3Bucket.retrieveByGuid(bucket.getGuid());
+        S3Bucket b = S3Bucket.get(bucket.getGuid());
         assertNotNull(b);
         assertTrue(b.isComplete());
         assertEquals(b.getGuid(), bucket.getGuid());
@@ -233,7 +233,7 @@ public class S3AssetTest extends AtlanLiveTest {
             groups = {"s3.delete.object.read"},
             dependsOnGroups = {"s3.delete.object"})
     void readDeletedObject() throws AtlanException {
-        S3Object deleted = S3Object.retrieveByGuid(object.getGuid());
+        S3Object deleted = S3Object.get(object.getGuid());
         assertNotNull(deleted);
         assertEquals(deleted.getGuid(), object.getGuid());
         assertEquals(deleted.getQualifiedName(), object.getQualifiedName());
@@ -245,7 +245,7 @@ public class S3AssetTest extends AtlanLiveTest {
             dependsOnGroups = {"s3.delete.object.read"})
     void restoreObject() throws AtlanException {
         assertTrue(S3Object.restore(object.getQualifiedName()));
-        S3Object restored = S3Object.retrieveByQualifiedName(object.getQualifiedName());
+        S3Object restored = S3Object.get(object.getQualifiedName());
         assertEquals(restored.getGuid(), object.getGuid());
         assertEquals(restored.getQualifiedName(), object.getQualifiedName());
         assertEquals(restored.getStatus(), AtlanStatus.ACTIVE);

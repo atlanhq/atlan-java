@@ -59,7 +59,7 @@ public class AtlanRequestTest {
             .requestDenyRole("role1")
             .requestDenyRole("role2")
             // .sourceEntity()
-            .destinationEntity(GlossaryTerm.builder()
+            .destinationEntity(GlossaryTerm._internal()
                     .name("name")
                     .guid("guid")
                     .displayName("displayName")

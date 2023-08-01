@@ -13,6 +13,8 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.QueryFactory;
+import com.atlan.util.StringUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
@@ -26,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -160,7 +162,7 @@ public class QlikSpace extends Asset implements IQlikSpace, IQlik, IBI, ICatalog
      * @return reference to a QlikSpace that can be used for defining a relationship to a QlikSpace
      */
     public static QlikSpace refByGuid(String guid) {
-        return QlikSpace.builder().guid(guid).build();
+        return QlikSpace._internal().guid(guid).build();
     }
 
     /**
@@ -170,21 +172,80 @@ public class QlikSpace extends Asset implements IQlikSpace, IQlik, IBI, ICatalog
      * @return reference to a QlikSpace that can be used for defining a relationship to a QlikSpace
      */
     public static QlikSpace refByQualifiedName(String qualifiedName) {
-        return QlikSpace.builder()
+        return QlikSpace._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
     }
 
     /**
+     * Retrieves a QlikSpace by one of its identifiers, complete with all of its relationships.
+     *
+     * @param id of the QlikSpace to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full QlikSpace, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the QlikSpace does not exist or the provided GUID is not a QlikSpace
+     */
+    @JsonIgnore
+    public static QlikSpace get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
+    }
+
+    /**
+     * Retrieves a QlikSpace by one of its identifiers, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the QlikSpace to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full QlikSpace, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the QlikSpace does not exist or the provided GUID is not a QlikSpace
+     */
+    @JsonIgnore
+    public static QlikSpace get(AtlanClient client, String id) throws AtlanException {
+        return get(client, id, true);
+    }
+
+    /**
+     * Retrieves a QlikSpace by one of its identifiers, optionally complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the QlikSpace to retrieve, either its GUID or its full qualifiedName
+     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @return the requested full QlikSpace, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the QlikSpace does not exist or the provided GUID is not a QlikSpace
+     */
+    @JsonIgnore
+    public static QlikSpace get(AtlanClient client, String id, boolean includeRelationships) throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (StringUtils.isUUID(id)) {
+            Asset asset = Asset.get(client, id, includeRelationships);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof QlikSpace) {
+                return (QlikSpace) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "QlikSpace");
+            }
+        } else {
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
+            if (asset instanceof QlikSpace) {
+                return (QlikSpace) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "QlikSpace");
+            }
+        }
+    }
+
+    /**
      * Retrieves a QlikSpace by its GUID, complete with all of its relationships.
      *
      * @param guid of the QlikSpace to retrieve
      * @return the requested full QlikSpace, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the QlikSpace does not exist or the provided GUID is not a QlikSpace
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static QlikSpace retrieveByGuid(String guid) throws AtlanException {
-        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+        return get(Atlan.getDefaultClient(), guid);
     }
 
     /**
@@ -194,16 +255,11 @@ public class QlikSpace extends Asset implements IQlikSpace, IQlik, IBI, ICatalog
      * @param guid of the QlikSpace to retrieve
      * @return the requested full QlikSpace, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the QlikSpace does not exist or the provided GUID is not a QlikSpace
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static QlikSpace retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof QlikSpace) {
-            return (QlikSpace) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "QlikSpace");
-        }
+        return get(client, guid);
     }
 
     /**
@@ -212,9 +268,11 @@ public class QlikSpace extends Asset implements IQlikSpace, IQlik, IBI, ICatalog
      * @param qualifiedName of the QlikSpace to retrieve
      * @return the requested full QlikSpace, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the QlikSpace does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static QlikSpace retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+        return get(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -224,14 +282,11 @@ public class QlikSpace extends Asset implements IQlikSpace, IQlik, IBI, ICatalog
      * @param qualifiedName of the QlikSpace to retrieve
      * @return the requested full QlikSpace, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the QlikSpace does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static QlikSpace retrieveByQualifiedName(AtlanClient client, String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
-        if (asset instanceof QlikSpace) {
-            return (QlikSpace) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "QlikSpace");
-        }
+        return get(client, qualifiedName);
     }
 
     /**
@@ -265,7 +320,7 @@ public class QlikSpace extends Asset implements IQlikSpace, IQlik, IBI, ICatalog
      * @return the minimal request necessary to update the QlikSpace, as a builder
      */
     public static QlikSpaceBuilder<?, ?> updater(String qualifiedName, String name) {
-        return QlikSpace.builder().qualifiedName(qualifiedName).name(name);
+        return QlikSpace._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -395,7 +450,7 @@ public class QlikSpace extends Asset implements IQlikSpace, IQlik, IBI, ICatalog
     public static QlikSpace updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (QlikSpace) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return (QlikSpace) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -453,7 +508,8 @@ public class QlikSpace extends Asset implements IQlikSpace, IQlik, IBI, ICatalog
     public static QlikSpace updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (QlikSpace) Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+        return (QlikSpace)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

@@ -18,7 +18,7 @@
             List<ICatalog> outputs,
             LineageProcess parent) {
         AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
-        return LineageProcess.builder()
+        return LineageProcess._internal()
                 .qualifiedName(generateQualifiedName(name, connectionQualifiedName, id, inputs, outputs, parent))
                 .name(name)
                 .connectorType(connectorType)
@@ -35,7 +35,7 @@
      * @return the minimal request necessary to update the LineageProcess, as a builder
      */
     public static LineageProcessBuilder<?, ?> updater(String qualifiedName, String name) {
-        return LineageProcess.builder().qualifiedName(qualifiedName).name(name);
+        return LineageProcess._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**

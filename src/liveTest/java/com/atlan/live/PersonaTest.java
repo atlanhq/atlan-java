@@ -88,7 +88,7 @@ public class PersonaTest extends AtlanLiveTest {
         int count = 0;
         while (list == null && count < Atlan.getMaxNetworkRetries()) {
             try {
-                list = Persona.findByName(PERSONA_NAME, null);
+                list = Persona.findByName(PERSONA_NAME);
             } catch (NotFoundException e) {
                 Thread.sleep(HttpClient.waitTime(count).toMillis());
                 count++;
@@ -146,7 +146,7 @@ public class PersonaTest extends AtlanLiveTest {
             groups = {"persona.read.personas.2"},
             dependsOnGroups = {"persona.update.personas.*"})
     void retrievePersonas2() throws AtlanException {
-        Persona one = Persona.retrieveByQualifiedName(persona.getQualifiedName());
+        Persona one = Persona.get(persona.getQualifiedName());
         assertNotNull(one);
         assertEquals(one.getGuid(), persona.getGuid());
         assertEquals(one.getDescription(), "Now with a description!");
@@ -160,7 +160,7 @@ public class PersonaTest extends AtlanLiveTest {
         for (IAuthPolicy policy : policies) {
             // Need to retrieve the full policy if we want to see any info about it
             // (what comes back on the Persona itself are just policy references)
-            AuthPolicy full = AuthPolicy.retrieveByGuid(policy.getGuid());
+            AuthPolicy full = AuthPolicy.get(policy.getGuid());
             assertNotNull(full);
             String subCat = full.getPolicySubCategory();
             assertNotNull(subCat);

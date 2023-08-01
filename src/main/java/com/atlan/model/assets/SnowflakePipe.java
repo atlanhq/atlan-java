@@ -13,6 +13,8 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.QueryFactory;
+import com.atlan.util.StringUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +30,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -216,7 +218,7 @@ public class SnowflakePipe extends Asset implements ISnowflakePipe, ISQL, ICatal
      * @return reference to a SnowflakePipe that can be used for defining a relationship to a SnowflakePipe
      */
     public static SnowflakePipe refByGuid(String guid) {
-        return SnowflakePipe.builder().guid(guid).build();
+        return SnowflakePipe._internal().guid(guid).build();
     }
 
     /**
@@ -226,51 +228,107 @@ public class SnowflakePipe extends Asset implements ISnowflakePipe, ISQL, ICatal
      * @return reference to a SnowflakePipe that can be used for defining a relationship to a SnowflakePipe
      */
     public static SnowflakePipe refByQualifiedName(String qualifiedName) {
-        return SnowflakePipe.builder()
+        return SnowflakePipe._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
     }
 
     /**
-     * Retrieves a SnowflakePipe by its GUID, complete with all of its relationships.
+     * Retrieves a SnowflakePipe by one of its identifiers, complete with all of its relationships.
      *
-     * @param guid of the SnowflakePipe to retrieve
+     * @param id of the SnowflakePipe to retrieve, either its GUID or its full qualifiedName
      * @return the requested full SnowflakePipe, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SnowflakePipe does not exist or the provided GUID is not a SnowflakePipe
      */
-    public static SnowflakePipe retrieveByGuid(String guid) throws AtlanException {
-        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+    @JsonIgnore
+    public static SnowflakePipe get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
     }
 
     /**
-     * Retrieves a SnowflakePipe by its GUID, complete with all of its relationships.
+     * Retrieves a SnowflakePipe by one of its identifiers, complete with all of its relationships.
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
-     * @param guid of the SnowflakePipe to retrieve
+     * @param id of the SnowflakePipe to retrieve, either its GUID or its full qualifiedName
      * @return the requested full SnowflakePipe, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SnowflakePipe does not exist or the provided GUID is not a SnowflakePipe
      */
-    public static SnowflakePipe retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof SnowflakePipe) {
-            return (SnowflakePipe) asset;
+    @JsonIgnore
+    public static SnowflakePipe get(AtlanClient client, String id) throws AtlanException {
+        return get(client, id, true);
+    }
+
+    /**
+     * Retrieves a SnowflakePipe by one of its identifiers, optionally complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the SnowflakePipe to retrieve, either its GUID or its full qualifiedName
+     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @return the requested full SnowflakePipe, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SnowflakePipe does not exist or the provided GUID is not a SnowflakePipe
+     */
+    @JsonIgnore
+    public static SnowflakePipe get(AtlanClient client, String id, boolean includeRelationships) throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (StringUtils.isUUID(id)) {
+            Asset asset = Asset.get(client, id, includeRelationships);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof SnowflakePipe) {
+                return (SnowflakePipe) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "SnowflakePipe");
+            }
         } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "SnowflakePipe");
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
+            if (asset instanceof SnowflakePipe) {
+                return (SnowflakePipe) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "SnowflakePipe");
+            }
         }
     }
 
     /**
+     * Retrieves a SnowflakePipe by its GUID, complete with all of its relationships.
+     *
+     * @param guid of the SnowflakePipe to retrieve
+     * @return the requested full SnowflakePipe, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SnowflakePipe does not exist or the provided GUID is not a SnowflakePipe
+     * @deprecated see {@link #get(String)} instead
+     */
+    @Deprecated
+    public static SnowflakePipe retrieveByGuid(String guid) throws AtlanException {
+        return get(Atlan.getDefaultClient(), guid);
+    }
+
+    /**
+     * Retrieves a SnowflakePipe by its GUID, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param guid of the SnowflakePipe to retrieve
+     * @return the requested full SnowflakePipe, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SnowflakePipe does not exist or the provided GUID is not a SnowflakePipe
+     * @deprecated see {@link #get(AtlanClient, String)} instead
+     */
+    @Deprecated
+    public static SnowflakePipe retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
+        return get(client, guid);
+    }
+
+    /**
      * Retrieves a SnowflakePipe by its qualifiedName, complete with all of its relationships.
      *
      * @param qualifiedName of the SnowflakePipe to retrieve
      * @return the requested full SnowflakePipe, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SnowflakePipe does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static SnowflakePipe retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+        return get(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -280,15 +338,12 @@ public class SnowflakePipe extends Asset implements ISnowflakePipe, ISQL, ICatal
      * @param qualifiedName of the SnowflakePipe to retrieve
      * @return the requested full SnowflakePipe, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SnowflakePipe does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static SnowflakePipe retrieveByQualifiedName(AtlanClient client, String qualifiedName)
             throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
-        if (asset instanceof SnowflakePipe) {
-            return (SnowflakePipe) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "SnowflakePipe");
-        }
+        return get(client, qualifiedName);
     }
 
     /**
@@ -322,7 +377,7 @@ public class SnowflakePipe extends Asset implements ISnowflakePipe, ISQL, ICatal
      * @return the minimal request necessary to update the SnowflakePipe, as a builder
      */
     public static SnowflakePipeBuilder<?, ?> updater(String qualifiedName, String name) {
-        return SnowflakePipe.builder().qualifiedName(qualifiedName).name(name);
+        return SnowflakePipe._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -454,7 +509,7 @@ public class SnowflakePipe extends Asset implements ISnowflakePipe, ISQL, ICatal
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (SnowflakePipe)
-                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -513,7 +568,7 @@ public class SnowflakePipe extends Asset implements ISnowflakePipe, ISQL, ICatal
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (SnowflakePipe)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

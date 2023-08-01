@@ -3,6 +3,7 @@
 package com.atlan.model.core;
 
 import com.atlan.Atlan;
+import com.atlan.AtlanClient;
 import com.atlan.exception.ApiException;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
@@ -10,10 +11,12 @@ import com.atlan.exception.NotFoundException;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.net.HttpClient;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,6 +26,11 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class AssetDeletionResponse extends AssetMutationResponse implements AtlanAsyncMutator {
     private static final long serialVersionUID = 2L;
+
+    /** Connectivity to the Atlan tenant where the asset deletion was run. */
+    @Setter
+    @JsonIgnore
+    private transient AtlanClient client;
 
     /**
      * Block until the asset that was deleted is confirmed to be deleted,
@@ -58,7 +66,7 @@ public class AssetDeletionResponse extends AssetMutationResponse implements Atla
                 // Note that there seems to be some eventual consistency delay between a
                 // retrieveMinimal and a retrieveFull - to ensure delete status is fully
                 // consistent we need to retrieve the full asset
-                Asset candidate = Asset.retrieveFull(one.getGuid());
+                Asset candidate = Asset.get(client, one.getGuid(), true);
                 if (candidate.getStatus() == AtlanStatus.ACTIVE) {
                     leftovers.add(candidate);
                 }

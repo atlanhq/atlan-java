@@ -13,6 +13,8 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.QueryFactory;
+import com.atlan.util.StringUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
@@ -26,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -217,7 +219,7 @@ public class DbtModelColumn extends Asset implements IDbtModelColumn, IDbt, ICat
      * @return reference to a DbtModelColumn that can be used for defining a relationship to a DbtModelColumn
      */
     public static DbtModelColumn refByGuid(String guid) {
-        return DbtModelColumn.builder().guid(guid).build();
+        return DbtModelColumn._internal().guid(guid).build();
     }
 
     /**
@@ -227,51 +229,108 @@ public class DbtModelColumn extends Asset implements IDbtModelColumn, IDbt, ICat
      * @return reference to a DbtModelColumn that can be used for defining a relationship to a DbtModelColumn
      */
     public static DbtModelColumn refByQualifiedName(String qualifiedName) {
-        return DbtModelColumn.builder()
+        return DbtModelColumn._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
     }
 
     /**
-     * Retrieves a DbtModelColumn by its GUID, complete with all of its relationships.
+     * Retrieves a DbtModelColumn by one of its identifiers, complete with all of its relationships.
      *
-     * @param guid of the DbtModelColumn to retrieve
+     * @param id of the DbtModelColumn to retrieve, either its GUID or its full qualifiedName
      * @return the requested full DbtModelColumn, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DbtModelColumn does not exist or the provided GUID is not a DbtModelColumn
      */
-    public static DbtModelColumn retrieveByGuid(String guid) throws AtlanException {
-        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+    @JsonIgnore
+    public static DbtModelColumn get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
     }
 
     /**
-     * Retrieves a DbtModelColumn by its GUID, complete with all of its relationships.
+     * Retrieves a DbtModelColumn by one of its identifiers, complete with all of its relationships.
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
-     * @param guid of the DbtModelColumn to retrieve
+     * @param id of the DbtModelColumn to retrieve, either its GUID or its full qualifiedName
      * @return the requested full DbtModelColumn, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DbtModelColumn does not exist or the provided GUID is not a DbtModelColumn
      */
-    public static DbtModelColumn retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof DbtModelColumn) {
-            return (DbtModelColumn) asset;
+    @JsonIgnore
+    public static DbtModelColumn get(AtlanClient client, String id) throws AtlanException {
+        return get(client, id, true);
+    }
+
+    /**
+     * Retrieves a DbtModelColumn by one of its identifiers, optionally complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the DbtModelColumn to retrieve, either its GUID or its full qualifiedName
+     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @return the requested full DbtModelColumn, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DbtModelColumn does not exist or the provided GUID is not a DbtModelColumn
+     */
+    @JsonIgnore
+    public static DbtModelColumn get(AtlanClient client, String id, boolean includeRelationships)
+            throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (StringUtils.isUUID(id)) {
+            Asset asset = Asset.get(client, id, includeRelationships);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof DbtModelColumn) {
+                return (DbtModelColumn) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "DbtModelColumn");
+            }
         } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "DbtModelColumn");
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
+            if (asset instanceof DbtModelColumn) {
+                return (DbtModelColumn) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "DbtModelColumn");
+            }
         }
     }
 
     /**
+     * Retrieves a DbtModelColumn by its GUID, complete with all of its relationships.
+     *
+     * @param guid of the DbtModelColumn to retrieve
+     * @return the requested full DbtModelColumn, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DbtModelColumn does not exist or the provided GUID is not a DbtModelColumn
+     * @deprecated see {@link #get(String)} instead
+     */
+    @Deprecated
+    public static DbtModelColumn retrieveByGuid(String guid) throws AtlanException {
+        return get(Atlan.getDefaultClient(), guid);
+    }
+
+    /**
+     * Retrieves a DbtModelColumn by its GUID, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param guid of the DbtModelColumn to retrieve
+     * @return the requested full DbtModelColumn, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DbtModelColumn does not exist or the provided GUID is not a DbtModelColumn
+     * @deprecated see {@link #get(AtlanClient, String)} instead
+     */
+    @Deprecated
+    public static DbtModelColumn retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
+        return get(client, guid);
+    }
+
+    /**
      * Retrieves a DbtModelColumn by its qualifiedName, complete with all of its relationships.
      *
      * @param qualifiedName of the DbtModelColumn to retrieve
      * @return the requested full DbtModelColumn, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DbtModelColumn does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static DbtModelColumn retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+        return get(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -281,15 +340,12 @@ public class DbtModelColumn extends Asset implements IDbtModelColumn, IDbt, ICat
      * @param qualifiedName of the DbtModelColumn to retrieve
      * @return the requested full DbtModelColumn, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DbtModelColumn does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static DbtModelColumn retrieveByQualifiedName(AtlanClient client, String qualifiedName)
             throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
-        if (asset instanceof DbtModelColumn) {
-            return (DbtModelColumn) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "DbtModelColumn");
-        }
+        return get(client, qualifiedName);
     }
 
     /**
@@ -323,7 +379,7 @@ public class DbtModelColumn extends Asset implements IDbtModelColumn, IDbt, ICat
      * @return the minimal request necessary to update the DbtModelColumn, as a builder
      */
     public static DbtModelColumnBuilder<?, ?> updater(String qualifiedName, String name) {
-        return DbtModelColumn.builder().qualifiedName(qualifiedName).name(name);
+        return DbtModelColumn._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -455,7 +511,7 @@ public class DbtModelColumn extends Asset implements IDbtModelColumn, IDbt, ICat
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (DbtModelColumn)
-                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -514,7 +570,7 @@ public class DbtModelColumn extends Asset implements IDbtModelColumn, IDbt, ICat
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (DbtModelColumn)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

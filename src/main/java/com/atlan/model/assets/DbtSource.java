@@ -13,6 +13,8 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.QueryFactory;
+import com.atlan.util.StringUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -211,7 +213,7 @@ public class DbtSource extends Asset implements IDbtSource, IDbt, ICatalog, IAss
      * @return reference to a DbtSource that can be used for defining a relationship to a DbtSource
      */
     public static DbtSource refByGuid(String guid) {
-        return DbtSource.builder().guid(guid).build();
+        return DbtSource._internal().guid(guid).build();
     }
 
     /**
@@ -221,21 +223,80 @@ public class DbtSource extends Asset implements IDbtSource, IDbt, ICatalog, IAss
      * @return reference to a DbtSource that can be used for defining a relationship to a DbtSource
      */
     public static DbtSource refByQualifiedName(String qualifiedName) {
-        return DbtSource.builder()
+        return DbtSource._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
     }
 
     /**
+     * Retrieves a DbtSource by one of its identifiers, complete with all of its relationships.
+     *
+     * @param id of the DbtSource to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full DbtSource, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DbtSource does not exist or the provided GUID is not a DbtSource
+     */
+    @JsonIgnore
+    public static DbtSource get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
+    }
+
+    /**
+     * Retrieves a DbtSource by one of its identifiers, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the DbtSource to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full DbtSource, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DbtSource does not exist or the provided GUID is not a DbtSource
+     */
+    @JsonIgnore
+    public static DbtSource get(AtlanClient client, String id) throws AtlanException {
+        return get(client, id, true);
+    }
+
+    /**
+     * Retrieves a DbtSource by one of its identifiers, optionally complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the DbtSource to retrieve, either its GUID or its full qualifiedName
+     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @return the requested full DbtSource, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DbtSource does not exist or the provided GUID is not a DbtSource
+     */
+    @JsonIgnore
+    public static DbtSource get(AtlanClient client, String id, boolean includeRelationships) throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (StringUtils.isUUID(id)) {
+            Asset asset = Asset.get(client, id, includeRelationships);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof DbtSource) {
+                return (DbtSource) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "DbtSource");
+            }
+        } else {
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
+            if (asset instanceof DbtSource) {
+                return (DbtSource) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "DbtSource");
+            }
+        }
+    }
+
+    /**
      * Retrieves a DbtSource by its GUID, complete with all of its relationships.
      *
      * @param guid of the DbtSource to retrieve
      * @return the requested full DbtSource, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DbtSource does not exist or the provided GUID is not a DbtSource
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static DbtSource retrieveByGuid(String guid) throws AtlanException {
-        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+        return get(Atlan.getDefaultClient(), guid);
     }
 
     /**
@@ -245,16 +306,11 @@ public class DbtSource extends Asset implements IDbtSource, IDbt, ICatalog, IAss
      * @param guid of the DbtSource to retrieve
      * @return the requested full DbtSource, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DbtSource does not exist or the provided GUID is not a DbtSource
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static DbtSource retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof DbtSource) {
-            return (DbtSource) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "DbtSource");
-        }
+        return get(client, guid);
     }
 
     /**
@@ -263,9 +319,11 @@ public class DbtSource extends Asset implements IDbtSource, IDbt, ICatalog, IAss
      * @param qualifiedName of the DbtSource to retrieve
      * @return the requested full DbtSource, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DbtSource does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static DbtSource retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+        return get(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -275,14 +333,11 @@ public class DbtSource extends Asset implements IDbtSource, IDbt, ICatalog, IAss
      * @param qualifiedName of the DbtSource to retrieve
      * @return the requested full DbtSource, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DbtSource does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static DbtSource retrieveByQualifiedName(AtlanClient client, String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
-        if (asset instanceof DbtSource) {
-            return (DbtSource) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "DbtSource");
-        }
+        return get(client, qualifiedName);
     }
 
     /**
@@ -316,7 +371,7 @@ public class DbtSource extends Asset implements IDbtSource, IDbt, ICatalog, IAss
      * @return the minimal request necessary to update the DbtSource, as a builder
      */
     public static DbtSourceBuilder<?, ?> updater(String qualifiedName, String name) {
-        return DbtSource.builder().qualifiedName(qualifiedName).name(name);
+        return DbtSource._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -446,7 +501,7 @@ public class DbtSource extends Asset implements IDbtSource, IDbt, ICatalog, IAss
     public static DbtSource updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (DbtSource) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return (DbtSource) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -504,7 +559,8 @@ public class DbtSource extends Asset implements IDbtSource, IDbt, ICatalog, IAss
     public static DbtSource updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (DbtSource) Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+        return (DbtSource)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

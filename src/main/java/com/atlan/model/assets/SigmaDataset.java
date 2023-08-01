@@ -13,6 +13,8 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.QueryFactory;
+import com.atlan.util.StringUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
@@ -26,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
@@ -147,7 +149,7 @@ public class SigmaDataset extends Asset implements ISigmaDataset, ISigma, IBI, I
      * @return reference to a SigmaDataset that can be used for defining a relationship to a SigmaDataset
      */
     public static SigmaDataset refByGuid(String guid) {
-        return SigmaDataset.builder().guid(guid).build();
+        return SigmaDataset._internal().guid(guid).build();
     }
 
     /**
@@ -157,21 +159,80 @@ public class SigmaDataset extends Asset implements ISigmaDataset, ISigma, IBI, I
      * @return reference to a SigmaDataset that can be used for defining a relationship to a SigmaDataset
      */
     public static SigmaDataset refByQualifiedName(String qualifiedName) {
-        return SigmaDataset.builder()
+        return SigmaDataset._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
     }
 
     /**
+     * Retrieves a SigmaDataset by one of its identifiers, complete with all of its relationships.
+     *
+     * @param id of the SigmaDataset to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full SigmaDataset, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SigmaDataset does not exist or the provided GUID is not a SigmaDataset
+     */
+    @JsonIgnore
+    public static SigmaDataset get(String id) throws AtlanException {
+        return get(Atlan.getDefaultClient(), id);
+    }
+
+    /**
+     * Retrieves a SigmaDataset by one of its identifiers, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the SigmaDataset to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full SigmaDataset, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SigmaDataset does not exist or the provided GUID is not a SigmaDataset
+     */
+    @JsonIgnore
+    public static SigmaDataset get(AtlanClient client, String id) throws AtlanException {
+        return get(client, id, true);
+    }
+
+    /**
+     * Retrieves a SigmaDataset by one of its identifiers, optionally complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the SigmaDataset to retrieve, either its GUID or its full qualifiedName
+     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @return the requested full SigmaDataset, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SigmaDataset does not exist or the provided GUID is not a SigmaDataset
+     */
+    @JsonIgnore
+    public static SigmaDataset get(AtlanClient client, String id, boolean includeRelationships) throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (StringUtils.isUUID(id)) {
+            Asset asset = Asset.get(client, id, includeRelationships);
+            if (asset == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset instanceof SigmaDataset) {
+                return (SigmaDataset) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "SigmaDataset");
+            }
+        } else {
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
+            if (asset instanceof SigmaDataset) {
+                return (SigmaDataset) asset;
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "SigmaDataset");
+            }
+        }
+    }
+
+    /**
      * Retrieves a SigmaDataset by its GUID, complete with all of its relationships.
      *
      * @param guid of the SigmaDataset to retrieve
      * @return the requested full SigmaDataset, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SigmaDataset does not exist or the provided GUID is not a SigmaDataset
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static SigmaDataset retrieveByGuid(String guid) throws AtlanException {
-        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+        return get(Atlan.getDefaultClient(), guid);
     }
 
     /**
@@ -181,16 +242,11 @@ public class SigmaDataset extends Asset implements ISigmaDataset, ISigma, IBI, I
      * @param guid of the SigmaDataset to retrieve
      * @return the requested full SigmaDataset, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SigmaDataset does not exist or the provided GUID is not a SigmaDataset
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static SigmaDataset retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof SigmaDataset) {
-            return (SigmaDataset) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "SigmaDataset");
-        }
+        return get(client, guid);
     }
 
     /**
@@ -199,9 +255,11 @@ public class SigmaDataset extends Asset implements ISigmaDataset, ISigma, IBI, I
      * @param qualifiedName of the SigmaDataset to retrieve
      * @return the requested full SigmaDataset, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SigmaDataset does not exist
+     * @deprecated see {@link #get(String)} instead
      */
+    @Deprecated
     public static SigmaDataset retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+        return get(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -211,14 +269,11 @@ public class SigmaDataset extends Asset implements ISigmaDataset, ISigma, IBI, I
      * @param qualifiedName of the SigmaDataset to retrieve
      * @return the requested full SigmaDataset, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SigmaDataset does not exist
+     * @deprecated see {@link #get(AtlanClient, String)} instead
      */
+    @Deprecated
     public static SigmaDataset retrieveByQualifiedName(AtlanClient client, String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
-        if (asset instanceof SigmaDataset) {
-            return (SigmaDataset) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "SigmaDataset");
-        }
+        return get(client, qualifiedName);
     }
 
     /**
@@ -252,7 +307,7 @@ public class SigmaDataset extends Asset implements ISigmaDataset, ISigma, IBI, I
      * @return the minimal request necessary to update the SigmaDataset, as a builder
      */
     public static SigmaDatasetBuilder<?, ?> updater(String qualifiedName, String name) {
-        return SigmaDataset.builder().qualifiedName(qualifiedName).name(name);
+        return SigmaDataset._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -384,7 +439,7 @@ public class SigmaDataset extends Asset implements ISigmaDataset, ISigma, IBI, I
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (SigmaDataset)
-                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -443,7 +498,7 @@ public class SigmaDataset extends Asset implements ISigmaDataset, ISigma, IBI, I
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         return (SigmaDataset)
-                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

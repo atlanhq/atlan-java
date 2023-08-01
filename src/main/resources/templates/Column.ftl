@@ -43,7 +43,7 @@
         String databaseQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(schemaQualifiedName);
         String databaseName = StringUtils.getNameFromQualifiedName(databaseQualifiedName);
         String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(databaseQualifiedName);
-        ColumnBuilder<?, ?> builder = Column.builder()
+        ColumnBuilder<?, ?> builder = Column._internal()
                 .name(name)
                 .qualifiedName(generateQualifiedName(name, parentQualifiedName))
                 .connectorType(connectorType)
@@ -97,7 +97,7 @@
      * @return the minimal request necessary to update the Column, as a builder
      */
     public static ColumnBuilder<?, ?> updater(String qualifiedName, String name) {
-        return Column.builder().qualifiedName(qualifiedName).name(name);
+        return Column._internal().qualifiedName(qualifiedName).name(name);
     }
 
     /**
