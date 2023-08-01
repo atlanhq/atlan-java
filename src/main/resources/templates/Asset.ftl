@@ -318,7 +318,7 @@
      * @param guid of the asset to retrieve
      * @return the requested full asset, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link com.atlan.exception.NotFoundException} if the asset does not exist
-     * @deprecated see {@link #get(String, boolean)} instead
+     * @deprecated see {@link #get(AtlanClient, String, boolean)} instead
      */
     @Deprecated
     public static Asset retrieveFull(String guid) throws AtlanException {
@@ -347,7 +347,7 @@
      * @param guid of the asset to retrieve
      * @return the requested minimal asset, without its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link com.atlan.exception.NotFoundException} if the asset does not exist
-     * @deprecated see {@link #get(String, boolean)} instead
+     * @deprecated see {@link #get(AtlanClient, String, boolean)} instead
      */
     @Deprecated
     public static Asset retrieveMinimal(String guid) throws AtlanException {
@@ -414,7 +414,7 @@
      * @param qualifiedName the unique name of the asset to retrieve
      * @return the requested minimal asset, without its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link com.atlan.exception.NotFoundException} if the asset does not exist
-     * @deprecated see {@link #get(String, String, boolean)} instead
+     * @deprecated see {@link #get(AtlanClient, String, String, boolean)} instead
      */
     @Deprecated
     public static Asset retrieveMinimal(String typeName, String qualifiedName) throws AtlanException {
