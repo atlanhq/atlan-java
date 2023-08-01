@@ -41,6 +41,7 @@ import lombok.extern.slf4j.Slf4j;
     @JsonSubTypes.Type(value = SourceTagAttachment.class, name = SourceTagAttachment.TYPE_NAME),
     @JsonSubTypes.Type(value = SourceTagAttachmentValue.class, name = SourceTagAttachmentValue.TYPE_NAME),
     @JsonSubTypes.Type(value = SourceTagAttribute.class, name = SourceTagAttribute.TYPE_NAME),
+    @JsonSubTypes.Type(value = StarredDetails.class, name = StarredDetails.TYPE_NAME),
 })
 @Slf4j
 public abstract class AtlanStruct extends AtlanObject {

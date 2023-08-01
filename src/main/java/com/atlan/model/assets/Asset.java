@@ -21,6 +21,7 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.structs.PopularityInsights;
+import com.atlan.model.structs.StarredDetails;
 import com.atlan.net.HttpClient;
 import com.atlan.serde.AssetDeserializer;
 import com.atlan.serde.AssetSerializer;
@@ -565,6 +566,12 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Attribute
     @Singular("addStarredBy")
     SortedSet<String> starredBy;
+
+    /** List of usernames with extra information of the users who have starred an asset */
+    @Attribute
+    @Singular
+    @JsonProperty("starredDetailsList")
+    List<StarredDetails> starredDetails;
 
     /** TBC */
     @Attribute

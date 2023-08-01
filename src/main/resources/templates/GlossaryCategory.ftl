@@ -61,6 +61,22 @@
     }
 
     /**
+     * Find a GlossaryCategory by its human-readable name. Only the bare minimum set of attributes and no
+     * relationships will be retrieved for the category, if found. Note that this operation must run two
+     * separate queries to first resolve the qualifiedName of the glossary, so will be somewhat slower.
+     * If you already have the qualifiedName of the glossary, use findByNameFast instead.
+     *
+     * @param name of the GlossaryCategory
+     * @param glossaryName name of the Glossary in which the category exists
+     * @return the GlossaryCategory, if found
+     * @throws AtlanException on any API problems, or if the GlossaryCategory does not exist
+     */
+    public static GlossaryCategory findByName(String name, String glossaryName)
+            throws AtlanException {
+        return findByName(name, glossaryName, null);
+    }
+
+    /**
      * Find a GlossaryCategory by its human-readable name. Note that this operation must run two
      * separate queries to first resolve the qualifiedName of the glossary, so will be somewhat slower.
      * If you already have the qualifiedName of the glossary, use findByNameFast instead.
@@ -74,6 +90,23 @@
     public static GlossaryCategory findByName(String name, String glossaryName, Collection<String> attributes)
             throws AtlanException {
         return findByName(Atlan.getDefaultClient(), name, glossaryName, attributes);
+    }
+
+    /**
+     * Find a GlossaryCategory by its human-readable name. Only the bare minimum set of attributes and no
+     * relationships will be retrieved for the category, if found. Note that this operation must run two
+     * separate queries to first resolve the qualifiedName of the glossary, so will be somewhat slower.
+     * If you already have the qualifiedName of the glossary, use findByNameFast instead.
+     *
+     * @param client connectivity to the Atlan tenant on which to search for the GlossaryCategory
+     * @param name of the GlossaryCategory
+     * @param glossaryName name of the Glossary in which the category exists
+     * @return the GlossaryCategory, if found
+     * @throws AtlanException on any API problems, or if the GlossaryCategory does not exist
+     */
+    public static GlossaryCategory findByName(AtlanClient client, String name, String glossaryName)
+            throws AtlanException {
+        return findByName(client, name, glossaryName, null);
     }
 
     /**
@@ -95,6 +128,19 @@
     }
 
     /**
+     * Find a GlossaryCategory by its human-readable name. Only the bare minimum set of attributes and no
+     * relationships will be retrieved for the category, if found.
+     *
+     * @param name of the GlossaryCategory
+     * @param glossaryQualifiedName qualifiedName of the Glossary in which the category exists
+     * @return the GlossaryCategory, if found
+     * @throws AtlanException on any API problems, or if the GlossaryCategory does not exist
+     */
+    public static GlossaryCategory findByNameFast(String name, String glossaryQualifiedName) throws AtlanException {
+        return findByNameFast(name, glossaryQualifiedName, null);
+    }
+
+    /**
      * Find a GlossaryCategory by its human-readable name.
      *
      * @param name of the GlossaryCategory
@@ -109,8 +155,24 @@
     }
 
     /**
+     * Find a GlossaryCategory by its human-readable name. Only the bare minimum set of attributes and no
+     * relationships will be retrieved for the category, if found.
+     *
+     * @param client connectivity to the Atlan tenant on which to search for the GlossaryCategory
+     * @param name of the GlossaryCategory
+     * @param glossaryQualifiedName qualifiedName of the Glossary in which the category exists
+     * @return the GlossaryCategory, if found
+     * @throws AtlanException on any API problems, or if the GlossaryCategory does not exist
+     */
+    public static GlossaryCategory findByNameFast(
+            AtlanClient client, String name, String glossaryQualifiedName) throws AtlanException {
+        return findByNameFast(client, name, glossaryQualifiedName, null);
+    }
+
+    /**
      * Find a GlossaryCategory by its human-readable name.
      *
+     * @param client connectivity to the Atlan tenant on which to search for the GlossaryCategory
      * @param name of the GlossaryCategory
      * @param glossaryQualifiedName qualifiedName of the Glossary in which the category exists
      * @param attributes an optional collection of attributes to retrieve for the GlossaryCategory

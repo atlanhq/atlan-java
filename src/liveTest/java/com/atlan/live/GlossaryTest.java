@@ -301,7 +301,7 @@ public class GlossaryTest extends AtlanLiveTest {
             groups = {"glossary.read.hierarchy"},
             dependsOnGroups = {"glossary.create.hierarchy"})
     void traverseHierarchy() throws AtlanException {
-        Glossary glossary = Glossary.findByName(GLOSSARY_NAME, null);
+        Glossary glossary = Glossary.findByName(GLOSSARY_NAME);
         assertNotNull(glossary);
         Glossary.CategoryHierarchy tree = glossary.getHierarchy();
         assertNotNull(tree);

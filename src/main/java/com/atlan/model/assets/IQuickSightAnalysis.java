@@ -10,6 +10,7 @@ import com.atlan.model.enums.QuickSightAnalysisStatus;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
+import com.atlan.model.structs.StarredDetails;
 import com.atlan.serde.AssetDeserializer;
 import com.atlan.serde.AssetSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -403,6 +404,9 @@ public interface IQuickSightAnalysis {
 
     /** TBC */
     SortedSet<String> getStarredBy();
+
+    /** TBC */
+    List<StarredDetails> getStarredDetails();
 
     /** TBC */
     String getSubType();

@@ -60,6 +60,21 @@
     }
 
     /**
+     * Find a GlossaryTerm by its human-readable name. Only the bare minimum set of attributes and no
+     * relationships will be retrieved for the term, if found. Note that this operation must run two
+     * separate queries to first resolve the qualifiedName of the glossary, so will be somewhat slower.
+     * If you already have the qualifiedName of the glossary, use findByNameFast instead.
+     *
+     * @param name of the GlossaryTerm
+     * @param glossaryName human-readable name of the Glossary in which the category exists
+     * @return the GlossaryTerm, if found
+     * @throws AtlanException on any API problems, or if the GlossaryTerm does not exist
+     */
+    public static GlossaryTerm findByName(String name, String glossaryName) throws AtlanException {
+        return findByName(name, glossaryName, null);
+    }
+
+    /**
      * Find a GlossaryTerm by its human-readable name. Note that this operation must run two
      * separate queries to first resolve the qualifiedName of the glossary, so will be somewhat slower.
      * If you already have the qualifiedName of the glossary, use findByNameFast instead.
@@ -73,6 +88,22 @@
     public static GlossaryTerm findByName(String name, String glossaryName, Collection<String> attributes)
             throws AtlanException {
         return findByName(Atlan.getDefaultClient(), name, glossaryName, attributes);
+    }
+
+    /**
+     * Find a GlossaryTerm by its human-readable name. Only the bare minimum set of attributes and no
+     * relationships will be retrieved for the term, if found. Note that this operation must run two
+     * separate queries to first resolve the qualifiedName of the glossary, so will be somewhat slower.
+     * If you already have the qualifiedName of the glossary, use findByNameFast instead.
+     *
+     * @param client connectivity to the Atlan tenant in which to search for the GlossaryTerm
+     * @param name of the GlossaryTerm
+     * @param glossaryName human-readable name of the Glossary in which the category exists
+     * @return the GlossaryTerm, if found
+     * @throws AtlanException on any API problems, or if the GlossaryTerm does not exist
+     */
+    public static GlossaryTerm findByName(AtlanClient client, String name, String glossaryName) throws AtlanException {
+        return findByName(client, name, glossaryName, null);
     }
 
     /**
@@ -94,6 +125,20 @@
     }
 
     /**
+     * Find a GlossaryTerm by its human-readable name. Only the bare minimum set of attributes and no
+     * relationships will be retrieved for the term, if found.
+     *
+     * @param name of the GlossaryTerm
+     * @param glossaryQualifiedName qualifiedName of the Glossary in which the category exists
+     * @return the GlossaryTerm, if found
+     * @throws AtlanException on any API problems, or if the GlossaryTerm does not exist
+     */
+    public static GlossaryTerm findByNameFast(String name, String glossaryQualifiedName)
+            throws AtlanException {
+        return findByNameFast(name, glossaryQualifiedName, null);
+    }
+
+    /**
      * Find a GlossaryTerm by its human-readable name.
      *
      * @param name of the GlossaryTerm
@@ -105,6 +150,20 @@
     public static GlossaryTerm findByNameFast(String name, String glossaryQualifiedName, Collection<String> attributes)
             throws AtlanException {
         return findByNameFast(Atlan.getDefaultClient(), name, glossaryQualifiedName, attributes);
+    }
+
+    /**
+     * Find a GlossaryTerm by its human-readable name. Only the bare minimum set of attributes and no
+     * relationships will be retrieved for the term, if found.
+     *
+     * @param client connectivity to the Atlan tenant in which to search for the GlossaryTerm
+     * @param name of the GlossaryTerm
+     * @param glossaryQualifiedName qualifiedName of the Glossary in which the category exists
+     * @return the GlossaryTerm, if found
+     * @throws AtlanException on any API problems, or if the GlossaryTerm does not exist
+     */
+    public static GlossaryTerm findByNameFast(AtlanClient client, String name, String glossaryQualifiedName) throws AtlanException {
+        return findByNameFast(client, name, glossaryQualifiedName, null);
     }
 
     /**

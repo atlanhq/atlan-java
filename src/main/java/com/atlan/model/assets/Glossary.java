@@ -367,6 +367,18 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
     }
 
     /**
+     * Find a Glossary by its human-readable name. Only the bare minimum set of attributes and no
+     * relationships will be retrieved for the glossary, if found.
+     *
+     * @param name of the Glossary
+     * @return the Glossary, if found
+     * @throws AtlanException on any API problems, or if the Glossary does not exist
+     */
+    public static Glossary findByName(String name) throws AtlanException {
+        return findByName(name, null);
+    }
+
+    /**
      * Find a Glossary by its human-readable name.
      *
      * @param name of the Glossary
@@ -376,6 +388,19 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
      */
     public static Glossary findByName(String name, Collection<String> attributes) throws AtlanException {
         return findByName(Atlan.getDefaultClient(), name, attributes);
+    }
+
+    /**
+     * Find a Glossary by its human-readable name. Only the bare minimum set of attributes and no
+     * relationships will be retrieved for the glossary, if found.
+     *
+     * @param client connectivity to the Atlan tenant on which to search for the Glossary
+     * @param name of the Glossary
+     * @return the Glossary, if found
+     * @throws AtlanException on any API problems, or if the Glossary does not exist
+     */
+    public static Glossary findByName(AtlanClient client, String name) throws AtlanException {
+        return findByName(client, name, null);
     }
 
     /**

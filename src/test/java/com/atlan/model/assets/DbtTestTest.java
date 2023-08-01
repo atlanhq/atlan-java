@@ -361,6 +361,14 @@ public class DbtTestTest {
             .sourceUpdatedBy("String0")
             .addStarredBy("String0")
             .addStarredBy("String1")
+            .starredDetail(StarredDetails.builder()
+                    .assetStarredBy("String0")
+                    .assetStarredAt(123456789L)
+                    .build())
+            .starredDetail(StarredDetails.builder()
+                    .assetStarredBy("String1")
+                    .assetStarredAt(987654321L)
+                    .build())
             .subType("String0")
             .tenantId("String0")
             .userDescription("String0")
@@ -383,8 +391,8 @@ public class DbtTestTest {
             .dbtTestRawSQL("String0")
             .dbtTestState("String0")
             .dbtTestStatus("String0")
-            .sqlAsset(TablePartition.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .sqlAsset(TablePartition.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .sqlAsset(Table.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .sqlAsset(Table.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .build();
 
     private static final int hash = full.hashCode();
