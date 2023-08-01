@@ -973,7 +973,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
      * @throws AtlanException on any error during the API invocation, such as the {@link com.atlan.exception.NotFoundException} if the asset does not exist
      */
     @JsonIgnore
-    protected static Asset get(AtlanClient client, String typeName, String qualifiedName, boolean includeRelationships)
+    public static Asset get(AtlanClient client, String typeName, String qualifiedName, boolean includeRelationships)
             throws AtlanException {
         AssetResponse response =
                 client.assets.get(typeName, qualifiedName, !includeRelationships, !includeRelationships);
