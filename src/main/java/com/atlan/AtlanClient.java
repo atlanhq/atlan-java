@@ -14,6 +14,8 @@ import java.net.PasswordAuthentication;
 import java.net.Proxy;
 import java.util.HashMap;
 import java.util.Map;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Configuration for the SDK against a particular Atlan tenant.
@@ -23,27 +25,69 @@ public class AtlanClient {
     public static final int DEFAULT_READ_TIMEOUT = 120 * 1000;
     public static final String DELETED_AUDIT_OBJECT = "(DELETED)";
 
-    // Note that URLConnection reserves the value of 0 to mean "infinite
-    // timeout", so we use -1 here to represent an unset value which should
-    // fall back to a default.
-    private volatile int connectTimeout = -1;
-    private volatile int readTimeout = -1;
+    /** Timeout value that will be used for making new connections to the Atlan API (in milliseconds). */
+    @Getter
+    @Setter
+    private volatile int connectTimeout = DEFAULT_CONNECT_TIMEOUT;
 
+    /**
+     * Timeout value that will be used for reading a response from an API request (in milliseconds).
+     * Note that this value should be set conservatively because some API requests can take time
+     * and a short timeout increases the likelihood of causing a problem in the backend.
+     */
+    @Getter
+    @Setter
+    private volatile int readTimeout = DEFAULT_READ_TIMEOUT;
+
+    /** Maximum number of times requests will be retried. */
+    @Getter
+    @Setter
     private volatile int maxNetworkRetries = 10;
 
     private final String apiBase;
     private final boolean internalAccess;
+
+    /** API token to use for authenticating API calls. */
+    @Getter
+    @Setter
     private volatile String apiToken;
+
+    /** Proxy to tunnel all Atlan connections. */
+    @Getter
+    @Setter
     private volatile Proxy connectionProxy = null;
+
+    /** Credential for proxy authorization if required. */
+    @Getter
+    @Setter
     private volatile PasswordAuthentication proxyCredential = null;
 
+    /** Information about your application. */
+    @Getter
     private volatile Map<String, String> appInfo = null;
 
+    /** Cache of Atlan tags specific to this client. */
+    @Getter
     private final AtlanTagCache atlanTagCache;
+
+    /** Cache of custom metadata structures specific to this client. */
+    @Getter
     private final CustomMetadataCache customMetadataCache;
+
+    /** Cache of enums specific to this client. */
+    @Getter
     private final EnumCache enumCache;
+
+    /** Cache of groups specific to this client. */
+    @Getter
     private final GroupCache groupCache;
+
+    /** Cache of workspace roles specific to this client. */
+    @Getter
     private final RoleCache roleCache;
+
+    /** Cache of users specific to this client. */
+    @Getter
     private final UserCache userCache;
 
     private final ObjectMapper mapper;
@@ -203,54 +247,6 @@ public class AtlanClient {
     }
 
     /**
-     * Retrieve the cache of Atlan tags specific to this client.
-     * @return the cache of Atlan tags specific to this client.
-     */
-    public AtlanTagCache getAtlanTagCache() {
-        return atlanTagCache;
-    }
-
-    /**
-     * Retrieve the cache of custom metadata structures specific to this client.
-     * @return the cache of custom metadata structures specific to this client.
-     */
-    public CustomMetadataCache getCustomMetadataCache() {
-        return customMetadataCache;
-    }
-
-    /**
-     * Retrieve the cache of enums specific to this client.
-     * @return the cache of enums specific to this client.
-     */
-    public EnumCache getEnumCache() {
-        return enumCache;
-    }
-
-    /**
-     * Retrieve the cache of groups specific to this client.
-     * @return the cache of groups specific to this client.
-     */
-    public GroupCache getGroupCache() {
-        return groupCache;
-    }
-
-    /**
-     * Retrieve the cache of workspace roles specific to this client.
-     * @return the cache of workspace roles specific to this client.
-     */
-    public RoleCache getRoleCache() {
-        return roleCache;
-    }
-
-    /**
-     * Retrieve the cache of users specific to this client.
-     * @return the cache of users specific to this client.
-     */
-    public UserCache getUserCache() {
-        return userCache;
-    }
-
-    /**
      * Indicates whether the SDK is configured for cluster-internal access (true) or external access (false).
      * @return boolean indicating whether the SDK is configured for cluster-internal access (true) or not (false)
      */
@@ -261,117 +257,6 @@ public class AtlanClient {
     /** Retrieve the base URL for the tenant of Atlan configured in this client. */
     public String getBaseUrl() {
         return apiBase;
-    }
-
-    /** Set the API token to use for authenticating API calls. */
-    public void setApiToken(final String token) {
-        apiToken = token;
-    }
-
-    /** Retrieve the API token to use for authenticating API calls. */
-    public String getApiToken() {
-        return apiToken;
-    }
-
-    /**
-     * Set proxy to tunnel all Atlan connections.
-     *
-     * @param proxy proxy host and port setting
-     */
-    public void setConnectionProxy(final Proxy proxy) {
-        connectionProxy = proxy;
-    }
-
-    /**
-     * Returns the proxy to tunnel all Atlan connections.
-     *
-     * @return proxy
-     */
-    public Proxy getConnectionProxy() {
-        return connectionProxy;
-    }
-
-    /**
-     * Returns the connection timeout.
-     *
-     * @return timeout value in milliseconds
-     */
-    public int getConnectTimeout() {
-        if (connectTimeout == -1) {
-            return DEFAULT_CONNECT_TIMEOUT;
-        }
-        return connectTimeout;
-    }
-
-    /**
-     * Sets the timeout value that will be used for making new connections to the Atlan API (in
-     * milliseconds).
-     *
-     * @param timeout timeout value in milliseconds
-     */
-    public void setConnectTimeout(final int timeout) {
-        connectTimeout = timeout;
-    }
-
-    /**
-     * Returns the read timeout.
-     *
-     * @return timeout value in milliseconds
-     */
-    public int getReadTimeout() {
-        if (readTimeout == -1) {
-            return DEFAULT_READ_TIMEOUT;
-        }
-        return readTimeout;
-    }
-
-    /**
-     * Sets the timeout value that will be used when reading data from an established connection to
-     * the Atlan API (in milliseconds).
-     *
-     * <p>Note that this value should be set conservatively because some API requests can take time
-     * and a short timeout increases the likelihood of causing a problem in the backend.
-     *
-     * @param timeout timeout value in milliseconds
-     */
-    public void setReadTimeout(final int timeout) {
-        readTimeout = timeout;
-    }
-
-    /**
-     * Returns the maximum number of times requests will be retried.
-     *
-     * @return the maximum number of times requests will be retried
-     */
-    public int getMaxNetworkRetries() {
-        return maxNetworkRetries;
-    }
-
-    /**
-     * Sets the maximum number of times requests will be retried.
-     *
-     * @param numRetries the maximum number of times requests will be retried
-     */
-    public void setMaxNetworkRetries(final int numRetries) {
-        maxNetworkRetries = numRetries;
-    }
-
-    /**
-     * Provide credential for proxy authorization if required.
-     *
-     * @param auth proxy required userName and password
-     */
-    public void setProxyCredential(final PasswordAuthentication auth) {
-        proxyCredential = auth;
-    }
-
-    /**
-     * Returns the credential to use for proxy authorization if required.
-     *
-     * @return the credential to use for proxy authorization
-     */
-    public PasswordAuthentication getProxyCredential() {
-        return proxyCredential;
     }
 
     /**
@@ -420,14 +305,5 @@ public class AtlanClient {
         appInfo.put("version", version);
         appInfo.put("url", url);
         appInfo.put("partner_id", partnerId);
-    }
-
-    /**
-     * Returns information about your application.
-     *
-     * @return information about your application
-     */
-    public Map<String, String> getAppInfo() {
-        return appInfo;
     }
 }

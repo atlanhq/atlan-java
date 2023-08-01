@@ -463,7 +463,9 @@ public class AssetTestGenerator extends AssetGenerator {
                 Class<?> fieldType = field.getType();
                 String fieldName = field.getName();
                 // Exclude the embedded type details for structs used for deserialization
-                if (!fieldName.equals("TYPE_NAME") && !fieldName.equals("typeName")) {
+                if (!fieldName.equals("TYPE_NAME")
+                        && !fieldName.equals("typeName")
+                        && !fieldName.equals("serialVersionUID")) {
                     sb.append("\"").append(fieldName).append("\": ");
                     if (isPrimitive(fieldType)) {
                         sb.append(getRawPrimitiveValue(null, fieldType.getSimpleName(), count));

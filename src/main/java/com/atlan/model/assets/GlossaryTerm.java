@@ -281,14 +281,14 @@ public class GlossaryTerm extends Asset implements IGlossaryTerm, IAsset, IRefer
             } else if (asset instanceof GlossaryTerm) {
                 return (GlossaryTerm) asset;
             } else {
-                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "GlossaryTerm");
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, TYPE_NAME);
             }
         } else {
             Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
             if (asset instanceof GlossaryTerm) {
                 return (GlossaryTerm) asset;
             } else {
-                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "GlossaryTerm");
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, TYPE_NAME);
             }
         }
     }

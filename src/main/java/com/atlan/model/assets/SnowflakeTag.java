@@ -287,14 +287,14 @@ public class SnowflakeTag extends Asset implements ISnowflakeTag, ITag, ISQL, IC
             } else if (asset instanceof SnowflakeTag) {
                 return (SnowflakeTag) asset;
             } else {
-                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, "SnowflakeTag");
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, TYPE_NAME);
             }
         } else {
             Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
             if (asset instanceof SnowflakeTag) {
                 return (SnowflakeTag) asset;
             } else {
-                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, "SnowflakeTag");
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, TYPE_NAME);
             }
         }
     }
