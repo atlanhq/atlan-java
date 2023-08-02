@@ -348,6 +348,9 @@ public interface IMicroStrategyFact {
     String getSampleDataUrl();
 
     /** TBC */
+    SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
+
+    /** TBC */
     SourceCostUnitType getSourceCostUnit();
 
     /** TBC */

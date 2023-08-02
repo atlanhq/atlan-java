@@ -337,6 +337,9 @@ public interface IQuickSightAnalysis {
     String getSampleDataUrl();
 
     /** TBC */
+    SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
+
+    /** TBC */
     SourceCostUnitType getSourceCostUnit();
 
     /** TBC */

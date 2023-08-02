@@ -310,6 +310,9 @@ public interface IBadge {
     String getSampleDataUrl();
 
     /** TBC */
+    SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
+
+    /** TBC */
     SourceCostUnitType getSourceCostUnit();
 
     /** TBC */

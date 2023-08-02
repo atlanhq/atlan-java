@@ -396,6 +396,9 @@ public interface ITablePartition {
     String getSchemaQualifiedName();
 
     /** TBC */
+    SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
+
+    /** TBC */
     Long getSizeBytes();
 
     /** TBC */

@@ -328,6 +328,9 @@ public interface IPersona {
     String getSampleDataUrl();
 
     /** TBC */
+    SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
+
+    /** TBC */
     SourceCostUnitType getSourceCostUnit();
 
     /** TBC */

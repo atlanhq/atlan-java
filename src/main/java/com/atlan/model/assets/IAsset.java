@@ -302,6 +302,9 @@ public interface IAsset {
     /** TBC */
     String getSampleDataUrl();
 
+    /** TBC */
+    SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
+
     /** The unit of measure for sourceTotalCost. */
     SourceCostUnitType getSourceCostUnit();
 

@@ -177,6 +177,9 @@ public class TableauWorksheetTest {
             .popularityScore(123.456)
             .readme(Readme.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .sampleDataUrl("String0")
+            .schemaRegistrySubject(SchemaRegistrySubject.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .schemaRegistrySubject(
+                    SchemaRegistrySubject.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .sourceCostUnit(SourceCostUnitType.CREDITS)
             .sourceCreatedAt(123456789L)
             .sourceCreatedBy("String0")

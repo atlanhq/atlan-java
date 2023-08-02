@@ -318,6 +318,9 @@ public interface ILookerDashboard {
     String getSampleDataUrl();
 
     /** TBC */
+    SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
+
+    /** TBC */
     SourceCostUnitType getSourceCostUnit();
 
     /** TBC */

@@ -20,19 +20,19 @@
     ${commentCount}. Find all assets in Atlan with their `${attribute.details.renamed}` textually matching the provided value.
 
         !!! details "For more details"
-            For more information, see the searching section on [full text queries](../../search/queries/text).
+            For more information, see the searching section on [full text queries](../../search/queries/text.md).
 
 <#elseif field.enumClassName == "NumericFields">
     ${commentCount}. Find all assets in Atlan with their `${attribute.details.renamed}` greater than the provided value.
 
         !!! details "For more details"
-            For more information, see the searching section on [range queries](../../search/queries/terms/#range).
+            For more information, see the searching section on [range queries](../../search/queries/terms.md#range).
 
 <#else>
     ${commentCount}. Find all assets in Atlan with their `${attribute.details.renamed}` exactly matching the provided value.
 
         !!! details "For more details"
-            For more information, see the searching section on [term queries](../../search/queries/terms/#term).
+            For more information, see the searching section on [term queries](../../search/queries/terms.md#term).
 
 </#if>
 </#list>
@@ -65,12 +65,12 @@
     1. Set the `${attribute.details.renamed}` for a `${className}`.
 
         !!! details "For more details"
-            For more information, see the asset CRUD snippets on either [creating](../../sdks/advanced-examples/create) or [updating](../../sdks/advanced-examples/update) assets.
+            For more information, see the asset CRUD snippets on either [creating](../../snippets/advanced-examples/create.md) or [updating](../../snippets/advanced-examples/update.md) assets.
 
     2. Retrieve the `${attribute.details.renamed}` from a `${className}`.
 
         !!! details "For more details"
-            For more information, see the asset CRUD snippets on [retrieving](../../sdks/advanced-examples/read) assets.
+            For more information, see the asset CRUD snippets on [retrieving](../../snippets/advanced-examples/read.md) assets.
 
     <@searchDescription attribute=attribute />
 </#macro>

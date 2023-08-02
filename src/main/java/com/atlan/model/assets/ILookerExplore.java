@@ -324,6 +324,9 @@ public interface ILookerExplore {
     String getSampleDataUrl();
 
     /** TBC */
+    SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
+
+    /** TBC */
     String getSourceConnectionName();
 
     /** TBC */

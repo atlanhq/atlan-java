@@ -327,6 +327,9 @@ public interface ITableauProject {
     String getSampleDataUrl();
 
     /** TBC */
+    SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
+
+    /** TBC */
     ITableauSite getSite();
 
     /** TBC */

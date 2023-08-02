@@ -351,6 +351,9 @@ public interface ISnowflakeStream {
     String getSchemaQualifiedName();
 
     /** TBC */
+    SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
+
+    /** TBC */
     Boolean getSnowflakeStreamIsStale();
 
     /** TBC */

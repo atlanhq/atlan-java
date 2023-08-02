@@ -26,7 +26,6 @@ import java.util.Map;
  */
 public class AtlanRequestSerializer extends StdSerializer<AtlanRequest> {
     private static final long serialVersionUID = 2L;
-    public static final String DELETED = "(DELETED)";
 
     private final AtlanClient client;
 
@@ -66,7 +65,7 @@ public class AtlanRequestSerializer extends StdSerializer<AtlanRequest> {
             try {
                 clsId = client.getAtlanTagCache().getIdForName(clsName);
             } catch (NotFoundException e) {
-                clsId = DELETED;
+                clsId = AtlanClient.DELETED_AUDIT_OBJECT;
             } catch (AtlanException e) {
                 throw new IOException("Unable to translate Atlan tag with name: " + clsName, e);
             }
@@ -80,7 +79,7 @@ public class AtlanRequestSerializer extends StdSerializer<AtlanRequest> {
                 client.getCustomMetadataCache()
                         .getAttributesFromCustomMetadata(destinationAttribute, cmName, cm.getAttributes(), attrValues);
             } catch (NotFoundException e) {
-                destinationAttribute = DELETED;
+                destinationAttribute = AtlanClient.DELETED_AUDIT_OBJECT;
             } catch (AtlanException e) {
                 throw new IOException("Unable to find custom metadata with name: " + cmName, e);
             }

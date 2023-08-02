@@ -186,6 +186,7 @@ Asset,Base class for all assets.,assetMcIncidentStates,TBC
 Asset,Base class for all assets.,assetMcLastSyncRunAt,TBC
 Asset,Base class for all assets.,starredBy,Users who have starred this asset.
 Asset,Base class for all assets.,starredDetailsList,List of usernames with extra information of the users who have starred an asset
+Asset,Base class for all assets.,schemaRegistrySubjects,TBC
 Asset,Base class for all assets.,mcMonitors,TBC
 Asset,Base class for all assets.,files,TBC
 Asset,Base class for all assets.,mcIncidents,TBC
@@ -411,8 +412,8 @@ DbtModelColumn,Instance of a column within a dbt model in Atlan.,dbtTests,TBC
 DbtProcess,Instance of a lineage process for dbt in Atlan.,dbtProcessJobStatus,TBC
 DbtSource,Instance of a dbt source asset in Atlan.,dbtState,TBC
 DbtSource,Instance of a dbt source asset in Atlan.,dbtFreshnessCriteria,TBC
-DbtSource,Instance of a dbt source asset in Atlan.,dbtTests,TBC
 DbtSource,Instance of a dbt source asset in Atlan.,sqlAssets,TBC
+DbtSource,Instance of a dbt source asset in Atlan.,dbtTests,TBC
 DbtSource,Instance of a dbt source asset in Atlan.,sqlAsset,TBC
 DbtTest,dbt Test Assets,dbtTestStatus,"Status provides the details of the results of a test. For errors, it reads ""ERROR""."
 DbtTest,dbt Test Assets,dbtTestState,"The test results. Can be one of, in order of severity, ""error"", ""fail"", ""warn"", ""pass"""
@@ -636,9 +637,9 @@ Metric,Base class for metrics assets.,metricType,TBC
 Metric,Base class for metrics assets.,metricSQL,TBC
 Metric,Base class for metrics assets.,metricFilters,TBC
 Metric,Base class for metrics assets.,metricTimeGrains,TBC
+Metric,Base class for metrics assets.,metricTimestampColumn,TBC
 Metric,Base class for metrics assets.,assets,TBC
 Metric,Base class for metrics assets.,metricDimensionColumns,TBC
-Metric,Base class for metrics assets.,metricTimestampColumn,TBC
 MicroStrategy,Base class for MicroStrategy assets.,microStrategyProjectQualifiedName,Unique name of the related MicroStrategy project.
 MicroStrategy,Base class for MicroStrategy assets.,microStrategyProjectName,Simple name of the related MicroStrategy project.
 MicroStrategy,Base class for MicroStrategy assets.,microStrategyCubeQualifiedNames,Unique names of the related MicroStrategy cubes.
@@ -785,8 +786,8 @@ PowerBITable,Instance of a Power BI table in Atlan.,datasetQualifiedName,TBC
 PowerBITable,Instance of a Power BI table in Atlan.,powerBITableSourceExpressions,TBC
 PowerBITable,Instance of a Power BI table in Atlan.,powerBITableColumnCount,TBC
 PowerBITable,Instance of a Power BI table in Atlan.,powerBITableMeasureCount,TBC
-PowerBITable,Instance of a Power BI table in Atlan.,measures,TBC
 PowerBITable,Instance of a Power BI table in Atlan.,columns,TBC
+PowerBITable,Instance of a Power BI table in Atlan.,measures,TBC
 PowerBITable,Instance of a Power BI table in Atlan.,dataset,TBC
 PowerBITile,Instance of a Power BI tile in Atlan.,workspaceQualifiedName,TBC
 PowerBITile,Instance of a Power BI tile in Atlan.,dashboardQualifiedName,TBC
@@ -915,10 +916,10 @@ QuickSightDatasetField,Instance of a QuickSight Dataset field in Atlan.,quickSig
 QuickSightFolder,Instance of a QuickSight Folder in Atlan.,quickSightFolderType,Shared or private type of folder
 QuickSightFolder,Instance of a QuickSight Folder in Atlan.,quickSightFolderHierarchy,Detailed path of the folder
 QuickSightFolder,Instance of a QuickSight Folder in Atlan.,quickSightDashboards,TBC
-QuickSightFolder,Instance of a QuickSight Folder in Atlan.,quickSightAnalyses,TBC
 QuickSightFolder,Instance of a QuickSight Folder in Atlan.,quickSightDatasets,TBC
-Readme,Instance of a README in Atlan.,asset,Asset to which the README is linked.
+QuickSightFolder,Instance of a QuickSight Folder in Atlan.,quickSightAnalyses,TBC
 Readme,Instance of a README in Atlan.,seeAlso,TBC
+Readme,Instance of a README in Atlan.,asset,Asset to which the README is linked.
 ReadmeTemplate,Instance of a README template in Atlan.,icon,TBC
 ReadmeTemplate,Instance of a README template in Atlan.,iconType,TBC
 Redash,Base class for Redash assets.,redashIsPublished,Whether the asset is published in Redash (true) or not (false).
@@ -1005,8 +1006,8 @@ SalesforceObject,Instance of a Salesforce object in Atlan.,isCustom,Whether the 
 SalesforceObject,Instance of a Salesforce object in Atlan.,isMergable,TBC
 SalesforceObject,Instance of a Salesforce object in Atlan.,isQueryable,TBC
 SalesforceObject,Instance of a Salesforce object in Atlan.,fieldCount,Number of fields in the object.
-SalesforceObject,Instance of a Salesforce object in Atlan.,organization,TBC
 SalesforceObject,Instance of a Salesforce object in Atlan.,lookupFields,TBC
+SalesforceObject,Instance of a Salesforce object in Atlan.,organization,TBC
 SalesforceObject,Instance of a Salesforce object in Atlan.,fields,TBC
 SalesforceOrganization,Instance of a Salesforce organization in Atlan.,sourceId,ID of the organization in Salesforce.
 SalesforceOrganization,Instance of a Salesforce organization in Atlan.,reports,TBC
@@ -1028,6 +1029,15 @@ Schema,Instance of a database schema in Atlan.,snowflakePipes,Snowflake Pipes th
 Schema,Instance of a database schema in Atlan.,snowflakeStreams,Snowflake Streams that are defined within this schema.
 Schema,Instance of a database schema in Atlan.,procedures,Stored procedures (routines) that are defined within this schema.
 Schema,Instance of a database schema in Atlan.,views,Views that exist within this schema.
+SchemaRegistry,Schema Registry Assets,schemaRegistrySchemaType,"Type of language/specification used to define the schema like JSON, Protobuf etc."
+SchemaRegistry,Schema Registry Assets,schemaRegistrySchemaId,Unique identifier for schema definition set by the schema registry
+SchemaRegistrySubject,Schema Registry Subject Assets,schemaRegistrySubjectBaseName,"Base name of the subject (i.e. without -key, -value prefixes)"
+SchemaRegistrySubject,Schema Registry Subject Assets,schemaRegistrySubjectIsKeySchema,If the subject is a schema for the keys of the messages.
+SchemaRegistrySubject,Schema Registry Subject Assets,schemaRegistrySubjectSchemaCompatibility,Compatibility of the schema across versions.
+SchemaRegistrySubject,Schema Registry Subject Assets,schemaRegistrySubjectLatestSchemaVersion,Latest schema version of the subject.
+SchemaRegistrySubject,Schema Registry Subject Assets,schemaRegistrySubjectLatestSchemaDefinition,Definition of the latest schema in the subject.
+SchemaRegistrySubject,Schema Registry Subject Assets,schemaRegistrySubjectGoverningAssetQualifiedNames,List of asset qualified names that this subject is governing/validating.
+SchemaRegistrySubject,Schema Registry Subject Assets,assets,TBC
 Sigma,Base class for Sigma assets.,sigmaWorkbookQualifiedName,TBC
 Sigma,Base class for Sigma assets.,sigmaWorkbookName,TBC
 Sigma,Base class for Sigma assets.,sigmaPageQualifiedName,TBC

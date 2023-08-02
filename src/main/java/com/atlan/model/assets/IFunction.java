@@ -375,6 +375,9 @@ public interface IFunction {
     String getSchemaQualifiedName();
 
     /** TBC */
+    SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
+
+    /** TBC */
     SourceCostUnitType getSourceCostUnit();
 
     /** TBC */

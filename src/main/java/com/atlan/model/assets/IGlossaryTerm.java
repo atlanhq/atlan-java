@@ -345,6 +345,9 @@ public interface IGlossaryTerm {
     String getSampleDataUrl();
 
     /** TBC */
+    SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
+
+    /** TBC */
     SortedSet<IGlossaryTerm> getSeeAlso();
 
     /** TBC */

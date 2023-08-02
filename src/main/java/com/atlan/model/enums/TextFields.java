@@ -301,6 +301,8 @@ public enum TextFields implements AtlanSearchableField {
     SAMPLE_DATA_URL("sampleDataUrl.text"),
     /** Simple name of the schema in which this SQL asset exists, or empty if it does not exist within a schema. */
     SCHEMA_NAME("schemaName"),
+    /** Definition of the latest schema in the subject. */
+    SCHEMA_REGISTRY_SUBJECT_LATEST_SCHEMA_DEFINITION("schemaRegistrySubjectLatestSchemaDefinition"),
     /** Human-readable name of the dataset that contains this column. */
     SIGMA_DATASET_NAME("sigmaDatasetName"),
     /** Unique name of the dataset that contains this column. */

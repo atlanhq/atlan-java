@@ -350,6 +350,9 @@ public interface IDatabase {
     /** TBC */
     String getSchemaQualifiedName();
 
+    /** TBC */
+    SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
+
     /** Schemas that exist within this database. */
     SortedSet<ISchema> getSchemas();
 

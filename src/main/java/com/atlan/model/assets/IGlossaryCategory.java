@@ -318,6 +318,9 @@ public interface IGlossaryCategory {
     String getSampleDataUrl();
 
     /** TBC */
+    SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
+
+    /** TBC */
     String getShortDescription();
 
     /** TBC */

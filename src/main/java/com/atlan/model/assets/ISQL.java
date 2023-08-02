@@ -348,6 +348,9 @@ public interface ISQL {
     String getSchemaQualifiedName();
 
     /** TBC */
+    SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
+
+    /** TBC */
     SourceCostUnitType getSourceCostUnit();
 
     /** TBC */

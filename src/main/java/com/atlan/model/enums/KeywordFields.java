@@ -935,6 +935,18 @@ public enum KeywordFields implements AtlanSearchableField {
     SCHEMA_NAME("schemaName.keyword"),
     /** Unique name of the schema in which this SQL asset exists, or empty if it does not exist within a schema. */
     SCHEMA_QUALIFIED_NAME("schemaQualifiedName"),
+    /** Unique identifier for schema definition set by the schema registry */
+    SCHEMA_REGISTRY_SCHEMA_ID("schemaRegistrySchemaId"),
+    /** Type of language/specification used to define the schema like JSON, Protobuf etc. */
+    SCHEMA_REGISTRY_SCHEMA_TYPE("schemaRegistrySchemaType"),
+    /** Base name of the subject (i.e. without -key, -value prefixes) */
+    SCHEMA_REGISTRY_SUBJECT_BASE_NAME("schemaRegistrySubjectBaseName"),
+    /** List of asset qualified names that this subject is governing/validating. */
+    SCHEMA_REGISTRY_SUBJECT_GOVERNING_ASSET_QUALIFIED_NAMES("schemaRegistrySubjectGoverningAssetQualifiedNames"),
+    /** Latest schema version of the subject. */
+    SCHEMA_REGISTRY_SUBJECT_LATEST_SCHEMA_VERSION("schemaRegistrySubjectLatestSchemaVersion"),
+    /** Compatibility of the schema across versions. */
+    SCHEMA_REGISTRY_SUBJECT_SCHEMA_COMPATIBILITY("schemaRegistrySubjectSchemaCompatibility"),
     /** TBC */
     SEARCH_PARAMETERS("searchParameters"),
     /** TBC */

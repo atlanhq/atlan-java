@@ -7,8 +7,8 @@ ${description}
 !!! warning "Complete reference"
     This is a complete reference for the `${originalName}` object in Atlan, showing every possible property and relationship that can exist for these objects. For an introduction, you probably want to start with:
 
-    - [:material-hexagon-slice-1: snippets](../../sdks) — small, atomic examples of single-step use cases.
-    - [:material-hexagon-slice-3: implementation patterns](../../patterns) — walkthroughs of common multi-step implementation patterns.
+    - [Snippets](../../snippets/index.md) — small, atomic examples of single-step use cases.
+    - [Patterns](../../patterns/index.md) — walkthroughs of common multi-step implementation patterns.
 
 ## Inheritance
 
@@ -24,7 +24,7 @@ Following are all the properties available on `${originalName}` assets in Atlan.
 
 ### Core properties
 
-For detailed examples of searching these fields, see [common search fields](../../search/attributes/common).
+For detailed examples of searching these fields, see [common search fields](../../search/attributes/common.md).
 
 ??? details "Expand for details on each core property"
 

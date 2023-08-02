@@ -324,6 +324,9 @@ public interface IReadme {
     String getSampleDataUrl();
 
     /** TBC */
+    SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
+
+    /** TBC */
     SortedSet<IReadme> getSeeAlso();
 
     /** TBC */
