@@ -315,6 +315,9 @@ public interface IGlossary {
     String getSampleDataUrl();
 
     /** TBC */
+    SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
+
+    /** TBC */
     String getShortDescription();
 
     /** TBC */

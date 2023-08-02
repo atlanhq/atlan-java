@@ -354,6 +354,9 @@ public interface ISnowflakePipe {
     String getSchemaQualifiedName();
 
     /** TBC */
+    SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
+
+    /** TBC */
     Boolean getSnowflakePipeIsAutoIngestEnabled();
 
     /** TBC */

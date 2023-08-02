@@ -457,6 +457,11 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Attribute
     String sampleDataUrl;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISchemaRegistrySubject> schemaRegistrySubjects;
+
     /** The unit of measure for sourceTotalCost. */
     @Attribute
     SourceCostUnitType sourceCostUnit;

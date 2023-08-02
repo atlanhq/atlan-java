@@ -327,6 +327,9 @@ public interface ILookerLook {
     String getSampleDataUrl();
 
     /** TBC */
+    SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
+
+    /** TBC */
     Integer getSourceContentMetadataId();
 
     /** TBC */

@@ -381,6 +381,9 @@ public interface IMaterializedView {
     String getSchemaQualifiedName();
 
     /** TBC */
+    SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
+
+    /** TBC */
     Long getSizeBytes();
 
     /** TBC */

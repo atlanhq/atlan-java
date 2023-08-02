@@ -308,6 +308,9 @@ public interface ISigmaDataElement {
     /** TBC */
     String getSampleDataUrl();
 
+    /** TBC */
+    SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
+
     /** Number of data element fields within this data element. */
     Long getSigmaDataElementFieldCount();
 

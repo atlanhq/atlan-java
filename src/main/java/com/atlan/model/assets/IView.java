@@ -377,6 +377,9 @@ public interface IView {
     /** TBC */
     String getSchemaQualifiedName();
 
+    /** TBC */
+    SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
+
     /** Size of the view in bytes. */
     Long getSizeBytes();
 

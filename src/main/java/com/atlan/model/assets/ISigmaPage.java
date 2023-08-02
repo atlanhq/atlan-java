@@ -308,6 +308,9 @@ public interface ISigmaPage {
     /** TBC */
     String getSampleDataUrl();
 
+    /** TBC */
+    SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
+
     /** Number of data elements that exist within this page. */
     Long getSigmaDataElementCount();
 

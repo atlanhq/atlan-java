@@ -309,6 +309,9 @@ public interface ISigma {
     String getSampleDataUrl();
 
     /** TBC */
+    SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
+
+    /** TBC */
     String getSigmaDataElementName();
 
     /** TBC */

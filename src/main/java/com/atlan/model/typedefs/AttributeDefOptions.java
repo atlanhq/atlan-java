@@ -143,6 +143,7 @@ public class AttributeDefOptions extends AtlanObject {
             SalesforceOrganization.TYPE_NAME,
             SalesforceReport.TYPE_NAME,
             Schema.TYPE_NAME,
+            SchemaRegistrySubject.TYPE_NAME,
             SigmaDataElement.TYPE_NAME,
             SigmaDataElementField.TYPE_NAME,
             SigmaDataset.TYPE_NAME,

@@ -359,6 +359,9 @@ public interface ISchema {
     /** TBC */
     String getSchemaQualifiedName();
 
+    /** TBC */
+    SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
+
     /** Snowflake Pipes that are defined within this schema. */
     SortedSet<ISnowflakePipe> getSnowflakePipes();
 

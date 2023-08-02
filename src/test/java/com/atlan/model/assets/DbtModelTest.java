@@ -196,6 +196,9 @@ public class DbtModelTest {
             .popularityScore(123.456)
             .readme(Readme.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .sampleDataUrl("String0")
+            .schemaRegistrySubject(SchemaRegistrySubject.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .schemaRegistrySubject(
+                    SchemaRegistrySubject.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .sourceCostUnit(SourceCostUnitType.CREDITS)
             .sourceCreatedAt(123456789L)
             .sourceCreatedBy("String0")
@@ -391,14 +394,14 @@ public class DbtModelTest {
             .dbtModelExecutionTime(123.456)
             .dbtModelRunElapsedTime(123.456)
             .dbtModelRunGeneratedAt(123456789L)
-            .dbtModelSqlAsset(Table.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .dbtModelSqlAsset(Table.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .dbtModelSqlAsset(Schema.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .dbtModelSqlAsset(Schema.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .dbtRawSQL("String0")
             .dbtStats("String0")
             .dbtStatus("String0")
             .dbtTest(DbtTest.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .dbtTest(DbtTest.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .primarySqlAsset(Table.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .primarySqlAsset(Schema.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .build();
 
     private static final int hash = full.hashCode();

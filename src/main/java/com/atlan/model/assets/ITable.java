@@ -404,6 +404,9 @@ public interface ITable {
     /** TBC */
     String getSchemaQualifiedName();
 
+    /** TBC */
+    SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
+
     /** Size of the table in bytes. */
     Long getSizeBytes();
 

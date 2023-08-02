@@ -309,6 +309,9 @@ public interface ISigmaDatasetColumn {
     String getSampleDataUrl();
 
     /** TBC */
+    SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
+
+    /** TBC */
     String getSigmaDataElementName();
 
     /** TBC */

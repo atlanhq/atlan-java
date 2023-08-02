@@ -196,6 +196,9 @@ public class DbtTestTest {
             .popularityScore(123.456)
             .readme(Readme.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .sampleDataUrl("String0")
+            .schemaRegistrySubject(SchemaRegistrySubject.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .schemaRegistrySubject(
+                    SchemaRegistrySubject.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .sourceCostUnit(SourceCostUnitType.CREDITS)
             .sourceCreatedAt(123456789L)
             .sourceCreatedBy("String0")
@@ -391,8 +394,8 @@ public class DbtTestTest {
             .dbtTestRawSQL("String0")
             .dbtTestState("String0")
             .dbtTestStatus("String0")
-            .sqlAsset(Table.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .sqlAsset(Table.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .sqlAsset(Schema.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .sqlAsset(Schema.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .build();
 
     private static final int hash = full.hashCode();

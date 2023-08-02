@@ -159,6 +159,8 @@ public enum BooleanFields implements AtlanSearchableField {
     REDASH_IS_PUBLISHED("redashIsPublished"),
     /** Whether versioning is enabled for the bucket. */
     S3BUCKET_VERSIONING_ENABLED("s3BucketVersioningEnabled"),
+    /** If the subject is a schema for the keys of the messages. */
+    SCHEMA_REGISTRY_SUBJECT_IS_KEY_SCHEMA("schemaRegistrySubjectIsKeySchema"),
     /** TBC */
     SIGMA_DATA_ELEMENT_FIELD_IS_HIDDEN("sigmaDataElementFieldIsHidden"),
     /** TBC */

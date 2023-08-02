@@ -327,6 +327,9 @@ public interface ITableauFlow {
     String getSampleDataUrl();
 
     /** TBC */
+    SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
+
+    /** TBC */
     String getSiteQualifiedName();
 
     /** TBC */

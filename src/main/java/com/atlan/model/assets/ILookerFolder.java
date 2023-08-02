@@ -315,6 +315,9 @@ public interface ILookerFolder {
     String getSampleDataUrl();
 
     /** TBC */
+    SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
+
+    /** TBC */
     Integer getSourceChildCount();
 
     /** TBC */
