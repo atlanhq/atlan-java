@@ -7,11 +7,13 @@ import static org.testng.Assert.*;
 import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
+import com.atlan.exception.NotFoundException;
 import com.atlan.model.admin.*;
 import com.atlan.model.assets.*;
 import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.core.AtlanTag;
 import com.atlan.model.enums.AtlanConnectorType;
+import com.atlan.net.HttpClient;
 import java.util.ArrayList;
 import java.util.Set;
 import lombok.extern.slf4j.Slf4j;
@@ -177,7 +179,21 @@ public class RequestsTest extends AtlanLiveTest {
     @Test(
             groups = {"request.create.request"},
             dependsOnGroups = {"request.read.token", "request.create.glossary"})
-    void createAtlanTagRequest() throws AtlanException {
+    void createAtlanTagRequest() throws AtlanException, InterruptedException {
+        // Force a cache refresh to ensure this client has the tag name available
+        String tagId = null;
+        int count = 0;
+        int maxTries = requestsClient.getMaxNetworkRetries() * 2;
+        while (tagId == null && count < maxTries) {
+            try {
+                requestsClient.getAtlanTagCache().refreshCache();
+                tagId = requestsClient.getAtlanTagCache().getIdForName(ATLAN_TAG_NAME);
+            } catch (NotFoundException e) {
+                log.debug("Atlan tag not yet visible to secondary client, retrying...");
+            }
+            Thread.sleep(HttpClient.waitTime(count).toMillis());
+            count++;
+        }
         AtlanTagRequest toCreate = AtlanTagRequest.creator(
                         term.getGuid(),
                         term.getQualifiedName(),
@@ -192,7 +208,8 @@ public class RequestsTest extends AtlanLiveTest {
             dependsOnGroups = {"request.create.request"},
             alwaysRun = true)
     void readRequests() throws AtlanException {
-        AtlanRequestResponse response = AtlanRequest.list(Atlan.getDefaultClient());
+        String createdBy = requestsClient.users.getCurrentUser().getUsername();
+        AtlanRequestResponse response = Atlan.getDefaultClient().requests.list("{\"createdBy\":\"" + createdBy + "\"}");
         assertNotNull(response);
         assertTrue(response.getTotalRecord() > 0);
         for (AtlanRequest request : response.getRecords()) {
@@ -224,10 +241,10 @@ public class RequestsTest extends AtlanLiveTest {
     void readRequest() throws AtlanException {
         AtlanRequest response = Atlan.getDefaultClient().requests.get(attributeRequestGuid);
         assertTrue(response instanceof AttributeRequest);
-        response = Atlan.getDefaultClient().requests.get(atlanTagRequestGuid);
-        assertTrue(response instanceof AtlanTagRequest);
         response = Atlan.getDefaultClient().requests.get(termLinkRequestGuid);
         assertTrue(response instanceof TermLinkRequest);
+        response = Atlan.getDefaultClient().requests.get(atlanTagRequestGuid);
+        assertTrue(response instanceof AtlanTagRequest);
     }
 
     @Test(

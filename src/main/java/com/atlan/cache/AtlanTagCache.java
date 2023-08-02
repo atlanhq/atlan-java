@@ -63,7 +63,7 @@ public class AtlanTagCache {
      * @throws InvalidRequestException if no name was provided for the Atlan tag to retrieve
      */
     public String getIdForName(String name) throws AtlanException {
-        if (name != null && name.length() > 0) {
+        if (name != null && !name.isEmpty()) {
             String cmId = mapNameToId.get(name);
             if (cmId == null && !deletedNames.contains(name)) {
                 // If not found, refresh the cache and look again (could be stale)
@@ -91,7 +91,7 @@ public class AtlanTagCache {
      * @throws InvalidRequestException if no ID was provided for the Atlan tag to retrieve
      */
     public String getNameForId(String id) throws AtlanException {
-        if (id != null && id.length() > 0) {
+        if (id != null && !id.isEmpty()) {
             String cmName = mapIdToName.get(id);
             if (cmName == null && !deletedIds.contains(id)) {
                 // If not found, refresh the cache and look again (could be stale)

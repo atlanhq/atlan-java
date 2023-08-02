@@ -78,7 +78,7 @@ public class AtlanRequestDeserializer extends StdDeserializer<AtlanRequest> {
                         try {
                             humanReadableAtlanTag = client.getAtlanTagCache().getNameForId(typeName);
                         } catch (NotFoundException e) {
-                            humanReadableAtlanTag = AtlanRequestSerializer.DELETED;
+                            humanReadableAtlanTag = AtlanClient.DELETED_AUDIT_OBJECT;
                         } catch (AtlanException e) {
                             throw new IOException("Unable to translate Atlan tag with the ID: " + typeName, e);
                         }
@@ -100,7 +100,7 @@ public class AtlanRequestDeserializer extends StdDeserializer<AtlanRequest> {
                                     client.getCustomMetadataCache().getNameForId(cmId);
                             cma = client.getCustomMetadataCache().getCustomMetadataAttributes(cmId, jsonPayload);
                         } catch (NotFoundException e) {
-                            destinationAttribute = AtlanRequestSerializer.DELETED;
+                            destinationAttribute = AtlanClient.DELETED_AUDIT_OBJECT;
                             cma = CustomMetadataAttributes.builder().build();
                         } catch (AtlanException e) {
                             throw new IOException(
