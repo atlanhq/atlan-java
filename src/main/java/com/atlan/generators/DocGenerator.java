@@ -28,6 +28,8 @@ public class DocGenerator extends AbstractGenerator {
     @Override
     public void generate() throws Exception {
         generateAssetDocs();
+        generateEnumDocs();
+        generateStructDocs();
         generateFullModelDiagram();
         generateAttributeCSV();
     }
@@ -90,6 +92,63 @@ public class DocGenerator extends AbstractGenerator {
                 } catch (IOException e) {
                     log.error("Unable to open file output: {}", filename, e);
                 }
+            }
+        }
+    }
+
+    private void generateEnumDocs() throws Exception {
+        Template docTemplate = ftl.getTemplate("enum_doc.ftl");
+        for (EnumDef enumDef : cache.getEnumDefCache().values()) {
+            EnumGenerator enumGen = new EnumGenerator(enumDef, cfg);
+            String originalName = enumGen.getOriginalName().toLowerCase(Locale.ROOT);
+            // For enums there is only one doc file to generate
+            createDirectoryIdempotent(AssetDocGenerator.DIRECTORY);
+            String filename = AssetDocGenerator.DIRECTORY + File.separator + originalName + ".md";
+            try (BufferedWriter fs = new BufferedWriter(
+                    new OutputStreamWriter(new FileOutputStream(filename), StandardCharsets.UTF_8))) {
+                docTemplate.process(enumGen, fs);
+            } catch (IOException e) {
+                log.error("Unable to open file output: {}", filename, e);
+            }
+        }
+    }
+
+    private void generateStructDocs() throws Exception {
+        Template docTemplate = ftl.getTemplate("struct_doc.ftl");
+        Template javaPropertySnippetTemplate = ftl.getTemplate("snippet_java_properties_struct.ftl");
+        Template rawPropertySnippetTemplate = ftl.getTemplate("snippet_raw_properties_struct.ftl");
+        for (StructDef structDef : cache.getStructDefCache().values()) {
+            StructGenerator structGen = new StructGenerator(structDef, cfg);
+            String originalName = structGen.getOriginalName().toLowerCase(Locale.ROOT);
+            // First the overall struct file
+            createDirectoryIdempotent(AssetDocGenerator.DIRECTORY);
+            String filename = AssetDocGenerator.DIRECTORY + File.separator + originalName + ".md";
+            try (BufferedWriter fs = new BufferedWriter(
+                    new OutputStreamWriter(new FileOutputStream(filename), StandardCharsets.UTF_8))) {
+                docTemplate.process(structGen, fs);
+            } catch (IOException e) {
+                log.error("Unable to open file output: {}", filename, e);
+            }
+            // Then the snippets
+            String javaSnippets = AssetDocGenerator.DIRECTORY + File.separator + "snippets" + File.separator + "model"
+                    + File.separator + "java";
+            createDirectoryIdempotent(javaSnippets);
+            filename = javaSnippets + File.separator + originalName + "-properties.md";
+            try (BufferedWriter fs = new BufferedWriter(
+                    new OutputStreamWriter(new FileOutputStream(filename), StandardCharsets.UTF_8))) {
+                javaPropertySnippetTemplate.process(structGen, fs);
+            } catch (IOException e) {
+                log.error("Unable to open file output: {}", filename, e);
+            }
+            String rawSnippets = AssetDocGenerator.DIRECTORY + File.separator + "snippets" + File.separator + "model"
+                    + File.separator + "raw";
+            createDirectoryIdempotent(rawSnippets);
+            filename = rawSnippets + File.separator + originalName + "-properties.md";
+            try (BufferedWriter fs = new BufferedWriter(
+                    new OutputStreamWriter(new FileOutputStream(filename), StandardCharsets.UTF_8))) {
+                rawPropertySnippetTemplate.process(structGen, fs);
+            } catch (IOException e) {
+                log.error("Unable to open file output: {}", filename, e);
             }
         }
     }
