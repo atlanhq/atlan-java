@@ -20,5 +20,5 @@
     1. Set the `${attribute.originalName}` for a `${originalName}`.
 
         !!! details "For more details"
-            For more information, see the [asset CRUD](../snippets/advanced-examples/index.md) snippets.
+            For more information, see the [asset CRUD](../../snippets/advanced-examples/index.md) snippets.
 </#macro>

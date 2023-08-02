@@ -20,10 +20,10 @@
     1. Add a `${attribute.details.renamed}` relationship<#if attribute.rawValues?size == 2>s</#if> from `${className}` to `${attribute.details.type.name}`<#if attribute.rawValues?size == 2>s</#if>.
 
         !!! details "For more details"
-            For more information, see the asset CRUD snippets on either [creating](../snippets/advanced-examples/create.md) or [updating](../snippets/advanced-examples/update.md) assets.
+            For more information, see the asset CRUD snippets on either [creating](../../snippets/advanced-examples/create.md) or [updating](../../snippets/advanced-examples/update.md) assets.
 
     2. Retrieve the `${attribute.details.renamed}` from a `${className}`.
 
         !!! details "For more details"
-            For more information, see the asset CRUD snippets on [retrieving](../snippets/advanced-examples/read.md) assets.
+            For more information, see the asset CRUD snippets on [retrieving](../../snippets/advanced-examples/read.md) assets.
 </#macro>

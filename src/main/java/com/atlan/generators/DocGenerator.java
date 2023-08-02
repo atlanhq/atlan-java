@@ -49,8 +49,9 @@ public class DocGenerator extends AbstractGenerator {
                 generator.resolveDetails();
                 String originalName = generator.getOriginalName().toLowerCase(Locale.ROOT);
                 // First the overall asset file
-                createDirectoryIdempotent(AssetDocGenerator.DIRECTORY);
-                String filename = AssetDocGenerator.DIRECTORY + File.separator + originalName + ".md";
+                String directory = AssetDocGenerator.DIRECTORY + File.separator + "entities";
+                createDirectoryIdempotent(directory);
+                String filename = directory + File.separator + originalName + ".md";
                 try (BufferedWriter fs = new BufferedWriter(
                         new OutputStreamWriter(new FileOutputStream(filename), StandardCharsets.UTF_8))) {
                     docTemplate.process(generator, fs);
@@ -102,8 +103,9 @@ public class DocGenerator extends AbstractGenerator {
             EnumGenerator enumGen = new EnumGenerator(enumDef, cfg);
             String originalName = enumGen.getOriginalName().toLowerCase(Locale.ROOT);
             // For enums there is only one doc file to generate
-            createDirectoryIdempotent(AssetDocGenerator.DIRECTORY);
-            String filename = AssetDocGenerator.DIRECTORY + File.separator + originalName + ".md";
+            String directory = AssetDocGenerator.DIRECTORY + File.separator + "enums";
+            createDirectoryIdempotent(directory);
+            String filename = directory + File.separator + originalName + ".md";
             try (BufferedWriter fs = new BufferedWriter(
                     new OutputStreamWriter(new FileOutputStream(filename), StandardCharsets.UTF_8))) {
                 docTemplate.process(enumGen, fs);
@@ -121,8 +123,9 @@ public class DocGenerator extends AbstractGenerator {
             StructGenerator structGen = new StructGenerator(structDef, cfg);
             String originalName = structGen.getOriginalName().toLowerCase(Locale.ROOT);
             // First the overall struct file
-            createDirectoryIdempotent(AssetDocGenerator.DIRECTORY);
-            String filename = AssetDocGenerator.DIRECTORY + File.separator + originalName + ".md";
+            String directory = AssetDocGenerator.DIRECTORY + File.separator + "structs";
+            createDirectoryIdempotent(directory);
+            String filename = directory + File.separator + originalName + ".md";
             try (BufferedWriter fs = new BufferedWriter(
                     new OutputStreamWriter(new FileOutputStream(filename), StandardCharsets.UTF_8))) {
                 docTemplate.process(structGen, fs);

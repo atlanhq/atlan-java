@@ -17,11 +17,11 @@
     1. Set the `${attribute.renamed}` for a `${className}`.
 
         !!! details "For more details"
-            For more information, see the asset CRUD snippets on either [creating](../snippets/advanced-examples/create.md) or [updating](../snippets/advanced-examples/update.md) assets.
+            For more information, see the asset CRUD snippets on either [creating](../../snippets/advanced-examples/create.md) or [updating](../../snippets/advanced-examples/update.md) assets.
 
     2. Retrieve the `${attribute.renamed}` from a `${className}`.
 
         !!! details "For more details"
-            For more information, see the asset CRUD snippets on [retrieving](../snippets/advanced-examples/read.md) assets.
+            For more information, see the asset CRUD snippets on [retrieving](../../snippets/advanced-examples/read.md) assets.
 
 </#macro>

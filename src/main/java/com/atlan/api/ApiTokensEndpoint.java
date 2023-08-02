@@ -103,7 +103,9 @@ public class ApiTokensEndpoint extends HeraclesEndpoint {
      */
     public ApiToken get(String displayName) throws AtlanException {
         ApiTokenResponse response = list("{\"displayName\":\"" + displayName + "\"}", "-createdAt", 0, 2);
-        if (response != null && response.getRecords() != null) {
+        if (response != null
+                && response.getRecords() != null
+                && !response.getRecords().isEmpty()) {
             return response.getRecords().get(0);
         } else {
             return null;
