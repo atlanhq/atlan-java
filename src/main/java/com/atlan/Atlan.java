@@ -15,7 +15,7 @@ public abstract class Atlan {
     public static final int DEFAULT_READ_TIMEOUT = 120 * 1000;
     public static final int DEFAULT_NETWORK_RETRIES = 10;
 
-    public static final String VERSION = "0.9.0-SNAPSHOT";
+    public static final String VERSION = "0.9.0";
 
     public static volatile boolean enableTelemetry = true;
 
