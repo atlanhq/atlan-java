@@ -11,6 +11,7 @@ import com.atlan.exception.NotFoundException;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.net.HttpClient;
+import com.atlan.net.RequestOptions;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
@@ -66,8 +67,15 @@ public class AssetDeletionResponse extends AssetMutationResponse implements Atla
                 // Note that there seems to be some eventual consistency delay between a
                 // retrieveMinimal and a retrieveFull - to ensure delete status is fully
                 // consistent we need to retrieve the full asset
-                Asset candidate = Asset.get(client, one.getGuid(), true);
-                if (candidate.getStatus() == AtlanStatus.ACTIVE) {
+                AssetResponse response = client.assets.get(
+                        one.getGuid(),
+                        false,
+                        false,
+                        RequestOptions.from(client)
+                                .maxNetworkRetries(MAX_ASYNC_RETRIES)
+                                .build());
+                Asset candidate = response.getAsset();
+                if (candidate != null && candidate.getStatus() == AtlanStatus.ACTIVE) {
                     leftovers.add(candidate);
                 }
             } catch (NotFoundException e) {

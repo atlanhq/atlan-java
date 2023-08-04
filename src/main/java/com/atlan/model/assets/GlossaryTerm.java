@@ -2,27 +2,23 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
-import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
-import com.atlan.exception.LogicException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.core.AssetFilter;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.KeywordFields;
 import com.atlan.model.relations.UniqueAttributes;
-import com.atlan.model.search.IndexSearchDSL;
-import com.atlan.model.search.IndexSearchRequest;
-import com.atlan.model.search.IndexSearchResponse;
 import com.atlan.util.QueryFactory;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
@@ -549,39 +545,25 @@ public class GlossaryTerm extends Asset implements IGlossaryTerm, IAsset, IRefer
     public static GlossaryTerm findByNameFast(
             AtlanClient client, String name, String glossaryQualifiedName, Collection<String> attributes)
             throws AtlanException {
-        Query filter = QueryFactory.CompoundQuery.builder()
-                .must(QueryFactory.beActive())
-                .must(QueryFactory.beOfType(TYPE_NAME))
-                .must(QueryFactory.have(KeywordFields.NAME).eq(name))
-                .must(QueryFactory.have(KeywordFields.GLOSSARY).eq(glossaryQualifiedName))
-                .build()
-                ._toQuery();
-        IndexSearchRequest.IndexSearchRequestBuilder<?, ?> builder = IndexSearchRequest.builder(
-                IndexSearchDSL.builder(filter).size(2).build());
-        if (attributes != null && !attributes.isEmpty()) {
-            builder.attributes(attributes);
+        List<GlossaryTerm> results = new ArrayList<>();
+        GlossaryTerm.all(client)
+                .filter(QueryFactory.where(KeywordFields.NAME).eq(name))
+                .filter(QueryFactory.where(KeywordFields.GLOSSARY).eq(glossaryQualifiedName))
+                .attributes(attributes == null ? Collections.emptyList() : attributes)
+                .batch(2)
+                .stream()
+                .limit(2)
+                .filter(a -> a instanceof GlossaryTerm)
+                .forEach(t -> results.add((GlossaryTerm) t));
+        if (results.isEmpty()) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_NAME, TYPE_NAME, name);
+        } else if (results.size() > 1) {
+            log.warn(
+                    "Multiple terms found with the name '{}' in glossary '{}', returning only the first.",
+                    name,
+                    glossaryQualifiedName);
         }
-        IndexSearchRequest request = builder.build();
-        IndexSearchResponse response = request.search(client);
-        if (response != null) {
-            long count = response.getApproximateCount();
-            if (count > 1) {
-                log.warn(
-                        "Multiple terms found with the name '{}' in glossary '{}', returning only the first.",
-                        name,
-                        glossaryQualifiedName);
-            }
-            List<Asset> results = response.getAssets();
-            if (results != null && !results.isEmpty()) {
-                Asset first = results.get(0);
-                if (first instanceof GlossaryTerm) {
-                    return (GlossaryTerm) first;
-                } else {
-                    throw new LogicException(ErrorCode.FOUND_UNEXPECTED_ASSET_TYPE);
-                }
-            }
-        }
-        throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_NAME, TYPE_NAME, name);
+        return results.get(0);
     }
 
     /**

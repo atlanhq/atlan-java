@@ -178,39 +178,25 @@
      */
     public static GlossaryTerm findByNameFast(AtlanClient client, String name, String glossaryQualifiedName, Collection<String> attributes)
             throws AtlanException {
-        Query filter = QueryFactory.CompoundQuery.builder()
-                .must(QueryFactory.beActive())
-                .must(QueryFactory.beOfType(TYPE_NAME))
-                .must(QueryFactory.have(KeywordFields.NAME).eq(name))
-                .must(QueryFactory.have(KeywordFields.GLOSSARY).eq(glossaryQualifiedName))
-                .build()
-                ._toQuery();
-        IndexSearchRequest.IndexSearchRequestBuilder<?, ?> builder = IndexSearchRequest.builder(
-                IndexSearchDSL.builder(filter).size(2).build());
-        if (attributes != null && !attributes.isEmpty()) {
-            builder.attributes(attributes);
+        List<GlossaryTerm> results = new ArrayList<>();
+        GlossaryTerm.all(client)
+                .filter(QueryFactory.where(KeywordFields.NAME).eq(name))
+                .filter(QueryFactory.where(KeywordFields.GLOSSARY).eq(glossaryQualifiedName))
+                .attributes(attributes == null ? Collections.emptyList() : attributes)
+                .batch(2)
+                .stream()
+                .limit(2)
+                .filter(a -> a instanceof GlossaryTerm)
+                .forEach(t -> results.add((GlossaryTerm) t));
+        if (results.isEmpty()) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_NAME, TYPE_NAME, name);
+        } else if (results.size() > 1) {
+            log.warn(
+                    "Multiple terms found with the name '{}' in glossary '{}', returning only the first.",
+                    name,
+                    glossaryQualifiedName);
         }
-        IndexSearchRequest request = builder.build();
-        IndexSearchResponse response = request.search(client);
-        if (response != null) {
-            long count = response.getApproximateCount();
-            if (count > 1) {
-                log.warn(
-                        "Multiple terms found with the name '{}' in glossary '{}', returning only the first.",
-                        name,
-                        glossaryQualifiedName);
-            }
-            List<Asset> results = response.getAssets();
-            if (results != null && !results.isEmpty()) {
-                Asset first = results.get(0);
-                if (first instanceof GlossaryTerm) {
-                    return (GlossaryTerm) first;
-                } else {
-                    throw new LogicException(ErrorCode.FOUND_UNEXPECTED_ASSET_TYPE);
-                }
-            }
-        }
-        throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_NAME, TYPE_NAME, name);
+        return results.get(0);
     }
 
     /**

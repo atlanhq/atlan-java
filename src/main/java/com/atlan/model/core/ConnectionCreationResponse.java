@@ -11,6 +11,7 @@ import com.atlan.exception.PermissionException;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.assets.Connection;
 import com.atlan.net.HttpClient;
+import com.atlan.net.RequestOptions;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
@@ -66,8 +67,14 @@ public class ConnectionCreationResponse extends AssetMutationResponse implements
                 // Only even attempt to look at an asset if it is a connection, otherwise skip it
                 // entirely
                 try {
-                    Asset candidate = Asset.get(client, one.getGuid(), true);
-                    if (candidate == null) {
+                    AssetResponse candidate = client.assets.get(
+                            one.getGuid(),
+                            false,
+                            false,
+                            RequestOptions.from(client)
+                                    .maxNetworkRetries(MAX_ASYNC_RETRIES)
+                                    .build());
+                    if (candidate == null || candidate.getAsset() == null) {
                         // Since the retry logic in this case is actually embedded in the retrieveMinimal
                         // call, if we get to this point without retrieving the connection we have by
                         // definition overrun the retry limit

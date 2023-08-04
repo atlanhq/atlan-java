@@ -111,25 +111,17 @@
      */
     public static List<Purpose> findByName(AtlanClient client, String name, Collection<String> attributes)
             throws AtlanException {
-        Query filter = QueryFactory.CompoundQuery.builder()
-                .must(QueryFactory.beActive())
-                .must(QueryFactory.beOfType(TYPE_NAME))
-                .must(QueryFactory.have(KeywordFields.NAME).eq(name))
-                .build()
-                ._toQuery();
-        IndexSearchRequest.IndexSearchRequestBuilder<?, ?> builder = IndexSearchRequest.builder(filter);
-        if (attributes != null && !attributes.isEmpty()) {
-            builder.attributes(attributes);
-        }
-        IndexSearchRequest request = builder.build();
-        IndexSearchResponse response = request.search(client);
-        List<Purpose> purposes = new ArrayList<>();
-        response.stream().filter(p -> (p instanceof Purpose)).forEach(p -> purposes.add((Purpose) p));
-        if (purposes.isEmpty()) {
+        List<Purpose> results = new ArrayList<>();
+        Purpose.all(client)
+                .filter(QueryFactory.where(KeywordFields.NAME).eq(name))
+                .attributes(attributes == null ? Collections.emptyList() : attributes)
+                .stream()
+                .filter(a -> a instanceof Purpose)
+                .forEach(p -> results.add((Purpose) p));
+        if (results.isEmpty()) {
             throw new NotFoundException(ErrorCode.PURPOSE_NOT_FOUND_BY_NAME, name);
-        } else {
-            return purposes;
         }
+        return results;
     }
 
     /**

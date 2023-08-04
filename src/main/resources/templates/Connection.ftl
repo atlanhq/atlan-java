@@ -354,36 +354,17 @@
      */
     public static List<Connection> findByName(AtlanClient client, String name, AtlanConnectorType type, Collection<String> attributes)
             throws AtlanException {
-        Query filter = QueryFactory.CompoundQuery.builder()
-                .must(QueryFactory.beActive())
-                .must(QueryFactory.beOfType(TYPE_NAME))
-                .must(QueryFactory.have(KeywordFields.NAME).eq(name))
-                .must(QueryFactory.have(KeywordFields.CONNECTOR_TYPE).eq(type.getValue()))
-                .build()
-                ._toQuery();
-        IndexSearchRequest.IndexSearchRequestBuilder<?, ?> builder = IndexSearchRequest.builder(filter);
-        if (attributes != null && !attributes.isEmpty()) {
-            builder.attributes(attributes);
-        }
-        IndexSearchRequest request = builder.build();
-        IndexSearchResponse response = request.search(client);
-        List<Connection> connections = new ArrayList<>();
-        if (response != null) {
-            List<Asset> results = response.getAssets();
-            while (results != null) {
-                for (Asset result : results) {
-                    if (result instanceof Connection) {
-                        connections.add((Connection) result);
-                    }
-                }
-                response = response.getNextPage();
-                results = response.getAssets();
-            }
-        }
-        if (connections.isEmpty()) {
+        List<Connection> results = new ArrayList<>();
+        Connection.all(client)
+                .filter(QueryFactory.where(KeywordFields.NAME).eq(name))
+                .filter(QueryFactory.where(KeywordFields.CONNECTOR_TYPE).eq(type.getValue()))
+                .attributes(attributes == null ? Collections.emptyList() : attributes)
+                .stream()
+                .filter(a -> a instanceof Connection)
+                .forEach(c -> results.add((Connection) c));
+        if (results.isEmpty()) {
             throw new NotFoundException(ErrorCode.CONNECTION_NOT_FOUND_BY_NAME, name, type.getValue());
-        } else {
-            return connections;
         }
+        return results;
     }
 </#macro>

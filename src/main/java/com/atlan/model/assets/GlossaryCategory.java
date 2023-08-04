@@ -486,8 +486,8 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
             throws AtlanException {
         List<GlossaryCategory> results = new ArrayList<>();
         GlossaryCategory.all(client)
-                .filter(QueryFactory.have(KeywordFields.NAME).eq(name))
-                .filter(QueryFactory.have(KeywordFields.GLOSSARY).eq(glossaryQualifiedName))
+                .filter(QueryFactory.where(KeywordFields.NAME).eq(name))
+                .filter(QueryFactory.where(KeywordFields.GLOSSARY).eq(glossaryQualifiedName))
                 .attributes(attributes == null ? Collections.emptyList() : attributes)
                 .stream()
                 .filter(a -> a instanceof GlossaryCategory)
