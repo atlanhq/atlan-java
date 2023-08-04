@@ -240,6 +240,16 @@
         }
 
         /**
+         * Retrieve a specific category from anywhere in the hierarchy by its unique identifier (GUID).
+         *
+         * @param guid of the category to retrieve
+         * @return the requested category
+         */
+        public GlossaryCategory getCategory(String guid) {
+            return map.get(guid);
+        }
+
+        /**
          * Retrieve only the root-level categories (those with no parents).
          *
          * @return the root-level categories of the Glossary
