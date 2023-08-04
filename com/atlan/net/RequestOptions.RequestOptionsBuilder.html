@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -90,13 +90,13 @@ loadScripts(document, 'script');</script>
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
-<li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
-<li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
@@ -135,7 +135,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd><a href="RequestOptions.html" title="class in com.atlan.net">RequestOptions</a></dd>
 </dl>
 <hr>
-<pre>public static final class <span class="typeNameLabel">RequestOptions.RequestOptionsBuilder</span>
+<pre>public static class <span class="typeNameLabel">RequestOptions.RequestOptionsBuilder</span>
 extends java.lang.Object</pre>
 </li>
 </ul>
@@ -143,30 +143,6 @@ extends java.lang.Object</pre>
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
-<!-- ======== CONSTRUCTOR SUMMARY ======== -->
-<section>
-<ul class="blockList">
-<li class="blockList"><a id="constructor.summary">
-<!--   -->
-</a>
-<h3>Constructor Summary</h3>
-<table class="memberSummary">
-<caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colFirst" scope="col">Constructor</th>
-<th class="colLast" scope="col">Description</th>
-</tr>
-<tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E()">RequestOptionsBuilder</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Constructs a request options builder with the global parameters (API key and client ID) as
- default values.</div>
-</td>
-</tr>
-</table>
-</li>
-</ul>
-</section>
 <!-- ========== METHOD SUMMARY =========== -->
 <section>
 <ul class="blockList">
@@ -184,67 +160,37 @@ extends java.lang.Object</pre>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code><a href="RequestOptions.html" title="class in com.atlan.net">RequestOptions</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#build()">build</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Constructs a <a href="RequestOptions.html" title="class in com.atlan.net"><code>RequestOptions</code></a> with the specified values.</div>
-</td>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>java.net.Proxy</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getConnectionProxy()">getConnectionProxy</a></span>()</code></th>
+<td class="colFirst"><code><a href="RequestOptions.RequestOptionsBuilder.html" title="class in com.atlan.net">RequestOptions.RequestOptionsBuilder</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#connectionProxy(java.net.Proxy)">connectionProxy</a></span>&#8203;(java.net.Proxy&nbsp;connectionProxy)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code>int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getConnectTimeout()">getConnectTimeout</a></span>()</code></th>
+<td class="colFirst"><code><a href="RequestOptions.RequestOptionsBuilder.html" title="class in com.atlan.net">RequestOptions.RequestOptionsBuilder</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#connectTimeout(int)">connectTimeout</a></span>&#8203;(int&nbsp;connectTimeout)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code>int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMaxNetworkRetries()">getMaxNetworkRetries</a></span>()</code></th>
+<td class="colFirst"><code><a href="RequestOptions.RequestOptionsBuilder.html" title="class in com.atlan.net">RequestOptions.RequestOptionsBuilder</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#maxNetworkRetries(int)">maxNetworkRetries</a></span>&#8203;(int&nbsp;maxNetworkRetries)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code>java.net.PasswordAuthentication</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getProxyCredential()">getProxyCredential</a></span>()</code></th>
+<td class="colFirst"><code><a href="RequestOptions.RequestOptionsBuilder.html" title="class in com.atlan.net">RequestOptions.RequestOptionsBuilder</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#proxyCredential(java.net.PasswordAuthentication)">proxyCredential</a></span>&#8203;(java.net.PasswordAuthentication&nbsp;proxyCredential)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code>int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getReadTimeout()">getReadTimeout</a></span>()</code></th>
+<td class="colFirst"><code><a href="RequestOptions.RequestOptionsBuilder.html" title="class in com.atlan.net">RequestOptions.RequestOptionsBuilder</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readTimeout(int)">readTimeout</a></span>&#8203;(int&nbsp;readTimeout)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
-<td class="colFirst"><code><a href="RequestOptions.RequestOptionsBuilder.html" title="class in com.atlan.net">RequestOptions.RequestOptionsBuilder</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setConnectionProxy(java.net.Proxy)">setConnectionProxy</a></span>&#8203;(java.net.Proxy&nbsp;connectionProxy)</code></th>
+<td class="colFirst"><code>java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i7" class="rowColor">
-<td class="colFirst"><code><a href="RequestOptions.RequestOptionsBuilder.html" title="class in com.atlan.net">RequestOptions.RequestOptionsBuilder</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setConnectTimeout(int)">setConnectTimeout</a></span>&#8203;(int&nbsp;timeout)</code></th>
-<td class="colLast">
-<div class="block">Sets the timeout value that will be used for making new connections to the Atlan API (in
- milliseconds).</div>
-</td>
-</tr>
-<tr id="i8" class="altColor">
-<td class="colFirst"><code><a href="RequestOptions.RequestOptionsBuilder.html" title="class in com.atlan.net">RequestOptions.RequestOptionsBuilder</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setMaxNetworkRetries(int)">setMaxNetworkRetries</a></span>&#8203;(int&nbsp;maxNetworkRetries)</code></th>
-<td class="colLast">
-<div class="block">Sets the maximum number of times the request will be retried in the event of a failure.</div>
-</td>
-</tr>
-<tr id="i9" class="rowColor">
-<td class="colFirst"><code><a href="RequestOptions.RequestOptionsBuilder.html" title="class in com.atlan.net">RequestOptions.RequestOptionsBuilder</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setProxyCredential(java.net.PasswordAuthentication)">setProxyCredential</a></span>&#8203;(java.net.PasswordAuthentication&nbsp;proxyCredential)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i10" class="altColor">
-<td class="colFirst"><code><a href="RequestOptions.RequestOptionsBuilder.html" title="class in com.atlan.net">RequestOptions.RequestOptionsBuilder</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setReadTimeout(int)">setReadTimeout</a></span>&#8203;(int&nbsp;timeout)</code></th>
-<td class="colLast">
-<div class="block">Sets the timeout value that will be used when reading data from an established connection to
- the Atlan API (in milliseconds).</div>
-</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -252,7 +198,7 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
-<code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</code></li>
+<code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, wait, wait, wait</code></li>
 </ul>
 </li>
 </ul>
@@ -263,27 +209,6 @@ extends java.lang.Object</pre>
 <div class="details">
 <ul class="blockList">
 <li class="blockList">
-<!-- ========= CONSTRUCTOR DETAIL ======== -->
-<section>
-<ul class="blockList">
-<li class="blockList"><a id="constructor.detail">
-<!--   -->
-</a>
-<h3>Constructor Detail</h3>
-<a id="&lt;init&gt;()">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>RequestOptionsBuilder</h4>
-<pre>public&nbsp;RequestOptionsBuilder()</pre>
-<div class="block">Constructs a request options builder with the global parameters (API key and client ID) as
- default values.</div>
-</li>
-</ul>
-</li>
-</ul>
-</section>
 <!-- ============ METHOD DETAIL ========== -->
 <section>
 <ul class="blockList">
@@ -291,124 +216,91 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="getConnectTimeout()">
+<a id="connectTimeout(int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getConnectTimeout</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;getConnectTimeout()</pre>
-</li>
-</ul>
-<a id="setConnectTimeout(int)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setConnectTimeout</h4>
-<pre class="methodSignature">public&nbsp;<a href="RequestOptions.RequestOptionsBuilder.html" title="class in com.atlan.net">RequestOptions.RequestOptionsBuilder</a>&nbsp;setConnectTimeout&#8203;(int&nbsp;timeout)</pre>
-<div class="block">Sets the timeout value that will be used for making new connections to the Atlan API (in
- milliseconds).</div>
+<h4>connectTimeout</h4>
+<pre class="methodSignature">public&nbsp;<a href="RequestOptions.RequestOptionsBuilder.html" title="class in com.atlan.net">RequestOptions.RequestOptionsBuilder</a>&nbsp;connectTimeout&#8203;(int&nbsp;connectTimeout)</pre>
 <dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>timeout</code> - timeout value in milliseconds</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
 </dl>
 </li>
 </ul>
-<a id="getReadTimeout()">
+<a id="readTimeout(int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getReadTimeout</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;getReadTimeout()</pre>
-</li>
-</ul>
-<a id="setReadTimeout(int)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setReadTimeout</h4>
-<pre class="methodSignature">public&nbsp;<a href="RequestOptions.RequestOptionsBuilder.html" title="class in com.atlan.net">RequestOptions.RequestOptionsBuilder</a>&nbsp;setReadTimeout&#8203;(int&nbsp;timeout)</pre>
-<div class="block">Sets the timeout value that will be used when reading data from an established connection to
- the Atlan API (in milliseconds).
-
- <p>Note that this value should be set conservatively because some API requests can take time
- and a short timeout increases the likelihood of causing a problem in the backend.</div>
+<h4>readTimeout</h4>
+<pre class="methodSignature">public&nbsp;<a href="RequestOptions.RequestOptionsBuilder.html" title="class in com.atlan.net">RequestOptions.RequestOptionsBuilder</a>&nbsp;readTimeout&#8203;(int&nbsp;readTimeout)</pre>
 <dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>timeout</code> - timeout value in milliseconds</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
 </dl>
 </li>
 </ul>
-<a id="getMaxNetworkRetries()">
+<a id="maxNetworkRetries(int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getMaxNetworkRetries</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;getMaxNetworkRetries()</pre>
-</li>
-</ul>
-<a id="setMaxNetworkRetries(int)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setMaxNetworkRetries</h4>
-<pre class="methodSignature">public&nbsp;<a href="RequestOptions.RequestOptionsBuilder.html" title="class in com.atlan.net">RequestOptions.RequestOptionsBuilder</a>&nbsp;setMaxNetworkRetries&#8203;(int&nbsp;maxNetworkRetries)</pre>
-<div class="block">Sets the maximum number of times the request will be retried in the event of a failure.</div>
+<h4>maxNetworkRetries</h4>
+<pre class="methodSignature">public&nbsp;<a href="RequestOptions.RequestOptionsBuilder.html" title="class in com.atlan.net">RequestOptions.RequestOptionsBuilder</a>&nbsp;maxNetworkRetries&#8203;(int&nbsp;maxNetworkRetries)</pre>
 <dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>maxNetworkRetries</code> - the number of times to retry the request</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
 </dl>
 </li>
 </ul>
-<a id="getConnectionProxy()">
+<a id="connectionProxy(java.net.Proxy)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getConnectionProxy</h4>
-<pre class="methodSignature">public&nbsp;java.net.Proxy&nbsp;getConnectionProxy()</pre>
+<h4>connectionProxy</h4>
+<pre class="methodSignature">public&nbsp;<a href="RequestOptions.RequestOptionsBuilder.html" title="class in com.atlan.net">RequestOptions.RequestOptionsBuilder</a>&nbsp;connectionProxy&#8203;(java.net.Proxy&nbsp;connectionProxy)</pre>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
 </li>
 </ul>
-<a id="setConnectionProxy(java.net.Proxy)">
+<a id="proxyCredential(java.net.PasswordAuthentication)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>setConnectionProxy</h4>
-<pre class="methodSignature">public&nbsp;<a href="RequestOptions.RequestOptionsBuilder.html" title="class in com.atlan.net">RequestOptions.RequestOptionsBuilder</a>&nbsp;setConnectionProxy&#8203;(java.net.Proxy&nbsp;connectionProxy)</pre>
-</li>
-</ul>
-<a id="getProxyCredential()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getProxyCredential</h4>
-<pre class="methodSignature">public&nbsp;java.net.PasswordAuthentication&nbsp;getProxyCredential()</pre>
-</li>
-</ul>
-<a id="setProxyCredential(java.net.PasswordAuthentication)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setProxyCredential</h4>
-<pre class="methodSignature">public&nbsp;<a href="RequestOptions.RequestOptionsBuilder.html" title="class in com.atlan.net">RequestOptions.RequestOptionsBuilder</a>&nbsp;setProxyCredential&#8203;(java.net.PasswordAuthentication&nbsp;proxyCredential)</pre>
+<h4>proxyCredential</h4>
+<pre class="methodSignature">public&nbsp;<a href="RequestOptions.RequestOptionsBuilder.html" title="class in com.atlan.net">RequestOptions.RequestOptionsBuilder</a>&nbsp;proxyCredential&#8203;(java.net.PasswordAuthentication&nbsp;proxyCredential)</pre>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
 </li>
 </ul>
 <a id="build()">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>build</h4>
 <pre class="methodSignature">public&nbsp;<a href="RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;build()</pre>
-<div class="block">Constructs a <a href="RequestOptions.html" title="class in com.atlan.net"><code>RequestOptions</code></a> with the specified values.</div>
+</li>
+</ul>
+<a id="toString()">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>toString</h4>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;toString()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<dd><code>toString</code>&nbsp;in class&nbsp;<code>java.lang.Object</code></dd>
+</dl>
 </li>
 </ul>
 </li>
@@ -464,13 +356,13 @@ extends java.lang.Object</pre>
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
-<li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
-<li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>

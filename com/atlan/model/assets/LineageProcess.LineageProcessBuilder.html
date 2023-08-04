@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":6,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":6,"i14":10,"i15":10,"i16":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":6,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":6,"i17":10,"i18":10,"i19":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -200,80 +200,95 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="LineageProcess.LineageProcessBuilder.html" title="type parameter in LineageProcess.LineageProcessBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ast(java.lang.String)">ast</a></span>&#8203;(java.lang.String&nbsp;ast)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#airflowTask(com.atlan.model.assets.IAirflowTask)">airflowTask</a></span>&#8203;(<a href="IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&nbsp;airflowTask)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code>abstract <a href="LineageProcess.LineageProcessBuilder.html" title="type parameter in LineageProcess.LineageProcessBuilder">C</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#build()">build</a></span>()</code></th>
+<td class="colFirst"><code><a href="LineageProcess.LineageProcessBuilder.html" title="type parameter in LineageProcess.LineageProcessBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#airflowTasks(java.util.Collection)">airflowTasks</a></span>&#8203;(java.util.Collection&lt;? extends <a href="IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt;&nbsp;airflowTasks)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="LineageProcess.LineageProcessBuilder.html" title="type parameter in LineageProcess.LineageProcessBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearColumnProcesses()">clearColumnProcesses</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ast(java.lang.String)">ast</a></span>&#8203;(java.lang.String&nbsp;ast)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code><a href="LineageProcess.LineageProcessBuilder.html" title="type parameter in LineageProcess.LineageProcessBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearInputs()">clearInputs</a></span>()</code></th>
+<td class="colFirst"><code>abstract <a href="LineageProcess.LineageProcessBuilder.html" title="type parameter in LineageProcess.LineageProcessBuilder">C</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#build()">build</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="LineageProcess.LineageProcessBuilder.html" title="type parameter in LineageProcess.LineageProcessBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearOutputs()">clearOutputs</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearAirflowTasks()">clearAirflowTasks</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="LineageProcess.LineageProcessBuilder.html" title="type parameter in LineageProcess.LineageProcessBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#code(java.lang.String)">code</a></span>&#8203;(java.lang.String&nbsp;code)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearColumnProcesses()">clearColumnProcesses</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="LineageProcess.LineageProcessBuilder.html" title="type parameter in LineageProcess.LineageProcessBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#columnProcess(com.atlan.model.assets.IColumnProcess)">columnProcess</a></span>&#8203;(<a href="IColumnProcess.html" title="interface in com.atlan.model.assets">IColumnProcess</a>&nbsp;columnProcess)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearInputs()">clearInputs</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code><a href="LineageProcess.LineageProcessBuilder.html" title="type parameter in LineageProcess.LineageProcessBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#columnProcesses(java.util.Collection)">columnProcesses</a></span>&#8203;(java.util.Collection&lt;? extends <a href="IColumnProcess.html" title="interface in com.atlan.model.assets">IColumnProcess</a>&gt;&nbsp;columnProcesses)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearOutputs()">clearOutputs</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code><a href="LineageProcess.LineageProcessBuilder.html" title="type parameter in LineageProcess.LineageProcessBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#input(com.atlan.model.assets.ICatalog)">input</a></span>&#8203;(<a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a>&nbsp;input)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#code(java.lang.String)">code</a></span>&#8203;(java.lang.String&nbsp;code)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code><a href="LineageProcess.LineageProcessBuilder.html" title="type parameter in LineageProcess.LineageProcessBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#inputs(java.util.Collection)">inputs</a></span>&#8203;(java.util.Collection&lt;? extends <a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a>&gt;&nbsp;inputs)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#columnProcess(com.atlan.model.assets.IColumnProcess)">columnProcess</a></span>&#8203;(<a href="IColumnProcess.html" title="interface in com.atlan.model.assets">IColumnProcess</a>&nbsp;columnProcess)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code><a href="LineageProcess.LineageProcessBuilder.html" title="type parameter in LineageProcess.LineageProcessBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#output(com.atlan.model.assets.ICatalog)">output</a></span>&#8203;(<a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a>&nbsp;output)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#columnProcesses(java.util.Collection)">columnProcesses</a></span>&#8203;(java.util.Collection&lt;? extends <a href="IColumnProcess.html" title="interface in com.atlan.model.assets">IColumnProcess</a>&gt;&nbsp;columnProcesses)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i12" class="altColor">
 <td class="colFirst"><code><a href="LineageProcess.LineageProcessBuilder.html" title="type parameter in LineageProcess.LineageProcessBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#outputs(java.util.Collection)">outputs</a></span>&#8203;(java.util.Collection&lt;? extends <a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a>&gt;&nbsp;outputs)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#input(com.atlan.model.assets.ICatalog)">input</a></span>&#8203;(<a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a>&nbsp;input)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i13" class="rowColor">
-<td class="colFirst"><code>protected abstract <a href="LineageProcess.LineageProcessBuilder.html" title="type parameter in LineageProcess.LineageProcessBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#self()">self</a></span>()</code></th>
+<td class="colFirst"><code><a href="LineageProcess.LineageProcessBuilder.html" title="type parameter in LineageProcess.LineageProcessBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#inputs(java.util.Collection)">inputs</a></span>&#8203;(java.util.Collection&lt;? extends <a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a>&gt;&nbsp;inputs)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i14" class="altColor">
 <td class="colFirst"><code><a href="LineageProcess.LineageProcessBuilder.html" title="type parameter in LineageProcess.LineageProcessBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sql(java.lang.String)">sql</a></span>&#8203;(java.lang.String&nbsp;sql)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#output(com.atlan.model.assets.ICatalog)">output</a></span>&#8203;(<a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a>&nbsp;output)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i15" class="rowColor">
+<td class="colFirst"><code><a href="LineageProcess.LineageProcessBuilder.html" title="type parameter in LineageProcess.LineageProcessBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#outputs(java.util.Collection)">outputs</a></span>&#8203;(java.util.Collection&lt;? extends <a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a>&gt;&nbsp;outputs)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i16" class="altColor">
+<td class="colFirst"><code>protected abstract <a href="LineageProcess.LineageProcessBuilder.html" title="type parameter in LineageProcess.LineageProcessBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#self()">self</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i17" class="rowColor">
+<td class="colFirst"><code><a href="LineageProcess.LineageProcessBuilder.html" title="type parameter in LineageProcess.LineageProcessBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sql(java.lang.String)">sql</a></span>&#8203;(java.lang.String&nbsp;sql)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i18" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code><a href="LineageProcess.LineageProcessBuilder.html" title="type parameter in LineageProcess.LineageProcessBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#typeName(java.lang.String)">typeName</a></span>&#8203;(java.lang.String&nbsp;typeName)</code></th>
 <td class="colLast">&nbsp;</td>
@@ -389,6 +404,33 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
 </dl>
+</li>
+</ul>
+<a id="airflowTask(com.atlan.model.assets.IAirflowTask)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>airflowTask</h4>
+<pre class="methodSignature">public&nbsp;<a href="LineageProcess.LineageProcessBuilder.html" title="type parameter in LineageProcess.LineageProcessBuilder">B</a>&nbsp;airflowTask&#8203;(<a href="IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&nbsp;airflowTask)</pre>
+</li>
+</ul>
+<a id="airflowTasks(java.util.Collection)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>airflowTasks</h4>
+<pre class="methodSignature">public&nbsp;<a href="LineageProcess.LineageProcessBuilder.html" title="type parameter in LineageProcess.LineageProcessBuilder">B</a>&nbsp;airflowTasks&#8203;(java.util.Collection&lt;? extends <a href="IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt;&nbsp;airflowTasks)</pre>
+</li>
+</ul>
+<a id="clearAirflowTasks()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clearAirflowTasks</h4>
+<pre class="methodSignature">public&nbsp;<a href="LineageProcess.LineageProcessBuilder.html" title="type parameter in LineageProcess.LineageProcessBuilder">B</a>&nbsp;clearAirflowTasks()</pre>
 </li>
 </ul>
 <a id="ast(java.lang.String)">

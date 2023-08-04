@@ -2746,6 +2746,233 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </li>
 </ul>
 </li>
+<li class="blockList"><a id="com.atlan.model.assets.AirflowDag">
+<!--   -->
+</a>
+<h3>Class <a href="com/atlan/model/assets/AirflowDag.html" title="class in com.atlan.model.assets">com.atlan.model.assets.AirflowDag</a> extends <a href="com/atlan/model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>airflowDagSchedule</h4>
+<pre>java.lang.String airflowDagSchedule</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>airflowDagScheduleDelta</h4>
+<pre>java.lang.Long airflowDagScheduleDelta</pre>
+<div class="block">Duration between scheduled runs in seconds</div>
+</li>
+<li class="blockList">
+<h4>airflowRunEndTime</h4>
+<pre>java.lang.Long airflowRunEndTime</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>airflowRunName</h4>
+<pre>java.lang.String airflowRunName</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>airflowRunOpenLineageState</h4>
+<pre><a href="com/atlan/model/enums/OpenLineageRunState.html" title="enum in com.atlan.model.enums">OpenLineageRunState</a> airflowRunOpenLineageState</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>airflowRunOpenLineageVersion</h4>
+<pre>java.lang.String airflowRunOpenLineageVersion</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>airflowRunStartTime</h4>
+<pre>java.lang.Long airflowRunStartTime</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>airflowRunType</h4>
+<pre>java.lang.String airflowRunType</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>airflowRunVersion</h4>
+<pre>java.lang.String airflowRunVersion</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>airflowTags</h4>
+<pre>java.util.SortedSet&lt;java.lang.String&gt; airflowTags</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>airflowTasks</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; airflowTasks</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>inputToProcesses</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; inputToProcesses</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>outputFromProcesses</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; outputFromProcesses</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockListLast">
+<h4>typeName</h4>
+<pre>java.lang.String typeName</pre>
+<div class="block">Fixed typeName for AirflowDags.</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList"><a id="com.atlan.model.assets.AirflowTask">
+<!--   -->
+</a>
+<h3>Class <a href="com/atlan/model/assets/AirflowTask.html" title="class in com.atlan.model.assets">com.atlan.model.assets.AirflowTask</a> extends <a href="com/atlan/model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>airflowDag</h4>
+<pre><a href="com/atlan/model/assets/IAirflowDag.html" title="interface in com.atlan.model.assets">IAirflowDag</a> airflowDag</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>airflowDagName</h4>
+<pre>java.lang.String airflowDagName</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>airflowDagQualifiedName</h4>
+<pre>java.lang.String airflowDagQualifiedName</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>airflowRunEndTime</h4>
+<pre>java.lang.Long airflowRunEndTime</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>airflowRunName</h4>
+<pre>java.lang.String airflowRunName</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>airflowRunOpenLineageState</h4>
+<pre><a href="com/atlan/model/enums/OpenLineageRunState.html" title="enum in com.atlan.model.enums">OpenLineageRunState</a> airflowRunOpenLineageState</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>airflowRunOpenLineageVersion</h4>
+<pre>java.lang.String airflowRunOpenLineageVersion</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>airflowRunStartTime</h4>
+<pre>java.lang.Long airflowRunStartTime</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>airflowRunType</h4>
+<pre>java.lang.String airflowRunType</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>airflowRunVersion</h4>
+<pre>java.lang.String airflowRunVersion</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>airflowTags</h4>
+<pre>java.util.SortedSet&lt;java.lang.String&gt; airflowTags</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>airflowTaskConnectionId</h4>
+<pre>java.lang.String airflowTaskConnectionId</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>airflowTaskOperatorClass</h4>
+<pre>java.lang.String airflowTaskOperatorClass</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>airflowTaskPool</h4>
+<pre>java.lang.String airflowTaskPool</pre>
+<div class="block">Pool on which this run happened</div>
+</li>
+<li class="blockList">
+<h4>airflowTaskPoolSlots</h4>
+<pre>java.lang.Long airflowTaskPoolSlots</pre>
+<div class="block">Pool slots used for the run</div>
+</li>
+<li class="blockList">
+<h4>airflowTaskPriorityWeight</h4>
+<pre>java.lang.Long airflowTaskPriorityWeight</pre>
+<div class="block">Priority weight of the run</div>
+</li>
+<li class="blockList">
+<h4>airflowTaskQueue</h4>
+<pre>java.lang.String airflowTaskQueue</pre>
+<div class="block">Queue on which this run happened</div>
+</li>
+<li class="blockList">
+<h4>airflowTaskRetryNumber</h4>
+<pre>java.lang.Long airflowTaskRetryNumber</pre>
+<div class="block">Retry required for the run</div>
+</li>
+<li class="blockList">
+<h4>airflowTaskSql</h4>
+<pre>java.lang.String airflowTaskSql</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>airflowTaskTriggerRule</h4>
+<pre>java.lang.String airflowTaskTriggerRule</pre>
+<div class="block">Trigger rule of the run</div>
+</li>
+<li class="blockList">
+<h4>inputToProcesses</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; inputToProcesses</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>outputFromProcesses</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; outputFromProcesses</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>process</h4>
+<pre><a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a> process</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>tables</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ITable.html" title="interface in com.atlan.model.assets">ITable</a>&gt; tables</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockListLast">
+<h4>typeName</h4>
+<pre>java.lang.String typeName</pre>
+<div class="block">Fixed typeName for AirflowTasks.</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="blockList"><a id="com.atlan.model.assets.APIPath">
 <!--   -->
 </a>
@@ -4166,6 +4393,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <h3>Serialized Fields</h3>
 <ul class="blockList">
 <li class="blockList">
+<h4>airflowTasks</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; airflowTasks</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
 <h4>ast</h4>
 <pre>java.lang.String ast</pre>
 <div class="block">TBC</div>
@@ -4663,6 +4895,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <h3>Serialized Fields</h3>
 <ul class="blockList">
 <li class="blockList">
+<h4>airflowTasks</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; airflowTasks</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
 <h4>ast</h4>
 <pre>java.lang.String ast</pre>
 <div class="block">TBC</div>
@@ -5081,6 +5318,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <h3>Serialized Fields</h3>
 <ul class="blockList">
+<li class="blockList">
+<h4>airflowTasks</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; airflowTasks</pre>
+<div class="block">TBC</div>
+</li>
 <li class="blockList">
 <h4>ast</h4>
 <pre>java.lang.String ast</pre>
@@ -5780,6 +6022,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <h3>Serialized Fields</h3>
 <ul class="blockList">
+<li class="blockList">
+<h4>airflowTasks</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; airflowTasks</pre>
+<div class="block">TBC</div>
+</li>
 <li class="blockList">
 <h4>ast</h4>
 <pre>java.lang.String ast</pre>
@@ -7436,6 +7683,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <h3>Serialized Fields</h3>
 <ul class="blockList">
+<li class="blockList">
+<h4>airflowTasks</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; airflowTasks</pre>
+<div class="block">TBC</div>
+</li>
 <li class="blockList">
 <h4>ast</h4>
 <pre>java.lang.String ast</pre>
@@ -14913,6 +15165,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <h3>Serialized Fields</h3>
 <ul class="blockList">
+<li class="blockList">
+<h4>airflowTask</h4>
+<pre><a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a> airflowTask</pre>
+<div class="block">TBC</div>
+</li>
 <li class="blockList">
 <h4>alias</h4>
 <pre>java.lang.String alias</pre>
