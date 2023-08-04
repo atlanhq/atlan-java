@@ -39,6 +39,9 @@ public interface IDbtProcess {
     SortedSet<String> getAdminUsers();
 
     /** TBC */
+    SortedSet<IAirflowTask> getAirflowTasks();
+
+    /** TBC */
     String getAnnouncementMessage();
 
     /** TBC */

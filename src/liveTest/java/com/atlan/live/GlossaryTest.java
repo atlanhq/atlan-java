@@ -434,6 +434,10 @@ public class GlossaryTest extends AtlanLiveTest {
             dependsOnGroups = {"glossary.create.hierarchy"})
     void updateCategory() throws AtlanException {
         category = GlossaryCategory.get(leaf1baGuid);
+        List<GlossaryCategory> list = GlossaryCategory.findByName("leaf1ba" + PREFIX, GLOSSARY_NAME);
+        assertNotNull(list);
+        assertEquals(list.size(), 1);
+        assertEquals(category.getGuid(), list.get(0).getGuid());
         GlossaryCategory toUpdate = GlossaryCategory.updater(
                         category.getQualifiedName(),
                         category.getName(),

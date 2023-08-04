@@ -16,9 +16,9 @@ import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @SuppressWarnings("deprecation")
-public class LineageProcessTest {
+public class AirflowTaskTest {
 
-    private static final LineageProcess full = LineageProcess._internal()
+    private static final AirflowTask full = AirflowTask._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -59,6 +59,19 @@ public class LineageProcessTest {
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
                             .build())
+            .airflowRunEndTime(123456789L)
+            .airflowRunName("String0")
+            .airflowRunOpenLineageState(OpenLineageRunState.START)
+            .airflowRunOpenLineageVersion("String0")
+            .airflowRunStartTime(123456789L)
+            .airflowRunType("String0")
+            .airflowRunVersion("String0")
+            .airflowTag("String0")
+            .airflowTag("String1")
+            .inputToProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .inputToProcess(LineageProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .outputFromProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .outputFromProcess(LineageProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .adminGroup("String0")
             .adminGroup("String1")
             .adminRole("String0")
@@ -357,31 +370,35 @@ public class LineageProcessTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
-            .airflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .airflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .ast("String0")
-            .code("String0")
-            .columnProcess(ColumnProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .columnProcess(ColumnProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .input(AirflowDag.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .input(AirflowDag.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .output(AirflowDag.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .output(AirflowDag.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .sql("String0")
+            .airflowDag(AirflowDag.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .airflowDagName("String0")
+            .airflowDagQualifiedName("String0")
+            .airflowTaskConnectionId("String0")
+            .airflowTaskOperatorClass("String0")
+            .airflowTaskPool("String0")
+            .airflowTaskPoolSlots(123456789L)
+            .airflowTaskPriorityWeight(123456789L)
+            .airflowTaskQueue("String0")
+            .airflowTaskRetryNumber(123456789L)
+            .airflowTaskSql("String0")
+            .airflowTaskTriggerRule("String0")
+            .process(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .table(Table.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .table(Table.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .build();
 
     private static final int hash = full.hashCode();
-    private static LineageProcess frodo;
+    private static AirflowTask frodo;
     private static String serialized;
 
-    @Test(groups = {"LineageProcess.builderEquivalency"})
+    @Test(groups = {"AirflowTask.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"LineageProcess.serialize"},
-            dependsOnGroups = {"LineageProcess.builderEquivalency"})
+            groups = {"AirflowTask.serialize"},
+            dependsOnGroups = {"AirflowTask.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson(Atlan.getDefaultClient());
@@ -390,17 +407,17 @@ public class LineageProcessTest {
     }
 
     @Test(
-            groups = {"LineageProcess.deserialize"},
-            dependsOnGroups = {"LineageProcess.serialize"})
+            groups = {"AirflowTask.deserialize"},
+            dependsOnGroups = {"AirflowTask.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = Atlan.getDefaultClient().readValue(serialized, LineageProcess.class);
+        frodo = Atlan.getDefaultClient().readValue(serialized, AirflowTask.class);
         assertNotNull(frodo);
     }
 
     @Test(
-            groups = {"LineageProcess.equivalency"},
-            dependsOnGroups = {"LineageProcess.serialize", "LineageProcess.deserialize"})
+            groups = {"AirflowTask.equivalency"},
+            dependsOnGroups = {"AirflowTask.serialize", "AirflowTask.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -409,8 +426,8 @@ public class LineageProcessTest {
     }
 
     @Test(
-            groups = {"LineageProcess.equivalency"},
-            dependsOnGroups = {"LineageProcess.serialize", "LineageProcess.deserialize"})
+            groups = {"AirflowTask.equivalency"},
+            dependsOnGroups = {"AirflowTask.serialize", "AirflowTask.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

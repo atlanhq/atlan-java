@@ -74,6 +74,36 @@ public enum KeywordFields implements AtlanSearchableField {
     /** List of users who administer the asset. (This is only used for Connection assets.) */
     ADMIN_USERS("adminUsers"),
     /** TBC */
+    AIRFLOW_DAG_NAME("airflowDagName.keyword"),
+    /** TBC */
+    AIRFLOW_DAG_QUALIFIED_NAME("airflowDagQualifiedName"),
+    /** TBC */
+    AIRFLOW_DAG_SCHEDULE("airflowDagSchedule"),
+    /** Name of the run */
+    AIRFLOW_RUN_NAME("airflowRunName"),
+    /** OpenLineage state of the run */
+    AIRFLOW_RUN_OPEN_LINEAGE_STATE("airflowRunOpenLineageState"),
+    /** OpenLineage Version of the run */
+    AIRFLOW_RUN_OPEN_LINEAGE_VERSION("airflowRunOpenLineageVersion"),
+    /** Type of the run */
+    AIRFLOW_RUN_TYPE("airflowRunType"),
+    /** Airflow Version of the run */
+    AIRFLOW_RUN_VERSION("airflowRunVersion"),
+    /** TBC */
+    AIRFLOW_TAGS("airflowTags"),
+    /** TBC */
+    AIRFLOW_TASK_CONNECTION_ID("airflowTaskConnectionId.keyword"),
+    /** TBC */
+    AIRFLOW_TASK_OPERATOR_CLASS("airflowTaskOperatorClass.keyword"),
+    /** Pool on which this run happened */
+    AIRFLOW_TASK_POOL("airflowTaskPool"),
+    /** Queue on which this run happened */
+    AIRFLOW_TASK_QUEUE("airflowTaskQueue"),
+    /** TBC */
+    AIRFLOW_TASK_SQL("airflowTaskSql"),
+    /** Trigger rule of the run */
+    AIRFLOW_TASK_TRIGGER_RULE("airflowTaskTriggerRule"),
+    /** TBC */
     ALIAS("alias"),
     /** Detailed message to include in the announcement on this asset. */
     ANNOUNCEMENT_MESSAGE("announcementMessage"),

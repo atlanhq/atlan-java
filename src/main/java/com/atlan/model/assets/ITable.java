@@ -39,6 +39,9 @@ public interface ITable {
     SortedSet<String> getAdminUsers();
 
     /** TBC */
+    IAirflowTask getAirflowTask();
+
+    /** TBC */
     String getAlias();
 
     /** TBC */

@@ -45,6 +45,11 @@ public class DbtColumnProcess extends Asset
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<IAirflowTask> airflowTasks;
+
+    /** TBC */
+    @Attribute
     String ast;
 
     /** TBC */

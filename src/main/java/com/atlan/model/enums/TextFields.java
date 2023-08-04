@@ -26,6 +26,12 @@ public enum TextFields implements AtlanSearchableField {
     /** TBC */
     ADLS_OBJECT_URL("adlsObjectUrl"),
     /** TBC */
+    AIRFLOW_DAG_NAME("airflowDagName"),
+    /** TBC */
+    AIRFLOW_TASK_CONNECTION_ID("airflowTaskConnectionId"),
+    /** TBC */
+    AIRFLOW_TASK_OPERATOR_CLASS("airflowTaskOperatorClass"),
+    /** TBC */
     API_NAME("apiName"),
     /** TBC */
     API_PATH_RAW_URI("apiPathRawURI.text"),

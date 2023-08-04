@@ -6,6 +6,7 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.enums.OpenLineageRunState;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
@@ -20,14 +21,14 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a lineage process in Atlan.
+ * Airflow Task Assets
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface ILineageProcess {
+public interface IAirflowTask {
 
-    public static final String TYPE_NAME = "Process";
+    public static final String TYPE_NAME = "AirflowTask";
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -39,7 +40,64 @@ public interface ILineageProcess {
     SortedSet<String> getAdminUsers();
 
     /** TBC */
-    SortedSet<IAirflowTask> getAirflowTasks();
+    IAirflowDag getAirflowDag();
+
+    /** TBC */
+    String getAirflowDagName();
+
+    /** TBC */
+    String getAirflowDagQualifiedName();
+
+    /** TBC */
+    Long getAirflowRunEndTime();
+
+    /** TBC */
+    String getAirflowRunName();
+
+    /** TBC */
+    OpenLineageRunState getAirflowRunOpenLineageState();
+
+    /** TBC */
+    String getAirflowRunOpenLineageVersion();
+
+    /** TBC */
+    Long getAirflowRunStartTime();
+
+    /** TBC */
+    String getAirflowRunType();
+
+    /** TBC */
+    String getAirflowRunVersion();
+
+    /** TBC */
+    SortedSet<String> getAirflowTags();
+
+    /** TBC */
+    String getAirflowTaskConnectionId();
+
+    /** TBC */
+    String getAirflowTaskOperatorClass();
+
+    /** Pool on which this run happened */
+    String getAirflowTaskPool();
+
+    /** Pool slots used for the run */
+    Long getAirflowTaskPoolSlots();
+
+    /** Priority weight of the run */
+    Long getAirflowTaskPriorityWeight();
+
+    /** Queue on which this run happened */
+    String getAirflowTaskQueue();
+
+    /** Retry required for the run */
+    Long getAirflowTaskRetryNumber();
+
+    /** TBC */
+    String getAirflowTaskSql();
+
+    /** Trigger rule of the run */
+    String getAirflowTaskTriggerRule();
 
     /** TBC */
     String getAnnouncementMessage();
@@ -219,9 +277,6 @@ public interface ILineageProcess {
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
-    String getAst();
-
-    /** TBC */
     CertificateStatus getCertificateStatus();
 
     /** TBC */
@@ -232,12 +287,6 @@ public interface ILineageProcess {
 
     /** TBC */
     String getCertificateUpdatedBy();
-
-    /** TBC */
-    String getCode();
-
-    /** TBC */
-    SortedSet<IColumnProcess> getColumnProcesses();
 
     /** TBC */
     String getConnectionName();
@@ -264,7 +313,7 @@ public interface ILineageProcess {
     Boolean getHasLineage();
 
     /** TBC */
-    SortedSet<ICatalog> getInputs();
+    SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
     Boolean getIsDiscoverable();
@@ -300,7 +349,7 @@ public interface ILineageProcess {
     String getName();
 
     /** TBC */
-    SortedSet<ICatalog> getOutputs();
+    SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
     SortedSet<String> getOwnerGroups();
@@ -310,6 +359,9 @@ public interface ILineageProcess {
 
     /** TBC */
     Double getPopularityScore();
+
+    /** TBC */
+    ILineageProcess getProcess();
 
     /** TBC */
     String getQualifiedName();
@@ -390,9 +442,6 @@ public interface ILineageProcess {
     String getSourceUpdatedBy();
 
     /** TBC */
-    String getSql();
-
-    /** TBC */
     SortedSet<String> getStarredBy();
 
     /** TBC */
@@ -400,6 +449,9 @@ public interface ILineageProcess {
 
     /** TBC */
     String getSubType();
+
+    /** TBC */
+    SortedSet<ITable> getTables();
 
     /** TBC */
     String getTenantId();

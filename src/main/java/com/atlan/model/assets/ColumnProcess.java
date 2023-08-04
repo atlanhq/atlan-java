@@ -45,6 +45,11 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<IAirflowTask> airflowTasks;
+
+    /** TBC */
+    @Attribute
     String ast;
 
     /** TBC */
