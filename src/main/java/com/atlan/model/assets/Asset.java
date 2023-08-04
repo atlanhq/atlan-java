@@ -889,6 +889,72 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     }
 
     /**
+     * If no asset exists, fails with a NotFoundException.
+     * Will merge any provided custom metadata with any custom metadata that already exists on the asset.
+     * If an asset does exist, optionally overwrites any Atlan tags.
+     *
+     * @param replaceAtlanTags whether to replace AtlanTags during an update (true) or not (false)
+     * @return details of the updated asset
+     * @throws AtlanException on any error during the API invocation
+     * @throws com.atlan.exception.NotFoundException if the asset does not exist (will not create it)
+     */
+    public AssetMutationResponse updateMergingCM(boolean replaceAtlanTags) throws AtlanException {
+        return updateMergingCM(Atlan.getDefaultClient(), replaceAtlanTags);
+    }
+
+    /**
+     * If no asset exists, fails with a NotFoundException.
+     * Will merge any provided custom metadata with any custom metadata that already exists on the asset.
+     * If an asset does exist, optionally overwrites any Atlan tags.
+     *
+     * @param client connectivity to the Atlan tenant where this asset should be saved
+     * @param replaceAtlanTags whether to replace AtlanTags during an update (true) or not (false)
+     * @return details of the updated asset
+     * @throws AtlanException on any error during the API invocation
+     * @throws com.atlan.exception.NotFoundException if the asset does not exist (will not create it)
+     */
+    public AssetMutationResponse updateMergingCM(AtlanClient client, boolean replaceAtlanTags) throws AtlanException {
+        // Attempt to retrieve the asset first, and allow this to throw a NotFoundException if it does not exist
+        get(client, this.getTypeName(), this.getQualifiedName(), false);
+        // Otherwise, attempt the update
+        return saveReplacingCM(client, replaceAtlanTags);
+    }
+
+    /**
+     * If no asset exists, fails with a NotFoundException.
+     * Will overwrite all custom metadata on any existing asset with only the custom metadata provided
+     * (wiping out any other custom metadata on an existing asset that is not provided in the request).
+     * If an asset does exist, optionally overwrites any Atlan tags.
+     *
+     * @param replaceAtlanTags whether to replace Atlan tags during an update (true) or not (false)
+     * @return details of the updated asset
+     * @throws AtlanException on any error during the API invocation
+     * @throws com.atlan.exception.NotFoundException if the asset does not exist (will not create it)
+     */
+    public AssetMutationResponse updateReplacingCM(boolean replaceAtlanTags) throws AtlanException {
+        return updateReplacingCM(Atlan.getDefaultClient(), replaceAtlanTags);
+    }
+
+    /**
+     * If no asset exists, fails with a NotFoundException.
+     * Will overwrite all custom metadata on any existing asset with only the custom metadata provided
+     * (wiping out any other custom metadata on an existing asset that is not provided in the request).
+     * If an asset does exist, optionally overwrites any Atlan tags.
+     *
+     * @param client connectivity to the Atlan tenant where this asset should be saved
+     * @param replaceAtlanTags whether to replace Atlan tags during an update (true) or not (false)
+     * @return details of the updated asset
+     * @throws AtlanException on any error during the API invocation
+     * @throws com.atlan.exception.NotFoundException if the asset does not exist (will not create it)
+     */
+    public AssetMutationResponse updateReplacingCM(AtlanClient client, boolean replaceAtlanTags) throws AtlanException {
+        // Attempt to retrieve the asset first, and allow this to throw a NotFoundException if it does not exist
+        get(client, this.getTypeName(), this.getQualifiedName(), false);
+        // Otherwise, attempt the update
+        return saveReplacingCM(client, replaceAtlanTags);
+    }
+
+    /**
      * Retrieves an asset by its GUID, optionally complete with all of its relationships.
      * The type of the asset will only be determined at runtime.
      *

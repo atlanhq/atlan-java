@@ -9,6 +9,7 @@ import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
+import com.atlan.exception.NotFoundException;
 import com.atlan.model.assets.*;
 import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.enums.*;
@@ -153,6 +154,9 @@ public class GlossaryTest extends AtlanLiveTest {
      * @throws AtlanException on any error creating or reading-back the glossary term
      */
     static GlossaryTerm createTerm(AtlanClient client, String name, String glossaryId) throws AtlanException {
+        assertThrows(
+                NotFoundException.class,
+                () -> GlossaryTerm.creator(name, glossaryId, null).build().updateMergingCM(false));
         GlossaryTerm term = GlossaryTerm.creator(name, glossaryId, null).build();
         AssetMutationResponse response = term.save(client);
         assertNotNull(response);
@@ -500,7 +504,7 @@ public class GlossaryTest extends AtlanLiveTest {
                 .announcementMessage(ANNOUNCEMENT_MESSAGE)
                 .category(GlossaryCategory.refByGuid(category.getGuid()))
                 .build();
-        AssetMutationResponse response = term.save();
+        AssetMutationResponse response = term.updateMergingCM(false);
         assertNotNull(response);
         assertEquals(response.getDeletedAssets().size(), 0);
         assertEquals(response.getCreatedAssets().size(), 0);
