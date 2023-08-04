@@ -3,22 +3,17 @@
 package com.atlan.model.assets;
 
 import co.elastic.clients.elasticsearch._types.SortOrder;
-import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
-import com.atlan.exception.LogicException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.core.AssetFilter;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.KeywordFields;
 import com.atlan.model.relations.UniqueAttributes;
-import com.atlan.model.search.IndexSearchDSL;
-import com.atlan.model.search.IndexSearchRequest;
-import com.atlan.model.search.IndexSearchResponse;
 import com.atlan.util.QueryFactory;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -414,35 +409,21 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
      */
     public static Glossary findByName(AtlanClient client, String name, Collection<String> attributes)
             throws AtlanException {
-        Query filter = QueryFactory.CompoundQuery.builder()
-                .must(QueryFactory.beActive())
-                .must(QueryFactory.beOfType(TYPE_NAME))
-                .must(QueryFactory.have(KeywordFields.NAME).eq(name))
-                .build()
-                ._toQuery();
-        IndexSearchRequest.IndexSearchRequestBuilder<?, ?> builder = IndexSearchRequest.builder(
-                IndexSearchDSL.builder(filter).size(2).build());
-        if (attributes != null && !attributes.isEmpty()) {
-            builder.attributes(attributes);
+        List<Glossary> results = new ArrayList<>();
+        Glossary.all(client)
+                .filter(QueryFactory.where(KeywordFields.NAME).eq(name))
+                .attributes(attributes == null ? Collections.emptyList() : attributes)
+                .batch(2)
+                .stream()
+                .limit(2)
+                .filter(a -> a instanceof Glossary)
+                .forEach(g -> results.add((Glossary) g));
+        if (results.isEmpty()) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_NAME, TYPE_NAME, name);
+        } else if (results.size() > 1) {
+            log.warn("Multiple glossaries found with the name '{}', returning only the first.", name);
         }
-        IndexSearchRequest request = builder.build();
-        IndexSearchResponse response = request.search(client);
-        if (response != null) {
-            long count = response.getApproximateCount();
-            if (count > 1) {
-                log.warn("Multiple glossaries found with the name '{}', returning only the first.", name);
-            }
-            List<Asset> results = response.getAssets();
-            if (results != null && !results.isEmpty()) {
-                Asset first = results.get(0);
-                if (first instanceof Glossary) {
-                    return (Glossary) first;
-                } else {
-                    throw new LogicException(ErrorCode.FOUND_UNEXPECTED_ASSET_TYPE);
-                }
-            }
-        }
-        throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_NAME, TYPE_NAME, name);
+        return results.get(0);
     }
 
     /**
@@ -504,38 +485,27 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
             throw new InvalidRequestException(
                     ErrorCode.MISSING_REQUIRED_QUERY_PARAM, Glossary.TYPE_NAME, "qualifiedName");
         }
-        Query filter = QueryFactory.CompoundQuery.builder()
-                .must(QueryFactory.beActive())
-                .must(QueryFactory.beOfType(GlossaryCategory.TYPE_NAME))
-                .must(QueryFactory.have(KeywordFields.GLOSSARY).eq(getQualifiedName()))
-                .build()
-                ._toQuery();
-        IndexSearchRequest.IndexSearchRequestBuilder<?, ?> builder = IndexSearchRequest.builder(
-                        IndexSearchDSL.builder(filter)
-                                .size(20)
-                                .sortOption(QueryFactory.Sort.by(KeywordFields.NAME, SortOrder.Asc))
-                                .build())
-                .attribute("parentCategory");
-        if (attributes != null) {
-            builder.attributes(attributes);
+        Set<String> topCategories = new LinkedHashSet<>();
+        Map<String, GlossaryCategory> categoryMap = new HashMap<>();
+        GlossaryCategory.all(client)
+                .filter(QueryFactory.where(KeywordFields.GLOSSARY).eq(getQualifiedName()))
+                .attribute("parentCategory")
+                .attributes(attributes == null ? Collections.emptyList() : attributes)
+                .batch(20)
+                .sort(QueryFactory.Sort.by(KeywordFields.NAME, SortOrder.Asc))
+                .stream()
+                .filter(a -> a instanceof GlossaryCategory)
+                .forEach(c -> {
+                    GlossaryCategory category = (GlossaryCategory) c;
+                    categoryMap.put(category.getGuid(), category);
+                    if (category.getParentCategory() == null) {
+                        topCategories.add(category.getGuid());
+                    }
+                });
+        if (topCategories.isEmpty()) {
+            throw new NotFoundException(ErrorCode.NO_CATEGORIES, getGuid(), getQualifiedName());
         }
-        IndexSearchRequest request = builder.build();
-        IndexSearchResponse response = request.search(client);
-        if (response != null) {
-            Set<String> topCategories = new LinkedHashSet<>();
-            Map<String, GlossaryCategory> categoryMap = new HashMap<>();
-            // First build up a map in-memory of all the categories
-            response.stream().filter(c -> (c instanceof GlossaryCategory)).forEach(c -> {
-                GlossaryCategory category = (GlossaryCategory) c;
-                categoryMap.put(category.getGuid(), category);
-                if (category.getParentCategory() == null) {
-                    topCategories.add(category.getGuid());
-                }
-            });
-            // Then pass that over to a CategoryHierarchy to order
-            return new CategoryHierarchy(topCategories, categoryMap);
-        }
-        throw new NotFoundException(ErrorCode.NO_CATEGORIES, getGuid(), getQualifiedName());
+        return new CategoryHierarchy(topCategories, categoryMap);
     }
 
     /**

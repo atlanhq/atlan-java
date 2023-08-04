@@ -18,7 +18,7 @@ Some of these models are for types that can only be created through the APIs (or
     <#else>
     class ${subType.originalName}
     </#if>
-    link ${subType.originalName} "${subType.originalName?lower_case}"
+    link ${subType.originalName} "entities/${subType.originalName?lower_case}"
     ${originalName} <|-- ${subType.originalName} : extends
     <#if subType.fullSubTypes?has_content>
     <@renderSubTypes originalName=subType.originalName subTypes=subType.fullSubTypes />
@@ -32,6 +32,6 @@ classDiagram
     class Referenceable {
         <<abstract>>
     }
-    link Referenceable "referenceable"
+    link Referenceable "entities/referenceable"
     <@renderSubTypes originalName="Referenceable" subTypes=fullSubTypes />
 ```

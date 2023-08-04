@@ -39,6 +39,9 @@ public interface IColumnProcess {
     SortedSet<String> getAdminUsers();
 
     /** TBC */
+    SortedSet<IAirflowTask> getAirflowTasks();
+
+    /** TBC */
     String getAnnouncementMessage();
 
     /** TBC */

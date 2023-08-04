@@ -44,6 +44,11 @@ public class BIProcess extends Asset implements IBIProcess, ILineageProcess, IAs
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<IAirflowTask> airflowTasks;
+
+    /** TBC */
+    @Attribute
     String ast;
 
     /** TBC */

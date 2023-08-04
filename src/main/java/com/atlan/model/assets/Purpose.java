@@ -2,7 +2,6 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
-import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
@@ -18,14 +17,13 @@ import com.atlan.model.enums.DataAction;
 import com.atlan.model.enums.KeywordFields;
 import com.atlan.model.enums.PurposeMetadataAction;
 import com.atlan.model.relations.UniqueAttributes;
-import com.atlan.model.search.IndexSearchRequest;
-import com.atlan.model.search.IndexSearchResponse;
 import com.atlan.util.QueryFactory;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.SortedSet;
 import javax.annotation.processing.Generated;
@@ -407,25 +405,17 @@ public class Purpose extends Asset implements IPurpose, IAccessControl, IAsset, 
      */
     public static List<Purpose> findByName(AtlanClient client, String name, Collection<String> attributes)
             throws AtlanException {
-        Query filter = QueryFactory.CompoundQuery.builder()
-                .must(QueryFactory.beActive())
-                .must(QueryFactory.beOfType(TYPE_NAME))
-                .must(QueryFactory.have(KeywordFields.NAME).eq(name))
-                .build()
-                ._toQuery();
-        IndexSearchRequest.IndexSearchRequestBuilder<?, ?> builder = IndexSearchRequest.builder(filter);
-        if (attributes != null && !attributes.isEmpty()) {
-            builder.attributes(attributes);
-        }
-        IndexSearchRequest request = builder.build();
-        IndexSearchResponse response = request.search(client);
-        List<Purpose> purposes = new ArrayList<>();
-        response.stream().filter(p -> (p instanceof Purpose)).forEach(p -> purposes.add((Purpose) p));
-        if (purposes.isEmpty()) {
+        List<Purpose> results = new ArrayList<>();
+        Purpose.all(client)
+                .filter(QueryFactory.where(KeywordFields.NAME).eq(name))
+                .attributes(attributes == null ? Collections.emptyList() : attributes)
+                .stream()
+                .filter(a -> a instanceof Purpose)
+                .forEach(p -> results.add((Purpose) p));
+        if (results.isEmpty()) {
             throw new NotFoundException(ErrorCode.PURPOSE_NOT_FOUND_BY_NAME, name);
-        } else {
-            return purposes;
         }
+        return results;
     }
 
     /**

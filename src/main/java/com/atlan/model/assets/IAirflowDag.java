@@ -6,6 +6,7 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.enums.OpenLineageRunState;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
@@ -20,14 +21,14 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a lineage process in Atlan.
+ * Airflow Dag Assets
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface ILineageProcess {
+public interface IAirflowDag {
 
-    public static final String TYPE_NAME = "Process";
+    public static final String TYPE_NAME = "AirflowDag";
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -37,6 +38,36 @@ public interface ILineageProcess {
 
     /** TBC */
     SortedSet<String> getAdminUsers();
+
+    /** TBC */
+    String getAirflowDagSchedule();
+
+    /** Duration between scheduled runs in seconds */
+    Long getAirflowDagScheduleDelta();
+
+    /** TBC */
+    Long getAirflowRunEndTime();
+
+    /** TBC */
+    String getAirflowRunName();
+
+    /** TBC */
+    OpenLineageRunState getAirflowRunOpenLineageState();
+
+    /** TBC */
+    String getAirflowRunOpenLineageVersion();
+
+    /** TBC */
+    Long getAirflowRunStartTime();
+
+    /** TBC */
+    String getAirflowRunType();
+
+    /** TBC */
+    String getAirflowRunVersion();
+
+    /** TBC */
+    SortedSet<String> getAirflowTags();
 
     /** TBC */
     SortedSet<IAirflowTask> getAirflowTasks();
@@ -219,9 +250,6 @@ public interface ILineageProcess {
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
-    String getAst();
-
-    /** TBC */
     CertificateStatus getCertificateStatus();
 
     /** TBC */
@@ -232,12 +260,6 @@ public interface ILineageProcess {
 
     /** TBC */
     String getCertificateUpdatedBy();
-
-    /** TBC */
-    String getCode();
-
-    /** TBC */
-    SortedSet<IColumnProcess> getColumnProcesses();
 
     /** TBC */
     String getConnectionName();
@@ -264,7 +286,7 @@ public interface ILineageProcess {
     Boolean getHasLineage();
 
     /** TBC */
-    SortedSet<ICatalog> getInputs();
+    SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
     Boolean getIsDiscoverable();
@@ -300,7 +322,7 @@ public interface ILineageProcess {
     String getName();
 
     /** TBC */
-    SortedSet<ICatalog> getOutputs();
+    SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
     SortedSet<String> getOwnerGroups();
@@ -388,9 +410,6 @@ public interface ILineageProcess {
 
     /** TBC */
     String getSourceUpdatedBy();
-
-    /** TBC */
-    String getSql();
 
     /** TBC */
     SortedSet<String> getStarredBy();

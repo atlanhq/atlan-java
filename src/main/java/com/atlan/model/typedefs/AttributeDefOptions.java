@@ -36,6 +36,8 @@ public class AttributeDefOptions extends AtlanObject {
             ADLSObject.TYPE_NAME,
             APIPath.TYPE_NAME,
             APISpec.TYPE_NAME,
+            AirflowDag.TYPE_NAME,
+            AirflowTask.TYPE_NAME,
             AtlanCollection.TYPE_NAME,
             AtlanQuery.TYPE_NAME,
             AuthPolicy.TYPE_NAME,
