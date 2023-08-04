@@ -73,6 +73,31 @@ AccessControl,Base class for Atlan access control assets.,denyCustomMetadataGuid
 AccessControl,Base class for Atlan access control assets.,denyAssetTabs,Asset sidebar tabs that should be hidden from this access control object.
 AccessControl,Base class for Atlan access control assets.,channelLink,Link to a Slack channel that is used to discuss this access control object.
 AccessControl,Base class for Atlan access control assets.,policies,Policies associated with this access control object.
+Airflow,Airflow Assets,airflowTags,TBC
+Airflow,Airflow Assets,airflowRunVersion,Airflow Version of the run
+Airflow,Airflow Assets,airflowRunOpenLineageVersion,OpenLineage Version of the run
+Airflow,Airflow Assets,airflowRunName,Name of the run
+Airflow,Airflow Assets,airflowRunType,Type of the run
+Airflow,Airflow Assets,airflowRunStartTime,Start time of the run
+Airflow,Airflow Assets,airflowRunEndTime,End time of the run
+Airflow,Airflow Assets,airflowRunOpenLineageState,OpenLineage state of the run
+AirflowDag,Airflow Dag Assets,airflowDagSchedule,TBC
+AirflowDag,Airflow Dag Assets,airflowDagScheduleDelta,Duration between scheduled runs in seconds
+AirflowDag,Airflow Dag Assets,airflowTasks,TBC
+AirflowTask,Airflow Task Assets,airflowTaskOperatorClass,TBC
+AirflowTask,Airflow Task Assets,airflowDagName,TBC
+AirflowTask,Airflow Task Assets,airflowDagQualifiedName,TBC
+AirflowTask,Airflow Task Assets,airflowTaskConnectionId,TBC
+AirflowTask,Airflow Task Assets,airflowTaskSql,TBC
+AirflowTask,Airflow Task Assets,airflowTaskRetryNumber,Retry required for the run
+AirflowTask,Airflow Task Assets,airflowTaskPool,Pool on which this run happened
+AirflowTask,Airflow Task Assets,airflowTaskPoolSlots,Pool slots used for the run
+AirflowTask,Airflow Task Assets,airflowTaskQueue,Queue on which this run happened
+AirflowTask,Airflow Task Assets,airflowTaskPriorityWeight,Priority weight of the run
+AirflowTask,Airflow Task Assets,airflowTaskTriggerRule,Trigger rule of the run
+AirflowTask,Airflow Task Assets,process,TBC
+AirflowTask,Airflow Task Assets,tables,TBC
+AirflowTask,Airflow Task Assets,airflowDag,TBC
 Asset,Base class for all assets.,name,Human-readable name of the asset.
 Asset,Base class for all assets.,displayName,Name used for display purposes (in user interfaces).
 Asset,Base class for all assets.,description,"Description of the asset, as crawled from a source."
@@ -840,6 +865,7 @@ Process,Instance of a lineage process in Atlan.,outputs,Assets that are outputs 
 Process,Instance of a lineage process in Atlan.,code,Code that ran within the process.
 Process,Instance of a lineage process in Atlan.,sql,SQL query that ran to produce the outputs.
 Process,Instance of a lineage process in Atlan.,ast,TBC
+Process,Instance of a lineage process in Atlan.,airflowTasks,TBC
 Process,Instance of a lineage process in Atlan.,outputs,Assets that are outputs from this process.
 Process,Instance of a lineage process in Atlan.,inputs,Assets that are inputs to this process.
 Process,Instance of a lineage process in Atlan.,columnProcesses,Processes that detail column-level lineage for this process.
@@ -1089,6 +1115,7 @@ Table,Instance of a database table in Atlan.,partitionCount,TBC
 Table,Instance of a database table in Atlan.,partitionList,TBC
 Table,Instance of a database table in Atlan.,partitions,TBC
 Table,Instance of a database table in Atlan.,columns,Columns that exist within this table.
+Table,Instance of a database table in Atlan.,airflowTask,TBC
 Table,Instance of a database table in Atlan.,queries,Queries that involve this table.
 Table,Instance of a database table in Atlan.,facts,TBC
 Table,Instance of a database table in Atlan.,atlanSchema,Schema in which this table exists.
