@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -173,6 +173,13 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr id="i2" class="altColor">
+<td class="colFirst"><code><a href="GlossaryCategory.html" title="class in com.atlan.model.assets">GlossaryCategory</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCategory(java.lang.String)">getCategory</a></span>&#8203;(java.lang.String&nbsp;guid)</code></th>
+<td class="colLast">
+<div class="block">Retrieve a specific category from anywhere in the hierarchy by its unique identifier (GUID).</div>
+</td>
+</tr>
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="IGlossaryCategory.html" title="interface in com.atlan.model.assets">IGlossaryCategory</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRootCategories()">getRootCategories</a></span>()</code></th>
 <td class="colLast">
@@ -203,6 +210,22 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a id="getCategory(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getCategory</h4>
+<pre class="methodSignature">public&nbsp;<a href="GlossaryCategory.html" title="class in com.atlan.model.assets">GlossaryCategory</a>&nbsp;getCategory&#8203;(java.lang.String&nbsp;guid)</pre>
+<div class="block">Retrieve a specific category from anywhere in the hierarchy by its unique identifier (GUID).</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>guid</code> - of the category to retrieve</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the requested category</dd>
+</dl>
+</li>
+</ul>
 <a id="getRootCategories()">
 <!--   -->
 </a>
