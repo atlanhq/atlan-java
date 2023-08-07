@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -40,11 +41,19 @@ public class AssetMutationResponse extends ApiResource {
      */
     @JsonIgnore
     public List<Asset> getCreatedAssets() {
-        if (mutatedAssets != null) {
-            List<Asset> created = mutatedAssets.getCREATE();
-            return created == null ? Collections.emptyList() : created;
-        }
-        return Collections.emptyList();
+        return mutatedAssets == null ? Collections.emptyList() : sublist(mutatedAssets.getCREATE(), Asset.class);
+    }
+
+    /**
+     * Retrieve the sublist of assets that were created, of the provided type.
+     *
+     * @param type of assets to filter the created list by
+     * @return list of created assets, only of the requested type, or an empty list of none of that type were created
+     * @param <T> the type of created assets to filter
+     */
+    @JsonIgnore
+    public <T extends Asset> List<T> getCreatedAssets(Class<T> type) {
+        return mutatedAssets == null ? Collections.emptyList() : sublist(mutatedAssets.getCREATE(), type);
     }
 
     /**
@@ -53,11 +62,19 @@ public class AssetMutationResponse extends ApiResource {
      */
     @JsonIgnore
     public List<Asset> getUpdatedAssets() {
-        if (mutatedAssets != null) {
-            List<Asset> updated = mutatedAssets.getUPDATE();
-            return updated == null ? Collections.emptyList() : updated;
-        }
-        return Collections.emptyList();
+        return mutatedAssets == null ? Collections.emptyList() : sublist(mutatedAssets.getUPDATE(), Asset.class);
+    }
+
+    /**
+     * Retrieve the sublist of assets that were updated, of the provided type.
+     *
+     * @param type of assets to filter the updated list by
+     * @return list of updated assets, only of the requested type, or an empty list of none of that type were updated
+     * @param <T> the type of updated assets to filter
+     */
+    @JsonIgnore
+    public <T extends Asset> List<T> getUpdatedAssets(Class<T> type) {
+        return mutatedAssets == null ? Collections.emptyList() : sublist(mutatedAssets.getUPDATE(), type);
     }
 
     /**
@@ -67,11 +84,22 @@ public class AssetMutationResponse extends ApiResource {
      */
     @JsonIgnore
     public List<Asset> getPartiallyUpdatedAssets() {
-        if (mutatedAssets != null) {
-            List<Asset> updated = mutatedAssets.getPARTIAL_UPDATE();
-            return updated == null ? Collections.emptyList() : updated;
-        }
-        return Collections.emptyList();
+        return mutatedAssets == null
+                ? Collections.emptyList()
+                : sublist(mutatedAssets.getPARTIAL_UPDATE(), Asset.class);
+    }
+
+    /**
+     * Retrieve the sublist of assets that were partially updated, of the provided type.
+     * Note: this should only ever be populated by calls to the certain endpoints
+     *
+     * @param type of assets to filter the partially updated list by
+     * @return list of partially updated assets, only of the requested type, or an empty list of none of that type were partially updated
+     * @param <T> the type of partially updated assets to filter
+     */
+    @JsonIgnore
+    public <T extends Asset> List<T> getPartiallyUpdatedAssets(Class<T> type) {
+        return mutatedAssets == null ? Collections.emptyList() : sublist(mutatedAssets.getPARTIAL_UPDATE(), type);
     }
 
     /**
@@ -80,10 +108,29 @@ public class AssetMutationResponse extends ApiResource {
      */
     @JsonIgnore
     public List<Asset> getDeletedAssets() {
-        if (mutatedAssets != null) {
-            List<Asset> deleted = mutatedAssets.getDELETE();
-            return deleted == null ? Collections.emptyList() : deleted;
+        return mutatedAssets == null ? Collections.emptyList() : sublist(mutatedAssets.getDELETE(), Asset.class);
+    }
+
+    /**
+     * Retrieve the sublist of assets that were deleted, of the provided type.
+     *
+     * @param type of assets to filter the deleted list by
+     * @return list of deleted assets, only of the requested type, or an empty list of none of that type were deleted
+     * @param <T> the type of deleted assets to filter
+     */
+    @JsonIgnore
+    public <T extends Asset> List<T> getDeletedAssets(Class<T> type) {
+        return mutatedAssets == null ? Collections.emptyList() : sublist(mutatedAssets.getDELETE(), type);
+    }
+
+    @SuppressWarnings("unchecked")
+    private <T extends Asset> List<T> sublist(List<Asset> list, Class<T> type) {
+        if (type == Asset.class) {
+            return list == null ? Collections.emptyList() : (List<T>) list;
+        } else {
+            return list == null
+                    ? Collections.emptyList()
+                    : list.stream().filter(type::isInstance).map(type::cast).collect(Collectors.toList());
         }
-        return Collections.emptyList();
     }
 }

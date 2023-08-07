@@ -84,7 +84,7 @@ public class GlossaryTest extends AtlanLiveTest {
         Asset one = response.getCreatedAssets().get(0);
         assertNotNull(one);
         assertTrue(one instanceof Glossary);
-        glossary = (Glossary) one;
+        glossary = response.getCreatedAssets(Glossary.class).get(0);
         assertNotNull(glossary.getGuid());
         assertNotNull(glossary.getQualifiedName());
         assertEquals(glossary.getName(), name);
@@ -119,15 +119,12 @@ public class GlossaryTest extends AtlanLiveTest {
         assertNotNull(response);
         assertEquals(response.getDeletedAssets().size(), 0);
         assertEquals(response.getCreatedAssets().size(), names.size());
-        List<Asset> entities = response.getCreatedAssets();
+        List<GlossaryCategory> entities = response.getCreatedAssets(GlossaryCategory.class);
         List<GlossaryCategory> toReturn = new ArrayList<>(names.size());
-        for (Asset created : entities) {
-            if (created instanceof GlossaryCategory) {
-                GlossaryCategory one = (GlossaryCategory) created;
-                String name = one.getName();
-                int index = names.indexOf(name);
-                toReturn.add(index, one);
-            }
+        for (GlossaryCategory created : entities) {
+            String name = created.getName();
+            int index = names.indexOf(name);
+            toReturn.add(index, created);
         }
         return toReturn;
     }
@@ -164,7 +161,7 @@ public class GlossaryTest extends AtlanLiveTest {
         assertEquals(response.getUpdatedAssets().size(), 1);
         Asset one = response.getUpdatedAssets().get(0);
         assertTrue(one instanceof Glossary);
-        Glossary glossary = (Glossary) one;
+        Glossary glossary = response.getUpdatedAssets(Glossary.class).get(0);
         assertEquals(glossary.getGuid(), glossaryId);
         assertEquals(response.getCreatedAssets().size(), 1);
         one = response.getCreatedAssets().get(0);
@@ -193,7 +190,7 @@ public class GlossaryTest extends AtlanLiveTest {
         assertEquals(response.getDeletedAssets().size(), 1);
         Asset one = response.getDeletedAssets().get(0);
         assertTrue(one instanceof Glossary);
-        Glossary deletedGlossary = (Glossary) one;
+        Glossary deletedGlossary = response.getDeletedAssets(Glossary.class).get(0);
         assertEquals(deletedGlossary.getGuid(), guid);
         assertEquals(deletedGlossary.getStatus(), AtlanStatus.DELETED);
         return deletedGlossary;
@@ -214,7 +211,8 @@ public class GlossaryTest extends AtlanLiveTest {
         assertEquals(response.getDeletedAssets().size(), 1);
         Asset one = response.getDeletedAssets().get(0);
         assertTrue(one instanceof GlossaryCategory);
-        GlossaryCategory deletedCategory = (GlossaryCategory) one;
+        GlossaryCategory deletedCategory =
+                response.getDeletedAssets(GlossaryCategory.class).get(0);
         assertEquals(deletedCategory.getGuid(), guid);
         assertEquals(deletedCategory.getStatus(), AtlanStatus.DELETED);
         return deletedCategory;
@@ -235,7 +233,7 @@ public class GlossaryTest extends AtlanLiveTest {
         assertEquals(response.getDeletedAssets().size(), 1);
         Asset one = response.getDeletedAssets().get(0);
         assertTrue(one instanceof GlossaryTerm);
-        GlossaryTerm deletedTerm = (GlossaryTerm) one;
+        GlossaryTerm deletedTerm = response.getDeletedAssets(GlossaryTerm.class).get(0);
         assertEquals(deletedTerm.getGuid(), guid);
         assertEquals(deletedTerm.getStatus(), AtlanStatus.DELETED);
         return deletedTerm;
@@ -594,7 +592,7 @@ public class GlossaryTest extends AtlanLiveTest {
         assertEquals(entities.size(), 1);
         Asset one = entities.get(0);
         assertTrue(one instanceof GlossaryTerm);
-        GlossaryTerm term = (GlossaryTerm) one;
+        GlossaryTerm term = response.getDeletedAssets(GlossaryTerm.class).get(0);
         assertEquals(term.getGuid(), term1.getGuid());
         assertEquals(term.getQualifiedName(), term1.getQualifiedName());
         assertEquals(term.getName(), term1.getName());
