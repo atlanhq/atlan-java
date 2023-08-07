@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -315,6 +316,7 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
         AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         String connectionName = StringUtils.getNameFromQualifiedName(connectionQualifiedName);
         return ColumnProcess._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(LineageProcess.generateQualifiedName(
                         name, connectionQualifiedName, id, inputs, outputs, parent))
                 .name(name)
@@ -333,7 +335,10 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
      * @return the minimal request necessary to update the ColumnProcess, as a builder
      */
     public static ColumnProcessBuilder<?, ?> updater(String qualifiedName, String name) {
-        return ColumnProcess._internal().qualifiedName(qualifiedName).name(name);
+        return ColumnProcess._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
     }
 
     /**

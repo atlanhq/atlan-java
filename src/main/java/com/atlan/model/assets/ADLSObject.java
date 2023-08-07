@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -381,6 +382,7 @@ public class ADLSObject extends Asset
         String accountQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(containerQualifiedName);
         String connectionQualifiedName = StringUtils.getConnectionQualifiedName(containerQualifiedName);
         return ADLSObject._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(generateQualifiedName(name, containerQualifiedName))
                 .name(name)
                 .adlsContainer(ADLSContainer.refByQualifiedName(containerQualifiedName))
@@ -408,7 +410,10 @@ public class ADLSObject extends Asset
      * @return the minimal request necessary to update the ADLSObject, as a builder
      */
     public static ADLSObjectBuilder<?, ?> updater(String qualifiedName, String name) {
-        return ADLSObject._internal().qualifiedName(qualifiedName).name(name);
+        return ADLSObject._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
     }
 
     /**

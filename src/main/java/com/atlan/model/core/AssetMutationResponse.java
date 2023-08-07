@@ -4,6 +4,7 @@ package com.atlan.model.core;
 
 import com.atlan.model.assets.Asset;
 import com.atlan.net.ApiResource;
+import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Collections;
@@ -19,6 +20,15 @@ import lombok.ToString;
 @ToString(callSuper = true)
 public class AssetMutationResponse extends ApiResource {
     private static final long serialVersionUID = 2L;
+
+    /** Kind of mutation that was applied to any given asset. */
+    public enum MutationType {
+        CREATED,
+        UPDATED,
+        DELETED,
+        NOOP,
+        UNKNOWN
+    }
 
     /** Assets that were changed. */
     @JsonProperty("mutatedEntities")
@@ -132,5 +142,81 @@ public class AssetMutationResponse extends ApiResource {
                     ? Collections.emptyList()
                     : list.stream().filter(type::isInstance).map(type::cast).collect(Collectors.toList());
         }
+    }
+
+    /**
+     * Retrieve the real GUID that was assigned to the asset provided in the request.
+     *
+     * @param input asset that was sent in the request that produced this mutation response
+     * @return the GUID ultimately assigned to that asset, or null if the provided asset is not part of this response
+     */
+    @JsonIgnore
+    public String getAssignedGuid(Asset input) {
+        if (input == null || guidAssignments == null || guidAssignments.isEmpty()) {
+            return null;
+        }
+        String guid = input.getGuid();
+        return StringUtils.isUUID(guid) ? guid : guidAssignments.getOrDefault(guid, null);
+    }
+
+    /**
+     * Determine the type of mutation that was applied to the asset provided in the request.
+     *
+     * @param input asset that was sent in the request that produced this mutation response
+     */
+    @JsonIgnore
+    public MutationType getMutation(Asset input) {
+        String guid = getAssignedGuid(input);
+        // If the asset is not anywhere in the response, then we'll leave it as an unknown
+        // (though technically we could probably say it was a NOOP, it might be useful to
+        // distinguish these).
+        MutationType type = MutationType.UNKNOWN;
+        if (guid != null) {
+            if (getCreatedAssets().stream().anyMatch(a -> guid.equals(a.getGuid()))) {
+                type = MutationType.CREATED;
+            } else if (getUpdatedAssets().stream().anyMatch(a -> guid.equals(a.getGuid()))
+                    || getPartiallyUpdatedAssets().stream().anyMatch(a -> guid.equals(a.getGuid()))) {
+                type = MutationType.UPDATED;
+            } else if (getDeletedAssets().stream().anyMatch(a -> guid.equals(a.getGuid()))) {
+                type = MutationType.DELETED;
+            } else {
+                // If it was there in the GUID assignments, but does not appear anywhere in
+                // actual asset lists, then it was a no-op (nothing happened to the asset)
+                type = MutationType.NOOP;
+            }
+        }
+        return type;
+    }
+
+    /**
+     * Retrieve the specific mutation result for the asset provided in the request.
+     *
+     * @param input asset that was sent in the request that produced this mutation response
+     * @return the resulting asset from the request, or null if none was found (or if the asset was entirely unchanged)
+     * @param <T> the type of the asset
+     */
+    @JsonIgnore
+    @SuppressWarnings("unchecked")
+    public <T extends Asset> T getResult(T input) {
+        String guid = getAssignedGuid(input);
+        List<Asset> found = getCreatedAssets().stream()
+                .filter(a -> guid.equals(a.getGuid()))
+                .collect(Collectors.toList());
+        if (found.isEmpty()) {
+            found = getUpdatedAssets().stream()
+                    .filter(a -> guid.equals(a.getGuid()))
+                    .collect(Collectors.toList());
+        }
+        if (found.isEmpty()) {
+            found = getPartiallyUpdatedAssets().stream()
+                    .filter(a -> guid.equals(a.getGuid()))
+                    .collect(Collectors.toList());
+        }
+        if (found.isEmpty()) {
+            found = getDeletedAssets().stream()
+                    .filter(a -> guid.equals(a.getGuid()))
+                    .collect(Collectors.toList());
+        }
+        return found.isEmpty() ? null : (T) found.get(0);
     }
 }

@@ -9,6 +9,7 @@
      */
     public static S3BucketBuilder<?, ?> creator(String name, String connectionQualifiedName, String awsArn) {
         return S3Bucket._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(IS3.generateQualifiedName(connectionQualifiedName, awsArn))
                 .name(name)
                 .connectionQualifiedName(connectionQualifiedName)
@@ -24,7 +25,10 @@
      * @return the minimal request necessary to update the S3Bucket, as a builder
      */
     public static S3BucketBuilder<?, ?> updater(String qualifiedName, String name) {
-        return S3Bucket._internal().qualifiedName(qualifiedName).name(name);
+        return S3Bucket._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
     }
 
     /**

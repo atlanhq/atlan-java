@@ -9,6 +9,7 @@
      */
     public static LinkBuilder<?, ?> creator(Asset reference, String title, String url) {
         return Link._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(generateQualifiedName())
                 .name(title)
                 .link(url)
@@ -23,7 +24,10 @@
      * @return the minimal request necessary to update the Link, as a builder
      */
     public static LinkBuilder<?, ?> updater(String qualifiedName, String name) {
-        return Link._internal().qualifiedName(qualifiedName).name(name);
+        return Link._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
     }
 
     /**

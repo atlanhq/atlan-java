@@ -26,6 +26,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -433,6 +434,7 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
             throws AtlanException {
         boolean adminFound = false;
         ConnectionBuilder<?, ?> builder = Connection._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .name(name)
                 .qualifiedName(generateQualifiedName(connectorType.getValue()))
                 .category(connectorType.getCategory())
@@ -617,7 +619,10 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
      * @return the minimal request necessary to update the Connection, as a builder
      */
     public static ConnectionBuilder<?, ?> updater(String qualifiedName, String name) {
-        return Connection._internal().qualifiedName(qualifiedName).name(name);
+        return Connection._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
     }
 
     /**

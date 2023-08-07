@@ -9,6 +9,7 @@
      */
     public static ReadmeBuilder<?, ?> creator(Asset reference, String assetName, String content) {
         return Readme._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(generateQualifiedName(reference.getGuid()))
                 .name(generateName(assetName))
                 .description(content)
@@ -23,7 +24,10 @@
      * @return the minimal request necessary to update the Readme, as a builder
      */
     public static ReadmeBuilder<?, ?> updater(String assetGuid, String assetName) {
-        return Readme._internal().qualifiedName(generateQualifiedName(assetGuid)).name(generateName(assetName));
+        return Readme._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(generateQualifiedName(assetGuid))
+                .name(generateName(assetName));
     }
 
     /**
@@ -46,7 +50,10 @@
             throw new InvalidRequestException(
                     ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "Readme", String.join(",", missing));
         }
-        return Readme._internal().qualifiedName(this.getQualifiedName()).name(this.getName());
+        return Readme._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(this.getQualifiedName())
+                .name(this.getName());
     }
 
     /**

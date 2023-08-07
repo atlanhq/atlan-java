@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -335,6 +336,7 @@ public class PresetDashboard extends Asset implements IPresetDashboard, IPreset,
         AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(tokens);
         String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(workspaceQualifiedName);
         return PresetDashboard._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .name(name)
                 .qualifiedName(workspaceQualifiedName + "/" + name)
                 .connectorType(connectorType)
@@ -351,7 +353,10 @@ public class PresetDashboard extends Asset implements IPresetDashboard, IPreset,
      * @return the minimal request necessary to update the PresetDashboard, as a builder
      */
     public static PresetDashboardBuilder<?, ?> updater(String qualifiedName, String name) {
-        return PresetDashboard._internal().qualifiedName(qualifiedName).name(name);
+        return PresetDashboard._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
     }
 
     /**

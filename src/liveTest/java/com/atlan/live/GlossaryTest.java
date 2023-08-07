@@ -84,12 +84,16 @@ public class GlossaryTest extends AtlanLiveTest {
         Asset one = response.getCreatedAssets().get(0);
         assertNotNull(one);
         assertTrue(one instanceof Glossary);
-        glossary = response.getCreatedAssets(Glossary.class).get(0);
-        assertNotNull(glossary.getGuid());
-        assertNotNull(glossary.getQualifiedName());
-        assertEquals(glossary.getName(), name);
-        assertNotEquals(glossary.getQualifiedName(), name);
-        return glossary;
+        assertEquals(response.getMutation(glossary), AssetMutationResponse.MutationType.CREATED);
+        Glossary result = response.getResult(glossary);
+        assertNotNull(result);
+        Glossary created = response.getCreatedAssets(Glossary.class).get(0);
+        assertNotNull(created.getGuid());
+        assertNotNull(created.getQualifiedName());
+        assertEquals(created.getName(), name);
+        assertNotEquals(created.getQualifiedName(), name);
+        assertEquals(created, result);
+        return created;
     }
 
     /**
@@ -510,6 +514,15 @@ public class GlossaryTest extends AtlanLiveTest {
         assertNotNull(entities);
         assertEquals(entities.size(), 2);
 
+        List<GlossaryTerm> terms = response.getUpdatedAssets(GlossaryTerm.class);
+        assertNotNull(terms);
+        assertEquals(terms.size(), 1);
+        assertEquals(terms.get(0).getGuid(), term1.getGuid());
+        GlossaryTerm result = response.getResult(term);
+        assertNotNull(result);
+        assertEquals(result.getGuid(), term1.getGuid());
+        assertEquals(response.getMutation(term), AssetMutationResponse.MutationType.UPDATED);
+
         Asset one = entities.get(0);
         assertTrue(one instanceof GlossaryTerm);
         term = (GlossaryTerm) one;
@@ -526,6 +539,7 @@ public class GlossaryTest extends AtlanLiveTest {
         assertEquals(c.getGuid(), category.getGuid());
         assertEquals(c.getQualifiedName(), category.getQualifiedName());
         assertEquals(c.getName(), category.getName());
+
         term = GlossaryTerm.updateCertificate(
                 term1.getQualifiedName(), term1.getName(), glossary.getGuid(), CERTIFICATE_STATUS, CERTIFICATE_MESSAGE);
         assertNotNull(term);

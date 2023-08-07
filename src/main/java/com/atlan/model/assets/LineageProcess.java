@@ -23,6 +23,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -315,6 +316,7 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
             LineageProcess parent) {
         AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         return LineageProcess._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(generateQualifiedName(name, connectionQualifiedName, id, inputs, outputs, parent))
                 .name(name)
                 .connectorType(connectorType)
@@ -331,7 +333,10 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
      * @return the minimal request necessary to update the LineageProcess, as a builder
      */
     public static LineageProcessBuilder<?, ?> updater(String qualifiedName, String name) {
-        return LineageProcess._internal().qualifiedName(qualifiedName).name(name);
+        return LineageProcess._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
     }
 
     /**

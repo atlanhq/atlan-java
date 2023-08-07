@@ -54,8 +54,17 @@ public interface ICatalog {
             case APISpec.TYPE_NAME:
                 ref = APISpec.refByQualifiedName(qualifiedName);
                 break;
+            case AirflowDag.TYPE_NAME:
+                ref = AirflowDag.refByQualifiedName(qualifiedName);
+                break;
+            case AirflowTask.TYPE_NAME:
+                ref = AirflowTask.refByQualifiedName(qualifiedName);
+                break;
             case AtlanQuery.TYPE_NAME:
                 ref = AtlanQuery.refByQualifiedName(qualifiedName);
+                break;
+            case AzureEventHub.TYPE_NAME:
+                ref = AzureEventHub.refByQualifiedName(qualifiedName);
                 break;
             case Column.TYPE_NAME:
                 ref = Column.refByQualifiedName(qualifiedName);
@@ -66,6 +75,9 @@ public interface ICatalog {
             case Database.TYPE_NAME:
                 ref = Database.refByQualifiedName(qualifiedName);
                 break;
+            case DbtColumnProcess.TYPE_NAME:
+                ref = DbtColumnProcess.refByQualifiedName(qualifiedName);
+                break;
             case DbtMetric.TYPE_NAME:
                 ref = DbtMetric.refByQualifiedName(qualifiedName);
                 break;
@@ -75,8 +87,23 @@ public interface ICatalog {
             case DbtModelColumn.TYPE_NAME:
                 ref = DbtModelColumn.refByQualifiedName(qualifiedName);
                 break;
+            case DbtProcess.TYPE_NAME:
+                ref = DbtProcess.refByQualifiedName(qualifiedName);
+                break;
             case DbtSource.TYPE_NAME:
                 ref = DbtSource.refByQualifiedName(qualifiedName);
+                break;
+            case DbtTag.TYPE_NAME:
+                ref = DbtTag.refByQualifiedName(qualifiedName);
+                break;
+            case DbtTest.TYPE_NAME:
+                ref = DbtTest.refByQualifiedName(qualifiedName);
+                break;
+            case File.TYPE_NAME:
+                ref = File.refByQualifiedName(qualifiedName);
+                break;
+            case Function.TYPE_NAME:
+                ref = Function.refByQualifiedName(qualifiedName);
                 break;
             case GCSBucket.TYPE_NAME:
                 ref = GCSBucket.refByQualifiedName(qualifiedName);
@@ -86,6 +113,12 @@ public interface ICatalog {
                 break;
             case Insight.TYPE_NAME:
                 ref = Insight.refByQualifiedName(qualifiedName);
+                break;
+            case KafkaConsumerGroup.TYPE_NAME:
+                ref = KafkaConsumerGroup.refByQualifiedName(qualifiedName);
+                break;
+            case KafkaTopic.TYPE_NAME:
+                ref = KafkaTopic.refByQualifiedName(qualifiedName);
                 break;
             case Link.TYPE_NAME:
                 ref = Link.refByQualifiedName(qualifiedName);
@@ -120,6 +153,12 @@ public interface ICatalog {
             case LookerView.TYPE_NAME:
                 ref = LookerView.refByQualifiedName(qualifiedName);
                 break;
+            case MCIncident.TYPE_NAME:
+                ref = MCIncident.refByQualifiedName(qualifiedName);
+                break;
+            case MCMonitor.TYPE_NAME:
+                ref = MCMonitor.refByQualifiedName(qualifiedName);
+                break;
             case MaterializedView.TYPE_NAME:
                 ref = MaterializedView.refByQualifiedName(qualifiedName);
                 break;
@@ -131,6 +170,33 @@ public interface ICatalog {
                 break;
             case MetabaseQuestion.TYPE_NAME:
                 ref = MetabaseQuestion.refByQualifiedName(qualifiedName);
+                break;
+            case MicroStrategyAttribute.TYPE_NAME:
+                ref = MicroStrategyAttribute.refByQualifiedName(qualifiedName);
+                break;
+            case MicroStrategyCube.TYPE_NAME:
+                ref = MicroStrategyCube.refByQualifiedName(qualifiedName);
+                break;
+            case MicroStrategyDocument.TYPE_NAME:
+                ref = MicroStrategyDocument.refByQualifiedName(qualifiedName);
+                break;
+            case MicroStrategyDossier.TYPE_NAME:
+                ref = MicroStrategyDossier.refByQualifiedName(qualifiedName);
+                break;
+            case MicroStrategyFact.TYPE_NAME:
+                ref = MicroStrategyFact.refByQualifiedName(qualifiedName);
+                break;
+            case MicroStrategyMetric.TYPE_NAME:
+                ref = MicroStrategyMetric.refByQualifiedName(qualifiedName);
+                break;
+            case MicroStrategyProject.TYPE_NAME:
+                ref = MicroStrategyProject.refByQualifiedName(qualifiedName);
+                break;
+            case MicroStrategyReport.TYPE_NAME:
+                ref = MicroStrategyReport.refByQualifiedName(qualifiedName);
+                break;
+            case MicroStrategyVisualization.TYPE_NAME:
+                ref = MicroStrategyVisualization.refByQualifiedName(qualifiedName);
                 break;
             case ModeChart.TYPE_NAME:
                 ref = ModeChart.refByQualifiedName(qualifiedName);
@@ -195,11 +261,59 @@ public interface ICatalog {
             case Procedure.TYPE_NAME:
                 ref = Procedure.refByQualifiedName(qualifiedName);
                 break;
+            case QlikApp.TYPE_NAME:
+                ref = QlikApp.refByQualifiedName(qualifiedName);
+                break;
+            case QlikChart.TYPE_NAME:
+                ref = QlikChart.refByQualifiedName(qualifiedName);
+                break;
+            case QlikDataset.TYPE_NAME:
+                ref = QlikDataset.refByQualifiedName(qualifiedName);
+                break;
+            case QlikSheet.TYPE_NAME:
+                ref = QlikSheet.refByQualifiedName(qualifiedName);
+                break;
+            case QlikSpace.TYPE_NAME:
+                ref = QlikSpace.refByQualifiedName(qualifiedName);
+                break;
+            case QlikStream.TYPE_NAME:
+                ref = QlikStream.refByQualifiedName(qualifiedName);
+                break;
+            case QuickSightAnalysis.TYPE_NAME:
+                ref = QuickSightAnalysis.refByQualifiedName(qualifiedName);
+                break;
+            case QuickSightAnalysisVisual.TYPE_NAME:
+                ref = QuickSightAnalysisVisual.refByQualifiedName(qualifiedName);
+                break;
+            case QuickSightDashboard.TYPE_NAME:
+                ref = QuickSightDashboard.refByQualifiedName(qualifiedName);
+                break;
+            case QuickSightDashboardVisual.TYPE_NAME:
+                ref = QuickSightDashboardVisual.refByQualifiedName(qualifiedName);
+                break;
+            case QuickSightDataset.TYPE_NAME:
+                ref = QuickSightDataset.refByQualifiedName(qualifiedName);
+                break;
+            case QuickSightDatasetField.TYPE_NAME:
+                ref = QuickSightDatasetField.refByQualifiedName(qualifiedName);
+                break;
+            case QuickSightFolder.TYPE_NAME:
+                ref = QuickSightFolder.refByQualifiedName(qualifiedName);
+                break;
             case Readme.TYPE_NAME:
                 ref = Readme.refByQualifiedName(qualifiedName);
                 break;
             case ReadmeTemplate.TYPE_NAME:
                 ref = ReadmeTemplate.refByQualifiedName(qualifiedName);
+                break;
+            case RedashDashboard.TYPE_NAME:
+                ref = RedashDashboard.refByQualifiedName(qualifiedName);
+                break;
+            case RedashQuery.TYPE_NAME:
+                ref = RedashQuery.refByQualifiedName(qualifiedName);
+                break;
+            case RedashVisualization.TYPE_NAME:
+                ref = RedashVisualization.refByQualifiedName(qualifiedName);
                 break;
             case S3Bucket.TYPE_NAME:
                 ref = S3Bucket.refByQualifiedName(qualifiedName);
@@ -225,6 +339,9 @@ public interface ICatalog {
             case Schema.TYPE_NAME:
                 ref = Schema.refByQualifiedName(qualifiedName);
                 break;
+            case SchemaRegistrySubject.TYPE_NAME:
+                ref = SchemaRegistrySubject.refByQualifiedName(qualifiedName);
+                break;
             case SigmaDataElement.TYPE_NAME:
                 ref = SigmaDataElement.refByQualifiedName(qualifiedName);
                 break;
@@ -248,6 +365,9 @@ public interface ICatalog {
                 break;
             case SnowflakeStream.TYPE_NAME:
                 ref = SnowflakeStream.refByQualifiedName(qualifiedName);
+                break;
+            case SnowflakeTag.TYPE_NAME:
+                ref = SnowflakeTag.refByQualifiedName(qualifiedName);
                 break;
             case Table.TYPE_NAME:
                 ref = Table.refByQualifiedName(qualifiedName);
@@ -284,6 +404,15 @@ public interface ICatalog {
                 break;
             case TableauWorksheet.TYPE_NAME:
                 ref = TableauWorksheet.refByQualifiedName(qualifiedName);
+                break;
+            case ThoughtspotAnswer.TYPE_NAME:
+                ref = ThoughtspotAnswer.refByQualifiedName(qualifiedName);
+                break;
+            case ThoughtspotDashlet.TYPE_NAME:
+                ref = ThoughtspotDashlet.refByQualifiedName(qualifiedName);
+                break;
+            case ThoughtspotLiveboard.TYPE_NAME:
+                ref = ThoughtspotLiveboard.refByQualifiedName(qualifiedName);
                 break;
             case View.TYPE_NAME:
                 ref = View.refByQualifiedName(qualifiedName);

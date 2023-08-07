@@ -27,6 +27,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -351,6 +352,7 @@ public class ADLSAccount extends Asset
      */
     public static ADLSAccountBuilder<?, ?> creator(String name, String connectionQualifiedName) {
         return ADLSAccount._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(generateQualifiedName(name, connectionQualifiedName))
                 .name(name)
                 .connectionQualifiedName(connectionQualifiedName)
@@ -376,7 +378,10 @@ public class ADLSAccount extends Asset
      * @return the minimal request necessary to update the ADLSAccount, as a builder
      */
     public static ADLSAccountBuilder<?, ?> updater(String qualifiedName, String name) {
-        return ADLSAccount._internal().qualifiedName(qualifiedName).name(name);
+        return ADLSAccount._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
     }
 
     /**

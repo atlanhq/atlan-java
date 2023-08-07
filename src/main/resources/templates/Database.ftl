@@ -10,6 +10,7 @@
         AtlanConnectorType connectorType =
                 Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName.split("/"));
         return Database._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .name(name)
                 .qualifiedName(generateQualifiedName(name, connectionQualifiedName))
                 .connectorType(connectorType)
@@ -35,7 +36,10 @@
      * @return the minimal request necessary to update the Database, as a builder
      */
     public static DatabaseBuilder<?, ?> updater(String qualifiedName, String name) {
-        return Database._internal().qualifiedName(qualifiedName).name(name);
+        return Database._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
     }
 
     /**

@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -313,6 +314,7 @@ public class PresetDataset extends Asset implements IPresetDataset, IPreset, IBI
         String workspaceQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(collectionQualifiedName);
         String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(workspaceQualifiedName);
         return PresetDataset._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .name(name)
                 .qualifiedName(collectionQualifiedName + "/" + name)
                 .connectorType(connectorType)
@@ -330,7 +332,10 @@ public class PresetDataset extends Asset implements IPresetDataset, IPreset, IBI
      * @return the minimal request necessary to update the PresetDataset, as a builder
      */
     public static PresetDatasetBuilder<?, ?> updater(String qualifiedName, String name) {
-        return PresetDataset._internal().qualifiedName(qualifiedName).name(name);
+        return PresetDataset._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
     }
 
     /**

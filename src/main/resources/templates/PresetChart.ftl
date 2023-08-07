@@ -12,6 +12,7 @@
         String workspaceQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(collectionQualifiedName);
         String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(workspaceQualifiedName);
         return PresetChart._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .name(name)
                 .qualifiedName(collectionQualifiedName + "/" + name)
                 .connectorType(connectorType)
@@ -29,7 +30,10 @@
      * @return the minimal request necessary to update the PresetChart, as a builder
      */
     public static PresetChartBuilder<?, ?> updater(String qualifiedName, String name) {
-        return PresetChart._internal().qualifiedName(qualifiedName).name(name);
+        return PresetChart._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
     }
 
     /**

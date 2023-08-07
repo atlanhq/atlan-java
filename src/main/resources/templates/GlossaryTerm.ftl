@@ -10,6 +10,7 @@
      */
     public static GlossaryTermBuilder<?, ?> creator(String name, String glossaryGuid, String glossaryQualifiedName) {
         return GlossaryTerm._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(name)
                 .name(name)
                 .anchor(Glossary.anchorLink(glossaryGuid, glossaryQualifiedName));
@@ -27,6 +28,7 @@
         // Turns out that updating a term requires the glossary GUID, and will not work
         // with the qualifiedName of the glossary
         return GlossaryTerm._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(qualifiedName)
                 .name(name)
                 .anchor(Glossary.anchorLink(glossaryGuid, null));

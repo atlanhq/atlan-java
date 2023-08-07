@@ -16,6 +16,7 @@ import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -291,6 +292,7 @@ public class Badge extends Asset implements IBadge, IAsset, IReferenceable {
         String cmId = client.getCustomMetadataCache().getIdForName(cmName);
         String cmAttrId = client.getCustomMetadataCache().getAttrIdForName(cmName, cmAttribute);
         return Badge._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(generateQualifiedName(client, cmName, cmAttribute))
                 .name(name)
                 .badgeMetadataAttribute(cmId + "." + cmAttrId);
@@ -332,7 +334,10 @@ public class Badge extends Asset implements IBadge, IAsset, IReferenceable {
      * @return the minimal request necessary to update the Badge, as a builder
      */
     public static BadgeBuilder<?, ?> updater(String qualifiedName, String name) {
-        return Badge._internal().qualifiedName(qualifiedName).name(name);
+        return Badge._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
     }
 
     /**

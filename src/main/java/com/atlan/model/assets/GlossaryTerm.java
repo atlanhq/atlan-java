@@ -22,6 +22,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -377,6 +378,7 @@ public class GlossaryTerm extends Asset implements IGlossaryTerm, IAsset, IRefer
      */
     public static GlossaryTermBuilder<?, ?> creator(String name, String glossaryGuid, String glossaryQualifiedName) {
         return GlossaryTerm._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(name)
                 .name(name)
                 .anchor(Glossary.anchorLink(glossaryGuid, glossaryQualifiedName));
@@ -394,6 +396,7 @@ public class GlossaryTerm extends Asset implements IGlossaryTerm, IAsset, IRefer
         // Turns out that updating a term requires the glossary GUID, and will not work
         // with the qualifiedName of the glossary
         return GlossaryTerm._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(qualifiedName)
                 .name(name)
                 .anchor(Glossary.anchorLink(glossaryGuid, null));

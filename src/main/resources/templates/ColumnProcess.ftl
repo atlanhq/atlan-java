@@ -20,6 +20,7 @@
         AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         String connectionName = StringUtils.getNameFromQualifiedName(connectionQualifiedName);
         return ColumnProcess._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(LineageProcess.generateQualifiedName(name, connectionQualifiedName, id, inputs, outputs, parent))
                 .name(name)
                 .connectorType(connectorType)
@@ -37,7 +38,10 @@
      * @return the minimal request necessary to update the ColumnProcess, as a builder
      */
     public static ColumnProcessBuilder<?, ?> updater(String qualifiedName, String name) {
-        return ColumnProcess._internal().qualifiedName(qualifiedName).name(name);
+        return ColumnProcess._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
     }
 
     /**

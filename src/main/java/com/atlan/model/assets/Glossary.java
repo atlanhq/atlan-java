@@ -28,6 +28,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -324,7 +325,10 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
      * @return the minimal object necessary to create the Glossary, as a builder
      */
     public static GlossaryBuilder<?, ?> creator(String name) {
-        return Glossary._internal().qualifiedName(name).name(name);
+        return Glossary._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(name)
+                .name(name);
     }
 
     /**

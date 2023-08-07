@@ -21,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -403,6 +404,7 @@ public class GCSObject extends Asset
         String connectionQualifiedName = StringUtils.getConnectionQualifiedName(bucketQualifiedName);
         String bucketName = StringUtils.getNameFromQualifiedName(bucketQualifiedName);
         return GCSObject._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(generateQualifiedName(name, bucketQualifiedName))
                 .name(name)
                 .connectionQualifiedName(connectionQualifiedName)
@@ -431,7 +433,10 @@ public class GCSObject extends Asset
      * @return the minimal request necessary to update the GCSObject, as a builder
      */
     public static GCSObjectBuilder<?, ?> updater(String qualifiedName, String name) {
-        return GCSObject._internal().qualifiedName(qualifiedName).name(name);
+        return GCSObject._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
     }
 
     /**

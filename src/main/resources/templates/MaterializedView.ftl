@@ -14,6 +14,7 @@
         String databaseName = StringUtils.getNameFromQualifiedName(databaseQualifiedName);
         String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(databaseQualifiedName);
         return MaterializedView._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .name(name)
                 .qualifiedName(generateQualifiedName(name, schemaQualifiedName))
                 .connectorType(connectorType)
@@ -44,7 +45,10 @@
      * @return the minimal request necessary to update the MaterializedView, as a builder
      */
     public static MaterializedViewBuilder<?, ?> updater(String qualifiedName, String name) {
-        return MaterializedView._internal().qualifiedName(qualifiedName).name(name);
+        return MaterializedView._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
     }
 
     /**

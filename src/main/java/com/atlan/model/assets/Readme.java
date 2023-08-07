@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -302,6 +303,7 @@ public class Readme extends Asset implements IReadme, IResource, ICatalog, IAsse
      */
     public static ReadmeBuilder<?, ?> creator(Asset reference, String assetName, String content) {
         return Readme._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(generateQualifiedName(reference.getGuid()))
                 .name(generateName(assetName))
                 .description(content)
@@ -317,6 +319,7 @@ public class Readme extends Asset implements IReadme, IResource, ICatalog, IAsse
      */
     public static ReadmeBuilder<?, ?> updater(String assetGuid, String assetName) {
         return Readme._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(generateQualifiedName(assetGuid))
                 .name(generateName(assetName));
     }
@@ -341,7 +344,10 @@ public class Readme extends Asset implements IReadme, IResource, ICatalog, IAsse
             throw new InvalidRequestException(
                     ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "Readme", String.join(",", missing));
         }
-        return Readme._internal().qualifiedName(this.getQualifiedName()).name(this.getName());
+        return Readme._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(this.getQualifiedName())
+                .name(this.getName());
     }
 
     /**

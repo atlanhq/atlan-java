@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -415,6 +416,7 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
         String databaseName = StringUtils.getNameFromQualifiedName(databaseQualifiedName);
         String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(databaseQualifiedName);
         return View._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .name(name)
                 .qualifiedName(generateQualifiedName(name, schemaQualifiedName))
                 .connectorType(connectorType)
@@ -445,7 +447,10 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
      * @return the minimal request necessary to update the View, as a builder
      */
     public static ViewBuilder<?, ?> updater(String qualifiedName, String name) {
-        return View._internal().qualifiedName(qualifiedName).name(name);
+        return View._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
     }
 
     /**

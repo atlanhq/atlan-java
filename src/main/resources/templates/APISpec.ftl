@@ -8,6 +8,7 @@
      */
     public static APISpecBuilder<?, ?> creator(String name, String connectionQualifiedName) {
         return APISpec._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(connectionQualifiedName + "/" + name)
                 .name(name)
                 .connectionQualifiedName(connectionQualifiedName)
@@ -22,7 +23,10 @@
      * @return the minimal request necessary to update the APISpec, as a builder
      */
     public static APISpecBuilder<?, ?> updater(String qualifiedName, String name) {
-        return APISpec._internal().qualifiedName(qualifiedName).name(name);
+        return APISpec._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
     }
 
     /**

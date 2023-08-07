@@ -25,7 +25,10 @@
      * @return the minimal object necessary to create the Glossary, as a builder
      */
     public static GlossaryBuilder<?, ?> creator(String name) {
-        return Glossary._internal().qualifiedName(name).name(name);
+        return Glossary._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(name)
+                .name(name);
     }
 
     /**

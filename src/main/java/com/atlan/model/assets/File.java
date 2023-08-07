@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -308,6 +309,7 @@ public class File extends Asset implements IFile, IResource, ICatalog, IAsset, I
      */
     public static FileBuilder<?, ?> creator(String name, String connectionQualifiedName, FileType type) {
         return File._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .connectionQualifiedName(connectionQualifiedName)
                 .name(name)
                 .qualifiedName(generateQualifiedName(connectionQualifiedName, name))
@@ -333,7 +335,10 @@ public class File extends Asset implements IFile, IResource, ICatalog, IAsset, I
      * @return the minimal request necessary to update the File, as a builder
      */
     public static FileBuilder<?, ?> updater(String qualifiedName, String name) {
-        return File._internal().qualifiedName(qualifiedName).name(name);
+        return File._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
     }
 
     /**

@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -307,6 +308,7 @@ public class Link extends Asset implements ILink, IResource, ICatalog, IAsset, I
      */
     public static LinkBuilder<?, ?> creator(Asset reference, String title, String url) {
         return Link._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(generateQualifiedName())
                 .name(title)
                 .link(url)
@@ -321,7 +323,10 @@ public class Link extends Asset implements ILink, IResource, ICatalog, IAsset, I
      * @return the minimal request necessary to update the Link, as a builder
      */
     public static LinkBuilder<?, ?> updater(String qualifiedName, String name) {
-        return Link._internal().qualifiedName(qualifiedName).name(name);
+        return Link._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
     }
 
     /**

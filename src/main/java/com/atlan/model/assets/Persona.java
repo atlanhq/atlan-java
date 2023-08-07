@@ -26,6 +26,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.SortedSet;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -309,6 +310,7 @@ public class Persona extends Asset implements IPersona, IAccessControl, IAsset, 
      */
     public static PersonaBuilder<?, ?> creator(String name) {
         return Persona._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(name)
                 .name(name)
                 .displayName(name)
@@ -325,7 +327,11 @@ public class Persona extends Asset implements IPersona, IAccessControl, IAsset, 
      * @return the minimal request necessary to update the Persona, as a builder
      */
     public static PersonaBuilder<?, ?> updater(String qualifiedName, String name, boolean isEnabled) {
-        return Persona._internal().qualifiedName(qualifiedName).name(name).isAccessControlEnabled(isEnabled);
+        return Persona._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name)
+                .isAccessControlEnabled(isEnabled);
     }
 
     /**

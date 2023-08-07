@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.SortedSet;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -357,7 +358,11 @@ public class AuthPolicy extends Asset implements IAuthPolicy, IAsset, IReference
      * @see Purpose#createDataPolicy(String, String, AuthPolicyType, Collection, Collection, boolean)
      */
     public static AuthPolicyBuilder<?, ?> creator(String name) {
-        return AuthPolicy._internal().qualifiedName(name).name(name).displayName("");
+        return AuthPolicy._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(name)
+                .name(name)
+                .displayName("");
     }
 
     /**
@@ -368,7 +373,10 @@ public class AuthPolicy extends Asset implements IAuthPolicy, IAsset, IReference
      * @return the minimal request necessary to update the AuthPolicy, as a builder
      */
     public static AuthPolicyBuilder<?, ?> updater(String qualifiedName, String name) {
-        return AuthPolicy._internal().qualifiedName(qualifiedName).name(name);
+        return AuthPolicy._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
     }
 
     /**

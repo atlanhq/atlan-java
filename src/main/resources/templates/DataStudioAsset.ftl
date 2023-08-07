@@ -10,6 +10,7 @@
     public static DataStudioAssetBuilder<?, ?> creator(
             String name, String connectionQualifiedName, GoogleDataStudioAssetType assetType) {
         return DataStudioAsset._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(connectionQualifiedName + "/" + name)
                 .name(name)
                 .connectionQualifiedName(connectionQualifiedName)
@@ -25,7 +26,10 @@
      * @return the minimal request necessary to update the DataStudioAsset, as a builder
      */
     public static DataStudioAssetBuilder<?, ?> updater(String qualifiedName, String name) {
-        return DataStudioAsset._internal().qualifiedName(qualifiedName).name(name);
+        return DataStudioAsset._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
     }
 
     /**

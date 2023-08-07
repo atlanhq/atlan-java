@@ -12,9 +12,15 @@ import lombok.extern.slf4j.Slf4j;
 
 @Getter
 @Slf4j
-public class AssetGenerator extends TypeGenerator {
+public class AssetGenerator extends TypeGenerator implements Comparable<AssetGenerator> {
 
     public static final String DIRECTORY = "assets";
+
+    // Sort attribute definitions in a set based purely on their name (two attributes
+    // in the same set with the same name should be a conflict / duplicate)
+    private static final Comparator<String> stringComparator = Comparator.nullsFirst(String::compareTo);
+    private static final Comparator<AssetGenerator> assetComparator =
+            Comparator.comparing(AssetGenerator::getOriginalName, stringComparator);
 
     private final EntityDef entityDef;
     private String parentClassName;
@@ -115,6 +121,26 @@ public class AssetGenerator extends TypeGenerator {
         } else {
             this.parentClassName = "Asset";
         }
+    }
+
+    public SortedSet<String> getAllSubTypes(String originalTypeName) {
+        SortedSet<String> localSubTypes = new TreeSet<>();
+        AssetGenerator assetGen = cache.getCachedAssetType(originalTypeName);
+        if (assetGen != null) {
+            assetGen.resolveSubTypes();
+            if (!assetGen.isAbstract()) {
+                log.info("Adding concrete subtype {} to: {}", assetGen.getClassName(), originalTypeName);
+                localSubTypes.add(assetGen.getClassName());
+            }
+            List<String> subTypes = assetGen.getOriginalSubTypes();
+            if (subTypes != null && !subTypes.isEmpty()) {
+                for (String subType : subTypes) {
+                    SortedSet<String> further = getAllSubTypes(subType);
+                    localSubTypes.addAll(further);
+                }
+            }
+        }
+        return localSubTypes;
     }
 
     private void resolveSubTypes() {
@@ -225,6 +251,12 @@ public class AssetGenerator extends TypeGenerator {
             }
             mapContainers.add(attribute.getRenamed());
         }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public int compareTo(AssetGenerator o) {
+        return assetComparator.compare(this, o);
     }
 
     @Getter

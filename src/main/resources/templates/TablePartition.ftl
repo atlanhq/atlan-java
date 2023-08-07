@@ -16,6 +16,7 @@
         String databaseName = StringUtils.getNameFromQualifiedName(databaseQualifiedName);
         String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(databaseQualifiedName);
         return TablePartition._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .name(name)
                 .qualifiedName(generateQualifiedName(name, tableQualifiedName))
                 .connectorType(connectorType)
@@ -48,7 +49,10 @@
      * @return the minimal request necessary to update the TablePartition, as a builder
      */
     public static TablePartitionBuilder<?, ?> updater(String qualifiedName, String name) {
-        return TablePartition._internal().qualifiedName(qualifiedName).name(name);
+        return TablePartition._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
     }
 
     /**
