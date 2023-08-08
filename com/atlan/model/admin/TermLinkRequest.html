@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":10,"i2":9,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10};
+var data = {"i0":9,"i1":10,"i2":9,"i3":9,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -271,6 +271,14 @@ extends <a href="AtlanRequest.html" title="class in com.atlan.model.admin">Atlan
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>static <a href="TermLinkRequest.TermLinkRequestBuilder.html" title="class in com.atlan.model.admin">TermLinkRequest.TermLinkRequestBuilder</a>&lt;?,&#8203;?&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#creator(com.atlan.model.assets.Asset,com.atlan.model.assets.GlossaryTerm)">creator</a></span>&#8203;(<a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;asset,
+       <a href="../assets/GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&nbsp;term)</code></th>
+<td class="colLast">
+<div class="block">Create a new request to change an attribute's value.</div>
+</td>
+</tr>
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code>static <a href="TermLinkRequest.TermLinkRequestBuilder.html" title="class in com.atlan.model.admin">TermLinkRequest.TermLinkRequestBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#creator(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)">creator</a></span>&#8203;(java.lang.String&nbsp;assetGuid,
        java.lang.String&nbsp;assetQualifiedName,
        java.lang.String&nbsp;assetType,
@@ -280,36 +288,36 @@ extends <a href="AtlanRequest.html" title="class in com.atlan.model.admin">Atlan
 <div class="block">Create a new request to link a term to an asset.</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#equals(java.lang.Object)">equals</a></span>&#8203;(java.lang.Object&nbsp;o)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRequestType()">getRequestType</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Fixed requestType for term assignments.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSourceType()">getSourceType</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Fixed sourceType for term assignments.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code><a href="TermLinkRequest.TermLinkRequestBuilder.html" title="class in com.atlan.model.admin">TermLinkRequest.TermLinkRequestBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toBuilder()">toBuilder</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 </tr>
@@ -406,6 +414,28 @@ extends <a href="AtlanRequest.html" title="class in com.atlan.model.admin">Atlan
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a id="creator(com.atlan.model.assets.Asset,com.atlan.model.assets.GlossaryTerm)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>creator</h4>
+<pre class="methodSignature">public static&nbsp;<a href="TermLinkRequest.TermLinkRequestBuilder.html" title="class in com.atlan.model.admin">TermLinkRequest.TermLinkRequestBuilder</a>&lt;?,&#8203;?&gt;&nbsp;creator&#8203;(<a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;asset,
+                                                                        <a href="../assets/GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&nbsp;term)
+                                                                 throws <a href="../../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></pre>
+<div class="block">Create a new request to change an attribute's value.
+ Note that the asset must have at least its real (not placeholder) GUID and qualifiedName populated.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>asset</code> - against which to raise the request</dd>
+<dd><code>term</code> - to link to the asset</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a builder for the request with these details</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></code> - if any of the required details for the provided asset are missing</dd>
+</dl>
+</li>
+</ul>
 <a id="creator(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)">
 <!--   -->
 </a>

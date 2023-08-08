@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -168,6 +168,21 @@ extends <a href="../../net/ApiResource.html" title="class in com.atlan.net">ApiR
 <!--   -->
 </a>
 <h3>Nested Class Summary</h3>
+<table class="memberSummary">
+<caption><span>Nested Classes</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colSecond" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static class&nbsp;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="AssetMutationResponse.MutationType.html" title="enum in com.atlan.model.core">AssetMutationResponse.MutationType</a></span></code></th>
+<td class="colLast">
+<div class="block">Kind of mutation that was applied to any given asset.</div>
+</td>
+</tr>
+</table>
 <ul class="blockList">
 <li class="blockList"><a id="nested.classes.inherited.from.class.com.atlan.net.ApiResource">
 <!--   -->
@@ -248,60 +263,109 @@ extends <a href="../../net/ApiResource.html" title="class in com.atlan.net">ApiR
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssignedGuid(com.atlan.model.assets.Asset)">getAssignedGuid</a></span>&#8203;(<a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;input)</code></th>
+<td class="colLast">
+<div class="block">Retrieve the real GUID that was assigned to the asset provided in the request.</div>
+</td>
+</tr>
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCreatedAssets()">getCreatedAssets</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Retrieve the list of assets that were created.</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
+<td class="colFirst"><code>&lt;T extends <a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;<br>java.util.List&lt;T&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCreatedAssets(java.lang.Class)">getCreatedAssets</a></span>&#8203;(java.lang.Class&lt;T&gt;&nbsp;type)</code></th>
+<td class="colLast">
+<div class="block">Retrieve the sublist of assets that were created, of the provided type.</div>
+</td>
+</tr>
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDeletedAssets()">getDeletedAssets</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Retrieve the list of assets that were deleted.</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i6" class="altColor">
+<td class="colFirst"><code>&lt;T extends <a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;<br>java.util.List&lt;T&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDeletedAssets(java.lang.Class)">getDeletedAssets</a></span>&#8203;(java.lang.Class&lt;T&gt;&nbsp;type)</code></th>
+<td class="colLast">
+<div class="block">Retrieve the sublist of assets that were deleted, of the provided type.</div>
+</td>
+</tr>
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getGuidAssignments()">getGuidAssignments</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Map of assigned unique identifiers for the created assets.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code><a href="MutatedAssets.html" title="class in com.atlan.model.core">MutatedAssets</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMutatedAssets()">getMutatedAssets</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Assets that were changed.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i9" class="rowColor">
+<td class="colFirst"><code><a href="AssetMutationResponse.MutationType.html" title="enum in com.atlan.model.core">AssetMutationResponse.MutationType</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMutation(com.atlan.model.assets.Asset)">getMutation</a></span>&#8203;(<a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;input)</code></th>
+<td class="colLast">
+<div class="block">Determine the type of mutation that was applied to the asset provided in the request.</div>
+</td>
+</tr>
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPartiallyUpdatedAssets()">getPartiallyUpdatedAssets</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Retrieve the list of assets that were partially updated.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i11" class="rowColor">
+<td class="colFirst"><code>&lt;T extends <a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;<br>java.util.List&lt;T&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPartiallyUpdatedAssets(java.lang.Class)">getPartiallyUpdatedAssets</a></span>&#8203;(java.lang.Class&lt;T&gt;&nbsp;type)</code></th>
+<td class="colLast">
+<div class="block">Retrieve the sublist of assets that were partially updated, of the provided type.</div>
+</td>
+</tr>
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPartialUpdatedAssets()">getPartialUpdatedAssets</a></span>()</code></th>
 <td class="colLast">
 <div class="block">List of assets that were partially updated.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i13" class="rowColor">
+<td class="colFirst"><code>&lt;T extends <a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;<br>T</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getResult(T)">getResult</a></span>&#8203;(T&nbsp;input)</code></th>
+<td class="colLast">
+<div class="block">Retrieve the specific mutation result for the asset provided in the request.</div>
+</td>
+</tr>
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getUpdatedAssets()">getUpdatedAssets</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Retrieve the list of assets that were updated.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i15" class="rowColor">
+<td class="colFirst"><code>&lt;T extends <a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;<br>java.util.List&lt;T&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getUpdatedAssets(java.lang.Class)">getUpdatedAssets</a></span>&#8203;(java.lang.Class&lt;T&gt;&nbsp;type)</code></th>
+<td class="colLast">
+<div class="block">Retrieve the sublist of assets that were updated, of the provided type.</div>
+</td>
+</tr>
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 </tr>
@@ -376,6 +440,24 @@ extends <a href="../../net/ApiResource.html" title="class in com.atlan.net">ApiR
 </dl>
 </li>
 </ul>
+<a id="getCreatedAssets(java.lang.Class)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getCreatedAssets</h4>
+<pre class="methodSignature">public&nbsp;&lt;T extends <a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;&nbsp;java.util.List&lt;T&gt;&nbsp;getCreatedAssets&#8203;(java.lang.Class&lt;T&gt;&nbsp;type)</pre>
+<div class="block">Retrieve the sublist of assets that were created, of the provided type.</div>
+<dl>
+<dt><span class="paramLabel">Type Parameters:</span></dt>
+<dd><code>T</code> - the type of created assets to filter</dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>type</code> - of assets to filter the created list by</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>list of created assets, only of the requested type, or an empty list of none of that type were created</dd>
+</dl>
+</li>
+</ul>
 <a id="getUpdatedAssets()">
 <!--   -->
 </a>
@@ -387,6 +469,24 @@ extends <a href="../../net/ApiResource.html" title="class in com.atlan.net">ApiR
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>list of updated assets, or an empty list of none were updated</dd>
+</dl>
+</li>
+</ul>
+<a id="getUpdatedAssets(java.lang.Class)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getUpdatedAssets</h4>
+<pre class="methodSignature">public&nbsp;&lt;T extends <a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;&nbsp;java.util.List&lt;T&gt;&nbsp;getUpdatedAssets&#8203;(java.lang.Class&lt;T&gt;&nbsp;type)</pre>
+<div class="block">Retrieve the sublist of assets that were updated, of the provided type.</div>
+<dl>
+<dt><span class="paramLabel">Type Parameters:</span></dt>
+<dd><code>T</code> - the type of updated assets to filter</dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>type</code> - of assets to filter the updated list by</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>list of updated assets, only of the requested type, or an empty list of none of that type were updated</dd>
 </dl>
 </li>
 </ul>
@@ -405,6 +505,25 @@ extends <a href="../../net/ApiResource.html" title="class in com.atlan.net">ApiR
 </dl>
 </li>
 </ul>
+<a id="getPartiallyUpdatedAssets(java.lang.Class)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getPartiallyUpdatedAssets</h4>
+<pre class="methodSignature">public&nbsp;&lt;T extends <a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;&nbsp;java.util.List&lt;T&gt;&nbsp;getPartiallyUpdatedAssets&#8203;(java.lang.Class&lt;T&gt;&nbsp;type)</pre>
+<div class="block">Retrieve the sublist of assets that were partially updated, of the provided type.
+ Note: this should only ever be populated by calls to the certain endpoints</div>
+<dl>
+<dt><span class="paramLabel">Type Parameters:</span></dt>
+<dd><code>T</code> - the type of partially updated assets to filter</dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>type</code> - of assets to filter the partially updated list by</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>list of partially updated assets, only of the requested type, or an empty list of none of that type were partially updated</dd>
+</dl>
+</li>
+</ul>
 <a id="getDeletedAssets()">
 <!--   -->
 </a>
@@ -416,6 +535,74 @@ extends <a href="../../net/ApiResource.html" title="class in com.atlan.net">ApiR
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>list of deleted assets, or an empty list of none were deleted</dd>
+</dl>
+</li>
+</ul>
+<a id="getDeletedAssets(java.lang.Class)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getDeletedAssets</h4>
+<pre class="methodSignature">public&nbsp;&lt;T extends <a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;&nbsp;java.util.List&lt;T&gt;&nbsp;getDeletedAssets&#8203;(java.lang.Class&lt;T&gt;&nbsp;type)</pre>
+<div class="block">Retrieve the sublist of assets that were deleted, of the provided type.</div>
+<dl>
+<dt><span class="paramLabel">Type Parameters:</span></dt>
+<dd><code>T</code> - the type of deleted assets to filter</dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>type</code> - of assets to filter the deleted list by</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>list of deleted assets, only of the requested type, or an empty list of none of that type were deleted</dd>
+</dl>
+</li>
+</ul>
+<a id="getAssignedGuid(com.atlan.model.assets.Asset)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getAssignedGuid</h4>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getAssignedGuid&#8203;(<a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;input)</pre>
+<div class="block">Retrieve the real GUID that was assigned to the asset provided in the request.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>input</code> - asset that was sent in the request that produced this mutation response</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the GUID ultimately assigned to that asset, or null if the provided asset is not part of this response</dd>
+</dl>
+</li>
+</ul>
+<a id="getMutation(com.atlan.model.assets.Asset)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getMutation</h4>
+<pre class="methodSignature">public&nbsp;<a href="AssetMutationResponse.MutationType.html" title="enum in com.atlan.model.core">AssetMutationResponse.MutationType</a>&nbsp;getMutation&#8203;(<a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;input)</pre>
+<div class="block">Determine the type of mutation that was applied to the asset provided in the request.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>input</code> - asset that was sent in the request that produced this mutation response</dd>
+</dl>
+</li>
+</ul>
+<a id="getResult(com.atlan.model.assets.Asset)">
+<!--   -->
+</a><a id="getResult(T)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getResult</h4>
+<pre class="methodSignature">public&nbsp;&lt;T extends <a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;&nbsp;T&nbsp;getResult&#8203;(T&nbsp;input)</pre>
+<div class="block">Retrieve the specific mutation result for the asset provided in the request.</div>
+<dl>
+<dt><span class="paramLabel">Type Parameters:</span></dt>
+<dd><code>T</code> - the type of the asset</dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>input</code> - asset that was sent in the request that produced this mutation response</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the resulting asset from the request, or null if none was found (or if the asset was entirely unchanged)</dd>
 </dl>
 </li>
 </ul>
