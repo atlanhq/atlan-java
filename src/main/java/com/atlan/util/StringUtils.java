@@ -159,6 +159,6 @@ public final class StringUtils {
      *     false}.
      */
     public static boolean isUUID(String str) {
-        return uuidPattern.matcher(str).find();
+        return str != null && uuidPattern.matcher(str).find();
     }
 }

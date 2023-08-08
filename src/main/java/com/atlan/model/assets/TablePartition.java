@@ -209,6 +209,30 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
     String viewQualifiedName;
 
     /**
+     * Builds the minimal object necessary to create a relationship to a TablePartition, from a potentially
+     * more-complete TablePartition object.
+     *
+     * @return the minimal object necessary to relate to the TablePartition
+     * @throws InvalidRequestException if any of the minimal set of required properties for a TablePartition relationship are not found in the initial object
+     */
+    @Override
+    public TablePartition trimToReference() throws InvalidRequestException {
+        if (this.getGuid() != null && !this.getGuid().isEmpty()) {
+            return refByGuid(this.getGuid());
+        }
+        if (this.getQualifiedName() != null && !this.getQualifiedName().isEmpty()) {
+            return refByQualifiedName(this.getQualifiedName());
+        }
+        if (this.getUniqueAttributes() != null
+                && this.getUniqueAttributes().getQualifiedName() != null
+                && !this.getUniqueAttributes().getQualifiedName().isEmpty()) {
+            return refByQualifiedName(this.getUniqueAttributes().getQualifiedName());
+        }
+        throw new InvalidRequestException(
+                ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, TYPE_NAME, "guid, qualifiedName");
+    }
+
+    /**
      * Start an asset filter that will return all TablePartition assets.
      * Additional conditions can be chained onto the returned filter before any
      * asset retrieval is attempted, ensuring all conditions are pushed-down for
@@ -422,6 +446,22 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
      */
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Builds the minimal object necessary to create a table partition.
+     *
+     * @param name of the table partition
+     * @param table in which the partition should be created, which must have at least
+     *              a qualifiedName
+     * @return the minimal request necessary to create the table partition, as a builder
+     * @throws InvalidRequestException if the table provided is without a qualifiedName
+     */
+    public static TablePartitionBuilder<?, ?> creator(String name, Table table) throws InvalidRequestException {
+        if (table.getQualifiedName() == null || table.getQualifiedName().isEmpty()) {
+            throw new InvalidRequestException(ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, "Table", "qualifiedName");
+        }
+        return creator(name, table.getQualifiedName()).parentTable(table.trimToReference());
     }
 
     /**

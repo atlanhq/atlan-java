@@ -154,6 +154,30 @@ public class GlossaryTerm extends Asset implements IGlossaryTerm, IAsset, IRefer
     SortedSet<IGlossaryTerm> validValuesFor;
 
     /**
+     * Builds the minimal object necessary to create a relationship to a GlossaryTerm, from a potentially
+     * more-complete GlossaryTerm object.
+     *
+     * @return the minimal object necessary to relate to the GlossaryTerm
+     * @throws InvalidRequestException if any of the minimal set of required properties for a GlossaryTerm relationship are not found in the initial object
+     */
+    @Override
+    public GlossaryTerm trimToReference() throws InvalidRequestException {
+        if (this.getGuid() != null && !this.getGuid().isEmpty()) {
+            return refByGuid(this.getGuid());
+        }
+        if (this.getQualifiedName() != null && !this.getQualifiedName().isEmpty()) {
+            return refByQualifiedName(this.getQualifiedName());
+        }
+        if (this.getUniqueAttributes() != null
+                && this.getUniqueAttributes().getQualifiedName() != null
+                && !this.getUniqueAttributes().getQualifiedName().isEmpty()) {
+            return refByQualifiedName(this.getUniqueAttributes().getQualifiedName());
+        }
+        throw new InvalidRequestException(
+                ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, TYPE_NAME, "guid, qualifiedName");
+    }
+
+    /**
      * Start an asset filter that will return all GlossaryTerm assets.
      * Additional conditions can be chained onto the returned filter before any
      * asset retrieval is attempted, ensuring all conditions are pushed-down for
@@ -368,6 +392,36 @@ public class GlossaryTerm extends Asset implements IGlossaryTerm, IAsset, IRefer
     }
 
     /**
+     * Builds the minimal object necessary for creating a term.
+     *
+     * @param name of the term
+     * @param glossary in which the term should be created
+     * @return the minimal request necessary to create the term, as a builder
+     * @throws InvalidRequestException if the glossary provided is without a GUID or qualifiedName
+     */
+    public static GlossaryTermBuilder<?, ?> creator(String name, Glossary glossary) throws InvalidRequestException {
+        return creator(name, (String) null).anchor(glossary.trimToReference());
+    }
+
+    /**
+     * Builds the minimal object necessary for creating a term.
+     *
+     * @param name of the term
+     * @param glossaryId unique identifier of the term's glossary, either is real GUID or qualifiedName
+     * @return the minimal request necessary to create the term, as a builder
+     */
+    public static GlossaryTermBuilder<?, ?> creator(String name, String glossaryId) {
+        Glossary anchor = StringUtils.isUUID(glossaryId)
+                ? Glossary.refByGuid(glossaryId)
+                : Glossary.refByQualifiedName(glossaryId);
+        return GlossaryTerm._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(name)
+                .name(name)
+                .anchor(anchor);
+    }
+
+    /**
      * Builds the minimal object necessary for creating a term. At least one of glossaryGuid or
      * glossaryQualifiedName must be provided.
      *
@@ -375,13 +429,15 @@ public class GlossaryTerm extends Asset implements IGlossaryTerm, IAsset, IRefer
      * @param glossaryGuid unique identifier of the term's glossary
      * @param glossaryQualifiedName unique name of the term's glossary
      * @return the minimal request necessary to create the term, as a builder
+     * @deprecated see {@link #creator(String, String)} instead
      */
+    @Deprecated
     public static GlossaryTermBuilder<?, ?> creator(String name, String glossaryGuid, String glossaryQualifiedName) {
-        return GlossaryTerm._internal()
-                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
-                .qualifiedName(name)
-                .name(name)
-                .anchor(Glossary.anchorLink(glossaryGuid, glossaryQualifiedName));
+        if (glossaryGuid != null) {
+            return creator(name, glossaryGuid);
+        } else {
+            return creator(name, glossaryQualifiedName);
+        }
     }
 
     /**
@@ -399,7 +455,7 @@ public class GlossaryTerm extends Asset implements IGlossaryTerm, IAsset, IRefer
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(qualifiedName)
                 .name(name)
-                .anchor(Glossary.anchorLink(glossaryGuid, null));
+                .anchor(Glossary.refByGuid(glossaryGuid));
     }
 
     /**

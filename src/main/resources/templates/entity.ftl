@@ -160,6 +160,30 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
 </#list>
 <#if !abstract>
     /**
+     * Builds the minimal object necessary to create a relationship to a ${className}, from a potentially
+     * more-complete ${className} object.
+     *
+     * @return the minimal object necessary to relate to the ${className}
+     * @throws InvalidRequestException if any of the minimal set of required properties for a ${className} relationship are not found in the initial object
+     */
+    @Override
+    public ${className} trimToReference() throws InvalidRequestException {
+        if (this.getGuid() != null && !this.getGuid().isEmpty()) {
+            return refByGuid(this.getGuid());
+        }
+        if (this.getQualifiedName() != null && !this.getQualifiedName().isEmpty()) {
+            return refByQualifiedName(this.getQualifiedName());
+        }
+        if (this.getUniqueAttributes() != null
+                && this.getUniqueAttributes().getQualifiedName() != null
+                && !this.getUniqueAttributes().getQualifiedName().isEmpty()) {
+            return refByQualifiedName(this.getUniqueAttributes().getQualifiedName());
+        }
+        throw new InvalidRequestException(
+            ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, TYPE_NAME, "guid, qualifiedName");
+    }
+
+    /**
      * Start an asset filter that will return all ${className} assets.
      * Additional conditions can be chained onto the returned filter before any
      * asset retrieval is attempted, ensuring all conditions are pushed-down for

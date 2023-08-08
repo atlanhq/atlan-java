@@ -41,6 +41,12 @@ public enum NumericFields implements AtlanSearchableField {
     ASSET_DBT_JOB_NEXT_RUN("assetDbtJobNextRun"),
     /** TBC */
     ASSET_MC_LAST_SYNC_RUN_AT("assetMcLastSyncRunAt"),
+    /** Soda check count */
+    ASSET_SODA_CHECK_COUNT("assetSodaCheckCount"),
+    /** TBC */
+    ASSET_SODA_LAST_SCAN_AT("assetSodaLastScanAt"),
+    /** TBC */
+    ASSET_SODA_LAST_SYNC_RUN_AT("assetSodaLastSyncRunAt"),
     /** TBC */
     AUTH_SERVICE_POLICY_LAST_SYNC("authServicePolicyLastSync"),
     /** Time (epoch) at which the certification was last updated, in milliseconds. */
@@ -292,6 +298,10 @@ public enum NumericFields implements AtlanSearchableField {
     /** TBC */
     SNOWFLAKE_STREAM_STALE_AFTER("snowflakeStreamStaleAfter"),
     /** TBC */
+    SODA_CHECK_INCIDENT_COUNT("sodaCheckIncidentCount"),
+    /** TBC */
+    SODA_CHECK_LAST_SCAN_AT("sodaCheckLastScanAt"),
+    /** TBC */
     SOURCELAST_UPDATER_ID("sourcelastUpdaterId"),
     /** TBC */
     SOURCE_CHILD_COUNT("sourceChildCount"),
@@ -329,6 +339,8 @@ public enum NumericFields implements AtlanSearchableField {
     SOURCE_VIEW_COUNT("sourceViewCount"),
     /** TBC */
     STALE_SINCE_DATE("staleSinceDate"),
+    /** TBC */
+    STARRED_COUNT("starredCount"),
     /** TBC */
     START_TIME("startTime"),
     /** Number of tables in this schema. */

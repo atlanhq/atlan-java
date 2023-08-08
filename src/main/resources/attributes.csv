@@ -211,6 +211,13 @@ Asset,Base class for all assets.,assetMcIncidentStates,TBC
 Asset,Base class for all assets.,assetMcLastSyncRunAt,TBC
 Asset,Base class for all assets.,starredBy,Users who have starred this asset.
 Asset,Base class for all assets.,starredDetailsList,List of usernames with extra information of the users who have starred an asset
+Asset,Base class for all assets.,starredCount,TBC
+Asset,Base class for all assets.,assetSodaDQStatus,Soda DQ Status
+Asset,Base class for all assets.,assetSodaCheckCount,Soda check count
+Asset,Base class for all assets.,assetSodaLastSyncRunAt,TBC
+Asset,Base class for all assets.,assetSodaLastScanAt,TBC
+Asset,Base class for all assets.,assetSodaCheckStatuses,All associated soda check statuses
+Asset,Base class for all assets.,assetSodaSourceURL,TBC
 Asset,Base class for all assets.,schemaRegistrySubjects,TBC
 Asset,Base class for all assets.,mcMonitors,TBC
 Asset,Base class for all assets.,files,TBC
@@ -218,6 +225,7 @@ Asset,Base class for all assets.,mcIncidents,TBC
 Asset,Base class for all assets.,links,Resources that are linked to this asset.
 Asset,Base class for all assets.,metrics,TBC
 Asset,Base class for all assets.,readme,README that is linked to this asset.
+Asset,Base class for all assets.,sodaChecks,TBC
 Asset,Base class for all assets.,meanings,Glossary terms that are linked to this asset.
 AtlasGlossary,Instance of a glossary in Atlan.,shortDescription,Unused.
 AtlasGlossary,Instance of a glossary in Atlan.,longDescription,Unused.
@@ -239,22 +247,22 @@ AtlasGlossaryTerm,Instance of a term in Atlan.,examples,Unused.
 AtlasGlossaryTerm,Instance of a term in Atlan.,abbreviation,Unused.
 AtlasGlossaryTerm,Instance of a term in Atlan.,usage,Unused.
 AtlasGlossaryTerm,Instance of a term in Atlan.,additionalAttributes,Unused.
-AtlasGlossaryTerm,Instance of a term in Atlan.,translationTerms,TBC (Other direction is translatedTerms.)
 AtlasGlossaryTerm,Instance of a term in Atlan.,validValuesFor,TBC (Other direction is validValues.)
-AtlasGlossaryTerm,Instance of a term in Atlan.,synonyms,Terms that have the same (or a very similar) meaning in the same language.
-AtlasGlossaryTerm,Instance of a term in Atlan.,replacedBy,TBC
 AtlasGlossaryTerm,Instance of a term in Atlan.,validValues,TBC (Other direction is validValuesFor.)
-AtlasGlossaryTerm,Instance of a term in Atlan.,replacementTerms,TBC
 AtlasGlossaryTerm,Instance of a term in Atlan.,seeAlso,Linked terms that may also be of interest.
-AtlasGlossaryTerm,Instance of a term in Atlan.,translatedTerms,TBC (Other direction is translationTerms.)
 AtlasGlossaryTerm,Instance of a term in Atlan.,isA,TBC (Other direction is classifies.)
-AtlasGlossaryTerm,Instance of a term in Atlan.,anchor,Glossary in which this term is contained.
 AtlasGlossaryTerm,Instance of a term in Atlan.,antonyms,Terms that have the opposite (or near opposite) meaning in the same language.
 AtlasGlossaryTerm,Instance of a term in Atlan.,assignedEntities,"Assets that are attached to this term. Note: this should ONLY be used to view such relationships, never to set such relationships. Only set such relationships in the other direction."
 AtlasGlossaryTerm,Instance of a term in Atlan.,classifies,TBC (Other direction is isA.)
 AtlasGlossaryTerm,Instance of a term in Atlan.,categories,Categories within which this term is organized.
 AtlasGlossaryTerm,Instance of a term in Atlan.,preferredToTerms,Other terms that are less common or less preferred than this term. (Other direction is preferredTerms.)
 AtlasGlossaryTerm,Instance of a term in Atlan.,preferredTerms,Preferred terms to use instead of this term. (Other direction is preferredToTerms.)
+AtlasGlossaryTerm,Instance of a term in Atlan.,translationTerms,TBC (Other direction is translatedTerms.)
+AtlasGlossaryTerm,Instance of a term in Atlan.,synonyms,Terms that have the same (or a very similar) meaning in the same language.
+AtlasGlossaryTerm,Instance of a term in Atlan.,replacedBy,TBC
+AtlasGlossaryTerm,Instance of a term in Atlan.,replacementTerms,TBC
+AtlasGlossaryTerm,Instance of a term in Atlan.,translatedTerms,TBC (Other direction is translationTerms.)
+AtlasGlossaryTerm,Instance of a term in Atlan.,anchor,Glossary in which this term is contained.
 AtlasServer,Unused,AtlasServer.name,TBC
 AtlasServer,Unused,AtlasServer.displayName,TBC
 AtlasServer,Unused,fullName,TBC
@@ -556,8 +564,8 @@ LookerFolder,Instance of a Looker folder in Atlan.,sourceContentMetadataId,TBC
 LookerFolder,Instance of a Looker folder in Atlan.,sourceCreatorId,TBC
 LookerFolder,Instance of a Looker folder in Atlan.,sourceChildCount,TBC
 LookerFolder,Instance of a Looker folder in Atlan.,sourceParentID,TBC
-LookerFolder,Instance of a Looker folder in Atlan.,looks,TBC
 LookerFolder,Instance of a Looker folder in Atlan.,dashboards,TBC
+LookerFolder,Instance of a Looker folder in Atlan.,looks,TBC
 LookerLook,Instance of a Looker look in Atlan.,folderName,TBC
 LookerLook,Instance of a Looker look in Atlan.,sourceUserId,TBC
 LookerLook,Instance of a Looker look in Atlan.,sourceViewCount,TBC
@@ -608,8 +616,8 @@ MCIncident,Instance of a Monte Carlo Incident in Atlan.,mcIncidentSubTypes,TBC
 MCIncident,Instance of a Monte Carlo Incident in Atlan.,mcIncidentSeverity,Severity of the incident.
 MCIncident,Instance of a Monte Carlo Incident in Atlan.,mcIncidentState,"Status of the incident, for example whether it is being investigated or is already fixed."
 MCIncident,Instance of a Monte Carlo Incident in Atlan.,mcIncidentWarehouse,Name of the warehouse in which the incident occurred.
-MCIncident,Instance of a Monte Carlo Incident in Atlan.,mcIncidentAssets,Assets impacted by the incident.
 MCIncident,Instance of a Monte Carlo Incident in Atlan.,mcMonitor,Monitor through which this incident occurred.
+MCIncident,Instance of a Monte Carlo Incident in Atlan.,mcIncidentAssets,Assets impacted by the incident.
 MCMonitor,Instance of a Monte Carlo monitor in Atlan.,mcMonitorId,Unique identifier for the monitor.
 MCMonitor,Instance of a Monte Carlo monitor in Atlan.,mcMonitorStatus,Status of the monitor.
 MCMonitor,Instance of a Monte Carlo monitor in Atlan.,mcMonitorType,"Type of monitor, for example field health (stats) or dimension tracking (categories)."
@@ -687,8 +695,8 @@ MicroStrategyCube,Instance of a MicroStrategy cube in Atlan.,microStrategyProjec
 MicroStrategyCube,Instance of a MicroStrategy cube in Atlan.,microStrategyAttributes,Attributes used by the cube.
 MicroStrategyDocument,Instance of a MicroStrategy document in Atlan.,microStrategyProject,Project containing the document.
 MicroStrategyDossier,Instance of a MicroStrategy dossier in Atlan.,microStrategyDossierChapterNames,List of names of the dossier chapters.
-MicroStrategyDossier,Instance of a MicroStrategy dossier in Atlan.,microStrategyProject,Project containing the dossier.
 MicroStrategyDossier,Instance of a MicroStrategy dossier in Atlan.,microStrategyVisualizations,Visualizations used within the dossier.
+MicroStrategyDossier,Instance of a MicroStrategy dossier in Atlan.,microStrategyProject,Project containing the dossier.
 MicroStrategyFact,Instance of a MicroStrategy fact in Atlan.,microStrategyFactExpressions,List of expressions for the fact.
 MicroStrategyFact,Instance of a MicroStrategy fact in Atlan.,microStrategyMetrics,Metrics where the fact is used.
 MicroStrategyFact,Instance of a MicroStrategy fact in Atlan.,microStrategyProject,Project containing the fact.
@@ -749,8 +757,8 @@ ModeReport,Instance of a Mode report in Atlan.,modeChartCount,TBC
 ModeReport,Instance of a Mode report in Atlan.,modeQueryPreview,TBC
 ModeReport,Instance of a Mode report in Atlan.,modeIsPublic,TBC
 ModeReport,Instance of a Mode report in Atlan.,modeIsShared,TBC
-ModeReport,Instance of a Mode report in Atlan.,modeCollections,TBC
 ModeReport,Instance of a Mode report in Atlan.,modeQueries,TBC
+ModeReport,Instance of a Mode report in Atlan.,modeCollections,TBC
 ModeWorkspace,Instance of a Mode workspace in Atlan.,modeCollectionCount,TBC
 ModeWorkspace,Instance of a Mode workspace in Atlan.,modeCollections,TBC
 MonteCarlo,Base class for Monte Carlo assets.,mcLabels,TBC
@@ -774,8 +782,8 @@ PowerBIColumn,Instance of a Power BI column in Atlan.,table,TBC
 PowerBIDashboard,Instance of a Power BI dashboard in Atlan.,workspaceQualifiedName,TBC
 PowerBIDashboard,Instance of a Power BI dashboard in Atlan.,webUrl,TBC
 PowerBIDashboard,Instance of a Power BI dashboard in Atlan.,tileCount,TBC
-PowerBIDashboard,Instance of a Power BI dashboard in Atlan.,tiles,TBC
 PowerBIDashboard,Instance of a Power BI dashboard in Atlan.,workspace,TBC
+PowerBIDashboard,Instance of a Power BI dashboard in Atlan.,tiles,TBC
 PowerBIDataflow,Instance of a Power BI dataflow in Atlan.,workspaceQualifiedName,TBC
 PowerBIDataflow,Instance of a Power BI dataflow in Atlan.,webUrl,TBC
 PowerBIDataflow,Instance of a Power BI dataflow in Atlan.,workspace,TBC
@@ -865,9 +873,9 @@ Process,Instance of a lineage process in Atlan.,outputs,Assets that are outputs 
 Process,Instance of a lineage process in Atlan.,code,Code that ran within the process.
 Process,Instance of a lineage process in Atlan.,sql,SQL query that ran to produce the outputs.
 Process,Instance of a lineage process in Atlan.,ast,TBC
-Process,Instance of a lineage process in Atlan.,airflowTasks,TBC
 Process,Instance of a lineage process in Atlan.,outputs,Assets that are outputs from this process.
 Process,Instance of a lineage process in Atlan.,inputs,Assets that are inputs to this process.
+Process,Instance of a lineage process in Atlan.,airflowTasks,TBC
 Process,Instance of a lineage process in Atlan.,columnProcesses,Processes that detail column-level lineage for this process.
 Purpose,Instance of a Purpose access control object in Atlan.,purposeClassifications,Tags on which this purpose is applied.
 Qlik,Base class for Qlik assets.,qlikId,Unique identifier of the Qlik asset in Qlik.
@@ -1042,19 +1050,19 @@ SalesforceOrganization,Instance of a Salesforce organization in Atlan.,dashboard
 SalesforceReport,Instance of a Salesforce report in Atlan.,sourceId,ID of the report in Salesforce.
 SalesforceReport,Instance of a Salesforce report in Atlan.,reportType,Type of report in Salesforce.
 SalesforceReport,Instance of a Salesforce report in Atlan.,detailColumns,List of column names on the report.
-SalesforceReport,Instance of a Salesforce report in Atlan.,organization,TBC
 SalesforceReport,Instance of a Salesforce report in Atlan.,dashboards,TBC
+SalesforceReport,Instance of a Salesforce report in Atlan.,organization,TBC
 Schema,Instance of a database schema in Atlan.,tableCount,Number of tables in this schema.
 Schema,Instance of a database schema in Atlan.,viewsCount,Number of views in this schema.
 Schema,Instance of a database schema in Atlan.,snowflakeTags,Tags applied to this schema in Snowflake.
-Schema,Instance of a database schema in Atlan.,materialisedViews,Materialized views that exist within this schema.
 Schema,Instance of a database schema in Atlan.,functions,TBC
 Schema,Instance of a database schema in Atlan.,tables,Tables that exist within this schema.
 Schema,Instance of a database schema in Atlan.,database,Database in which this schema exists.
-Schema,Instance of a database schema in Atlan.,snowflakePipes,Snowflake Pipes that are defined within this schema.
-Schema,Instance of a database schema in Atlan.,snowflakeStreams,Snowflake Streams that are defined within this schema.
 Schema,Instance of a database schema in Atlan.,procedures,Stored procedures (routines) that are defined within this schema.
 Schema,Instance of a database schema in Atlan.,views,Views that exist within this schema.
+Schema,Instance of a database schema in Atlan.,materialisedViews,Materialized views that exist within this schema.
+Schema,Instance of a database schema in Atlan.,snowflakePipes,Snowflake Pipes that are defined within this schema.
+Schema,Instance of a database schema in Atlan.,snowflakeStreams,Snowflake Streams that are defined within this schema.
 SchemaRegistry,Schema Registry Assets,schemaRegistrySchemaType,"Type of language/specification used to define the schema like JSON, Protobuf etc."
 SchemaRegistry,Schema Registry Assets,schemaRegistrySchemaId,Unique identifier for schema definition set by the schema registry
 SchemaRegistrySubject,Schema Registry Subject Assets,schemaRegistrySubjectBaseName,"Base name of the subject (i.e. without -key, -value prefixes)"
@@ -1099,6 +1107,13 @@ SnowflakeStream,Instance of a Snowflake Stream in Atlan.,snowflakeStreamIsStale,
 SnowflakeStream,Instance of a Snowflake Stream in Atlan.,snowflakeStreamStaleAfter,TBC
 SnowflakeStream,Instance of a Snowflake Stream in Atlan.,atlanSchema,TBC
 SnowflakeTag,Instance of a Snowflake Tag in Atlan.,atlanSchema,Database schemas to which this tag is applied.
+SodaCheck,Soda Check,sodaCheckId,Check Id
+SodaCheck,Soda Check,sodaCheckEvaluationStatus,Check status
+SodaCheck,Soda Check,sodaCheckDefinition,Check definition
+SodaCheck,Soda Check,sodaCheckLastScanAt,TBC
+SodaCheck,Soda Check,sodaCheckIncidentCount,TBC
+SodaCheck,Soda Check,sodaCheckColumns,TBC
+SodaCheck,Soda Check,sodaCheckAssets,TBC
 Table,Instance of a database table in Atlan.,columnCount,Number of columns in this table.
 Table,Instance of a database table in Atlan.,rowCount,Number of rows in this table.
 Table,Instance of a database table in Atlan.,sizeBytes,Size of the table in bytes.

@@ -210,6 +210,24 @@ public interface IDatabase {
     SortedSet<String> getAssetMcMonitorTypes();
 
     /** TBC */
+    Long getAssetSodaCheckCount();
+
+    /** TBC */
+    String getAssetSodaCheckStatuses();
+
+    /** TBC */
+    String getAssetSodaDQStatus();
+
+    /** TBC */
+    Long getAssetSodaLastScanAt();
+
+    /** TBC */
+    Long getAssetSodaLastSyncRunAt();
+
+    /** TBC */
+    String getAssetSodaSourceURL();
+
+    /** TBC */
     SortedSet<String> getAssetTags();
 
     /** TBC */
@@ -357,6 +375,9 @@ public interface IDatabase {
     SortedSet<ISchema> getSchemas();
 
     /** TBC */
+    SortedSet<ISodaCheck> getSodaChecks();
+
+    /** TBC */
     SourceCostUnitType getSourceCostUnit();
 
     /** TBC */
@@ -430,6 +451,9 @@ public interface IDatabase {
 
     /** TBC */
     SortedSet<String> getStarredBy();
+
+    /** TBC */
+    Integer getStarredCount();
 
     /** TBC */
     List<StarredDetails> getStarredDetails();

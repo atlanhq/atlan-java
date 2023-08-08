@@ -3,6 +3,23 @@
      * Builds the minimal object necessary to create a table partition.
      *
      * @param name of the table partition
+     * @param table in which the partition should be created, which must have at least
+     *              a qualifiedName
+     * @return the minimal request necessary to create the table partition, as a builder
+     * @throws InvalidRequestException if the table provided is without a qualifiedName
+     */
+    public static TablePartitionBuilder<?, ?> creator(String name, Table table) throws InvalidRequestException {
+        if (table.getQualifiedName() == null || table.getQualifiedName().isEmpty()) {
+            throw new InvalidRequestException(
+                    ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, "Table", "qualifiedName");
+        }
+        return creator(name, table.getQualifiedName()).parentTable(table.trimToReference());
+    }
+
+    /**
+     * Builds the minimal object necessary to create a table partition.
+     *
+     * @param name of the table partition
      * @param tableQualifiedName unique name of the table in which this table partition exists
      * @return the minimal request necessary to create the table partition, as a builder
      */

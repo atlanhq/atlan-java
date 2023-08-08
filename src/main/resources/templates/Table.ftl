@@ -3,6 +3,23 @@
      * Builds the minimal object necessary to create a table.
      *
      * @param name of the table
+     * @param schema in which the table should be created, which must have at least
+     *               a qualifiedName
+     * @return the minimal request necessary to create the table, as a builder
+     * @throws InvalidRequestException if the schema provided is without a qualifiedName
+     */
+    public static TableBuilder<?, ?> creator(String name, Schema schema) throws InvalidRequestException {
+        if (schema.getQualifiedName() == null || schema.getQualifiedName().isEmpty()) {
+            throw new InvalidRequestException(
+                    ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, "Schema", "qualifiedName");
+        }
+        return creator(name, schema.getQualifiedName()).schema(schema.trimToReference());
+    }
+
+    /**
+     * Builds the minimal object necessary to create a table.
+     *
+     * @param name of the table
      * @param schemaQualifiedName unique name of the schema in which this table exists
      * @return the minimal request necessary to create the table, as a builder
      */

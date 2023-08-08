@@ -113,6 +113,30 @@ public class ADLSContainer extends Asset
     SortedSet<ILineageProcess> outputFromProcesses;
 
     /**
+     * Builds the minimal object necessary to create a relationship to a ADLSContainer, from a potentially
+     * more-complete ADLSContainer object.
+     *
+     * @return the minimal object necessary to relate to the ADLSContainer
+     * @throws InvalidRequestException if any of the minimal set of required properties for a ADLSContainer relationship are not found in the initial object
+     */
+    @Override
+    public ADLSContainer trimToReference() throws InvalidRequestException {
+        if (this.getGuid() != null && !this.getGuid().isEmpty()) {
+            return refByGuid(this.getGuid());
+        }
+        if (this.getQualifiedName() != null && !this.getQualifiedName().isEmpty()) {
+            return refByQualifiedName(this.getQualifiedName());
+        }
+        if (this.getUniqueAttributes() != null
+                && this.getUniqueAttributes().getQualifiedName() != null
+                && !this.getUniqueAttributes().getQualifiedName().isEmpty()) {
+            return refByQualifiedName(this.getUniqueAttributes().getQualifiedName());
+        }
+        throw new InvalidRequestException(
+                ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, TYPE_NAME, "guid, qualifiedName");
+    }
+
+    /**
      * Start an asset filter that will return all ADLSContainer assets.
      * Additional conditions can be chained onto the returned filter before any
      * asset retrieval is attempted, ensuring all conditions are pushed-down for
@@ -325,6 +349,23 @@ public class ADLSContainer extends Asset
      */
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Builds the minimal object necessary to create a ADLSContainer.
+     *
+     * @param name of the ADLSContainer
+     * @param account in which the ADLSContainer should be created, which must have at least
+     *                a qualifiedName
+     * @return the minimal request necessary to create the ADLSContainer, as a builder
+     * @throws InvalidRequestException if the container provided is without a qualifiedName
+     */
+    public static ADLSContainerBuilder<?, ?> creator(String name, ADLSAccount account) throws InvalidRequestException {
+        if (account.getQualifiedName() == null || account.getQualifiedName().isEmpty()) {
+            throw new InvalidRequestException(
+                    ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, "ADLSAccount", "qualifiedName");
+        }
+        return creator(name, account.getQualifiedName()).adlsAccount(account.trimToReference());
     }
 
     /**

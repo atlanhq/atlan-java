@@ -188,6 +188,30 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
     String viewQualifiedName;
 
     /**
+     * Builds the minimal object necessary to create a relationship to a View, from a potentially
+     * more-complete View object.
+     *
+     * @return the minimal object necessary to relate to the View
+     * @throws InvalidRequestException if any of the minimal set of required properties for a View relationship are not found in the initial object
+     */
+    @Override
+    public View trimToReference() throws InvalidRequestException {
+        if (this.getGuid() != null && !this.getGuid().isEmpty()) {
+            return refByGuid(this.getGuid());
+        }
+        if (this.getQualifiedName() != null && !this.getQualifiedName().isEmpty()) {
+            return refByQualifiedName(this.getQualifiedName());
+        }
+        if (this.getUniqueAttributes() != null
+                && this.getUniqueAttributes().getQualifiedName() != null
+                && !this.getUniqueAttributes().getQualifiedName().isEmpty()) {
+            return refByQualifiedName(this.getUniqueAttributes().getQualifiedName());
+        }
+        throw new InvalidRequestException(
+                ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, TYPE_NAME, "guid, qualifiedName");
+    }
+
+    /**
      * Start an asset filter that will return all View assets.
      * Additional conditions can be chained onto the returned filter before any
      * asset retrieval is attempted, ensuring all conditions are pushed-down for
@@ -399,6 +423,22 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
      */
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Builds the minimal object necessary to create a view.
+     *
+     * @param name of the view
+     * @param schema in which the view should be created, which must have at least
+     *               a qualifiedName
+     * @return the minimal request necessary to create the view, as a builder
+     * @throws InvalidRequestException if the schema provided is without a qualifiedName
+     */
+    public static ViewBuilder<?, ?> creator(String name, Schema schema) throws InvalidRequestException {
+        if (schema.getQualifiedName() == null || schema.getQualifiedName().isEmpty()) {
+            throw new InvalidRequestException(ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, "Schema", "qualifiedName");
+        }
+        return creator(name, schema.getQualifiedName()).schema(schema.trimToReference());
     }
 
     /**

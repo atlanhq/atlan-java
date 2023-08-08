@@ -112,6 +112,30 @@ public class APIPath extends Asset implements IAPIPath, IAPI, ICatalog, IAsset, 
     SortedSet<ILineageProcess> outputFromProcesses;
 
     /**
+     * Builds the minimal object necessary to create a relationship to a APIPath, from a potentially
+     * more-complete APIPath object.
+     *
+     * @return the minimal object necessary to relate to the APIPath
+     * @throws InvalidRequestException if any of the minimal set of required properties for a APIPath relationship are not found in the initial object
+     */
+    @Override
+    public APIPath trimToReference() throws InvalidRequestException {
+        if (this.getGuid() != null && !this.getGuid().isEmpty()) {
+            return refByGuid(this.getGuid());
+        }
+        if (this.getQualifiedName() != null && !this.getQualifiedName().isEmpty()) {
+            return refByQualifiedName(this.getQualifiedName());
+        }
+        if (this.getUniqueAttributes() != null
+                && this.getUniqueAttributes().getQualifiedName() != null
+                && !this.getUniqueAttributes().getQualifiedName().isEmpty()) {
+            return refByQualifiedName(this.getUniqueAttributes().getQualifiedName());
+        }
+        throw new InvalidRequestException(
+                ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, TYPE_NAME, "guid, qualifiedName");
+    }
+
+    /**
      * Start an asset filter that will return all APIPath assets.
      * Additional conditions can be chained onto the returned filter before any
      * asset retrieval is attempted, ensuring all conditions are pushed-down for
@@ -323,6 +347,23 @@ public class APIPath extends Asset implements IAPIPath, IAPI, ICatalog, IAsset, 
      */
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Builds the minimal object necessary to create an API path.
+     *
+     * @param name of the API path
+     * @param apiSpec in which the API path should be created, which must have at least
+     *                a qualifiedName
+     * @return the minimal request necessary to create the API path, as a builder
+     * @throws InvalidRequestException if the apiSpec provided is without a qualifiedName
+     */
+    public static APIPathBuilder<?, ?> creator(String name, APISpec apiSpec) throws InvalidRequestException {
+        if (apiSpec.getQualifiedName() == null || apiSpec.getQualifiedName().isEmpty()) {
+            throw new InvalidRequestException(
+                    ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, "APISpec", "qualifiedName");
+        }
+        return creator(name, apiSpec.getQualifiedName()).apiSpec(apiSpec.trimToReference());
     }
 
     /**

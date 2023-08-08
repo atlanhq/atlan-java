@@ -412,6 +412,30 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
     String viewQualifiedName;
 
     /**
+     * Builds the minimal object necessary to create a relationship to a Column, from a potentially
+     * more-complete Column object.
+     *
+     * @return the minimal object necessary to relate to the Column
+     * @throws InvalidRequestException if any of the minimal set of required properties for a Column relationship are not found in the initial object
+     */
+    @Override
+    public Column trimToReference() throws InvalidRequestException {
+        if (this.getGuid() != null && !this.getGuid().isEmpty()) {
+            return refByGuid(this.getGuid());
+        }
+        if (this.getQualifiedName() != null && !this.getQualifiedName().isEmpty()) {
+            return refByQualifiedName(this.getQualifiedName());
+        }
+        if (this.getUniqueAttributes() != null
+                && this.getUniqueAttributes().getQualifiedName() != null
+                && !this.getUniqueAttributes().getQualifiedName().isEmpty()) {
+            return refByQualifiedName(this.getUniqueAttributes().getQualifiedName());
+        }
+        throw new InvalidRequestException(
+                ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, TYPE_NAME, "guid, qualifiedName");
+    }
+
+    /**
      * Start an asset filter that will return all Column assets.
      * Additional conditions can be chained onto the returned filter before any
      * asset retrieval is attempted, ensuring all conditions are pushed-down for
@@ -640,6 +664,81 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
             return (ISQL) tablePartition;
         }
         return null;
+    }
+
+    /**
+     * Builds the minimal object necessary to create a Column.
+     *
+     * @param name of the Column
+     * @param table in which the Column should be created, which must have at least
+     *              a qualifiedName
+     * @param order the order the Column appears within its table (the Column's position)
+     * @return the minimal request necessary to create the Column, as a builder
+     * @throws InvalidRequestException if the table provided is without a qualifiedName
+     */
+    public static ColumnBuilder<?, ?> creator(String name, Table table, int order) throws InvalidRequestException {
+        if (table.getQualifiedName() == null || table.getQualifiedName().isEmpty()) {
+            throw new InvalidRequestException(ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, "Table", "qualifiedName");
+        }
+        return creator(name, table.getTypeName(), table.getQualifiedName(), order)
+                .table(table.trimToReference());
+    }
+
+    /**
+     * Builds the minimal object necessary to create a Column.
+     *
+     * @param name of the Column
+     * @param partition in which the Column should be created, which must have at least
+     *                  a qualifiedName
+     * @param order the order the Column appears within its partition (the Column's position)
+     * @return the minimal request necessary to create the Column, as a builder
+     * @throws InvalidRequestException if the partition provided is without a qualifiedName
+     */
+    public static ColumnBuilder<?, ?> creator(String name, TablePartition partition, int order)
+            throws InvalidRequestException {
+        if (partition.getQualifiedName() == null || partition.getQualifiedName().isEmpty()) {
+            throw new InvalidRequestException(
+                    ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, "TablePartition", "qualifiedName");
+        }
+        return creator(name, partition.getTypeName(), partition.getQualifiedName(), order)
+                .tablePartition(partition.trimToReference());
+    }
+
+    /**
+     * Builds the minimal object necessary to create a Column.
+     *
+     * @param name of the Column
+     * @param view in which the Column should be created, which must have at least
+     *             a qualifiedName
+     * @param order the order the Column appears within its view (the Column's position)
+     * @return the minimal request necessary to create the Column, as a builder
+     * @throws InvalidRequestException if the view provided is without a qualifiedName
+     */
+    public static ColumnBuilder<?, ?> creator(String name, View view, int order) throws InvalidRequestException {
+        if (view.getQualifiedName() == null || view.getQualifiedName().isEmpty()) {
+            throw new InvalidRequestException(ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, "View", "qualifiedName");
+        }
+        return creator(name, view.getTypeName(), view.getQualifiedName(), order).view(view.trimToReference());
+    }
+
+    /**
+     * Builds the minimal object necessary to create a Column.
+     *
+     * @param name of the Column
+     * @param view in which the Column should be created, which must have at least
+     *             a qualifiedName
+     * @param order the order the Column appears within its materialized view (the Column's position)
+     * @return the minimal request necessary to create the Column, as a builder
+     * @throws InvalidRequestException if the materialized view provided is without a qualifiedName
+     */
+    public static ColumnBuilder<?, ?> creator(String name, MaterializedView view, int order)
+            throws InvalidRequestException {
+        if (view.getQualifiedName() == null || view.getQualifiedName().isEmpty()) {
+            throw new InvalidRequestException(
+                    ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, "MaterializedView", "qualifiedName");
+        }
+        return creator(name, view.getTypeName(), view.getQualifiedName(), order)
+                .materializedView(view.trimToReference());
     }
 
     /**

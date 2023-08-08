@@ -369,6 +369,9 @@ public interface ICatalog {
             case SnowflakeTag.TYPE_NAME:
                 ref = SnowflakeTag.refByQualifiedName(qualifiedName);
                 break;
+            case SodaCheck.TYPE_NAME:
+                ref = SodaCheck.refByQualifiedName(qualifiedName);
+                break;
             case Table.TYPE_NAME:
                 ref = Table.refByQualifiedName(qualifiedName);
                 break;
@@ -605,6 +608,24 @@ public interface ICatalog {
     SortedSet<String> getAssetMcMonitorTypes();
 
     /** TBC */
+    Long getAssetSodaCheckCount();
+
+    /** TBC */
+    String getAssetSodaCheckStatuses();
+
+    /** TBC */
+    String getAssetSodaDQStatus();
+
+    /** TBC */
+    Long getAssetSodaLastScanAt();
+
+    /** TBC */
+    Long getAssetSodaLastSyncRunAt();
+
+    /** TBC */
+    String getAssetSodaSourceURL();
+
+    /** TBC */
     SortedSet<String> getAssetTags();
 
     /** TBC */
@@ -707,6 +728,9 @@ public interface ICatalog {
     SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
 
     /** TBC */
+    SortedSet<ISodaCheck> getSodaChecks();
+
+    /** TBC */
     SourceCostUnitType getSourceCostUnit();
 
     /** TBC */
@@ -774,6 +798,9 @@ public interface ICatalog {
 
     /** TBC */
     SortedSet<String> getStarredBy();
+
+    /** TBC */
+    Integer getStarredCount();
 
     /** TBC */
     List<StarredDetails> getStarredDetails();

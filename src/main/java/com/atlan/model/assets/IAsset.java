@@ -209,6 +209,24 @@ public interface IAsset {
     /** Types of all associated Monte Carlo monitors. */
     SortedSet<String> getAssetMcMonitorTypes();
 
+    /** Soda check count */
+    Long getAssetSodaCheckCount();
+
+    /** All associated soda check statuses */
+    String getAssetSodaCheckStatuses();
+
+    /** Soda DQ Status */
+    String getAssetSodaDQStatus();
+
+    /** TBC */
+    Long getAssetSodaLastScanAt();
+
+    /** TBC */
+    Long getAssetSodaLastSyncRunAt();
+
+    /** TBC */
+    String getAssetSodaSourceURL();
+
     /** TBC */
     SortedSet<String> getAssetTags();
 
@@ -305,6 +323,9 @@ public interface IAsset {
     /** TBC */
     SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
 
+    /** TBC */
+    SortedSet<ISodaCheck> getSodaChecks();
+
     /** The unit of measure for sourceTotalCost. */
     SourceCostUnitType getSourceCostUnit();
 
@@ -373,6 +394,9 @@ public interface IAsset {
 
     /** Users who have starred this asset. */
     SortedSet<String> getStarredBy();
+
+    /** TBC */
+    Integer getStarredCount();
 
     /** List of usernames with extra information of the users who have starred an asset */
     List<StarredDetails> getStarredDetails();

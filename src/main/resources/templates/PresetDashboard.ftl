@@ -3,6 +3,23 @@
      * Builds the minimal object necessary to create a Preset collection.
      *
      * @param name of the collection
+     * @param workspace in which the collection should be created, which must have at least
+     *                  a qualifiedName
+     * @return the minimal request necessary to create the collection, as a builder
+     * @throws InvalidRequestException if the workspace provided is without a qualifiedName
+     */
+    public static PresetDashboardBuilder<?, ?> creator(String name, PresetWorkspace workspace) throws InvalidRequestException {
+        if (workspace.getQualifiedName() == null || workspace.getQualifiedName().isEmpty()) {
+            throw new InvalidRequestException(
+                    ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, "PresetWorkspace", "qualifiedName");
+        }
+        return creator(name, workspace.getQualifiedName()).presetWorkspace(workspace.trimToReference());
+    }
+
+    /**
+     * Builds the minimal object necessary to create a Preset collection.
+     *
+     * @param name of the collection
      * @param workspaceQualifiedName unique name of the workspace in which the collection exists
      * @return the minimal object necessary to create the collection, as a builder
      */

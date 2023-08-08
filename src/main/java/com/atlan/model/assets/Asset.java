@@ -321,6 +321,30 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Singular
     SortedSet<String> assetMcMonitorTypes;
 
+    /** Soda check count */
+    @Attribute
+    Long assetSodaCheckCount;
+
+    /** All associated soda check statuses */
+    @Attribute
+    String assetSodaCheckStatuses;
+
+    /** Soda DQ Status */
+    @Attribute
+    String assetSodaDQStatus;
+
+    /** TBC */
+    @Attribute
+    Long assetSodaLastScanAt;
+
+    /** TBC */
+    @Attribute
+    Long assetSodaLastSyncRunAt;
+
+    /** TBC */
+    @Attribute
+    String assetSodaSourceURL;
+
     /** TBC */
     @Attribute
     @Singular
@@ -462,6 +486,11 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Singular
     SortedSet<ISchemaRegistrySubject> schemaRegistrySubjects;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISodaCheck> sodaChecks;
+
     /** The unit of measure for sourceTotalCost. */
     @Attribute
     SourceCostUnitType sourceCostUnit;
@@ -572,6 +601,10 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Attribute
     @Singular("addStarredBy")
     SortedSet<String> starredBy;
+
+    /** TBC */
+    @Attribute
+    Integer starredCount;
 
     /** List of usernames with extra information of the users who have starred an asset */
     @Attribute
@@ -713,6 +746,14 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
      * @throws InvalidRequestException if any of the minimal set of required properties are not found in the initial object
      */
     public abstract AssetBuilder<?, ?> trimToRequired() throws InvalidRequestException;
+
+    /**
+     * Reduce the asset to the minimum set of properties required to relate to it.
+     *
+     * @return an asset containing the minimal set of properties required to relate to this asset
+     * @throws InvalidRequestException if any of the minimal set of required properties are not found in the initial object
+     */
+    public abstract Asset trimToReference() throws InvalidRequestException;
 
     /**
      * If an asset with the same qualifiedName exists, updates the existing asset. Otherwise, creates the asset.

@@ -3,6 +3,23 @@
      * Builds the minimal object necessary to create a Preset dataset.
      *
      * @param name of the dataset
+     * @param collection in which the dataset should be created, which must have at least
+     *                   a qualifiedName
+     * @return the minimal request necessary to create the dataset, as a builder
+     * @throws InvalidRequestException if the collection provided is without a qualifiedName
+     */
+    public static PresetDatasetBuilder<?, ?> creator(String name, PresetDashboard collection) throws InvalidRequestException {
+        if (collection.getQualifiedName() == null || collection.getQualifiedName().isEmpty()) {
+            throw new InvalidRequestException(
+                    ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, "PresetDashboard", "qualifiedName");
+        }
+        return creator(name, collection.getQualifiedName()).presetDashboard(collection.trimToReference());
+    }
+
+    /**
+     * Builds the minimal object necessary to create a Preset dataset.
+     *
+     * @param name of the dataset
      * @param collectionQualifiedName unique name of the collection in which the dataset exists
      * @return the minimal object necessary to create the dataset, as a builder
      */

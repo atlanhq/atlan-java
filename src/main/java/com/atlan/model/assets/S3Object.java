@@ -142,6 +142,30 @@ public class S3Object extends Asset
     String s3ObjectVersionId;
 
     /**
+     * Builds the minimal object necessary to create a relationship to a S3Object, from a potentially
+     * more-complete S3Object object.
+     *
+     * @return the minimal object necessary to relate to the S3Object
+     * @throws InvalidRequestException if any of the minimal set of required properties for a S3Object relationship are not found in the initial object
+     */
+    @Override
+    public S3Object trimToReference() throws InvalidRequestException {
+        if (this.getGuid() != null && !this.getGuid().isEmpty()) {
+            return refByGuid(this.getGuid());
+        }
+        if (this.getQualifiedName() != null && !this.getQualifiedName().isEmpty()) {
+            return refByQualifiedName(this.getQualifiedName());
+        }
+        if (this.getUniqueAttributes() != null
+                && this.getUniqueAttributes().getQualifiedName() != null
+                && !this.getUniqueAttributes().getQualifiedName().isEmpty()) {
+            return refByQualifiedName(this.getUniqueAttributes().getQualifiedName());
+        }
+        throw new InvalidRequestException(
+                ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, TYPE_NAME, "guid, qualifiedName");
+    }
+
+    /**
      * Start an asset filter that will return all S3Object assets.
      * Additional conditions can be chained onto the returned filter before any
      * asset retrieval is attempted, ensuring all conditions are pushed-down for
@@ -353,6 +377,33 @@ public class S3Object extends Asset
      */
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Builds the minimal object necessary to create an S3 object.
+     *
+     * @param name of the S3 object
+     * @param bucket in which the S3 object should be created, which must have at least
+     *               a qualifiedName and name
+     * @param awsArn unique ARN of the object
+     * @return the minimal request necessary to create the S3 object, as a builder
+     * @throws InvalidRequestException if the bucket provided is without any required attributes
+     */
+    public static S3ObjectBuilder<?, ?> creator(String name, S3Bucket bucket, String awsArn)
+            throws InvalidRequestException {
+        List<String> missing = new ArrayList<>();
+        if (bucket.getQualifiedName() == null || bucket.getQualifiedName().isEmpty()) {
+            missing.add("qualifiedName");
+        }
+        if (bucket.getName() == null || bucket.getName().isEmpty()) {
+            missing.add("name");
+        }
+        if (!missing.isEmpty()) {
+            throw new InvalidRequestException(
+                    ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, "S3Bucket", String.join(",", missing));
+        }
+        return creator(name, bucket.getQualifiedName(), bucket.getName(), awsArn)
+                .bucket(bucket.trimToReference());
     }
 
     /**

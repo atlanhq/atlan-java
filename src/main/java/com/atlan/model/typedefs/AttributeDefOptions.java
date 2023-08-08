@@ -155,6 +155,7 @@ public class AttributeDefOptions extends AtlanObject {
             SnowflakePipe.TYPE_NAME,
             SnowflakeStream.TYPE_NAME,
             SnowflakeTag.TYPE_NAME,
+            SodaCheck.TYPE_NAME,
             Table.TYPE_NAME,
             TablePartition.TYPE_NAME,
             TableauCalculatedField.TYPE_NAME,

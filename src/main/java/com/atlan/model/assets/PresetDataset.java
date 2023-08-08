@@ -87,6 +87,30 @@ public class PresetDataset extends Asset implements IPresetDataset, IPreset, IBI
     String presetWorkspaceQualifiedName;
 
     /**
+     * Builds the minimal object necessary to create a relationship to a PresetDataset, from a potentially
+     * more-complete PresetDataset object.
+     *
+     * @return the minimal object necessary to relate to the PresetDataset
+     * @throws InvalidRequestException if any of the minimal set of required properties for a PresetDataset relationship are not found in the initial object
+     */
+    @Override
+    public PresetDataset trimToReference() throws InvalidRequestException {
+        if (this.getGuid() != null && !this.getGuid().isEmpty()) {
+            return refByGuid(this.getGuid());
+        }
+        if (this.getQualifiedName() != null && !this.getQualifiedName().isEmpty()) {
+            return refByQualifiedName(this.getQualifiedName());
+        }
+        if (this.getUniqueAttributes() != null
+                && this.getUniqueAttributes().getQualifiedName() != null
+                && !this.getUniqueAttributes().getQualifiedName().isEmpty()) {
+            return refByQualifiedName(this.getUniqueAttributes().getQualifiedName());
+        }
+        throw new InvalidRequestException(
+                ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, TYPE_NAME, "guid, qualifiedName");
+    }
+
+    /**
      * Start an asset filter that will return all PresetDataset assets.
      * Additional conditions can be chained onto the returned filter before any
      * asset retrieval is attempted, ensuring all conditions are pushed-down for
@@ -299,6 +323,25 @@ public class PresetDataset extends Asset implements IPresetDataset, IPreset, IBI
      */
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Builds the minimal object necessary to create a Preset dataset.
+     *
+     * @param name of the dataset
+     * @param collection in which the dataset should be created, which must have at least
+     *                   a qualifiedName
+     * @return the minimal request necessary to create the dataset, as a builder
+     * @throws InvalidRequestException if the collection provided is without a qualifiedName
+     */
+    public static PresetDatasetBuilder<?, ?> creator(String name, PresetDashboard collection)
+            throws InvalidRequestException {
+        if (collection.getQualifiedName() == null
+                || collection.getQualifiedName().isEmpty()) {
+            throw new InvalidRequestException(
+                    ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, "PresetDashboard", "qualifiedName");
+        }
+        return creator(name, collection.getQualifiedName()).presetDashboard(collection.trimToReference());
     }
 
     /**

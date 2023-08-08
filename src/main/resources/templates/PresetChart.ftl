@@ -3,6 +3,23 @@
      * Builds the minimal object necessary to create a Preset chart.
      *
      * @param name of the chart
+     * @param collection in which the chart should be created, which must have at least
+     *                   a qualifiedName
+     * @return the minimal request necessary to create the chart, as a builder
+     * @throws InvalidRequestException if the collection provided is without a qualifiedName
+     */
+    public static PresetChartBuilder<?, ?> creator(String name, PresetDashboard collection) throws InvalidRequestException {
+        if (collection.getQualifiedName() == null || collection.getQualifiedName().isEmpty()) {
+            throw new InvalidRequestException(
+                    ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, "PresetDashboard", "qualifiedName");
+        }
+        return creator(name, collection.getQualifiedName()).presetDashboard(collection.trimToReference());
+    }
+
+    /**
+     * Builds the minimal object necessary to create a Preset chart.
+     *
+     * @param name of the chart
      * @param collectionQualifiedName unique name of the collection in which the chart exists
      * @return the minimal object necessary to create the chart, as a builder
      */

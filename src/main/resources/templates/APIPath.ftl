@@ -2,6 +2,23 @@
     /**
      * Builds the minimal object necessary to create an API path.
      *
+     * @param name of the API path
+     * @param apiSpec in which the API path should be created, which must have at least
+     *                a qualifiedName
+     * @return the minimal request necessary to create the API path, as a builder
+     * @throws InvalidRequestException if the apiSpec provided is without a qualifiedName
+     */
+    public static APIPathBuilder<?, ?> creator(String name, APISpec apiSpec) throws InvalidRequestException {
+        if (apiSpec.getQualifiedName() == null || apiSpec.getQualifiedName().isEmpty()) {
+            throw new InvalidRequestException(
+                    ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, "APISpec", "qualifiedName");
+        }
+        return creator(name, apiSpec.getQualifiedName()).apiSpec(apiSpec.trimToReference());
+    }
+
+    /**
+     * Builds the minimal object necessary to create an API path.
+     *
      * @param pathURI unique URI of the API path
      * @param apiSpecQualifiedName unique name of the API spec through which the path is accessible
      * @return the minimal object necessary to create the API path, as a builder

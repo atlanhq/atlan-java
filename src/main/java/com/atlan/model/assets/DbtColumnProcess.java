@@ -167,6 +167,30 @@ public class DbtColumnProcess extends Asset
     String sql;
 
     /**
+     * Builds the minimal object necessary to create a relationship to a DbtColumnProcess, from a potentially
+     * more-complete DbtColumnProcess object.
+     *
+     * @return the minimal object necessary to relate to the DbtColumnProcess
+     * @throws InvalidRequestException if any of the minimal set of required properties for a DbtColumnProcess relationship are not found in the initial object
+     */
+    @Override
+    public DbtColumnProcess trimToReference() throws InvalidRequestException {
+        if (this.getGuid() != null && !this.getGuid().isEmpty()) {
+            return refByGuid(this.getGuid());
+        }
+        if (this.getQualifiedName() != null && !this.getQualifiedName().isEmpty()) {
+            return refByQualifiedName(this.getQualifiedName());
+        }
+        if (this.getUniqueAttributes() != null
+                && this.getUniqueAttributes().getQualifiedName() != null
+                && !this.getUniqueAttributes().getQualifiedName().isEmpty()) {
+            return refByQualifiedName(this.getUniqueAttributes().getQualifiedName());
+        }
+        throw new InvalidRequestException(
+                ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, TYPE_NAME, "guid, qualifiedName");
+    }
+
+    /**
      * Start an asset filter that will return all DbtColumnProcess assets.
      * Additional conditions can be chained onto the returned filter before any
      * asset retrieval is attempted, ensuring all conditions are pushed-down for

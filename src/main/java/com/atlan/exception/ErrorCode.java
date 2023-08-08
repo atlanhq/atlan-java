@@ -206,6 +206,11 @@ public enum ErrorCode implements ExceptionMessageSet {
             "ATLAN-JAVA-400-037",
             "No Atlan client has been provided.",
             "You must provide an Atlan client to this operation, or it has no information about which Atlan tenant to run against."),
+    MISSING_REQUIRED_RELATIONSHIP_PARAM(
+            400,
+            "ATLAN-JAVA-400-038",
+            "One or more required parameters to create a relationship to {0} are missing: {1}.",
+            "You must provide all of the parameters listed to relate to assets of this type."),
 
     AUTHENTICATION_PASSTHROUGH(
             401,

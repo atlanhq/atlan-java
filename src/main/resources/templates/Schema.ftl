@@ -3,6 +3,23 @@
      * Builds the minimal object necessary to create a schema.
      *
      * @param name of the schema
+     * @param database in which the schema should be created, which must have at least
+     *                 a qualifiedName
+     * @return the minimal request necessary to create the schema, as a builder
+     * @throws InvalidRequestException if the database provided is without a qualifiedName
+     */
+    public static SchemaBuilder<?, ?> creator(String name, Database database) throws InvalidRequestException {
+        if (database.getQualifiedName() == null || database.getQualifiedName().isEmpty()) {
+            throw new InvalidRequestException(
+                    ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, "Database", "qualifiedName");
+        }
+        return creator(name, database.getQualifiedName()).database(database.trimToReference());
+    }
+
+    /**
+     * Builds the minimal object necessary to create a schema.
+     *
+     * @param name of the schema
      * @param databaseQualifiedName unique name of the database in which this schema exists
      * @return the minimal request necessary to create the schema, as a builder
      */

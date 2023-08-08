@@ -3,6 +3,23 @@
      * Builds the minimal object necessary to create a ADLSObject.
      *
      * @param name of the ADLSObject
+     * @param container in which the ADLSObject should be created, which must have at least
+     *                  a qualifiedName
+     * @return the minimal request necessary to create the ADLSObject, as a builder
+     * @throws InvalidRequestException if the container provided is without a qualifiedName
+     */
+    public static ADLSObjectBuilder<?, ?> creator(String name, ADLSContainer container) throws InvalidRequestException {
+        if (container.getQualifiedName() == null || container.getQualifiedName().isEmpty()) {
+            throw new InvalidRequestException(
+                    ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, "ADLSContainer", "qualifiedName");
+        }
+        return creator(name, container.getQualifiedName()).adlsContainer(container.trimToReference());
+    }
+
+    /**
+     * Builds the minimal object necessary to create a ADLSObject.
+     *
+     * @param name of the ADLSObject
      * @param containerQualifiedName unique name of the container through which the ADLSObject is accessible
      * @return the minimal object necessary to create the ADLSObject, as a builder
      */

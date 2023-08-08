@@ -80,6 +80,30 @@ public class Readme extends Asset implements IReadme, IResource, ICatalog, IAsse
     SortedSet<IReadme> seeAlso;
 
     /**
+     * Builds the minimal object necessary to create a relationship to a Readme, from a potentially
+     * more-complete Readme object.
+     *
+     * @return the minimal object necessary to relate to the Readme
+     * @throws InvalidRequestException if any of the minimal set of required properties for a Readme relationship are not found in the initial object
+     */
+    @Override
+    public Readme trimToReference() throws InvalidRequestException {
+        if (this.getGuid() != null && !this.getGuid().isEmpty()) {
+            return refByGuid(this.getGuid());
+        }
+        if (this.getQualifiedName() != null && !this.getQualifiedName().isEmpty()) {
+            return refByQualifiedName(this.getQualifiedName());
+        }
+        if (this.getUniqueAttributes() != null
+                && this.getUniqueAttributes().getQualifiedName() != null
+                && !this.getUniqueAttributes().getQualifiedName().isEmpty()) {
+            return refByQualifiedName(this.getUniqueAttributes().getQualifiedName());
+        }
+        throw new InvalidRequestException(
+                ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, TYPE_NAME, "guid, qualifiedName");
+    }
+
+    /**
      * Start an asset filter that will return all Readme assets.
      * Additional conditions can be chained onto the returned filter before any
      * asset retrieval is attempted, ensuring all conditions are pushed-down for
@@ -291,6 +315,30 @@ public class Readme extends Asset implements IReadme, IResource, ICatalog, IAsse
      */
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Builds the minimal object necessary to create a README.
+     * Note that the provided asset must have a real (not a placeholder) GUID.
+     *
+     * @param asset the asset to which the README should be attached, including its GUID and name
+     * @param content the HTML content to use for the README
+     * @return the minimal object necessary to create the README and attach it to the asset, as a builder
+     * @throws InvalidRequestException if any of the required details are missing from the provided asset
+     */
+    public static ReadmeBuilder<?, ?> creator(Asset asset, String content) throws InvalidRequestException {
+        List<String> missing = new ArrayList<>();
+        if (asset.getGuid() == null || asset.getGuid().isEmpty() || !StringUtils.isUUID(asset.getGuid())) {
+            missing.add("guid");
+        }
+        if (asset.getName() == null || asset.getName().isEmpty()) {
+            missing.add("name");
+        }
+        if (!missing.isEmpty()) {
+            throw new InvalidRequestException(
+                    ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, "Asset", String.join(",", missing));
+        }
+        return creator(asset.trimToReference(), asset.getName(), content);
     }
 
     /**
