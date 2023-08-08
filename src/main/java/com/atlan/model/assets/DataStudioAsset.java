@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -106,6 +107,30 @@ public class DataStudioAsset extends Asset
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /**
+     * Builds the minimal object necessary to create a relationship to a DataStudioAsset, from a potentially
+     * more-complete DataStudioAsset object.
+     *
+     * @return the minimal object necessary to relate to the DataStudioAsset
+     * @throws InvalidRequestException if any of the minimal set of required properties for a DataStudioAsset relationship are not found in the initial object
+     */
+    @Override
+    public DataStudioAsset trimToReference() throws InvalidRequestException {
+        if (this.getGuid() != null && !this.getGuid().isEmpty()) {
+            return refByGuid(this.getGuid());
+        }
+        if (this.getQualifiedName() != null && !this.getQualifiedName().isEmpty()) {
+            return refByQualifiedName(this.getQualifiedName());
+        }
+        if (this.getUniqueAttributes() != null
+                && this.getUniqueAttributes().getQualifiedName() != null
+                && !this.getUniqueAttributes().getQualifiedName().isEmpty()) {
+            return refByQualifiedName(this.getUniqueAttributes().getQualifiedName());
+        }
+        throw new InvalidRequestException(
+                ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, TYPE_NAME, "guid, qualifiedName");
+    }
 
     /**
      * Start an asset filter that will return all DataStudioAsset assets.
@@ -334,6 +359,7 @@ public class DataStudioAsset extends Asset
     public static DataStudioAssetBuilder<?, ?> creator(
             String name, String connectionQualifiedName, GoogleDataStudioAssetType assetType) {
         return DataStudioAsset._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(connectionQualifiedName + "/" + name)
                 .name(name)
                 .connectionQualifiedName(connectionQualifiedName)
@@ -349,7 +375,10 @@ public class DataStudioAsset extends Asset
      * @return the minimal request necessary to update the DataStudioAsset, as a builder
      */
     public static DataStudioAssetBuilder<?, ?> updater(String qualifiedName, String name) {
-        return DataStudioAsset._internal().qualifiedName(qualifiedName).name(name);
+        return DataStudioAsset._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
     }
 
     /**

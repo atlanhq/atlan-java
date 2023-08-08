@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -116,6 +117,30 @@ public class APISpec extends Asset implements IAPISpec, IAPI, ICatalog, IAsset, 
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /**
+     * Builds the minimal object necessary to create a relationship to a APISpec, from a potentially
+     * more-complete APISpec object.
+     *
+     * @return the minimal object necessary to relate to the APISpec
+     * @throws InvalidRequestException if any of the minimal set of required properties for a APISpec relationship are not found in the initial object
+     */
+    @Override
+    public APISpec trimToReference() throws InvalidRequestException {
+        if (this.getGuid() != null && !this.getGuid().isEmpty()) {
+            return refByGuid(this.getGuid());
+        }
+        if (this.getQualifiedName() != null && !this.getQualifiedName().isEmpty()) {
+            return refByQualifiedName(this.getQualifiedName());
+        }
+        if (this.getUniqueAttributes() != null
+                && this.getUniqueAttributes().getQualifiedName() != null
+                && !this.getUniqueAttributes().getQualifiedName().isEmpty()) {
+            return refByQualifiedName(this.getUniqueAttributes().getQualifiedName());
+        }
+        throw new InvalidRequestException(
+                ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, TYPE_NAME, "guid, qualifiedName");
+    }
 
     /**
      * Start an asset filter that will return all APISpec assets.
@@ -340,6 +365,7 @@ public class APISpec extends Asset implements IAPISpec, IAPI, ICatalog, IAsset, 
      */
     public static APISpecBuilder<?, ?> creator(String name, String connectionQualifiedName) {
         return APISpec._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(connectionQualifiedName + "/" + name)
                 .name(name)
                 .connectionQualifiedName(connectionQualifiedName)
@@ -354,7 +380,10 @@ public class APISpec extends Asset implements IAPISpec, IAPI, ICatalog, IAsset, 
      * @return the minimal request necessary to update the APISpec, as a builder
      */
     public static APISpecBuilder<?, ?> updater(String qualifiedName, String name) {
-        return APISpec._internal().qualifiedName(qualifiedName).name(name);
+        return APISpec._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
     }
 
     /**

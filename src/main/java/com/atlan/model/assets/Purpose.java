@@ -26,6 +26,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.SortedSet;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -78,6 +79,30 @@ public class Purpose extends Asset implements IPurpose, IAccessControl, IAsset, 
     @Singular
     @JsonProperty("purposeClassifications")
     SortedSet<String> purposeAtlanTags;
+
+    /**
+     * Builds the minimal object necessary to create a relationship to a Purpose, from a potentially
+     * more-complete Purpose object.
+     *
+     * @return the minimal object necessary to relate to the Purpose
+     * @throws InvalidRequestException if any of the minimal set of required properties for a Purpose relationship are not found in the initial object
+     */
+    @Override
+    public Purpose trimToReference() throws InvalidRequestException {
+        if (this.getGuid() != null && !this.getGuid().isEmpty()) {
+            return refByGuid(this.getGuid());
+        }
+        if (this.getQualifiedName() != null && !this.getQualifiedName().isEmpty()) {
+            return refByQualifiedName(this.getQualifiedName());
+        }
+        if (this.getUniqueAttributes() != null
+                && this.getUniqueAttributes().getQualifiedName() != null
+                && !this.getUniqueAttributes().getQualifiedName().isEmpty()) {
+            return refByQualifiedName(this.getUniqueAttributes().getQualifiedName());
+        }
+        throw new InvalidRequestException(
+                ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, TYPE_NAME, "guid, qualifiedName");
+    }
 
     /**
      * Start an asset filter that will return all Purpose assets.
@@ -307,6 +332,7 @@ public class Purpose extends Asset implements IPurpose, IAccessControl, IAsset, 
             throw new InvalidRequestException(ErrorCode.NO_ATLAN_TAG_FOR_PURPOSE);
         }
         return Purpose._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(name)
                 .name(name)
                 .displayName(name)
@@ -324,7 +350,11 @@ public class Purpose extends Asset implements IPurpose, IAccessControl, IAsset, 
      * @return the minimal request necessary to update the Purpose, as a builder
      */
     public static PurposeBuilder<?, ?> updater(String qualifiedName, String name, boolean isEnabled) {
-        return Purpose._internal().qualifiedName(qualifiedName).name(name).isAccessControlEnabled(isEnabled);
+        return Purpose._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name)
+                .isAccessControlEnabled(isEnabled);
     }
 
     /**

@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -185,6 +186,30 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
     /** TBC */
     @Attribute
     String viewQualifiedName;
+
+    /**
+     * Builds the minimal object necessary to create a relationship to a View, from a potentially
+     * more-complete View object.
+     *
+     * @return the minimal object necessary to relate to the View
+     * @throws InvalidRequestException if any of the minimal set of required properties for a View relationship are not found in the initial object
+     */
+    @Override
+    public View trimToReference() throws InvalidRequestException {
+        if (this.getGuid() != null && !this.getGuid().isEmpty()) {
+            return refByGuid(this.getGuid());
+        }
+        if (this.getQualifiedName() != null && !this.getQualifiedName().isEmpty()) {
+            return refByQualifiedName(this.getQualifiedName());
+        }
+        if (this.getUniqueAttributes() != null
+                && this.getUniqueAttributes().getQualifiedName() != null
+                && !this.getUniqueAttributes().getQualifiedName().isEmpty()) {
+            return refByQualifiedName(this.getUniqueAttributes().getQualifiedName());
+        }
+        throw new InvalidRequestException(
+                ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, TYPE_NAME, "guid, qualifiedName");
+    }
 
     /**
      * Start an asset filter that will return all View assets.
@@ -404,6 +429,22 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
      * Builds the minimal object necessary to create a view.
      *
      * @param name of the view
+     * @param schema in which the view should be created, which must have at least
+     *               a qualifiedName
+     * @return the minimal request necessary to create the view, as a builder
+     * @throws InvalidRequestException if the schema provided is without a qualifiedName
+     */
+    public static ViewBuilder<?, ?> creator(String name, Schema schema) throws InvalidRequestException {
+        if (schema.getQualifiedName() == null || schema.getQualifiedName().isEmpty()) {
+            throw new InvalidRequestException(ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, "Schema", "qualifiedName");
+        }
+        return creator(name, schema.getQualifiedName()).schema(schema.trimToReference());
+    }
+
+    /**
+     * Builds the minimal object necessary to create a view.
+     *
+     * @param name of the view
      * @param schemaQualifiedName unique name of the schema in which this view exists
      * @return the minimal request necessary to create the view, as a builder
      */
@@ -415,6 +456,7 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
         String databaseName = StringUtils.getNameFromQualifiedName(databaseQualifiedName);
         String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(databaseQualifiedName);
         return View._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .name(name)
                 .qualifiedName(generateQualifiedName(name, schemaQualifiedName))
                 .connectorType(connectorType)
@@ -445,7 +487,10 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
      * @return the minimal request necessary to update the View, as a builder
      */
     public static ViewBuilder<?, ?> updater(String qualifiedName, String name) {
-        return View._internal().qualifiedName(qualifiedName).name(name);
+        return View._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
     }
 
     /**

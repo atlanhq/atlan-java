@@ -16,6 +16,7 @@ import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -48,6 +49,30 @@ public class Badge extends Asset implements IBadge, IAsset, IReferenceable {
     /** TBC */
     @Attribute
     String badgeMetadataAttribute;
+
+    /**
+     * Builds the minimal object necessary to create a relationship to a Badge, from a potentially
+     * more-complete Badge object.
+     *
+     * @return the minimal object necessary to relate to the Badge
+     * @throws InvalidRequestException if any of the minimal set of required properties for a Badge relationship are not found in the initial object
+     */
+    @Override
+    public Badge trimToReference() throws InvalidRequestException {
+        if (this.getGuid() != null && !this.getGuid().isEmpty()) {
+            return refByGuid(this.getGuid());
+        }
+        if (this.getQualifiedName() != null && !this.getQualifiedName().isEmpty()) {
+            return refByQualifiedName(this.getQualifiedName());
+        }
+        if (this.getUniqueAttributes() != null
+                && this.getUniqueAttributes().getQualifiedName() != null
+                && !this.getUniqueAttributes().getQualifiedName().isEmpty()) {
+            return refByQualifiedName(this.getUniqueAttributes().getQualifiedName());
+        }
+        throw new InvalidRequestException(
+                ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, TYPE_NAME, "guid, qualifiedName");
+    }
 
     /**
      * Start an asset filter that will return all Badge assets.
@@ -291,6 +316,7 @@ public class Badge extends Asset implements IBadge, IAsset, IReferenceable {
         String cmId = client.getCustomMetadataCache().getIdForName(cmName);
         String cmAttrId = client.getCustomMetadataCache().getAttrIdForName(cmName, cmAttribute);
         return Badge._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(generateQualifiedName(client, cmName, cmAttribute))
                 .name(name)
                 .badgeMetadataAttribute(cmId + "." + cmAttrId);
@@ -332,7 +358,10 @@ public class Badge extends Asset implements IBadge, IAsset, IReferenceable {
      * @return the minimal request necessary to update the Badge, as a builder
      */
     public static BadgeBuilder<?, ?> updater(String qualifiedName, String name) {
-        return Badge._internal().qualifiedName(qualifiedName).name(name);
+        return Badge._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
     }
 
     /**

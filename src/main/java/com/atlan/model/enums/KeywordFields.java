@@ -227,6 +227,12 @@ public enum KeywordFields implements AtlanSearchableField {
     ASSET_MC_MONITOR_STATUSES("assetMcMonitorStatuses"),
     /** Types of all associated Monte Carlo monitors. */
     ASSET_MC_MONITOR_TYPES("assetMcMonitorTypes"),
+    /** All associated soda check statuses */
+    ASSET_SODA_CHECK_STATUSES("assetSodaCheckStatuses"),
+    /** Soda DQ Status */
+    ASSET_SODA_DQ_STATUS("assetSodaDQStatus"),
+    /** TBC */
+    ASSET_SODA_SOURCE_URL("assetSodaSourceURL"),
     /** TBC */
     ASSET_TAGS("assetTags"),
     /** All terms attached to an asset, searchable by the term's qualifiedName. */
@@ -1013,6 +1019,12 @@ public enum KeywordFields implements AtlanSearchableField {
     SNOWFLAKE_STREAM_SOURCE_TYPE("snowflakeStreamSourceType"),
     /** TBC */
     SNOWFLAKE_STREAM_TYPE("snowflakeStreamType"),
+    /** Check definition */
+    SODA_CHECK_DEFINITION("sodaCheckDefinition"),
+    /** Check status */
+    SODA_CHECK_EVALUATION_STATUS("sodaCheckEvaluationStatus"),
+    /** Check Id */
+    SODA_CHECK_ID("sodaCheckId"),
     /** TBC */
     SOURCE_CONNECTION_NAME("sourceConnectionName"),
     /** The unit of measure for sourceTotalCost. */
@@ -1027,7 +1039,7 @@ public enum KeywordFields implements AtlanSearchableField {
     SOURCE_DEFINITION_SCHEMA("sourceDefinitionSchema"),
     /** URL to create an embed for a resource (for example, an image of a dashboard) within Atlan. */
     SOURCE_EMBED_URL("sourceEmbedURL"),
-    /** ID of the report in Salesforce. */
+    /** ID of the dashboard in Salesforce. */
     SOURCE_ID("sourceId"),
     /** Despite the name, this is not used for anything. Only the value of connectorName impacts icons. */
     SOURCE_LOGO("sourceLogo"),

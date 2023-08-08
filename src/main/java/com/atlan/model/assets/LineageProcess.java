@@ -23,6 +23,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -78,6 +79,30 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
     /** TBC */
     @Attribute
     String sql;
+
+    /**
+     * Builds the minimal object necessary to create a relationship to a LineageProcess, from a potentially
+     * more-complete LineageProcess object.
+     *
+     * @return the minimal object necessary to relate to the LineageProcess
+     * @throws InvalidRequestException if any of the minimal set of required properties for a LineageProcess relationship are not found in the initial object
+     */
+    @Override
+    public LineageProcess trimToReference() throws InvalidRequestException {
+        if (this.getGuid() != null && !this.getGuid().isEmpty()) {
+            return refByGuid(this.getGuid());
+        }
+        if (this.getQualifiedName() != null && !this.getQualifiedName().isEmpty()) {
+            return refByQualifiedName(this.getQualifiedName());
+        }
+        if (this.getUniqueAttributes() != null
+                && this.getUniqueAttributes().getQualifiedName() != null
+                && !this.getUniqueAttributes().getQualifiedName().isEmpty()) {
+            return refByQualifiedName(this.getUniqueAttributes().getQualifiedName());
+        }
+        throw new InvalidRequestException(
+                ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, TYPE_NAME, "guid, qualifiedName");
+    }
 
     /**
      * Start an asset filter that will return all LineageProcess assets.
@@ -315,6 +340,7 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
             LineageProcess parent) {
         AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         return LineageProcess._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(generateQualifiedName(name, connectionQualifiedName, id, inputs, outputs, parent))
                 .name(name)
                 .connectorType(connectorType)
@@ -331,7 +357,10 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
      * @return the minimal request necessary to update the LineageProcess, as a builder
      */
     public static LineageProcessBuilder<?, ?> updater(String qualifiedName, String name) {
-        return LineageProcess._internal().qualifiedName(qualifiedName).name(name);
+        return LineageProcess._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
     }
 
     /**

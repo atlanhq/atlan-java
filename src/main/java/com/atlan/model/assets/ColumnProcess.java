@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -78,6 +79,30 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
     /** TBC */
     @Attribute
     String sql;
+
+    /**
+     * Builds the minimal object necessary to create a relationship to a ColumnProcess, from a potentially
+     * more-complete ColumnProcess object.
+     *
+     * @return the minimal object necessary to relate to the ColumnProcess
+     * @throws InvalidRequestException if any of the minimal set of required properties for a ColumnProcess relationship are not found in the initial object
+     */
+    @Override
+    public ColumnProcess trimToReference() throws InvalidRequestException {
+        if (this.getGuid() != null && !this.getGuid().isEmpty()) {
+            return refByGuid(this.getGuid());
+        }
+        if (this.getQualifiedName() != null && !this.getQualifiedName().isEmpty()) {
+            return refByQualifiedName(this.getQualifiedName());
+        }
+        if (this.getUniqueAttributes() != null
+                && this.getUniqueAttributes().getQualifiedName() != null
+                && !this.getUniqueAttributes().getQualifiedName().isEmpty()) {
+            return refByQualifiedName(this.getUniqueAttributes().getQualifiedName());
+        }
+        throw new InvalidRequestException(
+                ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, TYPE_NAME, "guid, qualifiedName");
+    }
 
     /**
      * Start an asset filter that will return all ColumnProcess assets.
@@ -315,6 +340,7 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
         AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         String connectionName = StringUtils.getNameFromQualifiedName(connectionQualifiedName);
         return ColumnProcess._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(LineageProcess.generateQualifiedName(
                         name, connectionQualifiedName, id, inputs, outputs, parent))
                 .name(name)
@@ -333,7 +359,10 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
      * @return the minimal request necessary to update the ColumnProcess, as a builder
      */
     public static ColumnProcessBuilder<?, ?> updater(String qualifiedName, String name) {
-        return ColumnProcess._internal().qualifiedName(qualifiedName).name(name);
+        return ColumnProcess._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
     }
 
     /**

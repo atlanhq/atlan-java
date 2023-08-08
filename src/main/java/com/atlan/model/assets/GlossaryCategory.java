@@ -22,6 +22,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -78,6 +79,30 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
     @Attribute
     @Singular
     SortedSet<IGlossaryTerm> terms;
+
+    /**
+     * Builds the minimal object necessary to create a relationship to a GlossaryCategory, from a potentially
+     * more-complete GlossaryCategory object.
+     *
+     * @return the minimal object necessary to relate to the GlossaryCategory
+     * @throws InvalidRequestException if any of the minimal set of required properties for a GlossaryCategory relationship are not found in the initial object
+     */
+    @Override
+    public GlossaryCategory trimToReference() throws InvalidRequestException {
+        if (this.getGuid() != null && !this.getGuid().isEmpty()) {
+            return refByGuid(this.getGuid());
+        }
+        if (this.getQualifiedName() != null && !this.getQualifiedName().isEmpty()) {
+            return refByQualifiedName(this.getQualifiedName());
+        }
+        if (this.getUniqueAttributes() != null
+                && this.getUniqueAttributes().getQualifiedName() != null
+                && !this.getUniqueAttributes().getQualifiedName().isEmpty()) {
+            return refByQualifiedName(this.getUniqueAttributes().getQualifiedName());
+        }
+        throw new InvalidRequestException(
+                ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, TYPE_NAME, "guid, qualifiedName");
+    }
 
     /**
      * Start an asset filter that will return all GlossaryCategory assets.
@@ -296,6 +321,36 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
     }
 
     /**
+     * Builds the minimal object necessary for creating a category.
+     *
+     * @param name of the category
+     * @param glossary in which the category should be created
+     * @return the minimal request necessary to create the category, as a builder
+     * @throws InvalidRequestException if the glossary provided is without a GUID or qualifiedName
+     */
+    public static GlossaryCategoryBuilder<?, ?> creator(String name, Glossary glossary) throws InvalidRequestException {
+        return creator(name, (String) null).anchor(glossary.trimToReference());
+    }
+
+    /**
+     * Builds the minimal object necessary for creating a category.
+     *
+     * @param name of the category
+     * @param glossaryId unique identifier of the category's glossary, either is real GUID or qualifiedName
+     * @return the minimal request necessary to create the category, as a builder
+     */
+    public static GlossaryCategoryBuilder<?, ?> creator(String name, String glossaryId) {
+        Glossary anchor = StringUtils.isUUID(glossaryId)
+                ? Glossary.refByGuid(glossaryId)
+                : Glossary.refByQualifiedName(glossaryId);
+        return GlossaryCategory._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(name)
+                .name(name)
+                .anchor(anchor);
+    }
+
+    /**
      * Builds the minimal object necessary for creating a GlossaryCategory. At least one of glossaryGuid or
      * glossaryQualifiedName must be provided.
      *
@@ -303,13 +358,16 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
      * @param glossaryGuid unique identifier of the GlossaryCategory's glossary
      * @param glossaryQualifiedName unique name of the GlossaryCategory's glossary
      * @return the minimal object necessary to create the GlossaryCategory, as a builder
+     * @deprecated see {@link #creator(String, String)} instead
      */
+    @Deprecated
     public static GlossaryCategoryBuilder<?, ?> creator(
             String name, String glossaryGuid, String glossaryQualifiedName) {
-        return GlossaryCategory._internal()
-                .qualifiedName(name)
-                .name(name)
-                .anchor(Glossary.anchorLink(glossaryGuid, glossaryQualifiedName));
+        if (glossaryGuid != null) {
+            return creator(name, glossaryGuid);
+        } else {
+            return creator(name, glossaryQualifiedName);
+        }
     }
 
     /**
@@ -324,9 +382,10 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
         // Turns out that updating a category requires the glossary GUID, and will not work
         // with the qualifiedName of the glossary
         return GlossaryCategory._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(qualifiedName)
                 .name(name)
-                .anchor(Glossary.anchorLink(glossaryGuid, null));
+                .anchor(Glossary.refByGuid(glossaryGuid));
     }
 
     /**

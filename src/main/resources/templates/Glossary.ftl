@@ -5,7 +5,9 @@
      * @param glossaryGuid unique identifier of the Glossary for the term
      * @param glossaryQualifiedName unique name of the Glossary
      * @return a builder that can be further extended with other metadata
+     * @deprecated see {@link #refByGuid(String)} or {@link #refByQualifiedName(String)} or {@link #trimToReference()} instead
      */
+    @Deprecated
     static Glossary anchorLink(String glossaryGuid, String glossaryQualifiedName) {
         Glossary anchor = null;
         if (glossaryGuid == null && glossaryQualifiedName == null) {
@@ -25,7 +27,10 @@
      * @return the minimal object necessary to create the Glossary, as a builder
      */
     public static GlossaryBuilder<?, ?> creator(String name) {
-        return Glossary._internal().qualifiedName(name).name(name);
+        return Glossary._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(name)
+                .name(name);
     }
 
     /**

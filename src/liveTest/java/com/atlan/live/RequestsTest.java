@@ -73,7 +73,7 @@ public class RequestsTest extends AtlanLiveTest {
     @Test(groups = {"request.create.glossary"})
     void createGlossary() throws AtlanException {
         glossary = GlossaryTest.createGlossary(Atlan.getDefaultClient(), GLOSSARY_NAME);
-        term = GlossaryTest.createTerm(TERM_NAME, glossary.getGuid());
+        term = GlossaryTest.createTerm(TERM_NAME, glossary);
     }
 
     @Test(groups = {"request.create.atlantag"})
@@ -152,12 +152,7 @@ public class RequestsTest extends AtlanLiveTest {
             groups = {"request.create.request"},
             dependsOnGroups = {"request.read.token", "request.create.glossary"})
     void createAttributeRequest() throws AtlanException {
-        AttributeRequest toCreate = AttributeRequest.creator(
-                        term.getGuid(),
-                        term.getQualifiedName(),
-                        GlossaryTerm.TYPE_NAME,
-                        "userDescription",
-                        ATTR_VALUE_DESCRIPTION)
+        AttributeRequest toCreate = AttributeRequest.creator(term, "userDescription", ATTR_VALUE_DESCRIPTION)
                 .build();
         toCreate.create(requestsClient);
     }
@@ -166,13 +161,7 @@ public class RequestsTest extends AtlanLiveTest {
             groups = {"request.create.request"},
             dependsOnGroups = {"request.read.token", "request.create.glossary", "request.create.connection"})
     void createTermLinkRequest() throws AtlanException {
-        TermLinkRequest toCreate = TermLinkRequest.creator(
-                        database.getGuid(),
-                        database.getQualifiedName(),
-                        Database.TYPE_NAME,
-                        term.getGuid(),
-                        term.getQualifiedName())
-                .build();
+        TermLinkRequest toCreate = TermLinkRequest.creator(database, term).build();
         toCreate.create(requestsClient);
     }
 
@@ -194,11 +183,7 @@ public class RequestsTest extends AtlanLiveTest {
             Thread.sleep(HttpClient.waitTime(count).toMillis());
             count++;
         }
-        AtlanTagRequest toCreate = AtlanTagRequest.creator(
-                        term.getGuid(),
-                        term.getQualifiedName(),
-                        GlossaryTerm.TYPE_NAME,
-                        AtlanTagPayload.of(ATLAN_TAG_NAME))
+        AtlanTagRequest toCreate = AtlanTagRequest.creator(term, AtlanTagPayload.of(ATLAN_TAG_NAME))
                 .build();
         toCreate.create(requestsClient);
     }

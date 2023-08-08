@@ -3,6 +3,23 @@
      * Builds the minimal object necessary to create a GCSObject.
      *
      * @param name of the GCSObject
+     * @param bucket in which the GCSObject should be created, which must have at least
+     *               a qualifiedName
+     * @return the minimal request necessary to create the GCSObject, as a builder
+     * @throws InvalidRequestException if the bucket provided is without a qualifiedName
+     */
+    public static GCSObjectBuilder<?, ?> creator(String name, GCSBucket bucket) throws InvalidRequestException {
+        if (bucket.getQualifiedName() == null || bucket.getQualifiedName().isEmpty()) {
+            throw new InvalidRequestException(
+                    ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, "GCSBucket", "qualifiedName");
+        }
+        return creator(name, bucket.getQualifiedName()).gcsBucket(bucket.trimToReference());
+    }
+
+    /**
+     * Builds the minimal object necessary to create a GCSObject.
+     *
+     * @param name of the GCSObject
      * @param bucketQualifiedName unique name of the bucket in which the GCSObject is contained
      * @return the minimal object necessary to create the GCSObject, as a builder
      */
@@ -10,6 +27,7 @@
         String connectionQualifiedName = StringUtils.getConnectionQualifiedName(bucketQualifiedName);
         String bucketName = StringUtils.getNameFromQualifiedName(bucketQualifiedName);
         return GCSObject._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(generateQualifiedName(name, bucketQualifiedName))
                 .name(name)
                 .connectionQualifiedName(connectionQualifiedName)
@@ -38,7 +56,10 @@
      * @return the minimal request necessary to update the GCSObject, as a builder
      */
     public static GCSObjectBuilder<?, ?> updater(String qualifiedName, String name) {
-        return GCSObject._internal().qualifiedName(qualifiedName).name(name);
+        return GCSObject._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
     }
 
     /**

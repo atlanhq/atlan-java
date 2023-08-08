@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -110,6 +111,30 @@ public class ADLSContainer extends Asset
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /**
+     * Builds the minimal object necessary to create a relationship to a ADLSContainer, from a potentially
+     * more-complete ADLSContainer object.
+     *
+     * @return the minimal object necessary to relate to the ADLSContainer
+     * @throws InvalidRequestException if any of the minimal set of required properties for a ADLSContainer relationship are not found in the initial object
+     */
+    @Override
+    public ADLSContainer trimToReference() throws InvalidRequestException {
+        if (this.getGuid() != null && !this.getGuid().isEmpty()) {
+            return refByGuid(this.getGuid());
+        }
+        if (this.getQualifiedName() != null && !this.getQualifiedName().isEmpty()) {
+            return refByQualifiedName(this.getQualifiedName());
+        }
+        if (this.getUniqueAttributes() != null
+                && this.getUniqueAttributes().getQualifiedName() != null
+                && !this.getUniqueAttributes().getQualifiedName().isEmpty()) {
+            return refByQualifiedName(this.getUniqueAttributes().getQualifiedName());
+        }
+        throw new InvalidRequestException(
+                ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, TYPE_NAME, "guid, qualifiedName");
+    }
 
     /**
      * Start an asset filter that will return all ADLSContainer assets.
@@ -330,12 +355,30 @@ public class ADLSContainer extends Asset
      * Builds the minimal object necessary to create a ADLSContainer.
      *
      * @param name of the ADLSContainer
+     * @param account in which the ADLSContainer should be created, which must have at least
+     *                a qualifiedName
+     * @return the minimal request necessary to create the ADLSContainer, as a builder
+     * @throws InvalidRequestException if the container provided is without a qualifiedName
+     */
+    public static ADLSContainerBuilder<?, ?> creator(String name, ADLSAccount account) throws InvalidRequestException {
+        if (account.getQualifiedName() == null || account.getQualifiedName().isEmpty()) {
+            throw new InvalidRequestException(
+                    ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, "ADLSAccount", "qualifiedName");
+        }
+        return creator(name, account.getQualifiedName()).adlsAccount(account.trimToReference());
+    }
+
+    /**
+     * Builds the minimal object necessary to create a ADLSContainer.
+     *
+     * @param name of the ADLSContainer
      * @param accountQualifiedName unique name of the account through which the ADLSContainer is accessible
      * @return the minimal object necessary to create the ADLSContainer, as a builder
      */
     public static ADLSContainerBuilder<?, ?> creator(String name, String accountQualifiedName) {
         String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(accountQualifiedName);
         return ADLSContainer._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(generateQualifiedName(name, accountQualifiedName))
                 .name(name)
                 .adlsAccount(ADLSAccount.refByQualifiedName(accountQualifiedName))
@@ -363,7 +406,10 @@ public class ADLSContainer extends Asset
      * @return the minimal request necessary to update the ADLSContainer, as a builder
      */
     public static ADLSContainerBuilder<?, ?> updater(String qualifiedName, String name) {
-        return ADLSContainer._internal().qualifiedName(qualifiedName).name(name);
+        return ADLSContainer._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
     }
 
     /**

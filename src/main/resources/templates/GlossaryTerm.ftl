@@ -1,5 +1,35 @@
 <#macro all>
     /**
+     * Builds the minimal object necessary for creating a term.
+     *
+     * @param name of the term
+     * @param glossary in which the term should be created
+     * @return the minimal request necessary to create the term, as a builder
+     * @throws InvalidRequestException if the glossary provided is without a GUID or qualifiedName
+     */
+    public static GlossaryTermBuilder<?, ?> creator(String name, Glossary glossary) throws InvalidRequestException {
+        return creator(name, (String) null).anchor(glossary.trimToReference());
+    }
+
+    /**
+     * Builds the minimal object necessary for creating a term.
+     *
+     * @param name of the term
+     * @param glossaryId unique identifier of the term's glossary, either is real GUID or qualifiedName
+     * @return the minimal request necessary to create the term, as a builder
+     */
+    public static GlossaryTermBuilder<?, ?> creator(String name, String glossaryId) {
+        Glossary anchor = StringUtils.isUUID(glossaryId)
+                ? Glossary.refByGuid(glossaryId)
+                : Glossary.refByQualifiedName(glossaryId);
+        return GlossaryTerm._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(name)
+                .name(name)
+                .anchor(anchor);
+    }
+
+    /**
      * Builds the minimal object necessary for creating a term. At least one of glossaryGuid or
      * glossaryQualifiedName must be provided.
      *
@@ -7,12 +37,15 @@
      * @param glossaryGuid unique identifier of the term's glossary
      * @param glossaryQualifiedName unique name of the term's glossary
      * @return the minimal request necessary to create the term, as a builder
+     * @deprecated see {@link #creator(String, String)} instead
      */
+    @Deprecated
     public static GlossaryTermBuilder<?, ?> creator(String name, String glossaryGuid, String glossaryQualifiedName) {
-        return GlossaryTerm._internal()
-                .qualifiedName(name)
-                .name(name)
-                .anchor(Glossary.anchorLink(glossaryGuid, glossaryQualifiedName));
+        if (glossaryGuid != null) {
+            return creator(name, glossaryGuid);
+        } else {
+            return creator(name, glossaryQualifiedName);
+        }
     }
 
     /**
@@ -27,9 +60,10 @@
         // Turns out that updating a term requires the glossary GUID, and will not work
         // with the qualifiedName of the glossary
         return GlossaryTerm._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(qualifiedName)
                 .name(name)
-                .anchor(Glossary.anchorLink(glossaryGuid, null));
+                .anchor(Glossary.refByGuid(glossaryGuid));
     }
 
     /**

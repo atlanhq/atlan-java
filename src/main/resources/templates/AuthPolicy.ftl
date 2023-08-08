@@ -14,6 +14,7 @@
      */
     public static AuthPolicyBuilder<?, ?> creator(String name) {
         return AuthPolicy._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(name)
                 .name(name)
                 .displayName("");
@@ -27,7 +28,10 @@
      * @return the minimal request necessary to update the AuthPolicy, as a builder
      */
     public static AuthPolicyBuilder<?, ?> updater(String qualifiedName, String name) {
-        return AuthPolicy._internal().qualifiedName(qualifiedName).name(name);
+        return AuthPolicy._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
     }
 
     /**

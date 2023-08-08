@@ -26,6 +26,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -144,6 +145,30 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
     /** Subtype of the connection. */
     @Attribute
     String subCategory;
+
+    /**
+     * Builds the minimal object necessary to create a relationship to a Connection, from a potentially
+     * more-complete Connection object.
+     *
+     * @return the minimal object necessary to relate to the Connection
+     * @throws InvalidRequestException if any of the minimal set of required properties for a Connection relationship are not found in the initial object
+     */
+    @Override
+    public Connection trimToReference() throws InvalidRequestException {
+        if (this.getGuid() != null && !this.getGuid().isEmpty()) {
+            return refByGuid(this.getGuid());
+        }
+        if (this.getQualifiedName() != null && !this.getQualifiedName().isEmpty()) {
+            return refByQualifiedName(this.getQualifiedName());
+        }
+        if (this.getUniqueAttributes() != null
+                && this.getUniqueAttributes().getQualifiedName() != null
+                && !this.getUniqueAttributes().getQualifiedName().isEmpty()) {
+            return refByQualifiedName(this.getUniqueAttributes().getQualifiedName());
+        }
+        throw new InvalidRequestException(
+                ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, TYPE_NAME, "guid, qualifiedName");
+    }
 
     /**
      * Start an asset filter that will return all Connection assets.
@@ -433,6 +458,7 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
             throws AtlanException {
         boolean adminFound = false;
         ConnectionBuilder<?, ?> builder = Connection._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .name(name)
                 .qualifiedName(generateQualifiedName(connectorType.getValue()))
                 .category(connectorType.getCategory())
@@ -617,7 +643,10 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
      * @return the minimal request necessary to update the Connection, as a builder
      */
     public static ConnectionBuilder<?, ?> updater(String qualifiedName, String name) {
-        return Connection._internal().qualifiedName(qualifiedName).name(name);
+        return Connection._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
     }
 
     /**

@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -83,6 +84,30 @@ public class File extends Asset implements IFile, IResource, ICatalog, IAsset, I
     @Attribute
     @Singular("putResourceMetadata")
     Map<String, String> resourceMetadata;
+
+    /**
+     * Builds the minimal object necessary to create a relationship to a File, from a potentially
+     * more-complete File object.
+     *
+     * @return the minimal object necessary to relate to the File
+     * @throws InvalidRequestException if any of the minimal set of required properties for a File relationship are not found in the initial object
+     */
+    @Override
+    public File trimToReference() throws InvalidRequestException {
+        if (this.getGuid() != null && !this.getGuid().isEmpty()) {
+            return refByGuid(this.getGuid());
+        }
+        if (this.getQualifiedName() != null && !this.getQualifiedName().isEmpty()) {
+            return refByQualifiedName(this.getQualifiedName());
+        }
+        if (this.getUniqueAttributes() != null
+                && this.getUniqueAttributes().getQualifiedName() != null
+                && !this.getUniqueAttributes().getQualifiedName().isEmpty()) {
+            return refByQualifiedName(this.getUniqueAttributes().getQualifiedName());
+        }
+        throw new InvalidRequestException(
+                ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, TYPE_NAME, "guid, qualifiedName");
+    }
 
     /**
      * Start an asset filter that will return all File assets.
@@ -308,6 +333,7 @@ public class File extends Asset implements IFile, IResource, ICatalog, IAsset, I
      */
     public static FileBuilder<?, ?> creator(String name, String connectionQualifiedName, FileType type) {
         return File._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .connectionQualifiedName(connectionQualifiedName)
                 .name(name)
                 .qualifiedName(generateQualifiedName(connectionQualifiedName, name))
@@ -333,7 +359,10 @@ public class File extends Asset implements IFile, IResource, ICatalog, IAsset, I
      * @return the minimal request necessary to update the File, as a builder
      */
     public static FileBuilder<?, ?> updater(String qualifiedName, String name) {
-        return File._internal().qualifiedName(qualifiedName).name(name);
+        return File._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
     }
 
     /**

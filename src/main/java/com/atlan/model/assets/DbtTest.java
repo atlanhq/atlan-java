@@ -178,6 +178,30 @@ public class DbtTest extends Asset implements IDbtTest, IDbt, ICatalog, IAsset, 
     SortedSet<ISQL> sqlAssets;
 
     /**
+     * Builds the minimal object necessary to create a relationship to a DbtTest, from a potentially
+     * more-complete DbtTest object.
+     *
+     * @return the minimal object necessary to relate to the DbtTest
+     * @throws InvalidRequestException if any of the minimal set of required properties for a DbtTest relationship are not found in the initial object
+     */
+    @Override
+    public DbtTest trimToReference() throws InvalidRequestException {
+        if (this.getGuid() != null && !this.getGuid().isEmpty()) {
+            return refByGuid(this.getGuid());
+        }
+        if (this.getQualifiedName() != null && !this.getQualifiedName().isEmpty()) {
+            return refByQualifiedName(this.getQualifiedName());
+        }
+        if (this.getUniqueAttributes() != null
+                && this.getUniqueAttributes().getQualifiedName() != null
+                && !this.getUniqueAttributes().getQualifiedName().isEmpty()) {
+            return refByQualifiedName(this.getUniqueAttributes().getQualifiedName());
+        }
+        throw new InvalidRequestException(
+                ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, TYPE_NAME, "guid, qualifiedName");
+    }
+
+    /**
      * Start an asset filter that will return all DbtTest assets.
      * Additional conditions can be chained onto the returned filter before any
      * asset retrieval is attempted, ensuring all conditions are pushed-down for

@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -228,6 +229,30 @@ public class Table extends Asset implements ITable, ISQL, ICatalog, IAsset, IRef
     /** TBC */
     @Attribute
     String viewQualifiedName;
+
+    /**
+     * Builds the minimal object necessary to create a relationship to a Table, from a potentially
+     * more-complete Table object.
+     *
+     * @return the minimal object necessary to relate to the Table
+     * @throws InvalidRequestException if any of the minimal set of required properties for a Table relationship are not found in the initial object
+     */
+    @Override
+    public Table trimToReference() throws InvalidRequestException {
+        if (this.getGuid() != null && !this.getGuid().isEmpty()) {
+            return refByGuid(this.getGuid());
+        }
+        if (this.getQualifiedName() != null && !this.getQualifiedName().isEmpty()) {
+            return refByQualifiedName(this.getQualifiedName());
+        }
+        if (this.getUniqueAttributes() != null
+                && this.getUniqueAttributes().getQualifiedName() != null
+                && !this.getUniqueAttributes().getQualifiedName().isEmpty()) {
+            return refByQualifiedName(this.getUniqueAttributes().getQualifiedName());
+        }
+        throw new InvalidRequestException(
+                ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, TYPE_NAME, "guid, qualifiedName");
+    }
 
     /**
      * Start an asset filter that will return all Table assets.
@@ -447,6 +472,22 @@ public class Table extends Asset implements ITable, ISQL, ICatalog, IAsset, IRef
      * Builds the minimal object necessary to create a table.
      *
      * @param name of the table
+     * @param schema in which the table should be created, which must have at least
+     *               a qualifiedName
+     * @return the minimal request necessary to create the table, as a builder
+     * @throws InvalidRequestException if the schema provided is without a qualifiedName
+     */
+    public static TableBuilder<?, ?> creator(String name, Schema schema) throws InvalidRequestException {
+        if (schema.getQualifiedName() == null || schema.getQualifiedName().isEmpty()) {
+            throw new InvalidRequestException(ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, "Schema", "qualifiedName");
+        }
+        return creator(name, schema.getQualifiedName()).schema(schema.trimToReference());
+    }
+
+    /**
+     * Builds the minimal object necessary to create a table.
+     *
+     * @param name of the table
      * @param schemaQualifiedName unique name of the schema in which this table exists
      * @return the minimal request necessary to create the table, as a builder
      */
@@ -458,6 +499,7 @@ public class Table extends Asset implements ITable, ISQL, ICatalog, IAsset, IRef
         String databaseName = StringUtils.getNameFromQualifiedName(databaseQualifiedName);
         String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(databaseQualifiedName);
         return Table._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .name(name)
                 .qualifiedName(generateQualifiedName(name, schemaQualifiedName))
                 .connectorType(connectorType)
@@ -477,7 +519,10 @@ public class Table extends Asset implements ITable, ISQL, ICatalog, IAsset, IRef
      * @return the minimal request necessary to update the Table, as a builder
      */
     public static TableBuilder<?, ?> updater(String qualifiedName, String name) {
-        return Table._internal().qualifiedName(qualifiedName).name(name);
+        return Table._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
     }
 
     /**

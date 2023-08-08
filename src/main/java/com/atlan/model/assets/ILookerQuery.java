@@ -210,6 +210,24 @@ public interface ILookerQuery {
     SortedSet<String> getAssetMcMonitorTypes();
 
     /** TBC */
+    Long getAssetSodaCheckCount();
+
+    /** TBC */
+    String getAssetSodaCheckStatuses();
+
+    /** TBC */
+    String getAssetSodaDQStatus();
+
+    /** TBC */
+    Long getAssetSodaLastScanAt();
+
+    /** TBC */
+    Long getAssetSodaLastSyncRunAt();
+
+    /** TBC */
+    String getAssetSodaSourceURL();
+
+    /** TBC */
     SortedSet<String> getAssetTags();
 
     /** TBC */
@@ -321,6 +339,9 @@ public interface ILookerQuery {
     SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
 
     /** TBC */
+    SortedSet<ISodaCheck> getSodaChecks();
+
+    /** TBC */
     SourceCostUnitType getSourceCostUnit();
 
     /** TBC */
@@ -397,6 +418,9 @@ public interface ILookerQuery {
 
     /** TBC */
     SortedSet<String> getStarredBy();
+
+    /** TBC */
+    Integer getStarredCount();
 
     /** TBC */
     List<StarredDetails> getStarredDetails();

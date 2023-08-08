@@ -146,7 +146,7 @@ public abstract class HttpClient {
      * @return a string containing the value of the {@code User-Agent} header
      */
     protected static String buildUserAgentString() {
-        String userAgent = String.format("Atlan-SDK/1.0 Java/%s", Atlan.VERSION);
+        String userAgent = String.format("Atlan-JavaSDK/%s", Atlan.VERSION);
 
         if (Atlan.getAppInfo() != null) {
             userAgent += " " + formatAppInfo(Atlan.getAppInfo());

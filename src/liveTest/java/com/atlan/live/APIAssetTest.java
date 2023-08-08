@@ -61,7 +61,7 @@ public class APIAssetTest extends AtlanLiveTest {
             groups = {"api.create.path"},
             dependsOnGroups = {"api.create.spec"})
     void createPath() throws AtlanException {
-        APIPath toCreate = APIPath.creator(PATH_NAME, spec.getQualifiedName()).build();
+        APIPath toCreate = APIPath.creator(PATH_NAME, spec).build();
         AssetMutationResponse response = toCreate.save();
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());

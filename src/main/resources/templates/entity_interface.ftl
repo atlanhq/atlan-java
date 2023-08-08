@@ -62,7 +62,7 @@ public interface I${className} {
 
 <#if interfaceTemplateFile??>
 <#import interfaceTemplateFile as methods>
-<@methods.all/>
+<@methods.all subTypes=getAllSubTypes(originalName)/>
 </#if>
 
     <#list interfaceAttributes as attribute>

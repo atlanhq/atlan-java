@@ -3,6 +3,23 @@
      * Builds the minimal object necessary to create a Preset chart.
      *
      * @param name of the chart
+     * @param collection in which the chart should be created, which must have at least
+     *                   a qualifiedName
+     * @return the minimal request necessary to create the chart, as a builder
+     * @throws InvalidRequestException if the collection provided is without a qualifiedName
+     */
+    public static PresetChartBuilder<?, ?> creator(String name, PresetDashboard collection) throws InvalidRequestException {
+        if (collection.getQualifiedName() == null || collection.getQualifiedName().isEmpty()) {
+            throw new InvalidRequestException(
+                    ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, "PresetDashboard", "qualifiedName");
+        }
+        return creator(name, collection.getQualifiedName()).presetDashboard(collection.trimToReference());
+    }
+
+    /**
+     * Builds the minimal object necessary to create a Preset chart.
+     *
+     * @param name of the chart
      * @param collectionQualifiedName unique name of the collection in which the chart exists
      * @return the minimal object necessary to create the chart, as a builder
      */
@@ -12,6 +29,7 @@
         String workspaceQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(collectionQualifiedName);
         String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(workspaceQualifiedName);
         return PresetChart._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .name(name)
                 .qualifiedName(collectionQualifiedName + "/" + name)
                 .connectorType(connectorType)
@@ -29,7 +47,10 @@
      * @return the minimal request necessary to update the PresetChart, as a builder
      */
     public static PresetChartBuilder<?, ?> updater(String qualifiedName, String name) {
-        return PresetChart._internal().qualifiedName(qualifiedName).name(name);
+        return PresetChart._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
     }
 
     /**

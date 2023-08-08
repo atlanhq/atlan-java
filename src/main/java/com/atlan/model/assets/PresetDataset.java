@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -84,6 +85,30 @@ public class PresetDataset extends Asset implements IPresetDataset, IPreset, IBI
     /** TBC */
     @Attribute
     String presetWorkspaceQualifiedName;
+
+    /**
+     * Builds the minimal object necessary to create a relationship to a PresetDataset, from a potentially
+     * more-complete PresetDataset object.
+     *
+     * @return the minimal object necessary to relate to the PresetDataset
+     * @throws InvalidRequestException if any of the minimal set of required properties for a PresetDataset relationship are not found in the initial object
+     */
+    @Override
+    public PresetDataset trimToReference() throws InvalidRequestException {
+        if (this.getGuid() != null && !this.getGuid().isEmpty()) {
+            return refByGuid(this.getGuid());
+        }
+        if (this.getQualifiedName() != null && !this.getQualifiedName().isEmpty()) {
+            return refByQualifiedName(this.getQualifiedName());
+        }
+        if (this.getUniqueAttributes() != null
+                && this.getUniqueAttributes().getQualifiedName() != null
+                && !this.getUniqueAttributes().getQualifiedName().isEmpty()) {
+            return refByQualifiedName(this.getUniqueAttributes().getQualifiedName());
+        }
+        throw new InvalidRequestException(
+                ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, TYPE_NAME, "guid, qualifiedName");
+    }
 
     /**
      * Start an asset filter that will return all PresetDataset assets.
@@ -304,6 +329,25 @@ public class PresetDataset extends Asset implements IPresetDataset, IPreset, IBI
      * Builds the minimal object necessary to create a Preset dataset.
      *
      * @param name of the dataset
+     * @param collection in which the dataset should be created, which must have at least
+     *                   a qualifiedName
+     * @return the minimal request necessary to create the dataset, as a builder
+     * @throws InvalidRequestException if the collection provided is without a qualifiedName
+     */
+    public static PresetDatasetBuilder<?, ?> creator(String name, PresetDashboard collection)
+            throws InvalidRequestException {
+        if (collection.getQualifiedName() == null
+                || collection.getQualifiedName().isEmpty()) {
+            throw new InvalidRequestException(
+                    ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, "PresetDashboard", "qualifiedName");
+        }
+        return creator(name, collection.getQualifiedName()).presetDashboard(collection.trimToReference());
+    }
+
+    /**
+     * Builds the minimal object necessary to create a Preset dataset.
+     *
+     * @param name of the dataset
      * @param collectionQualifiedName unique name of the collection in which the dataset exists
      * @return the minimal object necessary to create the dataset, as a builder
      */
@@ -313,6 +357,7 @@ public class PresetDataset extends Asset implements IPresetDataset, IPreset, IBI
         String workspaceQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(collectionQualifiedName);
         String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(workspaceQualifiedName);
         return PresetDataset._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .name(name)
                 .qualifiedName(collectionQualifiedName + "/" + name)
                 .connectorType(connectorType)
@@ -330,7 +375,10 @@ public class PresetDataset extends Asset implements IPresetDataset, IPreset, IBI
      * @return the minimal request necessary to update the PresetDataset, as a builder
      */
     public static PresetDatasetBuilder<?, ?> updater(String qualifiedName, String name) {
-        return PresetDataset._internal().qualifiedName(qualifiedName).name(name);
+        return PresetDataset._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
     }
 
     /**

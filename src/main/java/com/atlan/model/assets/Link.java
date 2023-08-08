@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -82,6 +83,30 @@ public class Link extends Asset implements ILink, IResource, ICatalog, IAsset, I
     @Attribute
     @Singular("putResourceMetadata")
     Map<String, String> resourceMetadata;
+
+    /**
+     * Builds the minimal object necessary to create a relationship to a Link, from a potentially
+     * more-complete Link object.
+     *
+     * @return the minimal object necessary to relate to the Link
+     * @throws InvalidRequestException if any of the minimal set of required properties for a Link relationship are not found in the initial object
+     */
+    @Override
+    public Link trimToReference() throws InvalidRequestException {
+        if (this.getGuid() != null && !this.getGuid().isEmpty()) {
+            return refByGuid(this.getGuid());
+        }
+        if (this.getQualifiedName() != null && !this.getQualifiedName().isEmpty()) {
+            return refByQualifiedName(this.getQualifiedName());
+        }
+        if (this.getUniqueAttributes() != null
+                && this.getUniqueAttributes().getQualifiedName() != null
+                && !this.getUniqueAttributes().getQualifiedName().isEmpty()) {
+            return refByQualifiedName(this.getUniqueAttributes().getQualifiedName());
+        }
+        throw new InvalidRequestException(
+                ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, TYPE_NAME, "guid, qualifiedName");
+    }
 
     /**
      * Start an asset filter that will return all Link assets.
@@ -304,13 +329,15 @@ public class Link extends Asset implements ILink, IResource, ICatalog, IAsset, I
      * @param title for the Link
      * @param url of the Link
      * @return the minimal object necessary to create the Link and attach it to the asset, as a builder
+     * @throws InvalidRequestException if the provided asset reference is missing any required information
      */
-    public static LinkBuilder<?, ?> creator(Asset reference, String title, String url) {
+    public static LinkBuilder<?, ?> creator(Asset reference, String title, String url) throws InvalidRequestException {
         return Link._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(generateQualifiedName())
                 .name(title)
                 .link(url)
-                .asset(reference);
+                .asset(reference.trimToReference());
     }
 
     /**
@@ -321,7 +348,10 @@ public class Link extends Asset implements ILink, IResource, ICatalog, IAsset, I
      * @return the minimal request necessary to update the Link, as a builder
      */
     public static LinkBuilder<?, ?> updater(String qualifiedName, String name) {
-        return Link._internal().qualifiedName(qualifiedName).name(name);
+        return Link._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
     }
 
     /**

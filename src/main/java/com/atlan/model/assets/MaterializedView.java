@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -196,6 +197,30 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
     /** TBC */
     @Attribute
     String viewQualifiedName;
+
+    /**
+     * Builds the minimal object necessary to create a relationship to a MaterializedView, from a potentially
+     * more-complete MaterializedView object.
+     *
+     * @return the minimal object necessary to relate to the MaterializedView
+     * @throws InvalidRequestException if any of the minimal set of required properties for a MaterializedView relationship are not found in the initial object
+     */
+    @Override
+    public MaterializedView trimToReference() throws InvalidRequestException {
+        if (this.getGuid() != null && !this.getGuid().isEmpty()) {
+            return refByGuid(this.getGuid());
+        }
+        if (this.getQualifiedName() != null && !this.getQualifiedName().isEmpty()) {
+            return refByQualifiedName(this.getQualifiedName());
+        }
+        if (this.getUniqueAttributes() != null
+                && this.getUniqueAttributes().getQualifiedName() != null
+                && !this.getUniqueAttributes().getQualifiedName().isEmpty()) {
+            return refByQualifiedName(this.getUniqueAttributes().getQualifiedName());
+        }
+        throw new InvalidRequestException(
+                ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, TYPE_NAME, "guid, qualifiedName");
+    }
 
     /**
      * Start an asset filter that will return all MaterializedView assets.
@@ -417,6 +442,22 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
      * Builds the minimal object necessary to create a materialized view.
      *
      * @param name of the materialized view
+     * @param schema in which the materialized view should be created, which must have at least
+     *               a qualifiedName
+     * @return the minimal request necessary to create the materialized view, as a builder
+     * @throws InvalidRequestException if the schema provided is without a qualifiedName
+     */
+    public static MaterializedViewBuilder<?, ?> creator(String name, Schema schema) throws InvalidRequestException {
+        if (schema.getQualifiedName() == null || schema.getQualifiedName().isEmpty()) {
+            throw new InvalidRequestException(ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, "Schema", "qualifiedName");
+        }
+        return creator(name, schema.getQualifiedName()).schema(schema.trimToReference());
+    }
+
+    /**
+     * Builds the minimal object necessary to create a materialized view.
+     *
+     * @param name of the materialized view
      * @param schemaQualifiedName unique name of the schema in which this materialized view exists
      * @return the minimal request necessary to create the materialized view, as a builder
      */
@@ -428,6 +469,7 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
         String databaseName = StringUtils.getNameFromQualifiedName(databaseQualifiedName);
         String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(databaseQualifiedName);
         return MaterializedView._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .name(name)
                 .qualifiedName(generateQualifiedName(name, schemaQualifiedName))
                 .connectorType(connectorType)
@@ -458,7 +500,10 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
      * @return the minimal request necessary to update the MaterializedView, as a builder
      */
     public static MaterializedViewBuilder<?, ?> updater(String qualifiedName, String name) {
-        return MaterializedView._internal().qualifiedName(qualifiedName).name(name);
+        return MaterializedView._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
     }
 
     /**

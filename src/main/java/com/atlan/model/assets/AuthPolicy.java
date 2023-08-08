@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.SortedSet;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -128,6 +129,30 @@ public class AuthPolicy extends Asset implements IAuthPolicy, IAsset, IReference
     @Attribute
     @Singular("addPolicyValiditySchedule")
     List<AuthPolicyValiditySchedule> policyValiditySchedule;
+
+    /**
+     * Builds the minimal object necessary to create a relationship to a AuthPolicy, from a potentially
+     * more-complete AuthPolicy object.
+     *
+     * @return the minimal object necessary to relate to the AuthPolicy
+     * @throws InvalidRequestException if any of the minimal set of required properties for a AuthPolicy relationship are not found in the initial object
+     */
+    @Override
+    public AuthPolicy trimToReference() throws InvalidRequestException {
+        if (this.getGuid() != null && !this.getGuid().isEmpty()) {
+            return refByGuid(this.getGuid());
+        }
+        if (this.getQualifiedName() != null && !this.getQualifiedName().isEmpty()) {
+            return refByQualifiedName(this.getQualifiedName());
+        }
+        if (this.getUniqueAttributes() != null
+                && this.getUniqueAttributes().getQualifiedName() != null
+                && !this.getUniqueAttributes().getQualifiedName().isEmpty()) {
+            return refByQualifiedName(this.getUniqueAttributes().getQualifiedName());
+        }
+        throw new InvalidRequestException(
+                ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, TYPE_NAME, "guid, qualifiedName");
+    }
 
     /**
      * Start an asset filter that will return all AuthPolicy assets.
@@ -357,7 +382,11 @@ public class AuthPolicy extends Asset implements IAuthPolicy, IAsset, IReference
      * @see Purpose#createDataPolicy(String, String, AuthPolicyType, Collection, Collection, boolean)
      */
     public static AuthPolicyBuilder<?, ?> creator(String name) {
-        return AuthPolicy._internal().qualifiedName(name).name(name).displayName("");
+        return AuthPolicy._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(name)
+                .name(name)
+                .displayName("");
     }
 
     /**
@@ -368,7 +397,10 @@ public class AuthPolicy extends Asset implements IAuthPolicy, IAsset, IReference
      * @return the minimal request necessary to update the AuthPolicy, as a builder
      */
     public static AuthPolicyBuilder<?, ?> updater(String qualifiedName, String name) {
-        return AuthPolicy._internal().qualifiedName(qualifiedName).name(name);
+        return AuthPolicy._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
     }
 
     /**

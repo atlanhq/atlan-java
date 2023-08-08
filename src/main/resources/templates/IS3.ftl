@@ -1,4 +1,4 @@
-<#macro all>
+<#macro all subTypes>
     /**
      * Generate a unique S3 name.
      *

@@ -3,6 +3,23 @@
      * Builds the minimal object necessary to create a ADLSObject.
      *
      * @param name of the ADLSObject
+     * @param container in which the ADLSObject should be created, which must have at least
+     *                  a qualifiedName
+     * @return the minimal request necessary to create the ADLSObject, as a builder
+     * @throws InvalidRequestException if the container provided is without a qualifiedName
+     */
+    public static ADLSObjectBuilder<?, ?> creator(String name, ADLSContainer container) throws InvalidRequestException {
+        if (container.getQualifiedName() == null || container.getQualifiedName().isEmpty()) {
+            throw new InvalidRequestException(
+                    ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, "ADLSContainer", "qualifiedName");
+        }
+        return creator(name, container.getQualifiedName()).adlsContainer(container.trimToReference());
+    }
+
+    /**
+     * Builds the minimal object necessary to create a ADLSObject.
+     *
+     * @param name of the ADLSObject
      * @param containerQualifiedName unique name of the container through which the ADLSObject is accessible
      * @return the minimal object necessary to create the ADLSObject, as a builder
      */
@@ -10,6 +27,7 @@
         String accountQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(containerQualifiedName);
         String connectionQualifiedName = StringUtils.getConnectionQualifiedName(containerQualifiedName);
         return ADLSObject._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(generateQualifiedName(name, containerQualifiedName))
                 .name(name)
                 .adlsContainer(ADLSContainer.refByQualifiedName(containerQualifiedName))
@@ -37,7 +55,10 @@
      * @return the minimal request necessary to update the ADLSObject, as a builder
      */
     public static ADLSObjectBuilder<?, ?> updater(String qualifiedName, String name) {
-        return ADLSObject._internal().qualifiedName(qualifiedName).name(name);
+        return ADLSObject._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
     }
 
     /**

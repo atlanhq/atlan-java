@@ -12,6 +12,7 @@
             throw new InvalidRequestException(ErrorCode.NO_ATLAN_TAG_FOR_PURPOSE);
         }
         return Purpose._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(name)
                 .name(name)
                 .displayName(name)
@@ -29,7 +30,11 @@
      * @return the minimal request necessary to update the Purpose, as a builder
      */
     public static PurposeBuilder<?, ?> updater(String qualifiedName, String name, boolean isEnabled) {
-        return Purpose._internal().qualifiedName(qualifiedName).name(name).isAccessControlEnabled(isEnabled);
+        return Purpose._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name)
+                .isAccessControlEnabled(isEnabled);
     }
 
     /**

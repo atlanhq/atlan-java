@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -191,6 +192,30 @@ public class Schema extends Asset implements ISchema, ISQL, ICatalog, IAsset, IR
     @Attribute
     @Singular
     SortedSet<IView> views;
+
+    /**
+     * Builds the minimal object necessary to create a relationship to a Schema, from a potentially
+     * more-complete Schema object.
+     *
+     * @return the minimal object necessary to relate to the Schema
+     * @throws InvalidRequestException if any of the minimal set of required properties for a Schema relationship are not found in the initial object
+     */
+    @Override
+    public Schema trimToReference() throws InvalidRequestException {
+        if (this.getGuid() != null && !this.getGuid().isEmpty()) {
+            return refByGuid(this.getGuid());
+        }
+        if (this.getQualifiedName() != null && !this.getQualifiedName().isEmpty()) {
+            return refByQualifiedName(this.getQualifiedName());
+        }
+        if (this.getUniqueAttributes() != null
+                && this.getUniqueAttributes().getQualifiedName() != null
+                && !this.getUniqueAttributes().getQualifiedName().isEmpty()) {
+            return refByQualifiedName(this.getUniqueAttributes().getQualifiedName());
+        }
+        throw new InvalidRequestException(
+                ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, TYPE_NAME, "guid, qualifiedName");
+    }
 
     /**
      * Start an asset filter that will return all Schema assets.
@@ -410,6 +435,23 @@ public class Schema extends Asset implements ISchema, ISQL, ICatalog, IAsset, IR
      * Builds the minimal object necessary to create a schema.
      *
      * @param name of the schema
+     * @param database in which the schema should be created, which must have at least
+     *                 a qualifiedName
+     * @return the minimal request necessary to create the schema, as a builder
+     * @throws InvalidRequestException if the database provided is without a qualifiedName
+     */
+    public static SchemaBuilder<?, ?> creator(String name, Database database) throws InvalidRequestException {
+        if (database.getQualifiedName() == null || database.getQualifiedName().isEmpty()) {
+            throw new InvalidRequestException(
+                    ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, "Database", "qualifiedName");
+        }
+        return creator(name, database.getQualifiedName()).database(database.trimToReference());
+    }
+
+    /**
+     * Builds the minimal object necessary to create a schema.
+     *
+     * @param name of the schema
      * @param databaseQualifiedName unique name of the database in which this schema exists
      * @return the minimal request necessary to create the schema, as a builder
      */
@@ -419,6 +461,7 @@ public class Schema extends Asset implements ISchema, ISQL, ICatalog, IAsset, IR
         String databaseName = StringUtils.getNameFromQualifiedName(databaseQualifiedName);
         String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(databaseQualifiedName);
         return Schema._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .name(name)
                 .qualifiedName(generateQualifiedName(name, databaseQualifiedName))
                 .connectorType(connectorType)
@@ -447,7 +490,10 @@ public class Schema extends Asset implements ISchema, ISQL, ICatalog, IAsset, IR
      * @return the minimal request necessary to update the Schema, as a builder
      */
     public static SchemaBuilder<?, ?> updater(String qualifiedName, String name) {
-        return Schema._internal().qualifiedName(qualifiedName).name(name);
+        return Schema._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
     }
 
     /**

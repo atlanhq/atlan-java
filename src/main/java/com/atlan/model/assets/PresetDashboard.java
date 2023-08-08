@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -106,6 +107,30 @@ public class PresetDashboard extends Asset implements IPresetDashboard, IPreset,
     /** TBC */
     @Attribute
     String presetWorkspaceQualifiedName;
+
+    /**
+     * Builds the minimal object necessary to create a relationship to a PresetDashboard, from a potentially
+     * more-complete PresetDashboard object.
+     *
+     * @return the minimal object necessary to relate to the PresetDashboard
+     * @throws InvalidRequestException if any of the minimal set of required properties for a PresetDashboard relationship are not found in the initial object
+     */
+    @Override
+    public PresetDashboard trimToReference() throws InvalidRequestException {
+        if (this.getGuid() != null && !this.getGuid().isEmpty()) {
+            return refByGuid(this.getGuid());
+        }
+        if (this.getQualifiedName() != null && !this.getQualifiedName().isEmpty()) {
+            return refByQualifiedName(this.getQualifiedName());
+        }
+        if (this.getUniqueAttributes() != null
+                && this.getUniqueAttributes().getQualifiedName() != null
+                && !this.getUniqueAttributes().getQualifiedName().isEmpty()) {
+            return refByQualifiedName(this.getUniqueAttributes().getQualifiedName());
+        }
+        throw new InvalidRequestException(
+                ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, TYPE_NAME, "guid, qualifiedName");
+    }
 
     /**
      * Start an asset filter that will return all PresetDashboard assets.
@@ -327,6 +352,24 @@ public class PresetDashboard extends Asset implements IPresetDashboard, IPreset,
      * Builds the minimal object necessary to create a Preset collection.
      *
      * @param name of the collection
+     * @param workspace in which the collection should be created, which must have at least
+     *                  a qualifiedName
+     * @return the minimal request necessary to create the collection, as a builder
+     * @throws InvalidRequestException if the workspace provided is without a qualifiedName
+     */
+    public static PresetDashboardBuilder<?, ?> creator(String name, PresetWorkspace workspace)
+            throws InvalidRequestException {
+        if (workspace.getQualifiedName() == null || workspace.getQualifiedName().isEmpty()) {
+            throw new InvalidRequestException(
+                    ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, "PresetWorkspace", "qualifiedName");
+        }
+        return creator(name, workspace.getQualifiedName()).presetWorkspace(workspace.trimToReference());
+    }
+
+    /**
+     * Builds the minimal object necessary to create a Preset collection.
+     *
+     * @param name of the collection
      * @param workspaceQualifiedName unique name of the workspace in which the collection exists
      * @return the minimal object necessary to create the collection, as a builder
      */
@@ -335,6 +378,7 @@ public class PresetDashboard extends Asset implements IPresetDashboard, IPreset,
         AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(tokens);
         String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(workspaceQualifiedName);
         return PresetDashboard._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .name(name)
                 .qualifiedName(workspaceQualifiedName + "/" + name)
                 .connectorType(connectorType)
@@ -351,7 +395,10 @@ public class PresetDashboard extends Asset implements IPresetDashboard, IPreset,
      * @return the minimal request necessary to update the PresetDashboard, as a builder
      */
     public static PresetDashboardBuilder<?, ?> updater(String qualifiedName, String name) {
-        return PresetDashboard._internal().qualifiedName(qualifiedName).name(name);
+        return PresetDashboard._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
     }
 
     /**

@@ -7,6 +7,7 @@
      */
     public static PersonaBuilder<?, ?> creator(String name) {
         return Persona._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(name)
                 .name(name)
                 .displayName(name)
@@ -23,7 +24,11 @@
      * @return the minimal request necessary to update the Persona, as a builder
      */
     public static PersonaBuilder<?, ?> updater(String qualifiedName, String name, boolean isEnabled) {
-        return Persona._internal().qualifiedName(qualifiedName).name(name).isAccessControlEnabled(isEnabled);
+        return Persona._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name)
+                .isAccessControlEnabled(isEnabled);
     }
 
     /**

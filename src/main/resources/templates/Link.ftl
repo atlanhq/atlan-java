@@ -6,13 +6,15 @@
      * @param title for the Link
      * @param url of the Link
      * @return the minimal object necessary to create the Link and attach it to the asset, as a builder
+     * @throws InvalidRequestException if the provided asset reference is missing any required information
      */
-    public static LinkBuilder<?, ?> creator(Asset reference, String title, String url) {
+    public static LinkBuilder<?, ?> creator(Asset reference, String title, String url) throws InvalidRequestException {
         return Link._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(generateQualifiedName())
                 .name(title)
                 .link(url)
-                .asset(reference);
+                .asset(reference.trimToReference());
     }
 
     /**
@@ -23,7 +25,10 @@
      * @return the minimal request necessary to update the Link, as a builder
      */
     public static LinkBuilder<?, ?> updater(String qualifiedName, String name) {
-        return Link._internal().qualifiedName(qualifiedName).name(name);
+        return Link._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
     }
 
     /**

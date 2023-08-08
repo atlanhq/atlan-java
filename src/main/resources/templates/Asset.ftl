@@ -109,6 +109,14 @@
     public abstract AssetBuilder<?, ?> trimToRequired() throws InvalidRequestException;
 
     /**
+     * Reduce the asset to the minimum set of properties required to relate to it.
+     *
+     * @return an asset containing the minimal set of properties required to relate to this asset
+     * @throws InvalidRequestException if any of the minimal set of required properties are not found in the initial object
+     */
+    public abstract Asset trimToReference() throws InvalidRequestException;
+
+    /**
      * If an asset with the same qualifiedName exists, updates the existing asset. Otherwise, creates the asset.
      * No Atlan tags or custom metadata will be changed if updating an existing asset, irrespective of what
      * is included in the asset itself when the method is called.
