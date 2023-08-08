@@ -31,15 +31,14 @@ public class ResourceTest extends AtlanLiveTest {
     @Test(groups = {"resources.create.term"})
     void createTerm() throws AtlanException {
         glossary = GlossaryTest.createGlossary(PREFIX);
-        term = GlossaryTest.createTerm(PREFIX, glossary.getGuid());
+        term = GlossaryTest.createTerm(PREFIX, glossary);
     }
 
     @Test(
             groups = {"resources.create.readme"},
             dependsOnGroups = {"resources.create.term"})
     void addReadme() throws AtlanException {
-        Readme toCreate = Readme.creator(GlossaryTerm.refByGuid(term.getGuid()), term.getName(), README_CONTENT)
-                .build();
+        Readme toCreate = Readme.creator(term, README_CONTENT).build();
         AssetMutationResponse response = toCreate.save();
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
@@ -62,8 +61,7 @@ public class ResourceTest extends AtlanLiveTest {
             groups = {"resources.create.link"},
             dependsOnGroups = {"resources.create.term"})
     void addLink() throws AtlanException {
-        Link toCreate = Link.creator(GlossaryTerm.refByGuid(term.getGuid()), LINK_TITLE, LINK_URL)
-                .build();
+        Link toCreate = Link.creator(term, LINK_TITLE, LINK_URL).build();
         AssetMutationResponse response = toCreate.save();
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());

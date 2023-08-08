@@ -344,7 +344,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
     @Test(groups = {"cm.create.term"})
     void createTerm() throws AtlanException {
         glossary = GlossaryTest.createGlossary(PREFIX);
-        term = GlossaryTest.createTerm(PREFIX, glossary.getGuid());
+        term = GlossaryTest.createTerm(PREFIX, glossary);
     }
 
     @Test(groups = {"cm.create.groups"})

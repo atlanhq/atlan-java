@@ -97,52 +97,15 @@ public class GlossaryTest extends AtlanLiveTest {
     }
 
     /**
-     * Create multiple categories at the same time, from the details provided.
-     *
-     * @param names of the categories to create
-     * @param glossaryId GUID of the glossary in which to create the categories
-     * @param parentCategoryId GUID of the parent in which to create the categories (or null if they should be root-level categories)
-     * @return the list of categories that were created, in the same order as in the names provided
-     * @throws AtlanException on any error creating or reading-back the categories
-     */
-    static List<GlossaryCategory> createCategories(List<String> names, String glossaryId, String parentCategoryId)
-            throws AtlanException {
-        List<Asset> toCreate = new ArrayList<>();
-        for (String name : names) {
-            GlossaryCategory one;
-            if (parentCategoryId == null) {
-                one = GlossaryCategory.creator(name, glossaryId, null).build();
-            } else {
-                one = GlossaryCategory.creator(name, glossaryId, null)
-                        .parentCategory(GlossaryCategory.refByGuid(parentCategoryId))
-                        .build();
-            }
-            toCreate.add(one);
-        }
-        AssetMutationResponse response = Atlan.getDefaultClient().assets.save(toCreate, false);
-        assertNotNull(response);
-        assertEquals(response.getDeletedAssets().size(), 0);
-        assertEquals(response.getCreatedAssets().size(), names.size());
-        List<GlossaryCategory> entities = response.getCreatedAssets(GlossaryCategory.class);
-        List<GlossaryCategory> toReturn = new ArrayList<>(names.size());
-        for (GlossaryCategory created : entities) {
-            String name = created.getName();
-            int index = names.indexOf(name);
-            toReturn.add(index, created);
-        }
-        return toReturn;
-    }
-
-    /**
      * Create a new glossary term with a unique name.
      *
      * @param name to make the glossary term unique
-     * @param glossaryId GUID of the glossary in which to create the term
+     * @param glossary in which to create the term
      * @return the glossary term that was created
      * @throws AtlanException on any error creating or reading-back the glossary term
      */
-    static GlossaryTerm createTerm(String name, String glossaryId) throws AtlanException {
-        return createTerm(Atlan.getDefaultClient(), name, glossaryId);
+    static GlossaryTerm createTerm(String name, Glossary glossary) throws AtlanException {
+        return createTerm(Atlan.getDefaultClient(), name, glossary);
     }
 
     /**
@@ -150,23 +113,23 @@ public class GlossaryTest extends AtlanLiveTest {
      *
      * @param client connectivity to the Atlan tenant in which to create the term
      * @param name to make the glossary term unique
-     * @param glossaryId GUID of the glossary in which to create the term
+     * @param glossary in which to create the term
      * @return the glossary term that was created
      * @throws AtlanException on any error creating or reading-back the glossary term
      */
-    static GlossaryTerm createTerm(AtlanClient client, String name, String glossaryId) throws AtlanException {
+    static GlossaryTerm createTerm(AtlanClient client, String name, Glossary glossary) throws AtlanException {
         assertThrows(
                 NotFoundException.class,
-                () -> GlossaryTerm.creator(name, glossaryId, null).build().updateMergingCM(false));
-        GlossaryTerm term = GlossaryTerm.creator(name, glossaryId, null).build();
+                () -> GlossaryTerm.creator(name, glossary).build().updateMergingCM(false));
+        GlossaryTerm term = GlossaryTerm.creator(name, glossary).build();
         AssetMutationResponse response = term.save(client);
         assertNotNull(response);
         assertEquals(response.getDeletedAssets().size(), 0);
         assertEquals(response.getUpdatedAssets().size(), 1);
         Asset one = response.getUpdatedAssets().get(0);
         assertTrue(one instanceof Glossary);
-        Glossary glossary = response.getUpdatedAssets(Glossary.class).get(0);
-        assertEquals(glossary.getGuid(), glossaryId);
+        Glossary updated = response.getUpdatedAssets(Glossary.class).get(0);
+        assertEquals(updated.getGuid(), glossary.getGuid());
         assertEquals(response.getCreatedAssets().size(), 1);
         one = response.getCreatedAssets().get(0);
         assertNotNull(one);
@@ -252,55 +215,77 @@ public class GlossaryTest extends AtlanLiveTest {
             groups = {"glossary.create.hierarchy"},
             dependsOnGroups = {"glossary.create.glossary"})
     void createHierarchy() throws AtlanException {
+        List<Asset> categories = new ArrayList<>();
+        GlossaryCategory top1 =
+                GlossaryCategory.creator("top1" + PREFIX, glossary).build();
+        GlossaryCategory top2 =
+                GlossaryCategory.creator("top2" + PREFIX, glossary).build();
+        GlossaryCategory mid1a = GlossaryCategory.creator("mid1a" + PREFIX, glossary)
+                .parentCategory(top1.trimToReference())
+                .build();
+        GlossaryCategory mid1b = GlossaryCategory.creator("mid1b" + PREFIX, glossary)
+                .parentCategory(top1.trimToReference())
+                .build();
+        GlossaryCategory mid2a = GlossaryCategory.creator("mid2a" + PREFIX, glossary)
+                .parentCategory(top2.trimToReference())
+                .build();
+        GlossaryCategory mid2b = GlossaryCategory.creator("mid2b" + PREFIX, glossary)
+                .parentCategory(top2.trimToReference())
+                .build();
+        categories.add(top1);
+        categories.add(top2);
+        categories.add(mid1a);
+        categories.add(mid1b);
+        categories.add(mid2a);
+        categories.add(mid2b);
+        categories.add(GlossaryCategory.creator("leaf1aa" + PREFIX, glossary)
+                .parentCategory(mid1a.trimToReference())
+                .build());
+        categories.add(GlossaryCategory.creator("leaf1ab" + PREFIX, glossary)
+                .parentCategory(mid1a.trimToReference())
+                .build());
+        categories.add(GlossaryCategory.creator("leaf1ba" + PREFIX, glossary)
+                .parentCategory(mid1b.trimToReference())
+                .build());
+        categories.add(GlossaryCategory.creator("leaf1bb" + PREFIX, glossary)
+                .parentCategory(mid1b.trimToReference())
+                .build());
+        categories.add(GlossaryCategory.creator("leaf2aa" + PREFIX, glossary)
+                .parentCategory(mid2a.trimToReference())
+                .build());
+        categories.add(GlossaryCategory.creator("leaf2ab" + PREFIX, glossary)
+                .parentCategory(mid2a.trimToReference())
+                .build());
+        categories.add(GlossaryCategory.creator("leaf2ba" + PREFIX, glossary)
+                .parentCategory(mid2b.trimToReference())
+                .build());
+        categories.add(GlossaryCategory.creator("leaf2bb" + PREFIX, glossary)
+                .parentCategory(mid2b.trimToReference())
+                .build());
 
-        List<String> topNames = List.of("top1" + PREFIX, "top2" + PREFIX);
-
-        List<GlossaryCategory> tops = createCategories(topNames, glossary.getGuid(), null);
-        assertEquals(tops.size(), 2);
-        top1Guid = tops.get(0).getGuid();
-        top2Guid = tops.get(1).getGuid();
-
-        List<String> midNames = List.of("mid1a" + PREFIX, "mid1b" + PREFIX);
-
-        List<GlossaryCategory> mids = createCategories(midNames, glossary.getGuid(), top1Guid);
-        assertEquals(mids.size(), 2);
-        mid1aGuid = mids.get(0).getGuid();
-        mid1bGuid = mids.get(1).getGuid();
-
-        midNames = List.of("mid2a" + PREFIX, "mid2b" + PREFIX);
-
-        mids = createCategories(midNames, glossary.getGuid(), top2Guid);
-        assertEquals(mids.size(), 2);
-        mid2aGuid = mids.get(0).getGuid();
-        mid2bGuid = mids.get(1).getGuid();
-
-        List<String> leafNames = List.of("leaf1aa" + PREFIX, "leaf1ab" + PREFIX);
-
-        List<GlossaryCategory> leaves = createCategories(leafNames, glossary.getGuid(), mid1aGuid);
-        assertEquals(leaves.size(), 2);
-        leaf1aaGuid = leaves.get(0).getGuid();
-        leaf1abGuid = leaves.get(1).getGuid();
-
-        leafNames = List.of("leaf1ba" + PREFIX, "leaf1bb" + PREFIX);
-
-        leaves = createCategories(leafNames, glossary.getGuid(), mid1bGuid);
-        assertEquals(leaves.size(), 2);
-        leaf1baGuid = leaves.get(0).getGuid();
-        leaf1bbGuid = leaves.get(1).getGuid();
-
-        leafNames = List.of("leaf2aa" + PREFIX, "leaf2ab" + PREFIX);
-
-        leaves = createCategories(leafNames, glossary.getGuid(), mid2aGuid);
-        assertEquals(leaves.size(), 2);
-        leaf2aaGuid = leaves.get(0).getGuid();
-        leaf2abGuid = leaves.get(1).getGuid();
-
-        leafNames = List.of("leaf2ba" + PREFIX, "leaf2bb" + PREFIX);
-
-        leaves = createCategories(leafNames, glossary.getGuid(), mid2bGuid);
-        assertEquals(leaves.size(), 2);
-        leaf2baGuid = leaves.get(0).getGuid();
-        leaf2bbGuid = leaves.get(1).getGuid();
+        AssetMutationResponse response = Atlan.getDefaultClient().assets.save(categories, false);
+        assertNotNull(response);
+        assertEquals(response.getDeletedAssets().size(), 0);
+        assertEquals(response.getUpdatedAssets().size(), 1);
+        assertEquals(response.getUpdatedAssets(Glossary.class).size(), 1);
+        assertEquals(response.getUpdatedAssets(Glossary.class).get(0).getGuid(), glossary.getGuid());
+        assertEquals(response.getCreatedAssets().size(), categories.size());
+        List<GlossaryCategory> entities = response.getCreatedAssets(GlossaryCategory.class);
+        assertEquals(entities.size(), categories.size());
+        top1Guid = response.getAssignedGuid(top1);
+        top2Guid = response.getAssignedGuid(top2);
+        mid1aGuid = response.getAssignedGuid(mid1a);
+        mid1bGuid = response.getAssignedGuid(mid1b);
+        mid2aGuid = response.getAssignedGuid(mid2a);
+        mid2bGuid = response.getAssignedGuid(mid2b);
+        leaf1aaGuid = entities.get(6).getGuid();
+        leaf1abGuid = entities.get(7).getGuid();
+        leaf1baGuid = entities.get(8).getGuid();
+        leaf1bbGuid = entities.get(9).getGuid();
+        leaf2aaGuid = entities.get(10).getGuid();
+        leaf2abGuid = entities.get(11).getGuid();
+        leaf2baGuid = entities.get(12).getGuid();
+        leaf2bbGuid = entities.get(13).getGuid();
     }
 
     @Test(
@@ -359,7 +344,7 @@ public class GlossaryTest extends AtlanLiveTest {
             groups = {"glossary.create.term"},
             dependsOnGroups = {"glossary.create.glossary"})
     void createTerm1() throws AtlanException {
-        term1 = createTerm(TERM_NAME1, glossary.getGuid());
+        term1 = createTerm(TERM_NAME1, glossary);
         assertEquals(term1.getName(), TERM_NAME1);
     }
 
@@ -367,7 +352,7 @@ public class GlossaryTest extends AtlanLiveTest {
             groups = {"glossary.create.term"},
             dependsOnGroups = {"glossary.create.glossary"})
     void createTerm2() throws AtlanException {
-        term2 = createTerm(TERM_NAME2, glossary.getGuid());
+        term2 = createTerm(TERM_NAME2, glossary);
         assertEquals(term2.getName(), TERM_NAME2);
     }
 

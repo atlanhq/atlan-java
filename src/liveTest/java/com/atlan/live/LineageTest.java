@@ -63,16 +63,16 @@ public class LineageTest extends AtlanLiveTest {
     void createConnection() throws AtlanException {
         connection = ConnectionTest.createConnection(CONNECTION_NAME, CONNECTOR_TYPE);
         Database database = SQLAssetTest.createDatabase(DATABASE_NAME, connection.getQualifiedName());
-        Schema schema = SQLAssetTest.createSchema(SCHEMA_NAME, database.getQualifiedName());
-        table = SQLAssetTest.createTable(TABLE_NAME, schema.getQualifiedName());
-        mview = SQLAssetTest.createMaterializedView(MVIEW_NAME, schema.getQualifiedName());
-        view = SQLAssetTest.createView(VIEW_NAME, schema.getQualifiedName());
-        SQLAssetTest.createColumn(COLUMN_NAME1, Table.TYPE_NAME, table.getQualifiedName(), 1);
-        SQLAssetTest.createColumn(COLUMN_NAME2, Table.TYPE_NAME, table.getQualifiedName(), 2);
-        SQLAssetTest.createColumn(COLUMN_NAME3, MaterializedView.TYPE_NAME, mview.getQualifiedName(), 1);
-        SQLAssetTest.createColumn(COLUMN_NAME4, MaterializedView.TYPE_NAME, mview.getQualifiedName(), 2);
-        SQLAssetTest.createColumn(COLUMN_NAME5, View.TYPE_NAME, view.getQualifiedName(), 1);
-        SQLAssetTest.createColumn(COLUMN_NAME6, View.TYPE_NAME, view.getQualifiedName(), 2);
+        Schema schema = SQLAssetTest.createSchema(SCHEMA_NAME, database);
+        table = SQLAssetTest.createTable(TABLE_NAME, schema);
+        mview = SQLAssetTest.createMaterializedView(MVIEW_NAME, schema);
+        view = SQLAssetTest.createView(VIEW_NAME, schema);
+        SQLAssetTest.createColumn(COLUMN_NAME1, table, 1);
+        SQLAssetTest.createColumn(COLUMN_NAME2, table, 2);
+        SQLAssetTest.createColumn(COLUMN_NAME3, mview, 1);
+        SQLAssetTest.createColumn(COLUMN_NAME4, mview, 2);
+        SQLAssetTest.createColumn(COLUMN_NAME5, view, 1);
+        SQLAssetTest.createColumn(COLUMN_NAME6, view, 2);
     }
 
     // TODO: column-level lineage

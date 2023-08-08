@@ -2,6 +2,12 @@
 /* Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.admin;
 
+import com.atlan.exception.ErrorCode;
+import com.atlan.exception.InvalidRequestException;
+import com.atlan.model.assets.Asset;
+import com.atlan.model.assets.GlossaryTerm;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -28,6 +34,41 @@ public class TermLinkRequest extends AtlanRequest {
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     String sourceType = SOURCE_TYPE;
+
+    /**
+     * Create a new request to change an attribute's value.
+     * Note that the asset must have at least its real (not placeholder) GUID and qualifiedName populated.
+     *
+     * @param asset against which to raise the request
+     * @param term to link to the asset
+     * @return a builder for the request with these details
+     * @throws InvalidRequestException if any of the required details for the provided asset are missing
+     */
+    public static TermLinkRequestBuilder<?, ?> creator(Asset asset, GlossaryTerm term) throws InvalidRequestException {
+        List<String> missing = new ArrayList<>();
+        if (asset.getQualifiedName() == null || asset.getQualifiedName().isEmpty()) {
+            missing.add("qualifiedName");
+        }
+        if (asset.getGuid() == null || asset.getGuid().isEmpty()) {
+            missing.add("guid");
+        }
+        if (term.getQualifiedName() == null || term.getQualifiedName().isEmpty()) {
+            missing.add("term::qualifiedName");
+        }
+        if (term.getGuid() == null || term.getGuid().isEmpty()) {
+            missing.add("term::guid");
+        }
+        if (!missing.isEmpty()) {
+            throw new InvalidRequestException(
+                    ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, asset.getTypeName(), String.join(",", missing));
+        }
+        return creator(
+                asset.getGuid(),
+                asset.getQualifiedName(),
+                asset.getTypeName(),
+                term.getGuid(),
+                term.getQualifiedName());
+    }
 
     /**
      * Create a new request to link a term to an asset.

@@ -103,20 +103,20 @@ public class SQLAssetTest extends AtlanLiveTest {
      * Create a schema with the provided characteristics.
      *
      * @param name unique name for the schema
-     * @param databaseQualifiedName qualifiedName of the database in which to create the schema
+     * @param database in which to create the schema
      * @return the created schema
      * @throws AtlanException on any errors creating the schema
      */
-    static Schema createSchema(String name, String databaseQualifiedName) throws AtlanException {
-        Schema schema = Schema.creator(name, databaseQualifiedName).build();
+    static Schema createSchema(String name, Database database) throws AtlanException {
+        Schema schema = Schema.creator(name, database).build();
         AssetMutationResponse response = schema.save();
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
         assertEquals(response.getUpdatedAssets().size(), 1);
         Asset one = response.getUpdatedAssets().get(0);
         assertTrue(one instanceof Database);
-        Database database = (Database) one;
-        assertEquals(database.getQualifiedName(), databaseQualifiedName);
+        Database updated = (Database) one;
+        assertEquals(updated.getQualifiedName(), database.getQualifiedName());
         assertEquals(response.getCreatedAssets().size(), 1);
         one = response.getCreatedAssets().get(0);
         assertTrue(one instanceof Schema);
@@ -124,7 +124,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertNotNull(schema.getGuid());
         assertNotNull(schema.getQualifiedName());
         assertEquals(schema.getName(), name);
-        assertEquals(schema.getDatabaseQualifiedName(), databaseQualifiedName);
+        assertEquals(schema.getDatabaseQualifiedName(), database.getQualifiedName());
         return schema;
     }
 
@@ -132,20 +132,20 @@ public class SQLAssetTest extends AtlanLiveTest {
      * Create a table with the provided characteristics.
      *
      * @param name unique name for the table
-     * @param schemaQualifiedName qualifiedName of the schema in which to create the table
+     * @param schema in which to create the table
      * @return the created table
      * @throws AtlanException on any errors creating the table
      */
-    static Table createTable(String name, String schemaQualifiedName) throws AtlanException {
-        Table table = Table.creator(name, schemaQualifiedName).columnCount(2L).build();
+    static Table createTable(String name, Schema schema) throws AtlanException {
+        Table table = Table.creator(name, schema).columnCount(2L).build();
         AssetMutationResponse response = table.save();
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
         assertEquals(response.getUpdatedAssets().size(), 1);
         Asset one = response.getUpdatedAssets().get(0);
         assertTrue(one instanceof Schema);
-        Schema schema = (Schema) one;
-        assertEquals(schema.getQualifiedName(), schemaQualifiedName);
+        Schema updated = (Schema) one;
+        assertEquals(updated.getQualifiedName(), schema.getQualifiedName());
         assertEquals(response.getCreatedAssets().size(), 1);
         one = response.getCreatedAssets().get(0);
         assertTrue(one instanceof Table);
@@ -153,7 +153,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertNotNull(table.getGuid());
         assertNotNull(table.getQualifiedName());
         assertEquals(table.getName(), name);
-        assertEquals(table.getSchemaQualifiedName(), schemaQualifiedName);
+        assertEquals(table.getSchemaQualifiedName(), schema.getQualifiedName());
         return table;
     }
 
@@ -161,20 +161,20 @@ public class SQLAssetTest extends AtlanLiveTest {
      * Create a view with the provided characteristics.
      *
      * @param name unique name for the view
-     * @param schemaQualifiedName qualifiedName of the schema in which to create the view
+     * @param schema in which to create the view
      * @return the created view
      * @throws AtlanException on any errors creating the view
      */
-    static View createView(String name, String schemaQualifiedName) throws AtlanException {
-        View view = View.creator(name, schemaQualifiedName).columnCount(2L).build();
+    static View createView(String name, Schema schema) throws AtlanException {
+        View view = View.creator(name, schema).columnCount(2L).build();
         AssetMutationResponse response = view.save();
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
         assertEquals(response.getUpdatedAssets().size(), 1);
         Asset one = response.getUpdatedAssets().get(0);
         assertTrue(one instanceof Schema);
-        Schema schema = (Schema) one;
-        assertEquals(schema.getQualifiedName(), schemaQualifiedName);
+        Schema updated = (Schema) one;
+        assertEquals(updated.getQualifiedName(), schema.getQualifiedName());
         assertEquals(response.getCreatedAssets().size(), 1);
         one = response.getCreatedAssets().get(0);
         assertTrue(one instanceof View);
@@ -182,7 +182,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertNotNull(view.getGuid());
         assertNotNull(view.getQualifiedName());
         assertEquals(view.getName(), name);
-        assertEquals(view.getSchemaQualifiedName(), schemaQualifiedName);
+        assertEquals(view.getSchemaQualifiedName(), schema.getQualifiedName());
         return view;
     }
 
@@ -190,22 +190,21 @@ public class SQLAssetTest extends AtlanLiveTest {
      * Create a materialized view with the provided characteristics.
      *
      * @param name unique name for the materialized view
-     * @param schemaQualifiedName qualifiedName of the schema in which to create the materialized view
+     * @param schema in which to create the materialized view
      * @return the created materialized view
      * @throws AtlanException on any errors creating the materialized view
      */
-    static MaterializedView createMaterializedView(String name, String schemaQualifiedName) throws AtlanException {
-        MaterializedView mview = MaterializedView.creator(name, schemaQualifiedName)
-                .columnCount(2L)
-                .build();
+    static MaterializedView createMaterializedView(String name, Schema schema) throws AtlanException {
+        MaterializedView mview =
+                MaterializedView.creator(name, schema).columnCount(2L).build();
         AssetMutationResponse response = mview.save();
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
         assertEquals(response.getUpdatedAssets().size(), 1);
         Asset one = response.getUpdatedAssets().get(0);
         assertTrue(one instanceof Schema);
-        Schema schema = (Schema) one;
-        assertEquals(schema.getQualifiedName(), schemaQualifiedName);
+        Schema updated = (Schema) one;
+        assertEquals(updated.getQualifiedName(), schema.getQualifiedName());
         assertEquals(response.getCreatedAssets().size(), 1);
         one = response.getCreatedAssets().get(0);
         assertTrue(one instanceof MaterializedView);
@@ -213,7 +212,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertNotNull(mview.getGuid());
         assertNotNull(mview.getQualifiedName());
         assertEquals(mview.getName(), name);
-        assertEquals(mview.getSchemaQualifiedName(), schemaQualifiedName);
+        assertEquals(mview.getSchemaQualifiedName(), schema.getQualifiedName());
         return mview;
     }
 
@@ -221,21 +220,21 @@ public class SQLAssetTest extends AtlanLiveTest {
      * Create a table partition with the provided characteristics.
      *
      * @param name unique name for the table partition
-     * @param tableQualifiedName qualifiedName of the table in which to create the table partition
+     * @param table in which to create the table partition
      * @return the created table partition
      * @throws AtlanException on any errors creating the table partition
      */
-    static TablePartition createTablePartition(String name, String tableQualifiedName) throws AtlanException {
+    static TablePartition createTablePartition(String name, Table table) throws AtlanException {
         TablePartition partition =
-                TablePartition.creator(name, tableQualifiedName).columnCount(2L).build();
+                TablePartition.creator(name, table).columnCount(2L).build();
         AssetMutationResponse response = partition.save();
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
         assertEquals(response.getUpdatedAssets().size(), 1);
         Asset one = response.getUpdatedAssets().get(0);
         assertTrue(one instanceof Table);
-        Table table = (Table) one;
-        assertEquals(table.getQualifiedName(), tableQualifiedName);
+        Table updated = (Table) one;
+        assertEquals(updated.getQualifiedName(), table.getQualifiedName());
         assertEquals(response.getCreatedAssets().size(), 1);
         one = response.getCreatedAssets().get(0);
         assertTrue(one instanceof TablePartition);
@@ -243,7 +242,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertNotNull(partition.getGuid());
         assertNotNull(partition.getQualifiedName());
         assertEquals(partition.getName(), name);
-        assertEquals(partition.getTableQualifiedName(), tableQualifiedName);
+        assertEquals(partition.getTableQualifiedName(), table.getQualifiedName());
         return partition;
     }
 
@@ -251,37 +250,47 @@ public class SQLAssetTest extends AtlanLiveTest {
      * Create a column with the provided characteristics.
      *
      * @param name unique name for the column
-     * @param parentType type of the column's parent container
-     * @param parentQualifiedName qualifiedName of the column's parent container
+     * @param parent container of the column
      * @param order position of the column within the container
      * @return the created column
      * @throws AtlanException on any errors creating the column
      */
-    static Column createColumn(String name, String parentType, String parentQualifiedName, int order)
-            throws AtlanException {
-        Column column =
-                Column.creator(name, parentType, parentQualifiedName, order).build();
-        AssetMutationResponse response = column.save();
-        assertNotNull(response);
-        assertTrue(response.getDeletedAssets().isEmpty());
-        assertEquals(response.getUpdatedAssets().size(), 1);
-        Asset one = response.getUpdatedAssets().get(0);
-        assertTrue(one instanceof ISQL);
-        ISQL parent = (ISQL) one;
-        assertEquals(parent.getQualifiedName(), parentQualifiedName);
-        assertEquals(response.getCreatedAssets().size(), 1);
-        one = response.getCreatedAssets().get(0);
-        assertTrue(one instanceof Column);
-        column = (Column) one;
-        assertNotNull(column.getGuid());
-        assertNotNull(column.getQualifiedName());
-        assertEquals(column.getName(), name);
-        if (parentType.equals(Table.TYPE_NAME)) {
-            assertEquals(column.getTableQualifiedName(), parentQualifiedName);
-        } else if (parentType.equals(View.TYPE_NAME) || parentType.equals(MaterializedView.TYPE_NAME)) {
-            assertEquals(column.getViewQualifiedName(), parentQualifiedName);
+    static Column createColumn(String name, ISQL parent, int order) throws AtlanException {
+        Column column = null;
+        if (parent instanceof Table) {
+            column = Column.creator(name, (Table) parent, order).build();
+        } else if (parent instanceof View) {
+            column = Column.creator(name, (View) parent, order).build();
+        } else if (parent instanceof MaterializedView) {
+            column = Column.creator(name, (MaterializedView) parent, order).build();
+        } else if (parent instanceof TablePartition) {
+            column = Column.creator(name, (TablePartition) parent, order).build();
         }
-        return column;
+        if (column != null) {
+            String parentType = parent.getTypeName();
+            AssetMutationResponse response = column.save();
+            assertNotNull(response);
+            assertTrue(response.getDeletedAssets().isEmpty());
+            assertEquals(response.getUpdatedAssets().size(), 1);
+            Asset one = response.getUpdatedAssets().get(0);
+            assertTrue(one instanceof ISQL);
+            ISQL updated = (ISQL) one;
+            assertEquals(updated.getQualifiedName(), parent.getQualifiedName());
+            assertEquals(response.getCreatedAssets().size(), 1);
+            one = response.getCreatedAssets().get(0);
+            assertTrue(one instanceof Column);
+            column = (Column) one;
+            assertNotNull(column.getGuid());
+            assertNotNull(column.getQualifiedName());
+            assertEquals(column.getName(), name);
+            if (parentType.equals(Table.TYPE_NAME)) {
+                assertEquals(column.getTableQualifiedName(), parent.getQualifiedName());
+            } else if (parentType.equals(View.TYPE_NAME) || parentType.equals(MaterializedView.TYPE_NAME)) {
+                assertEquals(column.getViewQualifiedName(), parent.getQualifiedName());
+            }
+            return column;
+        }
+        return null;
     }
 
     @Test(groups = {"asset.create.connection"})
@@ -313,7 +322,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.create.schema"},
             dependsOnGroups = {"asset.create.database"})
     void createSchema() throws AtlanException {
-        schema = createSchema(SCHEMA_NAME, database.getQualifiedName());
+        schema = createSchema(SCHEMA_NAME, database);
         assertEquals(schema.getConnectorType(), CONNECTOR_TYPE);
         assertEquals(schema.getDatabaseName(), DATABASE_NAME);
     }
@@ -322,7 +331,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.create.table"},
             dependsOnGroups = {"asset.create.schema"})
     void createTable() throws AtlanException {
-        table = createTable(TABLE_NAME, schema.getQualifiedName());
+        table = createTable(TABLE_NAME, schema);
         assertEquals(table.getConnectorType(), CONNECTOR_TYPE);
         assertEquals(table.getSchemaName(), SCHEMA_NAME);
         assertEquals(table.getDatabaseName(), DATABASE_NAME);
@@ -334,7 +343,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.create.view"},
             dependsOnGroups = {"asset.create.table"})
     void createView() throws AtlanException {
-        view = createView(VIEW_NAME, schema.getQualifiedName());
+        view = createView(VIEW_NAME, schema);
         assertEquals(view.getConnectorType(), CONNECTOR_TYPE);
         assertEquals(view.getSchemaName(), SCHEMA_NAME);
         assertEquals(view.getDatabaseName(), DATABASE_NAME);
@@ -346,7 +355,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.create.mview"},
             dependsOnGroups = {"asset.create.view"})
     void createMView() throws AtlanException {
-        mview = createMaterializedView(MVIEW_NAME, schema.getQualifiedName());
+        mview = createMaterializedView(MVIEW_NAME, schema);
         assertEquals(mview.getConnectorType(), CONNECTOR_TYPE);
         assertEquals(mview.getSchemaName(), SCHEMA_NAME);
         assertEquals(mview.getDatabaseName(), DATABASE_NAME);
@@ -358,7 +367,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.create.partition"},
             dependsOnGroups = {"asset.create.mview"})
     void createPartition() throws AtlanException {
-        Table table = Table.creator(TABLE_NAME2, schema.getQualifiedName())
+        Table table = Table.creator(TABLE_NAME2, schema)
                 .columnCount(2L)
                 .isPartitioned(true)
                 .partitionCount(1L)
@@ -379,7 +388,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertNotNull(table2.getQualifiedName());
         assertEquals(table2.getName(), TABLE_NAME2);
         assertEquals(table2.getSchemaQualifiedName(), schema.getQualifiedName());
-        partition = createTablePartition(PARTITION_NAME, table2.getQualifiedName());
+        partition = createTablePartition(PARTITION_NAME, table2);
         assertEquals(partition.getConnectorType(), CONNECTOR_TYPE);
         assertEquals(partition.getTableName(), TABLE_NAME2);
         assertEquals(partition.getSchemaName(), SCHEMA_NAME);
@@ -392,7 +401,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.create.column.1"},
             dependsOnGroups = {"asset.create.partition"})
     void createColumn1() throws AtlanException {
-        column1 = createColumn(COLUMN_NAME1, Table.TYPE_NAME, table.getQualifiedName(), 1);
+        column1 = createColumn(COLUMN_NAME1, table, 1);
         assertEquals(column1.getConnectorType(), CONNECTOR_TYPE);
         assertEquals(column1.getTableName(), TABLE_NAME);
         assertEquals(column1.getSchemaName(), SCHEMA_NAME);
@@ -406,7 +415,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.create.column.2"},
             dependsOnGroups = {"asset.create.column.1"})
     void createColumn2() throws AtlanException {
-        column2 = createColumn(COLUMN_NAME2, Table.TYPE_NAME, table.getQualifiedName(), 2);
+        column2 = createColumn(COLUMN_NAME2, table, 2);
         assertEquals(column2.getConnectorType(), CONNECTOR_TYPE);
         assertEquals(column2.getTableName(), TABLE_NAME);
         assertEquals(column2.getSchemaName(), SCHEMA_NAME);
@@ -420,7 +429,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.create.column.3"},
             dependsOnGroups = {"asset.create.column.2"})
     void createColumn3() throws AtlanException {
-        column3 = createColumn(COLUMN_NAME3, View.TYPE_NAME, view.getQualifiedName(), 1);
+        column3 = createColumn(COLUMN_NAME3, view, 1);
         assertEquals(column3.getConnectorType(), CONNECTOR_TYPE);
         assertEquals(column3.getViewName(), VIEW_NAME);
         assertEquals(column3.getSchemaName(), SCHEMA_NAME);
@@ -434,7 +443,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.create.column.4"},
             dependsOnGroups = {"asset.create.column.3"})
     void createColumn4() throws AtlanException {
-        column4 = createColumn(COLUMN_NAME4, View.TYPE_NAME, view.getQualifiedName(), 2);
+        column4 = createColumn(COLUMN_NAME4, view, 2);
         assertEquals(column4.getConnectorType(), CONNECTOR_TYPE);
         assertEquals(column4.getViewName(), VIEW_NAME);
         assertEquals(column4.getSchemaName(), SCHEMA_NAME);
@@ -448,7 +457,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.create.column.5"},
             dependsOnGroups = {"asset.create.column.4"})
     void createColumn5() throws AtlanException {
-        column5 = createColumn(COLUMN_NAME5, MaterializedView.TYPE_NAME, mview.getQualifiedName(), 1);
+        column5 = createColumn(COLUMN_NAME5, mview, 1);
         assertEquals(column5.getConnectorType(), CONNECTOR_TYPE);
         assertEquals(column5.getViewName(), MVIEW_NAME);
         assertEquals(column5.getSchemaName(), SCHEMA_NAME);
@@ -462,7 +471,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.create.column.6"},
             dependsOnGroups = {"asset.create.column.5"})
     void createColumn6() throws AtlanException {
-        column6 = createColumn(COLUMN_NAME6, MaterializedView.TYPE_NAME, mview.getQualifiedName(), 2);
+        column6 = createColumn(COLUMN_NAME6, mview, 2);
         assertEquals(column6.getConnectorType(), CONNECTOR_TYPE);
         assertEquals(column6.getViewName(), MVIEW_NAME);
         assertEquals(column6.getSchemaName(), SCHEMA_NAME);
@@ -476,7 +485,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.create.column.7"},
             dependsOnGroups = {"asset.create.column.6"})
     void createColumn7() throws AtlanException {
-        Column column = Column.creator(COLUMN_NAME7, TablePartition.TYPE_NAME, partition.getQualifiedName(), 1)
+        Column column = Column.creator(COLUMN_NAME7, partition, 1)
                 .partitionOrder(1)
                 .isPartition(true)
                 .build();
@@ -506,7 +515,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.create.column.8"},
             dependsOnGroups = {"asset.create.column.7"})
     void createColumn8() throws AtlanException {
-        Column column = Column.creator(COLUMN_NAME8, TablePartition.TYPE_NAME, partition.getQualifiedName(), 2)
+        Column column = Column.creator(COLUMN_NAME8, partition, 2)
                 .partitionOrder(2)
                 .isPartition(true)
                 .build();
@@ -1090,8 +1099,8 @@ public class SQLAssetTest extends AtlanLiveTest {
     @Test(groups = {"asset.create.glossary"})
     void createGlossary() throws AtlanException {
         glossary = GlossaryTest.createGlossary(PREFIX);
-        term1 = GlossaryTest.createTerm(TERM_NAME1, glossary.getGuid());
-        term2 = GlossaryTest.createTerm(TERM_NAME2, glossary.getGuid());
+        term1 = GlossaryTest.createTerm(TERM_NAME1, glossary);
+        term2 = GlossaryTest.createTerm(TERM_NAME2, glossary);
     }
 
     @Test(

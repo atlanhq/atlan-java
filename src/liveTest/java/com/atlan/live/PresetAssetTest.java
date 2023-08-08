@@ -71,8 +71,8 @@ public class PresetAssetTest extends AtlanLiveTest {
             groups = {"preset.create.collection"},
             dependsOnGroups = {"preset.create.workspace"})
     void createCollection() throws AtlanException {
-        PresetDashboard toCreate = PresetDashboard.creator(COLLECTION_NAME, workspace.getQualifiedName())
-                .build();
+        PresetDashboard toCreate =
+                PresetDashboard.creator(COLLECTION_NAME, workspace).build();
         AssetMutationResponse response = toCreate.save();
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
@@ -98,8 +98,7 @@ public class PresetAssetTest extends AtlanLiveTest {
             groups = {"preset.create.chart"},
             dependsOnGroups = {"preset.create.collection"})
     void createChart() throws AtlanException {
-        PresetChart toCreate =
-                PresetChart.creator(CHART_NAME, collection.getQualifiedName()).build();
+        PresetChart toCreate = PresetChart.creator(CHART_NAME, collection).build();
         AssetMutationResponse response = toCreate.save();
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
@@ -126,8 +125,7 @@ public class PresetAssetTest extends AtlanLiveTest {
             groups = {"preset.create.dataset"},
             dependsOnGroups = {"preset.create.collection"})
     void createDataset() throws AtlanException {
-        PresetDataset toCreate = PresetDataset.creator(DATASET_NAME, collection.getQualifiedName())
-                .build();
+        PresetDataset toCreate = PresetDataset.creator(DATASET_NAME, collection).build();
         AssetMutationResponse response = toCreate.save();
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());

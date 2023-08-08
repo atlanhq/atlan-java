@@ -2,6 +2,11 @@
 /* Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.admin;
 
+import com.atlan.exception.ErrorCode;
+import com.atlan.exception.InvalidRequestException;
+import com.atlan.model.assets.Asset;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -31,6 +36,31 @@ public class AtlanTagRequest extends AtlanRequest {
 
     /** Details of the requested Atlan tag. */
     AtlanTagPayload payload;
+
+    /**
+     * Create a new request to attach an Atlan tag to an asset.
+     * Note that the asset must have at least its real (not placeholder) GUID and qualifiedName populated.
+     *
+     * @param asset against which to raise the request
+     * @param atlanTagDetails details of the requested Atlan tag
+     * @return a builder for the request with these details
+     * @throws InvalidRequestException if any of the required details for the provided asset are missing
+     */
+    public static AtlanTagRequestBuilder<?, ?> creator(Asset asset, AtlanTagPayload atlanTagDetails)
+            throws InvalidRequestException {
+        List<String> missing = new ArrayList<>();
+        if (asset.getQualifiedName() == null || asset.getQualifiedName().isEmpty()) {
+            missing.add("qualifiedName");
+        }
+        if (asset.getGuid() == null || asset.getGuid().isEmpty()) {
+            missing.add("guid");
+        }
+        if (!missing.isEmpty()) {
+            throw new InvalidRequestException(
+                    ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, asset.getTypeName(), String.join(",", missing));
+        }
+        return creator(asset.getGuid(), asset.getQualifiedName(), asset.getTypeName(), atlanTagDetails);
+    }
 
     /**
      * Create a new request to attach an Atlan tag to an asset.

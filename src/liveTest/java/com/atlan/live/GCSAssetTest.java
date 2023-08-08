@@ -65,8 +65,7 @@ public class GCSAssetTest extends AtlanLiveTest {
             groups = {"gcs.create.object"},
             dependsOnGroups = {"gcs.create.bucket"})
     void createObject() throws AtlanException {
-        GCSObject gcsObject =
-                GCSObject.creator(OBJECT_NAME, bucket.getQualifiedName()).build();
+        GCSObject gcsObject = GCSObject.creator(OBJECT_NAME, bucket).build();
         AssetMutationResponse response = gcsObject.save();
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
