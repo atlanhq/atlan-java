@@ -340,28 +340,6 @@ public class UsersEndpoint extends HeraclesEndpoint {
     }
 
     /**
-     * Delete a user.
-     *
-     * @param id unique identifier (GUID) of the user to delete
-     * @throws AtlanException on any API communication issue
-     */
-    public void delete(String id) throws AtlanException {
-        delete(id, null);
-    }
-
-    /**
-     * Delete a user.
-     *
-     * @param id unique identifier (GUID) of the user to delete
-     * @param options to override default client settings
-     * @throws AtlanException on any API communication issue
-     */
-    public void delete(String id, RequestOptions options) throws AtlanException {
-        String url = String.format("%s%s/%s/delete", getBaseUrl(), endpoint, id);
-        ApiResource.request(client, ApiResource.RequestMethod.POST, url, "", null, options);
-    }
-
-    /**
      * Retrieve the groups this user belongs to.
      *
      * @param id unique identifier (GUID) of the user

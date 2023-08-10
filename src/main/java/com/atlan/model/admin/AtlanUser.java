@@ -148,27 +148,6 @@ public class AtlanUser extends AtlanObject {
     }
 
     /**
-     * Delete a user from Atlan.
-     *
-     * @param id unique identifier (GUID) of the user to delete
-     * @throws AtlanException on any error during API invocation
-     */
-    public static void delete(String id) throws AtlanException {
-        delete(Atlan.getDefaultClient(), id);
-    }
-
-    /**
-     * Delete a user from Atlan.
-     *
-     * @param client connectivity to the Atlan tenant from which the user should be deleted
-     * @param id unique identifier (GUID) of the user to delete
-     * @throws AtlanException on any error during API invocation
-     */
-    public static void delete(AtlanClient client, String id) throws AtlanException {
-        client.users.delete(id);
-    }
-
-    /**
      * Add this user to one or more groups.
      *
      * @param groupIds unique identifiers (GUIDs) of the groups to add the user into

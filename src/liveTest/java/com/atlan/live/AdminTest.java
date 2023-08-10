@@ -9,10 +9,8 @@ import com.atlan.exception.AtlanException;
 import com.atlan.model.admin.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 import org.testng.annotations.Test;
 
@@ -22,25 +20,17 @@ import org.testng.annotations.Test;
 public class AdminTest extends AtlanLiveTest {
 
     private static final String PREFIX = makeUnique("Admin");
-    private static final String GROUP_NAME1 = PREFIX + "1";
-    private static final String GROUP_NAME2 = PREFIX + "2";
+    private static final String GROUP_NAME = PREFIX;
 
-    private static final String EMAIL_DOMAIN = "@" + makeUnique("example").replace("_", "") + ".com";
-    private static final String USER_EMAIL1 = GROUP_NAME1 + EMAIL_DOMAIN;
-    private static final String USER_EMAIL2 = GROUP_NAME2 + EMAIL_DOMAIN;
-    private static final String USER_EMAIL3 = PREFIX + "3" + EMAIL_DOMAIN;
+    private static final String EMAIL_DOMAIN = "@atlan.com";
 
     private static final DateTimeFormatter SIMPLE_DATE = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private static final LocalDate NOW = LocalDate.now();
-    private static final LocalDate BEFORE = NOW.minus(1, ChronoUnit.DAYS);
+    private static final LocalDate BEFORE = NOW.minusDays(1);
     private static final String TODAY = SIMPLE_DATE.format(NOW);
     private static final String YESTERDAY = SIMPLE_DATE.format(BEFORE);
 
     private static AtlanGroup group1 = null;
-    private static AtlanGroup group2 = null;
-    private static AtlanUser user1 = null;
-    private static AtlanUser user2 = null;
-    private static AtlanUser user3 = null;
 
     private static long defaultGroupCount = 0L;
 
@@ -90,9 +80,56 @@ public class AdminTest extends AtlanLiveTest {
         assertNotNull(sessions);
     }
 
-    @Test(groups = {"admin.create.group.1"})
+    @Test(groups = {"admin.read.groups"})
+    void retrieveGroups() throws AtlanException {
+        List<AtlanGroup> groups = AtlanGroup.list();
+        assertNotNull(groups);
+        assertFalse(groups.isEmpty());
+        for (AtlanGroup group : groups) {
+            if (group.isDefault()) {
+                defaultGroupCount++;
+            }
+        }
+    }
+
+    @Test(
+            groups = {"admin.read.users.1"},
+            dependsOnGroups = {"admin.read.groups"})
+    void retrieveUsers1() throws AtlanException {
+        List<AtlanUser> users = AtlanUser.list();
+        assertNotNull(users);
+        assertFalse(users.isEmpty());
+        AtlanUser user1 = AtlanUser.getByUsername(FIXED_USER);
+        assertNotNull(user1);
+        assertNotNull(user1.getId());
+        assertEquals(user1.getGroupCount().longValue(), defaultGroupCount);
+        users = AtlanUser.getByEmail(EMAIL_DOMAIN);
+        assertNotNull(users);
+        assertFalse(users.isEmpty());
+        String email = user1.getEmail();
+        users = AtlanUser.getByEmail(email);
+        assertNotNull(users);
+        assertEquals(users.size(), 1);
+        assertEquals(user1, users.get(0));
+    }
+
+    @Test(
+            groups = {"admin.create.group.1"},
+            dependsOnGroups = {"admin.read.users.1"})
     void createGroup1() throws AtlanException {
-        group1 = createGroup(GROUP_NAME1);
+        AtlanGroup group = AtlanGroup.creator(GROUP_NAME).build();
+        String fixedUserId = AtlanUser.getByUsername(FIXED_USER).getId();
+        CreateGroupResponse response = Atlan.getDefaultClient().groups.create(group, List.of(fixedUserId));
+        String groupGuid2 = response.getGroup();
+        assertNotNull(groupGuid2);
+        Map<String, CreateGroupResponse.UserStatus> statusMap = response.getUsers();
+        assertNotNull(statusMap);
+        assertTrue(statusMap.containsKey(fixedUserId));
+        assertTrue(statusMap.get(fixedUserId).wasSuccessful());
+        List<AtlanGroup> list = AtlanGroup.get(GROUP_NAME);
+        assertNotNull(list);
+        assertEquals(list.size(), 1);
+        group1 = list.get(0);
         assertNotNull(group1);
         assertNotNull(group1.getId());
     }
@@ -101,15 +138,7 @@ public class AdminTest extends AtlanLiveTest {
             groups = {"admin.read.group.1"},
             dependsOnGroups = {"admin.create.group.1"})
     void retrieveGroups1() throws AtlanException {
-        List<AtlanGroup> groups = AtlanGroup.list();
-        assertNotNull(groups);
-        assertTrue(groups.size() >= 1);
-        for (AtlanGroup group : groups) {
-            if (group.isDefault()) {
-                defaultGroupCount++;
-            }
-        }
-        groups = AtlanGroup.get(GROUP_NAME1);
+        List<AtlanGroup> groups = AtlanGroup.get(GROUP_NAME);
         assertNotNull(groups);
         assertEquals(groups.size(), 1);
         AtlanGroup one = groups.get(0);
@@ -132,112 +161,20 @@ public class AdminTest extends AtlanLiveTest {
         group.update();
     }
 
-    @Test(groups = {"admin.create.users"})
-    void createUsers() throws AtlanException {
-        AtlanUser user = AtlanUser.creator(USER_EMAIL1, "$guest").build();
-        user.create();
-        AtlanUser user2 = AtlanUser.creator(USER_EMAIL2, "$guest").build();
-        AtlanUser user3 = AtlanUser.creator(USER_EMAIL3, "$guest").build();
-        Atlan.getDefaultClient().users.create(List.of(user2, user3));
-    }
-
-    @Test(
-            groups = {"admin.read.users.1"},
-            dependsOnGroups = {"admin.create.users", "admin.read.group.1"})
-    void retrieveUsers1() throws AtlanException {
-        List<AtlanUser> users = AtlanUser.list();
-        assertNotNull(users);
-        assertTrue(users.size() >= 2);
-        users = AtlanUser.getByEmail(USER_EMAIL1);
-        assertNotNull(users);
-        assertEquals(users.size(), 1);
-        user1 = users.get(0);
-        assertNotNull(user1);
-        assertNotNull(user1.getId());
-        assertNull(user1.getAttributes().getDesignation());
-        assertEquals(user1.getGroupCount().longValue(), defaultGroupCount);
-        users = AtlanUser.getByEmail(EMAIL_DOMAIN);
-        assertNotNull(users);
-        assertEquals(users.size(), 3);
-        Set<String> ids = users.stream().map(AtlanUser::getId).collect(Collectors.toSet());
-        assertEquals(ids.size(), 3);
-        for (AtlanUser user : users) {
-            if (user.getEmail().equals(USER_EMAIL2.toLowerCase())) {
-                user2 = user;
-                assertNotNull(user2.getId());
-            } else if (user.getEmail().equals(USER_EMAIL3.toLowerCase())) {
-                user3 = user;
-                assertNotNull(user3.getId());
-            }
-        }
-    }
-
-    @Test(
-            groups = {"admin.create.group.2"},
-            dependsOnGroups = {"admin.read.users.1"})
-    void createGroups2() throws AtlanException {
-        AtlanGroup group = AtlanGroup.creator(GROUP_NAME2).build();
-        CreateGroupResponse response =
-                Atlan.getDefaultClient().groups.create(group, List.of(user2.getId(), user3.getId()));
-        String groupGuid2 = response.getGroup();
-        assertNotNull(groupGuid2);
-        Map<String, CreateGroupResponse.UserStatus> statusMap = response.getUsers();
-        assertNotNull(statusMap);
-        assertTrue(statusMap.containsKey(user2.getId()));
-        assertTrue(statusMap.get(user2.getId()).wasSuccessful());
-        assertTrue(statusMap.containsKey(user3.getId()));
-        assertTrue(statusMap.get(user3.getId()).wasSuccessful());
-        List<AtlanGroup> list = AtlanGroup.get(GROUP_NAME2);
-        assertNotNull(list);
-        assertEquals(list.size(), 1);
-        group2 = list.get(0);
-    }
-
-    @Test(
-            groups = {"admin.update.users"},
-            dependsOnGroups = {"admin.create.users", "admin.create.group.*"})
-    void updateUsers() throws AtlanException {
-        AtlanUser user = AtlanUser.updater(user1.getId()).build();
-        user.addToGroups(List.of(group1.getId()));
-        user.changeRole(Atlan.getDefaultClient().getRoleCache().getIdForName("$member"));
-        GroupResponse response = user.fetchGroups();
-        assertNotNull(response);
-        assertNotNull(response.getRecords());
-        assertEquals(response.getRecords().size(), 1 + defaultGroupCount);
-        Set<String> groupIds =
-                response.getRecords().stream().map(AtlanGroup::getId).collect(Collectors.toSet());
-        assertTrue(groupIds.contains(group1.getId()));
-        // TODO: these won't work before we have a verified user
-        /*
-            UpdateUserResponse response = user.activate();
-            assertNotNull(response);
-            assertTrue(response.getEnabled());
-            response = user.deactivate();
-            assertNotNull(response);
-            assertFalse(response.getEnabled());
-        */
-    }
-
     @Test(
             groups = {"admin.read.users.2"},
-            dependsOnGroups = {"admin.update.users"})
+            dependsOnGroups = {"admin.create.group.*"})
     void retrieveUsers2() throws AtlanException {
-        List<AtlanUser> users = AtlanUser.getByEmail(USER_EMAIL1);
-        assertNotNull(users);
-        assertEquals(users.size(), 1);
-        AtlanUser one = users.get(0);
+        AtlanUser one = AtlanUser.getByUsername(FIXED_USER);
         assertNotNull(one);
-        assertEquals(one.getId(), user1.getId());
         assertEquals(one.getGroupCount().longValue(), 1 + defaultGroupCount);
-        AtlanUser guest = AtlanUser.getByUsername(GROUP_NAME1.toLowerCase());
-        assertEquals(guest, one);
     }
 
     @Test(
             groups = {"admin.read.groups.2"},
-            dependsOnGroups = {"admin.update.group.*", "admin.update.users"})
+            dependsOnGroups = {"admin.create.group.*", "admin.update.group.*"})
     void retrieveGroups2() throws AtlanException {
-        List<AtlanGroup> groups = AtlanGroup.get(GROUP_NAME1);
+        List<AtlanGroup> groups = AtlanGroup.get(GROUP_NAME);
         assertNotNull(groups);
         assertEquals(groups.size(), 1);
         AtlanGroup one = groups.get(0);
@@ -251,10 +188,11 @@ public class AdminTest extends AtlanLiveTest {
             groups = {"admin.update.users.2"},
             dependsOnGroups = {"admin.read.groups.2", "admin.read.users.2"})
     void removeUserFromGroup() throws AtlanException {
-        List<AtlanGroup> groups = AtlanGroup.get(GROUP_NAME1);
+        List<AtlanGroup> groups = AtlanGroup.get(GROUP_NAME);
+        String fixedUserId = AtlanUser.getByUsername(FIXED_USER).getId();
         assertNotNull(groups);
         AtlanGroup group = groups.get(0);
-        group.removeUsers(List.of(user1.getId()));
+        group.removeUsers(List.of(fixedUserId));
         UserResponse response = group.fetchUsers();
         assertNotNull(response);
         assertTrue(response.getRecords() == null || response.getRecords().isEmpty());
@@ -264,7 +202,7 @@ public class AdminTest extends AtlanLiveTest {
             groups = {"admin.read.users.3"},
             dependsOnGroups = {"admin.update.users.2"})
     void retrieveUsers3() throws AtlanException {
-        AtlanUser user = AtlanUser.getByUsername(user1.getUsername());
+        AtlanUser user = AtlanUser.getByUsername(FIXED_USER);
         GroupResponse response = user.fetchGroups();
         assertNotNull(response);
         assertTrue(response.getRecords() == null
@@ -284,7 +222,7 @@ public class AdminTest extends AtlanLiveTest {
                         .build());
         List<KeycloakEvent> results = events.stream().limit(1000).collect(Collectors.toList());
         assertNotNull(results);
-        assertTrue(results.size() > 0);
+        assertFalse(results.isEmpty());
     }
 
     @Test(
@@ -300,17 +238,7 @@ public class AdminTest extends AtlanLiveTest {
                         .build());
         List<AdminEvent> results = events.stream().limit(1000).collect(Collectors.toList());
         assertNotNull(results);
-        assertTrue(results.size() > 0);
-    }
-
-    @Test(
-            groups = {"admin.purge.users"},
-            dependsOnGroups = {"admin.create.*", "admin.read.*", "admin.update.*"},
-            alwaysRun = true)
-    void purgeUsers() throws AtlanException {
-        AtlanUser.delete(user1.getId());
-        AtlanUser.delete(user2.getId());
-        AtlanUser.delete(user3.getId());
+        assertFalse(results.isEmpty());
     }
 
     @Test(
@@ -319,6 +247,5 @@ public class AdminTest extends AtlanLiveTest {
             alwaysRun = true)
     void purgeGroups() throws AtlanException {
         deleteGroup(group1.getId());
-        deleteGroup(group2.getId());
     }
 }

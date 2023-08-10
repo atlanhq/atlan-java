@@ -29,11 +29,6 @@ public class CustomMetadataTest extends AtlanLiveTest {
 
     private static final String PREFIX = makeUnique("CM");
 
-    // TODO: This cannot be dynamic because a user must first be verified
-    //  before they can be linked — so we must use a hard-coded value for
-    //  a username that we know is verified and active in the environment
-    public static final String FIXED_USER = "chris";
-
     private static final String CM_RACI = makeUnique("RACI");
     private static final String CM_IPR = makeUnique("IPR");
     private static final String CM_QUALITY = makeUnique("DQ");
