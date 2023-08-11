@@ -2,8 +2,6 @@
 /* Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.api;
 
-import co.elastic.clients.elasticsearch._types.SortOptions;
-import co.elastic.clients.elasticsearch._types.SortOrder;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
@@ -13,6 +11,7 @@ import com.atlan.model.assets.Connection;
 import com.atlan.model.core.*;
 import com.atlan.model.enums.AtlanDeleteType;
 import com.atlan.model.enums.AtlanStatus;
+import com.atlan.model.enums.KeywordFields;
 import com.atlan.model.lineage.LineageListRequest;
 import com.atlan.model.lineage.LineageListResponse;
 import com.atlan.model.lineage.LineageRequest;
@@ -841,12 +840,11 @@ public class AssetEndpoint extends AtlasEndpoint {
     public IndexSearchResponse search(IndexSearchRequest request, RequestOptions options) throws AtlanException {
         String url = String.format("%s%s", getBaseUrl(), search_endpoint);
         if (request.getDsl().getSort() == null || request.getDsl().getSort().isEmpty()) {
-            // If no sort has been provided, explicitly sort by _doc for consistency of paging
-            // operations
+            // If no sort has been provided, explicitly sort by GUID for consistency of paging
+            // operations (unfortunately sorting by _doc still has duplicates across large number of pages)
             request = request.toBuilder()
                     .dsl(request.getDsl().toBuilder()
-                            .sortOption(SortOptions.of(
-                                    s -> s.field(f -> f.field("_doc").order(SortOrder.Asc))))
+                            .sortOption(QueryFactory.Sort.by(KeywordFields.GUID))
                             .build())
                     .build();
         }
