@@ -217,14 +217,14 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>protected static java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#buildUserAgentString()">buildUserAgentString</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#buildUserAgentString(com.atlan.AtlanClient)">buildUserAgentString</a></span>&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)</code></th>
 <td class="colLast">
 <div class="block">Builds the value of the <code>User-Agent</code> header.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>protected static java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#buildXAtlanClientUserAgentString()">buildXAtlanClientUserAgentString</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#buildXAtlanClientUserAgentString(com.atlan.AtlanClient)">buildXAtlanClientUserAgentString</a></span>&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)</code></th>
 <td class="colLast">
 <div class="block">Builds the value of the <code>X-Atlan-Client-User-Agent</code> header.</div>
 </td>
@@ -445,29 +445,33 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a id="buildUserAgentString()">
+<a id="buildUserAgentString(com.atlan.AtlanClient)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>buildUserAgentString</h4>
-<pre class="methodSignature">protected static&nbsp;java.lang.String&nbsp;buildUserAgentString()</pre>
+<pre class="methodSignature">protected static&nbsp;java.lang.String&nbsp;buildUserAgentString&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)</pre>
 <div class="block">Builds the value of the <code>User-Agent</code> header.</div>
 <dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>client</code> - through which to connect to Atlan</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>a string containing the value of the <code>User-Agent</code> header</dd>
 </dl>
 </li>
 </ul>
-<a id="buildXAtlanClientUserAgentString()">
+<a id="buildXAtlanClientUserAgentString(com.atlan.AtlanClient)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>buildXAtlanClientUserAgentString</h4>
-<pre class="methodSignature">protected static&nbsp;java.lang.String&nbsp;buildXAtlanClientUserAgentString()</pre>
+<pre class="methodSignature">protected static&nbsp;java.lang.String&nbsp;buildXAtlanClientUserAgentString&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)</pre>
 <div class="block">Builds the value of the <code>X-Atlan-Client-User-Agent</code> header.</div>
 <dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>client</code> - through which to connect to Atlan</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>a string containing the value of the <code>X-Atlan-Client-User-Agent</code> header</dd>
 </dl>

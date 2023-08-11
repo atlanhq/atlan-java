@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -296,29 +296,48 @@ implements java.lang.Iterable&lt;<a href="../assets/Asset.html" title="class in 
 </td>
 </tr>
 <tr id="i9" class="rowColor">
+<td class="colFirst"><code>java.util.List&lt;<a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSpecificPage(int,int)">getSpecificPage</a></span>&#8203;(int&nbsp;offset,
+               int&nbsp;pageSize)</code></th>
+<td class="colLast">
+<div class="block">Retrieve a specific page of results using the same query used to produce this response.</div>
+</td>
+</tr>
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>java.util.Iterator&lt;<a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#iterator()">iterator</a></span>()</code></th>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i12" class="altColor">
+<td class="colFirst"><code>java.util.stream.Stream&lt;<a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parallelStream()">parallelStream</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Stream the results in parallel across all pages (may do more than limited to in a request).</div>
+</td>
+</tr>
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setClient(com.atlan.AtlanClient)">setClient</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)</code></th>
 <td class="colLast">
 <div class="block">Connectivity to the Atlan tenant where the search was run.</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i14" class="altColor">
+<td class="colFirst"><code>java.util.Spliterator&lt;<a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#spliterator()">spliterator</a></span>()</code></th>
+</tr>
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>java.util.stream.Stream&lt;<a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#stream()">stream</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Stream the results (lazily) for processing without needing to manually manage paging.</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 </tr>
@@ -349,7 +368,7 @@ implements java.lang.Iterable&lt;<a href="../assets/Asset.html" title="class in 
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;java.lang.Iterable</h3>
-<code>forEach, spliterator</code></li>
+<code>forEach</code></li>
 </ul>
 </li>
 </ul>
@@ -403,6 +422,27 @@ implements java.lang.Iterable&lt;<a href="../assets/Asset.html" title="class in 
 </dl>
 </li>
 </ul>
+<a id="getSpecificPage(int,int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getSpecificPage</h4>
+<pre class="methodSignature">public&nbsp;java.util.List&lt;<a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;&nbsp;getSpecificPage&#8203;(int&nbsp;offset,
+                                             int&nbsp;pageSize)
+                                      throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Retrieve a specific page of results using the same query used to produce this response.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>offset</code> - starting point for the specific page</dd>
+<dd><code>pageSize</code> - maximum number of results beyond the starting point to retrieve</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>specific page of results from this response</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API interaction problem</dd>
+</dl>
+</li>
+</ul>
 <a id="iterator()">
 <!--   -->
 </a>
@@ -416,6 +456,19 @@ implements java.lang.Iterable&lt;<a href="../assets/Asset.html" title="class in 
 </dl>
 </li>
 </ul>
+<a id="spliterator()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>spliterator</h4>
+<pre class="methodSignature">public&nbsp;java.util.Spliterator&lt;<a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;&nbsp;spliterator()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code>spliterator</code>&nbsp;in interface&nbsp;<code>java.lang.Iterable&lt;<a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;</code></dd>
+</dl>
+</li>
+</ul>
 <a id="stream()">
 <!--   -->
 </a>
@@ -424,6 +477,20 @@ implements java.lang.Iterable&lt;<a href="../assets/Asset.html" title="class in 
 <h4>stream</h4>
 <pre class="methodSignature">public&nbsp;java.util.stream.Stream&lt;<a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;&nbsp;stream()</pre>
 <div class="block">Stream the results (lazily) for processing without needing to manually manage paging.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a lazily-loaded stream of results from the search</dd>
+</dl>
+</li>
+</ul>
+<a id="parallelStream()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>parallelStream</h4>
+<pre class="methodSignature">public&nbsp;java.util.stream.Stream&lt;<a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;&nbsp;parallelStream()</pre>
+<div class="block">Stream the results in parallel across all pages (may do more than limited to in a request).</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>a lazily-loaded stream of results from the search</dd>
