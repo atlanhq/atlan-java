@@ -3,7 +3,6 @@
 package com.atlan.net;
 
 /* Based on original code from https://github.com/stripe/stripe-java (under MIT license) */
-import com.atlan.Atlan;
 import com.atlan.exception.ApiConnectionException;
 import com.atlan.exception.ErrorCode;
 import java.io.IOException;
@@ -49,7 +48,8 @@ public class HttpURLConnectionClient extends HttpClient {
             return new AtlanResponseStream(responseCode, headers, responseStream);
 
         } catch (IOException e) {
-            throw new ApiConnectionException(ErrorCode.CONNECTION_ERROR, e, Atlan.getBaseUrl());
+            throw new ApiConnectionException(
+                    ErrorCode.CONNECTION_ERROR, e, request.client().getBaseUrl());
         }
     }
 
@@ -66,7 +66,8 @@ public class HttpURLConnectionClient extends HttpClient {
         try {
             return responseStream.unstream();
         } catch (IOException e) {
-            throw new ApiConnectionException(ErrorCode.CONNECTION_ERROR, e, Atlan.getBaseUrl());
+            throw new ApiConnectionException(
+                    ErrorCode.CONNECTION_ERROR, e, request.client().getBaseUrl());
         }
     }
 
@@ -79,8 +80,9 @@ public class HttpURLConnectionClient extends HttpClient {
     static HttpHeaders getHeaders(AtlanRequest request) {
         Map<String, List<String>> userAgentHeadersMap = new HashMap<>();
 
-        userAgentHeadersMap.put("User-Agent", List.of(buildUserAgentString()));
-        userAgentHeadersMap.put("X-Atlan-Client-User-Agent", List.of(buildXAtlanClientUserAgentString()));
+        userAgentHeadersMap.put("User-Agent", List.of(buildUserAgentString(request.client())));
+        userAgentHeadersMap.put(
+                "X-Atlan-Client-User-Agent", List.of(buildXAtlanClientUserAgentString(request.client())));
         userAgentHeadersMap.put("x-atlan-agent", List.of("sdk"));
         userAgentHeadersMap.put("x-atlan-agent-id", List.of("java"));
 

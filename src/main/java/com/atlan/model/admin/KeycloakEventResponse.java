@@ -36,6 +36,8 @@ import lombok.ToString;
 public class KeycloakEventResponse extends ApiResource implements Iterable<KeycloakEvent> {
     private static final long serialVersionUID = 2L;
 
+    private static final int CHARACTERISTICS = Spliterator.NONNULL | Spliterator.IMMUTABLE | Spliterator.ORDERED;
+
     /** Connectivity to the Atlan tenant where the search was run. */
     @Setter
     @JsonIgnore
@@ -78,8 +80,7 @@ public class KeycloakEventResponse extends ApiResource implements Iterable<Keycl
      * @return a lazily-loaded stream of results from the search
      */
     public Stream<KeycloakEvent> stream() {
-        return StreamSupport.stream(
-                Spliterators.spliteratorUnknownSize(iterator(), Spliterator.NONNULL + Spliterator.ORDERED), false);
+        return StreamSupport.stream(Spliterators.spliteratorUnknownSize(iterator(), CHARACTERISTICS), false);
     }
 
     /**

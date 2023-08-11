@@ -55,6 +55,17 @@ public class AssetFilter {
          * @throws AtlanException on any issues interacting with the Atlan APIs
          */
         public Stream<Asset> stream() throws AtlanException {
+            return stream(false);
+        }
+
+        /**
+         * Run the set of filters to retrieve assets that match the supplied criteria.
+         *
+         * @param parallel if true, returns a parallel stream
+         * @return a stream of assets that match the specified criteria, lazily-fetched
+         * @throws AtlanException on any issues interacting with the Atlan APIs
+         */
+        public Stream<Asset> stream(boolean parallel) throws AtlanException {
             if (client == null) {
                 throw new InvalidRequestException(ErrorCode.NO_ATLAN_CLIENT);
             }
@@ -81,7 +92,11 @@ public class AssetFilter {
             if (relationAttributes != null) {
                 request.relationAttributes(relationAttributes);
             }
-            return request.build().search(client).stream();
+            if (parallel) {
+                return request.build().search(client).parallelStream();
+            } else {
+                return request.build().search(client).stream();
+            }
         }
     }
 }
