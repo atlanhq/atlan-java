@@ -4,6 +4,7 @@ package com.atlan.net;
 
 /* Based on original code from https://github.com/stripe/stripe-java (under MIT license) */
 import com.atlan.Atlan;
+import com.atlan.AtlanClient;
 import com.atlan.exception.ApiConnectionException;
 import com.atlan.exception.AtlanException;
 import com.atlan.serde.Serde;
@@ -143,13 +144,14 @@ public abstract class HttpClient {
     /**
      * Builds the value of the {@code User-Agent} header.
      *
+     * @param client through which to connect to Atlan
      * @return a string containing the value of the {@code User-Agent} header
      */
-    protected static String buildUserAgentString() {
+    protected static String buildUserAgentString(AtlanClient client) {
         String userAgent = String.format("Atlan-JavaSDK/%s", Atlan.VERSION);
 
-        if (Atlan.getAppInfo() != null) {
-            userAgent += " " + formatAppInfo(Atlan.getAppInfo());
+        if (client.getAppInfo() != null) {
+            userAgent += " " + formatAppInfo(client.getAppInfo());
         }
 
         return userAgent;
@@ -158,9 +160,10 @@ public abstract class HttpClient {
     /**
      * Builds the value of the {@code X-Atlan-Client-User-Agent} header.
      *
+     * @param client through which to connect to Atlan
      * @return a string containing the value of the {@code X-Atlan-Client-User-Agent} header
      */
-    protected static String buildXAtlanClientUserAgentString() {
+    protected static String buildXAtlanClientUserAgentString(AtlanClient client) {
         String[] propertyNames = {
             "os.name", "os.version", "os.arch", "java.version", "java.vendor", "java.vm.version", "java.vm.vendor"
         };
@@ -174,8 +177,8 @@ public abstract class HttpClient {
         propertyMap.put("publisher", "Atlan");
 
         try {
-            if (Atlan.getAppInfo() != null) {
-                propertyMap.put("application", Serde.allInclusiveMapper.writeValueAsString(Atlan.getAppInfo()));
+            if (client.getAppInfo() != null) {
+                propertyMap.put("application", Serde.allInclusiveMapper.writeValueAsString(client.getAppInfo()));
             }
             return Serde.allInclusiveMapper.writeValueAsString(propertyMap);
         } catch (IOException e) {

@@ -2,7 +2,6 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.core;
 
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.ApiException;
 import com.atlan.exception.AtlanException;
@@ -91,7 +90,7 @@ public class ConnectionCreationResponse extends AssetMutationResponse implements
             }
         }
         if (!leftovers.isEmpty()) {
-            if (retryCount == Atlan.getMaxNetworkRetries()) {
+            if (retryCount == client.getMaxNetworkRetries()) {
                 throw new ApiException(ErrorCode.RETRY_OVERRUN, null);
             } else {
                 Thread.sleep(HttpClient.waitTime(retryCount).toMillis());
