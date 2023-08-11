@@ -14,7 +14,9 @@ public enum PurposeMetadataAction implements AtlanEnum, AtlanPolicyAction {
     ADD_ATLAN_TAG("entity-add-classification"),
     READ_ATLAN_TAG("entity-read-classification"),
     UPDATE_ATLAN_TAG("entity-update-classification"),
-    REMOVE_ATLAN_TAG("entity-remove-classification");
+    REMOVE_ATLAN_TAG("entity-remove-classification"),
+    ATTACH_TERMS("purpose-add-terms"),
+    DETACH_TERMS("purpose-remove-terms");
 
     @JsonValue
     @Getter(onMethod_ = {@Override})
