@@ -18,10 +18,7 @@ import com.atlan.model.core.AtlanTag;
 import com.atlan.model.enums.*;
 import com.atlan.model.search.*;
 import com.atlan.net.HttpClient;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.Test;
@@ -622,6 +619,38 @@ public class SQLAssetTest extends AtlanLiveTest {
             response = index.search();
             count++;
         }
+
+        // Test iterator
+        List<String> guids = new ArrayList<>();
+        response.forEach(a -> guids.add(a.getGuid()));
+
+        // Test sequential streaming
+        List<String> guidsSeq = Atlan.getDefaultClient()
+                .assets
+                .all()
+                .filter(where(KeywordFields.QUALIFIED_NAME).startsWith(connection.getQualifiedName()))
+                .batch(5)
+                .sort(Sort.by(NumericFields.TIMESTAMP, SortOrder.Asc))
+                .attribute("name")
+                .stream()
+                .map(Asset::getGuid)
+                .collect(Collectors.toList());
+
+        // Test parallel streaming
+        List<String> guidsPar = Atlan.getDefaultClient()
+                .assets
+                .all()
+                .filter(where(KeywordFields.QUALIFIED_NAME).startsWith(connection.getQualifiedName()))
+                .batch(5)
+                .sort(Sort.by(NumericFields.TIMESTAMP, SortOrder.Asc))
+                .attribute("name")
+                .stream(true)
+                .map(Asset::getGuid)
+                .collect(Collectors.toList());
+
+        // Test results from all approaches (iterator, sequential, parallel streaming) are equivalent
+        assertEquals(guidsSeq, guidsPar);
+        assertEquals(guids, guidsSeq);
 
         assertEquals(response.getApproximateCount().longValue(), 16L);
         List<Asset> entities = response.getAssets();

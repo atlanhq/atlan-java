@@ -22,6 +22,8 @@ import lombok.extern.jackson.Jacksonized;
 public class LineageListResponse extends ApiResource implements Iterable<Asset> {
     private static final long serialVersionUID = 2L;
 
+    private static final int CHARACTERISTICS = Spliterator.NONNULL | Spliterator.IMMUTABLE | Spliterator.ORDERED;
+
     /** Connectivity to the Atlan tenant where the lineage request was run. */
     @Setter
     @JsonIgnore
@@ -66,8 +68,7 @@ public class LineageListResponse extends ApiResource implements Iterable<Asset> 
      * @return a lazily-loaded stream of results from the search
      */
     public Stream<Asset> stream() {
-        return StreamSupport.stream(
-                Spliterators.spliteratorUnknownSize(iterator(), Spliterator.NONNULL + Spliterator.ORDERED), false);
+        return StreamSupport.stream(Spliterators.spliteratorUnknownSize(iterator(), CHARACTERISTICS), false);
     }
 
     /**
