@@ -37,6 +37,12 @@ public class CustomMetadataCache {
         this.typeDefsEndpoint = typeDefsEndpoint;
     }
 
+    /**
+     * Refreshes the cache of custom metadata structures by requesting the full set of custom metadata
+     * structures from Atlan.
+     *
+     * @throws AtlanException on any API communication problem
+     */
     public synchronized void refreshCache() throws AtlanException {
         log.debug("Refreshing cache of custom metadata...");
         TypeDefResponse response = typeDefsEndpoint.list(AtlanTypeCategory.CUSTOM_METADATA);
@@ -213,8 +219,8 @@ public class CustomMetadataCache {
     /**
      * Retrieve the full set of custom attributes to include on search results.
      *
-     * @param setName the name of the custom metadata set for which to retrieve a set of attribute names
-     * @return a set of the names, strictly useful for inclusion in search results
+     * @param setName human-readable name of the custom metadata set for which to retrieve a set of attribute names
+     * @return a set of the attribute names, strictly useful for inclusion in search results
      * @throws AtlanException on any API communication problem if the cache needs to be refreshed
      * @throws NotFoundException if the custom metadata cannot be found (does not exist) in Atlan
      * @throws InvalidRequestException if no name was provided for the custom metadata to retrieve

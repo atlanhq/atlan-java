@@ -14,6 +14,10 @@ import java.util.stream.StreamSupport;
 import lombok.*;
 import lombok.extern.jackson.Jacksonized;
 
+/**
+ * Captures the response from a lineage retrieval against Atlan. Also provides the ability to iteratively
+ * page through results, without needing to track or re-run the original query using {@link #getNextPage()}.
+ */
 @Getter
 @Jacksonized
 @Builder

@@ -317,6 +317,7 @@ public class UsersEndpoint extends HeraclesEndpoint {
      *
      * @param id unique identifier (GUID) of the user to update
      * @param user the details to update on the user
+     * @return basic details about the updated user
      * @throws AtlanException on any API communication issue
      */
     public UserMinimalResponse update(String id, AtlanUser user) throws AtlanException {
@@ -331,6 +332,7 @@ public class UsersEndpoint extends HeraclesEndpoint {
      * @param id unique identifier (GUID) of the user to update
      * @param user the details to update on the user
      * @param options to override default client settings
+     * @return basic details about the updated user
      * @throws AtlanException on any API communication issue
      */
     public UserMinimalResponse update(String id, AtlanUser user, RequestOptions options) throws AtlanException {
@@ -343,6 +345,7 @@ public class UsersEndpoint extends HeraclesEndpoint {
      * Retrieve the groups this user belongs to.
      *
      * @param id unique identifier (GUID) of the user
+     * @return groups this user belongs to
      * @throws AtlanException on any API communication issue
      */
     public GroupResponse listGroups(String id) throws AtlanException {
@@ -354,6 +357,7 @@ public class UsersEndpoint extends HeraclesEndpoint {
      *
      * @param id unique identifier (GUID) of the user
      * @param options to override default client settings
+     * @return groups this user belongs to
      * @throws AtlanException on any API communication issue
      */
     public GroupResponse listGroups(String id, RequestOptions options) throws AtlanException {

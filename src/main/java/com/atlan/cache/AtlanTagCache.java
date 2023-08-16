@@ -33,6 +33,11 @@ public class AtlanTagCache {
         this.typeDefsEndpoint = typeDefsEndpoint;
     }
 
+    /**
+     * Refreshes the cache of Atlan tags by requesting the full set of Atlan tags from Atlan.
+     *
+     * @throws AtlanException on any API communication problem
+     */
     public synchronized void refreshCache() throws AtlanException {
         log.debug("Refreshing cache of Atlan tags...");
         TypeDefResponse response = typeDefsEndpoint.list(AtlanTypeCategory.ATLAN_TAG);

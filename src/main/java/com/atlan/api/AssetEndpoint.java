@@ -106,7 +106,7 @@ public class AssetEndpoint extends AtlasEndpoint {
     }
 
     /**
-     * Creates any asset, not updating any of the existing entity's Atlan tags and entirely
+     * Creates any asset, not updating any of the existing asset's Atlan tags and entirely
      * ignoring any custom metadata.
      *
      * @param value asset to upsert
@@ -118,7 +118,7 @@ public class AssetEndpoint extends AtlasEndpoint {
     }
 
     /**
-     * Creates any asset, not updating any of the existing entity's Atlan tags and entirely
+     * Creates any asset, not updating any of the existing asset's Atlan tags and entirely
      * ignoring any custom metadata.
      *
      * @param value asset to upsert
@@ -131,7 +131,7 @@ public class AssetEndpoint extends AtlasEndpoint {
     }
 
     /**
-     * Creates any asset, optionally overwriting an existing entity's Atlan tags and entirely
+     * Creates any asset, optionally overwriting an existing asset's Atlan tags and entirely
      * ignoring any custom metadata.
      *
      * @param value asset to upsert
@@ -144,7 +144,7 @@ public class AssetEndpoint extends AtlasEndpoint {
     }
 
     /**
-     * Creates any asset, optionally overwriting an existing entity's Atlan tags and entirely
+     * Creates any asset, optionally overwriting an existing asset's Atlan tags and entirely
      * ignoring any custom metadata.
      *
      * @param value asset to upsert
@@ -422,12 +422,12 @@ public class AssetEndpoint extends AtlasEndpoint {
     }
 
     /**
-     * Retrieves any entity by its GUID.
+     * Retrieves any asset by its GUID.
      *
-     * @param guid unique ID (GUID) of the entity to retrieve
-     * @param ignoreRelationships whether to exclude the entity's relationships (true) or include them (false) in the response
+     * @param guid unique ID (GUID) of the asset to retrieve
+     * @param ignoreRelationships whether to exclude the asset's relationships (true) or include them (false) in the response
      * @param minExtInfo TBC
-     * @return the requested entity and its details, if it exists
+     * @return the requested asset and its details, if it exists
      * @throws AtlanException on any API interaction problems
      */
     public AssetResponse get(String guid, boolean ignoreRelationships, boolean minExtInfo) throws AtlanException {
@@ -435,13 +435,13 @@ public class AssetEndpoint extends AtlasEndpoint {
     }
 
     /**
-     * Retrieves any entity by its GUID.
+     * Retrieves any asset by its GUID.
      *
-     * @param guid unique ID (GUID) of the entity to retrieve
-     * @param ignoreRelationships whether to exclude the entity's relationships (true) or include them (false) in the response
+     * @param guid unique ID (GUID) of the asset to retrieve
+     * @param ignoreRelationships whether to exclude the asset's relationships (true) or include them (false) in the response
      * @param minExtInfo TBC
      * @param options to override default client settings
-     * @return the requested entity and its details, if it exists
+     * @return the requested asset and its details, if it exists
      * @throws AtlanException on any API interaction problems
      */
     public AssetResponse get(String guid, boolean ignoreRelationships, boolean minExtInfo, RequestOptions options)
@@ -459,7 +459,7 @@ public class AssetEndpoint extends AtlasEndpoint {
      * Updates only the provided custom metadata attributes on the asset. This will leave all other custom metadata
      * attributes, even within the same named custom metadata, unchanged.
      *
-     * @param guid unique identifier of the entity for which to update the custom metadata attributes
+     * @param guid unique identifier of the asset for which to update the custom metadata attributes
      * @param cmName the name of the custom metadata to update
      * @param values the values of the custom metadata attributes to change
      * @throws AtlanException on any API issue
@@ -473,7 +473,7 @@ public class AssetEndpoint extends AtlasEndpoint {
      * Updates only the provided custom metadata attributes on the asset. This will leave all other custom metadata
      * attributes, even within the same named custom metadata, unchanged.
      *
-     * @param guid unique identifier of the entity for which to update the custom metadata attributes
+     * @param guid unique identifier of the asset for which to update the custom metadata attributes
      * @param cmName the name of the custom metadata to update
      * @param values the values of the custom metadata attributes to change
      * @param options to override default client settings
@@ -495,10 +495,10 @@ public class AssetEndpoint extends AtlasEndpoint {
     }
 
     /**
-     * Replaces specific custom metadata for the specified entity. This will replace everything within that named
+     * Replaces specific custom metadata for the specified asset. This will replace everything within that named
      * custom metadata, but not touch any of the other named custom metadata.
      *
-     * @param guid unique identifier of the entity for which to replace the custom metadata
+     * @param guid unique identifier of the asset for which to replace the custom metadata
      * @param cmName the name of the custom metadata to replace
      * @param values the values to replace
      * @throws AtlanException on any API issue
@@ -509,10 +509,10 @@ public class AssetEndpoint extends AtlasEndpoint {
     }
 
     /**
-     * Replaces specific custom metadata for the specified entity. This will replace everything within that named
+     * Replaces specific custom metadata for the specified asset. This will replace everything within that named
      * custom metadata, but not touch any of the other named custom metadata.
      *
-     * @param guid unique identifier of the entity for which to replace the custom metadata
+     * @param guid unique identifier of the asset for which to replace the custom metadata
      * @param cmName the name of the custom metadata to replace
      * @param values the values to replace
      * @param options to override the default client settings
@@ -536,9 +536,9 @@ public class AssetEndpoint extends AtlasEndpoint {
     }
 
     /**
-     * Removes specific custom metadata from the specified entity.
+     * Removes specific custom metadata from the specified asset.
      *
-     * @param guid unique identifier of the entity from which to remove the custom metadata
+     * @param guid unique identifier of the asset from which to remove the custom metadata
      * @param cmName the name of the custom metadata to remove
      * @throws AtlanException on any API issue
      */
@@ -547,9 +547,9 @@ public class AssetEndpoint extends AtlasEndpoint {
     }
 
     /**
-     * Removes specific custom metadata from the specified entity.
+     * Removes specific custom metadata from the specified asset.
      *
-     * @param guid unique identifier of the entity from which to remove the custom metadata
+     * @param guid unique identifier of the asset from which to remove the custom metadata
      * @param cmName the name of the custom metadata to remove
      * @param options to override the default client settings
      * @throws AtlanException on any API issue
@@ -575,7 +575,7 @@ public class AssetEndpoint extends AtlasEndpoint {
      * Retrieves any asset by its qualifiedName.
      *
      * @param typeName type of asset to be retrieved
-     * @param qualifiedName qualifiedName of the asset to be updated
+     * @param qualifiedName qualifiedName of the asset to be retrieved
      * @param ignoreRelationships whether to include relationships (false) or exclude them (true)
      * @param minExtInfo whether to minimize extra info (true) or not (false)
      * @return the requested asset
@@ -946,7 +946,7 @@ public class AssetEndpoint extends AtlasEndpoint {
     }
 
     /**
-     * Request class for updating custom metadata on an entity.
+     * Request class for updating custom metadata on an asset.
      */
     @EqualsAndHashCode(callSuper = false)
     static class CustomMetadataUpdateRequest extends AtlanObject {

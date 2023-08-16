@@ -253,10 +253,10 @@ public interface AtlanEventHandler {
      */
     static boolean hasDescription(Asset asset) {
         String description = asset.getUserDescription();
-        if (description == null || description.length() == 0) {
+        if (description == null || description.isEmpty()) {
             description = asset.getDescription();
         }
-        return description != null && description.length() > 0;
+        return description != null && !description.isEmpty();
     }
 
     /**

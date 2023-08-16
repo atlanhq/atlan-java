@@ -54,14 +54,15 @@ public class RoleCache {
 
     /**
      * Translate the provided human-readable role name to its GUID.
+     *
      * @param name human-readable name of the role
-     * @return GUID of the role
+     * @return unique identifier (GUID) of the role
      * @throws AtlanException on any API communication problem if the cache needs to be refreshed
      * @throws NotFoundException if the role cannot be found (does not exist) in Atlan
      * @throws InvalidRequestException if no name was provided for the role to retrieve
      */
     public String getIdForName(String name) throws AtlanException {
-        if (name != null && name.length() > 0) {
+        if (name != null && !name.isEmpty()) {
             String roleId = mapNameToId.get(name);
             if (roleId == null) {
                 // If not found, refresh the cache and look again (could be stale)
@@ -79,14 +80,15 @@ public class RoleCache {
 
     /**
      * Translate the provided role GUID to the human-readable role name.
-     * @param id GUID of the role
+     *
+     * @param id unique identifier (GUID) of the role
      * @return human-readable name of the role
      * @throws AtlanException on any API communication problem if the cache needs to be refreshed
      * @throws NotFoundException if the role cannot be found (does not exist) in Atlan
      * @throws InvalidRequestException if no name was provided for the role to retrieve
      */
     public String getNameForId(String id) throws AtlanException {
-        if (id != null && id.length() > 0) {
+        if (id != null && !id.isEmpty()) {
             String roleName = mapIdToName.get(id);
             if (roleName == null) {
                 // If not found, refresh the cache and look again (could be stale)
