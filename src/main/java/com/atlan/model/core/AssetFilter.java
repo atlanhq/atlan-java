@@ -49,6 +49,30 @@ public class AssetFilter {
     public static class AssetFilterBuilder {
 
         /**
+         * Return the total number of assets that will match the supplied criteria,
+         * using the most minimal query possible (retrieves minimal data).
+         *
+         * @return the count of assets that will match the supplied criteria
+         * @throws AtlanException on any issues interacting with the Atlan APIs
+         */
+        public long count() throws AtlanException {
+            if (client == null) {
+                throw new InvalidRequestException(ErrorCode.NO_ATLAN_CLIENT);
+            }
+            QueryFactory.CompoundQuery.CompoundQueryBuilder query = QueryFactory.CompoundQuery.builder();
+            if (filters != null) {
+                query.musts(filters);
+            }
+            if (excludes != null) {
+                query.mustNots(excludes);
+            }
+            IndexSearchDSL.IndexSearchDSLBuilder<?, ?> dsl =
+                    IndexSearchDSL.builder(query.build()._toQuery()).size(1);
+            IndexSearchRequest.IndexSearchRequestBuilder<?, ?> request = IndexSearchRequest.builder(dsl.build());
+            return request.build().search(client).getApproximateCount();
+        }
+
+        /**
          * Run the set of filters to retrieve assets that match the supplied criteria.
          *
          * @return a stream of assets that match the specified criteria, lazily-fetched
