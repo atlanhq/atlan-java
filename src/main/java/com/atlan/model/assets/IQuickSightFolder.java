@@ -8,6 +8,8 @@ import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.QuickSightFolderType;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -29,6 +31,22 @@ import javax.annotation.processing.Generated;
 public interface IQuickSightFolder {
 
     public static final String TYPE_NAME = "QuickSightFolder";
+
+    /** TBC */
+    RelationField QUICK_SIGHT_ANALYSES = new RelationField("quickSightAnalyses");
+
+    /** TBC */
+    RelationField QUICK_SIGHT_DASHBOARDS = new RelationField("quickSightDashboards");
+
+    /** TBC */
+    RelationField QUICK_SIGHT_DATASETS = new RelationField("quickSightDatasets");
+
+    /** Detailed path of the folder */
+    KeywordField QUICK_SIGHT_FOLDER_HIERARCHY =
+            new KeywordField("quickSightFolderHierarchy", "quickSightFolderHierarchy");
+
+    /** Shared or private type of folder */
+    KeywordField QUICK_SIGHT_FOLDER_TYPE = new KeywordField("quickSightFolderType", "quickSightFolderType");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -175,6 +193,9 @@ public interface IQuickSightFolder {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -271,6 +292,9 @@ public interface IQuickSightFolder {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -305,6 +329,9 @@ public interface IQuickSightFolder {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

@@ -7,6 +7,9 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.KeywordTextField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -28,6 +31,40 @@ import javax.annotation.processing.Generated;
 public interface IAPISpec {
 
     public static final String TYPE_NAME = "APISpec";
+
+    /** TBC */
+    RelationField API_PATHS = new RelationField("apiPaths");
+
+    /** TBC */
+    KeywordTextField API_SPEC_CONTACT_EMAIL =
+            new KeywordTextField("apiSpecContactEmail", "apiSpecContactEmail", "apiSpecContactEmail.text");
+
+    /** TBC */
+    KeywordTextField API_SPEC_CONTACT_NAME =
+            new KeywordTextField("apiSpecContactName", "apiSpecContactName.keyword", "apiSpecContactName");
+
+    /** TBC */
+    KeywordTextField API_SPEC_CONTACT_URL =
+            new KeywordTextField("apiSpecContactURL", "apiSpecContactURL", "apiSpecContactURL.text");
+
+    /** TBC */
+    KeywordField API_SPEC_CONTRACT_VERSION = new KeywordField("apiSpecContractVersion", "apiSpecContractVersion");
+
+    /** TBC */
+    KeywordTextField API_SPEC_LICENSE_NAME =
+            new KeywordTextField("apiSpecLicenseName", "apiSpecLicenseName.keyword", "apiSpecLicenseName");
+
+    /** TBC */
+    KeywordTextField API_SPEC_LICENSE_URL =
+            new KeywordTextField("apiSpecLicenseURL", "apiSpecLicenseURL", "apiSpecLicenseURL.text");
+
+    /** TBC */
+    KeywordTextField API_SPEC_SERVICE_ALIAS =
+            new KeywordTextField("apiSpecServiceAlias", "apiSpecServiceAlias", "apiSpecServiceAlias.text");
+
+    /** TBC */
+    KeywordTextField API_SPEC_TERMS_OF_SERVICE_URL = new KeywordTextField(
+            "apiSpecTermsOfServiceURL", "apiSpecTermsOfServiceURL", "apiSpecTermsOfServiceURL.text");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -219,6 +256,9 @@ public interface IAPISpec {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -315,6 +355,9 @@ public interface IAPISpec {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -349,6 +392,9 @@ public interface IAPISpec {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

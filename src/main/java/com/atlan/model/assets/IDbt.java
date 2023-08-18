@@ -7,6 +7,9 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.KeywordTextField;
+import com.atlan.model.fields.NumericField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -28,6 +31,68 @@ import javax.annotation.processing.Generated;
 public interface IDbt {
 
     public static final String TYPE_NAME = "Dbt";
+
+    /** TBC */
+    KeywordTextField DBT_ACCOUNT_NAME =
+            new KeywordTextField("dbtAccountName", "dbtAccountName.keyword", "dbtAccountName");
+
+    /** TBC */
+    KeywordTextField DBT_ALIAS = new KeywordTextField("dbtAlias", "dbtAlias.keyword", "dbtAlias");
+
+    /** TBC */
+    KeywordField DBT_CONNECTION_CONTEXT = new KeywordField("dbtConnectionContext", "dbtConnectionContext");
+
+    /** TBC */
+    KeywordTextField DBT_ENVIRONMENT_DBT_VERSION = new KeywordTextField(
+            "dbtEnvironmentDbtVersion", "dbtEnvironmentDbtVersion.keyword", "dbtEnvironmentDbtVersion");
+
+    /** TBC */
+    KeywordTextField DBT_ENVIRONMENT_NAME =
+            new KeywordTextField("dbtEnvironmentName", "dbtEnvironmentName.keyword", "dbtEnvironmentName");
+
+    /** TBC */
+    NumericField DBT_JOB_LAST_RUN = new NumericField("dbtJobLastRun", "dbtJobLastRun");
+
+    /** TBC */
+    KeywordTextField DBT_JOB_NAME = new KeywordTextField("dbtJobName", "dbtJobName.keyword", "dbtJobName");
+
+    /** TBC */
+    NumericField DBT_JOB_NEXT_RUN = new NumericField("dbtJobNextRun", "dbtJobNextRun");
+
+    /** TBC */
+    KeywordTextField DBT_JOB_NEXT_RUN_HUMANIZED =
+            new KeywordTextField("dbtJobNextRunHumanized", "dbtJobNextRunHumanized.keyword", "dbtJobNextRunHumanized");
+
+    /** TBC */
+    KeywordField DBT_JOB_SCHEDULE = new KeywordField("dbtJobSchedule", "dbtJobSchedule");
+
+    /** TBC */
+    KeywordTextField DBT_JOB_SCHEDULE_CRON_HUMANIZED = new KeywordTextField(
+            "dbtJobScheduleCronHumanized", "dbtJobScheduleCronHumanized.keyword", "dbtJobScheduleCronHumanized");
+
+    /** TBC */
+    KeywordField DBT_JOB_STATUS = new KeywordField("dbtJobStatus", "dbtJobStatus");
+
+    /** TBC */
+    KeywordField DBT_META = new KeywordField("dbtMeta", "dbtMeta");
+
+    /** TBC */
+    KeywordTextField DBT_PACKAGE_NAME =
+            new KeywordTextField("dbtPackageName", "dbtPackageName.keyword", "dbtPackageName");
+
+    /** TBC */
+    KeywordTextField DBT_PROJECT_NAME =
+            new KeywordTextField("dbtProjectName", "dbtProjectName.keyword", "dbtProjectName");
+
+    /** TBC */
+    KeywordField DBT_SEMANTIC_LAYER_PROXY_URL =
+            new KeywordField("dbtSemanticLayerProxyUrl", "dbtSemanticLayerProxyUrl");
+
+    /** TBC */
+    KeywordField DBT_TAGS = new KeywordField("dbtTags", "dbtTags");
+
+    /** TBC */
+    KeywordTextField DBT_UNIQUE_ID = new KeywordTextField("dbtUniqueId", "dbtUniqueId.keyword", "dbtUniqueId");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -172,6 +237,9 @@ public interface IDbt {
 
     /** TBC */
     String getAssetDbtUniqueId();
+
+    /** TBC */
+    String getAssetIcon();
 
     /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
@@ -324,6 +392,9 @@ public interface IDbt {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -358,6 +429,9 @@ public interface IDbt {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

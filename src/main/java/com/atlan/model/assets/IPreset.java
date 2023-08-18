@@ -7,6 +7,8 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordTextField;
+import com.atlan.model.fields.NumericField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -28,6 +30,20 @@ import javax.annotation.processing.Generated;
 public interface IPreset {
 
     public static final String TYPE_NAME = "Preset";
+
+    /** ID of the Preset asset's collection. */
+    NumericField PRESET_DASHBOARD_ID = new NumericField("presetDashboardId", "presetDashboardId");
+
+    /** qualifiedName of the Preset asset's collection. */
+    KeywordTextField PRESET_DASHBOARD_QUALIFIED_NAME = new KeywordTextField(
+            "presetDashboardQualifiedName", "presetDashboardQualifiedName", "presetDashboardQualifiedName.text");
+
+    /** ID of the Preset asset's workspace. */
+    NumericField PRESET_WORKSPACE_ID = new NumericField("presetWorkspaceId", "presetWorkspaceId");
+
+    /** qualifiedName of the Preset asset's workspace. */
+    KeywordTextField PRESET_WORKSPACE_QUALIFIED_NAME = new KeywordTextField(
+            "presetWorkspaceQualifiedName", "presetWorkspaceQualifiedName", "presetWorkspaceQualifiedName.text");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -174,6 +190,9 @@ public interface IPreset {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -270,6 +289,9 @@ public interface IPreset {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -304,6 +326,9 @@ public interface IPreset {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

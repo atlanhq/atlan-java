@@ -7,6 +7,8 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -28,6 +30,16 @@ import javax.annotation.processing.Generated;
 public interface IMicroStrategyDossier {
 
     public static final String TYPE_NAME = "MicroStrategyDossier";
+
+    /** List of names of the dossier chapters. */
+    KeywordField MICRO_STRATEGY_DOSSIER_CHAPTER_NAMES =
+            new KeywordField("microStrategyDossierChapterNames", "microStrategyDossierChapterNames");
+
+    /** Project containing the dossier. */
+    RelationField MICRO_STRATEGY_PROJECT = new RelationField("microStrategyProject");
+
+    /** Visualizations used within the dossier. */
+    RelationField MICRO_STRATEGY_VISUALIZATIONS = new RelationField("microStrategyVisualizations");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -174,6 +186,9 @@ public interface IMicroStrategyDossier {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -270,6 +285,9 @@ public interface IMicroStrategyDossier {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -343,6 +361,9 @@ public interface IMicroStrategyDossier {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

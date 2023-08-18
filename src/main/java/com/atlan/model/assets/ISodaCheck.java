@@ -7,6 +7,9 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -28,6 +31,28 @@ import javax.annotation.processing.Generated;
 public interface ISodaCheck {
 
     public static final String TYPE_NAME = "SodaCheck";
+
+    /** TBC */
+    RelationField SODA_CHECK_ASSETS = new RelationField("sodaCheckAssets");
+
+    /** TBC */
+    RelationField SODA_CHECK_COLUMNS = new RelationField("sodaCheckColumns");
+
+    /** Check definition */
+    KeywordField SODA_CHECK_DEFINITION = new KeywordField("sodaCheckDefinition", "sodaCheckDefinition");
+
+    /** Check status */
+    KeywordField SODA_CHECK_EVALUATION_STATUS =
+            new KeywordField("sodaCheckEvaluationStatus", "sodaCheckEvaluationStatus");
+
+    /** Check Id */
+    KeywordField SODA_CHECK_ID = new KeywordField("sodaCheckId", "sodaCheckId");
+
+    /** TBC */
+    NumericField SODA_CHECK_INCIDENT_COUNT = new NumericField("sodaCheckIncidentCount", "sodaCheckIncidentCount");
+
+    /** TBC */
+    NumericField SODA_CHECK_LAST_SCAN_AT = new NumericField("sodaCheckLastScanAt", "sodaCheckLastScanAt");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -174,6 +199,9 @@ public interface ISodaCheck {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -270,6 +298,9 @@ public interface ISodaCheck {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -304,6 +335,9 @@ public interface ISodaCheck {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

@@ -7,6 +7,7 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.NumericField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -28,6 +29,10 @@ import javax.annotation.processing.Generated;
 public interface IRedashDashboard {
 
     public static final String TYPE_NAME = "RedashDashboard";
+
+    /** Number of widgets in the Redash dashboard. */
+    NumericField REDASH_DASHBOARD_WIDGET_COUNT =
+            new NumericField("redashDashboardWidgetCount", "redashDashboardWidgetCount");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -174,6 +179,9 @@ public interface IRedashDashboard {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -270,6 +278,9 @@ public interface IRedashDashboard {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -304,6 +315,9 @@ public interface IRedashDashboard {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

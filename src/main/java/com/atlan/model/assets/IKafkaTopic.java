@@ -9,6 +9,10 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.KafkaTopicCleanupPolicy;
 import com.atlan.model.enums.KafkaTopicCompressionType;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.BooleanField;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -30,6 +34,36 @@ import javax.annotation.processing.Generated;
 public interface IKafkaTopic {
 
     public static final String TYPE_NAME = "KafkaTopic";
+
+    /** Consumer groups subscribed to this topic. */
+    RelationField KAFKA_CONSUMER_GROUPS = new RelationField("kafkaConsumerGroups");
+
+    /** TBC */
+    KeywordField KAFKA_TOPIC_CLEANUP_POLICY = new KeywordField("kafkaTopicCleanupPolicy", "kafkaTopicCleanupPolicy");
+
+    /** TBC */
+    KeywordField KAFKA_TOPIC_COMPRESSION_TYPE =
+            new KeywordField("kafkaTopicCompressionType", "kafkaTopicCompressionType");
+
+    /** TBC */
+    BooleanField KAFKA_TOPIC_IS_INTERNAL = new BooleanField("kafkaTopicIsInternal", "kafkaTopicIsInternal");
+
+    /** TBC */
+    NumericField KAFKA_TOPIC_PARTITIONS_COUNT =
+            new NumericField("kafkaTopicPartitionsCount", "kafkaTopicPartitionsCount");
+
+    /** Number of (unexpired) messages in this topic. */
+    NumericField KAFKA_TOPIC_RECORD_COUNT = new NumericField("kafkaTopicRecordCount", "kafkaTopicRecordCount");
+
+    /** TBC */
+    NumericField KAFKA_TOPIC_REPLICATION_FACTOR =
+            new NumericField("kafkaTopicReplicationFactor", "kafkaTopicReplicationFactor");
+
+    /** TBC */
+    NumericField KAFKA_TOPIC_SEGMENT_BYTES = new NumericField("kafkaTopicSegmentBytes", "kafkaTopicSegmentBytes");
+
+    /** TBC */
+    NumericField KAFKA_TOPIC_SIZE_IN_BYTES = new NumericField("kafkaTopicSizeInBytes", "kafkaTopicSizeInBytes");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -176,6 +210,9 @@ public interface IKafkaTopic {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -272,6 +309,9 @@ public interface IKafkaTopic {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -333,6 +373,9 @@ public interface IKafkaTopic {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

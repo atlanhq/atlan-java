@@ -7,6 +7,8 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -28,6 +30,21 @@ import javax.annotation.processing.Generated;
 public interface IDbtSource {
 
     public static final String TYPE_NAME = "DbtSource";
+
+    /** TBC */
+    KeywordField DBT_FRESHNESS_CRITERIA = new KeywordField("dbtFreshnessCriteria", "dbtFreshnessCriteria");
+
+    /** TBC */
+    KeywordField DBT_STATE = new KeywordField("dbtState", "dbtState");
+
+    /** TBC */
+    RelationField DBT_TESTS = new RelationField("dbtTests");
+
+    /** TBC */
+    RelationField PRIMARY_SQL_ASSET = new RelationField("sqlAsset");
+
+    /** TBC */
+    RelationField SQL_ASSETS = new RelationField("sqlAssets");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -172,6 +189,9 @@ public interface IDbtSource {
 
     /** TBC */
     String getAssetDbtUniqueId();
+
+    /** TBC */
+    String getAssetIcon();
 
     /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
@@ -333,6 +353,9 @@ public interface IDbtSource {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -367,6 +390,9 @@ public interface IDbtSource {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

@@ -7,6 +7,9 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.BooleanField;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -28,6 +31,33 @@ import javax.annotation.processing.Generated;
 public interface IFunction {
 
     public static final String TYPE_NAME = "Function";
+
+    /** Arguments that are passed in to the function. */
+    KeywordField FUNCTION_ARGUMENTS = new KeywordField("functionArguments", "functionArguments");
+
+    /** Code or set of statements that determine the output of the function. */
+    KeywordField FUNCTION_DEFINITION = new KeywordField("functionDefinition", "functionDefinition");
+
+    /** Determines whether the functions is stored or executed externally. */
+    BooleanField FUNCTION_IS_EXTERNAL = new BooleanField("functionIsExternal", "functionIsExternal");
+
+    /** Determines whether the function must re-compute or not if there are no underlying changes in the values. */
+    BooleanField FUNCTION_IS_MEMOIZABLE = new BooleanField("functionIsMemoizable", "functionIsMemoizable");
+
+    /** Determines whether sensitive information of the function is omitted for unauthorized users. */
+    BooleanField FUNCTION_IS_SECURE = new BooleanField("functionIsSecure", "functionIsSecure");
+
+    /** The programming language in which the function is written. */
+    KeywordField FUNCTION_LANGUAGE = new KeywordField("functionLanguage", "functionLanguage");
+
+    /** Data type of the value returned by the function. */
+    KeywordField FUNCTION_RETURN_TYPE = new KeywordField("functionReturnType", "functionReturnType");
+
+    /** TBC */
+    RelationField FUNCTION_SCHEMA = new RelationField("functionSchema");
+
+    /** The type of function. */
+    KeywordField FUNCTION_TYPE = new KeywordField("functionType", "functionType");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -174,6 +204,9 @@ public interface IFunction {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -312,6 +345,9 @@ public interface IFunction {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -352,6 +388,9 @@ public interface IFunction {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

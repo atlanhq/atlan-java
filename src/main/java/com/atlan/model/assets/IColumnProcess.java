@@ -7,6 +7,7 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -28,6 +29,9 @@ import javax.annotation.processing.Generated;
 public interface IColumnProcess {
 
     public static final String TYPE_NAME = "ColumnProcess";
+
+    /** Parent process that contains this column-level process. */
+    RelationField PROCESS = new RelationField("process");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -175,6 +179,9 @@ public interface IColumnProcess {
 
     /** TBC */
     String getAssetDbtUniqueId();
+
+    /** TBC */
+    String getAssetIcon();
 
     /** TBC */
     SortedSet<String> getAssetMcIncidentNames();

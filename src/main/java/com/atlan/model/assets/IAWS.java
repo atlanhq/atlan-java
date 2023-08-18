@@ -7,6 +7,8 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.KeywordTextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.AwsTag;
 import com.atlan.model.structs.PopularityInsights;
@@ -29,6 +31,33 @@ import javax.annotation.processing.Generated;
 public interface IAWS {
 
     public static final String TYPE_NAME = "AWS";
+
+    /** 12-digit number that uniquely identifies an AWS account. */
+    KeywordField AWS_ACCOUNT_ID = new KeywordField("awsAccountId", "awsAccountId");
+
+    /** Amazon Resource Name (ARN) for this asset. This uniquely identifies the asset in AWS, and thus must be unique across all AWS asset instances. */
+    KeywordTextField AWS_ARN = new KeywordTextField("awsArn", "awsArn", "awsArn.text");
+
+    /** Root user's ID. */
+    KeywordField AWS_OWNER_ID = new KeywordField("awsOwnerId", "awsOwnerId");
+
+    /** Root user's name. */
+    KeywordTextField AWS_OWNER_NAME = new KeywordTextField("awsOwnerName", "awsOwnerName", "awsOwnerName.text");
+
+    /** Group of AWS region and service objects. */
+    KeywordField AWS_PARTITION = new KeywordField("awsPartition", "awsPartition");
+
+    /** Physical region where the data center in which the asset exists is clustered. */
+    KeywordField AWS_REGION = new KeywordField("awsRegion", "awsRegion");
+
+    /** Unique resource ID assigned when a new resource is created. */
+    KeywordField AWS_RESOURCE_ID = new KeywordField("awsResourceId", "awsResourceId");
+
+    /** Type of service in which the asset exists. */
+    KeywordField AWS_SERVICE = new KeywordField("awsService", "awsService");
+
+    /** List of tags that have been applied to the asset in AWS. */
+    KeywordField AWS_TAGS = new KeywordField("awsTags", "awsTags");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -173,6 +202,9 @@ public interface IAWS {
 
     /** TBC */
     String getAssetDbtUniqueId();
+
+    /** TBC */
+    String getAssetIcon();
 
     /** TBC */
     SortedSet<String> getAssetMcIncidentNames();

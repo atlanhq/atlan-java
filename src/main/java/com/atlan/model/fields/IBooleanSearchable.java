@@ -4,8 +4,6 @@ package com.atlan.model.fields;
 
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import co.elastic.clients.elasticsearch._types.query_dsl.TermQuery;
-import com.atlan.exception.AtlanException;
-import com.atlan.exception.InvalidRequestException;
 
 public interface IBooleanSearchable {
     /**
@@ -21,10 +19,8 @@ public interface IBooleanSearchable {
      *
      * @param value the value (boolean) to check the field's value is exactly equal to
      * @return a query that will only match assets whose value for the field is exactly equal to the boolean value provided
-     * @throws InvalidRequestException if this query does not make sense to run on the field
-     * @throws AtlanException on any API communication issue
      */
-    Query eq(boolean value) throws AtlanException;
+    Query eq(boolean value);
 
     /**
      * Returns a query that will match all assets whose provided field has a value that exactly equals

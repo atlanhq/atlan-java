@@ -7,6 +7,10 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.BooleanField;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -28,6 +32,48 @@ import javax.annotation.processing.Generated;
 public interface IMaterializedView {
 
     public static final String TYPE_NAME = "MaterialisedView";
+
+    /** TBC */
+    KeywordField ALIAS = new KeywordField("alias", "alias");
+
+    /** TBC */
+    NumericField COLUMN_COUNT = new NumericField("columnCount", "columnCount");
+
+    /** TBC */
+    RelationField COLUMNS = new RelationField("columns");
+
+    /** TBC */
+    KeywordField DEFINITION = new KeywordField("definition", "definition");
+
+    /** TBC */
+    BooleanField IS_QUERY_PREVIEW = new BooleanField("isQueryPreview", "isQueryPreview");
+
+    /** TBC */
+    BooleanField IS_TEMPORARY = new BooleanField("isTemporary", "isTemporary");
+
+    /** TBC */
+    KeywordField QUERY_PREVIEW_CONFIG = new KeywordField("queryPreviewConfig", "queryPreviewConfig");
+
+    /** TBC */
+    KeywordField REFRESH_METHOD = new KeywordField("refreshMethod", "refreshMethod");
+
+    /** TBC */
+    KeywordField REFRESH_MODE = new KeywordField("refreshMode", "refreshMode");
+
+    /** TBC */
+    NumericField ROW_COUNT = new NumericField("rowCount", "rowCount");
+
+    /** TBC */
+    RelationField SCHEMA = new RelationField("atlanSchema");
+
+    /** TBC */
+    NumericField SIZE_BYTES = new NumericField("sizeBytes", "sizeBytes");
+
+    /** TBC */
+    NumericField STALE_SINCE_DATE = new NumericField("staleSinceDate", "staleSinceDate");
+
+    /** TBC */
+    KeywordField STALENESS = new KeywordField("staleness", "staleness");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -177,6 +223,9 @@ public interface IMaterializedView {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -297,6 +346,9 @@ public interface IMaterializedView {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -343,6 +395,9 @@ public interface IMaterializedView {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

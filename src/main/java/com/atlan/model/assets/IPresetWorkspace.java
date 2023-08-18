@@ -7,6 +7,11 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.BooleanField;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.KeywordTextField;
+import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -28,6 +33,43 @@ import javax.annotation.processing.Generated;
 public interface IPresetWorkspace {
 
     public static final String TYPE_NAME = "PresetWorkspace";
+
+    /** Collections within this workspace. */
+    RelationField PRESET_DASHBOARDS = new RelationField("presetDashboards");
+
+    /** ID of the cluster for the Preset workspace. */
+    NumericField PRESET_WORKSPACE_CLUSTER_ID = new NumericField("presetWorkspaceClusterId", "presetWorkspaceClusterId");
+
+    /** Number of collections in the workspace. */
+    NumericField PRESET_WORKSPACE_DASHBOARD_COUNT =
+            new NumericField("presetWorkspaceDashboardCount", "presetWorkspaceDashboardCount");
+
+    /** Number of datasets in the workspace. */
+    NumericField PRESET_WORKSPACE_DATASET_COUNT =
+            new NumericField("presetWorkspaceDatasetCount", "presetWorkspaceDatasetCount");
+
+    /** ID of the deployment for the Preset workspace. */
+    NumericField PRESET_WORKSPACE_DEPLOYMENT_ID =
+            new NumericField("presetWorkspaceDeploymentId", "presetWorkspaceDeploymentId");
+
+    /** Hostname of the Preset workspace. */
+    KeywordTextField PRESET_WORKSPACE_HOSTNAME =
+            new KeywordTextField("presetWorkspaceHostname", "presetWorkspaceHostname", "presetWorkspaceHostname.text");
+
+    /** Whether the workspace is in maintenance mode (true) or not (false). */
+    BooleanField PRESET_WORKSPACE_IS_IN_MAINTENANCE_MODE =
+            new BooleanField("presetWorkspaceIsInMaintenanceMode", "presetWorkspaceIsInMaintenanceMode");
+
+    /** Whether public collections are allowed in the workspace (true) or not (false). */
+    BooleanField PRESET_WORKSPACE_PUBLIC_DASHBOARDS_ALLOWED =
+            new BooleanField("presetWorkspacePublicDashboardsAllowed", "presetWorkspacePublicDashboardsAllowed");
+
+    /** Region of the workspace. */
+    KeywordTextField PRESET_WORKSPACE_REGION =
+            new KeywordTextField("presetWorkspaceRegion", "presetWorkspaceRegion", "presetWorkspaceRegion.text");
+
+    /** Status of the workspace. */
+    KeywordField PRESET_WORKSPACE_STATUS = new KeywordField("presetWorkspaceStatus", "presetWorkspaceStatus");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -174,6 +216,9 @@ public interface IPresetWorkspace {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -270,6 +315,9 @@ public interface IPresetWorkspace {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -304,6 +352,9 @@ public interface IPresetWorkspace {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

@@ -7,6 +7,8 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -28,6 +30,12 @@ import javax.annotation.processing.Generated;
 public interface IThoughtspot {
 
     public static final String TYPE_NAME = "Thoughtspot";
+
+    /** TBC */
+    KeywordField THOUGHTSPOT_CHART_TYPE = new KeywordField("thoughtspotChartType", "thoughtspotChartType");
+
+    /** TBC */
+    TextField THOUGHTSPOT_QUESTION_TEXT = new TextField("thoughtspotQuestionText", "null");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -174,6 +182,9 @@ public interface IThoughtspot {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -270,6 +281,9 @@ public interface IThoughtspot {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -304,6 +318,9 @@ public interface IThoughtspot {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

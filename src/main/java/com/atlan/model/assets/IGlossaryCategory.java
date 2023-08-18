@@ -7,6 +7,8 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -28,6 +30,29 @@ import javax.annotation.processing.Generated;
 public interface IGlossaryCategory {
 
     public static final String TYPE_NAME = "AtlasGlossaryCategory";
+
+    /** TBC */
+    KeywordField ADDITIONAL_ATTRIBUTES = new KeywordField("additionalAttributes", "additionalAttributes");
+
+    /** TBC */
+    /** TBC */
+    RelationField CHILDREN_CATEGORIES = new RelationField("childrenCategories");
+
+    /** TBC */
+    KeywordField LONG_DESCRIPTION = new KeywordField("longDescription", "longDescription");
+
+    /** TBC */
+    /** TBC */
+    KeywordField SHORT_DESCRIPTION = new KeywordField("shortDescription", "shortDescription");
+
+    /** TBC */
+    RelationField TERMS = new RelationField("terms");
+
+    /** Glossary in which the category is contained, searchable by the qualifiedName of the glossary. */
+    KeywordField ANCHOR = new KeywordField("anchor", "__glossary");
+
+    /** Parent category in which a subcategory is contained, searchable by the qualifiedName of the category. */
+    KeywordField PARENT_CATEGORY = new KeywordField("parentCategory", "__parentCategory");
 
     /** TBC */
     Map<String, String> getAdditionalAttributes();
@@ -178,6 +203,9 @@ public interface IGlossaryCategory {
 
     /** TBC */
     String getAssetDbtUniqueId();
+
+    /** TBC */
+    String getAssetIcon();
 
     /** TBC */
     SortedSet<String> getAssetMcIncidentNames();

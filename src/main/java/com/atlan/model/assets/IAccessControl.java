@@ -8,6 +8,9 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.BooleanField;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -29,6 +32,21 @@ import javax.annotation.processing.Generated;
 public interface IAccessControl {
 
     public static final String TYPE_NAME = "AccessControl";
+
+    /** Link to a Slack channel that is used to discuss this access control object. */
+    KeywordField CHANNEL_LINK = new KeywordField("channelLink", "channelLink");
+
+    /** Asset sidebar tabs that should be hidden from this access control object. */
+    KeywordField DENY_ASSET_TABS = new KeywordField("denyAssetTabs", "denyAssetTabs");
+
+    /** Unique identifiers (GUIDs) of custom metadata that should be hidden from this access control object. */
+    KeywordField DENY_CUSTOM_METADATA_GUIDS = new KeywordField("denyCustomMetadataGuids", "denyCustomMetadataGuids");
+
+    /** Whether the access object is activated (true) or deactivated (false). */
+    BooleanField IS_ACCESS_CONTROL_ENABLED = new BooleanField("isAccessControlEnabled", "isAccessControlEnabled");
+
+    /** Policies associated with this access control object. */
+    RelationField POLICIES = new RelationField("policies");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -173,6 +191,9 @@ public interface IAccessControl {
 
     /** TBC */
     String getAssetDbtUniqueId();
+
+    /** TBC */
+    String getAssetIcon();
 
     /** TBC */
     SortedSet<String> getAssetMcIncidentNames();

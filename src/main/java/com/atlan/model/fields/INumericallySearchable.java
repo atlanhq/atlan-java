@@ -7,8 +7,6 @@ import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import co.elastic.clients.elasticsearch._types.query_dsl.RangeQuery;
 import co.elastic.clients.elasticsearch._types.query_dsl.TermQuery;
 import co.elastic.clients.json.JsonData;
-import com.atlan.exception.AtlanException;
-import com.atlan.exception.InvalidRequestException;
 
 public interface INumericallySearchable {
     /**
@@ -25,10 +23,8 @@ public interface INumericallySearchable {
      * @param value the numeric value to exactly match
      * @return a query that will only match assets whose value for the field is exactly the numeric value provided
      * @param <T> numeric values
-     * @throws InvalidRequestException if this query does not make sense to run on the field
-     * @throws AtlanException on any API communication issue
      */
-    <T extends Number> Query eq(T value) throws AtlanException;
+    <T extends Number> Query eq(T value);
 
     /**
      * Returns a query that will match all assets whose provided field has a value that exactly
@@ -51,10 +47,8 @@ public interface INumericallySearchable {
      * @param value the numeric value to compare against
      * @return a query that will only match assets whose value for the field is strictly greater than the numeric value provided
      * @param <T> numeric values
-     * @throws InvalidRequestException if this query does not make sense to run on the field
-     * @throws AtlanException on any API communication issue
      */
-    <T extends Number> Query gt(T value) throws AtlanException;
+    <T extends Number> Query gt(T value);
 
     /**
      * Returns a query that will match all assets whose provided field has a value that is strictly greater
@@ -76,10 +70,8 @@ public interface INumericallySearchable {
      * @param value the numeric value to compare against
      * @return a query that will only match assets whose value for the field is greater than or equal to the numeric value provided
      * @param <T> numeric values
-     * @throws InvalidRequestException if this query does not make sense to run on the field
-     * @throws AtlanException on any API communication issue
      */
-    <T extends Number> Query gte(T value) throws AtlanException;
+    <T extends Number> Query gte(T value);
 
     /**
      * Returns a query that will match all assets whose provided field has a value that is greater
@@ -101,10 +93,8 @@ public interface INumericallySearchable {
      * @param value the numeric value to compare against
      * @return a query that will only match assets whose value for the field is strictly less than the numeric value provided
      * @param <T> numeric values
-     * @throws InvalidRequestException if this query does not make sense to run on the field
-     * @throws AtlanException on any API communication issue
      */
-    <T extends Number> Query lt(T value) throws AtlanException;
+    <T extends Number> Query lt(T value);
 
     /**
      * Returns a query that will match all assets whose provided field has a value that is strictly less
@@ -126,10 +116,8 @@ public interface INumericallySearchable {
      * @param value the numeric value to compare against
      * @return a query that will only match assets whose value for the field is less than or equal to the numeric value provided
      * @param <T> numeric values
-     * @throws InvalidRequestException if this query does not make sense to run on the field
-     * @throws AtlanException on any API communication issue
      */
-    <T extends Number> Query lte(T value) throws AtlanException;
+    <T extends Number> Query lte(T value);
 
     /**
      * Returns a query that will match all assets whose provided field has a value that is less
@@ -152,10 +140,8 @@ public interface INumericallySearchable {
      * @param max maximum value of the field that will match (inclusive)
      * @return a query that will only match assets whose value for the field is between the min and max (both inclusive)
      * @param <T> numeric values
-     * @throws InvalidRequestException if this query does not make sense to run on the field
-     * @throws AtlanException on any API communication issue
      */
-    <T extends Number> Query between(T min, T max) throws AtlanException;
+    <T extends Number> Query between(T min, T max);
 
     /**
      * Returns a query that will match all assets whose provided field has a value between the

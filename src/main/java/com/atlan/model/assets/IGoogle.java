@@ -7,6 +7,9 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.KeywordTextField;
+import com.atlan.model.fields.NumericField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.GoogleLabel;
 import com.atlan.model.structs.GoogleTag;
@@ -30,6 +33,32 @@ import javax.annotation.processing.Generated;
 public interface IGoogle {
 
     public static final String TYPE_NAME = "Google";
+
+    /** List of labels that have been applied to the asset in Google. */
+    KeywordField GOOGLE_LABELS = new KeywordField("googleLabels", "googleLabels");
+
+    /** TBC */
+    KeywordField GOOGLE_LOCATION = new KeywordField("googleLocation", "googleLocation");
+
+    /** TBC */
+    KeywordField GOOGLE_LOCATION_TYPE = new KeywordField("googleLocationType", "googleLocationType");
+
+    /** ID of the project in which the asset exists. */
+    KeywordTextField GOOGLE_PROJECT_ID =
+            new KeywordTextField("googleProjectId", "googleProjectId", "googleProjectId.text");
+
+    /** Name of the project in which the asset exists. */
+    KeywordTextField GOOGLE_PROJECT_NAME =
+            new KeywordTextField("googleProjectName", "googleProjectName", "googleProjectName.text");
+
+    /** TBC */
+    NumericField GOOGLE_PROJECT_NUMBER = new NumericField("googleProjectNumber", "googleProjectNumber");
+
+    /** Service in Google in which the asset exists. */
+    KeywordField GOOGLE_SERVICE = new KeywordField("googleService", "googleService");
+
+    /** List of tags that have been applied to the asset in Google. */
+    KeywordField GOOGLE_TAGS = new KeywordField("googleTags", "googleTags");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -174,6 +203,9 @@ public interface IGoogle {
 
     /** TBC */
     String getAssetDbtUniqueId();
+
+    /** TBC */
+    String getAssetIcon();
 
     /** TBC */
     SortedSet<String> getAssetMcIncidentNames();

@@ -7,6 +7,10 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.BooleanField;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -28,6 +32,39 @@ import javax.annotation.processing.Generated;
 public interface IView {
 
     public static final String TYPE_NAME = "View";
+
+    /** TBC */
+    KeywordField ALIAS = new KeywordField("alias", "alias");
+
+    /** Number of columns in this view. */
+    NumericField COLUMN_COUNT = new NumericField("columnCount", "columnCount");
+
+    /** Columns that exist within this view. */
+    RelationField COLUMNS = new RelationField("columns");
+
+    /** Definition of the view (DDL). */
+    KeywordField DEFINITION = new KeywordField("definition", "definition");
+
+    /** TBC */
+    BooleanField IS_QUERY_PREVIEW = new BooleanField("isQueryPreview", "isQueryPreview");
+
+    /** Whether this view is temporary (true) or not (false). */
+    BooleanField IS_TEMPORARY = new BooleanField("isTemporary", "isTemporary");
+
+    /** Queries that involve this view. */
+    RelationField QUERIES = new RelationField("queries");
+
+    /** TBC */
+    KeywordField QUERY_PREVIEW_CONFIG = new KeywordField("queryPreviewConfig", "queryPreviewConfig");
+
+    /** Number of rows in this view. */
+    NumericField ROW_COUNT = new NumericField("rowCount", "rowCount");
+
+    /** Schema in which this view exists. */
+    RelationField SCHEMA = new RelationField("atlanSchema");
+
+    /** Size of the view in bytes. */
+    NumericField SIZE_BYTES = new NumericField("sizeBytes", "sizeBytes");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -177,6 +214,9 @@ public interface IView {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -297,6 +337,9 @@ public interface IView {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -343,6 +386,9 @@ public interface IView {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

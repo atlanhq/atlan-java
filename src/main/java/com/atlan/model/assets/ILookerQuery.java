@@ -7,6 +7,8 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -28,6 +30,27 @@ import javax.annotation.processing.Generated;
 public interface ILookerQuery {
 
     public static final String TYPE_NAME = "LookerQuery";
+
+    /** TBC */
+    KeywordField FIELDS = new KeywordField("fields", "fields");
+
+    /** TBC */
+    RelationField LOOKS = new RelationField("looks");
+
+    /** TBC */
+    RelationField MODEL = new RelationField("model");
+
+    /** TBC */
+    KeywordField SOURCE_DEFINITION = new KeywordField("sourceDefinition", "sourceDefinition");
+
+    /** TBC */
+    KeywordField SOURCE_DEFINITION_DATABASE = new KeywordField("sourceDefinitionDatabase", "sourceDefinitionDatabase");
+
+    /** TBC */
+    KeywordField SOURCE_DEFINITION_SCHEMA = new KeywordField("sourceDefinitionSchema", "sourceDefinitionSchema");
+
+    /** TBC */
+    RelationField TILES = new RelationField("tiles");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -174,6 +197,9 @@ public interface ILookerQuery {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -273,6 +299,9 @@ public interface ILookerQuery {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -313,6 +342,9 @@ public interface ILookerQuery {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

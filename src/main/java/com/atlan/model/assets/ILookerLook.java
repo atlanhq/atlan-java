@@ -7,6 +7,9 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -28,6 +31,48 @@ import javax.annotation.processing.Generated;
 public interface ILookerLook {
 
     public static final String TYPE_NAME = "LookerLook";
+
+    /** TBC */
+    RelationField DASHBOARD = new RelationField("dashboard");
+
+    /** TBC */
+    RelationField FOLDER = new RelationField("folder");
+
+    /** TBC */
+    KeywordField FOLDER_NAME = new KeywordField("folderName", "folderName");
+
+    /** TBC */
+    RelationField MODEL = new RelationField("model");
+
+    /** TBC */
+    KeywordField MODEL_NAME = new KeywordField("modelName", "modelName");
+
+    /** TBC */
+    RelationField QUERY = new RelationField("query");
+
+    /** TBC */
+    NumericField SOURCE_CONTENT_METADATA_ID = new NumericField("sourceContentMetadataId", "sourceContentMetadataId");
+
+    /** TBC */
+    NumericField SOURCE_LAST_ACCESSED_AT = new NumericField("sourceLastAccessedAt", "sourceLastAccessedAt");
+
+    /** TBC */
+    NumericField SOURCE_LAST_VIEWED_AT = new NumericField("sourceLastViewedAt", "sourceLastViewedAt");
+
+    /** TBC */
+    NumericField SOURCE_QUERY_ID = new NumericField("sourceQueryId", "sourceQueryId");
+
+    /** TBC */
+    NumericField SOURCE_USER_ID = new NumericField("sourceUserId", "sourceUserId");
+
+    /** TBC */
+    NumericField SOURCE_VIEW_COUNT = new NumericField("sourceViewCount", "sourceViewCount");
+
+    /** TBC */
+    NumericField SOURCELAST_UPDATER_ID = new NumericField("sourcelastUpdaterId", "sourcelastUpdaterId");
+
+    /** TBC */
+    RelationField TILE = new RelationField("tile");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -174,6 +219,9 @@ public interface ILookerLook {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -279,6 +327,9 @@ public interface ILookerLook {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -319,6 +370,9 @@ public interface ILookerLook {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

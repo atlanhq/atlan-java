@@ -7,6 +7,8 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -28,6 +30,21 @@ import javax.annotation.processing.Generated;
 public interface IMicroStrategyCube {
 
     public static final String TYPE_NAME = "MicroStrategyCube";
+
+    /** Attributes used by the cube. */
+    RelationField MICRO_STRATEGY_ATTRIBUTES = new RelationField("microStrategyAttributes");
+
+    /** Query used to create the cube. */
+    KeywordField MICRO_STRATEGY_CUBE_QUERY = new KeywordField("microStrategyCubeQuery", "microStrategyCubeQuery");
+
+    /** Whether the cube is an OLAP or MTDI cube. */
+    KeywordField MICRO_STRATEGY_CUBE_TYPE = new KeywordField("microStrategyCubeType", "microStrategyCubeType");
+
+    /** Metrics where the cube is used. */
+    RelationField MICRO_STRATEGY_METRICS = new RelationField("microStrategyMetrics");
+
+    /** Project containing the cube. */
+    RelationField MICRO_STRATEGY_PROJECT = new RelationField("microStrategyProject");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -174,6 +191,9 @@ public interface IMicroStrategyCube {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -270,6 +290,9 @@ public interface IMicroStrategyCube {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -349,6 +372,9 @@ public interface IMicroStrategyCube {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

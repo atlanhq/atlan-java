@@ -7,6 +7,9 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.BooleanField;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.KeywordTextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -28,6 +31,25 @@ import javax.annotation.processing.Generated;
 public interface IAPI {
 
     public static final String TYPE_NAME = "API";
+
+    /** TBC */
+    KeywordField API_EXTERNAL_DOCS = new KeywordField("apiExternalDocs", "apiExternalDocs");
+
+    /** TBC */
+    BooleanField API_IS_AUTH_OPTIONAL = new BooleanField("apiIsAuthOptional", "apiIsAuthOptional");
+
+    /** TBC */
+    KeywordTextField API_SPEC_NAME = new KeywordTextField("apiSpecName", "apiSpecName.keyword", "apiSpecName");
+
+    /** TBC */
+    KeywordTextField API_SPEC_QUALIFIED_NAME =
+            new KeywordTextField("apiSpecQualifiedName", "apiSpecQualifiedName", "apiSpecQualifiedName.text");
+
+    /** TBC */
+    KeywordField API_SPEC_TYPE = new KeywordField("apiSpecType", "apiSpecType");
+
+    /** TBC */
+    KeywordField API_SPEC_VERSION = new KeywordField("apiSpecVersion", "apiSpecVersion");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -192,6 +214,9 @@ public interface IAPI {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -288,6 +313,9 @@ public interface IAPI {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -322,6 +350,9 @@ public interface IAPI {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

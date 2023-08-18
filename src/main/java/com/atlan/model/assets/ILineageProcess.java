@@ -7,6 +7,8 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -28,6 +30,27 @@ import javax.annotation.processing.Generated;
 public interface ILineageProcess {
 
     public static final String TYPE_NAME = "Process";
+
+    /** TBC */
+    RelationField AIRFLOW_TASKS = new RelationField("airflowTasks");
+
+    /** TBC */
+    KeywordField AST = new KeywordField("ast", "ast");
+
+    /** TBC */
+    KeywordField CODE = new KeywordField("code", "code");
+
+    /** TBC */
+    RelationField COLUMN_PROCESSES = new RelationField("columnProcesses");
+
+    /** TBC */
+    KeywordField INPUTS = new KeywordField("inputs", "inputs");
+
+    /** TBC */
+    KeywordField OUTPUTS = new KeywordField("outputs", "outputs");
+
+    /** TBC */
+    KeywordField SQL = new KeywordField("sql", "sql");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -175,6 +198,9 @@ public interface ILineageProcess {
 
     /** TBC */
     String getAssetDbtUniqueId();
+
+    /** TBC */
+    String getAssetIcon();
 
     /** TBC */
     SortedSet<String> getAssetMcIncidentNames();

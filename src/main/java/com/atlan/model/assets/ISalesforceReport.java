@@ -7,6 +7,8 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -28,6 +30,21 @@ import javax.annotation.processing.Generated;
 public interface ISalesforceReport {
 
     public static final String TYPE_NAME = "SalesforceReport";
+
+    /** TBC */
+    RelationField DASHBOARDS = new RelationField("dashboards");
+
+    /** List of column names on the report. */
+    KeywordField DETAIL_COLUMNS = new KeywordField("detailColumns", "detailColumns");
+
+    /** TBC */
+    RelationField ORGANIZATION = new RelationField("organization");
+
+    /** Type of report in Salesforce. */
+    KeywordField REPORT_TYPE = new KeywordField("reportType", "reportType");
+
+    /** ID of the report in Salesforce. */
+    KeywordField SOURCE_ID = new KeywordField("sourceId", "sourceId");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -177,6 +194,9 @@ public interface ISalesforceReport {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -279,6 +299,9 @@ public interface ISalesforceReport {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -319,6 +342,9 @@ public interface ISalesforceReport {
 
     /** TBC */
     String getOrganizationQualifiedName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

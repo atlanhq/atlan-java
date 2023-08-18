@@ -7,6 +7,10 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.KeywordTextField;
+import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.GoogleLabel;
 import com.atlan.model.structs.GoogleTag;
@@ -30,6 +34,59 @@ import javax.annotation.processing.Generated;
 public interface IGCSObject {
 
     public static final String TYPE_NAME = "GCSObject";
+
+    /** GCS bucket in which the object exists. */
+    RelationField GCS_BUCKET = new RelationField("gcsBucket");
+
+    /** Human-readable name of the bucket in which this object exists. */
+    KeywordTextField GCS_BUCKET_NAME = new KeywordTextField("gcsBucketName", "gcsBucketName.keyword", "gcsBucketName");
+
+    /** qualifiedName of the bucket in which this object exists. */
+    KeywordTextField GCS_BUCKET_QUALIFIED_NAME =
+            new KeywordTextField("gcsBucketQualifiedName", "gcsBucketQualifiedName", "gcsBucketQualifiedName.text");
+
+    /** TBC */
+    KeywordField GCS_OBJECT_CRC32C_HASH = new KeywordField("gcsObjectCRC32CHash", "gcsObjectCRC32CHash");
+
+    /** Information about how the object's content should be presented. */
+    KeywordField GCS_OBJECT_CONTENT_DISPOSITION =
+            new KeywordField("gcsObjectContentDisposition", "gcsObjectContentDisposition");
+
+    /** TBC */
+    KeywordField GCS_OBJECT_CONTENT_ENCODING = new KeywordField("gcsObjectContentEncoding", "gcsObjectContentEncoding");
+
+    /** TBC */
+    KeywordField GCS_OBJECT_CONTENT_LANGUAGE = new KeywordField("gcsObjectContentLanguage", "gcsObjectContentLanguage");
+
+    /** Type of content in the object. */
+    KeywordField GCS_OBJECT_CONTENT_TYPE = new KeywordField("gcsObjectContentType", "gcsObjectContentType");
+
+    /** TBC */
+    NumericField GCS_OBJECT_DATA_LAST_MODIFIED_TIME =
+            new NumericField("gcsObjectDataLastModifiedTime", "gcsObjectDataLastModifiedTime");
+
+    /** TBC */
+    NumericField GCS_OBJECT_GENERATION_ID = new NumericField("gcsObjectGenerationId", "gcsObjectGenerationId");
+
+    /** TBC */
+    KeywordField GCS_OBJECT_HOLD_TYPE = new KeywordField("gcsObjectHoldType", "gcsObjectHoldType");
+
+    /** TBC */
+    KeywordTextField GCS_OBJECT_KEY = new KeywordTextField("gcsObjectKey", "gcsObjectKey", "gcsObjectKey.text");
+
+    /** TBC */
+    KeywordField GCS_OBJECT_MD5HASH = new KeywordField("gcsObjectMD5Hash", "gcsObjectMD5Hash");
+
+    /** TBC */
+    KeywordTextField GCS_OBJECT_MEDIA_LINK =
+            new KeywordTextField("gcsObjectMediaLink", "gcsObjectMediaLink", "gcsObjectMediaLink.text");
+
+    /** TBC */
+    NumericField GCS_OBJECT_RETENTION_EXPIRATION_DATE =
+            new NumericField("gcsObjectRetentionExpirationDate", "gcsObjectRetentionExpirationDate");
+
+    /** Object size in bytes. */
+    NumericField GCS_OBJECT_SIZE = new NumericField("gcsObjectSize", "gcsObjectSize");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -174,6 +231,9 @@ public interface IGCSObject {
 
     /** TBC */
     String getAssetDbtUniqueId();
+
+    /** TBC */
+    String getAssetIcon();
 
     /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
@@ -362,6 +422,9 @@ public interface IGCSObject {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -396,6 +459,9 @@ public interface IGCSObject {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

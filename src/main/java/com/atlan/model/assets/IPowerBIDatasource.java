@@ -8,6 +8,8 @@ import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.PowerBIEndorsementType;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -29,6 +31,12 @@ import javax.annotation.processing.Generated;
 public interface IPowerBIDatasource {
 
     public static final String TYPE_NAME = "PowerBIDatasource";
+
+    /** TBC */
+    KeywordField CONNECTION_DETAILS = new KeywordField("connectionDetails", "connectionDetails");
+
+    /** TBC */
+    RelationField DATASETS = new RelationField("datasets");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -175,6 +183,9 @@ public interface IPowerBIDatasource {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -277,6 +288,9 @@ public interface IPowerBIDatasource {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -311,6 +325,9 @@ public interface IPowerBIDatasource {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

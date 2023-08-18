@@ -7,6 +7,8 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -28,6 +30,12 @@ import javax.annotation.processing.Generated;
 public interface ISigmaWorkbook {
 
     public static final String TYPE_NAME = "SigmaWorkbook";
+
+    /** Number of pages that exist within this workbook. */
+    NumericField SIGMA_PAGE_COUNT = new NumericField("sigmaPageCount", "sigmaPageCount");
+
+    /** Pages that exist within this workbook. */
+    RelationField SIGMA_PAGES = new RelationField("sigmaPages");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -174,6 +182,9 @@ public interface ISigmaWorkbook {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -270,6 +281,9 @@ public interface ISigmaWorkbook {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -304,6 +318,9 @@ public interface ISigmaWorkbook {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

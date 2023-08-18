@@ -8,6 +8,9 @@ import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.GoogleDataStudioAssetType;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.BooleanField;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.KeywordTextStemmedField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.GoogleLabel;
 import com.atlan.model.structs.GoogleTag;
@@ -31,6 +34,23 @@ import javax.annotation.processing.Generated;
 public interface IDataStudioAsset {
 
     public static final String TYPE_NAME = "DataStudioAsset";
+
+    /** Owner of the asset within Google Data Studio. */
+    KeywordField DATA_STUDIO_ASSET_OWNER = new KeywordField("dataStudioAssetOwner", "dataStudioAssetOwner");
+
+    /** Title for the asset. */
+    KeywordTextStemmedField DATA_STUDIO_ASSET_TITLE = new KeywordTextStemmedField(
+            "dataStudioAssetTitle",
+            "dataStudioAssetTitle.keyword",
+            "dataStudioAssetTitle",
+            "dataStudioAssetTitle.stemmed");
+
+    /** Type of Google Data Studio asset. */
+    KeywordField DATA_STUDIO_ASSET_TYPE = new KeywordField("dataStudioAssetType", "dataStudioAssetType");
+
+    /** Whether the asset is soft-deleted in Google Data Studio (true) or not (false). */
+    BooleanField IS_TRASHED_DATA_STUDIO_ASSET =
+            new BooleanField("isTrashedDataStudioAsset", "isTrashedDataStudioAsset");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -177,6 +197,9 @@ public interface IDataStudioAsset {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -306,6 +329,9 @@ public interface IDataStudioAsset {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -343,6 +369,9 @@ public interface IDataStudioAsset {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

@@ -8,6 +8,7 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -29,6 +30,15 @@ import javax.annotation.processing.Generated;
 public interface IPersona {
 
     public static final String TYPE_NAME = "Persona";
+
+    /** Groups for whom this persona is accessible. */
+    KeywordField PERSONA_GROUPS = new KeywordField("personaGroups", "personaGroups");
+
+    /** Users for whom this persona is accessible. */
+    KeywordField PERSONA_USERS = new KeywordField("personaUsers", "personaUsers");
+
+    /** TBC */
+    KeywordField ROLE_ID = new KeywordField("roleId", "roleId");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -173,6 +183,9 @@ public interface IPersona {
 
     /** TBC */
     String getAssetDbtUniqueId();
+
+    /** TBC */
+    String getAssetIcon();
 
     /** TBC */
     SortedSet<String> getAssetMcIncidentNames();

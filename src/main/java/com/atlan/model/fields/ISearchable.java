@@ -3,8 +3,6 @@
 package com.atlan.model.fields;
 
 import co.elastic.clients.elasticsearch._types.query_dsl.*;
-import com.atlan.exception.AtlanException;
-import com.atlan.exception.InvalidRequestException;
 
 public interface ISearchable {
     /**
@@ -13,10 +11,8 @@ public interface ISearchable {
      *
      * @return a query that will only match assets that have some non-null, non-empty value
      *         (no matter what actual value) for the field
-     * @throws InvalidRequestException if this query does not make sense to run on the field
-     * @throws AtlanException on any API communication issue
      */
-    Query exists() throws AtlanException;
+    Query exists();
 
     /**
      * Returns a query that will only match assets that have some non-null, non-empty value

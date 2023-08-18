@@ -211,6 +211,11 @@ public enum ErrorCode implements ExceptionMessageSet {
             "ATLAN-JAVA-400-038",
             "One or more required parameters to create a relationship to {0} are missing: {1}.",
             "You must provide all of the parameters listed to relate to assets of this type."),
+    INVALID_QUERY(
+            400,
+            "ATLAN-JAVA-400-039",
+            "Cannot create a {0} query on field: {1}.",
+            "You can either try a different field, or try a different kind of query."),
 
     AUTHENTICATION_PASSTHROUGH(
             401,

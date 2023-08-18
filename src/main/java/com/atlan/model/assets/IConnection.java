@@ -9,6 +9,9 @@ import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.QueryUsernameStrategy;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.BooleanField;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.NumericField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -30,6 +33,80 @@ import javax.annotation.processing.Generated;
 public interface IConnection {
 
     public static final String TYPE_NAME = "Connection";
+
+    /** When true, allow the source to be queried. */
+    BooleanField ALLOW_QUERY = new BooleanField("allowQuery", "allowQuery");
+
+    /** When true, allow data previews of the source. */
+    BooleanField ALLOW_QUERY_PREVIEW = new BooleanField("allowQueryPreview", "allowQueryPreview");
+
+    /** Type of connection. */
+    KeywordField CATEGORY = new KeywordField("category", "category");
+
+    /** TBC */
+    KeywordField CONNECTION_DBT_ENVIRONMENTS =
+            new KeywordField("connectionDbtEnvironments", "connectionDbtEnvironments");
+
+    /** TBC */
+    KeywordField CONNECTION_SSO_CREDENTIAL_GUID =
+            new KeywordField("connectionSSOCredentialGuid", "connectionSSOCredentialGuid");
+
+    /** Despite the name, this is not used for anything. Only the value of connectorName impacts icons. */
+    KeywordField CONNECTOR_ICON = new KeywordField("connectorIcon", "connectorIcon");
+
+    /** Despite the name, this is not used for anything. Only the value of connectorName impacts icons. */
+    KeywordField CONNECTOR_IMAGE = new KeywordField("connectorImage", "connectorImage");
+
+    /** TBC */
+    KeywordField CREDENTIAL_STRATEGY = new KeywordField("credentialStrategy", "credentialStrategy");
+
+    /** TBC */
+    KeywordField DEFAULT_CREDENTIAL_GUID = new KeywordField("defaultCredentialGuid", "defaultCredentialGuid");
+
+    /** Whether the connection has popularity insights (true) or not (false). */
+    BooleanField HAS_POPULARITY_INSIGHTS = new BooleanField("hasPopularityInsights", "hasPopularityInsights");
+
+    /** Host name of the connection's source. */
+    KeywordField HOST = new KeywordField("host", "host");
+
+    /** Whether sample data can be previewed for this connection (true) or not (false). */
+    BooleanField IS_SAMPLE_DATA_PREVIEW_ENABLED =
+            new BooleanField("isSampleDataPreviewEnabled", "isSampleDataPreviewEnabled");
+
+    /** TBC */
+    KeywordField POLICY_STRATEGY = new KeywordField("policyStrategy", "policyStrategy");
+
+    /** Number of days over which popularity is calculated, for example 30 days. */
+    NumericField POPULARITY_INSIGHTS_TIMEFRAME =
+            new NumericField("popularityInsightsTimeframe", "popularityInsightsTimeframe");
+
+    /** Port number to the connection's source. */
+    NumericField PORT = new NumericField("port", "port");
+
+    /** TBC */
+    KeywordField PREVIEW_CREDENTIAL_STRATEGY =
+            new KeywordField("previewCredentialStrategy", "previewCredentialStrategy");
+
+    /** TBC */
+    KeywordField QUERY_CONFIG = new KeywordField("queryConfig", "queryConfig");
+
+    /** TBC */
+    KeywordField QUERY_PREVIEW_CONFIG = new KeywordField("queryPreviewConfig", "queryPreviewConfig");
+
+    /** TBC */
+    NumericField QUERY_TIMEOUT = new NumericField("queryTimeout", "queryTimeout");
+
+    /** TBC */
+    KeywordField QUERY_USERNAME_STRATEGY = new KeywordField("queryUsernameStrategy", "queryUsernameStrategy");
+
+    /** Maximum number of rows that can be returned for the source. */
+    NumericField ROW_LIMIT = new NumericField("rowLimit", "rowLimit");
+
+    /** Despite the name, this is not used for anything. Only the value of connectorName impacts icons. */
+    KeywordField SOURCE_LOGO = new KeywordField("sourceLogo", "sourceLogo");
+
+    /** Subtype of the connection. */
+    KeywordField SUB_CATEGORY = new KeywordField("subCategory", "subCategory");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -180,6 +257,9 @@ public interface IConnection {
 
     /** TBC */
     String getAssetDbtUniqueId();
+
+    /** TBC */
+    String getAssetIcon();
 
     /** TBC */
     SortedSet<String> getAssetMcIncidentNames();

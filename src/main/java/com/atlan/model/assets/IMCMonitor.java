@@ -7,6 +7,12 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.BooleanField;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.KeywordTextField;
+import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.MCRuleComparison;
 import com.atlan.model.structs.MCRuleSchedule;
@@ -30,6 +36,64 @@ import javax.annotation.processing.Generated;
 public interface IMCMonitor {
 
     public static final String TYPE_NAME = "MCMonitor";
+
+    /** Condition on which the monitor produces an alert. */
+    TextField MC_MONITOR_ALERT_CONDITION = new TextField("mcMonitorAlertCondition", "null");
+
+    /** Assets impacted by this monitor. */
+    RelationField MC_MONITOR_ASSETS = new RelationField("mcMonitorAssets");
+
+    /** TBC */
+    NumericField MC_MONITOR_BREACH_RATE = new NumericField("mcMonitorBreachRate", "mcMonitorBreachRate");
+
+    /** Unique identifier for the monitor. */
+    KeywordField MC_MONITOR_ID = new KeywordField("mcMonitorId", "mcMonitorId");
+
+    /** Number of incidents associated with this monitor. */
+    NumericField MC_MONITOR_INCIDENT_COUNT = new NumericField("mcMonitorIncidentCount", "mcMonitorIncidentCount");
+
+    /** Namespace of the monitor. */
+    KeywordTextField MC_MONITOR_NAMESPACE =
+            new KeywordTextField("mcMonitorNamespace", "mcMonitorNamespace.keyword", "mcMonitorNamespace");
+
+    /** Comparison logic used for the rule. */
+    KeywordField MC_MONITOR_RULE_COMPARISONS = new KeywordField("mcMonitorRuleComparisons", "mcMonitorRuleComparisons");
+
+    /** SQL code for custom SQL rules. */
+    KeywordField MC_MONITOR_RULE_CUSTOM_SQL = new KeywordField("mcMonitorRuleCustomSql", "mcMonitorRuleCustomSql");
+
+    /** Whether the rule is currently snoozed (true) or not (false). */
+    BooleanField MC_MONITOR_RULE_IS_SNOOZED = new BooleanField("mcMonitorRuleIsSnoozed", "mcMonitorRuleIsSnoozed");
+
+    /** Time at which the next execution of the rule should occur. */
+    NumericField MC_MONITOR_RULE_NEXT_EXECUTION_TIME =
+            new NumericField("mcMonitorRuleNextExecutionTime", "mcMonitorRuleNextExecutionTime");
+
+    /** Time at which the previous execution of the rule occurred. */
+    NumericField MC_MONITOR_RULE_PREVIOUS_EXECUTION_TIME =
+            new NumericField("mcMonitorRulePreviousExecutionTime", "mcMonitorRulePreviousExecutionTime");
+
+    /** Schedule details for the rule. */
+    KeywordField MC_MONITOR_RULE_SCHEDULE_CONFIG =
+            new KeywordField("mcMonitorRuleScheduleConfig", "mcMonitorRuleScheduleConfig");
+
+    /** Readable description of the schedule for the rule. */
+    TextField MC_MONITOR_RULE_SCHEDULE_CONFIG_HUMANIZED = new TextField("mcMonitorRuleScheduleConfigHumanized", "null");
+
+    /** Type of rule for the monitor. */
+    KeywordField MC_MONITOR_RULE_TYPE = new KeywordField("mcMonitorRuleType", "mcMonitorRuleType");
+
+    /** Type of schedule for the monitor, for example fixed or dynamic. */
+    KeywordField MC_MONITOR_SCHEDULE_TYPE = new KeywordField("mcMonitorScheduleType", "mcMonitorScheduleType");
+
+    /** Status of the monitor. */
+    KeywordField MC_MONITOR_STATUS = new KeywordField("mcMonitorStatus", "mcMonitorStatus");
+
+    /** Type of monitor, for example field health (stats) or dimension tracking (categories). */
+    KeywordField MC_MONITOR_TYPE = new KeywordField("mcMonitorType", "mcMonitorType");
+
+    /** Name of the warehouse for the monitor. */
+    KeywordField MC_MONITOR_WAREHOUSE = new KeywordField("mcMonitorWarehouse", "mcMonitorWarehouse");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -176,6 +240,9 @@ public interface IMCMonitor {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -272,6 +339,9 @@ public interface IMCMonitor {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -366,6 +436,9 @@ public interface IMCMonitor {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

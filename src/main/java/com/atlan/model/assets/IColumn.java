@@ -7,6 +7,11 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.BooleanField;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.KeywordTextField;
+import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.ColumnValueFrequencyMap;
 import com.atlan.model.structs.Histogram;
@@ -30,6 +35,210 @@ import javax.annotation.processing.Generated;
 public interface IColumn {
 
     public static final String TYPE_NAME = "Column";
+
+    /** TBC */
+    NumericField COLUMN_AVERAGE = new NumericField("columnAverage", "columnAverage");
+
+    /** Average length of values in a string column. */
+    NumericField COLUMN_AVERAGE_LENGTH = new NumericField("columnAverageLength", "columnAverageLength");
+
+    /** TBC */
+    RelationField COLUMN_DBT_MODEL_COLUMNS = new RelationField("columnDbtModelColumns");
+
+    /** Level of nesting, used for STRUCT/NESTED columns */
+    NumericField COLUMN_DEPTH_LEVEL = new NumericField("columnDepthLevel", "columnDepthLevel");
+
+    /** Number of rows that contain distinct values. */
+    NumericField COLUMN_DISTINCT_VALUES_COUNT =
+            new NumericField("columnDistinctValuesCount", "columnDistinctValuesCount");
+
+    /** TBC */
+    NumericField COLUMN_DISTINCT_VALUES_COUNT_LONG =
+            new NumericField("columnDistinctValuesCountLong", "columnDistinctValuesCountLong");
+
+    /** Number of rows that contain duplicate values. */
+    NumericField COLUMN_DUPLICATE_VALUES_COUNT =
+            new NumericField("columnDuplicateValuesCount", "columnDuplicateValuesCount");
+
+    /** TBC */
+    NumericField COLUMN_DUPLICATE_VALUES_COUNT_LONG =
+            new NumericField("columnDuplicateValuesCountLong", "columnDuplicateValuesCountLong");
+
+    /** List of values in a histogram that represents the contents of the column. */
+    KeywordField COLUMN_HISTOGRAM = new KeywordField("columnHistogram", "columnHistogram");
+
+    /** Greatest value in a numeric column. */
+    NumericField COLUMN_MAX = new NumericField("columnMax", "columnMax");
+
+    /** Length of the longest value in a string column. */
+    NumericField COLUMN_MAXIMUM_STRING_LENGTH =
+            new NumericField("columnMaximumStringLength", "columnMaximumStringLength");
+
+    /** List of the greatest values in a column. */
+    KeywordField COLUMN_MAXS = new KeywordField("columnMaxs", "columnMaxs");
+
+    /** Arithmetic mean of the values in a numeric column. */
+    NumericField COLUMN_MEAN = new NumericField("columnMean", "columnMean");
+
+    /** Calculated median of the values in a numeric column. */
+    NumericField COLUMN_MEDIAN = new NumericField("columnMedian", "columnMedian");
+
+    /** Least value in a numeric column. */
+    NumericField COLUMN_MIN = new NumericField("columnMin", "columnMin");
+
+    /** Length of the shortest value in a string column. */
+    NumericField COLUMN_MINIMUM_STRING_LENGTH =
+            new NumericField("columnMinimumStringLength", "columnMinimumStringLength");
+
+    /** List of the least values in a column. */
+    KeywordField COLUMN_MINS = new KeywordField("columnMins", "columnMins");
+
+    /** Number of rows in a column that do not contain content. */
+    NumericField COLUMN_MISSING_VALUES_COUNT = new NumericField("columnMissingValuesCount", "columnMissingValuesCount");
+
+    /** TBC */
+    NumericField COLUMN_MISSING_VALUES_COUNT_LONG =
+            new NumericField("columnMissingValuesCountLong", "columnMissingValuesCountLong");
+
+    /** Percentage of rows in a column that do not contain content. */
+    NumericField COLUMN_MISSING_VALUES_PERCENTAGE =
+            new NumericField("columnMissingValuesPercentage", "columnMissingValuesPercentage");
+
+    /** Calculated standard deviation of the values in a numeric column. */
+    NumericField COLUMN_STANDARD_DEVIATION = new NumericField("columnStandardDeviation", "columnStandardDeviation");
+
+    /** Calculated sum of the values in a numeric column. */
+    NumericField COLUMN_SUM = new NumericField("columnSum", "columnSum");
+
+    /** TBC */
+    KeywordField COLUMN_TOP_VALUES = new KeywordField("columnTopValues", "columnTopValues");
+
+    /** Number of rows in which a value in this column appears only once. */
+    NumericField COLUMN_UNIQUE_VALUES_COUNT = new NumericField("columnUniqueValuesCount", "columnUniqueValuesCount");
+
+    /** TBC */
+    NumericField COLUMN_UNIQUE_VALUES_COUNT_LONG =
+            new NumericField("columnUniqueValuesCountLong", "columnUniqueValuesCountLong");
+
+    /** Ratio indicating how unique data in the column is: 0 indicates that all values are the same, 100 indicates that all values in the column are unique. */
+    NumericField COLUMN_UNIQUENESS_PERCENTAGE =
+            new NumericField("columnUniquenessPercentage", "columnUniquenessPercentage");
+
+    /** Calculated variance of the values in a numeric column. */
+    NumericField COLUMN_VARIANCE = new NumericField("columnVariance", "columnVariance");
+
+    /** TBC */
+    RelationField DATA_QUALITY_METRIC_DIMENSIONS = new RelationField("dataQualityMetricDimensions");
+
+    /** Data type of values in the column. */
+    KeywordTextField DATA_TYPE = new KeywordTextField("dataType", "dataType", "dataType.text");
+
+    /** TBC */
+    RelationField DBT_METRICS = new RelationField("dbtMetrics");
+
+    /** TBC */
+    RelationField DBT_MODEL_COLUMNS = new RelationField("dbtModelColumns");
+
+    /** TBC */
+    KeywordField DEFAULT_VALUE = new KeywordField("defaultValue", "defaultValue");
+
+    /** Column this column refers to as a foreign key. */
+    RelationField FOREIGN_KEY_FROM = new RelationField("foreignKeyFrom");
+
+    /** All the columns that refer to this column as a foreign key. NOTE: when providing values to this relationship, isForeign must also be set to true. */
+    RelationField FOREIGN_KEY_TO = new RelationField("foreignKeyTo");
+
+    /** TBC */
+    BooleanField IS_CLUSTERED = new BooleanField("isClustered", "isClustered");
+
+    /** TBC */
+    BooleanField IS_DIST = new BooleanField("isDist", "isDist");
+
+    /** When true, this column is a foreign key to another table. NOTE: this must be true when using the foreignKeyTo relationship to specify columns that refer to this column as a foreign key. */
+    BooleanField IS_FOREIGN = new BooleanField("isForeign", "isForeign");
+
+    /** When true, this column is indexed in the database. */
+    BooleanField IS_INDEXED = new BooleanField("isIndexed", "isIndexed");
+
+    /** When true, the values in this column can be null. */
+    BooleanField IS_NULLABLE = new BooleanField("isNullable", "isNullable");
+
+    /** TBC */
+    BooleanField IS_PARTITION = new BooleanField("isPartition", "isPartition");
+
+    /** TBC */
+    BooleanField IS_PINNED = new BooleanField("isPinned", "isPinned");
+
+    /** When true, this column is the primary key for the table. */
+    BooleanField IS_PRIMARY = new BooleanField("isPrimary", "isPrimary");
+
+    /** TBC */
+    BooleanField IS_SORT = new BooleanField("isSort", "isSort");
+
+    /** Materialized view in which this column exists, or empty if the column instead exists in a table or view. */
+    RelationField MATERIALIZED_VIEW = new RelationField("materialisedView");
+
+    /** Maximum length of a value in this column. */
+    NumericField MAX_LENGTH = new NumericField("maxLength", "maxLength");
+
+    /** TBC */
+    RelationField METRIC_TIMESTAMPS = new RelationField("metricTimestamps");
+
+    /** TBC */
+    NumericField NESTED_COLUMN_COUNT = new NumericField("nestedColumnCount", "nestedColumnCount");
+
+    /** TBC */
+    RelationField NESTED_COLUMNS = new RelationField("nestedColumns");
+
+    /** Number of digits allowed to the right of the decimal point. */
+    NumericField NUMERIC_SCALE = new NumericField("numericScale", "numericScale");
+
+    /** Order (position) in which the column appears in the table (starting at 1). */
+    NumericField ORDER = new NumericField("order", "order");
+
+    /** TBC */
+    RelationField PARENT_COLUMN = new RelationField("parentColumn");
+
+    /** TBC */
+    KeywordTextField PARENT_COLUMN_NAME =
+            new KeywordTextField("parentColumnName", "parentColumnName.keyword", "parentColumnName");
+
+    /** TBC */
+    KeywordTextField PARENT_COLUMN_QUALIFIED_NAME = new KeywordTextField(
+            "parentColumnQualifiedName", "parentColumnQualifiedName", "parentColumnQualifiedName.text");
+
+    /** TBC */
+    NumericField PARTITION_ORDER = new NumericField("partitionOrder", "partitionOrder");
+
+    /** TBC */
+    NumericField PINNED_AT = new NumericField("pinnedAt", "pinnedAt");
+
+    /** TBC */
+    KeywordField PINNED_BY = new KeywordField("pinnedBy", "pinnedBy");
+
+    /** Total number of digits allowed when the dataType is numeric. */
+    NumericField PRECISION = new NumericField("precision", "precision");
+
+    /** Queries that involve this column. */
+    RelationField QUERIES = new RelationField("queries");
+
+    /** TBC */
+    KeywordField RAW_DATA_TYPE_DEFINITION = new KeywordField("rawDataTypeDefinition", "rawDataTypeDefinition");
+
+    /** TBC */
+    KeywordField SUB_DATA_TYPE = new KeywordField("subDataType", "subDataType");
+
+    /** Table in which this column exists, or empty if the column instead exists in a view or materialized view. */
+    RelationField TABLE = new RelationField("table");
+
+    /** TBC */
+    RelationField TABLE_PARTITION = new RelationField("tablePartition");
+
+    /** TBC */
+    KeywordField VALIDATIONS = new KeywordField("validations", "validations");
+
+    /** View in which this column exists, or empty if the column instead exists in a table or materialized view. */
+    RelationField VIEW = new RelationField("view");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -174,6 +383,9 @@ public interface IColumn {
 
     /** TBC */
     String getAssetDbtUniqueId();
+
+    /** TBC */
+    String getAssetIcon();
 
     /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
@@ -389,6 +601,9 @@ public interface IColumn {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -477,6 +692,9 @@ public interface IColumn {
 
     /** Order (position) in which the column appears in the table (starting at 1). */
     Integer getOrder();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

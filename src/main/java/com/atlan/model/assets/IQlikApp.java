@@ -7,6 +7,10 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.BooleanField;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -28,6 +32,27 @@ import javax.annotation.processing.Generated;
 public interface IQlikApp {
 
     public static final String TYPE_NAME = "QlikApp";
+
+    /** Static space taken up by the app. */
+    NumericField QLIK_APP_STATIC_BYTE_SIZE = new NumericField("qlikAppStaticByteSize", "qlikAppStaticByteSize");
+
+    /** Whether section access or data masking is enabled (true) or not (false). */
+    BooleanField QLIK_HAS_SECTION_ACCESS = new BooleanField("qlikHasSectionAccess", "qlikHasSectionAccess");
+
+    /** Whether the app is in direct query mode (true) or not (false). */
+    BooleanField QLIK_IS_DIRECT_QUERY_MODE = new BooleanField("qlikIsDirectQueryMode", "qlikIsDirectQueryMode");
+
+    /** Whether the app is encrypted (true) or not (false). */
+    BooleanField QLIK_IS_ENCRYPTED = new BooleanField("qlikIsEncrypted", "qlikIsEncrypted");
+
+    /** Origin App ID of the Qlik app. */
+    KeywordField QLIK_ORIGIN_APP_ID = new KeywordField("qlikOriginAppId", "qlikOriginAppId");
+
+    /** Sheets that exist within the app. */
+    RelationField QLIK_SHEETS = new RelationField("qlikSheets");
+
+    /** Space in which the app exists. */
+    RelationField QLIK_SPACE = new RelationField("qlikSpace");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -174,6 +199,9 @@ public interface IQlikApp {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -270,6 +298,9 @@ public interface IQlikApp {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -304,6 +335,9 @@ public interface IQlikApp {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

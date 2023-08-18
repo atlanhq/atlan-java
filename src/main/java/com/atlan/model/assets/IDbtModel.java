@@ -7,6 +7,9 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -28,6 +31,64 @@ import javax.annotation.processing.Generated;
 public interface IDbtModel {
 
     public static final String TYPE_NAME = "DbtModel";
+
+    /** TBC */
+    KeywordField DBT_COMPILED_SQL = new KeywordField("dbtCompiledSQL", "dbtCompiledSQL");
+
+    /** TBC */
+    KeywordField DBT_ERROR = new KeywordField("dbtError", "dbtError");
+
+    /** TBC */
+    KeywordField DBT_MATERIALIZATION_TYPE = new KeywordField("dbtMaterializationType", "dbtMaterializationType");
+
+    /** TBC */
+    RelationField DBT_METRICS = new RelationField("dbtMetrics");
+
+    /** TBC */
+    RelationField DBT_MODEL_COLUMNS = new RelationField("dbtModelColumns");
+
+    /** TBC */
+    NumericField DBT_MODEL_COMPILE_COMPLETED_AT =
+            new NumericField("dbtModelCompileCompletedAt", "dbtModelCompileCompletedAt");
+
+    /** TBC */
+    NumericField DBT_MODEL_COMPILE_STARTED_AT =
+            new NumericField("dbtModelCompileStartedAt", "dbtModelCompileStartedAt");
+
+    /** TBC */
+    NumericField DBT_MODEL_EXECUTE_COMPLETED_AT =
+            new NumericField("dbtModelExecuteCompletedAt", "dbtModelExecuteCompletedAt");
+
+    /** TBC */
+    NumericField DBT_MODEL_EXECUTE_STARTED_AT =
+            new NumericField("dbtModelExecuteStartedAt", "dbtModelExecuteStartedAt");
+
+    /** TBC */
+    NumericField DBT_MODEL_EXECUTION_TIME = new NumericField("dbtModelExecutionTime", "dbtModelExecutionTime");
+
+    /** TBC */
+    NumericField DBT_MODEL_RUN_ELAPSED_TIME = new NumericField("dbtModelRunElapsedTime", "dbtModelRunElapsedTime");
+
+    /** TBC */
+    NumericField DBT_MODEL_RUN_GENERATED_AT = new NumericField("dbtModelRunGeneratedAt", "dbtModelRunGeneratedAt");
+
+    /** TBC */
+    RelationField DBT_MODEL_SQL_ASSETS = new RelationField("dbtModelSqlAssets");
+
+    /** TBC */
+    KeywordField DBT_RAW_SQL = new KeywordField("dbtRawSQL", "dbtRawSQL");
+
+    /** TBC */
+    KeywordField DBT_STATS = new KeywordField("dbtStats", "dbtStats");
+
+    /** TBC */
+    KeywordField DBT_STATUS = new KeywordField("dbtStatus", "dbtStatus");
+
+    /** TBC */
+    RelationField DBT_TESTS = new RelationField("dbtTests");
+
+    /** TBC */
+    RelationField PRIMARY_SQL_ASSET = new RelationField("sqlAsset");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -172,6 +233,9 @@ public interface IDbtModel {
 
     /** TBC */
     String getAssetDbtUniqueId();
+
+    /** TBC */
+    String getAssetIcon();
 
     /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
@@ -375,6 +439,9 @@ public interface IDbtModel {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -409,6 +476,9 @@ public interface IDbtModel {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

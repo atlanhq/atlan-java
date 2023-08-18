@@ -6,12 +6,24 @@ import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import com.atlan.model.enums.AtlanEnum;
 import java.util.Collection;
 
+/**
+ * Represents any field in Atlan that can be searched by keyword or text-based search operations,
+ * including a stemmed variation of the text analyzers.
+ */
 public class KeywordTextStemmedField extends SearchableField
         implements IKeywordSearchable, ITextSearchable, IStemmedSearchable {
 
     private final String textFieldName;
     private final String stemmedFieldName;
 
+    /**
+     * Default constructor.
+     *
+     * @param atlan name of the attribute in the metastore
+     * @param keyword name of the keyword field in the search index
+     * @param text name of the text field in the search index
+     * @param stemmed name of the stemmed text field in the search index
+     */
     public KeywordTextStemmedField(String atlan, String keyword, String text, String stemmed) {
         super(atlan, keyword);
         this.textFieldName = text;

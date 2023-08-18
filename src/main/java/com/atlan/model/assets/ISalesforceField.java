@@ -7,6 +7,12 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.BooleanField;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.KeywordTextField;
+import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -28,6 +34,60 @@ import javax.annotation.processing.Generated;
 public interface ISalesforceField {
 
     public static final String TYPE_NAME = "SalesforceField";
+
+    /** Data type of values in the field. */
+    KeywordTextField DATA_TYPE = new KeywordTextField("dataType", "dataType", "dataType.text");
+
+    /** TBC */
+    KeywordField DEFAULT_VALUE_FORMULA = new KeywordField("defaultValueFormula", "defaultValueFormula");
+
+    /** TBC */
+    KeywordField FORMULA = new KeywordField("formula", "formula");
+
+    /** TBC */
+    TextField INLINE_HELP_TEXT = new TextField("inlineHelpText", "null");
+
+    /** TBC */
+    BooleanField IS_CALCULATED = new BooleanField("isCalculated", "isCalculated");
+
+    /** TBC */
+    BooleanField IS_CASE_SENSITIVE = new BooleanField("isCaseSensitive", "isCaseSensitive");
+
+    /** TBC */
+    BooleanField IS_ENCRYPTED = new BooleanField("isEncrypted", "isEncrypted");
+
+    /** TBC */
+    BooleanField IS_NULLABLE = new BooleanField("isNullable", "isNullable");
+
+    /** Whether the field references a record of multiple objects (true) or not (false). */
+    BooleanField IS_POLYMORPHIC_FOREIGN_KEY = new BooleanField("isPolymorphicForeignKey", "isPolymorphicForeignKey");
+
+    /** TBC */
+    BooleanField IS_UNIQUE = new BooleanField("isUnique", "isUnique");
+
+    /** TBC */
+    RelationField LOOKUP_OBJECTS = new RelationField("lookupObjects");
+
+    /** TBC */
+    NumericField MAX_LENGTH = new NumericField("maxLength", "maxLength");
+
+    /** Number of digits allowed to the right of the decimal point. */
+    NumericField NUMERIC_SCALE = new NumericField("numericScale", "numericScale");
+
+    /** TBC */
+    RelationField OBJECT = new RelationField("object");
+
+    /** TBC */
+    KeywordField OBJECT_QUALIFIED_NAME = new KeywordField("objectQualifiedName", "objectQualifiedName");
+
+    /** TBC */
+    NumericField ORDER = new NumericField("order", "order");
+
+    /** List of values from which a user can pick while adding a record. */
+    KeywordField PICKLIST_VALUES = new KeywordField("picklistValues", "picklistValues");
+
+    /** Total number of digits allowed. */
+    NumericField PRECISION = new NumericField("precision", "precision");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -177,6 +237,9 @@ public interface ISalesforceField {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -285,6 +348,9 @@ public interface ISalesforceField {
     String getInlineHelpText();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -358,6 +424,9 @@ public interface ISalesforceField {
 
     /** TBC */
     String getOrganizationQualifiedName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

@@ -7,6 +7,9 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -28,6 +31,22 @@ import javax.annotation.processing.Generated;
 public interface ISigmaDataElement {
 
     public static final String TYPE_NAME = "SigmaDataElement";
+
+    /** Number of data element fields within this data element. */
+    NumericField SIGMA_DATA_ELEMENT_FIELD_COUNT =
+            new NumericField("sigmaDataElementFieldCount", "sigmaDataElementFieldCount");
+
+    /** Data element fields within this data element. */
+    RelationField SIGMA_DATA_ELEMENT_FIELDS = new RelationField("sigmaDataElementFields");
+
+    /** TBC */
+    KeywordField SIGMA_DATA_ELEMENT_QUERY = new KeywordField("sigmaDataElementQuery", "sigmaDataElementQuery");
+
+    /** TBC */
+    KeywordField SIGMA_DATA_ELEMENT_TYPE = new KeywordField("sigmaDataElementType", "sigmaDataElementType");
+
+    /** Page that contains this data element. */
+    RelationField SIGMA_PAGE = new RelationField("sigmaPage");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -174,6 +193,9 @@ public interface ISigmaDataElement {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -270,6 +292,9 @@ public interface ISigmaDataElement {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -304,6 +329,9 @@ public interface ISigmaDataElement {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

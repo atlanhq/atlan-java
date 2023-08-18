@@ -7,6 +7,7 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -28,6 +29,12 @@ import javax.annotation.processing.Generated;
 public interface IMonteCarlo {
 
     public static final String TYPE_NAME = "MonteCarlo";
+
+    /** TBC */
+    KeywordField MC_ASSET_QUALIFIED_NAMES = new KeywordField("mcAssetQualifiedNames", "mcAssetQualifiedNames");
+
+    /** TBC */
+    KeywordField MC_LABELS = new KeywordField("mcLabels", "mcLabels");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -174,6 +181,9 @@ public interface IMonteCarlo {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -270,6 +280,9 @@ public interface IMonteCarlo {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -310,6 +323,9 @@ public interface IMonteCarlo {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

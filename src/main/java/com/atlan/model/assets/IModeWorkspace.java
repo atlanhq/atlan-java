@@ -7,6 +7,8 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -28,6 +30,12 @@ import javax.annotation.processing.Generated;
 public interface IModeWorkspace {
 
     public static final String TYPE_NAME = "ModeWorkspace";
+
+    /** TBC */
+    NumericField MODE_COLLECTION_COUNT = new NumericField("modeCollectionCount", "modeCollectionCount");
+
+    /** TBC */
+    RelationField MODE_COLLECTIONS = new RelationField("modeCollections");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -174,6 +182,9 @@ public interface IModeWorkspace {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -270,6 +281,9 @@ public interface IModeWorkspace {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -337,6 +351,9 @@ public interface IModeWorkspace {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

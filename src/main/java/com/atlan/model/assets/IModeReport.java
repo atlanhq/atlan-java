@@ -7,6 +7,11 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.BooleanField;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -28,6 +33,33 @@ import javax.annotation.processing.Generated;
 public interface IModeReport {
 
     public static final String TYPE_NAME = "ModeReport";
+
+    /** TBC */
+    NumericField MODE_CHART_COUNT = new NumericField("modeChartCount", "modeChartCount");
+
+    /** TBC */
+    KeywordField MODE_COLLECTION_TOKEN = new KeywordField("modeCollectionToken", "modeCollectionToken");
+
+    /** TBC */
+    RelationField MODE_COLLECTIONS = new RelationField("modeCollections");
+
+    /** TBC */
+    BooleanField MODE_IS_PUBLIC = new BooleanField("modeIsPublic", "modeIsPublic");
+
+    /** TBC */
+    BooleanField MODE_IS_SHARED = new BooleanField("modeIsShared", "modeIsShared");
+
+    /** TBC */
+    RelationField MODE_QUERIES = new RelationField("modeQueries");
+
+    /** TBC */
+    NumericField MODE_QUERY_COUNT = new NumericField("modeQueryCount", "modeQueryCount");
+
+    /** TBC */
+    TextField MODE_QUERY_PREVIEW = new TextField("modeQueryPreview", "null");
+
+    /** TBC */
+    NumericField MODE_REPORT_PUBLISHED_AT = new NumericField("modeReportPublishedAt", "modeReportPublishedAt");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -174,6 +206,9 @@ public interface IModeReport {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -270,6 +305,9 @@ public interface IModeReport {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -358,6 +396,9 @@ public interface IModeReport {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

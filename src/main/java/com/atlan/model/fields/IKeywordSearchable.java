@@ -4,8 +4,6 @@ package com.atlan.model.fields;
 
 import co.elastic.clients.elasticsearch._types.FieldValue;
 import co.elastic.clients.elasticsearch._types.query_dsl.*;
-import com.atlan.exception.AtlanException;
-import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.enums.AtlanEnum;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -25,10 +23,8 @@ public interface IKeywordSearchable {
      *
      * @param value the value (prefix) to check the field's value starts with (case-sensitive)
      * @return a query that will only match assets whose value for the field starts with the value provided
-     * @throws InvalidRequestException if this query does not make sense to run on the field
-     * @throws AtlanException on any API communication issue
      */
-    default Query startsWith(String value) throws AtlanException {
+    default Query startsWith(String value) {
         return startsWith(value, false);
     }
 
@@ -39,10 +35,8 @@ public interface IKeywordSearchable {
      * @param value the value (prefix) to check the field's value starts with (case-sensitive)
      * @param caseInsensitive if true will match the value irrespective of case, otherwise will be a case-sensitive match
      * @return a query that will only match assets whose value for the field starts with the value provided
-     * @throws InvalidRequestException if this query does not make sense to run on the field
-     * @throws AtlanException on any API communication issue
      */
-    Query startsWith(String value, boolean caseInsensitive) throws AtlanException;
+    Query startsWith(String value, boolean caseInsensitive);
 
     /**
      * Returns a query that will match all assets whose provided field has a value that starts with
@@ -64,10 +58,8 @@ public interface IKeywordSearchable {
      *
      * @param value the value (enumerated) to check the field's value is exactly equal to
      * @return a query that will only match assets whose value for the field is exactly equal to the enumerated value provided
-     * @throws InvalidRequestException if this query does not make sense to run on the field
-     * @throws AtlanException on any API communication issue
      */
-    Query eq(AtlanEnum value) throws AtlanException;
+    Query eq(AtlanEnum value);
 
     /**
      * Returns a query that will match all assets whose provided field has a value that exactly equals
@@ -87,10 +79,8 @@ public interface IKeywordSearchable {
      *
      * @param value the value (string) to check the field's value is exactly equal to
      * @return a query that will only match assets whose value for the field is exactly equal to the string value provided
-     * @throws InvalidRequestException if this query does not make sense to run on the field
-     * @throws AtlanException on any API communication issue
      */
-    default Query eq(String value) throws AtlanException {
+    default Query eq(String value) {
         return eq(value, false);
     }
 
@@ -101,10 +91,8 @@ public interface IKeywordSearchable {
      * @param value the value (string) to check the field's value is exactly equal to
      * @param caseInsensitive if true will match the value irrespective of case, otherwise will be a case-sensitive match
      * @return a query that will only match assets whose value for the field is exactly equal to the string value provided (optionally case-insensitive)
-     * @throws InvalidRequestException if this query does not make sense to run on the field
-     * @throws AtlanException on any API communication issue
      */
-    Query eq(String value, boolean caseInsensitive) throws AtlanException;
+    Query eq(String value, boolean caseInsensitive);
 
     /**
      * Returns a query that will match all assets whose provided field has a value that exactly equals
@@ -126,10 +114,8 @@ public interface IKeywordSearchable {
      *
      * @param values the values (strings) to check the field's value is exactly equal to
      * @return a query that will only match assets whose value for the field is exactly equal to at least one of the string values provided
-     * @throws InvalidRequestException if this query does not make sense to run on the field
-     * @throws AtlanException on any API communication issue
      */
-    Query in(Collection<String> values) throws AtlanException;
+    Query in(Collection<String> values);
 
     /**
      * Returns a query that will match all assets whose provided field has a value that exactly equals

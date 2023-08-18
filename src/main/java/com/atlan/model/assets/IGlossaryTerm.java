@@ -7,6 +7,8 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -28,6 +30,74 @@ import javax.annotation.processing.Generated;
 public interface IGlossaryTerm {
 
     public static final String TYPE_NAME = "AtlasGlossaryTerm";
+
+    /** TBC */
+    KeywordField ABBREVIATION = new KeywordField("abbreviation", "abbreviation");
+
+    /** TBC */
+    KeywordField ADDITIONAL_ATTRIBUTES = new KeywordField("additionalAttributes", "additionalAttributes");
+
+    /** TBC */
+    /** TBC */
+    RelationField ANTONYMS = new RelationField("antonyms");
+
+    /** TBC */
+    RelationField ASSIGNED_ENTITIES = new RelationField("assignedEntities");
+
+    /** TBC */
+    /** TBC */
+    RelationField CLASSIFIES = new RelationField("classifies");
+
+    /** TBC */
+    KeywordField EXAMPLES = new KeywordField("examples", "examples");
+
+    /** TBC */
+    RelationField IS_A = new RelationField("isA");
+
+    /** TBC */
+    KeywordField LONG_DESCRIPTION = new KeywordField("longDescription", "longDescription");
+
+    /** TBC */
+    RelationField PREFERRED_TERMS = new RelationField("preferredTerms");
+
+    /** TBC */
+    RelationField PREFERRED_TO_TERMS = new RelationField("preferredToTerms");
+
+    /** TBC */
+    RelationField REPLACED_BY = new RelationField("replacedBy");
+
+    /** TBC */
+    RelationField REPLACEMENT_TERMS = new RelationField("replacementTerms");
+
+    /** TBC */
+    RelationField SEE_ALSO = new RelationField("seeAlso");
+
+    /** TBC */
+    KeywordField SHORT_DESCRIPTION = new KeywordField("shortDescription", "shortDescription");
+
+    /** TBC */
+    RelationField SYNONYMS = new RelationField("synonyms");
+
+    /** TBC */
+    RelationField TRANSLATED_TERMS = new RelationField("translatedTerms");
+
+    /** TBC */
+    RelationField TRANSLATION_TERMS = new RelationField("translationTerms");
+
+    /** TBC */
+    KeywordField USAGE = new KeywordField("usage", "usage");
+
+    /** TBC */
+    RelationField VALID_VALUES = new RelationField("validValues");
+
+    /** TBC */
+    RelationField VALID_VALUES_FOR = new RelationField("validValuesFor");
+
+    /** Glossary in which the term is contained, searchable by the qualifiedName of the glossary. */
+    KeywordField ANCHOR = new KeywordField("anchor", "__glossary");
+
+    /** Categories in which the term is organized, searchable by the qualifiedName of the category. */
+    KeywordField CATEGORIES = new KeywordField("categories", "__categories");
 
     /** TBC */
     String getAbbreviation();
@@ -184,6 +254,9 @@ public interface IGlossaryTerm {
 
     /** TBC */
     String getAssetDbtUniqueId();
+
+    /** TBC */
+    String getAssetIcon();
 
     /** TBC */
     SortedSet<String> getAssetMcIncidentNames();

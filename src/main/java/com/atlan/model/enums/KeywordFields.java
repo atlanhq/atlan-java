@@ -1,11 +1,12 @@
 /* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* Copyright 2023- Atlan Pte. Ltd. */
 package com.atlan.model.enums;
 
-import javax.annotation.processing.Generated;
+import com.atlan.model.enums.AtlanSearchableField;
 import lombok.Getter;
+import javax.annotation.processing.Generated;
 
-@Generated(value = "com.atlan.generators.ModelGeneratorV2")
+@Generated(value="com.atlan.generators.ModelGeneratorV2")
 public enum KeywordFields implements AtlanSearchableField {
     /** Unused. */
     ABBREVIATION("abbreviation"),
@@ -205,6 +206,8 @@ public enum KeywordFields implements AtlanSearchableField {
     ASSET_DBT_TEST_STATUS("assetDbtTestStatus"),
     /** TBC */
     ASSET_DBT_UNIQUE_ID("assetDbtUniqueId.keyword"),
+    /** TBC */
+    ASSET_ICON("assetIcon"),
     /** TBC */
     ASSET_MC_INCIDENT_NAMES("assetMcIncidentNames.keyword"),
     /** TBC */
@@ -569,6 +572,10 @@ public enum KeywordFields implements AtlanSearchableField {
     LOOKER_EXPLORE_QUALIFIED_NAME("lookerExploreQualifiedName"),
     /** TBC */
     LOOKER_FIELD_DATA_TYPE("lookerFieldDataType"),
+    /** File name of the looker view in the project */
+    LOOKER_VIEW_FILE_NAME("lookerViewFileName"),
+    /** File path of the looker view in the project */
+    LOOKER_VIEW_FILE_PATH("lookerViewFilePath"),
     /** TBC */
     LOOKER_VIEW_QUALIFIED_NAME("lookerViewQualifiedName"),
     /** TBC */

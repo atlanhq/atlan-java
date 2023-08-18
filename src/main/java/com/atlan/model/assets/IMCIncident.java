@@ -7,6 +7,8 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -28,6 +30,30 @@ import javax.annotation.processing.Generated;
 public interface IMCIncident {
 
     public static final String TYPE_NAME = "MCIncident";
+
+    /** Assets impacted by the incident. */
+    RelationField MC_INCIDENT_ASSETS = new RelationField("mcIncidentAssets");
+
+    /** Unique identifier for the incident. */
+    KeywordField MC_INCIDENT_ID = new KeywordField("mcIncidentId", "mcIncidentId");
+
+    /** Severity of the incident. */
+    KeywordField MC_INCIDENT_SEVERITY = new KeywordField("mcIncidentSeverity", "mcIncidentSeverity");
+
+    /** Status of the incident, for example whether it is being investigated or is already fixed. */
+    KeywordField MC_INCIDENT_STATE = new KeywordField("mcIncidentState", "mcIncidentState");
+
+    /** TBC */
+    KeywordField MC_INCIDENT_SUB_TYPES = new KeywordField("mcIncidentSubTypes", "mcIncidentSubTypes");
+
+    /** Type of incident. */
+    KeywordField MC_INCIDENT_TYPE = new KeywordField("mcIncidentType", "mcIncidentType");
+
+    /** Name of the warehouse in which the incident occurred. */
+    KeywordField MC_INCIDENT_WAREHOUSE = new KeywordField("mcIncidentWarehouse", "mcIncidentWarehouse");
+
+    /** Monitor through which this incident occurred. */
+    RelationField MC_MONITOR = new RelationField("mcMonitor");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -174,6 +200,9 @@ public interface IMCIncident {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -270,6 +299,9 @@ public interface IMCIncident {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -334,6 +366,9 @@ public interface IMCIncident {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

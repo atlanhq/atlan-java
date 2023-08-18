@@ -7,6 +7,10 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.BooleanField;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.KeywordTextField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -28,6 +32,53 @@ import javax.annotation.processing.Generated;
 public interface IAtlanQuery {
 
     public static final String TYPE_NAME = "Query";
+
+    /** TBC */
+    KeywordTextField COLLECTION_QUALIFIED_NAME =
+            new KeywordTextField("collectionQualifiedName", "collectionQualifiedName", "collectionQualifiedName.text");
+
+    /** TBC */
+    RelationField COLUMNS = new RelationField("columns");
+
+    /** TBC */
+    KeywordTextField DEFAULT_DATABASE_QUALIFIED_NAME = new KeywordTextField(
+            "defaultDatabaseQualifiedName", "defaultDatabaseQualifiedName", "defaultDatabaseQualifiedName.text");
+
+    /** TBC */
+    KeywordTextField DEFAULT_SCHEMA_QUALIFIED_NAME = new KeywordTextField(
+            "defaultSchemaQualifiedName", "defaultSchemaQualifiedName", "defaultSchemaQualifiedName.text");
+
+    /** TBC */
+    BooleanField IS_PRIVATE = new BooleanField("isPrivate", "isPrivate");
+
+    /** TBC */
+    BooleanField IS_SQL_SNIPPET = new BooleanField("isSqlSnippet", "isSqlSnippet");
+
+    /** TBC */
+    BooleanField IS_VISUAL_QUERY = new BooleanField("isVisualQuery", "isVisualQuery");
+
+    /** TBC */
+    RelationField PARENT = new RelationField("parent");
+
+    /** TBC */
+    KeywordTextField PARENT_QUALIFIED_NAME =
+            new KeywordTextField("parentQualifiedName", "parentQualifiedName", "parentQualifiedName.text");
+
+    /** TBC */
+    KeywordField RAW_QUERY = new KeywordField("rawQuery", "rawQuery");
+
+    /** TBC */
+    RelationField TABLES = new RelationField("tables");
+
+    /** TBC */
+    KeywordField VARIABLES_SCHEMA_BASE64 = new KeywordField("variablesSchemaBase64", "variablesSchemaBase64");
+
+    /** TBC */
+    RelationField VIEWS = new RelationField("views");
+
+    /** TBC */
+    KeywordField VISUAL_BUILDER_SCHEMA_BASE64 =
+            new KeywordField("visualBuilderSchemaBase64", "visualBuilderSchemaBase64");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -174,6 +225,9 @@ public interface IAtlanQuery {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -297,6 +351,9 @@ public interface IAtlanQuery {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -346,6 +403,9 @@ public interface IAtlanQuery {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

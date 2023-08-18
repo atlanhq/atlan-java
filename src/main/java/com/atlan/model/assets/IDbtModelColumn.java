@@ -7,6 +7,10 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.KeywordTextField;
+import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -28,6 +32,28 @@ import javax.annotation.processing.Generated;
 public interface IDbtModelColumn {
 
     public static final String TYPE_NAME = "DbtModelColumn";
+
+    /** TBC */
+    RelationField DBT_MODEL = new RelationField("dbtModel");
+
+    /** TBC */
+    KeywordField DBT_MODEL_COLUMN_DATA_TYPE = new KeywordField("dbtModelColumnDataType", "dbtModelColumnDataType");
+
+    /** TBC */
+    NumericField DBT_MODEL_COLUMN_ORDER = new NumericField("dbtModelColumnOrder", "dbtModelColumnOrder");
+
+    /** TBC */
+    RelationField DBT_MODEL_COLUMN_SQL_COLUMNS = new RelationField("dbtModelColumnSqlColumns");
+
+    /** TBC */
+    KeywordTextField DBT_MODEL_QUALIFIED_NAME =
+            new KeywordTextField("dbtModelQualifiedName", "dbtModelQualifiedName", "dbtModelQualifiedName.text");
+
+    /** TBC */
+    RelationField DBT_TESTS = new RelationField("dbtTests");
+
+    /** TBC */
+    RelationField SQL_COLUMN = new RelationField("sqlColumn");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -172,6 +198,9 @@ public interface IDbtModelColumn {
 
     /** TBC */
     String getAssetDbtUniqueId();
+
+    /** TBC */
+    String getAssetIcon();
 
     /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
@@ -342,6 +371,9 @@ public interface IDbtModelColumn {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -376,6 +408,9 @@ public interface IDbtModelColumn {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

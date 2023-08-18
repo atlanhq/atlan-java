@@ -7,6 +7,9 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.KeywordTextField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -28,6 +31,63 @@ import javax.annotation.processing.Generated;
 public interface IMicroStrategyMetric {
 
     public static final String TYPE_NAME = "MicroStrategyMetric";
+
+    /** Simple names of the related MicroStrategy attributes. */
+    KeywordTextField MICRO_STRATEGY_ATTRIBUTE_NAMES = new KeywordTextField(
+            "microStrategyAttributeNames", "microStrategyAttributeNames.keyword", "microStrategyAttributeNames");
+
+    /** Unique names of the related MicroStrategy attributes. */
+    KeywordTextField MICRO_STRATEGY_ATTRIBUTE_QUALIFIED_NAMES = new KeywordTextField(
+            "microStrategyAttributeQualifiedNames",
+            "microStrategyAttributeQualifiedNames",
+            "microStrategyAttributeQualifiedNames.text");
+
+    /** Attributes related to this metric. */
+    RelationField MICRO_STRATEGY_ATTRIBUTES = new RelationField("microStrategyAttributes");
+
+    /** Cubes related to this metric. */
+    RelationField MICRO_STRATEGY_CUBES = new RelationField("microStrategyCubes");
+
+    /** Simple names of the related MicroStrategy facts. */
+    KeywordTextField MICRO_STRATEGY_FACT_NAMES =
+            new KeywordTextField("microStrategyFactNames", "microStrategyFactNames.keyword", "microStrategyFactNames");
+
+    /** Unique names of the related MicroStrategy facts. */
+    KeywordTextField MICRO_STRATEGY_FACT_QUALIFIED_NAMES = new KeywordTextField(
+            "microStrategyFactQualifiedNames",
+            "microStrategyFactQualifiedNames",
+            "microStrategyFactQualifiedNames.text");
+
+    /** Facts related to this metric. */
+    RelationField MICRO_STRATEGY_FACTS = new RelationField("microStrategyFacts");
+
+    /** Metrics that are children of this metric. */
+    RelationField MICRO_STRATEGY_METRIC_CHILDREN = new RelationField("microStrategyMetricChildren");
+
+    /** Expression that defines the metric. */
+    KeywordField MICRO_STRATEGY_METRIC_EXPRESSION =
+            new KeywordField("microStrategyMetricExpression", "microStrategyMetricExpression");
+
+    /** Simple names of the parent MicroStrategy metrics. */
+    KeywordTextField MICRO_STRATEGY_METRIC_PARENT_NAMES = new KeywordTextField(
+            "microStrategyMetricParentNames",
+            "microStrategyMetricParentNames.keyword",
+            "microStrategyMetricParentNames");
+
+    /** Unique names of the parent MicroStrategy metrics. */
+    KeywordTextField MICRO_STRATEGY_METRIC_PARENT_QUALIFIED_NAMES = new KeywordTextField(
+            "microStrategyMetricParentQualifiedNames",
+            "microStrategyMetricParentQualifiedNames",
+            "microStrategyMetricParentQualifiedNames.text");
+
+    /** Metrics that are parents of this metric. */
+    RelationField MICRO_STRATEGY_METRIC_PARENTS = new RelationField("microStrategyMetricParents");
+
+    /** Project containing the metric. */
+    RelationField MICRO_STRATEGY_PROJECT = new RelationField("microStrategyProject");
+
+    /** Reports related to this metric. */
+    RelationField MICRO_STRATEGY_REPORTS = new RelationField("microStrategyReports");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -174,6 +234,9 @@ public interface IMicroStrategyMetric {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -268,6 +331,9 @@ public interface IMicroStrategyMetric {
 
     /** TBC */
     Boolean getHasLineage();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
@@ -376,6 +442,9 @@ public interface IMicroStrategyMetric {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

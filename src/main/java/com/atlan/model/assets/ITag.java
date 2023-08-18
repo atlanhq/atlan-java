@@ -7,6 +7,8 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.KeywordTextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.SourceTagAttribute;
@@ -29,6 +31,19 @@ import javax.annotation.processing.Generated;
 public interface ITag {
 
     public static final String TYPE_NAME = "Tag";
+
+    /** Name of the classification in Atlan that is mapped to this tag. */
+    KeywordField MAPPED_ATLAN_TAG_NAME = new KeywordField("mappedClassificationName", "mappedClassificationName");
+
+    /** Allowed values for the tag in the source system. These are denormalized from tagAttributes for ease of querying. */
+    KeywordTextField TAG_ALLOWED_VALUES =
+            new KeywordTextField("tagAllowedValues", "tagAllowedValues", "tagAllowedValues.text");
+
+    /** Attributes associated with the tag in the source system. */
+    KeywordField TAG_ATTRIBUTES = new KeywordField("tagAttributes", "tagAttributes");
+
+    /** Unique identifier of the tag in the source system. */
+    KeywordField TAG_ID = new KeywordField("tagId", "tagId");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -175,6 +190,9 @@ public interface ITag {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -271,6 +289,9 @@ public interface ITag {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -308,6 +329,9 @@ public interface ITag {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

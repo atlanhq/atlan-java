@@ -7,6 +7,8 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -28,6 +30,24 @@ import javax.annotation.processing.Generated;
 public interface ILookerFolder {
 
     public static final String TYPE_NAME = "LookerFolder";
+
+    /** TBC */
+    RelationField DASHBOARDS = new RelationField("dashboards");
+
+    /** TBC */
+    RelationField LOOKS = new RelationField("looks");
+
+    /** TBC */
+    NumericField SOURCE_CHILD_COUNT = new NumericField("sourceChildCount", "sourceChildCount");
+
+    /** TBC */
+    NumericField SOURCE_CONTENT_METADATA_ID = new NumericField("sourceContentMetadataId", "sourceContentMetadataId");
+
+    /** TBC */
+    NumericField SOURCE_CREATOR_ID = new NumericField("sourceCreatorId", "sourceCreatorId");
+
+    /** TBC */
+    NumericField SOURCE_PARENT_ID = new NumericField("sourceParentID", "sourceParentID");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -174,6 +194,9 @@ public interface ILookerFolder {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -273,6 +296,9 @@ public interface ILookerFolder {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -310,6 +336,9 @@ public interface ILookerFolder {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

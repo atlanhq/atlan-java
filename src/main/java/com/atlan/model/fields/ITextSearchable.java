@@ -4,8 +4,6 @@ package com.atlan.model.fields;
 
 import co.elastic.clients.elasticsearch._types.query_dsl.MatchQuery;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
-import com.atlan.exception.AtlanException;
-import com.atlan.exception.InvalidRequestException;
 
 public interface ITextSearchable {
     /**
@@ -22,10 +20,8 @@ public interface ITextSearchable {
      *
      * @param value the string value to match against
      * @return a query that will only match assets whose analyzed value for the field matches the value provided (which will also be analyzed)
-     * @throws InvalidRequestException if this query does not make sense to run on the field
-     * @throws AtlanException on any API communication issue
      */
-    Query match(String value) throws AtlanException;
+    Query match(String value);
 
     /**
      * Returns a query that will textually match the provided value against the field. This

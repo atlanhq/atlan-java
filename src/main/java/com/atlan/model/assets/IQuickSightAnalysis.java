@@ -8,6 +8,8 @@ import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.QuickSightAnalysisStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -29,6 +31,27 @@ import javax.annotation.processing.Generated;
 public interface IQuickSightAnalysis {
 
     public static final String TYPE_NAME = "QuickSightAnalysis";
+
+    /** Calculated fields of quicksight analysis  */
+    KeywordField QUICK_SIGHT_ANALYSIS_CALCULATED_FIELDS =
+            new KeywordField("quickSightAnalysisCalculatedFields", "quickSightAnalysisCalculatedFields");
+
+    /** Filter groups used for quicksight analysis */
+    KeywordField QUICK_SIGHT_ANALYSIS_FILTER_GROUPS =
+            new KeywordField("quickSightAnalysisFilterGroups", "quickSightAnalysisFilterGroups");
+
+    /** TBC */
+    RelationField QUICK_SIGHT_ANALYSIS_FOLDERS = new RelationField("quickSightAnalysisFolders");
+
+    /** parameters used for quicksight analysis  */
+    KeywordField QUICK_SIGHT_ANALYSIS_PARAMETER_DECLARATIONS =
+            new KeywordField("quickSightAnalysisParameterDeclarations", "quickSightAnalysisParameterDeclarations");
+
+    /** Status of quicksight analysis */
+    KeywordField QUICK_SIGHT_ANALYSIS_STATUS = new KeywordField("quickSightAnalysisStatus", "quickSightAnalysisStatus");
+
+    /** TBC */
+    RelationField QUICK_SIGHT_ANALYSIS_VISUALS = new RelationField("quickSightAnalysisVisuals");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -175,6 +198,9 @@ public interface IQuickSightAnalysis {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -271,6 +297,9 @@ public interface IQuickSightAnalysis {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -305,6 +334,9 @@ public interface IQuickSightAnalysis {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

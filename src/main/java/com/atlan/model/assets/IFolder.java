@@ -7,6 +7,8 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordTextField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -28,6 +30,17 @@ import javax.annotation.processing.Generated;
 public interface IFolder {
 
     public static final String TYPE_NAME = "Folder";
+
+    /** qualifiedName of the collection in which this folder exists. */
+    KeywordTextField COLLECTION_QUALIFIED_NAME =
+            new KeywordTextField("collectionQualifiedName", "collectionQualifiedName", "collectionQualifiedName.text");
+
+    /** Namespace in which this folder exists. */
+    RelationField PARENT = new RelationField("parent");
+
+    /** TBC */
+    KeywordTextField PARENT_QUALIFIED_NAME =
+            new KeywordTextField("parentQualifiedName", "parentQualifiedName", "parentQualifiedName.text");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -172,6 +185,9 @@ public interface IFolder {
 
     /** TBC */
     String getAssetDbtUniqueId();
+
+    /** TBC */
+    String getAssetIcon();
 
     /** TBC */
     SortedSet<String> getAssetMcIncidentNames();

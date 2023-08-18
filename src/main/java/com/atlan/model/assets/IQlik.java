@@ -7,6 +7,9 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.BooleanField;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.KeywordTextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -28,6 +31,32 @@ import javax.annotation.processing.Generated;
 public interface IQlik {
 
     public static final String TYPE_NAME = "Qlik";
+
+    /** Unique identifier (in Qlik) of the app where the asset exists. */
+    KeywordField QLIK_APP_ID = new KeywordField("qlikAppId", "qlikAppId");
+
+    /** Unique name of the app where the Qlik asset exists. */
+    KeywordTextField QLIK_APP_QUALIFIED_NAME =
+            new KeywordTextField("qlikAppQualifiedName", "qlikAppQualifiedName", "qlikAppQualifiedName.text");
+
+    /** Unique identifier of the Qlik asset in Qlik. */
+    KeywordField QLIK_ID = new KeywordField("qlikId", "qlikId");
+
+    /** Whether the asset is published in Qlik (true) or not (false). */
+    BooleanField QLIK_IS_PUBLISHED = new BooleanField("qlikIsPublished", "qlikIsPublished");
+
+    /** Unique identifier (in Qlik) of the owner of the asset. */
+    KeywordField QLIK_OWNER_ID = new KeywordField("qlikOwnerId", "qlikOwnerId");
+
+    /** QRI of the Qlik object. */
+    KeywordTextField QLIK_QRI = new KeywordTextField("qlikQRI", "qlikQRI", "qlikQRI.text");
+
+    /** Unique identifier (in Qlik) of the space where the asset exists. */
+    KeywordField QLIK_SPACE_ID = new KeywordField("qlikSpaceId", "qlikSpaceId");
+
+    /** Unique name of the space where the Qlik asset exists. */
+    KeywordTextField QLIK_SPACE_QUALIFIED_NAME =
+            new KeywordTextField("qlikSpaceQualifiedName", "qlikSpaceQualifiedName", "qlikSpaceQualifiedName.text");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -174,6 +203,9 @@ public interface IQlik {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -270,6 +302,9 @@ public interface IQlik {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -304,6 +339,9 @@ public interface IQlik {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

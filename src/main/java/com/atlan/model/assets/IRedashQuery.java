@@ -7,6 +7,10 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.KeywordTextField;
+import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -28,6 +32,30 @@ import javax.annotation.processing.Generated;
 public interface IRedashQuery {
 
     public static final String TYPE_NAME = "RedashQuery";
+
+    /** Time when the Redash query was last executed. */
+    NumericField REDASH_QUERY_LAST_EXECUTED_AT =
+            new NumericField("redashQueryLastExecutedAt", "redashQueryLastExecutedAt");
+
+    /** Elapsed time of the last run of the Redash query. */
+    NumericField REDASH_QUERY_LAST_EXECUTION_RUNTIME =
+            new NumericField("redashQueryLastExecutionRuntime", "redashQueryLastExecutionRuntime");
+
+    /** Parameters for the Redash query. */
+    KeywordField REDASH_QUERY_PARAMETERS = new KeywordField("redashQueryParameters", "redashQueryParameters");
+
+    /** SQL code of the Redash query. */
+    KeywordField REDASH_QUERY_SQL = new KeywordField("redashQuerySQL", "redashQuerySQL");
+
+    /** Schedule of the Redash query. */
+    KeywordField REDASH_QUERY_SCHEDULE = new KeywordField("redashQuerySchedule", "redashQuerySchedule");
+
+    /** Human-readable schedule of the Redash query. */
+    KeywordTextField REDASH_QUERY_SCHEDULE_HUMANIZED = new KeywordTextField(
+            "redashQueryScheduleHumanized", "redashQueryScheduleHumanized", "redashQueryScheduleHumanized.text");
+
+    /** Visualizations of this Redash query. */
+    RelationField REDASH_VISUALIZATIONS = new RelationField("redashVisualizations");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -174,6 +202,9 @@ public interface IRedashQuery {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -270,6 +301,9 @@ public interface IRedashQuery {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -304,6 +338,9 @@ public interface IRedashQuery {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

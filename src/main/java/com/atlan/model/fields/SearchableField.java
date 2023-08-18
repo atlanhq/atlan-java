@@ -3,26 +3,31 @@
 package com.atlan.model.fields;
 
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
-import com.atlan.exception.AtlanException;
 import lombok.AccessLevel;
 import lombok.Getter;
 
-public class SearchableField implements ISearchable {
-
-    @Getter
-    private final String atlanFieldName;
+/**
+ * Base class for any field in Atlan that can be searched.
+ */
+public class SearchableField extends AtlanField implements ISearchable {
 
     @Getter(AccessLevel.PROTECTED)
     private final String elasticFieldName;
 
+    /**
+     * Default constructor.
+     *
+     * @param atlan name of the attribute in the metastore
+     * @param elastic name of the field in the search index
+     */
     public SearchableField(String atlan, String elastic) {
-        this.atlanFieldName = atlan;
+        super(atlan);
         this.elasticFieldName = elastic;
     }
 
     /** {@inheritDoc} */
     @Override
-    public Query exists() throws AtlanException {
+    public Query exists() {
         return ISearchable.exists(getElasticFieldName());
     }
 }

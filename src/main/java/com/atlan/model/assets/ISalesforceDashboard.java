@@ -7,6 +7,9 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -28,6 +31,21 @@ import javax.annotation.processing.Generated;
 public interface ISalesforceDashboard {
 
     public static final String TYPE_NAME = "SalesforceDashboard";
+
+    /** Type of dashboard in Salesforce. */
+    KeywordField DASHBOARD_TYPE = new KeywordField("dashboardType", "dashboardType");
+
+    /** TBC */
+    RelationField ORGANIZATION = new RelationField("organization");
+
+    /** Number of reports linked to the dashboard in Salesforce. */
+    NumericField REPORT_COUNT = new NumericField("reportCount", "reportCount");
+
+    /** Reports linked to the dashboard in Salesforce. */
+    RelationField REPORTS = new RelationField("reports");
+
+    /** ID of the dashboard in Salesforce. */
+    KeywordField SOURCE_ID = new KeywordField("sourceId", "sourceId");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -177,6 +195,9 @@ public interface ISalesforceDashboard {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -276,6 +297,9 @@ public interface ISalesforceDashboard {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -316,6 +340,9 @@ public interface ISalesforceDashboard {
 
     /** TBC */
     String getOrganizationQualifiedName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

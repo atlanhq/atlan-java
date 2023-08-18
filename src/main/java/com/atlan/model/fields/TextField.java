@@ -4,9 +4,19 @@ package com.atlan.model.fields;
 
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 
+/**
+ * Represents any field in Atlan that can only be searched using text-related search operations.
+ */
 public class TextField extends SearchableField implements ITextSearchable {
-    public TextField(String atlan, String keyword) {
-        super(atlan, keyword);
+
+    /**
+     * Default constructor.
+     *
+     * @param atlan name of the attribute in the metastore
+     * @param text name of the text field in the search index
+     */
+    public TextField(String atlan, String text) {
+        super(atlan, text);
     }
 
     /** {@inheritDoc} */

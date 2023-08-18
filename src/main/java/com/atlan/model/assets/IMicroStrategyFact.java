@@ -7,6 +7,8 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -28,6 +30,16 @@ import javax.annotation.processing.Generated;
 public interface IMicroStrategyFact {
 
     public static final String TYPE_NAME = "MicroStrategyFact";
+
+    /** List of expressions for the fact. */
+    KeywordField MICRO_STRATEGY_FACT_EXPRESSIONS =
+            new KeywordField("microStrategyFactExpressions", "microStrategyFactExpressions");
+
+    /** Metrics where the fact is used. */
+    RelationField MICRO_STRATEGY_METRICS = new RelationField("microStrategyMetrics");
+
+    /** Project containing the fact. */
+    RelationField MICRO_STRATEGY_PROJECT = new RelationField("microStrategyProject");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -174,6 +186,9 @@ public interface IMicroStrategyFact {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -270,6 +285,9 @@ public interface IMicroStrategyFact {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -343,6 +361,9 @@ public interface IMicroStrategyFact {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

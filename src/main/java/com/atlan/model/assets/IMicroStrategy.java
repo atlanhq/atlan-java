@@ -7,6 +7,10 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.BooleanField;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.KeywordTextField;
+import com.atlan.model.fields.NumericField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -28,6 +32,48 @@ import javax.annotation.processing.Generated;
 public interface IMicroStrategy {
 
     public static final String TYPE_NAME = "MicroStrategy";
+
+    /** Date when the asset was certified in MicroStrategy. */
+    NumericField MICRO_STRATEGY_CERTIFIED_AT = new NumericField("microStrategyCertifiedAt", "microStrategyCertifiedAt");
+
+    /** User who certified the asset in MicroStrategy. */
+    KeywordField MICRO_STRATEGY_CERTIFIED_BY = new KeywordField("microStrategyCertifiedBy", "microStrategyCertifiedBy");
+
+    /** Simple names of the related MicroStrategy cubes. */
+    KeywordTextField MICRO_STRATEGY_CUBE_NAMES =
+            new KeywordTextField("microStrategyCubeNames", "microStrategyCubeNames.keyword", "microStrategyCubeNames");
+
+    /** Unique names of the related MicroStrategy cubes. */
+    KeywordTextField MICRO_STRATEGY_CUBE_QUALIFIED_NAMES = new KeywordTextField(
+            "microStrategyCubeQualifiedNames",
+            "microStrategyCubeQualifiedNames",
+            "microStrategyCubeQualifiedNames.text");
+
+    /** Whether the asset is certified in MicroStrategy (true) or not (false). */
+    BooleanField MICRO_STRATEGY_IS_CERTIFIED = new BooleanField("microStrategyIsCertified", "microStrategyIsCertified");
+
+    /** Location of the asset within MicroStrategy. */
+    KeywordField MICRO_STRATEGY_LOCATION = new KeywordField("microStrategyLocation", "microStrategyLocation");
+
+    /** Simple name of the related MicroStrategy project. */
+    KeywordTextField MICRO_STRATEGY_PROJECT_NAME = new KeywordTextField(
+            "microStrategyProjectName", "microStrategyProjectName.keyword", "microStrategyProjectName");
+
+    /** Unique name of the related MicroStrategy project. */
+    KeywordTextField MICRO_STRATEGY_PROJECT_QUALIFIED_NAME = new KeywordTextField(
+            "microStrategyProjectQualifiedName",
+            "microStrategyProjectQualifiedName",
+            "microStrategyProjectQualifiedName.text");
+
+    /** Simple names of the related MicroStrategy reports. */
+    KeywordTextField MICRO_STRATEGY_REPORT_NAMES = new KeywordTextField(
+            "microStrategyReportNames", "microStrategyReportNames.keyword", "microStrategyReportNames");
+
+    /** Unique names of the related MicroStrategy reports. */
+    KeywordTextField MICRO_STRATEGY_REPORT_QUALIFIED_NAMES = new KeywordTextField(
+            "microStrategyReportQualifiedNames",
+            "microStrategyReportQualifiedNames",
+            "microStrategyReportQualifiedNames.text");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -174,6 +220,9 @@ public interface IMicroStrategy {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -270,6 +319,9 @@ public interface IMicroStrategy {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -334,6 +386,9 @@ public interface IMicroStrategy {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

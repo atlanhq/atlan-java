@@ -7,6 +7,9 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.KafkaTopicConsumption;
 import com.atlan.model.structs.PopularityInsights;
@@ -29,6 +32,23 @@ import javax.annotation.processing.Generated;
 public interface IKafkaConsumerGroup {
 
     public static final String TYPE_NAME = "KafkaConsumerGroup";
+
+    /** TBC */
+    NumericField KAFKA_CONSUMER_GROUP_MEMBER_COUNT =
+            new NumericField("kafkaConsumerGroupMemberCount", "kafkaConsumerGroupMemberCount");
+
+    /** TBC */
+    KeywordField KAFKA_CONSUMER_GROUP_TOPIC_CONSUMPTION_PROPERTIES = new KeywordField(
+            "kafkaConsumerGroupTopicConsumptionProperties", "kafkaConsumerGroupTopicConsumptionProperties");
+
+    /** Names of the topics for this consumer group. */
+    KeywordField KAFKA_TOPIC_NAMES = new KeywordField("kafkaTopicNames", "kafkaTopicNames");
+
+    /** Unique names of the topics for this consumer group. */
+    KeywordField KAFKA_TOPIC_QUALIFIED_NAMES = new KeywordField("kafkaTopicQualifiedNames", "kafkaTopicQualifiedNames");
+
+    /** Topics for this consumer group. */
+    RelationField KAFKA_TOPICS = new RelationField("kafkaTopics");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -175,6 +195,9 @@ public interface IKafkaConsumerGroup {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -271,6 +294,9 @@ public interface IKafkaConsumerGroup {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -320,6 +346,9 @@ public interface IKafkaConsumerGroup {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

@@ -6,9 +6,19 @@ import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import com.atlan.model.enums.AtlanEnum;
 import java.util.Collection;
 
+/**
+ * Represents any field in Atlan that can be searched only by keyword (no text-analyzed fuzziness).
+ */
 public class KeywordField extends SearchableField implements IKeywordSearchable {
-    public KeywordField(String atlan, String elastic) {
-        super(atlan, elastic);
+
+    /**
+     * Default constructor.
+     *
+     * @param atlan name of the attribute in the metastore
+     * @param keyword name of the keyword field in the search index
+     */
+    public KeywordField(String atlan, String keyword) {
+        super(atlan, keyword);
     }
 
     /** {@inheritDoc} */

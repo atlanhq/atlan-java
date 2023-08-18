@@ -7,6 +7,9 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.BooleanField;
+import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -28,6 +31,27 @@ import javax.annotation.processing.Generated;
 public interface ISalesforceObject {
 
     public static final String TYPE_NAME = "SalesforceObject";
+
+    /** Number of fields in the object. */
+    NumericField FIELD_COUNT = new NumericField("fieldCount", "fieldCount");
+
+    /** TBC */
+    RelationField FIELDS = new RelationField("fields");
+
+    /** Whether the object is a custom object (true) or not (false). */
+    BooleanField IS_CUSTOM = new BooleanField("isCustom", "isCustom");
+
+    /** TBC */
+    BooleanField IS_MERGABLE = new BooleanField("isMergable", "isMergable");
+
+    /** TBC */
+    BooleanField IS_QUERYABLE = new BooleanField("isQueryable", "isQueryable");
+
+    /** TBC */
+    RelationField LOOKUP_FIELDS = new RelationField("lookupFields");
+
+    /** TBC */
+    RelationField ORGANIZATION = new RelationField("organization");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -177,6 +201,9 @@ public interface ISalesforceObject {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -279,6 +306,9 @@ public interface ISalesforceObject {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** Whether the object is a custom object (true) or not (false). */
@@ -331,6 +361,9 @@ public interface ISalesforceObject {
 
     /** TBC */
     String getOrganizationQualifiedName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

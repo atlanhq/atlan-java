@@ -8,6 +8,9 @@ import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.QuickSightDatasetImportMode;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -29,6 +32,20 @@ import javax.annotation.processing.Generated;
 public interface IQuickSightDataset {
 
     public static final String TYPE_NAME = "QuickSightDataset";
+
+    /** Quicksight dataset column count indicates number of columns present in the dataset */
+    NumericField QUICK_SIGHT_DATASET_COLUMN_COUNT =
+            new NumericField("quickSightDatasetColumnCount", "quickSightDatasetColumnCount");
+
+    /** TBC */
+    RelationField QUICK_SIGHT_DATASET_FIELDS = new RelationField("quickSightDatasetFields");
+
+    /** TBC */
+    RelationField QUICK_SIGHT_DATASET_FOLDERS = new RelationField("quickSightDatasetFolders");
+
+    /** Quicksight dataset importMode indicates a value that indicates whether you want to import the data into SPICE */
+    KeywordField QUICK_SIGHT_DATASET_IMPORT_MODE =
+            new KeywordField("quickSightDatasetImportMode", "quickSightDatasetImportMode");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -175,6 +192,9 @@ public interface IQuickSightDataset {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -271,6 +291,9 @@ public interface IQuickSightDataset {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -305,6 +328,9 @@ public interface IQuickSightDataset {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

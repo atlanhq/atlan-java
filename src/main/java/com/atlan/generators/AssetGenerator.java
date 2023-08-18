@@ -262,11 +262,25 @@ public class AssetGenerator extends TypeGenerator implements Comparable<AssetGen
     @Getter
     public static class Attribute<T extends Attribute<?>> extends AttributeGenerator implements Comparable<T> {
 
+        enum IndexType {
+            KEYWORD,
+            TEXT,
+            RANK_FEATURE,
+            BOOLEAN,
+            NUMERIC,
+            STEMMED,
+            RELATION,
+            ;
+        }
+
         // Sort attribute definitions in a set based purely on their name (two attributes
         // in the same set with the same name should be a conflict / duplicate)
         private static final Comparator<String> stringComparator = Comparator.nullsFirst(String::compareTo);
         private static final Comparator<Attribute<?>> attributeComparator =
                 Comparator.comparing(Attribute::getRenamed, stringComparator);
+
+        private String searchType;
+        private String searchTypeArgs;
 
         protected Attribute(GeneratorConfig cfg) {
             super(cfg);
@@ -275,6 +289,9 @@ public class AssetGenerator extends TypeGenerator implements Comparable<AssetGen
         public Attribute(String className, AttributeDef attributeDef, GeneratorConfig cfg) {
             super(className, attributeDef, cfg);
         }
+
+        // TODO: somewhere in here we need to resolve the search index variations,
+        //  to feed into the entity_interface.ftl template processing...
 
         @Override
         protected void resolveName() {
@@ -300,6 +317,40 @@ public class AssetGenerator extends TypeGenerator implements Comparable<AssetGen
                         .build());
                 setRetyped(true);
             }
+            Map<IndexType, String> searchMap = getIndexesForAttribute(attributeDef);
+            Set<IndexType> indices = searchMap.keySet();
+            if (!indices.isEmpty()) {
+                if (indices.equals(Set.of(IndexType.RELATION))) {
+                    searchType = "RelationField";
+                    searchTypeArgs = null;
+                } else if (indices.equals(Set.of(IndexType.KEYWORD))) {
+                    searchType = "KeywordField";
+                    searchTypeArgs = "\"" + searchMap.get(IndexType.KEYWORD) + "\"";
+                } else if (indices.equals(Set.of(IndexType.TEXT))) {
+                    searchType = "TextField";
+                    searchTypeArgs = "\"" + searchMap.get(IndexType.KEYWORD) + "\"";
+                } else if (indices.equals(Set.of(IndexType.NUMERIC))) {
+                    searchType = "NumericField";
+                    searchTypeArgs = "\"" + searchMap.get(IndexType.NUMERIC) + "\"";
+                } else if (indices.equals(Set.of(IndexType.BOOLEAN))) {
+                    searchType = "BooleanField";
+                    searchTypeArgs = "\"" + searchMap.get(IndexType.BOOLEAN) + "\"";
+                } else if (indices.equals(Set.of(IndexType.NUMERIC, IndexType.RANK_FEATURE))) {
+                    searchType = "NumericRankField";
+                    searchTypeArgs =
+                            "\"" + searchMap.get(IndexType.KEYWORD) + "\", \"" + searchMap.get(IndexType.TEXT) + "\"";
+                } else if (indices.equals(Set.of(IndexType.KEYWORD, IndexType.TEXT))) {
+                    searchType = "KeywordTextField";
+                    searchTypeArgs =
+                            "\"" + searchMap.get(IndexType.KEYWORD) + "\", \"" + searchMap.get(IndexType.TEXT) + "\"";
+                } else if (indices.equals(Set.of(IndexType.KEYWORD, IndexType.TEXT, IndexType.STEMMED))) {
+                    searchType = "KeywordTextStemmedField";
+                    searchTypeArgs = "\"" + searchMap.get(IndexType.KEYWORD) + "\", \"" + searchMap.get(IndexType.TEXT)
+                            + "\", \"" + searchMap.get(IndexType.STEMMED) + "\"";
+                } else {
+                    log.warn("Found index combination for {} that is not handled: {}", getOriginalName(), indices);
+                }
+            }
         }
 
         public String getSingular() {
@@ -307,6 +358,117 @@ public class AssetGenerator extends TypeGenerator implements Comparable<AssetGen
                 return cfg.resolveSingular(getOriginalName());
             }
             return null;
+        }
+
+        private Map<IndexType, String> getIndexesForAttribute(AttributeDef attributeDef) {
+
+            Map<IndexType, String> searchable = new LinkedHashMap<>();
+
+            Map<String, String> config = attributeDef.getIndexTypeESConfig();
+            String attrName = attributeDef.getName();
+
+            if (attributeDef instanceof RelationshipAttributeDef) {
+                // Park relationship attributes, as they will generally not be searchable
+                searchable.put(IndexType.RELATION, attrName);
+            } else {
+
+                // Default index
+                if (config != null && config.containsKey("analyzer")) {
+                    String analyzer = config.get("analyzer");
+                    if (analyzer.equals("atlan_text_analyzer")) {
+                        if (attrName.endsWith(".stemmed")) {
+                            searchable.put(IndexType.STEMMED, attrName);
+                        } else {
+                            searchable.put(IndexType.TEXT, attrName);
+                        }
+                    } else {
+                        log.warn("Unknown analyzer on attribute {}: {}", attrName, analyzer);
+                    }
+                } else {
+                    IndexType defIndex = getDefaultIndexForType(getType());
+                    searchable.put(defIndex, attrName);
+                }
+
+                boolean duplicate = false;
+                // Additional indexes
+                Map<String, Map<String, String>> fields = attributeDef.getIndexTypeESFields();
+                if (fields != null) {
+                    for (Map.Entry<String, Map<String, String>> entry : fields.entrySet()) {
+                        String fieldName = attrName + "." + entry.getKey();
+                        Map<String, String> indexDetails = entry.getValue();
+                        if (indexDetails != null && indexDetails.containsKey("type")) {
+                            String indexType = indexDetails.get("type");
+                            switch (indexType) {
+                                case "keyword":
+                                    duplicate = searchable.put(IndexType.KEYWORD, fieldName) != null;
+                                    break;
+                                case "text":
+                                    if (fieldName.endsWith(".stemmed")) {
+                                        duplicate = searchable.put(IndexType.STEMMED, fieldName) != null;
+                                    } else {
+                                        duplicate = searchable.put(IndexType.TEXT, fieldName) != null;
+                                    }
+                                    break;
+                                case "rank_feature":
+                                    duplicate = searchable.put(IndexType.RANK_FEATURE, fieldName) != null;
+                                    break;
+                                default:
+                                    log.warn(
+                                            "Unknown index type on attribute {}, field {}: {}",
+                                            attributeDef.getName(),
+                                            fieldName,
+                                            indexType);
+                                    break;
+                            }
+                        } else {
+                            IndexType defIndex = getDefaultIndexForType(getType());
+                            duplicate = searchable.put(defIndex, fieldName) != null;
+                        }
+                    }
+                }
+
+                if (duplicate) {
+                    log.info("Same attribute had multiple (identical) index references: {}", attrName);
+                }
+            }
+
+            return searchable;
+        }
+
+        /**
+         * Lookup the default index for the provided attribute data type.
+         *
+         * @param type mapped type of the attribute
+         * @return the default index for that data type
+         */
+        private static IndexType getDefaultIndexForType(MappedType type) {
+            String baseType = type.getOriginalBase();
+            IndexType toUse;
+            switch (baseType) {
+                case "date":
+                case "float":
+                case "double":
+                case "int":
+                case "long":
+                    toUse = IndexType.NUMERIC;
+                    break;
+                case "boolean":
+                    toUse = IndexType.BOOLEAN;
+                    break;
+                case "string":
+                default:
+                    toUse = IndexType.KEYWORD;
+                    break;
+            }
+            return toUse;
+        }
+
+        public String getEnumForAttr() {
+            return getRenamed()
+                    .replaceAll("_", "")
+                    .replaceAll("([A-Z]+)([A-Z][a-z])", "$1_$2")
+                    .replaceAll("([a-z])([A-Z])", "$1_$2")
+                    .toUpperCase(Locale.ROOT);
         }
 
         /** {@inheritDoc} */

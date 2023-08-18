@@ -12,6 +12,10 @@ import com.atlan.model.enums.AuthPolicyType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.DataMaskingType;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.BooleanField;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.AuthPolicyCondition;
 import com.atlan.model.structs.AuthPolicyValiditySchedule;
@@ -35,6 +39,60 @@ import javax.annotation.processing.Generated;
 public interface IAuthPolicy {
 
     public static final String TYPE_NAME = "AuthPolicy";
+
+    /** Access control object to which this policy belongs. */
+    RelationField ACCESS_CONTROL = new RelationField("accessControl");
+
+    /** Whether the policy is activated (true) or deactivated (false). */
+    BooleanField IS_POLICY_ENABLED = new BooleanField("isPolicyEnabled", "isPolicyEnabled");
+
+    /** Actions included in the policy. */
+    KeywordField POLICY_ACTIONS = new KeywordField("policyActions", "policyActions");
+
+    /** Category of access control object for the policy (for example, persona vs purpose). */
+    KeywordField POLICY_CATEGORY = new KeywordField("policyCategory", "policyCategory");
+
+    /** TBC */
+    KeywordField POLICY_CONDITIONS = new KeywordField("policyConditions", "policyConditions");
+
+    /** TBC */
+    BooleanField POLICY_DELEGATE_ADMIN = new BooleanField("policyDelegateAdmin", "policyDelegateAdmin");
+
+    /** Groups to whom the policy applies. */
+    KeywordField POLICY_GROUPS = new KeywordField("policyGroups", "policyGroups");
+
+    /** TBC */
+    KeywordField POLICY_MASK_TYPE = new KeywordField("policyMaskType", "policyMaskType");
+
+    /** TBC */
+    NumericField POLICY_PRIORITY = new NumericField("policyPriority", "policyPriority");
+
+    /** TBC */
+    KeywordField POLICY_RESOURCE_CATEGORY = new KeywordField("policyResourceCategory", "policyResourceCategory");
+
+    /** TBC */
+    KeywordField POLICY_RESOURCE_SIGNATURE = new KeywordField("policyResourceSignature", "policyResourceSignature");
+
+    /** Resources against which to apply the policy. */
+    KeywordField POLICY_RESOURCES = new KeywordField("policyResources", "policyResources");
+
+    /** Roles to whom the policy applies. */
+    KeywordField POLICY_ROLES = new KeywordField("policyRoles", "policyRoles");
+
+    /** Service that handles the policy (for example, atlas vs heka). */
+    KeywordField POLICY_SERVICE_NAME = new KeywordField("policyServiceName", "policyServiceName");
+
+    /** Underlying kind of policy (for example, metadata vs data vs glossary). */
+    KeywordField POLICY_SUB_CATEGORY = new KeywordField("policySubCategory", "policySubCategory");
+
+    /** Kind of policy (for example, allow vs deny). */
+    KeywordField POLICY_TYPE = new KeywordField("policyType", "policyType");
+
+    /** Users to whom the policy applies. */
+    KeywordField POLICY_USERS = new KeywordField("policyUsers", "policyUsers");
+
+    /** TBC */
+    KeywordField POLICY_VALIDITY_SCHEDULE = new KeywordField("policyValiditySchedule", "policyValiditySchedule");
 
     /** Access control object to which this policy belongs. */
     IAccessControl getAccessControl();
@@ -182,6 +240,9 @@ public interface IAuthPolicy {
 
     /** TBC */
     String getAssetDbtUniqueId();
+
+    /** TBC */
+    String getAssetIcon();
 
     /** TBC */
     SortedSet<String> getAssetMcIncidentNames();

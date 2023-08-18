@@ -4,9 +4,19 @@ package com.atlan.model.fields;
 
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 
+/**
+ * Represents any field in Atlan that can be searched using only numeric search operations.
+ */
 public class NumericField extends SearchableField implements INumericallySearchable {
-    public NumericField(String atlan, String elastic) {
-        super(atlan, elastic);
+
+    /**
+     * Default constructor.
+     *
+     * @param atlan name of the attribute in the metastore
+     * @param numeric name of the numeric field in the search index
+     */
+    public NumericField(String atlan, String numeric) {
+        super(atlan, numeric);
     }
 
     /** {@inheritDoc} */

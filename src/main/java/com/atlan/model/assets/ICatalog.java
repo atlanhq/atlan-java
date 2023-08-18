@@ -7,6 +7,7 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -28,6 +29,18 @@ import javax.annotation.processing.Generated;
 public interface ICatalog {
 
     public static final String TYPE_NAME = "Catalog";
+
+    /** TBC */
+    RelationField INPUT_TO_AIRFLOW_TASKS = new RelationField("inputToAirflowTasks");
+
+    /** Processes to which this asset provides input. */
+    RelationField INPUT_TO_PROCESSES = new RelationField("inputToProcesses");
+
+    /** TBC */
+    RelationField OUTPUT_FROM_AIRFLOW_TASKS = new RelationField("outputFromAirflowTasks");
+
+    /** Processes from which this asset is produced as output. */
+    RelationField OUTPUT_FROM_PROCESSES = new RelationField("outputFromProcesses");
 
     /**
      * Reference to an asset by its qualifiedName.
@@ -572,6 +585,9 @@ public interface ICatalog {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -667,6 +683,9 @@ public interface ICatalog {
     /** TBC */
     Boolean getHasLineage();
 
+    /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
     /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
@@ -702,6 +721,9 @@ public interface ICatalog {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();

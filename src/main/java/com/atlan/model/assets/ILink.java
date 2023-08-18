@@ -8,6 +8,8 @@ import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.IconType;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -29,6 +31,15 @@ import javax.annotation.processing.Generated;
 public interface ILink {
 
     public static final String TYPE_NAME = "Link";
+
+    /** Asset to which the link is attached. */
+    RelationField ASSET = new RelationField("asset");
+
+    /** Icon for the link. */
+    KeywordField ICON = new KeywordField("icon", "icon");
+
+    /** Type of icon for the link. */
+    KeywordField ICON_TYPE = new KeywordField("iconType", "iconType");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -178,6 +189,9 @@ public interface ILink {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -280,6 +294,9 @@ public interface ILink {
     IconType getIconType();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -320,6 +337,9 @@ public interface ILink {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();
