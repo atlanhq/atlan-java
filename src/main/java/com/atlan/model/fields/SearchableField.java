@@ -2,6 +2,9 @@
 /* Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.fields;
 
+import co.elastic.clients.elasticsearch._types.SortOptions;
+import co.elastic.clients.elasticsearch._types.SortOrder;
+import co.elastic.clients.elasticsearch._types.aggregations.Aggregation;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -29,5 +32,29 @@ public class SearchableField extends AtlanField implements ISearchable {
     @Override
     public Query exists() {
         return ISearchable.exists(getElasticFieldName());
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public Aggregation distinct() {
+        return ISearchable.distinct(getElasticFieldName());
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public Aggregation count() {
+        return ISearchable.count(getElasticFieldName());
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public Aggregation bucketBy() {
+        return ISearchable.bucketBy(getElasticFieldName());
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public SortOptions order(SortOrder order) {
+        return ISearchable.order(getElasticFieldName(), order);
     }
 }

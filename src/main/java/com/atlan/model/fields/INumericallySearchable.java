@@ -3,6 +3,7 @@
 package com.atlan.model.fields;
 
 import co.elastic.clients.elasticsearch._types.FieldValue;
+import co.elastic.clients.elasticsearch._types.aggregations.Aggregation;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import co.elastic.clients.elasticsearch._types.query_dsl.RangeQuery;
 import co.elastic.clients.elasticsearch._types.query_dsl.TermQuery;
@@ -156,5 +157,77 @@ public interface INumericallySearchable {
     static <T extends Number> Query between(final String field, final T min, final T max) {
         return RangeQuery.of(r -> r.field(field).gte(JsonData.of(min)).lte(JsonData.of(max)))
                 ._toQuery();
+    }
+
+    /**
+     * Return criteria to calculate a sum of the values of the field across all results.
+     *
+     * @return criteria to calculate the sum of the values of the provided field across the results
+     */
+    Aggregation sum();
+
+    /**
+     * Return criteria to calculate a sum of the values of the provided field across all
+     * results.
+     *
+     * @param field for which to find the sum of values
+     * @return criteria to calculate the sum of the values of the provided field across the results
+     */
+    static Aggregation sum(final String field) {
+        return Aggregation.of(a -> a.sum(s -> s.field(field)));
+    }
+
+    /**
+     * Return criteria to calculate the average value of the field across all results.
+     *
+     * @return criteria to calculate the average value of the provided field across the results
+     */
+    Aggregation avg();
+
+    /**
+     * Return criteria to calculate the average value of the provided field across all
+     * results.
+     *
+     * @param field for which to find the average value
+     * @return criteria to calculate the average value of the provided field across the results
+     */
+    static Aggregation avg(final String field) {
+        return Aggregation.of(a -> a.avg(s -> s.field(field)));
+    }
+
+    /**
+     * Return criteria to calculate the minimum value of the field across all results.
+     *
+     * @return criteria to calculate the minimum value of the provided field across the results
+     */
+    Aggregation min();
+
+    /**
+     * Return criteria to calculate the minimum value of the provided field across all
+     * results.
+     *
+     * @param field for which to find the minimum value
+     * @return criteria to calculate the minimum value of the provided field across the results
+     */
+    static Aggregation min(final String field) {
+        return Aggregation.of(a -> a.min(s -> s.field(field)));
+    }
+
+    /**
+     * Return criteria to calculate the maximum value of the field across all results.
+     *
+     * @return criteria to calculate the maximum value of the provided field across the results
+     */
+    Aggregation max();
+
+    /**
+     * Return criteria to calculate the maximum value of the provided field across all
+     * results.
+     *
+     * @param field for which to find the maximum value
+     * @return criteria to calculate the maximum value of the provided field across the results
+     */
+    static Aggregation max(final String field) {
+        return Aggregation.of(a -> a.max(s -> s.field(field)));
     }
 }

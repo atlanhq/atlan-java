@@ -13,6 +13,8 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
+import com.atlan.model.search.CompoundQuery;
+import com.atlan.model.search.FluentSearch;
 import com.atlan.util.QueryFactory;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -252,13 +254,72 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
     }
 
     /**
+     * Start a fluent search that will return all TablePartition assets.
+     * Additional conditions can be chained onto the returned search before any
+     * asset retrieval is attempted, ensuring all conditions are pushed-down for
+     * optimal retrieval. Only active (non-archived) TablePartition assets will be included.
+     *
+     * @return a fluent search that includes all TablePartition assets
+     */
+    public static FluentSearch.FluentSearchBuilder<?, ?> select() {
+        return select(Atlan.getDefaultClient());
+    }
+
+    /**
+     * Start a fluent search that will return all TablePartition assets.
+     * Additional conditions can be chained onto the returned search before any
+     * asset retrieval is attempted, ensuring all conditions are pushed-down for
+     * optimal retrieval. Only active (non-archived) TablePartition assets will be included.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the assets
+     * @return a fluent search that includes all TablePartition assets
+     */
+    public static FluentSearch.FluentSearchBuilder<?, ?> select(AtlanClient client) {
+        return select(client, false);
+    }
+
+    /**
+     * Start a fluent search that will return all TablePartition assets.
+     * Additional conditions can be chained onto the returned search before any
+     * asset retrieval is attempted, ensuring all conditions are pushed-down for
+     * optimal retrieval.
+     *
+     * @param includeArchived when true, archived (soft-deleted) TablePartitions will be included
+     * @return a fluent search that includes all TablePartition assets
+     */
+    public static FluentSearch.FluentSearchBuilder<?, ?> select(boolean includeArchived) {
+        return select(Atlan.getDefaultClient(), includeArchived);
+    }
+
+    /**
+     * Start a fluent search that will return all TablePartition assets.
+     * Additional conditions can be chained onto the returned search before any
+     * asset retrieval is attempted, ensuring all conditions are pushed-down for
+     * optimal retrieval.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the assets
+     * @param includeArchived when true, archived (soft-deleted) TablePartitions will be included
+     * @return a fluent search that includes all TablePartition assets
+     */
+    public static FluentSearch.FluentSearchBuilder<?, ?> select(AtlanClient client, boolean includeArchived) {
+        FluentSearch.FluentSearchBuilder<?, ?> builder =
+                FluentSearch.builder(client).where(CompoundQuery.assetType(TYPE_NAME));
+        if (!includeArchived) {
+            builder.where(CompoundQuery.ACTIVE);
+        }
+        return builder;
+    }
+
+    /**
      * Start an asset filter that will return all TablePartition assets.
      * Additional conditions can be chained onto the returned filter before any
      * asset retrieval is attempted, ensuring all conditions are pushed-down for
      * optimal retrieval. Only active (non-archived) TablePartition assets will be included.
      *
      * @return an asset filter that includes all TablePartition assets
+     * @deprecated replaced by {@link #select()}
      */
+    @Deprecated
     public static AssetFilter.AssetFilterBuilder all() {
         return all(Atlan.getDefaultClient());
     }
@@ -271,7 +332,9 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the assets
      * @return an asset filter that includes all TablePartition assets
+     * @deprecated replaced by {@link #select(AtlanClient)}
      */
+    @Deprecated
     public static AssetFilter.AssetFilterBuilder all(AtlanClient client) {
         return all(client, false);
     }
@@ -284,7 +347,9 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
      *
      * @param includeArchived when true, archived (soft-deleted) TablePartitions will be included
      * @return an asset filter that includes all TablePartition assets
+     * @deprecated replaced by {@link #select(boolean)}
      */
+    @Deprecated
     public static AssetFilter.AssetFilterBuilder all(boolean includeArchived) {
         return all(Atlan.getDefaultClient(), includeArchived);
     }
@@ -298,7 +363,9 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
      * @param client connectivity to the Atlan tenant from which to retrieve the assets
      * @param includeArchived when true, archived (soft-deleted) TablePartitions will be included
      * @return an asset filter that includes all TablePartition assets
+     * @deprecated replaced by {@link #select(AtlanClient, boolean)}
      */
+    @Deprecated
     public static AssetFilter.AssetFilterBuilder all(AtlanClient client, boolean includeArchived) {
         AssetFilter.AssetFilterBuilder builder =
                 AssetFilter.builder().client(client).filter(QueryFactory.type(TYPE_NAME));

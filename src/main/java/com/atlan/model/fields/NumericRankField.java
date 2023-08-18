@@ -2,6 +2,7 @@
 /* Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.fields;
 
+import co.elastic.clients.elasticsearch._types.aggregations.Aggregation;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 
 /**
@@ -70,5 +71,29 @@ public class NumericRankField extends SearchableField implements INumericallySea
     @Override
     public <T extends Number> Query between(T min, T max) {
         return INumericallySearchable.between(getNumericFieldName(), min, max);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public Aggregation sum() {
+        return INumericallySearchable.sum(getNumericFieldName());
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public Aggregation avg() {
+        return INumericallySearchable.avg(getNumericFieldName());
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public Aggregation min() {
+        return INumericallySearchable.min(getNumericFieldName());
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public Aggregation max() {
+        return INumericallySearchable.max(getNumericFieldName());
     }
 }
