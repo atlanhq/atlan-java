@@ -6,11 +6,11 @@ import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import com.atlan.model.enums.AtlanEnum;
 import java.util.Collection;
 
-public class KeywordAndTextField extends SearchableField implements IKeywordSearchable, ITextSearchable {
+public class KeywordTextField extends SearchableField implements IKeywordSearchable, ITextSearchable {
 
     private final String textFieldName;
 
-    public KeywordAndTextField(String atlan, String keyword, String text) {
+    public KeywordTextField(String atlan, String keyword, String text) {
         super(atlan, keyword);
         this.textFieldName = text;
     }
