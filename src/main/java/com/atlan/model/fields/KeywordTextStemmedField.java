@@ -3,11 +3,11 @@
 package com.atlan.model.fields;
 
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
-import com.atlan.exception.AtlanException;
 import com.atlan.model.enums.AtlanEnum;
 import java.util.Collection;
 
-public class KeywordTextStemmedField extends SearchableField implements IKeywordSearchable, ITextSearchable, IStemmedSearchable {
+public class KeywordTextStemmedField extends SearchableField
+        implements IKeywordSearchable, ITextSearchable, IStemmedSearchable {
 
     private final String textFieldName;
     private final String stemmedFieldName;

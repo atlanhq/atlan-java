@@ -5,8 +5,8 @@ package com.atlan.model.assets;
 import com.atlan.model.core.AtlanTag;
 import com.atlan.model.core.CustomMetadataAttributes;
 import com.atlan.model.enums.AtlanStatus;
-import com.atlan.model.fields.KeywordAndTextField;
 import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.KeywordTextField;
 import com.atlan.model.fields.NumericField;
 import java.util.Map;
 import java.util.SortedSet;
@@ -17,7 +17,7 @@ import java.util.SortedSet;
 public interface IReferenceable {
 
     /** Type of the asset. For example Table, Column, and so on. */
-    KeywordAndTextField TYPE_NAME = new KeywordAndTextField("typeName", "__typeName.keyword", "__typeName");
+    KeywordTextField TYPE_NAME = new KeywordTextField("typeName", "__typeName.keyword", "__typeName");
 
     /** Globally unique identifier (GUID) of any object in Atlan. */
     KeywordField GUID = new KeywordField("guid", "__guid");
@@ -32,19 +32,18 @@ public interface IReferenceable {
     KeywordField STATUS = new KeywordField("status", "__state");
 
     /** All directly-assigned Atlan tags that exist on an asset, searchable by internal hashed-string ID of the Atlan tag. */
-    KeywordAndTextField ATLAN_TAGS =
-            new KeywordAndTextField("classificationNames", "__traitNames", "__classificationsText");
+    KeywordTextField ATLAN_TAGS = new KeywordTextField("classificationNames", "__traitNames", "__classificationsText");
 
     /** All propagated Atlan tags that exist on an asset, searchable by internal hashed-string ID of the Atlan tag. */
-    KeywordAndTextField PROPAGATED_ATLAN_TAGS =
-            new KeywordAndTextField("classificationNames", "__propagatedTraitNames", "__classificationsText");
+    KeywordTextField PROPAGATED_ATLAN_TAGS =
+            new KeywordTextField("classificationNames", "__propagatedTraitNames", "__classificationsText");
 
     /** All terms attached to an asset, searchable by the term's qualifiedName. */
-    KeywordAndTextField ASSIGNED_TERMS = new KeywordAndTextField("meanings", "__meanings", "__meaningsText");
+    KeywordTextField ASSIGNED_TERMS = new KeywordTextField("meanings", "__meanings", "__meaningsText");
 
     /** All super types of an asset. */
-    KeywordAndTextField SUPER_TYPE_NAMES =
-            new KeywordAndTextField("typeName", "__superTypeNames.keyword", "__superTypeNames");
+    KeywordTextField SUPER_TYPE_NAMES =
+            new KeywordTextField("typeName", "__superTypeNames.keyword", "__superTypeNames");
 
     /** Time (in milliseconds) when the asset was created. */
     NumericField CREATE_TIME = new NumericField("createTime", "__timestamp");
