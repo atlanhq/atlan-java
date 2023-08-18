@@ -55,11 +55,21 @@ public class LookerModel extends Asset implements ILookerModel, ILooker, IBI, IC
     /** TBC */
     @Attribute
     @Singular
+    SortedSet<IAirflowTask> inputToAirflowTasks;
+
+    /** TBC */
+    @Attribute
+    @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
     /** TBC */
     @Attribute
     ILookerLook look;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IAirflowTask> outputFromAirflowTasks;
 
     /** TBC */
     @Attribute

@@ -59,12 +59,22 @@ public class PowerBITable extends Asset implements IPowerBITable, IPowerBI, IBI,
     /** TBC */
     @Attribute
     @Singular
+    SortedSet<IAirflowTask> inputToAirflowTasks;
+
+    /** TBC */
+    @Attribute
+    @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
     /** TBC */
     @Attribute
     @Singular
     SortedSet<IPowerBIMeasure> measures;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IAirflowTask> outputFromAirflowTasks;
 
     /** TBC */
     @Attribute

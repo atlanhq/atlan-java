@@ -140,12 +140,22 @@ public class DbtProcess extends Asset implements IDbtProcess, IDbt, ILineageProc
     /** TBC */
     @Attribute
     @Singular
+    SortedSet<IAirflowTask> inputToAirflowTasks;
+
+    /** TBC */
+    @Attribute
+    @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
     /** TBC */
     @Attribute
     @Singular
     SortedSet<ICatalog> inputs;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IAirflowTask> outputFromAirflowTasks;
 
     /** TBC */
     @Attribute

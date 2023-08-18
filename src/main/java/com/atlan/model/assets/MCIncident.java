@@ -46,6 +46,11 @@ public class MCIncident extends Asset
     /** TBC */
     @Attribute
     @Singular
+    SortedSet<IAirflowTask> inputToAirflowTasks;
+
+    /** TBC */
+    @Attribute
+    @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
     /** TBC */
@@ -91,6 +96,11 @@ public class MCIncident extends Asset
     /** Monitor through which this incident occurred. */
     @Attribute
     IMCMonitor mcMonitor;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IAirflowTask> outputFromAirflowTasks;
 
     /** TBC */
     @Attribute

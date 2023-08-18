@@ -59,6 +59,11 @@ public class SalesforceObject extends Asset
     /** TBC */
     @Attribute
     @Singular
+    SortedSet<IAirflowTask> inputToAirflowTasks;
+
+    /** TBC */
+    @Attribute
+    @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
     /** Whether the object is a custom object (true) or not (false). */
@@ -85,6 +90,11 @@ public class SalesforceObject extends Asset
     /** TBC */
     @Attribute
     String organizationQualifiedName;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IAirflowTask> outputFromAirflowTasks;
 
     /** TBC */
     @Attribute

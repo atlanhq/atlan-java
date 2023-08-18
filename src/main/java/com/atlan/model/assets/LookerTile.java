@@ -49,6 +49,11 @@ public class LookerTile extends Asset implements ILookerTile, ILooker, IBI, ICat
     /** TBC */
     @Attribute
     @Singular
+    SortedSet<IAirflowTask> inputToAirflowTasks;
+
+    /** TBC */
+    @Attribute
+    @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
     /** TBC */
@@ -70,6 +75,11 @@ public class LookerTile extends Asset implements ILookerTile, ILooker, IBI, ICat
     /** TBC */
     @Attribute
     String noteText;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IAirflowTask> outputFromAirflowTasks;
 
     /** TBC */
     @Attribute

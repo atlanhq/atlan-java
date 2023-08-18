@@ -50,7 +50,25 @@ public class LookerView extends Asset implements ILookerView, ILooker, IBI, ICat
     /** TBC */
     @Attribute
     @Singular
+    SortedSet<IAirflowTask> inputToAirflowTasks;
+
+    /** TBC */
+    @Attribute
+    @Singular
     SortedSet<ILineageProcess> inputToProcesses;
+
+    /** File name of the looker view in the project */
+    @Attribute
+    String lookerViewFileName;
+
+    /** File path of the looker view in the project */
+    @Attribute
+    String lookerViewFilePath;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IAirflowTask> outputFromAirflowTasks;
 
     /** TBC */
     @Attribute

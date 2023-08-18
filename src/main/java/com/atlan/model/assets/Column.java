@@ -220,6 +220,11 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
     /** TBC */
     @Attribute
     @Singular
+    SortedSet<IAirflowTask> inputToAirflowTasks;
+
+    /** TBC */
+    @Attribute
+    @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
     /** TBC */
@@ -296,6 +301,11 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
     /** Order (position) in which the column appears in the table (starting at 1). */
     @Attribute
     Integer order;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IAirflowTask> outputFromAirflowTasks;
 
     /** TBC */
     @Attribute

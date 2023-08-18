@@ -48,6 +48,11 @@ public class MicroStrategyProject extends Asset
     /** TBC */
     @Attribute
     @Singular
+    SortedSet<IAirflowTask> inputToAirflowTasks;
+
+    /** TBC */
+    @Attribute
+    @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
     /** Attributes contained within the project. */
@@ -134,6 +139,11 @@ public class MicroStrategyProject extends Asset
     @Attribute
     @Singular
     SortedSet<IMicroStrategyVisualization> microStrategyVisualizations;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IAirflowTask> outputFromAirflowTasks;
 
     /** TBC */
     @Attribute

@@ -47,6 +47,11 @@ public class KafkaConsumerGroup extends Asset
     /** TBC */
     @Attribute
     @Singular
+    SortedSet<IAirflowTask> inputToAirflowTasks;
+
+    /** TBC */
+    @Attribute
+    @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
     /** TBC */
@@ -72,6 +77,11 @@ public class KafkaConsumerGroup extends Asset
     @Attribute
     @Singular
     SortedSet<IKafkaTopic> kafkaTopics;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IAirflowTask> outputFromAirflowTasks;
 
     /** TBC */
     @Attribute

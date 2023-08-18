@@ -48,6 +48,11 @@ public class MicroStrategyVisualization extends Asset
     /** TBC */
     @Attribute
     @Singular
+    SortedSet<IAirflowTask> inputToAirflowTasks;
+
+    /** TBC */
+    @Attribute
+    @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
     /** TBC */
@@ -114,6 +119,11 @@ public class MicroStrategyVisualization extends Asset
     /** Type of visualization. */
     @Attribute
     String microStrategyVisualizationType;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IAirflowTask> outputFromAirflowTasks;
 
     /** TBC */
     @Attribute

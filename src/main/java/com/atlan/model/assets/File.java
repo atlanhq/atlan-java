@@ -61,6 +61,11 @@ public class File extends Asset implements IFile, IResource, ICatalog, IAsset, I
     /** TBC */
     @Attribute
     @Singular
+    SortedSet<IAirflowTask> inputToAirflowTasks;
+
+    /** TBC */
+    @Attribute
+    @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
     /** TBC */
@@ -70,6 +75,11 @@ public class File extends Asset implements IFile, IResource, ICatalog, IAsset, I
     /** TBC */
     @Attribute
     String link;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IAirflowTask> outputFromAirflowTasks;
 
     /** TBC */
     @Attribute

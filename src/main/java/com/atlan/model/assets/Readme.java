@@ -50,6 +50,11 @@ public class Readme extends Asset implements IReadme, IResource, ICatalog, IAsse
     /** TBC */
     @Attribute
     @Singular
+    SortedSet<IAirflowTask> inputToAirflowTasks;
+
+    /** TBC */
+    @Attribute
+    @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
     /** TBC */
@@ -59,6 +64,11 @@ public class Readme extends Asset implements IReadme, IResource, ICatalog, IAsse
     /** TBC */
     @Attribute
     String link;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IAirflowTask> outputFromAirflowTasks;
 
     /** TBC */
     @Attribute

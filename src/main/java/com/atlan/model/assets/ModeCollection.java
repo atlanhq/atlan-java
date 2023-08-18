@@ -45,6 +45,11 @@ public class ModeCollection extends Asset implements IModeCollection, IMode, IBI
     /** TBC */
     @Attribute
     @Singular
+    SortedSet<IAirflowTask> inputToAirflowTasks;
+
+    /** TBC */
+    @Attribute
+    @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
     /** TBC */
@@ -99,6 +104,11 @@ public class ModeCollection extends Asset implements IModeCollection, IMode, IBI
     /** TBC */
     @Attribute
     String modeWorkspaceUsername;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IAirflowTask> outputFromAirflowTasks;
 
     /** TBC */
     @Attribute

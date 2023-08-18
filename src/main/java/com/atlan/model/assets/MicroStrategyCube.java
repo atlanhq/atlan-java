@@ -48,6 +48,11 @@ public class MicroStrategyCube extends Asset
     /** TBC */
     @Attribute
     @Singular
+    SortedSet<IAirflowTask> inputToAirflowTasks;
+
+    /** TBC */
+    @Attribute
+    @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
     /** Attributes used by the cube. */
@@ -116,6 +121,11 @@ public class MicroStrategyCube extends Asset
     @Attribute
     @Singular
     SortedSet<String> microStrategyReportQualifiedNames;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IAirflowTask> outputFromAirflowTasks;
 
     /** TBC */
     @Attribute

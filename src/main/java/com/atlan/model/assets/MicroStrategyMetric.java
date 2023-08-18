@@ -48,6 +48,11 @@ public class MicroStrategyMetric extends Asset
     /** TBC */
     @Attribute
     @Singular
+    SortedSet<IAirflowTask> inputToAirflowTasks;
+
+    /** TBC */
+    @Attribute
+    @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
     /** Simple names of the related MicroStrategy attributes. */
@@ -162,6 +167,11 @@ public class MicroStrategyMetric extends Asset
     @Attribute
     @Singular
     SortedSet<IMicroStrategyReport> microStrategyReports;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IAirflowTask> outputFromAirflowTasks;
 
     /** TBC */
     @Attribute

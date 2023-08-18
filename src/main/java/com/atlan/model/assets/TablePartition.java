@@ -52,6 +52,11 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ITablePartition> childTablePartitions;
+
+    /** TBC */
+    @Attribute
     Long columnCount;
 
     /** TBC */
@@ -101,6 +106,11 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
     /** TBC */
     @Attribute
     @Singular
+    SortedSet<IAirflowTask> inputToAirflowTasks;
+
+    /** TBC */
+    @Attribute
+    @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
     /** TBC */
@@ -126,11 +136,20 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
     /** TBC */
     @Attribute
     @Singular
+    SortedSet<IAirflowTask> outputFromAirflowTasks;
+
+    /** TBC */
+    @Attribute
+    @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
     /** TBC */
     @Attribute
     ITable parentTable;
+
+    /** TBC */
+    @Attribute
+    ITablePartition parentTablePartition;
 
     /** TBC */
     @Attribute

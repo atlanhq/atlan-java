@@ -90,6 +90,11 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
     /** TBC */
     @Attribute
     @Singular
+    SortedSet<IAirflowTask> inputToAirflowTasks;
+
+    /** TBC */
+    @Attribute
+    @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
     /** TBC */
@@ -107,6 +112,11 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
     /** TBC */
     @Attribute
     Long lastProfiledAt;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IAirflowTask> outputFromAirflowTasks;
 
     /** TBC */
     @Attribute

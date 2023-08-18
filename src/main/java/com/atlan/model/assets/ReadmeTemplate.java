@@ -54,6 +54,11 @@ public class ReadmeTemplate extends Asset implements IReadmeTemplate, IResource,
     /** TBC */
     @Attribute
     @Singular
+    SortedSet<IAirflowTask> inputToAirflowTasks;
+
+    /** TBC */
+    @Attribute
+    @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
     /** TBC */
@@ -63,6 +68,11 @@ public class ReadmeTemplate extends Asset implements IReadmeTemplate, IResource,
     /** TBC */
     @Attribute
     String link;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IAirflowTask> outputFromAirflowTasks;
 
     /** TBC */
     @Attribute

@@ -48,6 +48,11 @@ public class AzureEventHub extends Asset
     /** TBC */
     @Attribute
     @Singular
+    SortedSet<IAirflowTask> inputToAirflowTasks;
+
+    /** TBC */
+    @Attribute
+    @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
     /** TBC */
@@ -86,6 +91,11 @@ public class AzureEventHub extends Asset
     /** TBC */
     @Attribute
     Long kafkaTopicSizeInBytes;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IAirflowTask> outputFromAirflowTasks;
 
     /** TBC */
     @Attribute

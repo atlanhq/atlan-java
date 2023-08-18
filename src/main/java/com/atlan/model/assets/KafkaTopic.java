@@ -47,6 +47,11 @@ public class KafkaTopic extends Asset implements IKafkaTopic, IKafka, IEventStor
     /** TBC */
     @Attribute
     @Singular
+    SortedSet<IAirflowTask> inputToAirflowTasks;
+
+    /** TBC */
+    @Attribute
+    @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
     /** Consumer groups subscribed to this topic. */
@@ -85,6 +90,11 @@ public class KafkaTopic extends Asset implements IKafkaTopic, IKafka, IEventStor
     /** TBC */
     @Attribute
     Long kafkaTopicSizeInBytes;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IAirflowTask> outputFromAirflowTasks;
 
     /** TBC */
     @Attribute

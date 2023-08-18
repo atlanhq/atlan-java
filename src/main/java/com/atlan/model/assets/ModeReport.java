@@ -45,6 +45,11 @@ public class ModeReport extends Asset implements IModeReport, IMode, IBI, ICatal
     /** TBC */
     @Attribute
     @Singular
+    SortedSet<IAirflowTask> inputToAirflowTasks;
+
+    /** TBC */
+    @Attribute
+    @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
     /** TBC */
@@ -120,6 +125,11 @@ public class ModeReport extends Asset implements IModeReport, IMode, IBI, ICatal
     /** TBC */
     @Attribute
     String modeWorkspaceUsername;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IAirflowTask> outputFromAirflowTasks;
 
     /** TBC */
     @Attribute

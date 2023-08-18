@@ -72,6 +72,11 @@ public class SnowflakeTag extends Asset implements ISnowflakeTag, ITag, ISQL, IC
     /** TBC */
     @Attribute
     @Singular
+    SortedSet<IAirflowTask> inputToAirflowTasks;
+
+    /** TBC */
+    @Attribute
+    @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
     /** TBC */
@@ -86,6 +91,11 @@ public class SnowflakeTag extends Asset implements ISnowflakeTag, ITag, ISQL, IC
     @Attribute
     @JsonProperty("mappedClassificationName")
     String mappedAtlanTagName;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IAirflowTask> outputFromAirflowTasks;
 
     /** TBC */
     @Attribute

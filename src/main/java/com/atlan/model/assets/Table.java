@@ -112,6 +112,11 @@ public class Table extends Asset implements ITable, ISQL, ICatalog, IAsset, IRef
     /** TBC */
     @Attribute
     @Singular
+    SortedSet<IAirflowTask> inputToAirflowTasks;
+
+    /** TBC */
+    @Attribute
+    @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
     /** TBC */
@@ -133,6 +138,11 @@ public class Table extends Asset implements ITable, ISQL, ICatalog, IAsset, IRef
     /** TBC */
     @Attribute
     Long lastProfiledAt;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IAirflowTask> outputFromAirflowTasks;
 
     /** TBC */
     @Attribute

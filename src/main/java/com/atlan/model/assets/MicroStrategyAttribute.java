@@ -48,6 +48,11 @@ public class MicroStrategyAttribute extends Asset
     /** TBC */
     @Attribute
     @Singular
+    SortedSet<IAirflowTask> inputToAirflowTasks;
+
+    /** TBC */
+    @Attribute
+    @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
     /** Attribute form name, description, display format and expression as a JSON string. */
@@ -117,6 +122,11 @@ public class MicroStrategyAttribute extends Asset
     @Attribute
     @Singular
     SortedSet<IMicroStrategyReport> microStrategyReports;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IAirflowTask> outputFromAirflowTasks;
 
     /** TBC */
     @Attribute

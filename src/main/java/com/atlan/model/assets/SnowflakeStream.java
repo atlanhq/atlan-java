@@ -71,6 +71,11 @@ public class SnowflakeStream extends Asset implements ISnowflakeStream, ISQL, IC
     /** TBC */
     @Attribute
     @Singular
+    SortedSet<IAirflowTask> inputToAirflowTasks;
+
+    /** TBC */
+    @Attribute
+    @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
     /** TBC */
@@ -80,6 +85,11 @@ public class SnowflakeStream extends Asset implements ISnowflakeStream, ISQL, IC
     /** TBC */
     @Attribute
     Long lastProfiledAt;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IAirflowTask> outputFromAirflowTasks;
 
     /** TBC */
     @Attribute

@@ -48,6 +48,11 @@ public class MicroStrategyReport extends Asset
     /** TBC */
     @Attribute
     @Singular
+    SortedSet<IAirflowTask> inputToAirflowTasks;
+
+    /** TBC */
+    @Attribute
+    @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
     /** Attributes related to this report. */
@@ -112,6 +117,11 @@ public class MicroStrategyReport extends Asset
     /** Whether the report is a Grid or Chart. */
     @Attribute
     String microStrategyReportType;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IAirflowTask> outputFromAirflowTasks;
 
     /** TBC */
     @Attribute

@@ -50,6 +50,11 @@ public class LookerQuery extends Asset implements ILookerQuery, ILooker, IBI, IC
     /** TBC */
     @Attribute
     @Singular
+    SortedSet<IAirflowTask> inputToAirflowTasks;
+
+    /** TBC */
+    @Attribute
+    @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
     /** TBC */
@@ -60,6 +65,11 @@ public class LookerQuery extends Asset implements ILookerQuery, ILooker, IBI, IC
     /** TBC */
     @Attribute
     ILookerModel model;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IAirflowTask> outputFromAirflowTasks;
 
     /** TBC */
     @Attribute

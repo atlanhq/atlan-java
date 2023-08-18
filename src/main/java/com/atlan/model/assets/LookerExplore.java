@@ -50,6 +50,11 @@ public class LookerExplore extends Asset implements ILookerExplore, ILooker, IBI
     /** TBC */
     @Attribute
     @Singular
+    SortedSet<IAirflowTask> inputToAirflowTasks;
+
+    /** TBC */
+    @Attribute
+    @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
     /** TBC */
@@ -59,6 +64,11 @@ public class LookerExplore extends Asset implements ILookerExplore, ILooker, IBI
     /** TBC */
     @Attribute
     String modelName;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IAirflowTask> outputFromAirflowTasks;
 
     /** TBC */
     @Attribute

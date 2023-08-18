@@ -1,12 +1,11 @@
 /* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023- Atlan Pte. Ltd. */
+/* Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.enums;
 
-import com.atlan.model.enums.AtlanSearchableField;
-import lombok.Getter;
 import javax.annotation.processing.Generated;
+import lombok.Getter;
 
-@Generated(value="com.atlan.generators.ModelGeneratorV2")
+@Generated(value = "com.atlan.generators.ModelGeneratorV2")
 public enum KeywordFields implements AtlanSearchableField {
     /** Unused. */
     ABBREVIATION("abbreviation"),

@@ -57,6 +57,11 @@ public class LookerLook extends Asset implements ILookerLook, ILooker, IBI, ICat
     /** TBC */
     @Attribute
     @Singular
+    SortedSet<IAirflowTask> inputToAirflowTasks;
+
+    /** TBC */
+    @Attribute
+    @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
     /** TBC */
@@ -66,6 +71,11 @@ public class LookerLook extends Asset implements ILookerLook, ILooker, IBI, ICat
     /** TBC */
     @Attribute
     String modelName;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IAirflowTask> outputFromAirflowTasks;
 
     /** TBC */
     @Attribute
