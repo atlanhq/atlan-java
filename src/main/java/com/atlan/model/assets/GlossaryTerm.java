@@ -11,7 +11,6 @@ import com.atlan.exception.NotFoundException;
 import com.atlan.model.core.AssetFilter;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
-import com.atlan.model.enums.KeywordFields;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.CompoundQuery;
 import com.atlan.model.search.FluentSearch;
@@ -672,11 +671,11 @@ public class GlossaryTerm extends Asset implements IGlossaryTerm, IAsset, IRefer
             AtlanClient client, String name, String glossaryQualifiedName, Collection<String> attributes)
             throws AtlanException {
         List<GlossaryTerm> results = new ArrayList<>();
-        GlossaryTerm.all(client)
-                .filter(QueryFactory.where(KeywordFields.NAME).eq(name))
-                .filter(QueryFactory.where(KeywordFields.GLOSSARY).eq(glossaryQualifiedName))
-                .attributes(attributes == null ? Collections.emptyList() : attributes)
-                .batch(2)
+        GlossaryTerm.select(client)
+                .where(GlossaryTerm.NAME.eq(name))
+                .where(GlossaryTerm.ANCHOR.eq(glossaryQualifiedName))
+                ._includesOnResults(attributes == null ? Collections.emptyList() : attributes)
+                .pageSize(2)
                 .stream()
                 .limit(2)
                 .filter(a -> a instanceof GlossaryTerm)

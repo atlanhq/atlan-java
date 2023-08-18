@@ -4,16 +4,13 @@ package com.atlan.events;
 
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
-import com.atlan.model.assets.Asset;
-import com.atlan.model.assets.ICatalog;
-import com.atlan.model.assets.ILineageProcess;
-import com.atlan.model.enums.KeywordFields;
+import com.atlan.model.assets.*;
 import com.atlan.model.events.AtlanEvent;
 import com.atlan.model.events.AtlanEventPayload;
+import com.atlan.model.search.CompoundQuery;
 import com.atlan.model.search.IndexSearchRequest;
 import com.atlan.model.search.IndexSearchResponse;
 import com.atlan.util.AssetBatch;
-import com.atlan.util.QueryFactory;
 import java.io.IOException;
 import java.util.*;
 import org.slf4j.Logger;
@@ -222,19 +219,18 @@ public interface AtlanEventHandler {
             boolean includeMeanings,
             boolean includeAtlanTags)
             throws AtlanException {
-        IndexSearchRequest request = IndexSearchRequest.builder(QueryFactory.CompoundQuery.builder()
-                        .must(QueryFactory.beActive())
-                        .must(QueryFactory.beOfType(fromEvent.getTypeName()))
-                        .must(QueryFactory.have(KeywordFields.QUALIFIED_NAME).eq(fromEvent.getQualifiedName()))
-                        .build()
-                        ._toQuery())
+        IndexSearchRequest request = client.assets
+                .select()
+                .where(CompoundQuery.assetType(fromEvent.getTypeName()))
+                .where(Asset.QUALIFIED_NAME.eq(fromEvent.getQualifiedName()))
+                // Include attributes that are mandatory for updates, for some asset types
+                .includeOnResults(IGlossaryTerm.ANCHOR)
+                .includeOnResults(IAWS.AWS_ARN)
+                .includeOnRelations(IReferenceable.GUID)
+                .toRequestBuilder()
                 .excludeAtlanTags(!includeAtlanTags)
                 .excludeMeanings(!includeMeanings)
                 .attributes(limitedToAttributes == null ? Collections.emptySet() : limitedToAttributes)
-                // Include attributes that are mandatory for updates, for some asset types
-                .attribute("anchor")
-                .attribute("awsArn")
-                .relationAttribute("guid")
                 .build();
         IndexSearchResponse response = request.search(client);
         if (response != null && response.getAssets() != null) {

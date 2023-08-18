@@ -36,6 +36,7 @@ import com.atlan.model.enums.PurposeMetadataAction;
 import com.atlan.model.enums.DataAction;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.KeywordFields;
+import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.FluentSearch;
 import com.atlan.model.search.CompoundQuery;

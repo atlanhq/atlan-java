@@ -14,7 +14,6 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectionCategory;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
-import com.atlan.model.enums.KeywordFields;
 import com.atlan.model.enums.QueryUsernameStrategy;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.CompoundQuery;
@@ -810,10 +809,10 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
             AtlanClient client, String name, AtlanConnectorType type, Collection<String> attributes)
             throws AtlanException {
         List<Connection> results = new ArrayList<>();
-        Connection.all(client)
-                .filter(QueryFactory.where(KeywordFields.NAME).eq(name))
-                .filter(QueryFactory.where(KeywordFields.CONNECTOR_TYPE).eq(type.getValue()))
-                .attributes(attributes == null ? Collections.emptyList() : attributes)
+        Connection.select(client)
+                .where(Connection.NAME.eq(name))
+                .where(Connection.CONNECTOR_TYPE.eq(type.getValue()))
+                ._includesOnResults(attributes == null ? Collections.emptyList() : attributes)
                 .stream()
                 .filter(a -> a instanceof Connection)
                 .forEach(c -> results.add((Connection) c));

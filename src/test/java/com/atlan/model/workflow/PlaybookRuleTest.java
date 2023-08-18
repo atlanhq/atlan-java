@@ -7,8 +7,8 @@ import static org.testng.Assert.*;
 import com.atlan.Atlan;
 import com.atlan.model.enums.PlaybookActionOperator;
 import com.atlan.model.enums.PlaybookActionType;
+import com.atlan.model.search.CompoundQuery;
 import com.atlan.model.search.IndexSearchRequest;
-import com.atlan.util.QueryFactory;
 import java.io.IOException;
 import org.testng.annotations.Test;
 
@@ -17,7 +17,7 @@ public class PlaybookRuleTest {
     private static final PlaybookRule full = PlaybookRule.builder()
             .name("name")
             .config(PlaybookRuleConfig.builder()
-                    .query(IndexSearchRequest.builder(QueryFactory.beActive())
+                    .query(IndexSearchRequest.builder(CompoundQuery.ACTIVE)
                             .attribute("anchor")
                             .relationAttribute("guid")
                             .build())

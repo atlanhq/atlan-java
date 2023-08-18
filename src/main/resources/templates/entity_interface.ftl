@@ -71,7 +71,7 @@ public interface I${className} {
     <#list nonInheritedAttributes as attribute>
     /** ${attribute.description} */
     <#if attribute.searchType??>
-    <#if (className != "GlossaryTerm" || attribute.originalName != "categories") && (className != "GlossaryCategory" || attribute.originalName != "parentCategory") && ((className != "GlossaryTerm" || className != "GlossaryCategory") && attribute.originalName != "anchor")>
+    <#if (className != "GlossaryTerm" || attribute.originalName != "categories") && (className != "GlossaryCategory" || attribute.originalName != "parentCategory") && ((className != "GlossaryTerm" || className != "GlossaryCategory") && attribute.originalName != "anchor") && (className != "Asset" || attribute.originalName != "meanings")>
     ${attribute.searchType} ${attribute.enumForAttr} = new ${attribute.searchType}("${attribute.originalName}"<#if attribute.searchTypeArgs??>, ${attribute.searchTypeArgs}</#if>);
 
     </#if>

@@ -2,7 +2,6 @@
 /* Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.search;
 
-import co.elastic.clients.elasticsearch._types.SortOptions;
 import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import com.atlan.AtlanClient;
@@ -13,6 +12,7 @@ import com.atlan.model.enums.AtlanStatus;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import lombok.Builder;
 import lombok.Singular;
 import lombok.experimental.SuperBuilder;
 
@@ -23,13 +23,11 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class CompoundQuery {
 
-    public static final Query ACTIVE =
-            builder().where(Asset.STATUS.eq(AtlanStatus.ACTIVE)).toQuery();
-    public static final Query ARCHIVED =
-            builder().where(Asset.STATUS.eq(AtlanStatus.DELETED)).toQuery();
-    public static final Query WITH_LINEAGE =
-            builder().where(Asset.HAS_LINEAGE.eq(true)).toQuery();
-    public static final Query WITHOUT_LINEAGE = builder().whereNot(WITH_LINEAGE).toQuery();
+    public static final Query ACTIVE = Asset.STATUS.eq(AtlanStatus.ACTIVE);
+    public static final Query ARCHIVED = Asset.STATUS.eq(AtlanStatus.DELETED);
+    public static final Query WITH_LINEAGE = Asset.HAS_LINEAGE.eq(true);
+    public static final Query WITHOUT_LINEAGE =
+            builder().whereNot(WITH_LINEAGE).build().toQuery();
 
     /**
      * Returns a query that will only match assets of the type provided.
@@ -90,6 +88,7 @@ public class CompoundQuery {
                 .whereSome(IReferenceable.ATLAN_TAGS.in(values)) // direct Atlan tags
                 .whereSome(IReferenceable.PROPAGATED_ATLAN_TAGS.in(values)) // propagated Atlan tags
                 .minSomes(1)
+                .build()
                 .toQuery();
     }
 
@@ -107,6 +106,7 @@ public class CompoundQuery {
                     .whereSome(IReferenceable.ATLAN_TAGS.exists())
                     .whereSome(IReferenceable.PROPAGATED_ATLAN_TAGS.exists())
                     .minSomes(1)
+                    .build()
                     .toQuery();
         }
     }
@@ -148,76 +148,25 @@ public class CompoundQuery {
     private List<Query> whereSomes;
 
     /** The minimum number of criteria in the "whereSomes" that must match on each search result. (Defaults to 1.) */
-    private int minSomes;
+    @Builder.Default
+    private int minSomes = 1;
 
-    public static CompoundQueryBuilder<?, ?> builder() {
-        // Note: this is needed to ensure defaults are set in coordination with builder overrides below.
-        return new CompoundQueryBuilderImpl().minSomes(1);
-    }
-
-    public abstract static class CompoundQueryBuilder<C extends CompoundQuery, B extends CompoundQueryBuilder<C, B>> {
-        /**
-         * Translate the Atlan compound query into an Elastic Query object.
-         *
-         * @return an Elastic Query object that represents the compound query
-         */
-        public Query toQuery() {
-            BoolQuery.Builder builder = new BoolQuery.Builder();
-            if (wheres != null && !wheres.isEmpty()) {
-                builder.filter(wheres);
-            }
-            if (whereNots != null && !whereNots.isEmpty()) {
-                builder.mustNot(whereNots);
-            }
-            if (whereSomes != null && !whereSomes.isEmpty()) {
-                builder.should(whereSomes).minimumShouldMatch("" + minSomes);
-            }
-            return builder.build()._toQuery();
+    /**
+     * Translate the Atlan compound query into an Elastic Query object.
+     *
+     * @return an Elastic Query object that represents the compound query
+     */
+    public Query toQuery() {
+        BoolQuery.Builder builder = new BoolQuery.Builder();
+        if (wheres != null && !wheres.isEmpty()) {
+            builder.filter(wheres);
         }
-
-        /**
-         * Translate the Atlan compound query into an Atlan search DSL builder.
-         *
-         * @return an Atlan search DSL builder that encapsulates the compound query
-         */
-        public IndexSearchDSL.IndexSearchDSLBuilder<?, ?> toDSL() {
-            return IndexSearchDSL.builder(toQuery());
+        if (whereNots != null && !whereNots.isEmpty()) {
+            builder.mustNot(whereNots);
         }
-
-        /**
-         * Translate the Atlan compound query into an Atlan search request builder.
-         *
-         * @return an Atlan search request builder that encapsulates the compound query
-         */
-        public IndexSearchRequest.IndexSearchRequestBuilder<?, ?> toRequest() {
-            return toRequest(50, null);
+        if (whereSomes != null && !whereSomes.isEmpty()) {
+            builder.should(whereSomes).minimumShouldMatch("" + minSomes);
         }
-
-        /**
-         * Translate the Atlan compound query into an Atlan search request builder.
-         *
-         * @param pageSize page size to use in the request
-         * @return an Atlan search request builder that encapsulates the compound query
-         */
-        public IndexSearchRequest.IndexSearchRequestBuilder<?, ?> toRequest(int pageSize) {
-            return toRequest(pageSize, null);
-        }
-
-        /**
-         * Translate the Atlan compound query into an Atlan search request builder.
-         *
-         * @param pageSize page size to use in the request
-         * @param sorts any sort options to apply to the results
-         * @return an Atlan search request builder that encapsulates the compound query
-         */
-        public IndexSearchRequest.IndexSearchRequestBuilder<?, ?> toRequest(
-                int pageSize, Collection<SortOptions> sorts) {
-            if (sorts == null || sorts.isEmpty()) {
-                return IndexSearchRequest.builder(toDSL().size(pageSize).build());
-            } else {
-                return IndexSearchRequest.builder(
-                        toDSL().size(pageSize).sort(sorts).build());
-            }
-        }
+        return builder.build()._toQuery();
     }
 }

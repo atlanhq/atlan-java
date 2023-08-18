@@ -12,7 +12,6 @@ import com.atlan.exception.NotFoundException;
 import com.atlan.model.core.AssetFilter;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
-import com.atlan.model.enums.KeywordFields;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.CompoundQuery;
 import com.atlan.model.search.FluentSearch;
@@ -507,10 +506,10 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
     public static Glossary findByName(AtlanClient client, String name, Collection<String> attributes)
             throws AtlanException {
         List<Glossary> results = new ArrayList<>();
-        Glossary.all(client)
-                .filter(QueryFactory.where(KeywordFields.NAME).eq(name))
-                .attributes(attributes == null ? Collections.emptyList() : attributes)
-                .batch(2)
+        Glossary.select(client)
+                .where(Glossary.NAME.eq(name))
+                ._includesOnResults(attributes == null ? Collections.emptyList() : attributes)
+                .pageSize(2)
                 .stream()
                 .limit(2)
                 .filter(a -> a instanceof Glossary)
@@ -584,12 +583,12 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
         }
         Set<String> topCategories = new LinkedHashSet<>();
         Map<String, GlossaryCategory> categoryMap = new HashMap<>();
-        GlossaryCategory.all(client)
-                .filter(QueryFactory.where(KeywordFields.GLOSSARY).eq(getQualifiedName()))
-                .attribute("parentCategory")
-                .attributes(attributes == null ? Collections.emptyList() : attributes)
-                .batch(20)
-                .sort(QueryFactory.Sort.by(KeywordFields.NAME, SortOrder.Asc))
+        GlossaryCategory.select(client)
+                .where(GlossaryCategory.ANCHOR.eq(getQualifiedName()))
+                .includeOnResults(GlossaryCategory.PARENT_CATEGORY)
+                ._includesOnResults(attributes == null ? Collections.emptyList() : attributes)
+                .pageSize(20)
+                .sort(GlossaryCategory.NAME.order(SortOrder.Asc))
                 .stream()
                 .filter(a -> a instanceof GlossaryCategory)
                 .forEach(c -> {

@@ -3,6 +3,7 @@
 package com.atlan.model.search;
 
 import co.elastic.clients.elasticsearch._types.SortOptions;
+import co.elastic.clients.elasticsearch._types.aggregations.Aggregation;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
@@ -10,6 +11,7 @@ import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.fields.AtlanField;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import lombok.Singular;
@@ -20,6 +22,7 @@ import lombok.experimental.SuperBuilder;
  * (removing the need to understand the guts of Elastic).
  */
 @SuperBuilder(builderMethodName = "_internal")
+@SuppressWarnings("cast")
 public class FluentSearch extends CompoundQuery {
 
     /**
@@ -39,6 +42,13 @@ public class FluentSearch extends CompoundQuery {
     @Singular
     List<SortOptions> sorts;
 
+    /**
+     * Aggregations to run against the results of the search.
+     * You provide any key you want to the map (you'll use it to look at the results of a specific aggregation).
+     */
+    @Singular("aggregate")
+    Map<String, Aggregation> aggregations;
+
     /** Number of results to retrieve per underlying API request. */
     Integer pageSize;
 
@@ -46,12 +56,83 @@ public class FluentSearch extends CompoundQuery {
     @Singular("includeOnResults")
     List<AtlanField> includesOnResults;
 
+    /** Attributes to retrieve for each asset (for internal use, unchecked!). */
+    @Singular("_includeOnResults")
+    List<String> _includesOnResults;
+
     /** Attributes to retrieve for each asset related to the assets in the results. */
     @Singular("includeOnRelations")
     List<AtlanField> includesOnRelations;
 
+    /** Attributes to retrieve for each asset related to the assets in the results (for internal use, unchecked!). */
+    @Singular("_includeOnRelations")
+    List<String> _includesOnRelations;
+
+    /**
+     * Translate the Atlan compound query into an Atlan search DSL builder.
+     *
+     * @return an Atlan search DSL builder that encapsulates the compound query
+     */
+    protected IndexSearchDSL.IndexSearchDSLBuilder<?, ?> _dsl() {
+        return IndexSearchDSL.builder(toQuery());
+    }
+
+    /**
+     * Translate the Atlan compound query into an Atlan search request builder.
+     *
+     * @return an Atlan search request builder that encapsulates the compound query
+     */
+    protected IndexSearchRequest.IndexSearchRequestBuilder<?, ?> _requestBuilder() {
+        IndexSearchDSL.IndexSearchDSLBuilder<?, ?> dsl = _dsl();
+        if (pageSize != null) {
+            dsl.size(pageSize);
+        }
+        if (sorts != null) {
+            dsl.sort(sorts);
+        }
+        if (aggregations != null) {
+            dsl.aggregations(aggregations);
+        }
+        IndexSearchRequest.IndexSearchRequestBuilder<?, ?> request = IndexSearchRequest.builder(dsl.build());
+        if (_includesOnRelations != null) {
+            request.attributes(_includesOnResults);
+        }
+        if (includesOnResults != null) {
+            request.attributes(includesOnResults.stream()
+                    .map(AtlanField::getAtlanFieldName)
+                    .collect(Collectors.toList()));
+        }
+        if (_includesOnRelations != null) {
+            request.relationAttributes(_includesOnRelations);
+        }
+        if (includesOnRelations != null) {
+            request.relationAttributes(includesOnRelations.stream()
+                    .map(AtlanField::getAtlanFieldName)
+                    .collect(Collectors.toList()));
+        }
+        return request;
+    }
+
     public abstract static class FluentSearchBuilder<C extends FluentSearch, B extends FluentSearchBuilder<C, B>>
             extends CompoundQueryBuilder<C, B> {
+
+        /**
+         * Translate the Atlan compound query into an Atlan search request builder.
+         *
+         * @return an Atlan search request builder that encapsulates the compound query
+         */
+        public IndexSearchRequest.IndexSearchRequestBuilder<?, ?> toRequestBuilder() {
+            return build()._requestBuilder();
+        }
+
+        /**
+         * Translate the Atlan compound query into an Atlan search request.
+         *
+         * @return an Atlan search request that encapsulates the compound query
+         */
+        public IndexSearchRequest toRequest() {
+            return toRequestBuilder().build();
+        }
 
         /**
          * Return the total number of assets that will match the supplied criteria,
@@ -66,8 +147,7 @@ public class FluentSearch extends CompoundQuery {
             }
             // As long as there is a client, build the search request for just a single result (with count)
             // and then just return the count
-            IndexSearchRequest request = toRequest(1).build();
-            return request.search(client).getApproximateCount();
+            return toRequest().search(client).getApproximateCount();
         }
 
         /**
@@ -91,24 +171,11 @@ public class FluentSearch extends CompoundQuery {
             if (client == null) {
                 throw new InvalidRequestException(ErrorCode.NO_ATLAN_CLIENT);
             }
-            if (pageSize == null) {
-                pageSize = 50;
-            }
-            IndexSearchRequest.IndexSearchRequestBuilder<?, ?> request = toRequest(pageSize, sorts);
-            if (includesOnResults != null) {
-                request.attributes(includesOnResults.stream()
-                        .map(AtlanField::getAtlanFieldName)
-                        .collect(Collectors.toList()));
-            }
-            if (includesOnRelations != null) {
-                request.relationAttributes(includesOnRelations.stream()
-                        .map(AtlanField::getAtlanFieldName)
-                        .collect(Collectors.toList()));
-            }
+            IndexSearchRequest request = toRequest();
             if (parallel) {
-                return request.build().search(client).parallelStream();
+                return request.search(client).parallelStream();
             } else {
-                return request.build().search(client).stream();
+                return request.search(client).stream();
             }
         }
     }

@@ -14,7 +14,6 @@ import com.atlan.model.enums.AuthPolicyCategory;
 import com.atlan.model.enums.AuthPolicyResourceCategory;
 import com.atlan.model.enums.AuthPolicyType;
 import com.atlan.model.enums.DataAction;
-import com.atlan.model.enums.KeywordFields;
 import com.atlan.model.enums.PurposeMetadataAction;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.CompoundQuery;
@@ -503,9 +502,9 @@ public class Purpose extends Asset implements IPurpose, IAccessControl, IAsset, 
     public static List<Purpose> findByName(AtlanClient client, String name, Collection<String> attributes)
             throws AtlanException {
         List<Purpose> results = new ArrayList<>();
-        Purpose.all(client)
-                .filter(QueryFactory.where(KeywordFields.NAME).eq(name))
-                .attributes(attributes == null ? Collections.emptyList() : attributes)
+        Purpose.select(client)
+                .where(Purpose.NAME.eq(name))
+                ._includesOnResults(attributes == null ? Collections.emptyList() : attributes)
                 .stream()
                 .filter(a -> a instanceof Purpose)
                 .forEach(p -> results.add((Purpose) p));

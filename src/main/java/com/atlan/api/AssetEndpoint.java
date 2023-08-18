@@ -2,24 +2,22 @@
 /* Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.api;
 
+import co.elastic.clients.elasticsearch._types.SortOrder;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.assets.Connection;
+import com.atlan.model.assets.IReferenceable;
 import com.atlan.model.core.*;
 import com.atlan.model.enums.AtlanDeleteType;
 import com.atlan.model.enums.AtlanStatus;
-import com.atlan.model.enums.KeywordFields;
 import com.atlan.model.lineage.LineageListRequest;
 import com.atlan.model.lineage.LineageListResponse;
 import com.atlan.model.lineage.LineageRequest;
 import com.atlan.model.lineage.LineageResponse;
-import com.atlan.model.search.AuditSearchRequest;
-import com.atlan.model.search.AuditSearchResponse;
-import com.atlan.model.search.IndexSearchRequest;
-import com.atlan.model.search.IndexSearchResponse;
+import com.atlan.model.search.*;
 import com.atlan.net.ApiResource;
 import com.atlan.net.RequestOptions;
 import com.atlan.util.QueryFactory;
@@ -52,13 +50,44 @@ public class AssetEndpoint extends AtlasEndpoint {
     }
 
     /**
+     * Start a fluent search that will return all assets.
+     * Additional conditions can be chained onto the returned filter before any
+     * asset retrieval is attempted, ensuring all conditions are pushed-down for
+     * optimal retrieval. Only active (non-archived) assets will be included.
+     *
+     * @return a fluent search that includes all assets
+     */
+    public FluentSearch.FluentSearchBuilder<?, ?> select() {
+        return select(false);
+    }
+
+    /**
+     * Start a fluent search that will return all assets.
+     * Additional conditions can be chained onto the returned filter before any
+     * asset retrieval is attempted, ensuring all conditions are pushed-down for
+     * optimal retrieval.
+     *
+     * @param includeArchived when true, archived (soft-deleted) assets will be included
+     * @return a fluent search that includes all assets
+     */
+    public FluentSearch.FluentSearchBuilder<?, ?> select(boolean includeArchived) {
+        FluentSearch.FluentSearchBuilder<?, ?> builder = FluentSearch.builder(client);
+        if (!includeArchived) {
+            builder.where(CompoundQuery.ACTIVE);
+        }
+        return builder;
+    }
+
+    /**
      * Start an asset filter that will return all Table assets.
      * Additional conditions can be chained onto the returned filter before any
      * asset retrieval is attempted, ensuring all conditions are pushed-down for
      * optimal retrieval. Only active (non-archived) Table assets will be included.
      *
      * @return an asset filter that includes all Table assets
+     * @deprecated replaced by {@link #select()}
      */
+    @Deprecated
     public AssetFilter.AssetFilterBuilder all() {
         return all(false);
     }
@@ -71,7 +100,9 @@ public class AssetEndpoint extends AtlasEndpoint {
      *
      * @param includeArchived when true, archived (soft-deleted) Tables will be included
      * @return an asset filter that includes all Table assets
+     * @deprecated replaced by {@link #select(boolean)}
      */
+    @Deprecated
     public AssetFilter.AssetFilterBuilder all(boolean includeArchived) {
         AssetFilter.AssetFilterBuilder builder = AssetFilter.builder().client(client);
         if (!includeArchived) {
@@ -264,7 +295,8 @@ public class AssetEndpoint extends AtlasEndpoint {
                         "%s?replaceClassifications=%s&replaceBusinessAttributes=true&overwriteBusinessAttributes=true",
                         bulk_endpoint, replaceAtlanTags));
         BulkEntityRequest beq = BulkEntityRequest.builder().entities(values).build();
-        return ApiResource.request(client, ApiResource.RequestMethod.POST, url, beq, AssetMutationResponse.class, null);
+        return ApiResource.request(
+                client, ApiResource.RequestMethod.POST, url, beq, AssetMutationResponse.class, options);
     }
 
     /**
@@ -844,7 +876,7 @@ public class AssetEndpoint extends AtlasEndpoint {
             // operations (unfortunately sorting by _doc still has duplicates across large number of pages)
             request = request.toBuilder()
                     .dsl(request.getDsl().toBuilder()
-                            .sortOption(QueryFactory.Sort.by(KeywordFields.GUID))
+                            .sortOption(IReferenceable.GUID.order(SortOrder.Asc))
                             .build())
                     .build();
         }
