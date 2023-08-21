@@ -69,18 +69,18 @@ public class FluentSearch extends CompoundQuery {
     List<String> _includesOnRelations;
 
     /**
-     * Translate the Atlan compound query into an Atlan search DSL builder.
+     * Translate the Atlan fluent search into an Atlan search DSL builder.
      *
-     * @return an Atlan search DSL builder that encapsulates the compound query
+     * @return an Atlan search DSL builder that encapsulates the fluent search
      */
     protected IndexSearchDSL.IndexSearchDSLBuilder<?, ?> _dsl() {
         return IndexSearchDSL.builder(toQuery());
     }
 
     /**
-     * Translate the Atlan compound query into an Atlan search request builder.
+     * Translate the Atlan fluent search into an Atlan search request builder.
      *
-     * @return an Atlan search request builder that encapsulates the compound query
+     * @return an Atlan search request builder that encapsulates the fluent search
      */
     protected IndexSearchRequest.IndexSearchRequestBuilder<?, ?> _requestBuilder() {
         IndexSearchDSL.IndexSearchDSLBuilder<?, ?> dsl = _dsl();
@@ -94,7 +94,7 @@ public class FluentSearch extends CompoundQuery {
             dsl.aggregations(aggregations);
         }
         IndexSearchRequest.IndexSearchRequestBuilder<?, ?> request = IndexSearchRequest.builder(dsl.build());
-        if (_includesOnRelations != null) {
+        if (_includesOnResults != null) {
             request.attributes(_includesOnResults);
         }
         if (includesOnResults != null) {
@@ -117,18 +117,18 @@ public class FluentSearch extends CompoundQuery {
             extends CompoundQueryBuilder<C, B> {
 
         /**
-         * Translate the Atlan compound query into an Atlan search request builder.
+         * Translate the Atlan fluent search into an Atlan search request builder.
          *
-         * @return an Atlan search request builder that encapsulates the compound query
+         * @return an Atlan search request builder that encapsulates the fluent search
          */
         public IndexSearchRequest.IndexSearchRequestBuilder<?, ?> toRequestBuilder() {
             return build()._requestBuilder();
         }
 
         /**
-         * Translate the Atlan compound query into an Atlan search request.
+         * Translate the Atlan fluent search into an Atlan search request.
          *
-         * @return an Atlan search request that encapsulates the compound query
+         * @return an Atlan search request that encapsulates the fluent search
          */
         public IndexSearchRequest toRequest() {
             return toRequestBuilder().build();
@@ -147,11 +147,14 @@ public class FluentSearch extends CompoundQuery {
             }
             // As long as there is a client, build the search request for just a single result (with count)
             // and then just return the count
-            return toRequest().search(client).getApproximateCount();
+            IndexSearchRequest request = IndexSearchRequest.builder(
+                            build()._dsl().size(1).clearAggregations().build())
+                    .build();
+            return request.search(client).getApproximateCount();
         }
 
         /**
-         * Run the set of filters to retrieve assets that match the supplied criteria.
+         * Run the fluent search to retrieve assets that match the supplied criteria.
          *
          * @return a stream of assets that match the specified criteria, lazily-fetched
          * @throws AtlanException on any issues interacting with the Atlan APIs
@@ -161,7 +164,7 @@ public class FluentSearch extends CompoundQuery {
         }
 
         /**
-         * Run the set of filters to retrieve assets that match the supplied criteria.
+         * Run the fluent search to retrieve assets that match the supplied criteria.
          *
          * @param parallel if true, returns a parallel stream
          * @return a stream of assets that match the specified criteria, lazily-fetched
