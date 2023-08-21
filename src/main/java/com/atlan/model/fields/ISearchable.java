@@ -98,7 +98,7 @@ public interface ISearchable {
      *
      * @param field by which to sort the results
      * @param order in which to sort the results
-     * @return sort condition for hte provided field, in the specified order
+     * @return sort condition for the provided field, in the specified order
      */
     static SortOptions order(final String field, SortOrder order) {
         return SortOptions.of(s -> s.field(FieldSort.of(f -> f.field(field).order(order))));

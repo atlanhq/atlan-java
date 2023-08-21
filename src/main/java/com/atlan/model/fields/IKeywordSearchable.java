@@ -32,7 +32,7 @@ public interface IKeywordSearchable {
      * Returns a query that will match all assets whose provided field has a value that starts with
      * the provided value. Note that this can also be a case-insensitive match.
      *
-     * @param value the value (prefix) to check the field's value starts with (case-sensitive)
+     * @param value the value (prefix) to check the field's value starts with
      * @param caseInsensitive if true will match the value irrespective of case, otherwise will be a case-sensitive match
      * @return a query that will only match assets whose value for the field starts with the value provided
      */

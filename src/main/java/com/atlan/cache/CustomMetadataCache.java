@@ -222,7 +222,7 @@ public class CustomMetadataCache {
     /**
      * Retrieve a single custom attribute name to include on search results.
      *
-     * @param setName human-readable name of the custom metadata set for which to retrieve a the custom metadata attribute name
+     * @param setName human-readable name of the custom metadata set for which to retrieve the custom metadata attribute name
      * @param attributeName human-readable name of the attribute
      * @return the attribute name, strictly useful for inclusion in search results
      * @throws AtlanException on any API communication problem if the cache needs to be refreshed
