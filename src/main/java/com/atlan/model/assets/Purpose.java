@@ -15,6 +15,7 @@ import com.atlan.model.enums.AuthPolicyResourceCategory;
 import com.atlan.model.enums.AuthPolicyType;
 import com.atlan.model.enums.DataAction;
 import com.atlan.model.enums.PurposeMetadataAction;
+import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.CompoundQuery;
 import com.atlan.model.search.FluentSearch;
@@ -459,19 +460,32 @@ public class Purpose extends Asset implements IPurpose, IAccessControl, IAsset, 
      * @throws NotFoundException if the Purpose does not exist
      */
     public static List<Purpose> findByName(String name) throws AtlanException {
-        return findByName(name, null);
+        return findByName(name, (List<AtlanField>) null);
     }
 
     /**
      * Find a Purpose by its human-readable name.
      *
      * @param name of the Purpose
-     * @param attributes an optional collection of attributes to retrieve for the Purpose
+     * @param attributes an optional collection of attributes (unchecked) to retrieve for the Purpose
      * @return all Purposes with that name, if found
      * @throws AtlanException on any API problems
      * @throws NotFoundException if the Purpose does not exist
      */
     public static List<Purpose> findByName(String name, Collection<String> attributes) throws AtlanException {
+        return findByName(Atlan.getDefaultClient(), name, attributes);
+    }
+
+    /**
+     * Find a Purpose by its human-readable name.
+     *
+     * @param name of the Purpose
+     * @param attributes an optional collection of attributes (checked) to retrieve for the Purpose
+     * @return all Purposes with that name, if found
+     * @throws AtlanException on any API problems
+     * @throws NotFoundException if the Purpose does not exist
+     */
+    public static List<Purpose> findByName(String name, List<AtlanField> attributes) throws AtlanException {
         return findByName(Atlan.getDefaultClient(), name, attributes);
     }
 
@@ -486,7 +500,7 @@ public class Purpose extends Asset implements IPurpose, IAccessControl, IAsset, 
      * @throws NotFoundException if the Purpose does not exist
      */
     public static List<Purpose> findByName(AtlanClient client, String name) throws AtlanException {
-        return findByName(client, name, null);
+        return findByName(client, name, (List<AtlanField>) null);
     }
 
     /**
@@ -494,7 +508,7 @@ public class Purpose extends Asset implements IPurpose, IAccessControl, IAsset, 
      *
      * @param client connectivity to the Atlan tenant in which to search for the purpose
      * @param name of the Purpose
-     * @param attributes an optional collection of attributes to retrieve for the Purpose
+     * @param attributes an optional collection of attributes (unchecked) to retrieve for the Purpose
      * @return all Purposes with that name, if found
      * @throws AtlanException on any API problems
      * @throws NotFoundException if the Purpose does not exist
@@ -505,6 +519,31 @@ public class Purpose extends Asset implements IPurpose, IAccessControl, IAsset, 
         Purpose.select(client)
                 .where(Purpose.NAME.eq(name))
                 ._includesOnResults(attributes == null ? Collections.emptyList() : attributes)
+                .stream()
+                .filter(a -> a instanceof Purpose)
+                .forEach(p -> results.add((Purpose) p));
+        if (results.isEmpty()) {
+            throw new NotFoundException(ErrorCode.PURPOSE_NOT_FOUND_BY_NAME, name);
+        }
+        return results;
+    }
+
+    /**
+     * Find a Purpose by its human-readable name.
+     *
+     * @param client connectivity to the Atlan tenant in which to search for the Purpose
+     * @param name of the Purpose
+     * @param attributes an optional list of attributes (checked) to retrieve for the Purpose
+     * @return all Purposes with that name, if found
+     * @throws AtlanException on any API problems
+     * @throws NotFoundException if the Purpose does not exist
+     */
+    public static List<Purpose> findByName(AtlanClient client, String name, List<AtlanField> attributes)
+            throws AtlanException {
+        List<Purpose> results = new ArrayList<>();
+        Purpose.select(client)
+                .where(Purpose.NAME.eq(name))
+                .includesOnResults(attributes == null ? Collections.emptyList() : attributes)
                 .stream()
                 .filter(a -> a instanceof Purpose)
                 .forEach(p -> results.add((Purpose) p));

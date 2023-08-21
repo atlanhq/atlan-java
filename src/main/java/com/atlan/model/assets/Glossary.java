@@ -12,6 +12,7 @@ import com.atlan.exception.NotFoundException;
 import com.atlan.model.core.AssetFilter;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.CompoundQuery;
 import com.atlan.model.search.FluentSearch;
@@ -466,18 +467,30 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
      * @throws AtlanException on any API problems, or if the Glossary does not exist
      */
     public static Glossary findByName(String name) throws AtlanException {
-        return findByName(name, null);
+        return findByName(name, (List<AtlanField>) null);
     }
 
     /**
      * Find a Glossary by its human-readable name.
      *
      * @param name of the Glossary
-     * @param attributes an optional collection of attributes to retrieve for the Glossary
+     * @param attributes an optional collection of attributes (unchecked) to retrieve for the Glossary
      * @return the Glossary, if found
      * @throws AtlanException on any API problems, or if the Glossary does not exist
      */
     public static Glossary findByName(String name, Collection<String> attributes) throws AtlanException {
+        return findByName(Atlan.getDefaultClient(), name, attributes);
+    }
+
+    /**
+     * Find a Glossary by its human-readable name.
+     *
+     * @param name of the Glossary
+     * @param attributes an optional collection of attributes (checked) to retrieve for the Glossary
+     * @return the Glossary, if found
+     * @throws AtlanException on any API problems, or if the Glossary does not exist
+     */
+    public static Glossary findByName(String name, List<AtlanField> attributes) throws AtlanException {
         return findByName(Atlan.getDefaultClient(), name, attributes);
     }
 
@@ -491,7 +504,7 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
      * @throws AtlanException on any API problems, or if the Glossary does not exist
      */
     public static Glossary findByName(AtlanClient client, String name) throws AtlanException {
-        return findByName(client, name, null);
+        return findByName(client, name, (List<AtlanField>) null);
     }
 
     /**
@@ -499,7 +512,7 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
      *
      * @param client connectivity to the Atlan tenant on which to search for the Glossary
      * @param name of the Glossary
-     * @param attributes an optional collection of attributes to retrieve for the Glossary
+     * @param attributes an optional collection of attributes (unchecked) to retrieve for the Glossary
      * @return the Glossary, if found
      * @throws AtlanException on any API problems, or if the Glossary does not exist
      */
@@ -509,6 +522,34 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
         Glossary.select(client)
                 .where(Glossary.NAME.eq(name))
                 ._includesOnResults(attributes == null ? Collections.emptyList() : attributes)
+                .pageSize(2)
+                .stream()
+                .limit(2)
+                .filter(a -> a instanceof Glossary)
+                .forEach(g -> results.add((Glossary) g));
+        if (results.isEmpty()) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_NAME, TYPE_NAME, name);
+        } else if (results.size() > 1) {
+            log.warn("Multiple glossaries found with the name '{}', returning only the first.", name);
+        }
+        return results.get(0);
+    }
+
+    /**
+     * Find a Glossary by its human-readable name.
+     *
+     * @param client connectivity to the Atlan tenant on which to search for the Glossary
+     * @param name of the Glossary
+     * @param attributes an optional collection of attributes (checked) to retrieve for the Glossary
+     * @return the Glossary, if found
+     * @throws AtlanException on any API problems, or if the Glossary does not exist
+     */
+    public static Glossary findByName(AtlanClient client, String name, List<AtlanField> attributes)
+            throws AtlanException {
+        List<Glossary> results = new ArrayList<>();
+        Glossary.select(client)
+                .where(Glossary.NAME.eq(name))
+                .includesOnResults(attributes == null ? Collections.emptyList() : attributes)
                 .pageSize(2)
                 .stream()
                 .limit(2)
@@ -544,7 +585,7 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
      * @throws AtlanException on any API problems, or if the Glossary does not exist
      */
     public CategoryHierarchy getHierarchy(AtlanClient client) throws AtlanException {
-        return getHierarchy(client, null);
+        return getHierarchy(client, (List<AtlanField>) null);
     }
 
     /**
@@ -555,11 +596,27 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
      * want additional details about each category, specify the attributes you want in the {@code attributes} parameter
      * to this method.
      *
-     * @param attributes to retrieve for each category in the hierarchy
+     * @param attributes (unchecked) to retrieve for each category in the hierarchy
      * @return a traversable category hierarchy
      * @throws AtlanException on any API problems, or if the Glossary does not exist
      */
-    public CategoryHierarchy getHierarchy(List<String> attributes) throws AtlanException {
+    public CategoryHierarchy getHierarchy(Collection<String> attributes) throws AtlanException {
+        return getHierarchy(Atlan.getDefaultClient(), attributes);
+    }
+
+    /**
+     * Retrieve category hierarchy in this Glossary, in a traversable form. You can traverse in either
+     * depth-first ({@link CategoryHierarchy#depthFirst()}) or breadth-first ({@link CategoryHierarchy#breadthFirst()})
+     * order. Both return an ordered list of {@link GlossaryCategory} objects.
+     * Note: by default, each category will have a minimal set of information (name, GUID, qualifiedName). If you
+     * want additional details about each category, specify the attributes you want in the {@code attributes} parameter
+     * to this method.
+     *
+     * @param attributes (checked) to retrieve for each category in the hierarchy
+     * @return a traversable category hierarchy
+     * @throws AtlanException on any API problems, or if the Glossary does not exist
+     */
+    public CategoryHierarchy getHierarchy(List<AtlanField> attributes) throws AtlanException {
         return getHierarchy(Atlan.getDefaultClient(), attributes);
     }
 
@@ -572,11 +629,11 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
      * to this method.
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the hierarchy
-     * @param attributes to retrieve for each category in the hierarchy
+     * @param attributes (unchecked) to retrieve for each category in the hierarchy
      * @return a traversable category hierarchy
      * @throws AtlanException on any API problems, or if the Glossary does not exist
      */
-    public CategoryHierarchy getHierarchy(AtlanClient client, List<String> attributes) throws AtlanException {
+    public CategoryHierarchy getHierarchy(AtlanClient client, Collection<String> attributes) throws AtlanException {
         if (qualifiedName == null) {
             throw new InvalidRequestException(
                     ErrorCode.MISSING_REQUIRED_QUERY_PARAM, Glossary.TYPE_NAME, "qualifiedName");
@@ -587,6 +644,47 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
                 .where(GlossaryCategory.ANCHOR.eq(getQualifiedName()))
                 .includeOnResults(GlossaryCategory.PARENT_CATEGORY)
                 ._includesOnResults(attributes == null ? Collections.emptyList() : attributes)
+                .pageSize(20)
+                .sort(GlossaryCategory.NAME.order(SortOrder.Asc))
+                .stream()
+                .filter(a -> a instanceof GlossaryCategory)
+                .forEach(c -> {
+                    GlossaryCategory category = (GlossaryCategory) c;
+                    categoryMap.put(category.getGuid(), category);
+                    if (category.getParentCategory() == null) {
+                        topCategories.add(category.getGuid());
+                    }
+                });
+        if (topCategories.isEmpty()) {
+            throw new NotFoundException(ErrorCode.NO_CATEGORIES, getGuid(), getQualifiedName());
+        }
+        return new CategoryHierarchy(topCategories, categoryMap);
+    }
+
+    /**
+     * Retrieve category hierarchy in this Glossary, in a traversable form. You can traverse in either
+     * depth-first ({@link CategoryHierarchy#depthFirst()}) or breadth-first ({@link CategoryHierarchy#breadthFirst()})
+     * order. Both return an ordered list of {@link GlossaryCategory} objects.
+     * Note: by default, each category will have a minimal set of information (name, GUID, qualifiedName). If you
+     * want additional details about each category, specify the attributes you want in the {@code attributes} parameter
+     * to this method.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the hierarchy
+     * @param attributes (checked) to retrieve for each category in the hierarchy
+     * @return a traversable category hierarchy
+     * @throws AtlanException on any API problems, or if the Glossary does not exist
+     */
+    public CategoryHierarchy getHierarchy(AtlanClient client, List<AtlanField> attributes) throws AtlanException {
+        if (qualifiedName == null) {
+            throw new InvalidRequestException(
+                    ErrorCode.MISSING_REQUIRED_QUERY_PARAM, Glossary.TYPE_NAME, "qualifiedName");
+        }
+        Set<String> topCategories = new LinkedHashSet<>();
+        Map<String, GlossaryCategory> categoryMap = new HashMap<>();
+        GlossaryCategory.select(client)
+                .where(GlossaryCategory.ANCHOR.eq(getQualifiedName()))
+                .includeOnResults(GlossaryCategory.PARENT_CATEGORY)
+                .includesOnResults(attributes == null ? Collections.emptyList() : attributes)
                 .pageSize(20)
                 .sort(GlossaryCategory.NAME.order(SortOrder.Asc))
                 .stream()

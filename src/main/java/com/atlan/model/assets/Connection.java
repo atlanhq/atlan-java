@@ -15,6 +15,7 @@ import com.atlan.model.enums.AtlanConnectionCategory;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.QueryUsernameStrategy;
+import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.CompoundQuery;
 import com.atlan.model.search.FluentSearch;
@@ -760,7 +761,7 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
      * @throws NotFoundException if the connection does not exist
      */
     public static List<Connection> findByName(String name, AtlanConnectorType type) throws AtlanException {
-        return findByName(name, type, null);
+        return findByName(name, type, (List<AtlanField>) null);
     }
 
     /**
@@ -768,12 +769,27 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
      *
      * @param name of the connection
      * @param type of the connection
-     * @param attributes an optional collection of attributes to retrieve for the connection
+     * @param attributes an optional collection of attributes (unchecked) to retrieve for the connection
      * @return all connections with that name and type, if found
      * @throws AtlanException on any API problems
      * @throws NotFoundException if the connection does not exist
      */
     public static List<Connection> findByName(String name, AtlanConnectorType type, Collection<String> attributes)
+            throws AtlanException {
+        return findByName(Atlan.getDefaultClient(), name, type, attributes);
+    }
+
+    /**
+     * Find a connection by its human-readable name and type.
+     *
+     * @param name of the connection
+     * @param type of the connection
+     * @param attributes an optional collection of attributes (checked) to retrieve for the connection
+     * @return all connections with that name and type, if found
+     * @throws AtlanException on any API problems
+     * @throws NotFoundException if the connection does not exist
+     */
+    public static List<Connection> findByName(String name, AtlanConnectorType type, List<AtlanField> attributes)
             throws AtlanException {
         return findByName(Atlan.getDefaultClient(), name, type, attributes);
     }
@@ -791,7 +807,7 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
      */
     public static List<Connection> findByName(AtlanClient client, String name, AtlanConnectorType type)
             throws AtlanException {
-        return findByName(client, name, type, null);
+        return findByName(client, name, type, (List<AtlanField>) null);
     }
 
     /**
@@ -813,6 +829,34 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
                 .where(Connection.NAME.eq(name))
                 .where(Connection.CONNECTOR_TYPE.eq(type.getValue()))
                 ._includesOnResults(attributes == null ? Collections.emptyList() : attributes)
+                .stream()
+                .filter(a -> a instanceof Connection)
+                .forEach(c -> results.add((Connection) c));
+        if (results.isEmpty()) {
+            throw new NotFoundException(ErrorCode.CONNECTION_NOT_FOUND_BY_NAME, name, type.getValue());
+        }
+        return results;
+    }
+
+    /**
+     * Find a connection by its human-readable name and type.
+     *
+     * @param client connectivity to the Atlan tenant in which to search for the connection
+     * @param name of the connection
+     * @param type of the connection
+     * @param attributes an optional collection of attributes (checked) to retrieve for the connection
+     * @return all connections with that name and type, if found
+     * @throws AtlanException on any API problems
+     * @throws NotFoundException if the connection does not exist
+     */
+    public static List<Connection> findByName(
+            AtlanClient client, String name, AtlanConnectorType type, List<AtlanField> attributes)
+            throws AtlanException {
+        List<Connection> results = new ArrayList<>();
+        Connection.select(client)
+                .where(Connection.NAME.eq(name))
+                .where(Connection.CONNECTOR_TYPE.eq(type.getValue()))
+                .includesOnResults(attributes == null ? Collections.emptyList() : attributes)
                 .stream()
                 .filter(a -> a instanceof Connection)
                 .forEach(c -> results.add((Connection) c));

@@ -6,7 +6,6 @@ import static com.atlan.util.QueryFactory.*;
 import static org.testng.Assert.*;
 
 import co.elastic.clients.elasticsearch._types.SortOrder;
-import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
@@ -17,6 +16,7 @@ import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.core.AtlanTag;
 import com.atlan.model.enums.*;
 import com.atlan.model.search.*;
+import com.atlan.model.search.CompoundQuery;
 import com.atlan.net.HttpClient;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -596,19 +596,16 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.search.byParentQN"},
             dependsOnGroups = {"asset.create.*"})
     void searchByParentQN() throws AtlanException, InterruptedException {
-        Query combined = CompoundQuery.builder()
-                .must(beActive())
-                .must(have(KeywordFields.QUALIFIED_NAME).startingWith(connection.getQualifiedName()))
-                .build()
-                ._toQuery();
-
-        IndexSearchRequest index = IndexSearchRequest.builder(IndexSearchDSL.builder(combined)
-                        .size(50)
-                        .aggregation("type", Aggregate.bucketBy(KeywordFields.TYPE_NAME))
-                        .sortOption(Sort.by(NumericFields.TIMESTAMP, SortOrder.Asc))
-                        .build())
-                .attribute("name")
-                .build();
+        IndexSearchRequest index = Atlan.getDefaultClient()
+                .assets
+                .select()
+                .where(CompoundQuery.ACTIVE)
+                .where(Asset.QUALIFIED_NAME.startsWith(connection.getQualifiedName()))
+                .pageSize(50)
+                .aggregate("type", IReferenceable.TYPE_NAME.bucketBy())
+                .sort(Asset.CREATE_TIME.order(SortOrder.Asc))
+                .includeOnResults(Asset.NAME)
+                .toRequest();
 
         IndexSearchResponse response = index.search();
         assertNotNull(response);
@@ -627,11 +624,11 @@ public class SQLAssetTest extends AtlanLiveTest {
         // Test sequential streaming
         List<String> guidsSeq = Atlan.getDefaultClient()
                 .assets
-                .all()
-                .filter(where(KeywordFields.QUALIFIED_NAME).startsWith(connection.getQualifiedName()))
-                .batch(5)
-                .sort(Sort.by(NumericFields.TIMESTAMP, SortOrder.Asc))
-                .attribute("name")
+                .select()
+                .where(Asset.QUALIFIED_NAME.startsWith(connection.getQualifiedName()))
+                .pageSize(5)
+                .sort(Asset.CREATE_TIME.order(SortOrder.Asc))
+                .includeOnResults(Asset.NAME)
                 .stream()
                 .map(Asset::getGuid)
                 .collect(Collectors.toList());
@@ -783,16 +780,14 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.search.byParentQN"},
             dependsOnGroups = {"asset.create.*"})
     void testSearchIterators() throws AtlanException, InterruptedException {
-        Query combined = CompoundQuery.builder()
-                .must(beActive())
-                .must(have(KeywordFields.QUALIFIED_NAME).startingWith(connection.getQualifiedName()))
-                .build()
-                ._toQuery();
-
-        IndexSearchRequest index = IndexSearchRequest.builder(
-                        IndexSearchDSL.builder(combined).size(5).build())
-                .attribute("name")
-                .build();
+        IndexSearchRequest index = Atlan.getDefaultClient()
+                .assets
+                .select()
+                .where(CompoundQuery.ACTIVE)
+                .where(Asset.QUALIFIED_NAME.startsWith(connection.getQualifiedName()))
+                .pageSize(5)
+                .includeOnResults(Asset.NAME)
+                .toRequest();
 
         IndexSearchResponse response = index.search();
         assertNotNull(response);
@@ -1029,18 +1024,12 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.search.byAtlanTag"},
             dependsOnGroups = {"asset.update.column.addAtlanTags.again"})
     void searchByAnyAtlanTag() throws AtlanException, InterruptedException {
-        Query combined = CompoundQuery.builder()
-                .must(beActive())
-                .must(beOfType(Column.TYPE_NAME))
-                .must(have(KeywordFields.QUALIFIED_NAME).startingWith(connection.getQualifiedName()))
-                .must(beDirectlyTagged())
-                .build()
-                ._toQuery();
-
-        IndexSearchRequest index = IndexSearchRequest.builder(combined)
-                .attribute("name")
-                .attribute("connectionQualifiedName")
-                .build();
+        IndexSearchRequest index = Column.select()
+                .where(Column.QUALIFIED_NAME.startsWith(connection.getQualifiedName()))
+                .where(CompoundQuery.tagged(true))
+                .includeOnResults(Column.NAME)
+                .includeOnResults(Column.CONNECTION_QUALIFIED_NAME)
+                .toRequest();
 
         IndexSearchResponse response = index.search();
         assertNotNull(response);
@@ -1069,15 +1058,10 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.search.byAtlanTag"},
             dependsOnGroups = {"asset.update.column.addAtlanTags.again"})
     void searchBySpecificAtlanTag() throws AtlanException, InterruptedException {
-        Query combined = CompoundQuery.builder()
-                .must(beActive())
-                .must(beOfType(Column.TYPE_NAME))
-                .must(beTaggedByAtLeastOneOf(List.of(ATLAN_TAG_NAME1, ATLAN_TAG_NAME2)))
-                .build()
-                ._toQuery();
-
-        IndexSearchRequest index =
-                IndexSearchRequest.builder(combined).attribute("name").build();
+        IndexSearchRequest index = Column.select()
+                .where(tagged(Atlan.getDefaultClient(), List.of(ATLAN_TAG_NAME1, ATLAN_TAG_NAME2)))
+                .includeOnResults(Column.NAME)
+                .toRequest();
 
         IndexSearchResponse response = index.search();
         assertNotNull(response);
@@ -1245,20 +1229,14 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.search.byTerm"},
             dependsOnGroups = {"asset.update.column.replaceTerms"})
     void searchByAnyTerm() throws AtlanException, InterruptedException {
-        Query combined = CompoundQuery.builder()
-                .must(beActive())
-                .must(beOfType(Column.TYPE_NAME))
-                .must(beAssignedATerm())
-                .must(have(KeywordFields.QUALIFIED_NAME).startingWith(connection.getQualifiedName()))
-                .build()
-                ._toQuery();
-
-        IndexSearchRequest index = IndexSearchRequest.builder(combined)
-                .attribute("name")
-                .attribute("meanings")
-                .attribute("connectionQualifiedName")
-                .relationAttribute("name")
-                .build();
+        IndexSearchRequest index = Column.select()
+                .where(CompoundQuery.assignedTerm())
+                .where(Column.QUALIFIED_NAME.startsWith(connection.getQualifiedName()))
+                .includeOnResults(Column.NAME)
+                .includeOnResults(Column.ASSIGNED_TERMS)
+                .includeOnResults(Column.CONNECTION_QUALIFIED_NAME)
+                .includeOnRelations(Asset.NAME)
+                .toRequest();
 
         IndexSearchResponse response = index.search();
         assertNotNull(response);
@@ -1291,19 +1269,13 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.search.byTerm"},
             dependsOnGroups = {"asset.update.column.replaceTerms"})
     void searchBySpecificTerm() throws AtlanException, InterruptedException {
-        Query combined = CompoundQuery.builder()
-                .must(beActive())
-                .must(beOfType(Column.TYPE_NAME))
-                .must(beDefinedByAtLeastOneOf(List.of(term1.getQualifiedName(), term2.getQualifiedName())))
-                .build()
-                ._toQuery();
-
-        IndexSearchRequest index = IndexSearchRequest.builder(combined)
-                .attribute("name")
-                .attribute("meanings")
-                .attribute("connectionQualifiedName")
-                .relationAttribute("name")
-                .build();
+        IndexSearchRequest index = Column.select()
+                .where(CompoundQuery.assignedTerm(List.of(term1.getQualifiedName(), term2.getQualifiedName())))
+                .includeOnResults(Column.NAME)
+                .includeOnResults(Column.ASSIGNED_TERMS)
+                .includeOnResults(Column.CONNECTION_QUALIFIED_NAME)
+                .includeOnRelations(Asset.NAME)
+                .toRequest();
 
         IndexSearchResponse response = index.search();
         assertNotNull(response);
