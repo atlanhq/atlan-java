@@ -2,7 +2,6 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.live;
 
-import static com.atlan.util.QueryFactory.*;
 import static org.testng.Assert.*;
 
 import co.elastic.clients.elasticsearch._types.SortOrder;
@@ -636,11 +635,11 @@ public class SQLAssetTest extends AtlanLiveTest {
         // Test parallel streaming
         List<String> guidsPar = Atlan.getDefaultClient()
                 .assets
-                .all()
-                .filter(where(KeywordFields.QUALIFIED_NAME).startsWith(connection.getQualifiedName()))
-                .batch(5)
-                .sort(Sort.by(NumericFields.TIMESTAMP, SortOrder.Asc))
-                .attribute("name")
+                .select()
+                .where(Asset.QUALIFIED_NAME.startsWith(connection.getQualifiedName()))
+                .pageSize(5)
+                .sort(Asset.CREATE_TIME.order(SortOrder.Asc))
+                .includeOnResults(Asset.NAME)
                 .stream(true)
                 .map(Asset::getGuid)
                 .collect(Collectors.toList());
@@ -1059,7 +1058,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"asset.update.column.addAtlanTags.again"})
     void searchBySpecificAtlanTag() throws AtlanException, InterruptedException {
         IndexSearchRequest index = Column.select()
-                .where(tagged(Atlan.getDefaultClient(), List.of(ATLAN_TAG_NAME1, ATLAN_TAG_NAME2)))
+                .where(CompoundQuery.tagged(Atlan.getDefaultClient(), List.of(ATLAN_TAG_NAME1, ATLAN_TAG_NAME2)))
                 .includeOnResults(Column.NAME)
                 .toRequest();
 

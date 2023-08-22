@@ -2,7 +2,6 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.live;
 
-import static com.atlan.util.QueryFactory.*;
 import static org.testng.Assert.*;
 
 import com.atlan.Atlan;

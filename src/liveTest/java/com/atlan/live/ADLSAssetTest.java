@@ -2,20 +2,15 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.live;
 
-import static com.atlan.util.QueryFactory.*;
 import static org.testng.Assert.*;
 
 import co.elastic.clients.elasticsearch._types.SortOrder;
-import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.*;
 import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.enums.*;
-import com.atlan.model.search.AggregationBucketResult;
-import com.atlan.model.search.IndexSearchDSL;
-import com.atlan.model.search.IndexSearchRequest;
-import com.atlan.model.search.IndexSearchResponse;
+import com.atlan.model.search.*;
 import com.atlan.net.HttpClient;
 import java.util.List;
 import java.util.Set;
@@ -175,21 +170,17 @@ public class ADLSAssetTest extends AtlanLiveTest {
             groups = {"adls.search.assets"},
             dependsOnGroups = {"adls.update.container.again"})
     void searchAssets() throws AtlanException, InterruptedException {
-        Query combined = CompoundQuery.builder()
-                .must(beActive())
-                .must(haveSuperType(IADLS.TYPE_NAME))
-                .must(have(KeywordFields.QUALIFIED_NAME).startingWith(connection.getQualifiedName()))
-                .build()
-                ._toQuery();
-
-        IndexSearchRequest index = IndexSearchRequest.builder(IndexSearchDSL.builder(combined)
-                        .size(10)
-                        .aggregation("type", Aggregate.bucketBy(KeywordFields.TYPE_NAME))
-                        .sortOption(Sort.by(NumericFields.TIMESTAMP, SortOrder.Asc))
-                        .build())
-                .attribute("name")
-                .attribute("connectionQualifiedName")
-                .build();
+        IndexSearchRequest index = Atlan.getDefaultClient()
+                .assets
+                .select()
+                .where(CompoundQuery.superType(IADLS.TYPE_NAME))
+                .where(Asset.QUALIFIED_NAME.startsWith(connection.getQualifiedName()))
+                .pageSize(10)
+                .aggregate("type", IReferenceable.TYPE_NAME.bucketBy())
+                .sort(Asset.CREATE_TIME.order(SortOrder.Asc))
+                .includeOnResults(Asset.NAME)
+                .includeOnResults(Asset.CONNECTION_QUALIFIED_NAME)
+                .toRequest();
 
         IndexSearchResponse response = index.search();
         assertNotNull(response);

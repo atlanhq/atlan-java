@@ -2,10 +2,8 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.live;
 
-import static com.atlan.util.QueryFactory.*;
 import static org.testng.Assert.*;
 
-import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
@@ -14,12 +12,11 @@ import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanLineageDirection;
 import com.atlan.model.enums.AtlanStatus;
-import com.atlan.model.enums.KeywordFields;
 import com.atlan.model.lineage.LineageListRequest;
 import com.atlan.model.lineage.LineageListResponse;
 import com.atlan.model.lineage.LineageRequest;
 import com.atlan.model.lineage.LineageResponse;
-import com.atlan.model.search.IndexSearchDSL;
+import com.atlan.model.search.CompoundQuery;
 import com.atlan.model.search.IndexSearchRequest;
 import com.atlan.model.search.IndexSearchResponse;
 import com.atlan.net.HttpClient;
@@ -468,18 +465,15 @@ public class LineageTest extends AtlanLiveTest {
             groups = {"lineage.search.lineage"},
             dependsOnGroups = {"lineage.read.lineage.*"})
     void searchByLineage() throws AtlanException, InterruptedException {
-        Query combined = CompoundQuery.builder()
-                .must(beActive())
-                .must(haveLineage())
-                .must(haveSuperType(ISQL.TYPE_NAME))
-                .must(have(KeywordFields.QUALIFIED_NAME).startingWith(connection.getQualifiedName()))
-                .build()
-                ._toQuery();
-
-        IndexSearchRequest index = IndexSearchRequest.builder(IndexSearchDSL.of(combined))
-                .attribute("name")
-                .attribute("__hasLineage")
-                .build();
+        IndexSearchRequest index = Atlan.getDefaultClient()
+                .assets
+                .select()
+                .where(CompoundQuery.WITH_LINEAGE)
+                .where(CompoundQuery.superType(ISQL.TYPE_NAME))
+                .where(Asset.QUALIFIED_NAME.startsWith(connection.getQualifiedName()))
+                .includeOnResults(Asset.NAME)
+                .includeOnResults(Asset.HAS_LINEAGE)
+                .toRequest();
 
         IndexSearchResponse response = index.search();
 
