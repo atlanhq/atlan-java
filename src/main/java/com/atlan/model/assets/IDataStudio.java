@@ -176,6 +176,9 @@ public interface IDataStudio {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -296,6 +299,9 @@ public interface IDataStudio {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -330,6 +336,9 @@ public interface IDataStudio {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

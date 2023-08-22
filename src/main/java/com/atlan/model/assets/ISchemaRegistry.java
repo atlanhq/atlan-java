@@ -8,6 +8,7 @@ import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SchemaRegistrySchemaType;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -29,6 +30,12 @@ import javax.annotation.processing.Generated;
 public interface ISchemaRegistry {
 
     public static final String TYPE_NAME = "SchemaRegistry";
+
+    /** Unique identifier for schema definition set by the schema registry */
+    KeywordField SCHEMA_REGISTRY_SCHEMA_ID = new KeywordField("schemaRegistrySchemaId", "schemaRegistrySchemaId");
+
+    /** Type of language/specification used to define the schema like JSON, Protobuf etc. */
+    KeywordField SCHEMA_REGISTRY_SCHEMA_TYPE = new KeywordField("schemaRegistrySchemaType", "schemaRegistrySchemaType");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -175,6 +182,9 @@ public interface ISchemaRegistry {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -271,6 +281,9 @@ public interface ISchemaRegistry {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -305,6 +318,9 @@ public interface ISchemaRegistry {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

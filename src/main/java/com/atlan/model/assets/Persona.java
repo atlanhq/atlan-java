@@ -14,10 +14,12 @@ import com.atlan.model.enums.AuthPolicyCategory;
 import com.atlan.model.enums.AuthPolicyResourceCategory;
 import com.atlan.model.enums.AuthPolicyType;
 import com.atlan.model.enums.DataAction;
-import com.atlan.model.enums.KeywordFields;
 import com.atlan.model.enums.PersonaGlossaryAction;
 import com.atlan.model.enums.PersonaMetadataAction;
+import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.UniqueAttributes;
+import com.atlan.model.search.CompoundQuery;
+import com.atlan.model.search.FluentSearch;
 import com.atlan.util.QueryFactory;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -113,13 +115,72 @@ public class Persona extends Asset implements IPersona, IAccessControl, IAsset, 
     }
 
     /**
+     * Start a fluent search that will return all Persona assets.
+     * Additional conditions can be chained onto the returned search before any
+     * asset retrieval is attempted, ensuring all conditions are pushed-down for
+     * optimal retrieval. Only active (non-archived) Persona assets will be included.
+     *
+     * @return a fluent search that includes all Persona assets
+     */
+    public static FluentSearch.FluentSearchBuilder<?, ?> select() {
+        return select(Atlan.getDefaultClient());
+    }
+
+    /**
+     * Start a fluent search that will return all Persona assets.
+     * Additional conditions can be chained onto the returned search before any
+     * asset retrieval is attempted, ensuring all conditions are pushed-down for
+     * optimal retrieval. Only active (non-archived) Persona assets will be included.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the assets
+     * @return a fluent search that includes all Persona assets
+     */
+    public static FluentSearch.FluentSearchBuilder<?, ?> select(AtlanClient client) {
+        return select(client, false);
+    }
+
+    /**
+     * Start a fluent search that will return all Persona assets.
+     * Additional conditions can be chained onto the returned search before any
+     * asset retrieval is attempted, ensuring all conditions are pushed-down for
+     * optimal retrieval.
+     *
+     * @param includeArchived when true, archived (soft-deleted) Personas will be included
+     * @return a fluent search that includes all Persona assets
+     */
+    public static FluentSearch.FluentSearchBuilder<?, ?> select(boolean includeArchived) {
+        return select(Atlan.getDefaultClient(), includeArchived);
+    }
+
+    /**
+     * Start a fluent search that will return all Persona assets.
+     * Additional conditions can be chained onto the returned search before any
+     * asset retrieval is attempted, ensuring all conditions are pushed-down for
+     * optimal retrieval.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the assets
+     * @param includeArchived when true, archived (soft-deleted) Personas will be included
+     * @return a fluent search that includes all Persona assets
+     */
+    public static FluentSearch.FluentSearchBuilder<?, ?> select(AtlanClient client, boolean includeArchived) {
+        FluentSearch.FluentSearchBuilder<?, ?> builder =
+                FluentSearch.builder(client).where(CompoundQuery.assetType(TYPE_NAME));
+        if (!includeArchived) {
+            builder.where(CompoundQuery.ACTIVE);
+        }
+        return builder;
+    }
+
+    /**
      * Start an asset filter that will return all Persona assets.
      * Additional conditions can be chained onto the returned filter before any
      * asset retrieval is attempted, ensuring all conditions are pushed-down for
      * optimal retrieval. Only active (non-archived) Persona assets will be included.
      *
      * @return an asset filter that includes all Persona assets
+     * @deprecated replaced by {@link #select()}
      */
+    @Deprecated
     public static AssetFilter.AssetFilterBuilder all() {
         return all(Atlan.getDefaultClient());
     }
@@ -132,7 +193,9 @@ public class Persona extends Asset implements IPersona, IAccessControl, IAsset, 
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the assets
      * @return an asset filter that includes all Persona assets
+     * @deprecated replaced by {@link #select(AtlanClient)}
      */
+    @Deprecated
     public static AssetFilter.AssetFilterBuilder all(AtlanClient client) {
         return all(client, false);
     }
@@ -145,7 +208,9 @@ public class Persona extends Asset implements IPersona, IAccessControl, IAsset, 
      *
      * @param includeArchived when true, archived (soft-deleted) Personas will be included
      * @return an asset filter that includes all Persona assets
+     * @deprecated replaced by {@link #select(boolean)}
      */
+    @Deprecated
     public static AssetFilter.AssetFilterBuilder all(boolean includeArchived) {
         return all(Atlan.getDefaultClient(), includeArchived);
     }
@@ -159,7 +224,9 @@ public class Persona extends Asset implements IPersona, IAccessControl, IAsset, 
      * @param client connectivity to the Atlan tenant from which to retrieve the assets
      * @param includeArchived when true, archived (soft-deleted) Personas will be included
      * @return an asset filter that includes all Persona assets
+     * @deprecated replaced by {@link #select(AtlanClient, boolean)}
      */
+    @Deprecated
     public static AssetFilter.AssetFilterBuilder all(AtlanClient client, boolean includeArchived) {
         AssetFilter.AssetFilterBuilder builder =
                 AssetFilter.builder().client(client).filter(QueryFactory.type(TYPE_NAME));
@@ -394,19 +461,32 @@ public class Persona extends Asset implements IPersona, IAccessControl, IAsset, 
      * @throws NotFoundException if the Persona does not exist
      */
     public static List<Persona> findByName(String name) throws AtlanException {
-        return findByName(name, null);
+        return findByName(name, (List<AtlanField>) null);
     }
 
     /**
      * Find a Persona by its human-readable name.
      *
      * @param name of the Persona
-     * @param attributes an optional collection of attributes to retrieve for the Persona
+     * @param attributes an optional collection of attributes (unchecked) to retrieve for the Persona
      * @return all Personas with that name, if found
      * @throws AtlanException on any API problems
      * @throws NotFoundException if the Persona does not exist
      */
     public static List<Persona> findByName(String name, Collection<String> attributes) throws AtlanException {
+        return findByName(Atlan.getDefaultClient(), name, attributes);
+    }
+
+    /**
+     * Find a Persona by its human-readable name.
+     *
+     * @param name of the Persona
+     * @param attributes an optional collection of attributes (checked) to retrieve for the Persona
+     * @return all Personas with that name, if found
+     * @throws AtlanException on any API problems
+     * @throws NotFoundException if the Persona does not exist
+     */
+    public static List<Persona> findByName(String name, List<AtlanField> attributes) throws AtlanException {
         return findByName(Atlan.getDefaultClient(), name, attributes);
     }
 
@@ -421,7 +501,7 @@ public class Persona extends Asset implements IPersona, IAccessControl, IAsset, 
      * @throws NotFoundException if the Persona does not exist
      */
     public static List<Persona> findByName(AtlanClient client, String name) throws AtlanException {
-        return findByName(client, name, null);
+        return findByName(client, name, (List<AtlanField>) null);
     }
 
     /**
@@ -429,7 +509,7 @@ public class Persona extends Asset implements IPersona, IAccessControl, IAsset, 
      *
      * @param client connectivity to the Atlan tenant in which to search for the Persona
      * @param name of the Persona
-     * @param attributes an optional collection of attributes to retrieve for the Persona
+     * @param attributes an optional collection of attributes (unchecked) to retrieve for the Persona
      * @return all Personas with that name, if found
      * @throws AtlanException on any API problems
      * @throws NotFoundException if the Persona does not exist
@@ -437,9 +517,34 @@ public class Persona extends Asset implements IPersona, IAccessControl, IAsset, 
     public static List<Persona> findByName(AtlanClient client, String name, Collection<String> attributes)
             throws AtlanException {
         List<Persona> results = new ArrayList<>();
-        Persona.all(client)
-                .filter(QueryFactory.where(KeywordFields.NAME).eq(name))
-                .attributes(attributes == null ? Collections.emptyList() : attributes)
+        Persona.select(client)
+                .where(Persona.NAME.eq(name))
+                ._includesOnResults(attributes == null ? Collections.emptyList() : attributes)
+                .stream()
+                .filter(a -> a instanceof Persona)
+                .forEach(p -> results.add((Persona) p));
+        if (results.isEmpty()) {
+            throw new NotFoundException(ErrorCode.PERSONA_NOT_FOUND_BY_NAME, name);
+        }
+        return results;
+    }
+
+    /**
+     * Find a Persona by its human-readable name.
+     *
+     * @param client connectivity to the Atlan tenant in which to search for the Persona
+     * @param name of the Persona
+     * @param attributes an optional list of attributes (checked) to retrieve for the Persona
+     * @return all Personas with that name, if found
+     * @throws AtlanException on any API problems
+     * @throws NotFoundException if the Persona does not exist
+     */
+    public static List<Persona> findByName(AtlanClient client, String name, List<AtlanField> attributes)
+            throws AtlanException {
+        List<Persona> results = new ArrayList<>();
+        Persona.select(client)
+                .where(Persona.NAME.eq(name))
+                .includesOnResults(attributes == null ? Collections.emptyList() : attributes)
                 .stream()
                 .filter(a -> a instanceof Persona)
                 .forEach(p -> results.add((Persona) p));

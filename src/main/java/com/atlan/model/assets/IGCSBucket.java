@@ -7,6 +7,10 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.BooleanField;
+import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.GoogleLabel;
 import com.atlan.model.structs.GoogleTag;
@@ -30,6 +34,32 @@ import javax.annotation.processing.Generated;
 public interface IGCSBucket {
 
     public static final String TYPE_NAME = "GCSBucket";
+
+    /** TBC */
+    TextField GCS_BUCKET_LIFECYCLE_RULES = new TextField("gcsBucketLifecycleRules", "gcsBucketLifecycleRules");
+
+    /** TBC */
+    NumericField GCS_BUCKET_RETENTION_EFFECTIVE_TIME =
+            new NumericField("gcsBucketRetentionEffectiveTime", "gcsBucketRetentionEffectiveTime");
+
+    /** TBC */
+    BooleanField GCS_BUCKET_RETENTION_LOCKED = new BooleanField("gcsBucketRetentionLocked", "gcsBucketRetentionLocked");
+
+    /** TBC */
+    NumericField GCS_BUCKET_RETENTION_PERIOD = new NumericField("gcsBucketRetentionPeriod", "gcsBucketRetentionPeriod");
+
+    /** TBC */
+    TextField GCS_BUCKET_RETENTION_POLICY = new TextField("gcsBucketRetentionPolicy", "gcsBucketRetentionPolicy");
+
+    /** TBC */
+    BooleanField GCS_BUCKET_VERSIONING_ENABLED =
+            new BooleanField("gcsBucketVersioningEnabled", "gcsBucketVersioningEnabled");
+
+    /** TBC */
+    NumericField GCS_OBJECT_COUNT = new NumericField("gcsObjectCount", "gcsObjectCount");
+
+    /** GCS objects within this bucket. */
+    RelationField GCS_OBJECTS = new RelationField("gcsObjects");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -174,6 +204,9 @@ public interface IGCSBucket {
 
     /** TBC */
     String getAssetDbtUniqueId();
+
+    /** TBC */
+    String getAssetIcon();
 
     /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
@@ -338,6 +371,9 @@ public interface IGCSBucket {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -372,6 +408,9 @@ public interface IGCSBucket {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

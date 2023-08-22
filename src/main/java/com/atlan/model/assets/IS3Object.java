@@ -7,6 +7,10 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.KeywordTextField;
+import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.AwsTag;
 import com.atlan.model.structs.PopularityInsights;
@@ -29,6 +33,37 @@ import javax.annotation.processing.Generated;
 public interface IS3Object {
 
     public static final String TYPE_NAME = "S3Object";
+
+    /** S3 bucket in which the object exists. */
+    RelationField BUCKET = new RelationField("bucket");
+
+    /** Name of the bucket in which the object exists. */
+    KeywordTextField S3BUCKET_NAME = new KeywordTextField("s3BucketName", "s3BucketName", "s3BucketName.text");
+
+    /** qualifiedName of the bucket in which the object exists. */
+    KeywordField S3BUCKET_QUALIFIED_NAME = new KeywordField("s3BucketQualifiedName", "s3BucketQualifiedName");
+
+    /** Information about how the object's content should be presented. */
+    KeywordField S3OBJECT_CONTENT_DISPOSITION =
+            new KeywordField("s3ObjectContentDisposition", "s3ObjectContentDisposition");
+
+    /** Type of content in the object. */
+    KeywordField S3OBJECT_CONTENT_TYPE = new KeywordField("s3ObjectContentType", "s3ObjectContentType");
+
+    /** Unique identity of the object in an S3 bucket. This is usually the concatenation of any prefix (folder) in the S3 bucket with the name of the object (file) itself. */
+    KeywordTextField S3OBJECT_KEY = new KeywordTextField("s3ObjectKey", "s3ObjectKey", "s3ObjectKey.text");
+
+    /** Time (epoch) at which the object was last updated, in milliseconds, or when it was created if it has never been modified. */
+    NumericField S3OBJECT_LAST_MODIFIED_TIME = new NumericField("s3ObjectLastModifiedTime", "s3ObjectLastModifiedTime");
+
+    /** Object size in bytes. */
+    NumericField S3OBJECT_SIZE = new NumericField("s3ObjectSize", "s3ObjectSize");
+
+    /** Storage class used for storing the object. */
+    KeywordField S3OBJECT_STORAGE_CLASS = new KeywordField("s3ObjectStorageClass", "s3ObjectStorageClass");
+
+    /** Version of the object. This is only applicable when versioning is enabled on the bucket in which the object exists. */
+    KeywordField S3OBJECT_VERSION_ID = new KeywordField("s3ObjectVersionId", "s3ObjectVersionId");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -175,6 +210,9 @@ public interface IS3Object {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -301,6 +339,9 @@ public interface IS3Object {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -335,6 +376,9 @@ public interface IS3Object {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

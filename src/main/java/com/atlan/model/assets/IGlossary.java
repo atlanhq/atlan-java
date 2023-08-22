@@ -7,6 +7,8 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -28,6 +30,27 @@ import javax.annotation.processing.Generated;
 public interface IGlossary {
 
     public static final String TYPE_NAME = "AtlasGlossary";
+
+    /** TBC */
+    KeywordField ADDITIONAL_ATTRIBUTES = new KeywordField("additionalAttributes", "additionalAttributes");
+
+    /** TBC */
+    RelationField CATEGORIES = new RelationField("categories");
+
+    /** TBC */
+    KeywordField LANGUAGE = new KeywordField("language", "language");
+
+    /** TBC */
+    KeywordField LONG_DESCRIPTION = new KeywordField("longDescription", "longDescription");
+
+    /** TBC */
+    KeywordField SHORT_DESCRIPTION = new KeywordField("shortDescription", "shortDescription");
+
+    /** TBC */
+    RelationField TERMS = new RelationField("terms");
+
+    /** TBC */
+    KeywordField USAGE = new KeywordField("usage", "usage");
 
     /** TBC */
     Map<String, String> getAdditionalAttributes();
@@ -175,6 +198,9 @@ public interface IGlossary {
 
     /** TBC */
     String getAssetDbtUniqueId();
+
+    /** TBC */
+    String getAssetIcon();
 
     /** TBC */
     SortedSet<String> getAssetMcIncidentNames();

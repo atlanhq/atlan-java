@@ -7,6 +7,10 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.BooleanField;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.KeywordTextField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -28,6 +32,26 @@ import javax.annotation.processing.Generated;
 public interface IMetabaseCollection {
 
     public static final String TYPE_NAME = "MetabaseCollection";
+
+    /** TBC */
+    KeywordField METABASE_COLOR = new KeywordField("metabaseColor", "metabaseColor");
+
+    /** TBC */
+    RelationField METABASE_DASHBOARDS = new RelationField("metabaseDashboards");
+
+    /** TBC */
+    BooleanField METABASE_IS_PERSONAL_COLLECTION =
+            new BooleanField("metabaseIsPersonalCollection", "metabaseIsPersonalCollection");
+
+    /** TBC */
+    KeywordTextField METABASE_NAMESPACE =
+            new KeywordTextField("metabaseNamespace", "metabaseNamespace", "metabaseNamespace.text");
+
+    /** TBC */
+    RelationField METABASE_QUESTIONS = new RelationField("metabaseQuestions");
+
+    /** TBC */
+    KeywordTextField METABASE_SLUG = new KeywordTextField("metabaseSlug", "metabaseSlug", "metabaseSlug.text");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -174,6 +198,9 @@ public interface IMetabaseCollection {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -270,6 +297,9 @@ public interface IMetabaseCollection {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -328,6 +358,9 @@ public interface IMetabaseCollection {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

@@ -7,6 +7,9 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -28,6 +31,36 @@ import javax.annotation.processing.Generated;
 public interface ILookerTile {
 
     public static final String TYPE_NAME = "LookerTile";
+
+    /** TBC */
+    RelationField DASHBOARD = new RelationField("dashboard");
+
+    /** TBC */
+    RelationField LOOK = new RelationField("look");
+
+    /** TBC */
+    NumericField LOOK_ID = new NumericField("lookId", "lookId");
+
+    /** TBC */
+    KeywordField LOOKML_LINK_ID = new KeywordField("lookmlLinkId", "lookmlLinkId");
+
+    /** TBC */
+    KeywordField MERGE_RESULT_ID = new KeywordField("mergeResultId", "mergeResultId");
+
+    /** TBC */
+    KeywordField NOTE_TEXT = new KeywordField("noteText", "noteText");
+
+    /** TBC */
+    RelationField QUERY = new RelationField("query");
+
+    /** TBC */
+    NumericField QUERY_ID = new NumericField("queryID", "queryID");
+
+    /** TBC */
+    NumericField RESULT_MAKER_ID = new NumericField("resultMakerID", "resultMakerID");
+
+    /** TBC */
+    KeywordField SUBTITLE_TEXT = new KeywordField("subtitleText", "subtitleText");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -174,6 +207,9 @@ public interface ILookerTile {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -273,6 +309,9 @@ public interface ILookerTile {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -322,6 +361,9 @@ public interface ILookerTile {
 
     /** TBC */
     String getNoteText();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

@@ -7,6 +7,11 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.BooleanField;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.KeywordTextField;
+import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -28,6 +33,63 @@ import javax.annotation.processing.Generated;
 public interface ISQL {
 
     public static final String TYPE_NAME = "SQL";
+
+    /** Simple name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
+    KeywordTextField DATABASE_NAME = new KeywordTextField("databaseName", "databaseName.keyword", "databaseName");
+
+    /** Unique name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
+    KeywordField DATABASE_QUALIFIED_NAME = new KeywordField("databaseQualifiedName", "databaseQualifiedName");
+
+    /** TBC */
+    RelationField DBT_MODELS = new RelationField("dbtModels");
+
+    /** TBC */
+    RelationField DBT_SOURCES = new RelationField("dbtSources");
+
+    /** TBC */
+    RelationField DBT_TESTS = new RelationField("dbtTests");
+
+    /** Whether the asset has been profiled (true) or not (false). */
+    BooleanField IS_PROFILED = new BooleanField("isProfiled", "isProfiled");
+
+    /** Time (epoch) at which the asset was last profiled, in milliseconds. */
+    NumericField LAST_PROFILED_AT = new NumericField("lastProfiledAt", "lastProfiledAt");
+
+    /** TBC */
+    NumericField QUERY_COUNT = new NumericField("queryCount", "queryCount");
+
+    /** Time (epoch) at which the query count was last updated, in milliseconds. */
+    NumericField QUERY_COUNT_UPDATED_AT = new NumericField("queryCountUpdatedAt", "queryCountUpdatedAt");
+
+    /** TBC */
+    NumericField QUERY_USER_COUNT = new NumericField("queryUserCount", "queryUserCount");
+
+    /** TBC */
+    KeywordField QUERY_USER_MAP = new KeywordField("queryUserMap", "queryUserMap");
+
+    /** Simple name of the schema in which this SQL asset exists, or empty if it does not exist within a schema. */
+    KeywordTextField SCHEMA_NAME = new KeywordTextField("schemaName", "schemaName.keyword", "schemaName");
+
+    /** Unique name of the schema in which this SQL asset exists, or empty if it does not exist within a schema. */
+    KeywordField SCHEMA_QUALIFIED_NAME = new KeywordField("schemaQualifiedName", "schemaQualifiedName");
+
+    /** TBC */
+    RelationField SQL_DBT_SOURCES = new RelationField("sqlDBTSources");
+
+    /** TBC */
+    RelationField SQL_DBT_MODELS = new RelationField("sqlDbtModels");
+
+    /** Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
+    KeywordTextField TABLE_NAME = new KeywordTextField("tableName", "tableName.keyword", "tableName");
+
+    /** Unique name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
+    KeywordField TABLE_QUALIFIED_NAME = new KeywordField("tableQualifiedName", "tableQualifiedName");
+
+    /** Simple name of the view in which this SQL asset exists, or empty if it does not exist within a view. */
+    KeywordTextField VIEW_NAME = new KeywordTextField("viewName", "viewName.keyword", "viewName");
+
+    /** Unique name of the view in which this SQL asset exists, or empty if it does not exist within a view. */
+    KeywordField VIEW_QUALIFIED_NAME = new KeywordField("viewQualifiedName", "viewQualifiedName");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -174,6 +236,9 @@ public interface ISQL {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -285,6 +350,9 @@ public interface ISQL {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -325,6 +393,9 @@ public interface ISQL {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

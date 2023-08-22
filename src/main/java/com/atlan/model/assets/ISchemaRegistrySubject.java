@@ -9,6 +9,10 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SchemaRegistrySchemaCompatibility;
 import com.atlan.model.enums.SchemaRegistrySchemaType;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.BooleanField;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -30,6 +34,33 @@ import javax.annotation.processing.Generated;
 public interface ISchemaRegistrySubject {
 
     public static final String TYPE_NAME = "SchemaRegistrySubject";
+
+    /** TBC */
+    RelationField ASSETS = new RelationField("assets");
+
+    /** Base name of the subject (i.e. without -key, -value prefixes) */
+    KeywordField SCHEMA_REGISTRY_SUBJECT_BASE_NAME =
+            new KeywordField("schemaRegistrySubjectBaseName", "schemaRegistrySubjectBaseName");
+
+    /** List of asset qualified names that this subject is governing/validating. */
+    KeywordField SCHEMA_REGISTRY_SUBJECT_GOVERNING_ASSET_QUALIFIED_NAMES = new KeywordField(
+            "schemaRegistrySubjectGoverningAssetQualifiedNames", "schemaRegistrySubjectGoverningAssetQualifiedNames");
+
+    /** If the subject is a schema for the keys of the messages. */
+    BooleanField SCHEMA_REGISTRY_SUBJECT_IS_KEY_SCHEMA =
+            new BooleanField("schemaRegistrySubjectIsKeySchema", "schemaRegistrySubjectIsKeySchema");
+
+    /** Definition of the latest schema in the subject. */
+    TextField SCHEMA_REGISTRY_SUBJECT_LATEST_SCHEMA_DEFINITION =
+            new TextField("schemaRegistrySubjectLatestSchemaDefinition", "schemaRegistrySubjectLatestSchemaDefinition");
+
+    /** Latest schema version of the subject. */
+    KeywordField SCHEMA_REGISTRY_SUBJECT_LATEST_SCHEMA_VERSION =
+            new KeywordField("schemaRegistrySubjectLatestSchemaVersion", "schemaRegistrySubjectLatestSchemaVersion");
+
+    /** Compatibility of the schema across versions. */
+    KeywordField SCHEMA_REGISTRY_SUBJECT_SCHEMA_COMPATIBILITY =
+            new KeywordField("schemaRegistrySubjectSchemaCompatibility", "schemaRegistrySubjectSchemaCompatibility");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -176,6 +207,9 @@ public interface ISchemaRegistrySubject {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -275,6 +309,9 @@ public interface ISchemaRegistrySubject {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -309,6 +346,9 @@ public interface ISchemaRegistrySubject {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

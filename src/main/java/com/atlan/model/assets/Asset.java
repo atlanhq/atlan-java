@@ -264,6 +264,10 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
 
     /** TBC */
     @Attribute
+    String assetIcon;
+
+    /** TBC */
+    @Attribute
     @Singular
     SortedSet<String> assetMcIncidentNames;
 

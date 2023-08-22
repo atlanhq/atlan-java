@@ -95,8 +95,9 @@ AirflowTask,Airflow Task Assets,airflowTaskPoolSlots,Pool slots used for the run
 AirflowTask,Airflow Task Assets,airflowTaskQueue,Queue on which this run happened
 AirflowTask,Airflow Task Assets,airflowTaskPriorityWeight,Priority weight of the run
 AirflowTask,Airflow Task Assets,airflowTaskTriggerRule,Trigger rule of the run
+AirflowTask,Airflow Task Assets,outputs,TBC
 AirflowTask,Airflow Task Assets,process,TBC
-AirflowTask,Airflow Task Assets,tables,TBC
+AirflowTask,Airflow Task Assets,inputs,TBC
 AirflowTask,Airflow Task Assets,airflowDag,TBC
 Asset,Base class for all assets.,name,Human-readable name of the asset.
 Asset,Base class for all assets.,displayName,Name used for display purposes (in user interfaces).
@@ -218,6 +219,7 @@ Asset,Base class for all assets.,assetSodaLastSyncRunAt,TBC
 Asset,Base class for all assets.,assetSodaLastScanAt,TBC
 Asset,Base class for all assets.,assetSodaCheckStatuses,All associated soda check statuses
 Asset,Base class for all assets.,assetSodaSourceURL,TBC
+Asset,Base class for all assets.,assetIcon,TBC
 Asset,Base class for all assets.,schemaRegistrySubjects,TBC
 Asset,Base class for all assets.,mcMonitors,TBC
 Asset,Base class for all assets.,files,TBC
@@ -298,6 +300,8 @@ Azure,Base class for Azure assets.,azureTags,Tags that have been applied to this
 Badge,Instance of a badge in Atlan.,badgeConditions,TBC
 Badge,Instance of a badge in Atlan.,badgeMetadataAttribute,TBC
 Catalog,Base class for catalog assets.,inputToProcesses,Processes to which this asset provides input.
+Catalog,Base class for catalog assets.,outputFromAirflowTasks,TBC
+Catalog,Base class for catalog assets.,inputToAirflowTasks,TBC
 Catalog,Base class for catalog assets.,outputFromProcesses,Processes from which this asset is produced as output.
 Collection,Instance of a query collection in Atlan.,icon,Image used to represent this collection.
 Collection,Instance of a query collection in Atlan.,iconType,"Type of image used to represent the collection (for example, an emoji)."
@@ -608,6 +612,8 @@ LookerTile,Instance of a Looker tile in Atlan.,query,TBC
 LookerTile,Instance of a Looker tile in Atlan.,look,TBC
 LookerTile,Instance of a Looker tile in Atlan.,dashboard,TBC
 LookerView,Instance of a Looker view in Atlan.,projectName,TBC
+LookerView,Instance of a Looker view in Atlan.,lookerViewFilePath,File path of the looker view in the project
+LookerView,Instance of a Looker view in Atlan.,lookerViewFileName,File name of the looker view in the project
 LookerView,Instance of a Looker view in Atlan.,project,TBC
 LookerView,Instance of a Looker view in Atlan.,fields,TBC
 MCIncident,Instance of a Monte Carlo Incident in Atlan.,mcIncidentId,Unique identifier for the incident.
@@ -1130,7 +1136,6 @@ Table,Instance of a database table in Atlan.,partitionCount,TBC
 Table,Instance of a database table in Atlan.,partitionList,TBC
 Table,Instance of a database table in Atlan.,partitions,TBC
 Table,Instance of a database table in Atlan.,columns,Columns that exist within this table.
-Table,Instance of a database table in Atlan.,airflowTask,TBC
 Table,Instance of a database table in Atlan.,queries,Queries that involve this table.
 Table,Instance of a database table in Atlan.,facts,TBC
 Table,Instance of a database table in Atlan.,atlanSchema,Schema in which this table exists.
@@ -1150,7 +1155,9 @@ TablePartition,Instance of a database table partition in Atlan.,isPartitioned,TB
 TablePartition,Instance of a database table partition in Atlan.,partitionStrategy,TBC
 TablePartition,Instance of a database table partition in Atlan.,partitionCount,TBC
 TablePartition,Instance of a database table partition in Atlan.,partitionList,TBC
+TablePartition,Instance of a database table partition in Atlan.,childTablePartitions,TBC
 TablePartition,Instance of a database table partition in Atlan.,columns,TBC
+TablePartition,Instance of a database table partition in Atlan.,parentTablePartition,TBC
 TablePartition,Instance of a database table partition in Atlan.,parentTable,TBC
 TableauCalculatedField,Instance of a Tableau calculated field in Atlan.,siteQualifiedName,TBC
 TableauCalculatedField,Instance of a Tableau calculated field in Atlan.,projectQualifiedName,TBC

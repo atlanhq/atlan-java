@@ -2,17 +2,17 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.live;
 
-import static com.atlan.util.QueryFactory.*;
 import static org.testng.Assert.*;
 
-import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
+import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.admin.AtlanGroup;
 import com.atlan.model.assets.*;
 import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.core.CustomMetadataAttributes;
 import com.atlan.model.enums.*;
+import com.atlan.model.fields.CustomMetadataField;
 import com.atlan.model.search.*;
 import com.atlan.model.structs.BadgeCondition;
 import com.atlan.model.typedefs.*;
@@ -349,6 +349,24 @@ public class CustomMetadataTest extends AtlanLiveTest {
     }
 
     @Test(
+            groups = {"cm.search.invalid"},
+            dependsOnGroups = {"cm.create.cm.*"})
+    void testInvalidSearchParameters() {
+        assertThrows(InvalidRequestException.class, () -> GlossaryTerm.select()
+                .where(CustomMetadataField.of(Atlan.getDefaultClient(), CM_RACI, CM_ATTR_RACI_ACCOUNTABLE)
+                        .gt(5)));
+        assertThrows(InvalidRequestException.class, () -> GlossaryTerm.select()
+                .where(CustomMetadataField.of(Atlan.getDefaultClient(), CM_IPR, CM_ATTR_IPR_DATE)
+                        .startsWith("abc", false)));
+        assertThrows(InvalidRequestException.class, () -> GlossaryTerm.select()
+                .where(CustomMetadataField.of(Atlan.getDefaultClient(), CM_IPR, CM_ATTR_IPR_MANDATORY)
+                        .lt(3)));
+        assertThrows(InvalidRequestException.class, () -> GlossaryTerm.select()
+                .where(CustomMetadataField.of(Atlan.getDefaultClient(), CM_QUALITY, CM_ATTR_QUALITY_TYPE)
+                        .lte(10)));
+    }
+
+    @Test(
             groups = {"cm.update.term.add.raci"},
             dependsOnGroups = {"cm.create.term", "cm.create.cm.raci", "cm.create.groups"})
     void addTermCMRACI() throws AtlanException {
@@ -481,18 +499,13 @@ public class CustomMetadataTest extends AtlanLiveTest {
             dependsOnGroups = {"cm.update.term.replace.ipr"})
     void searchByAnyAccountable() throws AtlanException, InterruptedException {
 
-        Query combined = CompoundQuery.builder()
-                .must(beActive())
-                .must(beOfType(GlossaryTerm.TYPE_NAME))
-                .must(haveCM(CM_RACI, CM_ATTR_RACI_ACCOUNTABLE).present())
-                .build()
-                ._toQuery();
-
-        IndexSearchRequest index = IndexSearchRequest.builder(combined)
-                .attribute("name")
-                .attribute("anchor")
-                .relationAttribute("name")
-                .build();
+        IndexSearchRequest index = GlossaryTerm.select()
+                .where(CustomMetadataField.of(Atlan.getDefaultClient(), CM_RACI, CM_ATTR_RACI_ACCOUNTABLE)
+                        .exists())
+                .includeOnResults(GlossaryTerm.NAME)
+                .includeOnResults(GlossaryTerm.ANCHOR)
+                .includeOnRelations(Asset.NAME)
+                .toRequest();
 
         IndexSearchResponse response = index.search();
 
@@ -523,18 +536,13 @@ public class CustomMetadataTest extends AtlanLiveTest {
             dependsOnGroups = {"cm.update.term.replace.ipr"})
     void searchBySpecificAccountable() throws AtlanException, InterruptedException {
 
-        Query combined = CompoundQuery.builder()
-                .must(beActive())
-                .must(beOfType(GlossaryTerm.TYPE_NAME))
-                .must(haveCM(CM_RACI, CM_ATTR_RACI_ACCOUNTABLE).eq(FIXED_USER))
-                .build()
-                ._toQuery();
-
-        IndexSearchRequest index = IndexSearchRequest.builder(combined)
-                .attribute("name")
-                .attribute("anchor")
-                .relationAttribute("name")
-                .build();
+        IndexSearchRequest index = GlossaryTerm.select()
+                .where(CustomMetadataField.of(Atlan.getDefaultClient(), CM_RACI, CM_ATTR_RACI_ACCOUNTABLE)
+                        .eq(FIXED_USER, false))
+                .includeOnResults(GlossaryTerm.NAME)
+                .includeOnResults(GlossaryTerm.ANCHOR)
+                .includeOnRelations(Asset.NAME)
+                .toRequest();
 
         IndexSearchResponse response = index.search();
 

@@ -7,6 +7,7 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -28,6 +29,9 @@ import javax.annotation.processing.Generated;
 public interface IDbtProcess {
 
     public static final String TYPE_NAME = "DbtProcess";
+
+    /** TBC */
+    KeywordField DBT_PROCESS_JOB_STATUS = new KeywordField("dbtProcessJobStatus", "dbtProcessJobStatus");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -175,6 +179,9 @@ public interface IDbtProcess {
 
     /** TBC */
     String getAssetDbtUniqueId();
+
+    /** TBC */
+    String getAssetIcon();
 
     /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
@@ -339,6 +346,9 @@ public interface IDbtProcess {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -376,6 +386,9 @@ public interface IDbtProcess {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

@@ -22,6 +22,11 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Singular;
 
+/**
+ * Set of common and reusable queries.
+ * @deprecated replaced by {@link com.atlan.model.search.CompoundQuery}
+ */
+@Deprecated
 public class QueryFactory {
 
     private static final Query ACTIVE = have(KeywordFields.STATE).eq(AtlanStatus.ACTIVE.getValue());
@@ -383,7 +388,11 @@ public class QueryFactory {
                 SearchableCMField.builder().attributeId(attributeId).build());
     }
 
-    /** Class to compose compound queries combining various conditions. */
+    /**
+     * Class to compose compound queries combining various conditions.
+     * @deprecated replaced by the more specific implementations in {@link com.atlan.model.fields}
+     */
+    @Deprecated
     public static final class FieldQuery {
 
         private final AtlanSearchableField field;
@@ -636,7 +645,11 @@ public class QueryFactory {
         }
     }
 
-    /** Class to compose compound queries combining various conditions. */
+    /**
+     * Class to compose compound queries combining various conditions.
+     * @deprecated replaced by {@link com.atlan.model.search.CompoundQuery}
+     */
+    @Deprecated
     @Builder
     public static final class CompoundQuery {
 
@@ -680,7 +693,11 @@ public class QueryFactory {
         }
     }
 
-    /** Class to quickly compose aggregation criteria. */
+    /**
+     * Class to quickly compose aggregation criteria.
+     * @deprecated replaced by interfaces and implementations under {@link com.atlan.model.fields}
+     */
+    @Deprecated
     public static final class Aggregate {
 
         /**
@@ -766,7 +783,9 @@ public class QueryFactory {
      * @param result the aggregation result from which to retrieve the numeric metric
      * @return the numeric result for the aggregation, or 0.0 in case the aggregation is empty
      * @throws InvalidRequestException if the provided aggregation result is not a metric
+     * @deprecated replaced by {@link AggregationResult#getMetric()}
      */
+    @Deprecated
     public static double getAggregationMetric(AggregationResult result) throws InvalidRequestException {
         if (result instanceof AggregationMetricResult) {
             return ((AggregationMetricResult) result).getValue();
@@ -777,7 +796,11 @@ public class QueryFactory {
         }
     }
 
-    /** Class to quickly compose a sorting condition. */
+    /**
+     * Class to quickly compose a sorting condition.
+     * @deprecated replaced by {@link com.atlan.model.fields.ISearchable#order(SortOrder)}
+     */
+    @Deprecated
     @Builder
     @Getter
     public static final class Sort {
@@ -808,7 +831,9 @@ public class QueryFactory {
     /**
      * Local class to encapsulate custom metadata fields into a searchable interface.
      * (Should not be used outside this factory, hence private.)
+     * @deprecated replaced by {@link com.atlan.model.fields.CustomMetadataField}
      */
+    @Deprecated
     @Builder
     private static final class SearchableCMField implements AtlanSearchableField {
 

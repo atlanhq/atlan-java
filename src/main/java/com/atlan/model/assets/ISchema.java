@@ -7,6 +7,8 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -28,6 +30,39 @@ import javax.annotation.processing.Generated;
 public interface ISchema {
 
     public static final String TYPE_NAME = "Schema";
+
+    /** Database in which this schema exists. */
+    RelationField DATABASE = new RelationField("database");
+
+    /** TBC */
+    RelationField FUNCTIONS = new RelationField("functions");
+
+    /** Materialized views that exist within this schema. */
+    RelationField MATERIALIZED_VIEWS = new RelationField("materialisedViews");
+
+    /** Stored procedures (routines) that are defined within this schema. */
+    RelationField PROCEDURES = new RelationField("procedures");
+
+    /** Snowflake Pipes that are defined within this schema. */
+    RelationField SNOWFLAKE_PIPES = new RelationField("snowflakePipes");
+
+    /** Snowflake Streams that are defined within this schema. */
+    RelationField SNOWFLAKE_STREAMS = new RelationField("snowflakeStreams");
+
+    /** Tags applied to this schema in Snowflake. */
+    RelationField SNOWFLAKE_TAGS = new RelationField("snowflakeTags");
+
+    /** Number of tables in this schema. */
+    NumericField TABLE_COUNT = new NumericField("tableCount", "tableCount");
+
+    /** Tables that exist within this schema. */
+    RelationField TABLES = new RelationField("tables");
+
+    /** Number of views in this schema. */
+    NumericField VIEW_COUNT = new NumericField("viewsCount", "viewsCount");
+
+    /** Views that exist within this schema. */
+    RelationField VIEWS = new RelationField("views");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -174,6 +209,9 @@ public interface ISchema {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -291,6 +329,9 @@ public interface ISchema {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -334,6 +375,9 @@ public interface ISchema {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

@@ -14,6 +14,9 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.KeywordTextField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.AzureTag;
 import com.atlan.model.structs.PopularityInsights;
@@ -36,6 +39,42 @@ import javax.annotation.processing.Generated;
 public interface IADLSAccount {
 
     public static final String TYPE_NAME = "ADLSAccount";
+
+    /** TBC */
+    KeywordField ADLS_ACCOUNT_ACCESS_TIER = new KeywordField("adlsAccountAccessTier", "adlsAccountAccessTier");
+
+    /** TBC */
+    KeywordField ADLS_ACCOUNT_KIND = new KeywordField("adlsAccountKind", "adlsAccountKind");
+
+    /** TBC */
+    KeywordField ADLS_ACCOUNT_PERFORMANCE = new KeywordField("adlsAccountPerformance", "adlsAccountPerformance");
+
+    /** TBC */
+    KeywordField ADLS_ACCOUNT_PROVISION_STATE =
+            new KeywordField("adlsAccountProvisionState", "adlsAccountProvisionState");
+
+    /** TBC */
+    KeywordField ADLS_ACCOUNT_REPLICATION = new KeywordField("adlsAccountReplication", "adlsAccountReplication");
+
+    /** TBC */
+    KeywordTextField ADLS_ACCOUNT_RESOURCE_GROUP = new KeywordTextField(
+            "adlsAccountResourceGroup", "adlsAccountResourceGroup.keyword", "adlsAccountResourceGroup");
+
+    /** TBC */
+    KeywordTextField ADLS_ACCOUNT_SUBSCRIPTION = new KeywordTextField(
+            "adlsAccountSubscription", "adlsAccountSubscription.keyword", "adlsAccountSubscription");
+
+    /** Containers that exist within this account. */
+    RelationField ADLS_CONTAINERS = new RelationField("adlsContainers");
+
+    /** Entity tag for the asset. An entity tag is a hash of the object and represents changes to the contents of an object only, not its metadata. */
+    KeywordField ADLS_E_TAG = new KeywordField("adlsETag", "adlsETag");
+
+    /** TBC */
+    KeywordField ADLS_ENCRYPTION_TYPE = new KeywordField("adlsEncryptionType", "adlsEncryptionType");
+
+    /** TBC */
+    KeywordField ADLS_PRIMARY_DISK_STATE = new KeywordField("adlsPrimaryDiskState", "adlsPrimaryDiskState");
 
     /** TBC */
     ADLSAccessTier getAdlsAccountAccessTier();
@@ -221,6 +260,9 @@ public interface IADLSAccount {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -326,6 +368,9 @@ public interface IADLSAccount {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -360,6 +405,9 @@ public interface IADLSAccount {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

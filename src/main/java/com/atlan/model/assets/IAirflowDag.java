@@ -8,6 +8,9 @@ import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.OpenLineageRunState;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -29,6 +32,15 @@ import javax.annotation.processing.Generated;
 public interface IAirflowDag {
 
     public static final String TYPE_NAME = "AirflowDag";
+
+    /** TBC */
+    KeywordField AIRFLOW_DAG_SCHEDULE = new KeywordField("airflowDagSchedule", "airflowDagSchedule");
+
+    /** Duration between scheduled runs in seconds */
+    NumericField AIRFLOW_DAG_SCHEDULE_DELTA = new NumericField("airflowDagScheduleDelta", "airflowDagScheduleDelta");
+
+    /** TBC */
+    RelationField AIRFLOW_TASKS = new RelationField("airflowTasks");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -208,6 +220,9 @@ public interface IAirflowDag {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -304,6 +319,9 @@ public interface IAirflowDag {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -338,6 +356,9 @@ public interface IAirflowDag {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

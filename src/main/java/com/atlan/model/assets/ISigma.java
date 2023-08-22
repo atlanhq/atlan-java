@@ -7,6 +7,7 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordTextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -28,6 +29,29 @@ import javax.annotation.processing.Generated;
 public interface ISigma {
 
     public static final String TYPE_NAME = "Sigma";
+
+    /** TBC */
+    KeywordTextField SIGMA_DATA_ELEMENT_NAME =
+            new KeywordTextField("sigmaDataElementName", "sigmaDataElementName.keyword", "sigmaDataElementName");
+
+    /** TBC */
+    KeywordTextField SIGMA_DATA_ELEMENT_QUALIFIED_NAME = new KeywordTextField(
+            "sigmaDataElementQualifiedName", "sigmaDataElementQualifiedName", "sigmaDataElementQualifiedName.text");
+
+    /** TBC */
+    KeywordTextField SIGMA_PAGE_NAME = new KeywordTextField("sigmaPageName", "sigmaPageName.keyword", "sigmaPageName");
+
+    /** TBC */
+    KeywordTextField SIGMA_PAGE_QUALIFIED_NAME =
+            new KeywordTextField("sigmaPageQualifiedName", "sigmaPageQualifiedName", "sigmaPageQualifiedName.text");
+
+    /** TBC */
+    KeywordTextField SIGMA_WORKBOOK_NAME =
+            new KeywordTextField("sigmaWorkbookName", "sigmaWorkbookName.keyword", "sigmaWorkbookName");
+
+    /** TBC */
+    KeywordTextField SIGMA_WORKBOOK_QUALIFIED_NAME = new KeywordTextField(
+            "sigmaWorkbookQualifiedName", "sigmaWorkbookQualifiedName", "sigmaWorkbookQualifiedName.text");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -174,6 +198,9 @@ public interface ISigma {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -270,6 +297,9 @@ public interface ISigma {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -304,6 +334,9 @@ public interface ISigma {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

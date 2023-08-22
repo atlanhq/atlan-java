@@ -105,7 +105,7 @@
      * @throws AtlanException on any API problems, or if the GlossaryTerm does not exist
      */
     public static GlossaryTerm findByName(String name, String glossaryName) throws AtlanException {
-        return findByName(name, glossaryName, null);
+        return findByName(name, glossaryName, (List<AtlanField>) null);
     }
 
     /**
@@ -115,11 +115,27 @@
      *
      * @param name of the GlossaryTerm
      * @param glossaryName human-readable name of the Glossary in which the category exists
-     * @param attributes an optional collection of attributes to retrieve for the GlossaryTerm
+     * @param attributes an optional collection of attributes (unchecked) to retrieve for the GlossaryTerm
      * @return the GlossaryTerm, if found
      * @throws AtlanException on any API problems, or if the GlossaryTerm does not exist
      */
     public static GlossaryTerm findByName(String name, String glossaryName, Collection<String> attributes)
+            throws AtlanException {
+        return findByName(Atlan.getDefaultClient(), name, glossaryName, attributes);
+    }
+
+    /**
+     * Find a GlossaryTerm by its human-readable name. Note that this operation must run two
+     * separate queries to first resolve the qualifiedName of the glossary, so will be somewhat slower.
+     * If you already have the qualifiedName of the glossary, use findByNameFast instead.
+     *
+     * @param name of the GlossaryTerm
+     * @param glossaryName human-readable name of the Glossary in which the category exists
+     * @param attributes an optional collection of attributes (checked) to retrieve for the GlossaryTerm
+     * @return the GlossaryTerm, if found
+     * @throws AtlanException on any API problems, or if the GlossaryTerm does not exist
+     */
+    public static GlossaryTerm findByName(String name, String glossaryName, List<AtlanField> attributes)
             throws AtlanException {
         return findByName(Atlan.getDefaultClient(), name, glossaryName, attributes);
     }
@@ -137,7 +153,7 @@
      * @throws AtlanException on any API problems, or if the GlossaryTerm does not exist
      */
     public static GlossaryTerm findByName(AtlanClient client, String name, String glossaryName) throws AtlanException {
-        return findByName(client, name, glossaryName, null);
+        return findByName(client, name, glossaryName, (List<AtlanField>) null);
     }
 
     /**
@@ -148,13 +164,31 @@
      * @param client connectivity to the Atlan tenant in which to search for the GlossaryTerm
      * @param name of the GlossaryTerm
      * @param glossaryName human-readable name of the Glossary in which the category exists
-     * @param attributes an optional collection of attributes to retrieve for the GlossaryTerm
+     * @param attributes an optional collection of attributes (unchecked) to retrieve for the GlossaryTerm
      * @return the GlossaryTerm, if found
      * @throws AtlanException on any API problems, or if the GlossaryTerm does not exist
      */
     public static GlossaryTerm findByName(AtlanClient client, String name, String glossaryName, Collection<String> attributes)
             throws AtlanException {
-        Glossary glossary = Glossary.findByName(client, glossaryName, null);
+        Glossary glossary = Glossary.findByName(client, glossaryName);
+        return findByNameFast(client, name, glossary.getQualifiedName(), attributes);
+    }
+
+    /**
+     * Find a GlossaryTerm by its human-readable name. Note that this operation must run two
+     * separate queries to first resolve the qualifiedName of the glossary, so will be somewhat slower.
+     * If you already have the qualifiedName of the glossary, use findByNameFast instead.
+     *
+     * @param client connectivity to the Atlan tenant in which to search for the GlossaryTerm
+     * @param name of the GlossaryTerm
+     * @param glossaryName human-readable name of the Glossary in which the category exists
+     * @param attributes an optional collection of attributes (checked) to retrieve for the GlossaryTerm
+     * @return the GlossaryTerm, if found
+     * @throws AtlanException on any API problems, or if the GlossaryTerm does not exist
+     */
+    public static GlossaryTerm findByName(AtlanClient client, String name, String glossaryName, List<AtlanField> attributes)
+            throws AtlanException {
+        Glossary glossary = Glossary.findByName(client, glossaryName);
         return findByNameFast(client, name, glossary.getQualifiedName(), attributes);
     }
 
@@ -169,7 +203,7 @@
      */
     public static GlossaryTerm findByNameFast(String name, String glossaryQualifiedName)
             throws AtlanException {
-        return findByNameFast(name, glossaryQualifiedName, null);
+        return findByNameFast(name, glossaryQualifiedName, (List<AtlanField>) null);
     }
 
     /**
@@ -177,11 +211,25 @@
      *
      * @param name of the GlossaryTerm
      * @param glossaryQualifiedName qualifiedName of the Glossary in which the category exists
-     * @param attributes an optional collection of attributes to retrieve for the GlossaryTerm
+     * @param attributes an optional collection of attributes (unchecked) to retrieve for the GlossaryTerm
      * @return the GlossaryTerm, if found
      * @throws AtlanException on any API problems, or if the GlossaryTerm does not exist
      */
     public static GlossaryTerm findByNameFast(String name, String glossaryQualifiedName, Collection<String> attributes)
+            throws AtlanException {
+        return findByNameFast(Atlan.getDefaultClient(), name, glossaryQualifiedName, attributes);
+    }
+
+    /**
+     * Find a GlossaryTerm by its human-readable name.
+     *
+     * @param name of the GlossaryTerm
+     * @param glossaryQualifiedName qualifiedName of the Glossary in which the category exists
+     * @param attributes an optional collection of attributes (checked) to retrieve for the GlossaryTerm
+     * @return the GlossaryTerm, if found
+     * @throws AtlanException on any API problems, or if the GlossaryTerm does not exist
+     */
+    public static GlossaryTerm findByNameFast(String name, String glossaryQualifiedName, List<AtlanField> attributes)
             throws AtlanException {
         return findByNameFast(Atlan.getDefaultClient(), name, glossaryQualifiedName, attributes);
     }
@@ -197,7 +245,7 @@
      * @throws AtlanException on any API problems, or if the GlossaryTerm does not exist
      */
     public static GlossaryTerm findByNameFast(AtlanClient client, String name, String glossaryQualifiedName) throws AtlanException {
-        return findByNameFast(client, name, glossaryQualifiedName, null);
+        return findByNameFast(client, name, glossaryQualifiedName, (List<AtlanField>) null);
     }
 
     /**
@@ -206,18 +254,51 @@
      * @param client connectivity to the Atlan tenant in which to search for the GlossaryTerm
      * @param name of the GlossaryTerm
      * @param glossaryQualifiedName qualifiedName of the Glossary in which the category exists
-     * @param attributes an optional collection of attributes to retrieve for the GlossaryTerm
+     * @param attributes an optional collection of attributes (unchecked) to retrieve for the GlossaryTerm
      * @return the GlossaryTerm, if found
      * @throws AtlanException on any API problems, or if the GlossaryTerm does not exist
      */
     public static GlossaryTerm findByNameFast(AtlanClient client, String name, String glossaryQualifiedName, Collection<String> attributes)
             throws AtlanException {
         List<GlossaryTerm> results = new ArrayList<>();
-        GlossaryTerm.all(client)
-                .filter(QueryFactory.where(KeywordFields.NAME).eq(name))
-                .filter(QueryFactory.where(KeywordFields.GLOSSARY).eq(glossaryQualifiedName))
-                .attributes(attributes == null ? Collections.emptyList() : attributes)
-                .batch(2)
+        GlossaryTerm.select(client)
+                .where(GlossaryTerm.NAME.eq(name))
+                .where(GlossaryTerm.ANCHOR.eq(glossaryQualifiedName))
+                ._includesOnResults(attributes == null ? Collections.emptyList() : attributes)
+                .pageSize(2)
+                .stream()
+                .limit(2)
+                .filter(a -> a instanceof GlossaryTerm)
+                .forEach(t -> results.add((GlossaryTerm) t));
+        if (results.isEmpty()) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_NAME, TYPE_NAME, name);
+        } else if (results.size() > 1) {
+            log.warn(
+                    "Multiple terms found with the name '{}' in glossary '{}', returning only the first.",
+                    name,
+                    glossaryQualifiedName);
+        }
+        return results.get(0);
+    }
+
+    /**
+     * Find a GlossaryTerm by its human-readable name.
+     *
+     * @param client connectivity to the Atlan tenant in which to search for the GlossaryTerm
+     * @param name of the GlossaryTerm
+     * @param glossaryQualifiedName qualifiedName of the Glossary in which the category exists
+     * @param attributes an optional collection of attributes (checked) to retrieve for the GlossaryTerm
+     * @return the GlossaryTerm, if found
+     * @throws AtlanException on any API problems, or if the GlossaryTerm does not exist
+     */
+    public static GlossaryTerm findByNameFast(AtlanClient client, String name, String glossaryQualifiedName, List<AtlanField> attributes)
+            throws AtlanException {
+        List<GlossaryTerm> results = new ArrayList<>();
+        GlossaryTerm.select(client)
+                .where(GlossaryTerm.NAME.eq(name))
+                .where(GlossaryTerm.ANCHOR.eq(glossaryQualifiedName))
+                .includesOnResults(attributes == null ? Collections.emptyList() : attributes)
+                .pageSize(2)
                 .stream()
                 .limit(2)
                 .filter(a -> a instanceof GlossaryTerm)

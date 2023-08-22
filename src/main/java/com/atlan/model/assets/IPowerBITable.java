@@ -8,6 +8,9 @@ import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.PowerBIEndorsementType;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -29,6 +32,32 @@ import javax.annotation.processing.Generated;
 public interface IPowerBITable {
 
     public static final String TYPE_NAME = "PowerBITable";
+
+    /** TBC */
+    RelationField COLUMNS = new RelationField("columns");
+
+    /** TBC */
+    RelationField DATASET = new RelationField("dataset");
+
+    /** TBC */
+    KeywordField DATASET_QUALIFIED_NAME = new KeywordField("datasetQualifiedName", "datasetQualifiedName");
+
+    /** TBC */
+    RelationField MEASURES = new RelationField("measures");
+
+    /** TBC */
+    NumericField POWER_BI_TABLE_COLUMN_COUNT = new NumericField("powerBITableColumnCount", "powerBITableColumnCount");
+
+    /** TBC */
+    NumericField POWER_BI_TABLE_MEASURE_COUNT =
+            new NumericField("powerBITableMeasureCount", "powerBITableMeasureCount");
+
+    /** TBC */
+    KeywordField POWER_BI_TABLE_SOURCE_EXPRESSIONS =
+            new KeywordField("powerBITableSourceExpressions", "powerBITableSourceExpressions");
+
+    /** TBC */
+    KeywordField WORKSPACE_QUALIFIED_NAME = new KeywordField("workspaceQualifiedName", "workspaceQualifiedName");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -175,6 +204,9 @@ public interface IPowerBITable {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -280,6 +312,9 @@ public interface IPowerBITable {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -317,6 +352,9 @@ public interface IPowerBITable {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

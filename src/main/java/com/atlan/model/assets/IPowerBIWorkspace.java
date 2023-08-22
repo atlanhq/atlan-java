@@ -8,6 +8,9 @@ import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.PowerBIEndorsementType;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -29,6 +32,33 @@ import javax.annotation.processing.Generated;
 public interface IPowerBIWorkspace {
 
     public static final String TYPE_NAME = "PowerBIWorkspace";
+
+    /** TBC */
+    NumericField DASHBOARD_COUNT = new NumericField("dashboardCount", "dashboardCount");
+
+    /** TBC */
+    RelationField DASHBOARDS = new RelationField("dashboards");
+
+    /** TBC */
+    NumericField DATAFLOW_COUNT = new NumericField("dataflowCount", "dataflowCount");
+
+    /** TBC */
+    RelationField DATAFLOWS = new RelationField("dataflows");
+
+    /** TBC */
+    NumericField DATASET_COUNT = new NumericField("datasetCount", "datasetCount");
+
+    /** TBC */
+    RelationField DATASETS = new RelationField("datasets");
+
+    /** TBC */
+    NumericField REPORT_COUNT = new NumericField("reportCount", "reportCount");
+
+    /** TBC */
+    RelationField REPORTS = new RelationField("reports");
+
+    /** TBC */
+    KeywordField WEB_URL = new KeywordField("webUrl", "webUrl");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -175,6 +205,9 @@ public interface IPowerBIWorkspace {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -289,6 +322,9 @@ public interface IPowerBIWorkspace {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -323,6 +359,9 @@ public interface IPowerBIWorkspace {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

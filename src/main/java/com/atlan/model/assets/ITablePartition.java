@@ -7,6 +7,10 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.BooleanField;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -28,6 +32,63 @@ import javax.annotation.processing.Generated;
 public interface ITablePartition {
 
     public static final String TYPE_NAME = "TablePartition";
+
+    /** TBC */
+    KeywordField ALIAS = new KeywordField("alias", "alias");
+
+    /** TBC */
+    RelationField CHILD_TABLE_PARTITIONS = new RelationField("childTablePartitions");
+
+    /** TBC */
+    NumericField COLUMN_COUNT = new NumericField("columnCount", "columnCount");
+
+    /** TBC */
+    RelationField COLUMNS = new RelationField("columns");
+
+    /** TBC */
+    KeywordField CONSTRAINT = new KeywordField("constraint", "constraint");
+
+    /** TBC */
+    KeywordField EXTERNAL_LOCATION = new KeywordField("externalLocation", "externalLocation");
+
+    /** TBC */
+    KeywordField EXTERNAL_LOCATION_FORMAT = new KeywordField("externalLocationFormat", "externalLocationFormat");
+
+    /** TBC */
+    KeywordField EXTERNAL_LOCATION_REGION = new KeywordField("externalLocationRegion", "externalLocationRegion");
+
+    /** TBC */
+    BooleanField IS_PARTITIONED = new BooleanField("isPartitioned", "isPartitioned");
+
+    /** TBC */
+    BooleanField IS_QUERY_PREVIEW = new BooleanField("isQueryPreview", "isQueryPreview");
+
+    /** TBC */
+    BooleanField IS_TEMPORARY = new BooleanField("isTemporary", "isTemporary");
+
+    /** TBC */
+    RelationField PARENT_TABLE = new RelationField("parentTable");
+
+    /** TBC */
+    RelationField PARENT_TABLE_PARTITION = new RelationField("parentTablePartition");
+
+    /** TBC */
+    NumericField PARTITION_COUNT = new NumericField("partitionCount", "partitionCount");
+
+    /** TBC */
+    KeywordField PARTITION_LIST = new KeywordField("partitionList", "partitionList");
+
+    /** TBC */
+    KeywordField PARTITION_STRATEGY = new KeywordField("partitionStrategy", "partitionStrategy");
+
+    /** TBC */
+    KeywordField QUERY_PREVIEW_CONFIG = new KeywordField("queryPreviewConfig", "queryPreviewConfig");
+
+    /** TBC */
+    NumericField ROW_COUNT = new NumericField("rowCount", "rowCount");
+
+    /** TBC */
+    NumericField SIZE_BYTES = new NumericField("sizeBytes", "sizeBytes");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -177,6 +238,9 @@ public interface ITablePartition {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -249,6 +313,9 @@ public interface ITablePartition {
     String getCertificateUpdatedBy();
 
     /** TBC */
+    SortedSet<ITablePartition> getChildTablePartitions();
+
+    /** TBC */
     Long getColumnCount();
 
     /** TBC */
@@ -306,6 +373,9 @@ public interface ITablePartition {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -357,6 +427,9 @@ public interface ITablePartition {
     String getName();
 
     /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -367,6 +440,9 @@ public interface ITablePartition {
 
     /** TBC */
     ITable getParentTable();
+
+    /** TBC */
+    ITablePartition getParentTablePartition();
 
     /** TBC */
     Long getPartitionCount();

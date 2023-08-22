@@ -8,6 +8,7 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -29,6 +30,9 @@ import javax.annotation.processing.Generated;
 public interface IPurpose {
 
     public static final String TYPE_NAME = "Purpose";
+
+    /** Tags on which this purpose is applied. */
+    KeywordField PURPOSE_ATLAN_TAGS = new KeywordField("purposeClassifications", "purposeClassifications");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -173,6 +177,9 @@ public interface IPurpose {
 
     /** TBC */
     String getAssetDbtUniqueId();
+
+    /** TBC */
+    String getAssetIcon();
 
     /** TBC */
     SortedSet<String> getAssetMcIncidentNames();

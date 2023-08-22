@@ -7,6 +7,9 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -28,6 +31,36 @@ import javax.annotation.processing.Generated;
 public interface ILookerDashboard {
 
     public static final String TYPE_NAME = "LookerDashboard";
+
+    /** TBC */
+    RelationField FOLDER = new RelationField("folder");
+
+    /** TBC */
+    KeywordField FOLDER_NAME = new KeywordField("folderName", "folderName");
+
+    /** TBC */
+    RelationField LOOKS = new RelationField("looks");
+
+    /** TBC */
+    NumericField SOURCE_LAST_ACCESSED_AT = new NumericField("sourceLastAccessedAt", "sourceLastAccessedAt");
+
+    /** TBC */
+    NumericField SOURCE_LAST_VIEWED_AT = new NumericField("sourceLastViewedAt", "sourceLastViewedAt");
+
+    /** TBC */
+    NumericField SOURCE_METADATA_ID = new NumericField("sourceMetadataId", "sourceMetadataId");
+
+    /** TBC */
+    NumericField SOURCE_USER_ID = new NumericField("sourceUserId", "sourceUserId");
+
+    /** TBC */
+    NumericField SOURCE_VIEW_COUNT = new NumericField("sourceViewCount", "sourceViewCount");
+
+    /** TBC */
+    NumericField SOURCELAST_UPDATER_ID = new NumericField("sourcelastUpdaterId", "sourcelastUpdaterId");
+
+    /** TBC */
+    RelationField TILES = new RelationField("tiles");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -174,6 +207,9 @@ public interface ILookerDashboard {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -276,6 +312,9 @@ public interface ILookerDashboard {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -313,6 +352,9 @@ public interface ILookerDashboard {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

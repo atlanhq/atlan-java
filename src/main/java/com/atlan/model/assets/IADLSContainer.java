@@ -9,6 +9,11 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.BooleanField;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.KeywordTextField;
+import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.AzureTag;
 import com.atlan.model.structs.PopularityInsights;
@@ -31,6 +36,33 @@ import javax.annotation.processing.Generated;
 public interface IADLSContainer {
 
     public static final String TYPE_NAME = "ADLSContainer";
+
+    /** Account this container exists within. */
+    RelationField ADLS_ACCOUNT = new RelationField("adlsAccount");
+
+    /** TBC */
+    KeywordField ADLS_CONTAINER_ENCRYPTION_SCOPE =
+            new KeywordField("adlsContainerEncryptionScope", "adlsContainerEncryptionScope");
+
+    /** TBC */
+    KeywordField ADLS_CONTAINER_LEASE_STATE = new KeywordField("adlsContainerLeaseState", "adlsContainerLeaseState");
+
+    /** TBC */
+    KeywordField ADLS_CONTAINER_LEASE_STATUS = new KeywordField("adlsContainerLeaseStatus", "adlsContainerLeaseStatus");
+
+    /** TBC */
+    KeywordTextField ADLS_CONTAINER_URL =
+            new KeywordTextField("adlsContainerUrl", "adlsContainerUrl.keyword", "adlsContainerUrl");
+
+    /** TBC */
+    BooleanField ADLS_CONTAINER_VERSION_LEVEL_IMMUTABILITY_SUPPORT = new BooleanField(
+            "adlsContainerVersionLevelImmutabilitySupport", "adlsContainerVersionLevelImmutabilitySupport");
+
+    /** Number of objects that exist within this container. */
+    NumericField ADLS_OBJECT_COUNT = new NumericField("adlsObjectCount", "adlsObjectCount");
+
+    /** Objects that exist within this container. */
+    RelationField ADLS_OBJECTS = new RelationField("adlsObjects");
 
     /** Account this container exists within. */
     IADLSAccount getAdlsAccount();
@@ -207,6 +239,9 @@ public interface IADLSContainer {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -312,6 +347,9 @@ public interface IADLSContainer {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -346,6 +384,9 @@ public interface IADLSContainer {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

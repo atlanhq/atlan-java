@@ -8,6 +8,9 @@ import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.PowerBIEndorsementType;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.BooleanField;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.KeywordTextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -29,6 +32,19 @@ import javax.annotation.processing.Generated;
 public interface IPowerBI {
 
     public static final String TYPE_NAME = "PowerBI";
+
+    /** TBC */
+    KeywordField POWER_BI_ENDORSEMENT = new KeywordField("powerBIEndorsement", "powerBIEndorsement");
+
+    /** TBC */
+    KeywordField POWER_BI_FORMAT_STRING = new KeywordField("powerBIFormatString", "powerBIFormatString");
+
+    /** TBC */
+    BooleanField POWER_BI_IS_HIDDEN = new BooleanField("powerBIIsHidden", "powerBIIsHidden");
+
+    /** TBC */
+    KeywordTextField POWER_BI_TABLE_QUALIFIED_NAME = new KeywordTextField(
+            "powerBITableQualifiedName", "powerBITableQualifiedName", "powerBITableQualifiedName.text");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -175,6 +191,9 @@ public interface IPowerBI {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -271,6 +290,9 @@ public interface IPowerBI {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -305,6 +327,9 @@ public interface IPowerBI {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

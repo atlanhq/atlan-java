@@ -7,6 +7,11 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.BooleanField;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.KeywordTextStemmedField;
+import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -28,6 +33,42 @@ import javax.annotation.processing.Generated;
 public interface IPresetDashboard {
 
     public static final String TYPE_NAME = "PresetDashboard";
+
+    /** Charts contained within the collection. */
+    RelationField PRESET_CHARTS = new RelationField("presetCharts");
+
+    /** Username of the user who last changed the collection. */
+    KeywordTextStemmedField PRESET_DASHBOARD_CHANGED_BY_NAME = new KeywordTextStemmedField(
+            "presetDashboardChangedByName",
+            "presetDashboardChangedByName.keyword",
+            "presetDashboardChangedByName",
+            "presetDashboardChangedByName.stemmed");
+
+    /** TBC */
+    KeywordField PRESET_DASHBOARD_CHANGED_BY_URL =
+            new KeywordField("presetDashboardChangedByURL", "presetDashboardChangedByURL");
+
+    /** Number of charts within the collection. */
+    NumericField PRESET_DASHBOARD_CHART_COUNT =
+            new NumericField("presetDashboardChartCount", "presetDashboardChartCount");
+
+    /** Whether the collection is managed externally (true) or not (false). */
+    BooleanField PRESET_DASHBOARD_IS_MANAGED_EXTERNALLY =
+            new BooleanField("presetDashboardIsManagedExternally", "presetDashboardIsManagedExternally");
+
+    /** Whether the collection is published (true) or not (false). */
+    BooleanField PRESET_DASHBOARD_IS_PUBLISHED =
+            new BooleanField("presetDashboardIsPublished", "presetDashboardIsPublished");
+
+    /** URL to a thumbnail illustration of the collection. */
+    KeywordField PRESET_DASHBOARD_THUMBNAIL_URL =
+            new KeywordField("presetDashboardThumbnailURL", "presetDashboardThumbnailURL");
+
+    /** Datasets contained within the collection. */
+    RelationField PRESET_DATASETS = new RelationField("presetDatasets");
+
+    /** Workspace in which the collection exists. */
+    RelationField PRESET_WORKSPACE = new RelationField("presetWorkspace");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -174,6 +215,9 @@ public interface IPresetDashboard {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -270,6 +314,9 @@ public interface IPresetDashboard {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -304,6 +351,9 @@ public interface IPresetDashboard {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

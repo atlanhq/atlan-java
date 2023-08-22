@@ -7,6 +7,9 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -28,6 +31,21 @@ import javax.annotation.processing.Generated;
 public interface IQlikChart {
 
     public static final String TYPE_NAME = "QlikChart";
+
+    /** Footnote on the chart. */
+    TextField QLIK_CHART_FOOTNOTE = new TextField("qlikChartFootnote", "qlikChartFootnote");
+
+    /** Orientation of the chart. */
+    KeywordField QLIK_CHART_ORIENTATION = new KeywordField("qlikChartOrientation", "qlikChartOrientation");
+
+    /** Subtitle of the chart. */
+    TextField QLIK_CHART_SUBTITLE = new TextField("qlikChartSubtitle", "qlikChartSubtitle");
+
+    /** Subtype of the chart, for example: bar, graph, pie, etc. */
+    KeywordField QLIK_CHART_TYPE = new KeywordField("qlikChartType", "qlikChartType");
+
+    /** Sheet in which the chart exists. */
+    RelationField QLIK_SHEET = new RelationField("qlikSheet");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -174,6 +192,9 @@ public interface IQlikChart {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -270,6 +291,9 @@ public interface IQlikChart {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -304,6 +328,9 @@ public interface IQlikChart {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

@@ -7,6 +7,9 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.KeywordTextField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -28,6 +31,26 @@ import javax.annotation.processing.Generated;
 public interface IMicroStrategyVisualization {
 
     public static final String TYPE_NAME = "MicroStrategyVisualization";
+
+    /** Dossier containing the visualization. */
+    RelationField MICRO_STRATEGY_DOSSIER = new RelationField("microStrategyDossier");
+
+    /** Simple name of the dossier containing this visualization. */
+    KeywordTextField MICRO_STRATEGY_DOSSIER_NAME = new KeywordTextField(
+            "microStrategyDossierName", "microStrategyDossierName.keyword", "microStrategyDossierName");
+
+    /** Unique name of the dossier containing this visualization. */
+    KeywordTextField MICRO_STRATEGY_DOSSIER_QUALIFIED_NAME = new KeywordTextField(
+            "microStrategyDossierQualifiedName",
+            "microStrategyDossierQualifiedName",
+            "microStrategyDossierQualifiedName.text");
+
+    /** Project containing the visualization. */
+    RelationField MICRO_STRATEGY_PROJECT = new RelationField("microStrategyProject");
+
+    /** Type of visualization. */
+    KeywordField MICRO_STRATEGY_VISUALIZATION_TYPE =
+            new KeywordField("microStrategyVisualizationType", "microStrategyVisualizationType");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -174,6 +197,9 @@ public interface IMicroStrategyVisualization {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -270,6 +296,9 @@ public interface IMicroStrategyVisualization {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -349,6 +378,9 @@ public interface IMicroStrategyVisualization {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

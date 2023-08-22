@@ -7,6 +7,8 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.DbtMetricFilter;
 import com.atlan.model.structs.PopularityInsights;
@@ -29,6 +31,15 @@ import javax.annotation.processing.Generated;
 public interface IDbtMetric {
 
     public static final String TYPE_NAME = "DbtMetric";
+
+    /** TBC */
+    RelationField DBT_METRIC_FILTER_COLUMNS = new RelationField("dbtMetricFilterColumns");
+
+    /** TBC */
+    KeywordField DBT_METRIC_FILTERS = new KeywordField("dbtMetricFilters", "dbtMetricFilters");
+
+    /** TBC */
+    RelationField DBT_MODEL = new RelationField("dbtModel");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -173,6 +184,9 @@ public interface IDbtMetric {
 
     /** TBC */
     String getAssetDbtUniqueId();
+
+    /** TBC */
+    String getAssetIcon();
 
     /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
@@ -337,6 +351,9 @@ public interface IDbtMetric {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -389,6 +406,9 @@ public interface IDbtMetric {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

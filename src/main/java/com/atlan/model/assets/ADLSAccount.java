@@ -20,6 +20,8 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
+import com.atlan.model.search.CompoundQuery;
+import com.atlan.model.search.FluentSearch;
 import com.atlan.model.structs.AzureTag;
 import com.atlan.util.QueryFactory;
 import com.atlan.util.StringUtils;
@@ -43,7 +45,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 public class ADLSAccount extends Asset
-        implements IADLSAccount, IADLS, IObjectStore, IAzure, ICatalog, IAsset, IReferenceable, ICloud {
+        implements IADLSAccount, IADLS, IAzure, IObjectStore, ICloud, IAsset, IReferenceable, ICatalog {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "ADLSAccount";
@@ -122,7 +124,17 @@ public class ADLSAccount extends Asset
     /** TBC */
     @Attribute
     @Singular
+    SortedSet<IAirflowTask> inputToAirflowTasks;
+
+    /** TBC */
+    @Attribute
+    @Singular
     SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IAirflowTask> outputFromAirflowTasks;
 
     /** TBC */
     @Attribute
@@ -154,13 +166,72 @@ public class ADLSAccount extends Asset
     }
 
     /**
+     * Start a fluent search that will return all ADLSAccount assets.
+     * Additional conditions can be chained onto the returned search before any
+     * asset retrieval is attempted, ensuring all conditions are pushed-down for
+     * optimal retrieval. Only active (non-archived) ADLSAccount assets will be included.
+     *
+     * @return a fluent search that includes all ADLSAccount assets
+     */
+    public static FluentSearch.FluentSearchBuilder<?, ?> select() {
+        return select(Atlan.getDefaultClient());
+    }
+
+    /**
+     * Start a fluent search that will return all ADLSAccount assets.
+     * Additional conditions can be chained onto the returned search before any
+     * asset retrieval is attempted, ensuring all conditions are pushed-down for
+     * optimal retrieval. Only active (non-archived) ADLSAccount assets will be included.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the assets
+     * @return a fluent search that includes all ADLSAccount assets
+     */
+    public static FluentSearch.FluentSearchBuilder<?, ?> select(AtlanClient client) {
+        return select(client, false);
+    }
+
+    /**
+     * Start a fluent search that will return all ADLSAccount assets.
+     * Additional conditions can be chained onto the returned search before any
+     * asset retrieval is attempted, ensuring all conditions are pushed-down for
+     * optimal retrieval.
+     *
+     * @param includeArchived when true, archived (soft-deleted) ADLSAccounts will be included
+     * @return a fluent search that includes all ADLSAccount assets
+     */
+    public static FluentSearch.FluentSearchBuilder<?, ?> select(boolean includeArchived) {
+        return select(Atlan.getDefaultClient(), includeArchived);
+    }
+
+    /**
+     * Start a fluent search that will return all ADLSAccount assets.
+     * Additional conditions can be chained onto the returned search before any
+     * asset retrieval is attempted, ensuring all conditions are pushed-down for
+     * optimal retrieval.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the assets
+     * @param includeArchived when true, archived (soft-deleted) ADLSAccounts will be included
+     * @return a fluent search that includes all ADLSAccount assets
+     */
+    public static FluentSearch.FluentSearchBuilder<?, ?> select(AtlanClient client, boolean includeArchived) {
+        FluentSearch.FluentSearchBuilder<?, ?> builder =
+                FluentSearch.builder(client).where(CompoundQuery.assetType(TYPE_NAME));
+        if (!includeArchived) {
+            builder.where(CompoundQuery.ACTIVE);
+        }
+        return builder;
+    }
+
+    /**
      * Start an asset filter that will return all ADLSAccount assets.
      * Additional conditions can be chained onto the returned filter before any
      * asset retrieval is attempted, ensuring all conditions are pushed-down for
      * optimal retrieval. Only active (non-archived) ADLSAccount assets will be included.
      *
      * @return an asset filter that includes all ADLSAccount assets
+     * @deprecated replaced by {@link #select()}
      */
+    @Deprecated
     public static AssetFilter.AssetFilterBuilder all() {
         return all(Atlan.getDefaultClient());
     }
@@ -173,7 +244,9 @@ public class ADLSAccount extends Asset
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the assets
      * @return an asset filter that includes all ADLSAccount assets
+     * @deprecated replaced by {@link #select(AtlanClient)}
      */
+    @Deprecated
     public static AssetFilter.AssetFilterBuilder all(AtlanClient client) {
         return all(client, false);
     }
@@ -186,7 +259,9 @@ public class ADLSAccount extends Asset
      *
      * @param includeArchived when true, archived (soft-deleted) ADLSAccounts will be included
      * @return an asset filter that includes all ADLSAccount assets
+     * @deprecated replaced by {@link #select(boolean)}
      */
+    @Deprecated
     public static AssetFilter.AssetFilterBuilder all(boolean includeArchived) {
         return all(Atlan.getDefaultClient(), includeArchived);
     }
@@ -200,7 +275,9 @@ public class ADLSAccount extends Asset
      * @param client connectivity to the Atlan tenant from which to retrieve the assets
      * @param includeArchived when true, archived (soft-deleted) ADLSAccounts will be included
      * @return an asset filter that includes all ADLSAccount assets
+     * @deprecated replaced by {@link #select(AtlanClient, boolean)}
      */
+    @Deprecated
     public static AssetFilter.AssetFilterBuilder all(AtlanClient client, boolean includeArchived) {
         AssetFilter.AssetFilterBuilder builder =
                 AssetFilter.builder().client(client).filter(QueryFactory.type(TYPE_NAME));

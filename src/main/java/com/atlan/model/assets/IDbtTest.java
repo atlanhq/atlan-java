@@ -7,6 +7,9 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.KeywordTextField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -28,6 +31,43 @@ import javax.annotation.processing.Generated;
 public interface IDbtTest {
 
     public static final String TYPE_NAME = "DbtTest";
+
+    /** TBC */
+    RelationField DBT_MODEL_COLUMNS = new RelationField("dbtModelColumns");
+
+    /** TBC */
+    RelationField DBT_MODELS = new RelationField("dbtModels");
+
+    /** TBC */
+    RelationField DBT_SOURCES = new RelationField("dbtSources");
+
+    /** The compiled code of a test ( tests in dbt can be defined using python ) */
+    KeywordField DBT_TEST_COMPILED_CODE = new KeywordField("dbtTestCompiledCode", "dbtTestCompiledCode");
+
+    /** The compiled sql of a test */
+    KeywordField DBT_TEST_COMPILED_SQL = new KeywordField("dbtTestCompiledSQL", "dbtTestCompiledSQL");
+
+    /** The error message in the case of state being "error" */
+    KeywordField DBT_TEST_ERROR = new KeywordField("dbtTestError", "dbtTestError");
+
+    /** The language in which a dbt test is written. Example: sql,python */
+    KeywordField DBT_TEST_LANGUAGE = new KeywordField("dbtTestLanguage", "dbtTestLanguage");
+
+    /** The raw code of a test ( tests in dbt can be defined using python ) */
+    KeywordTextField DBT_TEST_RAW_CODE =
+            new KeywordTextField("dbtTestRawCode", "dbtTestRawCode", "dbtTestRawCode.text");
+
+    /** The raw sql of a test */
+    KeywordTextField DBT_TEST_RAW_SQL = new KeywordTextField("dbtTestRawSQL", "dbtTestRawSQL", "dbtTestRawSQL.text");
+
+    /** The test results. Can be one of, in order of severity, "error", "fail", "warn", "pass" */
+    KeywordField DBT_TEST_STATE = new KeywordField("dbtTestState", "dbtTestState");
+
+    /** Status provides the details of the results of a test. For errors, it reads "ERROR". */
+    KeywordField DBT_TEST_STATUS = new KeywordField("dbtTestStatus", "dbtTestStatus");
+
+    /** TBC */
+    RelationField SQL_ASSETS = new RelationField("sqlAssets");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -172,6 +212,9 @@ public interface IDbtTest {
 
     /** TBC */
     String getAssetDbtUniqueId();
+
+    /** TBC */
+    String getAssetIcon();
 
     /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
@@ -357,6 +400,9 @@ public interface IDbtTest {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -391,6 +437,9 @@ public interface IDbtTest {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

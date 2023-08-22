@@ -24,6 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 public class CustomMetadataCache {
 
     private Map<String, CustomMetadataDef> cacheById = new ConcurrentHashMap<>();
+    private Map<String, AttributeDef> attrCacheById = new ConcurrentHashMap<>();
     private Map<String, String> mapIdToName = new ConcurrentHashMap<>();
     private Map<String, String> mapNameToId = new ConcurrentHashMap<>();
 
@@ -37,6 +38,12 @@ public class CustomMetadataCache {
         this.typeDefsEndpoint = typeDefsEndpoint;
     }
 
+    /**
+     * Refreshes the cache of custom metadata structures by requesting the full set of custom metadata
+     * structures from Atlan.
+     *
+     * @throws AtlanException on any API communication problem
+     */
     public synchronized void refreshCache() throws AtlanException {
         log.debug("Refreshing cache of custom metadata...");
         TypeDefResponse response = typeDefsEndpoint.list(AtlanTypeCategory.CUSTOM_METADATA);
@@ -47,6 +54,7 @@ public class CustomMetadataCache {
             customMetadata = Collections.emptyList();
         }
         cacheById = new ConcurrentHashMap<>();
+        attrCacheById = new ConcurrentHashMap<>();
         mapIdToName = new ConcurrentHashMap<>();
         mapNameToId = new ConcurrentHashMap<>();
         mapAttrIdToName = new ConcurrentHashMap<>();
@@ -63,6 +71,7 @@ public class CustomMetadataCache {
                 String attrId = attributeDef.getName();
                 String attrName = attributeDef.getDisplayName();
                 mapAttrIdToName.get(typeId).put(attrId, attrName);
+                attrCacheById.put(attrId, attributeDef);
                 if (attributeDef.isArchived()) {
                     archivedAttrIds.put(attrId, attrName);
                 } else {
@@ -89,7 +98,7 @@ public class CustomMetadataCache {
      * @throws InvalidRequestException if no name was provided for the custom metadata to retrieve
      */
     public String getIdForName(String name) throws AtlanException {
-        if (name != null && name.length() > 0) {
+        if (name != null && !name.isEmpty()) {
             String cmId = mapNameToId.get(name);
             if (cmId == null) {
                 // If not found, refresh the cache and look again (could be stale)
@@ -115,7 +124,7 @@ public class CustomMetadataCache {
      * @throws InvalidRequestException if no name was provided for the custom metadata to retrieve
      */
     public String getNameForId(String id) throws AtlanException {
-        if (id != null && id.length() > 0) {
+        if (id != null && !id.isEmpty()) {
             String cmName = mapIdToName.get(id);
             if (cmName == null) {
                 // If not found, refresh the cache and look again (could be stale)
@@ -211,10 +220,32 @@ public class CustomMetadataCache {
     }
 
     /**
+     * Retrieve a single custom attribute name to include on search results.
+     *
+     * @param setName human-readable name of the custom metadata set for which to retrieve the custom metadata attribute name
+     * @param attributeName human-readable name of the attribute
+     * @return the attribute name, strictly useful for inclusion in search results
+     * @throws AtlanException on any API communication problem if the cache needs to be refreshed
+     * @throws NotFoundException if the custom metadata cannot be found (does not exist) in Atlan
+     * @throws InvalidRequestException if no name was provided for the custom metadata to retrieve
+     * @see com.atlan.model.search.IndexSearchRequest.IndexSearchRequestBuilder#attributes(Collection)
+     */
+    public String getAttributeForSearchResults(String setName, String attributeName) throws AtlanException {
+        String setId = getIdForName(setName);
+        String attrId = _getAttributeForSearchResults(setId, attributeName);
+        if (attrId == null) {
+            // If we've not found any names, refresh the cache and look again (could be stale)
+            refreshCache();
+            attrId = _getAttributeForSearchResults(setId, attributeName);
+        }
+        return attrId;
+    }
+
+    /**
      * Retrieve the full set of custom attributes to include on search results.
      *
-     * @param setName the name of the custom metadata set for which to retrieve a set of attribute names
-     * @return a set of the names, strictly useful for inclusion in search results
+     * @param setName human-readable name of the custom metadata set for which to retrieve a set of attribute names
+     * @return a set of the attribute names, strictly useful for inclusion in search results
      * @throws AtlanException on any API communication problem if the cache needs to be refreshed
      * @throws NotFoundException if the custom metadata cannot be found (does not exist) in Atlan
      * @throws InvalidRequestException if no name was provided for the custom metadata to retrieve
@@ -244,6 +275,14 @@ public class CustomMetadataCache {
         return null;
     }
 
+    private String _getAttributeForSearchResults(String setId, String attrName) {
+        Map<String, String> subMap = mapAttrNameToId.get(setId);
+        if (subMap != null) {
+            return subMap.get(attrName);
+        }
+        return null;
+    }
+
     /**
      * Retrieve the full custom metadata structure definition.
      *
@@ -259,6 +298,23 @@ public class CustomMetadataCache {
     }
 
     /**
+     * Retrieve a specific custom metadata attribute definition by its unique Atlan-internal ID string.
+     *
+     * @param attributeId Atlan-internal ID string for the custom metadata attribute
+     * @return attribute definition for the custom metadata attribute
+     * @throws AtlanException on any API communication problem if the cache needs to be refreshed
+     */
+    public AttributeDef getAttributeDef(String attributeId) throws AtlanException {
+        if (attributeId == null || attributeId.isEmpty()) {
+            throw new InvalidRequestException(ErrorCode.MISSING_CM_ATTR_ID);
+        }
+        if (attrCacheById.isEmpty()) {
+            refreshCache();
+        }
+        return attrCacheById.get(attributeId);
+    }
+
+    /**
      * Translate the provided human-readable custom metadata attribute name to the Atlan-internal ID string.
      *
      * @param setId Atlan-internal ID string for the custom metadata set
@@ -269,9 +325,9 @@ public class CustomMetadataCache {
      * @throws InvalidRequestException if no name was provided for the custom metadata property to retrieve
      */
     private String getAttrIdForNameFromSetId(String setId, String attributeName) throws AtlanException {
-        if (setId != null && setId.length() > 0) {
+        if (setId != null && !setId.isEmpty()) {
             Map<String, String> subMap = mapAttrNameToId.get(setId);
-            if (attributeName != null && attributeName.length() > 0) {
+            if (attributeName != null && !attributeName.isEmpty()) {
                 String attrId = null;
                 if (subMap != null) {
                     attrId = subMap.get(attributeName);
@@ -310,9 +366,9 @@ public class CustomMetadataCache {
      * @throws InvalidRequestException if no ID was provided for the custom metadata property to retrieve
      */
     private String getAttrNameForIdFromSetId(String setId, String attributeId) throws AtlanException {
-        if (setId != null && setId.length() > 0) {
+        if (setId != null && !setId.isEmpty()) {
             Map<String, String> subMap = mapAttrIdToName.get(setId);
-            if (attributeId != null && attributeId.length() > 0) {
+            if (attributeId != null && !attributeId.isEmpty()) {
                 String attrName = null;
                 if (subMap != null) {
                     attrName = subMap.get(attributeId);

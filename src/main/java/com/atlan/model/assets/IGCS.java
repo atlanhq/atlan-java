@@ -7,6 +7,9 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.BooleanField;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.NumericField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.GoogleLabel;
 import com.atlan.model.structs.GoogleTag;
@@ -30,6 +33,24 @@ import javax.annotation.processing.Generated;
 public interface IGCS {
 
     public static final String TYPE_NAME = "GCS";
+
+    /** TBC */
+    KeywordField GCS_ACCESS_CONTROL = new KeywordField("gcsAccessControl", "gcsAccessControl");
+
+    /** Entity tag for the asset. An entity tag is a hash of the object and represents changes to the contents of an object only, not its metadata. */
+    KeywordField GCS_E_TAG = new KeywordField("gcsETag", "gcsETag");
+
+    /** TBC */
+    KeywordField GCS_ENCRYPTION_TYPE = new KeywordField("gcsEncryptionType", "gcsEncryptionType");
+
+    /** TBC */
+    NumericField GCS_META_GENERATION_ID = new NumericField("gcsMetaGenerationId", "gcsMetaGenerationId");
+
+    /** TBC */
+    BooleanField GCS_REQUESTER_PAYS = new BooleanField("gcsRequesterPays", "gcsRequesterPays");
+
+    /** TBC */
+    KeywordField GCS_STORAGE_CLASS = new KeywordField("gcsStorageClass", "gcsStorageClass");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -176,6 +197,9 @@ public interface IGCS {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -314,6 +338,9 @@ public interface IGCS {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -348,6 +375,9 @@ public interface IGCS {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

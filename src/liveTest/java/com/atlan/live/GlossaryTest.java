@@ -2,10 +2,8 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.live;
 
-import static com.atlan.util.QueryFactory.*;
 import static org.testng.Assert.*;
 
-import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
@@ -13,12 +11,8 @@ import com.atlan.exception.NotFoundException;
 import com.atlan.model.assets.*;
 import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.enums.*;
-import com.atlan.model.search.AggregationBucketResult;
-import com.atlan.model.search.IndexSearchDSL;
-import com.atlan.model.search.IndexSearchRequest;
-import com.atlan.model.search.IndexSearchResponse;
+import com.atlan.model.search.*;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -220,48 +214,9 @@ public class GlossaryTest extends AtlanLiveTest {
                 GlossaryCategory.creator("top1" + PREFIX, glossary).build();
         GlossaryCategory top2 =
                 GlossaryCategory.creator("top2" + PREFIX, glossary).build();
-        GlossaryCategory mid1a = GlossaryCategory.creator("mid1a" + PREFIX, glossary)
-                .parentCategory(top1.trimToReference())
-                .build();
-        GlossaryCategory mid1b = GlossaryCategory.creator("mid1b" + PREFIX, glossary)
-                .parentCategory(top1.trimToReference())
-                .build();
-        GlossaryCategory mid2a = GlossaryCategory.creator("mid2a" + PREFIX, glossary)
-                .parentCategory(top2.trimToReference())
-                .build();
-        GlossaryCategory mid2b = GlossaryCategory.creator("mid2b" + PREFIX, glossary)
-                .parentCategory(top2.trimToReference())
-                .build();
+
         categories.add(top1);
         categories.add(top2);
-        categories.add(mid1a);
-        categories.add(mid1b);
-        categories.add(mid2a);
-        categories.add(mid2b);
-        categories.add(GlossaryCategory.creator("leaf1aa" + PREFIX, glossary)
-                .parentCategory(mid1a.trimToReference())
-                .build());
-        categories.add(GlossaryCategory.creator("leaf1ab" + PREFIX, glossary)
-                .parentCategory(mid1a.trimToReference())
-                .build());
-        categories.add(GlossaryCategory.creator("leaf1ba" + PREFIX, glossary)
-                .parentCategory(mid1b.trimToReference())
-                .build());
-        categories.add(GlossaryCategory.creator("leaf1bb" + PREFIX, glossary)
-                .parentCategory(mid1b.trimToReference())
-                .build());
-        categories.add(GlossaryCategory.creator("leaf2aa" + PREFIX, glossary)
-                .parentCategory(mid2a.trimToReference())
-                .build());
-        categories.add(GlossaryCategory.creator("leaf2ab" + PREFIX, glossary)
-                .parentCategory(mid2a.trimToReference())
-                .build());
-        categories.add(GlossaryCategory.creator("leaf2ba" + PREFIX, glossary)
-                .parentCategory(mid2b.trimToReference())
-                .build());
-        categories.add(GlossaryCategory.creator("leaf2bb" + PREFIX, glossary)
-                .parentCategory(mid2b.trimToReference())
-                .build());
 
         AssetMutationResponse response = Atlan.getDefaultClient().assets.save(categories, false);
         assertNotNull(response);
@@ -274,18 +229,86 @@ public class GlossaryTest extends AtlanLiveTest {
         assertEquals(entities.size(), categories.size());
         top1Guid = response.getAssignedGuid(top1);
         top2Guid = response.getAssignedGuid(top2);
+
+        categories = new ArrayList<>();
+
+        GlossaryCategory mid1a = GlossaryCategory.creator("mid1a" + PREFIX, glossary)
+                .parentCategory(GlossaryCategory.refByGuid(top1Guid))
+                .build();
+        GlossaryCategory mid1b = GlossaryCategory.creator("mid1b" + PREFIX, glossary)
+                .parentCategory(GlossaryCategory.refByGuid(top1Guid))
+                .build();
+        GlossaryCategory mid2a = GlossaryCategory.creator("mid2a" + PREFIX, glossary)
+                .parentCategory(GlossaryCategory.refByGuid(top2Guid))
+                .build();
+        GlossaryCategory mid2b = GlossaryCategory.creator("mid2b" + PREFIX, glossary)
+                .parentCategory(GlossaryCategory.refByGuid(top2Guid))
+                .build();
+        categories.add(mid1a);
+        categories.add(mid1b);
+        categories.add(mid2a);
+        categories.add(mid2b);
+
+        response = Atlan.getDefaultClient().assets.save(categories, false);
+        assertNotNull(response);
+        assertEquals(response.getDeletedAssets().size(), 0);
+        assertEquals(response.getUpdatedAssets().size(), 3);
+        assertEquals(response.getUpdatedAssets(Glossary.class).size(), 1);
+        assertEquals(response.getUpdatedAssets(Glossary.class).get(0).getGuid(), glossary.getGuid());
+        assertEquals(response.getUpdatedAssets(GlossaryCategory.class).size(), 2);
+        assertEquals(response.getCreatedAssets().size(), categories.size());
+        entities = response.getCreatedAssets(GlossaryCategory.class);
+        assertEquals(entities.size(), categories.size());
         mid1aGuid = response.getAssignedGuid(mid1a);
         mid1bGuid = response.getAssignedGuid(mid1b);
         mid2aGuid = response.getAssignedGuid(mid2a);
         mid2bGuid = response.getAssignedGuid(mid2b);
-        leaf1aaGuid = entities.get(6).getGuid();
-        leaf1abGuid = entities.get(7).getGuid();
-        leaf1baGuid = entities.get(8).getGuid();
-        leaf1bbGuid = entities.get(9).getGuid();
-        leaf2aaGuid = entities.get(10).getGuid();
-        leaf2abGuid = entities.get(11).getGuid();
-        leaf2baGuid = entities.get(12).getGuid();
-        leaf2bbGuid = entities.get(13).getGuid();
+
+        categories = new ArrayList<>();
+
+        categories.add(GlossaryCategory.creator("leaf1aa" + PREFIX, glossary)
+                .parentCategory(GlossaryCategory.refByGuid(mid1aGuid))
+                .build());
+        categories.add(GlossaryCategory.creator("leaf1ab" + PREFIX, glossary)
+                .parentCategory(GlossaryCategory.refByGuid(mid1aGuid))
+                .build());
+        categories.add(GlossaryCategory.creator("leaf1ba" + PREFIX, glossary)
+                .parentCategory(GlossaryCategory.refByGuid(mid1bGuid))
+                .build());
+        categories.add(GlossaryCategory.creator("leaf1bb" + PREFIX, glossary)
+                .parentCategory(GlossaryCategory.refByGuid(mid1bGuid))
+                .build());
+        categories.add(GlossaryCategory.creator("leaf2aa" + PREFIX, glossary)
+                .parentCategory(GlossaryCategory.refByGuid(mid2aGuid))
+                .build());
+        categories.add(GlossaryCategory.creator("leaf2ab" + PREFIX, glossary)
+                .parentCategory(GlossaryCategory.refByGuid(mid2aGuid))
+                .build());
+        categories.add(GlossaryCategory.creator("leaf2ba" + PREFIX, glossary)
+                .parentCategory(GlossaryCategory.refByGuid(mid2bGuid))
+                .build());
+        categories.add(GlossaryCategory.creator("leaf2bb" + PREFIX, glossary)
+                .parentCategory(GlossaryCategory.refByGuid(mid2bGuid))
+                .build());
+
+        response = Atlan.getDefaultClient().assets.save(categories, false);
+        assertNotNull(response);
+        assertEquals(response.getDeletedAssets().size(), 0);
+        assertEquals(response.getUpdatedAssets().size(), 5);
+        assertEquals(response.getUpdatedAssets(Glossary.class).size(), 1);
+        assertEquals(response.getUpdatedAssets(Glossary.class).get(0).getGuid(), glossary.getGuid());
+        assertEquals(response.getUpdatedAssets(GlossaryCategory.class).size(), 4);
+        assertEquals(response.getCreatedAssets().size(), categories.size());
+        entities = response.getCreatedAssets(GlossaryCategory.class);
+        assertEquals(entities.size(), categories.size());
+        leaf1aaGuid = entities.get(0).getGuid();
+        leaf1abGuid = entities.get(1).getGuid();
+        leaf1baGuid = entities.get(2).getGuid();
+        leaf1bbGuid = entities.get(3).getGuid();
+        leaf2aaGuid = entities.get(4).getGuid();
+        leaf2abGuid = entities.get(5).getGuid();
+        leaf2baGuid = entities.get(6).getGuid();
+        leaf2bbGuid = entities.get(7).getGuid();
     }
 
     @Test(
@@ -536,20 +559,14 @@ public class GlossaryTest extends AtlanLiveTest {
             groups = {"glossary.search.term"},
             dependsOnGroups = {"glossary.update.term"})
     void searchTerms() throws AtlanException {
-        Query combined = CompoundQuery.builder()
-                .must(beActive())
-                .must(beOfType(GlossaryTerm.TYPE_NAME))
-                .must(have(KeywordFields.NAME).eq(TERM_NAME1))
-                .build()
-                ._toQuery();
 
-        IndexSearchRequest index = IndexSearchRequest.builder(IndexSearchDSL.builder(combined)
-                        .size(100)
-                        .aggregation("type", Aggregate.bucketBy(KeywordFields.TYPE_NAME))
-                        .build())
-                .attributes(Collections.singletonList("anchor"))
-                .relationAttributes(Collections.singletonList("certificateStatus"))
-                .build();
+        IndexSearchRequest index = GlossaryTerm.select()
+                .where(GlossaryTerm.NAME.eq(TERM_NAME1))
+                .pageSize(100)
+                .aggregate("type", IReferenceable.TYPE_NAME.bucketBy())
+                .includeOnResults(GlossaryTerm.ANCHOR)
+                .includeOnRelations(Asset.CERTIFICATE_STATUS)
+                .toRequest();
 
         IndexSearchResponse response = index.search();
         assertNotNull(response);

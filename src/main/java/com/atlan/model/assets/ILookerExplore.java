@@ -7,6 +7,8 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -28,6 +30,30 @@ import javax.annotation.processing.Generated;
 public interface ILookerExplore {
 
     public static final String TYPE_NAME = "LookerExplore";
+
+    /** TBC */
+    RelationField FIELDS = new RelationField("fields");
+
+    /** TBC */
+    RelationField MODEL = new RelationField("model");
+
+    /** TBC */
+    KeywordField MODEL_NAME = new KeywordField("modelName", "modelName");
+
+    /** TBC */
+    RelationField PROJECT = new RelationField("project");
+
+    /** TBC */
+    KeywordField PROJECT_NAME = new KeywordField("projectName", "projectName");
+
+    /** TBC */
+    KeywordField SOURCE_CONNECTION_NAME = new KeywordField("sourceConnectionName", "sourceConnectionName");
+
+    /** TBC */
+    KeywordField SQL_TABLE_NAME = new KeywordField("sqlTableName", "sqlTableName");
+
+    /** TBC */
+    KeywordField VIEW_NAME = new KeywordField("viewName", "viewName");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -174,6 +200,9 @@ public interface ILookerExplore {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -273,6 +302,9 @@ public interface ILookerExplore {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -313,6 +345,9 @@ public interface ILookerExplore {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

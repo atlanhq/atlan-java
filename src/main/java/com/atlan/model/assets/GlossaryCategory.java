@@ -11,8 +11,10 @@ import com.atlan.exception.NotFoundException;
 import com.atlan.model.core.AssetFilter;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
-import com.atlan.model.enums.KeywordFields;
+import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.UniqueAttributes;
+import com.atlan.model.search.CompoundQuery;
+import com.atlan.model.search.FluentSearch;
 import com.atlan.util.QueryFactory;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -105,13 +107,72 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
     }
 
     /**
+     * Start a fluent search that will return all GlossaryCategory assets.
+     * Additional conditions can be chained onto the returned search before any
+     * asset retrieval is attempted, ensuring all conditions are pushed-down for
+     * optimal retrieval. Only active (non-archived) GlossaryCategory assets will be included.
+     *
+     * @return a fluent search that includes all GlossaryCategory assets
+     */
+    public static FluentSearch.FluentSearchBuilder<?, ?> select() {
+        return select(Atlan.getDefaultClient());
+    }
+
+    /**
+     * Start a fluent search that will return all GlossaryCategory assets.
+     * Additional conditions can be chained onto the returned search before any
+     * asset retrieval is attempted, ensuring all conditions are pushed-down for
+     * optimal retrieval. Only active (non-archived) GlossaryCategory assets will be included.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the assets
+     * @return a fluent search that includes all GlossaryCategory assets
+     */
+    public static FluentSearch.FluentSearchBuilder<?, ?> select(AtlanClient client) {
+        return select(client, false);
+    }
+
+    /**
+     * Start a fluent search that will return all GlossaryCategory assets.
+     * Additional conditions can be chained onto the returned search before any
+     * asset retrieval is attempted, ensuring all conditions are pushed-down for
+     * optimal retrieval.
+     *
+     * @param includeArchived when true, archived (soft-deleted) GlossaryCategorys will be included
+     * @return a fluent search that includes all GlossaryCategory assets
+     */
+    public static FluentSearch.FluentSearchBuilder<?, ?> select(boolean includeArchived) {
+        return select(Atlan.getDefaultClient(), includeArchived);
+    }
+
+    /**
+     * Start a fluent search that will return all GlossaryCategory assets.
+     * Additional conditions can be chained onto the returned search before any
+     * asset retrieval is attempted, ensuring all conditions are pushed-down for
+     * optimal retrieval.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the assets
+     * @param includeArchived when true, archived (soft-deleted) GlossaryCategorys will be included
+     * @return a fluent search that includes all GlossaryCategory assets
+     */
+    public static FluentSearch.FluentSearchBuilder<?, ?> select(AtlanClient client, boolean includeArchived) {
+        FluentSearch.FluentSearchBuilder<?, ?> builder =
+                FluentSearch.builder(client).where(CompoundQuery.assetType(TYPE_NAME));
+        if (!includeArchived) {
+            builder.where(CompoundQuery.ACTIVE);
+        }
+        return builder;
+    }
+
+    /**
      * Start an asset filter that will return all GlossaryCategory assets.
      * Additional conditions can be chained onto the returned filter before any
      * asset retrieval is attempted, ensuring all conditions are pushed-down for
      * optimal retrieval. Only active (non-archived) GlossaryCategory assets will be included.
      *
      * @return an asset filter that includes all GlossaryCategory assets
+     * @deprecated replaced by {@link #select()}
      */
+    @Deprecated
     public static AssetFilter.AssetFilterBuilder all() {
         return all(Atlan.getDefaultClient());
     }
@@ -124,7 +185,9 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the assets
      * @return an asset filter that includes all GlossaryCategory assets
+     * @deprecated replaced by {@link #select(AtlanClient)}
      */
+    @Deprecated
     public static AssetFilter.AssetFilterBuilder all(AtlanClient client) {
         return all(client, false);
     }
@@ -137,7 +200,9 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
      *
      * @param includeArchived when true, archived (soft-deleted) GlossaryCategorys will be included
      * @return an asset filter that includes all GlossaryCategory assets
+     * @deprecated replaced by {@link #select(boolean)}
      */
+    @Deprecated
     public static AssetFilter.AssetFilterBuilder all(boolean includeArchived) {
         return all(Atlan.getDefaultClient(), includeArchived);
     }
@@ -151,7 +216,9 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
      * @param client connectivity to the Atlan tenant from which to retrieve the assets
      * @param includeArchived when true, archived (soft-deleted) GlossaryCategorys will be included
      * @return an asset filter that includes all GlossaryCategory assets
+     * @deprecated replaced by {@link #select(AtlanClient, boolean)}
      */
+    @Deprecated
     public static AssetFilter.AssetFilterBuilder all(AtlanClient client, boolean includeArchived) {
         AssetFilter.AssetFilterBuilder builder =
                 AssetFilter.builder().client(client).filter(QueryFactory.type(TYPE_NAME));
@@ -427,7 +494,7 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
      * @throws AtlanException on any API problems, or if the GlossaryCategory does not exist
      */
     public static List<GlossaryCategory> findByName(String name, String glossaryName) throws AtlanException {
-        return findByName(name, glossaryName, null);
+        return findByName(name, glossaryName, (List<AtlanField>) null);
     }
 
     /**
@@ -438,11 +505,28 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
      *
      * @param name of the GlossaryCategory
      * @param glossaryName name of the Glossary in which the category exists
-     * @param attributes an optional collection of attributes to retrieve for the GlossaryCategory
+     * @param attributes an optional collection of attributes (unchecked) to retrieve for the GlossaryCategory
      * @return the GlossaryCategory, if found
      * @throws AtlanException on any API problems, or if the GlossaryCategory does not exist
      */
     public static List<GlossaryCategory> findByName(String name, String glossaryName, Collection<String> attributes)
+            throws AtlanException {
+        return findByName(Atlan.getDefaultClient(), name, glossaryName, attributes);
+    }
+
+    /**
+     * Find a GlossaryCategory by its human-readable name. Note that this operation must run two
+     * separate queries to first resolve the qualifiedName of the glossary, so will be somewhat slower.
+     * If you already have the qualifiedName of the glossary, use findByNameFast instead.
+     * Note that categories are not unique by name, so there may be multiple results.
+     *
+     * @param name of the GlossaryCategory
+     * @param glossaryName name of the Glossary in which the category exists
+     * @param attributes an optional collection of attributes (checked) to retrieve for the GlossaryCategory
+     * @return the GlossaryCategory, if found
+     * @throws AtlanException on any API problems, or if the GlossaryCategory does not exist
+     */
+    public static List<GlossaryCategory> findByName(String name, String glossaryName, List<AtlanField> attributes)
             throws AtlanException {
         return findByName(Atlan.getDefaultClient(), name, glossaryName, attributes);
     }
@@ -461,7 +545,7 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
      */
     public static List<GlossaryCategory> findByName(AtlanClient client, String name, String glossaryName)
             throws AtlanException {
-        return findByName(client, name, glossaryName, null);
+        return findByName(client, name, glossaryName, (List<AtlanField>) null);
     }
 
     /**
@@ -473,13 +557,32 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
      * @param client connectivity to the Atlan tenant on which to search for the GlossaryCategory
      * @param name of the GlossaryCategory
      * @param glossaryName name of the Glossary in which the category exists
-     * @param attributes an optional collection of attributes to retrieve for the GlossaryCategory
+     * @param attributes an optional collection of attributes (unchecked) to retrieve for the GlossaryCategory
      * @return the GlossaryCategory, if found
      * @throws AtlanException on any API problems, or if the GlossaryCategory does not exist
      */
     public static List<GlossaryCategory> findByName(
             AtlanClient client, String name, String glossaryName, Collection<String> attributes) throws AtlanException {
-        Glossary glossary = Glossary.findByName(client, glossaryName, null);
+        Glossary glossary = Glossary.findByName(client, glossaryName);
+        return findByNameFast(client, name, glossary.getQualifiedName(), attributes);
+    }
+
+    /**
+     * Find a GlossaryCategory by its human-readable name. Note that this operation must run two
+     * separate queries to first resolve the qualifiedName of the glossary, so will be somewhat slower.
+     * If you already have the qualifiedName of the glossary, use findByNameFast instead.
+     * Note that categories are not unique by name, so there may be multiple results.
+     *
+     * @param client connectivity to the Atlan tenant on which to search for the GlossaryCategory
+     * @param name of the GlossaryCategory
+     * @param glossaryName name of the Glossary in which the category exists
+     * @param attributes an optional collection of attributes (checked) to retrieve for the GlossaryCategory
+     * @return the GlossaryCategory, if found
+     * @throws AtlanException on any API problems, or if the GlossaryCategory does not exist
+     */
+    public static List<GlossaryCategory> findByName(
+            AtlanClient client, String name, String glossaryName, List<AtlanField> attributes) throws AtlanException {
+        Glossary glossary = Glossary.findByName(client, glossaryName);
         return findByNameFast(client, name, glossary.getQualifiedName(), attributes);
     }
 
@@ -495,7 +598,7 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
      */
     public static List<GlossaryCategory> findByNameFast(String name, String glossaryQualifiedName)
             throws AtlanException {
-        return findByNameFast(name, glossaryQualifiedName, null);
+        return findByNameFast(name, glossaryQualifiedName, (List<AtlanField>) null);
     }
 
     /**
@@ -504,12 +607,27 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
      *
      * @param name of the GlossaryCategory
      * @param glossaryQualifiedName qualifiedName of the Glossary in which the category exists
-     * @param attributes an optional collection of attributes to retrieve for the GlossaryCategory
+     * @param attributes an optional collection of attributes (unchecked) to retrieve for the GlossaryCategory
      * @return the GlossaryCategory, if found
      * @throws AtlanException on any API problems, or if the GlossaryCategory does not exist
      */
     public static List<GlossaryCategory> findByNameFast(
             String name, String glossaryQualifiedName, Collection<String> attributes) throws AtlanException {
+        return findByNameFast(Atlan.getDefaultClient(), name, glossaryQualifiedName, attributes);
+    }
+
+    /**
+     * Find a GlossaryCategory by its human-readable name.
+     * Note that categories are not unique by name, so there may be multiple results.
+     *
+     * @param name of the GlossaryCategory
+     * @param glossaryQualifiedName qualifiedName of the Glossary in which the category exists
+     * @param attributes an optional collection of attributes (checked) to retrieve for the GlossaryCategory
+     * @return the GlossaryCategory, if found
+     * @throws AtlanException on any API problems, or if the GlossaryCategory does not exist
+     */
+    public static List<GlossaryCategory> findByNameFast(
+            String name, String glossaryQualifiedName, List<AtlanField> attributes) throws AtlanException {
         return findByNameFast(Atlan.getDefaultClient(), name, glossaryQualifiedName, attributes);
     }
 
@@ -526,7 +644,7 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
      */
     public static List<GlossaryCategory> findByNameFast(AtlanClient client, String name, String glossaryQualifiedName)
             throws AtlanException {
-        return findByNameFast(client, name, glossaryQualifiedName, null);
+        return findByNameFast(client, name, glossaryQualifiedName, (List<AtlanField>) null);
     }
 
     /**
@@ -536,7 +654,7 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
      * @param client connectivity to the Atlan tenant on which to search for the GlossaryCategory
      * @param name of the GlossaryCategory
      * @param glossaryQualifiedName qualifiedName of the Glossary in which the category exists
-     * @param attributes an optional collection of attributes to retrieve for the GlossaryCategory
+     * @param attributes an optional collection of attributes (unchecked) to retrieve for the GlossaryCategory
      * @return the GlossaryCategory, if found
      * @throws AtlanException on any API problems, or if the GlossaryCategory does not exist
      */
@@ -544,10 +662,38 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
             AtlanClient client, String name, String glossaryQualifiedName, Collection<String> attributes)
             throws AtlanException {
         List<GlossaryCategory> results = new ArrayList<>();
-        GlossaryCategory.all(client)
-                .filter(QueryFactory.where(KeywordFields.NAME).eq(name))
-                .filter(QueryFactory.where(KeywordFields.GLOSSARY).eq(glossaryQualifiedName))
-                .attributes(attributes == null ? Collections.emptyList() : attributes)
+        GlossaryCategory.select(client)
+                .where(GlossaryCategory.NAME.eq(name))
+                .where(GlossaryCategory.ANCHOR.eq(glossaryQualifiedName))
+                ._includesOnResults(attributes == null ? Collections.emptyList() : attributes)
+                .stream()
+                .filter(a -> a instanceof GlossaryCategory)
+                .forEach(c -> results.add((GlossaryCategory) c));
+        if (results.isEmpty()) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_NAME, TYPE_NAME, name);
+        }
+        return results;
+    }
+
+    /**
+     * Find a GlossaryCategory by its human-readable name.
+     * Note that categories are not unique by name, so there may be multiple results.
+     *
+     * @param client connectivity to the Atlan tenant on which to search for the GlossaryCategory
+     * @param name of the GlossaryCategory
+     * @param glossaryQualifiedName qualifiedName of the Glossary in which the category exists
+     * @param attributes an optional collection of attributes (checked) to retrieve for the GlossaryCategory
+     * @return the GlossaryCategory, if found
+     * @throws AtlanException on any API problems, or if the GlossaryCategory does not exist
+     */
+    public static List<GlossaryCategory> findByNameFast(
+            AtlanClient client, String name, String glossaryQualifiedName, List<AtlanField> attributes)
+            throws AtlanException {
+        List<GlossaryCategory> results = new ArrayList<>();
+        GlossaryCategory.select(client)
+                .where(GlossaryCategory.NAME.eq(name))
+                .where(GlossaryCategory.ANCHOR.eq(glossaryQualifiedName))
+                .includesOnResults(attributes == null ? Collections.emptyList() : attributes)
                 .stream()
                 .filter(a -> a instanceof GlossaryCategory)
                 .forEach(c -> results.add((GlossaryCategory) c));

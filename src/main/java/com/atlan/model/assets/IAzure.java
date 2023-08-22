@@ -7,6 +7,8 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.KeywordTextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.AzureTag;
 import com.atlan.model.structs.PopularityInsights;
@@ -29,6 +31,20 @@ import javax.annotation.processing.Generated;
 public interface IAzure {
 
     public static final String TYPE_NAME = "Azure";
+
+    /** TBC */
+    KeywordField ADLS_ACCOUNT_SECONDARY_LOCATION =
+            new KeywordField("adlsAccountSecondaryLocation", "adlsAccountSecondaryLocation");
+
+    /** TBC */
+    KeywordField AZURE_LOCATION = new KeywordField("azureLocation", "azureLocation");
+
+    /** TBC */
+    KeywordTextField AZURE_RESOURCE_ID =
+            new KeywordTextField("azureResourceId", "azureResourceId", "azureResourceId.text");
+
+    /** Tags that have been applied to this Azure asset. */
+    KeywordField AZURE_TAGS = new KeywordField("azureTags", "azureTags");
 
     /** TBC */
     String getAdlsAccountSecondaryLocation();
@@ -176,6 +192,9 @@ public interface IAzure {
 
     /** TBC */
     String getAssetDbtUniqueId();
+
+    /** TBC */
+    String getAssetIcon();
 
     /** TBC */
     SortedSet<String> getAssetMcIncidentNames();

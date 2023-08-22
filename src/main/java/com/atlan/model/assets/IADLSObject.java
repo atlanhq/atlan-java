@@ -12,6 +12,12 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.BooleanField;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.KeywordTextField;
+import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.AzureTag;
 import com.atlan.model.structs.PopularityInsights;
@@ -34,6 +40,65 @@ import javax.annotation.processing.Generated;
 public interface IADLSObject {
 
     public static final String TYPE_NAME = "ADLSObject";
+
+    /** Container this object exists within. */
+    RelationField ADLS_CONTAINER = new RelationField("adlsContainer");
+
+    /** Unique name of the container this object exists within. */
+    KeywordTextField ADLS_CONTAINER_QUALIFIED_NAME = new KeywordTextField(
+            "adlsContainerQualifiedName", "adlsContainerQualifiedName", "adlsContainerQualifiedName.text");
+
+    /** TBC */
+    KeywordField ADLS_OBJECT_ACCESS_TIER = new KeywordField("adlsObjectAccessTier", "adlsObjectAccessTier");
+
+    /** TBC */
+    NumericField ADLS_OBJECT_ACCESS_TIER_LAST_MODIFIED_TIME =
+            new NumericField("adlsObjectAccessTierLastModifiedTime", "adlsObjectAccessTierLastModifiedTime");
+
+    /** TBC */
+    KeywordField ADLS_OBJECT_ARCHIVE_STATUS = new KeywordField("adlsObjectArchiveStatus", "adlsObjectArchiveStatus");
+
+    /** TBC */
+    TextField ADLS_OBJECT_CACHE_CONTROL = new TextField("adlsObjectCacheControl", "adlsObjectCacheControl");
+
+    /** TBC */
+    KeywordTextField ADLS_OBJECT_CONTENT_LANGUAGE = new KeywordTextField(
+            "adlsObjectContentLanguage", "adlsObjectContentLanguage.keyword", "adlsObjectContentLanguage");
+
+    /** TBC */
+    KeywordField ADLS_OBJECT_CONTENT_MD5HASH = new KeywordField("adlsObjectContentMD5Hash", "adlsObjectContentMD5Hash");
+
+    /** TBC */
+    TextField ADLS_OBJECT_CONTENT_TYPE = new TextField("adlsObjectContentType", "adlsObjectContentType");
+
+    /** TBC */
+    KeywordField ADLS_OBJECT_LEASE_STATE = new KeywordField("adlsObjectLeaseState", "adlsObjectLeaseState");
+
+    /** TBC */
+    KeywordField ADLS_OBJECT_LEASE_STATUS = new KeywordField("adlsObjectLeaseStatus", "adlsObjectLeaseStatus");
+
+    /** TBC */
+    KeywordField ADLS_OBJECT_METADATA = new KeywordField("adlsObjectMetadata", "adlsObjectMetadata");
+
+    /** TBC */
+    BooleanField ADLS_OBJECT_SERVER_ENCRYPTED =
+            new BooleanField("adlsObjectServerEncrypted", "adlsObjectServerEncrypted");
+
+    /** TBC */
+    NumericField ADLS_OBJECT_SIZE = new NumericField("adlsObjectSize", "adlsObjectSize");
+
+    /** TBC */
+    KeywordField ADLS_OBJECT_TYPE = new KeywordField("adlsObjectType", "adlsObjectType");
+
+    /** TBC */
+    KeywordTextField ADLS_OBJECT_URL = new KeywordTextField("adlsObjectUrl", "adlsObjectUrl.keyword", "adlsObjectUrl");
+
+    /** TBC */
+    KeywordField ADLS_OBJECT_VERSION_ID = new KeywordField("adlsObjectVersionId", "adlsObjectVersionId");
+
+    /** TBC */
+    BooleanField ADLS_OBJECT_VERSION_LEVEL_IMMUTABILITY_SUPPORT =
+            new BooleanField("adlsObjectVersionLevelImmutabilitySupport", "adlsObjectVersionLevelImmutabilitySupport");
 
     /** TBC */
     String getAdlsAccountQualifiedName();
@@ -240,6 +305,9 @@ public interface IADLSObject {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -345,6 +413,9 @@ public interface IADLSObject {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -379,6 +450,9 @@ public interface IADLSObject {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

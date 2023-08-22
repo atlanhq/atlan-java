@@ -14,9 +14,11 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectionCategory;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
-import com.atlan.model.enums.KeywordFields;
 import com.atlan.model.enums.QueryUsernameStrategy;
+import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.UniqueAttributes;
+import com.atlan.model.search.CompoundQuery;
+import com.atlan.model.search.FluentSearch;
 import com.atlan.util.QueryFactory;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -171,13 +173,72 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
     }
 
     /**
+     * Start a fluent search that will return all Connection assets.
+     * Additional conditions can be chained onto the returned search before any
+     * asset retrieval is attempted, ensuring all conditions are pushed-down for
+     * optimal retrieval. Only active (non-archived) Connection assets will be included.
+     *
+     * @return a fluent search that includes all Connection assets
+     */
+    public static FluentSearch.FluentSearchBuilder<?, ?> select() {
+        return select(Atlan.getDefaultClient());
+    }
+
+    /**
+     * Start a fluent search that will return all Connection assets.
+     * Additional conditions can be chained onto the returned search before any
+     * asset retrieval is attempted, ensuring all conditions are pushed-down for
+     * optimal retrieval. Only active (non-archived) Connection assets will be included.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the assets
+     * @return a fluent search that includes all Connection assets
+     */
+    public static FluentSearch.FluentSearchBuilder<?, ?> select(AtlanClient client) {
+        return select(client, false);
+    }
+
+    /**
+     * Start a fluent search that will return all Connection assets.
+     * Additional conditions can be chained onto the returned search before any
+     * asset retrieval is attempted, ensuring all conditions are pushed-down for
+     * optimal retrieval.
+     *
+     * @param includeArchived when true, archived (soft-deleted) Connections will be included
+     * @return a fluent search that includes all Connection assets
+     */
+    public static FluentSearch.FluentSearchBuilder<?, ?> select(boolean includeArchived) {
+        return select(Atlan.getDefaultClient(), includeArchived);
+    }
+
+    /**
+     * Start a fluent search that will return all Connection assets.
+     * Additional conditions can be chained onto the returned search before any
+     * asset retrieval is attempted, ensuring all conditions are pushed-down for
+     * optimal retrieval.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the assets
+     * @param includeArchived when true, archived (soft-deleted) Connections will be included
+     * @return a fluent search that includes all Connection assets
+     */
+    public static FluentSearch.FluentSearchBuilder<?, ?> select(AtlanClient client, boolean includeArchived) {
+        FluentSearch.FluentSearchBuilder<?, ?> builder =
+                FluentSearch.builder(client).where(CompoundQuery.assetType(TYPE_NAME));
+        if (!includeArchived) {
+            builder.where(CompoundQuery.ACTIVE);
+        }
+        return builder;
+    }
+
+    /**
      * Start an asset filter that will return all Connection assets.
      * Additional conditions can be chained onto the returned filter before any
      * asset retrieval is attempted, ensuring all conditions are pushed-down for
      * optimal retrieval. Only active (non-archived) Connection assets will be included.
      *
      * @return an asset filter that includes all Connection assets
+     * @deprecated replaced by {@link #select()}
      */
+    @Deprecated
     public static AssetFilter.AssetFilterBuilder all() {
         return all(Atlan.getDefaultClient());
     }
@@ -190,7 +251,9 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the assets
      * @return an asset filter that includes all Connection assets
+     * @deprecated replaced by {@link #select(AtlanClient)}
      */
+    @Deprecated
     public static AssetFilter.AssetFilterBuilder all(AtlanClient client) {
         return all(client, false);
     }
@@ -203,7 +266,9 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
      *
      * @param includeArchived when true, archived (soft-deleted) Connections will be included
      * @return an asset filter that includes all Connection assets
+     * @deprecated replaced by {@link #select(boolean)}
      */
+    @Deprecated
     public static AssetFilter.AssetFilterBuilder all(boolean includeArchived) {
         return all(Atlan.getDefaultClient(), includeArchived);
     }
@@ -217,7 +282,9 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
      * @param client connectivity to the Atlan tenant from which to retrieve the assets
      * @param includeArchived when true, archived (soft-deleted) Connections will be included
      * @return an asset filter that includes all Connection assets
+     * @deprecated replaced by {@link #select(AtlanClient, boolean)}
      */
+    @Deprecated
     public static AssetFilter.AssetFilterBuilder all(AtlanClient client, boolean includeArchived) {
         AssetFilter.AssetFilterBuilder builder =
                 AssetFilter.builder().client(client).filter(QueryFactory.type(TYPE_NAME));
@@ -694,7 +761,7 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
      * @throws NotFoundException if the connection does not exist
      */
     public static List<Connection> findByName(String name, AtlanConnectorType type) throws AtlanException {
-        return findByName(name, type, null);
+        return findByName(name, type, (List<AtlanField>) null);
     }
 
     /**
@@ -702,12 +769,27 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
      *
      * @param name of the connection
      * @param type of the connection
-     * @param attributes an optional collection of attributes to retrieve for the connection
+     * @param attributes an optional collection of attributes (unchecked) to retrieve for the connection
      * @return all connections with that name and type, if found
      * @throws AtlanException on any API problems
      * @throws NotFoundException if the connection does not exist
      */
     public static List<Connection> findByName(String name, AtlanConnectorType type, Collection<String> attributes)
+            throws AtlanException {
+        return findByName(Atlan.getDefaultClient(), name, type, attributes);
+    }
+
+    /**
+     * Find a connection by its human-readable name and type.
+     *
+     * @param name of the connection
+     * @param type of the connection
+     * @param attributes an optional collection of attributes (checked) to retrieve for the connection
+     * @return all connections with that name and type, if found
+     * @throws AtlanException on any API problems
+     * @throws NotFoundException if the connection does not exist
+     */
+    public static List<Connection> findByName(String name, AtlanConnectorType type, List<AtlanField> attributes)
             throws AtlanException {
         return findByName(Atlan.getDefaultClient(), name, type, attributes);
     }
@@ -725,7 +807,7 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
      */
     public static List<Connection> findByName(AtlanClient client, String name, AtlanConnectorType type)
             throws AtlanException {
-        return findByName(client, name, type, null);
+        return findByName(client, name, type, (List<AtlanField>) null);
     }
 
     /**
@@ -743,10 +825,38 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
             AtlanClient client, String name, AtlanConnectorType type, Collection<String> attributes)
             throws AtlanException {
         List<Connection> results = new ArrayList<>();
-        Connection.all(client)
-                .filter(QueryFactory.where(KeywordFields.NAME).eq(name))
-                .filter(QueryFactory.where(KeywordFields.CONNECTOR_TYPE).eq(type.getValue()))
-                .attributes(attributes == null ? Collections.emptyList() : attributes)
+        Connection.select(client)
+                .where(Connection.NAME.eq(name))
+                .where(Connection.CONNECTOR_TYPE.eq(type.getValue()))
+                ._includesOnResults(attributes == null ? Collections.emptyList() : attributes)
+                .stream()
+                .filter(a -> a instanceof Connection)
+                .forEach(c -> results.add((Connection) c));
+        if (results.isEmpty()) {
+            throw new NotFoundException(ErrorCode.CONNECTION_NOT_FOUND_BY_NAME, name, type.getValue());
+        }
+        return results;
+    }
+
+    /**
+     * Find a connection by its human-readable name and type.
+     *
+     * @param client connectivity to the Atlan tenant in which to search for the connection
+     * @param name of the connection
+     * @param type of the connection
+     * @param attributes an optional collection of attributes (checked) to retrieve for the connection
+     * @return all connections with that name and type, if found
+     * @throws AtlanException on any API problems
+     * @throws NotFoundException if the connection does not exist
+     */
+    public static List<Connection> findByName(
+            AtlanClient client, String name, AtlanConnectorType type, List<AtlanField> attributes)
+            throws AtlanException {
+        List<Connection> results = new ArrayList<>();
+        Connection.select(client)
+                .where(Connection.NAME.eq(name))
+                .where(Connection.CONNECTOR_TYPE.eq(type.getValue()))
+                .includesOnResults(attributes == null ? Collections.emptyList() : attributes)
                 .stream()
                 .filter(a -> a instanceof Connection)
                 .forEach(c -> results.add((Connection) c));

@@ -7,6 +7,10 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.KeywordTextField;
+import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -28,6 +32,41 @@ import javax.annotation.processing.Generated;
 public interface ILookerField {
 
     public static final String TYPE_NAME = "LookerField";
+
+    /** TBC */
+    RelationField EXPLORE = new RelationField("explore");
+
+    /** TBC */
+    KeywordTextField LOOKER_EXPLORE_QUALIFIED_NAME = new KeywordTextField(
+            "lookerExploreQualifiedName", "lookerExploreQualifiedName", "lookerExploreQualifiedName.text");
+
+    /** TBC */
+    KeywordField LOOKER_FIELD_DATA_TYPE = new KeywordField("lookerFieldDataType", "lookerFieldDataType");
+
+    /** TBC */
+    NumericField LOOKER_TIMES_USED = new NumericField("lookerTimesUsed", "lookerTimesUsed");
+
+    /** TBC */
+    KeywordTextField LOOKER_VIEW_QUALIFIED_NAME =
+            new KeywordTextField("lookerViewQualifiedName", "lookerViewQualifiedName", "lookerViewQualifiedName.text");
+
+    /** TBC */
+    RelationField MODEL = new RelationField("model");
+
+    /** TBC */
+    KeywordField MODEL_NAME = new KeywordField("modelName", "modelName");
+
+    /** TBC */
+    RelationField PROJECT = new RelationField("project");
+
+    /** TBC */
+    KeywordField PROJECT_NAME = new KeywordField("projectName", "projectName");
+
+    /** TBC */
+    KeywordField SOURCE_DEFINITION = new KeywordField("sourceDefinition", "sourceDefinition");
+
+    /** TBC */
+    RelationField VIEW = new RelationField("view");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -174,6 +213,9 @@ public interface ILookerField {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -273,6 +315,9 @@ public interface ILookerField {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -325,6 +370,9 @@ public interface ILookerField {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

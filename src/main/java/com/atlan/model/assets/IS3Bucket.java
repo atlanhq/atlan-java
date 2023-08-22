@@ -7,6 +7,9 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.BooleanField;
+import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.AwsTag;
 import com.atlan.model.structs.PopularityInsights;
@@ -29,6 +32,16 @@ import javax.annotation.processing.Generated;
 public interface IS3Bucket {
 
     public static final String TYPE_NAME = "S3Bucket";
+
+    /** S3 objects within this bucket. */
+    RelationField OBJECTS = new RelationField("objects");
+
+    /** Whether versioning is enabled for the bucket. */
+    BooleanField S3BUCKET_VERSIONING_ENABLED =
+            new BooleanField("s3BucketVersioningEnabled", "s3BucketVersioningEnabled");
+
+    /** Number of objects within the bucket. */
+    NumericField S3OBJECT_COUNT = new NumericField("s3ObjectCount", "s3ObjectCount");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -175,6 +188,9 @@ public interface IS3Bucket {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -298,6 +314,9 @@ public interface IS3Bucket {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -335,6 +354,9 @@ public interface IS3Bucket {
 
     /** S3 objects within this bucket. */
     SortedSet<IS3Object> getObjects();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

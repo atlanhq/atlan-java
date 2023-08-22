@@ -7,6 +7,7 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -28,6 +29,12 @@ import javax.annotation.processing.Generated;
 public interface INamespace {
 
     public static final String TYPE_NAME = "Namespace";
+
+    /** TBC */
+    RelationField CHILDREN_FOLDERS = new RelationField("childrenFolders");
+
+    /** TBC */
+    RelationField CHILDREN_QUERIES = new RelationField("childrenQueries");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -172,6 +179,9 @@ public interface INamespace {
 
     /** TBC */
     String getAssetDbtUniqueId();
+
+    /** TBC */
+    String getAssetIcon();
 
     /** TBC */
     SortedSet<String> getAssetMcIncidentNames();

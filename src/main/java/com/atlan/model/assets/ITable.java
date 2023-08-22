@@ -7,6 +7,10 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.BooleanField;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -30,6 +34,66 @@ public interface ITable {
     public static final String TYPE_NAME = "Table";
 
     /** TBC */
+    KeywordField ALIAS = new KeywordField("alias", "alias");
+
+    /** Number of columns in this table. */
+    NumericField COLUMN_COUNT = new NumericField("columnCount", "columnCount");
+
+    /** Columns that exist within this table. */
+    RelationField COLUMNS = new RelationField("columns");
+
+    /** TBC */
+    RelationField DIMENSIONS = new RelationField("dimensions");
+
+    /** TBC */
+    KeywordField EXTERNAL_LOCATION = new KeywordField("externalLocation", "externalLocation");
+
+    /** TBC */
+    KeywordField EXTERNAL_LOCATION_FORMAT = new KeywordField("externalLocationFormat", "externalLocationFormat");
+
+    /** TBC */
+    KeywordField EXTERNAL_LOCATION_REGION = new KeywordField("externalLocationRegion", "externalLocationRegion");
+
+    /** TBC */
+    RelationField FACTS = new RelationField("facts");
+
+    /** TBC */
+    BooleanField IS_PARTITIONED = new BooleanField("isPartitioned", "isPartitioned");
+
+    /** TBC */
+    BooleanField IS_QUERY_PREVIEW = new BooleanField("isQueryPreview", "isQueryPreview");
+
+    /** Whether this table is temporary (true) or not (false). */
+    BooleanField IS_TEMPORARY = new BooleanField("isTemporary", "isTemporary");
+
+    /** TBC */
+    NumericField PARTITION_COUNT = new NumericField("partitionCount", "partitionCount");
+
+    /** TBC */
+    KeywordField PARTITION_LIST = new KeywordField("partitionList", "partitionList");
+
+    /** TBC */
+    KeywordField PARTITION_STRATEGY = new KeywordField("partitionStrategy", "partitionStrategy");
+
+    /** TBC */
+    RelationField PARTITIONS = new RelationField("partitions");
+
+    /** Queries that involve this table. */
+    RelationField QUERIES = new RelationField("queries");
+
+    /** TBC */
+    KeywordField QUERY_PREVIEW_CONFIG = new KeywordField("queryPreviewConfig", "queryPreviewConfig");
+
+    /** Number of rows in this table. */
+    NumericField ROW_COUNT = new NumericField("rowCount", "rowCount");
+
+    /** Schema in which this table exists. */
+    RelationField SCHEMA = new RelationField("atlanSchema");
+
+    /** Size of the table in bytes. */
+    NumericField SIZE_BYTES = new NumericField("sizeBytes", "sizeBytes");
+
+    /** TBC */
     SortedSet<String> getAdminGroups();
 
     /** TBC */
@@ -37,9 +101,6 @@ public interface ITable {
 
     /** TBC */
     SortedSet<String> getAdminUsers();
-
-    /** TBC */
-    IAirflowTask getAirflowTask();
 
     /** TBC */
     String getAlias();
@@ -180,6 +241,9 @@ public interface ITable {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -312,6 +376,9 @@ public interface ITable {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -361,6 +428,9 @@ public interface ITable {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

@@ -8,6 +8,10 @@ import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.OpenLineageRunState;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.KeywordTextField;
+import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -29,6 +33,55 @@ import javax.annotation.processing.Generated;
 public interface IAirflowTask {
 
     public static final String TYPE_NAME = "AirflowTask";
+
+    /** TBC */
+    RelationField AIRFLOW_DAG = new RelationField("airflowDag");
+
+    /** TBC */
+    KeywordTextField AIRFLOW_DAG_NAME =
+            new KeywordTextField("airflowDagName", "airflowDagName.keyword", "airflowDagName");
+
+    /** TBC */
+    KeywordField AIRFLOW_DAG_QUALIFIED_NAME = new KeywordField("airflowDagQualifiedName", "airflowDagQualifiedName");
+
+    /** TBC */
+    KeywordTextField AIRFLOW_TASK_CONNECTION_ID = new KeywordTextField(
+            "airflowTaskConnectionId", "airflowTaskConnectionId.keyword", "airflowTaskConnectionId");
+
+    /** TBC */
+    KeywordTextField AIRFLOW_TASK_OPERATOR_CLASS = new KeywordTextField(
+            "airflowTaskOperatorClass", "airflowTaskOperatorClass.keyword", "airflowTaskOperatorClass");
+
+    /** Pool on which this run happened */
+    KeywordField AIRFLOW_TASK_POOL = new KeywordField("airflowTaskPool", "airflowTaskPool");
+
+    /** Pool slots used for the run */
+    NumericField AIRFLOW_TASK_POOL_SLOTS = new NumericField("airflowTaskPoolSlots", "airflowTaskPoolSlots");
+
+    /** Priority weight of the run */
+    NumericField AIRFLOW_TASK_PRIORITY_WEIGHT =
+            new NumericField("airflowTaskPriorityWeight", "airflowTaskPriorityWeight");
+
+    /** Queue on which this run happened */
+    KeywordField AIRFLOW_TASK_QUEUE = new KeywordField("airflowTaskQueue", "airflowTaskQueue");
+
+    /** Retry required for the run */
+    NumericField AIRFLOW_TASK_RETRY_NUMBER = new NumericField("airflowTaskRetryNumber", "airflowTaskRetryNumber");
+
+    /** TBC */
+    KeywordField AIRFLOW_TASK_SQL = new KeywordField("airflowTaskSql", "airflowTaskSql");
+
+    /** Trigger rule of the run */
+    KeywordField AIRFLOW_TASK_TRIGGER_RULE = new KeywordField("airflowTaskTriggerRule", "airflowTaskTriggerRule");
+
+    /** TBC */
+    RelationField INPUTS = new RelationField("inputs");
+
+    /** TBC */
+    RelationField OUTPUTS = new RelationField("outputs");
+
+    /** TBC */
+    RelationField PROCESS = new RelationField("process");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -235,6 +288,9 @@ public interface IAirflowTask {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -331,7 +387,13 @@ public interface IAirflowTask {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
+
+    /** TBC */
+    SortedSet<ICatalog> getInputs();
 
     /** TBC */
     Boolean getIsDiscoverable();
@@ -367,7 +429,13 @@ public interface IAirflowTask {
     String getName();
 
     /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();
+
+    /** TBC */
+    SortedSet<ICatalog> getOutputs();
 
     /** TBC */
     SortedSet<String> getOwnerGroups();
@@ -473,9 +541,6 @@ public interface IAirflowTask {
 
     /** TBC */
     String getSubType();
-
-    /** TBC */
-    SortedSet<ITable> getTables();
 
     /** TBC */
     String getTenantId();

@@ -8,6 +8,8 @@ import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.PowerBIEndorsementType;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -29,6 +31,29 @@ import javax.annotation.processing.Generated;
 public interface IPowerBIColumn {
 
     public static final String TYPE_NAME = "PowerBIColumn";
+
+    /** TBC */
+    KeywordField DATASET_QUALIFIED_NAME = new KeywordField("datasetQualifiedName", "datasetQualifiedName");
+
+    /** TBC */
+    KeywordField POWER_BI_COLUMN_DATA_CATEGORY =
+            new KeywordField("powerBIColumnDataCategory", "powerBIColumnDataCategory");
+
+    /** TBC */
+    KeywordField POWER_BI_COLUMN_DATA_TYPE = new KeywordField("powerBIColumnDataType", "powerBIColumnDataType");
+
+    /** TBC */
+    KeywordField POWER_BI_COLUMN_SUMMARIZE_BY =
+            new KeywordField("powerBIColumnSummarizeBy", "powerBIColumnSummarizeBy");
+
+    /** TBC */
+    KeywordField POWER_BI_SORT_BY_COLUMN = new KeywordField("powerBISortByColumn", "powerBISortByColumn");
+
+    /** TBC */
+    RelationField TABLE = new RelationField("table");
+
+    /** TBC */
+    KeywordField WORKSPACE_QUALIFIED_NAME = new KeywordField("workspaceQualifiedName", "workspaceQualifiedName");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -175,6 +200,9 @@ public interface IPowerBIColumn {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -274,6 +302,9 @@ public interface IPowerBIColumn {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -308,6 +339,9 @@ public interface IPowerBIColumn {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

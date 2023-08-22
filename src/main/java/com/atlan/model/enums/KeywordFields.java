@@ -5,6 +5,11 @@ package com.atlan.model.enums;
 import javax.annotation.processing.Generated;
 import lombok.Getter;
 
+/**
+ * Enumeration of all index fields.
+ * @deprecated these are now enumerated as constants in the various asset interfaces, as instances of one of the following: {@link com.atlan.model.fields.BooleanField}, {@link com.atlan.model.fields.KeywordField}, {@link com.atlan.model.fields.KeywordTextField}, {@link com.atlan.model.fields.KeywordTextStemmedField}, {@link com.atlan.model.fields.NumericField}, {@link com.atlan.model.fields.NumericRankField}, {@link com.atlan.model.fields.RelationField}, or {@link com.atlan.model.fields.TextField}
+ */
+@Deprecated
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 public enum KeywordFields implements AtlanSearchableField {
     /** Unused. */
@@ -205,6 +210,8 @@ public enum KeywordFields implements AtlanSearchableField {
     ASSET_DBT_TEST_STATUS("assetDbtTestStatus"),
     /** TBC */
     ASSET_DBT_UNIQUE_ID("assetDbtUniqueId.keyword"),
+    /** TBC */
+    ASSET_ICON("assetIcon"),
     /** TBC */
     ASSET_MC_INCIDENT_NAMES("assetMcIncidentNames.keyword"),
     /** TBC */
@@ -569,6 +576,10 @@ public enum KeywordFields implements AtlanSearchableField {
     LOOKER_EXPLORE_QUALIFIED_NAME("lookerExploreQualifiedName"),
     /** TBC */
     LOOKER_FIELD_DATA_TYPE("lookerFieldDataType"),
+    /** File name of the looker view in the project */
+    LOOKER_VIEW_FILE_NAME("lookerViewFileName"),
+    /** File path of the looker view in the project */
+    LOOKER_VIEW_FILE_PATH("lookerViewFilePath"),
     /** TBC */
     LOOKER_VIEW_QUALIFIED_NAME("lookerViewQualifiedName"),
     /** TBC */

@@ -28,6 +28,11 @@ public class EnumCache {
         this.typeDefsEndpoint = typeDefsEndpoint;
     }
 
+    /**
+     * Refreshes the cache of enumerations by requesting the full set of enumerations from Atlan.
+     *
+     * @throws AtlanException on any API communication problem
+     */
     public synchronized void refreshCache() throws AtlanException {
         log.debug("Refreshing cache of enumerations...");
         TypeDefResponse response = typeDefsEndpoint.list(AtlanTypeCategory.ENUM);
@@ -54,7 +59,7 @@ public class EnumCache {
      * @throws InvalidRequestException if no name was provided for the enumeration to retrieve
      */
     public EnumDef getByName(String name) throws AtlanException {
-        if (name != null && name.length() > 0) {
+        if (name != null && !name.isEmpty()) {
             EnumDef enumDef = cacheById.get(name);
             if (enumDef == null) {
                 // If not found, refresh the cache and look again (could be stale)

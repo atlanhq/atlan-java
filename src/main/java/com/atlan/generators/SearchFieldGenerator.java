@@ -213,7 +213,7 @@ public class SearchFieldGenerator extends TypeGenerator {
 
         private String searchFieldName;
         private String enumName;
-        private final IndexType toFilter;
+        private final SearchFieldGenerator.IndexType toFilter;
 
         private Field(FieldDetails details, GeneratorConfig cfg) {
             super(cfg);
@@ -227,7 +227,7 @@ public class SearchFieldGenerator extends TypeGenerator {
                 String className,
                 String entityName,
                 AttributeDef attributeDef,
-                IndexType toFilter,
+                SearchFieldGenerator.IndexType toFilter,
                 GeneratorConfig cfg) {
             super(className, attributeDef, cfg);
             this.toFilter = toFilter;
@@ -253,19 +253,20 @@ public class SearchFieldGenerator extends TypeGenerator {
             if (config != null && config.containsKey("analyzer")) {
                 String analyzer = config.get("analyzer");
                 if (analyzer.equals("atlan_text_analyzer")) {
-                    if (toFilter == IndexType.STEMMED && attrName.endsWith(".stemmed")) {
+                    if (toFilter == SearchFieldGenerator.IndexType.STEMMED && attrName.endsWith(".stemmed")) {
                         searchable.add(attrName);
-                    } else if (toFilter == IndexType.TEXT && !attrName.endsWith(".stemmed")) {
+                    } else if (toFilter == SearchFieldGenerator.IndexType.TEXT && !attrName.endsWith(".stemmed")) {
                         searchable.add(attrName);
                     }
                 } else {
                     log.warn("Unknown analyzer on attribute {}: {}", attrName, analyzer);
                 }
             } else {
-                IndexType defIndex = getDefaultIndexForType(getType());
+                SearchFieldGenerator.IndexType defIndex = getDefaultIndexForType(getType());
                 if (defIndex == toFilter
-                        || (toFilter == IndexType.NUMERIC
-                                && (defIndex == IndexType.DATE || defIndex == IndexType.FLOAT))) {
+                        || (toFilter == SearchFieldGenerator.IndexType.NUMERIC
+                                && (defIndex == SearchFieldGenerator.IndexType.DATE
+                                        || defIndex == SearchFieldGenerator.IndexType.FLOAT))) {
                     searchable.add(attrName);
                 }
             }
@@ -281,19 +282,21 @@ public class SearchFieldGenerator extends TypeGenerator {
                         String indexType = indexDetails.get("type");
                         switch (indexType) {
                             case "keyword":
-                                if (toFilter == IndexType.KEYWORD) {
+                                if (toFilter == SearchFieldGenerator.IndexType.KEYWORD) {
                                     duplicate = searchable.add(fieldName);
                                 }
                                 break;
                             case "text":
-                                if (toFilter == IndexType.STEMMED && fieldName.endsWith(".stemmed")) {
+                                if (toFilter == SearchFieldGenerator.IndexType.STEMMED
+                                        && fieldName.endsWith(".stemmed")) {
                                     duplicate = searchable.add(fieldName);
-                                } else if (toFilter == IndexType.TEXT && !fieldName.endsWith(".stemmed")) {
+                                } else if (toFilter == SearchFieldGenerator.IndexType.TEXT
+                                        && !fieldName.endsWith(".stemmed")) {
                                     duplicate = searchable.add(fieldName);
                                 }
                                 break;
                             case "rank_feature":
-                                if (toFilter == IndexType.RANK_FEATURE) {
+                                if (toFilter == SearchFieldGenerator.IndexType.RANK_FEATURE) {
                                     duplicate = searchable.add(fieldName);
                                 }
                                 break;
@@ -306,10 +309,11 @@ public class SearchFieldGenerator extends TypeGenerator {
                                 break;
                         }
                     } else {
-                        IndexType defIndex = getDefaultIndexForType(getType());
+                        SearchFieldGenerator.IndexType defIndex = getDefaultIndexForType(getType());
                         if (defIndex == toFilter
-                                || (toFilter == IndexType.NUMERIC
-                                        && (defIndex == IndexType.DATE || defIndex == IndexType.FLOAT))) {
+                                || (toFilter == SearchFieldGenerator.IndexType.NUMERIC
+                                        && (defIndex == SearchFieldGenerator.IndexType.DATE
+                                                || defIndex == SearchFieldGenerator.IndexType.FLOAT))) {
                             duplicate = searchable.add(fieldName);
                         }
                     }
@@ -349,25 +353,25 @@ public class SearchFieldGenerator extends TypeGenerator {
          * @param type mapped type of the attribute
          * @return the default index for that data type
          */
-        private static IndexType getDefaultIndexForType(MappedType type) {
+        private static SearchFieldGenerator.IndexType getDefaultIndexForType(MappedType type) {
             String baseType = type.getOriginalBase();
-            IndexType toUse;
+            SearchFieldGenerator.IndexType toUse;
             switch (baseType) {
                 case "date":
-                    toUse = IndexType.DATE;
+                    toUse = SearchFieldGenerator.IndexType.DATE;
                     break;
                 case "float":
                 case "double":
                 case "int":
                 case "long":
-                    toUse = IndexType.FLOAT;
+                    toUse = SearchFieldGenerator.IndexType.FLOAT;
                     break;
                 case "boolean":
-                    toUse = IndexType.BOOLEAN;
+                    toUse = SearchFieldGenerator.IndexType.BOOLEAN;
                     break;
                 case "string":
                 default:
-                    toUse = IndexType.KEYWORD;
+                    toUse = SearchFieldGenerator.IndexType.KEYWORD;
                     break;
             }
             return toUse;

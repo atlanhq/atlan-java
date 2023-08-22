@@ -17,6 +17,14 @@ import com.atlan.model.enums.PurposeMetadataAction;
 import com.atlan.model.enums.DataAction;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.KeywordFields;
+import com.atlan.model.fields.BooleanField;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.KeywordTextField;
+import com.atlan.model.fields.KeywordTextStemmedField;
+import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.NumericRankField;
+import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.UniqueAttributes;
 <#list interfaceAttributes as attribute>
 <#if attribute.type.type == "ENUM">
@@ -59,6 +67,16 @@ import javax.annotation.processing.Generated;
 public interface I${className} {
 
     public static final String TYPE_NAME = "${originalName}";
+
+    <#list nonInheritedAttributes as attribute>
+    /** ${attribute.description} */
+    <#if attribute.searchType??>
+    <#if (className != "GlossaryTerm" || attribute.originalName != "categories") && (className != "GlossaryCategory" || attribute.originalName != "parentCategory") && ((className != "GlossaryTerm" || className != "GlossaryCategory") && attribute.originalName != "anchor") && (className != "Asset" || attribute.originalName != "meanings")>
+    ${attribute.searchType} ${attribute.enumForAttr} = new ${attribute.searchType}("${attribute.originalName}"<#if attribute.searchTypeArgs??>, ${attribute.searchTypeArgs}</#if>);
+
+    </#if>
+    </#if>
+    </#list>
 
 <#if interfaceTemplateFile??>
 <#import interfaceTemplateFile as methods>

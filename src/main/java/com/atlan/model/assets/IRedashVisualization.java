@@ -7,6 +7,9 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.KeywordTextField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -28,6 +31,20 @@ import javax.annotation.processing.Generated;
 public interface IRedashVisualization {
 
     public static final String TYPE_NAME = "RedashVisualization";
+
+    /** Query from which the visualization was created. */
+    RelationField REDASH_QUERY = new RelationField("redashQuery");
+
+    /** Name of the query from which the visualization was created. */
+    KeywordTextField REDASH_QUERY_NAME =
+            new KeywordTextField("redashQueryName", "redashQueryName.keyword", "redashQueryName");
+
+    /** Unique name of the query from which the visualization was created. */
+    KeywordTextField REDASH_QUERY_QUALIFIED_NAME = new KeywordTextField(
+            "redashQueryQualifiedName", "redashQueryQualifiedName", "redashQueryQualifiedName.text");
+
+    /** Type of the Redash visualization. */
+    KeywordField REDASH_VISUALIZATION_TYPE = new KeywordField("redashVisualizationType", "redashVisualizationType");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -174,6 +191,9 @@ public interface IRedashVisualization {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -270,6 +290,9 @@ public interface IRedashVisualization {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -304,6 +327,9 @@ public interface IRedashVisualization {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

@@ -7,6 +7,8 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.KeywordTextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.AwsTag;
 import com.atlan.model.structs.PopularityInsights;
@@ -29,6 +31,12 @@ import javax.annotation.processing.Generated;
 public interface IS3 {
 
     public static final String TYPE_NAME = "S3";
+
+    /** Entity tag for the asset. An entity tag is a hash of the object and represents changes to the contents of an object only, not its metadata. */
+    KeywordTextField S3E_TAG = new KeywordTextField("s3ETag", "s3ETag", "s3ETag.text");
+
+    /** TBC */
+    KeywordField S3ENCRYPTION = new KeywordField("s3Encryption", "s3Encryption");
 
     /**
      * Generate a unique S3 name.
@@ -186,6 +194,9 @@ public interface IS3 {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -309,6 +320,9 @@ public interface IS3 {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -343,6 +357,9 @@ public interface IS3 {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

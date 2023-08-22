@@ -7,6 +7,9 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordTextField;
+import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -28,6 +31,22 @@ import javax.annotation.processing.Generated;
 public interface IMetabaseQuestion {
 
     public static final String TYPE_NAME = "MetabaseQuestion";
+
+    /** TBC */
+    RelationField METABASE_COLLECTION = new RelationField("metabaseCollection");
+
+    /** TBC */
+    NumericField METABASE_DASHBOARD_COUNT = new NumericField("metabaseDashboardCount", "metabaseDashboardCount");
+
+    /** TBC */
+    RelationField METABASE_DASHBOARDS = new RelationField("metabaseDashboards");
+
+    /** TBC */
+    KeywordTextField METABASE_QUERY = new KeywordTextField("metabaseQuery", "metabaseQuery.keyword", "metabaseQuery");
+
+    /** TBC */
+    KeywordTextField METABASE_QUERY_TYPE =
+            new KeywordTextField("metabaseQueryType", "metabaseQueryType", "metabaseQueryType.text");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -174,6 +193,9 @@ public interface IMetabaseQuestion {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -270,6 +292,9 @@ public interface IMetabaseQuestion {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -325,6 +350,9 @@ public interface IMetabaseQuestion {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

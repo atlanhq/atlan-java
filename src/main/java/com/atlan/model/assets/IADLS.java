@@ -7,6 +7,7 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordTextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.AzureTag;
 import com.atlan.model.structs.PopularityInsights;
@@ -29,6 +30,10 @@ import javax.annotation.processing.Generated;
 public interface IADLS {
 
     public static final String TYPE_NAME = "ADLS";
+
+    /** Unique name of the account for this ADLS asset. */
+    KeywordTextField ADLS_ACCOUNT_QUALIFIED_NAME = new KeywordTextField(
+            "adlsAccountQualifiedName", "adlsAccountQualifiedName", "adlsAccountQualifiedName.text");
 
     /** Unique name of the account for this ADLS asset. */
     String getAdlsAccountQualifiedName();
@@ -181,6 +186,9 @@ public interface IADLS {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -286,6 +294,9 @@ public interface IADLS {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -320,6 +331,9 @@ public interface IADLS {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

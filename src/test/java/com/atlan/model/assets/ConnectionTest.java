@@ -111,6 +111,7 @@ public class ConnectionTest {
             .assetDbtTag("String1")
             .assetDbtTestStatus("String0")
             .assetDbtUniqueId("String0")
+            .assetIcon("String0")
             .assetMcIncidentName("String0")
             .assetMcIncidentName("String1")
             .assetMcIncidentQualifiedName("String0")

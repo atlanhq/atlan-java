@@ -8,6 +8,8 @@ import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.FileType;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -29,6 +31,15 @@ import javax.annotation.processing.Generated;
 public interface IFile {
 
     public static final String TYPE_NAME = "File";
+
+    /** TBC */
+    RelationField FILE_ASSETS = new RelationField("fileAssets");
+
+    /** URL giving the online location where the file can be accessed. */
+    KeywordField FILE_PATH = new KeywordField("filePath", "filePath");
+
+    /** Type of the file */
+    KeywordField FILE_TYPE = new KeywordField("fileType", "fileType");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -175,6 +186,9 @@ public interface IFile {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetIcon();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
 
     /** TBC */
@@ -280,6 +294,9 @@ public interface IFile {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -320,6 +337,9 @@ public interface IFile {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();

@@ -7,6 +7,9 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.BooleanField;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.NumericField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -28,6 +31,22 @@ import javax.annotation.processing.Generated;
 public interface IAuthService {
 
     public static final String TYPE_NAME = "AuthService";
+
+    /** TBC */
+    KeywordField AUTH_SERVICE_CONFIG = new KeywordField("authServiceConfig", "authServiceConfig");
+
+    /** TBC */
+    BooleanField AUTH_SERVICE_IS_ENABLED = new BooleanField("authServiceIsEnabled", "authServiceIsEnabled");
+
+    /** TBC */
+    NumericField AUTH_SERVICE_POLICY_LAST_SYNC =
+            new NumericField("authServicePolicyLastSync", "authServicePolicyLastSync");
+
+    /** TBC */
+    KeywordField AUTH_SERVICE_TYPE = new KeywordField("authServiceType", "authServiceType");
+
+    /** TBC */
+    KeywordField TAG_SERVICE = new KeywordField("tagService", "tagService");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -172,6 +191,9 @@ public interface IAuthService {
 
     /** TBC */
     String getAssetDbtUniqueId();
+
+    /** TBC */
+    String getAssetIcon();
 
     /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
