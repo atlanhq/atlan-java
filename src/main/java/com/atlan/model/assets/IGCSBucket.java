@@ -36,7 +36,7 @@ public interface IGCSBucket {
     public static final String TYPE_NAME = "GCSBucket";
 
     /** TBC */
-    TextField GCS_BUCKET_LIFECYCLE_RULES = new TextField("gcsBucketLifecycleRules", "null");
+    TextField GCS_BUCKET_LIFECYCLE_RULES = new TextField("gcsBucketLifecycleRules", "gcsBucketLifecycleRules");
 
     /** TBC */
     NumericField GCS_BUCKET_RETENTION_EFFECTIVE_TIME =
@@ -49,7 +49,7 @@ public interface IGCSBucket {
     NumericField GCS_BUCKET_RETENTION_PERIOD = new NumericField("gcsBucketRetentionPeriod", "gcsBucketRetentionPeriod");
 
     /** TBC */
-    TextField GCS_BUCKET_RETENTION_POLICY = new TextField("gcsBucketRetentionPolicy", "null");
+    TextField GCS_BUCKET_RETENTION_POLICY = new TextField("gcsBucketRetentionPolicy", "gcsBucketRetentionPolicy");
 
     /** TBC */
     BooleanField GCS_BUCKET_VERSIONING_ENABLED =

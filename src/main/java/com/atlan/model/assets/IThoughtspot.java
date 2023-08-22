@@ -35,7 +35,7 @@ public interface IThoughtspot {
     KeywordField THOUGHTSPOT_CHART_TYPE = new KeywordField("thoughtspotChartType", "thoughtspotChartType");
 
     /** TBC */
-    TextField THOUGHTSPOT_QUESTION_TEXT = new TextField("thoughtspotQuestionText", "null");
+    TextField THOUGHTSPOT_QUESTION_TEXT = new TextField("thoughtspotQuestionText", "thoughtspotQuestionText");
 
     /** TBC */
     SortedSet<String> getAdminGroups();

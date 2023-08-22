@@ -39,13 +39,13 @@ public interface IMetric {
     RelationField METRIC_DIMENSION_COLUMNS = new RelationField("metricDimensionColumns");
 
     /** TBC */
-    TextField METRIC_FILTERS = new TextField("metricFilters", "null");
+    TextField METRIC_FILTERS = new TextField("metricFilters", "metricFilters");
 
     /** TBC */
     KeywordField METRIC_SQL = new KeywordField("metricSQL", "metricSQL");
 
     /** TBC */
-    TextField METRIC_TIME_GRAINS = new TextField("metricTimeGrains", "null");
+    TextField METRIC_TIME_GRAINS = new TextField("metricTimeGrains", "metricTimeGrains");
 
     /** TBC */
     RelationField METRIC_TIMESTAMP_COLUMN = new RelationField("metricTimestampColumn");

@@ -51,10 +51,6 @@ public class Table extends Asset implements ITable, ISQL, ICatalog, IAsset, IRef
 
     /** TBC */
     @Attribute
-    IAirflowTask airflowTask;
-
-    /** TBC */
-    @Attribute
     String alias;
 
     /** Number of columns in this table. */

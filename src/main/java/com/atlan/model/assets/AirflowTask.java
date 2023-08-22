@@ -160,11 +160,6 @@ public class AirflowTask extends Asset implements IAirflowTask, IAirflow, ICatal
     @Attribute
     ILineageProcess process;
 
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ITable> tables;
-
     /**
      * Builds the minimal object necessary to create a relationship to a AirflowTask, from a potentially
      * more-complete AirflowTask object.

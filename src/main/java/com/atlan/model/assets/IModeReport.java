@@ -56,7 +56,7 @@ public interface IModeReport {
     NumericField MODE_QUERY_COUNT = new NumericField("modeQueryCount", "modeQueryCount");
 
     /** TBC */
-    TextField MODE_QUERY_PREVIEW = new TextField("modeQueryPreview", "null");
+    TextField MODE_QUERY_PREVIEW = new TextField("modeQueryPreview", "modeQueryPreview");
 
     /** TBC */
     NumericField MODE_REPORT_PUBLISHED_AT = new NumericField("modeReportPublishedAt", "modeReportPublishedAt");

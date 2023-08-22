@@ -36,7 +36,7 @@ public interface IModeQuery {
     RelationField MODE_CHARTS = new RelationField("modeCharts");
 
     /** TBC */
-    TextField MODE_RAW_QUERY = new TextField("modeRawQuery", "null");
+    TextField MODE_RAW_QUERY = new TextField("modeRawQuery", "modeRawQuery");
 
     /** TBC */
     RelationField MODE_REPORT = new RelationField("modeReport");

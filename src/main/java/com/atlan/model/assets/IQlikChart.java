@@ -33,13 +33,13 @@ public interface IQlikChart {
     public static final String TYPE_NAME = "QlikChart";
 
     /** Footnote on the chart. */
-    TextField QLIK_CHART_FOOTNOTE = new TextField("qlikChartFootnote", "null");
+    TextField QLIK_CHART_FOOTNOTE = new TextField("qlikChartFootnote", "qlikChartFootnote");
 
     /** Orientation of the chart. */
     KeywordField QLIK_CHART_ORIENTATION = new KeywordField("qlikChartOrientation", "qlikChartOrientation");
 
     /** Subtitle of the chart. */
-    TextField QLIK_CHART_SUBTITLE = new TextField("qlikChartSubtitle", "null");
+    TextField QLIK_CHART_SUBTITLE = new TextField("qlikChartSubtitle", "qlikChartSubtitle");
 
     /** Subtype of the chart, for example: bar, graph, pie, etc. */
     KeywordField QLIK_CHART_TYPE = new KeywordField("qlikChartType", "qlikChartType");

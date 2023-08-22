@@ -59,7 +59,7 @@ public interface IADLSObject {
     KeywordField ADLS_OBJECT_ARCHIVE_STATUS = new KeywordField("adlsObjectArchiveStatus", "adlsObjectArchiveStatus");
 
     /** TBC */
-    TextField ADLS_OBJECT_CACHE_CONTROL = new TextField("adlsObjectCacheControl", "null");
+    TextField ADLS_OBJECT_CACHE_CONTROL = new TextField("adlsObjectCacheControl", "adlsObjectCacheControl");
 
     /** TBC */
     KeywordTextField ADLS_OBJECT_CONTENT_LANGUAGE = new KeywordTextField(
@@ -69,7 +69,7 @@ public interface IADLSObject {
     KeywordField ADLS_OBJECT_CONTENT_MD5HASH = new KeywordField("adlsObjectContentMD5Hash", "adlsObjectContentMD5Hash");
 
     /** TBC */
-    TextField ADLS_OBJECT_CONTENT_TYPE = new TextField("adlsObjectContentType", "null");
+    TextField ADLS_OBJECT_CONTENT_TYPE = new TextField("adlsObjectContentType", "adlsObjectContentType");
 
     /** TBC */
     KeywordField ADLS_OBJECT_LEASE_STATE = new KeywordField("adlsObjectLeaseState", "adlsObjectLeaseState");

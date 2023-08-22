@@ -179,7 +179,8 @@ public interface IAsset {
     KeywordField ASSET_DBT_JOB_SCHEDULE = new KeywordField("assetDbtJobSchedule", "assetDbtJobSchedule");
 
     /** TBC */
-    TextField ASSET_DBT_JOB_SCHEDULE_CRON_HUMANIZED = new TextField("assetDbtJobScheduleCronHumanized", "null");
+    TextField ASSET_DBT_JOB_SCHEDULE_CRON_HUMANIZED =
+            new TextField("assetDbtJobScheduleCronHumanized", "assetDbtJobScheduleCronHumanized");
 
     /** TBC */
     KeywordField ASSET_DBT_JOB_STATUS = new KeywordField("assetDbtJobStatus", "assetDbtJobStatus");
@@ -359,7 +360,8 @@ public interface IAsset {
     KeywordField OWNER_USERS = new KeywordField("ownerUsers", "ownerUsers");
 
     /** TBC */
-    NumericRankField POPULARITY_SCORE = new NumericRankField("popularityScore", "null", "null");
+    NumericRankField POPULARITY_SCORE =
+            new NumericRankField("popularityScore", "popularityScore", "popularityScore.rank_feature");
 
     /** README that is linked to this asset. */
     RelationField README = new RelationField("readme");
@@ -466,7 +468,7 @@ public interface IAsset {
             new KeywordTextField("userDescription", "userDescription.keyword", "userDescription");
 
     /** TBC */
-    NumericRankField VIEW_SCORE = new NumericRankField("viewScore", "null", "null");
+    NumericRankField VIEW_SCORE = new NumericRankField("viewScore", "viewScore", "viewScore.rank_feature");
 
     /** TBC */
     KeywordField VIEWER_GROUPS = new KeywordField("viewerGroups", "viewerGroups");

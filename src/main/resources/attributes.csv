@@ -98,7 +98,6 @@ AirflowTask,Airflow Task Assets,airflowTaskTriggerRule,Trigger rule of the run
 AirflowTask,Airflow Task Assets,outputs,TBC
 AirflowTask,Airflow Task Assets,process,TBC
 AirflowTask,Airflow Task Assets,inputs,TBC
-AirflowTask,Airflow Task Assets,tables,TBC
 AirflowTask,Airflow Task Assets,airflowDag,TBC
 Asset,Base class for all assets.,name,Human-readable name of the asset.
 Asset,Base class for all assets.,displayName,Name used for display purposes (in user interfaces).
@@ -1135,12 +1134,11 @@ Table,Instance of a database table in Atlan.,isPartitioned,TBC
 Table,Instance of a database table in Atlan.,partitionStrategy,TBC
 Table,Instance of a database table in Atlan.,partitionCount,TBC
 Table,Instance of a database table in Atlan.,partitionList,TBC
+Table,Instance of a database table in Atlan.,partitions,TBC
 Table,Instance of a database table in Atlan.,columns,Columns that exist within this table.
+Table,Instance of a database table in Atlan.,queries,Queries that involve this table.
 Table,Instance of a database table in Atlan.,facts,TBC
 Table,Instance of a database table in Atlan.,atlanSchema,Schema in which this table exists.
-Table,Instance of a database table in Atlan.,partitions,TBC
-Table,Instance of a database table in Atlan.,airflowTask,TBC
-Table,Instance of a database table in Atlan.,queries,Queries that involve this table.
 Table,Instance of a database table in Atlan.,dimensions,TBC
 TablePartition,Instance of a database table partition in Atlan.,constraint,TBC
 TablePartition,Instance of a database table partition in Atlan.,columnCount,TBC

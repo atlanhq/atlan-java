@@ -42,7 +42,7 @@ public interface IPowerBIMeasure {
             new BooleanField("powerBIIsExternalMeasure", "powerBIIsExternalMeasure");
 
     /** TBC */
-    TextField POWER_BI_MEASURE_EXPRESSION = new TextField("powerBIMeasureExpression", "null");
+    TextField POWER_BI_MEASURE_EXPRESSION = new TextField("powerBIMeasureExpression", "powerBIMeasureExpression");
 
     /** TBC */
     RelationField TABLE = new RelationField("table");

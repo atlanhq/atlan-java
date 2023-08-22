@@ -52,7 +52,7 @@ public interface ISchemaRegistrySubject {
 
     /** Definition of the latest schema in the subject. */
     TextField SCHEMA_REGISTRY_SUBJECT_LATEST_SCHEMA_DEFINITION =
-            new TextField("schemaRegistrySubjectLatestSchemaDefinition", "null");
+            new TextField("schemaRegistrySubjectLatestSchemaDefinition", "schemaRegistrySubjectLatestSchemaDefinition");
 
     /** Latest schema version of the subject. */
     KeywordField SCHEMA_REGISTRY_SUBJECT_LATEST_SCHEMA_VERSION =

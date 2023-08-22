@@ -52,7 +52,7 @@ public interface IAPIPath {
     KeywordTextField API_PATH_RAW_URI = new KeywordTextField("apiPathRawURI", "apiPathRawURI", "apiPathRawURI.text");
 
     /** TBC */
-    TextField API_PATH_SUMMARY = new TextField("apiPathSummary", "null");
+    TextField API_PATH_SUMMARY = new TextField("apiPathSummary", "apiPathSummary");
 
     /** TBC */
     RelationField API_SPEC = new RelationField("apiSpec");

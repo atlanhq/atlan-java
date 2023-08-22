@@ -45,7 +45,7 @@ public interface ISalesforceField {
     KeywordField FORMULA = new KeywordField("formula", "formula");
 
     /** TBC */
-    TextField INLINE_HELP_TEXT = new TextField("inlineHelpText", "null");
+    TextField INLINE_HELP_TEXT = new TextField("inlineHelpText", "inlineHelpText.text");
 
     /** TBC */
     BooleanField IS_CALCULATED = new BooleanField("isCalculated", "isCalculated");

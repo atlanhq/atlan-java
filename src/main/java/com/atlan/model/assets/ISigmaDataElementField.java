@@ -36,7 +36,8 @@ public interface ISigmaDataElementField {
     RelationField SIGMA_DATA_ELEMENT = new RelationField("sigmaDataElement");
 
     /** TBC */
-    TextField SIGMA_DATA_ELEMENT_FIELD_FORMULA = new TextField("sigmaDataElementFieldFormula", "null");
+    TextField SIGMA_DATA_ELEMENT_FIELD_FORMULA =
+            new TextField("sigmaDataElementFieldFormula", "sigmaDataElementFieldFormula");
 
     /** TBC */
     BooleanField SIGMA_DATA_ELEMENT_FIELD_IS_HIDDEN =

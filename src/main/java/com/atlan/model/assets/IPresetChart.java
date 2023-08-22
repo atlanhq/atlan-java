@@ -33,7 +33,8 @@ public interface IPresetChart {
     public static final String TYPE_NAME = "PresetChart";
 
     /** Markdown-based description of the chart. */
-    TextField PRESET_CHART_DESCRIPTION_MARKDOWN = new TextField("presetChartDescriptionMarkdown", "null");
+    TextField PRESET_CHART_DESCRIPTION_MARKDOWN =
+            new TextField("presetChartDescriptionMarkdown", "presetChartDescriptionMarkdown");
 
     /** TBC */
     KeywordField PRESET_CHART_FORM_DATA = new KeywordField("presetChartFormData", "presetChartFormData");

@@ -84,9 +84,6 @@ public interface IAirflowTask {
     RelationField PROCESS = new RelationField("process");
 
     /** TBC */
-    RelationField TABLES = new RelationField("tables");
-
-    /** TBC */
     SortedSet<String> getAdminGroups();
 
     /** TBC */
@@ -544,9 +541,6 @@ public interface IAirflowTask {
 
     /** TBC */
     String getSubType();
-
-    /** TBC */
-    SortedSet<ITable> getTables();
 
     /** TBC */
     String getTenantId();

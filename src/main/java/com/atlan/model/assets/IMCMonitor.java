@@ -38,7 +38,7 @@ public interface IMCMonitor {
     public static final String TYPE_NAME = "MCMonitor";
 
     /** Condition on which the monitor produces an alert. */
-    TextField MC_MONITOR_ALERT_CONDITION = new TextField("mcMonitorAlertCondition", "null");
+    TextField MC_MONITOR_ALERT_CONDITION = new TextField("mcMonitorAlertCondition", "mcMonitorAlertCondition");
 
     /** Assets impacted by this monitor. */
     RelationField MC_MONITOR_ASSETS = new RelationField("mcMonitorAssets");
@@ -78,7 +78,8 @@ public interface IMCMonitor {
             new KeywordField("mcMonitorRuleScheduleConfig", "mcMonitorRuleScheduleConfig");
 
     /** Readable description of the schedule for the rule. */
-    TextField MC_MONITOR_RULE_SCHEDULE_CONFIG_HUMANIZED = new TextField("mcMonitorRuleScheduleConfigHumanized", "null");
+    TextField MC_MONITOR_RULE_SCHEDULE_CONFIG_HUMANIZED =
+            new TextField("mcMonitorRuleScheduleConfigHumanized", "mcMonitorRuleScheduleConfigHumanized");
 
     /** Type of rule for the monitor. */
     KeywordField MC_MONITOR_RULE_TYPE = new KeywordField("mcMonitorRuleType", "mcMonitorRuleType");

@@ -34,9 +34,6 @@ public interface ITable {
     public static final String TYPE_NAME = "Table";
 
     /** TBC */
-    RelationField AIRFLOW_TASK = new RelationField("airflowTask");
-
-    /** TBC */
     KeywordField ALIAS = new KeywordField("alias", "alias");
 
     /** Number of columns in this table. */
@@ -104,9 +101,6 @@ public interface ITable {
 
     /** TBC */
     SortedSet<String> getAdminUsers();
-
-    /** TBC */
-    IAirflowTask getAirflowTask();
 
     /** TBC */
     String getAlias();

@@ -328,7 +328,7 @@ public class AssetGenerator extends TypeGenerator implements Comparable<AssetGen
                     searchTypeArgs = "\"" + searchMap.get(IndexType.KEYWORD) + "\"";
                 } else if (indices.equals(Set.of(IndexType.TEXT))) {
                     searchType = "TextField";
-                    searchTypeArgs = "\"" + searchMap.get(IndexType.KEYWORD) + "\"";
+                    searchTypeArgs = "\"" + searchMap.get(IndexType.TEXT) + "\"";
                 } else if (indices.equals(Set.of(IndexType.NUMERIC))) {
                     searchType = "NumericField";
                     searchTypeArgs = "\"" + searchMap.get(IndexType.NUMERIC) + "\"";
@@ -337,8 +337,8 @@ public class AssetGenerator extends TypeGenerator implements Comparable<AssetGen
                     searchTypeArgs = "\"" + searchMap.get(IndexType.BOOLEAN) + "\"";
                 } else if (indices.equals(Set.of(IndexType.NUMERIC, IndexType.RANK_FEATURE))) {
                     searchType = "NumericRankField";
-                    searchTypeArgs =
-                            "\"" + searchMap.get(IndexType.KEYWORD) + "\", \"" + searchMap.get(IndexType.TEXT) + "\"";
+                    searchTypeArgs = "\"" + searchMap.get(IndexType.NUMERIC) + "\", \""
+                            + searchMap.get(IndexType.RANK_FEATURE) + "\"";
                 } else if (indices.equals(Set.of(IndexType.KEYWORD, IndexType.TEXT))) {
                     searchType = "KeywordTextField";
                     searchTypeArgs =
