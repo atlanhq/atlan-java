@@ -96,10 +96,139 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <h1 title="Deprecated API" class="title">Deprecated API</h1>
 <h2 title="Contents">Contents</h2>
 <ul>
+<li><a href="#interface">Interfaces</a></li>
+<li><a href="#class">Classes</a></li>
+<li><a href="#enum">Enums</a></li>
 <li><a href="#method">Methods</a></li>
 </ul>
 </div>
-<div class="contentContainer"><a id="method">
+<div class="contentContainer"><a id="interface">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<table class="deprecatedSummary">
+<caption><span>Interfaces</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Interface</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/enums/AtlanSearchableField.html" title="interface in com.atlan.model.enums">com.atlan.model.enums.AtlanSearchableField</a></th>
+<td class="colLast">
+<div class="deprecationComment">see <a href="com/atlan/model/fields/SearchableField.html" title="class in com.atlan.model.fields"><code>SearchableField</code></a> instead</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<a id="class">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<table class="deprecatedSummary">
+<caption><span>Classes</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/core/AssetFilter.html" title="class in com.atlan.model.core">com.atlan.model.core.AssetFilter</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/search/FluentSearch.html" title="class in com.atlan.model.search"><code>FluentSearch</code></a></div>
+</td>
+</tr>
+<tr class="rowColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/util/QueryFactory.html" title="class in com.atlan.util">com.atlan.util.QueryFactory</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/search/CompoundQuery.html" title="class in com.atlan.model.search"><code>CompoundQuery</code></a></div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/util/QueryFactory.Aggregate.html" title="class in com.atlan.util">com.atlan.util.QueryFactory.Aggregate</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by interfaces and implementations under <a href="com/atlan/model/fields/package-summary.html"><code>com.atlan.model.fields</code></a></div>
+</td>
+</tr>
+<tr class="rowColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/util/QueryFactory.CompoundQuery.html" title="class in com.atlan.util">com.atlan.util.QueryFactory.CompoundQuery</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/search/CompoundQuery.html" title="class in com.atlan.model.search"><code>CompoundQuery</code></a></div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/util/QueryFactory.FieldQuery.html" title="class in com.atlan.util">com.atlan.util.QueryFactory.FieldQuery</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by the more specific implementations in <a href="com/atlan/model/fields/package-summary.html"><code>com.atlan.model.fields</code></a></div>
+</td>
+</tr>
+<tr class="rowColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/util/QueryFactory.Sort.html" title="class in com.atlan.util">com.atlan.util.QueryFactory.Sort</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/fields/ISearchable.html#order(co.elastic.clients.elasticsearch._types.SortOrder)"><code>ISearchable.order(SortOrder)</code></a></div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<a id="enum">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<table class="deprecatedSummary">
+<caption><span>Enums</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Enum</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/enums/BooleanFields.html" title="enum in com.atlan.model.enums">com.atlan.model.enums.BooleanFields</a></th>
+<td class="colLast">
+<div class="deprecationComment">these are now enumerated as constants in the various asset interfaces, as instances of one of the following: <a href="com/atlan/model/fields/BooleanField.html" title="class in com.atlan.model.fields"><code>BooleanField</code></a>, <a href="com/atlan/model/fields/KeywordField.html" title="class in com.atlan.model.fields"><code>KeywordField</code></a>, <a href="com/atlan/model/fields/KeywordTextField.html" title="class in com.atlan.model.fields"><code>KeywordTextField</code></a>, <a href="com/atlan/model/fields/KeywordTextStemmedField.html" title="class in com.atlan.model.fields"><code>KeywordTextStemmedField</code></a>, <a href="com/atlan/model/fields/NumericField.html" title="class in com.atlan.model.fields"><code>NumericField</code></a>, <a href="com/atlan/model/fields/NumericRankField.html" title="class in com.atlan.model.fields"><code>NumericRankField</code></a>, <a href="com/atlan/model/fields/RelationField.html" title="class in com.atlan.model.fields"><code>RelationField</code></a>, or <a href="com/atlan/model/fields/TextField.html" title="class in com.atlan.model.fields"><code>TextField</code></a></div>
+</td>
+</tr>
+<tr class="rowColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/enums/KeywordFields.html" title="enum in com.atlan.model.enums">com.atlan.model.enums.KeywordFields</a></th>
+<td class="colLast">
+<div class="deprecationComment">these are now enumerated as constants in the various asset interfaces, as instances of one of the following: <a href="com/atlan/model/fields/BooleanField.html" title="class in com.atlan.model.fields"><code>BooleanField</code></a>, <a href="com/atlan/model/fields/KeywordField.html" title="class in com.atlan.model.fields"><code>KeywordField</code></a>, <a href="com/atlan/model/fields/KeywordTextField.html" title="class in com.atlan.model.fields"><code>KeywordTextField</code></a>, <a href="com/atlan/model/fields/KeywordTextStemmedField.html" title="class in com.atlan.model.fields"><code>KeywordTextStemmedField</code></a>, <a href="com/atlan/model/fields/NumericField.html" title="class in com.atlan.model.fields"><code>NumericField</code></a>, <a href="com/atlan/model/fields/NumericRankField.html" title="class in com.atlan.model.fields"><code>NumericRankField</code></a>, <a href="com/atlan/model/fields/RelationField.html" title="class in com.atlan.model.fields"><code>RelationField</code></a>, or <a href="com/atlan/model/fields/TextField.html" title="class in com.atlan.model.fields"><code>TextField</code></a></div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/enums/NumericFields.html" title="enum in com.atlan.model.enums">com.atlan.model.enums.NumericFields</a></th>
+<td class="colLast">
+<div class="deprecationComment">these are now enumerated as constants in the various asset interfaces, as instances of one of the following: <a href="com/atlan/model/fields/BooleanField.html" title="class in com.atlan.model.fields"><code>BooleanField</code></a>, <a href="com/atlan/model/fields/KeywordField.html" title="class in com.atlan.model.fields"><code>KeywordField</code></a>, <a href="com/atlan/model/fields/KeywordTextField.html" title="class in com.atlan.model.fields"><code>KeywordTextField</code></a>, <a href="com/atlan/model/fields/KeywordTextStemmedField.html" title="class in com.atlan.model.fields"><code>KeywordTextStemmedField</code></a>, <a href="com/atlan/model/fields/NumericField.html" title="class in com.atlan.model.fields"><code>NumericField</code></a>, <a href="com/atlan/model/fields/NumericRankField.html" title="class in com.atlan.model.fields"><code>NumericRankField</code></a>, <a href="com/atlan/model/fields/RelationField.html" title="class in com.atlan.model.fields"><code>RelationField</code></a>, or <a href="com/atlan/model/fields/TextField.html" title="class in com.atlan.model.fields"><code>TextField</code></a></div>
+</td>
+</tr>
+<tr class="rowColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/enums/RankFields.html" title="enum in com.atlan.model.enums">com.atlan.model.enums.RankFields</a></th>
+<td class="colLast">
+<div class="deprecationComment">these are now enumerated as constants in the various asset interfaces, as instances of one of the following: <a href="com/atlan/model/fields/BooleanField.html" title="class in com.atlan.model.fields"><code>BooleanField</code></a>, <a href="com/atlan/model/fields/KeywordField.html" title="class in com.atlan.model.fields"><code>KeywordField</code></a>, <a href="com/atlan/model/fields/KeywordTextField.html" title="class in com.atlan.model.fields"><code>KeywordTextField</code></a>, <a href="com/atlan/model/fields/KeywordTextStemmedField.html" title="class in com.atlan.model.fields"><code>KeywordTextStemmedField</code></a>, <a href="com/atlan/model/fields/NumericField.html" title="class in com.atlan.model.fields"><code>NumericField</code></a>, <a href="com/atlan/model/fields/NumericRankField.html" title="class in com.atlan.model.fields"><code>NumericRankField</code></a>, <a href="com/atlan/model/fields/RelationField.html" title="class in com.atlan.model.fields"><code>RelationField</code></a>, or <a href="com/atlan/model/fields/TextField.html" title="class in com.atlan.model.fields"><code>TextField</code></a></div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/enums/StemmedFields.html" title="enum in com.atlan.model.enums">com.atlan.model.enums.StemmedFields</a></th>
+<td class="colLast">
+<div class="deprecationComment">these are now enumerated as constants in the various asset interfaces, as instances of one of the following: <a href="com/atlan/model/fields/BooleanField.html" title="class in com.atlan.model.fields"><code>BooleanField</code></a>, <a href="com/atlan/model/fields/KeywordField.html" title="class in com.atlan.model.fields"><code>KeywordField</code></a>, <a href="com/atlan/model/fields/KeywordTextField.html" title="class in com.atlan.model.fields"><code>KeywordTextField</code></a>, <a href="com/atlan/model/fields/KeywordTextStemmedField.html" title="class in com.atlan.model.fields"><code>KeywordTextStemmedField</code></a>, <a href="com/atlan/model/fields/NumericField.html" title="class in com.atlan.model.fields"><code>NumericField</code></a>, <a href="com/atlan/model/fields/NumericRankField.html" title="class in com.atlan.model.fields"><code>NumericRankField</code></a>, <a href="com/atlan/model/fields/RelationField.html" title="class in com.atlan.model.fields"><code>RelationField</code></a>, or <a href="com/atlan/model/fields/TextField.html" title="class in com.atlan.model.fields"><code>TextField</code></a></div>
+</td>
+</tr>
+<tr class="rowColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/enums/TextFields.html" title="enum in com.atlan.model.enums">com.atlan.model.enums.TextFields</a></th>
+<td class="colLast">
+<div class="deprecationComment">these are now enumerated as constants in the various asset interfaces, as instances of one of the following: <a href="com/atlan/model/fields/BooleanField.html" title="class in com.atlan.model.fields"><code>BooleanField</code></a>, <a href="com/atlan/model/fields/KeywordField.html" title="class in com.atlan.model.fields"><code>KeywordField</code></a>, <a href="com/atlan/model/fields/KeywordTextField.html" title="class in com.atlan.model.fields"><code>KeywordTextField</code></a>, <a href="com/atlan/model/fields/KeywordTextStemmedField.html" title="class in com.atlan.model.fields"><code>KeywordTextStemmedField</code></a>, <a href="com/atlan/model/fields/NumericField.html" title="class in com.atlan.model.fields"><code>NumericField</code></a>, <a href="com/atlan/model/fields/NumericRankField.html" title="class in com.atlan.model.fields"><code>NumericRankField</code></a>, <a href="com/atlan/model/fields/RelationField.html" title="class in com.atlan.model.fields"><code>RelationField</code></a>, or <a href="com/atlan/model/fields/TextField.html" title="class in com.atlan.model.fields"><code>TextField</code></a></div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<a id="method">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -112,39 +241,51 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </tr>
 <tbody>
 <tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/api/AssetEndpoint.html#all()">com.atlan.api.AssetEndpoint.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/api/AssetEndpoint.html#select()"><code>AssetEndpoint.select()</code></a></div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/admin/AtlanGroup.html#retrieveAll()">com.atlan.model.admin.AtlanGroup.retrieveAll()</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/admin/AtlanGroup.html#list()"><code>AtlanGroup.list()</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/admin/AtlanGroup.html#retrieveByName(java.lang.String)">com.atlan.model.admin.AtlanGroup.retrieveByName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/admin/AtlanGroup.html#get(java.lang.String)"><code>AtlanGroup.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/admin/AtlanUser.html#retrieveAll()">com.atlan.model.admin.AtlanUser.retrieveAll()</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/admin/AtlanUser.html#list()"><code>AtlanUser.list()</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/admin/AtlanUser.html#retrieveByEmail(java.lang.String)">com.atlan.model.admin.AtlanUser.retrieveByEmail&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/admin/AtlanUser.html#getByEmail(java.lang.String)"><code>AtlanUser.getByEmail(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/admin/AtlanUser.html#retrieveByUsername(java.lang.String)">com.atlan.model.admin.AtlanUser.retrieveByUsername&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/admin/AtlanUser.html#getByUsername(java.lang.String)"><code>AtlanUser.getByUsername(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/ADLSAccount.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.ADLSAccount.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/ADLSAccount.html#appendAtlanTags(java.lang.String,java.util.List)"><code>ADLSAccount.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="rowColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/ADLSAccount.html#all()">com.atlan.model.assets.ADLSAccount.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/ADLSAccount.html#select()"><code>ADLSAccount.select()</code></a></div>
 </td>
 </tr>
 <tr class="altColor">
@@ -166,21 +307,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="rowColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/ADLSContainer.html#all()">com.atlan.model.assets.ADLSContainer.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/ADLSContainer.html#select()"><code>ADLSContainer.select()</code></a></div>
+</td>
+</tr>
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/ADLSContainer.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.ADLSContainer.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/ADLSContainer.html#get(java.lang.String)"><code>ADLSContainer.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/ADLSContainer.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.ADLSContainer.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/ADLSContainer.html#get(java.lang.String)"><code>ADLSContainer.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/ADLSObject.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.ADLSObject.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/ADLSObject.html#appendAtlanTags(java.lang.String,java.util.List)"><code>ADLSObject.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="rowColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/ADLSObject.html#all()">com.atlan.model.assets.ADLSObject.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/ADLSObject.html#select()"><code>ADLSObject.select()</code></a></div>
 </td>
 </tr>
 <tr class="altColor">
@@ -202,21 +355,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="rowColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/AirflowDag.html#all()">com.atlan.model.assets.AirflowDag.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/AirflowDag.html#select()"><code>AirflowDag.select()</code></a></div>
+</td>
+</tr>
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/AirflowDag.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.AirflowDag.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/AirflowDag.html#get(java.lang.String)"><code>AirflowDag.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/AirflowDag.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.AirflowDag.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/AirflowDag.html#get(java.lang.String)"><code>AirflowDag.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/AirflowTask.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.AirflowTask.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/AirflowTask.html#appendAtlanTags(java.lang.String,java.util.List)"><code>AirflowTask.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="rowColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/AirflowTask.html#all()">com.atlan.model.assets.AirflowTask.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/AirflowTask.html#select()"><code>AirflowTask.select()</code></a></div>
 </td>
 </tr>
 <tr class="altColor">
@@ -238,21 +403,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="rowColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/APIPath.html#all()">com.atlan.model.assets.APIPath.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/APIPath.html#select()"><code>APIPath.select()</code></a></div>
+</td>
+</tr>
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/APIPath.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.APIPath.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/APIPath.html#get(java.lang.String)"><code>APIPath.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/APIPath.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.APIPath.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/APIPath.html#get(java.lang.String)"><code>APIPath.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/APISpec.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.APISpec.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/APISpec.html#appendAtlanTags(java.lang.String,java.util.List)"><code>APISpec.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="rowColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/APISpec.html#all()">com.atlan.model.assets.APISpec.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/APISpec.html#select()"><code>APISpec.select()</code></a></div>
 </td>
 </tr>
 <tr class="altColor">
@@ -344,21 +521,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="rowColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/AtlanCollection.html#all()">com.atlan.model.assets.AtlanCollection.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/AtlanCollection.html#select()"><code>AtlanCollection.select()</code></a></div>
+</td>
+</tr>
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/AtlanCollection.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.AtlanCollection.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/AtlanCollection.html#get(java.lang.String)"><code>AtlanCollection.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/AtlanCollection.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.AtlanCollection.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/AtlanCollection.html#get(java.lang.String)"><code>AtlanCollection.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/AtlanQuery.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.AtlanQuery.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/AtlanQuery.html#appendAtlanTags(java.lang.String,java.util.List)"><code>AtlanQuery.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="rowColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/AtlanQuery.html#all()">com.atlan.model.assets.AtlanQuery.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/AtlanQuery.html#select()"><code>AtlanQuery.select()</code></a></div>
 </td>
 </tr>
 <tr class="altColor">
@@ -380,21 +569,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="rowColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/AuthPolicy.html#all()">com.atlan.model.assets.AuthPolicy.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/AuthPolicy.html#select()"><code>AuthPolicy.select()</code></a></div>
+</td>
+</tr>
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/AuthPolicy.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.AuthPolicy.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/AuthPolicy.html#get(java.lang.String)"><code>AuthPolicy.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/AuthPolicy.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.AuthPolicy.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/AuthPolicy.html#get(java.lang.String)"><code>AuthPolicy.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/AuthService.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.AuthService.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/AuthService.html#appendAtlanTags(java.lang.String,java.util.List)"><code>AuthService.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="rowColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/AuthService.html#all()">com.atlan.model.assets.AuthService.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/AuthService.html#select()"><code>AuthService.select()</code></a></div>
 </td>
 </tr>
 <tr class="altColor">
@@ -416,15 +617,27 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="rowColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/AzureEventHub.html#all()">com.atlan.model.assets.AzureEventHub.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/AzureEventHub.html#select()"><code>AzureEventHub.select()</code></a></div>
+</td>
+</tr>
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/AzureEventHub.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.AzureEventHub.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/AzureEventHub.html#get(java.lang.String)"><code>AzureEventHub.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/AzureEventHub.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.AzureEventHub.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/AzureEventHub.html#get(java.lang.String)"><code>AzureEventHub.get(String)</code></a> instead</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/Badge.html#all()">com.atlan.model.assets.Badge.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/Badge.html#select()"><code>Badge.select()</code></a></div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -446,21 +659,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/BIProcess.html#all()">com.atlan.model.assets.BIProcess.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/BIProcess.html#select()"><code>BIProcess.select()</code></a></div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/BIProcess.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.BIProcess.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/BIProcess.html#get(java.lang.String)"><code>BIProcess.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/BIProcess.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.BIProcess.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/BIProcess.html#get(java.lang.String)"><code>BIProcess.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/Column.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.Column.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/Column.html#appendAtlanTags(java.lang.String,java.util.List)"><code>Column.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/Column.html#all()">com.atlan.model.assets.Column.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/Column.html#select()"><code>Column.select()</code></a></div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -482,21 +707,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/ColumnProcess.html#all()">com.atlan.model.assets.ColumnProcess.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/ColumnProcess.html#select()"><code>ColumnProcess.select()</code></a></div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/ColumnProcess.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.ColumnProcess.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/ColumnProcess.html#get(java.lang.String)"><code>ColumnProcess.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/ColumnProcess.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.ColumnProcess.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/ColumnProcess.html#get(java.lang.String)"><code>ColumnProcess.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/Connection.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.Connection.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/Connection.html#appendAtlanTags(java.lang.String,java.util.List)"><code>Connection.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/Connection.html#all()">com.atlan.model.assets.Connection.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/Connection.html#select()"><code>Connection.select()</code></a></div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -524,21 +761,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="rowColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/Database.html#all()">com.atlan.model.assets.Database.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/Database.html#select()"><code>Database.select()</code></a></div>
+</td>
+</tr>
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/Database.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.Database.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/Database.html#get(java.lang.String)"><code>Database.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/Database.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.Database.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/Database.html#get(java.lang.String)"><code>Database.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/DataStudioAsset.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.DataStudioAsset.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/DataStudioAsset.html#appendAtlanTags(java.lang.String,java.util.List)"><code>DataStudioAsset.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="rowColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/DataStudioAsset.html#all()">com.atlan.model.assets.DataStudioAsset.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/DataStudioAsset.html#select()"><code>DataStudioAsset.select()</code></a></div>
 </td>
 </tr>
 <tr class="altColor">
@@ -560,21 +809,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="rowColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/DbtColumnProcess.html#all()">com.atlan.model.assets.DbtColumnProcess.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/DbtColumnProcess.html#select()"><code>DbtColumnProcess.select()</code></a></div>
+</td>
+</tr>
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/DbtColumnProcess.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.DbtColumnProcess.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/DbtColumnProcess.html#get(java.lang.String)"><code>DbtColumnProcess.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/DbtColumnProcess.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.DbtColumnProcess.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/DbtColumnProcess.html#get(java.lang.String)"><code>DbtColumnProcess.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/DbtMetric.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.DbtMetric.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/DbtMetric.html#appendAtlanTags(java.lang.String,java.util.List)"><code>DbtMetric.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="rowColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/DbtMetric.html#all()">com.atlan.model.assets.DbtMetric.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/DbtMetric.html#select()"><code>DbtMetric.select()</code></a></div>
 </td>
 </tr>
 <tr class="altColor">
@@ -596,21 +857,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="rowColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/DbtModel.html#all()">com.atlan.model.assets.DbtModel.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/DbtModel.html#select()"><code>DbtModel.select()</code></a></div>
+</td>
+</tr>
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/DbtModel.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.DbtModel.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/DbtModel.html#get(java.lang.String)"><code>DbtModel.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/DbtModel.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.DbtModel.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/DbtModel.html#get(java.lang.String)"><code>DbtModel.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/DbtModelColumn.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.DbtModelColumn.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/DbtModelColumn.html#appendAtlanTags(java.lang.String,java.util.List)"><code>DbtModelColumn.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="rowColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/DbtModelColumn.html#all()">com.atlan.model.assets.DbtModelColumn.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/DbtModelColumn.html#select()"><code>DbtModelColumn.select()</code></a></div>
 </td>
 </tr>
 <tr class="altColor">
@@ -632,21 +905,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="rowColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/DbtProcess.html#all()">com.atlan.model.assets.DbtProcess.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/DbtProcess.html#select()"><code>DbtProcess.select()</code></a></div>
+</td>
+</tr>
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/DbtProcess.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.DbtProcess.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/DbtProcess.html#get(java.lang.String)"><code>DbtProcess.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/DbtProcess.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.DbtProcess.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/DbtProcess.html#get(java.lang.String)"><code>DbtProcess.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/DbtSource.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.DbtSource.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/DbtSource.html#appendAtlanTags(java.lang.String,java.util.List)"><code>DbtSource.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="rowColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/DbtSource.html#all()">com.atlan.model.assets.DbtSource.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/DbtSource.html#select()"><code>DbtSource.select()</code></a></div>
 </td>
 </tr>
 <tr class="altColor">
@@ -668,21 +953,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="rowColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/DbtTag.html#all()">com.atlan.model.assets.DbtTag.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/DbtTag.html#select()"><code>DbtTag.select()</code></a></div>
+</td>
+</tr>
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/DbtTag.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.DbtTag.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/DbtTag.html#get(java.lang.String)"><code>DbtTag.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/DbtTag.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.DbtTag.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/DbtTag.html#get(java.lang.String)"><code>DbtTag.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/DbtTest.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.DbtTest.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/DbtTest.html#appendAtlanTags(java.lang.String,java.util.List)"><code>DbtTest.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="rowColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/DbtTest.html#all()">com.atlan.model.assets.DbtTest.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/DbtTest.html#select()"><code>DbtTest.select()</code></a></div>
 </td>
 </tr>
 <tr class="altColor">
@@ -704,21 +1001,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="rowColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/File.html#all()">com.atlan.model.assets.File.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/File.html#select()"><code>File.select()</code></a></div>
+</td>
+</tr>
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/File.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.File.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/File.html#get(java.lang.String)"><code>File.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/File.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.File.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/File.html#get(java.lang.String)"><code>File.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/Folder.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.Folder.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/Folder.html#appendAtlanTags(java.lang.String,java.util.List)"><code>Folder.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="rowColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/Folder.html#all()">com.atlan.model.assets.Folder.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/Folder.html#select()"><code>Folder.select()</code></a></div>
 </td>
 </tr>
 <tr class="altColor">
@@ -740,21 +1049,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="rowColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/Function.html#all()">com.atlan.model.assets.Function.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/Function.html#select()"><code>Function.select()</code></a></div>
+</td>
+</tr>
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/Function.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.Function.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/Function.html#get(java.lang.String)"><code>Function.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/Function.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.Function.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/Function.html#get(java.lang.String)"><code>Function.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/GCSBucket.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.GCSBucket.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/GCSBucket.html#appendAtlanTags(java.lang.String,java.util.List)"><code>GCSBucket.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="rowColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/GCSBucket.html#all()">com.atlan.model.assets.GCSBucket.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/GCSBucket.html#select()"><code>GCSBucket.select()</code></a></div>
 </td>
 </tr>
 <tr class="altColor">
@@ -776,21 +1097,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="rowColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/GCSObject.html#all()">com.atlan.model.assets.GCSObject.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/GCSObject.html#select()"><code>GCSObject.select()</code></a></div>
+</td>
+</tr>
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/GCSObject.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.GCSObject.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/GCSObject.html#get(java.lang.String)"><code>GCSObject.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/GCSObject.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.GCSObject.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/GCSObject.html#get(java.lang.String)"><code>GCSObject.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/Glossary.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.Glossary.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/Glossary.html#appendAtlanTags(java.lang.String,java.util.List)"><code>Glossary.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="rowColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/Glossary.html#all()">com.atlan.model.assets.Glossary.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/Glossary.html#select()"><code>Glossary.select()</code></a></div>
 </td>
 </tr>
 <tr class="altColor">
@@ -812,27 +1145,39 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="rowColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/GlossaryCategory.html#all()">com.atlan.model.assets.GlossaryCategory.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/GlossaryCategory.html#select()"><code>GlossaryCategory.select()</code></a></div>
+</td>
+</tr>
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/GlossaryCategory.html#creator(java.lang.String,java.lang.String,java.lang.String)">com.atlan.model.assets.GlossaryCategory.creator&#8203;(String, String, String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/GlossaryCategory.html#creator(java.lang.String,java.lang.String)"><code>GlossaryCategory.creator(String, String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/GlossaryCategory.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.GlossaryCategory.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/GlossaryCategory.html#get(java.lang.String)"><code>GlossaryCategory.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/GlossaryCategory.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.GlossaryCategory.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/GlossaryCategory.html#get(java.lang.String)"><code>GlossaryCategory.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/GlossaryTerm.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.GlossaryTerm.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/GlossaryTerm.html#appendAtlanTags(java.lang.String,java.util.List)"><code>GlossaryTerm.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/GlossaryTerm.html#all()">com.atlan.model.assets.GlossaryTerm.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/GlossaryTerm.html#select()"><code>GlossaryTerm.select()</code></a></div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -860,33 +1205,45 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="rowColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/Insight.html#all()">com.atlan.model.assets.Insight.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/Insight.html#select()"><code>Insight.select()</code></a></div>
+</td>
+</tr>
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/Insight.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.Insight.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/Insight.html#get(java.lang.String)"><code>Insight.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/Insight.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.Insight.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/Insight.html#get(java.lang.String)"><code>Insight.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/IReferenceable.html#getAtlanTagNames()">com.atlan.model.assets.IReferenceable.getAtlanTagNames()</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/IReferenceable.html#getAtlanTags()"><code>IReferenceable.getAtlanTags()</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/IReferenceable.html#getMeanings()">com.atlan.model.assets.IReferenceable.getMeanings()</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/Asset.html#getAssignedTerms()"><code>Asset.getAssignedTerms()</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/KafkaConsumerGroup.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.KafkaConsumerGroup.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/KafkaConsumerGroup.html#appendAtlanTags(java.lang.String,java.util.List)"><code>KafkaConsumerGroup.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="rowColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/KafkaConsumerGroup.html#all()">com.atlan.model.assets.KafkaConsumerGroup.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/KafkaConsumerGroup.html#select()"><code>KafkaConsumerGroup.select()</code></a></div>
 </td>
 </tr>
 <tr class="altColor">
@@ -908,21 +1265,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="rowColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/KafkaTopic.html#all()">com.atlan.model.assets.KafkaTopic.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/KafkaTopic.html#select()"><code>KafkaTopic.select()</code></a></div>
+</td>
+</tr>
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/KafkaTopic.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.KafkaTopic.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/KafkaTopic.html#get(java.lang.String)"><code>KafkaTopic.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/KafkaTopic.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.KafkaTopic.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/KafkaTopic.html#get(java.lang.String)"><code>KafkaTopic.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/LineageProcess.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.LineageProcess.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/LineageProcess.html#appendAtlanTags(java.lang.String,java.util.List)"><code>LineageProcess.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="rowColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/LineageProcess.html#all()">com.atlan.model.assets.LineageProcess.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/LineageProcess.html#select()"><code>LineageProcess.select()</code></a></div>
 </td>
 </tr>
 <tr class="altColor">
@@ -938,21 +1307,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/Link.html#all()">com.atlan.model.assets.Link.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/Link.html#select()"><code>Link.select()</code></a></div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/Link.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.Link.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/Link.html#get(java.lang.String)"><code>Link.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/Link.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.Link.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/Link.html#get(java.lang.String)"><code>Link.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/LookerDashboard.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.LookerDashboard.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/LookerDashboard.html#appendAtlanTags(java.lang.String,java.util.List)"><code>LookerDashboard.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/LookerDashboard.html#all()">com.atlan.model.assets.LookerDashboard.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/LookerDashboard.html#select()"><code>LookerDashboard.select()</code></a></div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -974,21 +1355,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/LookerExplore.html#all()">com.atlan.model.assets.LookerExplore.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/LookerExplore.html#select()"><code>LookerExplore.select()</code></a></div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/LookerExplore.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.LookerExplore.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/LookerExplore.html#get(java.lang.String)"><code>LookerExplore.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/LookerExplore.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.LookerExplore.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/LookerExplore.html#get(java.lang.String)"><code>LookerExplore.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/LookerField.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.LookerField.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/LookerField.html#appendAtlanTags(java.lang.String,java.util.List)"><code>LookerField.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/LookerField.html#all()">com.atlan.model.assets.LookerField.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/LookerField.html#select()"><code>LookerField.select()</code></a></div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -1010,21 +1403,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/LookerFolder.html#all()">com.atlan.model.assets.LookerFolder.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/LookerFolder.html#select()"><code>LookerFolder.select()</code></a></div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/LookerFolder.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.LookerFolder.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/LookerFolder.html#get(java.lang.String)"><code>LookerFolder.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/LookerFolder.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.LookerFolder.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/LookerFolder.html#get(java.lang.String)"><code>LookerFolder.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/LookerLook.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.LookerLook.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/LookerLook.html#appendAtlanTags(java.lang.String,java.util.List)"><code>LookerLook.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/LookerLook.html#all()">com.atlan.model.assets.LookerLook.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/LookerLook.html#select()"><code>LookerLook.select()</code></a></div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -1046,21 +1451,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/LookerModel.html#all()">com.atlan.model.assets.LookerModel.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/LookerModel.html#select()"><code>LookerModel.select()</code></a></div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/LookerModel.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.LookerModel.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/LookerModel.html#get(java.lang.String)"><code>LookerModel.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/LookerModel.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.LookerModel.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/LookerModel.html#get(java.lang.String)"><code>LookerModel.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/LookerProject.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.LookerProject.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/LookerProject.html#appendAtlanTags(java.lang.String,java.util.List)"><code>LookerProject.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/LookerProject.html#all()">com.atlan.model.assets.LookerProject.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/LookerProject.html#select()"><code>LookerProject.select()</code></a></div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -1082,21 +1499,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/LookerQuery.html#all()">com.atlan.model.assets.LookerQuery.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/LookerQuery.html#select()"><code>LookerQuery.select()</code></a></div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/LookerQuery.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.LookerQuery.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/LookerQuery.html#get(java.lang.String)"><code>LookerQuery.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/LookerQuery.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.LookerQuery.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/LookerQuery.html#get(java.lang.String)"><code>LookerQuery.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/LookerTile.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.LookerTile.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/LookerTile.html#appendAtlanTags(java.lang.String,java.util.List)"><code>LookerTile.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/LookerTile.html#all()">com.atlan.model.assets.LookerTile.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/LookerTile.html#select()"><code>LookerTile.select()</code></a></div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -1118,21 +1547,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/LookerView.html#all()">com.atlan.model.assets.LookerView.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/LookerView.html#select()"><code>LookerView.select()</code></a></div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/LookerView.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.LookerView.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/LookerView.html#get(java.lang.String)"><code>LookerView.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/LookerView.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.LookerView.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/LookerView.html#get(java.lang.String)"><code>LookerView.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/MaterializedView.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.MaterializedView.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/MaterializedView.html#appendAtlanTags(java.lang.String,java.util.List)"><code>MaterializedView.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/MaterializedView.html#all()">com.atlan.model.assets.MaterializedView.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/MaterializedView.html#select()"><code>MaterializedView.select()</code></a></div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -1154,21 +1595,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/MCIncident.html#all()">com.atlan.model.assets.MCIncident.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/MCIncident.html#select()"><code>MCIncident.select()</code></a></div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/MCIncident.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.MCIncident.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/MCIncident.html#get(java.lang.String)"><code>MCIncident.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/MCIncident.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.MCIncident.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/MCIncident.html#get(java.lang.String)"><code>MCIncident.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/MCMonitor.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.MCMonitor.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/MCMonitor.html#appendAtlanTags(java.lang.String,java.util.List)"><code>MCMonitor.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/MCMonitor.html#all()">com.atlan.model.assets.MCMonitor.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/MCMonitor.html#select()"><code>MCMonitor.select()</code></a></div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -1190,21 +1643,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/MetabaseCollection.html#all()">com.atlan.model.assets.MetabaseCollection.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/MetabaseCollection.html#select()"><code>MetabaseCollection.select()</code></a></div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/MetabaseCollection.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.MetabaseCollection.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/MetabaseCollection.html#get(java.lang.String)"><code>MetabaseCollection.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/MetabaseCollection.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.MetabaseCollection.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/MetabaseCollection.html#get(java.lang.String)"><code>MetabaseCollection.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/MetabaseDashboard.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.MetabaseDashboard.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/MetabaseDashboard.html#appendAtlanTags(java.lang.String,java.util.List)"><code>MetabaseDashboard.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/MetabaseDashboard.html#all()">com.atlan.model.assets.MetabaseDashboard.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/MetabaseDashboard.html#select()"><code>MetabaseDashboard.select()</code></a></div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -1226,21 +1691,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/MetabaseQuestion.html#all()">com.atlan.model.assets.MetabaseQuestion.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/MetabaseQuestion.html#select()"><code>MetabaseQuestion.select()</code></a></div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/MetabaseQuestion.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.MetabaseQuestion.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/MetabaseQuestion.html#get(java.lang.String)"><code>MetabaseQuestion.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/MetabaseQuestion.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.MetabaseQuestion.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/MetabaseQuestion.html#get(java.lang.String)"><code>MetabaseQuestion.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/MicroStrategyAttribute.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.MicroStrategyAttribute.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/MicroStrategyAttribute.html#appendAtlanTags(java.lang.String,java.util.List)"><code>MicroStrategyAttribute.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/MicroStrategyAttribute.html#all()">com.atlan.model.assets.MicroStrategyAttribute.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/MicroStrategyAttribute.html#select()"><code>MicroStrategyAttribute.select()</code></a></div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -1262,21 +1739,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/MicroStrategyCube.html#all()">com.atlan.model.assets.MicroStrategyCube.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/MicroStrategyCube.html#select()"><code>MicroStrategyCube.select()</code></a></div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/MicroStrategyCube.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.MicroStrategyCube.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/MicroStrategyCube.html#get(java.lang.String)"><code>MicroStrategyCube.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/MicroStrategyCube.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.MicroStrategyCube.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/MicroStrategyCube.html#get(java.lang.String)"><code>MicroStrategyCube.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/MicroStrategyDocument.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.MicroStrategyDocument.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/MicroStrategyDocument.html#appendAtlanTags(java.lang.String,java.util.List)"><code>MicroStrategyDocument.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/MicroStrategyDocument.html#all()">com.atlan.model.assets.MicroStrategyDocument.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/MicroStrategyDocument.html#select()"><code>MicroStrategyDocument.select()</code></a></div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -1298,21 +1787,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/MicroStrategyDossier.html#all()">com.atlan.model.assets.MicroStrategyDossier.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/MicroStrategyDossier.html#select()"><code>MicroStrategyDossier.select()</code></a></div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/MicroStrategyDossier.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.MicroStrategyDossier.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/MicroStrategyDossier.html#get(java.lang.String)"><code>MicroStrategyDossier.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/MicroStrategyDossier.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.MicroStrategyDossier.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/MicroStrategyDossier.html#get(java.lang.String)"><code>MicroStrategyDossier.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/MicroStrategyFact.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.MicroStrategyFact.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/MicroStrategyFact.html#appendAtlanTags(java.lang.String,java.util.List)"><code>MicroStrategyFact.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/MicroStrategyFact.html#all()">com.atlan.model.assets.MicroStrategyFact.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/MicroStrategyFact.html#select()"><code>MicroStrategyFact.select()</code></a></div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -1334,21 +1835,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/MicroStrategyMetric.html#all()">com.atlan.model.assets.MicroStrategyMetric.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/MicroStrategyMetric.html#select()"><code>MicroStrategyMetric.select()</code></a></div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/MicroStrategyMetric.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.MicroStrategyMetric.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/MicroStrategyMetric.html#get(java.lang.String)"><code>MicroStrategyMetric.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/MicroStrategyMetric.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.MicroStrategyMetric.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/MicroStrategyMetric.html#get(java.lang.String)"><code>MicroStrategyMetric.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/MicroStrategyProject.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.MicroStrategyProject.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/MicroStrategyProject.html#appendAtlanTags(java.lang.String,java.util.List)"><code>MicroStrategyProject.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/MicroStrategyProject.html#all()">com.atlan.model.assets.MicroStrategyProject.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/MicroStrategyProject.html#select()"><code>MicroStrategyProject.select()</code></a></div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -1370,21 +1883,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/MicroStrategyReport.html#all()">com.atlan.model.assets.MicroStrategyReport.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/MicroStrategyReport.html#select()"><code>MicroStrategyReport.select()</code></a></div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/MicroStrategyReport.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.MicroStrategyReport.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/MicroStrategyReport.html#get(java.lang.String)"><code>MicroStrategyReport.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/MicroStrategyReport.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.MicroStrategyReport.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/MicroStrategyReport.html#get(java.lang.String)"><code>MicroStrategyReport.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/MicroStrategyVisualization.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.MicroStrategyVisualization.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/MicroStrategyVisualization.html#appendAtlanTags(java.lang.String,java.util.List)"><code>MicroStrategyVisualization.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/MicroStrategyVisualization.html#all()">com.atlan.model.assets.MicroStrategyVisualization.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/MicroStrategyVisualization.html#select()"><code>MicroStrategyVisualization.select()</code></a></div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -1406,21 +1931,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/ModeChart.html#all()">com.atlan.model.assets.ModeChart.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/ModeChart.html#select()"><code>ModeChart.select()</code></a></div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/ModeChart.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.ModeChart.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/ModeChart.html#get(java.lang.String)"><code>ModeChart.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/ModeChart.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.ModeChart.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/ModeChart.html#get(java.lang.String)"><code>ModeChart.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/ModeCollection.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.ModeCollection.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/ModeCollection.html#appendAtlanTags(java.lang.String,java.util.List)"><code>ModeCollection.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/ModeCollection.html#all()">com.atlan.model.assets.ModeCollection.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/ModeCollection.html#select()"><code>ModeCollection.select()</code></a></div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -1442,21 +1979,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/ModeQuery.html#all()">com.atlan.model.assets.ModeQuery.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/ModeQuery.html#select()"><code>ModeQuery.select()</code></a></div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/ModeQuery.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.ModeQuery.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/ModeQuery.html#get(java.lang.String)"><code>ModeQuery.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/ModeQuery.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.ModeQuery.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/ModeQuery.html#get(java.lang.String)"><code>ModeQuery.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/ModeReport.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.ModeReport.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/ModeReport.html#appendAtlanTags(java.lang.String,java.util.List)"><code>ModeReport.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/ModeReport.html#all()">com.atlan.model.assets.ModeReport.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/ModeReport.html#select()"><code>ModeReport.select()</code></a></div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -1478,21 +2027,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/ModeWorkspace.html#all()">com.atlan.model.assets.ModeWorkspace.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/ModeWorkspace.html#select()"><code>ModeWorkspace.select()</code></a></div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/ModeWorkspace.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.ModeWorkspace.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/ModeWorkspace.html#get(java.lang.String)"><code>ModeWorkspace.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/ModeWorkspace.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.ModeWorkspace.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/ModeWorkspace.html#get(java.lang.String)"><code>ModeWorkspace.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/Persona.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.Persona.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/Persona.html#appendAtlanTags(java.lang.String,java.util.List)"><code>Persona.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/Persona.html#all()">com.atlan.model.assets.Persona.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/Persona.html#select()"><code>Persona.select()</code></a></div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -1514,21 +2075,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/PowerBIColumn.html#all()">com.atlan.model.assets.PowerBIColumn.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/PowerBIColumn.html#select()"><code>PowerBIColumn.select()</code></a></div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/PowerBIColumn.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.PowerBIColumn.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/PowerBIColumn.html#get(java.lang.String)"><code>PowerBIColumn.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/PowerBIColumn.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.PowerBIColumn.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/PowerBIColumn.html#get(java.lang.String)"><code>PowerBIColumn.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/PowerBIDashboard.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.PowerBIDashboard.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/PowerBIDashboard.html#appendAtlanTags(java.lang.String,java.util.List)"><code>PowerBIDashboard.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/PowerBIDashboard.html#all()">com.atlan.model.assets.PowerBIDashboard.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/PowerBIDashboard.html#select()"><code>PowerBIDashboard.select()</code></a></div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -1550,21 +2123,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/PowerBIDataflow.html#all()">com.atlan.model.assets.PowerBIDataflow.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/PowerBIDataflow.html#select()"><code>PowerBIDataflow.select()</code></a></div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/PowerBIDataflow.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.PowerBIDataflow.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/PowerBIDataflow.html#get(java.lang.String)"><code>PowerBIDataflow.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/PowerBIDataflow.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.PowerBIDataflow.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/PowerBIDataflow.html#get(java.lang.String)"><code>PowerBIDataflow.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/PowerBIDataset.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.PowerBIDataset.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/PowerBIDataset.html#appendAtlanTags(java.lang.String,java.util.List)"><code>PowerBIDataset.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/PowerBIDataset.html#all()">com.atlan.model.assets.PowerBIDataset.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/PowerBIDataset.html#select()"><code>PowerBIDataset.select()</code></a></div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -1586,21 +2171,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/PowerBIDatasource.html#all()">com.atlan.model.assets.PowerBIDatasource.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/PowerBIDatasource.html#select()"><code>PowerBIDatasource.select()</code></a></div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/PowerBIDatasource.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.PowerBIDatasource.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/PowerBIDatasource.html#get(java.lang.String)"><code>PowerBIDatasource.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/PowerBIDatasource.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.PowerBIDatasource.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/PowerBIDatasource.html#get(java.lang.String)"><code>PowerBIDatasource.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/PowerBIMeasure.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.PowerBIMeasure.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/PowerBIMeasure.html#appendAtlanTags(java.lang.String,java.util.List)"><code>PowerBIMeasure.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/PowerBIMeasure.html#all()">com.atlan.model.assets.PowerBIMeasure.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/PowerBIMeasure.html#select()"><code>PowerBIMeasure.select()</code></a></div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -1622,21 +2219,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/PowerBIPage.html#all()">com.atlan.model.assets.PowerBIPage.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/PowerBIPage.html#select()"><code>PowerBIPage.select()</code></a></div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/PowerBIPage.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.PowerBIPage.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/PowerBIPage.html#get(java.lang.String)"><code>PowerBIPage.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/PowerBIPage.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.PowerBIPage.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/PowerBIPage.html#get(java.lang.String)"><code>PowerBIPage.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/PowerBIReport.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.PowerBIReport.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/PowerBIReport.html#appendAtlanTags(java.lang.String,java.util.List)"><code>PowerBIReport.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/PowerBIReport.html#all()">com.atlan.model.assets.PowerBIReport.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/PowerBIReport.html#select()"><code>PowerBIReport.select()</code></a></div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -1658,21 +2267,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/PowerBITable.html#all()">com.atlan.model.assets.PowerBITable.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/PowerBITable.html#select()"><code>PowerBITable.select()</code></a></div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/PowerBITable.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.PowerBITable.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/PowerBITable.html#get(java.lang.String)"><code>PowerBITable.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/PowerBITable.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.PowerBITable.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/PowerBITable.html#get(java.lang.String)"><code>PowerBITable.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/PowerBITile.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.PowerBITile.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/PowerBITile.html#appendAtlanTags(java.lang.String,java.util.List)"><code>PowerBITile.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/PowerBITile.html#all()">com.atlan.model.assets.PowerBITile.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/PowerBITile.html#select()"><code>PowerBITile.select()</code></a></div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -1694,21 +2315,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/PowerBIWorkspace.html#all()">com.atlan.model.assets.PowerBIWorkspace.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/PowerBIWorkspace.html#select()"><code>PowerBIWorkspace.select()</code></a></div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/PowerBIWorkspace.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.PowerBIWorkspace.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/PowerBIWorkspace.html#get(java.lang.String)"><code>PowerBIWorkspace.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/PowerBIWorkspace.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.PowerBIWorkspace.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/PowerBIWorkspace.html#get(java.lang.String)"><code>PowerBIWorkspace.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/PresetChart.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.PresetChart.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/PresetChart.html#appendAtlanTags(java.lang.String,java.util.List)"><code>PresetChart.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/PresetChart.html#all()">com.atlan.model.assets.PresetChart.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/PresetChart.html#select()"><code>PresetChart.select()</code></a></div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -1730,21 +2363,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/PresetDashboard.html#all()">com.atlan.model.assets.PresetDashboard.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/PresetDashboard.html#select()"><code>PresetDashboard.select()</code></a></div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/PresetDashboard.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.PresetDashboard.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/PresetDashboard.html#get(java.lang.String)"><code>PresetDashboard.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/PresetDashboard.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.PresetDashboard.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/PresetDashboard.html#get(java.lang.String)"><code>PresetDashboard.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/PresetDataset.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.PresetDataset.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/PresetDataset.html#appendAtlanTags(java.lang.String,java.util.List)"><code>PresetDataset.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/PresetDataset.html#all()">com.atlan.model.assets.PresetDataset.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/PresetDataset.html#select()"><code>PresetDataset.select()</code></a></div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -1766,21 +2411,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/PresetWorkspace.html#all()">com.atlan.model.assets.PresetWorkspace.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/PresetWorkspace.html#select()"><code>PresetWorkspace.select()</code></a></div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/PresetWorkspace.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.PresetWorkspace.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/PresetWorkspace.html#get(java.lang.String)"><code>PresetWorkspace.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/PresetWorkspace.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.PresetWorkspace.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/PresetWorkspace.html#get(java.lang.String)"><code>PresetWorkspace.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/Procedure.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.Procedure.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/Procedure.html#appendAtlanTags(java.lang.String,java.util.List)"><code>Procedure.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/Procedure.html#all()">com.atlan.model.assets.Procedure.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/Procedure.html#select()"><code>Procedure.select()</code></a></div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -1802,21 +2459,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/Purpose.html#all()">com.atlan.model.assets.Purpose.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/Purpose.html#select()"><code>Purpose.select()</code></a></div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/Purpose.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.Purpose.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/Purpose.html#get(java.lang.String)"><code>Purpose.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/Purpose.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.Purpose.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/Purpose.html#get(java.lang.String)"><code>Purpose.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/QlikApp.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.QlikApp.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/QlikApp.html#appendAtlanTags(java.lang.String,java.util.List)"><code>QlikApp.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/QlikApp.html#all()">com.atlan.model.assets.QlikApp.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/QlikApp.html#select()"><code>QlikApp.select()</code></a></div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -1838,21 +2507,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/QlikChart.html#all()">com.atlan.model.assets.QlikChart.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/QlikChart.html#select()"><code>QlikChart.select()</code></a></div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/QlikChart.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.QlikChart.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/QlikChart.html#get(java.lang.String)"><code>QlikChart.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/QlikChart.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.QlikChart.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/QlikChart.html#get(java.lang.String)"><code>QlikChart.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/QlikDataset.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.QlikDataset.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/QlikDataset.html#appendAtlanTags(java.lang.String,java.util.List)"><code>QlikDataset.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/QlikDataset.html#all()">com.atlan.model.assets.QlikDataset.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/QlikDataset.html#select()"><code>QlikDataset.select()</code></a></div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -1874,21 +2555,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/QlikSheet.html#all()">com.atlan.model.assets.QlikSheet.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/QlikSheet.html#select()"><code>QlikSheet.select()</code></a></div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/QlikSheet.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.QlikSheet.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/QlikSheet.html#get(java.lang.String)"><code>QlikSheet.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/QlikSheet.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.QlikSheet.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/QlikSheet.html#get(java.lang.String)"><code>QlikSheet.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/QlikSpace.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.QlikSpace.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/QlikSpace.html#appendAtlanTags(java.lang.String,java.util.List)"><code>QlikSpace.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/QlikSpace.html#all()">com.atlan.model.assets.QlikSpace.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/QlikSpace.html#select()"><code>QlikSpace.select()</code></a></div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -1910,21 +2603,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/QlikStream.html#all()">com.atlan.model.assets.QlikStream.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/QlikStream.html#select()"><code>QlikStream.select()</code></a></div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/QlikStream.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.QlikStream.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/QlikStream.html#get(java.lang.String)"><code>QlikStream.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/QlikStream.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.QlikStream.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/QlikStream.html#get(java.lang.String)"><code>QlikStream.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/QuickSightAnalysis.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.QuickSightAnalysis.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/QuickSightAnalysis.html#appendAtlanTags(java.lang.String,java.util.List)"><code>QuickSightAnalysis.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/QuickSightAnalysis.html#all()">com.atlan.model.assets.QuickSightAnalysis.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/QuickSightAnalysis.html#select()"><code>QuickSightAnalysis.select()</code></a></div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -1946,21 +2651,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/QuickSightAnalysisVisual.html#all()">com.atlan.model.assets.QuickSightAnalysisVisual.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/QuickSightAnalysisVisual.html#select()"><code>QuickSightAnalysisVisual.select()</code></a></div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/QuickSightAnalysisVisual.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.QuickSightAnalysisVisual.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/QuickSightAnalysisVisual.html#get(java.lang.String)"><code>QuickSightAnalysisVisual.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/QuickSightAnalysisVisual.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.QuickSightAnalysisVisual.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/QuickSightAnalysisVisual.html#get(java.lang.String)"><code>QuickSightAnalysisVisual.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/QuickSightDashboard.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.QuickSightDashboard.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/QuickSightDashboard.html#appendAtlanTags(java.lang.String,java.util.List)"><code>QuickSightDashboard.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/QuickSightDashboard.html#all()">com.atlan.model.assets.QuickSightDashboard.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/QuickSightDashboard.html#select()"><code>QuickSightDashboard.select()</code></a></div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -1982,21 +2699,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/QuickSightDashboardVisual.html#all()">com.atlan.model.assets.QuickSightDashboardVisual.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/QuickSightDashboardVisual.html#select()"><code>QuickSightDashboardVisual.select()</code></a></div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/QuickSightDashboardVisual.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.QuickSightDashboardVisual.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/QuickSightDashboardVisual.html#get(java.lang.String)"><code>QuickSightDashboardVisual.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/QuickSightDashboardVisual.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.QuickSightDashboardVisual.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/QuickSightDashboardVisual.html#get(java.lang.String)"><code>QuickSightDashboardVisual.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/QuickSightDataset.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.QuickSightDataset.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/QuickSightDataset.html#appendAtlanTags(java.lang.String,java.util.List)"><code>QuickSightDataset.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/QuickSightDataset.html#all()">com.atlan.model.assets.QuickSightDataset.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/QuickSightDataset.html#select()"><code>QuickSightDataset.select()</code></a></div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -2018,21 +2747,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/QuickSightDatasetField.html#all()">com.atlan.model.assets.QuickSightDatasetField.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/QuickSightDatasetField.html#select()"><code>QuickSightDatasetField.select()</code></a></div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/QuickSightDatasetField.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.QuickSightDatasetField.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/QuickSightDatasetField.html#get(java.lang.String)"><code>QuickSightDatasetField.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/QuickSightDatasetField.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.QuickSightDatasetField.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/QuickSightDatasetField.html#get(java.lang.String)"><code>QuickSightDatasetField.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/QuickSightFolder.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.QuickSightFolder.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/QuickSightFolder.html#appendAtlanTags(java.lang.String,java.util.List)"><code>QuickSightFolder.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/QuickSightFolder.html#all()">com.atlan.model.assets.QuickSightFolder.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/QuickSightFolder.html#select()"><code>QuickSightFolder.select()</code></a></div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -2048,15 +2789,27 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="rowColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/Readme.html#all()">com.atlan.model.assets.Readme.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/Readme.html#select()"><code>Readme.select()</code></a></div>
+</td>
+</tr>
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/Readme.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.Readme.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/Readme.html#get(java.lang.String)"><code>Readme.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/Readme.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.Readme.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/Readme.html#get(java.lang.String)"><code>Readme.get(String)</code></a> instead</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/ReadmeTemplate.html#all()">com.atlan.model.assets.ReadmeTemplate.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/ReadmeTemplate.html#select()"><code>ReadmeTemplate.select()</code></a></div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -2078,21 +2831,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/RedashDashboard.html#all()">com.atlan.model.assets.RedashDashboard.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/RedashDashboard.html#select()"><code>RedashDashboard.select()</code></a></div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/RedashDashboard.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.RedashDashboard.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/RedashDashboard.html#get(java.lang.String)"><code>RedashDashboard.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/RedashDashboard.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.RedashDashboard.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/RedashDashboard.html#get(java.lang.String)"><code>RedashDashboard.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/RedashQuery.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.RedashQuery.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/RedashQuery.html#appendAtlanTags(java.lang.String,java.util.List)"><code>RedashQuery.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/RedashQuery.html#all()">com.atlan.model.assets.RedashQuery.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/RedashQuery.html#select()"><code>RedashQuery.select()</code></a></div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -2114,21 +2879,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/RedashVisualization.html#all()">com.atlan.model.assets.RedashVisualization.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/RedashVisualization.html#select()"><code>RedashVisualization.select()</code></a></div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/RedashVisualization.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.RedashVisualization.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/RedashVisualization.html#get(java.lang.String)"><code>RedashVisualization.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/RedashVisualization.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.RedashVisualization.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/RedashVisualization.html#get(java.lang.String)"><code>RedashVisualization.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/S3Bucket.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.S3Bucket.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/S3Bucket.html#appendAtlanTags(java.lang.String,java.util.List)"><code>S3Bucket.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/S3Bucket.html#all()">com.atlan.model.assets.S3Bucket.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/S3Bucket.html#select()"><code>S3Bucket.select()</code></a></div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -2150,21 +2927,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/S3Object.html#all()">com.atlan.model.assets.S3Object.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/S3Object.html#select()"><code>S3Object.select()</code></a></div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/S3Object.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.S3Object.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/S3Object.html#get(java.lang.String)"><code>S3Object.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/S3Object.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.S3Object.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/S3Object.html#get(java.lang.String)"><code>S3Object.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/SalesforceDashboard.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.SalesforceDashboard.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/SalesforceDashboard.html#appendAtlanTags(java.lang.String,java.util.List)"><code>SalesforceDashboard.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/SalesforceDashboard.html#all()">com.atlan.model.assets.SalesforceDashboard.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/SalesforceDashboard.html#select()"><code>SalesforceDashboard.select()</code></a></div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -2186,21 +2975,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/SalesforceField.html#all()">com.atlan.model.assets.SalesforceField.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/SalesforceField.html#select()"><code>SalesforceField.select()</code></a></div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/SalesforceField.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.SalesforceField.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/SalesforceField.html#get(java.lang.String)"><code>SalesforceField.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/SalesforceField.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.SalesforceField.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/SalesforceField.html#get(java.lang.String)"><code>SalesforceField.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/SalesforceObject.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.SalesforceObject.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/SalesforceObject.html#appendAtlanTags(java.lang.String,java.util.List)"><code>SalesforceObject.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/SalesforceObject.html#all()">com.atlan.model.assets.SalesforceObject.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/SalesforceObject.html#select()"><code>SalesforceObject.select()</code></a></div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -2222,21 +3023,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/SalesforceOrganization.html#all()">com.atlan.model.assets.SalesforceOrganization.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/SalesforceOrganization.html#select()"><code>SalesforceOrganization.select()</code></a></div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/SalesforceOrganization.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.SalesforceOrganization.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/SalesforceOrganization.html#get(java.lang.String)"><code>SalesforceOrganization.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/SalesforceOrganization.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.SalesforceOrganization.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/SalesforceOrganization.html#get(java.lang.String)"><code>SalesforceOrganization.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/SalesforceReport.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.SalesforceReport.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/SalesforceReport.html#appendAtlanTags(java.lang.String,java.util.List)"><code>SalesforceReport.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/SalesforceReport.html#all()">com.atlan.model.assets.SalesforceReport.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/SalesforceReport.html#select()"><code>SalesforceReport.select()</code></a></div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -2258,21 +3071,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/Schema.html#all()">com.atlan.model.assets.Schema.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/Schema.html#select()"><code>Schema.select()</code></a></div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/Schema.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.Schema.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/Schema.html#get(java.lang.String)"><code>Schema.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/Schema.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.Schema.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/Schema.html#get(java.lang.String)"><code>Schema.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/SchemaRegistrySubject.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.SchemaRegistrySubject.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/SchemaRegistrySubject.html#appendAtlanTags(java.lang.String,java.util.List)"><code>SchemaRegistrySubject.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/SchemaRegistrySubject.html#all()">com.atlan.model.assets.SchemaRegistrySubject.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/SchemaRegistrySubject.html#select()"><code>SchemaRegistrySubject.select()</code></a></div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -2294,21 +3119,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/SigmaDataElement.html#all()">com.atlan.model.assets.SigmaDataElement.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/SigmaDataElement.html#select()"><code>SigmaDataElement.select()</code></a></div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/SigmaDataElement.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.SigmaDataElement.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/SigmaDataElement.html#get(java.lang.String)"><code>SigmaDataElement.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/SigmaDataElement.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.SigmaDataElement.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/SigmaDataElement.html#get(java.lang.String)"><code>SigmaDataElement.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/SigmaDataElementField.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.SigmaDataElementField.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/SigmaDataElementField.html#appendAtlanTags(java.lang.String,java.util.List)"><code>SigmaDataElementField.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/SigmaDataElementField.html#all()">com.atlan.model.assets.SigmaDataElementField.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/SigmaDataElementField.html#select()"><code>SigmaDataElementField.select()</code></a></div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -2330,21 +3167,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/SigmaDataset.html#all()">com.atlan.model.assets.SigmaDataset.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/SigmaDataset.html#select()"><code>SigmaDataset.select()</code></a></div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/SigmaDataset.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.SigmaDataset.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/SigmaDataset.html#get(java.lang.String)"><code>SigmaDataset.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/SigmaDataset.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.SigmaDataset.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/SigmaDataset.html#get(java.lang.String)"><code>SigmaDataset.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/SigmaDatasetColumn.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.SigmaDatasetColumn.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/SigmaDatasetColumn.html#appendAtlanTags(java.lang.String,java.util.List)"><code>SigmaDatasetColumn.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/SigmaDatasetColumn.html#all()">com.atlan.model.assets.SigmaDatasetColumn.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/SigmaDatasetColumn.html#select()"><code>SigmaDatasetColumn.select()</code></a></div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -2366,21 +3215,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/SigmaPage.html#all()">com.atlan.model.assets.SigmaPage.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/SigmaPage.html#select()"><code>SigmaPage.select()</code></a></div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/SigmaPage.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.SigmaPage.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/SigmaPage.html#get(java.lang.String)"><code>SigmaPage.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/SigmaPage.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.SigmaPage.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/SigmaPage.html#get(java.lang.String)"><code>SigmaPage.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/SigmaWorkbook.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.SigmaWorkbook.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/SigmaWorkbook.html#appendAtlanTags(java.lang.String,java.util.List)"><code>SigmaWorkbook.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/SigmaWorkbook.html#all()">com.atlan.model.assets.SigmaWorkbook.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/SigmaWorkbook.html#select()"><code>SigmaWorkbook.select()</code></a></div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -2402,21 +3263,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/SnowflakePipe.html#all()">com.atlan.model.assets.SnowflakePipe.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/SnowflakePipe.html#select()"><code>SnowflakePipe.select()</code></a></div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/SnowflakePipe.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.SnowflakePipe.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/SnowflakePipe.html#get(java.lang.String)"><code>SnowflakePipe.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/SnowflakePipe.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.SnowflakePipe.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/SnowflakePipe.html#get(java.lang.String)"><code>SnowflakePipe.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/SnowflakeStream.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.SnowflakeStream.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/SnowflakeStream.html#appendAtlanTags(java.lang.String,java.util.List)"><code>SnowflakeStream.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/SnowflakeStream.html#all()">com.atlan.model.assets.SnowflakeStream.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/SnowflakeStream.html#select()"><code>SnowflakeStream.select()</code></a></div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -2438,21 +3311,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/SnowflakeTag.html#all()">com.atlan.model.assets.SnowflakeTag.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/SnowflakeTag.html#select()"><code>SnowflakeTag.select()</code></a></div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/SnowflakeTag.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.SnowflakeTag.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/SnowflakeTag.html#get(java.lang.String)"><code>SnowflakeTag.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/SnowflakeTag.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.SnowflakeTag.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/SnowflakeTag.html#get(java.lang.String)"><code>SnowflakeTag.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/SodaCheck.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.SodaCheck.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/SodaCheck.html#appendAtlanTags(java.lang.String,java.util.List)"><code>SodaCheck.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/SodaCheck.html#all()">com.atlan.model.assets.SodaCheck.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/SodaCheck.html#select()"><code>SodaCheck.select()</code></a></div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -2474,21 +3359,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/Table.html#all()">com.atlan.model.assets.Table.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/Table.html#select()"><code>Table.select()</code></a></div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/Table.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.Table.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/Table.html#get(java.lang.String)"><code>Table.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/Table.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.Table.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/Table.html#get(java.lang.String)"><code>Table.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/TableauCalculatedField.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.TableauCalculatedField.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/TableauCalculatedField.html#appendAtlanTags(java.lang.String,java.util.List)"><code>TableauCalculatedField.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/TableauCalculatedField.html#all()">com.atlan.model.assets.TableauCalculatedField.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/TableauCalculatedField.html#select()"><code>TableauCalculatedField.select()</code></a></div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -2510,21 +3407,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/TableauDashboard.html#all()">com.atlan.model.assets.TableauDashboard.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/TableauDashboard.html#select()"><code>TableauDashboard.select()</code></a></div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/TableauDashboard.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.TableauDashboard.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/TableauDashboard.html#get(java.lang.String)"><code>TableauDashboard.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/TableauDashboard.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.TableauDashboard.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/TableauDashboard.html#get(java.lang.String)"><code>TableauDashboard.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/TableauDatasource.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.TableauDatasource.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/TableauDatasource.html#appendAtlanTags(java.lang.String,java.util.List)"><code>TableauDatasource.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/TableauDatasource.html#all()">com.atlan.model.assets.TableauDatasource.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/TableauDatasource.html#select()"><code>TableauDatasource.select()</code></a></div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -2546,21 +3455,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/TableauDatasourceField.html#all()">com.atlan.model.assets.TableauDatasourceField.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/TableauDatasourceField.html#select()"><code>TableauDatasourceField.select()</code></a></div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/TableauDatasourceField.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.TableauDatasourceField.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/TableauDatasourceField.html#get(java.lang.String)"><code>TableauDatasourceField.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/TableauDatasourceField.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.TableauDatasourceField.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/TableauDatasourceField.html#get(java.lang.String)"><code>TableauDatasourceField.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/TableauFlow.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.TableauFlow.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/TableauFlow.html#appendAtlanTags(java.lang.String,java.util.List)"><code>TableauFlow.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/TableauFlow.html#all()">com.atlan.model.assets.TableauFlow.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/TableauFlow.html#select()"><code>TableauFlow.select()</code></a></div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -2582,21 +3503,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/TableauMetric.html#all()">com.atlan.model.assets.TableauMetric.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/TableauMetric.html#select()"><code>TableauMetric.select()</code></a></div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/TableauMetric.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.TableauMetric.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/TableauMetric.html#get(java.lang.String)"><code>TableauMetric.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/TableauMetric.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.TableauMetric.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/TableauMetric.html#get(java.lang.String)"><code>TableauMetric.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/TableauProject.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.TableauProject.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/TableauProject.html#appendAtlanTags(java.lang.String,java.util.List)"><code>TableauProject.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/TableauProject.html#all()">com.atlan.model.assets.TableauProject.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/TableauProject.html#select()"><code>TableauProject.select()</code></a></div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -2618,21 +3551,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/TableauSite.html#all()">com.atlan.model.assets.TableauSite.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/TableauSite.html#select()"><code>TableauSite.select()</code></a></div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/TableauSite.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.TableauSite.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/TableauSite.html#get(java.lang.String)"><code>TableauSite.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/TableauSite.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.TableauSite.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/TableauSite.html#get(java.lang.String)"><code>TableauSite.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/TableauWorkbook.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.TableauWorkbook.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/TableauWorkbook.html#appendAtlanTags(java.lang.String,java.util.List)"><code>TableauWorkbook.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/TableauWorkbook.html#all()">com.atlan.model.assets.TableauWorkbook.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/TableauWorkbook.html#select()"><code>TableauWorkbook.select()</code></a></div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -2654,21 +3599,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/TableauWorksheet.html#all()">com.atlan.model.assets.TableauWorksheet.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/TableauWorksheet.html#select()"><code>TableauWorksheet.select()</code></a></div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/TableauWorksheet.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.TableauWorksheet.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/TableauWorksheet.html#get(java.lang.String)"><code>TableauWorksheet.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/TableauWorksheet.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.TableauWorksheet.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/TableauWorksheet.html#get(java.lang.String)"><code>TableauWorksheet.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/TablePartition.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.TablePartition.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/TablePartition.html#appendAtlanTags(java.lang.String,java.util.List)"><code>TablePartition.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/TablePartition.html#all()">com.atlan.model.assets.TablePartition.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/TablePartition.html#select()"><code>TablePartition.select()</code></a></div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -2690,21 +3647,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/ThoughtspotAnswer.html#all()">com.atlan.model.assets.ThoughtspotAnswer.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/ThoughtspotAnswer.html#select()"><code>ThoughtspotAnswer.select()</code></a></div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/ThoughtspotAnswer.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.ThoughtspotAnswer.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/ThoughtspotAnswer.html#get(java.lang.String)"><code>ThoughtspotAnswer.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/ThoughtspotAnswer.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.ThoughtspotAnswer.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/ThoughtspotAnswer.html#get(java.lang.String)"><code>ThoughtspotAnswer.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/ThoughtspotDashlet.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.ThoughtspotDashlet.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/ThoughtspotDashlet.html#appendAtlanTags(java.lang.String,java.util.List)"><code>ThoughtspotDashlet.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/ThoughtspotDashlet.html#all()">com.atlan.model.assets.ThoughtspotDashlet.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/ThoughtspotDashlet.html#select()"><code>ThoughtspotDashlet.select()</code></a></div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -2726,21 +3695,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/ThoughtspotLiveboard.html#all()">com.atlan.model.assets.ThoughtspotLiveboard.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/ThoughtspotLiveboard.html#select()"><code>ThoughtspotLiveboard.select()</code></a></div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/ThoughtspotLiveboard.html#retrieveByGuid(java.lang.String)">com.atlan.model.assets.ThoughtspotLiveboard.retrieveByGuid&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/ThoughtspotLiveboard.html#get(java.lang.String)"><code>ThoughtspotLiveboard.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/ThoughtspotLiveboard.html#retrieveByQualifiedName(java.lang.String)">com.atlan.model.assets.ThoughtspotLiveboard.retrieveByQualifiedName&#8203;(String)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/ThoughtspotLiveboard.html#get(java.lang.String)"><code>ThoughtspotLiveboard.get(String)</code></a> instead</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/View.html#addAtlanTags(java.lang.String,java.util.List)">com.atlan.model.assets.View.addAtlanTags&#8203;(String, List&lt;String&gt;)</a></th>
 <td class="colLast">
 <div class="deprecationComment">see <a href="com/atlan/model/assets/View.html#appendAtlanTags(java.lang.String,java.util.List)"><code>View.appendAtlanTags(String, List)</code></a> instead</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/assets/View.html#all()">com.atlan.model.assets.View.all()</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/assets/View.html#select()"><code>View.select()</code></a></div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -2758,6 +3739,12 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <tr class="rowColor">
 <th class="colDeprecatedItemName" scope="row"><a href="com/atlan/model/lineage/LineageResponse.LineageResponseBuilder.html#childrenCounts(java.lang.Object)">com.atlan.model.lineage.LineageResponse.LineageResponseBuilder.childrenCounts&#8203;(Object)</a></th>
 <td class="colLast"></td>
+</tr>
+<tr class="altColor">
+<th class="colDeprecatedItemName" scope="row"><a href="com/atlan/util/QueryFactory.html#getAggregationMetric(com.atlan.model.search.AggregationResult)">com.atlan.util.QueryFactory.getAggregationMetric&#8203;(AggregationResult)</a></th>
+<td class="colLast">
+<div class="deprecationComment">replaced by <a href="com/atlan/model/search/AggregationResult.html#getMetric()"><code>AggregationResult.getMetric()</code></a></div>
+</td>
 </tr>
 </tbody>
 </table>

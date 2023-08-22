@@ -27,8 +27,8 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":9,"i2":9};
-var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
+var data = {"i0":42,"i1":41,"i2":41};
+var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -140,10 +140,15 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd><code><a href="AtlanSearchableField.html" title="interface in com.atlan.model.enums">AtlanSearchableField</a></code>, <code>java.io.Serializable</code>, <code>java.lang.Comparable&lt;<a href="RankFields.html" title="enum in com.atlan.model.enums">RankFields</a>&gt;</code></dd>
 </dl>
 <hr>
-<pre>@Generated("com.atlan.generators.ModelGeneratorV2")
+<pre>@Deprecated
+@Generated("com.atlan.generators.ModelGeneratorV2")
 public enum <span class="typeNameLabel">RankFields</span>
 extends java.lang.Enum&lt;<a href="RankFields.html" title="enum in com.atlan.model.enums">RankFields</a>&gt;
 implements <a href="AtlanSearchableField.html" title="interface in com.atlan.model.enums">AtlanSearchableField</a></pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">these are now enumerated as constants in the various asset interfaces, as instances of one of the following: <a href="../fields/BooleanField.html" title="class in com.atlan.model.fields"><code>BooleanField</code></a>, <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields"><code>KeywordField</code></a>, <a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields"><code>KeywordTextField</code></a>, <a href="../fields/KeywordTextStemmedField.html" title="class in com.atlan.model.fields"><code>KeywordTextStemmedField</code></a>, <a href="../fields/NumericField.html" title="class in com.atlan.model.fields"><code>NumericField</code></a>, <a href="../fields/NumericRankField.html" title="class in com.atlan.model.fields"><code>NumericRankField</code></a>, <a href="../fields/RelationField.html" title="class in com.atlan.model.fields"><code>RelationField</code></a>, or <a href="../fields/TextField.html" title="class in com.atlan.model.fields"><code>TextField</code></a></div>
+</div>
+<div class="block">Enumeration of all index fields.</div>
 </li>
 </ul>
 </div>
@@ -166,12 +171,14 @@ implements <a href="AtlanSearchableField.html" title="interface in com.atlan.mod
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#POPULARITY_SCORE">POPULARITY_SCORE</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#VIEW_SCORE">VIEW_SCORE</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
@@ -187,7 +194,7 @@ implements <a href="AtlanSearchableField.html" title="interface in com.atlan.mod
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t6" class="tableTab"><span><a href="javascript:show(32);">Deprecated Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colSecond" scope="col">Method</th>
@@ -196,12 +203,15 @@ implements <a href="AtlanSearchableField.html" title="interface in com.atlan.mod
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIndexedFieldName()">getIndexedFieldName</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
+&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>static <a href="RankFields.html" title="enum in com.atlan.model.enums">RankFields</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#valueOf(java.lang.String)">valueOf</a></span>&#8203;(java.lang.String&nbsp;name)</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns the enum constant of this type with the specified name.</div>
 </td>
 </tr>
@@ -209,6 +219,7 @@ implements <a href="AtlanSearchableField.html" title="interface in com.atlan.mod
 <td class="colFirst"><code>static <a href="RankFields.html" title="enum in com.atlan.model.enums">RankFields</a>[]</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#values()">values</a></span>()</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns an array containing the constants of this enum type, in
 the order they are declared.</div>
 </td>
@@ -251,6 +262,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>POPULARITY_SCORE</h4>
 <pre>public static final&nbsp;<a href="RankFields.html" title="enum in com.atlan.model.enums">RankFields</a> POPULARITY_SCORE</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -261,6 +273,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>VIEW_SCORE</h4>
 <pre>public static final&nbsp;<a href="RankFields.html" title="enum in com.atlan.model.enums">RankFields</a> VIEW_SCORE</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -281,6 +294,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>values</h4>
 <pre class="methodSignature">public static&nbsp;<a href="RankFields.html" title="enum in com.atlan.model.enums">RankFields</a>[]&nbsp;values()</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns an array containing the constants of this enum type, in
 the order they are declared. This method may be used to iterate
 over the constants as follows:
@@ -301,6 +315,7 @@ for (RankFields c : RankFields.values())
 <li class="blockList">
 <h4>valueOf</h4>
 <pre class="methodSignature">public static&nbsp;<a href="RankFields.html" title="enum in com.atlan.model.enums">RankFields</a>&nbsp;valueOf&#8203;(java.lang.String&nbsp;name)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns the enum constant of this type with the specified name.
 The string must match <i>exactly</i> an identifier used to declare an
 enum constant in this type.  (Extraneous whitespace characters are 
@@ -323,6 +338,7 @@ not permitted.)</div>
 <li class="blockList">
 <h4>getIndexedFieldName</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getIndexedFieldName()</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="AtlanSearchableField.html#getIndexedFieldName()">getIndexedFieldName</a></code>&nbsp;in interface&nbsp;<code><a href="AtlanSearchableField.html" title="interface in com.atlan.model.enums">AtlanSearchableField</a></code></dd>

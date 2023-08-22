@@ -27,8 +27,8 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9,"i11":9,"i12":9,"i13":9,"i14":9,"i15":9,"i16":9,"i17":9,"i18":9,"i19":9,"i20":9,"i21":9,"i22":9,"i23":9,"i24":9,"i25":9,"i26":9,"i27":9,"i28":9};
-var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
+var data = {"i0":41,"i1":41,"i2":41,"i3":41,"i4":41,"i5":41,"i6":41,"i7":41,"i8":41,"i9":41,"i10":41,"i11":41,"i12":41,"i13":41,"i14":41,"i15":41,"i16":41,"i17":41,"i18":41,"i19":41,"i20":41,"i21":41,"i22":41,"i23":41,"i24":41,"i25":41,"i26":41,"i27":41,"i28":41};
+var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -131,8 +131,13 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockList">
 <li class="blockList">
 <hr>
-<pre>public class <span class="typeNameLabel">QueryFactory</span>
+<pre>@Deprecated
+public class <span class="typeNameLabel">QueryFactory</span>
 extends java.lang.Object</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">replaced by <a href="../model/search/CompoundQuery.html" title="class in com.atlan.model.search"><code>CompoundQuery</code></a></div>
+</div>
+<div class="block">Set of common and reusable queries.</div>
 </li>
 </ul>
 </div>
@@ -157,28 +162,36 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>static class&nbsp;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="QueryFactory.Aggregate.html" title="class in com.atlan.util">QueryFactory.Aggregate</a></span></code></th>
 <td class="colLast">
-<div class="block">Class to quickly compose aggregation criteria.</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">replaced by interfaces and implementations under <a href="../model/fields/package-summary.html"><code>com.atlan.model.fields</code></a></div>
+</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static class&nbsp;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="QueryFactory.CompoundQuery.html" title="class in com.atlan.util">QueryFactory.CompoundQuery</a></span></code></th>
 <td class="colLast">
-<div class="block">Class to compose compound queries combining various conditions.</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">replaced by <a href="../model/search/CompoundQuery.html" title="class in com.atlan.model.search"><code>CompoundQuery</code></a></div>
+</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static class&nbsp;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="QueryFactory.FieldQuery.html" title="class in com.atlan.util">QueryFactory.FieldQuery</a></span></code></th>
 <td class="colLast">
-<div class="block">Class to compose compound queries combining various conditions.</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">replaced by the more specific implementations in <a href="../model/fields/package-summary.html"><code>com.atlan.model.fields</code></a></div>
+</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static class&nbsp;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="QueryFactory.Sort.html" title="class in com.atlan.util">QueryFactory.Sort</a></span></code></th>
 <td class="colLast">
-<div class="block">Class to quickly compose a sorting condition.</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">replaced by <a href="../model/fields/ISearchable.html#order(co.elastic.clients.elasticsearch._types.SortOrder)"><code>ISearchable.order(SortOrder)</code></a></div>
+</div>
 </td>
 </tr>
 </table>
@@ -200,7 +213,9 @@ extends java.lang.Object</pre>
 </tr>
 <tr class="altColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E()">QueryFactory</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
+&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -214,7 +229,7 @@ extends java.lang.Object</pre>
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t6" class="tableTab"><span><a href="javascript:show(32);">Deprecated Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colSecond" scope="col">Method</th>
@@ -224,6 +239,7 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>static co.elastic.clients.elasticsearch._types.query_dsl.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#active()">active</a></span>()</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will only match active assets.</div>
 </td>
 </tr>
@@ -231,6 +247,7 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>static co.elastic.clients.elasticsearch._types.query_dsl.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#archived()">archived</a></span>()</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will only match soft-deleted (archived) assets.</div>
 </td>
 </tr>
@@ -238,6 +255,7 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>static co.elastic.clients.elasticsearch._types.query_dsl.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#beActive()">beActive</a></span>()</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will only match active assets.</div>
 </td>
 </tr>
@@ -245,6 +263,7 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>static co.elastic.clients.elasticsearch._types.query_dsl.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#beArchived()">beArchived</a></span>()</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will only match soft-deleted (archived) assets.</div>
 </td>
 </tr>
@@ -252,6 +271,7 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>static co.elastic.clients.elasticsearch._types.query_dsl.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#beAssignedATerm()">beAssignedATerm</a></span>()</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will only match assets that have at least one term assigned.</div>
 </td>
 </tr>
@@ -259,6 +279,7 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>static co.elastic.clients.elasticsearch._types.query_dsl.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#beDefinedByAtLeastOneOf(java.util.Collection)">beDefinedByAtLeastOneOf</a></span>&#8203;(java.util.Collection&lt;java.lang.String&gt;&nbsp;termQualifiedNames)</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will only match assets that have at least one of the terms assigned.</div>
 </td>
 </tr>
@@ -266,6 +287,7 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>static co.elastic.clients.elasticsearch._types.query_dsl.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#beDirectlyTagged()">beDirectlyTagged</a></span>()</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will only match assets that have at least one Atlan tag directly assigned.</div>
 </td>
 </tr>
@@ -273,6 +295,7 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>static co.elastic.clients.elasticsearch._types.query_dsl.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#beOfType(java.lang.String)">beOfType</a></span>&#8203;(java.lang.String&nbsp;typeName)</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will only match assets of the type provided.</div>
 </td>
 </tr>
@@ -280,6 +303,7 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>static co.elastic.clients.elasticsearch._types.query_dsl.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#beOneOfTypes(java.util.Collection)">beOneOfTypes</a></span>&#8203;(java.util.Collection&lt;java.lang.String&gt;&nbsp;typeNames)</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will match all assets that are one of the types provided.</div>
 </td>
 </tr>
@@ -287,6 +311,7 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>static co.elastic.clients.elasticsearch._types.query_dsl.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#beTagged()">beTagged</a></span>()</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will only match assets that have at least one Atlan tag assigned,
  irrespective of whether that tag is directly assigned or propagated.</div>
 </td>
@@ -296,6 +321,7 @@ extends java.lang.Object</pre>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#beTaggedByAtLeastOneOf(com.atlan.AtlanClient,java.util.Collection)">beTaggedByAtLeastOneOf</a></span>&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
                       java.util.Collection&lt;java.lang.String&gt;&nbsp;atlanTagNames)</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will only match assets that have at least one of the Atlan tags
  provided.</div>
 </td>
@@ -304,6 +330,7 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>static co.elastic.clients.elasticsearch._types.query_dsl.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#beTaggedByAtLeastOneOf(java.util.Collection)">beTaggedByAtLeastOneOf</a></span>&#8203;(java.util.Collection&lt;java.lang.String&gt;&nbsp;atlanTagNames)</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will only match assets that have at least one of the Atlan tags
  provided.</div>
 </td>
@@ -312,6 +339,7 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>static co.elastic.clients.elasticsearch._types.query_dsl.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#defined()">defined</a></span>()</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will only match assets that have at least one term assigned.</div>
 </td>
 </tr>
@@ -319,6 +347,7 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>static co.elastic.clients.elasticsearch._types.query_dsl.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#definedBy(java.util.Collection)">definedBy</a></span>&#8203;(java.util.Collection&lt;java.lang.String&gt;&nbsp;termQualifiedNames)</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will only match assets that have at least one of the terms assigned.</div>
 </td>
 </tr>
@@ -326,13 +355,16 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>static double</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAggregationMetric(com.atlan.model.search.AggregationResult)">getAggregationMetric</a></span>&#8203;(<a href="../model/search/AggregationResult.html" title="class in com.atlan.model.search">AggregationResult</a>&nbsp;result)</code></th>
 <td class="colLast">
-<div class="block">Retrieve the numeric value from the provided aggregation result.</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">replaced by <a href="../model/search/AggregationResult.html#getMetric()"><code>AggregationResult.getMetric()</code></a></div>
+</div>
 </td>
 </tr>
 <tr id="i15" class="rowColor">
 <td class="colFirst"><code>static <a href="QueryFactory.FieldQuery.html" title="class in com.atlan.util">QueryFactory.FieldQuery</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#have(com.atlan.model.enums.AtlanSearchableField)">have</a></span>&#8203;(<a href="../model/enums/AtlanSearchableField.html" title="interface in com.atlan.model.enums">AtlanSearchableField</a>&nbsp;field)</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns the start of a query against any field.</div>
 </td>
 </tr>
@@ -342,6 +374,7 @@ extends java.lang.Object</pre>
       java.lang.String&nbsp;cmName,
       java.lang.String&nbsp;cmAttributeName)</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns the start of a query against any custom metadata field.</div>
 </td>
 </tr>
@@ -350,6 +383,7 @@ extends java.lang.Object</pre>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#haveCM(java.lang.String,java.lang.String)">haveCM</a></span>&#8203;(java.lang.String&nbsp;cmName,
       java.lang.String&nbsp;cmAttributeName)</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns the start of a query against any custom metadata field.</div>
 </td>
 </tr>
@@ -357,6 +391,7 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>static co.elastic.clients.elasticsearch._types.query_dsl.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#haveLineage()">haveLineage</a></span>()</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will only match assets with lineage.</div>
 </td>
 </tr>
@@ -364,6 +399,7 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>static co.elastic.clients.elasticsearch._types.query_dsl.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#haveSuperType(java.lang.String)">haveSuperType</a></span>&#8203;(java.lang.String&nbsp;typeName)</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will match all assets that are a subtype of the type provided.</div>
 </td>
 </tr>
@@ -371,6 +407,7 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>static co.elastic.clients.elasticsearch._types.query_dsl.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#superType(java.lang.String)">superType</a></span>&#8203;(java.lang.String&nbsp;typeName)</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will match all assets that are a subtype of the type provided.</div>
 </td>
 </tr>
@@ -378,6 +415,7 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>static co.elastic.clients.elasticsearch._types.query_dsl.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#tagged(boolean)">tagged</a></span>&#8203;(boolean&nbsp;directly)</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will only match assets that have at least one Atlan tag assigned.</div>
 </td>
 </tr>
@@ -386,6 +424,7 @@ extends java.lang.Object</pre>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#tagged(com.atlan.AtlanClient,java.util.Collection)">tagged</a></span>&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
       java.util.Collection&lt;java.lang.String&gt;&nbsp;atlanTagNames)</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will only match assets that have at least one of the Atlan tags
  provided.</div>
 </td>
@@ -394,6 +433,7 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>static co.elastic.clients.elasticsearch._types.query_dsl.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#tagged(java.util.Collection)">tagged</a></span>&#8203;(java.util.Collection&lt;java.lang.String&gt;&nbsp;atlanTagNames)</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will only match assets that have at least one of the Atlan tags
  provided.</div>
 </td>
@@ -402,6 +442,7 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>static co.elastic.clients.elasticsearch._types.query_dsl.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#type(java.lang.String)">type</a></span>&#8203;(java.lang.String&nbsp;typeName)</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will only match assets of the type provided.</div>
 </td>
 </tr>
@@ -409,6 +450,7 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>static co.elastic.clients.elasticsearch._types.query_dsl.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#types(java.util.Collection)">types</a></span>&#8203;(java.util.Collection&lt;java.lang.String&gt;&nbsp;typeNames)</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will match all assets that are one of the types provided.</div>
 </td>
 </tr>
@@ -418,6 +460,7 @@ extends java.lang.Object</pre>
      java.lang.String&nbsp;cmName,
      java.lang.String&nbsp;cmAttributeName)</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns the start of a query against any custom metadata field.</div>
 </td>
 </tr>
@@ -425,6 +468,7 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>static <a href="QueryFactory.FieldQuery.html" title="class in com.atlan.util">QueryFactory.FieldQuery</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#where(com.atlan.model.enums.AtlanSearchableField)">where</a></span>&#8203;(<a href="../model/enums/AtlanSearchableField.html" title="interface in com.atlan.model.enums">AtlanSearchableField</a>&nbsp;field)</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns the start of a query against any field.</div>
 </td>
 </tr>
@@ -433,6 +477,7 @@ extends java.lang.Object</pre>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#where(java.lang.String,java.lang.String)">where</a></span>&#8203;(java.lang.String&nbsp;cmName,
      java.lang.String&nbsp;cmAttributeName)</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns the start of a query against any custom metadata field.</div>
 </td>
 </tr>
@@ -467,6 +512,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>QueryFactory</h4>
 <pre>public&nbsp;QueryFactory()</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 </li>
 </ul>
 </li>
@@ -486,6 +532,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>active</h4>
 <pre class="methodSignature">public static&nbsp;co.elastic.clients.elasticsearch._types.query_dsl.Query&nbsp;active()</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will only match active assets.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -502,6 +549,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>beActive</h4>
 <pre class="methodSignature">public static&nbsp;co.elastic.clients.elasticsearch._types.query_dsl.Query&nbsp;beActive()</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will only match active assets.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -518,6 +566,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>archived</h4>
 <pre class="methodSignature">public static&nbsp;co.elastic.clients.elasticsearch._types.query_dsl.Query&nbsp;archived()</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will only match soft-deleted (archived) assets.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -534,6 +583,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>beArchived</h4>
 <pre class="methodSignature">public static&nbsp;co.elastic.clients.elasticsearch._types.query_dsl.Query&nbsp;beArchived()</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will only match soft-deleted (archived) assets.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -550,6 +600,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>haveLineage</h4>
 <pre class="methodSignature">public static&nbsp;co.elastic.clients.elasticsearch._types.query_dsl.Query&nbsp;haveLineage()</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will only match assets with lineage.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -564,6 +615,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>type</h4>
 <pre class="methodSignature">public static&nbsp;co.elastic.clients.elasticsearch._types.query_dsl.Query&nbsp;type&#8203;(java.lang.String&nbsp;typeName)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will only match assets of the type provided.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -582,6 +634,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>beOfType</h4>
 <pre class="methodSignature">public static&nbsp;co.elastic.clients.elasticsearch._types.query_dsl.Query&nbsp;beOfType&#8203;(java.lang.String&nbsp;typeName)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will only match assets of the type provided.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -600,6 +653,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>superType</h4>
 <pre class="methodSignature">public static&nbsp;co.elastic.clients.elasticsearch._types.query_dsl.Query&nbsp;superType&#8203;(java.lang.String&nbsp;typeName)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will match all assets that are a subtype of the type provided.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -618,6 +672,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>haveSuperType</h4>
 <pre class="methodSignature">public static&nbsp;co.elastic.clients.elasticsearch._types.query_dsl.Query&nbsp;haveSuperType&#8203;(java.lang.String&nbsp;typeName)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will match all assets that are a subtype of the type provided.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -636,6 +691,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>types</h4>
 <pre class="methodSignature">public static&nbsp;co.elastic.clients.elasticsearch._types.query_dsl.Query&nbsp;types&#8203;(java.util.Collection&lt;java.lang.String&gt;&nbsp;typeNames)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will match all assets that are one of the types provided.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -654,6 +710,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>beOneOfTypes</h4>
 <pre class="methodSignature">public static&nbsp;co.elastic.clients.elasticsearch._types.query_dsl.Query&nbsp;beOneOfTypes&#8203;(java.util.Collection&lt;java.lang.String&gt;&nbsp;typeNames)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will match all assets that are one of the types provided.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -673,6 +730,7 @@ extends java.lang.Object</pre>
 <h4>tagged</h4>
 <pre class="methodSignature">public static&nbsp;co.elastic.clients.elasticsearch._types.query_dsl.Query&nbsp;tagged&#8203;(java.util.Collection&lt;java.lang.String&gt;&nbsp;atlanTagNames)
                                                                       throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will only match assets that have at least one of the Atlan tags
  provided. This will match irrespective of the Atlan tag being directly applied to the
  asset, or if it was propagated to the asset.</div>
@@ -696,6 +754,7 @@ extends java.lang.Object</pre>
 <h4>beTaggedByAtLeastOneOf</h4>
 <pre class="methodSignature">public static&nbsp;co.elastic.clients.elasticsearch._types.query_dsl.Query&nbsp;beTaggedByAtLeastOneOf&#8203;(java.util.Collection&lt;java.lang.String&gt;&nbsp;atlanTagNames)
                                                                                       throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will only match assets that have at least one of the Atlan tags
  provided. This will match irrespective of the Atlan tag being directly applied to the
  asset, or if it was propagated to the asset.</div>
@@ -720,6 +779,7 @@ extends java.lang.Object</pre>
 <pre class="methodSignature">public static&nbsp;co.elastic.clients.elasticsearch._types.query_dsl.Query&nbsp;tagged&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
                                                                              java.util.Collection&lt;java.lang.String&gt;&nbsp;atlanTagNames)
                                                                       throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will only match assets that have at least one of the Atlan tags
  provided. This will match irrespective of the Atlan tag being directly applied to the
  asset, or if it was propagated to the asset.</div>
@@ -745,6 +805,7 @@ extends java.lang.Object</pre>
 <pre class="methodSignature">public static&nbsp;co.elastic.clients.elasticsearch._types.query_dsl.Query&nbsp;beTaggedByAtLeastOneOf&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
                                                                                              java.util.Collection&lt;java.lang.String&gt;&nbsp;atlanTagNames)
                                                                                       throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will only match assets that have at least one of the Atlan tags
  provided. This will match irrespective of the Atlan tag being directly applied to the
  asset, or if it was propagated to the asset.</div>
@@ -768,6 +829,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>tagged</h4>
 <pre class="methodSignature">public static&nbsp;co.elastic.clients.elasticsearch._types.query_dsl.Query&nbsp;tagged&#8203;(boolean&nbsp;directly)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will only match assets that have at least one Atlan tag assigned.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -787,6 +849,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>beDirectlyTagged</h4>
 <pre class="methodSignature">public static&nbsp;co.elastic.clients.elasticsearch._types.query_dsl.Query&nbsp;beDirectlyTagged()</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will only match assets that have at least one Atlan tag directly assigned.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -803,6 +866,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>beTagged</h4>
 <pre class="methodSignature">public static&nbsp;co.elastic.clients.elasticsearch._types.query_dsl.Query&nbsp;beTagged()</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will only match assets that have at least one Atlan tag assigned,
  irrespective of whether that tag is directly assigned or propagated.</div>
 <dl>
@@ -820,6 +884,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>defined</h4>
 <pre class="methodSignature">public static&nbsp;co.elastic.clients.elasticsearch._types.query_dsl.Query&nbsp;defined()</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will only match assets that have at least one term assigned.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -836,6 +901,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>beAssignedATerm</h4>
 <pre class="methodSignature">public static&nbsp;co.elastic.clients.elasticsearch._types.query_dsl.Query&nbsp;beAssignedATerm()</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will only match assets that have at least one term assigned.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -852,6 +918,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>definedBy</h4>
 <pre class="methodSignature">public static&nbsp;co.elastic.clients.elasticsearch._types.query_dsl.Query&nbsp;definedBy&#8203;(java.util.Collection&lt;java.lang.String&gt;&nbsp;termQualifiedNames)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will only match assets that have at least one of the terms assigned.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -870,6 +937,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>beDefinedByAtLeastOneOf</h4>
 <pre class="methodSignature">public static&nbsp;co.elastic.clients.elasticsearch._types.query_dsl.Query&nbsp;beDefinedByAtLeastOneOf&#8203;(java.util.Collection&lt;java.lang.String&gt;&nbsp;termQualifiedNames)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will only match assets that have at least one of the terms assigned.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -888,6 +956,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>where</h4>
 <pre class="methodSignature">public static&nbsp;<a href="QueryFactory.FieldQuery.html" title="class in com.atlan.util">QueryFactory.FieldQuery</a>&nbsp;where&#8203;(<a href="../model/enums/AtlanSearchableField.html" title="interface in com.atlan.model.enums">AtlanSearchableField</a>&nbsp;field)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns the start of a query against any field. You need to call one of the operations
  on the returned FieldQuery object to actually complete building the query against the field.</div>
 <dl>
@@ -907,6 +976,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>have</h4>
 <pre class="methodSignature">public static&nbsp;<a href="QueryFactory.FieldQuery.html" title="class in com.atlan.util">QueryFactory.FieldQuery</a>&nbsp;have&#8203;(<a href="../model/enums/AtlanSearchableField.html" title="interface in com.atlan.model.enums">AtlanSearchableField</a>&nbsp;field)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns the start of a query against any field. You need to call one of the operations
  on the returned FieldQuery object to actually complete building the query against the field.</div>
 <dl>
@@ -928,6 +998,7 @@ extends java.lang.Object</pre>
 <pre class="methodSignature">public static&nbsp;<a href="QueryFactory.FieldQuery.html" title="class in com.atlan.util">QueryFactory.FieldQuery</a>&nbsp;where&#8203;(java.lang.String&nbsp;cmName,
                                             java.lang.String&nbsp;cmAttributeName)
                                      throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns the start of a query against any custom metadata field. You need to call one of the
  operations on the returned FieldQuery object to actually complete building the query against
  the field.</div>
@@ -953,6 +1024,7 @@ extends java.lang.Object</pre>
 <pre class="methodSignature">public static&nbsp;<a href="QueryFactory.FieldQuery.html" title="class in com.atlan.util">QueryFactory.FieldQuery</a>&nbsp;haveCM&#8203;(java.lang.String&nbsp;cmName,
                                              java.lang.String&nbsp;cmAttributeName)
                                       throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns the start of a query against any custom metadata field. You need to call one of the
  operations on the returned FieldQuery object to actually complete building the query against
  the field.</div>
@@ -979,6 +1051,7 @@ extends java.lang.Object</pre>
                                             java.lang.String&nbsp;cmName,
                                             java.lang.String&nbsp;cmAttributeName)
                                      throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns the start of a query against any custom metadata field. You need to call one of the
  operations on the returned FieldQuery object to actually complete building the query against
  the field.</div>
@@ -1006,6 +1079,7 @@ extends java.lang.Object</pre>
                                              java.lang.String&nbsp;cmName,
                                              java.lang.String&nbsp;cmAttributeName)
                                       throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns the start of a query against any custom metadata field. You need to call one of the
  operations on the returned FieldQuery object to actually complete building the query against
  the field.</div>
@@ -1029,8 +1103,12 @@ extends java.lang.Object</pre>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getAggregationMetric</h4>
-<pre class="methodSignature">public static&nbsp;double&nbsp;getAggregationMetric&#8203;(<a href="../model/search/AggregationResult.html" title="class in com.atlan.model.search">AggregationResult</a>&nbsp;result)
+<pre class="methodSignature">@Deprecated
+public static&nbsp;double&nbsp;getAggregationMetric&#8203;(<a href="../model/search/AggregationResult.html" title="class in com.atlan.model.search">AggregationResult</a>&nbsp;result)
                                    throws <a href="../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">replaced by <a href="../model/search/AggregationResult.html#getMetric()"><code>AggregationResult.getMetric()</code></a></div>
+</div>
 <div class="block">Retrieve the numeric value from the provided aggregation result.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>

@@ -89,13 +89,13 @@ loadScripts(document, 'script');</script>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>
@@ -135,6 +135,101 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
+<!-- =========== FIELD SUMMARY =========== -->
+<section>
+<ul class="blockList">
+<li class="blockList"><a id="field.summary">
+<!--   -->
+</a>
+<h3>Field Summary</h3>
+<table class="memberSummary">
+<caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colSecond" scope="col">Field</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static <a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ASSIGNED_TERMS">ASSIGNED_TERMS</a></span></code></th>
+<td class="colLast">
+<div class="block">All terms attached to an asset, searchable by the term's qualifiedName.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static <a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ATLAN_TAGS">ATLAN_TAGS</a></span></code></th>
+<td class="colLast">
+<div class="block">All directly-assigned Atlan tags that exist on an asset, searchable by internal hashed-string ID of the Atlan tag.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static <a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#CREATE_TIME">CREATE_TIME</a></span></code></th>
+<td class="colLast">
+<div class="block">Time (in milliseconds) when the asset was created.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#CREATED_BY">CREATED_BY</a></span></code></th>
+<td class="colLast">
+<div class="block">Atlan user who created this asset.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#GUID">GUID</a></span></code></th>
+<td class="colLast">
+<div class="block">Globally unique identifier (GUID) of any object in Atlan.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static <a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#PROPAGATED_ATLAN_TAGS">PROPAGATED_ATLAN_TAGS</a></span></code></th>
+<td class="colLast">
+<div class="block">All propagated Atlan tags that exist on an asset, searchable by internal hashed-string ID of the Atlan tag.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#STATUS">STATUS</a></span></code></th>
+<td class="colLast">
+<div class="block">Asset status in Atlan (active vs deleted).</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static <a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SUPER_TYPE_NAMES">SUPER_TYPE_NAMES</a></span></code></th>
+<td class="colLast">
+<div class="block">All super types of an asset.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static <a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#TYPE_NAME">TYPE_NAME</a></span></code></th>
+<td class="colLast">
+<div class="block">Type of the asset.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static <a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#UPDATE_TIME">UPDATE_TIME</a></span></code></th>
+<td class="colLast">
+<div class="block">Time (in milliseconds) when the asset was last updated.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#UPDATED_BY">UPDATED_BY</a></span></code></th>
+<td class="colLast">
+<div class="block">Atlan user who last updated the asset.</div>
+</td>
+</tr>
+</table>
+</li>
+</ul>
+</section>
 <!-- ========== METHOD SUMMARY =========== -->
 <section>
 <ul class="blockList">
@@ -275,6 +370,126 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="details">
 <ul class="blockList">
 <li class="blockList">
+<!-- ============ FIELD DETAIL =========== -->
+<section>
+<ul class="blockList">
+<li class="blockList"><a id="field.detail">
+<!--   -->
+</a>
+<h3>Field Detail</h3>
+<a id="TYPE_NAME">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>TYPE_NAME</h4>
+<pre>static final&nbsp;<a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a> TYPE_NAME</pre>
+<div class="block">Type of the asset. For example Table, Column, and so on.</div>
+</li>
+</ul>
+<a id="GUID">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>GUID</h4>
+<pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> GUID</pre>
+<div class="block">Globally unique identifier (GUID) of any object in Atlan.</div>
+</li>
+</ul>
+<a id="CREATED_BY">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>CREATED_BY</h4>
+<pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> CREATED_BY</pre>
+<div class="block">Atlan user who created this asset.</div>
+</li>
+</ul>
+<a id="UPDATED_BY">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>UPDATED_BY</h4>
+<pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> UPDATED_BY</pre>
+<div class="block">Atlan user who last updated the asset.</div>
+</li>
+</ul>
+<a id="STATUS">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>STATUS</h4>
+<pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> STATUS</pre>
+<div class="block">Asset status in Atlan (active vs deleted).</div>
+</li>
+</ul>
+<a id="ATLAN_TAGS">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>ATLAN_TAGS</h4>
+<pre>static final&nbsp;<a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a> ATLAN_TAGS</pre>
+<div class="block">All directly-assigned Atlan tags that exist on an asset, searchable by internal hashed-string ID of the Atlan tag.</div>
+</li>
+</ul>
+<a id="PROPAGATED_ATLAN_TAGS">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>PROPAGATED_ATLAN_TAGS</h4>
+<pre>static final&nbsp;<a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a> PROPAGATED_ATLAN_TAGS</pre>
+<div class="block">All propagated Atlan tags that exist on an asset, searchable by internal hashed-string ID of the Atlan tag.</div>
+</li>
+</ul>
+<a id="ASSIGNED_TERMS">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>ASSIGNED_TERMS</h4>
+<pre>static final&nbsp;<a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a> ASSIGNED_TERMS</pre>
+<div class="block">All terms attached to an asset, searchable by the term's qualifiedName.</div>
+</li>
+</ul>
+<a id="SUPER_TYPE_NAMES">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>SUPER_TYPE_NAMES</h4>
+<pre>static final&nbsp;<a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a> SUPER_TYPE_NAMES</pre>
+<div class="block">All super types of an asset.</div>
+</li>
+</ul>
+<a id="CREATE_TIME">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>CREATE_TIME</h4>
+<pre>static final&nbsp;<a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a> CREATE_TIME</pre>
+<div class="block">Time (in milliseconds) when the asset was created.</div>
+</li>
+</ul>
+<a id="UPDATE_TIME">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>UPDATE_TIME</h4>
+<pre>static final&nbsp;<a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a> UPDATE_TIME</pre>
+<div class="block">Time (in milliseconds) when the asset was last updated.</div>
+</li>
+</ul>
+</li>
+</ul>
+</section>
 <!-- ============ METHOD DETAIL ========== -->
 <section>
 <ul class="blockList">
@@ -508,13 +723,13 @@ java.util.SortedSet&lt;<a href="Meaning.html" title="class in com.atlan.model.as
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>

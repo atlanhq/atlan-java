@@ -27,8 +27,8 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":9};
-var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
+var data = {"i0":42,"i1":41};
+var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -135,8 +135,12 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd><a href="QueryFactory.html" title="class in com.atlan.util">QueryFactory</a></dd>
 </dl>
 <hr>
-<pre>public static final class <span class="typeNameLabel">QueryFactory.CompoundQuery</span>
+<pre>@Deprecated
+public static final class <span class="typeNameLabel">QueryFactory.CompoundQuery</span>
 extends java.lang.Object</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">replaced by <a href="../model/search/CompoundQuery.html" title="class in com.atlan.model.search"><code>CompoundQuery</code></a></div>
+</div>
 <div class="block">Class to compose compound queries combining various conditions.</div>
 </li>
 </ul>
@@ -161,7 +165,9 @@ extends java.lang.Object</pre>
 <tr class="altColor">
 <td class="colFirst"><code>static class&nbsp;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="QueryFactory.CompoundQuery.CompoundQueryBuilder.html" title="class in com.atlan.util">QueryFactory.CompoundQuery.CompoundQueryBuilder</a></span></code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
+&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -175,7 +181,7 @@ extends java.lang.Object</pre>
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t6" class="tableTab"><span><a href="javascript:show(32);">Deprecated Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colSecond" scope="col">Method</th>
@@ -185,13 +191,16 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>co.elastic.clients.elasticsearch._types.query_dsl.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#_toQuery()">_toQuery</a></span>()</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Translate the Atlan compound query into an Elastic Query object.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>static <a href="QueryFactory.CompoundQuery.CompoundQueryBuilder.html" title="class in com.atlan.util">QueryFactory.CompoundQuery.CompoundQueryBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#builder()">builder</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
+&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -224,6 +233,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>_toQuery</h4>
 <pre class="methodSignature">public&nbsp;co.elastic.clients.elasticsearch._types.query_dsl.Query&nbsp;_toQuery()</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Translate the Atlan compound query into an Elastic Query object.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -238,6 +248,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>builder</h4>
 <pre class="methodSignature">public static&nbsp;<a href="QueryFactory.CompoundQuery.CompoundQueryBuilder.html" title="class in com.atlan.util">QueryFactory.CompoundQuery.CompoundQueryBuilder</a>&nbsp;builder()</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 </li>
 </ul>
 </li>

@@ -27,8 +27,8 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10};
-var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
+var data = {"i0":42,"i1":42,"i2":42,"i3":42,"i4":42,"i5":42,"i6":42,"i7":42,"i8":42,"i9":42,"i10":42,"i11":42,"i12":42,"i13":42,"i14":42,"i15":42,"i16":42,"i17":42};
+var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -135,8 +135,12 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd><a href="QueryFactory.html" title="class in com.atlan.util">QueryFactory</a></dd>
 </dl>
 <hr>
-<pre>public static final class <span class="typeNameLabel">QueryFactory.FieldQuery</span>
+<pre>@Deprecated
+public static final class <span class="typeNameLabel">QueryFactory.FieldQuery</span>
 extends java.lang.Object</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">replaced by the more specific implementations in <a href="../model/fields/package-summary.html"><code>com.atlan.model.fields</code></a></div>
+</div>
 <div class="block">Class to compose compound queries combining various conditions.</div>
 </li>
 </ul>
@@ -152,7 +156,7 @@ extends java.lang.Object</pre>
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t6" class="tableTab"><span><a href="javascript:show(32);">Deprecated Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colSecond" scope="col">Method</th>
@@ -162,6 +166,7 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>co.elastic.clients.elasticsearch._types.query_dsl.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#beOneOf(java.util.Collection)">beOneOf</a></span>&#8203;(java.util.Collection&lt;java.lang.String&gt;&nbsp;values)</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will match all assets whose provided field has a value that exactly equals
  at least one of the provided string values.</div>
 </td>
@@ -171,6 +176,7 @@ extends java.lang.Object</pre>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#between(T,T)">between</a></span>&#8203;(T&nbsp;min,
        T&nbsp;max)</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will match all assets whose provided field has a value between the
  minimum and maximum specified values, inclusive.</div>
 </td>
@@ -179,6 +185,7 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>co.elastic.clients.elasticsearch._types.query_dsl.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#eq(boolean)">eq</a></span>&#8203;(boolean&nbsp;value)</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will match all assets whose provided field has a value that exactly equals
  the provided boolean value.</div>
 </td>
@@ -187,6 +194,7 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>co.elastic.clients.elasticsearch._types.query_dsl.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#eq(com.atlan.model.enums.AtlanEnum)">eq</a></span>&#8203;(<a href="../model/enums/AtlanEnum.html" title="interface in com.atlan.model.enums">AtlanEnum</a>&nbsp;value)</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will match all assets whose provided field has a value that exactly equals
  the provided enumerated value.</div>
 </td>
@@ -195,6 +203,7 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>co.elastic.clients.elasticsearch._types.query_dsl.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#eq(java.lang.String)">eq</a></span>&#8203;(java.lang.String&nbsp;value)</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will match all assets whose provided field has a value that exactly equals
  the provided string value.</div>
 </td>
@@ -204,6 +213,7 @@ extends java.lang.Object</pre>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#eq(java.lang.String,boolean)">eq</a></span>&#8203;(java.lang.String&nbsp;value,
   boolean&nbsp;caseInsensitive)</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will match all assets whose provided field has a value that exactly equals
  the provided string value.</div>
 </td>
@@ -212,6 +222,7 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>&lt;T extends java.lang.Number&gt;<br>co.elastic.clients.elasticsearch._types.query_dsl.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#eq(T)">eq</a></span>&#8203;(T&nbsp;value)</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will match all assets whose provided field has a value that exactly
  matches the provided numeric value.</div>
 </td>
@@ -220,6 +231,7 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>&lt;T extends java.lang.Number&gt;<br>co.elastic.clients.elasticsearch._types.query_dsl.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#gt(T)">gt</a></span>&#8203;(T&nbsp;value)</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will match all assets whose provided field has a value that is strictly greater
  than the provided numeric value.</div>
 </td>
@@ -228,6 +240,7 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>&lt;T extends java.lang.Number&gt;<br>co.elastic.clients.elasticsearch._types.query_dsl.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#gte(T)">gte</a></span>&#8203;(T&nbsp;value)</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will match all assets whose provided field has a value that is greater
  than or equal to the provided numeric value.</div>
 </td>
@@ -236,6 +249,7 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>co.elastic.clients.elasticsearch._types.query_dsl.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#in(java.util.Collection)">in</a></span>&#8203;(java.util.Collection&lt;java.lang.String&gt;&nbsp;values)</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will match all assets whose provided field has a value that exactly equals
  at least one of the provided string values.</div>
 </td>
@@ -244,6 +258,7 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>&lt;T extends java.lang.Number&gt;<br>co.elastic.clients.elasticsearch._types.query_dsl.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#lt(T)">lt</a></span>&#8203;(T&nbsp;value)</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will match all assets whose provided field has a value that is strictly less
  than the provided numeric value.</div>
 </td>
@@ -252,6 +267,7 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>&lt;T extends java.lang.Number&gt;<br>co.elastic.clients.elasticsearch._types.query_dsl.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#lte(T)">lte</a></span>&#8203;(T&nbsp;value)</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will match all assets whose provided field has a value that is less
  than or equal to the provided numeric value.</div>
 </td>
@@ -260,6 +276,7 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>co.elastic.clients.elasticsearch._types.query_dsl.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#match(java.lang.String)">match</a></span>&#8203;(java.lang.String&nbsp;value)</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will textually match the provided value against the field.</div>
 </td>
 </tr>
@@ -267,6 +284,7 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>co.elastic.clients.elasticsearch._types.query_dsl.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#present()">present</a></span>()</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will only match assets that have some non-null, non-empty value
  (no matter what actual value) for the field.</div>
 </td>
@@ -275,6 +293,7 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>co.elastic.clients.elasticsearch._types.query_dsl.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#startingWith(java.lang.String)">startingWith</a></span>&#8203;(java.lang.String&nbsp;value)</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will match all assets whose provided field has a value that starts with
  the provided value.</div>
 </td>
@@ -284,6 +303,7 @@ extends java.lang.Object</pre>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#startingWith(java.lang.String,boolean)">startingWith</a></span>&#8203;(java.lang.String&nbsp;value,
             boolean&nbsp;caseInsensitive)</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will match all assets whose provided field has a value that starts with
  the provided value.</div>
 </td>
@@ -292,6 +312,7 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>co.elastic.clients.elasticsearch._types.query_dsl.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#startsWith(java.lang.String)">startsWith</a></span>&#8203;(java.lang.String&nbsp;value)</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will match all assets whose provided field has a value that starts with
  the provided value.</div>
 </td>
@@ -301,6 +322,7 @@ extends java.lang.Object</pre>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#startsWith(java.lang.String,boolean)">startsWith</a></span>&#8203;(java.lang.String&nbsp;value,
           boolean&nbsp;caseInsensitive)</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will match all assets whose provided field has a value that starts with
  the provided value.</div>
 </td>
@@ -336,6 +358,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>startsWith</h4>
 <pre class="methodSignature">public&nbsp;co.elastic.clients.elasticsearch._types.query_dsl.Query&nbsp;startsWith&#8203;(java.lang.String&nbsp;value)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will match all assets whose provided field has a value that starts with
  the provided value. Note that this is a case-sensitive match.</div>
 <dl>
@@ -355,6 +378,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>startingWith</h4>
 <pre class="methodSignature">public&nbsp;co.elastic.clients.elasticsearch._types.query_dsl.Query&nbsp;startingWith&#8203;(java.lang.String&nbsp;value)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will match all assets whose provided field has a value that starts with
  the provided value. Note that this is a case-sensitive match.</div>
 <dl>
@@ -375,6 +399,7 @@ extends java.lang.Object</pre>
 <h4>startsWith</h4>
 <pre class="methodSignature">public&nbsp;co.elastic.clients.elasticsearch._types.query_dsl.Query&nbsp;startsWith&#8203;(java.lang.String&nbsp;value,
                                                                           boolean&nbsp;caseInsensitive)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will match all assets whose provided field has a value that starts with
  the provided value. Note that this can also be a case-insensitive match.</div>
 <dl>
@@ -396,6 +421,7 @@ extends java.lang.Object</pre>
 <h4>startingWith</h4>
 <pre class="methodSignature">public&nbsp;co.elastic.clients.elasticsearch._types.query_dsl.Query&nbsp;startingWith&#8203;(java.lang.String&nbsp;value,
                                                                             boolean&nbsp;caseInsensitive)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will match all assets whose provided field has a value that starts with
  the provided value. Note that this can also be a case-insensitive match.</div>
 <dl>
@@ -416,6 +442,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>eq</h4>
 <pre class="methodSignature">public&nbsp;co.elastic.clients.elasticsearch._types.query_dsl.Query&nbsp;eq&#8203;(<a href="../model/enums/AtlanEnum.html" title="interface in com.atlan.model.enums">AtlanEnum</a>&nbsp;value)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will match all assets whose provided field has a value that exactly equals
  the provided enumerated value.</div>
 <dl>
@@ -433,6 +460,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>eq</h4>
 <pre class="methodSignature">public&nbsp;co.elastic.clients.elasticsearch._types.query_dsl.Query&nbsp;eq&#8203;(boolean&nbsp;value)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will match all assets whose provided field has a value that exactly equals
  the provided boolean value.</div>
 <dl>
@@ -450,6 +478,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>eq</h4>
 <pre class="methodSignature">public&nbsp;co.elastic.clients.elasticsearch._types.query_dsl.Query&nbsp;eq&#8203;(java.lang.String&nbsp;value)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will match all assets whose provided field has a value that exactly equals
  the provided string value.</div>
 <dl>
@@ -468,6 +497,7 @@ extends java.lang.Object</pre>
 <h4>eq</h4>
 <pre class="methodSignature">public&nbsp;co.elastic.clients.elasticsearch._types.query_dsl.Query&nbsp;eq&#8203;(java.lang.String&nbsp;value,
                                                                   boolean&nbsp;caseInsensitive)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will match all assets whose provided field has a value that exactly equals
  the provided string value. Note that this can also be modified to ignore case when doing the exact match.</div>
 <dl>
@@ -486,6 +516,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>in</h4>
 <pre class="methodSignature">public&nbsp;co.elastic.clients.elasticsearch._types.query_dsl.Query&nbsp;in&#8203;(java.util.Collection&lt;java.lang.String&gt;&nbsp;values)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will match all assets whose provided field has a value that exactly equals
  at least one of the provided string values.</div>
 <dl>
@@ -505,6 +536,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>beOneOf</h4>
 <pre class="methodSignature">public&nbsp;co.elastic.clients.elasticsearch._types.query_dsl.Query&nbsp;beOneOf&#8203;(java.util.Collection&lt;java.lang.String&gt;&nbsp;values)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will match all assets whose provided field has a value that exactly equals
  at least one of the provided string values.</div>
 <dl>
@@ -526,6 +558,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>eq</h4>
 <pre class="methodSignature">public&nbsp;&lt;T extends java.lang.Number&gt;&nbsp;co.elastic.clients.elasticsearch._types.query_dsl.Query&nbsp;eq&#8203;(T&nbsp;value)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will match all assets whose provided field has a value that exactly
  matches the provided numeric value.</div>
 <dl>
@@ -547,6 +580,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>gt</h4>
 <pre class="methodSignature">public&nbsp;&lt;T extends java.lang.Number&gt;&nbsp;co.elastic.clients.elasticsearch._types.query_dsl.Query&nbsp;gt&#8203;(T&nbsp;value)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will match all assets whose provided field has a value that is strictly greater
  than the provided numeric value.</div>
 <dl>
@@ -568,6 +602,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>gte</h4>
 <pre class="methodSignature">public&nbsp;&lt;T extends java.lang.Number&gt;&nbsp;co.elastic.clients.elasticsearch._types.query_dsl.Query&nbsp;gte&#8203;(T&nbsp;value)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will match all assets whose provided field has a value that is greater
  than or equal to the provided numeric value.</div>
 <dl>
@@ -589,6 +624,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>lt</h4>
 <pre class="methodSignature">public&nbsp;&lt;T extends java.lang.Number&gt;&nbsp;co.elastic.clients.elasticsearch._types.query_dsl.Query&nbsp;lt&#8203;(T&nbsp;value)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will match all assets whose provided field has a value that is strictly less
  than the provided numeric value.</div>
 <dl>
@@ -610,6 +646,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>lte</h4>
 <pre class="methodSignature">public&nbsp;&lt;T extends java.lang.Number&gt;&nbsp;co.elastic.clients.elasticsearch._types.query_dsl.Query&nbsp;lte&#8203;(T&nbsp;value)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will match all assets whose provided field has a value that is less
  than or equal to the provided numeric value.</div>
 <dl>
@@ -632,6 +669,7 @@ extends java.lang.Object</pre>
 <h4>between</h4>
 <pre class="methodSignature">public&nbsp;&lt;T extends java.lang.Number&gt;&nbsp;co.elastic.clients.elasticsearch._types.query_dsl.Query&nbsp;between&#8203;(T&nbsp;min,
                                                                                                     T&nbsp;max)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will match all assets whose provided field has a value between the
  minimum and maximum specified values, inclusive.</div>
 <dl>
@@ -652,6 +690,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>present</h4>
 <pre class="methodSignature">public&nbsp;co.elastic.clients.elasticsearch._types.query_dsl.Query&nbsp;present()</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will only match assets that have some non-null, non-empty value
  (no matter what actual value) for the field.</div>
 <dl>
@@ -668,6 +707,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>match</h4>
 <pre class="methodSignature">public&nbsp;co.elastic.clients.elasticsearch._types.query_dsl.Query&nbsp;match&#8203;(java.lang.String&nbsp;value)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns a query that will textually match the provided value against the field. This
  analyzes the provided value according to the same analysis carried out on the field
  (for example, tokenization, stemming, and so on).</div>

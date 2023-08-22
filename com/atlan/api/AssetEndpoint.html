@@ -27,8 +27,8 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10,"i37":10,"i38":10,"i39":10,"i40":10,"i41":10,"i42":10,"i43":10,"i44":10,"i45":10,"i46":10};
-var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":42,"i5":42,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10,"i37":10,"i38":10,"i39":10,"i40":10,"i41":10,"i42":10,"i43":10,"i44":10,"i45":10,"i46":10,"i47":10,"i48":10};
+var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -221,7 +221,7 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t6" class="tableTab"><span><a href="javascript:show(32);">Deprecated Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colSecond" scope="col">Method</th>
@@ -275,14 +275,18 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 <td class="colFirst"><code><a href="../model/core/AssetFilter.AssetFilterBuilder.html" title="class in com.atlan.model.core">AssetFilter.AssetFilterBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#all()">all</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Start an asset filter that will return all Table assets.</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">replaced by <a href="#select()"><code>select()</code></a></div>
+</div>
 </td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="../model/core/AssetFilter.AssetFilterBuilder.html" title="class in com.atlan.model.core">AssetFilter.AssetFilterBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#all(boolean)">all</a></span>&#8203;(boolean&nbsp;includeArchived)</code></th>
 <td class="colLast">
-<div class="block">Start an asset filter that will return all Table assets.</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">replaced by <a href="#select(boolean)"><code>select(boolean)</code></a></div>
+</div>
 </td>
 </tr>
 <tr id="i6" class="altColor">
@@ -331,7 +335,7 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
    boolean&nbsp;ignoreRelationships,
    boolean&nbsp;minExtInfo)</code></th>
 <td class="colLast">
-<div class="block">Retrieves any entity by its GUID.</div>
+<div class="block">Retrieves any asset by its GUID.</div>
 </td>
 </tr>
 <tr id="i12" class="altColor">
@@ -341,7 +345,7 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
    boolean&nbsp;minExtInfo,
    <a href="../net/RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)</code></th>
 <td class="colLast">
-<div class="block">Retrieves any entity by its GUID.</div>
+<div class="block">Retrieves any asset by its GUID.</div>
 </td>
 </tr>
 <tr id="i13" class="rowColor">
@@ -421,7 +425,7 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeCustomMetadata(java.lang.String,java.lang.String)">removeCustomMetadata</a></span>&#8203;(java.lang.String&nbsp;guid,
                     java.lang.String&nbsp;cmName)</code></th>
 <td class="colLast">
-<div class="block">Removes specific custom metadata from the specified entity.</div>
+<div class="block">Removes specific custom metadata from the specified asset.</div>
 </td>
 </tr>
 <tr id="i22" class="altColor">
@@ -430,7 +434,7 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
                     java.lang.String&nbsp;cmName,
                     <a href="../net/RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)</code></th>
 <td class="colLast">
-<div class="block">Removes specific custom metadata from the specified entity.</div>
+<div class="block">Removes specific custom metadata from the specified asset.</div>
 </td>
 </tr>
 <tr id="i23" class="rowColor">
@@ -439,7 +443,7 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
                      java.lang.String&nbsp;cmName,
                      <a href="../model/core/CustomMetadataAttributes.html" title="class in com.atlan.model.core">CustomMetadataAttributes</a>&nbsp;values)</code></th>
 <td class="colLast">
-<div class="block">Replaces specific custom metadata for the specified entity.</div>
+<div class="block">Replaces specific custom metadata for the specified asset.</div>
 </td>
 </tr>
 <tr id="i24" class="altColor">
@@ -449,7 +453,7 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
                      <a href="../model/core/CustomMetadataAttributes.html" title="class in com.atlan.model.core">CustomMetadataAttributes</a>&nbsp;values,
                      <a href="../net/RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)</code></th>
 <td class="colLast">
-<div class="block">Replaces specific custom metadata for the specified entity.</div>
+<div class="block">Replaces specific custom metadata for the specified asset.</div>
 </td>
 </tr>
 <tr id="i25" class="rowColor">
@@ -486,7 +490,7 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 <td class="colFirst"><code><a href="../model/core/AssetMutationResponse.html" title="class in com.atlan.model.core">AssetMutationResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#save(com.atlan.model.assets.Asset)">save</a></span>&#8203;(<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;value)</code></th>
 <td class="colLast">
-<div class="block">Creates any asset, not updating any of the existing entity's Atlan tags and entirely
+<div class="block">Creates any asset, not updating any of the existing asset's Atlan tags and entirely
  ignoring any custom metadata.</div>
 </td>
 </tr>
@@ -495,7 +499,7 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#save(com.atlan.model.assets.Asset,boolean)">save</a></span>&#8203;(<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;value,
     boolean&nbsp;replaceAtlanTags)</code></th>
 <td class="colLast">
-<div class="block">Creates any asset, optionally overwriting an existing entity's Atlan tags and entirely
+<div class="block">Creates any asset, optionally overwriting an existing asset's Atlan tags and entirely
  ignoring any custom metadata.</div>
 </td>
 </tr>
@@ -505,7 +509,7 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
     boolean&nbsp;replaceAtlanTags,
     <a href="../net/RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)</code></th>
 <td class="colLast">
-<div class="block">Creates any asset, optionally overwriting an existing entity's Atlan tags and entirely
+<div class="block">Creates any asset, optionally overwriting an existing asset's Atlan tags and entirely
  ignoring any custom metadata.</div>
 </td>
 </tr>
@@ -514,7 +518,7 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#save(com.atlan.model.assets.Asset,com.atlan.net.RequestOptions)">save</a></span>&#8203;(<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;value,
     <a href="../net/RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)</code></th>
 <td class="colLast">
-<div class="block">Creates any asset, not updating any of the existing entity's Atlan tags and entirely
+<div class="block">Creates any asset, not updating any of the existing asset's Atlan tags and entirely
  ignoring any custom metadata.</div>
 </td>
 </tr>
@@ -610,6 +614,20 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 </td>
 </tr>
 <tr id="i43" class="rowColor">
+<td class="colFirst"><code><a href="../model/search/FluentSearch.FluentSearchBuilder.html" title="class in com.atlan.model.search">FluentSearch.FluentSearchBuilder</a>&lt;?,&#8203;?&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#select()">select</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Start a fluent search that will return all assets.</div>
+</td>
+</tr>
+<tr id="i44" class="altColor">
+<td class="colFirst"><code><a href="../model/search/FluentSearch.FluentSearchBuilder.html" title="class in com.atlan.model.search">FluentSearch.FluentSearchBuilder</a>&lt;?,&#8203;?&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#select(boolean)">select</a></span>&#8203;(boolean&nbsp;includeArchived)</code></th>
+<td class="colLast">
+<div class="block">Start a fluent search that will return all assets.</div>
+</td>
+</tr>
+<tr id="i45" class="rowColor">
 <td class="colFirst"><code><a href="../model/core/AssetMutationResponse.html" title="class in com.atlan.model.core">AssetMutationResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateAttributes(java.lang.String,java.lang.String,com.atlan.model.assets.Asset)">updateAttributes</a></span>&#8203;(java.lang.String&nbsp;typeName,
                 java.lang.String&nbsp;qualifiedName,
@@ -618,7 +636,7 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 <div class="block">Updates any simple attributes provided.</div>
 </td>
 </tr>
-<tr id="i44" class="altColor">
+<tr id="i46" class="altColor">
 <td class="colFirst"><code><a href="../model/core/AssetMutationResponse.html" title="class in com.atlan.model.core">AssetMutationResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateAttributes(java.lang.String,java.lang.String,com.atlan.model.assets.Asset,com.atlan.net.RequestOptions)">updateAttributes</a></span>&#8203;(java.lang.String&nbsp;typeName,
                 java.lang.String&nbsp;qualifiedName,
@@ -628,7 +646,7 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 <div class="block">Updates any simple attributes provided.</div>
 </td>
 </tr>
-<tr id="i45" class="rowColor">
+<tr id="i47" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateCustomMetadataAttributes(java.lang.String,java.lang.String,com.atlan.model.core.CustomMetadataAttributes)">updateCustomMetadataAttributes</a></span>&#8203;(java.lang.String&nbsp;guid,
                               java.lang.String&nbsp;cmName,
@@ -637,7 +655,7 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 <div class="block">Updates only the provided custom metadata attributes on the asset.</div>
 </td>
 </tr>
-<tr id="i46" class="altColor">
+<tr id="i48" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateCustomMetadataAttributes(java.lang.String,java.lang.String,com.atlan.model.core.CustomMetadataAttributes,com.atlan.net.RequestOptions)">updateCustomMetadataAttributes</a></span>&#8203;(java.lang.String&nbsp;guid,
                               java.lang.String&nbsp;cmName,
@@ -704,13 +722,53 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a id="select()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>select</h4>
+<pre class="methodSignature">public&nbsp;<a href="../model/search/FluentSearch.FluentSearchBuilder.html" title="class in com.atlan.model.search">FluentSearch.FluentSearchBuilder</a>&lt;?,&#8203;?&gt;&nbsp;select()</pre>
+<div class="block">Start a fluent search that will return all assets.
+ Additional conditions can be chained onto the returned filter before any
+ asset retrieval is attempted, ensuring all conditions are pushed-down for
+ optimal retrieval. Only active (non-archived) assets will be included.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a fluent search that includes all assets</dd>
+</dl>
+</li>
+</ul>
+<a id="select(boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>select</h4>
+<pre class="methodSignature">public&nbsp;<a href="../model/search/FluentSearch.FluentSearchBuilder.html" title="class in com.atlan.model.search">FluentSearch.FluentSearchBuilder</a>&lt;?,&#8203;?&gt;&nbsp;select&#8203;(boolean&nbsp;includeArchived)</pre>
+<div class="block">Start a fluent search that will return all assets.
+ Additional conditions can be chained onto the returned filter before any
+ asset retrieval is attempted, ensuring all conditions are pushed-down for
+ optimal retrieval.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>includeArchived</code> - when true, archived (soft-deleted) assets will be included</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a fluent search that includes all assets</dd>
+</dl>
+</li>
+</ul>
 <a id="all()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>all</h4>
-<pre class="methodSignature">public&nbsp;<a href="../model/core/AssetFilter.AssetFilterBuilder.html" title="class in com.atlan.model.core">AssetFilter.AssetFilterBuilder</a>&nbsp;all()</pre>
+<pre class="methodSignature">@Deprecated
+public&nbsp;<a href="../model/core/AssetFilter.AssetFilterBuilder.html" title="class in com.atlan.model.core">AssetFilter.AssetFilterBuilder</a>&nbsp;all()</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">replaced by <a href="#select()"><code>select()</code></a></div>
+</div>
 <div class="block">Start an asset filter that will return all Table assets.
  Additional conditions can be chained onto the returned filter before any
  asset retrieval is attempted, ensuring all conditions are pushed-down for
@@ -727,7 +785,11 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 <ul class="blockList">
 <li class="blockList">
 <h4>all</h4>
-<pre class="methodSignature">public&nbsp;<a href="../model/core/AssetFilter.AssetFilterBuilder.html" title="class in com.atlan.model.core">AssetFilter.AssetFilterBuilder</a>&nbsp;all&#8203;(boolean&nbsp;includeArchived)</pre>
+<pre class="methodSignature">@Deprecated
+public&nbsp;<a href="../model/core/AssetFilter.AssetFilterBuilder.html" title="class in com.atlan.model.core">AssetFilter.AssetFilterBuilder</a>&nbsp;all&#8203;(boolean&nbsp;includeArchived)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">replaced by <a href="#select(boolean)"><code>select(boolean)</code></a></div>
+</div>
 <div class="block">Start an asset filter that will return all Table assets.
  Additional conditions can be chained onto the returned filter before any
  asset retrieval is attempted, ensuring all conditions are pushed-down for
@@ -788,7 +850,7 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 <h4>save</h4>
 <pre class="methodSignature">public&nbsp;<a href="../model/core/AssetMutationResponse.html" title="class in com.atlan.model.core">AssetMutationResponse</a>&nbsp;save&#8203;(<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;value)
                            throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Creates any asset, not updating any of the existing entity's Atlan tags and entirely
+<div class="block">Creates any asset, not updating any of the existing asset's Atlan tags and entirely
  ignoring any custom metadata.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -809,7 +871,7 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 <pre class="methodSignature">public&nbsp;<a href="../model/core/AssetMutationResponse.html" title="class in com.atlan.model.core">AssetMutationResponse</a>&nbsp;save&#8203;(<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;value,
                                   <a href="../net/RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)
                            throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Creates any asset, not updating any of the existing entity's Atlan tags and entirely
+<div class="block">Creates any asset, not updating any of the existing asset's Atlan tags and entirely
  ignoring any custom metadata.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -831,7 +893,7 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 <pre class="methodSignature">public&nbsp;<a href="../model/core/AssetMutationResponse.html" title="class in com.atlan.model.core">AssetMutationResponse</a>&nbsp;save&#8203;(<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;value,
                                   boolean&nbsp;replaceAtlanTags)
                            throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Creates any asset, optionally overwriting an existing entity's Atlan tags and entirely
+<div class="block">Creates any asset, optionally overwriting an existing asset's Atlan tags and entirely
  ignoring any custom metadata.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -854,7 +916,7 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
                                   boolean&nbsp;replaceAtlanTags,
                                   <a href="../net/RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)
                            throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Creates any asset, optionally overwriting an existing entity's Atlan tags and entirely
+<div class="block">Creates any asset, optionally overwriting an existing asset's Atlan tags and entirely
  ignoring any custom metadata.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -1209,14 +1271,14 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
                          boolean&nbsp;ignoreRelationships,
                          boolean&nbsp;minExtInfo)
                   throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Retrieves any entity by its GUID.</div>
+<div class="block">Retrieves any asset by its GUID.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>guid</code> - unique ID (GUID) of the entity to retrieve</dd>
-<dd><code>ignoreRelationships</code> - whether to exclude the entity's relationships (true) or include them (false) in the response</dd>
+<dd><code>guid</code> - unique ID (GUID) of the asset to retrieve</dd>
+<dd><code>ignoreRelationships</code> - whether to exclude the asset's relationships (true) or include them (false) in the response</dd>
 <dd><code>minExtInfo</code> - TBC</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the requested entity and its details, if it exists</dd>
+<dd>the requested asset and its details, if it exists</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API interaction problems</dd>
 </dl>
@@ -1233,15 +1295,15 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
                          boolean&nbsp;minExtInfo,
                          <a href="../net/RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)
                   throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Retrieves any entity by its GUID.</div>
+<div class="block">Retrieves any asset by its GUID.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>guid</code> - unique ID (GUID) of the entity to retrieve</dd>
-<dd><code>ignoreRelationships</code> - whether to exclude the entity's relationships (true) or include them (false) in the response</dd>
+<dd><code>guid</code> - unique ID (GUID) of the asset to retrieve</dd>
+<dd><code>ignoreRelationships</code> - whether to exclude the asset's relationships (true) or include them (false) in the response</dd>
 <dd><code>minExtInfo</code> - TBC</dd>
 <dd><code>options</code> - to override default client settings</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the requested entity and its details, if it exists</dd>
+<dd>the requested asset and its details, if it exists</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API interaction problems</dd>
 </dl>
@@ -1261,7 +1323,7 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
  attributes, even within the same named custom metadata, unchanged.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>guid</code> - unique identifier of the entity for which to update the custom metadata attributes</dd>
+<dd><code>guid</code> - unique identifier of the asset for which to update the custom metadata attributes</dd>
 <dd><code>cmName</code> - the name of the custom metadata to update</dd>
 <dd><code>values</code> - the values of the custom metadata attributes to change</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
@@ -1284,7 +1346,7 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
  attributes, even within the same named custom metadata, unchanged.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>guid</code> - unique identifier of the entity for which to update the custom metadata attributes</dd>
+<dd><code>guid</code> - unique identifier of the asset for which to update the custom metadata attributes</dd>
 <dd><code>cmName</code> - the name of the custom metadata to update</dd>
 <dd><code>values</code> - the values of the custom metadata attributes to change</dd>
 <dd><code>options</code> - to override default client settings</dd>
@@ -1303,11 +1365,11 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
                                   java.lang.String&nbsp;cmName,
                                   <a href="../model/core/CustomMetadataAttributes.html" title="class in com.atlan.model.core">CustomMetadataAttributes</a>&nbsp;values)
                            throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Replaces specific custom metadata for the specified entity. This will replace everything within that named
+<div class="block">Replaces specific custom metadata for the specified asset. This will replace everything within that named
  custom metadata, but not touch any of the other named custom metadata.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>guid</code> - unique identifier of the entity for which to replace the custom metadata</dd>
+<dd><code>guid</code> - unique identifier of the asset for which to replace the custom metadata</dd>
 <dd><code>cmName</code> - the name of the custom metadata to replace</dd>
 <dd><code>values</code> - the values to replace</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
@@ -1326,11 +1388,11 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
                                   <a href="../model/core/CustomMetadataAttributes.html" title="class in com.atlan.model.core">CustomMetadataAttributes</a>&nbsp;values,
                                   <a href="../net/RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)
                            throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Replaces specific custom metadata for the specified entity. This will replace everything within that named
+<div class="block">Replaces specific custom metadata for the specified asset. This will replace everything within that named
  custom metadata, but not touch any of the other named custom metadata.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>guid</code> - unique identifier of the entity for which to replace the custom metadata</dd>
+<dd><code>guid</code> - unique identifier of the asset for which to replace the custom metadata</dd>
 <dd><code>cmName</code> - the name of the custom metadata to replace</dd>
 <dd><code>values</code> - the values to replace</dd>
 <dd><code>options</code> - to override the default client settings</dd>
@@ -1348,10 +1410,10 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 <pre class="methodSignature">public&nbsp;void&nbsp;removeCustomMetadata&#8203;(java.lang.String&nbsp;guid,
                                  java.lang.String&nbsp;cmName)
                           throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Removes specific custom metadata from the specified entity.</div>
+<div class="block">Removes specific custom metadata from the specified asset.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>guid</code> - unique identifier of the entity from which to remove the custom metadata</dd>
+<dd><code>guid</code> - unique identifier of the asset from which to remove the custom metadata</dd>
 <dd><code>cmName</code> - the name of the custom metadata to remove</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API issue</dd>
@@ -1368,10 +1430,10 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
                                  java.lang.String&nbsp;cmName,
                                  <a href="../net/RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)
                           throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Removes specific custom metadata from the specified entity.</div>
+<div class="block">Removes specific custom metadata from the specified asset.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>guid</code> - unique identifier of the entity from which to remove the custom metadata</dd>
+<dd><code>guid</code> - unique identifier of the asset from which to remove the custom metadata</dd>
 <dd><code>cmName</code> - the name of the custom metadata to remove</dd>
 <dd><code>options</code> - to override the default client settings</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
@@ -1394,7 +1456,7 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>typeName</code> - type of asset to be retrieved</dd>
-<dd><code>qualifiedName</code> - qualifiedName of the asset to be updated</dd>
+<dd><code>qualifiedName</code> - qualifiedName of the asset to be retrieved</dd>
 <dd><code>ignoreRelationships</code> - whether to include relationships (false) or exclude them (true)</dd>
 <dd><code>minExtInfo</code> - whether to minimize extra info (true) or not (false)</dd>
 <dt><span class="returnLabel">Returns:</span></dt>

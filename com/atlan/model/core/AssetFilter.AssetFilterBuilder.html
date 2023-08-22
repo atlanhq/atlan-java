@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -212,60 +212,68 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr id="i10" class="altColor">
+<td class="colFirst"><code>long</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#count()">count</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Return the total number of assets that will match the supplied criteria,
+ using the most minimal query possible (retrieves minimal data).</div>
+</td>
+</tr>
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code><a href="AssetFilter.AssetFilterBuilder.html" title="class in com.atlan.model.core">AssetFilter.AssetFilterBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#exclude(co.elastic.clients.elasticsearch._types.query_dsl.Query)">exclude</a></span>&#8203;(co.elastic.clients.elasticsearch._types.query_dsl.Query&nbsp;exclude)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code><a href="AssetFilter.AssetFilterBuilder.html" title="class in com.atlan.model.core">AssetFilter.AssetFilterBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#excludes(java.util.Collection)">excludes</a></span>&#8203;(java.util.Collection&lt;? extends co.elastic.clients.elasticsearch._types.query_dsl.Query&gt;&nbsp;excludes)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code><a href="AssetFilter.AssetFilterBuilder.html" title="class in com.atlan.model.core">AssetFilter.AssetFilterBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#filter(co.elastic.clients.elasticsearch._types.query_dsl.Query)">filter</a></span>&#8203;(co.elastic.clients.elasticsearch._types.query_dsl.Query&nbsp;filter)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code><a href="AssetFilter.AssetFilterBuilder.html" title="class in com.atlan.model.core">AssetFilter.AssetFilterBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#filters(java.util.Collection)">filters</a></span>&#8203;(java.util.Collection&lt;? extends co.elastic.clients.elasticsearch._types.query_dsl.Query&gt;&nbsp;filters)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code><a href="AssetFilter.AssetFilterBuilder.html" title="class in com.atlan.model.core">AssetFilter.AssetFilterBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#relationAttribute(java.lang.String)">relationAttribute</a></span>&#8203;(java.lang.String&nbsp;relationAttribute)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code><a href="AssetFilter.AssetFilterBuilder.html" title="class in com.atlan.model.core">AssetFilter.AssetFilterBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#relationAttributes(java.util.Collection)">relationAttributes</a></span>&#8203;(java.util.Collection&lt;? extends java.lang.String&gt;&nbsp;relationAttributes)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code><a href="AssetFilter.AssetFilterBuilder.html" title="class in com.atlan.model.core">AssetFilter.AssetFilterBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sort(co.elastic.clients.elasticsearch._types.SortOptions)">sort</a></span>&#8203;(co.elastic.clients.elasticsearch._types.SortOptions&nbsp;sort)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i18" class="altColor">
 <td class="colFirst"><code><a href="AssetFilter.AssetFilterBuilder.html" title="class in com.atlan.model.core">AssetFilter.AssetFilterBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sorts(java.util.Collection)">sorts</a></span>&#8203;(java.util.Collection&lt;? extends co.elastic.clients.elasticsearch._types.SortOptions&gt;&nbsp;sorts)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i18" class="altColor">
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code>java.util.stream.Stream&lt;<a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#stream()">stream</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Run the set of filters to retrieve assets that match the supplied criteria.</div>
 </td>
 </tr>
-<tr id="i19" class="rowColor">
+<tr id="i20" class="altColor">
 <td class="colFirst"><code>java.util.stream.Stream&lt;<a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#stream(boolean)">stream</a></span>&#8203;(boolean&nbsp;parallel)</code></th>
 <td class="colLast">
 <div class="block">Run the set of filters to retrieve assets that match the supplied criteria.</div>
 </td>
 </tr>
-<tr id="i20" class="altColor">
+<tr id="i21" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
@@ -294,6 +302,24 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a id="count()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>count</h4>
+<pre class="methodSignature">public&nbsp;long&nbsp;count()
+           throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Return the total number of assets that will match the supplied criteria,
+ using the most minimal query possible (retrieves minimal data).</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the count of assets that will match the supplied criteria</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any issues interacting with the Atlan APIs</dd>
+</dl>
+</li>
+</ul>
 <a id="stream()">
 <!--   -->
 </a>

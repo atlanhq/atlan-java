@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -246,15 +246,30 @@ implements java.lang.Comparable&lt;T&gt;</pre>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSingular()">getSingular</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getEnumForAttr()">getEnumForAttr</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSearchType()">getSearchType</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSearchTypeArgs()">getSearchTypeArgs</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i4" class="altColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSingular()">getSingular</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#resolveName()">resolveName</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#resolveType(com.atlan.model.typedefs.AttributeDef)">resolveType</a></span>&#8203;(<a href="../model/typedefs/AttributeDef.html" title="class in com.atlan.model.typedefs">AttributeDef</a>&nbsp;attributeDef)</code></th>
 <td class="colLast">&nbsp;</td>
@@ -362,10 +377,19 @@ implements java.lang.Comparable&lt;T&gt;</pre>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getSingular()</pre>
 </li>
 </ul>
+<a id="getEnumForAttr()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getEnumForAttr</h4>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getEnumForAttr()</pre>
+</li>
+</ul>
 <a id="compareTo(com.atlan.generators.AssetGenerator.Attribute)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>compareTo</h4>
 <pre class="methodSignature">public&nbsp;int&nbsp;compareTo&#8203;(<a href="AssetGenerator.Attribute.html" title="class in com.atlan.generators">AssetGenerator.Attribute</a>&nbsp;o)</pre>
@@ -373,6 +397,24 @@ implements java.lang.Comparable&lt;T&gt;</pre>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code>compareTo</code>&nbsp;in interface&nbsp;<code>java.lang.Comparable&lt;<a href="AssetGenerator.Attribute.html" title="type parameter in AssetGenerator.Attribute">T</a> extends <a href="AssetGenerator.Attribute.html" title="class in com.atlan.generators">AssetGenerator.Attribute</a>&lt;?&gt;&gt;</code></dd>
 </dl>
+</li>
+</ul>
+<a id="getSearchType()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getSearchType</h4>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getSearchType()</pre>
+</li>
+</ul>
+<a id="getSearchTypeArgs()">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getSearchTypeArgs</h4>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getSearchTypeArgs()</pre>
 </li>
 </ul>
 </li>

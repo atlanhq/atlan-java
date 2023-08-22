@@ -27,8 +27,8 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":9,"i2":9};
-var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
+var data = {"i0":42,"i1":41,"i2":41};
+var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -140,10 +140,15 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd><code><a href="AtlanSearchableField.html" title="interface in com.atlan.model.enums">AtlanSearchableField</a></code>, <code>java.io.Serializable</code>, <code>java.lang.Comparable&lt;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a>&gt;</code></dd>
 </dl>
 <hr>
-<pre>@Generated("com.atlan.generators.ModelGeneratorV2")
+<pre>@Deprecated
+@Generated("com.atlan.generators.ModelGeneratorV2")
 public enum <span class="typeNameLabel">TextFields</span>
 extends java.lang.Enum&lt;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a>&gt;
 implements <a href="AtlanSearchableField.html" title="interface in com.atlan.model.enums">AtlanSearchableField</a></pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">these are now enumerated as constants in the various asset interfaces, as instances of one of the following: <a href="../fields/BooleanField.html" title="class in com.atlan.model.fields"><code>BooleanField</code></a>, <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields"><code>KeywordField</code></a>, <a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields"><code>KeywordTextField</code></a>, <a href="../fields/KeywordTextStemmedField.html" title="class in com.atlan.model.fields"><code>KeywordTextStemmedField</code></a>, <a href="../fields/NumericField.html" title="class in com.atlan.model.fields"><code>NumericField</code></a>, <a href="../fields/NumericRankField.html" title="class in com.atlan.model.fields"><code>NumericRankField</code></a>, <a href="../fields/RelationField.html" title="class in com.atlan.model.fields"><code>RelationField</code></a>, or <a href="../fields/TextField.html" title="class in com.atlan.model.fields"><code>TextField</code></a></div>
+</div>
+<div class="block">Enumeration of all index fields.</div>
 </li>
 </ul>
 </div>
@@ -166,1032 +171,1204 @@ implements <a href="AtlanSearchableField.html" title="interface in com.atlan.mod
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#ADLS_ACCOUNT_QUALIFIED_NAME">ADLS_ACCOUNT_QUALIFIED_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Unique name of the account for this ADLS asset.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#ADLS_ACCOUNT_RESOURCE_GROUP">ADLS_ACCOUNT_RESOURCE_GROUP</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#ADLS_ACCOUNT_SUBSCRIPTION">ADLS_ACCOUNT_SUBSCRIPTION</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#ADLS_CONTAINER_QUALIFIED_NAME">ADLS_CONTAINER_QUALIFIED_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Unique name of the container this object exists within.</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#ADLS_CONTAINER_URL">ADLS_CONTAINER_URL</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#ADLS_OBJECT_CACHE_CONTROL">ADLS_OBJECT_CACHE_CONTROL</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#ADLS_OBJECT_CONTENT_LANGUAGE">ADLS_OBJECT_CONTENT_LANGUAGE</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#ADLS_OBJECT_CONTENT_TYPE">ADLS_OBJECT_CONTENT_TYPE</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#ADLS_OBJECT_URL">ADLS_OBJECT_URL</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#AIRFLOW_DAG_NAME">AIRFLOW_DAG_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#AIRFLOW_TASK_CONNECTION_ID">AIRFLOW_TASK_CONNECTION_ID</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#AIRFLOW_TASK_OPERATOR_CLASS">AIRFLOW_TASK_OPERATOR_CLASS</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#API_NAME">API_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#API_PATH_RAW_URI">API_PATH_RAW_URI</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#API_PATH_SUMMARY">API_PATH_SUMMARY</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#API_SPEC_CONTACT_EMAIL">API_SPEC_CONTACT_EMAIL</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#API_SPEC_CONTACT_NAME">API_SPEC_CONTACT_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#API_SPEC_CONTACT_URL">API_SPEC_CONTACT_URL</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#API_SPEC_LICENSE_NAME">API_SPEC_LICENSE_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#API_SPEC_LICENSE_URL">API_SPEC_LICENSE_URL</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#API_SPEC_NAME">API_SPEC_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#API_SPEC_QUALIFIED_NAME">API_SPEC_QUALIFIED_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#API_SPEC_SERVICE_ALIAS">API_SPEC_SERVICE_ALIAS</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#API_SPEC_TERMS_OF_SERVICE_URL">API_SPEC_TERMS_OF_SERVICE_URL</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#ASSET_DBT_ACCOUNT_NAME">ASSET_DBT_ACCOUNT_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#ASSET_DBT_ALIAS">ASSET_DBT_ALIAS</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#ASSET_DBT_ENVIRONMENT_NAME">ASSET_DBT_ENVIRONMENT_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#ASSET_DBT_JOB_LAST_RUN_GIT_BRANCH">ASSET_DBT_JOB_LAST_RUN_GIT_BRANCH</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#ASSET_DBT_JOB_LAST_RUN_STATUS_MESSAGE">ASSET_DBT_JOB_LAST_RUN_STATUS_MESSAGE</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#ASSET_DBT_JOB_NAME">ASSET_DBT_JOB_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#ASSET_DBT_JOB_NEXT_RUN_HUMANIZED">ASSET_DBT_JOB_NEXT_RUN_HUMANIZED</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#ASSET_DBT_JOB_SCHEDULE_CRON_HUMANIZED">ASSET_DBT_JOB_SCHEDULE_CRON_HUMANIZED</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#ASSET_DBT_PACKAGE_NAME">ASSET_DBT_PACKAGE_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#ASSET_DBT_PROJECT_NAME">ASSET_DBT_PROJECT_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#ASSET_DBT_TAGS">ASSET_DBT_TAGS</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#ASSET_DBT_UNIQUE_ID">ASSET_DBT_UNIQUE_ID</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#ASSET_MC_INCIDENT_NAMES">ASSET_MC_INCIDENT_NAMES</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#ASSET_MC_INCIDENT_QUALIFIED_NAMES">ASSET_MC_INCIDENT_QUALIFIED_NAMES</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#ASSET_MC_MONITOR_NAMES">ASSET_MC_MONITOR_NAMES</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#ASSET_MC_MONITOR_QUALIFIED_NAMES">ASSET_MC_MONITOR_QUALIFIED_NAMES</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#ASSET_TAGS">ASSET_TAGS</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#ATLAN_TAGS_TEXT">ATLAN_TAGS_TEXT</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">All Atlan tags that exist on an asset, whether directly assigned or propagated, searchable by the internal hashed-string ID of the Atlan tag.</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#AWS_ARN">AWS_ARN</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Amazon Resource Name (ARN) for this asset.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#AWS_OWNER_NAME">AWS_OWNER_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Root user's name.</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#AZURE_RESOURCE_ID">AZURE_RESOURCE_ID</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#CERTIFICATE_STATUS">CERTIFICATE_STATUS</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Status of the asset's certification.</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#COLLECTION_QUALIFIED_NAME">COLLECTION_QUALIFIED_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#CONNECTION_NAME">CONNECTION_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#CONNECTION_QUALIFIED_NAME">CONNECTION_QUALIFIED_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Unique name of the connection through which this asset is accessible.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#DATA_STUDIO_ASSET_TITLE">DATA_STUDIO_ASSET_TITLE</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Title for the asset.</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#DATA_TYPE">DATA_TYPE</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Data type of values in the field.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#DATABASE_NAME">DATABASE_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Simple name of the database in which this SQL asset exists, or empty if it does not exist within a database.</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#DBT_ACCOUNT_NAME">DBT_ACCOUNT_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#DBT_ALIAS">DBT_ALIAS</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#DBT_ENVIRONMENT_DBT_VERSION">DBT_ENVIRONMENT_DBT_VERSION</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#DBT_ENVIRONMENT_NAME">DBT_ENVIRONMENT_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#DBT_JOB_NAME">DBT_JOB_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#DBT_JOB_NEXT_RUN_HUMANIZED">DBT_JOB_NEXT_RUN_HUMANIZED</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#DBT_JOB_SCHEDULE_CRON_HUMANIZED">DBT_JOB_SCHEDULE_CRON_HUMANIZED</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#DBT_MODEL_QUALIFIED_NAME">DBT_MODEL_QUALIFIED_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#DBT_PACKAGE_NAME">DBT_PACKAGE_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#DBT_PROJECT_NAME">DBT_PROJECT_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#DBT_QUALIFIED_NAME">DBT_QUALIFIED_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#DBT_TEST_RAW_CODE">DBT_TEST_RAW_CODE</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">The raw code of a test ( tests in dbt can be defined using python )</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#DBT_TEST_RAW_SQL">DBT_TEST_RAW_SQL</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">The raw sql of a test</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#DBT_UNIQUE_ID">DBT_UNIQUE_ID</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#DEFAULT_DATABASE_QUALIFIED_NAME">DEFAULT_DATABASE_QUALIFIED_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#DEFAULT_SCHEMA_QUALIFIED_NAME">DEFAULT_SCHEMA_QUALIFIED_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#DESCRIPTION">DESCRIPTION</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Description of the asset, as crawled from a source.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#DISPLAY_NAME">DISPLAY_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Name used for display purposes (in user interfaces).</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#GCS_BUCKET_LIFECYCLE_RULES">GCS_BUCKET_LIFECYCLE_RULES</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#GCS_BUCKET_NAME">GCS_BUCKET_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Human-readable name of the bucket in which this object exists.</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#GCS_BUCKET_QUALIFIED_NAME">GCS_BUCKET_QUALIFIED_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">qualifiedName of the bucket in which this object exists.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#GCS_BUCKET_RETENTION_POLICY">GCS_BUCKET_RETENTION_POLICY</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#GCS_OBJECT_KEY">GCS_OBJECT_KEY</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#GCS_OBJECT_MEDIA_LINK">GCS_OBJECT_MEDIA_LINK</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#GOOGLE_PROJECT_ID">GOOGLE_PROJECT_ID</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">ID of the project in which the asset exists.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#GOOGLE_PROJECT_NAME">GOOGLE_PROJECT_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Name of the project in which the asset exists.</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#INLINE_HELP_TEXT">INLINE_HELP_TEXT</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#LOOKER_EXPLORE_QUALIFIED_NAME">LOOKER_EXPLORE_QUALIFIED_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#LOOKER_VIEW_QUALIFIED_NAME">LOOKER_VIEW_QUALIFIED_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#MC_MONITOR_ALERT_CONDITION">MC_MONITOR_ALERT_CONDITION</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Condition on which the monitor produces an alert.</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#MC_MONITOR_NAMESPACE">MC_MONITOR_NAMESPACE</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Namespace of the monitor.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#MC_MONITOR_RULE_SCHEDULE_CONFIG_HUMANIZED">MC_MONITOR_RULE_SCHEDULE_CONFIG_HUMANIZED</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Readable description of the schedule for the rule.</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#MEANINGS_TEXT">MEANINGS_TEXT</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">All terms attached to an asset, as a single comma-separated string.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#METABASE_COLLECTION_NAME">METABASE_COLLECTION_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#METABASE_COLLECTION_QUALIFIED_NAME">METABASE_COLLECTION_QUALIFIED_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#METABASE_NAMESPACE">METABASE_NAMESPACE</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#METABASE_QUERY">METABASE_QUERY</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#METABASE_QUERY_TYPE">METABASE_QUERY_TYPE</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#METABASE_SLUG">METABASE_SLUG</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#METRIC_FILTERS">METRIC_FILTERS</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#METRIC_TIME_GRAINS">METRIC_TIME_GRAINS</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#MICRO_STRATEGY_ATTRIBUTE_NAMES">MICRO_STRATEGY_ATTRIBUTE_NAMES</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Simple names of the related MicroStrategy attributes.</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#MICRO_STRATEGY_ATTRIBUTE_QUALIFIED_NAMES">MICRO_STRATEGY_ATTRIBUTE_QUALIFIED_NAMES</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Unique names of the related MicroStrategy attributes.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#MICRO_STRATEGY_CUBE_NAMES">MICRO_STRATEGY_CUBE_NAMES</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Simple names of the related MicroStrategy cubes.</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#MICRO_STRATEGY_CUBE_QUALIFIED_NAMES">MICRO_STRATEGY_CUBE_QUALIFIED_NAMES</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Unique names of the related MicroStrategy cubes.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#MICRO_STRATEGY_DOSSIER_NAME">MICRO_STRATEGY_DOSSIER_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Simple name of the dossier containing this visualization.</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#MICRO_STRATEGY_DOSSIER_QUALIFIED_NAME">MICRO_STRATEGY_DOSSIER_QUALIFIED_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Unique name of the dossier containing this visualization.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#MICRO_STRATEGY_FACT_NAMES">MICRO_STRATEGY_FACT_NAMES</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Simple names of the related MicroStrategy facts.</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#MICRO_STRATEGY_FACT_QUALIFIED_NAMES">MICRO_STRATEGY_FACT_QUALIFIED_NAMES</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Unique names of the related MicroStrategy facts.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#MICRO_STRATEGY_METRIC_PARENT_NAMES">MICRO_STRATEGY_METRIC_PARENT_NAMES</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Simple names of the parent MicroStrategy metrics.</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#MICRO_STRATEGY_METRIC_PARENT_QUALIFIED_NAMES">MICRO_STRATEGY_METRIC_PARENT_QUALIFIED_NAMES</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Unique names of the parent MicroStrategy metrics.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#MICRO_STRATEGY_PROJECT_NAME">MICRO_STRATEGY_PROJECT_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Simple name of the related MicroStrategy project.</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#MICRO_STRATEGY_PROJECT_QUALIFIED_NAME">MICRO_STRATEGY_PROJECT_QUALIFIED_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Unique name of the related MicroStrategy project.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#MICRO_STRATEGY_REPORT_NAMES">MICRO_STRATEGY_REPORT_NAMES</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Simple names of the related MicroStrategy reports.</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#MICRO_STRATEGY_REPORT_QUALIFIED_NAMES">MICRO_STRATEGY_REPORT_QUALIFIED_NAMES</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Unique names of the related MicroStrategy reports.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#MODE_QUERY_NAME">MODE_QUERY_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#MODE_QUERY_PREVIEW">MODE_QUERY_PREVIEW</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#MODE_QUERY_QUALIFIED_NAME">MODE_QUERY_QUALIFIED_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#MODE_RAW_QUERY">MODE_RAW_QUERY</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#MODE_REPORT_NAME">MODE_REPORT_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#MODE_REPORT_QUALIFIED_NAME">MODE_REPORT_QUALIFIED_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#MODE_TOKEN">MODE_TOKEN</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#MODE_WORKSPACE_NAME">MODE_WORKSPACE_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#MODE_WORKSPACE_QUALIFIED_NAME">MODE_WORKSPACE_QUALIFIED_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#MODE_WORKSPACE_USERNAME">MODE_WORKSPACE_USERNAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#NAME">NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Human-readable name of the asset.</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#PARENT_COLUMN_NAME">PARENT_COLUMN_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#PARENT_COLUMN_QUALIFIED_NAME">PARENT_COLUMN_QUALIFIED_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#PARENT_QUALIFIED_NAME">PARENT_QUALIFIED_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#POWER_BI_MEASURE_EXPRESSION">POWER_BI_MEASURE_EXPRESSION</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#POWER_BI_TABLE_QUALIFIED_NAME">POWER_BI_TABLE_QUALIFIED_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#PRESET_CHART_DESCRIPTION_MARKDOWN">PRESET_CHART_DESCRIPTION_MARKDOWN</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Markdown-based description of the chart.</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#PRESET_DASHBOARD_CHANGED_BY_NAME">PRESET_DASHBOARD_CHANGED_BY_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Username of the user who last changed the collection.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#PRESET_DASHBOARD_QUALIFIED_NAME">PRESET_DASHBOARD_QUALIFIED_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">qualifiedName of the Preset asset's collection.</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#PRESET_DATASET_DATASOURCE_NAME">PRESET_DATASET_DATASOURCE_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Name of the data source for the dataset.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#PRESET_WORKSPACE_HOSTNAME">PRESET_WORKSPACE_HOSTNAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Hostname of the Preset workspace.</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#PRESET_WORKSPACE_QUALIFIED_NAME">PRESET_WORKSPACE_QUALIFIED_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">qualifiedName of the Preset asset's workspace.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#PRESET_WORKSPACE_REGION">PRESET_WORKSPACE_REGION</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Region of the workspace.</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#QLIK_APP_QUALIFIED_NAME">QLIK_APP_QUALIFIED_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Unique name of the app where the Qlik asset exists.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#QLIK_CHART_FOOTNOTE">QLIK_CHART_FOOTNOTE</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Footnote on the chart.</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#QLIK_CHART_SUBTITLE">QLIK_CHART_SUBTITLE</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Subtitle of the chart.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#QLIK_DATASET_TECHNICAL_NAME">QLIK_DATASET_TECHNICAL_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Technical name of the data asset.</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#QLIK_DATASET_URI">QLIK_DATASET_URI</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">URI of the dataset.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#QLIK_QRI">QLIK_QRI</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">QRI of the Qlik object.</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#QLIK_SPACE_QUALIFIED_NAME">QLIK_SPACE_QUALIFIED_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Unique name of the space where the Qlik asset exists.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#QUALIFIED_NAME">QUALIFIED_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Unique fully-qualified name of the asset in Atlan.</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#QUICK_SIGHT_ANALYSIS_QUALIFIED_NAME">QUICK_SIGHT_ANALYSIS_QUALIFIED_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Qualified name of the QuickSight Analysis</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#QUICK_SIGHT_DASHBOARD_QUALIFIED_NAME">QUICK_SIGHT_DASHBOARD_QUALIFIED_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#QUICK_SIGHT_DATASET_QUALIFIED_NAME">QUICK_SIGHT_DATASET_QUALIFIED_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Qualified name of the parent dataset</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#QUICK_SIGHT_SHEET_NAME">QUICK_SIGHT_SHEET_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#REDASH_QUERY_NAME">REDASH_QUERY_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Name of the query from which the visualization was created.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#REDASH_QUERY_QUALIFIED_NAME">REDASH_QUERY_QUALIFIED_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Unique name of the query from which the visualization was created.</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#REDASH_QUERY_SCHEDULE_HUMANIZED">REDASH_QUERY_SCHEDULE_HUMANIZED</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Human-readable schedule of the Redash query.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#S3BUCKET_NAME">S3BUCKET_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Name of the bucket in which the object exists.</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#S3E_TAG">S3E_TAG</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Entity tag for the asset.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#S3OBJECT_KEY">S3OBJECT_KEY</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Unique identity of the object in an S3 bucket.</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#SAMPLE_DATA_URL">SAMPLE_DATA_URL</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#SCHEMA_NAME">SCHEMA_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Simple name of the schema in which this SQL asset exists, or empty if it does not exist within a schema.</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#SCHEMA_REGISTRY_SUBJECT_LATEST_SCHEMA_DEFINITION">SCHEMA_REGISTRY_SUBJECT_LATEST_SCHEMA_DEFINITION</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Definition of the latest schema in the subject.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#SIGMA_DATA_ELEMENT_FIELD_FORMULA">SIGMA_DATA_ELEMENT_FIELD_FORMULA</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#SIGMA_DATA_ELEMENT_NAME">SIGMA_DATA_ELEMENT_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#SIGMA_DATA_ELEMENT_QUALIFIED_NAME">SIGMA_DATA_ELEMENT_QUALIFIED_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#SIGMA_DATASET_NAME">SIGMA_DATASET_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Human-readable name of the dataset that contains this column.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#SIGMA_DATASET_QUALIFIED_NAME">SIGMA_DATASET_QUALIFIED_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Unique name of the dataset that contains this column.</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#SIGMA_PAGE_NAME">SIGMA_PAGE_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#SIGMA_PAGE_QUALIFIED_NAME">SIGMA_PAGE_QUALIFIED_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#SIGMA_WORKBOOK_NAME">SIGMA_WORKBOOK_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#SIGMA_WORKBOOK_QUALIFIED_NAME">SIGMA_WORKBOOK_QUALIFIED_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#SNOWFLAKE_PIPE_NOTIFICATION_CHANNEL_NAME">SNOWFLAKE_PIPE_NOTIFICATION_CHANNEL_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#SUPER_TYPE_NAMES">SUPER_TYPE_NAMES</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">All super types of an asset.</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#TABLE_NAME">TABLE_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#TABLEAU_DATA_TYPE">TABLEAU_DATA_TYPE</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#TABLEAU_DATASOURCE_FIELD_DATA_TYPE">TABLEAU_DATASOURCE_FIELD_DATA_TYPE</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#TAG_ALLOWED_VALUES">TAG_ALLOWED_VALUES</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Allowed values for the tag in the source system.</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#THOUGHTSPOT_LIVEBOARD_NAME">THOUGHTSPOT_LIVEBOARD_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Name of the Liveboard in which the Dashlet exists.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#THOUGHTSPOT_LIVEBOARD_QUALIFIED_NAME">THOUGHTSPOT_LIVEBOARD_QUALIFIED_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Unique name of the Liveboard in which the Dashlet exists.</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#THOUGHTSPOT_QUESTION_TEXT">THOUGHTSPOT_QUESTION_TEXT</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#TYPE_NAME">TYPE_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Type of the asset.</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#USER_DESCRIPTION">USER_DESCRIPTION</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Description of the asset, as provided by a user.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#VIEW_NAME">VIEW_NAME</a></span></code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Simple name of the view in which this SQL asset exists, or empty if it does not exist within a view.</div>
 </td>
 </tr>
@@ -1207,7 +1384,7 @@ implements <a href="AtlanSearchableField.html" title="interface in com.atlan.mod
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t6" class="tableTab"><span><a href="javascript:show(32);">Deprecated Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colSecond" scope="col">Method</th>
@@ -1216,12 +1393,15 @@ implements <a href="AtlanSearchableField.html" title="interface in com.atlan.mod
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIndexedFieldName()">getIndexedFieldName</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
+&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>static <a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#valueOf(java.lang.String)">valueOf</a></span>&#8203;(java.lang.String&nbsp;name)</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns the enum constant of this type with the specified name.</div>
 </td>
 </tr>
@@ -1229,6 +1409,7 @@ implements <a href="AtlanSearchableField.html" title="interface in com.atlan.mod
 <td class="colFirst"><code>static <a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a>[]</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#values()">values</a></span>()</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns an array containing the constants of this enum type, in
 the order they are declared.</div>
 </td>
@@ -1271,6 +1452,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>ADLS_ACCOUNT_QUALIFIED_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> ADLS_ACCOUNT_QUALIFIED_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Unique name of the account for this ADLS asset.</div>
 </li>
 </ul>
@@ -1281,6 +1463,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>ADLS_ACCOUNT_RESOURCE_GROUP</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> ADLS_ACCOUNT_RESOURCE_GROUP</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -1291,6 +1474,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>ADLS_ACCOUNT_SUBSCRIPTION</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> ADLS_ACCOUNT_SUBSCRIPTION</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -1301,6 +1485,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>ADLS_CONTAINER_QUALIFIED_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> ADLS_CONTAINER_QUALIFIED_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Unique name of the container this object exists within.</div>
 </li>
 </ul>
@@ -1311,6 +1496,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>ADLS_CONTAINER_URL</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> ADLS_CONTAINER_URL</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -1321,6 +1507,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>ADLS_OBJECT_CACHE_CONTROL</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> ADLS_OBJECT_CACHE_CONTROL</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -1331,6 +1518,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>ADLS_OBJECT_CONTENT_LANGUAGE</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> ADLS_OBJECT_CONTENT_LANGUAGE</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -1341,6 +1529,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>ADLS_OBJECT_CONTENT_TYPE</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> ADLS_OBJECT_CONTENT_TYPE</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -1351,6 +1540,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>ADLS_OBJECT_URL</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> ADLS_OBJECT_URL</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -1361,6 +1551,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>AIRFLOW_DAG_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> AIRFLOW_DAG_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -1371,6 +1562,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>AIRFLOW_TASK_CONNECTION_ID</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> AIRFLOW_TASK_CONNECTION_ID</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -1381,6 +1573,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>AIRFLOW_TASK_OPERATOR_CLASS</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> AIRFLOW_TASK_OPERATOR_CLASS</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -1391,6 +1584,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>API_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> API_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -1401,6 +1595,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>API_PATH_RAW_URI</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> API_PATH_RAW_URI</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -1411,6 +1606,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>API_PATH_SUMMARY</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> API_PATH_SUMMARY</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -1421,6 +1617,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>API_SPEC_CONTACT_EMAIL</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> API_SPEC_CONTACT_EMAIL</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -1431,6 +1628,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>API_SPEC_CONTACT_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> API_SPEC_CONTACT_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -1441,6 +1639,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>API_SPEC_CONTACT_URL</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> API_SPEC_CONTACT_URL</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -1451,6 +1650,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>API_SPEC_LICENSE_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> API_SPEC_LICENSE_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -1461,6 +1661,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>API_SPEC_LICENSE_URL</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> API_SPEC_LICENSE_URL</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -1471,6 +1672,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>API_SPEC_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> API_SPEC_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -1481,6 +1683,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>API_SPEC_QUALIFIED_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> API_SPEC_QUALIFIED_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -1491,6 +1694,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>API_SPEC_SERVICE_ALIAS</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> API_SPEC_SERVICE_ALIAS</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -1501,6 +1705,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>API_SPEC_TERMS_OF_SERVICE_URL</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> API_SPEC_TERMS_OF_SERVICE_URL</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -1511,6 +1716,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>ASSET_DBT_ACCOUNT_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> ASSET_DBT_ACCOUNT_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -1521,6 +1727,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>ASSET_DBT_ALIAS</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> ASSET_DBT_ALIAS</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -1531,6 +1738,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>ASSET_DBT_ENVIRONMENT_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> ASSET_DBT_ENVIRONMENT_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -1541,6 +1749,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>ASSET_DBT_JOB_LAST_RUN_GIT_BRANCH</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> ASSET_DBT_JOB_LAST_RUN_GIT_BRANCH</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -1551,6 +1760,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>ASSET_DBT_JOB_LAST_RUN_STATUS_MESSAGE</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> ASSET_DBT_JOB_LAST_RUN_STATUS_MESSAGE</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -1561,6 +1771,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>ASSET_DBT_JOB_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> ASSET_DBT_JOB_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -1571,6 +1782,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>ASSET_DBT_JOB_NEXT_RUN_HUMANIZED</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> ASSET_DBT_JOB_NEXT_RUN_HUMANIZED</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -1581,6 +1793,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>ASSET_DBT_JOB_SCHEDULE_CRON_HUMANIZED</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> ASSET_DBT_JOB_SCHEDULE_CRON_HUMANIZED</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -1591,6 +1804,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>ASSET_DBT_PACKAGE_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> ASSET_DBT_PACKAGE_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -1601,6 +1815,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>ASSET_DBT_PROJECT_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> ASSET_DBT_PROJECT_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -1611,6 +1826,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>ASSET_DBT_TAGS</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> ASSET_DBT_TAGS</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -1621,6 +1837,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>ASSET_DBT_UNIQUE_ID</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> ASSET_DBT_UNIQUE_ID</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -1631,6 +1848,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>ASSET_MC_INCIDENT_NAMES</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> ASSET_MC_INCIDENT_NAMES</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -1641,6 +1859,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>ASSET_MC_INCIDENT_QUALIFIED_NAMES</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> ASSET_MC_INCIDENT_QUALIFIED_NAMES</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -1651,6 +1870,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>ASSET_MC_MONITOR_NAMES</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> ASSET_MC_MONITOR_NAMES</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -1661,6 +1881,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>ASSET_MC_MONITOR_QUALIFIED_NAMES</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> ASSET_MC_MONITOR_QUALIFIED_NAMES</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -1671,6 +1892,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>ASSET_TAGS</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> ASSET_TAGS</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -1681,6 +1903,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>ATLAN_TAGS_TEXT</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> ATLAN_TAGS_TEXT</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">All Atlan tags that exist on an asset, whether directly assigned or propagated, searchable by the internal hashed-string ID of the Atlan tag.</div>
 </li>
 </ul>
@@ -1691,6 +1914,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>AWS_ARN</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> AWS_ARN</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Amazon Resource Name (ARN) for this asset. This uniquely identifies the asset in AWS, and thus must be unique across all AWS asset instances.</div>
 </li>
 </ul>
@@ -1701,6 +1925,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>AWS_OWNER_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> AWS_OWNER_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Root user's name.</div>
 </li>
 </ul>
@@ -1711,6 +1936,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>AZURE_RESOURCE_ID</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> AZURE_RESOURCE_ID</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -1721,6 +1947,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>CERTIFICATE_STATUS</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> CERTIFICATE_STATUS</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Status of the asset's certification.</div>
 </li>
 </ul>
@@ -1731,6 +1958,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>COLLECTION_QUALIFIED_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> COLLECTION_QUALIFIED_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -1741,6 +1969,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>CONNECTION_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> CONNECTION_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -1751,6 +1980,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>CONNECTION_QUALIFIED_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> CONNECTION_QUALIFIED_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Unique name of the connection through which this asset is accessible.</div>
 </li>
 </ul>
@@ -1761,6 +1991,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>DATABASE_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> DATABASE_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Simple name of the database in which this SQL asset exists, or empty if it does not exist within a database.</div>
 </li>
 </ul>
@@ -1771,6 +2002,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>DATA_STUDIO_ASSET_TITLE</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> DATA_STUDIO_ASSET_TITLE</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Title for the asset.</div>
 </li>
 </ul>
@@ -1781,6 +2013,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>DATA_TYPE</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> DATA_TYPE</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Data type of values in the field.</div>
 </li>
 </ul>
@@ -1791,6 +2024,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>DBT_ACCOUNT_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> DBT_ACCOUNT_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -1801,6 +2035,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>DBT_ALIAS</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> DBT_ALIAS</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -1811,6 +2046,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>DBT_ENVIRONMENT_DBT_VERSION</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> DBT_ENVIRONMENT_DBT_VERSION</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -1821,6 +2057,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>DBT_ENVIRONMENT_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> DBT_ENVIRONMENT_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -1831,6 +2068,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>DBT_JOB_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> DBT_JOB_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -1841,6 +2079,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>DBT_JOB_NEXT_RUN_HUMANIZED</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> DBT_JOB_NEXT_RUN_HUMANIZED</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -1851,6 +2090,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>DBT_JOB_SCHEDULE_CRON_HUMANIZED</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> DBT_JOB_SCHEDULE_CRON_HUMANIZED</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -1861,6 +2101,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>DBT_MODEL_QUALIFIED_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> DBT_MODEL_QUALIFIED_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -1871,6 +2112,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>DBT_PACKAGE_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> DBT_PACKAGE_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -1881,6 +2123,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>DBT_PROJECT_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> DBT_PROJECT_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -1891,6 +2134,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>DBT_QUALIFIED_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> DBT_QUALIFIED_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -1901,6 +2145,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>DBT_TEST_RAW_CODE</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> DBT_TEST_RAW_CODE</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">The raw code of a test ( tests in dbt can be defined using python )</div>
 </li>
 </ul>
@@ -1911,6 +2156,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>DBT_TEST_RAW_SQL</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> DBT_TEST_RAW_SQL</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">The raw sql of a test</div>
 </li>
 </ul>
@@ -1921,6 +2167,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>DBT_UNIQUE_ID</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> DBT_UNIQUE_ID</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -1931,6 +2178,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>DEFAULT_DATABASE_QUALIFIED_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> DEFAULT_DATABASE_QUALIFIED_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -1941,6 +2189,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>DEFAULT_SCHEMA_QUALIFIED_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> DEFAULT_SCHEMA_QUALIFIED_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -1951,6 +2200,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>DESCRIPTION</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> DESCRIPTION</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Description of the asset, as crawled from a source.</div>
 </li>
 </ul>
@@ -1961,6 +2211,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>DISPLAY_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> DISPLAY_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Name used for display purposes (in user interfaces).</div>
 </li>
 </ul>
@@ -1971,6 +2222,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>GCS_BUCKET_LIFECYCLE_RULES</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> GCS_BUCKET_LIFECYCLE_RULES</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -1981,6 +2233,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>GCS_BUCKET_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> GCS_BUCKET_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Human-readable name of the bucket in which this object exists.</div>
 </li>
 </ul>
@@ -1991,6 +2244,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>GCS_BUCKET_QUALIFIED_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> GCS_BUCKET_QUALIFIED_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">qualifiedName of the bucket in which this object exists.</div>
 </li>
 </ul>
@@ -2001,6 +2255,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>GCS_BUCKET_RETENTION_POLICY</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> GCS_BUCKET_RETENTION_POLICY</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -2011,6 +2266,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>GCS_OBJECT_KEY</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> GCS_OBJECT_KEY</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -2021,6 +2277,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>GCS_OBJECT_MEDIA_LINK</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> GCS_OBJECT_MEDIA_LINK</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -2031,6 +2288,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>GOOGLE_PROJECT_ID</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> GOOGLE_PROJECT_ID</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">ID of the project in which the asset exists.</div>
 </li>
 </ul>
@@ -2041,6 +2299,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>GOOGLE_PROJECT_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> GOOGLE_PROJECT_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Name of the project in which the asset exists.</div>
 </li>
 </ul>
@@ -2051,6 +2310,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>INLINE_HELP_TEXT</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> INLINE_HELP_TEXT</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -2061,6 +2321,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>LOOKER_EXPLORE_QUALIFIED_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> LOOKER_EXPLORE_QUALIFIED_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -2071,6 +2332,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>LOOKER_VIEW_QUALIFIED_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> LOOKER_VIEW_QUALIFIED_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -2081,6 +2343,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>MC_MONITOR_ALERT_CONDITION</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> MC_MONITOR_ALERT_CONDITION</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Condition on which the monitor produces an alert.</div>
 </li>
 </ul>
@@ -2091,6 +2354,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>MC_MONITOR_NAMESPACE</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> MC_MONITOR_NAMESPACE</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Namespace of the monitor.</div>
 </li>
 </ul>
@@ -2101,6 +2365,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>MC_MONITOR_RULE_SCHEDULE_CONFIG_HUMANIZED</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> MC_MONITOR_RULE_SCHEDULE_CONFIG_HUMANIZED</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Readable description of the schedule for the rule.</div>
 </li>
 </ul>
@@ -2111,6 +2376,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>MEANINGS_TEXT</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> MEANINGS_TEXT</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">All terms attached to an asset, as a single comma-separated string.</div>
 </li>
 </ul>
@@ -2121,6 +2387,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>METABASE_COLLECTION_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> METABASE_COLLECTION_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -2131,6 +2398,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>METABASE_COLLECTION_QUALIFIED_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> METABASE_COLLECTION_QUALIFIED_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -2141,6 +2409,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>METABASE_NAMESPACE</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> METABASE_NAMESPACE</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -2151,6 +2420,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>METABASE_QUERY</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> METABASE_QUERY</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -2161,6 +2431,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>METABASE_QUERY_TYPE</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> METABASE_QUERY_TYPE</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -2171,6 +2442,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>METABASE_SLUG</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> METABASE_SLUG</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -2181,6 +2453,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>METRIC_FILTERS</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> METRIC_FILTERS</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -2191,6 +2464,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>METRIC_TIME_GRAINS</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> METRIC_TIME_GRAINS</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -2201,6 +2475,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>MICRO_STRATEGY_ATTRIBUTE_NAMES</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> MICRO_STRATEGY_ATTRIBUTE_NAMES</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Simple names of the related MicroStrategy attributes.</div>
 </li>
 </ul>
@@ -2211,6 +2486,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>MICRO_STRATEGY_ATTRIBUTE_QUALIFIED_NAMES</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> MICRO_STRATEGY_ATTRIBUTE_QUALIFIED_NAMES</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Unique names of the related MicroStrategy attributes.</div>
 </li>
 </ul>
@@ -2221,6 +2497,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>MICRO_STRATEGY_CUBE_NAMES</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> MICRO_STRATEGY_CUBE_NAMES</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Simple names of the related MicroStrategy cubes.</div>
 </li>
 </ul>
@@ -2231,6 +2508,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>MICRO_STRATEGY_CUBE_QUALIFIED_NAMES</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> MICRO_STRATEGY_CUBE_QUALIFIED_NAMES</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Unique names of the related MicroStrategy cubes.</div>
 </li>
 </ul>
@@ -2241,6 +2519,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>MICRO_STRATEGY_DOSSIER_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> MICRO_STRATEGY_DOSSIER_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Simple name of the dossier containing this visualization.</div>
 </li>
 </ul>
@@ -2251,6 +2530,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>MICRO_STRATEGY_DOSSIER_QUALIFIED_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> MICRO_STRATEGY_DOSSIER_QUALIFIED_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Unique name of the dossier containing this visualization.</div>
 </li>
 </ul>
@@ -2261,6 +2541,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>MICRO_STRATEGY_FACT_NAMES</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> MICRO_STRATEGY_FACT_NAMES</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Simple names of the related MicroStrategy facts.</div>
 </li>
 </ul>
@@ -2271,6 +2552,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>MICRO_STRATEGY_FACT_QUALIFIED_NAMES</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> MICRO_STRATEGY_FACT_QUALIFIED_NAMES</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Unique names of the related MicroStrategy facts.</div>
 </li>
 </ul>
@@ -2281,6 +2563,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>MICRO_STRATEGY_METRIC_PARENT_NAMES</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> MICRO_STRATEGY_METRIC_PARENT_NAMES</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Simple names of the parent MicroStrategy metrics.</div>
 </li>
 </ul>
@@ -2291,6 +2574,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>MICRO_STRATEGY_METRIC_PARENT_QUALIFIED_NAMES</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> MICRO_STRATEGY_METRIC_PARENT_QUALIFIED_NAMES</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Unique names of the parent MicroStrategy metrics.</div>
 </li>
 </ul>
@@ -2301,6 +2585,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>MICRO_STRATEGY_PROJECT_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> MICRO_STRATEGY_PROJECT_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Simple name of the related MicroStrategy project.</div>
 </li>
 </ul>
@@ -2311,6 +2596,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>MICRO_STRATEGY_PROJECT_QUALIFIED_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> MICRO_STRATEGY_PROJECT_QUALIFIED_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Unique name of the related MicroStrategy project.</div>
 </li>
 </ul>
@@ -2321,6 +2607,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>MICRO_STRATEGY_REPORT_NAMES</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> MICRO_STRATEGY_REPORT_NAMES</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Simple names of the related MicroStrategy reports.</div>
 </li>
 </ul>
@@ -2331,6 +2618,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>MICRO_STRATEGY_REPORT_QUALIFIED_NAMES</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> MICRO_STRATEGY_REPORT_QUALIFIED_NAMES</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Unique names of the related MicroStrategy reports.</div>
 </li>
 </ul>
@@ -2341,6 +2629,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>MODE_QUERY_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> MODE_QUERY_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -2351,6 +2640,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>MODE_QUERY_PREVIEW</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> MODE_QUERY_PREVIEW</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -2361,6 +2651,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>MODE_QUERY_QUALIFIED_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> MODE_QUERY_QUALIFIED_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -2371,6 +2662,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>MODE_RAW_QUERY</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> MODE_RAW_QUERY</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -2381,6 +2673,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>MODE_REPORT_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> MODE_REPORT_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -2391,6 +2684,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>MODE_REPORT_QUALIFIED_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> MODE_REPORT_QUALIFIED_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -2401,6 +2695,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>MODE_TOKEN</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> MODE_TOKEN</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -2411,6 +2706,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>MODE_WORKSPACE_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> MODE_WORKSPACE_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -2421,6 +2717,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>MODE_WORKSPACE_QUALIFIED_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> MODE_WORKSPACE_QUALIFIED_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -2431,6 +2728,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>MODE_WORKSPACE_USERNAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> MODE_WORKSPACE_USERNAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -2441,6 +2739,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Human-readable name of the asset.</div>
 </li>
 </ul>
@@ -2451,6 +2750,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>PARENT_COLUMN_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> PARENT_COLUMN_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -2461,6 +2761,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>PARENT_COLUMN_QUALIFIED_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> PARENT_COLUMN_QUALIFIED_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -2471,6 +2772,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>PARENT_QUALIFIED_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> PARENT_QUALIFIED_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -2481,6 +2783,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>POWER_BI_MEASURE_EXPRESSION</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> POWER_BI_MEASURE_EXPRESSION</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -2491,6 +2794,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>POWER_BI_TABLE_QUALIFIED_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> POWER_BI_TABLE_QUALIFIED_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -2501,6 +2805,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>PRESET_CHART_DESCRIPTION_MARKDOWN</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> PRESET_CHART_DESCRIPTION_MARKDOWN</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Markdown-based description of the chart.</div>
 </li>
 </ul>
@@ -2511,6 +2816,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>PRESET_DASHBOARD_CHANGED_BY_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> PRESET_DASHBOARD_CHANGED_BY_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Username of the user who last changed the collection.</div>
 </li>
 </ul>
@@ -2521,6 +2827,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>PRESET_DASHBOARD_QUALIFIED_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> PRESET_DASHBOARD_QUALIFIED_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">qualifiedName of the Preset asset's collection.</div>
 </li>
 </ul>
@@ -2531,6 +2838,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>PRESET_DATASET_DATASOURCE_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> PRESET_DATASET_DATASOURCE_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Name of the data source for the dataset.</div>
 </li>
 </ul>
@@ -2541,6 +2849,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>PRESET_WORKSPACE_HOSTNAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> PRESET_WORKSPACE_HOSTNAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Hostname of the Preset workspace.</div>
 </li>
 </ul>
@@ -2551,6 +2860,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>PRESET_WORKSPACE_QUALIFIED_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> PRESET_WORKSPACE_QUALIFIED_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">qualifiedName of the Preset asset's workspace.</div>
 </li>
 </ul>
@@ -2561,6 +2871,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>PRESET_WORKSPACE_REGION</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> PRESET_WORKSPACE_REGION</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Region of the workspace.</div>
 </li>
 </ul>
@@ -2571,6 +2882,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>QLIK_APP_QUALIFIED_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> QLIK_APP_QUALIFIED_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Unique name of the app where the Qlik asset exists.</div>
 </li>
 </ul>
@@ -2581,6 +2893,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>QLIK_CHART_FOOTNOTE</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> QLIK_CHART_FOOTNOTE</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Footnote on the chart.</div>
 </li>
 </ul>
@@ -2591,6 +2904,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>QLIK_CHART_SUBTITLE</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> QLIK_CHART_SUBTITLE</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Subtitle of the chart.</div>
 </li>
 </ul>
@@ -2601,6 +2915,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>QLIK_DATASET_TECHNICAL_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> QLIK_DATASET_TECHNICAL_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Technical name of the data asset.</div>
 </li>
 </ul>
@@ -2611,6 +2926,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>QLIK_DATASET_URI</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> QLIK_DATASET_URI</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">URI of the dataset.</div>
 </li>
 </ul>
@@ -2621,6 +2937,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>QLIK_QRI</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> QLIK_QRI</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">QRI of the Qlik object.</div>
 </li>
 </ul>
@@ -2631,6 +2948,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>QLIK_SPACE_QUALIFIED_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> QLIK_SPACE_QUALIFIED_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Unique name of the space where the Qlik asset exists.</div>
 </li>
 </ul>
@@ -2641,6 +2959,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>QUALIFIED_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> QUALIFIED_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Unique fully-qualified name of the asset in Atlan.</div>
 </li>
 </ul>
@@ -2651,6 +2970,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>QUICK_SIGHT_ANALYSIS_QUALIFIED_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> QUICK_SIGHT_ANALYSIS_QUALIFIED_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Qualified name of the QuickSight Analysis</div>
 </li>
 </ul>
@@ -2661,6 +2981,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>QUICK_SIGHT_DASHBOARD_QUALIFIED_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> QUICK_SIGHT_DASHBOARD_QUALIFIED_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -2671,6 +2992,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>QUICK_SIGHT_DATASET_QUALIFIED_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> QUICK_SIGHT_DATASET_QUALIFIED_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Qualified name of the parent dataset</div>
 </li>
 </ul>
@@ -2681,6 +3003,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>QUICK_SIGHT_SHEET_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> QUICK_SIGHT_SHEET_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -2691,6 +3014,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>REDASH_QUERY_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> REDASH_QUERY_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Name of the query from which the visualization was created.</div>
 </li>
 </ul>
@@ -2701,6 +3025,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>REDASH_QUERY_QUALIFIED_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> REDASH_QUERY_QUALIFIED_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Unique name of the query from which the visualization was created.</div>
 </li>
 </ul>
@@ -2711,6 +3036,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>REDASH_QUERY_SCHEDULE_HUMANIZED</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> REDASH_QUERY_SCHEDULE_HUMANIZED</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Human-readable schedule of the Redash query.</div>
 </li>
 </ul>
@@ -2721,6 +3047,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>S3BUCKET_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> S3BUCKET_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Name of the bucket in which the object exists.</div>
 </li>
 </ul>
@@ -2731,6 +3058,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>S3E_TAG</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> S3E_TAG</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Entity tag for the asset. An entity tag is a hash of the object and represents changes to the contents of an object only, not its metadata.</div>
 </li>
 </ul>
@@ -2741,6 +3069,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>S3OBJECT_KEY</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> S3OBJECT_KEY</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Unique identity of the object in an S3 bucket. This is usually the concatenation of any prefix (folder) in the S3 bucket with the name of the object (file) itself.</div>
 </li>
 </ul>
@@ -2751,6 +3080,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>SAMPLE_DATA_URL</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> SAMPLE_DATA_URL</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -2761,6 +3091,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>SCHEMA_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> SCHEMA_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Simple name of the schema in which this SQL asset exists, or empty if it does not exist within a schema.</div>
 </li>
 </ul>
@@ -2771,6 +3102,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>SCHEMA_REGISTRY_SUBJECT_LATEST_SCHEMA_DEFINITION</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> SCHEMA_REGISTRY_SUBJECT_LATEST_SCHEMA_DEFINITION</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Definition of the latest schema in the subject.</div>
 </li>
 </ul>
@@ -2781,6 +3113,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>SIGMA_DATASET_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> SIGMA_DATASET_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Human-readable name of the dataset that contains this column.</div>
 </li>
 </ul>
@@ -2791,6 +3124,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>SIGMA_DATASET_QUALIFIED_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> SIGMA_DATASET_QUALIFIED_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Unique name of the dataset that contains this column.</div>
 </li>
 </ul>
@@ -2801,6 +3135,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>SIGMA_DATA_ELEMENT_FIELD_FORMULA</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> SIGMA_DATA_ELEMENT_FIELD_FORMULA</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -2811,6 +3146,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>SIGMA_DATA_ELEMENT_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> SIGMA_DATA_ELEMENT_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -2821,6 +3157,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>SIGMA_DATA_ELEMENT_QUALIFIED_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> SIGMA_DATA_ELEMENT_QUALIFIED_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -2831,6 +3168,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>SIGMA_PAGE_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> SIGMA_PAGE_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -2841,6 +3179,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>SIGMA_PAGE_QUALIFIED_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> SIGMA_PAGE_QUALIFIED_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -2851,6 +3190,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>SIGMA_WORKBOOK_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> SIGMA_WORKBOOK_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -2861,6 +3201,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>SIGMA_WORKBOOK_QUALIFIED_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> SIGMA_WORKBOOK_QUALIFIED_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -2871,6 +3212,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>SNOWFLAKE_PIPE_NOTIFICATION_CHANNEL_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> SNOWFLAKE_PIPE_NOTIFICATION_CHANNEL_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -2881,6 +3223,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>SUPER_TYPE_NAMES</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> SUPER_TYPE_NAMES</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">All super types of an asset.</div>
 </li>
 </ul>
@@ -2891,6 +3234,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>TABLEAU_DATASOURCE_FIELD_DATA_TYPE</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> TABLEAU_DATASOURCE_FIELD_DATA_TYPE</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -2901,6 +3245,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>TABLEAU_DATA_TYPE</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> TABLEAU_DATA_TYPE</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -2911,6 +3256,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>TABLE_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> TABLE_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table.</div>
 </li>
 </ul>
@@ -2921,6 +3267,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>TAG_ALLOWED_VALUES</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> TAG_ALLOWED_VALUES</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Allowed values for the tag in the source system. These are denormalized from tagAttributes for ease of querying.</div>
 </li>
 </ul>
@@ -2931,6 +3278,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>THOUGHTSPOT_LIVEBOARD_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> THOUGHTSPOT_LIVEBOARD_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Name of the Liveboard in which the Dashlet exists.</div>
 </li>
 </ul>
@@ -2941,6 +3289,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>THOUGHTSPOT_LIVEBOARD_QUALIFIED_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> THOUGHTSPOT_LIVEBOARD_QUALIFIED_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Unique name of the Liveboard in which the Dashlet exists.</div>
 </li>
 </ul>
@@ -2951,6 +3300,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>THOUGHTSPOT_QUESTION_TEXT</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> THOUGHTSPOT_QUESTION_TEXT</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -2961,6 +3311,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>TYPE_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> TYPE_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Type of the asset. For example Table, Column, and so on.</div>
 </li>
 </ul>
@@ -2971,6 +3322,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>USER_DESCRIPTION</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> USER_DESCRIPTION</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Description of the asset, as provided by a user. If present, this will be used for the description in user interfaces. If not present, the description will be used.</div>
 </li>
 </ul>
@@ -2981,6 +3333,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>VIEW_NAME</h4>
 <pre>public static final&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a> VIEW_NAME</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Simple name of the view in which this SQL asset exists, or empty if it does not exist within a view.</div>
 </li>
 </ul>
@@ -3001,6 +3354,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>values</h4>
 <pre class="methodSignature">public static&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a>[]&nbsp;values()</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns an array containing the constants of this enum type, in
 the order they are declared. This method may be used to iterate
 over the constants as follows:
@@ -3021,6 +3375,7 @@ for (TextFields c : TextFields.values())
 <li class="blockList">
 <h4>valueOf</h4>
 <pre class="methodSignature">public static&nbsp;<a href="TextFields.html" title="enum in com.atlan.model.enums">TextFields</a>&nbsp;valueOf&#8203;(java.lang.String&nbsp;name)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns the enum constant of this type with the specified name.
 The string must match <i>exactly</i> an identifier used to declare an
 enum constant in this type.  (Extraneous whitespace characters are 
@@ -3043,6 +3398,7 @@ not permitted.)</div>
 <li class="blockList">
 <h4>getIndexedFieldName</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getIndexedFieldName()</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="AtlanSearchableField.html#getIndexedFieldName()">getIndexedFieldName</a></code>&nbsp;in interface&nbsp;<code><a href="AtlanSearchableField.html" title="interface in com.atlan.model.enums">AtlanSearchableField</a></code></dd>

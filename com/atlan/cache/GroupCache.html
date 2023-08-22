@@ -252,7 +252,7 @@ extends java.lang.Object</pre>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>name</code> - human-readable name of the group</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>GUID of the group</dd>
+<dd>unique identifier (GUID) of the group</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication problem if the cache needs to be refreshed</dd>
 <dd><code><a href="../exception/NotFoundException.html" title="class in com.atlan.exception">NotFoundException</a></code> - if the group cannot be found (does not exist) in Atlan</dd>
@@ -271,9 +271,9 @@ extends java.lang.Object</pre>
 <div class="block">Translate the provided alias to its GUID.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>alias</code> - of the group</dd>
+<dd><code>alias</code> - name of the group as it appears in the UI</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>GUID of the group</dd>
+<dd>unique identifier (GUID) of the group</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication problem if the cache needs to be refreshed</dd>
 <dd><code><a href="../exception/NotFoundException.html" title="class in com.atlan.exception">NotFoundException</a></code> - if the group cannot be found (does not exist) in Atlan</dd>
@@ -292,7 +292,7 @@ extends java.lang.Object</pre>
 <div class="block">Translate the provided group GUID to the human-readable group name.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>id</code> - GUID of the group</dd>
+<dd><code>id</code> - unique identifier (GUID) of the group</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>human-readable name of the group</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>

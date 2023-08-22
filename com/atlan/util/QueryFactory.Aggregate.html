@@ -27,8 +27,8 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9};
-var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
+var data = {"i0":41,"i1":41,"i2":41,"i3":41,"i4":41,"i5":41,"i6":41};
+var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -135,8 +135,12 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd><a href="QueryFactory.html" title="class in com.atlan.util">QueryFactory</a></dd>
 </dl>
 <hr>
-<pre>public static final class <span class="typeNameLabel">QueryFactory.Aggregate</span>
+<pre>@Deprecated
+public static final class <span class="typeNameLabel">QueryFactory.Aggregate</span>
 extends java.lang.Object</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">replaced by interfaces and implementations under <a href="../model/fields/package-summary.html"><code>com.atlan.model.fields</code></a></div>
+</div>
 <div class="block">Class to quickly compose aggregation criteria.</div>
 </li>
 </ul>
@@ -159,7 +163,9 @@ extends java.lang.Object</pre>
 </tr>
 <tr class="altColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E()">Aggregate</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
+&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -173,7 +179,7 @@ extends java.lang.Object</pre>
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t6" class="tableTab"><span><a href="javascript:show(32);">Deprecated Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colSecond" scope="col">Method</th>
@@ -183,6 +189,7 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>static co.elastic.clients.elasticsearch._types.aggregations.Aggregation</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#avg(com.atlan.model.enums.AtlanSearchableField)">avg</a></span>&#8203;(<a href="../model/enums/AtlanSearchableField.html" title="interface in com.atlan.model.enums">AtlanSearchableField</a>&nbsp;field)</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Return criteria to calculate the average value of the provided field across all
  results.</div>
 </td>
@@ -191,6 +198,7 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>static co.elastic.clients.elasticsearch._types.aggregations.Aggregation</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#bucketBy(com.atlan.model.enums.AtlanSearchableField)">bucketBy</a></span>&#8203;(<a href="../model/enums/AtlanSearchableField.html" title="interface in com.atlan.model.enums">AtlanSearchableField</a>&nbsp;field)</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Return criteria to bucket results based on the provided field.</div>
 </td>
 </tr>
@@ -198,6 +206,7 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>static co.elastic.clients.elasticsearch._types.aggregations.Aggregation</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#count(com.atlan.model.enums.AtlanSearchableField)">count</a></span>&#8203;(<a href="../model/enums/AtlanSearchableField.html" title="interface in com.atlan.model.enums">AtlanSearchableField</a>&nbsp;field)</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Return criteria to calculate the number of values in a field across all results.</div>
 </td>
 </tr>
@@ -205,6 +214,7 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>static co.elastic.clients.elasticsearch._types.aggregations.Aggregation</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#distinct(com.atlan.model.enums.AtlanSearchableField)">distinct</a></span>&#8203;(<a href="../model/enums/AtlanSearchableField.html" title="interface in com.atlan.model.enums">AtlanSearchableField</a>&nbsp;field)</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns criteria to calculate the approximate number of distinct values in a field across
  all results.</div>
 </td>
@@ -213,6 +223,7 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>static co.elastic.clients.elasticsearch._types.aggregations.Aggregation</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#max(com.atlan.model.enums.AtlanSearchableField)">max</a></span>&#8203;(<a href="../model/enums/AtlanSearchableField.html" title="interface in com.atlan.model.enums">AtlanSearchableField</a>&nbsp;field)</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Return criteria to calculate the maximum value of the provided field across all
  results.</div>
 </td>
@@ -221,6 +232,7 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>static co.elastic.clients.elasticsearch._types.aggregations.Aggregation</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#min(com.atlan.model.enums.AtlanSearchableField)">min</a></span>&#8203;(<a href="../model/enums/AtlanSearchableField.html" title="interface in com.atlan.model.enums">AtlanSearchableField</a>&nbsp;field)</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Return criteria to calculate the minimum value of the provided field across all
  results.</div>
 </td>
@@ -229,6 +241,7 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>static co.elastic.clients.elasticsearch._types.aggregations.Aggregation</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sum(com.atlan.model.enums.AtlanSearchableField)">sum</a></span>&#8203;(<a href="../model/enums/AtlanSearchableField.html" title="interface in com.atlan.model.enums">AtlanSearchableField</a>&nbsp;field)</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Return criteria to calculate a sum of the values of the provided field across all
  results.</div>
 </td>
@@ -264,6 +277,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>Aggregate</h4>
 <pre>public&nbsp;Aggregate()</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 </li>
 </ul>
 </li>
@@ -283,6 +297,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>distinct</h4>
 <pre class="methodSignature">public static&nbsp;co.elastic.clients.elasticsearch._types.aggregations.Aggregation&nbsp;distinct&#8203;(<a href="../model/enums/AtlanSearchableField.html" title="interface in com.atlan.model.enums">AtlanSearchableField</a>&nbsp;field)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Returns criteria to calculate the approximate number of distinct values in a field across
  all results. Note that this de-duplicates values, but is an <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-metrics-cardinality-aggregation.html">approximation</a>.</div>
 <dl>
@@ -300,6 +315,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>count</h4>
 <pre class="methodSignature">public static&nbsp;co.elastic.clients.elasticsearch._types.aggregations.Aggregation&nbsp;count&#8203;(<a href="../model/enums/AtlanSearchableField.html" title="interface in com.atlan.model.enums">AtlanSearchableField</a>&nbsp;field)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Return criteria to calculate the number of values in a field across all results.
  Note that this does not de-duplicate.</div>
 <dl>
@@ -317,6 +333,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>sum</h4>
 <pre class="methodSignature">public static&nbsp;co.elastic.clients.elasticsearch._types.aggregations.Aggregation&nbsp;sum&#8203;(<a href="../model/enums/AtlanSearchableField.html" title="interface in com.atlan.model.enums">AtlanSearchableField</a>&nbsp;field)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Return criteria to calculate a sum of the values of the provided field across all
  results.</div>
 <dl>
@@ -334,6 +351,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>avg</h4>
 <pre class="methodSignature">public static&nbsp;co.elastic.clients.elasticsearch._types.aggregations.Aggregation&nbsp;avg&#8203;(<a href="../model/enums/AtlanSearchableField.html" title="interface in com.atlan.model.enums">AtlanSearchableField</a>&nbsp;field)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Return criteria to calculate the average value of the provided field across all
  results.</div>
 <dl>
@@ -351,6 +369,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>min</h4>
 <pre class="methodSignature">public static&nbsp;co.elastic.clients.elasticsearch._types.aggregations.Aggregation&nbsp;min&#8203;(<a href="../model/enums/AtlanSearchableField.html" title="interface in com.atlan.model.enums">AtlanSearchableField</a>&nbsp;field)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Return criteria to calculate the minimum value of the provided field across all
  results.</div>
 <dl>
@@ -368,6 +387,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>max</h4>
 <pre class="methodSignature">public static&nbsp;co.elastic.clients.elasticsearch._types.aggregations.Aggregation&nbsp;max&#8203;(<a href="../model/enums/AtlanSearchableField.html" title="interface in com.atlan.model.enums">AtlanSearchableField</a>&nbsp;field)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Return criteria to calculate the maximum value of the provided field across all
  results.</div>
 <dl>
@@ -385,6 +405,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>bucketBy</h4>
 <pre class="methodSignature">public static&nbsp;co.elastic.clients.elasticsearch._types.aggregations.Aggregation&nbsp;bucketBy&#8203;(<a href="../model/enums/AtlanSearchableField.html" title="interface in com.atlan.model.enums">AtlanSearchableField</a>&nbsp;field)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Return criteria to bucket results based on the provided field.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
