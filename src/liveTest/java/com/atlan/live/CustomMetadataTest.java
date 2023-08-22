@@ -6,6 +6,7 @@ import static org.testng.Assert.*;
 
 import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
+import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.admin.AtlanGroup;
 import com.atlan.model.assets.*;
 import com.atlan.model.core.AssetMutationResponse;
@@ -345,6 +346,24 @@ public class CustomMetadataTest extends AtlanLiveTest {
     void createGroups() throws AtlanException {
         group1 = AdminTest.createGroup(GROUP_NAME1);
         group2 = AdminTest.createGroup(GROUP_NAME2);
+    }
+
+    @Test(
+            groups = {"cm.search.invalid"},
+            dependsOnGroups = {"cm.create.cm.*"})
+    void testInvalidSearchParameters() {
+        assertThrows(InvalidRequestException.class, () -> GlossaryTerm.select()
+                .where(CustomMetadataField.of(Atlan.getDefaultClient(), CM_RACI, CM_ATTR_RACI_ACCOUNTABLE)
+                        .gt(5)));
+        assertThrows(InvalidRequestException.class, () -> GlossaryTerm.select()
+                .where(CustomMetadataField.of(Atlan.getDefaultClient(), CM_IPR, CM_ATTR_IPR_DATE)
+                        .startsWith("abc", false)));
+        assertThrows(InvalidRequestException.class, () -> GlossaryTerm.select()
+                .where(CustomMetadataField.of(Atlan.getDefaultClient(), CM_IPR, CM_ATTR_IPR_MANDATORY)
+                        .lt(3)));
+        assertThrows(InvalidRequestException.class, () -> GlossaryTerm.select()
+                .where(CustomMetadataField.of(Atlan.getDefaultClient(), CM_QUALITY, CM_ATTR_QUALITY_TYPE)
+                        .lte(10)));
     }
 
     @Test(
