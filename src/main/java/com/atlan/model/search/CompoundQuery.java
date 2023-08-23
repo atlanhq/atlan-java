@@ -7,7 +7,6 @@ import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.Asset;
-import com.atlan.model.assets.IReferenceable;
 import com.atlan.model.enums.AtlanStatus;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -36,7 +35,7 @@ public class CompoundQuery {
      * @return a query that will only match assets of the type provided
      */
     public static Query assetType(String typeName) {
-        return IReferenceable.TYPE_NAME.eq(typeName);
+        return Asset.TYPE_NAME.eq(typeName);
     }
 
     /**
@@ -46,7 +45,7 @@ public class CompoundQuery {
      * @return a query that will only match assets of the types provided
      */
     public static Query assetTypes(Collection<String> typeNames) {
-        return IReferenceable.TYPE_NAME.in(typeNames);
+        return Asset.TYPE_NAME.in(typeNames);
     }
 
     /**
@@ -56,7 +55,7 @@ public class CompoundQuery {
      * @return a query that will only match assets of a subtype of the type provided
      */
     public static Query superType(String typeName) {
-        return IReferenceable.SUPER_TYPE_NAMES.eq(typeName);
+        return Asset.SUPER_TYPE_NAMES.eq(typeName);
     }
 
     /**
@@ -66,7 +65,7 @@ public class CompoundQuery {
      * @return a query that will only match assets of a subtype of the types provided
      */
     public static Query superTypes(Collection<String> typeNames) {
-        return IReferenceable.SUPER_TYPE_NAMES.in(typeNames);
+        return Asset.SUPER_TYPE_NAMES.in(typeNames);
     }
 
     /**
@@ -85,8 +84,8 @@ public class CompoundQuery {
             values.add(client.getAtlanTagCache().getIdForName(name));
         }
         return builder()
-                .whereSome(IReferenceable.ATLAN_TAGS.in(values)) // direct Atlan tags
-                .whereSome(IReferenceable.PROPAGATED_ATLAN_TAGS.in(values)) // propagated Atlan tags
+                .whereSome(Asset.ATLAN_TAGS.in(values)) // direct Atlan tags
+                .whereSome(Asset.PROPAGATED_ATLAN_TAGS.in(values)) // propagated Atlan tags
                 .minSomes(1)
                 .build()
                 .toQuery();
@@ -100,11 +99,11 @@ public class CompoundQuery {
      */
     public static Query tagged(boolean directly) {
         if (directly) {
-            return IReferenceable.ATLAN_TAGS.hasAnyValue();
+            return Asset.ATLAN_TAGS.hasAnyValue();
         } else {
             return builder()
-                    .whereSome(IReferenceable.ATLAN_TAGS.hasAnyValue())
-                    .whereSome(IReferenceable.PROPAGATED_ATLAN_TAGS.hasAnyValue())
+                    .whereSome(Asset.ATLAN_TAGS.hasAnyValue())
+                    .whereSome(Asset.PROPAGATED_ATLAN_TAGS.hasAnyValue())
                     .minSomes(1)
                     .build()
                     .toQuery();
@@ -117,7 +116,7 @@ public class CompoundQuery {
      * @return a query that will only match assets that have at least one term assigned
      */
     public static Query assignedTerm() {
-        return IReferenceable.ASSIGNED_TERMS.hasAnyValue();
+        return Asset.ASSIGNED_TERMS.hasAnyValue();
     }
 
     /**
@@ -127,7 +126,7 @@ public class CompoundQuery {
      * @return a query that will only match assets that have at least one of the terms assigned
      */
     public static Query assignedTerm(Collection<String> termQualifiedNames) {
-        return IReferenceable.ASSIGNED_TERMS.in(termQualifiedNames);
+        return Asset.ASSIGNED_TERMS.in(termQualifiedNames);
     }
 
     /** Criteria that must be present on every search result. (Translated to filters.) */

@@ -2,9 +2,9 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.typedefs;
 
-import com.atlan.model.assets.Asset;
 import com.atlan.model.enums.AtlanTypeCategory;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import lombok.Builder;
@@ -52,7 +52,7 @@ public class EntityDef extends TypeDef {
      * @return a builder for an entity definition
      */
     public static EntityDefBuilder<?, ?> creator(String name, List<AttributeDef> attributes) {
-        return creator(name, attributes, List.of(Asset.TYPE_NAME));
+        return creator(name, attributes, null);
     }
 
     /**
@@ -65,6 +65,12 @@ public class EntityDef extends TypeDef {
      * @return a builder for an entity definition
      */
     public static EntityDefBuilder<?, ?> creator(String name, List<AttributeDef> attributes, List<String> superTypes) {
+        if (superTypes == null) {
+            superTypes = new ArrayList<>();
+        }
+        if (superTypes.isEmpty()) {
+            superTypes.add("Asset");
+        }
         return EntityDef.builder()
                 .name(name)
                 .serviceType("custom_extension")
