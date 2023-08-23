@@ -66,7 +66,9 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface I${className} {
 
+<#if originalName != "Asset">
     public static final String TYPE_NAME = "${originalName}";
+</#if>
 
     <#list nonInheritedAttributes as attribute>
     /** ${attribute.description} */

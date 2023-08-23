@@ -35,8 +35,6 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface IAsset {
 
-    public static final String TYPE_NAME = "Asset";
-
     /** List of groups who administer the asset. (This is only used for Connection assets.) */
     KeywordField ADMIN_GROUPS = new KeywordField("adminGroups", "adminGroups");
 

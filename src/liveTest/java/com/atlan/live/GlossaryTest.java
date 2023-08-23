@@ -563,7 +563,7 @@ public class GlossaryTest extends AtlanLiveTest {
         IndexSearchRequest index = GlossaryTerm.select()
                 .where(GlossaryTerm.NAME.eq(TERM_NAME1))
                 .pageSize(100)
-                .aggregate("type", IReferenceable.TYPE_NAME.bucketBy())
+                .aggregate("type", Asset.TYPE_NAME.bucketBy())
                 .includeOnResults(GlossaryTerm.ANCHOR)
                 .includeOnRelations(Asset.CERTIFICATE_STATUS)
                 .toRequest();

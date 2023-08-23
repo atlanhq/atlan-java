@@ -25,6 +25,8 @@ import lombok.experimental.SuperBuilder;
 public class IndistinctAsset extends Asset {
     private static final long serialVersionUID = 2L;
 
+    public static final String TYPE_NAME = "Asset";
+
     /** Create a non-transient typeName to ensure it is included in serde. */
     @Getter(onMethod_ = {@Override})
     @Builder.Default
@@ -108,6 +110,6 @@ public class IndistinctAsset extends Asset {
             return refByQualifiedName(this.getUniqueAttributes().getQualifiedName());
         }
         throw new InvalidRequestException(
-                ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, TYPE_NAME, "guid, qualifiedName");
+                ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, "Asset", "guid, qualifiedName");
     }
 }

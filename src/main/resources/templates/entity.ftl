@@ -141,7 +141,9 @@ import javax.annotation.processing.Generated;
 public <#if abstract>abstract</#if> class ${className} extends ${parentClassName} implements <#if className == "TableauCalculatedField" || className == "TableauDatasourceField">ITableauField, </#if>I${className}<#list superTypes as parent>, I${resolveSuperTypeName(parent)}</#list> {
     private static final long serialVersionUID = 2L;
 
+<#if className != "Asset">
     public static final String TYPE_NAME = "${originalName}";
+</#if>
 
 <#if !abstract>
     /** Fixed typeName for ${className}s. */
