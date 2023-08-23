@@ -30,8 +30,8 @@ public class SearchableField extends AtlanField implements ISearchable {
 
     /** {@inheritDoc} */
     @Override
-    public Query exists() {
-        return ISearchable.exists(getElasticFieldName());
+    public Query hasAnyValue() {
+        return ISearchable.hasAnyValue(getElasticFieldName());
     }
 
     /** {@inheritDoc} */
