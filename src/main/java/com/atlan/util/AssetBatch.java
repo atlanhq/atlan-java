@@ -9,6 +9,7 @@ import com.atlan.model.assets.Asset;
 import com.atlan.model.assets.IndistinctAsset;
 import com.atlan.model.core.AssetMutationResponse;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -67,13 +68,13 @@ public class AssetBatch {
             boolean replaceAtlanTags,
             CustomMetadataHandling customMetadataHandling) {
         this.client = client;
-        _batch = new ArrayList<>();
+        _batch = Collections.synchronizedList(new ArrayList<>());
         this.typeName = typeName;
         this.maxSize = maxSize;
         this.replaceAtlanTags = replaceAtlanTags;
         this.customMetadataHandling = customMetadataHandling;
-        this.created = new ArrayList<>();
-        this.updated = new ArrayList<>();
+        this.created = Collections.synchronizedList(new ArrayList<>());
+        this.updated = Collections.synchronizedList(new ArrayList<>());
     }
 
     /**
@@ -125,7 +126,7 @@ public class AssetBatch {
                     response = client.assets.saveMergingCM(_batch, replaceAtlanTags);
                     break;
             }
-            _batch = new ArrayList<>();
+            _batch = Collections.synchronizedList(new ArrayList<>());
         }
         trackResponse(response);
         return response;
