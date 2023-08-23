@@ -501,7 +501,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
 
         IndexSearchRequest index = GlossaryTerm.select()
                 .where(CustomMetadataField.of(Atlan.getDefaultClient(), CM_RACI, CM_ATTR_RACI_ACCOUNTABLE)
-                        .exists())
+                        .hasAnyValue())
                 .includeOnResults(GlossaryTerm.NAME)
                 .includeOnResults(GlossaryTerm.ANCHOR)
                 .includeOnRelations(Asset.NAME)

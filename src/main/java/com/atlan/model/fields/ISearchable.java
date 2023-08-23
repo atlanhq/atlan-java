@@ -16,7 +16,7 @@ public interface ISearchable {
      * @return a query that will only match assets that have some non-null, non-empty value
      *         (no matter what actual value) for the field
      */
-    Query exists();
+    Query hasAnyValue();
 
     /**
      * Returns a query that will only match assets that have some non-null, non-empty value
@@ -26,7 +26,7 @@ public interface ISearchable {
      * @return a query that will only match assets that have some non-null, non-empty value
      *         (no matter what actual value) for the field
      */
-    static Query exists(final String field) {
+    static Query hasAnyValue(final String field) {
         return ExistsQuery.of(e -> e.field(field))._toQuery();
     }
 

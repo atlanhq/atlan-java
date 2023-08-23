@@ -100,11 +100,11 @@ public class CompoundQuery {
      */
     public static Query tagged(boolean directly) {
         if (directly) {
-            return IReferenceable.ATLAN_TAGS.exists();
+            return IReferenceable.ATLAN_TAGS.hasAnyValue();
         } else {
             return builder()
-                    .whereSome(IReferenceable.ATLAN_TAGS.exists())
-                    .whereSome(IReferenceable.PROPAGATED_ATLAN_TAGS.exists())
+                    .whereSome(IReferenceable.ATLAN_TAGS.hasAnyValue())
+                    .whereSome(IReferenceable.PROPAGATED_ATLAN_TAGS.hasAnyValue())
                     .minSomes(1)
                     .build()
                     .toQuery();
@@ -117,7 +117,7 @@ public class CompoundQuery {
      * @return a query that will only match assets that have at least one term assigned
      */
     public static Query assignedTerm() {
-        return IReferenceable.ASSIGNED_TERMS.exists();
+        return IReferenceable.ASSIGNED_TERMS.hasAnyValue();
     }
 
     /**
