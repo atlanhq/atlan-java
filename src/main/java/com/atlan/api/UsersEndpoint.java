@@ -129,7 +129,7 @@ public class UsersEndpoint extends HeraclesEndpoint {
                 ApiResource.request(client, ApiResource.RequestMethod.GET, url, "", UserResponse.class, options);
         while (response != null) {
             List<AtlanUser> page = response.getRecords();
-            if (page != null) {
+            if (page != null && !page.isEmpty()) {
                 users.addAll(page);
                 offset += limit;
                 url = String.format("%s&limit=%s&offset=%s", unlimitedUrl, limit, offset);
