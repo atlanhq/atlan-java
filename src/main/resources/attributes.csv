@@ -355,6 +355,7 @@ Column,Instance of a column in Atlan.,columnUniquenessPercentage,"Ratio indicati
 Column,Instance of a column in Atlan.,columnVariance,Calculated variance of the values in a numeric column.
 Column,Instance of a column in Atlan.,columnTopValues,TBC
 Column,Instance of a column in Atlan.,columnDepthLevel,"Level of nesting, used for STRUCT/NESTED columns"
+Column,Instance of a column in Atlan.,snowflakeDynamicTable,TBC
 Column,Instance of a column in Atlan.,view,"View in which this column exists, or empty if the column instead exists in a table or materialized view."
 Column,Instance of a column in Atlan.,nestedColumns,TBC
 Column,Instance of a column in Atlan.,dataQualityMetricDimensions,TBC
@@ -1067,6 +1068,7 @@ Schema,Instance of a database schema in Atlan.,database,Database in which this s
 Schema,Instance of a database schema in Atlan.,procedures,Stored procedures (routines) that are defined within this schema.
 Schema,Instance of a database schema in Atlan.,views,Views that exist within this schema.
 Schema,Instance of a database schema in Atlan.,materialisedViews,Materialized views that exist within this schema.
+Schema,Instance of a database schema in Atlan.,snowflakeDynamicTables,TBC
 Schema,Instance of a database schema in Atlan.,snowflakePipes,Snowflake Pipes that are defined within this schema.
 Schema,Instance of a database schema in Atlan.,snowflakeStreams,Snowflake Streams that are defined within this schema.
 SchemaRegistry,Schema Registry Assets,schemaRegistrySchemaType,"Type of language/specification used to define the schema like JSON, Protobuf etc."
@@ -1102,6 +1104,7 @@ SigmaPage,Instance of a Sigma page in Atlan.,sigmaDataElements,Data elements wit
 SigmaPage,Instance of a Sigma page in Atlan.,sigmaWorkbook,Workbook that contains this page.
 SigmaWorkbook,Instance of a Sigma workbook in Atlan.,sigmaPageCount,Number of pages that exist within this workbook.
 SigmaWorkbook,Instance of a Sigma workbook in Atlan.,sigmaPages,Pages that exist within this workbook.
+SnowflakeDynamicTable,Atlan Snowflake Dynamic Table Asset,definition,SQL statements used to define a Snowflake Dynamic Table
 SnowflakePipe,Instance of a Snowflake Pipe in Atlan.,definition,TBC
 SnowflakePipe,Instance of a Snowflake Pipe in Atlan.,snowflakePipeIsAutoIngestEnabled,TBC
 SnowflakePipe,Instance of a Snowflake Pipe in Atlan.,snowflakePipeNotificationChannelName,TBC

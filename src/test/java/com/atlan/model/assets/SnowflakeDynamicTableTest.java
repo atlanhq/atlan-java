@@ -16,9 +16,9 @@ import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @SuppressWarnings("deprecation")
-public class SchemaTest {
+public class SnowflakeDynamicTableTest {
 
-    private static final Schema full = Schema._internal()
+    private static final SnowflakeDynamicTable full = SnowflakeDynamicTable._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -59,6 +59,32 @@ public class SchemaTest {
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
                             .build())
+            .alias("String0")
+            .columnCount(123456789L)
+            .column(Column.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .column(Column.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .dimension(Table.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .dimension(Table.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .externalLocation("String0")
+            .externalLocationFormat("String0")
+            .externalLocationRegion("String0")
+            .fact(Table.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .fact(Table.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .isPartitioned(true)
+            .isQueryPreview(true)
+            .isTemporary(true)
+            .partitionCount(123456789L)
+            .partitionList("String0")
+            .partitionStrategy("String0")
+            .partition(TablePartition.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .partition(TablePartition.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .query(AtlanQuery.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .query(AtlanQuery.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .putQueryPreviewConfig("key1", "value1")
+            .putQueryPreviewConfig("key2", "value2")
+            .rowCount(123456789L)
+            .schema(Schema.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .sizeBytes(123456789L)
             .databaseName("String0")
             .databaseQualifiedName("String0")
             .dbtModel(DbtModel.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -400,42 +426,21 @@ public class SchemaTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
-            .database(Database.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .function(Function.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .function(Function.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .materializedView(MaterializedView.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .materializedView(MaterializedView.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .procedure(Procedure.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .procedure(Procedure.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .snowflakeDynamicTable(SnowflakeDynamicTable.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .snowflakeDynamicTable(
-                    SnowflakeDynamicTable.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .snowflakePipe(SnowflakePipe.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .snowflakePipe(SnowflakePipe.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .snowflakeStream(SnowflakeStream.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .snowflakeStream(SnowflakeStream.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .snowflakeTag(SnowflakeTag.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .snowflakeTag(SnowflakeTag.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .tableCount(123)
-            .table(Table.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .table(Table.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .viewCount(123)
-            .view(View.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .view(View.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .definition("String0")
             .build();
 
     private static final int hash = full.hashCode();
-    private static Schema frodo;
+    private static SnowflakeDynamicTable frodo;
     private static String serialized;
 
-    @Test(groups = {"Schema.builderEquivalency"})
+    @Test(groups = {"SnowflakeDynamicTable.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"Schema.serialize"},
-            dependsOnGroups = {"Schema.builderEquivalency"})
+            groups = {"SnowflakeDynamicTable.serialize"},
+            dependsOnGroups = {"SnowflakeDynamicTable.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson(Atlan.getDefaultClient());
@@ -444,17 +449,17 @@ public class SchemaTest {
     }
 
     @Test(
-            groups = {"Schema.deserialize"},
-            dependsOnGroups = {"Schema.serialize"})
+            groups = {"SnowflakeDynamicTable.deserialize"},
+            dependsOnGroups = {"SnowflakeDynamicTable.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = Atlan.getDefaultClient().readValue(serialized, Schema.class);
+        frodo = Atlan.getDefaultClient().readValue(serialized, SnowflakeDynamicTable.class);
         assertNotNull(frodo);
     }
 
     @Test(
-            groups = {"Schema.equivalency"},
-            dependsOnGroups = {"Schema.serialize", "Schema.deserialize"})
+            groups = {"SnowflakeDynamicTable.equivalency"},
+            dependsOnGroups = {"SnowflakeDynamicTable.serialize", "SnowflakeDynamicTable.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -463,8 +468,8 @@ public class SchemaTest {
     }
 
     @Test(
-            groups = {"Schema.equivalency"},
-            dependsOnGroups = {"Schema.serialize", "Schema.deserialize"})
+            groups = {"SnowflakeDynamicTable.equivalency"},
+            dependsOnGroups = {"SnowflakeDynamicTable.serialize", "SnowflakeDynamicTable.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

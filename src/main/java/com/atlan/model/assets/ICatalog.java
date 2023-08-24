@@ -373,6 +373,9 @@ public interface ICatalog {
             case SigmaWorkbook.TYPE_NAME:
                 ref = SigmaWorkbook.refByQualifiedName(qualifiedName);
                 break;
+            case SnowflakeDynamicTable.TYPE_NAME:
+                ref = SnowflakeDynamicTable.refByQualifiedName(qualifiedName);
+                break;
             case SnowflakePipe.TYPE_NAME:
                 ref = SnowflakePipe.refByQualifiedName(qualifiedName);
                 break;

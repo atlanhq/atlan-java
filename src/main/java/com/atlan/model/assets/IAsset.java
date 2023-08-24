@@ -278,7 +278,6 @@ public interface IAsset {
     /** TBC */
     KeywordTextField ASSET_TAGS = new KeywordTextField("assetTags", "assetTags", "assetTags.text");
 
-    /** Glossary terms that are linked to this asset. */
     /** Status of the asset's certification. */
     KeywordTextField CERTIFICATE_STATUS =
             new KeywordTextField("certificateStatus", "certificateStatus", "certificateStatus.text");

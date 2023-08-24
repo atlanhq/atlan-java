@@ -145,6 +145,11 @@ public class Schema extends Asset implements ISchema, ISQL, ICatalog, IAsset, IR
     @Attribute
     String schemaQualifiedName;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISnowflakeDynamicTable> snowflakeDynamicTables;
+
     /** Snowflake Pipes that are defined within this schema. */
     @Attribute
     @Singular

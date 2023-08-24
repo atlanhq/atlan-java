@@ -152,6 +152,7 @@ public class AttributeDefOptions extends AtlanObject {
             SigmaDatasetColumn.TYPE_NAME,
             SigmaPage.TYPE_NAME,
             SigmaWorkbook.TYPE_NAME,
+            SnowflakeDynamicTable.TYPE_NAME,
             SnowflakePipe.TYPE_NAME,
             SnowflakeStream.TYPE_NAME,
             SnowflakeTag.TYPE_NAME,
