@@ -34,9 +34,9 @@ For detailed examples of searching these fields, see [common search fields](../.
 
             ```java linenums="1" title="Type of this asset."
             ${className?uncap_first}.getTypeName(); // (1)
-            QueryFactory.must(haveSuperType(Asset.TYPE_NAME)); // (2)
-            QueryFactory.must(beOfType(${className}.TYPE_NAME)); // (3)
-            QueryFactory.must(beOneOfTypes(Table.TYPE_NAME, View.TYPE_NAME, MaterializedView.TYPE_NAME)); // (4)
+            client.assets.select().where(CompoundQuery.superType(ISQL.TYPE_NAME)); // (2)
+            client.assets.select().where(CompoundQuery.assetType(Table.TYPE_NAME)); // (3)
+            client.assets.select().where(CompoundQuery.assetTypes(List.of(Table.TYPE_NAME, View.TYPE_NAME, MaterializedView.TYPE_NAME))); // (4)
             ```
 
             1. Retrieve the `typeName` from an asset.
@@ -44,8 +44,8 @@ For detailed examples of searching these fields, see [common search fields](../.
                 !!! recommendation "Use instanceof for type checking"
                     If you are operating on an `Asset` type, chances are it is actually a more concrete type. Rather than using String-based comparisons, you can type-check using Java types: `if (asset instanceof Column)`, for example. This has the added benefit of not needing separate null handling (if null, then `asset` cannot be an `instanceof` any type).
 
-            2. Query for all assets that are sub-types of a particular super-type, in this example all assets that are sub-types of `Asset`.
-            3. Query for all assets with a particular type, in this example a `${className}`.
+            2. Query for all assets that are sub-types of a particular super-type, in this example all assets that are sub-types of `SQL`.
+            3. Query for all assets with a particular type, in this example a `Table`.
             4. Query for all assets with any one of a number of different types, in this example either a `Table`, `View`, or `MaterializedView`.
 
         --8<-- "snippets/model/core-java.md"
@@ -55,10 +55,20 @@ For detailed examples of searching these fields, see [common search fields](../.
         ??? type-string "type_name"
 
             ```python title="Type of this asset."
-            asset.type_name; // (1)
+            asset.type_name;  # (1)
+            FluentSearch().where(CompoundQuery.super_types([SQL]))  # (2)
+            FluentSearch().where(CompoundQuery.asset_type(Table))  # (3)
+            FluentSearch().where(CompoundQuery.asset_types([Table, View, MaterializedView]))  # (4)
             ```
 
             1. Retrieve the `type_name` from an asset.
+
+                !!! recommendation "Use isinstance for type checking"
+                    If you are operating on an `Asset` type, chances are it is actually a more concrete type. Rather than using String-based comparisons, you can type-check using Python types: `if isinstance(asset, Column)`, for example.
+
+            2. Query for all assets that are sub-types of a particular super-type, in this example all assets that are sub-types of `SQL`.
+            3. Query for all assets with a particular type, in this example a `Table`.
+            4. Query for all assets with any one of a number of different types, in this example either a `Table`, `View`, or `MaterializedView`.
 
         --8<-- "snippets/model/core-python.md"
 

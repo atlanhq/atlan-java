@@ -483,6 +483,7 @@ public class ColumnTest {
             .query(AtlanQuery.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .query(AtlanQuery.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .rawDataTypeDefinition("String0")
+            .snowflakeDynamicTable(SnowflakeDynamicTable.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .subDataType("String0")
             .table(Table.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .tablePartition(TablePartition.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))

@@ -35,13 +35,11 @@ public interface IGlossaryCategory {
     KeywordField ADDITIONAL_ATTRIBUTES = new KeywordField("additionalAttributes", "additionalAttributes");
 
     /** TBC */
-    /** TBC */
     RelationField CHILDREN_CATEGORIES = new RelationField("childrenCategories");
 
     /** TBC */
     KeywordField LONG_DESCRIPTION = new KeywordField("longDescription", "longDescription");
 
-    /** TBC */
     /** TBC */
     KeywordField SHORT_DESCRIPTION = new KeywordField("shortDescription", "shortDescription");
 

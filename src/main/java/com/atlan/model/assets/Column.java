@@ -378,6 +378,10 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
 
     /** TBC */
     @Attribute
+    ISnowflakeDynamicTable snowflakeDynamicTable;
+
+    /** TBC */
+    @Attribute
     @Singular
     SortedSet<IDbtSource> sqlDBTSources;
 

@@ -43,6 +43,9 @@ public interface ISchema {
     /** Stored procedures (routines) that are defined within this schema. */
     RelationField PROCEDURES = new RelationField("procedures");
 
+    /** TBC */
+    RelationField SNOWFLAKE_DYNAMIC_TABLES = new RelationField("snowflakeDynamicTables");
+
     /** Snowflake Pipes that are defined within this schema. */
     RelationField SNOWFLAKE_PIPES = new RelationField("snowflakePipes");
 
@@ -423,6 +426,9 @@ public interface ISchema {
 
     /** TBC */
     SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
+
+    /** TBC */
+    SortedSet<ISnowflakeDynamicTable> getSnowflakeDynamicTables();
 
     /** Snowflake Pipes that are defined within this schema. */
     SortedSet<ISnowflakePipe> getSnowflakePipes();

@@ -8,7 +8,6 @@ import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
-import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -22,86 +21,17 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a term in Atlan.
+ * Atlan Snowflake Dynamic Table Asset
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IGlossaryTerm {
+public interface ISnowflakeDynamicTable {
 
-    public static final String TYPE_NAME = "AtlasGlossaryTerm";
+    public static final String TYPE_NAME = "SnowflakeDynamicTable";
 
-    /** TBC */
-    KeywordField ABBREVIATION = new KeywordField("abbreviation", "abbreviation");
-
-    /** TBC */
-    KeywordField ADDITIONAL_ATTRIBUTES = new KeywordField("additionalAttributes", "additionalAttributes");
-
-    /** TBC */
-    RelationField ANTONYMS = new RelationField("antonyms");
-
-    /** TBC */
-    RelationField ASSIGNED_ENTITIES = new RelationField("assignedEntities");
-
-    /** TBC */
-    RelationField CLASSIFIES = new RelationField("classifies");
-
-    /** TBC */
-    KeywordField EXAMPLES = new KeywordField("examples", "examples");
-
-    /** TBC */
-    RelationField IS_A = new RelationField("isA");
-
-    /** TBC */
-    KeywordField LONG_DESCRIPTION = new KeywordField("longDescription", "longDescription");
-
-    /** TBC */
-    RelationField PREFERRED_TERMS = new RelationField("preferredTerms");
-
-    /** TBC */
-    RelationField PREFERRED_TO_TERMS = new RelationField("preferredToTerms");
-
-    /** TBC */
-    RelationField REPLACED_BY = new RelationField("replacedBy");
-
-    /** TBC */
-    RelationField REPLACEMENT_TERMS = new RelationField("replacementTerms");
-
-    /** TBC */
-    RelationField SEE_ALSO = new RelationField("seeAlso");
-
-    /** TBC */
-    KeywordField SHORT_DESCRIPTION = new KeywordField("shortDescription", "shortDescription");
-
-    /** TBC */
-    RelationField SYNONYMS = new RelationField("synonyms");
-
-    /** TBC */
-    RelationField TRANSLATED_TERMS = new RelationField("translatedTerms");
-
-    /** TBC */
-    RelationField TRANSLATION_TERMS = new RelationField("translationTerms");
-
-    /** TBC */
-    KeywordField USAGE = new KeywordField("usage", "usage");
-
-    /** TBC */
-    RelationField VALID_VALUES = new RelationField("validValues");
-
-    /** TBC */
-    RelationField VALID_VALUES_FOR = new RelationField("validValuesFor");
-
-    /** Glossary in which the term is contained, searchable by the qualifiedName of the glossary. */
-    KeywordField ANCHOR = new KeywordField("anchor", "__glossary");
-
-    /** Categories in which the term is organized, searchable by the qualifiedName of the category. */
-    KeywordField CATEGORIES = new KeywordField("categories", "__categories");
-
-    /** TBC */
-    String getAbbreviation();
-
-    /** TBC */
-    Map<String, String> getAdditionalAttributes();
+    /** SQL statements used to define a Snowflake Dynamic Table */
+    KeywordField DEFINITION = new KeywordField("definition", "definition");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -113,7 +43,7 @@ public interface IGlossaryTerm {
     SortedSet<String> getAdminUsers();
 
     /** TBC */
-    IGlossary getAnchor();
+    String getAlias();
 
     /** TBC */
     String getAnnouncementMessage();
@@ -129,9 +59,6 @@ public interface IGlossaryTerm {
 
     /** TBC */
     String getAnnouncementUpdatedBy();
-
-    /** TBC */
-    SortedSet<IGlossaryTerm> getAntonyms();
 
     /** TBC */
     String getAssetDbtAccountName();
@@ -314,13 +241,7 @@ public interface IGlossaryTerm {
     SortedSet<String> getAssetTags();
 
     /** TBC */
-    SortedSet<IAsset> getAssignedEntities();
-
-    /** TBC */
     SortedSet<IGlossaryTerm> getAssignedTerms();
-
-    /** TBC */
-    SortedSet<IGlossaryCategory> getCategories();
 
     /** TBC */
     CertificateStatus getCertificateStatus();
@@ -335,7 +256,10 @@ public interface IGlossaryTerm {
     String getCertificateUpdatedBy();
 
     /** TBC */
-    SortedSet<IGlossaryTerm> getClassifies();
+    Long getColumnCount();
+
+    /** TBC */
+    SortedSet<IColumn> getColumns();
 
     /** TBC */
     String getConnectionName();
@@ -347,16 +271,46 @@ public interface IGlossaryTerm {
     AtlanConnectorType getConnectorType();
 
     /** TBC */
+    String getDatabaseName();
+
+    /** TBC */
+    String getDatabaseQualifiedName();
+
+    /** TBC */
+    SortedSet<IDbtModel> getDbtModels();
+
+    /** TBC */
     String getDbtQualifiedName();
+
+    /** TBC */
+    SortedSet<IDbtSource> getDbtSources();
+
+    /** TBC */
+    SortedSet<IDbtTest> getDbtTests();
+
+    /** SQL statements used to define a Snowflake Dynamic Table */
+    String getDefinition();
 
     /** TBC */
     String getDescription();
 
     /** TBC */
+    SortedSet<ITable> getDimensions();
+
+    /** TBC */
     String getDisplayName();
 
     /** TBC */
-    SortedSet<String> getExamples();
+    String getExternalLocation();
+
+    /** TBC */
+    String getExternalLocationFormat();
+
+    /** TBC */
+    String getExternalLocationRegion();
+
+    /** TBC */
+    SortedSet<ITable> getFacts();
 
     /** TBC */
     SortedSet<IFile> getFiles();
@@ -365,13 +319,31 @@ public interface IGlossaryTerm {
     Boolean getHasLineage();
 
     /** TBC */
-    SortedSet<IGlossaryTerm> getIsA();
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** TBC */
+    SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
     Boolean getIsDiscoverable();
 
     /** TBC */
     Boolean getIsEditable();
+
+    /** TBC */
+    Boolean getIsPartitioned();
+
+    /** TBC */
+    Boolean getIsProfiled();
+
+    /** TBC */
+    Boolean getIsQueryPreview();
+
+    /** TBC */
+    Boolean getIsTemporary();
+
+    /** TBC */
+    Long getLastProfiledAt();
 
     /** TBC */
     Long getLastRowChangedAt();
@@ -389,9 +361,6 @@ public interface IGlossaryTerm {
     SortedSet<ILink> getLinks();
 
     /** TBC */
-    String getLongDescription();
-
-    /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
     /** TBC */
@@ -404,43 +373,76 @@ public interface IGlossaryTerm {
     String getName();
 
     /** TBC */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
+
+    /** TBC */
+    SortedSet<ILineageProcess> getOutputFromProcesses();
+
+    /** TBC */
     SortedSet<String> getOwnerGroups();
 
     /** TBC */
     SortedSet<String> getOwnerUsers();
 
     /** TBC */
+    Long getPartitionCount();
+
+    /** TBC */
+    String getPartitionList();
+
+    /** TBC */
+    String getPartitionStrategy();
+
+    /** TBC */
+    SortedSet<ITablePartition> getPartitions();
+
+    /** TBC */
     Double getPopularityScore();
-
-    /** TBC */
-    SortedSet<IGlossaryTerm> getPreferredTerms();
-
-    /** TBC */
-    SortedSet<IGlossaryTerm> getPreferredToTerms();
 
     /** TBC */
     String getQualifiedName();
 
     /** TBC */
+    SortedSet<IAtlanQuery> getQueries();
+
+    /** TBC */
+    Long getQueryCount();
+
+    /** TBC */
+    Long getQueryCountUpdatedAt();
+
+    /** TBC */
+    Map<String, String> getQueryPreviewConfig();
+
+    /** TBC */
+    Long getQueryUserCount();
+
+    /** TBC */
+    Map<String, Long> getQueryUserMap();
+
+    /** TBC */
     IReadme getReadme();
 
     /** TBC */
-    SortedSet<IGlossaryTerm> getReplacedBy();
-
-    /** TBC */
-    SortedSet<IGlossaryTerm> getReplacementTerms();
+    Long getRowCount();
 
     /** TBC */
     String getSampleDataUrl();
 
     /** TBC */
+    ISchema getSchema();
+
+    /** TBC */
+    String getSchemaName();
+
+    /** TBC */
+    String getSchemaQualifiedName();
+
+    /** TBC */
     SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
 
     /** TBC */
-    SortedSet<IGlossaryTerm> getSeeAlso();
-
-    /** TBC */
-    String getShortDescription();
+    Long getSizeBytes();
 
     /** TBC */
     SortedSet<ISodaCheck> getSodaChecks();
@@ -512,6 +514,12 @@ public interface IGlossaryTerm {
     String getSourceUpdatedBy();
 
     /** TBC */
+    SortedSet<IDbtSource> getSqlDBTSources();
+
+    /** TBC */
+    SortedSet<IDbtModel> getSqlDbtModels();
+
+    /** TBC */
     SortedSet<String> getStarredBy();
 
     /** TBC */
@@ -524,28 +532,22 @@ public interface IGlossaryTerm {
     String getSubType();
 
     /** TBC */
-    SortedSet<IGlossaryTerm> getSynonyms();
+    String getTableName();
+
+    /** TBC */
+    String getTableQualifiedName();
 
     /** TBC */
     String getTenantId();
 
     /** TBC */
-    SortedSet<IGlossaryTerm> getTranslatedTerms();
-
-    /** TBC */
-    SortedSet<IGlossaryTerm> getTranslationTerms();
-
-    /** TBC */
-    String getUsage();
-
-    /** TBC */
     String getUserDescription();
 
     /** TBC */
-    SortedSet<IGlossaryTerm> getValidValues();
+    String getViewName();
 
     /** TBC */
-    SortedSet<IGlossaryTerm> getValidValuesFor();
+    String getViewQualifiedName();
 
     /** TBC */
     Double getViewScore();

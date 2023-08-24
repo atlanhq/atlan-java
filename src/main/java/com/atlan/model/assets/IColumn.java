@@ -226,6 +226,9 @@ public interface IColumn {
     KeywordField RAW_DATA_TYPE_DEFINITION = new KeywordField("rawDataTypeDefinition", "rawDataTypeDefinition");
 
     /** TBC */
+    RelationField SNOWFLAKE_DYNAMIC_TABLE = new RelationField("snowflakeDynamicTable");
+
+    /** TBC */
     KeywordField SUB_DATA_TYPE = new KeywordField("subDataType", "subDataType");
 
     /** Table in which this column exists, or empty if the column instead exists in a view or materialized view. */
@@ -764,6 +767,9 @@ public interface IColumn {
 
     /** TBC */
     SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
+
+    /** TBC */
+    ISnowflakeDynamicTable getSnowflakeDynamicTable();
 
     /** TBC */
     SortedSet<ISodaCheck> getSodaChecks();
