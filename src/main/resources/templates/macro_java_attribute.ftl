@@ -1,41 +1,44 @@
-<#macro search attribute>
-<#if attribute.searchFields??>
-<#list attribute.searchFields as field>
-<#assign commentCount = field?counter + 2>
-<#if field.enumClassName == "TextFields" || field.enumClassName == "StemmedFields">
-    QueryFactory.must(have(${field.enumClassName}.${field.enumName}).match(${attribute.values?first})); // (${commentCount})
-<#elseif field.enumClassName == "NumericFields">
-    QueryFactory.must(have(${field.enumClassName}.${field.enumName}).gt(${attribute.values?first})); // (${commentCount})
-<#else>
-    QueryFactory.must(have(${field.enumClassName}.${field.enumName}).eq(${attribute.values?first})); // (${commentCount})
+<#macro search className attribute>
+<#if attribute.details.searchType?? && attribute.details.searchType != "RelationField">
+<#assign commentCount = 3>
+<#if attribute.details.searchType?starts_with("Keyword") || attribute.details.searchType == "BooleanField">
+    client.assets.select().where(${className}.${attribute.details.enumForAttr}.eq(${attribute.values?first})); // (${commentCount})
+<#assign commentCount = commentCount + 1>
 </#if>
-</#list>
+<#if attribute.details.searchType?contains("Text")>
+    client.assets.select().where(${className}.${attribute.details.enumForAttr}.match(${attribute.values?first})); // (${commentCount})
+<#assign commentCount = commentCount + 1>
+</#if>
+<#if attribute.details.searchType?starts_with("Numeric")>
+    client.assets.select().where(${className}.${attribute.details.enumForAttr}.gt(${attribute.values?first})); // (${commentCount})
+<#assign commentCount = commentCount + 1>
+</#if>
 </#if>
 </#macro>
 <#macro searchDescription attribute>
-<#if attribute.searchFields??>
-<#list attribute.searchFields as field>
-<#assign commentCount = field?counter + 2>
-<#if field.enumClassName == "TextFields" || field.enumClassName == "StemmedFields">
-    ${commentCount}. Find all assets in Atlan with their `${attribute.details.renamed}` textually matching the provided value.
-
-        !!! details "For more details"
-            For more information, see the searching section on [full text queries](../../search/queries/text.md).
-
-<#elseif field.enumClassName == "NumericFields">
-    ${commentCount}. Find all assets in Atlan with their `${attribute.details.renamed}` greater than the provided value.
-
-        !!! details "For more details"
-            For more information, see the searching section on [range queries](../../search/queries/terms.md#range).
-
-<#else>
+<#if attribute.details.searchType?? && attribute.details.searchType != "RelationField">
+<#assign commentCount = 3>
+<#if attribute.details.searchType?starts_with("Keyword") || attribute.details.searchType == "BooleanField">
     ${commentCount}. Find all assets in Atlan with their `${attribute.details.renamed}` exactly matching the provided value.
 
         !!! details "For more details"
             For more information, see the searching section on [term queries](../../search/queries/terms.md#term).
-
+<#assign commentCount = commentCount + 1>
 </#if>
-</#list>
+<#if attribute.details.searchType?contains("Text")>
+    ${commentCount}. Find all assets in Atlan with their `${attribute.details.renamed}` textually matching the provided value.
+
+        !!! details "For more details"
+            For more information, see the searching section on [full text queries](../../search/queries/text.md).
+<#assign commentCount = commentCount + 1>
+</#if>
+<#if attribute.details.searchType?starts_with("Numeric")>
+    ${commentCount}. Find all assets in Atlan with their `${attribute.details.renamed}` greater than the provided value.
+
+        !!! details "For more details"
+            For more information, see the searching section on [range queries](../../search/queries/terms.md#range).
+<#assign commentCount = commentCount + 1>
+</#if>
 </#if>
 </#macro>
 <#macro render className attribute>
@@ -59,7 +62,7 @@
     </#list>
     </#if>
     ${className?uncap_first}.get${attribute.details.renamed?cap_first}(); // (2)
-    <@search attribute=attribute />
+    <@search className=className attribute=attribute />
     ```
 
     1. Set the `${attribute.details.renamed}` for a `${className}`.
