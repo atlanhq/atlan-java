@@ -2,10 +2,13 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.cache;
 
+import com.atlan.model.assets.Asset;
 import com.atlan.model.assets.Attribute;
+import com.atlan.serde.Removable;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.io.IOException;
 import java.lang.reflect.*;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -43,6 +46,7 @@ public class ReflectionCache {
             // so if Jackson is told to ignore it, so will we
             if (!field.isAnnotationPresent(JsonIgnore.class)) {
                 String fieldName = field.getName();
+                map.put(fieldName, field);
                 if (field.isAnnotationPresent(JsonProperty.class)) {
                     // If the field has a JsonProperty annotation, we need to use this name
                     // as an override for the name of the field for serde purposes
@@ -57,7 +61,6 @@ public class ReflectionCache {
                     // class members on deserialization
                     attributesMap.get(originalClassName).put(fieldName, fieldName);
                 }
-                map.put(fieldName, field);
             }
         }
     }
@@ -186,6 +189,25 @@ public class ReflectionCache {
     }
 
     /**
+     * Retrieve the value for a specified field from the provided asset.
+     *
+     * @param a asset from which to retrieve the value
+     * @param fieldName field on that asset from which to retrieve the value
+     * @return value of the field on that asset
+     * @throws IOException if there is any error retrieving the value dynamically
+     */
+    public static Object getValue(Asset a, String fieldName) throws IOException {
+        Method getter = getGetter(a.getClass(), fieldName);
+        try {
+            return getter.invoke(a);
+        } catch (IllegalAccessException | InvocationTargetException | NullPointerException e) {
+            throw new IOException(
+                    "Failed to retrieve value for " + a.getClass().getName() + "." + fieldName + " through reflection.",
+                    e);
+        }
+    }
+
+    /**
      * Retrieve the setter method for the specified field.
      *
      * @param b class of the asset type
@@ -195,6 +217,31 @@ public class ReflectionCache {
     public static Method getSetter(Class<?> b, String fieldName) {
         addClass(b);
         return setterMap.get(b.getCanonicalName()).get(fieldName);
+    }
+
+    /**
+     * Set the value of a field on a specific asset (via its mutable builder).
+     *
+     * @param builder for the asset through which to set the property
+     * @param fieldName name of the property to set
+     * @param value value to set on the property
+     * @return true if the property was set, otherwise false (for example if no such property appears to exist)
+     * @throws NoSuchMethodException if there is no setter on the builder to set this field
+     * @throws IllegalAccessException if the setter cannot be accessed to set this field
+     * @throws InvocationTargetException if the provided builder cannot be used
+     */
+    public static boolean setValue(Asset.AssetBuilder<?, ?> builder, String fieldName, Object value)
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+        Method setter = getSetter(builder.getClass(), fieldName);
+        if (setter != null) {
+            if (value instanceof Removable) {
+                builder.nullField(fieldName);
+            } else {
+                setter.invoke(builder, value);
+            }
+            return true;
+        }
+        return false;
     }
 
     /**

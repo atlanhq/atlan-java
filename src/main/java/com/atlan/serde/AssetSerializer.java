@@ -15,7 +15,6 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.jsontype.TypeSerializer;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 /**
@@ -82,7 +81,7 @@ public class AssetSerializer extends StdSerializer<Asset> {
                     } else {
                         // Otherwise, pickup the value from the top-level
                         // attribute so that we can move that value across
-                        attrValue = ReflectionCache.getGetter(clazz, fieldName).invoke(asset);
+                        attrValue = ReflectionCache.getValue(asset, fieldName);
                     }
                     if (attrValue != null) {
                         // Ignore null values and empty collections
@@ -127,8 +126,7 @@ public class AssetSerializer extends StdSerializer<Asset> {
                 } else {
                     // For any other (top-level) field, we'll just write it out as-is (skipping any null
                     // values or empty lists)
-                    Object attrValue =
-                            ReflectionCache.getGetter(clazz, fieldName).invoke(asset);
+                    Object attrValue = ReflectionCache.getValue(asset, fieldName);
                     if (attrValue != null
                             && !(attrValue instanceof Collection && ((Collection<?>) attrValue).isEmpty())) {
                         String serializeName = ReflectionCache.getSerializedName(clazz, fieldName);
@@ -137,8 +135,6 @@ public class AssetSerializer extends StdSerializer<Asset> {
                 }
             }
 
-        } catch (IllegalAccessException | InvocationTargetException e) {
-            throw new IOException("Unable to retrieve value through reflection.", e);
         } catch (AtlanException e) {
             throw new IOException("Unable to retrieve the available custom metadata in Atlan.", e);
         }
