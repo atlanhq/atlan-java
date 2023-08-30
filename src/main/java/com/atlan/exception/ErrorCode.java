@@ -376,6 +376,16 @@ public enum ErrorCode implements ExceptionMessageSet {
             "ATLAN-JAVA-404-024",
             "Unable to find a purpose with the name: {0}.",
             "Verify the requested purpose exists in your Atlan environment."),
+    COLLECTION_NOT_FOUND_BY_NAME(
+            404,
+            "ATLAN-JAVA-404-025",
+            "Unable to find a query collection with the name: {0}.",
+            "Verify the requested query collection exists in your Atlan environment."),
+    QUERY_NOT_FOUND_BY_NAME(
+            404,
+            "ATLAN-JAVA-404-026",
+            "Unable to find a query with the name: {0}.",
+            "Verify the requested query exists in your Atlan environment."),
 
     CONFLICT_PASSTHROUGH(
             409,

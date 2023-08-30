@@ -51,18 +51,39 @@ public abstract class Atlan {
         if (baseURL == null) {
             throw new IllegalStateException(INVALID_CLIENT_MSG);
         }
-        String prepped = baseURL;
-        if (baseURL.endsWith("/")) {
-            prepped = baseURL.substring(0, baseURL.lastIndexOf("/"));
-        }
-        String key = prepped;
-        if (name != null && name.length() > 0) {
-            key = prepped + "#" + key;
-        }
+        String prepped = prepURL(baseURL);
+        String key = getClientId(prepped, name);
         if (!clientCache.containsKey(key)) {
             clientCache.put(key, new AtlanClient(prepped));
         }
         return clientCache.get(key);
+    }
+
+    /**
+     * Remove a configured Atlan client given the URL and (optional) unique name.
+     *
+     * @param baseURL base URL of the tenant for which the client is configured
+     * @param name (optional) unique name given to the client when it was configured
+     */
+    public static void removeClient(final String baseURL, final String name) {
+        String key = getClientId(prepURL(baseURL), name);
+        clientCache.remove(key);
+    }
+
+    private static String prepURL(final String baseURL) {
+        String prepped = baseURL;
+        if (baseURL.endsWith("/")) {
+            prepped = baseURL.substring(0, baseURL.lastIndexOf("/"));
+        }
+        return prepped;
+    }
+
+    private static String getClientId(final String baseURL, final String name) {
+        String key = baseURL;
+        if (name != null && !name.isEmpty()) {
+            key = baseURL + "#" + key;
+        }
+        return key;
     }
 
     /**

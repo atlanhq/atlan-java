@@ -9,9 +9,11 @@ import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.core.AssetFilter;
+import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.IconType;
+import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.CompoundQuery;
 import com.atlan.model.search.FluentSearch;
@@ -19,8 +21,14 @@ import com.atlan.util.QueryFactory;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import java.util.SortedSet;
+import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -369,6 +377,56 @@ public class AtlanCollection extends Asset implements IAtlanCollection, INamespa
     }
 
     /**
+     * Add the API token configured for the default client as an admin for this AtlanCollection.
+     * This is necessary to allow the API token to manage the collection itself or any queries within it.
+     *
+     * @param impersonationToken a bearer token for an actual user who is already an admin for the AtlanCollection, NOT an API token
+     * @throws AtlanException on any error during API invocation
+     */
+    public AssetMutationResponse addApiTokenAsAdmin(final String impersonationToken) throws AtlanException {
+        return Asset.addApiTokenAsAdmin(getGuid(), impersonationToken);
+    }
+
+    /**
+     * Add the API token configured for the default client as a viewer for this AtlanCollection.
+     * This is necessary to allow the API token to view or run queries within the collection, but not make any
+     * changes to them.
+     *
+     * @param impersonationToken a bearer token for an actual user who is already an admin for the AtlanCollection, NOT an API token
+     * @throws AtlanException on any error during API invocation
+     */
+    public AssetMutationResponse addApiTokenAsViewer(final String impersonationToken) throws AtlanException {
+
+        AtlanClient client = Atlan.getDefaultClient();
+        String token = client.users.getCurrentUser().getUsername();
+
+        String clientGuid = UUID.randomUUID().toString();
+        AtlanClient tmp = Atlan.getClient(client.getBaseUrl(), clientGuid);
+        tmp.setApiToken(impersonationToken);
+
+        // Look for the asset as the impersonated user, ensuring we include the viewer users
+        // in the results (so we avoid clobbering any existing viewer users)
+        Optional<Asset> found = tmp.assets.select().where(GUID.eq(getGuid())).includeOnResults(VIEWER_USERS).stream()
+                .findFirst();
+        AssetMutationResponse response = null;
+        if (found.isPresent()) {
+            Asset asset = found.get();
+            Set<String> existingViewers = asset.getViewerUsers();
+            response = asset.trimToRequired()
+                    .viewerUsers(existingViewers)
+                    .viewerUser(token)
+                    .build()
+                    .save(tmp);
+        } else {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, getGuid());
+        }
+
+        Atlan.removeClient(client.getBaseUrl(), clientGuid);
+
+        return response;
+    }
+
+    /**
      * Builds the minimal object necessary to update a AtlanCollection.
      *
      * @param qualifiedName of the AtlanCollection
@@ -376,7 +434,10 @@ public class AtlanCollection extends Asset implements IAtlanCollection, INamespa
      * @return the minimal request necessary to update the AtlanCollection, as a builder
      */
     public static AtlanCollectionBuilder<?, ?> updater(String qualifiedName, String name) {
-        return AtlanCollection._internal().qualifiedName(qualifiedName).name(name);
+        return AtlanCollection._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
     }
 
     /**
@@ -397,9 +458,112 @@ public class AtlanCollection extends Asset implements IAtlanCollection, INamespa
         }
         if (!missing.isEmpty()) {
             throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "AtlanCollection", String.join(",", missing));
+                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, TYPE_NAME, String.join(",", missing));
         }
         return updater(this.getQualifiedName(), this.getName());
+    }
+
+    /**
+     * Find a collection by its human-readable name. Only the bare minimum set of attributes and no
+     * relationships will be retrieved for the collection, if found.
+     *
+     * @param name of the collection
+     * @return all collections with that name, if found
+     * @throws AtlanException on any API problems
+     * @throws NotFoundException if the collection does not exist
+     */
+    public static List<AtlanCollection> findByName(String name) throws AtlanException {
+        return findByName(name, (List<AtlanField>) null);
+    }
+
+    /**
+     * Find a collection by its human-readable name.
+     *
+     * @param name of the collection
+     * @param attributes an optional collection of attributes (unchecked) to retrieve for the collection
+     * @return all collections with that name, if found
+     * @throws AtlanException on any API problems
+     * @throws NotFoundException if the collection does not exist
+     */
+    public static List<AtlanCollection> findByName(String name, Collection<String> attributes) throws AtlanException {
+        return findByName(Atlan.getDefaultClient(), name, attributes);
+    }
+
+    /**
+     * Find a collection by its human-readable name.
+     *
+     * @param name of the collection
+     * @param attributes an optional collection of attributes (checked) to retrieve for the collection
+     * @return all collections with that name, if found
+     * @throws AtlanException on any API problems
+     * @throws NotFoundException if the collection does not exist
+     */
+    public static List<AtlanCollection> findByName(String name, List<AtlanField> attributes) throws AtlanException {
+        return findByName(Atlan.getDefaultClient(), name, attributes);
+    }
+
+    /**
+     * Find a collection by its human-readable name. Only the bare minimum set of attributes and no
+     * relationships will be retrieved for the collection, if found.
+     *
+     * @param client connectivity to the Atlan tenant in which to search for the collection
+     * @param name of the collection
+     * @return all collections with that name, if found
+     * @throws AtlanException on any API problems
+     * @throws NotFoundException if the collection does not exist
+     */
+    public static List<AtlanCollection> findByName(AtlanClient client, String name) throws AtlanException {
+        return findByName(client, name, (List<AtlanField>) null);
+    }
+
+    /**
+     * Find a collection by its human-readable name.
+     *
+     * @param client connectivity to the Atlan tenant in which to search for the collection
+     * @param name of the collection
+     * @param attributes an optional collection of attributes to retrieve for the collection
+     * @return all collections with that name, if found
+     * @throws AtlanException on any API problems
+     * @throws NotFoundException if the collection does not exist
+     */
+    public static List<AtlanCollection> findByName(AtlanClient client, String name, Collection<String> attributes)
+            throws AtlanException {
+        List<AtlanCollection> results = new ArrayList<>();
+        AtlanCollection.select(client)
+                .where(NAME.eq(name))
+                ._includesOnResults(attributes == null ? Collections.emptyList() : attributes)
+                .stream()
+                .filter(a -> a instanceof AtlanCollection)
+                .forEach(c -> results.add((AtlanCollection) c));
+        if (results.isEmpty()) {
+            throw new NotFoundException(ErrorCode.COLLECTION_NOT_FOUND_BY_NAME, name);
+        }
+        return results;
+    }
+
+    /**
+     * Find a collection by its human-readable name.
+     *
+     * @param client connectivity to the Atlan tenant in which to search for the collection
+     * @param name of the collection
+     * @param attributes an optional collection of attributes (checked) to retrieve for the collection
+     * @return all collections with that name, if found
+     * @throws AtlanException on any API problems
+     * @throws NotFoundException if the collection does not exist
+     */
+    public static List<AtlanCollection> findByName(AtlanClient client, String name, List<AtlanField> attributes)
+            throws AtlanException {
+        List<AtlanCollection> results = new ArrayList<>();
+        AtlanCollection.select(client)
+                .where(NAME.eq(name))
+                .includesOnResults(attributes == null ? Collections.emptyList() : attributes)
+                .stream()
+                .filter(a -> a instanceof AtlanCollection)
+                .forEach(c -> results.add((AtlanCollection) c));
+        if (results.isEmpty()) {
+            throw new NotFoundException(ErrorCode.COLLECTION_NOT_FOUND_BY_NAME, name);
+        }
+        return results;
     }
 
     /**

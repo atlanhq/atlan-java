@@ -366,6 +366,46 @@
     }
 
     /**
+     * Add the API token configured for the default client as an admin to this object.
+     *
+     * @param assetGuid unique identifier (GUID) of the asset to which we should add this API token as an admin
+     * @param impersonationToken a bearer token for an actual user who is already an admin for the object, NOT an API token
+     * @throws AtlanException on any error during API invocation
+     */
+    protected static AssetMutationResponse addApiTokenAsAdmin(final String assetGuid, final String impersonationToken)
+            throws AtlanException {
+
+        AtlanClient client = Atlan.getDefaultClient();
+        String token = client.users.getCurrentUser().getUsername();
+
+        String clientGuid = UUID.randomUUID().toString();
+        AtlanClient tmp = Atlan.getClient(client.getBaseUrl(), clientGuid);
+        tmp.setApiToken(impersonationToken);
+
+        // Look for the asset as the impersonated user, ensuring we include the admin users
+        // in the results (so we avoid clobbering any existing admin users)
+        Optional<Asset> found = tmp.assets.select().where(GUID.eq(assetGuid)).includeOnResults(ADMIN_USERS).stream()
+                .findFirst();
+        AssetMutationResponse response = null;
+        if (found.isPresent()) {
+            Asset asset = found.get();
+            Set<String> existingAdmins = asset.getAdminUsers();
+            response = asset.trimToRequired()
+                    .adminUsers(existingAdmins)
+                    .adminUser(token)
+                    .build()
+                    .save(tmp);
+        } else {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, assetGuid);
+        }
+
+        Atlan.removeClient(client.getBaseUrl(), clientGuid);
+
+        return response;
+
+    }
+
+    /**
      * Retrieves an asset by its GUID, optionally complete with all of its relationships.
      * The type of the asset will only be determined at runtime.
      *

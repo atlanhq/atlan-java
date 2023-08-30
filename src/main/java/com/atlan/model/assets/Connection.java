@@ -10,6 +10,7 @@ import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.admin.ApiToken;
 import com.atlan.model.core.AssetFilter;
+import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.core.ConnectionCreationResponse;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectionCategory;
@@ -708,6 +709,17 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
             }
         }
         return client.assets.save(this, replaceAtlanTags);
+    }
+
+    /**
+     * Add the API token configured for the default client as an admin for this Connection.
+     * This is necessary to allow the API token to manage policies for the connection.
+     *
+     * @param impersonationToken a bearer token for an actual user who is already an admin for the Connection, NOT an API token
+     * @throws AtlanException on any error during API invocation
+     */
+    public AssetMutationResponse addApiTokenAsAdmin(final String impersonationToken) throws AtlanException {
+        return Asset.addApiTokenAsAdmin(getGuid(), impersonationToken);
     }
 
     /**

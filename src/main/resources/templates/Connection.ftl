@@ -261,6 +261,17 @@
     }
 
     /**
+     * Add the API token configured for the default client as an admin for this Connection.
+     * This is necessary to allow the API token to manage policies for the connection.
+     *
+     * @param impersonationToken a bearer token for an actual user who is already an admin for the Connection, NOT an API token
+     * @throws AtlanException on any error during API invocation
+     */
+    public AssetMutationResponse addApiTokenAsAdmin(final String impersonationToken) throws AtlanException {
+        return Asset.addApiTokenAsAdmin(getGuid(), impersonationToken);
+    }
+
+    /**
      * Generate a unique connection name.
      *
      * @param connectorType the name of the type of the connection's connector
