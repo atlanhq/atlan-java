@@ -21,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -526,7 +527,10 @@ public class DbtModel extends Asset implements IDbtModel, IDbt, ICatalog, IAsset
      * @return the minimal request necessary to update the DbtModel, as a builder
      */
     public static DbtModelBuilder<?, ?> updater(String qualifiedName, String name) {
-        return DbtModel._internal().qualifiedName(qualifiedName).name(name);
+        return DbtModel._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
     }
 
     /**

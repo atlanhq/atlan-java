@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -469,7 +470,10 @@ public class DbtTag extends Asset implements IDbtTag, IDbt, ITag, ICatalog, IAss
      * @return the minimal request necessary to update the DbtTag, as a builder
      */
     public static DbtTagBuilder<?, ?> updater(String qualifiedName, String name) {
-        return DbtTag._internal().qualifiedName(qualifiedName).name(name);
+        return DbtTag._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
     }
 
     /**

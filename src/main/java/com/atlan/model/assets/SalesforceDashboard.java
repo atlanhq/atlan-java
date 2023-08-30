@@ -20,6 +20,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -407,7 +408,10 @@ public class SalesforceDashboard extends Asset
      * @return the minimal request necessary to update the SalesforceDashboard, as a builder
      */
     public static SalesforceDashboardBuilder<?, ?> updater(String qualifiedName, String name) {
-        return SalesforceDashboard._internal().qualifiedName(qualifiedName).name(name);
+        return SalesforceDashboard._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
     }
 
     /**

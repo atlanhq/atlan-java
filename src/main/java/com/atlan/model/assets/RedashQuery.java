@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -411,7 +412,10 @@ public class RedashQuery extends Asset implements IRedashQuery, IRedash, IBI, IC
      * @return the minimal request necessary to update the RedashQuery, as a builder
      */
     public static RedashQueryBuilder<?, ?> updater(String qualifiedName, String name) {
-        return RedashQuery._internal().qualifiedName(qualifiedName).name(name);
+        return RedashQuery._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
     }
 
     /**

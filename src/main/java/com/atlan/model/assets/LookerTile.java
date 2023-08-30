@@ -20,6 +20,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -415,7 +416,10 @@ public class LookerTile extends Asset implements ILookerTile, ILooker, IBI, ICat
      * @return the minimal request necessary to update the LookerTile, as a builder
      */
     public static LookerTileBuilder<?, ?> updater(String qualifiedName, String name) {
-        return LookerTile._internal().qualifiedName(qualifiedName).name(name);
+        return LookerTile._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
     }
 
     /**

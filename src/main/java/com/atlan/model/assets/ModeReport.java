@@ -20,6 +20,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -449,7 +450,10 @@ public class ModeReport extends Asset implements IModeReport, IMode, IBI, ICatal
      * @return the minimal request necessary to update the ModeReport, as a builder
      */
     public static ModeReportBuilder<?, ?> updater(String qualifiedName, String name) {
-        return ModeReport._internal().qualifiedName(qualifiedName).name(name);
+        return ModeReport._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
     }
 
     /**

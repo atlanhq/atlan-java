@@ -21,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -420,7 +421,10 @@ public class QuickSightAnalysis extends Asset
      * @return the minimal request necessary to update the QuickSightAnalysis, as a builder
      */
     public static QuickSightAnalysisBuilder<?, ?> updater(String qualifiedName, String name) {
-        return QuickSightAnalysis._internal().qualifiedName(qualifiedName).name(name);
+        return QuickSightAnalysis._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
     }
 
     /**

@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -457,7 +458,10 @@ public class TableauDatasourceField extends Asset
      * @return the minimal request necessary to update the TableauDatasourceField, as a builder
      */
     public static TableauDatasourceFieldBuilder<?, ?> updater(String qualifiedName, String name) {
-        return TableauDatasourceField._internal().qualifiedName(qualifiedName).name(name);
+        return TableauDatasourceField._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
     }
 
     /**

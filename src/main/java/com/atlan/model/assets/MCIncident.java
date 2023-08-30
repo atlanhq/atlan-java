@@ -20,6 +20,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -420,7 +421,10 @@ public class MCIncident extends Asset
      * @return the minimal request necessary to update the MCIncident, as a builder
      */
     public static MCIncidentBuilder<?, ?> updater(String qualifiedName, String name) {
-        return MCIncident._internal().qualifiedName(qualifiedName).name(name);
+        return MCIncident._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
     }
 
     /**

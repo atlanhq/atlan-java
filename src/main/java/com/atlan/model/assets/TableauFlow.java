@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -413,7 +414,10 @@ public class TableauFlow extends Asset implements ITableauFlow, ITableau, IBI, I
      * @return the minimal request necessary to update the TableauFlow, as a builder
      */
     public static TableauFlowBuilder<?, ?> updater(String qualifiedName, String name) {
-        return TableauFlow._internal().qualifiedName(qualifiedName).name(name);
+        return TableauFlow._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
     }
 
     /**
