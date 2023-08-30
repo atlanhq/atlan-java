@@ -119,19 +119,30 @@ public class GroupsEndpoint extends HeraclesEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public List<AtlanGroup> list(RequestOptions options) throws AtlanException {
+        return list(20, options);
+    }
+
+    /**
+     * Retrieve all groups defined in Atlan.
+     *
+     * @param pageSize maximum number of groups to retrieve per request
+     * @param options to override default client settings
+     * @return a list of all the groups in Atlan
+     * @throws AtlanException on any API communication issue
+     */
+    public List<AtlanGroup> list(int pageSize, RequestOptions options) throws AtlanException {
         List<AtlanGroup> groups = new ArrayList<>();
         String unlimitedUrl = String.format("%s%s?sort=createdAt", getBaseUrl(), endpoint);
-        int limit = 100;
         int offset = 0;
-        String url = String.format("%s&limit=%s&offset=%s", unlimitedUrl, limit, offset);
+        String url = String.format("%s&limit=%s&offset=%s", unlimitedUrl, pageSize, offset);
         GroupResponse response =
                 ApiResource.request(client, ApiResource.RequestMethod.GET, url, "", GroupResponse.class, options);
         while (response != null) {
             List<AtlanGroup> page = response.getRecords();
             if (page != null) {
                 groups.addAll(page);
-                offset += limit;
-                url = String.format("%s&limit=%s&offset=%s", unlimitedUrl, limit, offset);
+                offset += pageSize;
+                url = String.format("%s&limit=%s&offset=%s", unlimitedUrl, pageSize, offset);
                 response =
                         ApiResource.request(client, ApiResource.RequestMethod.GET, url, "", GroupResponse.class, null);
             } else {

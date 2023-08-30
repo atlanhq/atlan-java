@@ -37,9 +37,9 @@ public class ApiTokensEndpoint extends HeraclesEndpoint {
     }
 
     /**
-     * Retrieves a list of the 100 most recently created tokens defined in Atlan.
+     * Retrieves a list of the 20 most recently created tokens defined in Atlan.
      *
-     * @return a list of the 100 most recently created tokens in Atlan
+     * @return a list of the 20 most recently created tokens in Atlan
      * @throws AtlanException on any API communication issue
      */
     public ApiTokenResponse list() throws AtlanException {
@@ -47,14 +47,14 @@ public class ApiTokensEndpoint extends HeraclesEndpoint {
     }
 
     /**
-     * Retrieves a list of the 100 most recently created tokens defined in Atlan.
+     * Retrieves a list of the 20 most recently created tokens defined in Atlan.
      *
      * @param options to override default client settings
-     * @return a list of the 100 most recently created tokens in Atlan
+     * @return a list of the 20 most recently created tokens in Atlan
      * @throws AtlanException on any API communication issue
      */
     public ApiTokenResponse list(RequestOptions options) throws AtlanException {
-        return list(null, "-createdAt", 0, 100, options);
+        return list(null, "-createdAt", 0, 20, options);
     }
 
     /**
