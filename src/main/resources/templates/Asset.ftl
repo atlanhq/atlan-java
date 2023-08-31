@@ -384,7 +384,7 @@
 
         // Look for the asset as the impersonated user, ensuring we include the admin users
         // in the results (so we avoid clobbering any existing admin users)
-        Optional<Asset> found = tmp.assets.select().where(GUID.eq(assetGuid)).includeOnResults(ADMIN_USERS).stream()
+        Optional<Asset> found = tmp.assets.select().where(GUID.eq(assetGuid)).includeOnResults(ADMIN_USERS).pageSize(1).stream()
                 .findFirst();
         AssetMutationResponse response = null;
         if (found.isPresent()) {
@@ -396,6 +396,7 @@
                     .build()
                     .save(tmp);
         } else {
+            Atlan.removeClient(client.getBaseUrl(), clientGuid);
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, assetGuid);
         }
 

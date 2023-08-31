@@ -254,7 +254,16 @@
         }
         if (adminUsers != null && !adminUsers.isEmpty()) {
             for (String userName : adminUsers) {
-                client.getUserCache().getIdForName(userName);
+                try {
+                    client.getUserCache().getIdForName(userName);
+                } catch (NotFoundException e) {
+                    // If we cannot find the username, fallback to looking for an API token
+                    ApiToken token = client.apiTokens.getById(userName);
+                    if (token == null) {
+                        // If that also turns up no results, re-throw the NotFoundException
+                        throw e;
+                    }
+                }
             }
         }
         return client.assets.save(this, replaceAtlanTags);
