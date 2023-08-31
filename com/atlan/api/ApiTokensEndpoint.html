@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -231,20 +231,27 @@ extends <a href="HeraclesEndpoint.html" title="class in com.atlan.api">HeraclesE
 </td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code><a href="../model/admin/ApiTokenResponse.html" title="class in com.atlan.model.admin">ApiTokenResponse</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#list()">list</a></span>()</code></th>
+<td class="colFirst"><code><a href="../model/admin/ApiToken.html" title="class in com.atlan.model.admin">ApiToken</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getById(java.lang.String)">getById</a></span>&#8203;(java.lang.String&nbsp;clientId)</code></th>
 <td class="colLast">
-<div class="block">Retrieves a list of the 100 most recently created tokens defined in Atlan.</div>
+<div class="block">Retrieves the API token with a client ID that exactly matches the provided string.</div>
 </td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="../model/admin/ApiTokenResponse.html" title="class in com.atlan.model.admin">ApiTokenResponse</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#list(com.atlan.net.RequestOptions)">list</a></span>&#8203;(<a href="../net/RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#list()">list</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Retrieves a list of the 100 most recently created tokens defined in Atlan.</div>
+<div class="block">Retrieves a list of the 20 most recently created tokens defined in Atlan.</div>
 </td>
 </tr>
 <tr id="i5" class="rowColor">
+<td class="colFirst"><code><a href="../model/admin/ApiTokenResponse.html" title="class in com.atlan.model.admin">ApiTokenResponse</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#list(com.atlan.net.RequestOptions)">list</a></span>&#8203;(<a href="../net/RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)</code></th>
+<td class="colLast">
+<div class="block">Retrieves a list of the 20 most recently created tokens defined in Atlan.</div>
+</td>
+</tr>
+<tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="../model/admin/ApiTokenResponse.html" title="class in com.atlan.model.admin">ApiTokenResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#list(java.lang.String,java.lang.String,int,int)">list</a></span>&#8203;(java.lang.String&nbsp;filter,
     java.lang.String&nbsp;sort,
@@ -254,7 +261,7 @@ extends <a href="HeraclesEndpoint.html" title="class in com.atlan.api">HeraclesE
 <div class="block">Retrieves a list of the API tokens defined in Atlan.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="../model/admin/ApiTokenResponse.html" title="class in com.atlan.model.admin">ApiTokenResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#list(java.lang.String,java.lang.String,int,int,com.atlan.net.RequestOptions)">list</a></span>&#8203;(java.lang.String&nbsp;filter,
     java.lang.String&nbsp;sort,
@@ -265,14 +272,14 @@ extends <a href="HeraclesEndpoint.html" title="class in com.atlan.api">HeraclesE
 <div class="block">Retrieves a list of the API tokens defined in Atlan.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#purge(java.lang.String)">purge</a></span>&#8203;(java.lang.String&nbsp;guid)</code></th>
 <td class="colLast">
 <div class="block">Delete (purge) the specified API token.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#purge(java.lang.String,com.atlan.net.RequestOptions)">purge</a></span>&#8203;(java.lang.String&nbsp;guid,
      <a href="../net/RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)</code></th>
@@ -280,7 +287,7 @@ extends <a href="HeraclesEndpoint.html" title="class in com.atlan.api">HeraclesE
 <div class="block">Delete (purge) the specified API token.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code><a href="../model/admin/ApiToken.html" title="class in com.atlan.model.admin">ApiToken</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#update(java.lang.String,java.lang.String,java.lang.String,java.util.Set)">update</a></span>&#8203;(java.lang.String&nbsp;guid,
       java.lang.String&nbsp;displayName,
@@ -290,7 +297,7 @@ extends <a href="HeraclesEndpoint.html" title="class in com.atlan.api">HeraclesE
 <div class="block">Update an existing API token with the provided settings.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code><a href="../model/admin/ApiToken.html" title="class in com.atlan.model.admin">ApiToken</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#update(java.lang.String,java.lang.String,java.lang.String,java.util.Set,com.atlan.net.RequestOptions)">update</a></span>&#8203;(java.lang.String&nbsp;guid,
       java.lang.String&nbsp;displayName,
@@ -366,10 +373,10 @@ extends <a href="HeraclesEndpoint.html" title="class in com.atlan.api">HeraclesE
 <h4>list</h4>
 <pre class="methodSignature">public&nbsp;<a href="../model/admin/ApiTokenResponse.html" title="class in com.atlan.model.admin">ApiTokenResponse</a>&nbsp;list()
                       throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Retrieves a list of the 100 most recently created tokens defined in Atlan.</div>
+<div class="block">Retrieves a list of the 20 most recently created tokens defined in Atlan.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>a list of the 100 most recently created tokens in Atlan</dd>
+<dd>a list of the 20 most recently created tokens in Atlan</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication issue</dd>
 </dl>
@@ -383,12 +390,12 @@ extends <a href="HeraclesEndpoint.html" title="class in com.atlan.api">HeraclesE
 <h4>list</h4>
 <pre class="methodSignature">public&nbsp;<a href="../model/admin/ApiTokenResponse.html" title="class in com.atlan.model.admin">ApiTokenResponse</a>&nbsp;list&#8203;(<a href="../net/RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)
                       throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Retrieves a list of the 100 most recently created tokens defined in Atlan.</div>
+<div class="block">Retrieves a list of the 20 most recently created tokens defined in Atlan.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>options</code> - to override default client settings</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>a list of the 100 most recently created tokens in Atlan</dd>
+<dd>a list of the 20 most recently created tokens in Atlan</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication issue</dd>
 </dl>
@@ -459,7 +466,26 @@ extends <a href="HeraclesEndpoint.html" title="class in com.atlan.api">HeraclesE
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>displayName</code> - name (as it appears in the UI) by which to retrieve the API token</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the API token whose name (in the UI) contains the provided string, or null if there is none</dd>
+<dd>the API token whose name (in the UI) matches the provided string, or null if there is none</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any error during API invocation</dd>
+</dl>
+</li>
+</ul>
+<a id="getById(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getById</h4>
+<pre class="methodSignature">public&nbsp;<a href="../model/admin/ApiToken.html" title="class in com.atlan.model.admin">ApiToken</a>&nbsp;getById&#8203;(java.lang.String&nbsp;clientId)
+                 throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Retrieves the API token with a client ID that exactly matches the provided string.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>clientId</code> - unique client identifier by which to retrieve the API token</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the API token whose cliendId matches the provided string, or null if there is none</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any error during API invocation</dd>
 </dl>
@@ -556,6 +582,7 @@ extends <a href="HeraclesEndpoint.html" title="class in com.atlan.api">HeraclesE
 <div class="block">Update an existing API token with the provided settings.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>guid</code> - unique identifier (GUID) of the API token</dd>
 <dd><code>displayName</code> - human-readable name for the API token</dd>
 <dd><code>description</code> - optional explanation of the API token</dd>
 <dd><code>personas</code> - unique identifiers (GUIDs) of personas that should be linked to the token</dd>

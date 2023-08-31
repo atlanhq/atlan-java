@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9};
+var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -263,19 +263,27 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>static void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeClient(java.lang.String,java.lang.String)">removeClient</a></span>&#8203;(java.lang.String&nbsp;baseURL,
+            java.lang.String&nbsp;name)</code></th>
+<td class="colLast">
+<div class="block">Remove a configured Atlan client given the URL and (optional) unique name.</div>
+</td>
+</tr>
+<tr id="i7" class="rowColor">
+<td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setApiToken(java.lang.String)">setApiToken</a></span>&#8203;(java.lang.String&nbsp;apiToken)</code></th>
 <td class="colLast">
 <div class="block">Set the API token for the default client.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setBaseUrl(java.lang.String)">setBaseUrl</a></span>&#8203;(java.lang.String&nbsp;baseURL)</code></th>
 <td class="colLast">
 <div class="block">Set the base URL for the default client.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setMaxNetworkRetries(int)">setMaxNetworkRetries</a></span>&#8203;(int&nbsp;numRetries)</code></th>
 <td class="colLast">
@@ -428,6 +436,22 @@ extends java.lang.Object</pre>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>baseURL</code> - base URL of the tenant for which to configure a client</dd>
 <dd><code>name</code> - a unique name for this client</dd>
+</dl>
+</li>
+</ul>
+<a id="removeClient(java.lang.String,java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>removeClient</h4>
+<pre class="methodSignature">public static&nbsp;void&nbsp;removeClient&#8203;(java.lang.String&nbsp;baseURL,
+                                java.lang.String&nbsp;name)</pre>
+<div class="block">Remove a configured Atlan client given the URL and (optional) unique name.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>baseURL</code> - base URL of the tenant for which the client is configured</dd>
+<dd><code>name</code> - (optional) unique name given to the client when it was configured</dd>
 </dl>
 </li>
 </ul>
