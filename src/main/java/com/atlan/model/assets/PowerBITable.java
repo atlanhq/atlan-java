@@ -21,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -427,7 +428,10 @@ public class PowerBITable extends Asset implements IPowerBITable, IPowerBI, IBI,
      * @return the minimal request necessary to update the PowerBITable, as a builder
      */
     public static PowerBITableBuilder<?, ?> updater(String qualifiedName, String name) {
-        return PowerBITable._internal().qualifiedName(qualifiedName).name(name);
+        return PowerBITable._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
     }
 
     /**

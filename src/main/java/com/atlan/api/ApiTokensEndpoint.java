@@ -37,9 +37,9 @@ public class ApiTokensEndpoint extends HeraclesEndpoint {
     }
 
     /**
-     * Retrieves a list of the 100 most recently created tokens defined in Atlan.
+     * Retrieves a list of the 20 most recently created tokens defined in Atlan.
      *
-     * @return a list of the 100 most recently created tokens in Atlan
+     * @return a list of the 20 most recently created tokens in Atlan
      * @throws AtlanException on any API communication issue
      */
     public ApiTokenResponse list() throws AtlanException {
@@ -47,14 +47,14 @@ public class ApiTokensEndpoint extends HeraclesEndpoint {
     }
 
     /**
-     * Retrieves a list of the 100 most recently created tokens defined in Atlan.
+     * Retrieves a list of the 20 most recently created tokens defined in Atlan.
      *
      * @param options to override default client settings
-     * @return a list of the 100 most recently created tokens in Atlan
+     * @return a list of the 20 most recently created tokens in Atlan
      * @throws AtlanException on any API communication issue
      */
     public ApiTokenResponse list(RequestOptions options) throws AtlanException {
-        return list(null, "-createdAt", 0, 100, options);
+        return list(null, "-createdAt", 0, 20, options);
     }
 
     /**
@@ -98,11 +98,32 @@ public class ApiTokensEndpoint extends HeraclesEndpoint {
      * Retrieves the API token with a name that exactly matches the provided string.
      *
      * @param displayName name (as it appears in the UI) by which to retrieve the API token
-     * @return the API token whose name (in the UI) contains the provided string, or null if there is none
+     * @return the API token whose name (in the UI) matches the provided string, or null if there is none
      * @throws AtlanException on any error during API invocation
      */
     public ApiToken get(String displayName) throws AtlanException {
         ApiTokenResponse response = list("{\"displayName\":\"" + displayName + "\"}", "-createdAt", 0, 2);
+        if (response != null
+                && response.getRecords() != null
+                && !response.getRecords().isEmpty()) {
+            return response.getRecords().get(0);
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Retrieves the API token with a client ID that exactly matches the provided string.
+     *
+     * @param clientId unique client identifier by which to retrieve the API token
+     * @return the API token whose cliendId matches the provided string, or null if there is none
+     * @throws AtlanException on any error during API invocation
+     */
+    public ApiToken getById(String clientId) throws AtlanException {
+        if (clientId != null && clientId.startsWith("service-account-")) {
+            clientId = clientId.substring("service-account-".length());
+        }
+        ApiTokenResponse response = list("{\"clientId\":\"" + clientId + "\"}", "-createdAt", 0, 2);
         if (response != null
                 && response.getRecords() != null
                 && !response.getRecords().isEmpty()) {
@@ -168,6 +189,7 @@ public class ApiTokensEndpoint extends HeraclesEndpoint {
     /**
      * Update an existing API token with the provided settings.
      *
+     * @param guid unique identifier (GUID) of the API token
      * @param displayName human-readable name for the API token
      * @param description optional explanation of the API token
      * @param personas unique identifiers (GUIDs) of personas that should be linked to the token
@@ -242,7 +264,7 @@ public class ApiTokensEndpoint extends HeraclesEndpoint {
                     this.validitySeconds = 409968000L;
                 } else {
                     // Otherwise use "infinite" as the ceiling for values
-                    this.validitySeconds = Math.max(validitySeconds, 409968000L);
+                    this.validitySeconds = Math.min(validitySeconds, 409968000L);
                 }
             }
         }

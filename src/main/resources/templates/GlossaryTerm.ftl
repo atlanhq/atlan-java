@@ -421,7 +421,7 @@
     /**
      * Update the certificate on a GlossaryTerm.
      *
-     * @param client connectivity to the Atlan tenant on which to update the GlossarTerm's certificate
+     * @param client connectivity to the Atlan tenant on which to update the GlossaryTerm's certificate
      * @param qualifiedName of the GlossaryTerm
      * @param name of the GlossaryTerm
      * @param glossaryGuid unique ID (GUID) of the GlossaryTerm's glossary

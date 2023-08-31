@@ -32,11 +32,11 @@ public interface IReferenceable {
     KeywordField STATUS = new KeywordField("status", "__state");
 
     /** All directly-assigned Atlan tags that exist on an asset, searchable by internal hashed-string ID of the Atlan tag. */
-    KeywordTextField ATLAN_TAGS = new KeywordTextField("classificationNames", "__traitNames", "__classificationsText");
+    KeywordTextField ATLAN_TAGS = new KeywordTextField("classifications", "__traitNames", "__classificationsText");
 
     /** All propagated Atlan tags that exist on an asset, searchable by internal hashed-string ID of the Atlan tag. */
     KeywordTextField PROPAGATED_ATLAN_TAGS =
-            new KeywordTextField("classificationNames", "__propagatedTraitNames", "__classificationsText");
+            new KeywordTextField("classifications", "__propagatedTraitNames", "__classificationsText");
 
     /** All terms attached to an asset, searchable by the term's qualifiedName. */
     KeywordTextField ASSIGNED_TERMS = new KeywordTextField("meanings", "__meanings", "__meaningsText");

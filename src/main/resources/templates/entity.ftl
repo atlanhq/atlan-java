@@ -14,6 +14,7 @@ import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.LogicException;
 import com.atlan.exception.NotFoundException;
+import com.atlan.model.admin.ApiToken;
 import com.atlan.model.core.AssetDeletionResponse;
 import com.atlan.model.core.AssetFilter;
 import com.atlan.model.core.AssetMutationResponse;
@@ -481,7 +482,10 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
      * @return the minimal request necessary to update the ${className}, as a builder
      */
     public static ${className}Builder<?, ?> updater(String qualifiedName, String name) {
-        return ${className}._internal().qualifiedName(qualifiedName).name(name);
+        return ${className}._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
     }
 
     /**
@@ -509,7 +513,7 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
 </#if>
 
 <#if !abstract>
-<#if className != "Glossary" && className != "GlossaryCategory" && className != "GlossaryTerm" && className != "Persona" && className != "Purpose">
+<#if className != "Glossary" && className != "GlossaryCategory" && className != "GlossaryTerm" && className != "Persona" && className != "Purpose" && className != "AtlanQuery">
     /**
      * Remove the system description from a ${className}.
      *

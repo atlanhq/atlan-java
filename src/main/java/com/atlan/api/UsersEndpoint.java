@@ -120,19 +120,30 @@ public class UsersEndpoint extends HeraclesEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public List<AtlanUser> list(RequestOptions options) throws AtlanException {
+        return list(20, options);
+    }
+
+    /**
+     * Retrieve all users defined in Atlan.
+     *
+     * @param pageSize maximum number of users to retrieve per request
+     * @param options to override default client settings
+     * @return a list of all the users in Atlan
+     * @throws AtlanException on any API communication issue
+     */
+    public List<AtlanUser> list(int pageSize, RequestOptions options) throws AtlanException {
         List<AtlanUser> users = new ArrayList<>();
         String unlimitedUrl = String.format("%s%s?sort=username", getBaseUrl(), endpoint);
-        int limit = 100;
         int offset = 0;
-        String url = String.format("%s&limit=%s&offset=%s", unlimitedUrl, limit, offset);
+        String url = String.format("%s&limit=%s&offset=%s", unlimitedUrl, pageSize, offset);
         UserResponse response =
                 ApiResource.request(client, ApiResource.RequestMethod.GET, url, "", UserResponse.class, options);
         while (response != null) {
             List<AtlanUser> page = response.getRecords();
             if (page != null && !page.isEmpty()) {
                 users.addAll(page);
-                offset += limit;
-                url = String.format("%s&limit=%s&offset=%s", unlimitedUrl, limit, offset);
+                offset += pageSize;
+                url = String.format("%s&limit=%s&offset=%s", unlimitedUrl, pageSize, offset);
                 response =
                         ApiResource.request(client, ApiResource.RequestMethod.GET, url, "", UserResponse.class, null);
             } else {

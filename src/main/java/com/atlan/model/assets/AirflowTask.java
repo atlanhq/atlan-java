@@ -21,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -471,7 +472,10 @@ public class AirflowTask extends Asset implements IAirflowTask, IAirflow, ICatal
      * @return the minimal request necessary to update the AirflowTask, as a builder
      */
     public static AirflowTaskBuilder<?, ?> updater(String qualifiedName, String name) {
-        return AirflowTask._internal().qualifiedName(qualifiedName).name(name);
+        return AirflowTask._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
     }
 
     /**
