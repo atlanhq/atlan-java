@@ -24,6 +24,7 @@ import java.util.Collections;
 import java.util.Set;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Singular;
 
 /**
  * API endpoints for managing Atlan's API tokens.
@@ -138,7 +139,7 @@ public class ApiTokensEndpoint extends HeraclesEndpoint {
      *
      * @param displayName human-readable name for the API token
      * @param description optional explanation of the API token
-     * @param personas unique identifiers (GUIDs) of personas that should be linked to the token
+     * @param personas unique names (qualifiedNames) of personas that should be linked to the token
      * @param validitySeconds time in seconds after which the token should expire
      * @return the created API token
      * @throws AtlanException on any API communication issue
@@ -153,7 +154,7 @@ public class ApiTokensEndpoint extends HeraclesEndpoint {
      *
      * @param displayName human-readable name for the API token
      * @param description optional explanation of the API token
-     * @param personas unique identifiers (GUIDs) of personas that should be linked to the token
+     * @param personas unique names (qualifiedNames) of personas that should be linked to the token
      * @param validitySeconds time in seconds after which the token should expire
      * @param options to override default client settings
      * @return the created API token
@@ -177,7 +178,7 @@ public class ApiTokensEndpoint extends HeraclesEndpoint {
      *
      * @param displayName human-readable name for the API token
      * @param description optional explanation of the API token
-     * @param personas unique identifiers (GUIDs) of personas that should be linked to the token
+     * @param personas unique names (qualifiedNames) of personas that should be linked to the token
      * @return the updated API token
      * @throws AtlanException on any API communication issue
      */
@@ -192,7 +193,7 @@ public class ApiTokensEndpoint extends HeraclesEndpoint {
      * @param guid unique identifier (GUID) of the API token
      * @param displayName human-readable name for the API token
      * @param description optional explanation of the API token
-     * @param personas unique identifiers (GUIDs) of personas that should be linked to the token
+     * @param personas unique names (qualifiedNames) of personas that should be linked to the token
      * @param options to override default client settings
      * @return the updated API token
      * @throws AtlanException on any API communication issue
@@ -247,9 +248,18 @@ public class ApiTokensEndpoint extends HeraclesEndpoint {
         @JsonInclude(JsonInclude.Include.ALWAYS)
         String description;
 
-        /** Unique identifiers (GUIDs) of personas that are associated with the token. */
+        /**
+         * Unique identifiers (GUIDs) of personas that are associated with the token.
+         * @deprecated see {@link #personaQualifiedNames}
+         */
         @JsonInclude(JsonInclude.Include.ALWAYS)
-        Set<String> personas;
+        @Deprecated
+        final Set<String> personas = Collections.emptySet();
+
+        /** Unique names (qualifiedNames) of personas that are associated with the token. */
+        @JsonInclude(JsonInclude.Include.ALWAYS)
+        @Singular
+        Set<String> personaQualifiedNames;
 
         /** Length of time, in seconds, after which the token will expire and no longer be usable. */
         Long validitySeconds;
@@ -257,7 +267,7 @@ public class ApiTokensEndpoint extends HeraclesEndpoint {
         public ApiTokenRequest(String displayName, String description, Set<String> personas, Long validitySeconds) {
             this.displayName = displayName;
             this.description = description == null ? "" : description;
-            this.personas = personas == null ? Collections.emptySet() : personas;
+            this.personaQualifiedNames = personas == null ? Collections.emptySet() : personas;
             if (validitySeconds != null) {
                 if (validitySeconds < 0) {
                     // Treat negative numbers as "infinite" (never expire)

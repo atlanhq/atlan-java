@@ -99,7 +99,7 @@ public class ApiToken extends AtlanObject {
      *
      * @param displayName readable name for the API token
      * @param description explanation of the API token
-     * @param personas unique identifiers (GUIDs) of personas to link to the token
+     * @param personas unique names (qualifiedNames) of personas that should be linked to the token
      * @param validity time in seconds after which the token should expire (negative numbers are treated as a token should never expire)
      * @return the API token details
      * @throws AtlanException on any API communication issues
@@ -115,7 +115,7 @@ public class ApiToken extends AtlanObject {
      * @param client connectivity to the Atlan tenant on which to create the new API token
      * @param displayName readable name for the API token
      * @param description explanation of the API token
-     * @param personas unique identifiers (GUIDs) of personas to link to the token
+     * @param personas unique names (qualifiedNames) of personas that should be linked to the token
      * @param validity time in seconds after which the token should expire (negative numbers are treated as a token should never expire)
      * @return the API token details
      * @throws AtlanException on any API communication issues
@@ -167,10 +167,10 @@ public class ApiToken extends AtlanObject {
      * @throws AtlanException on any error during API invocation
      */
     public ApiToken update(AtlanClient client) throws AtlanException {
-        if (this.id == null || this.id.length() == 0) {
+        if (this.id == null || this.id.isEmpty()) {
             throw new InvalidRequestException(ErrorCode.MISSING_TOKEN_ID);
         }
-        if (this.displayName == null || this.displayName.length() == 0) {
+        if (this.displayName == null || this.displayName.isEmpty()) {
             throw new InvalidRequestException(ErrorCode.MISSING_TOKEN_NAME);
         }
         String description = null;
@@ -180,7 +180,7 @@ public class ApiToken extends AtlanObject {
             if (attributes.getPersonas() != null) {
                 personas = new HashSet<>();
                 for (ApiTokenPersona persona : attributes.getPersonas()) {
-                    personas.add(persona.getId());
+                    personas.add(persona.getPersonaQualifiedName());
                 }
             }
         }
@@ -263,15 +263,22 @@ public class ApiToken extends AtlanObject {
         private static final Comparator<String> stringComparator = Comparator.nullsFirst(String::compareTo);
         private static final Comparator<ApiTokenPersona> personaComparator = Comparator.comparing(
                         ApiTokenPersona::getId, stringComparator)
-                .thenComparing(ApiTokenPersona::getPersona, stringComparator);
+                .thenComparing(ApiTokenPersona::getPersona, stringComparator)
+                .thenComparing(ApiTokenPersona::getPersonaQualifiedName, stringComparator);
 
         /** Unique identifier (GUID) of the linked persona. */
         String id;
         /** Unique name of the linked persona. */
         String persona;
+        /** Unique name (qualifiedName) of the linked persona. */
+        String personaQualifiedName;
 
-        public static ApiTokenPersona of(String id, String persona) {
-            return ApiTokenPersona.builder().id(id).persona(persona).build();
+        public static ApiTokenPersona of(String id, String persona, String personaQualifiedName) {
+            return ApiTokenPersona.builder()
+                    .id(id)
+                    .persona(persona)
+                    .personaQualifiedName(personaQualifiedName)
+                    .build();
         }
 
         /** {@inheritDoc} */
