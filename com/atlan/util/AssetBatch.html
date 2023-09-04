@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -159,6 +159,13 @@ extends java.lang.Object</pre>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="AssetBatch.CustomMetadataHandling.html" title="enum in com.atlan.util">AssetBatch.CustomMetadataHandling</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static class&nbsp;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="AssetBatch.FailedBatch.html" title="class in com.atlan.util">AssetBatch.FailedBatch</a></span></code></th>
+<td class="colLast">
+<div class="block">Internal class to capture batch failures.</div>
+</td>
+</tr>
 </table>
 </li>
 </ul>
@@ -190,6 +197,17 @@ extends java.lang.Object</pre>
           int&nbsp;maxSize,
           boolean&nbsp;replaceAtlanTags,
           <a href="AssetBatch.CustomMetadataHandling.html" title="enum in com.atlan.util">AssetBatch.CustomMetadataHandling</a>&nbsp;customMetadataHandling)</code></th>
+<td class="colLast">
+<div class="block">Create a new batch of assets to be bulk-saved.</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.atlan.AtlanClient,java.lang.String,int,boolean,com.atlan.util.AssetBatch.CustomMetadataHandling,boolean)">AssetBatch</a></span>&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+          java.lang.String&nbsp;typeName,
+          int&nbsp;maxSize,
+          boolean&nbsp;replaceAtlanTags,
+          <a href="AssetBatch.CustomMetadataHandling.html" title="enum in com.atlan.util">AssetBatch.CustomMetadataHandling</a>&nbsp;customMetadataHandling,
+          boolean&nbsp;captureFailures)</code></th>
 <td class="colLast">
 <div class="block">Create a new batch of assets to be bulk-saved.</div>
 </td>
@@ -234,6 +252,13 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
+<td class="colFirst"><code>java.util.List&lt;<a href="AssetBatch.FailedBatch.html" title="class in com.atlan.util">AssetBatch.FailedBatch</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getFailures()">getFailures</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Batches that failed to be committed (only populated when captureFailures is set to true).</div>
+</td>
+</tr>
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getUpdated()">getUpdated</a></span>()</code></th>
 <td class="colLast">
@@ -285,7 +310,7 @@ extends java.lang.Object</pre>
 <a id="&lt;init&gt;(com.atlan.AtlanClient,java.lang.String,int,boolean,com.atlan.util.AssetBatch.CustomMetadataHandling)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>AssetBatch</h4>
 <pre>public&nbsp;AssetBatch&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
@@ -301,6 +326,30 @@ extends java.lang.Object</pre>
 <dd><code>maxSize</code> - maximum size of each batch that should be processed (per API call)</dd>
 <dd><code>replaceAtlanTags</code> - if true, all Atlan tags on an existing asset will be overwritten; if false, all Atlan tags will be ignored</dd>
 <dd><code>customMetadataHandling</code> - how to handle custom metadata (ignore it, replace it (wiping out anything pre-existing), or merge it)</dd>
+</dl>
+</li>
+</ul>
+<a id="&lt;init&gt;(com.atlan.AtlanClient,java.lang.String,int,boolean,com.atlan.util.AssetBatch.CustomMetadataHandling,boolean)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>AssetBatch</h4>
+<pre>public&nbsp;AssetBatch&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+                  java.lang.String&nbsp;typeName,
+                  int&nbsp;maxSize,
+                  boolean&nbsp;replaceAtlanTags,
+                  <a href="AssetBatch.CustomMetadataHandling.html" title="enum in com.atlan.util">AssetBatch.CustomMetadataHandling</a>&nbsp;customMetadataHandling,
+                  boolean&nbsp;captureFailures)</pre>
+<div class="block">Create a new batch of assets to be bulk-saved.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>client</code> - connectivity to Atlan</dd>
+<dd><code>typeName</code> - name of the type of assets to batch process (used only for logging)</dd>
+<dd><code>maxSize</code> - maximum size of each batch that should be processed (per API call)</dd>
+<dd><code>replaceAtlanTags</code> - if true, all Atlan tags on an existing asset will be overwritten; if false, all Atlan tags will be ignored</dd>
+<dd><code>customMetadataHandling</code> - how to handle custom metadata (ignore it, replace it (wiping out anything pre-existing), or merge it)</dd>
+<dd><code>captureFailures</code> - when true, any failed batches will be captured and retained rather than exceptions being raised (for large amounts of processing this could cause memory issues!)</dd>
 </dl>
 </li>
 </ul>
@@ -363,11 +412,21 @@ extends java.lang.Object</pre>
 <a id="getUpdated()">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>getUpdated</h4>
 <pre class="methodSignature">public&nbsp;java.util.List&lt;<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;&nbsp;getUpdated()</pre>
 <div class="block">Assets that were updated (minimal info only).</div>
+</li>
+</ul>
+<a id="getFailures()">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getFailures</h4>
+<pre class="methodSignature">public&nbsp;java.util.List&lt;<a href="AssetBatch.FailedBatch.html" title="class in com.atlan.util">AssetBatch.FailedBatch</a>&gt;&nbsp;getFailures()</pre>
+<div class="block">Batches that failed to be committed (only populated when captureFailures is set to true).</div>
 </li>
 </ul>
 </li>
