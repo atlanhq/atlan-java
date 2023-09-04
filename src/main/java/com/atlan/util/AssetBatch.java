@@ -32,6 +32,7 @@ public class AssetBatch {
     private final int maxSize;
     private final boolean replaceAtlanTags;
     private final CustomMetadataHandling customMetadataHandling;
+    private final boolean captureFailures;
 
     /** Assets that were created (minimal info only). */
     @Getter
@@ -40,6 +41,10 @@ public class AssetBatch {
     /** Assets that were updated (minimal info only). */
     @Getter
     private final List<Asset> updated;
+
+    /** Batches that failed to be committed (only populated when captureFailures is set to true). */
+    @Getter
+    private final List<FailedBatch> failures;
 
     /**
      * Create a new batch of assets to be bulk-saved.
@@ -67,14 +72,36 @@ public class AssetBatch {
             int maxSize,
             boolean replaceAtlanTags,
             CustomMetadataHandling customMetadataHandling) {
+        this(client, typeName, maxSize, replaceAtlanTags, customMetadataHandling, false);
+    }
+
+    /**
+     * Create a new batch of assets to be bulk-saved.
+     *
+     * @param client connectivity to Atlan
+     * @param typeName name of the type of assets to batch process (used only for logging)
+     * @param maxSize maximum size of each batch that should be processed (per API call)
+     * @param replaceAtlanTags if true, all Atlan tags on an existing asset will be overwritten; if false, all Atlan tags will be ignored
+     * @param customMetadataHandling how to handle custom metadata (ignore it, replace it (wiping out anything pre-existing), or merge it)
+     * @param captureFailures when true, any failed batches will be captured and retained rather than exceptions being raised (for large amounts of processing this could cause memory issues!)
+     */
+    public AssetBatch(
+            AtlanClient client,
+            String typeName,
+            int maxSize,
+            boolean replaceAtlanTags,
+            CustomMetadataHandling customMetadataHandling,
+            boolean captureFailures) {
         this.client = client;
         _batch = Collections.synchronizedList(new ArrayList<>());
+        failures = Collections.synchronizedList(new ArrayList<>());
         this.typeName = typeName;
         this.maxSize = maxSize;
         this.replaceAtlanTags = replaceAtlanTags;
         this.customMetadataHandling = customMetadataHandling;
         this.created = Collections.synchronizedList(new ArrayList<>());
         this.updated = Collections.synchronizedList(new ArrayList<>());
+        this.captureFailures = captureFailures;
     }
 
     /**
@@ -114,17 +141,25 @@ public class AssetBatch {
     public AssetMutationResponse flush() throws AtlanException {
         AssetMutationResponse response = null;
         if (!_batch.isEmpty()) {
-            log.debug("... saving next batch of ({}) {}s...", _batch.size(), typeName);
-            switch (customMetadataHandling) {
-                case IGNORE:
-                    response = client.assets.save(_batch, replaceAtlanTags);
-                    break;
-                case OVERWRITE:
-                    response = client.assets.saveReplacingCM(_batch, replaceAtlanTags);
-                    break;
-                case MERGE:
-                    response = client.assets.saveMergingCM(_batch, replaceAtlanTags);
-                    break;
+            try {
+                log.debug("... saving next batch of ({}) {}s...", _batch.size(), typeName);
+                switch (customMetadataHandling) {
+                    case IGNORE:
+                        response = client.assets.save(_batch, replaceAtlanTags);
+                        break;
+                    case OVERWRITE:
+                        response = client.assets.saveReplacingCM(_batch, replaceAtlanTags);
+                        break;
+                    case MERGE:
+                        response = client.assets.saveMergingCM(_batch, replaceAtlanTags);
+                        break;
+                }
+            } catch (AtlanException e) {
+                if (captureFailures) {
+                    failures.add(new FailedBatch(_batch, e));
+                } else {
+                    throw e;
+                }
             }
             _batch = Collections.synchronizedList(new ArrayList<>());
         }
@@ -148,6 +183,20 @@ public class AssetBatch {
                     .guid(candidate.getGuid())
                     .qualifiedName(candidate.getQualifiedName())
                     .build());
+        }
+    }
+
+    /**
+     * Internal class to capture batch failures.
+     */
+    @Getter
+    public static final class FailedBatch {
+        private final List<Asset> failedAssets;
+        private final Exception failureReason;
+
+        public FailedBatch(List<Asset> failedAssets, Exception failureReason) {
+            this.failedAssets = Collections.unmodifiableList(failedAssets);
+            this.failureReason = failureReason;
         }
     }
 }

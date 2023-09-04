@@ -198,9 +198,12 @@ public class ReflectionCache {
      */
     public static Object getValue(Asset a, String fieldName) throws IOException {
         Method getter = getGetter(a.getClass(), fieldName);
+        if (getter == null) {
+            return null;
+        }
         try {
             return getter.invoke(a);
-        } catch (IllegalAccessException | InvocationTargetException | NullPointerException e) {
+        } catch (IllegalAccessException | InvocationTargetException e) {
             throw new IOException(
                     "Failed to retrieve value for " + a.getClass().getName() + "." + fieldName + " through reflection.",
                     e);
