@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":9,"i12":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":9,"i14":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -236,6 +236,16 @@ extends <a href="SearchableField.html" title="class in com.atlan.model.fields">S
 </td>
 </tr>
 <tr id="i5" class="rowColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAttributeName()">getAttributeName</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i6" class="altColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSetName()">getSetName</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>&lt;T extends java.lang.Number&gt;<br>co.elastic.clients.elasticsearch._types.query_dsl.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#gt(T)">gt</a></span>&#8203;(T&nbsp;value)</code></th>
 <td class="colLast">
@@ -243,7 +253,7 @@ extends <a href="SearchableField.html" title="class in com.atlan.model.fields">S
  than the provided numeric value.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>&lt;T extends java.lang.Number&gt;<br>co.elastic.clients.elasticsearch._types.query_dsl.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#gte(T)">gte</a></span>&#8203;(T&nbsp;value)</code></th>
 <td class="colLast">
@@ -251,7 +261,7 @@ extends <a href="SearchableField.html" title="class in com.atlan.model.fields">S
  than or equal to the provided numeric value.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>co.elastic.clients.elasticsearch._types.query_dsl.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#in(java.util.Collection)">in</a></span>&#8203;(java.util.Collection&lt;java.lang.String&gt;&nbsp;values)</code></th>
 <td class="colLast">
@@ -259,7 +269,7 @@ extends <a href="SearchableField.html" title="class in com.atlan.model.fields">S
  at least one of the provided string values.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>&lt;T extends java.lang.Number&gt;<br>co.elastic.clients.elasticsearch._types.query_dsl.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#lt(T)">lt</a></span>&#8203;(T&nbsp;value)</code></th>
 <td class="colLast">
@@ -267,7 +277,7 @@ extends <a href="SearchableField.html" title="class in com.atlan.model.fields">S
  than the provided numeric value.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>&lt;T extends java.lang.Number&gt;<br>co.elastic.clients.elasticsearch._types.query_dsl.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#lte(T)">lte</a></span>&#8203;(T&nbsp;value)</code></th>
 <td class="colLast">
@@ -275,14 +285,14 @@ extends <a href="SearchableField.html" title="class in com.atlan.model.fields">S
  than or equal to the provided numeric value.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>co.elastic.clients.elasticsearch._types.query_dsl.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#match(java.lang.String)">match</a></span>&#8203;(java.lang.String&nbsp;value)</code></th>
 <td class="colLast">
 <div class="block">Returns a query that will textually match the provided value against the field.</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>static <a href="CustomMetadataField.html" title="class in com.atlan.model.fields">CustomMetadataField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#of(com.atlan.AtlanClient,java.lang.String,java.lang.String)">of</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
   java.lang.String&nbsp;set,
@@ -291,7 +301,7 @@ extends <a href="SearchableField.html" title="class in com.atlan.model.fields">S
 <div class="block">Factory method shortcut to the default constructor.</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>co.elastic.clients.elasticsearch._types.query_dsl.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#startsWith(java.lang.String,boolean)">startsWith</a></span>&#8203;(java.lang.String&nbsp;value,
           boolean&nbsp;caseInsensitive)</code></th>
@@ -643,7 +653,7 @@ extends <a href="SearchableField.html" title="class in com.atlan.model.fields">S
 <a id="match(java.lang.String)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>match</h4>
 <pre class="methodSignature">public&nbsp;co.elastic.clients.elasticsearch._types.query_dsl.Query&nbsp;match&#8203;(java.lang.String&nbsp;value)
@@ -659,6 +669,24 @@ extends <a href="SearchableField.html" title="class in com.atlan.model.fields">S
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></code> - if the custom metadata field is not numerically-comparable</dd>
 </dl>
+</li>
+</ul>
+<a id="getSetName()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getSetName</h4>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getSetName()</pre>
+</li>
+</ul>
+<a id="getAttributeName()">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getAttributeName</h4>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getAttributeName()</pre>
 </li>
 </ul>
 </li>
