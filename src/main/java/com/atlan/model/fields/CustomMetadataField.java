@@ -11,14 +11,19 @@ import com.atlan.model.enums.AtlanEnum;
 import com.atlan.model.typedefs.AttributeDef;
 import com.atlan.util.TypeUtils;
 import java.util.Collection;
+import lombok.Getter;
 
 /**
  * Utility class to simplify searching for values on custom metadata attributes.
  */
 public class CustomMetadataField extends SearchableField {
 
+    @Getter
     private final String setName;
+
+    @Getter
     private final String attributeName;
+
     private final AttributeDef attributeDef;
 
     /**
