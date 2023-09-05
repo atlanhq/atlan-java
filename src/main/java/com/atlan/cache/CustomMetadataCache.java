@@ -277,8 +277,8 @@ public class CustomMetadataCache {
 
     private String _getAttributeForSearchResults(String setId, String attrName) {
         Map<String, String> subMap = mapAttrNameToId.get(setId);
-        if (subMap != null) {
-            return subMap.get(attrName);
+        if (subMap != null && subMap.containsKey(attrName)) {
+            return setId + "." + subMap.get(attrName);
         }
         return null;
     }
