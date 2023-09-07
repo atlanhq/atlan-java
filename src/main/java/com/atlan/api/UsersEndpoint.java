@@ -226,7 +226,9 @@ public class UsersEndpoint extends HeraclesEndpoint {
      * @param id the unique identifier (GUID) of the user to activate
      * @return the result of the update to the user
      * @throws AtlanException on any error during API invocation
+     * @deprecated this operation is no longer allowed programmatically
      */
+    @Deprecated
     public UserMinimalResponse activate(String id) throws AtlanException {
         return activate(id, null);
     }
@@ -239,7 +241,9 @@ public class UsersEndpoint extends HeraclesEndpoint {
      * @param options to override default client settings
      * @return the result of the update to the user
      * @throws AtlanException on any error during API invocation
+     * @deprecated this operation is no longer allowed programmatically
      */
+    @Deprecated
     public UserMinimalResponse activate(String id, RequestOptions options) throws AtlanException {
         return update(id, AtlanUser.builder().enabled(true).build(), options);
     }
@@ -251,7 +255,9 @@ public class UsersEndpoint extends HeraclesEndpoint {
      * @param id the unique identifier (GUID) of the user to deactivate
      * @return the result of the update to the user
      * @throws AtlanException on any error during API invocation
+     * @deprecated this operation is no longer allowed programmatically
      */
+    @Deprecated
     public UserMinimalResponse deactivate(String id) throws AtlanException {
         return deactivate(id, null);
     }
@@ -264,7 +270,9 @@ public class UsersEndpoint extends HeraclesEndpoint {
      * @param options to override default client settings
      * @return the result of the update to the user
      * @throws AtlanException on any error during API invocation
+     * @deprecated this operation is no longer allowed programmatically
      */
+    @Deprecated
     public UserMinimalResponse deactivate(String id, RequestOptions options) throws AtlanException {
         return update(id, AtlanUser.builder().enabled(false).build(), options);
     }

@@ -371,7 +371,9 @@ public class AtlanUser extends AtlanObject {
      *
      * @return the result of the update to the user
      * @throws AtlanException on any error during API invocation
+     * @deprecated this operation is no longer allowed programmatically
      */
+    @Deprecated
     public UserMinimalResponse activate() throws AtlanException {
         return activate(Atlan.getDefaultClient());
     }
@@ -383,7 +385,9 @@ public class AtlanUser extends AtlanObject {
      * @param client connectivity to the Atlan tenant in which to activate the user
      * @return the result of the update to the user
      * @throws AtlanException on any error during API invocation
+     * @deprecated this operation is no longer allowed programmatically
      */
+    @Deprecated
     public UserMinimalResponse activate(AtlanClient client) throws AtlanException {
         return client.users.activate(this.id);
     }
@@ -394,7 +398,9 @@ public class AtlanUser extends AtlanObject {
      *
      * @return the result of the update to the user
      * @throws AtlanException on any error during API invocation
+     * @deprecated this operation is no longer allowed programmatically
      */
+    @Deprecated
     public UserMinimalResponse deactivate() throws AtlanException {
         return deactivate(Atlan.getDefaultClient());
     }
@@ -406,7 +412,9 @@ public class AtlanUser extends AtlanObject {
      * @param client connectivity to the Atlan tenant in which to deactivate the user
      * @return the result of the update to the user
      * @throws AtlanException on any error during API invocation
+     * @deprecated this operation is no longer allowed programmatically
      */
+    @Deprecated
     public UserMinimalResponse deactivate(AtlanClient client) throws AtlanException {
         return client.users.deactivate(this.id);
     }
