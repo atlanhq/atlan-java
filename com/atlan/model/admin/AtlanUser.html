@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":9,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":9,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":9,"i21":9,"i22":9,"i23":9,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10,"i37":10,"i38":10,"i39":10,"i40":10,"i41":10,"i42":9,"i43":9,"i44":41,"i45":41,"i46":41,"i47":41,"i48":41,"i49":41,"i50":10,"i51":10,"i52":10,"i53":10,"i54":9};
+var data = {"i0":42,"i1":42,"i2":10,"i3":10,"i4":9,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":9,"i11":42,"i12":42,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":9,"i21":9,"i22":9,"i23":9,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10,"i37":10,"i38":10,"i39":10,"i40":10,"i41":10,"i42":9,"i43":9,"i44":41,"i45":41,"i46":41,"i47":41,"i48":41,"i49":41,"i50":10,"i51":10,"i52":10,"i53":10,"i54":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -235,14 +235,18 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <td class="colFirst"><code><a href="UserMinimalResponse.html" title="class in com.atlan.model.admin">UserMinimalResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#activate()">activate</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Enable this user to log into Atlan.</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">this operation is no longer allowed programmatically</div>
+</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="UserMinimalResponse.html" title="class in com.atlan.model.admin">UserMinimalResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#activate(com.atlan.AtlanClient)">activate</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)</code></th>
 <td class="colLast">
-<div class="block">Enable this user to log into Atlan.</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">this operation is no longer allowed programmatically</div>
+</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
@@ -311,14 +315,18 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <td class="colFirst"><code><a href="UserMinimalResponse.html" title="class in com.atlan.model.admin">UserMinimalResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#deactivate()">deactivate</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Prevent this user from logging into Atlan.</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">this operation is no longer allowed programmatically</div>
+</div>
 </td>
 </tr>
 <tr id="i12" class="altColor">
 <td class="colFirst"><code><a href="UserMinimalResponse.html" title="class in com.atlan.model.admin">UserMinimalResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#deactivate(com.atlan.AtlanClient)">deactivate</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)</code></th>
 <td class="colLast">
-<div class="block">Prevent this user from logging into Atlan.</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">this operation is no longer allowed programmatically</div>
+</div>
 </td>
 </tr>
 <tr id="i13" class="rowColor">
@@ -1128,8 +1136,12 @@ public static&nbsp;<a href="AtlanUser.html" title="class in com.atlan.model.admi
 <ul class="blockList">
 <li class="blockList">
 <h4>activate</h4>
-<pre class="methodSignature">public&nbsp;<a href="UserMinimalResponse.html" title="class in com.atlan.model.admin">UserMinimalResponse</a>&nbsp;activate()
+<pre class="methodSignature">@Deprecated
+public&nbsp;<a href="UserMinimalResponse.html" title="class in com.atlan.model.admin">UserMinimalResponse</a>&nbsp;activate()
                              throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">this operation is no longer allowed programmatically</div>
+</div>
 <div class="block">Enable this user to log into Atlan. This will only affect users who are deactivated, and will
  allow them to login again once completed.</div>
 <dl>
@@ -1146,8 +1158,12 @@ public static&nbsp;<a href="AtlanUser.html" title="class in com.atlan.model.admi
 <ul class="blockList">
 <li class="blockList">
 <h4>activate</h4>
-<pre class="methodSignature">public&nbsp;<a href="UserMinimalResponse.html" title="class in com.atlan.model.admin">UserMinimalResponse</a>&nbsp;activate&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)
+<pre class="methodSignature">@Deprecated
+public&nbsp;<a href="UserMinimalResponse.html" title="class in com.atlan.model.admin">UserMinimalResponse</a>&nbsp;activate&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)
                              throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">this operation is no longer allowed programmatically</div>
+</div>
 <div class="block">Enable this user to log into Atlan. This will only affect users who are deactivated, and will
  allow them to login again once completed.</div>
 <dl>
@@ -1166,8 +1182,12 @@ public static&nbsp;<a href="AtlanUser.html" title="class in com.atlan.model.admi
 <ul class="blockList">
 <li class="blockList">
 <h4>deactivate</h4>
-<pre class="methodSignature">public&nbsp;<a href="UserMinimalResponse.html" title="class in com.atlan.model.admin">UserMinimalResponse</a>&nbsp;deactivate()
+<pre class="methodSignature">@Deprecated
+public&nbsp;<a href="UserMinimalResponse.html" title="class in com.atlan.model.admin">UserMinimalResponse</a>&nbsp;deactivate()
                                throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">this operation is no longer allowed programmatically</div>
+</div>
 <div class="block">Prevent this user from logging into Atlan. This will only affect users who are activated, and will
  prevent them logging in once completed.</div>
 <dl>
@@ -1184,8 +1204,12 @@ public static&nbsp;<a href="AtlanUser.html" title="class in com.atlan.model.admi
 <ul class="blockList">
 <li class="blockList">
 <h4>deactivate</h4>
-<pre class="methodSignature">public&nbsp;<a href="UserMinimalResponse.html" title="class in com.atlan.model.admin">UserMinimalResponse</a>&nbsp;deactivate&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)
+<pre class="methodSignature">@Deprecated
+public&nbsp;<a href="UserMinimalResponse.html" title="class in com.atlan.model.admin">UserMinimalResponse</a>&nbsp;deactivate&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)
                                throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">this operation is no longer allowed programmatically</div>
+</div>
 <div class="block">Prevent this user from logging into Atlan. This will only affect users who are activated, and will
  prevent them logging in once completed.</div>
 <dl>
