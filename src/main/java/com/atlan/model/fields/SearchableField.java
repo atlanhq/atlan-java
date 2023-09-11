@@ -48,8 +48,12 @@ public class SearchableField extends AtlanField implements ISearchable {
 
     /** {@inheritDoc} */
     @Override
-    public Aggregation bucketBy() {
-        return ISearchable.bucketBy(getElasticFieldName());
+    public Aggregation bucketBy(int size, boolean includeSourceValue) {
+        if (includeSourceValue) {
+            return ISearchable.bucketBy(getElasticFieldName(), size, getAtlanFieldName());
+        } else {
+            return ISearchable.bucketBy(getElasticFieldName(), size);
+        }
     }
 
     /** {@inheritDoc} */

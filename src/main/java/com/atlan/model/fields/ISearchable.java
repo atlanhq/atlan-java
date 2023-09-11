@@ -7,8 +7,11 @@ import co.elastic.clients.elasticsearch._types.SortOptions;
 import co.elastic.clients.elasticsearch._types.SortOrder;
 import co.elastic.clients.elasticsearch._types.aggregations.Aggregation;
 import co.elastic.clients.elasticsearch._types.query_dsl.*;
+import co.elastic.clients.elasticsearch.core.search.SourceConfig;
 
 public interface ISearchable {
+    String EMBEDDED_SOURCE_VALUE = "sourceValue";
+
     /**
      * Returns a query that will only match assets that have some non-null, non-empty value
      * (no matter what actual value) for the field.
@@ -70,19 +73,81 @@ public interface ISearchable {
 
     /**
      * Return criteria to bucket results based on the field.
+     * Note: this will only return details for the top 10 buckets with the most results in them.
      *
      * @return criteria to bucket results by the provided field
      */
-    Aggregation bucketBy();
+    default Aggregation bucketBy() {
+        return bucketBy(10);
+    }
 
     /**
      * Return criteria to bucket results based on the provided field.
+     * Note: this will only return details for the top 10 buckets with the most results in them.
      *
      * @param field by which to bucket the results
      * @return criteria to bucket results by the provided field
      */
     static Aggregation bucketBy(final String field) {
-        return Aggregation.of(a -> a.terms(t -> t.field(field)));
+        return bucketBy(field, 10);
+    }
+
+    /**
+     * Return criteria to bucket results based on the field.
+     *
+     * @param size the number of buckets to include results across.
+     * @return criteria to bucket results by the provided field, across a maximum number of buckets defined by the provided size
+     */
+    default Aggregation bucketBy(int size) {
+        return bucketBy(size, false);
+    }
+
+    /**
+     * Return criteria to bucket results based on the provided field.
+     *
+     * @param field by which to bucket the results
+     * @param size the number of buckets to include results across.
+     * @return criteria to bucket results by the provided field, across a maximum number of buckets defined by the provided size
+     */
+    static Aggregation bucketBy(final String field, final int size) {
+        return bucketBy(field, size, null);
+    }
+
+    /**
+     * Return criteria to bucket results based on the provided field.
+     *
+     * @param size the number of buckets to include results across.
+     * @param includeSourceValue if true, include the actual source value of this attribute for each bucket will be included in the result
+     * @return criteria to bucket results by the provided field, across a maximum number of buckets defined by the provided size
+     */
+    Aggregation bucketBy(int size, boolean includeSourceValue);
+
+    /**
+     * Return criteria to bucket results based on the provided field.
+     *
+     * @param field by which to bucket the results
+     * @param size the number of buckets to include results across.
+     * @param sourceAttribute if non-null, the actual source value of this attribute for the bucket will be included in the result
+     * @return criteria to bucket results by the provided field, across a maximum number of buckets defined by the provided size
+     */
+    static Aggregation bucketBy(final String field, final int size, final String sourceAttribute) {
+        if (sourceAttribute != null && !sourceAttribute.isEmpty()) {
+            return Aggregation.of(a -> a.terms(t -> t.field(field).size(size))
+                    .aggregations(EMBEDDED_SOURCE_VALUE, topHits(sourceAttribute)));
+        } else {
+            return Aggregation.of(a -> a.terms(t -> t.field(field).size(size)));
+        }
+    }
+
+    /**
+     * Return criteria to give the top hits for values in the provided field.
+     *
+     * @param field for which to give the top values
+     * @return criteria to give the top hits for values in the provided field
+     */
+    private static Aggregation topHits(final String field) {
+        return Aggregation.of(
+                h -> h.topHits(t -> t.size(1).source(SourceConfig.of(c -> c.filter(f -> f.includes(field))))));
     }
 
     /**
