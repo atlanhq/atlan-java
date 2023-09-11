@@ -4,6 +4,7 @@ package com.atlan.serde;
 
 import com.atlan.AtlanClient;
 import com.atlan.model.search.AggregationBucketResult;
+import com.atlan.model.search.AggregationHitsResult;
 import com.atlan.model.search.AggregationMetricResult;
 import com.atlan.model.search.AggregationResult;
 import com.atlan.util.JacksonUtils;
@@ -49,9 +50,11 @@ public class AggregationResultDeserializer extends StdDeserializer<AggregationRe
     public AggregationResult deserialize(JsonParser parser, DeserializationContext context) throws IOException {
         JsonNode root = parser.getCodec().readTree(parser);
         JsonNode value = root.get("value"); // only exists on metric results
-        JsonNode buckets = root.get("buckets"); // exists on entities and custom metadata
+        JsonNode buckets = root.get("buckets"); // exists on bucket results
+        JsonNode hits = root.get("hits"); // exists on top-hits results
         if ((root.has("value") && (value == null || value.isNull()))
-                || (root.has("buckets") && (buckets == null || buckets.isNull()))) {
+                || (root.has("buckets") && (buckets == null || buckets.isNull()))
+                || (root.has("hits") && (hits == null || hits.isNull()))) {
             // If the JSON has explicit null values, return those as explicit nulls rather than errors
             return null;
         } else if (value != null && value.isNumber()) {
@@ -63,6 +66,10 @@ public class AggregationResultDeserializer extends StdDeserializer<AggregationRe
                     .docCountErrorUpperBound(JacksonUtils.deserializeLong(root, "doc_count_error_upper_bound"))
                     .sumOtherDocCount(JacksonUtils.deserializeLong(root, "sum_other_doc_count"))
                     .buckets(JacksonUtils.deserializeObject(client, root, "buckets", new TypeReference<>() {}))
+                    .build();
+        } else if (hits != null) {
+            return AggregationHitsResult.builder()
+                    .hits(JacksonUtils.deserializeObject(client, root, "hits", new TypeReference<>() {}))
                     .build();
         } else {
             throw new IOException("Aggregation currently not handled: " + root);
