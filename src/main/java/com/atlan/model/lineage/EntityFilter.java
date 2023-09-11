@@ -8,11 +8,13 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.jackson.Jacksonized;
 
 /**
  * Class used to define how to filter the assets to fetch when retrieving lineage.
  */
 @Getter
+@Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
