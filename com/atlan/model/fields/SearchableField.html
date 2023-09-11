@@ -89,7 +89,7 @@ loadScripts(document, 'script');</script>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
@@ -154,6 +154,23 @@ implements <a href="ISearchable.html" title="interface in com.atlan.model.fields
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
+<!-- =========== FIELD SUMMARY =========== -->
+<section>
+<ul class="blockList">
+<li class="blockList"><a id="field.summary">
+<!--   -->
+</a>
+<h3>Field Summary</h3>
+<ul class="blockList">
+<li class="blockList"><a id="fields.inherited.from.class.com.atlan.model.fields.ISearchable">
+<!--   -->
+</a>
+<h3>Fields inherited from interface&nbsp;com.atlan.model.fields.<a href="ISearchable.html" title="interface in com.atlan.model.fields">ISearchable</a></h3>
+<code><a href="ISearchable.html#EMBEDDED_SOURCE_VALUE">EMBEDDED_SOURCE_VALUE</a></code></li>
+</ul>
+</li>
+</ul>
+</section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
 <section>
 <ul class="blockList">
@@ -194,9 +211,10 @@ implements <a href="ISearchable.html" title="interface in com.atlan.model.fields
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>co.elastic.clients.elasticsearch._types.aggregations.Aggregation</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#bucketBy()">bucketBy</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#bucketBy(int,boolean)">bucketBy</a></span>&#8203;(int&nbsp;size,
+        boolean&nbsp;includeSourceValue)</code></th>
 <td class="colLast">
-<div class="block">Return criteria to bucket results based on the field.</div>
+<div class="block">Return criteria to bucket results based on the provided field.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
@@ -248,6 +266,13 @@ implements <a href="ISearchable.html" title="interface in com.atlan.model.fields
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
 <code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a id="methods.inherited.from.class.com.atlan.model.fields.ISearchable">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;com.atlan.model.fields.<a href="ISearchable.html" title="interface in com.atlan.model.fields">ISearchable</a></h3>
+<code><a href="ISearchable.html#bucketBy()">bucketBy</a>, <a href="ISearchable.html#bucketBy(int)">bucketBy</a></code></li>
 </ul>
 </li>
 </ul>
@@ -343,19 +368,23 @@ implements <a href="ISearchable.html" title="interface in com.atlan.model.fields
 </dl>
 </li>
 </ul>
-<a id="bucketBy()">
+<a id="bucketBy(int,boolean)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>bucketBy</h4>
-<pre class="methodSignature">public&nbsp;co.elastic.clients.elasticsearch._types.aggregations.Aggregation&nbsp;bucketBy()</pre>
-<div class="block">Return criteria to bucket results based on the field.</div>
+<pre class="methodSignature">public&nbsp;co.elastic.clients.elasticsearch._types.aggregations.Aggregation&nbsp;bucketBy&#8203;(int&nbsp;size,
+                                                                                 boolean&nbsp;includeSourceValue)</pre>
+<div class="block">Return criteria to bucket results based on the provided field.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="ISearchable.html#bucketBy()">bucketBy</a></code>&nbsp;in interface&nbsp;<code><a href="ISearchable.html" title="interface in com.atlan.model.fields">ISearchable</a></code></dd>
+<dd><code><a href="ISearchable.html#bucketBy(int,boolean)">bucketBy</a></code>&nbsp;in interface&nbsp;<code><a href="ISearchable.html" title="interface in com.atlan.model.fields">ISearchable</a></code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>size</code> - the number of buckets to include results across.</dd>
+<dd><code>includeSourceValue</code> - if true, include the actual source value of this attribute for each bucket will be included in the result</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>criteria to bucket results by the provided field</dd>
+<dd>criteria to bucket results by the provided field, across a maximum number of buckets defined by the provided size</dd>
 </dl>
 </li>
 </ul>
@@ -438,7 +467,7 @@ implements <a href="ISearchable.html" title="interface in com.atlan.model.fields
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
