@@ -20,6 +20,24 @@ import lombok.experimental.SuperBuilder;
  */
 public class UsersEndpoint extends HeraclesEndpoint {
 
+    private static final List<String> projections = List.of(
+            "firstName",
+            "lastName",
+            "username",
+            "id",
+            "email",
+            "emailVerified",
+            "enabled",
+            "roles",
+            "defaultRoles",
+            "groupCount",
+            "attributes",
+            "personas",
+            "createdTimestamp",
+            "lastLoginTime",
+            "loginEvents",
+            "isLocked");
+
     private static final String endpoint = "/users";
 
     public UsersEndpoint(AtlanClient client) {
@@ -63,15 +81,17 @@ public class UsersEndpoint extends HeraclesEndpoint {
         if (sort == null) {
             sort = "";
         }
+        String columns = String.join("&columns=", projections);
         String url = String.format(
-                "%s%s?filter=%s&sort=%s&count=%s&offset=%s&limit=%s",
+                "%s%s?maxLoginEvents=1&filter=%s&sort=%s&count=%s&offset=%s&limit=%s&columns=%s",
                 getBaseUrl(),
                 endpoint,
                 ApiResource.urlEncode(filter),
                 ApiResource.urlEncode(sort),
                 count,
                 offset,
-                limit);
+                limit,
+                columns);
         return ApiResource.request(client, ApiResource.RequestMethod.GET, url, "", UserResponse.class, options);
     }
 
@@ -98,7 +118,10 @@ public class UsersEndpoint extends HeraclesEndpoint {
         if (filter == null) {
             filter = "";
         }
-        String url = String.format("%s%s?filter=%s", getBaseUrl(), endpoint, ApiResource.urlEncode(filter));
+        String columns = String.join("&columns=", projections);
+        String url = String.format(
+                "%s%s?maxLoginEvents=1&filter=%s&columns=%s",
+                getBaseUrl(), endpoint, ApiResource.urlEncode(filter), columns);
         return ApiResource.request(client, ApiResource.RequestMethod.GET, url, "", UserResponse.class, options);
     }
 
@@ -133,7 +156,9 @@ public class UsersEndpoint extends HeraclesEndpoint {
      */
     public List<AtlanUser> list(int pageSize, RequestOptions options) throws AtlanException {
         List<AtlanUser> users = new ArrayList<>();
-        String unlimitedUrl = String.format("%s%s?sort=username", getBaseUrl(), endpoint);
+        String columns = String.join("&columns=", projections);
+        String unlimitedUrl =
+                String.format("%s%s?maxLoginEvents=1&sort=username&columns=%s", getBaseUrl(), endpoint, columns);
         int offset = 0;
         String url = String.format("%s&limit=%s&offset=%s", unlimitedUrl, pageSize, offset);
         UserResponse response =
