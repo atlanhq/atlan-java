@@ -1448,7 +1448,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         validateUpdatedColumn(column);
         Set<String> clearedFields = column.getNullFields();
         assertTrue(clearedFields.contains("certificateStatus"));
-        assertTrue(clearedFields.contains("certificateStatusMessage"));
+        assertFalse(clearedFields.contains("certificateStatusMessage"));
 
         one = audits.get(27);
         assertNotNull(one);
