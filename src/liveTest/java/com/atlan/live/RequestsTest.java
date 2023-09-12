@@ -269,7 +269,7 @@ public class RequestsTest extends AtlanLiveTest {
         AtlanTag only = new ArrayList<>(revised.getAtlanTags()).get(0);
         assertEquals(only.getTypeName(), ATLAN_TAG_NAME);
         assertTrue(only.getPropagate());
-        assertFalse(only.getRemovePropagationsOnEntityDelete());
+        assertTrue(only.getRemovePropagationsOnEntityDelete());
         assertEquals(only.getEntityGuid(), term.getGuid());
         Set<IAsset> assets = revised.getAssignedEntities();
         assertNotNull(assets);
