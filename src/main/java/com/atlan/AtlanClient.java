@@ -128,6 +128,18 @@ public class AtlanClient {
     /** Endpoint with operations to manage requests. */
     public final RequestsEndpoint requests;
 
+    /** Client-aware asset deserializer. */
+    @Getter
+    private final AssetDeserializer assetDeserializer;
+
+    /** Client-aware custom metadata deserializer. */
+    @Getter
+    private final CustomMetadataAuditDeserializer customMetadataAuditDeserializer;
+
+    /** Client-aware Atlan tag deserializer. */
+    @Getter
+    private final AtlanTagDeserializer atlanTagDeserializer;
+
     /**
      * Instantiate a new client — this should only be called by the Atlan factory, hence package-private.
      * @param baseURL of the tenant
@@ -163,6 +175,9 @@ public class AtlanClient {
         groupCache = new GroupCache();
         roleCache = new RoleCache(roles);
         userCache = new UserCache();
+        assetDeserializer = new AssetDeserializer(this);
+        customMetadataAuditDeserializer = new CustomMetadataAuditDeserializer(this);
+        atlanTagDeserializer = new AtlanTagDeserializer(this);
     }
 
     /**

@@ -239,6 +239,10 @@ public class ReflectionCache {
         if (setter != null) {
             if (value instanceof Removable) {
                 builder.nullField(fieldName);
+            } else if (value instanceof String && ((String) value).isEmpty()) {
+                builder.nullField(fieldName);
+            } else if (value == null) {
+                builder.nullField(fieldName);
             } else {
                 setter.invoke(builder, value);
             }
