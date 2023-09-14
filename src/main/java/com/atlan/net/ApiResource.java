@@ -312,6 +312,22 @@ public abstract class ApiResource extends AtlanObject implements AtlanResponseIn
         return response;
     }
 
+    /**
+     * Pass-through the request to the request-handling method, for file uploads.
+     * This method wraps debug-level logging lines around the request to show precisely what was constructed and sent
+     * to Atlan and precisely what was returned (prior to deserialization).
+     *
+     * @param client connectivity to Atlan
+     * @param method for the request
+     * @param url of the request
+     * @param payload binary input stream of the file contents
+     * @param filename name of the file being streamed
+     * @param clazz defining the expected response type
+     * @param options for sending the request (or null to use global defaults)
+     * @return the response
+     * @param <T> the type of the response
+     * @throws AtlanException on any API interaction problem
+     */
     public static <T extends ApiResource> T request(
             AtlanClient client,
             ApiResource.RequestMethod method,
@@ -342,6 +358,51 @@ public abstract class ApiResource extends AtlanObject implements AtlanResponseIn
                             response.getRawJsonObject());
                 } else {
                     log.debug(" ... response: {}", response.getRawJsonObject());
+                }
+            } else {
+                log.debug(" ... empty response.");
+            }
+        }
+        return response;
+    }
+
+    /**
+     * Pass-through the request to the request-handling method, for form-urlencoded endpoints.
+     *
+     * @param client connectivity to Atlan
+     * @param method for the request
+     * @param url of the request
+     * @param map of key-value pairs to be form-urlencoded
+     * @param clazz defining the expected response type
+     * @param options for sending the request (or null to use global defaults)
+     * @return the response
+     * @param <T> the type of the response
+     * @throws AtlanException on any API interaction problem
+     */
+    public static <T extends ApiResource> T request(
+            AtlanClient client,
+            ApiResource.RequestMethod method,
+            String url,
+            Map<String, Object> map,
+            Class<T> clazz,
+            RequestOptions options)
+            throws AtlanException {
+        if (map == null) {
+            throw new IllegalArgumentException(String.format("Found null map of key-value pairs for %s.", url));
+        }
+        // Create a unique ID for every request, and add it to the logging context and header
+        String requestId = UUID.randomUUID().toString();
+        MDC.put("X-Atlan-Request-Id", requestId);
+        T response = ApiResource.atlanResponseGetter.request(client, method, url, map, clazz, options, requestId);
+        // Ensure we reset the Atlan request ID, so we always have the context from the original
+        // request that was made (even if it in turn triggered off other requests)
+        MDC.put("X-Atlan-Request-Id", requestId);
+        if (log.isDebugEnabled()) {
+            if (response != null) {
+                if (Atlan.enableTelemetry) {
+                    log.debug(
+                            " ... response timing: {}",
+                            response.getLastResponse().metrics());
                 }
             } else {
                 log.debug(" ... empty response.");

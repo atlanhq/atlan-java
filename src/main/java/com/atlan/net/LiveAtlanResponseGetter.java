@@ -10,6 +10,7 @@ import com.atlan.model.core.AtlanResponseInterface;
 import com.atlan.serde.Serde;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Map;
 
 /**
  * Class that wraps the API request and response handling, such as detecting errors from specific response codes.
@@ -89,6 +90,34 @@ public class LiveAtlanResponseGetter implements AtlanResponseGetter {
             String requestId)
             throws AtlanException {
         AtlanRequest request = new AtlanRequest(client, method, url, upload, filename, options, requestId);
+        return request(request, clazz);
+    }
+
+    /**
+     * Makes a request to Atlan's API, to form-urlencode parameters.
+     *
+     * @param client connectivity to Atlan
+     * @param method to use for the request
+     * @param url of the endpoint (with all path and query parameters) for the request
+     * @param map of key-value pairs to be form-urlencoded
+     * @param clazz the expected response object type from the request
+     * @param options any alternative options to use for the request, or null to use default options
+     * @param requestId unique identifier (GUID) of a single request to Atlan
+     * @return the response of the request
+     * @param <T> the type of the response of the request
+     * @throws AtlanException on any API interaction problems, indicating the type of problem encountered
+     */
+    @Override
+    public <T extends AtlanResponseInterface> T request(
+            AtlanClient client,
+            ApiResource.RequestMethod method,
+            String url,
+            Map<String, Object> map,
+            Class<T> clazz,
+            RequestOptions options,
+            String requestId)
+            throws AtlanException {
+        AtlanRequest request = new AtlanRequest(client, method, url, map, options, requestId);
         return request(request, clazz);
     }
 
@@ -177,48 +206,32 @@ public class LiveAtlanResponseGetter implements AtlanResponseGetter {
         switch (response.code()) {
             case 400:
                 exception = new InvalidRequestException(
-                        ErrorCode.INVALID_REQUEST_PASSTHROUGH,
-                        error.getErrorCode() == null ? "" + error.getCode() : error.getErrorCode(),
-                        error.getErrorMessage() == null ? error.getMessage() : error.getErrorMessage());
+                        ErrorCode.INVALID_REQUEST_PASSTHROUGH, error.findCode(), error.findMessage());
                 break;
             case 404:
-                exception = new NotFoundException(
-                        ErrorCode.NOT_FOUND_PASSTHROUGH,
-                        error.getErrorCode() == null ? "" + error.getCode() : error.getErrorCode(),
-                        error.getErrorMessage() == null ? error.getMessage() : error.getErrorMessage());
+                exception =
+                        new NotFoundException(ErrorCode.NOT_FOUND_PASSTHROUGH, error.findCode(), error.findMessage());
                 break;
             case 401:
                 exception = new AuthenticationException(
-                        ErrorCode.AUTHENTICATION_PASSTHROUGH,
-                        error.getErrorCode() == null ? "" + error.getCode() : error.getErrorCode(),
-                        error.getErrorMessage() == null ? error.getMessage() : error.getErrorMessage());
+                        ErrorCode.AUTHENTICATION_PASSTHROUGH, error.findCode(), error.findMessage());
                 break;
             case 403:
                 exception = new PermissionException(
-                        ErrorCode.PERMISSION_PASSTHROUGH,
-                        error.getErrorCode() == null ? "" + error.getCode() : error.getErrorCode(),
-                        error.getErrorMessage() == null ? error.getMessage() : error.getErrorMessage());
+                        ErrorCode.PERMISSION_PASSTHROUGH, error.findCode(), error.findMessage());
                 break;
             case 409:
-                exception = new ConflictException(
-                        ErrorCode.CONFLICT_PASSTHROUGH,
-                        error.getErrorCode() == null ? "" + error.getCode() : error.getErrorCode(),
-                        error.getErrorMessage() == null ? error.getMessage() : error.getErrorMessage());
+                exception =
+                        new ConflictException(ErrorCode.CONFLICT_PASSTHROUGH, error.findCode(), error.findMessage());
                 break;
             case 429:
                 // TODO: confirm that a 429 is raised rather than needing to check the X-RateLimit-Remaining-Minute
                 //  header value of a response (if it is 0 then we are being rate-limited)
-                exception = new RateLimitException(
-                        ErrorCode.RATE_LIMIT_PASSTHROUGH,
-                        error.getErrorCode() == null ? "" + error.getCode() : error.getErrorCode(),
-                        error.getErrorMessage() == null ? error.getMessage() : error.getErrorMessage());
+                exception =
+                        new RateLimitException(ErrorCode.RATE_LIMIT_PASSTHROUGH, error.findCode(), error.findMessage());
                 break;
             default:
-                exception = new ApiException(
-                        ErrorCode.ERROR_PASSTHROUGH,
-                        null,
-                        error.getErrorCode() == null ? "" + error.getCode() : error.getErrorCode(),
-                        error.getErrorMessage() == null ? error.getMessage() : error.getErrorMessage());
+                exception = new ApiException(ErrorCode.ERROR_PASSTHROUGH, null, error.findCode(), error.findMessage());
                 break;
         }
 

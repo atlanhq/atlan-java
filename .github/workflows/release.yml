@@ -7,7 +7,35 @@ on:
     types: [published]
 
 jobs:
-  build:
+  merge-build:
+    runs-on: ubuntu-latest
+    name: "Build"
+    outputs:
+      version: ${{ steps.get_version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
+        with:
+          java-version: 11
+          distribution: adopt
+      - name: Set version
+        id: get_version
+        run: |
+          echo "version=$(./gradlew properties --no-daemon --console=plain -q | grep '^version:' | awk '{printf $2}')" >> $GITHUB_OUTPUT
+      - name: Build artifacts
+        run: ./gradlew assemble shadowJar buildZip
+        env:
+          GH_USERNAME: ${{ github.actor }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/upload-artifact@v3
+        with:
+          name: jar-with-dependencies
+          path: build/libs/atlan-java-*-jar-with-dependencies.jar
+      - uses: actions/upload-artifact@v3
+        with:
+          name: lambda-layer
+          path: build/distributions/atlan-java-*.zip
+  publish-release:
     runs-on: ubuntu-latest
     name: "Release"
     steps:
@@ -33,7 +61,31 @@ jobs:
           NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
           GPG_SIGNING_KEYID: ${{ secrets.GPG_SIGNING_KEYID }}
           GPG_SIGNING_PASSPHRASE: ${{ secrets.GPG_SIGNING_PASSPHRASE }}
-      - uses: actions/upload-artifact@v3
+  publish-images:
+    needs: merge-build
+    runs-on: ubuntu-latest
+    name: "Containers"
+    steps:
+      - uses: actions/checkout@v3
+      - uses: docker/setup-buildx-action@v2
+      - name: Log in to container registry
+        uses: docker/login-action@v2
         with:
-          name: lambda-layer
-          path: build/distributions/atlan-java-*.zip
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create assembly area
+        run: |
+          mkdir -p ./containers/numaflow/assembly
+      - uses: actions/download-artifact@v3
+        with:
+          name: jar-with-dependencies
+          path: ./containers/numaflow/assembly
+      - name: Build and publish container image
+        if: ${{ github.ref == 'refs/heads/main'}}
+        uses: docker/build-push-action@v4
+        with:
+          push: true
+          tags: ghcr.io/atlanhq/atlan-java-numaflow:${{ needs.merge-build.outputs.version }}
+          context: ./containers/numaflow
+          platforms: linux/amd64

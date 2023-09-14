@@ -7,6 +7,7 @@ import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.core.AtlanResponseInterface;
 import java.io.InputStream;
+import java.util.Map;
 
 /**
  * Interface through which API interaction wrapping is handled.
@@ -28,6 +29,16 @@ public interface AtlanResponseGetter {
             String url,
             InputStream upload,
             String filename,
+            Class<T> clazz,
+            RequestOptions options,
+            String requestId)
+            throws AtlanException;
+
+    <T extends AtlanResponseInterface> T request(
+            AtlanClient client,
+            ApiResource.RequestMethod method,
+            String url,
+            Map<String, Object> map,
             Class<T> clazz,
             RequestOptions options,
             String requestId)

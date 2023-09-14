@@ -46,6 +46,23 @@ public class HttpContent {
                 body.getBytes(ApiResource.CHARSET), String.format("application/json;charset=%s", ApiResource.CHARSET));
     }
 
+    /**
+     * Builds a new HttpContent for name/value tuples encoded using {@code
+     * application/x-www-form-urlencoded} MIME type.
+     *
+     * @param nameValueCollection the collection of name/value tuples to encode
+     * @return the encoded HttpContent instance
+     * @throws IllegalArgumentException if nameValueCollection is null
+     */
+    public static HttpContent buildFormURLEncodedContent(Collection<KeyValuePair<String, String>> nameValueCollection)
+            throws IOException {
+        requireNonNull(nameValueCollection);
+
+        return new HttpContent(
+                FormEncoder.createQueryString(nameValueCollection).getBytes(ApiResource.CHARSET),
+                String.format("application/x-www-form-urlencoded;charset=%s", ApiResource.CHARSET));
+    }
+
     /** The request's content, as a string. */
     public String stringContent() {
         return new String(this.byteArrayContent, ApiResource.CHARSET);

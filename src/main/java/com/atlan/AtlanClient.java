@@ -128,6 +128,9 @@ public class AtlanClient {
     /** Endpoint with operations to manage requests. */
     public final RequestsEndpoint requests;
 
+    /** Endpoint with operations to impersonate users. */
+    public final ImpersonationEndpoint impersonate;
+
     /** Client-aware asset deserializer. */
     @Getter
     private final AssetDeserializer assetDeserializer;
@@ -169,6 +172,7 @@ public class AtlanClient {
         images = new ImagesEndpoint(this);
         assets = new AssetEndpoint(this);
         requests = new RequestsEndpoint(this);
+        impersonate = new ImpersonationEndpoint(this);
         atlanTagCache = new AtlanTagCache(typeDefs);
         customMetadataCache = new CustomMetadataCache(typeDefs);
         enumCache = new EnumCache(typeDefs);
