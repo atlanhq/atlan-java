@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -215,67 +215,88 @@ extends <a href="AtlanObject.html" title="class in com.atlan.model.core">AtlanOb
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#findCode()">findCode</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Find the code within the error.</div>
+</td>
+</tr>
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#findMessage()">findMessage</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Find the message within the error.</div>
+</td>
+</tr>
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCode()">getCode</a></span>()</code></th>
 <td class="colLast">
 <div class="block">A numeric error code.</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getEntityGuid()">getEntityGuid</a></span>()</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getError()">getError</a></span>()</code></th>
 <td class="colLast">
 <div class="block">A human-readable suggestion on resolving the error.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getErrorCode()">getErrorCode</a></span>()</code></th>
 <td class="colLast">
 <div class="block">A short string indicating the error code reported.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i8" class="altColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getErrorDescription()">getErrorDescription</a></span>()</code></th>
+<td class="colLast">
+<div class="block">A human-readable description providing more details about the error.</div>
+</td>
+</tr>
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getErrorMessage()">getErrorMessage</a></span>()</code></th>
 <td class="colLast">
 <div class="block">A human-readable message providing more details about the error.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInfo()">getInfo</a></span>()</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMessage()">getMessage</a></span>()</code></th>
 <td class="colLast">
 <div class="block">A human-readable message providing more details about the error.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRequestId()">getRequestId</a></span>()</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 </tr>
@@ -329,6 +350,34 @@ extends <a href="AtlanObject.html" title="class in com.atlan.model.core">AtlanOb
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a id="findCode()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>findCode</h4>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;findCode()</pre>
+<div class="block">Find the code within the error.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the code</dd>
+</dl>
+</li>
+</ul>
+<a id="findMessage()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>findMessage</h4>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;findMessage()</pre>
+<div class="block">Find the message within the error.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the message</dd>
+</dl>
+</li>
+</ul>
 <a id="getCode()">
 <!--   -->
 </a>
@@ -357,6 +406,16 @@ extends <a href="AtlanObject.html" title="class in com.atlan.model.core">AtlanOb
 <h4>getErrorMessage</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getErrorMessage()</pre>
 <div class="block">A human-readable message providing more details about the error.</div>
+</li>
+</ul>
+<a id="getErrorDescription()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getErrorDescription</h4>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getErrorDescription()</pre>
+<div class="block">A human-readable description providing more details about the error.</div>
 </li>
 </ul>
 <a id="getMessage()">

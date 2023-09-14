@@ -188,10 +188,16 @@ extends <a href="AtlanException.html" title="class in com.atlan.exception">Atlan
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>&nbsp;</code></td>
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.atlan.exception.ExceptionMessageDefinition)">AuthenticationException</a></span>&#8203;(<a href="ExceptionMessageDefinition.html" title="class in com.atlan.exception">ExceptionMessageDefinition</a>&nbsp;error)</code></th>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.atlan.exception.ErrorCode,java.lang.Throwable)">AuthenticationException</a></span>&#8203;(<a href="ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a>&nbsp;error,
+                       java.lang.Throwable&nbsp;e)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code>&nbsp;</code></td>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.atlan.exception.ExceptionMessageDefinition)">AuthenticationException</a></span>&#8203;(<a href="ExceptionMessageDefinition.html" title="class in com.atlan.exception">ExceptionMessageDefinition</a>&nbsp;error)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code>protected </code></td>
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.atlan.exception.ExceptionMessageDefinition,int)">AuthenticationException</a></span>&#8203;(<a href="ExceptionMessageDefinition.html" title="class in com.atlan.exception">ExceptionMessageDefinition</a>&nbsp;error,
                        int&nbsp;statusCode)</code></th>
@@ -277,10 +283,20 @@ extends <a href="AtlanException.html" title="class in com.atlan.exception">Atlan
 <a id="&lt;init&gt;(com.atlan.exception.ErrorCode)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>AuthenticationException</h4>
 <pre>public&nbsp;AuthenticationException&#8203;(<a href="ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a>&nbsp;error)</pre>
+</li>
+</ul>
+<a id="&lt;init&gt;(com.atlan.exception.ErrorCode,java.lang.Throwable)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>AuthenticationException</h4>
+<pre>public&nbsp;AuthenticationException&#8203;(<a href="ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a>&nbsp;error,
+                               java.lang.Throwable&nbsp;e)</pre>
 </li>
 </ul>
 </li>

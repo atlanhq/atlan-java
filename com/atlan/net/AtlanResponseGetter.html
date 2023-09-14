@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":6,"i1":6};
+var data = {"i0":6,"i1":6,"i2":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -172,6 +172,17 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
        java.lang.String&nbsp;requestId)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
+<tr id="i2" class="altColor">
+<td class="colFirst"><code>&lt;T extends <a href="../model/core/AtlanResponseInterface.html" title="interface in com.atlan.model.core">AtlanResponseInterface</a>&gt;<br>T</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#request(com.atlan.AtlanClient,com.atlan.net.ApiResource.RequestMethod,java.lang.String,java.util.Map,java.lang.Class,com.atlan.net.RequestOptions,java.lang.String)">request</a></span>&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+       <a href="ApiResource.RequestMethod.html" title="enum in com.atlan.net">ApiResource.RequestMethod</a>&nbsp;method,
+       java.lang.String&nbsp;url,
+       java.util.Map&lt;java.lang.String,&#8203;java.lang.Object&gt;&nbsp;map,
+       java.lang.Class&lt;T&gt;&nbsp;clazz,
+       <a href="RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options,
+       java.lang.String&nbsp;requestId)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
 </table>
 </li>
 </ul>
@@ -212,7 +223,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <a id="request(com.atlan.AtlanClient,com.atlan.net.ApiResource.RequestMethod,java.lang.String,java.io.InputStream,java.lang.String,java.lang.Class,com.atlan.net.RequestOptions,java.lang.String)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>request</h4>
 <pre class="methodSignature">&lt;T extends <a href="../model/core/AtlanResponseInterface.html" title="interface in com.atlan.model.core">AtlanResponseInterface</a>&gt;&nbsp;T&nbsp;request&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
@@ -220,6 +231,26 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
                                              java.lang.String&nbsp;url,
                                              java.io.InputStream&nbsp;upload,
                                              java.lang.String&nbsp;filename,
+                                             java.lang.Class&lt;T&gt;&nbsp;clazz,
+                                             <a href="RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options,
+                                             java.lang.String&nbsp;requestId)
+                                      throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<dl>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code></dd>
+</dl>
+</li>
+</ul>
+<a id="request(com.atlan.AtlanClient,com.atlan.net.ApiResource.RequestMethod,java.lang.String,java.util.Map,java.lang.Class,com.atlan.net.RequestOptions,java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>request</h4>
+<pre class="methodSignature">&lt;T extends <a href="../model/core/AtlanResponseInterface.html" title="interface in com.atlan.model.core">AtlanResponseInterface</a>&gt;&nbsp;T&nbsp;request&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+                                             <a href="ApiResource.RequestMethod.html" title="enum in com.atlan.net">ApiResource.RequestMethod</a>&nbsp;method,
+                                             java.lang.String&nbsp;url,
+                                             java.util.Map&lt;java.lang.String,&#8203;java.lang.Object&gt;&nbsp;map,
                                              java.lang.Class&lt;T&gt;&nbsp;clazz,
                                              <a href="RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options,
                                              java.lang.String&nbsp;requestId)
