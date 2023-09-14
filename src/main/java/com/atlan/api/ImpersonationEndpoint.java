@@ -19,7 +19,6 @@ import lombok.extern.jackson.Jacksonized;
  */
 public class ImpersonationEndpoint extends AbstractEndpoint {
 
-    private static final String PREFIX = "/auth/realms/default/protocol/openid-connect/token";
     private static final String SERVICE = "http://keycloak-http.keycloak";
 
     public ImpersonationEndpoint(AtlanClient client) {
@@ -30,7 +29,7 @@ public class ImpersonationEndpoint extends AbstractEndpoint {
         if (!client.isInternal()) {
             throw new ApiConnectionException(ErrorCode.INTERNAL_ONLY);
         }
-        return getBaseUrl(SERVICE, PREFIX);
+        return SERVICE;
     }
 
     /**
@@ -53,7 +52,7 @@ public class ImpersonationEndpoint extends AbstractEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public String user(String userId, RequestOptions options) throws AtlanException {
-        String tokenUrl = getBaseUrl();
+        String tokenUrl = String.format("%s/auth/realms/default/protocol/openid-connect/token", getBaseUrl());
         String clientId = System.getenv("CLIENT_ID");
         String clientSecret = System.getenv("CLIENT_SECRET");
         if (clientId == null || clientId.isEmpty() || clientSecret == null || clientSecret.isEmpty()) {

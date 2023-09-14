@@ -83,7 +83,7 @@ public class AtlanRequest {
             this.method = method;
             this.url = new URL(url);
             this.content = (body == null || body.length() == 0) ? null : HttpContent.buildJSONEncodedContent(body);
-            this.headers = buildHeaders();
+            this.headers = buildHeaders(true);
         } catch (IOException e) {
             throw new ApiConnectionException(ErrorCode.CONNECTION_ERROR, e, client.getBaseUrl());
         }
@@ -119,7 +119,7 @@ public class AtlanRequest {
             this.url = new URL(url);
             this.content =
                     HttpContent.buildMultipartFormDataContent(List.of(new KeyValuePair<>("file", file)), filename);
-            this.headers = buildHeaders();
+            this.headers = buildHeaders(true);
         } catch (IOException e) {
             throw new ApiConnectionException(ErrorCode.CONNECTION_ERROR, e, client.getBaseUrl());
         }
@@ -153,13 +153,13 @@ public class AtlanRequest {
             this.method = method;
             this.url = new URL(url);
             this.content = FormEncoder.createHttpContent(map);
-            this.headers = buildHeaders();
+            this.headers = buildHeaders(false);
         } catch (IOException e) {
             throw new ApiConnectionException(ErrorCode.CONNECTION_ERROR, e, client.getBaseUrl());
         }
     }
 
-    private HttpHeaders buildHeaders() throws AuthenticationException {
+    private HttpHeaders buildHeaders(boolean checkApiToken) throws AuthenticationException {
         Map<String, List<String>> headerMap = new HashMap<>();
 
         // Accept
@@ -170,12 +170,14 @@ public class AtlanRequest {
 
         // Authorization
         String apiToken = client.getApiToken();
-        if (apiToken == null) {
-            throw new AuthenticationException(ErrorCode.NO_API_TOKEN);
-        } else if (apiToken.isEmpty()) {
-            throw new AuthenticationException(ErrorCode.EMPTY_API_TOKEN);
-        } else if (StringUtils.containsWhitespace(apiToken)) {
-            throw new AuthenticationException(ErrorCode.INVALID_API_TOKEN);
+        if (checkApiToken) {
+            if (apiToken == null) {
+                throw new AuthenticationException(ErrorCode.NO_API_TOKEN);
+            } else if (apiToken.isEmpty()) {
+                throw new AuthenticationException(ErrorCode.EMPTY_API_TOKEN);
+            } else if (StringUtils.containsWhitespace(apiToken)) {
+                throw new AuthenticationException(ErrorCode.INVALID_API_TOKEN);
+            }
         }
         headerMap.put("Authorization", Arrays.asList(String.format("Bearer %s", apiToken)));
 
