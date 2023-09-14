@@ -23,4 +23,8 @@ public class AuthenticationException extends AtlanException {
     public AuthenticationException(ErrorCode error) {
         super(error, null);
     }
+
+    public AuthenticationException(ErrorCode error, Throwable e) {
+        super(error, e);
+    }
 }

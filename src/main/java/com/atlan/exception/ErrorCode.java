@@ -16,6 +16,12 @@ public enum ErrorCode implements ExceptionMessageSet {
             "No base URL is configured in the SDK.",
             "You must call Atlan.setBaseUrl() FIRST, before making any API call or calling Atlan.setApiToken()."),
 
+    INTERNAL_ONLY(
+            -1,
+            "ATLAN-JAVA--1-003",
+            "This operation can only be used within the Atlan cluster.",
+            "You cannot use this operation from any external call to Atlan, it can only be done within the back-end cluster."),
+
     INVALID_REQUEST_PASSTHROUGH(
             400,
             "ATLAN-JAVA-400-000",
@@ -216,6 +222,11 @@ public enum ErrorCode implements ExceptionMessageSet {
             "ATLAN-JAVA-400-039",
             "Cannot create a {0} query on field: {1}.",
             "You can either try a different field, or try a different kind of query."),
+    MISSING_CREDENTIALS(
+            400,
+            "ATLAN-JAVA-400-040",
+            "Missing privileged credentials to impersonate users.",
+            "You must have both CLIENT_ID and CLIENT_SECRET configured to be able to impersonate users."),
 
     AUTHENTICATION_PASSTHROUGH(
             401,
@@ -249,6 +260,11 @@ public enum ErrorCode implements ExceptionMessageSet {
             "ATLAN-JAVA-403-000",
             "Server responded with {0}: {1}",
             "Check the details of the server's message to correct your request."),
+    UNABLE_TO_IMPERSONATE(
+            403,
+            "ATLAN-JAVA-403-001",
+            "Unable to impersonate requested user.",
+            "Check the details of your configured privileged credentials and the user you requested to impersonate."),
 
     NOT_FOUND_PASSTHROUGH(
             404,

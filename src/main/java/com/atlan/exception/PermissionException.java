@@ -17,4 +17,8 @@ public class PermissionException extends AuthenticationException {
     public PermissionException(ExceptionMessageDefinition error) {
         super(error, 403);
     }
+
+    public PermissionException(ErrorCode error, Throwable e) {
+        super(error, e);
+    }
 }
