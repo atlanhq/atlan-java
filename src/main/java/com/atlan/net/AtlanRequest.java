@@ -125,6 +125,40 @@ public class AtlanRequest {
         }
     }
 
+    /**
+     * Initializes a new instance of the {@link AtlanRequest} class, used specifically for exchanging form-urlencoded
+     * content.
+     *
+     * @param client connectivity to an Atlan tenant
+     * @param method the HTTP method
+     * @param url the URL of the request
+     * @param map of key-value pairs to be form-urlencoded
+     * @param options the special modifiers of the request
+     * @param requestId unique identifier (GUID) of a single request to Atlan
+     * @throws AtlanException if the request cannot be initialized for any reason
+     */
+    public AtlanRequest(
+            AtlanClient client,
+            ApiResource.RequestMethod method,
+            String url,
+            Map<String, Object> map,
+            RequestOptions options,
+            String requestId)
+            throws AtlanException {
+        try {
+            this.client = client;
+            this.body = null;
+            this.options = (options != null) ? options : RequestOptions.getDefault();
+            this.requestId = requestId;
+            this.method = method;
+            this.url = new URL(url);
+            this.content = FormEncoder.createHttpContent(map);
+            this.headers = buildHeaders();
+        } catch (IOException e) {
+            throw new ApiConnectionException(ErrorCode.CONNECTION_ERROR, e, client.getBaseUrl());
+        }
+    }
+
     private HttpHeaders buildHeaders() throws AuthenticationException {
         Map<String, List<String>> headerMap = new HashMap<>();
 
