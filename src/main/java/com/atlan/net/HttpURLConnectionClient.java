@@ -83,8 +83,6 @@ public class HttpURLConnectionClient extends HttpClient {
         userAgentHeadersMap.put("User-Agent", List.of(buildUserAgentString(request.client())));
         userAgentHeadersMap.put(
                 "X-Atlan-Client-User-Agent", List.of(buildXAtlanClientUserAgentString(request.client())));
-        userAgentHeadersMap.put("x-atlan-agent", List.of("sdk"));
-        userAgentHeadersMap.put("x-atlan-agent-id", List.of("java"));
 
         return request.headers().withAdditionalHeaders(userAgentHeadersMap);
     }

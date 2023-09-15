@@ -162,7 +162,7 @@ public class AtlanRequest {
     private HttpHeaders buildHeaders(boolean checkApiToken) throws AuthenticationException {
         Map<String, List<String>> headerMap = new HashMap<>();
 
-        // Request-Id + any custom headers (do these first so they cannot clobber auth, etc)
+        // Request-Id + any custom headers (do these first, so they cannot clobber auth, etc)
         headerMap.put("X-Atlan-Request-Id", List.of(requestId));
         if (options != null && options.getExtraHeaders() != null) {
             headerMap.putAll(options.getExtraHeaders());
