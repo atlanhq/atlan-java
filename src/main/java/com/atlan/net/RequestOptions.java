@@ -7,9 +7,12 @@ import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import java.net.PasswordAuthentication;
 import java.net.Proxy;
+import java.util.List;
+import java.util.Map;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Singular;
 
 /**
  * Class to encapsulate all the options that can be overridden on individual API calls.
@@ -19,6 +22,7 @@ import lombok.Getter;
 @Builder
 @Getter
 @EqualsAndHashCode(callSuper = false)
+@SuppressWarnings("cast")
 public class RequestOptions {
     private final int connectTimeout;
     private final int readTimeout;
@@ -26,6 +30,9 @@ public class RequestOptions {
     private final int maxNetworkRetries;
     private final Proxy connectionProxy;
     private final PasswordAuthentication proxyCredential;
+
+    @Singular
+    private final Map<String, List<String>> extraHeaders;
 
     /**
      * Returns a default set of request options, using the global settings of the SDK.
@@ -37,6 +44,7 @@ public class RequestOptions {
                 .connectTimeout(Atlan.DEFAULT_CONNECT_TIMEOUT)
                 .readTimeout(Atlan.DEFAULT_READ_TIMEOUT)
                 .maxNetworkRetries(Atlan.DEFAULT_NETWORK_RETRIES)
+                .extraHeaders(Atlan.EXTRA_HEADERS)
                 .build();
     }
 
@@ -52,6 +60,7 @@ public class RequestOptions {
                 .readTimeout(client.getReadTimeout())
                 .maxNetworkRetries(client.getMaxNetworkRetries())
                 .connectionProxy(client.getConnectionProxy())
-                .proxyCredential(client.getProxyCredential());
+                .proxyCredential(client.getProxyCredential())
+                .extraHeaders(client.getExtraHeaders());
     }
 }

@@ -4,6 +4,8 @@ package com.atlan;
 
 /* Based on original code from https://github.com/stripe/stripe-java (under MIT license) */
 import com.atlan.exception.ErrorCode;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -16,6 +18,8 @@ public abstract class Atlan {
     public static final int DEFAULT_NETWORK_RETRIES = 3;
 
     public static final String VERSION = "1.2.3-SNAPSHOT";
+
+    public static final Map<String, List<String>> EXTRA_HEADERS = Collections.emptyMap();
 
     public static volatile boolean enableTelemetry = true;
 
