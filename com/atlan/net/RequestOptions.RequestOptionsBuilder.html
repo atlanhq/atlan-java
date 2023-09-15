@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -164,30 +164,46 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="RequestOptions.RequestOptionsBuilder.html" title="class in com.atlan.net">RequestOptions.RequestOptionsBuilder</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#connectionProxy(java.net.Proxy)">connectionProxy</a></span>&#8203;(java.net.Proxy&nbsp;connectionProxy)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearExtraHeaders()">clearExtraHeaders</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="RequestOptions.RequestOptionsBuilder.html" title="class in com.atlan.net">RequestOptions.RequestOptionsBuilder</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#connectTimeout(int)">connectTimeout</a></span>&#8203;(int&nbsp;connectTimeout)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#connectionProxy(java.net.Proxy)">connectionProxy</a></span>&#8203;(java.net.Proxy&nbsp;connectionProxy)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="RequestOptions.RequestOptionsBuilder.html" title="class in com.atlan.net">RequestOptions.RequestOptionsBuilder</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#maxNetworkRetries(int)">maxNetworkRetries</a></span>&#8203;(int&nbsp;maxNetworkRetries)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#connectTimeout(int)">connectTimeout</a></span>&#8203;(int&nbsp;connectTimeout)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="RequestOptions.RequestOptionsBuilder.html" title="class in com.atlan.net">RequestOptions.RequestOptionsBuilder</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#proxyCredential(java.net.PasswordAuthentication)">proxyCredential</a></span>&#8203;(java.net.PasswordAuthentication&nbsp;proxyCredential)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#extraHeader(java.lang.String,java.util.List)">extraHeader</a></span>&#8203;(java.lang.String&nbsp;extraHeaderKey,
+           java.util.List&lt;java.lang.String&gt;&nbsp;extraHeaderValue)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="RequestOptions.RequestOptionsBuilder.html" title="class in com.atlan.net">RequestOptions.RequestOptionsBuilder</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readTimeout(int)">readTimeout</a></span>&#8203;(int&nbsp;readTimeout)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#extraHeaders(java.util.Map)">extraHeaders</a></span>&#8203;(java.util.Map&lt;? extends java.lang.String,&#8203;? extends java.util.List&lt;java.lang.String&gt;&gt;&nbsp;extraHeaders)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
+<td class="colFirst"><code><a href="RequestOptions.RequestOptionsBuilder.html" title="class in com.atlan.net">RequestOptions.RequestOptionsBuilder</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#maxNetworkRetries(int)">maxNetworkRetries</a></span>&#8203;(int&nbsp;maxNetworkRetries)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i7" class="rowColor">
+<td class="colFirst"><code><a href="RequestOptions.RequestOptionsBuilder.html" title="class in com.atlan.net">RequestOptions.RequestOptionsBuilder</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#proxyCredential(java.net.PasswordAuthentication)">proxyCredential</a></span>&#8203;(java.net.PasswordAuthentication&nbsp;proxyCredential)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i8" class="altColor">
+<td class="colFirst"><code><a href="RequestOptions.RequestOptionsBuilder.html" title="class in com.atlan.net">RequestOptions.RequestOptionsBuilder</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readTimeout(int)">readTimeout</a></span>&#8203;(int&nbsp;readTimeout)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
@@ -279,6 +295,34 @@ extends java.lang.Object</pre>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
 </dl>
+</li>
+</ul>
+<a id="extraHeader(java.lang.String,java.util.List)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>extraHeader</h4>
+<pre class="methodSignature">public&nbsp;<a href="RequestOptions.RequestOptionsBuilder.html" title="class in com.atlan.net">RequestOptions.RequestOptionsBuilder</a>&nbsp;extraHeader&#8203;(java.lang.String&nbsp;extraHeaderKey,
+                                                        java.util.List&lt;java.lang.String&gt;&nbsp;extraHeaderValue)</pre>
+</li>
+</ul>
+<a id="extraHeaders(java.util.Map)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>extraHeaders</h4>
+<pre class="methodSignature">public&nbsp;<a href="RequestOptions.RequestOptionsBuilder.html" title="class in com.atlan.net">RequestOptions.RequestOptionsBuilder</a>&nbsp;extraHeaders&#8203;(java.util.Map&lt;? extends java.lang.String,&#8203;? extends java.util.List&lt;java.lang.String&gt;&gt;&nbsp;extraHeaders)</pre>
+</li>
+</ul>
+<a id="clearExtraHeaders()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clearExtraHeaders</h4>
+<pre class="methodSignature">public&nbsp;<a href="RequestOptions.RequestOptionsBuilder.html" title="class in com.atlan.net">RequestOptions.RequestOptionsBuilder</a>&nbsp;clearExtraHeaders()</pre>
 </li>
 </ul>
 <a id="build()">
