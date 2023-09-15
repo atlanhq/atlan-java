@@ -13,7 +13,9 @@ import java.io.IOException;
 import java.net.PasswordAuthentication;
 import java.net.Proxy;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,14 +23,12 @@ import lombok.Setter;
  * Configuration for the SDK against a particular Atlan tenant.
  */
 public class AtlanClient {
-    public static final int DEFAULT_CONNECT_TIMEOUT = 30 * 1000;
-    public static final int DEFAULT_READ_TIMEOUT = 120 * 1000;
     public static final String DELETED_AUDIT_OBJECT = "(DELETED)";
 
     /** Timeout value that will be used for making new connections to the Atlan API (in milliseconds). */
     @Getter
     @Setter
-    private volatile int connectTimeout = DEFAULT_CONNECT_TIMEOUT;
+    private volatile int connectTimeout = Atlan.DEFAULT_CONNECT_TIMEOUT;
 
     /**
      * Timeout value that will be used for reading a response from an API request (in milliseconds).
@@ -37,12 +37,17 @@ public class AtlanClient {
      */
     @Getter
     @Setter
-    private volatile int readTimeout = DEFAULT_READ_TIMEOUT;
+    private volatile int readTimeout = Atlan.DEFAULT_READ_TIMEOUT;
 
     /** Maximum number of times requests will be retried. */
     @Getter
     @Setter
-    private volatile int maxNetworkRetries = 10;
+    private volatile int maxNetworkRetries = Atlan.DEFAULT_NETWORK_RETRIES;
+
+    /** Extra headers to include on any requests made by this client. */
+    @Getter
+    @Setter
+    private volatile Map<String, List<String>> extraHeaders;
 
     private final String apiBase;
     private final boolean internalAccess;
@@ -148,6 +153,7 @@ public class AtlanClient {
      * @param baseURL of the tenant
      */
     AtlanClient(final String baseURL) {
+        extraHeaders = new ConcurrentHashMap<>();
         if (baseURL.equals("INTERNAL")) {
             apiBase = null;
             internalAccess = true;
