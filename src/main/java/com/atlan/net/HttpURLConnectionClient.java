@@ -84,7 +84,9 @@ public class HttpURLConnectionClient extends HttpClient {
         userAgentHeadersMap.put(
                 "X-Atlan-Client-User-Agent", List.of(buildXAtlanClientUserAgentString(request.client())));
 
-        return request.headers().withAdditionalHeaders(userAgentHeadersMap);
+        return request.headers()
+                .withAdditionalHeaders(request.client().getExtraHeaders())
+                .withAdditionalHeaders(userAgentHeadersMap);
     }
 
     private static HttpURLConnection createAtlanConnection(AtlanRequest request)
