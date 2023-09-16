@@ -83,7 +83,7 @@ public class AtlanRequest {
             this.method = method;
             this.url = new URL(url);
             this.content = (body == null || body.length() == 0) ? null : HttpContent.buildJSONEncodedContent(body);
-            this.headers = buildHeaders(true);
+            this.headers = buildHeaders(true, options);
         } catch (IOException e) {
             throw new ApiConnectionException(ErrorCode.CONNECTION_ERROR, e, client.getBaseUrl());
         }
@@ -119,7 +119,7 @@ public class AtlanRequest {
             this.url = new URL(url);
             this.content =
                     HttpContent.buildMultipartFormDataContent(List.of(new KeyValuePair<>("file", file)), filename);
-            this.headers = buildHeaders(true);
+            this.headers = buildHeaders(true, options);
         } catch (IOException e) {
             throw new ApiConnectionException(ErrorCode.CONNECTION_ERROR, e, client.getBaseUrl());
         }
@@ -153,19 +153,25 @@ public class AtlanRequest {
             this.method = method;
             this.url = new URL(url);
             this.content = FormEncoder.createHttpContent(map);
-            this.headers = buildHeaders(false);
+            this.headers = buildHeaders(false, options);
         } catch (IOException e) {
             throw new ApiConnectionException(ErrorCode.CONNECTION_ERROR, e, client.getBaseUrl());
         }
     }
 
-    private HttpHeaders buildHeaders(boolean checkApiToken) throws AuthenticationException {
+    private HttpHeaders buildHeaders(boolean checkApiToken, RequestOptions provided) throws AuthenticationException {
         Map<String, List<String>> headerMap = new HashMap<>();
 
         // Request-Id + any custom headers (do these first, so they cannot clobber auth, etc)
         headerMap.put("X-Atlan-Request-Id", List.of(requestId));
-        if (options != null && options.getExtraHeaders() != null) {
-            headerMap.putAll(options.getExtraHeaders());
+        if (client.getExtraHeaders() != null) {
+            headerMap.putAll(client.getExtraHeaders());
+        }
+        // Note: we will NOT use the member 'options' here, as we only want these to
+        // override any set against the client itself if they are actually provided.
+        // (Any defaults should not clobber any extras placed on the client level.)
+        if (provided != null && provided.getExtraHeaders() != null) {
+            headerMap.putAll(provided.getExtraHeaders());
         }
 
         // Accept
