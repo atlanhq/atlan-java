@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":9,"i23":10,"i24":10};
+var data = {"i0":10,"i1":9,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":9,"i25":10,"i26":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -222,152 +222,166 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
+<td class="colFirst"><code><a href="AttributeDefOptions.html" title="class in com.atlan.model.typedefs">AttributeDefOptions</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#append(com.atlan.model.typedefs.AttributeDefOptions)">append</a></span>&#8203;(<a href="AttributeDefOptions.html" title="class in com.atlan.model.typedefs">AttributeDefOptions</a>&nbsp;options)</code></th>
+<td class="colLast">
+<div class="block">Append the provided set of attribute definition options onto this attribute definition.</div>
+</td>
+</tr>
+<tr id="i1" class="rowColor">
 <td class="colFirst"><code>static <a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="class in com.atlan.model.typedefs">AttributeDefOptions.AttributeDefOptionsBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#builder()">builder</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i1" class="rowColor">
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>protected boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#canEqual(java.lang.Object)">canEqual</a></span>&#8203;(java.lang.Object&nbsp;other)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#equals(java.lang.Object)">equals</a></span>&#8203;(java.lang.Object&nbsp;o)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAllowFiltering()">getAllowFiltering</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Whether this attribute should appear in the filterable facets of discovery (true) or not (false).</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAllowSearch()">getAllowSearch</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Whether the attribute should be searchable (true) or not (false).</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>java.util.Set&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getApplicableEntityTypes()">getApplicableEntityTypes</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Set of entities on which this attribute can be applied.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getArchivedAt()">getArchivedAt</a></span>()</code></th>
 <td class="colLast">
 <div class="block">When the attribute was deleted.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getArchivedBy()">getArchivedBy</a></span>()</code></th>
 <td class="colLast">
 <div class="block">User who deleted the attribute.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>java.util.Set&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCustomApplicableEntityTypes()">getCustomApplicableEntityTypes</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Set of entities on which this attribute should appear.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCustomType()">getCustomType</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Used for Atlan-specific types like <code>users</code>, <code>groups</code>, <code>url</code>, and <code>SQL</code>.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDescription()">getDescription</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Optional description of the attribute.</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getEnumType()">getEnumType</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Name of the enumeration (options), when the attribute is an enumeration.</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i13" class="rowColor">
+<td class="colFirst"><code>java.lang.Boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getHasTimePrecision()">getHasTimePrecision</a></span>()</code></th>
+<td class="colLast">
+<div class="block">If true for a date attribute, then time-level precision is also available in the UI (otherwise only date-level)</div>
+</td>
+</tr>
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIsAppendOnPartialUpdate()">getIsAppendOnPartialUpdate</a></span>()</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIsArchived()">getIsArchived</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Whether the attribute has been deleted (true) or is still active (false).</div>
 </td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIsDeprecated()">getIsDeprecated</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Whether the attribute is deprecated ("true") or not (null or "false").</div>
 </td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIsEnum()">getIsEnum</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Whether the attribute is an enumeration (true) or not (false).</div>
 </td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i18" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIsSoftReference()">getIsSoftReference</a></span>()</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMaxStrLength()">getMaxStrLength</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Maximum length allowed for a string value.</div>
 </td>
 </tr>
-<tr id="i18" class="altColor">
+<tr id="i20" class="altColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMultiValueSelect()">getMultiValueSelect</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Whether this attribute can have multiple values (true) or only a single value (false).</div>
 </td>
 </tr>
-<tr id="i19" class="rowColor">
+<tr id="i21" class="rowColor">
 <td class="colFirst"><code><a href="../enums/AtlanCustomAttributePrimitiveType.html" title="enum in com.atlan.model.enums">AtlanCustomAttributePrimitiveType</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPrimitiveType()">getPrimitiveType</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Primitive type of the attribute.</div>
 </td>
 </tr>
-<tr id="i20" class="altColor">
+<tr id="i22" class="altColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getShowInOverview()">getShowInOverview</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Whether users will see this attribute in the overview tab of the sidebar (true) or not (false).</div>
 </td>
 </tr>
-<tr id="i21" class="rowColor">
+<tr id="i23" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i22" class="altColor">
+<tr id="i24" class="altColor">
 <td class="colFirst"><code>static <a href="AttributeDefOptions.html" title="class in com.atlan.model.typedefs">AttributeDefOptions</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#of(com.atlan.model.enums.AtlanCustomAttributePrimitiveType,java.lang.String)">of</a></span>&#8203;(<a href="../enums/AtlanCustomAttributePrimitiveType.html" title="enum in com.atlan.model.enums">AtlanCustomAttributePrimitiveType</a>&nbsp;type,
   java.lang.String&nbsp;optionsName)</code></th>
@@ -375,12 +389,12 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <div class="block">Instantiate a new set of attribute options from the provided parameters.</div>
 </td>
 </tr>
-<tr id="i23" class="rowColor">
+<tr id="i25" class="rowColor">
 <td class="colFirst"><code><a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="class in com.atlan.model.typedefs">AttributeDefOptions.AttributeDefOptionsBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toBuilder()">toBuilder</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i24" class="altColor">
+<tr id="i26" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 </tr>
@@ -449,6 +463,26 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <dd><code>optionsName</code> - name of the options (enumeration) if the primitive type is an enumeration (can be null otherwise)</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the attribute options</dd>
+</dl>
+</li>
+</ul>
+<a id="append(com.atlan.model.typedefs.AttributeDefOptions)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>append</h4>
+<pre class="methodSignature">public&nbsp;<a href="AttributeDefOptions.html" title="class in com.atlan.model.typedefs">AttributeDefOptions</a>&nbsp;append&#8203;(<a href="AttributeDefOptions.html" title="class in com.atlan.model.typedefs">AttributeDefOptions</a>&nbsp;options)</pre>
+<div class="block">Append the provided set of attribute definition options onto this attribute definition.
+ Note that certain options are ignored by the append, specifically: primitiveType, isEnum,
+ enumType, customType, multiValueSelect, isArchived, archivedAt, archivedBy. These should only be set
+ by the appropriate initial setup <a href="#of(com.atlan.model.enums.AtlanCustomAttributePrimitiveType,java.lang.String)"><code>of(AtlanCustomAttributePrimitiveType, String)</code></a> or archival
+ of an attribute definition.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>options</code> - to append to this set of attribute definition options</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the combined set of attribute definition options</dd>
 </dl>
 </li>
 </ul>
@@ -598,6 +632,16 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <h4>getCustomType</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getCustomType()</pre>
 <div class="block">Used for Atlan-specific types like <code>users</code>, <code>groups</code>, <code>url</code>, and <code>SQL</code>.</div>
+</li>
+</ul>
+<a id="getHasTimePrecision()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getHasTimePrecision</h4>
+<pre class="methodSignature">public&nbsp;java.lang.Boolean&nbsp;getHasTimePrecision()</pre>
+<div class="block">If true for a date attribute, then time-level precision is also available in the UI (otherwise only date-level)</div>
 </li>
 </ul>
 <a id="getIsArchived()">

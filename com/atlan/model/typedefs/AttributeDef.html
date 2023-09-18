@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":10,"i2":10,"i3":9,"i4":9,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":9,"i32":9,"i33":10,"i34":10};
+var data = {"i0":9,"i1":10,"i2":10,"i3":9,"i4":9,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":9,"i32":9,"i33":9,"i34":9,"i35":9,"i36":9,"i37":9,"i38":9,"i39":10,"i40":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -437,6 +437,27 @@ implements java.lang.Comparable&lt;<a href="AttributeDef.html" title="class in c
 </tr>
 <tr id="i31" class="rowColor">
 <td class="colFirst"><code>static <a href="AttributeDef.html" title="class in com.atlan.model.typedefs">AttributeDef</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#of(com.atlan.AtlanClient,java.lang.String,com.atlan.model.enums.AtlanCustomAttributePrimitiveType,boolean)">of</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+  java.lang.String&nbsp;displayName,
+  <a href="../enums/AtlanCustomAttributePrimitiveType.html" title="enum in com.atlan.model.enums">AtlanCustomAttributePrimitiveType</a>&nbsp;type,
+  boolean&nbsp;multiValued)</code></th>
+<td class="colLast">
+<div class="block">Instantiate an attribute definition from the provided parameters.</div>
+</td>
+</tr>
+<tr id="i32" class="altColor">
+<td class="colFirst"><code>static <a href="AttributeDef.html" title="class in com.atlan.model.typedefs">AttributeDef</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#of(com.atlan.AtlanClient,java.lang.String,com.atlan.model.enums.AtlanCustomAttributePrimitiveType,boolean,com.atlan.model.typedefs.AttributeDefOptions)">of</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+  java.lang.String&nbsp;displayName,
+  <a href="../enums/AtlanCustomAttributePrimitiveType.html" title="enum in com.atlan.model.enums">AtlanCustomAttributePrimitiveType</a>&nbsp;type,
+  boolean&nbsp;multiValued,
+  <a href="AttributeDefOptions.html" title="class in com.atlan.model.typedefs">AttributeDefOptions</a>&nbsp;otherOptions)</code></th>
+<td class="colLast">
+<div class="block">Instantiate an attribute definition from the provided parameters.</div>
+</td>
+</tr>
+<tr id="i33" class="rowColor">
+<td class="colFirst"><code>static <a href="AttributeDef.html" title="class in com.atlan.model.typedefs">AttributeDef</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#of(com.atlan.AtlanClient,java.lang.String,com.atlan.model.enums.AtlanCustomAttributePrimitiveType,java.lang.String,boolean)">of</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
   java.lang.String&nbsp;displayName,
   <a href="../enums/AtlanCustomAttributePrimitiveType.html" title="enum in com.atlan.model.enums">AtlanCustomAttributePrimitiveType</a>&nbsp;type,
@@ -446,7 +467,38 @@ implements java.lang.Comparable&lt;<a href="AttributeDef.html" title="class in c
 <div class="block">Instantiate an attribute definition from the provided parameters.</div>
 </td>
 </tr>
-<tr id="i32" class="altColor">
+<tr id="i34" class="altColor">
+<td class="colFirst"><code>static <a href="AttributeDef.html" title="class in com.atlan.model.typedefs">AttributeDef</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#of(com.atlan.AtlanClient,java.lang.String,com.atlan.model.enums.AtlanCustomAttributePrimitiveType,java.lang.String,boolean,com.atlan.model.typedefs.AttributeDefOptions)">of</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+  java.lang.String&nbsp;displayName,
+  <a href="../enums/AtlanCustomAttributePrimitiveType.html" title="enum in com.atlan.model.enums">AtlanCustomAttributePrimitiveType</a>&nbsp;type,
+  java.lang.String&nbsp;optionsName,
+  boolean&nbsp;multiValued,
+  <a href="AttributeDefOptions.html" title="class in com.atlan.model.typedefs">AttributeDefOptions</a>&nbsp;otherOptions)</code></th>
+<td class="colLast">
+<div class="block">Instantiate an attribute definition from the provided parameters.</div>
+</td>
+</tr>
+<tr id="i35" class="rowColor">
+<td class="colFirst"><code>static <a href="AttributeDef.html" title="class in com.atlan.model.typedefs">AttributeDef</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#of(java.lang.String,com.atlan.model.enums.AtlanCustomAttributePrimitiveType,boolean)">of</a></span>&#8203;(java.lang.String&nbsp;displayName,
+  <a href="../enums/AtlanCustomAttributePrimitiveType.html" title="enum in com.atlan.model.enums">AtlanCustomAttributePrimitiveType</a>&nbsp;type,
+  boolean&nbsp;multiValued)</code></th>
+<td class="colLast">
+<div class="block">Instantiate an attribute definition from the provided parameters.</div>
+</td>
+</tr>
+<tr id="i36" class="altColor">
+<td class="colFirst"><code>static <a href="AttributeDef.html" title="class in com.atlan.model.typedefs">AttributeDef</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#of(java.lang.String,com.atlan.model.enums.AtlanCustomAttributePrimitiveType,boolean,com.atlan.model.typedefs.AttributeDefOptions)">of</a></span>&#8203;(java.lang.String&nbsp;displayName,
+  <a href="../enums/AtlanCustomAttributePrimitiveType.html" title="enum in com.atlan.model.enums">AtlanCustomAttributePrimitiveType</a>&nbsp;type,
+  boolean&nbsp;multiValued,
+  <a href="AttributeDefOptions.html" title="class in com.atlan.model.typedefs">AttributeDefOptions</a>&nbsp;otherOptions)</code></th>
+<td class="colLast">
+<div class="block">Instantiate an attribute definition from the provided parameters.</div>
+</td>
+</tr>
+<tr id="i37" class="rowColor">
 <td class="colFirst"><code>static <a href="AttributeDef.html" title="class in com.atlan.model.typedefs">AttributeDef</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#of(java.lang.String,com.atlan.model.enums.AtlanCustomAttributePrimitiveType,java.lang.String,boolean)">of</a></span>&#8203;(java.lang.String&nbsp;displayName,
   <a href="../enums/AtlanCustomAttributePrimitiveType.html" title="enum in com.atlan.model.enums">AtlanCustomAttributePrimitiveType</a>&nbsp;type,
@@ -456,12 +508,23 @@ implements java.lang.Comparable&lt;<a href="AttributeDef.html" title="class in c
 <div class="block">Instantiate an attribute definition from the provided parameters.</div>
 </td>
 </tr>
-<tr id="i33" class="rowColor">
+<tr id="i38" class="altColor">
+<td class="colFirst"><code>static <a href="AttributeDef.html" title="class in com.atlan.model.typedefs">AttributeDef</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#of(java.lang.String,com.atlan.model.enums.AtlanCustomAttributePrimitiveType,java.lang.String,boolean,com.atlan.model.typedefs.AttributeDefOptions)">of</a></span>&#8203;(java.lang.String&nbsp;displayName,
+  <a href="../enums/AtlanCustomAttributePrimitiveType.html" title="enum in com.atlan.model.enums">AtlanCustomAttributePrimitiveType</a>&nbsp;type,
+  java.lang.String&nbsp;optionsName,
+  boolean&nbsp;multiValued,
+  <a href="AttributeDefOptions.html" title="class in com.atlan.model.typedefs">AttributeDefOptions</a>&nbsp;otherOptions)</code></th>
+<td class="colLast">
+<div class="block">Instantiate an attribute definition from the provided parameters.</div>
+</td>
+</tr>
+<tr id="i39" class="rowColor">
 <td class="colFirst"><code><a href="AttributeDef.AttributeDefBuilder.html" title="class in com.atlan.model.typedefs">AttributeDef.AttributeDefBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toBuilder()">toBuilder</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i34" class="altColor">
+<tr id="i40" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 </tr>
@@ -515,6 +578,106 @@ implements java.lang.Comparable&lt;<a href="AttributeDef.html" title="class in c
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a id="of(java.lang.String,com.atlan.model.enums.AtlanCustomAttributePrimitiveType,boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>of</h4>
+<pre class="methodSignature">public static&nbsp;<a href="AttributeDef.html" title="class in com.atlan.model.typedefs">AttributeDef</a>&nbsp;of&#8203;(java.lang.String&nbsp;displayName,
+                              <a href="../enums/AtlanCustomAttributePrimitiveType.html" title="enum in com.atlan.model.enums">AtlanCustomAttributePrimitiveType</a>&nbsp;type,
+                              boolean&nbsp;multiValued)
+                       throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Instantiate an attribute definition from the provided parameters.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>displayName</code> - human-readable name of the attribute</dd>
+<dd><code>type</code> - primitive type of the attribute (non-enum)</dd>
+<dd><code>multiValued</code> - true if multiple values are allowed for the attribute, otherwise false</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the attribute definition</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - if there is any API error trying to construct the attribute (usually due to a non-existent enumeration)</dd>
+</dl>
+</li>
+</ul>
+<a id="of(com.atlan.AtlanClient,java.lang.String,com.atlan.model.enums.AtlanCustomAttributePrimitiveType,boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>of</h4>
+<pre class="methodSignature">public static&nbsp;<a href="AttributeDef.html" title="class in com.atlan.model.typedefs">AttributeDef</a>&nbsp;of&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+                              java.lang.String&nbsp;displayName,
+                              <a href="../enums/AtlanCustomAttributePrimitiveType.html" title="enum in com.atlan.model.enums">AtlanCustomAttributePrimitiveType</a>&nbsp;type,
+                              boolean&nbsp;multiValued)
+                       throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Instantiate an attribute definition from the provided parameters.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>client</code> - connectivity to the Atlan tenant on which this attribute is intended to be created</dd>
+<dd><code>displayName</code> - human-readable name of the attribute</dd>
+<dd><code>type</code> - primitive type of the attribute (non-enum)</dd>
+<dd><code>multiValued</code> - true if multiple values are allowed for the attribute, otherwise false</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the attribute definition</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - if there is any API error trying to construct the attribute (usually due to a non-existent enumeration)</dd>
+</dl>
+</li>
+</ul>
+<a id="of(java.lang.String,com.atlan.model.enums.AtlanCustomAttributePrimitiveType,boolean,com.atlan.model.typedefs.AttributeDefOptions)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>of</h4>
+<pre class="methodSignature">public static&nbsp;<a href="AttributeDef.html" title="class in com.atlan.model.typedefs">AttributeDef</a>&nbsp;of&#8203;(java.lang.String&nbsp;displayName,
+                              <a href="../enums/AtlanCustomAttributePrimitiveType.html" title="enum in com.atlan.model.enums">AtlanCustomAttributePrimitiveType</a>&nbsp;type,
+                              boolean&nbsp;multiValued,
+                              <a href="AttributeDefOptions.html" title="class in com.atlan.model.typedefs">AttributeDefOptions</a>&nbsp;otherOptions)
+                       throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Instantiate an attribute definition from the provided parameters.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>displayName</code> - human-readable name of the attribute</dd>
+<dd><code>type</code> - primitive type of the attribute (non-enum)</dd>
+<dd><code>multiValued</code> - true if multiple values are allowed for the attribute, otherwise false</dd>
+<dd><code>otherOptions</code> - other options to set on the attribute</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the attribute definition</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - if there is any API error trying to construct the attribute (usually due to a non-existent enumeration)</dd>
+</dl>
+</li>
+</ul>
+<a id="of(com.atlan.AtlanClient,java.lang.String,com.atlan.model.enums.AtlanCustomAttributePrimitiveType,boolean,com.atlan.model.typedefs.AttributeDefOptions)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>of</h4>
+<pre class="methodSignature">public static&nbsp;<a href="AttributeDef.html" title="class in com.atlan.model.typedefs">AttributeDef</a>&nbsp;of&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+                              java.lang.String&nbsp;displayName,
+                              <a href="../enums/AtlanCustomAttributePrimitiveType.html" title="enum in com.atlan.model.enums">AtlanCustomAttributePrimitiveType</a>&nbsp;type,
+                              boolean&nbsp;multiValued,
+                              <a href="AttributeDefOptions.html" title="class in com.atlan.model.typedefs">AttributeDefOptions</a>&nbsp;otherOptions)
+                       throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Instantiate an attribute definition from the provided parameters.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>client</code> - connectivity to the Atlan tenant on which this attribute is intended to be created</dd>
+<dd><code>displayName</code> - human-readable name of the attribute</dd>
+<dd><code>type</code> - primitive type of the attribute (non-enum)</dd>
+<dd><code>multiValued</code> - true if multiple values are allowed for the attribute, otherwise false</dd>
+<dd><code>otherOptions</code> - other options to set on the attribute</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the attribute definition</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - if there is any API error trying to construct the attribute (usually due to a non-existent enumeration)</dd>
+</dl>
+</li>
+</ul>
 <a id="of(java.lang.String,com.atlan.model.enums.AtlanCustomAttributePrimitiveType,java.lang.String,boolean)">
 <!--   -->
 </a>
@@ -560,6 +723,62 @@ implements java.lang.Comparable&lt;<a href="AttributeDef.html" title="class in c
 <dd><code>type</code> - primitive type of the attribute</dd>
 <dd><code>optionsName</code> - name of the options (enumeration) if the primitive type is an enumeration (can be null otherwise)</dd>
 <dd><code>multiValued</code> - true if multiple values are allowed for the attribute, otherwise false</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the attribute definition</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - if there is any API error trying to construct the attribute (usually due to a non-existent enumeration)</dd>
+</dl>
+</li>
+</ul>
+<a id="of(java.lang.String,com.atlan.model.enums.AtlanCustomAttributePrimitiveType,java.lang.String,boolean,com.atlan.model.typedefs.AttributeDefOptions)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>of</h4>
+<pre class="methodSignature">public static&nbsp;<a href="AttributeDef.html" title="class in com.atlan.model.typedefs">AttributeDef</a>&nbsp;of&#8203;(java.lang.String&nbsp;displayName,
+                              <a href="../enums/AtlanCustomAttributePrimitiveType.html" title="enum in com.atlan.model.enums">AtlanCustomAttributePrimitiveType</a>&nbsp;type,
+                              java.lang.String&nbsp;optionsName,
+                              boolean&nbsp;multiValued,
+                              <a href="AttributeDefOptions.html" title="class in com.atlan.model.typedefs">AttributeDefOptions</a>&nbsp;otherOptions)
+                       throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Instantiate an attribute definition from the provided parameters.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>displayName</code> - human-readable name of the attribute</dd>
+<dd><code>type</code> - primitive type of the attribute</dd>
+<dd><code>optionsName</code> - name of the options (enumeration) if the primitive type is an enumeration (can be null otherwise)</dd>
+<dd><code>multiValued</code> - true if multiple values are allowed for the attribute, otherwise false</dd>
+<dd><code>otherOptions</code> - other options to set on the attribute</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the attribute definition</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - if there is any API error trying to construct the attribute (usually due to a non-existent enumeration)</dd>
+</dl>
+</li>
+</ul>
+<a id="of(com.atlan.AtlanClient,java.lang.String,com.atlan.model.enums.AtlanCustomAttributePrimitiveType,java.lang.String,boolean,com.atlan.model.typedefs.AttributeDefOptions)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>of</h4>
+<pre class="methodSignature">public static&nbsp;<a href="AttributeDef.html" title="class in com.atlan.model.typedefs">AttributeDef</a>&nbsp;of&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+                              java.lang.String&nbsp;displayName,
+                              <a href="../enums/AtlanCustomAttributePrimitiveType.html" title="enum in com.atlan.model.enums">AtlanCustomAttributePrimitiveType</a>&nbsp;type,
+                              java.lang.String&nbsp;optionsName,
+                              boolean&nbsp;multiValued,
+                              <a href="AttributeDefOptions.html" title="class in com.atlan.model.typedefs">AttributeDefOptions</a>&nbsp;otherOptions)
+                       throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Instantiate an attribute definition from the provided parameters.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>client</code> - connectivity to the Atlan tenant on which this attribute is intended to be created</dd>
+<dd><code>displayName</code> - human-readable name of the attribute</dd>
+<dd><code>type</code> - primitive type of the attribute</dd>
+<dd><code>optionsName</code> - name of the options (enumeration) if the primitive type is an enumeration (can be null otherwise)</dd>
+<dd><code>multiValued</code> - true if multiple values are allowed for the attribute, otherwise false</dd>
+<dd><code>otherOptions</code> - other options to set on the attribute</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the attribute definition</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
