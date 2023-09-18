@@ -9,6 +9,7 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.KafkaTopicCleanupPolicy;
 import com.atlan.model.enums.KafkaTopicCompressionType;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -30,6 +31,9 @@ import javax.annotation.processing.Generated;
 public interface IAzureEventHub {
 
     public static final String TYPE_NAME = "AzureEventHub";
+
+    /** TBC */
+    KeywordField AZURE_EVENT_HUB_STATUS = new KeywordField("azureEventHubStatus", "azureEventHubStatus");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -239,6 +243,9 @@ public interface IAzureEventHub {
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
+    String getAzureEventHubStatus();
+
+    /** TBC */
     CertificateStatus getCertificateStatus();
 
     /** TBC */
@@ -306,6 +313,9 @@ public interface IAzureEventHub {
 
     /** TBC */
     Long getKafkaTopicReplicationFactor();
+
+    /** TBC */
+    Long getKafkaTopicRetentionTimeInMs();
 
     /** TBC */
     Long getKafkaTopicSegmentBytes();

@@ -122,6 +122,10 @@ public class AtlanQuery extends Asset implements IAtlanQuery, ISQL, ICatalog, IA
 
     /** TBC */
     @Attribute
+    String longRawQuery;
+
+    /** TBC */
+    @Attribute
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
@@ -158,6 +162,10 @@ public class AtlanQuery extends Asset implements IAtlanQuery, ISQL, ICatalog, IA
     /** TBC */
     @Attribute
     String rawQuery;
+
+    /** TBC */
+    @Attribute
+    String rawQueryText;
 
     /** TBC */
     @Attribute

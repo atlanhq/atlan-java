@@ -59,15 +59,16 @@ public class AzureEventHubTest {
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
                             .build())
-            .kafkaConsumerGroup(KafkaConsumerGroup.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .kafkaConsumerGroup(AzureEventHubConsumerGroup.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .kafkaConsumerGroup(
-                    KafkaConsumerGroup.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+                    AzureEventHubConsumerGroup.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .kafkaTopicCleanupPolicy(KafkaTopicCleanupPolicy.COMPACT)
             .kafkaTopicCompressionType(KafkaTopicCompressionType.UNCOMPRESSED)
             .kafkaTopicIsInternal(true)
             .kafkaTopicPartitionsCount(123456789L)
             .kafkaTopicRecordCount(123456789L)
             .kafkaTopicReplicationFactor(123456789L)
+            .kafkaTopicRetentionTimeInMs(123456789L)
             .kafkaTopicSegmentBytes(123456789L)
             .kafkaTopicSizeInBytes(123456789L)
             .inputToAirflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -386,6 +387,7 @@ public class AzureEventHubTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
+            .azureEventHubStatus("String0")
             .build();
 
     private static final int hash = full.hashCode();

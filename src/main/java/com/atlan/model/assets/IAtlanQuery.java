@@ -58,6 +58,9 @@ public interface IAtlanQuery {
     BooleanField IS_VISUAL_QUERY = new BooleanField("isVisualQuery", "isVisualQuery");
 
     /** TBC */
+    KeywordField LONG_RAW_QUERY = new KeywordField("longRawQuery", "longRawQuery");
+
+    /** TBC */
     RelationField PARENT = new RelationField("parent");
 
     /** TBC */
@@ -393,6 +396,9 @@ public interface IAtlanQuery {
     SortedSet<ILink> getLinks();
 
     /** TBC */
+    String getLongRawQuery();
+
+    /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
     /** TBC */
@@ -442,6 +448,9 @@ public interface IAtlanQuery {
 
     /** TBC */
     String getRawQuery();
+
+    /** TBC */
+    String getRawQueryText();
 
     /** TBC */
     IReadme getReadme();

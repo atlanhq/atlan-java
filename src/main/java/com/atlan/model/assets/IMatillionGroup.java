@@ -7,7 +7,8 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
-import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -21,17 +22,20 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a lineage process for dbt in Atlan.
+ * The MatillionGroup type represents a Group in Matillion. A Group is the top level hierarchy in Matillion where resources are managed and explored.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IDbtProcess {
+public interface IMatillionGroup {
 
-    public static final String TYPE_NAME = "DbtProcess";
+    public static final String TYPE_NAME = "MatillionGroup";
+
+    /** Count of the number of matillion projects under a matillion group */
+    NumericField MATILLION_PROJECT_COUNT = new NumericField("matillionProjectCount", "matillionProjectCount");
 
     /** TBC */
-    KeywordField DBT_PROCESS_JOB_STATUS = new KeywordField("dbtProcessJobStatus", "dbtProcessJobStatus");
+    RelationField MATILLION_PROJECTS = new RelationField("matillionProjects");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -41,9 +45,6 @@ public interface IDbtProcess {
 
     /** TBC */
     SortedSet<String> getAdminUsers();
-
-    /** TBC */
-    SortedSet<IAirflowTask> getAirflowTasks();
 
     /** TBC */
     String getAnnouncementMessage();
@@ -244,9 +245,6 @@ public interface IDbtProcess {
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
-    String getAst();
-
-    /** TBC */
     CertificateStatus getCertificateStatus();
 
     /** TBC */
@@ -259,12 +257,6 @@ public interface IDbtProcess {
     String getCertificateUpdatedBy();
 
     /** TBC */
-    String getCode();
-
-    /** TBC */
-    SortedSet<IColumnProcess> getColumnProcesses();
-
-    /** TBC */
     String getConnectionName();
 
     /** TBC */
@@ -274,64 +266,7 @@ public interface IDbtProcess {
     AtlanConnectorType getConnectorType();
 
     /** TBC */
-    String getDbtAccountName();
-
-    /** TBC */
-    String getDbtAlias();
-
-    /** TBC */
-    String getDbtConnectionContext();
-
-    /** TBC */
-    String getDbtEnvironmentDbtVersion();
-
-    /** TBC */
-    String getDbtEnvironmentName();
-
-    /** TBC */
-    Long getDbtJobLastRun();
-
-    /** TBC */
-    String getDbtJobName();
-
-    /** TBC */
-    Long getDbtJobNextRun();
-
-    /** TBC */
-    String getDbtJobNextRunHumanized();
-
-    /** TBC */
-    String getDbtJobSchedule();
-
-    /** TBC */
-    String getDbtJobScheduleCronHumanized();
-
-    /** TBC */
-    String getDbtJobStatus();
-
-    /** TBC */
-    String getDbtMeta();
-
-    /** TBC */
-    String getDbtPackageName();
-
-    /** TBC */
-    String getDbtProcessJobStatus();
-
-    /** TBC */
-    String getDbtProjectName();
-
-    /** TBC */
     String getDbtQualifiedName();
-
-    /** TBC */
-    String getDbtSemanticLayerProxyUrl();
-
-    /** TBC */
-    SortedSet<String> getDbtTags();
-
-    /** TBC */
-    String getDbtUniqueId();
 
     /** TBC */
     String getDescription();
@@ -350,9 +285,6 @@ public interface IDbtProcess {
 
     /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
-
-    /** TBC */
-    SortedSet<ICatalog> getInputs();
 
     /** TBC */
     Boolean getIsDiscoverable();
@@ -375,8 +307,14 @@ public interface IDbtProcess {
     /** TBC */
     SortedSet<ILink> getLinks();
 
+    /** Count of the number of matillion projects under a matillion group */
+    Long getMatillionProjectCount();
+
     /** TBC */
-    IMatillionComponent getMatillionComponent();
+    SortedSet<IMatillionProject> getMatillionProjects();
+
+    /** TBC */
+    String getMatillionVersion();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
@@ -395,9 +333,6 @@ public interface IDbtProcess {
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();
-
-    /** TBC */
-    SortedSet<ICatalog> getOutputs();
 
     /** TBC */
     SortedSet<String> getOwnerGroups();
@@ -488,9 +423,6 @@ public interface IDbtProcess {
 
     /** TBC */
     String getSourceUpdatedBy();
-
-    /** TBC */
-    String getSql();
 
     /** TBC */
     SortedSet<String> getStarredBy();

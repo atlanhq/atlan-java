@@ -16,9 +16,9 @@ import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @SuppressWarnings("deprecation")
-public class KafkaTopicTest {
+public class MongoDBCollectionTest {
 
-    private static final KafkaTopic full = KafkaTopic._internal()
+    private static final MongoDBCollection full = MongoDBCollection._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -59,6 +59,57 @@ public class KafkaTopicTest {
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
                             .build())
+            .alias("String0")
+            .columnCount(123456789L)
+            .column(Column.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .column(Column.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .dimension(Table.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .dimension(Table.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .externalLocation("String0")
+            .externalLocationFormat("String0")
+            .externalLocationRegion("String0")
+            .fact(Table.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .fact(Table.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .isPartitioned(true)
+            .isQueryPreview(true)
+            .isTemporary(true)
+            .partitionCount(123456789L)
+            .partitionList("String0")
+            .partitionStrategy("String0")
+            .partition(TablePartition.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .partition(TablePartition.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .query(AtlanQuery.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .query(AtlanQuery.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .putQueryPreviewConfig("key1", "value1")
+            .putQueryPreviewConfig("key2", "value2")
+            .rowCount(123456789L)
+            .schema(Schema.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .sizeBytes(123456789L)
+            .databaseName("String0")
+            .databaseQualifiedName("String0")
+            .dbtModel(DbtModel.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .dbtModel(DbtModel.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .dbtSource(DbtSource.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .dbtSource(DbtSource.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .dbtTest(DbtTest.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .dbtTest(DbtTest.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .isProfiled(true)
+            .lastProfiledAt(123456789L)
+            .queryCount(123456789L)
+            .queryCountUpdatedAt(123456789L)
+            .queryUserCount(123456789L)
+            .putQueryUserMap("key1", 123456L)
+            .putQueryUserMap("key2", 654321L)
+            .schemaName("String0")
+            .schemaQualifiedName("String0")
+            .sqlDBTSource(DbtSource.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .sqlDBTSource(DbtSource.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .sqlDbtModel(DbtModel.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .sqlDbtModel(DbtModel.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .tableName("String0")
+            .tableQualifiedName("String0")
+            .viewName("String0")
+            .viewQualifiedName("String0")
             .inputToAirflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .inputToAirflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .inputToProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -375,32 +426,33 @@ public class KafkaTopicTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
-            .kafkaConsumerGroup(AzureEventHubConsumerGroup.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .kafkaConsumerGroup(
-                    AzureEventHubConsumerGroup.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .kafkaTopicCleanupPolicy(KafkaTopicCleanupPolicy.COMPACT)
-            .kafkaTopicCompressionType(KafkaTopicCompressionType.UNCOMPRESSED)
-            .kafkaTopicIsInternal(true)
-            .kafkaTopicPartitionsCount(123456789L)
-            .kafkaTopicRecordCount(123456789L)
-            .kafkaTopicReplicationFactor(123456789L)
-            .kafkaTopicRetentionTimeInMs(123456789L)
-            .kafkaTopicSegmentBytes(123456789L)
-            .kafkaTopicSizeInBytes(123456789L)
+            .mongoDBCollectionAverageObjectSize(123456789L)
+            .mongoDBCollectionExpireAfterSeconds(123456789L)
+            .mongoDBCollectionIsCapped(true)
+            .mongoDBCollectionMaxSize(123456789L)
+            .mongoDBCollectionMaximumDocumentCount(123456789L)
+            .mongoDBCollectionNumIndexes(123456789L)
+            .mongoDBCollectionNumOrphanDocs(123456789L)
+            .mongoDBCollectionSchemaDefinition("String0")
+            .mongoDBCollectionSubtype("String0")
+            .mongoDBCollectionTimeField("String0")
+            .mongoDBCollectionTimeGranularity("String0")
+            .mongoDBCollectionTotalIndexSize(123456789L)
+            .mongoDBDatabase(MongoDBDatabase.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .build();
 
     private static final int hash = full.hashCode();
-    private static KafkaTopic frodo;
+    private static MongoDBCollection frodo;
     private static String serialized;
 
-    @Test(groups = {"KafkaTopic.builderEquivalency"})
+    @Test(groups = {"MongoDBCollection.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"KafkaTopic.serialize"},
-            dependsOnGroups = {"KafkaTopic.builderEquivalency"})
+            groups = {"MongoDBCollection.serialize"},
+            dependsOnGroups = {"MongoDBCollection.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson(Atlan.getDefaultClient());
@@ -409,17 +461,17 @@ public class KafkaTopicTest {
     }
 
     @Test(
-            groups = {"KafkaTopic.deserialize"},
-            dependsOnGroups = {"KafkaTopic.serialize"})
+            groups = {"MongoDBCollection.deserialize"},
+            dependsOnGroups = {"MongoDBCollection.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = Atlan.getDefaultClient().readValue(serialized, KafkaTopic.class);
+        frodo = Atlan.getDefaultClient().readValue(serialized, MongoDBCollection.class);
         assertNotNull(frodo);
     }
 
     @Test(
-            groups = {"KafkaTopic.equivalency"},
-            dependsOnGroups = {"KafkaTopic.serialize", "KafkaTopic.deserialize"})
+            groups = {"MongoDBCollection.equivalency"},
+            dependsOnGroups = {"MongoDBCollection.serialize", "MongoDBCollection.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -428,8 +480,8 @@ public class KafkaTopicTest {
     }
 
     @Test(
-            groups = {"KafkaTopic.equivalency"},
-            dependsOnGroups = {"KafkaTopic.serialize", "KafkaTopic.deserialize"})
+            groups = {"MongoDBCollection.equivalency"},
+            dependsOnGroups = {"MongoDBCollection.serialize", "MongoDBCollection.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

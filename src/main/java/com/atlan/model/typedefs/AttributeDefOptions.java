@@ -43,13 +43,13 @@ public class AttributeDefOptions extends AtlanObject {
             AuthPolicy.TYPE_NAME,
             AuthService.TYPE_NAME,
             AzureEventHub.TYPE_NAME,
+            AzureEventHubConsumerGroup.TYPE_NAME,
             BIProcess.TYPE_NAME,
             Badge.TYPE_NAME,
             Column.TYPE_NAME,
             ColumnProcess.TYPE_NAME,
             Connection.TYPE_NAME,
             DataStudioAsset.TYPE_NAME,
-            Database.TYPE_NAME,
             DbtColumnProcess.TYPE_NAME,
             DbtMetric.TYPE_NAME,
             DbtModel.TYPE_NAME,
@@ -67,7 +67,6 @@ public class AttributeDefOptions extends AtlanObject {
             GlossaryCategory.TYPE_NAME,
             GlossaryTerm.TYPE_NAME,
             Insight.TYPE_NAME,
-            KafkaConsumerGroup.TYPE_NAME,
             KafkaTopic.TYPE_NAME,
             LineageProcess.TYPE_NAME,
             Link.TYPE_NAME,
@@ -84,6 +83,10 @@ public class AttributeDefOptions extends AtlanObject {
             MCIncident.TYPE_NAME,
             MCMonitor.TYPE_NAME,
             MaterializedView.TYPE_NAME,
+            MatillionComponent.TYPE_NAME,
+            MatillionGroup.TYPE_NAME,
+            MatillionJob.TYPE_NAME,
+            MatillionProject.TYPE_NAME,
             MetabaseCollection.TYPE_NAME,
             MetabaseDashboard.TYPE_NAME,
             MetabaseQuestion.TYPE_NAME,
@@ -101,6 +104,8 @@ public class AttributeDefOptions extends AtlanObject {
             ModeQuery.TYPE_NAME,
             ModeReport.TYPE_NAME,
             ModeWorkspace.TYPE_NAME,
+            MongoDBCollection.TYPE_NAME,
+            MongoDBDatabase.TYPE_NAME,
             Persona.TYPE_NAME,
             PowerBIColumn.TYPE_NAME,
             PowerBIDashboard.TYPE_NAME,
@@ -249,6 +254,9 @@ public class AttributeDefOptions extends AtlanObject {
 
     /** Used for Atlan-specific types like {@code users}, {@code groups}, {@code url}, and {@code SQL}. */
     String customType;
+
+    /** If true for a date attribute, then time-level precision is also available in the UI (otherwise only date-level) */
+    Boolean hasTimePrecision;
 
     /** Whether the attribute has been deleted (true) or is still active (false). */
     Boolean isArchived;

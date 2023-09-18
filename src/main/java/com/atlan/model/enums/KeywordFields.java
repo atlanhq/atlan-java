@@ -277,6 +277,8 @@ public enum KeywordFields implements AtlanSearchableField {
     /** List of tags that have been applied to the asset in AWS. */
     AWS_TAGS("awsTags"),
     /** TBC */
+    AZURE_EVENT_HUB_STATUS("azureEventHubStatus"),
+    /** TBC */
     AZURE_LOCATION("azureLocation"),
     /** TBC */
     AZURE_RESOURCE_ID("azureResourceId"),
@@ -573,6 +575,8 @@ public enum KeywordFields implements AtlanSearchableField {
     /** Unused. */
     LONG_DESCRIPTION("longDescription"),
     /** TBC */
+    LONG_RAW_QUERY("longRawQuery"),
+    /** TBC */
     LOOKER_EXPLORE_QUALIFIED_NAME("lookerExploreQualifiedName"),
     /** TBC */
     LOOKER_FIELD_DATA_TYPE("lookerFieldDataType"),
@@ -586,6 +590,42 @@ public enum KeywordFields implements AtlanSearchableField {
     LOOKML_LINK_ID("lookmlLinkId"),
     /** Name of the classification in Atlan that is mapped to this tag. */
     MAPPED_ATLAN_TAG_NAME("mappedClassificationName"),
+    /** Unique id of a matillion component */
+    MATILLION_COMPONENT_ID("matillionComponentId"),
+    /** Unique id which represents the type of a component in matillion */
+    MATILLION_COMPONENT_IMPLEMENTATION_ID("matillionComponentImplementationId"),
+    /** The last five run status of a matillion component under a matillion job */
+    MATILLION_COMPONENT_LAST_FIVE_RUN_STATUS("matillionComponentLastFiveRunStatus"),
+    /** The latest run status of a matillion component under a matillion job */
+    MATILLION_COMPONENT_LAST_RUN_STATUS("matillionComponentLastRunStatus"),
+    /** Job details of the matillion job to which the matillion component internally links to */
+    MATILLION_COMPONENT_LINKED_JOB("matillionComponentLinkedJob"),
+    /** SQL Query involved with a matillion component */
+    MATILLION_COMPONENT_SQLS("matillionComponentSqls"),
+    /** List of environments under a matillion project */
+    MATILLION_ENVIRONMENTS("matillionEnvironments"),
+    /** Name of the matillion group to which the matillion project belongs */
+    MATILLION_GROUP_NAME("matillionGroupName.keyword"),
+    /** Qualified name of the matillion group to which the matillion project belongs */
+    MATILLION_GROUP_QUALIFIED_NAME("matillionGroupQualifiedName"),
+    /** Name of the matillion job to which the matillion component belongs */
+    MATILLION_JOB_NAME("matillionJobName.keyword"),
+    /** The hierarchy path of a job under a matillion project. Jobs can be managed at multiple folder levels under a matillion project */
+    MATILLION_JOB_PATH("matillionJobPath"),
+    /** Qualified name of the matillion job to which the matillion component belongs */
+    MATILLION_JOB_QUALIFIED_NAME("matillionJobQualifiedName"),
+    /** Specifies whether a matillion job is scheduled weekly or monthly */
+    MATILLION_JOB_SCHEDULE("matillionJobSchedule"),
+    /** The type of a job. There are two kinds of jobs in matillion - orchestration and transformation */
+    MATILLION_JOB_TYPE("matillionJobType"),
+    /** Name of the matillion project to which the matillion job belongs */
+    MATILLION_PROJECT_NAME("matillionProjectName.keyword"),
+    /** Qualified name of the matillion project to which the matillion job belongs */
+    MATILLION_PROJECT_QUALIFIED_NAME("matillionProjectQualifiedName"),
+    /** This designates the current point in time state of a project. We can think it to be branch or version control in github */
+    MATILLION_VERSION("matillionVersion"),
+    /** List of versions under a matillion project */
+    MATILLION_VERSIONS("matillionVersions"),
     /** TBC */
     MC_ASSET_QUALIFIED_NAMES("mcAssetQualifiedNames"),
     /** Unique identifier for the incident. */
@@ -720,6 +760,12 @@ public enum KeywordFields implements AtlanSearchableField {
     MODE_WORKSPACE_USERNAME("modeWorkspaceUsername"),
     /** Atlan user who last updated the asset. */
     MODIFIED_BY("__modifiedBy"),
+    /** Subtype of a MongoDB collection (e.g. Capped, Time Series etc.) */
+    MONGO_DB_COLLECTION_SUBTYPE("mongoDBCollectionSubtype"),
+    /** The name of the field which contains the date in each time series document */
+    MONGO_DB_COLLECTION_TIME_FIELD("mongoDBCollectionTimeField"),
+    /** Set the granularity to the value that is the closest match to the time span between consecutive incoming measurements */
+    MONGO_DB_COLLECTION_TIME_GRANULARITY("mongoDBCollectionTimeGranularity"),
     /** Human-readable name of the asset. */
     NAME("name.keyword"),
     /** TBC */

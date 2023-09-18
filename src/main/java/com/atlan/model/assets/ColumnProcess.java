@@ -71,6 +71,10 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
 
     /** TBC */
     @Attribute
+    IMatillionComponent matillionComponent;
+
+    /** TBC */
+    @Attribute
     @Singular
     SortedSet<ICatalog> outputs;
 

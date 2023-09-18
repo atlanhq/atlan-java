@@ -7,8 +7,8 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
-import com.atlan.model.fields.KeywordField;
 import com.atlan.model.relations.UniqueAttributes;
+import com.atlan.model.structs.KafkaTopicConsumption;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
 import com.atlan.serde.AssetDeserializer;
@@ -21,17 +21,14 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a lineage process for dbt in Atlan.
+ * Azure Event Hub Consumer Group assets, equivalent to Kafka Consumer Groups
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IDbtProcess {
+public interface IAzureEventHubConsumerGroup {
 
-    public static final String TYPE_NAME = "DbtProcess";
-
-    /** TBC */
-    KeywordField DBT_PROCESS_JOB_STATUS = new KeywordField("dbtProcessJobStatus", "dbtProcessJobStatus");
+    public static final String TYPE_NAME = "AzureEventHubConsumerGroup";
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -41,9 +38,6 @@ public interface IDbtProcess {
 
     /** TBC */
     SortedSet<String> getAdminUsers();
-
-    /** TBC */
-    SortedSet<IAirflowTask> getAirflowTasks();
 
     /** TBC */
     String getAnnouncementMessage();
@@ -244,9 +238,6 @@ public interface IDbtProcess {
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
-    String getAst();
-
-    /** TBC */
     CertificateStatus getCertificateStatus();
 
     /** TBC */
@@ -259,12 +250,6 @@ public interface IDbtProcess {
     String getCertificateUpdatedBy();
 
     /** TBC */
-    String getCode();
-
-    /** TBC */
-    SortedSet<IColumnProcess> getColumnProcesses();
-
-    /** TBC */
     String getConnectionName();
 
     /** TBC */
@@ -274,64 +259,7 @@ public interface IDbtProcess {
     AtlanConnectorType getConnectorType();
 
     /** TBC */
-    String getDbtAccountName();
-
-    /** TBC */
-    String getDbtAlias();
-
-    /** TBC */
-    String getDbtConnectionContext();
-
-    /** TBC */
-    String getDbtEnvironmentDbtVersion();
-
-    /** TBC */
-    String getDbtEnvironmentName();
-
-    /** TBC */
-    Long getDbtJobLastRun();
-
-    /** TBC */
-    String getDbtJobName();
-
-    /** TBC */
-    Long getDbtJobNextRun();
-
-    /** TBC */
-    String getDbtJobNextRunHumanized();
-
-    /** TBC */
-    String getDbtJobSchedule();
-
-    /** TBC */
-    String getDbtJobScheduleCronHumanized();
-
-    /** TBC */
-    String getDbtJobStatus();
-
-    /** TBC */
-    String getDbtMeta();
-
-    /** TBC */
-    String getDbtPackageName();
-
-    /** TBC */
-    String getDbtProcessJobStatus();
-
-    /** TBC */
-    String getDbtProjectName();
-
-    /** TBC */
     String getDbtQualifiedName();
-
-    /** TBC */
-    String getDbtSemanticLayerProxyUrl();
-
-    /** TBC */
-    SortedSet<String> getDbtTags();
-
-    /** TBC */
-    String getDbtUniqueId();
 
     /** TBC */
     String getDescription();
@@ -352,13 +280,25 @@ public interface IDbtProcess {
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
-    SortedSet<ICatalog> getInputs();
-
-    /** TBC */
     Boolean getIsDiscoverable();
 
     /** TBC */
     Boolean getIsEditable();
+
+    /** TBC */
+    Long getKafkaConsumerGroupMemberCount();
+
+    /** TBC */
+    List<KafkaTopicConsumption> getKafkaConsumerGroupTopicConsumptionProperties();
+
+    /** TBC */
+    SortedSet<String> getKafkaTopicNames();
+
+    /** TBC */
+    SortedSet<String> getKafkaTopicQualifiedNames();
+
+    /** TBC */
+    SortedSet<IKafkaTopic> getKafkaTopics();
 
     /** TBC */
     Long getLastRowChangedAt();
@@ -374,9 +314,6 @@ public interface IDbtProcess {
 
     /** TBC */
     SortedSet<ILink> getLinks();
-
-    /** TBC */
-    IMatillionComponent getMatillionComponent();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
@@ -395,9 +332,6 @@ public interface IDbtProcess {
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();
-
-    /** TBC */
-    SortedSet<ICatalog> getOutputs();
 
     /** TBC */
     SortedSet<String> getOwnerGroups();
@@ -488,9 +422,6 @@ public interface IDbtProcess {
 
     /** TBC */
     String getSourceUpdatedBy();
-
-    /** TBC */
-    String getSql();
 
     /** TBC */
     SortedSet<String> getStarredBy();

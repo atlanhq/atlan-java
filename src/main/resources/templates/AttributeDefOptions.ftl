@@ -113,6 +113,9 @@ public class AttributeDefOptions extends AtlanObject {
     /** Used for Atlan-specific types like {@code users}, {@code groups}, {@code url}, and {@code SQL}. */
     String customType;
 
+    /** If true for a date attribute, then time-level precision is also available in the UI (otherwise only date-level) */
+    Boolean hasTimePrecision;
+
     /** Whether the attribute has been deleted (true) or is still active (false). */
     Boolean isArchived;
 

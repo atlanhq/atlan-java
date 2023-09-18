@@ -16,9 +16,9 @@ import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @SuppressWarnings("deprecation")
-public class KafkaTopicTest {
+public class MongoDBDatabaseTest {
 
-    private static final KafkaTopic full = KafkaTopic._internal()
+    private static final MongoDBDatabase full = MongoDBDatabase._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -59,6 +59,34 @@ public class KafkaTopicTest {
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
                             .build())
+            .schemaCount(123)
+            .schema(Schema.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .schema(Schema.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .databaseName("String0")
+            .databaseQualifiedName("String0")
+            .dbtModel(DbtModel.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .dbtModel(DbtModel.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .dbtSource(DbtSource.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .dbtSource(DbtSource.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .dbtTest(DbtTest.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .dbtTest(DbtTest.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .isProfiled(true)
+            .lastProfiledAt(123456789L)
+            .queryCount(123456789L)
+            .queryCountUpdatedAt(123456789L)
+            .queryUserCount(123456789L)
+            .putQueryUserMap("key1", 123456L)
+            .putQueryUserMap("key2", 654321L)
+            .schemaName("String0")
+            .schemaQualifiedName("String0")
+            .sqlDBTSource(DbtSource.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .sqlDBTSource(DbtSource.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .sqlDbtModel(DbtModel.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .sqlDbtModel(DbtModel.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .tableName("String0")
+            .tableQualifiedName("String0")
+            .viewName("String0")
+            .viewQualifiedName("String0")
             .inputToAirflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .inputToAirflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .inputToProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -375,32 +403,23 @@ public class KafkaTopicTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
-            .kafkaConsumerGroup(AzureEventHubConsumerGroup.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .kafkaConsumerGroup(
-                    AzureEventHubConsumerGroup.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .kafkaTopicCleanupPolicy(KafkaTopicCleanupPolicy.COMPACT)
-            .kafkaTopicCompressionType(KafkaTopicCompressionType.UNCOMPRESSED)
-            .kafkaTopicIsInternal(true)
-            .kafkaTopicPartitionsCount(123456789L)
-            .kafkaTopicRecordCount(123456789L)
-            .kafkaTopicReplicationFactor(123456789L)
-            .kafkaTopicRetentionTimeInMs(123456789L)
-            .kafkaTopicSegmentBytes(123456789L)
-            .kafkaTopicSizeInBytes(123456789L)
+            .mongoDBCollection(MongoDBCollection.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .mongoDBCollection(MongoDBCollection.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .mongoDBDatabaseCollectionCount(123)
             .build();
 
     private static final int hash = full.hashCode();
-    private static KafkaTopic frodo;
+    private static MongoDBDatabase frodo;
     private static String serialized;
 
-    @Test(groups = {"KafkaTopic.builderEquivalency"})
+    @Test(groups = {"MongoDBDatabase.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"KafkaTopic.serialize"},
-            dependsOnGroups = {"KafkaTopic.builderEquivalency"})
+            groups = {"MongoDBDatabase.serialize"},
+            dependsOnGroups = {"MongoDBDatabase.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson(Atlan.getDefaultClient());
@@ -409,17 +428,17 @@ public class KafkaTopicTest {
     }
 
     @Test(
-            groups = {"KafkaTopic.deserialize"},
-            dependsOnGroups = {"KafkaTopic.serialize"})
+            groups = {"MongoDBDatabase.deserialize"},
+            dependsOnGroups = {"MongoDBDatabase.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = Atlan.getDefaultClient().readValue(serialized, KafkaTopic.class);
+        frodo = Atlan.getDefaultClient().readValue(serialized, MongoDBDatabase.class);
         assertNotNull(frodo);
     }
 
     @Test(
-            groups = {"KafkaTopic.equivalency"},
-            dependsOnGroups = {"KafkaTopic.serialize", "KafkaTopic.deserialize"})
+            groups = {"MongoDBDatabase.equivalency"},
+            dependsOnGroups = {"MongoDBDatabase.serialize", "MongoDBDatabase.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -428,8 +447,8 @@ public class KafkaTopicTest {
     }
 
     @Test(
-            groups = {"KafkaTopic.equivalency"},
-            dependsOnGroups = {"KafkaTopic.serialize", "KafkaTopic.deserialize"})
+            groups = {"MongoDBDatabase.equivalency"},
+            dependsOnGroups = {"MongoDBDatabase.serialize", "MongoDBDatabase.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

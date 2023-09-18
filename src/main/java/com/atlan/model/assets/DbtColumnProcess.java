@@ -158,6 +158,10 @@ public class DbtColumnProcess extends Asset
 
     /** TBC */
     @Attribute
+    IMatillionComponent matillionComponent;
+
+    /** TBC */
+    @Attribute
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 

@@ -8,6 +8,8 @@ import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.KeywordTextField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -21,17 +23,50 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a lineage process for dbt in Atlan.
+ * The MatillionComponent type represents a Component in matillion. Components are a part of a matillion job where each one of them is responsible for accomplising a task based on the type of component used
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IDbtProcess {
+public interface IMatillionComponent {
 
-    public static final String TYPE_NAME = "DbtProcess";
+    public static final String TYPE_NAME = "MatillionComponent";
+
+    /** Unique id of a matillion component */
+    KeywordField MATILLION_COMPONENT_ID = new KeywordField("matillionComponentId", "matillionComponentId");
+
+    /** Unique id which represents the type of a component in matillion */
+    KeywordField MATILLION_COMPONENT_IMPLEMENTATION_ID =
+            new KeywordField("matillionComponentImplementationId", "matillionComponentImplementationId");
+
+    /** The last five run status of a matillion component under a matillion job */
+    KeywordField MATILLION_COMPONENT_LAST_FIVE_RUN_STATUS =
+            new KeywordField("matillionComponentLastFiveRunStatus", "matillionComponentLastFiveRunStatus");
+
+    /** The latest run status of a matillion component under a matillion job */
+    KeywordField MATILLION_COMPONENT_LAST_RUN_STATUS =
+            new KeywordField("matillionComponentLastRunStatus", "matillionComponentLastRunStatus");
+
+    /** Job details of the matillion job to which the matillion component internally links to */
+    KeywordField MATILLION_COMPONENT_LINKED_JOB =
+            new KeywordField("matillionComponentLinkedJob", "matillionComponentLinkedJob");
+
+    /** SQL Query involved with a matillion component */
+    KeywordField MATILLION_COMPONENT_SQLS = new KeywordField("matillionComponentSqls", "matillionComponentSqls");
 
     /** TBC */
-    KeywordField DBT_PROCESS_JOB_STATUS = new KeywordField("dbtProcessJobStatus", "dbtProcessJobStatus");
+    RelationField MATILLION_JOB = new RelationField("matillionJob");
+
+    /** Name of the matillion job to which the matillion component belongs */
+    KeywordTextField MATILLION_JOB_NAME =
+            new KeywordTextField("matillionJobName", "matillionJobName.keyword", "matillionJobName");
+
+    /** Qualified name of the matillion job to which the matillion component belongs */
+    KeywordTextField MATILLION_JOB_QUALIFIED_NAME = new KeywordTextField(
+            "matillionJobQualifiedName", "matillionJobQualifiedName", "matillionJobQualifiedName.text");
+
+    /** TBC */
+    RelationField MATILLION_PROCESS = new RelationField("matillionProcess");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -41,9 +76,6 @@ public interface IDbtProcess {
 
     /** TBC */
     SortedSet<String> getAdminUsers();
-
-    /** TBC */
-    SortedSet<IAirflowTask> getAirflowTasks();
 
     /** TBC */
     String getAnnouncementMessage();
@@ -244,9 +276,6 @@ public interface IDbtProcess {
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
-    String getAst();
-
-    /** TBC */
     CertificateStatus getCertificateStatus();
 
     /** TBC */
@@ -259,12 +288,6 @@ public interface IDbtProcess {
     String getCertificateUpdatedBy();
 
     /** TBC */
-    String getCode();
-
-    /** TBC */
-    SortedSet<IColumnProcess> getColumnProcesses();
-
-    /** TBC */
     String getConnectionName();
 
     /** TBC */
@@ -274,64 +297,7 @@ public interface IDbtProcess {
     AtlanConnectorType getConnectorType();
 
     /** TBC */
-    String getDbtAccountName();
-
-    /** TBC */
-    String getDbtAlias();
-
-    /** TBC */
-    String getDbtConnectionContext();
-
-    /** TBC */
-    String getDbtEnvironmentDbtVersion();
-
-    /** TBC */
-    String getDbtEnvironmentName();
-
-    /** TBC */
-    Long getDbtJobLastRun();
-
-    /** TBC */
-    String getDbtJobName();
-
-    /** TBC */
-    Long getDbtJobNextRun();
-
-    /** TBC */
-    String getDbtJobNextRunHumanized();
-
-    /** TBC */
-    String getDbtJobSchedule();
-
-    /** TBC */
-    String getDbtJobScheduleCronHumanized();
-
-    /** TBC */
-    String getDbtJobStatus();
-
-    /** TBC */
-    String getDbtMeta();
-
-    /** TBC */
-    String getDbtPackageName();
-
-    /** TBC */
-    String getDbtProcessJobStatus();
-
-    /** TBC */
-    String getDbtProjectName();
-
-    /** TBC */
     String getDbtQualifiedName();
-
-    /** TBC */
-    String getDbtSemanticLayerProxyUrl();
-
-    /** TBC */
-    SortedSet<String> getDbtTags();
-
-    /** TBC */
-    String getDbtUniqueId();
 
     /** TBC */
     String getDescription();
@@ -350,9 +316,6 @@ public interface IDbtProcess {
 
     /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
-
-    /** TBC */
-    SortedSet<ICatalog> getInputs();
 
     /** TBC */
     Boolean getIsDiscoverable();
@@ -375,8 +338,38 @@ public interface IDbtProcess {
     /** TBC */
     SortedSet<ILink> getLinks();
 
+    /** Unique id of a matillion component */
+    String getMatillionComponentId();
+
+    /** Unique id which represents the type of a component in matillion */
+    String getMatillionComponentImplementationId();
+
+    /** The last five run status of a matillion component under a matillion job */
+    String getMatillionComponentLastFiveRunStatus();
+
+    /** The latest run status of a matillion component under a matillion job */
+    String getMatillionComponentLastRunStatus();
+
+    /** Job details of the matillion job to which the matillion component internally links to */
+    Map<String, String> getMatillionComponentLinkedJob();
+
+    /** SQL Query involved with a matillion component */
+    SortedSet<String> getMatillionComponentSqls();
+
     /** TBC */
-    IMatillionComponent getMatillionComponent();
+    IMatillionJob getMatillionJob();
+
+    /** Name of the matillion job to which the matillion component belongs */
+    String getMatillionJobName();
+
+    /** Qualified name of the matillion job to which the matillion component belongs */
+    String getMatillionJobQualifiedName();
+
+    /** TBC */
+    ILineageProcess getMatillionProcess();
+
+    /** TBC */
+    String getMatillionVersion();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
@@ -395,9 +388,6 @@ public interface IDbtProcess {
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();
-
-    /** TBC */
-    SortedSet<ICatalog> getOutputs();
 
     /** TBC */
     SortedSet<String> getOwnerGroups();
@@ -488,9 +478,6 @@ public interface IDbtProcess {
 
     /** TBC */
     String getSourceUpdatedBy();
-
-    /** TBC */
-    String getSql();
 
     /** TBC */
     SortedSet<String> getStarredBy();

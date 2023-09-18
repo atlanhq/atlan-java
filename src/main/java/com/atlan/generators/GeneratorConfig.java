@@ -67,7 +67,9 @@ public class GeneratorConfig {
             Map.entry("policyValiditySchedule", "addPolicyValiditySchedule"),
             Map.entry("authServiceConfig", "putAuthServiceConfig"),
             Map.entry("microStrategyLocation", "putMicroStrategyLocation"),
-            Map.entry("starredBy", "addStarredBy"));
+            Map.entry("starredBy", "addStarredBy"),
+            Map.entry("matillionComponentLinkedJob", "putMatillionComponentLinkedJob"),
+            Map.entry("matillionVersions", "addMatillionVersion"));
 
     private static final Map<String, String> DEFAULT_ATTRIBUTE_RENAMES = Map.ofEntries(
             Map.entry("connectorName", "connectorType"),

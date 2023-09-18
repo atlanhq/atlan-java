@@ -159,6 +159,8 @@ public enum NumericFields implements AtlanSearchableField {
     /** TBC */
     KAFKA_TOPIC_REPLICATION_FACTOR("kafkaTopicReplicationFactor"),
     /** TBC */
+    KAFKA_TOPIC_RETENTION_TIME_IN_MS("kafkaTopicRetentionTimeInMs"),
+    /** TBC */
     KAFKA_TOPIC_SEGMENT_BYTES("kafkaTopicSegmentBytes"),
     /** TBC */
     KAFKA_TOPIC_SIZE_IN_BYTES("kafkaTopicSizeInBytes"),
@@ -172,6 +174,12 @@ public enum NumericFields implements AtlanSearchableField {
     LOOKER_TIMES_USED("lookerTimesUsed"),
     /** TBC */
     LOOK_ID("lookId"),
+    /** The count of components under a specific matillion job */
+    MATILLION_JOB_COMPONENT_COUNT("matillionJobComponentCount"),
+    /** Count of the number of matillion projects under a matillion group */
+    MATILLION_PROJECT_COUNT("matillionProjectCount"),
+    /** Count of jobs under a matillion project */
+    MATILLION_PROJECT_JOB_COUNT("matillionProjectJobCount"),
     /** TBC */
     MAX_LENGTH("maxLength"),
     /** TBC */
@@ -200,6 +208,22 @@ public enum NumericFields implements AtlanSearchableField {
     MODE_REPORT_PUBLISHED_AT("modeReportPublishedAt"),
     /** Time (in milliseconds) when the asset was last updated. */
     MODIFICATION_TIMESTAMP("__modificationTimestamp"),
+    /** The average size of an object in the collection */
+    MONGO_DB_COLLECTION_AVERAGE_OBJECT_SIZE("mongoDBCollectionAverageObjectSize"),
+    /** Specifies the seconds after which documents in a time series collection or clustered collection expire */
+    MONGO_DB_COLLECTION_EXPIRE_AFTER_SECONDS("mongoDBCollectionExpireAfterSeconds"),
+    /** The maximum number of documents allowed in the capped collection */
+    MONGO_DB_COLLECTION_MAXIMUM_DOCUMENT_COUNT("mongoDBCollectionMaximumDocumentCount"),
+    /** The maximum size allowed in the capped collection */
+    MONGO_DB_COLLECTION_MAX_SIZE("mongoDBCollectionMaxSize"),
+    /** The number of indexes on the collection */
+    MONGO_DB_COLLECTION_NUM_INDEXES("mongoDBCollectionNumIndexes"),
+    /** The number of orphaned documents in the collection */
+    MONGO_DB_COLLECTION_NUM_ORPHAN_DOCS("mongoDBCollectionNumOrphanDocs"),
+    /** The total size of all indexes */
+    MONGO_DB_COLLECTION_TOTAL_INDEX_SIZE("mongoDBCollectionTotalIndexSize"),
+    /** The number of collection in a MongoDB Database */
+    MONGO_DB_DATABASE_COLLECTION_COUNT("mongoDBDatabaseCollectionCount"),
     /** TBC */
     NESTED_COLUMN_COUNT("nestedColumnCount"),
     /** Number of digits allowed to the right of the decimal point. */

@@ -7,7 +7,12 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.BooleanField;
 import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.KeywordTextField;
+import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -21,17 +26,65 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a lineage process for dbt in Atlan.
+ * MongoDB Collection Assets
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IDbtProcess {
+public interface IMongoDBCollection {
 
-    public static final String TYPE_NAME = "DbtProcess";
+    public static final String TYPE_NAME = "MongoDBCollection";
+
+    /** The average size of an object in the collection */
+    NumericField MONGO_DB_COLLECTION_AVERAGE_OBJECT_SIZE =
+            new NumericField("mongoDBCollectionAverageObjectSize", "mongoDBCollectionAverageObjectSize");
+
+    /** Specifies the seconds after which documents in a time series collection or clustered collection expire */
+    NumericField MONGO_DB_COLLECTION_EXPIRE_AFTER_SECONDS =
+            new NumericField("mongoDBCollectionExpireAfterSeconds", "mongoDBCollectionExpireAfterSeconds");
+
+    /** If the collection is a capped collection */
+    BooleanField MONGO_DB_COLLECTION_IS_CAPPED =
+            new BooleanField("mongoDBCollectionIsCapped", "mongoDBCollectionIsCapped");
+
+    /** The maximum size allowed in the capped collection */
+    NumericField MONGO_DB_COLLECTION_MAX_SIZE =
+            new NumericField("mongoDBCollectionMaxSize", "mongoDBCollectionMaxSize");
+
+    /** The maximum number of documents allowed in the capped collection */
+    NumericField MONGO_DB_COLLECTION_MAXIMUM_DOCUMENT_COUNT =
+            new NumericField("mongoDBCollectionMaximumDocumentCount", "mongoDBCollectionMaximumDocumentCount");
+
+    /** The number of indexes on the collection */
+    NumericField MONGO_DB_COLLECTION_NUM_INDEXES =
+            new NumericField("mongoDBCollectionNumIndexes", "mongoDBCollectionNumIndexes");
+
+    /** The number of orphaned documents in the collection */
+    NumericField MONGO_DB_COLLECTION_NUM_ORPHAN_DOCS =
+            new NumericField("mongoDBCollectionNumOrphanDocs", "mongoDBCollectionNumOrphanDocs");
+
+    /** Definition of the schema applicable for the collection. */
+    TextField MONGO_DB_COLLECTION_SCHEMA_DEFINITION =
+            new TextField("mongoDBCollectionSchemaDefinition", "mongoDBCollectionSchemaDefinition");
+
+    /** Subtype of a MongoDB collection (e.g. Capped, Time Series etc.) */
+    KeywordTextField MONGO_DB_COLLECTION_SUBTYPE = new KeywordTextField(
+            "mongoDBCollectionSubtype", "mongoDBCollectionSubtype", "mongoDBCollectionSubtype.text");
+
+    /** The name of the field which contains the date in each time series document */
+    KeywordField MONGO_DB_COLLECTION_TIME_FIELD =
+            new KeywordField("mongoDBCollectionTimeField", "mongoDBCollectionTimeField");
+
+    /** Set the granularity to the value that is the closest match to the time span between consecutive incoming measurements */
+    KeywordField MONGO_DB_COLLECTION_TIME_GRANULARITY =
+            new KeywordField("mongoDBCollectionTimeGranularity", "mongoDBCollectionTimeGranularity");
+
+    /** The total size of all indexes */
+    NumericField MONGO_DB_COLLECTION_TOTAL_INDEX_SIZE =
+            new NumericField("mongoDBCollectionTotalIndexSize", "mongoDBCollectionTotalIndexSize");
 
     /** TBC */
-    KeywordField DBT_PROCESS_JOB_STATUS = new KeywordField("dbtProcessJobStatus", "dbtProcessJobStatus");
+    RelationField MONGO_DB_DATABASE = new RelationField("mongoDBDatabase");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -43,7 +96,7 @@ public interface IDbtProcess {
     SortedSet<String> getAdminUsers();
 
     /** TBC */
-    SortedSet<IAirflowTask> getAirflowTasks();
+    String getAlias();
 
     /** TBC */
     String getAnnouncementMessage();
@@ -244,9 +297,6 @@ public interface IDbtProcess {
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
-    String getAst();
-
-    /** TBC */
     CertificateStatus getCertificateStatus();
 
     /** TBC */
@@ -259,10 +309,10 @@ public interface IDbtProcess {
     String getCertificateUpdatedBy();
 
     /** TBC */
-    String getCode();
+    Long getColumnCount();
 
     /** TBC */
-    SortedSet<IColumnProcess> getColumnProcesses();
+    SortedSet<IColumn> getColumns();
 
     /** TBC */
     String getConnectionName();
@@ -274,70 +324,43 @@ public interface IDbtProcess {
     AtlanConnectorType getConnectorType();
 
     /** TBC */
-    String getDbtAccountName();
+    String getDatabaseName();
 
     /** TBC */
-    String getDbtAlias();
+    String getDatabaseQualifiedName();
 
     /** TBC */
-    String getDbtConnectionContext();
-
-    /** TBC */
-    String getDbtEnvironmentDbtVersion();
-
-    /** TBC */
-    String getDbtEnvironmentName();
-
-    /** TBC */
-    Long getDbtJobLastRun();
-
-    /** TBC */
-    String getDbtJobName();
-
-    /** TBC */
-    Long getDbtJobNextRun();
-
-    /** TBC */
-    String getDbtJobNextRunHumanized();
-
-    /** TBC */
-    String getDbtJobSchedule();
-
-    /** TBC */
-    String getDbtJobScheduleCronHumanized();
-
-    /** TBC */
-    String getDbtJobStatus();
-
-    /** TBC */
-    String getDbtMeta();
-
-    /** TBC */
-    String getDbtPackageName();
-
-    /** TBC */
-    String getDbtProcessJobStatus();
-
-    /** TBC */
-    String getDbtProjectName();
+    SortedSet<IDbtModel> getDbtModels();
 
     /** TBC */
     String getDbtQualifiedName();
 
     /** TBC */
-    String getDbtSemanticLayerProxyUrl();
+    SortedSet<IDbtSource> getDbtSources();
 
     /** TBC */
-    SortedSet<String> getDbtTags();
-
-    /** TBC */
-    String getDbtUniqueId();
+    SortedSet<IDbtTest> getDbtTests();
 
     /** TBC */
     String getDescription();
 
     /** TBC */
+    SortedSet<ITable> getDimensions();
+
+    /** TBC */
     String getDisplayName();
+
+    /** TBC */
+    String getExternalLocation();
+
+    /** TBC */
+    String getExternalLocationFormat();
+
+    /** TBC */
+    String getExternalLocationRegion();
+
+    /** TBC */
+    SortedSet<ITable> getFacts();
 
     /** TBC */
     SortedSet<IFile> getFiles();
@@ -352,13 +375,25 @@ public interface IDbtProcess {
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
-    SortedSet<ICatalog> getInputs();
-
-    /** TBC */
     Boolean getIsDiscoverable();
 
     /** TBC */
     Boolean getIsEditable();
+
+    /** TBC */
+    Boolean getIsPartitioned();
+
+    /** TBC */
+    Boolean getIsProfiled();
+
+    /** TBC */
+    Boolean getIsQueryPreview();
+
+    /** TBC */
+    Boolean getIsTemporary();
+
+    /** TBC */
+    Long getLastProfiledAt();
 
     /** TBC */
     Long getLastRowChangedAt();
@@ -376,9 +411,6 @@ public interface IDbtProcess {
     SortedSet<ILink> getLinks();
 
     /** TBC */
-    IMatillionComponent getMatillionComponent();
-
-    /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
     /** TBC */
@@ -386,6 +418,45 @@ public interface IDbtProcess {
 
     /** TBC */
     SortedSet<IMetric> getMetrics();
+
+    /** The average size of an object in the collection */
+    Long getMongoDBCollectionAverageObjectSize();
+
+    /** Specifies the seconds after which documents in a time series collection or clustered collection expire */
+    Long getMongoDBCollectionExpireAfterSeconds();
+
+    /** If the collection is a capped collection */
+    Boolean getMongoDBCollectionIsCapped();
+
+    /** The maximum size allowed in the capped collection */
+    Long getMongoDBCollectionMaxSize();
+
+    /** The maximum number of documents allowed in the capped collection */
+    Long getMongoDBCollectionMaximumDocumentCount();
+
+    /** The number of indexes on the collection */
+    Long getMongoDBCollectionNumIndexes();
+
+    /** The number of orphaned documents in the collection */
+    Long getMongoDBCollectionNumOrphanDocs();
+
+    /** Definition of the schema applicable for the collection. */
+    String getMongoDBCollectionSchemaDefinition();
+
+    /** Subtype of a MongoDB collection (e.g. Capped, Time Series etc.) */
+    String getMongoDBCollectionSubtype();
+
+    /** The name of the field which contains the date in each time series document */
+    String getMongoDBCollectionTimeField();
+
+    /** Set the granularity to the value that is the closest match to the time span between consecutive incoming measurements */
+    String getMongoDBCollectionTimeGranularity();
+
+    /** The total size of all indexes */
+    Long getMongoDBCollectionTotalIndexSize();
+
+    /** TBC */
+    IMongoDBDatabase getMongoDBDatabase();
 
     /** TBC */
     String getName();
@@ -397,13 +468,22 @@ public interface IDbtProcess {
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
-    SortedSet<ICatalog> getOutputs();
-
-    /** TBC */
     SortedSet<String> getOwnerGroups();
 
     /** TBC */
     SortedSet<String> getOwnerUsers();
+
+    /** TBC */
+    Long getPartitionCount();
+
+    /** TBC */
+    String getPartitionList();
+
+    /** TBC */
+    String getPartitionStrategy();
+
+    /** TBC */
+    SortedSet<ITablePartition> getPartitions();
 
     /** TBC */
     Double getPopularityScore();
@@ -412,13 +492,46 @@ public interface IDbtProcess {
     String getQualifiedName();
 
     /** TBC */
+    SortedSet<IAtlanQuery> getQueries();
+
+    /** TBC */
+    Long getQueryCount();
+
+    /** TBC */
+    Long getQueryCountUpdatedAt();
+
+    /** TBC */
+    Map<String, String> getQueryPreviewConfig();
+
+    /** TBC */
+    Long getQueryUserCount();
+
+    /** TBC */
+    Map<String, Long> getQueryUserMap();
+
+    /** TBC */
     IReadme getReadme();
+
+    /** TBC */
+    Long getRowCount();
 
     /** TBC */
     String getSampleDataUrl();
 
     /** TBC */
+    ISchema getSchema();
+
+    /** TBC */
+    String getSchemaName();
+
+    /** TBC */
+    String getSchemaQualifiedName();
+
+    /** TBC */
     SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
+
+    /** TBC */
+    Long getSizeBytes();
 
     /** TBC */
     SortedSet<ISodaCheck> getSodaChecks();
@@ -490,7 +603,10 @@ public interface IDbtProcess {
     String getSourceUpdatedBy();
 
     /** TBC */
-    String getSql();
+    SortedSet<IDbtSource> getSqlDBTSources();
+
+    /** TBC */
+    SortedSet<IDbtModel> getSqlDbtModels();
 
     /** TBC */
     SortedSet<String> getStarredBy();
@@ -505,10 +621,22 @@ public interface IDbtProcess {
     String getSubType();
 
     /** TBC */
+    String getTableName();
+
+    /** TBC */
+    String getTableQualifiedName();
+
+    /** TBC */
     String getTenantId();
 
     /** TBC */
     String getUserDescription();
+
+    /** TBC */
+    String getViewName();
+
+    /** TBC */
+    String getViewQualifiedName();
 
     /** TBC */
     Double getViewScore();

@@ -7,7 +7,8 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
-import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -21,17 +22,21 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a lineage process for dbt in Atlan.
+ * MongoDB Database Assets
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IDbtProcess {
+public interface IMongoDBDatabase {
 
-    public static final String TYPE_NAME = "DbtProcess";
+    public static final String TYPE_NAME = "MongoDBDatabase";
 
     /** TBC */
-    KeywordField DBT_PROCESS_JOB_STATUS = new KeywordField("dbtProcessJobStatus", "dbtProcessJobStatus");
+    RelationField MONGO_DB_COLLECTIONS = new RelationField("mongoDBCollections");
+
+    /** The number of collection in a MongoDB Database */
+    NumericField MONGO_DB_DATABASE_COLLECTION_COUNT =
+            new NumericField("mongoDBDatabaseCollectionCount", "mongoDBDatabaseCollectionCount");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -41,9 +46,6 @@ public interface IDbtProcess {
 
     /** TBC */
     SortedSet<String> getAdminUsers();
-
-    /** TBC */
-    SortedSet<IAirflowTask> getAirflowTasks();
 
     /** TBC */
     String getAnnouncementMessage();
@@ -244,9 +246,6 @@ public interface IDbtProcess {
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
-    String getAst();
-
-    /** TBC */
     CertificateStatus getCertificateStatus();
 
     /** TBC */
@@ -259,12 +258,6 @@ public interface IDbtProcess {
     String getCertificateUpdatedBy();
 
     /** TBC */
-    String getCode();
-
-    /** TBC */
-    SortedSet<IColumnProcess> getColumnProcesses();
-
-    /** TBC */
     String getConnectionName();
 
     /** TBC */
@@ -274,64 +267,22 @@ public interface IDbtProcess {
     AtlanConnectorType getConnectorType();
 
     /** TBC */
-    String getDbtAccountName();
+    String getDatabaseName();
 
     /** TBC */
-    String getDbtAlias();
+    String getDatabaseQualifiedName();
 
     /** TBC */
-    String getDbtConnectionContext();
-
-    /** TBC */
-    String getDbtEnvironmentDbtVersion();
-
-    /** TBC */
-    String getDbtEnvironmentName();
-
-    /** TBC */
-    Long getDbtJobLastRun();
-
-    /** TBC */
-    String getDbtJobName();
-
-    /** TBC */
-    Long getDbtJobNextRun();
-
-    /** TBC */
-    String getDbtJobNextRunHumanized();
-
-    /** TBC */
-    String getDbtJobSchedule();
-
-    /** TBC */
-    String getDbtJobScheduleCronHumanized();
-
-    /** TBC */
-    String getDbtJobStatus();
-
-    /** TBC */
-    String getDbtMeta();
-
-    /** TBC */
-    String getDbtPackageName();
-
-    /** TBC */
-    String getDbtProcessJobStatus();
-
-    /** TBC */
-    String getDbtProjectName();
+    SortedSet<IDbtModel> getDbtModels();
 
     /** TBC */
     String getDbtQualifiedName();
 
     /** TBC */
-    String getDbtSemanticLayerProxyUrl();
+    SortedSet<IDbtSource> getDbtSources();
 
     /** TBC */
-    SortedSet<String> getDbtTags();
-
-    /** TBC */
-    String getDbtUniqueId();
+    SortedSet<IDbtTest> getDbtTests();
 
     /** TBC */
     String getDescription();
@@ -352,13 +303,16 @@ public interface IDbtProcess {
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
-    SortedSet<ICatalog> getInputs();
-
-    /** TBC */
     Boolean getIsDiscoverable();
 
     /** TBC */
     Boolean getIsEditable();
+
+    /** TBC */
+    Boolean getIsProfiled();
+
+    /** TBC */
+    Long getLastProfiledAt();
 
     /** TBC */
     Long getLastRowChangedAt();
@@ -376,9 +330,6 @@ public interface IDbtProcess {
     SortedSet<ILink> getLinks();
 
     /** TBC */
-    IMatillionComponent getMatillionComponent();
-
-    /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
     /** TBC */
@@ -388,6 +339,12 @@ public interface IDbtProcess {
     SortedSet<IMetric> getMetrics();
 
     /** TBC */
+    SortedSet<IMongoDBCollection> getMongoDBCollections();
+
+    /** The number of collection in a MongoDB Database */
+    Integer getMongoDBDatabaseCollectionCount();
+
+    /** TBC */
     String getName();
 
     /** TBC */
@@ -395,9 +352,6 @@ public interface IDbtProcess {
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();
-
-    /** TBC */
-    SortedSet<ICatalog> getOutputs();
 
     /** TBC */
     SortedSet<String> getOwnerGroups();
@@ -412,13 +366,37 @@ public interface IDbtProcess {
     String getQualifiedName();
 
     /** TBC */
+    Long getQueryCount();
+
+    /** TBC */
+    Long getQueryCountUpdatedAt();
+
+    /** TBC */
+    Long getQueryUserCount();
+
+    /** TBC */
+    Map<String, Long> getQueryUserMap();
+
+    /** TBC */
     IReadme getReadme();
 
     /** TBC */
     String getSampleDataUrl();
 
     /** TBC */
+    Integer getSchemaCount();
+
+    /** TBC */
+    String getSchemaName();
+
+    /** TBC */
+    String getSchemaQualifiedName();
+
+    /** TBC */
     SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
+
+    /** TBC */
+    SortedSet<ISchema> getSchemas();
 
     /** TBC */
     SortedSet<ISodaCheck> getSodaChecks();
@@ -490,7 +468,10 @@ public interface IDbtProcess {
     String getSourceUpdatedBy();
 
     /** TBC */
-    String getSql();
+    SortedSet<IDbtSource> getSqlDBTSources();
+
+    /** TBC */
+    SortedSet<IDbtModel> getSqlDbtModels();
 
     /** TBC */
     SortedSet<String> getStarredBy();
@@ -505,10 +486,22 @@ public interface IDbtProcess {
     String getSubType();
 
     /** TBC */
+    String getTableName();
+
+    /** TBC */
+    String getTableQualifiedName();
+
+    /** TBC */
     String getTenantId();
 
     /** TBC */
     String getUserDescription();
+
+    /** TBC */
+    String getViewName();
+
+    /** TBC */
+    String getViewQualifiedName();
 
     /** TBC */
     Double getViewScore();

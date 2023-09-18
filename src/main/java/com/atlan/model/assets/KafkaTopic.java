@@ -88,6 +88,10 @@ public class KafkaTopic extends Asset implements IKafkaTopic, IKafka, IEventStor
 
     /** TBC */
     @Attribute
+    Long kafkaTopicRetentionTimeInMs;
+
+    /** TBC */
+    @Attribute
     Long kafkaTopicSegmentBytes;
 
     /** TBC */

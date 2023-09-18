@@ -136,6 +136,8 @@ public enum BooleanFields implements AtlanSearchableField {
     MODE_IS_PUBLIC("modeIsPublic"),
     /** TBC */
     MODE_IS_SHARED("modeIsShared"),
+    /** If the collection is a capped collection */
+    MONGO_DB_COLLECTION_IS_CAPPED("mongoDBCollectionIsCapped"),
     /** TBC */
     POLICY_DELEGATE_ADMIN("policyDelegateAdmin"),
     /** TBC */

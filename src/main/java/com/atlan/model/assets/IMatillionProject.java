@@ -8,6 +8,9 @@ import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.KeywordTextField;
+import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -21,17 +24,37 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a lineage process for dbt in Atlan.
+ * The MatillionProject Type represents a Project in Matillion. A Project in matillion is a logical grouping of configuration settings and jobs which are responsible for data processing and transformation.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IDbtProcess {
+public interface IMatillionProject {
 
-    public static final String TYPE_NAME = "DbtProcess";
+    public static final String TYPE_NAME = "MatillionProject";
+
+    /** List of environments under a matillion project */
+    KeywordField MATILLION_ENVIRONMENTS = new KeywordField("matillionEnvironments", "matillionEnvironments");
 
     /** TBC */
-    KeywordField DBT_PROCESS_JOB_STATUS = new KeywordField("dbtProcessJobStatus", "dbtProcessJobStatus");
+    RelationField MATILLION_GROUP = new RelationField("matillionGroup");
+
+    /** Name of the matillion group to which the matillion project belongs */
+    KeywordTextField MATILLION_GROUP_NAME =
+            new KeywordTextField("matillionGroupName", "matillionGroupName.keyword", "matillionGroupName");
+
+    /** Qualified name of the matillion group to which the matillion project belongs */
+    KeywordTextField MATILLION_GROUP_QUALIFIED_NAME = new KeywordTextField(
+            "matillionGroupQualifiedName", "matillionGroupQualifiedName", "matillionGroupQualifiedName.text");
+
+    /** TBC */
+    RelationField MATILLION_JOBS = new RelationField("matillionJobs");
+
+    /** Count of jobs under a matillion project */
+    NumericField MATILLION_PROJECT_JOB_COUNT = new NumericField("matillionProjectJobCount", "matillionProjectJobCount");
+
+    /** List of versions under a matillion project */
+    KeywordField MATILLION_VERSIONS = new KeywordField("matillionVersions", "matillionVersions");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -41,9 +64,6 @@ public interface IDbtProcess {
 
     /** TBC */
     SortedSet<String> getAdminUsers();
-
-    /** TBC */
-    SortedSet<IAirflowTask> getAirflowTasks();
 
     /** TBC */
     String getAnnouncementMessage();
@@ -244,9 +264,6 @@ public interface IDbtProcess {
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
-    String getAst();
-
-    /** TBC */
     CertificateStatus getCertificateStatus();
 
     /** TBC */
@@ -259,12 +276,6 @@ public interface IDbtProcess {
     String getCertificateUpdatedBy();
 
     /** TBC */
-    String getCode();
-
-    /** TBC */
-    SortedSet<IColumnProcess> getColumnProcesses();
-
-    /** TBC */
     String getConnectionName();
 
     /** TBC */
@@ -274,64 +285,7 @@ public interface IDbtProcess {
     AtlanConnectorType getConnectorType();
 
     /** TBC */
-    String getDbtAccountName();
-
-    /** TBC */
-    String getDbtAlias();
-
-    /** TBC */
-    String getDbtConnectionContext();
-
-    /** TBC */
-    String getDbtEnvironmentDbtVersion();
-
-    /** TBC */
-    String getDbtEnvironmentName();
-
-    /** TBC */
-    Long getDbtJobLastRun();
-
-    /** TBC */
-    String getDbtJobName();
-
-    /** TBC */
-    Long getDbtJobNextRun();
-
-    /** TBC */
-    String getDbtJobNextRunHumanized();
-
-    /** TBC */
-    String getDbtJobSchedule();
-
-    /** TBC */
-    String getDbtJobScheduleCronHumanized();
-
-    /** TBC */
-    String getDbtJobStatus();
-
-    /** TBC */
-    String getDbtMeta();
-
-    /** TBC */
-    String getDbtPackageName();
-
-    /** TBC */
-    String getDbtProcessJobStatus();
-
-    /** TBC */
-    String getDbtProjectName();
-
-    /** TBC */
     String getDbtQualifiedName();
-
-    /** TBC */
-    String getDbtSemanticLayerProxyUrl();
-
-    /** TBC */
-    SortedSet<String> getDbtTags();
-
-    /** TBC */
-    String getDbtUniqueId();
 
     /** TBC */
     String getDescription();
@@ -350,9 +304,6 @@ public interface IDbtProcess {
 
     /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
-
-    /** TBC */
-    SortedSet<ICatalog> getInputs();
 
     /** TBC */
     Boolean getIsDiscoverable();
@@ -375,8 +326,29 @@ public interface IDbtProcess {
     /** TBC */
     SortedSet<ILink> getLinks();
 
+    /** List of environments under a matillion project */
+    SortedSet<String> getMatillionEnvironments();
+
     /** TBC */
-    IMatillionComponent getMatillionComponent();
+    IMatillionGroup getMatillionGroup();
+
+    /** Name of the matillion group to which the matillion project belongs */
+    String getMatillionGroupName();
+
+    /** Qualified name of the matillion group to which the matillion project belongs */
+    String getMatillionGroupQualifiedName();
+
+    /** TBC */
+    SortedSet<IMatillionJob> getMatillionJobs();
+
+    /** Count of jobs under a matillion project */
+    Long getMatillionProjectJobCount();
+
+    /** TBC */
+    String getMatillionVersion();
+
+    /** List of versions under a matillion project */
+    SortedSet<String> getMatillionVersions();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
@@ -395,9 +367,6 @@ public interface IDbtProcess {
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();
-
-    /** TBC */
-    SortedSet<ICatalog> getOutputs();
 
     /** TBC */
     SortedSet<String> getOwnerGroups();
@@ -488,9 +457,6 @@ public interface IDbtProcess {
 
     /** TBC */
     String getSourceUpdatedBy();
-
-    /** TBC */
-    String getSql();
 
     /** TBC */
     SortedSet<String> getStarredBy();

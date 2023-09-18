@@ -6,8 +6,12 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.enums.MatillionJobType;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.KeywordTextField;
+import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -21,17 +25,42 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a lineage process for dbt in Atlan.
+ * The MatillionJob Type repesents a Job in matillion. Jobs in matillion design, organize and execute workflows which are responsible for ETL data processing.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IDbtProcess {
+public interface IMatillionJob {
 
-    public static final String TYPE_NAME = "DbtProcess";
+    public static final String TYPE_NAME = "MatillionJob";
 
     /** TBC */
-    KeywordField DBT_PROCESS_JOB_STATUS = new KeywordField("dbtProcessJobStatus", "dbtProcessJobStatus");
+    RelationField MATILLION_COMPONENTS = new RelationField("matillionComponents");
+
+    /** The count of components under a specific matillion job */
+    NumericField MATILLION_JOB_COMPONENT_COUNT =
+            new NumericField("matillionJobComponentCount", "matillionJobComponentCount");
+
+    /** The hierarchy path of a job under a matillion project. Jobs can be managed at multiple folder levels under a matillion project */
+    KeywordTextField MATILLION_JOB_PATH =
+            new KeywordTextField("matillionJobPath", "matillionJobPath", "matillionJobPath.text");
+
+    /** Specifies whether a matillion job is scheduled weekly or monthly */
+    KeywordField MATILLION_JOB_SCHEDULE = new KeywordField("matillionJobSchedule", "matillionJobSchedule");
+
+    /** The type of a job. There are two kinds of jobs in matillion - orchestration and transformation */
+    KeywordField MATILLION_JOB_TYPE = new KeywordField("matillionJobType", "matillionJobType");
+
+    /** TBC */
+    RelationField MATILLION_PROJECT = new RelationField("matillionProject");
+
+    /** Name of the matillion project to which the matillion job belongs */
+    KeywordTextField MATILLION_PROJECT_NAME =
+            new KeywordTextField("matillionProjectName", "matillionProjectName.keyword", "matillionProjectName");
+
+    /** Qualified name of the matillion project to which the matillion job belongs */
+    KeywordTextField MATILLION_PROJECT_QUALIFIED_NAME = new KeywordTextField(
+            "matillionProjectQualifiedName", "matillionProjectQualifiedName", "matillionProjectQualifiedName.text");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -41,9 +70,6 @@ public interface IDbtProcess {
 
     /** TBC */
     SortedSet<String> getAdminUsers();
-
-    /** TBC */
-    SortedSet<IAirflowTask> getAirflowTasks();
 
     /** TBC */
     String getAnnouncementMessage();
@@ -244,9 +270,6 @@ public interface IDbtProcess {
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
-    String getAst();
-
-    /** TBC */
     CertificateStatus getCertificateStatus();
 
     /** TBC */
@@ -259,12 +282,6 @@ public interface IDbtProcess {
     String getCertificateUpdatedBy();
 
     /** TBC */
-    String getCode();
-
-    /** TBC */
-    SortedSet<IColumnProcess> getColumnProcesses();
-
-    /** TBC */
     String getConnectionName();
 
     /** TBC */
@@ -274,64 +291,7 @@ public interface IDbtProcess {
     AtlanConnectorType getConnectorType();
 
     /** TBC */
-    String getDbtAccountName();
-
-    /** TBC */
-    String getDbtAlias();
-
-    /** TBC */
-    String getDbtConnectionContext();
-
-    /** TBC */
-    String getDbtEnvironmentDbtVersion();
-
-    /** TBC */
-    String getDbtEnvironmentName();
-
-    /** TBC */
-    Long getDbtJobLastRun();
-
-    /** TBC */
-    String getDbtJobName();
-
-    /** TBC */
-    Long getDbtJobNextRun();
-
-    /** TBC */
-    String getDbtJobNextRunHumanized();
-
-    /** TBC */
-    String getDbtJobSchedule();
-
-    /** TBC */
-    String getDbtJobScheduleCronHumanized();
-
-    /** TBC */
-    String getDbtJobStatus();
-
-    /** TBC */
-    String getDbtMeta();
-
-    /** TBC */
-    String getDbtPackageName();
-
-    /** TBC */
-    String getDbtProcessJobStatus();
-
-    /** TBC */
-    String getDbtProjectName();
-
-    /** TBC */
     String getDbtQualifiedName();
-
-    /** TBC */
-    String getDbtSemanticLayerProxyUrl();
-
-    /** TBC */
-    SortedSet<String> getDbtTags();
-
-    /** TBC */
-    String getDbtUniqueId();
 
     /** TBC */
     String getDescription();
@@ -350,9 +310,6 @@ public interface IDbtProcess {
 
     /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
-
-    /** TBC */
-    SortedSet<ICatalog> getInputs();
 
     /** TBC */
     Boolean getIsDiscoverable();
@@ -376,7 +333,31 @@ public interface IDbtProcess {
     SortedSet<ILink> getLinks();
 
     /** TBC */
-    IMatillionComponent getMatillionComponent();
+    SortedSet<IMatillionComponent> getMatillionComponents();
+
+    /** The count of components under a specific matillion job */
+    Long getMatillionJobComponentCount();
+
+    /** The hierarchy path of a job under a matillion project. Jobs can be managed at multiple folder levels under a matillion project */
+    String getMatillionJobPath();
+
+    /** Specifies whether a matillion job is scheduled weekly or monthly */
+    String getMatillionJobSchedule();
+
+    /** The type of a job. There are two kinds of jobs in matillion - orchestration and transformation */
+    MatillionJobType getMatillionJobType();
+
+    /** TBC */
+    IMatillionProject getMatillionProject();
+
+    /** Name of the matillion project to which the matillion job belongs */
+    String getMatillionProjectName();
+
+    /** Qualified name of the matillion project to which the matillion job belongs */
+    String getMatillionProjectQualifiedName();
+
+    /** TBC */
+    String getMatillionVersion();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
@@ -395,9 +376,6 @@ public interface IDbtProcess {
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();
-
-    /** TBC */
-    SortedSet<ICatalog> getOutputs();
 
     /** TBC */
     SortedSet<String> getOwnerGroups();
@@ -488,9 +466,6 @@ public interface IDbtProcess {
 
     /** TBC */
     String getSourceUpdatedBy();
-
-    /** TBC */
-    String getSql();
 
     /** TBC */
     SortedSet<String> getStarredBy();

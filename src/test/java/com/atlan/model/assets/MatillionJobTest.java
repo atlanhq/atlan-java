@@ -16,9 +16,9 @@ import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @SuppressWarnings("deprecation")
-public class KafkaTopicTest {
+public class MatillionJobTest {
 
-    private static final KafkaTopic full = KafkaTopic._internal()
+    private static final MatillionJob full = MatillionJob._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -59,6 +59,7 @@ public class KafkaTopicTest {
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
                             .build())
+            .matillionVersion("String0")
             .inputToAirflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .inputToAirflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .inputToProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -375,32 +376,30 @@ public class KafkaTopicTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
-            .kafkaConsumerGroup(AzureEventHubConsumerGroup.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .kafkaConsumerGroup(
-                    AzureEventHubConsumerGroup.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .kafkaTopicCleanupPolicy(KafkaTopicCleanupPolicy.COMPACT)
-            .kafkaTopicCompressionType(KafkaTopicCompressionType.UNCOMPRESSED)
-            .kafkaTopicIsInternal(true)
-            .kafkaTopicPartitionsCount(123456789L)
-            .kafkaTopicRecordCount(123456789L)
-            .kafkaTopicReplicationFactor(123456789L)
-            .kafkaTopicRetentionTimeInMs(123456789L)
-            .kafkaTopicSegmentBytes(123456789L)
-            .kafkaTopicSizeInBytes(123456789L)
+            .matillionComponent(MatillionComponent.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .matillionComponent(
+                    MatillionComponent.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .matillionJobComponentCount(123456789L)
+            .matillionJobPath("String0")
+            .matillionJobSchedule("String0")
+            .matillionJobType(MatillionJobType.ORCHESTRATION)
+            .matillionProject(MatillionProject.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .matillionProjectName("String0")
+            .matillionProjectQualifiedName("String0")
             .build();
 
     private static final int hash = full.hashCode();
-    private static KafkaTopic frodo;
+    private static MatillionJob frodo;
     private static String serialized;
 
-    @Test(groups = {"KafkaTopic.builderEquivalency"})
+    @Test(groups = {"MatillionJob.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"KafkaTopic.serialize"},
-            dependsOnGroups = {"KafkaTopic.builderEquivalency"})
+            groups = {"MatillionJob.serialize"},
+            dependsOnGroups = {"MatillionJob.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson(Atlan.getDefaultClient());
@@ -409,17 +408,17 @@ public class KafkaTopicTest {
     }
 
     @Test(
-            groups = {"KafkaTopic.deserialize"},
-            dependsOnGroups = {"KafkaTopic.serialize"})
+            groups = {"MatillionJob.deserialize"},
+            dependsOnGroups = {"MatillionJob.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = Atlan.getDefaultClient().readValue(serialized, KafkaTopic.class);
+        frodo = Atlan.getDefaultClient().readValue(serialized, MatillionJob.class);
         assertNotNull(frodo);
     }
 
     @Test(
-            groups = {"KafkaTopic.equivalency"},
-            dependsOnGroups = {"KafkaTopic.serialize", "KafkaTopic.deserialize"})
+            groups = {"MatillionJob.equivalency"},
+            dependsOnGroups = {"MatillionJob.serialize", "MatillionJob.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -428,8 +427,8 @@ public class KafkaTopicTest {
     }
 
     @Test(
-            groups = {"KafkaTopic.equivalency"},
-            dependsOnGroups = {"KafkaTopic.serialize", "KafkaTopic.deserialize"})
+            groups = {"MatillionJob.equivalency"},
+            dependsOnGroups = {"MatillionJob.serialize", "MatillionJob.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

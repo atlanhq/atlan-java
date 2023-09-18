@@ -174,6 +174,20 @@ public enum TextFields implements AtlanSearchableField {
     LOOKER_EXPLORE_QUALIFIED_NAME("lookerExploreQualifiedName.text"),
     /** TBC */
     LOOKER_VIEW_QUALIFIED_NAME("lookerViewQualifiedName.text"),
+    /** Name of the matillion group to which the matillion project belongs */
+    MATILLION_GROUP_NAME("matillionGroupName"),
+    /** Qualified name of the matillion group to which the matillion project belongs */
+    MATILLION_GROUP_QUALIFIED_NAME("matillionGroupQualifiedName.text"),
+    /** Name of the matillion job to which the matillion component belongs */
+    MATILLION_JOB_NAME("matillionJobName"),
+    /** The hierarchy path of a job under a matillion project. Jobs can be managed at multiple folder levels under a matillion project */
+    MATILLION_JOB_PATH("matillionJobPath.text"),
+    /** Qualified name of the matillion job to which the matillion component belongs */
+    MATILLION_JOB_QUALIFIED_NAME("matillionJobQualifiedName.text"),
+    /** Name of the matillion project to which the matillion job belongs */
+    MATILLION_PROJECT_NAME("matillionProjectName"),
+    /** Qualified name of the matillion project to which the matillion job belongs */
+    MATILLION_PROJECT_QUALIFIED_NAME("matillionProjectQualifiedName.text"),
     /** Condition on which the monitor produces an alert. */
     MC_MONITOR_ALERT_CONDITION("mcMonitorAlertCondition"),
     /** Namespace of the monitor. */
@@ -246,6 +260,10 @@ public enum TextFields implements AtlanSearchableField {
     MODE_WORKSPACE_QUALIFIED_NAME("modeWorkspaceQualifiedName.text"),
     /** TBC */
     MODE_WORKSPACE_USERNAME("modeWorkspaceUsername.text"),
+    /** Definition of the schema applicable for the collection. */
+    MONGO_DB_COLLECTION_SCHEMA_DEFINITION("mongoDBCollectionSchemaDefinition"),
+    /** Subtype of a MongoDB collection (e.g. Capped, Time Series etc.) */
+    MONGO_DB_COLLECTION_SUBTYPE("mongoDBCollectionSubtype.text"),
     /** Human-readable name of the asset. */
     NAME("name"),
     /** TBC */
