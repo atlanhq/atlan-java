@@ -270,6 +270,7 @@ public class AssetGenerator extends TypeGenerator implements Comparable<AssetGen
             NUMERIC,
             STEMMED,
             RELATION,
+            S_RELATION,
             ;
         }
 
@@ -289,9 +290,6 @@ public class AssetGenerator extends TypeGenerator implements Comparable<AssetGen
         public Attribute(String className, AttributeDef attributeDef, GeneratorConfig cfg) {
             super(className, attributeDef, cfg);
         }
-
-        // TODO: somewhere in here we need to resolve the search index variations,
-        //  to feed into the entity_interface.ftl template processing...
 
         @Override
         protected void resolveName() {
@@ -323,6 +321,9 @@ public class AssetGenerator extends TypeGenerator implements Comparable<AssetGen
                 if (indices.equals(Set.of(IndexType.RELATION))) {
                     searchType = "RelationField";
                     searchTypeArgs = null;
+                } else if (indices.equals(Set.of(IndexType.S_RELATION))) {
+                    searchType = "SearchableRelationship";
+                    searchTypeArgs = "\"" + searchMap.get(IndexType.S_RELATION) + "\"";
                 } else if (indices.equals(Set.of(IndexType.KEYWORD))) {
                     searchType = "KeywordField";
                     searchTypeArgs = "\"" + searchMap.get(IndexType.KEYWORD) + "\"";
@@ -368,8 +369,15 @@ public class AssetGenerator extends TypeGenerator implements Comparable<AssetGen
             String attrName = attributeDef.getName();
 
             if (attributeDef instanceof RelationshipAttributeDef) {
-                // Park relationship attributes, as they will generally not be searchable
-                searchable.put(IndexType.RELATION, attrName);
+                String mappedRelationship = cfg.getSearchableRelationship(attributeDef.getName());
+                String relationshipType = ((RelationshipAttributeDef) attributeDef).getRelationshipTypeName();
+                if (mappedRelationship != null && mappedRelationship.equals(relationshipType)) {
+                    // Pull few searchable relationships from overall configuration
+                    searchable.put(IndexType.S_RELATION, relationshipType);
+                } else {
+                    // Park all other relationship attributes, as they will generally not be searchable
+                    searchable.put(IndexType.RELATION, attrName);
+                }
             } else {
 
                 // Default index

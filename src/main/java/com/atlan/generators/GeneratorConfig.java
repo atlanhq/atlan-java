@@ -106,6 +106,10 @@ public class GeneratorConfig {
     private static final Map<String, Map<String, String>> DEFAULT_TYPE_OVERRIDES =
             Map.of("TableauDatasource", Map.of("fields", "TableauField"));
 
+    private static final Map<String, String> DEFAULT_SEARCHABLE_RELATIONSHIPS = Map.of(
+            "readme", "asset_readme",
+            "links", "asset_links");
+
     // These are built-in structs, with no serviceType defined
     static final Set<String> BUILT_IN_STRUCTS = Set.of("Histogram", "ColumnValueFrequencyMap");
 
@@ -207,6 +211,14 @@ public class GeneratorConfig {
     private Map<String, Map<String, String>> retypeAttributes;
 
     /**
+     * Mapping of relationships that can be searched via ElasticSearch.
+     * Keyed by the name of the relationship attribute in Atlan, with the value being the name of the
+     * type of relationship that attribute captures (as it will be referred to in ElasticSearch).
+     */
+    @Singular
+    private Map<String, String> searchableRelationships;
+
+    /**
      * Configuration for generating using embedded templates in a jar file.
      *
      * @param generatorClass top-level class that is used to generate the code
@@ -237,7 +249,8 @@ public class GeneratorConfig {
                 .singularForAttributes(DEFAULT_SINGULARS)
                 .renameAttributes(DEFAULT_ATTRIBUTE_RENAMES)
                 .attributeToEnums(DEFAULT_ATTRIBUTE_ENUMS)
-                .retypeAttributes(DEFAULT_TYPE_OVERRIDES);
+                .retypeAttributes(DEFAULT_TYPE_OVERRIDES)
+                .searchableRelationships(DEFAULT_SEARCHABLE_RELATIONSHIPS);
     }
 
     /**
@@ -256,6 +269,7 @@ public class GeneratorConfig {
                 .renameAttributes(DEFAULT_ATTRIBUTE_RENAMES)
                 .attributeToEnums(DEFAULT_ATTRIBUTE_ENUMS)
                 .retypeAttributes(DEFAULT_TYPE_OVERRIDES)
+                .searchableRelationships(DEFAULT_SEARCHABLE_RELATIONSHIPS)
                 .renameEnumValue("ResolvingDNS", "RESOLVING_DNS")
                 .renameEnumValue("RA-GRS", "RA_GRS")
                 .doNotGenerateAsset("Referenceable")
@@ -386,6 +400,17 @@ public class GeneratorConfig {
         }
         String built = builder.toString();
         return built.endsWith("_") ? built.substring(0, built.length() - 1) : built;
+    }
+
+    /**
+     * Retrieve the relationship type name for any searchable relationship (will be a limited
+     * set of the overall relationships).
+     *
+     * @param field name of the relationship attribute in Atlan
+     * @return the relationship type name, if the attribute is searchable, otherwise null
+     */
+    public String getSearchableRelationship(String field) {
+        return searchableRelationships.getOrDefault(field, null);
     }
 
     private static String getUpperCamelCase(String text) {

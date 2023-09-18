@@ -272,4 +272,48 @@ public class AttributeDefOptions extends AtlanObject {
 
     /** TBC */
     String isAppendOnPartialUpdate;
+
+    /**
+     * Append the provided set of attribute definition options onto this attribute definition.
+     * Note that certain options are ignored by the append, specifically: primitiveType, isEnum,
+     * enumType, customType, multiValueSelect, isArchived, archivedAt, archivedBy. These should only be set
+     * by the appropriate initial setup {@link #of(AtlanCustomAttributePrimitiveType, String)} or archival
+     * of an attribute definition.
+     *
+     * @param options to append to this set of attribute definition options
+     * @return the combined set of attribute definition options
+     */
+    public AttributeDefOptions append(AttributeDefOptions options) {
+        if (options == null) {
+            return this;
+        }
+        if (options.description != null) {
+            this.description = options.description;
+        }
+        if (options.applicableEntityTypes != null) {
+            this.applicableEntityTypes = options.applicableEntityTypes;
+        }
+        if (options.customApplicableEntityTypes != null) {
+            this.customApplicableEntityTypes = options.customApplicableEntityTypes;
+        }
+        if (options.allowSearch != null) {
+            this.allowSearch = options.allowSearch;
+        }
+        if (options.maxStrLength != null) {
+            this.maxStrLength = options.maxStrLength;
+        }
+        if (options.allowFiltering != null) {
+            this.allowFiltering = options.allowFiltering;
+        }
+        if (options.showInOverview != null) {
+            this.showInOverview = options.showInOverview;
+        }
+        if (options.isDeprecated != null) {
+            this.isDeprecated = options.isDeprecated;
+        }
+        if (options.hasTimePrecision != null) {
+            this.hasTimePrecision = options.hasTimePrecision;
+        }
+        return this;
+    }
 }
