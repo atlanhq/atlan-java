@@ -88,6 +88,9 @@ public interface ICatalog {
             case DataStudioAsset.TYPE_NAME:
                 ref = DataStudioAsset.refByQualifiedName(qualifiedName);
                 break;
+            case Database.TYPE_NAME:
+                ref = Database.refByQualifiedName(qualifiedName);
+                break;
             case DbtColumnProcess.TYPE_NAME:
                 ref = DbtColumnProcess.refByQualifiedName(qualifiedName);
                 break;
@@ -126,6 +129,9 @@ public interface ICatalog {
                 break;
             case Insight.TYPE_NAME:
                 ref = Insight.refByQualifiedName(qualifiedName);
+                break;
+            case KafkaConsumerGroup.TYPE_NAME:
+                ref = KafkaConsumerGroup.refByQualifiedName(qualifiedName);
                 break;
             case KafkaTopic.TYPE_NAME:
                 ref = KafkaTopic.refByQualifiedName(qualifiedName);
