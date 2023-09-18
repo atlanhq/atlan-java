@@ -59,9 +59,9 @@ public class AzureEventHubTest {
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
                             .build())
-            .kafkaConsumerGroup(AzureEventHubConsumerGroup.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .kafkaConsumerGroup(KafkaConsumerGroup.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .kafkaConsumerGroup(
-                    AzureEventHubConsumerGroup.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+                    KafkaConsumerGroup.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .kafkaTopicCleanupPolicy(KafkaTopicCleanupPolicy.COMPACT)
             .kafkaTopicCompressionType(KafkaTopicCompressionType.UNCOMPRESSED)
             .kafkaTopicIsInternal(true)

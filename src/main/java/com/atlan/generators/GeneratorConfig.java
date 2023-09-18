@@ -286,7 +286,9 @@ public class GeneratorConfig {
                 .forceNonAbstractAsset("ColumnProcess")
                 .forceNonAbstractAsset("QlikSpace")
                 .forceNonAbstractAsset("KafkaTopic")
-                .forceNonAbstractAsset("Table");
+                .forceNonAbstractAsset("KafkaConsumerGroup")
+                .forceNonAbstractAsset("Table")
+                .forceNonAbstractAsset("Database");
     }
 
     /**
