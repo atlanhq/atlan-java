@@ -40,6 +40,76 @@ public class AttributeDef extends AtlanObject implements Comparable<AttributeDef
      * Instantiate an attribute definition from the provided parameters.
      *
      * @param displayName human-readable name of the attribute
+     * @param type primitive type of the attribute (non-enum)
+     * @param multiValued true if multiple values are allowed for the attribute, otherwise false
+     * @return the attribute definition
+     * @throws AtlanException if there is any API error trying to construct the attribute (usually due to a non-existent enumeration)
+     */
+    public static AttributeDef of(String displayName, AtlanCustomAttributePrimitiveType type, boolean multiValued)
+            throws AtlanException {
+        return of(Atlan.getDefaultClient(), displayName, type, multiValued);
+    }
+
+    /**
+     * Instantiate an attribute definition from the provided parameters.
+     *
+     * @param client connectivity to the Atlan tenant on which this attribute is intended to be created
+     * @param displayName human-readable name of the attribute
+     * @param type primitive type of the attribute (non-enum)
+     * @param multiValued true if multiple values are allowed for the attribute, otherwise false
+     * @return the attribute definition
+     * @throws AtlanException if there is any API error trying to construct the attribute (usually due to a non-existent enumeration)
+     */
+    public static AttributeDef of(
+            AtlanClient client, String displayName, AtlanCustomAttributePrimitiveType type, boolean multiValued)
+            throws AtlanException {
+        return of(client, displayName, type, null, multiValued);
+    }
+
+    /**
+     * Instantiate an attribute definition from the provided parameters.
+     *
+     * @param displayName human-readable name of the attribute
+     * @param type primitive type of the attribute (non-enum)
+     * @param multiValued true if multiple values are allowed for the attribute, otherwise false
+     * @param otherOptions other options to set on the attribute
+     * @return the attribute definition
+     * @throws AtlanException if there is any API error trying to construct the attribute (usually due to a non-existent enumeration)
+     */
+    public static AttributeDef of(
+            String displayName,
+            AtlanCustomAttributePrimitiveType type,
+            boolean multiValued,
+            AttributeDefOptions otherOptions)
+            throws AtlanException {
+        return of(Atlan.getDefaultClient(), displayName, type, multiValued, otherOptions);
+    }
+
+    /**
+     * Instantiate an attribute definition from the provided parameters.
+     *
+     * @param client connectivity to the Atlan tenant on which this attribute is intended to be created
+     * @param displayName human-readable name of the attribute
+     * @param type primitive type of the attribute (non-enum)
+     * @param multiValued true if multiple values are allowed for the attribute, otherwise false
+     * @param otherOptions other options to set on the attribute
+     * @return the attribute definition
+     * @throws AtlanException if there is any API error trying to construct the attribute (usually due to a non-existent enumeration)
+     */
+    public static AttributeDef of(
+            AtlanClient client,
+            String displayName,
+            AtlanCustomAttributePrimitiveType type,
+            boolean multiValued,
+            AttributeDefOptions otherOptions)
+            throws AtlanException {
+        return of(client, displayName, type, null, multiValued, otherOptions);
+    }
+
+    /**
+     * Instantiate an attribute definition from the provided parameters.
+     *
+     * @param displayName human-readable name of the attribute
      * @param type primitive type of the attribute
      * @param optionsName name of the options (enumeration) if the primitive type is an enumeration (can be null otherwise)
      * @param multiValued true if multiple values are allowed for the attribute, otherwise false
@@ -70,6 +140,50 @@ public class AttributeDef extends AtlanObject implements Comparable<AttributeDef
             String optionsName,
             boolean multiValued)
             throws AtlanException {
+        return of(client, displayName, type, optionsName, multiValued, null);
+    }
+
+    /**
+     * Instantiate an attribute definition from the provided parameters.
+     *
+     * @param displayName human-readable name of the attribute
+     * @param type primitive type of the attribute
+     * @param optionsName name of the options (enumeration) if the primitive type is an enumeration (can be null otherwise)
+     * @param multiValued true if multiple values are allowed for the attribute, otherwise false
+     * @param otherOptions other options to set on the attribute
+     * @return the attribute definition
+     * @throws AtlanException if there is any API error trying to construct the attribute (usually due to a non-existent enumeration)
+     */
+    public static AttributeDef of(
+            String displayName,
+            AtlanCustomAttributePrimitiveType type,
+            String optionsName,
+            boolean multiValued,
+            AttributeDefOptions otherOptions)
+            throws AtlanException {
+        return of(Atlan.getDefaultClient(), displayName, type, optionsName, multiValued, otherOptions);
+    }
+
+    /**
+     * Instantiate an attribute definition from the provided parameters.
+     *
+     * @param client connectivity to the Atlan tenant on which this attribute is intended to be created
+     * @param displayName human-readable name of the attribute
+     * @param type primitive type of the attribute
+     * @param optionsName name of the options (enumeration) if the primitive type is an enumeration (can be null otherwise)
+     * @param multiValued true if multiple values are allowed for the attribute, otherwise false
+     * @param otherOptions other options to set on the attribute
+     * @return the attribute definition
+     * @throws AtlanException if there is any API error trying to construct the attribute (usually due to a non-existent enumeration)
+     */
+    public static AttributeDef of(
+            AtlanClient client,
+            String displayName,
+            AtlanCustomAttributePrimitiveType type,
+            String optionsName,
+            boolean multiValued,
+            AttributeDefOptions otherOptions)
+            throws AtlanException {
         AttributeDefBuilder<?, ?> builder = AttributeDef.builder().displayName(displayName);
         String baseType;
         boolean addEnumValues = false;
@@ -92,9 +206,11 @@ public class AttributeDef extends AtlanObject implements Comparable<AttributeDef
             builder.typeName("array<" + baseType + ">")
                     .options(AttributeDefOptions.of(type, optionsName).toBuilder()
                             .multiValueSelect(true)
-                            .build());
+                            .build()
+                            .append(otherOptions));
         } else {
-            builder.typeName(baseType).options(AttributeDefOptions.of(type, optionsName));
+            builder.typeName(baseType)
+                    .options(AttributeDefOptions.of(type, optionsName).append(otherOptions));
         }
         if (addEnumValues) {
             builder.enumValues(client.getEnumCache().getByName(optionsName).getValidValues());

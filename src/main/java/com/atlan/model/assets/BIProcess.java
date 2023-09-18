@@ -70,6 +70,10 @@ public class BIProcess extends Asset implements IBIProcess, ILineageProcess, IAs
 
     /** TBC */
     @Attribute
+    IMatillionComponent matillionComponent;
+
+    /** TBC */
+    @Attribute
     @Singular
     SortedSet<ICatalog> outputs;
 

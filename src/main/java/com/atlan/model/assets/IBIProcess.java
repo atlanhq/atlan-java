@@ -309,6 +309,9 @@ public interface IBIProcess {
     SortedSet<ILink> getLinks();
 
     /** TBC */
+    IMatillionComponent getMatillionComponent();
+
+    /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
     /** TBC */

@@ -14,6 +14,7 @@ import com.atlan.model.fields.KeywordTextStemmedField;
 import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.NumericRankField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.SearchableRelationship;
 import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
@@ -336,7 +337,7 @@ public interface IAsset {
     KeywordField LAST_SYNC_WORKFLOW_NAME = new KeywordField("lastSyncWorkflowName", "lastSyncWorkflowName");
 
     /** Resources that are linked to this asset. */
-    RelationField LINKS = new RelationField("links");
+    SearchableRelationship LINKS = new SearchableRelationship("links", "asset_links");
 
     /** TBC */
     RelationField MC_INCIDENTS = new RelationField("mcIncidents");
@@ -361,7 +362,7 @@ public interface IAsset {
             new NumericRankField("popularityScore", "popularityScore", "popularityScore.rank_feature");
 
     /** README that is linked to this asset. */
-    RelationField README = new RelationField("readme");
+    SearchableRelationship README = new SearchableRelationship("readme", "asset_readme");
 
     /** TBC */
     KeywordTextField SAMPLE_DATA_URL = new KeywordTextField("sampleDataUrl", "sampleDataUrl", "sampleDataUrl.text");

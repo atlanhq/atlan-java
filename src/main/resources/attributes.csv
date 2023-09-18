@@ -297,6 +297,7 @@ Azure,Base class for Azure assets.,azureResourceId,TBC
 Azure,Base class for Azure assets.,azureLocation,TBC
 Azure,Base class for Azure assets.,adlsAccountSecondaryLocation,TBC
 Azure,Base class for Azure assets.,azureTags,Tags that have been applied to this Azure asset.
+AzureEventHub,"Azure Event Hub assets, equivalent to Kafka Topics",azureEventHubStatus,TBC
 Badge,Instance of a badge in Atlan.,badgeConditions,TBC
 Badge,Instance of a badge in Atlan.,badgeMetadataAttribute,TBC
 Catalog,Base class for catalog assets.,inputToProcesses,Processes to which this asset provides input.
@@ -527,6 +528,7 @@ KafkaTopic,Instance of a Kafka Topic in Atlan.,kafkaTopicIsInternal,TBC
 KafkaTopic,Instance of a Kafka Topic in Atlan.,kafkaTopicCompressionType,TBC
 KafkaTopic,Instance of a Kafka Topic in Atlan.,kafkaTopicReplicationFactor,TBC
 KafkaTopic,Instance of a Kafka Topic in Atlan.,kafkaTopicSegmentBytes,TBC
+KafkaTopic,Instance of a Kafka Topic in Atlan.,kafkaTopicRetentionTimeInMs,TBC
 KafkaTopic,Instance of a Kafka Topic in Atlan.,kafkaTopicPartitionsCount,TBC
 KafkaTopic,Instance of a Kafka Topic in Atlan.,kafkaTopicSizeInBytes,TBC
 KafkaTopic,Instance of a Kafka Topic in Atlan.,kafkaTopicRecordCount,Number of (unexpired) messages in this topic.
@@ -569,8 +571,10 @@ LookerFolder,Instance of a Looker folder in Atlan.,sourceContentMetadataId,TBC
 LookerFolder,Instance of a Looker folder in Atlan.,sourceCreatorId,TBC
 LookerFolder,Instance of a Looker folder in Atlan.,sourceChildCount,TBC
 LookerFolder,Instance of a Looker folder in Atlan.,sourceParentID,TBC
+LookerFolder,Instance of a Looker folder in Atlan.,lookerSubFolders,TBC
 LookerFolder,Instance of a Looker folder in Atlan.,dashboards,TBC
 LookerFolder,Instance of a Looker folder in Atlan.,looks,TBC
+LookerFolder,Instance of a Looker folder in Atlan.,lookerParentFolder,TBC
 LookerLook,Instance of a Looker look in Atlan.,folderName,TBC
 LookerLook,Instance of a Looker look in Atlan.,sourceUserId,TBC
 LookerLook,Instance of a Looker look in Atlan.,sourceViewCount,TBC
@@ -657,6 +661,34 @@ MaterialisedView,Instance of a materialized view in Atlan.,isTemporary,Whether t
 MaterialisedView,Instance of a materialized view in Atlan.,definition,Definition of the materialized view (DDL).
 MaterialisedView,Instance of a materialized view in Atlan.,columns,Columns that exist within this materialized view.
 MaterialisedView,Instance of a materialized view in Atlan.,atlanSchema,Schema in which this materialized view exists.
+Matillion,The Matillion type is a super type for all assets ingested from Matillion,matillionVersion,This designates the current point in time state of a project. We can think it to be branch or version control in github
+MatillionComponent,The MatillionComponent type represents a Component in matillion. Components are a part of a matillion job where each one of them is responsible for accomplising a task based on the type of component used,matillionComponentId,Unique id of a matillion component
+MatillionComponent,The MatillionComponent type represents a Component in matillion. Components are a part of a matillion job where each one of them is responsible for accomplising a task based on the type of component used,matillionComponentImplementationId,Unique id which represents the type of a component in matillion
+MatillionComponent,The MatillionComponent type represents a Component in matillion. Components are a part of a matillion job where each one of them is responsible for accomplising a task based on the type of component used,matillionComponentLinkedJob,Job details of the matillion job to which the matillion component internally links to
+MatillionComponent,The MatillionComponent type represents a Component in matillion. Components are a part of a matillion job where each one of them is responsible for accomplising a task based on the type of component used,matillionComponentLastRunStatus,The latest run status of a matillion component under a matillion job
+MatillionComponent,The MatillionComponent type represents a Component in matillion. Components are a part of a matillion job where each one of them is responsible for accomplising a task based on the type of component used,matillionComponentLastFiveRunStatus,The last five run status of a matillion component under a matillion job
+MatillionComponent,The MatillionComponent type represents a Component in matillion. Components are a part of a matillion job where each one of them is responsible for accomplising a task based on the type of component used,matillionComponentSqls,SQL Query involved with a matillion component
+MatillionComponent,The MatillionComponent type represents a Component in matillion. Components are a part of a matillion job where each one of them is responsible for accomplising a task based on the type of component used,matillionJobName,Name of the matillion job to which the matillion component belongs
+MatillionComponent,The MatillionComponent type represents a Component in matillion. Components are a part of a matillion job where each one of them is responsible for accomplising a task based on the type of component used,matillionJobQualifiedName,Qualified name of the matillion job to which the matillion component belongs
+MatillionComponent,The MatillionComponent type represents a Component in matillion. Components are a part of a matillion job where each one of them is responsible for accomplising a task based on the type of component used,matillionProcess,TBC
+MatillionComponent,The MatillionComponent type represents a Component in matillion. Components are a part of a matillion job where each one of them is responsible for accomplising a task based on the type of component used,matillionJob,TBC
+MatillionGroup,The MatillionGroup type represents a Group in Matillion. A Group is the top level hierarchy in Matillion where resources are managed and explored.,matillionProjectCount,Count of the number of matillion projects under a matillion group
+MatillionGroup,The MatillionGroup type represents a Group in Matillion. A Group is the top level hierarchy in Matillion where resources are managed and explored.,matillionProjects,TBC
+MatillionJob,"The MatillionJob Type repesents a Job in matillion. Jobs in matillion design, organize and execute workflows which are responsible for ETL data processing.",matillionJobType,The type of a job. There are two kinds of jobs in matillion - orchestration and transformation
+MatillionJob,"The MatillionJob Type repesents a Job in matillion. Jobs in matillion design, organize and execute workflows which are responsible for ETL data processing.",matillionJobPath,The hierarchy path of a job under a matillion project. Jobs can be managed at multiple folder levels under a matillion project
+MatillionJob,"The MatillionJob Type repesents a Job in matillion. Jobs in matillion design, organize and execute workflows which are responsible for ETL data processing.",matillionJobComponentCount,The count of components under a specific matillion job
+MatillionJob,"The MatillionJob Type repesents a Job in matillion. Jobs in matillion design, organize and execute workflows which are responsible for ETL data processing.",matillionJobSchedule,Specifies whether a matillion job is scheduled weekly or monthly
+MatillionJob,"The MatillionJob Type repesents a Job in matillion. Jobs in matillion design, organize and execute workflows which are responsible for ETL data processing.",matillionProjectName,Name of the matillion project to which the matillion job belongs
+MatillionJob,"The MatillionJob Type repesents a Job in matillion. Jobs in matillion design, organize and execute workflows which are responsible for ETL data processing.",matillionProjectQualifiedName,Qualified name of the matillion project to which the matillion job belongs
+MatillionJob,"The MatillionJob Type repesents a Job in matillion. Jobs in matillion design, organize and execute workflows which are responsible for ETL data processing.",matillionProject,TBC
+MatillionJob,"The MatillionJob Type repesents a Job in matillion. Jobs in matillion design, organize and execute workflows which are responsible for ETL data processing.",matillionComponents,TBC
+MatillionProject,The MatillionProject Type represents a Project in Matillion. A Project in matillion is a logical grouping of configuration settings and jobs which are responsible for data processing and transformation.,matillionVersions,List of versions under a matillion project
+MatillionProject,The MatillionProject Type represents a Project in Matillion. A Project in matillion is a logical grouping of configuration settings and jobs which are responsible for data processing and transformation.,matillionEnvironments,List of environments under a matillion project
+MatillionProject,The MatillionProject Type represents a Project in Matillion. A Project in matillion is a logical grouping of configuration settings and jobs which are responsible for data processing and transformation.,matillionProjectJobCount,Count of jobs under a matillion project
+MatillionProject,The MatillionProject Type represents a Project in Matillion. A Project in matillion is a logical grouping of configuration settings and jobs which are responsible for data processing and transformation.,matillionGroupName,Name of the matillion group to which the matillion project belongs
+MatillionProject,The MatillionProject Type represents a Project in Matillion. A Project in matillion is a logical grouping of configuration settings and jobs which are responsible for data processing and transformation.,matillionGroupQualifiedName,Qualified name of the matillion group to which the matillion project belongs
+MatillionProject,The MatillionProject Type represents a Project in Matillion. A Project in matillion is a logical grouping of configuration settings and jobs which are responsible for data processing and transformation.,matillionJobs,TBC
+MatillionProject,The MatillionProject Type represents a Project in Matillion. A Project in matillion is a logical grouping of configuration settings and jobs which are responsible for data processing and transformation.,matillionGroup,TBC
 Metabase,Base class for Metabase assets.,metabaseCollectionName,TBC
 Metabase,Base class for Metabase assets.,metabaseCollectionQualifiedName,TBC
 MetabaseCollection,Instance of a Metabase collection in Atlan.,metabaseSlug,TBC
@@ -768,6 +800,21 @@ ModeReport,Instance of a Mode report in Atlan.,modeQueries,TBC
 ModeReport,Instance of a Mode report in Atlan.,modeCollections,TBC
 ModeWorkspace,Instance of a Mode workspace in Atlan.,modeCollectionCount,TBC
 ModeWorkspace,Instance of a Mode workspace in Atlan.,modeCollections,TBC
+MongoDBCollection,MongoDB Collection Assets,mongoDBCollectionSubtype,"Subtype of a MongoDB collection (e.g. Capped, Time Series etc.)"
+MongoDBCollection,MongoDB Collection Assets,mongoDBCollectionIsCapped,If the collection is a capped collection
+MongoDBCollection,MongoDB Collection Assets,mongoDBCollectionTimeField,The name of the field which contains the date in each time series document
+MongoDBCollection,MongoDB Collection Assets,mongoDBCollectionTimeGranularity,Set the granularity to the value that is the closest match to the time span between consecutive incoming measurements
+MongoDBCollection,MongoDB Collection Assets,mongoDBCollectionExpireAfterSeconds,Specifies the seconds after which documents in a time series collection or clustered collection expire
+MongoDBCollection,MongoDB Collection Assets,mongoDBCollectionMaximumDocumentCount,The maximum number of documents allowed in the capped collection
+MongoDBCollection,MongoDB Collection Assets,mongoDBCollectionMaxSize,The maximum size allowed in the capped collection
+MongoDBCollection,MongoDB Collection Assets,mongoDBCollectionNumOrphanDocs,The number of orphaned documents in the collection
+MongoDBCollection,MongoDB Collection Assets,mongoDBCollectionNumIndexes,The number of indexes on the collection
+MongoDBCollection,MongoDB Collection Assets,mongoDBCollectionTotalIndexSize,The total size of all indexes
+MongoDBCollection,MongoDB Collection Assets,mongoDBCollectionAverageObjectSize,The average size of an object in the collection
+MongoDBCollection,MongoDB Collection Assets,mongoDBCollectionSchemaDefinition,Definition of the schema applicable for the collection.
+MongoDBCollection,MongoDB Collection Assets,mongoDBDatabase,TBC
+MongoDBDatabase,MongoDB Database Assets,mongoDBDatabaseCollectionCount,The number of collection in a MongoDB Database
+MongoDBDatabase,MongoDB Database Assets,mongoDBCollections,TBC
 MonteCarlo,Base class for Monte Carlo assets.,mcLabels,TBC
 MonteCarlo,Base class for Monte Carlo assets.,mcAssetQualifiedNames,TBC
 Namespace,Base class for query collections and folders.,childrenQueries,TBC
@@ -881,6 +928,7 @@ Process,Instance of a lineage process in Atlan.,code,Code that ran within the pr
 Process,Instance of a lineage process in Atlan.,sql,SQL query that ran to produce the outputs.
 Process,Instance of a lineage process in Atlan.,ast,TBC
 Process,Instance of a lineage process in Atlan.,outputs,Assets that are outputs from this process.
+Process,Instance of a lineage process in Atlan.,matillionComponent,TBC
 Process,Instance of a lineage process in Atlan.,inputs,Assets that are inputs to this process.
 Process,Instance of a lineage process in Atlan.,airflowTasks,TBC
 Process,Instance of a lineage process in Atlan.,columnProcesses,Processes that detail column-level lineage for this process.
@@ -917,6 +965,8 @@ QlikSpace,Instance of a Qlik Space in Atlan.,qlikSpaceType,"Type of space, for e
 QlikSpace,Instance of a Qlik Space in Atlan.,qlikDatasets,Datasets contained within the space.
 QlikSpace,Instance of a Qlik Space in Atlan.,qlikApps,Apps contained within the space.
 Query,Instance of a query in Atlan.,rawQuery,TBC
+Query,Instance of a query in Atlan.,longRawQuery,TBC
+Query,Instance of a query in Atlan.,rawQueryText,TBC
 Query,Instance of a query in Atlan.,defaultSchemaQualifiedName,TBC
 Query,Instance of a query in Atlan.,defaultDatabaseQualifiedName,TBC
 Query,Instance of a query in Atlan.,variablesSchemaBase64,TBC

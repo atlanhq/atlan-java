@@ -43,13 +43,13 @@ public class AttributeDefOptions extends AtlanObject {
             AuthPolicy.TYPE_NAME,
             AuthService.TYPE_NAME,
             AzureEventHub.TYPE_NAME,
+            AzureEventHubConsumerGroup.TYPE_NAME,
             BIProcess.TYPE_NAME,
             Badge.TYPE_NAME,
             Column.TYPE_NAME,
             ColumnProcess.TYPE_NAME,
             Connection.TYPE_NAME,
             DataStudioAsset.TYPE_NAME,
-            Database.TYPE_NAME,
             DbtColumnProcess.TYPE_NAME,
             DbtMetric.TYPE_NAME,
             DbtModel.TYPE_NAME,
@@ -67,7 +67,6 @@ public class AttributeDefOptions extends AtlanObject {
             GlossaryCategory.TYPE_NAME,
             GlossaryTerm.TYPE_NAME,
             Insight.TYPE_NAME,
-            KafkaConsumerGroup.TYPE_NAME,
             KafkaTopic.TYPE_NAME,
             LineageProcess.TYPE_NAME,
             Link.TYPE_NAME,
@@ -84,6 +83,10 @@ public class AttributeDefOptions extends AtlanObject {
             MCIncident.TYPE_NAME,
             MCMonitor.TYPE_NAME,
             MaterializedView.TYPE_NAME,
+            MatillionComponent.TYPE_NAME,
+            MatillionGroup.TYPE_NAME,
+            MatillionJob.TYPE_NAME,
+            MatillionProject.TYPE_NAME,
             MetabaseCollection.TYPE_NAME,
             MetabaseDashboard.TYPE_NAME,
             MetabaseQuestion.TYPE_NAME,
@@ -101,6 +104,8 @@ public class AttributeDefOptions extends AtlanObject {
             ModeQuery.TYPE_NAME,
             ModeReport.TYPE_NAME,
             ModeWorkspace.TYPE_NAME,
+            MongoDBCollection.TYPE_NAME,
+            MongoDBDatabase.TYPE_NAME,
             Persona.TYPE_NAME,
             PowerBIColumn.TYPE_NAME,
             PowerBIDashboard.TYPE_NAME,
@@ -250,6 +255,9 @@ public class AttributeDefOptions extends AtlanObject {
     /** Used for Atlan-specific types like {@code users}, {@code groups}, {@code url}, and {@code SQL}. */
     String customType;
 
+    /** If true for a date attribute, then time-level precision is also available in the UI (otherwise only date-level) */
+    Boolean hasTimePrecision;
+
     /** Whether the attribute has been deleted (true) or is still active (false). */
     Boolean isArchived;
 
@@ -264,4 +272,48 @@ public class AttributeDefOptions extends AtlanObject {
 
     /** TBC */
     String isAppendOnPartialUpdate;
+
+    /**
+     * Append the provided set of attribute definition options onto this attribute definition.
+     * Note that certain options are ignored by the append, specifically: primitiveType, isEnum,
+     * enumType, customType, multiValueSelect, isArchived, archivedAt, archivedBy. These should only be set
+     * by the appropriate initial setup {@link #of(AtlanCustomAttributePrimitiveType, String)} or archival
+     * of an attribute definition.
+     *
+     * @param options to append to this set of attribute definition options
+     * @return the combined set of attribute definition options
+     */
+    public AttributeDefOptions append(AttributeDefOptions options) {
+        if (options == null) {
+            return this;
+        }
+        if (options.description != null) {
+            this.description = options.description;
+        }
+        if (options.applicableEntityTypes != null) {
+            this.applicableEntityTypes = options.applicableEntityTypes;
+        }
+        if (options.customApplicableEntityTypes != null) {
+            this.customApplicableEntityTypes = options.customApplicableEntityTypes;
+        }
+        if (options.allowSearch != null) {
+            this.allowSearch = options.allowSearch;
+        }
+        if (options.maxStrLength != null) {
+            this.maxStrLength = options.maxStrLength;
+        }
+        if (options.allowFiltering != null) {
+            this.allowFiltering = options.allowFiltering;
+        }
+        if (options.showInOverview != null) {
+            this.showInOverview = options.showInOverview;
+        }
+        if (options.isDeprecated != null) {
+            this.isDeprecated = options.isDeprecated;
+        }
+        if (options.hasTimePrecision != null) {
+            this.hasTimePrecision = options.hasTimePrecision;
+        }
+        return this;
+    }
 }

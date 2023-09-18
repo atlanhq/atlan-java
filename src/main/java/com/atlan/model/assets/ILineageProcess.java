@@ -47,6 +47,9 @@ public interface ILineageProcess {
     KeywordField INPUTS = new KeywordField("inputs", "inputs");
 
     /** TBC */
+    RelationField MATILLION_COMPONENT = new RelationField("matillionComponent");
+
+    /** TBC */
     KeywordField OUTPUTS = new KeywordField("outputs", "outputs");
 
     /** TBC */
@@ -330,6 +333,9 @@ public interface ILineageProcess {
 
     /** TBC */
     SortedSet<ILink> getLinks();
+
+    /** TBC */
+    IMatillionComponent getMatillionComponent();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();

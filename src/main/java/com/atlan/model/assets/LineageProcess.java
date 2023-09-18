@@ -75,6 +75,10 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
 
     /** TBC */
     @Attribute
+    IMatillionComponent matillionComponent;
+
+    /** TBC */
+    @Attribute
     @Singular
     SortedSet<ICatalog> outputs;
 

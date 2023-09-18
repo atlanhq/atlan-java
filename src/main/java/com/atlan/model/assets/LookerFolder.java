@@ -62,6 +62,15 @@ public class LookerFolder extends Asset implements ILookerFolder, ILooker, IBI, 
 
     /** TBC */
     @Attribute
+    ILookerFolder lookerParentFolder;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILookerFolder> lookerSubFolders;
+
+    /** TBC */
+    @Attribute
     @Singular
     SortedSet<ILookerLook> looks;
 

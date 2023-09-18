@@ -79,14 +79,14 @@ public interface ICatalog {
             case AzureEventHub.TYPE_NAME:
                 ref = AzureEventHub.refByQualifiedName(qualifiedName);
                 break;
+            case AzureEventHubConsumerGroup.TYPE_NAME:
+                ref = AzureEventHubConsumerGroup.refByQualifiedName(qualifiedName);
+                break;
             case Column.TYPE_NAME:
                 ref = Column.refByQualifiedName(qualifiedName);
                 break;
             case DataStudioAsset.TYPE_NAME:
                 ref = DataStudioAsset.refByQualifiedName(qualifiedName);
-                break;
-            case Database.TYPE_NAME:
-                ref = Database.refByQualifiedName(qualifiedName);
                 break;
             case DbtColumnProcess.TYPE_NAME:
                 ref = DbtColumnProcess.refByQualifiedName(qualifiedName);
@@ -126,9 +126,6 @@ public interface ICatalog {
                 break;
             case Insight.TYPE_NAME:
                 ref = Insight.refByQualifiedName(qualifiedName);
-                break;
-            case KafkaConsumerGroup.TYPE_NAME:
-                ref = KafkaConsumerGroup.refByQualifiedName(qualifiedName);
                 break;
             case KafkaTopic.TYPE_NAME:
                 ref = KafkaTopic.refByQualifiedName(qualifiedName);
@@ -174,6 +171,18 @@ public interface ICatalog {
                 break;
             case MaterializedView.TYPE_NAME:
                 ref = MaterializedView.refByQualifiedName(qualifiedName);
+                break;
+            case MatillionComponent.TYPE_NAME:
+                ref = MatillionComponent.refByQualifiedName(qualifiedName);
+                break;
+            case MatillionGroup.TYPE_NAME:
+                ref = MatillionGroup.refByQualifiedName(qualifiedName);
+                break;
+            case MatillionJob.TYPE_NAME:
+                ref = MatillionJob.refByQualifiedName(qualifiedName);
+                break;
+            case MatillionProject.TYPE_NAME:
+                ref = MatillionProject.refByQualifiedName(qualifiedName);
                 break;
             case MetabaseCollection.TYPE_NAME:
                 ref = MetabaseCollection.refByQualifiedName(qualifiedName);
@@ -225,6 +234,12 @@ public interface ICatalog {
                 break;
             case ModeWorkspace.TYPE_NAME:
                 ref = ModeWorkspace.refByQualifiedName(qualifiedName);
+                break;
+            case MongoDBCollection.TYPE_NAME:
+                ref = MongoDBCollection.refByQualifiedName(qualifiedName);
+                break;
+            case MongoDBDatabase.TYPE_NAME:
+                ref = MongoDBDatabase.refByQualifiedName(qualifiedName);
                 break;
             case PowerBIColumn.TYPE_NAME:
                 ref = PowerBIColumn.refByQualifiedName(qualifiedName);

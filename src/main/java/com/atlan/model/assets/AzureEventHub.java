@@ -50,6 +50,10 @@ public class AzureEventHub extends Asset
 
     /** TBC */
     @Attribute
+    String azureEventHubStatus;
+
+    /** TBC */
+    @Attribute
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
@@ -86,6 +90,10 @@ public class AzureEventHub extends Asset
     /** TBC */
     @Attribute
     Long kafkaTopicReplicationFactor;
+
+    /** TBC */
+    @Attribute
+    Long kafkaTopicRetentionTimeInMs;
 
     /** TBC */
     @Attribute

@@ -60,6 +60,10 @@ public interface IKafkaTopic {
             new NumericField("kafkaTopicReplicationFactor", "kafkaTopicReplicationFactor");
 
     /** TBC */
+    NumericField KAFKA_TOPIC_RETENTION_TIME_IN_MS =
+            new NumericField("kafkaTopicRetentionTimeInMs", "kafkaTopicRetentionTimeInMs");
+
+    /** TBC */
     NumericField KAFKA_TOPIC_SEGMENT_BYTES = new NumericField("kafkaTopicSegmentBytes", "kafkaTopicSegmentBytes");
 
     /** TBC */
@@ -340,6 +344,9 @@ public interface IKafkaTopic {
 
     /** TBC */
     Long getKafkaTopicReplicationFactor();
+
+    /** TBC */
+    Long getKafkaTopicRetentionTimeInMs();
 
     /** TBC */
     Long getKafkaTopicSegmentBytes();

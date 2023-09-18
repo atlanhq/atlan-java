@@ -24,6 +24,7 @@ import com.atlan.model.fields.KeywordTextStemmedField;
 import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.NumericRankField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.SearchableRelationship;
 import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.UniqueAttributes;
 <#list interfaceAttributes as attribute>

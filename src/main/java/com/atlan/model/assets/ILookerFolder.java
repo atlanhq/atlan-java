@@ -35,6 +35,12 @@ public interface ILookerFolder {
     RelationField DASHBOARDS = new RelationField("dashboards");
 
     /** TBC */
+    RelationField LOOKER_PARENT_FOLDER = new RelationField("lookerParentFolder");
+
+    /** TBC */
+    RelationField LOOKER_SUB_FOLDERS = new RelationField("lookerSubFolders");
+
+    /** TBC */
     RelationField LOOKS = new RelationField("looks");
 
     /** TBC */
@@ -321,6 +327,12 @@ public interface ILookerFolder {
 
     /** TBC */
     SortedSet<ILink> getLinks();
+
+    /** TBC */
+    ILookerFolder getLookerParentFolder();
+
+    /** TBC */
+    SortedSet<ILookerFolder> getLookerSubFolders();
 
     /** TBC */
     SortedSet<ILookerLook> getLooks();

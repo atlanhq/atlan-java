@@ -377,6 +377,9 @@ public interface IDbtColumnProcess {
     SortedSet<ILink> getLinks();
 
     /** TBC */
+    IMatillionComponent getMatillionComponent();
+
+    /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
     /** TBC */
