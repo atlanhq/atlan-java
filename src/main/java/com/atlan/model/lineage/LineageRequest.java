@@ -11,6 +11,10 @@ import java.util.List;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+/**
+ * Requests for the older (now deprecated) lineage endpoints.
+ * @deprecated see {@link LineageListRequest} instead
+ */
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = false)
