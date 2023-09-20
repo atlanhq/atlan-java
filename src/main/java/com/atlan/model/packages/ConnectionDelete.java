@@ -2,13 +2,14 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.packages;
 
+import com.atlan.model.enums.AtlanPackageType;
 import com.atlan.model.workflow.*;
 import java.util.Collections;
 import java.util.List;
 
 public class ConnectionDelete {
 
-    public static final String PREFIX = "atlan-connection-delete";
+    public static final String PREFIX = AtlanPackageType.CONNECTION_DELETE.getValue();
 
     /**
      * Builds the minimal object necessary to create a new column delete workflow.
