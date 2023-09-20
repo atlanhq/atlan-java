@@ -44,6 +44,26 @@ public class MockAtlanTest {
                         .withHeader("Content-Type", "application/json")
                         .withBodyFile("typedefs-enum.json")
                         .withStatus(200)));
+        server.stubFor(get(urlEqualTo("/api/meta/types/typedefs?type="
+                        + AtlanTypeCategory.STRUCT.getValue().toLowerCase(Locale.ROOT)))
+                .willReturn(aResponse()
+                        .withHeader("Content-Type", "application/json")
+                        .withBodyFile("typedefs-structs.json")
+                        .withStatus(200)));
+        server.stubFor(get(urlEqualTo("/api/meta/types/typedefs?type="
+                        + AtlanTypeCategory.CUSTOM_METADATA.getValue().toLowerCase(Locale.ROOT)
+                        + "&type=" + AtlanTypeCategory.STRUCT.getValue().toLowerCase(Locale.ROOT)))
+                .willReturn(aResponse()
+                        .withHeader("Content-Type", "application/json")
+                        .withBodyFile("typedefs-custom-metadata-cache.json")
+                        .withStatus(200)));
+        server.stubFor(get(urlEqualTo("/api/meta/types/typedefs?type="
+                        + AtlanTypeCategory.ATLAN_TAG.getValue().toLowerCase(Locale.ROOT)
+                        + "&type=" + AtlanTypeCategory.STRUCT.getValue().toLowerCase(Locale.ROOT)))
+                .willReturn(aResponse()
+                        .withHeader("Content-Type", "application/json")
+                        .withBodyFile("typedefs-atlan-tag-cache.json")
+                        .withStatus(200)));
     }
 
     @AfterSuite
