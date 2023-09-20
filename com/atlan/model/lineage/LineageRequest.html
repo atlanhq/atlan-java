@@ -27,8 +27,8 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10};
-var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
+var data = {"i0":41,"i1":42,"i2":42,"i3":42,"i4":42,"i5":42,"i6":42,"i7":42,"i8":42,"i9":42,"i10":42,"i11":42,"i12":42,"i13":42,"i14":42};
+var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -140,8 +140,13 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd><code>java.io.Serializable</code></dd>
 </dl>
 <hr>
-<pre>public class <span class="typeNameLabel">LineageRequest</span>
+<pre>@Deprecated
+public class <span class="typeNameLabel">LineageRequest</span>
 extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a></pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">see <a href="LineageListRequest.html" title="class in com.atlan.model.lineage"><code>LineageListRequest</code></a> instead</div>
+</div>
+<div class="block">Requests for the older (now deprecated) lineage endpoints.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../serialized-form.html#com.atlan.model.lineage.LineageRequest">Serialized Form</a></dd>
@@ -169,7 +174,9 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <tr class="altColor">
 <td class="colFirst"><code>static class&nbsp;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="LineageRequest.LineageRequestBuilder.html" title="class in com.atlan.model.lineage">LineageRequest.LineageRequestBuilder</a>&lt;<a href="LineageRequest.LineageRequestBuilder.html" title="type parameter in LineageRequest.LineageRequestBuilder">C</a> extends <a href="LineageRequest.html" title="class in com.atlan.model.lineage">LineageRequest</a>,&#8203;<a href="LineageRequest.LineageRequestBuilder.html" title="type parameter in LineageRequest.LineageRequestBuilder">B</a> extends <a href="LineageRequest.LineageRequestBuilder.html" title="class in com.atlan.model.lineage">LineageRequest.LineageRequestBuilder</a>&lt;<a href="LineageRequest.LineageRequestBuilder.html" title="type parameter in LineageRequest.LineageRequestBuilder">C</a>,&#8203;<a href="LineageRequest.LineageRequestBuilder.html" title="type parameter in LineageRequest.LineageRequestBuilder">B</a>&gt;&gt;</span></code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
+&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -199,7 +206,9 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <tr class="altColor">
 <td class="colFirst"><code>protected </code></td>
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.atlan.model.lineage.LineageRequest.LineageRequestBuilder)">LineageRequest</a></span>&#8203;(<a href="LineageRequest.LineageRequestBuilder.html" title="class in com.atlan.model.lineage">LineageRequest.LineageRequestBuilder</a>&lt;?,&#8203;?&gt;&nbsp;b)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
+&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -213,7 +222,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t6" class="tableTab"><span><a href="javascript:show(32);">Deprecated Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colSecond" scope="col">Method</th>
@@ -222,22 +231,29 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>static <a href="LineageRequest.LineageRequestBuilder.html" title="class in com.atlan.model.lineage">LineageRequest.LineageRequestBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#builder()">builder</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
+&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>protected boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#canEqual(java.lang.Object)">canEqual</a></span>&#8203;(java.lang.Object&nbsp;other)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
+&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#equals(java.lang.Object)">equals</a></span>&#8203;(java.lang.Object&nbsp;o)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
+&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="LineageResponse.html" title="class in com.atlan.model.lineage">LineageResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#fetch()">fetch</a></span>()</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Fetch the lineage defined by this object.</div>
 </td>
 </tr>
@@ -245,6 +261,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <td class="colFirst"><code><a href="LineageResponse.html" title="class in com.atlan.model.lineage">LineageResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#fetch(com.atlan.AtlanClient)">fetch</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Fetch the lineage defined by this object.</div>
 </td>
 </tr>
@@ -252,6 +269,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAllowDeletedProcess()">getAllowDeletedProcess</a></span>()</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">When true, will include deleted processes if <a href="#hideProcess"><code>hideProcess</code></a> is set to false.</div>
 </td>
 </tr>
@@ -259,6 +277,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <td class="colFirst"><code>java.util.List&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAttributes()">getAttributes</a></span>()</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">List of attributes to be returned for each asset.</div>
 </td>
 </tr>
@@ -266,6 +285,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <td class="colFirst"><code>java.lang.Integer</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDepth()">getDepth</a></span>()</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Number of degrees of separation (hops) across which lineage should be fetched.</div>
 </td>
 </tr>
@@ -273,6 +293,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <td class="colFirst"><code><a href="../enums/AtlanLineageDirection.html" title="enum in com.atlan.model.enums">AtlanLineageDirection</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDirection()">getDirection</a></span>()</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Indicates whether to fetch upstream lineage only, downstream lineage only, or both.</div>
 </td>
 </tr>
@@ -280,6 +301,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <td class="colFirst"><code><a href="EntityFilter.html" title="class in com.atlan.model.lineage">EntityFilter</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getEntityFilters()">getEntityFilters</a></span>()</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Filters to apply on entities.</div>
 </td>
 </tr>
@@ -287,6 +309,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getGuid()">getGuid</a></span>()</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Unique identifier of the asset for which to retrieve lineage.</div>
 </td>
 </tr>
@@ -294,22 +317,30 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getHideProcess()">getHideProcess</a></span>()</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">When true, will only return non-process relations in the lineage.</div>
 </td>
 </tr>
 <tr id="i12" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
+&nbsp;</td>
 </tr>
 <tr id="i13" class="rowColor">
 <td class="colFirst"><code><a href="LineageRequest.LineageRequestBuilder.html" title="class in com.atlan.model.lineage">LineageRequest.LineageRequestBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toBuilder()">toBuilder</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
+&nbsp;</td>
 </tr>
 <tr id="i14" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -349,6 +380,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <li class="blockList">
 <h4>LineageRequest</h4>
 <pre>protected&nbsp;LineageRequest&#8203;(<a href="LineageRequest.LineageRequestBuilder.html" title="class in com.atlan.model.lineage">LineageRequest.LineageRequestBuilder</a>&lt;?,&#8203;?&gt;&nbsp;b)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 </li>
 </ul>
 </li>
@@ -369,6 +401,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <h4>fetch</h4>
 <pre class="methodSignature">public&nbsp;<a href="LineageResponse.html" title="class in com.atlan.model.lineage">LineageResponse</a>&nbsp;fetch()
                       throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Fetch the lineage defined by this object.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -386,6 +419,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <h4>fetch</h4>
 <pre class="methodSignature">public&nbsp;<a href="LineageResponse.html" title="class in com.atlan.model.lineage">LineageResponse</a>&nbsp;fetch&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)
                       throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Fetch the lineage defined by this object.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -404,6 +438,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <li class="blockList">
 <h4>builder</h4>
 <pre class="methodSignature">public static&nbsp;<a href="LineageRequest.LineageRequestBuilder.html" title="class in com.atlan.model.lineage">LineageRequest.LineageRequestBuilder</a>&lt;?,&#8203;?&gt;&nbsp;builder()</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 </li>
 </ul>
 <a id="toBuilder()">
@@ -413,6 +448,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <li class="blockList">
 <h4>toBuilder</h4>
 <pre class="methodSignature">public&nbsp;<a href="LineageRequest.LineageRequestBuilder.html" title="class in com.atlan.model.lineage">LineageRequest.LineageRequestBuilder</a>&lt;?,&#8203;?&gt;&nbsp;toBuilder()</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 </li>
 </ul>
 <a id="getGuid()">
@@ -422,6 +458,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <li class="blockList">
 <h4>getGuid</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getGuid()</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Unique identifier of the asset for which to retrieve lineage.</div>
 </li>
 </ul>
@@ -432,6 +469,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <li class="blockList">
 <h4>getDepth</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Integer&nbsp;getDepth()</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Number of degrees of separation (hops) across which lineage should be fetched.
  A depth of <code>1</code> will fetch the immediate upstream and/or downstream assets,
  while <code>2</code> will also fetch the immediate upstream and/or downstream assets
@@ -447,6 +485,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <li class="blockList">
 <h4>getDirection</h4>
 <pre class="methodSignature">public&nbsp;<a href="../enums/AtlanLineageDirection.html" title="enum in com.atlan.model.enums">AtlanLineageDirection</a>&nbsp;getDirection()</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Indicates whether to fetch upstream lineage only, downstream lineage only, or both.</div>
 </li>
 </ul>
@@ -457,6 +496,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <li class="blockList">
 <h4>getHideProcess</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Boolean&nbsp;getHideProcess()</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">When true, will only return non-process relations in the lineage. When false, will return the
  process and non-process relations in lineage. Note: currently processing a graph representation
  of lineage relies on this being set to <code>true</code>. You will need to parse your own graph
@@ -470,6 +510,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <li class="blockList">
 <h4>getAllowDeletedProcess</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Boolean&nbsp;getAllowDeletedProcess()</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">When true, will include deleted processes if <a href="#hideProcess"><code>hideProcess</code></a> is set to false. Otherwise,
  will not return deleted processes.</div>
 </li>
@@ -481,6 +522,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <li class="blockList">
 <h4>getEntityFilters</h4>
 <pre class="methodSignature">public&nbsp;<a href="EntityFilter.html" title="class in com.atlan.model.lineage">EntityFilter</a>&nbsp;getEntityFilters()</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Filters to apply on entities.
  Note that if the values in the properties of <code>entityFilters</code> are not valid, then the
  filter will not be applied and you will receive all values in the response. If your filter
@@ -494,6 +536,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <li class="blockList">
 <h4>getAttributes</h4>
 <pre class="methodSignature">public&nbsp;java.util.List&lt;java.lang.String&gt;&nbsp;getAttributes()</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">List of attributes to be returned for each asset.</div>
 </li>
 </ul>
@@ -504,6 +547,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <li class="blockList">
 <h4>equals</h4>
 <pre class="methodSignature">public&nbsp;boolean&nbsp;equals&#8203;(java.lang.Object&nbsp;o)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="../core/AtlanObject.html#equals(java.lang.Object)">equals</a></code>&nbsp;in class&nbsp;<code><a href="../core/AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a></code></dd>
@@ -517,6 +561,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <li class="blockList">
 <h4>canEqual</h4>
 <pre class="methodSignature">protected&nbsp;boolean&nbsp;canEqual&#8203;(java.lang.Object&nbsp;other)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="../core/AtlanObject.html#canEqual(java.lang.Object)">canEqual</a></code>&nbsp;in class&nbsp;<code><a href="../core/AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a></code></dd>
@@ -530,6 +575,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <li class="blockList">
 <h4>hashCode</h4>
 <pre class="methodSignature">public&nbsp;int&nbsp;hashCode()</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="../core/AtlanObject.html#hashCode()">hashCode</a></code>&nbsp;in class&nbsp;<code><a href="../core/AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a></code></dd>
@@ -543,6 +589,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <li class="blockList">
 <h4>toString</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;toString()</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block"><span class="descfrmTypeLabel">Description copied from class:&nbsp;<code><a href="../core/AtlanObject.html#toString()">AtlanObject</a></code></span></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>

@@ -20124,17 +20124,20 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <h4>allowDeletedProcess</h4>
 <pre>java.lang.Boolean allowDeletedProcess</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">When true, will include deleted processes if <a href="com/atlan/model/lineage/LineageRequest.html#hideProcess"><code>LineageRequest.hideProcess</code></a> is set to false. Otherwise,
  will not return deleted processes.</div>
 </li>
 <li class="blockList">
 <h4>attributes</h4>
 <pre>java.util.List&lt;java.lang.String&gt; attributes</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">List of attributes to be returned for each asset.</div>
 </li>
 <li class="blockList">
 <h4>depth</h4>
 <pre>java.lang.Integer depth</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Number of degrees of separation (hops) across which lineage should be fetched.
  A depth of <code>1</code> will fetch the immediate upstream and/or downstream assets,
  while <code>2</code> will also fetch the immediate upstream and/or downstream assets
@@ -20145,11 +20148,13 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <h4>direction</h4>
 <pre><a href="com/atlan/model/enums/AtlanLineageDirection.html" title="enum in com.atlan.model.enums">AtlanLineageDirection</a> direction</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Indicates whether to fetch upstream lineage only, downstream lineage only, or both.</div>
 </li>
 <li class="blockList">
 <h4>entityFilters</h4>
 <pre><a href="com/atlan/model/lineage/EntityFilter.html" title="class in com.atlan.model.lineage">EntityFilter</a> entityFilters</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Filters to apply on entities.
  Note that if the values in the properties of <code>entityFilters</code> are not valid, then the
  filter will not be applied and you will receive all values in the response. If your filter
@@ -20158,11 +20163,13 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <h4>guid</h4>
 <pre>java.lang.String guid</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Unique identifier of the asset for which to retrieve lineage.</div>
 </li>
 <li class="blockListLast">
 <h4>hideProcess</h4>
 <pre>java.lang.Boolean hideProcess</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">When true, will only return non-process relations in the lineage. When false, will return the
  process and non-process relations in lineage. Note: currently processing a graph representation
  of lineage relies on this being set to <code>true</code>. You will need to parse your own graph
