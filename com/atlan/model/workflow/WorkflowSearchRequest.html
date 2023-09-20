@@ -27,8 +27,8 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":10,"i2":10,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":10,"i10":10,"i11":10,"i12":10};
-var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
+var data = {"i0":9,"i1":10,"i2":10,"i3":9,"i4":41,"i5":9,"i6":41,"i7":9,"i8":9,"i9":9,"i10":9,"i11":10,"i12":10,"i13":10,"i14":10};
+var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -225,7 +225,7 @@ extends <a href="../search/IndexSearchDSL.html" title="class in com.atlan.model.
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t6" class="tableTab"><span><a href="javascript:show(32);">Deprecated Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colSecond" scope="col">Method</th>
@@ -248,22 +248,43 @@ extends <a href="../search/IndexSearchDSL.html" title="class in com.atlan.model.
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>static java.util.List&lt;<a href="WorkflowSearchResult.html" title="class in com.atlan.model.workflow">WorkflowSearchResult</a>&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#findByType(com.atlan.AtlanClient,java.lang.String,int)">findByType</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
-          java.lang.String&nbsp;prefix,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#findByType(com.atlan.AtlanClient,com.atlan.model.enums.AtlanPackageType,int)">findByType</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+          <a href="../enums/AtlanPackageType.html" title="enum in com.atlan.model.enums">AtlanPackageType</a>&nbsp;type,
           int&nbsp;maxResults)</code></th>
 <td class="colLast">
-<div class="block">Find workflows based on their type (prefix).</div>
+<div class="block">Find workflows based on their type.</div>
 </td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>static java.util.List&lt;<a href="WorkflowSearchResult.html" title="class in com.atlan.model.workflow">WorkflowSearchResult</a>&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#findByType(java.lang.String,int)">findByType</a></span>&#8203;(java.lang.String&nbsp;prefix,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#findByType(com.atlan.AtlanClient,java.lang.String,int)">findByType</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+          java.lang.String&nbsp;prefix,
           int&nbsp;maxResults)</code></th>
 <td class="colLast">
-<div class="block">Find workflows based on their type (prefix).</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">see <a href="#findByType(com.atlan.AtlanClient,com.atlan.model.enums.AtlanPackageType,int)"><code>findByType(AtlanClient, AtlanPackageType, int)</code></a> for the replacement</div>
+</div>
 </td>
 </tr>
 <tr id="i5" class="rowColor">
+<td class="colFirst"><code>static java.util.List&lt;<a href="WorkflowSearchResult.html" title="class in com.atlan.model.workflow">WorkflowSearchResult</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#findByType(com.atlan.model.enums.AtlanPackageType,int)">findByType</a></span>&#8203;(<a href="../enums/AtlanPackageType.html" title="enum in com.atlan.model.enums">AtlanPackageType</a>&nbsp;type,
+          int&nbsp;maxResults)</code></th>
+<td class="colLast">
+<div class="block">Find workflows based on their type.</div>
+</td>
+</tr>
+<tr id="i6" class="altColor">
+<td class="colFirst"><code>static java.util.List&lt;<a href="WorkflowSearchResult.html" title="class in com.atlan.model.workflow">WorkflowSearchResult</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#findByType(java.lang.String,int)">findByType</a></span>&#8203;(java.lang.String&nbsp;prefix,
+          int&nbsp;maxResults)</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">see <a href="#findByType(com.atlan.model.enums.AtlanPackageType,int)"><code>findByType(AtlanPackageType, int)</code></a> for the replacement</div>
+</div>
+</td>
+</tr>
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>static <a href="WorkflowSearchResult.html" title="class in com.atlan.model.workflow">WorkflowSearchResult</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#findLatestRun(com.atlan.AtlanClient,java.lang.String)">findLatestRun</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
              java.lang.String&nbsp;workflowName)</code></th>
@@ -271,14 +292,14 @@ extends <a href="../search/IndexSearchDSL.html" title="class in com.atlan.model.
 <div class="block">Find the latest run of a given workflow.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>static <a href="WorkflowSearchResult.html" title="class in com.atlan.model.workflow">WorkflowSearchResult</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#findLatestRun(java.lang.String)">findLatestRun</a></span>&#8203;(java.lang.String&nbsp;workflowName)</code></th>
 <td class="colLast">
 <div class="block">Find the latest run of a given workflow.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>static <a href="WorkflowSearchResult.html" title="class in com.atlan.model.workflow">WorkflowSearchResult</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#findRunByName(com.atlan.AtlanClient,java.lang.String)">findRunByName</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
              java.lang.String&nbsp;workflowRunName)</code></th>
@@ -286,33 +307,33 @@ extends <a href="../search/IndexSearchDSL.html" title="class in com.atlan.model.
 <div class="block">Find a specific run of a given workflow.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>static <a href="WorkflowSearchResult.html" title="class in com.atlan.model.workflow">WorkflowSearchResult</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#findRunByName(java.lang.String)">findRunByName</a></span>&#8203;(java.lang.String&nbsp;workflowRunName)</code></th>
 <td class="colLast">
 <div class="block">Find a specific run of a given workflow.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code><a href="WorkflowSearchResponse.html" title="class in com.atlan.model.workflow">WorkflowSearchResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#search()">search</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Run the search.</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code><a href="WorkflowSearchResponse.html" title="class in com.atlan.model.workflow">WorkflowSearchResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#search(com.atlan.AtlanClient)">search</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)</code></th>
 <td class="colLast">
 <div class="block">Run the search.</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 </tr>
@@ -495,9 +516,13 @@ extends <a href="../search/IndexSearchDSL.html" title="class in com.atlan.model.
 <ul class="blockList">
 <li class="blockList">
 <h4>findByType</h4>
-<pre class="methodSignature">public static&nbsp;java.util.List&lt;<a href="WorkflowSearchResult.html" title="class in com.atlan.model.workflow">WorkflowSearchResult</a>&gt;&nbsp;findByType&#8203;(java.lang.String&nbsp;prefix,
+<pre class="methodSignature">@Deprecated
+public static&nbsp;java.util.List&lt;<a href="WorkflowSearchResult.html" title="class in com.atlan.model.workflow">WorkflowSearchResult</a>&gt;&nbsp;findByType&#8203;(java.lang.String&nbsp;prefix,
                                                               int&nbsp;maxResults)
                                                        throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">see <a href="#findByType(com.atlan.model.enums.AtlanPackageType,int)"><code>findByType(AtlanPackageType, int)</code></a> for the replacement</div>
+</div>
 <div class="block">Find workflows based on their type (prefix).</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -516,15 +541,63 @@ extends <a href="../search/IndexSearchDSL.html" title="class in com.atlan.model.
 <ul class="blockList">
 <li class="blockList">
 <h4>findByType</h4>
-<pre class="methodSignature">public static&nbsp;java.util.List&lt;<a href="WorkflowSearchResult.html" title="class in com.atlan.model.workflow">WorkflowSearchResult</a>&gt;&nbsp;findByType&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+<pre class="methodSignature">@Deprecated
+public static&nbsp;java.util.List&lt;<a href="WorkflowSearchResult.html" title="class in com.atlan.model.workflow">WorkflowSearchResult</a>&gt;&nbsp;findByType&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
                                                               java.lang.String&nbsp;prefix,
                                                               int&nbsp;maxResults)
                                                        throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">see <a href="#findByType(com.atlan.AtlanClient,com.atlan.model.enums.AtlanPackageType,int)"><code>findByType(AtlanClient, AtlanPackageType, int)</code></a> for the replacement</div>
+</div>
 <div class="block">Find workflows based on their type (prefix).</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>client</code> - connectivity to the Atlan tenant on which to find the workflows</dd>
 <dd><code>prefix</code> - of the workflow, from a package class (for example <a href="../packages/ConnectionDelete.html#PREFIX"><code>ConnectionDelete.PREFIX</code></a></dd>
+<dd><code>maxResults</code> - the maximum number of results to retrieve</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the list of workflows of the provided type, with the most-recently created first</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code></dd>
+</dl>
+</li>
+</ul>
+<a id="findByType(com.atlan.model.enums.AtlanPackageType,int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>findByType</h4>
+<pre class="methodSignature">public static&nbsp;java.util.List&lt;<a href="WorkflowSearchResult.html" title="class in com.atlan.model.workflow">WorkflowSearchResult</a>&gt;&nbsp;findByType&#8203;(<a href="../enums/AtlanPackageType.html" title="enum in com.atlan.model.enums">AtlanPackageType</a>&nbsp;type,
+                                                              int&nbsp;maxResults)
+                                                       throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Find workflows based on their type.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>type</code> - of the workflow</dd>
+<dd><code>maxResults</code> - the maximum number of results to retrieve</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the list of workflows of the provided type, with the most-recently created first</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code></dd>
+</dl>
+</li>
+</ul>
+<a id="findByType(com.atlan.AtlanClient,com.atlan.model.enums.AtlanPackageType,int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>findByType</h4>
+<pre class="methodSignature">public static&nbsp;java.util.List&lt;<a href="WorkflowSearchResult.html" title="class in com.atlan.model.workflow">WorkflowSearchResult</a>&gt;&nbsp;findByType&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+                                                              <a href="../enums/AtlanPackageType.html" title="enum in com.atlan.model.enums">AtlanPackageType</a>&nbsp;type,
+                                                              int&nbsp;maxResults)
+                                                       throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Find workflows based on their type.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>client</code> - connectivity to the Atlan tenant on which to find the workflows</dd>
+<dd><code>type</code> - of the workflow</dd>
 <dd><code>maxResults</code> - the maximum number of results to retrieve</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the list of workflows of the provided type, with the most-recently created first</dd>
