@@ -8,6 +8,7 @@ import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.admin.PackageParameter;
 import com.atlan.model.assets.Connection;
 import com.atlan.model.enums.AtlanConnectorType;
+import com.atlan.model.enums.AtlanPackageType;
 import com.atlan.model.workflow.*;
 import java.util.Collections;
 import java.util.HashMap;
@@ -16,7 +17,7 @@ import java.util.Map;
 
 public class FivetranCrawler extends AbstractCrawler {
 
-    public static final String PREFIX = "atlan-fivetran";
+    public static final String PREFIX = AtlanPackageType.FIVETRAN.getValue();
 
     /**
      * Builds the minimal object necessary to create a new crawler for Fivetran,

@@ -2,13 +2,14 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.packages;
 
+import com.atlan.model.enums.AtlanPackageType;
 import com.atlan.model.workflow.*;
 import java.util.Collections;
 import java.util.List;
 
 public class SnowflakeMiner extends AbstractMiner {
 
-    public static final String PREFIX = "atlan-snowflake-miner";
+    public static final String PREFIX = AtlanPackageType.SNOWFLAKE_MINER.getValue();
 
     /**
      * Builds the minimal object necessary to create a new miner for Snowflake,

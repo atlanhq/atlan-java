@@ -9,6 +9,7 @@ import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.admin.PackageParameter;
 import com.atlan.model.assets.Connection;
 import com.atlan.model.enums.AtlanConnectorType;
+import com.atlan.model.enums.AtlanPackageType;
 import com.atlan.model.workflow.*;
 import com.atlan.serde.Serde;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -18,7 +19,7 @@ import java.util.Map;
 
 public class LookerCrawler extends AbstractCrawler {
 
-    public static final String PREFIX = "atlan-looker";
+    public static final String PREFIX = AtlanPackageType.LOOKER.getValue();
 
     /**
      * Builds the minimal object necessary to create a new crawler for Looker,

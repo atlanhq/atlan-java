@@ -10,6 +10,7 @@ import co.elastic.clients.elasticsearch._types.query_dsl.*;
 import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
+import com.atlan.model.enums.AtlanPackageType;
 import com.atlan.model.search.IndexSearchDSL;
 import java.util.List;
 import lombok.EqualsAndHashCode;
@@ -145,7 +146,9 @@ public class WorkflowSearchRequest extends IndexSearchDSL {
      * @param prefix of the workflow, from a package class (for example {@link com.atlan.model.packages.ConnectionDelete#PREFIX}
      * @param maxResults the maximum number of results to retrieve
      * @return the list of workflows of the provided type, with the most-recently created first
+     * @deprecated see {@link #findByType(AtlanPackageType, int)} for the replacement
      */
+    @Deprecated
     public static List<WorkflowSearchResult> findByType(String prefix, int maxResults) throws AtlanException {
         return findByType(Atlan.getDefaultClient(), prefix, maxResults);
     }
@@ -157,15 +160,41 @@ public class WorkflowSearchRequest extends IndexSearchDSL {
      * @param prefix of the workflow, from a package class (for example {@link com.atlan.model.packages.ConnectionDelete#PREFIX}
      * @param maxResults the maximum number of results to retrieve
      * @return the list of workflows of the provided type, with the most-recently created first
+     * @deprecated see {@link #findByType(AtlanClient, AtlanPackageType, int)} for the replacement
      */
+    @Deprecated
     public static List<WorkflowSearchResult> findByType(AtlanClient client, String prefix, int maxResults)
+            throws AtlanException {
+        return findByType(client, AtlanPackageType.fromValue(prefix), maxResults);
+    }
+
+    /**
+     * Find workflows based on their type.
+     *
+     * @param type of the workflow
+     * @param maxResults the maximum number of results to retrieve
+     * @return the list of workflows of the provided type, with the most-recently created first
+     */
+    public static List<WorkflowSearchResult> findByType(AtlanPackageType type, int maxResults) throws AtlanException {
+        return findByType(Atlan.getDefaultClient(), type, maxResults);
+    }
+
+    /**
+     * Find workflows based on their type.
+     *
+     * @param client connectivity to the Atlan tenant on which to find the workflows
+     * @param type of the workflow
+     * @param maxResults the maximum number of results to retrieve
+     * @return the list of workflows of the provided type, with the most-recently created first
+     */
+    public static List<WorkflowSearchResult> findByType(AtlanClient client, AtlanPackageType type, int maxResults)
             throws AtlanException {
 
         SortOptions sort = SortOptions.of(s -> s.field(FieldSort.of(f -> f.field("metadata.creationTimestamp")
                 .order(SortOrder.Desc)
                 .nested(NestedSortValue.of(v -> v.path("metadata"))))));
 
-        Query term = PrefixQuery.of(t -> t.field("metadata.name.keyword").value(prefix))
+        Query term = PrefixQuery.of(t -> t.field("metadata.name.keyword").value(type.getValue()))
                 ._toQuery();
 
         Query nested = NestedQuery.of(n -> n.path("metadata").query(term))._toQuery();
