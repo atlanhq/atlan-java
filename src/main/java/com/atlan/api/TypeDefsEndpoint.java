@@ -65,11 +65,41 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public TypeDefResponse list(AtlanTypeCategory category, RequestOptions options) throws AtlanException {
-        String url = String.format(
-                "%s%s",
-                getBaseUrl(),
-                String.format("%s?type=%s", endpoint, category.getValue().toLowerCase(Locale.ROOT)));
-        return ApiResource.request(client, ApiResource.RequestMethod.GET, url, "", TypeDefResponse.class, options);
+        return list(List.of(category), options);
+    }
+
+    /**
+     * Retrieves a list of the type definitions in Atlan.
+     *
+     * @param categories of type definitions to retrieve
+     * @return the requested list of type definitions
+     * @throws AtlanException on any API communication issue
+     */
+    public TypeDefResponse list(List<AtlanTypeCategory> categories) throws AtlanException {
+        return list(categories, null);
+    }
+
+    /**
+     * Retrieves a list of the type definitions in Atlan.
+     *
+     * @param categories of type definitions to retrieve
+     * @param options to override default client settings
+     * @return the requested list of type definitions
+     * @throws AtlanException on any API communication issue
+     */
+    public TypeDefResponse list(List<AtlanTypeCategory> categories, RequestOptions options) throws AtlanException {
+        StringBuilder url = new StringBuilder(String.format("%s%s", getBaseUrl(), String.format("%s", endpoint)));
+        for (int i = 0; i < categories.size(); i++) {
+            AtlanTypeCategory category = categories.get(i);
+            if (i == 0) {
+                url.append("?");
+            } else {
+                url.append("&");
+            }
+            url.append(String.format("type=%s", category.getValue().toLowerCase(Locale.ROOT)));
+        }
+        return ApiResource.request(
+                client, ApiResource.RequestMethod.GET, url.toString(), "", TypeDefResponse.class, options);
     }
 
     /**
