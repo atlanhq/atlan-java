@@ -3,10 +3,7 @@
 package com.atlan.cache;
 
 import com.atlan.api.TypeDefsEndpoint;
-import com.atlan.exception.AtlanException;
-import com.atlan.exception.ErrorCode;
-import com.atlan.exception.InvalidRequestException;
-import com.atlan.exception.NotFoundException;
+import com.atlan.exception.*;
 import com.atlan.model.enums.AtlanTypeCategory;
 import com.atlan.model.typedefs.AtlanTagDef;
 import com.atlan.model.typedefs.TypeDefResponse;
@@ -21,7 +18,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class AtlanTagCache {
 
-    private Map<String, AtlanTagDef> cacheById = new ConcurrentHashMap<>();
     private Map<String, String> mapIdToName = new ConcurrentHashMap<>();
     private Map<String, String> mapNameToId = new ConcurrentHashMap<>();
     private final Set<String> deletedIds = ConcurrentHashMap.newKeySet();
@@ -40,19 +36,18 @@ public class AtlanTagCache {
      */
     public synchronized void refreshCache() throws AtlanException {
         log.debug("Refreshing cache of Atlan tags...");
-        TypeDefResponse response = typeDefsEndpoint.list(AtlanTypeCategory.ATLAN_TAG);
-        List<AtlanTagDef> tags;
-        if (response != null) {
-            tags = response.getAtlanTagDefs();
-        } else {
-            tags = Collections.emptyList();
+        TypeDefResponse response =
+                typeDefsEndpoint.list(List.of(AtlanTypeCategory.ATLAN_TAG, AtlanTypeCategory.STRUCT));
+        if (response == null
+                || response.getStructDefs() == null
+                || response.getStructDefs().isEmpty()) {
+            throw new AuthenticationException(ErrorCode.EXPIRED_API_TOKEN);
         }
-        cacheById = new ConcurrentHashMap<>();
+        List<AtlanTagDef> tags = response.getAtlanTagDefs();
         mapIdToName = new ConcurrentHashMap<>();
         mapNameToId = new ConcurrentHashMap<>();
         for (AtlanTagDef clsDef : tags) {
             String typeId = clsDef.getName();
-            cacheById.put(typeId, clsDef);
             mapIdToName.put(typeId, clsDef.getDisplayName());
             mapNameToId.put(clsDef.getDisplayName(), typeId);
         }

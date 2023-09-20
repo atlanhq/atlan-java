@@ -46,13 +46,14 @@ public class CustomMetadataCache {
      */
     public synchronized void refreshCache() throws AtlanException {
         log.debug("Refreshing cache of custom metadata...");
-        TypeDefResponse response = typeDefsEndpoint.list(AtlanTypeCategory.CUSTOM_METADATA);
-        List<CustomMetadataDef> customMetadata;
-        if (response != null) {
-            customMetadata = response.getCustomMetadataDefs();
-        } else {
-            customMetadata = Collections.emptyList();
+        TypeDefResponse response =
+                typeDefsEndpoint.list(List.of(AtlanTypeCategory.CUSTOM_METADATA, AtlanTypeCategory.STRUCT));
+        if (response == null
+                || response.getStructDefs() == null
+                || response.getStructDefs().isEmpty()) {
+            throw new AuthenticationException(ErrorCode.EXPIRED_API_TOKEN);
         }
+        List<CustomMetadataDef> customMetadata = response.getCustomMetadataDefs();
         cacheById = new ConcurrentHashMap<>();
         attrCacheById = new ConcurrentHashMap<>();
         mapIdToName = new ConcurrentHashMap<>();

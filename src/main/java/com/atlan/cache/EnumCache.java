@@ -3,10 +3,7 @@
 package com.atlan.cache;
 
 import com.atlan.api.TypeDefsEndpoint;
-import com.atlan.exception.AtlanException;
-import com.atlan.exception.ErrorCode;
-import com.atlan.exception.InvalidRequestException;
-import com.atlan.exception.NotFoundException;
+import com.atlan.exception.*;
 import com.atlan.model.enums.AtlanTypeCategory;
 import com.atlan.model.typedefs.EnumDef;
 import com.atlan.model.typedefs.TypeDefResponse;
@@ -36,12 +33,12 @@ public class EnumCache {
     public synchronized void refreshCache() throws AtlanException {
         log.debug("Refreshing cache of enumerations...");
         TypeDefResponse response = typeDefsEndpoint.list(AtlanTypeCategory.ENUM);
-        List<EnumDef> enumerations;
-        if (response != null) {
-            enumerations = response.getEnumDefs();
-        } else {
-            enumerations = Collections.emptyList();
+        if (response == null
+                || response.getEnumDefs() == null
+                || response.getEnumDefs().isEmpty()) {
+            throw new AuthenticationException(ErrorCode.EXPIRED_API_TOKEN);
         }
+        List<EnumDef> enumerations = response.getEnumDefs();
         cacheById = new ConcurrentHashMap<>();
         for (EnumDef enumDef : enumerations) {
             String typeId = enumDef.getName();
