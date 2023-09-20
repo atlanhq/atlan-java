@@ -179,6 +179,7 @@ public class LineageTest extends AtlanLiveTest {
     @Test(
             groups = {"lineage.read.lineage"},
             dependsOnGroups = {"lineage.create.lineage.*"})
+    @SuppressWarnings("deprecation")
     void fetchLineageStart() throws AtlanException {
         LineageRequest lineage =
                 LineageRequest.builder().guid(table.getGuid()).hideProcess(true).build();
@@ -278,6 +279,7 @@ public class LineageTest extends AtlanLiveTest {
     @Test(
             groups = {"lineage.read.lineage"},
             dependsOnGroups = {"lineage.create.lineage.*"})
+    @SuppressWarnings("deprecation")
     void fetchLineageMiddle() throws AtlanException {
         LineageRequest lineage =
                 LineageRequest.builder().guid(mview.getGuid()).hideProcess(true).build();
@@ -372,6 +374,7 @@ public class LineageTest extends AtlanLiveTest {
     @Test(
             groups = {"lineage.read.lineage.end"},
             dependsOnGroups = {"lineage.create.lineage.*"})
+    @SuppressWarnings("deprecation")
     void fetchLineageEnd() throws AtlanException {
         LineageRequest lineage =
                 LineageRequest.builder().guid(view.getGuid()).hideProcess(true).build();
@@ -450,6 +453,7 @@ public class LineageTest extends AtlanLiveTest {
     @Test(
             groups = {"lineage.read.lineage.invalid"},
             dependsOnGroups = {"lineage.create.lineage.*"})
+    @SuppressWarnings("deprecation")
     void fetchLineageInvalid() throws AtlanException {
         LineageRequest lineage = LineageRequest.builder()
                 .guid(table.getGuid())

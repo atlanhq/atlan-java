@@ -15,6 +15,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
+@Deprecated
 public class LineageRequest extends AtlanObject {
     private static final long serialVersionUID = 2L;
 
