@@ -893,8 +893,9 @@ public class AssetEndpoint extends AtlasEndpoint {
      * @param request detailing the search query, parameters, and so on to run
      * @return the results of the search
      * @throws AtlanException on any API interaction problems
-     * @see #lineage(LineageListRequest)
+     * @deprecated use {@link #lineage(LineageListRequest)} instead
      */
+    @Deprecated
     public LineageResponse lineage(LineageRequest request) throws AtlanException {
         return lineage(request, null);
     }
@@ -907,8 +908,9 @@ public class AssetEndpoint extends AtlasEndpoint {
      * @param options to override default client settings
      * @return the results of the search
      * @throws AtlanException on any API interaction problems
-     * @see #lineage(LineageListRequest)
+     * @deprecated use {@link #lineage(LineageListRequest)} instead
      */
+    @Deprecated
     public LineageResponse lineage(LineageRequest request, RequestOptions options) throws AtlanException {
         String url = String.format("%s%s", getBaseUrl(), lineage_endpoint);
         return ApiResource.request(
