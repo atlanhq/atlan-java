@@ -7,6 +7,7 @@ import static org.testng.Assert.*;
 import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
+import com.atlan.exception.AuthenticationException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.admin.*;
 import com.atlan.model.assets.*;
@@ -177,7 +178,7 @@ public class RequestsTest extends AtlanLiveTest {
             try {
                 requestsClient.getAtlanTagCache().refreshCache();
                 tagId = requestsClient.getAtlanTagCache().getIdForName(ATLAN_TAG_NAME);
-            } catch (NotFoundException e) {
+            } catch (NotFoundException | AuthenticationException e) {
                 log.debug("Atlan tag not yet visible to secondary client, retrying...");
             }
             Thread.sleep(HttpClient.waitTime(count).toMillis());
