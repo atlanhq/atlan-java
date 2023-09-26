@@ -57,6 +57,10 @@ public class JacksonUtils {
             } else if (singularClass.isEnum()) {
                 Method fromValue = singularClass.getMethod("fromValue", String.class);
                 return fromValue.invoke(null, primitive.asText());
+            } else if (singularClass == Boolean.class) {
+                return primitive.asBoolean();
+            } else if (Number.class.isAssignableFrom(singularClass)) {
+                return deserializeNumber(primitive, method);
             } else {
                 return primitive.asText();
             }
