@@ -127,6 +127,9 @@ public class AtlanClient {
     /** Endpoint with operations to manage images. */
     public final ImagesEndpoint images;
 
+    /** Endpoint with operations to manage files. */
+    public final FilesEndpoint files;
+
     /** Endpoint with operations to manage assets. */
     public final AssetEndpoint assets;
 
@@ -176,6 +179,7 @@ public class AtlanClient {
         playbooks = new PlaybooksEndpoint(this);
         logs = new LogsEndpoint(this);
         images = new ImagesEndpoint(this);
+        files = new FilesEndpoint(this);
         assets = new AssetEndpoint(this);
         requests = new RequestsEndpoint(this);
         impersonate = new ImpersonationEndpoint(this);
