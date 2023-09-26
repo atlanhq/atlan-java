@@ -23,6 +23,19 @@ public interface AtlanResponseGetter {
             String requestId)
             throws AtlanException;
 
+    default <T extends AtlanResponseInterface> T request(
+            AtlanClient client,
+            ApiResource.RequestMethod method,
+            String url,
+            InputStream upload,
+            String filename,
+            Class<T> clazz,
+            RequestOptions options,
+            String requestId)
+            throws AtlanException {
+        return request(client, method, url, upload, filename, clazz, null, options, requestId);
+    }
+
     <T extends AtlanResponseInterface> T request(
             AtlanClient client,
             ApiResource.RequestMethod method,
@@ -30,6 +43,7 @@ public interface AtlanResponseGetter {
             InputStream upload,
             String filename,
             Class<T> clazz,
+            Map<String, String> extras,
             RequestOptions options,
             String requestId)
             throws AtlanException;

@@ -82,7 +82,7 @@ public class AtlanRequest {
             this.requestId = requestId;
             this.method = method;
             this.url = new URL(url);
-            this.content = (body == null || body.length() == 0) ? null : HttpContent.buildJSONEncodedContent(body);
+            this.content = (body == null || body.isEmpty()) ? null : HttpContent.buildJSONEncodedContent(body);
             this.headers = buildHeaders(true, options);
         } catch (IOException e) {
             throw new ApiConnectionException(ErrorCode.CONNECTION_ERROR, e, client.getBaseUrl());
@@ -97,6 +97,7 @@ public class AtlanRequest {
      * @param url the URL of the request
      * @param file the file to be uploaded through the request
      * @param filename name of the file the InputStream is reading
+     * @param extras (optional) additional form-encoded parameters to send
      * @param options the special modifiers of the request
      * @param requestId unique identifier (GUID) of a single request to Atlan
      * @throws AtlanException if the request cannot be initialized for any reason
@@ -107,6 +108,7 @@ public class AtlanRequest {
             String url,
             InputStream file,
             String filename,
+            Map<String, String> extras,
             RequestOptions options,
             String requestId)
             throws AtlanException {
@@ -117,8 +119,14 @@ public class AtlanRequest {
             this.requestId = requestId;
             this.method = method;
             this.url = new URL(url);
-            this.content =
-                    HttpContent.buildMultipartFormDataContent(List.of(new KeyValuePair<>("file", file)), filename);
+            List<KeyValuePair<String, Object>> parameters = new ArrayList<>();
+            parameters.add(new KeyValuePair<>("file", file));
+            if (extras != null) {
+                for (Map.Entry<String, String> entry : extras.entrySet()) {
+                    parameters.add(new KeyValuePair<>(entry.getKey(), entry.getValue()));
+                }
+            }
+            this.content = HttpContent.buildMultipartFormDataContent(parameters, filename);
             this.headers = buildHeaders(true, options);
         } catch (IOException e) {
             throw new ApiConnectionException(ErrorCode.CONNECTION_ERROR, e, client.getBaseUrl());
@@ -175,10 +183,10 @@ public class AtlanRequest {
         }
 
         // Accept
-        headerMap.put("Accept", Arrays.asList("application/json"));
+        headerMap.put("Accept", List.of("application/json"));
 
         // Accept-Charset
-        headerMap.put("Accept-Charset", Arrays.asList(ApiResource.CHARSET.name()));
+        headerMap.put("Accept-Charset", List.of(ApiResource.CHARSET.name()));
 
         // Authorization
         String apiToken = client.getApiToken();
@@ -191,7 +199,7 @@ public class AtlanRequest {
                 throw new AuthenticationException(ErrorCode.INVALID_API_TOKEN);
             }
         }
-        headerMap.put("Authorization", Arrays.asList(String.format("Bearer %s", apiToken)));
+        headerMap.put("Authorization", List.of(String.format("Bearer %s", apiToken)));
 
         return HttpHeaders.of(headerMap);
     }

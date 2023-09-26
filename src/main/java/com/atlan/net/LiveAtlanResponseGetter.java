@@ -72,6 +72,7 @@ public class LiveAtlanResponseGetter implements AtlanResponseGetter {
      * @param upload file to be uploaded
      * @param filename name of the file the InputStream is reading
      * @param clazz the expected response object type from the request
+     * @param extras (optional) additional form-encoded parameters to send
      * @param options any alternative options to use for the request, or null to use default options
      * @param requestId unique identifier (GUID) of a single request to Atlan
      * @return the response of the request
@@ -86,10 +87,11 @@ public class LiveAtlanResponseGetter implements AtlanResponseGetter {
             InputStream upload,
             String filename,
             Class<T> clazz,
+            Map<String, String> extras,
             RequestOptions options,
             String requestId)
             throws AtlanException {
-        AtlanRequest request = new AtlanRequest(client, method, url, upload, filename, options, requestId);
+        AtlanRequest request = new AtlanRequest(client, method, url, upload, filename, extras, options, requestId);
         return request(request, clazz);
     }
 

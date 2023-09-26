@@ -337,6 +337,36 @@ public abstract class ApiResource extends AtlanObject implements AtlanResponseIn
             Class<T> clazz,
             RequestOptions options)
             throws AtlanException {
+        return request(client, method, url, payload, filename, clazz, null, options);
+    }
+
+    /**
+     * Pass-through the request to the request-handling method, for file uploads.
+     * This method wraps debug-level logging lines around the request to show precisely what was constructed and sent
+     * to Atlan and precisely what was returned (prior to deserialization).
+     *
+     * @param client connectivity to Atlan
+     * @param method for the request
+     * @param url of the request
+     * @param payload binary input stream of the file contents
+     * @param filename name of the file being streamed
+     * @param clazz defining the expected response type
+     * @param extras additional form-encoded fields to send in the request
+     * @param options for sending the request (or null to use global defaults)
+     * @return the response
+     * @param <T> the type of the response
+     * @throws AtlanException on any API interaction problem
+     */
+    public static <T extends ApiResource> T request(
+            AtlanClient client,
+            ApiResource.RequestMethod method,
+            String url,
+            InputStream payload,
+            String filename,
+            Class<T> clazz,
+            Map<String, String> extras,
+            RequestOptions options)
+            throws AtlanException {
         if (payload == null) {
             throw new IllegalArgumentException(String.format("Found null input stream for %s.", url));
         }
@@ -345,7 +375,7 @@ public abstract class ApiResource extends AtlanObject implements AtlanResponseIn
         MDC.put("X-Atlan-Request-Id", requestId);
         log.debug("({}) {} with: {}", method, url, filename);
         T response = ApiResource.atlanResponseGetter.request(
-                client, method, url, payload, filename, clazz, options, requestId);
+                client, method, url, payload, filename, clazz, extras, options, requestId);
         // Ensure we reset the Atlan request ID, so we always have the context from the original
         // request that was made (even if it in turn triggered off other requests)
         MDC.put("X-Atlan-Request-Id", requestId);
