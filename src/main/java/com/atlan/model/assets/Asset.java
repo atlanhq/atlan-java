@@ -413,6 +413,10 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
 
     /** TBC */
     @Attribute
+    Boolean isAIGenerated;
+
+    /** TBC */
+    @Attribute
     Boolean isDiscoverable;
 
     /** TBC */

@@ -105,6 +105,10 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
     @Attribute
     Boolean isSampleDataPreviewEnabled;
 
+    /** A long integer indicating after how many rows heka should start uploading result to storage */
+    @Attribute
+    Long objectStorageUploadThreshold;
+
     /** TBC */
     @Attribute
     String policyStrategy;
@@ -149,6 +153,14 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
     /** Subtype of the connection. */
     @Attribute
     String subCategory;
+
+    /** A Boolean flag indicating whether to upload to S3, GCP, or another storage location */
+    @Attribute
+    Boolean useObjectStorage;
+
+    /** TBC */
+    @Attribute
+    Boolean vectorEmbeddingsEnabled;
 
     /**
      * Builds the minimal object necessary to create a relationship to a Connection, from a potentially

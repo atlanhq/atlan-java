@@ -36,6 +36,9 @@ public interface IAccessControl {
     /** Link to a Slack channel that is used to discuss this access control object. */
     KeywordField CHANNEL_LINK = new KeywordField("channelLink", "channelLink");
 
+    /** TBC */
+    KeywordField DENY_ASSET_FILTERS = new KeywordField("denyAssetFilters", "denyAssetFilters");
+
     /** Asset sidebar tabs that should be hidden from this access control object. */
     KeywordField DENY_ASSET_TABS = new KeywordField("denyAssetTabs", "denyAssetTabs");
 
@@ -282,6 +285,9 @@ public interface IAccessControl {
     /** TBC */
     String getDbtQualifiedName();
 
+    /** TBC */
+    SortedSet<String> getDenyAssetFilters();
+
     /** Asset sidebar tabs that should be hidden from this access control object. */
     SortedSet<AssetSidebarTab> getDenyAssetTabs();
 
@@ -299,6 +305,9 @@ public interface IAccessControl {
 
     /** TBC */
     Boolean getHasLineage();
+
+    /** TBC */
+    Boolean getIsAIGenerated();
 
     /** Whether the access object is activated (true) or deactivated (false). */
     Boolean getIsAccessControlEnabled();

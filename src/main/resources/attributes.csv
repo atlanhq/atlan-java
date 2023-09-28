@@ -71,6 +71,7 @@ AWS,Base class for AWS assets.,awsTags,List of tags that have been applied to th
 AccessControl,Base class for Atlan access control assets.,isAccessControlEnabled,Whether the access object is activated (true) or deactivated (false).
 AccessControl,Base class for Atlan access control assets.,denyCustomMetadataGuids,Unique identifiers (GUIDs) of custom metadata that should be hidden from this access control object.
 AccessControl,Base class for Atlan access control assets.,denyAssetTabs,Asset sidebar tabs that should be hidden from this access control object.
+AccessControl,Base class for Atlan access control assets.,denyAssetFilters,TBC
 AccessControl,Base class for Atlan access control assets.,channelLink,Link to a Slack channel that is used to discuss this access control object.
 AccessControl,Base class for Atlan access control assets.,policies,Policies associated with this access control object.
 Airflow,Airflow Assets,airflowTags,TBC
@@ -220,6 +221,7 @@ Asset,Base class for all assets.,assetSodaLastScanAt,TBC
 Asset,Base class for all assets.,assetSodaCheckStatuses,All associated soda check statuses
 Asset,Base class for all assets.,assetSodaSourceURL,TBC
 Asset,Base class for all assets.,assetIcon,TBC
+Asset,Base class for all assets.,isAIGenerated,TBC
 Asset,Base class for all assets.,schemaRegistrySubjects,TBC
 Asset,Base class for all assets.,mcMonitors,TBC
 Asset,Base class for all assets.,files,TBC
@@ -395,6 +397,9 @@ Connection,Instance of a connection in Atlan.,popularityInsightsTimeframe,"Numbe
 Connection,Instance of a connection in Atlan.,hasPopularityInsights,Whether the connection has popularity insights (true) or not (false).
 Connection,Instance of a connection in Atlan.,connectionDbtEnvironments,TBC
 Connection,Instance of a connection in Atlan.,connectionSSOCredentialGuid,TBC
+Connection,Instance of a connection in Atlan.,useObjectStorage,"A Boolean flag indicating whether to upload to S3, GCP, or another storage location"
+Connection,Instance of a connection in Atlan.,objectStorageUploadThreshold,A long integer indicating after how many rows heka should start uploading result to storage
+Connection,Instance of a connection in Atlan.,vectorEmbeddingsEnabled,TBC
 DataStudioAsset,Instance of a Google Data Studio asset in Atlan.,dataStudioAssetType,Type of Google Data Studio asset.
 DataStudioAsset,Instance of a Google Data Studio asset in Atlan.,dataStudioAssetTitle,Title for the asset.
 DataStudioAsset,Instance of a Google Data Studio asset in Atlan.,dataStudioAssetOwner,Owner of the asset within Google Data Studio.

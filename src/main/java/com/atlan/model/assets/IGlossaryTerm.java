@@ -368,6 +368,9 @@ public interface IGlossaryTerm {
     SortedSet<IGlossaryTerm> getIsA();
 
     /** TBC */
+    Boolean getIsAIGenerated();
+
+    /** TBC */
     Boolean getIsDiscoverable();
 
     /** TBC */

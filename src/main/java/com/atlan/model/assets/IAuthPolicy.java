@@ -341,6 +341,9 @@ public interface IAuthPolicy {
     Boolean getHasLineage();
 
     /** TBC */
+    Boolean getIsAIGenerated();
+
+    /** TBC */
     Boolean getIsDiscoverable();
 
     /** TBC */

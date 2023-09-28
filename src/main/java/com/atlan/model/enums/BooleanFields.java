@@ -59,6 +59,8 @@ public enum BooleanFields implements AtlanSearchableField {
     /** Whether the access object is activated (true) or deactivated (false). */
     IS_ACCESS_CONTROL_ENABLED("isAccessControlEnabled"),
     /** TBC */
+    IS_AI_GENERATED("isAIGenerated"),
+    /** TBC */
     IS_CALCULATED("isCalculated"),
     /** TBC */
     IS_CASE_SENSITIVE("isCaseSensitive"),
@@ -174,6 +176,10 @@ public enum BooleanFields implements AtlanSearchableField {
     SNOWFLAKE_PIPE_IS_AUTO_INGEST_ENABLED("snowflakePipeIsAutoIngestEnabled"),
     /** TBC */
     SNOWFLAKE_STREAM_IS_STALE("snowflakeStreamIsStale"),
+    /** A Boolean flag indicating whether to upload to S3, GCP, or another storage location */
+    USE_OBJECT_STORAGE("useObjectStorage"),
+    /** TBC */
+    VECTOR_EMBEDDINGS_ENABLED("vectorEmbeddingsEnabled"),
     ;
 
     @Getter(onMethod_ = {@Override})

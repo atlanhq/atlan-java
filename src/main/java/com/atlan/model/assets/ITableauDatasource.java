@@ -346,6 +346,9 @@ public interface ITableauDatasource {
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
+    Boolean getIsAIGenerated();
+
+    /** TBC */
     Boolean getIsCertified();
 
     /** TBC */

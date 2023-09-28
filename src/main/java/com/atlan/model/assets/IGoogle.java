@@ -328,6 +328,9 @@ public interface IGoogle {
     Boolean getHasLineage();
 
     /** TBC */
+    Boolean getIsAIGenerated();
+
+    /** TBC */
     Boolean getIsDiscoverable();
 
     /** TBC */

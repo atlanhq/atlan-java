@@ -292,6 +292,9 @@ public interface ISigmaDatasetColumn {
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
+    Boolean getIsAIGenerated();
+
+    /** TBC */
     Boolean getIsDiscoverable();
 
     /** TBC */

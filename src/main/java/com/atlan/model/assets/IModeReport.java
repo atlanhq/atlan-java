@@ -311,6 +311,9 @@ public interface IModeReport {
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
+    Boolean getIsAIGenerated();
+
+    /** TBC */
     Boolean getIsDiscoverable();
 
     /** TBC */

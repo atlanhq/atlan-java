@@ -354,6 +354,9 @@ public interface ISalesforceField {
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
+    Boolean getIsAIGenerated();
+
+    /** TBC */
     Boolean getIsCalculated();
 
     /** TBC */

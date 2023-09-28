@@ -287,6 +287,9 @@ public interface IBadge {
     Boolean getHasLineage();
 
     /** TBC */
+    Boolean getIsAIGenerated();
+
+    /** TBC */
     Boolean getIsDiscoverable();
 
     /** TBC */

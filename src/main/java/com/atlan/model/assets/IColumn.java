@@ -610,6 +610,9 @@ public interface IColumn {
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
+    Boolean getIsAIGenerated();
+
+    /** TBC */
     Boolean getIsClustered();
 
     /** TBC */

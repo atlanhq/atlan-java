@@ -302,6 +302,9 @@ public interface IAzure {
     Boolean getHasLineage();
 
     /** TBC */
+    Boolean getIsAIGenerated();
+
+    /** TBC */
     Boolean getIsDiscoverable();
 
     /** TBC */

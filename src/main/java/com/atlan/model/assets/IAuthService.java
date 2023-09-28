@@ -304,6 +304,9 @@ public interface IAuthService {
     Boolean getHasLineage();
 
     /** TBC */
+    Boolean getIsAIGenerated();
+
+    /** TBC */
     Boolean getIsDiscoverable();
 
     /** TBC */

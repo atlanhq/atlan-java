@@ -158,6 +158,7 @@ public class ConnectionTest {
             .file(File.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .file(File.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .hasLineage(true)
+            .isAIGenerated(true)
             .isDiscoverable(true)
             .isEditable(true)
             .lastRowChangedAt(123456789L)
@@ -380,6 +381,7 @@ public class ConnectionTest {
             .hasPopularityInsights(true)
             .host("String0")
             .isSampleDataPreviewEnabled(true)
+            .objectStorageUploadThreshold(123456789L)
             .policyStrategy("String0")
             .popularityInsightsTimeframe(123456789L)
             .port(123)
@@ -392,6 +394,8 @@ public class ConnectionTest {
             .rowLimit(123456789L)
             .sourceLogo("String0")
             .subCategory("String0")
+            .useObjectStorage(true)
+            .vectorEmbeddingsEnabled(true)
             .build();
 
     private static final int hash = full.hashCode();

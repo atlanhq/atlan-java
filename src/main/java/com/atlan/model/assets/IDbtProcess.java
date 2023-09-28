@@ -355,6 +355,9 @@ public interface IDbtProcess {
     SortedSet<ICatalog> getInputs();
 
     /** TBC */
+    Boolean getIsAIGenerated();
+
+    /** TBC */
     Boolean getIsDiscoverable();
 
     /** TBC */

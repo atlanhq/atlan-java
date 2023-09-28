@@ -8,6 +8,7 @@ import lombok.Getter;
 public enum LogoType implements AtlanEnum {
     EMOJI("emoji"),
     IMAGE("image"),
+    ICON("icon"),
     ;
 
     @JsonValue
