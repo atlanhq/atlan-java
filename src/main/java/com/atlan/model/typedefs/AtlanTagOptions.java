@@ -10,9 +10,7 @@ import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.admin.AtlanImage;
 import com.atlan.model.core.AtlanObject;
-import com.atlan.model.enums.AtlanIcon;
-import com.atlan.model.enums.AtlanTagColor;
-import com.atlan.model.enums.TagIconType;
+import com.atlan.model.enums.*;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import lombok.EqualsAndHashCode;
@@ -65,7 +63,9 @@ public class AtlanTagOptions extends AtlanObject {
      * @param color to use to represent the Atlan tag
      * @return the necessary options for setting this image and color for the Atlan tag
      * @throws AtlanException on any API communication issues trying to upload the image
+     * @deprecated see {@link #withImage(String)}
      */
+    @Deprecated
     public static AtlanTagOptions withImage(String url, AtlanTagColor color) throws AtlanException {
         return withImage(Atlan.getDefaultClient(), url, color);
     }
@@ -78,20 +78,61 @@ public class AtlanTagOptions extends AtlanObject {
      * @param color to use to represent the Atlan tag
      * @return the necessary options for setting this image and color for the Atlan tag
      * @throws AtlanException on any API communication issues trying to upload the image
+     * @deprecated see {@link #withImage(AtlanClient, String)}
      */
+    @Deprecated
     public static AtlanTagOptions withImage(AtlanClient client, String url, AtlanTagColor color) throws AtlanException {
+        return withImage(client, url);
+    }
+
+    /**
+     * Provide Atlan tag options that set the image for the tag, using an uploaded image.
+     *
+     * @param url URL to the image to use for the Atlan tag
+     * @return the necessary options for setting this image for the Atlan tag
+     * @throws AtlanException on any API communication issues trying to upload the image
+     */
+    public static AtlanTagOptions withImage(String url) throws AtlanException {
+        return withImage(Atlan.getDefaultClient(), url);
+    }
+
+    /**
+     * Provide Atlan tag options that set the image for the tag, using an uploaded image.
+     *
+     * @param client connectivity to the Atlan tenant in which the tag is intended to be created
+     * @param url URL to the image to use for the Atlan tag
+     * @return the necessary options for setting this image for the Atlan tag
+     * @throws AtlanException on any API communication issues trying to upload the image
+     */
+    public static AtlanTagOptions withImage(AtlanClient client, String url) throws AtlanException {
         try {
             AtlanImage result = client.images.upload(url);
             return AtlanTagOptions.builder()
-                    .color(color)
                     .iconType(TagIconType.IMAGE)
                     .imageID(result.getId())
+                    .color(AtlanTagColor.GRAY)
+                    .iconName(AtlanIcon.ATLAN_TAG)
                     .build();
         } catch (MalformedURLException e) {
             throw new InvalidRequestException(ErrorCode.INVALID_URL, e);
         } catch (IOException e) {
             throw new ApiException(ErrorCode.INACCESSIBLE_URL, e);
         }
+    }
+
+    /**
+     * Provide Atlan tag options that set the logo for the tag to the provided emoji.
+     *
+     * @param emoji the emoji character to use for the logo
+     * @return the necessary options for setting this emoji character as the logo for the Atlan tag
+     */
+    public static AtlanTagOptions withEmoji(String emoji) {
+        return AtlanTagOptions.builder()
+                .iconType(TagIconType.EMOJI)
+                .emoji(emoji)
+                .color(AtlanTagColor.GRAY)
+                .iconName(AtlanIcon.ATLAN_TAG)
+                .build();
     }
 
     /** Color to use for the Atlan tag. */
@@ -102,6 +143,9 @@ public class AtlanTagOptions extends AtlanObject {
 
     /** Type of icon to use for representing the tag visually. */
     TagIconType iconType;
+
+    /** If the {@code iconType} is emoji, this should hold the emoji character. */
+    String emoji;
 
     /** Unique identifier (GUID) of an image to use for the tag. */
     String imageID;

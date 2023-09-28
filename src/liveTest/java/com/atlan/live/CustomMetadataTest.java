@@ -76,7 +76,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
                         AttributeDef.of(CM_ATTR_IPR_MANDATORY, AtlanCustomAttributePrimitiveType.BOOLEAN, null, false))
                 .attributeDef(AttributeDef.of(CM_ATTR_IPR_DATE, AtlanCustomAttributePrimitiveType.DATE, null, false))
                 .attributeDef(AttributeDef.of(CM_ATTR_IPR_URL, AtlanCustomAttributePrimitiveType.URL, null, false))
-                .options(CustomMetadataOptions.withLogoAsEmoji("⚖️", true))
+                .options(CustomMetadataOptions.withEmoji("⚖️", true))
                 .build();
         CustomMetadataDef response = customMetadataDef.create();
         assertNotNull(response);
@@ -139,7 +139,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
                         AttributeDef.of(CM_ATTR_RACI_INFORMED, AtlanCustomAttributePrimitiveType.GROUPS, null, true))
                 .attributeDef(
                         AttributeDef.of(CM_ATTR_RACI_EXTRA, AtlanCustomAttributePrimitiveType.STRING, null, false))
-                .options(CustomMetadataOptions.withLogoAsEmoji("\uD83D\uDC6A"))
+                .options(CustomMetadataOptions.withIcon(AtlanIcon.USERS_THREE, AtlanTagColor.GRAY))
                 .build();
         CustomMetadataDef response = customMetadataDef.create();
         assertNotNull(response);
@@ -211,7 +211,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
                 .attributeDef(AttributeDef.of(CM_ATTR_QUALITY_SQL, AtlanCustomAttributePrimitiveType.SQL, null, false))
                 .attributeDef(AttributeDef.of(
                         CM_ATTR_QUALITY_TYPE, AtlanCustomAttributePrimitiveType.OPTIONS, CM_ENUM_DQ_TYPE, false))
-                .options(CustomMetadataOptions.withLogoFromURL(
+                .options(CustomMetadataOptions.withImage(
                         "https://github.com/great-expectations/great_expectations/raw/develop/docs/docusaurus/static/img/gx-mark-160.png",
                         true))
                 .build();

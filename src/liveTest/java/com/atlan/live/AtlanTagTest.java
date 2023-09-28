@@ -9,6 +9,7 @@ import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.enums.*;
 import com.atlan.model.typedefs.AtlanTagDef;
+import com.atlan.model.typedefs.AtlanTagOptions;
 import org.testng.annotations.Test;
 
 /**
@@ -19,6 +20,7 @@ public class AtlanTagTest extends AtlanLiveTest {
     private static final String PREFIX = makeUnique("tag");
     private static final String TAG_WITH_IMAGE = PREFIX + "_image";
     private static final String TAG_WITH_ICON = PREFIX + "_icon";
+    private static final String TAG_WITH_EMOJI = PREFIX + "_emoji";
 
     /**
      * Create a new Atlan tag with a unique name.
@@ -63,8 +65,7 @@ public class AtlanTagTest extends AtlanLiveTest {
     void createTagWithImage() throws AtlanException {
         AtlanTagDef tag = AtlanTagDef.creator(
                         TAG_WITH_IMAGE,
-                        "https://github.com/great-expectations/great_expectations/raw/develop/docs/docusaurus/static/img/gx-mark-160.png",
-                        AtlanTagColor.YELLOW)
+                        "https://github.com/great-expectations/great_expectations/raw/develop/docs/docusaurus/static/img/gx-mark-160.png")
                 .build();
         AtlanTagDef response = tag.create(Atlan.getDefaultClient());
         assertNotNull(response);
@@ -92,6 +93,21 @@ public class AtlanTagTest extends AtlanLiveTest {
         assertNotNull(response.getGuid());
         assertEquals(response.getDisplayName(), TAG_WITH_ICON);
         assertEquals(response.getOptions().getIconType(), TagIconType.ICON);
+    }
+
+    @Test(groups = {"tag.create.emoji"})
+    void createTagWithEmoji() throws AtlanException {
+        AtlanTagDef tag = AtlanTagDef.creator(TAG_WITH_EMOJI, AtlanTagOptions.withEmoji("\uD83D\uDC4D"))
+                .build();
+        AtlanTagDef response = tag.create(Atlan.getDefaultClient());
+        assertNotNull(response);
+        assertEquals(response.getCategory(), AtlanTypeCategory.ATLAN_TAG);
+        String uniqueName = response.getName();
+        assertNotNull(uniqueName);
+        assertNotEquals(uniqueName, TAG_WITH_EMOJI);
+        assertNotNull(response.getGuid());
+        assertEquals(response.getDisplayName(), TAG_WITH_EMOJI);
+        assertEquals(response.getOptions().getIconType(), TagIconType.EMOJI);
     }
 
     @Test(
