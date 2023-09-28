@@ -30,8 +30,8 @@
      * @param name of the connection
      * @param connectorType type of the connection's connector (this determines what logo appears for the assets)
      * @param adminRoles the GUIDs of the roles that can administer this connection
-     * @param adminGroups the names of the groups that can administer this connection
-     * @param adminUsers the names of the users that can administer this connection
+     * @param adminGroups the (internal) names of the groups that can administer this connection
+     * @param adminUsers the (internal) names of the users that can administer this connection
      * @return the minimal object necessary to create the connection, as a builder
      * @throws InvalidRequestException if no admin has been defined for the connection, or an invalid admin has been defined
      * @throws NotFoundException if a non-existent admin has been defined for the connection
@@ -56,8 +56,8 @@
      * @param name of the connection
      * @param connectorType type of the connection's connector (this determines what logo appears for the assets)
      * @param adminRoles the GUIDs of the roles that can administer this connection
-     * @param adminGroups the names of the groups that can administer this connection
-     * @param adminUsers the names of the users that can administer this connection
+     * @param adminGroups the (internal) names of the groups that can administer this connection
+     * @param adminUsers the (internal) names of the users that can administer this connection
      * @return the minimal object necessary to create the connection, as a builder
      * @throws InvalidRequestException if no admin has been defined for the connection, or an invalid admin has been defined
      * @throws NotFoundException if a non-existent admin has been defined for the connection
@@ -89,7 +89,7 @@
         }
         if (adminGroups != null && !adminGroups.isEmpty()) {
             for (String groupAlias : adminGroups) {
-                client.getGroupCache().getIdForAlias(groupAlias);
+                client.getGroupCache().getIdForName(groupAlias);
             }
             adminFound = true;
             builder.adminGroups(adminGroups);
@@ -172,7 +172,7 @@
         }
         if (adminGroups != null && !adminGroups.isEmpty()) {
             for (String groupAlias : adminGroups) {
-                client.getGroupCache().getIdForAlias(groupAlias);
+                client.getGroupCache().getIdForName(groupAlias);
             }
         }
         if (adminUsers != null && !adminUsers.isEmpty()) {
@@ -249,7 +249,7 @@
         }
         if (adminGroups != null && !adminGroups.isEmpty()) {
             for (String groupAlias : adminGroups) {
-                client.getGroupCache().getIdForAlias(groupAlias);
+                client.getGroupCache().getIdForName(groupAlias);
             }
         }
         if (adminUsers != null && !adminUsers.isEmpty()) {
