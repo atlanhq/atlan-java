@@ -27,8 +27,8 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":10,"i2":10,"i3":9,"i4":9,"i5":9,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":9,"i15":9,"i16":10,"i17":10};
-var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
+var data = {"i0":9,"i1":10,"i2":10,"i3":9,"i4":9,"i5":9,"i6":9,"i7":41,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":9,"i17":9,"i18":10,"i19":10};
+var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -226,7 +226,7 @@ extends <a href="TypeDef.html" title="class in com.atlan.model.typedefs">TypeDef
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t6" class="tableTab"><span><a href="javascript:show(32);">Deprecated Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colSecond" scope="col">Method</th>
@@ -268,66 +268,84 @@ extends <a href="TypeDef.html" title="class in com.atlan.model.typedefs">TypeDef
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>static <a href="AtlanTagDef.AtlanTagDefBuilder.html" title="class in com.atlan.model.typedefs">AtlanTagDef.AtlanTagDefBuilder</a>&lt;?,&#8203;?&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#creator(java.lang.String,java.lang.String,com.atlan.model.enums.AtlanTagColor)">creator</a></span>&#8203;(java.lang.String&nbsp;displayName,
-       java.lang.String&nbsp;url,
-       <a href="../enums/AtlanTagColor.html" title="enum in com.atlan.model.enums">AtlanTagColor</a>&nbsp;color)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#creator(java.lang.String,com.atlan.model.typedefs.AtlanTagOptions)">creator</a></span>&#8203;(java.lang.String&nbsp;displayName,
+       <a href="AtlanTagOptions.html" title="class in com.atlan.model.typedefs">AtlanTagOptions</a>&nbsp;options)</code></th>
 <td class="colLast">
 <div class="block">Builds the minimal object necessary to create an Atlan tag definition.</div>
 </td>
 </tr>
 <tr id="i6" class="altColor">
+<td class="colFirst"><code>static <a href="AtlanTagDef.AtlanTagDefBuilder.html" title="class in com.atlan.model.typedefs">AtlanTagDef.AtlanTagDefBuilder</a>&lt;?,&#8203;?&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#creator(java.lang.String,java.lang.String)">creator</a></span>&#8203;(java.lang.String&nbsp;displayName,
+       java.lang.String&nbsp;url)</code></th>
+<td class="colLast">
+<div class="block">Builds the minimal object necessary to create an Atlan tag definition.</div>
+</td>
+</tr>
+<tr id="i7" class="rowColor">
+<td class="colFirst"><code>static <a href="AtlanTagDef.AtlanTagDefBuilder.html" title="class in com.atlan.model.typedefs">AtlanTagDef.AtlanTagDefBuilder</a>&lt;?,&#8203;?&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#creator(java.lang.String,java.lang.String,com.atlan.model.enums.AtlanTagColor)">creator</a></span>&#8203;(java.lang.String&nbsp;displayName,
+       java.lang.String&nbsp;url,
+       <a href="../enums/AtlanTagColor.html" title="enum in com.atlan.model.enums">AtlanTagColor</a>&nbsp;color)</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">see <a href="#creator(java.lang.String,java.lang.String)"><code>creator(String, String)</code></a></div>
+</div>
+</td>
+</tr>
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#equals(java.lang.Object)">equals</a></span>&#8203;(java.lang.Object&nbsp;o)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code><a href="../enums/AtlanTypeCategory.html" title="enum in com.atlan.model.enums">AtlanTypeCategory</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCategory()">getCategory</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Fixed category for Atlan tag typedefs.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>java.util.List&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getEntityTypes()">getEntityTypes</a></span>()</code></th>
 <td class="colLast">
 <div class="block">List of the types of entities that the Atlan tag can be applied to.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code><a href="AtlanTagOptions.html" title="class in com.atlan.model.typedefs">AtlanTagOptions</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOptions()">getOptions</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Options that describe the Atlan tag.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSkipDisplayNameUniquenessCheck()">getSkipDisplayNameUniquenessCheck</a></span>()</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>java.util.List&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSubTypes()">getSubTypes</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Unused.</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>java.util.List&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSuperTypes()">getSuperTypes</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Unused.</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#purge(com.atlan.AtlanClient,java.lang.String)">purge</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
      java.lang.String&nbsp;displayName)</code></th>
@@ -335,19 +353,19 @@ extends <a href="TypeDef.html" title="class in com.atlan.model.typedefs">TypeDef
 <div class="block">Hard-deletes (purges) an Atlan tag by its human-readable name.</div>
 </td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#purge(java.lang.String)">purge</a></span>&#8203;(java.lang.String&nbsp;displayName)</code></th>
 <td class="colLast">
 <div class="block">Hard-deletes (purges) an Atlan tag by its human-readable name.</div>
 </td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i18" class="altColor">
 <td class="colFirst"><code><a href="AtlanTagDef.AtlanTagDefBuilder.html" title="class in com.atlan.model.typedefs">AtlanTagDef.AtlanTagDefBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toBuilder()">toBuilder</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 </tr>
@@ -452,16 +470,62 @@ extends <a href="TypeDef.html" title="class in com.atlan.model.typedefs">TypeDef
 <ul class="blockList">
 <li class="blockList">
 <h4>creator</h4>
-<pre class="methodSignature">public static&nbsp;<a href="AtlanTagDef.AtlanTagDefBuilder.html" title="class in com.atlan.model.typedefs">AtlanTagDef.AtlanTagDefBuilder</a>&lt;?,&#8203;?&gt;&nbsp;creator&#8203;(java.lang.String&nbsp;displayName,
+<pre class="methodSignature">@Deprecated
+public static&nbsp;<a href="AtlanTagDef.AtlanTagDefBuilder.html" title="class in com.atlan.model.typedefs">AtlanTagDef.AtlanTagDefBuilder</a>&lt;?,&#8203;?&gt;&nbsp;creator&#8203;(java.lang.String&nbsp;displayName,
                                                                 java.lang.String&nbsp;url,
                                                                 <a href="../enums/AtlanTagColor.html" title="enum in com.atlan.model.enums">AtlanTagColor</a>&nbsp;color)
                                                          throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">see <a href="#creator(java.lang.String,java.lang.String)"><code>creator(String, String)</code></a></div>
+</div>
 <div class="block">Builds the minimal object necessary to create an Atlan tag definition.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>displayName</code> - the human-readable name for the Atlan tag</dd>
 <dd><code>url</code> - URL to an image to use for the Atlan tag</dd>
 <dd><code>color</code> - the color to use for the Atlan tag</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the minimal request necessary to create the Atlan tag typedef, as a builder</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any issues uploading the image from the provided URL</dd>
+</dl>
+</li>
+</ul>
+<a id="creator(java.lang.String,java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>creator</h4>
+<pre class="methodSignature">public static&nbsp;<a href="AtlanTagDef.AtlanTagDefBuilder.html" title="class in com.atlan.model.typedefs">AtlanTagDef.AtlanTagDefBuilder</a>&lt;?,&#8203;?&gt;&nbsp;creator&#8203;(java.lang.String&nbsp;displayName,
+                                                                java.lang.String&nbsp;url)
+                                                         throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Builds the minimal object necessary to create an Atlan tag definition.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>displayName</code> - the human-readable name for the Atlan tag</dd>
+<dd><code>url</code> - URL to an image to use for the Atlan tag</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the minimal request necessary to create the Atlan tag typedef, as a builder</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any issues uploading the image from the provided URL</dd>
+</dl>
+</li>
+</ul>
+<a id="creator(java.lang.String,com.atlan.model.typedefs.AtlanTagOptions)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>creator</h4>
+<pre class="methodSignature">public static&nbsp;<a href="AtlanTagDef.AtlanTagDefBuilder.html" title="class in com.atlan.model.typedefs">AtlanTagDef.AtlanTagDefBuilder</a>&lt;?,&#8203;?&gt;&nbsp;creator&#8203;(java.lang.String&nbsp;displayName,
+                                                                <a href="AtlanTagOptions.html" title="class in com.atlan.model.typedefs">AtlanTagOptions</a>&nbsp;options)
+                                                         throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Builds the minimal object necessary to create an Atlan tag definition.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>displayName</code> - the human-readable name for the Atlan tag</dd>
+<dd><code>options</code> - to use when creating the Atlan tag</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the minimal request necessary to create the Atlan tag typedef, as a builder</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>

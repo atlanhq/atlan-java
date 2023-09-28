@@ -27,8 +27,8 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":9,"i11":9,"i12":9,"i13":9};
-var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
+var data = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":9,"i13":9,"i14":9,"i15":9,"i16":9,"i17":9,"i18":41,"i19":41,"i20":41,"i21":41};
+var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -213,7 +213,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t6" class="tableTab"><span><a href="javascript:show(32);">Deprecated Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colSecond" scope="col">Method</th>
@@ -242,74 +242,145 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 </td>
 </tr>
 <tr id="i4" class="altColor">
+<td class="colFirst"><code><a href="../enums/AtlanTagColor.html" title="enum in com.atlan.model.enums">AtlanTagColor</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIconColor()">getIconColor</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Color to use for the icon.</div>
+</td>
+</tr>
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code><a href="../enums/AtlanIcon.html" title="enum in com.atlan.model.enums">AtlanIcon</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIconName()">getIconName</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Icon to use to represent the custom metadata.</div>
+</td>
+</tr>
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getImageId()">getImageId</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Unique identifier (GUID) of the image used for the logo, for logos that are uploaded directly to Atlan.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIsLocked()">getIsLocked</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Indicates whether the custom metadata can be managed in the UI (false) or not (true).</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code><a href="../enums/LogoType.html" title="enum in com.atlan.model.enums">LogoType</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLogoType()">getLogoType</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Type of logo used for the custom metadata.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLogoUrl()">getLogoUrl</a></span>()</code></th>
 <td class="colLast">
 <div class="block">If the <code>logoType</code> is image, this should hold a URL to the image.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 </tr>
-<tr id="i10" class="altColor">
-<td class="colFirst"><code>static <a href="CustomMetadataOptions.html" title="class in com.atlan.model.typedefs">CustomMetadataOptions</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#withLogoAsEmoji(java.lang.String)">withLogoAsEmoji</a></span>&#8203;(java.lang.String&nbsp;emoji)</code></th>
-<td class="colLast">
-<div class="block">Provide custom metadata options that set the logo for the custom metadata to the provided
- emoji.</div>
-</td>
-</tr>
-<tr id="i11" class="rowColor">
-<td class="colFirst"><code>static <a href="CustomMetadataOptions.html" title="class in com.atlan.model.typedefs">CustomMetadataOptions</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#withLogoAsEmoji(java.lang.String,boolean)">withLogoAsEmoji</a></span>&#8203;(java.lang.String&nbsp;emoji,
-               boolean&nbsp;locked)</code></th>
-<td class="colLast">
-<div class="block">Provide custom metadata options that set the logo for the custom metadata to the provided
- emoji.</div>
-</td>
-</tr>
 <tr id="i12" class="altColor">
 <td class="colFirst"><code>static <a href="CustomMetadataOptions.html" title="class in com.atlan.model.typedefs">CustomMetadataOptions</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#withLogoFromURL(java.lang.String)">withLogoFromURL</a></span>&#8203;(java.lang.String&nbsp;url)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#withEmoji(java.lang.String)">withEmoji</a></span>&#8203;(java.lang.String&nbsp;emoji)</code></th>
 <td class="colLast">
-<div class="block">Provide custom metadata options that set the logo for the custom metadata from the image at
- the provided URL.</div>
+<div class="block">Provide custom metadata options that set the logo for the custom metadata to the provided
+ emoji.</div>
 </td>
 </tr>
 <tr id="i13" class="rowColor">
 <td class="colFirst"><code>static <a href="CustomMetadataOptions.html" title="class in com.atlan.model.typedefs">CustomMetadataOptions</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#withLogoFromURL(java.lang.String,boolean)">withLogoFromURL</a></span>&#8203;(java.lang.String&nbsp;url,
-               boolean&nbsp;locked)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#withEmoji(java.lang.String,boolean)">withEmoji</a></span>&#8203;(java.lang.String&nbsp;emoji,
+         boolean&nbsp;locked)</code></th>
+<td class="colLast">
+<div class="block">Provide custom metadata options that set the logo for the custom metadata to the provided
+ emoji.</div>
+</td>
+</tr>
+<tr id="i14" class="altColor">
+<td class="colFirst"><code>static <a href="CustomMetadataOptions.html" title="class in com.atlan.model.typedefs">CustomMetadataOptions</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#withIcon(com.atlan.model.enums.AtlanIcon,com.atlan.model.enums.AtlanTagColor)">withIcon</a></span>&#8203;(<a href="../enums/AtlanIcon.html" title="enum in com.atlan.model.enums">AtlanIcon</a>&nbsp;icon,
+        <a href="../enums/AtlanTagColor.html" title="enum in com.atlan.model.enums">AtlanTagColor</a>&nbsp;color)</code></th>
+<td class="colLast">
+<div class="block">Provide custom metadata options that set the logo for the custom metadata to the provided
+ icon and color.</div>
+</td>
+</tr>
+<tr id="i15" class="rowColor">
+<td class="colFirst"><code>static <a href="CustomMetadataOptions.html" title="class in com.atlan.model.typedefs">CustomMetadataOptions</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#withIcon(com.atlan.model.enums.AtlanIcon,com.atlan.model.enums.AtlanTagColor,boolean)">withIcon</a></span>&#8203;(<a href="../enums/AtlanIcon.html" title="enum in com.atlan.model.enums">AtlanIcon</a>&nbsp;icon,
+        <a href="../enums/AtlanTagColor.html" title="enum in com.atlan.model.enums">AtlanTagColor</a>&nbsp;color,
+        boolean&nbsp;locked)</code></th>
+<td class="colLast">
+<div class="block">Provide custom metadata options that set the logo for the custom metadata to the provided
+ icon.</div>
+</td>
+</tr>
+<tr id="i16" class="altColor">
+<td class="colFirst"><code>static <a href="CustomMetadataOptions.html" title="class in com.atlan.model.typedefs">CustomMetadataOptions</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#withImage(java.lang.String)">withImage</a></span>&#8203;(java.lang.String&nbsp;url)</code></th>
 <td class="colLast">
 <div class="block">Provide custom metadata options that set the logo for the custom metadata from the image at
  the provided URL.</div>
+</td>
+</tr>
+<tr id="i17" class="rowColor">
+<td class="colFirst"><code>static <a href="CustomMetadataOptions.html" title="class in com.atlan.model.typedefs">CustomMetadataOptions</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#withImage(java.lang.String,boolean)">withImage</a></span>&#8203;(java.lang.String&nbsp;url,
+         boolean&nbsp;locked)</code></th>
+<td class="colLast">
+<div class="block">Provide custom metadata options that set the logo for the custom metadata from the image at
+ the provided URL.</div>
+</td>
+</tr>
+<tr id="i18" class="altColor">
+<td class="colFirst"><code>static <a href="CustomMetadataOptions.html" title="class in com.atlan.model.typedefs">CustomMetadataOptions</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#withLogoAsEmoji(java.lang.String)">withLogoAsEmoji</a></span>&#8203;(java.lang.String&nbsp;emoji)</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">see <a href="#withEmoji(java.lang.String)"><code>withEmoji(String)</code></a></div>
+</div>
+</td>
+</tr>
+<tr id="i19" class="rowColor">
+<td class="colFirst"><code>static <a href="CustomMetadataOptions.html" title="class in com.atlan.model.typedefs">CustomMetadataOptions</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#withLogoAsEmoji(java.lang.String,boolean)">withLogoAsEmoji</a></span>&#8203;(java.lang.String&nbsp;emoji,
+               boolean&nbsp;locked)</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">see <a href="#withEmoji(java.lang.String,boolean)"><code>withEmoji(String, boolean)</code></a></div>
+</div>
+</td>
+</tr>
+<tr id="i20" class="altColor">
+<td class="colFirst"><code>static <a href="CustomMetadataOptions.html" title="class in com.atlan.model.typedefs">CustomMetadataOptions</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#withLogoFromURL(java.lang.String)">withLogoFromURL</a></span>&#8203;(java.lang.String&nbsp;url)</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">see <a href="#withImage(java.lang.String)"><code>withImage(String)</code></a></div>
+</div>
+</td>
+</tr>
+<tr id="i21" class="rowColor">
+<td class="colFirst"><code>static <a href="CustomMetadataOptions.html" title="class in com.atlan.model.typedefs">CustomMetadataOptions</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#withLogoFromURL(java.lang.String,boolean)">withLogoFromURL</a></span>&#8203;(java.lang.String&nbsp;url,
+               boolean&nbsp;locked)</code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">see <a href="#withImage(java.lang.String,boolean)"><code>withImage(String, boolean)</code></a></div>
+</div>
 </td>
 </tr>
 </table>
@@ -368,7 +439,11 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <ul class="blockList">
 <li class="blockList">
 <h4>withLogoFromURL</h4>
-<pre class="methodSignature">public static&nbsp;<a href="CustomMetadataOptions.html" title="class in com.atlan.model.typedefs">CustomMetadataOptions</a>&nbsp;withLogoFromURL&#8203;(java.lang.String&nbsp;url)</pre>
+<pre class="methodSignature">@Deprecated
+public static&nbsp;<a href="CustomMetadataOptions.html" title="class in com.atlan.model.typedefs">CustomMetadataOptions</a>&nbsp;withLogoFromURL&#8203;(java.lang.String&nbsp;url)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">see <a href="#withImage(java.lang.String)"><code>withImage(String)</code></a></div>
+</div>
 <div class="block">Provide custom metadata options that set the logo for the custom metadata from the image at
  the provided URL. The custom metadata will be editable through the UI.</div>
 <dl>
@@ -385,7 +460,11 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <ul class="blockList">
 <li class="blockList">
 <h4>withLogoAsEmoji</h4>
-<pre class="methodSignature">public static&nbsp;<a href="CustomMetadataOptions.html" title="class in com.atlan.model.typedefs">CustomMetadataOptions</a>&nbsp;withLogoAsEmoji&#8203;(java.lang.String&nbsp;emoji)</pre>
+<pre class="methodSignature">@Deprecated
+public static&nbsp;<a href="CustomMetadataOptions.html" title="class in com.atlan.model.typedefs">CustomMetadataOptions</a>&nbsp;withLogoAsEmoji&#8203;(java.lang.String&nbsp;emoji)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">see <a href="#withEmoji(java.lang.String)"><code>withEmoji(String)</code></a></div>
+</div>
 <div class="block">Provide custom metadata options that set the logo for the custom metadata to the provided
  emoji. The custom metadata will be editable through the UI.</div>
 <dl>
@@ -402,8 +481,12 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <ul class="blockList">
 <li class="blockList">
 <h4>withLogoFromURL</h4>
-<pre class="methodSignature">public static&nbsp;<a href="CustomMetadataOptions.html" title="class in com.atlan.model.typedefs">CustomMetadataOptions</a>&nbsp;withLogoFromURL&#8203;(java.lang.String&nbsp;url,
+<pre class="methodSignature">@Deprecated
+public static&nbsp;<a href="CustomMetadataOptions.html" title="class in com.atlan.model.typedefs">CustomMetadataOptions</a>&nbsp;withLogoFromURL&#8203;(java.lang.String&nbsp;url,
                                                     boolean&nbsp;locked)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">see <a href="#withImage(java.lang.String,boolean)"><code>withImage(String, boolean)</code></a></div>
+</div>
 <div class="block">Provide custom metadata options that set the logo for the custom metadata from the image at
  the provided URL.</div>
 <dl>
@@ -421,8 +504,12 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <ul class="blockList">
 <li class="blockList">
 <h4>withLogoAsEmoji</h4>
-<pre class="methodSignature">public static&nbsp;<a href="CustomMetadataOptions.html" title="class in com.atlan.model.typedefs">CustomMetadataOptions</a>&nbsp;withLogoAsEmoji&#8203;(java.lang.String&nbsp;emoji,
+<pre class="methodSignature">@Deprecated
+public static&nbsp;<a href="CustomMetadataOptions.html" title="class in com.atlan.model.typedefs">CustomMetadataOptions</a>&nbsp;withLogoAsEmoji&#8203;(java.lang.String&nbsp;emoji,
                                                     boolean&nbsp;locked)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">see <a href="#withEmoji(java.lang.String,boolean)"><code>withEmoji(String, boolean)</code></a></div>
+</div>
 <div class="block">Provide custom metadata options that set the logo for the custom metadata to the provided
  emoji.</div>
 <dl>
@@ -431,6 +518,118 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <dd><code>locked</code> - if true, the custom metadata cannot be modified through the Atlan UI</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the necessary options for setting this emoji character as the logo for the custom metadata</dd>
+</dl>
+</li>
+</ul>
+<a id="withImage(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>withImage</h4>
+<pre class="methodSignature">public static&nbsp;<a href="CustomMetadataOptions.html" title="class in com.atlan.model.typedefs">CustomMetadataOptions</a>&nbsp;withImage&#8203;(java.lang.String&nbsp;url)</pre>
+<div class="block">Provide custom metadata options that set the logo for the custom metadata from the image at
+ the provided URL. The custom metadata will be editable through the UI.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>url</code> - to an image (for example a .png)</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the necessary options for setting this image as the logo for the custom metadata</dd>
+</dl>
+</li>
+</ul>
+<a id="withImage(java.lang.String,boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>withImage</h4>
+<pre class="methodSignature">public static&nbsp;<a href="CustomMetadataOptions.html" title="class in com.atlan.model.typedefs">CustomMetadataOptions</a>&nbsp;withImage&#8203;(java.lang.String&nbsp;url,
+                                              boolean&nbsp;locked)</pre>
+<div class="block">Provide custom metadata options that set the logo for the custom metadata from the image at
+ the provided URL.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>url</code> - to an image (for example a .png)</dd>
+<dd><code>locked</code> - if true, the custom metadata cannot be modified through the Atlan UI</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the necessary options for setting this image as the logo for the custom metadata</dd>
+</dl>
+</li>
+</ul>
+<a id="withEmoji(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>withEmoji</h4>
+<pre class="methodSignature">public static&nbsp;<a href="CustomMetadataOptions.html" title="class in com.atlan.model.typedefs">CustomMetadataOptions</a>&nbsp;withEmoji&#8203;(java.lang.String&nbsp;emoji)</pre>
+<div class="block">Provide custom metadata options that set the logo for the custom metadata to the provided
+ emoji. The custom metadata will be editable through the UI.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>emoji</code> - the emoji character to use for the logo</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the necessary options for setting this emoji character as the logo for the custom metadata</dd>
+</dl>
+</li>
+</ul>
+<a id="withEmoji(java.lang.String,boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>withEmoji</h4>
+<pre class="methodSignature">public static&nbsp;<a href="CustomMetadataOptions.html" title="class in com.atlan.model.typedefs">CustomMetadataOptions</a>&nbsp;withEmoji&#8203;(java.lang.String&nbsp;emoji,
+                                              boolean&nbsp;locked)</pre>
+<div class="block">Provide custom metadata options that set the logo for the custom metadata to the provided
+ emoji.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>emoji</code> - the emoji character to use for the logo</dd>
+<dd><code>locked</code> - if true, the custom metadata cannot be modified through the Atlan UI</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the necessary options for setting this emoji character as the logo for the custom metadata</dd>
+</dl>
+</li>
+</ul>
+<a id="withIcon(com.atlan.model.enums.AtlanIcon,com.atlan.model.enums.AtlanTagColor)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>withIcon</h4>
+<pre class="methodSignature">public static&nbsp;<a href="CustomMetadataOptions.html" title="class in com.atlan.model.typedefs">CustomMetadataOptions</a>&nbsp;withIcon&#8203;(<a href="../enums/AtlanIcon.html" title="enum in com.atlan.model.enums">AtlanIcon</a>&nbsp;icon,
+                                             <a href="../enums/AtlanTagColor.html" title="enum in com.atlan.model.enums">AtlanTagColor</a>&nbsp;color)</pre>
+<div class="block">Provide custom metadata options that set the logo for the custom metadata to the provided
+ icon and color. The custom metadata will be editable through the UI.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>icon</code> - the icon to use for the logo</dd>
+<dd><code>color</code> - the color to use for the icon</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the necessary options for setting this icon (and color) as the logo for the custom metadata</dd>
+</dl>
+</li>
+</ul>
+<a id="withIcon(com.atlan.model.enums.AtlanIcon,com.atlan.model.enums.AtlanTagColor,boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>withIcon</h4>
+<pre class="methodSignature">public static&nbsp;<a href="CustomMetadataOptions.html" title="class in com.atlan.model.typedefs">CustomMetadataOptions</a>&nbsp;withIcon&#8203;(<a href="../enums/AtlanIcon.html" title="enum in com.atlan.model.enums">AtlanIcon</a>&nbsp;icon,
+                                             <a href="../enums/AtlanTagColor.html" title="enum in com.atlan.model.enums">AtlanTagColor</a>&nbsp;color,
+                                             boolean&nbsp;locked)</pre>
+<div class="block">Provide custom metadata options that set the logo for the custom metadata to the provided
+ icon.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>icon</code> - the icon to use for the logo</dd>
+<dd><code>color</code> - the color to use for the icon</dd>
+<dd><code>locked</code> - if true, the custom metadata cannot be modified through the Atlan UI</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the necessary options for setting this icon (and color) as the logo for the custom metadata</dd>
 </dl>
 </li>
 </ul>
@@ -451,6 +650,26 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <h4>getLogoType</h4>
 <pre class="methodSignature">public&nbsp;<a href="../enums/LogoType.html" title="enum in com.atlan.model.enums">LogoType</a>&nbsp;getLogoType()</pre>
 <div class="block">Type of logo used for the custom metadata.</div>
+</li>
+</ul>
+<a id="getIconColor()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getIconColor</h4>
+<pre class="methodSignature">public&nbsp;<a href="../enums/AtlanTagColor.html" title="enum in com.atlan.model.enums">AtlanTagColor</a>&nbsp;getIconColor()</pre>
+<div class="block">Color to use for the icon.</div>
+</li>
+</ul>
+<a id="getIconName()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getIconName</h4>
+<pre class="methodSignature">public&nbsp;<a href="../enums/AtlanIcon.html" title="enum in com.atlan.model.enums">AtlanIcon</a>&nbsp;getIconName()</pre>
+<div class="block">Icon to use to represent the custom metadata.</div>
 </li>
 </ul>
 <a id="getEmoji()">

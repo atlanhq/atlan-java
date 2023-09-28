@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":6,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":6,"i7":10};
+var data = {"i0":6,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":6,"i9":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -195,30 +195,40 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="CustomMetadataOptions.CustomMetadataOptionsBuilder.html" title="type parameter in CustomMetadataOptions.CustomMetadataOptionsBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#imageId(java.lang.String)">imageId</a></span>&#8203;(java.lang.String&nbsp;imageId)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#iconColor(com.atlan.model.enums.AtlanTagColor)">iconColor</a></span>&#8203;(<a href="../enums/AtlanTagColor.html" title="enum in com.atlan.model.enums">AtlanTagColor</a>&nbsp;iconColor)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="CustomMetadataOptions.CustomMetadataOptionsBuilder.html" title="type parameter in CustomMetadataOptions.CustomMetadataOptionsBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isLocked(java.lang.String)">isLocked</a></span>&#8203;(java.lang.String&nbsp;isLocked)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#iconName(com.atlan.model.enums.AtlanIcon)">iconName</a></span>&#8203;(<a href="../enums/AtlanIcon.html" title="enum in com.atlan.model.enums">AtlanIcon</a>&nbsp;iconName)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="CustomMetadataOptions.CustomMetadataOptionsBuilder.html" title="type parameter in CustomMetadataOptions.CustomMetadataOptionsBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#logoType(com.atlan.model.enums.LogoType)">logoType</a></span>&#8203;(<a href="../enums/LogoType.html" title="enum in com.atlan.model.enums">LogoType</a>&nbsp;logoType)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#imageId(java.lang.String)">imageId</a></span>&#8203;(java.lang.String&nbsp;imageId)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="CustomMetadataOptions.CustomMetadataOptionsBuilder.html" title="type parameter in CustomMetadataOptions.CustomMetadataOptionsBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#logoUrl(java.lang.String)">logoUrl</a></span>&#8203;(java.lang.String&nbsp;logoUrl)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isLocked(java.lang.String)">isLocked</a></span>&#8203;(java.lang.String&nbsp;isLocked)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
+<td class="colFirst"><code><a href="CustomMetadataOptions.CustomMetadataOptionsBuilder.html" title="type parameter in CustomMetadataOptions.CustomMetadataOptionsBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#logoType(com.atlan.model.enums.LogoType)">logoType</a></span>&#8203;(<a href="../enums/LogoType.html" title="enum in com.atlan.model.enums">LogoType</a>&nbsp;logoType)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i7" class="rowColor">
+<td class="colFirst"><code><a href="CustomMetadataOptions.CustomMetadataOptionsBuilder.html" title="type parameter in CustomMetadataOptions.CustomMetadataOptionsBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#logoUrl(java.lang.String)">logoUrl</a></span>&#8203;(java.lang.String&nbsp;logoUrl)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>protected abstract <a href="CustomMetadataOptions.CustomMetadataOptionsBuilder.html" title="type parameter in CustomMetadataOptions.CustomMetadataOptionsBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#self()">self</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
@@ -306,6 +316,32 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <li class="blockList">
 <h4>logoType</h4>
 <pre class="methodSignature">public&nbsp;<a href="CustomMetadataOptions.CustomMetadataOptionsBuilder.html" title="type parameter in CustomMetadataOptions.CustomMetadataOptionsBuilder">B</a>&nbsp;logoType&#8203;(<a href="../enums/LogoType.html" title="enum in com.atlan.model.enums">LogoType</a>&nbsp;logoType)</pre>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="iconColor(com.atlan.model.enums.AtlanTagColor)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>iconColor</h4>
+<pre class="methodSignature">public&nbsp;<a href="CustomMetadataOptions.CustomMetadataOptionsBuilder.html" title="type parameter in CustomMetadataOptions.CustomMetadataOptionsBuilder">B</a>&nbsp;iconColor&#8203;(<a href="../enums/AtlanTagColor.html" title="enum in com.atlan.model.enums">AtlanTagColor</a>&nbsp;iconColor)</pre>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="iconName(com.atlan.model.enums.AtlanIcon)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>iconName</h4>
+<pre class="methodSignature">public&nbsp;<a href="CustomMetadataOptions.CustomMetadataOptionsBuilder.html" title="type parameter in CustomMetadataOptions.CustomMetadataOptionsBuilder">B</a>&nbsp;iconName&#8203;(<a href="../enums/AtlanIcon.html" title="enum in com.atlan.model.enums">AtlanIcon</a>&nbsp;iconName)</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>

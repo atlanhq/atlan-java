@@ -3777,6 +3777,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Indicates whether this asset has lineage (true) or not.</div>
 </li>
 <li class="blockList">
+<h4>isAIGenerated</h4>
+<pre>java.lang.Boolean isAIGenerated</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
 <h4>isDiscoverable</h4>
 <pre>java.lang.Boolean isDiscoverable</pre>
 <div class="block">TBC</div>
@@ -5337,6 +5342,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Whether sample data can be previewed for this connection (true) or not (false).</div>
 </li>
 <li class="blockList">
+<h4>objectStorageUploadThreshold</h4>
+<pre>java.lang.Long objectStorageUploadThreshold</pre>
+<div class="block">A long integer indicating after how many rows heka should start uploading result to storage</div>
+</li>
+<li class="blockList">
 <h4>policyStrategy</h4>
 <pre>java.lang.String policyStrategy</pre>
 <div class="block">TBC</div>
@@ -5391,10 +5401,20 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <pre>java.lang.String subCategory</pre>
 <div class="block">Subtype of the connection.</div>
 </li>
-<li class="blockListLast">
+<li class="blockList">
 <h4>typeName</h4>
 <pre>java.lang.String typeName</pre>
 <div class="block">Fixed typeName for Connections.</div>
+</li>
+<li class="blockList">
+<h4>useObjectStorage</h4>
+<pre>java.lang.Boolean useObjectStorage</pre>
+<div class="block">A Boolean flag indicating whether to upload to S3, GCP, or another storage location</div>
+</li>
+<li class="blockListLast">
+<h4>vectorEmbeddingsEnabled</h4>
+<pre>java.lang.Boolean vectorEmbeddingsEnabled</pre>
+<div class="block">TBC</div>
 </li>
 </ul>
 </li>
@@ -12224,6 +12244,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">TBC</div>
 </li>
 <li class="blockList">
+<h4>denyAssetFilters</h4>
+<pre>java.util.SortedSet&lt;java.lang.String&gt; denyAssetFilters</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
 <h4>denyAssetTabs</h4>
 <pre>java.util.SortedSet&lt;<a href="com/atlan/model/enums/AssetSidebarTab.html" title="enum in com.atlan.model.enums">AssetSidebarTab</a>&gt; denyAssetTabs</pre>
 <div class="block">TBC</div>
@@ -13793,6 +13818,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <h4>channelLink</h4>
 <pre>java.lang.String channelLink</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>denyAssetFilters</h4>
+<pre>java.util.SortedSet&lt;java.lang.String&gt; denyAssetFilters</pre>
 <div class="block">TBC</div>
 </li>
 <li class="blockList">
@@ -21807,6 +21837,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Color to use for the Atlan tag.</div>
 </li>
 <li class="blockList">
+<h4>emoji</h4>
+<pre>java.lang.String emoji</pre>
+<div class="block">If the <code>iconType</code> is emoji, this should hold the emoji character.</div>
+</li>
+<li class="blockList">
 <h4>iconName</h4>
 <pre><a href="com/atlan/model/enums/AtlanIcon.html" title="enum in com.atlan.model.enums">AtlanIcon</a> iconName</pre>
 <div class="block">Name of icon to use to represent the tag visually.</div>
@@ -22139,6 +22174,16 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <h4>emoji</h4>
 <pre>java.lang.String emoji</pre>
 <div class="block">If the <code>logoType</code> is emoji, this should hold the emoji character.</div>
+</li>
+<li class="blockList">
+<h4>iconColor</h4>
+<pre><a href="com/atlan/model/enums/AtlanTagColor.html" title="enum in com.atlan.model.enums">AtlanTagColor</a> iconColor</pre>
+<div class="block">Color to use for the icon.</div>
+</li>
+<li class="blockList">
+<h4>iconName</h4>
+<pre><a href="com/atlan/model/enums/AtlanIcon.html" title="enum in com.atlan.model.enums">AtlanIcon</a> iconName</pre>
+<div class="block">Icon to use to represent the custom metadata.</div>
 </li>
 <li class="blockList">
 <h4>imageId</h4>
