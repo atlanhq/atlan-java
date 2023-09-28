@@ -288,6 +288,9 @@ public interface IBIProcess {
     SortedSet<ICatalog> getInputs();
 
     /** TBC */
+    Boolean getIsAIGenerated();
+
+    /** TBC */
     Boolean getIsDiscoverable();
 
     /** TBC */

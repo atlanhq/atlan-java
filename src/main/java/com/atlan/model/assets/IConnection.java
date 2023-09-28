@@ -73,6 +73,10 @@ public interface IConnection {
     BooleanField IS_SAMPLE_DATA_PREVIEW_ENABLED =
             new BooleanField("isSampleDataPreviewEnabled", "isSampleDataPreviewEnabled");
 
+    /** A long integer indicating after how many rows heka should start uploading result to storage */
+    NumericField OBJECT_STORAGE_UPLOAD_THRESHOLD =
+            new NumericField("objectStorageUploadThreshold", "objectStorageUploadThreshold");
+
     /** TBC */
     KeywordField POLICY_STRATEGY = new KeywordField("policyStrategy", "policyStrategy");
 
@@ -107,6 +111,12 @@ public interface IConnection {
 
     /** Subtype of the connection. */
     KeywordField SUB_CATEGORY = new KeywordField("subCategory", "subCategory");
+
+    /** A Boolean flag indicating whether to upload to S3, GCP, or another storage location */
+    BooleanField USE_OBJECT_STORAGE = new BooleanField("useObjectStorage", "useObjectStorage");
+
+    /** TBC */
+    BooleanField VECTOR_EMBEDDINGS_ENABLED = new BooleanField("vectorEmbeddingsEnabled", "vectorEmbeddingsEnabled");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -385,6 +395,9 @@ public interface IConnection {
     String getHost();
 
     /** TBC */
+    Boolean getIsAIGenerated();
+
+    /** TBC */
     Boolean getIsDiscoverable();
 
     /** TBC */
@@ -419,6 +432,9 @@ public interface IConnection {
 
     /** TBC */
     String getName();
+
+    /** A long integer indicating after how many rows heka should start uploading result to storage */
+    Long getObjectStorageUploadThreshold();
 
     /** TBC */
     SortedSet<String> getOwnerGroups();
@@ -558,8 +574,14 @@ public interface IConnection {
     /** TBC */
     String getTenantId();
 
+    /** A Boolean flag indicating whether to upload to S3, GCP, or another storage location */
+    Boolean getUseObjectStorage();
+
     /** TBC */
     String getUserDescription();
+
+    /** TBC */
+    Boolean getVectorEmbeddingsEnabled();
 
     /** TBC */
     Double getViewScore();

@@ -269,6 +269,9 @@ public interface IPurpose {
     String getDbtQualifiedName();
 
     /** TBC */
+    SortedSet<String> getDenyAssetFilters();
+
+    /** TBC */
     SortedSet<AssetSidebarTab> getDenyAssetTabs();
 
     /** TBC */
@@ -285,6 +288,9 @@ public interface IPurpose {
 
     /** TBC */
     Boolean getHasLineage();
+
+    /** TBC */
+    Boolean getIsAIGenerated();
 
     /** TBC */
     Boolean getIsAccessControlEnabled();

@@ -311,6 +311,9 @@ public interface ISalesforceObject {
     /** TBC */
     SortedSet<ILineageProcess> getInputToProcesses();
 
+    /** TBC */
+    Boolean getIsAIGenerated();
+
     /** Whether the object is a custom object (true) or not (false). */
     Boolean getIsCustom();
 

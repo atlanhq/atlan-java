@@ -60,6 +60,11 @@ public class Persona extends Asset implements IPersona, IAccessControl, IAsset, 
     /** TBC */
     @Attribute
     @Singular
+    SortedSet<String> denyAssetFilters;
+
+    /** TBC */
+    @Attribute
+    @Singular
     SortedSet<AssetSidebarTab> denyAssetTabs;
 
     /** TBC */

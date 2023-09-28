@@ -319,6 +319,9 @@ public interface IAsset {
     BooleanField HAS_LINEAGE = new BooleanField("__hasLineage", "__hasLineage");
 
     /** TBC */
+    BooleanField IS_AI_GENERATED = new BooleanField("isAIGenerated", "isAIGenerated");
+
+    /** TBC */
     BooleanField IS_DISCOVERABLE = new BooleanField("isDiscoverable", "isDiscoverable");
 
     /** TBC */
@@ -719,6 +722,9 @@ public interface IAsset {
 
     /** Indicates whether this asset has lineage (true) or not. */
     Boolean getHasLineage();
+
+    /** TBC */
+    Boolean getIsAIGenerated();
 
     /** TBC */
     Boolean getIsDiscoverable();

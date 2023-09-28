@@ -293,6 +293,9 @@ public interface IAtlanCollection {
     IconType getIconType();
 
     /** TBC */
+    Boolean getIsAIGenerated();
+
+    /** TBC */
     Boolean getIsDiscoverable();
 
     /** TBC */

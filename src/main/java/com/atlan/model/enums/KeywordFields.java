@@ -454,6 +454,8 @@ public enum KeywordFields implements AtlanSearchableField {
     DEFAULT_VALUE_FORMULA("defaultValueFormula"),
     /** Definition of the materialized view (DDL). */
     DEFINITION("definition"),
+    /** TBC */
+    DENY_ASSET_FILTERS("denyAssetFilters"),
     /** Asset sidebar tabs that should be hidden from this access control object. */
     DENY_ASSET_TABS("denyAssetTabs"),
     /** Unique identifiers (GUIDs) of custom metadata that should be hidden from this access control object. */

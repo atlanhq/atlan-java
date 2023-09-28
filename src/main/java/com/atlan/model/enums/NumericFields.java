@@ -228,6 +228,8 @@ public enum NumericFields implements AtlanSearchableField {
     NESTED_COLUMN_COUNT("nestedColumnCount"),
     /** Number of digits allowed to the right of the decimal point. */
     NUMERIC_SCALE("numericScale"),
+    /** A long integer indicating after how many rows heka should start uploading result to storage */
+    OBJECT_STORAGE_UPLOAD_THRESHOLD("objectStorageUploadThreshold"),
     /** TBC */
     OPERATION_END_TIME("operationEndTime"),
     /** TBC */

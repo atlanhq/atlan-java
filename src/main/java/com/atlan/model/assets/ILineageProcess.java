@@ -314,6 +314,9 @@ public interface ILineageProcess {
     SortedSet<ICatalog> getInputs();
 
     /** TBC */
+    Boolean getIsAIGenerated();
+
+    /** TBC */
     Boolean getIsDiscoverable();
 
     /** TBC */
