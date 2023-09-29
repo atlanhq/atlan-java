@@ -117,5 +117,6 @@ public class AtlanTagTest extends AtlanLiveTest {
     void purgeTags() throws AtlanException {
         deleteAtlanTag(TAG_WITH_ICON);
         deleteAtlanTag(TAG_WITH_IMAGE);
+        deleteAtlanTag(TAG_WITH_EMOJI);
     }
 }
