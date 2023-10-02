@@ -143,8 +143,13 @@ public class AssetSerializer extends StdSerializer<Asset> {
             // Special cases to wrap-up:
             // Encode the Readme's description after serialization
             if (asset.getTypeName() != null && asset.getTypeName().equals("Readme")) {
-                String unencoded = (String) attributes.get("description");
-                attributes.put("description", StringUtils.encodeContent(unencoded));
+                Object desc = attributes.get("description");
+                if (desc instanceof Removable) {
+                    attributes.put("description", desc);
+                } else {
+                    String unencoded = (String) attributes.get("description");
+                    attributes.put("description", StringUtils.encodeContent(unencoded));
+                }
             }
             sp.defaultSerializeField("attributes", attributes, gen);
         }
