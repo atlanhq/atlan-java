@@ -11,6 +11,8 @@ import com.atlan.model.core.AssetMutationResponse;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -45,6 +47,10 @@ public class AssetBatch {
     /** Batches that failed to be committed (only populated when captureFailures is set to true). */
     @Getter
     private final List<FailedBatch> failures;
+
+    /** Map from placeholder GUID to resolved (actual) GUID, for all assets that were processed through the batch. */
+    @Getter
+    private final Map<String, String> resolvedGuids;
 
     /**
      * Create a new batch of assets to be bulk-saved.
@@ -95,6 +101,7 @@ public class AssetBatch {
         this.client = client;
         _batch = Collections.synchronizedList(new ArrayList<>());
         failures = Collections.synchronizedList(new ArrayList<>());
+        resolvedGuids = new ConcurrentHashMap<>();
         this.typeName = typeName;
         this.maxSize = maxSize;
         this.replaceAtlanTags = replaceAtlanTags;
@@ -171,6 +178,9 @@ public class AssetBatch {
         if (response != null) {
             response.getCreatedAssets().forEach(a -> track(created, a));
             response.getUpdatedAssets().forEach(a -> track(updated, a));
+            if (response.getGuidAssignments() != null) {
+                resolvedGuids.putAll(response.getGuidAssignments());
+            }
         }
     }
 
