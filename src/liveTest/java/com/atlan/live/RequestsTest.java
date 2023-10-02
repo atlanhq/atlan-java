@@ -173,7 +173,7 @@ public class RequestsTest extends AtlanLiveTest {
         // Force a cache refresh to ensure this client has the tag name available
         String tagId = null;
         int count = 0;
-        int maxTries = requestsClient.getMaxNetworkRetries() * 2;
+        int maxTries = requestsClient.getMaxNetworkRetries() * 4;
         while (tagId == null && count < maxTries) {
             try {
                 requestsClient.getAtlanTagCache().refreshCache();
