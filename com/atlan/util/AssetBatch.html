@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -259,6 +259,13 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr id="i4" class="altColor">
+<td class="colFirst"><code>java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getResolvedGuids()">getResolvedGuids</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Map from placeholder GUID to resolved (actual) GUID, for all assets that were processed through the batch.</div>
+</td>
+</tr>
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getUpdated()">getUpdated</a></span>()</code></th>
 <td class="colLast">
@@ -422,11 +429,21 @@ extends java.lang.Object</pre>
 <a id="getFailures()">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>getFailures</h4>
 <pre class="methodSignature">public&nbsp;java.util.List&lt;<a href="AssetBatch.FailedBatch.html" title="class in com.atlan.util">AssetBatch.FailedBatch</a>&gt;&nbsp;getFailures()</pre>
 <div class="block">Batches that failed to be committed (only populated when captureFailures is set to true).</div>
+</li>
+</ul>
+<a id="getResolvedGuids()">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getResolvedGuids</h4>
+<pre class="methodSignature">public&nbsp;java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;getResolvedGuids()</pre>
+<div class="block">Map from placeholder GUID to resolved (actual) GUID, for all assets that were processed through the batch.</div>
 </li>
 </ul>
 </li>
