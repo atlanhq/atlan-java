@@ -147,7 +147,7 @@ public class AssetSerializer extends StdSerializer<Asset> {
                 if (desc instanceof Removable) {
                     attributes.put("description", desc);
                 } else {
-                    String unencoded = (String) attributes.get("description");
+                    String unencoded = (String) desc;
                     attributes.put("description", StringUtils.encodeContent(unencoded));
                 }
             }

@@ -10,7 +10,7 @@ import com.atlan.exception.ApiConnectionException;
  */
 public abstract class HeraclesEndpoint extends AbstractEndpoint {
     private static final String PREFIX = "/api/service";
-    private static final String SERVICE = "http://heracles-service.heracles";
+    private static final String SERVICE = "http://heracles-service.heracles.svc.cluster.local";
 
     protected HeraclesEndpoint(AtlanClient client) {
         super(client);

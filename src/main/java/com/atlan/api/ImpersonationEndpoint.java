@@ -19,7 +19,8 @@ import lombok.extern.jackson.Jacksonized;
  */
 public class ImpersonationEndpoint extends AbstractEndpoint {
 
-    private static final String SERVICE = "http://keycloak-http.keycloak";
+    private static final String SERVICE = "http://keycloak-http.keycloak.svc.cluster.local";
+    private static final String endpoint = "/auth/realms/default/protocol/openid-connect/token";
 
     public ImpersonationEndpoint(AtlanClient client) {
         super(client);
@@ -30,6 +31,50 @@ public class ImpersonationEndpoint extends AbstractEndpoint {
             throw new ApiConnectionException(ErrorCode.INTERNAL_ONLY);
         }
         return SERVICE;
+    }
+
+    /**
+     * Escalate to a privileged user on a short-term basis.
+     * Note: this is only possible from within the Atlan tenant, and only when given the appropriate credentials.
+     *
+     * @return a short-lived bearer token with escalated privileges
+     * @throws AtlanException on any API communication or permission issue
+     */
+    public String escalate() throws AtlanException {
+        return escalate(null);
+    }
+
+    /**
+     * Escalate to a privileged user on a short-term basis.
+     * Note: this is only possible from within the Atlan tenant, and only when given the appropriate credentials.
+     *
+     * @param options to override default client settings
+     * @return a short-lived bearer token with escalated privileges
+     * @throws AtlanException on any API communication or permission issue
+     */
+    public String escalate(RequestOptions options) throws AtlanException {
+        String tokenUrl = String.format("%s%s", getBaseUrl(), endpoint);
+        String clientId = System.getenv("CLIENT_ID");
+        String clientSecret = System.getenv("CLIENT_SECRET");
+        if (clientId == null || clientId.isEmpty() || clientSecret == null || clientSecret.isEmpty()) {
+            throw new InvalidRequestException(ErrorCode.MISSING_CREDENTIALS);
+        }
+        Map<String, Object> argoMap = Map.of(
+                "grant_type",
+                "client_credentials",
+                "client_id",
+                clientId,
+                "client_secret",
+                clientSecret,
+                "scope",
+                "openid");
+        try {
+            AccessTokenResponse clientToken = ApiResource.request(
+                    client, ApiResource.RequestMethod.POST, tokenUrl, argoMap, AccessTokenResponse.class, options);
+            return clientToken.getAccessToken();
+        } catch (AtlanException e) {
+            throw new PermissionException(ErrorCode.UNABLE_TO_ESCALATE, e);
+        }
     }
 
     /**
@@ -68,7 +113,7 @@ public class ImpersonationEndpoint extends AbstractEndpoint {
                     client, ApiResource.RequestMethod.POST, tokenUrl, argoMap, AccessTokenResponse.class, options);
             argoToken = clientToken.getAccessToken();
         } catch (AtlanException e) {
-            throw new PermissionException(ErrorCode.UNABLE_TO_IMPERSONATE, e);
+            throw new PermissionException(ErrorCode.UNABLE_TO_ESCALATE, e);
         }
         Map<String, Object> userMap = Map.of(
                 "grant_type", "urn:ietf:params:oauth:grant-type:token-exchange",

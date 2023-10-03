@@ -10,7 +10,7 @@ import com.atlan.exception.ApiConnectionException;
  */
 public abstract class HekaEndpoint extends AbstractEndpoint {
     private static final String PREFIX = "/api/sql";
-    private static final String SERVICE = "http://heka-service.heka";
+    private static final String SERVICE = "http://heka-service.heka.svc.cluster.local";
 
     public HekaEndpoint(AtlanClient client) {
         super(client);
