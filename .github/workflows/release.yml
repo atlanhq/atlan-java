@@ -77,15 +77,15 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Create assembly area
         run: |
-          mkdir -p ./containers/numaflow/assembly
+          mkdir -p ./containers/assembly
       - uses: actions/download-artifact@v3
         with:
           name: jar-with-dependencies
-          path: ./containers/numaflow/assembly
+          path: ./containers/assembly
       - name: Build and publish container image
         uses: docker/build-push-action@v4
         with:
           push: true
-          tags: ghcr.io/atlanhq/atlan-java-numaflow:${{ needs.merge-build.outputs.version }}
-          context: ./containers/numaflow
+          tags: ghcr.io/atlanhq/atlan-java:${{ needs.merge-build.outputs.version }}
+          context: ./containers
           platforms: linux/amd64
