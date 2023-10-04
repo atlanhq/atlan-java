@@ -171,15 +171,31 @@ implements <a href="AtlanEnum.html" title="interface in com.atlan.model.enums">A
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#CUSTOM_METADATA_UPDATE">CUSTOM_METADATA_UPDATE</a></span></code></th>
+<th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#ATLAN_TAG_UPDATE">ATLAN_TAG_UPDATE</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#ENTITY_CREATE">ENTITY_CREATE</a></span></code></th>
+<th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#CUSTOM_METADATA_UPDATE">CUSTOM_METADATA_UPDATE</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
+<th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#ENTITY_CREATE">ENTITY_CREATE</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#ENTITY_DELETE">ENTITY_DELETE</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#ENTITY_IMPORT_CREATE">ENTITY_IMPORT_CREATE</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#ENTITY_IMPORT_DELETE">ENTITY_IMPORT_DELETE</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#ENTITY_IMPORT_UPDATE">ENTITY_IMPORT_UPDATE</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
@@ -192,6 +208,18 @@ implements <a href="AtlanEnum.html" title="interface in com.atlan.model.enums">A
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#PROPAGATED_ATLAN_TAG_DELETE">PROPAGATED_ATLAN_TAG_DELETE</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#PROPAGATED_ATLAN_TAG_UPDATE">PROPAGATED_ATLAN_TAG_UPDATE</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#TERM_ADD">TERM_ADD</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#TERM_DELETE">TERM_DELETE</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -334,10 +362,73 @@ the order they are declared.</div>
 <a id="PROPAGATED_ATLAN_TAG_DELETE">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>PROPAGATED_ATLAN_TAG_DELETE</h4>
 <pre>public static final&nbsp;<a href="AuditActionType.html" title="enum in com.atlan.model.enums">AuditActionType</a> PROPAGATED_ATLAN_TAG_DELETE</pre>
+</li>
+</ul>
+<a id="ENTITY_IMPORT_CREATE">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>ENTITY_IMPORT_CREATE</h4>
+<pre>public static final&nbsp;<a href="AuditActionType.html" title="enum in com.atlan.model.enums">AuditActionType</a> ENTITY_IMPORT_CREATE</pre>
+</li>
+</ul>
+<a id="ENTITY_IMPORT_UPDATE">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>ENTITY_IMPORT_UPDATE</h4>
+<pre>public static final&nbsp;<a href="AuditActionType.html" title="enum in com.atlan.model.enums">AuditActionType</a> ENTITY_IMPORT_UPDATE</pre>
+</li>
+</ul>
+<a id="ENTITY_IMPORT_DELETE">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>ENTITY_IMPORT_DELETE</h4>
+<pre>public static final&nbsp;<a href="AuditActionType.html" title="enum in com.atlan.model.enums">AuditActionType</a> ENTITY_IMPORT_DELETE</pre>
+</li>
+</ul>
+<a id="ATLAN_TAG_UPDATE">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>ATLAN_TAG_UPDATE</h4>
+<pre>public static final&nbsp;<a href="AuditActionType.html" title="enum in com.atlan.model.enums">AuditActionType</a> ATLAN_TAG_UPDATE</pre>
+</li>
+</ul>
+<a id="PROPAGATED_ATLAN_TAG_UPDATE">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>PROPAGATED_ATLAN_TAG_UPDATE</h4>
+<pre>public static final&nbsp;<a href="AuditActionType.html" title="enum in com.atlan.model.enums">AuditActionType</a> PROPAGATED_ATLAN_TAG_UPDATE</pre>
+</li>
+</ul>
+<a id="TERM_ADD">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>TERM_ADD</h4>
+<pre>public static final&nbsp;<a href="AuditActionType.html" title="enum in com.atlan.model.enums">AuditActionType</a> TERM_ADD</pre>
+</li>
+</ul>
+<a id="TERM_DELETE">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>TERM_DELETE</h4>
+<pre>public static final&nbsp;<a href="AuditActionType.html" title="enum in com.atlan.model.enums">AuditActionType</a> TERM_DELETE</pre>
 </li>
 </ul>
 </li>
