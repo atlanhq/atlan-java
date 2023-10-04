@@ -103,8 +103,8 @@ dependencies {
     api 'software.amazon.awssdk:s3:2.20.96'
     api 'com.amazonaws:aws-lambda-java-core:1.2.2'
     implementation group: "io.github.classgraph", name: "classgraph", version: "4.8.160"
-    numaflow group: "io.numaproj.numaflow", name: "numaflow-java", version: "0.4.8"
-    numaflow "io.netty:netty-transport-native-epoll:4.1.90.Final:linux-x86_64"
+    numaflow group: "io.numaproj.numaflow", name: "numaflow-java", version: "0.4.6"
+    numaflow "io.netty:netty-transport-native-epoll:4.1.79.Final:linux-x86_64"
     testImplementation group: 'com.aventrix.jnanoid', name: 'jnanoid', version: '2.0.0'
     testImplementation group: 'org.testng', name: 'testng', version: '7.8.0'
     testImplementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.4.8'
