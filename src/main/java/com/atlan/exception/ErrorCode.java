@@ -272,6 +272,11 @@ public enum ErrorCode implements ExceptionMessageSet {
             "ATLAN-JAVA-403-001",
             "Unable to impersonate requested user.",
             "Check the details of your configured privileged credentials and the user you requested to impersonate."),
+    UNABLE_TO_ESCALATE(
+            403,
+            "ATLAN-JAVA-403-002",
+            "Unable to escalate to a privileged user.",
+            "Check the details of your configured privileged credentials."),
 
     NOT_FOUND_PASSTHROUGH(
             404,
