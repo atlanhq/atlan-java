@@ -19,7 +19,7 @@ FROM debian:buster-slim
 
 LABEL org.opencontainers.image.vendor="Atlan Pte. Ltd." \
       org.opencontainers.image.source="https://github.com/atlanhq/atlan-java" \
-      org.opencontainers.image.description="Atlan Java SDK and Numaflow bundled together for layering on Java UDFs." \
+      org.opencontainers.image.description="Atlan Java SDK bundled together for layering on any additional Java code." \
       org.opencontainers.image.licenses=Apache-2
 
 ENV JAVA_HOME=/opt/java/openjdk
