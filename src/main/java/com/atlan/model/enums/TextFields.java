@@ -372,7 +372,7 @@ public enum TextFields implements AtlanSearchableField {
     TYPE_NAME("__typeName"),
     /** Description of the asset, as provided by a user. If present, this will be used for the description in user interfaces. If not present, the description will be used. */
     USER_DESCRIPTION("userDescription"),
-    /** Simple name of the view in which this SQL asset exists, or empty if it does not exist within a view. */
+    /** TBC */
     VIEW_NAME("viewName"),
     ;
 

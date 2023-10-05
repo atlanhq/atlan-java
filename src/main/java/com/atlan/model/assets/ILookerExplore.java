@@ -8,6 +8,7 @@ import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.KeywordTextField;
 import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
@@ -53,7 +54,7 @@ public interface ILookerExplore {
     KeywordField SQL_TABLE_NAME = new KeywordField("sqlTableName", "sqlTableName");
 
     /** TBC */
-    KeywordField VIEW_NAME = new KeywordField("viewName", "viewName");
+    KeywordTextField VIEW_NAME = new KeywordTextField("viewName", "viewName.keyword", "viewName");
 
     /** TBC */
     SortedSet<String> getAdminGroups();
