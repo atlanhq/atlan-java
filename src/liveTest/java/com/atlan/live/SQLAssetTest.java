@@ -1369,6 +1369,13 @@ public class SQLAssetTest extends AtlanLiveTest {
         }
 
         validateAudits(response.getEntityAudits());
+
+        AuditSearch.AuditSearchBuilder<?, ?> builder = AuditSearch.builder(Atlan.getDefaultClient())
+                .where(AuditSearchRequest.ENTITY_ID.eq(column5.getGuid()))
+                .sort(AuditSearchRequest.CREATED.order(SortOrder.Desc))
+                .pageSize(10);
+        assertEquals(builder.count(), 33);
+        validateAudits(builder.stream().collect(Collectors.toList()));
     }
 
     @Test(
