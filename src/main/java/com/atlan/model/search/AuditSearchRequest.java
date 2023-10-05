@@ -2,15 +2,14 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.search;
 
-import co.elastic.clients.elasticsearch._types.FieldSort;
 import co.elastic.clients.elasticsearch._types.SortOptions;
 import co.elastic.clients.elasticsearch._types.SortOrder;
-import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
-import co.elastic.clients.elasticsearch._types.query_dsl.TermQuery;
 import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.core.AtlanObject;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.NumericField;
 import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -28,8 +27,13 @@ import lombok.experimental.SuperBuilder;
 public class AuditSearchRequest extends AtlanObject {
     private static final long serialVersionUID = 2L;
 
-    private static final SortOptions LATEST_FIRST =
-            SortOptions.of(s -> s.field(FieldSort.of(f -> f.field("created").order(SortOrder.Desc))));
+    public static final NumericField CREATED = new NumericField("createTime", "created");
+    public static final KeywordField ENTITY_ID = new KeywordField("guid", "entityId");
+    public static final KeywordField ENTITY_TYPE = new KeywordField("typeName", "typeName");
+    public static final KeywordField QUALIFIED_NAME = new KeywordField("qualifiedName", "entityQualifiedName");
+    public static final KeywordField USER = new KeywordField("updatedBy", "user");
+
+    private static final SortOptions LATEST_FIRST = CREATED.order(SortOrder.Desc);
 
     /** Parameters for the search itself. */
     IndexSearchDSL dsl;
@@ -65,14 +69,23 @@ public class AuditSearchRequest extends AtlanObject {
      * @return a request builder pre-configured with these criteria
      */
     public static AuditSearchRequestBuilder<?, ?> byGuid(String guid, int size) {
-        return AuditSearchRequest.builder()
-                .dsl(IndexSearchDSL.builder(BoolQuery.of(b -> b.filter(
-                                        TermQuery.of(t -> t.field("entityId").value(guid))
-                                                ._toQuery()))
-                                ._toQuery())
-                        .size(size)
-                        .sortOption(LATEST_FIRST)
-                        .build());
+        return byGuid(Atlan.getDefaultClient(), guid, size);
+    }
+
+    /**
+     * Start building an audit search request for the last changes to an asset, by its GUID.
+     *
+     * @param client connectivity to the Atlan tenant on which to search the audit logs
+     * @param guid unique identifier of the asset for which to retrieve the audit history
+     * @param size number of changes to retrieve
+     * @return a request builder pre-configured with these criteria
+     */
+    public static AuditSearchRequestBuilder<?, ?> byGuid(AtlanClient client, String guid, int size) {
+        return AuditSearch.builder(client)
+                .where(ENTITY_ID.eq(guid))
+                .pageSize(size)
+                .sort(LATEST_FIRST)
+                .toRequestBuilder();
     }
 
     /**
@@ -84,17 +97,26 @@ public class AuditSearchRequest extends AtlanObject {
      * @return a request builder pre-configured with these criteria
      */
     public static AuditSearchRequestBuilder<?, ?> byQualifiedName(String typeName, String qualifiedName, int size) {
-        return AuditSearchRequest.builder()
-                .dsl(IndexSearchDSL.builder(BoolQuery.of(b -> b.must(List.of(
-                                        TermQuery.of(t -> t.field("entityQualifiedName")
-                                                        .value(qualifiedName))
-                                                ._toQuery(),
-                                        TermQuery.of(t -> t.field("typeName").value(typeName))
-                                                ._toQuery())))
-                                ._toQuery())
-                        .size(size)
-                        .sortOption(LATEST_FIRST)
-                        .build());
+        return byQualifiedName(Atlan.getDefaultClient(), typeName, qualifiedName, size);
+    }
+
+    /**
+     * Start building an audit search request for the last changes to an asset, by its qualifiedName.
+     *
+     * @param client connectivity to the Atlan tenant on which to search the audit logs
+     * @param typeName the type of asset for which to retrieve the audit history
+     * @param qualifiedName unique name of the asset for which to retrieve the audit history
+     * @param size number of changes to retrieve
+     * @return a request builder pre-configured with these criteria
+     */
+    public static AuditSearchRequestBuilder<?, ?> byQualifiedName(
+            AtlanClient client, String typeName, String qualifiedName, int size) {
+        return AuditSearch.builder(client)
+                .where(QUALIFIED_NAME.eq(qualifiedName))
+                .where(ENTITY_TYPE.eq(typeName))
+                .pageSize(size)
+                .sort(LATEST_FIRST)
+                .toRequestBuilder();
     }
 
     /**
@@ -105,13 +127,22 @@ public class AuditSearchRequest extends AtlanObject {
      * @return a request builder pre-configured with these criteria
      */
     public static AuditSearchRequestBuilder<?, ?> byUser(String userName, int size) {
-        return AuditSearchRequest.builder()
-                .dsl(IndexSearchDSL.builder(BoolQuery.of(b -> b.must(List.of(
-                                        TermQuery.of(t -> t.field("user").value(userName))
-                                                ._toQuery())))
-                                ._toQuery())
-                        .size(size)
-                        .sortOption(LATEST_FIRST)
-                        .build());
+        return byUser(Atlan.getDefaultClient(), userName, size);
+    }
+
+    /**
+     * Start building an audit search request for the last changes made to any assets, by a given user.
+     *
+     * @param client connectivity to the Atlan tenant on which to search the audit logs
+     * @param userName the name of the user for which to look for any changes
+     * @param size number of changes to retrieve
+     * @return a request builder pre-configured with these criteria
+     */
+    public static AuditSearchRequestBuilder<?, ?> byUser(AtlanClient client, String userName, int size) {
+        return AuditSearch.builder(client)
+                .where(USER.eq(userName))
+                .pageSize(size)
+                .sort(LATEST_FIRST)
+                .toRequestBuilder();
     }
 }

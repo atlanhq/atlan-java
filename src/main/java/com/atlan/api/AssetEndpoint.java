@@ -132,8 +132,11 @@ public class AssetEndpoint extends AtlasEndpoint {
      */
     public AuditSearchResponse auditLogs(AuditSearchRequest request, RequestOptions options) throws AtlanException {
         String url = String.format("%s%s", getBaseUrl(), audit_endpoint);
-        return ApiResource.request(
+        AuditSearchResponse response = ApiResource.request(
                 client, ApiResource.RequestMethod.POST, url, request, AuditSearchResponse.class, options);
+        response.setClient(client);
+        response.setRequest(request);
+        return response;
     }
 
     /**
