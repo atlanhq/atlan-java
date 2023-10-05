@@ -1221,7 +1221,7 @@ public enum KeywordFields implements AtlanSearchableField {
     /** TBC */
     VIEWER_USERS("viewerUsers"),
     /** TBC */
-    VIEW_NAME("viewName"),
+    VIEW_NAME("viewName.keyword"),
     /** Unique name of the view in which this SQL asset exists, or empty if it does not exist within a view. */
     VIEW_QUALIFIED_NAME("viewQualifiedName"),
     /** TBC */

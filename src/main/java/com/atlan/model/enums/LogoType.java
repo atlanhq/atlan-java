@@ -9,6 +9,7 @@ public enum LogoType implements AtlanEnum {
     EMOJI("emoji"),
     IMAGE("image"),
     ICON("icon"),
+    NONE(""),
     ;
 
     @JsonValue
