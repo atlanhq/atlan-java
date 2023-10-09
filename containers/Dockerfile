@@ -3,7 +3,7 @@
 FROM eclipse-temurin:17 as jre-build
 
 RUN $JAVA_HOME/bin/jlink \
-		--add-modules java.base,java.compiler,java.desktop,java.instrument,java.logging,java.management,java.naming,java.rmi,java.xml,java.security.jgss,java.sql,jdk.compiler,jdk.jfr,jdk.unsupported \
+		--add-modules java.base,java.compiler,java.desktop,java.instrument,java.logging,java.management,java.naming,java.net.http,java.rmi,java.scripting,java.xml,java.security.jgss,java.security.sasl,java.sql,jdk.httpserver,jdk.compiler,jdk.jfr,jdk.unsupported \
 		--strip-debug \
 		--no-man-pages \
 		--no-header-files \
