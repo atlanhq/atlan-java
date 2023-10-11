@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":6,"i1":1,"i2":1,"i3":1,"i4":18,"i5":1,"i6":1,"i7":1,"i8":1,"i9":18,"i10":1,"i11":1,"i12":1,"i13":1,"i14":18,"i15":18,"i16":1};
+var data = {"i0":6,"i1":1,"i2":1,"i3":1,"i4":18,"i5":1,"i6":1,"i7":1,"i8":1,"i9":18,"i10":1,"i11":1,"i12":1,"i13":1,"i14":1,"i15":18,"i16":18,"i17":1};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],16:["t5","Default Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -283,10 +283,17 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </tr>
 <tr id="i13" class="rowColor">
 <td class="colFirst"><code>static boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hasReadme(com.atlan.model.assets.Asset)">hasReadme</a></span>&#8203;(<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;asset)</code></th>
+<td class="colLast">
+<div class="block">Check if the asset has a README assigned (with content).</div>
+</td>
+</tr>
+<tr id="i14" class="altColor">
+<td class="colFirst"><code>static boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isValidationRequest(java.lang.String)">isValidationRequest</a></span>&#8203;(java.lang.String&nbsp;data)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>default void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#saveChanges(com.atlan.AtlanClient,java.util.Collection,org.slf4j.Logger)">saveChanges</a></span>&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
            java.util.Collection&lt;<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;&nbsp;changedAssets,
@@ -295,7 +302,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Actually send the changed assets to Atlan so that they are persisted.</div>
 </td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>default boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#validatePrerequisites(com.atlan.model.events.AtlanEvent,org.slf4j.Logger)">validatePrerequisites</a></span>&#8203;(<a href="../model/events/AtlanEvent.html" title="class in com.atlan.model.events">AtlanEvent</a>&nbsp;event,
                      org.slf4j.Logger&nbsp;log)</code></th>
@@ -303,7 +310,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Validate the prerequisites expected by the event handler.</div>
 </td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>static boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#validSignature(java.lang.String,java.util.Map)">validSignature</a></span>&#8203;(java.lang.String&nbsp;expectedSignature,
               java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;headers)</code></th>
@@ -700,7 +707,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <a id="hasLineage(com.atlan.model.assets.Asset)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>hasLineage</h4>
 <pre class="methodSignature">static&nbsp;boolean&nbsp;hasLineage&#8203;(<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;asset)</pre>
@@ -710,6 +717,22 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd><code>asset</code> - to check for the presence of lineage</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>true if the asset is input to or output from at least one process</dd>
+</dl>
+</li>
+</ul>
+<a id="hasReadme(com.atlan.model.assets.Asset)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>hasReadme</h4>
+<pre class="methodSignature">static&nbsp;boolean&nbsp;hasReadme&#8203;(<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;asset)</pre>
+<div class="block">Check if the asset has a README assigned (with content).</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>asset</code> - to check for the presence of a README</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>true if the asset has a README, and the README is not empty</dd>
 </dl>
 </li>
 </ul>
