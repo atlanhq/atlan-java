@@ -227,9 +227,12 @@ public interface AtlanEventHandler {
                 .includeOnResults(IGlossaryTerm.ANCHOR)
                 .includeOnResults(IAWS.AWS_ARN)
                 .includeOnRelations(IReferenceable.GUID)
+                .includeOnRelations(Asset.NAME)
+                .includeOnRelations(Asset.DESCRIPTION)
                 .toRequestBuilder()
                 .excludeAtlanTags(!includeAtlanTags)
                 .excludeMeanings(!includeMeanings)
+                .allowDeletedRelations(false)
                 .attributes(limitedToAttributes == null ? Collections.emptySet() : limitedToAttributes)
                 .build();
         IndexSearchResponse response = request.search(client);
@@ -303,5 +306,17 @@ public interface AtlanEventHandler {
         } else {
             return asset.getHasLineage();
         }
+    }
+
+    /**
+     * Check if the asset has a README assigned (with content).
+     *
+     * @param asset to check for the presence of a README
+     * @return true if the asset has a README, and the README is not empty
+     */
+    static boolean hasReadme(Asset asset) {
+        return asset.getReadme() != null
+                && asset.getReadme().getDescription() != null
+                && !asset.getReadme().getDescription().isEmpty();
     }
 }
