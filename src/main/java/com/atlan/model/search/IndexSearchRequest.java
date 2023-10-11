@@ -81,6 +81,13 @@ public class IndexSearchRequest extends AtlanObject {
     Boolean excludeAtlanTags = false;
 
     /**
+     * Whether to include deleted relationships to this asset (true) or not (false). By default, this is false
+     * and therefore only active (not deleted) relationships will be included.
+     */
+    @Builder.Default
+    Boolean allowDeletedRelations = false;
+
+    /**
      * Run the search.
      *
      * @return the matching assets
