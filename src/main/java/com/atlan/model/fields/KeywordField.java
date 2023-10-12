@@ -4,7 +4,9 @@ package com.atlan.model.fields;
 
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import com.atlan.model.enums.AtlanEnum;
+import com.atlan.model.enums.ElasticRegexOperator;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Represents any field in Atlan that can be searched only by keyword (no text-analyzed fuzziness).
@@ -49,5 +51,23 @@ public class KeywordField extends SearchableField implements IKeywordSearchable 
     @Override
     public Query in(Collection<String> values) {
         return IKeywordSearchable.in(getKeywordFieldName(), values);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public Query in(List<String> values, int minMustMatch) {
+        return IKeywordSearchable.in(getKeywordFieldName(), values, minMustMatch);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public Query wildcard(String value, boolean caseInsensitive) {
+        return IKeywordSearchable.wildcard(getKeywordFieldName(), value, caseInsensitive);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public Query regex(String regexp, Collection<ElasticRegexOperator> flags, boolean caseInsensitive) {
+        return IKeywordSearchable.regex(getKeywordFieldName(), regexp, flags, caseInsensitive);
     }
 }

@@ -133,7 +133,33 @@ public class GlossaryTest extends AtlanLiveTest {
         assertNotNull(term.getQualifiedName());
         assertEquals(term.getName(), name);
         assertNotEquals(term.getQualifiedName(), name);
-        return term;
+        return term.toBuilder().anchor(glossary.trimToReference()).build();
+    }
+
+    /**
+     * Create a new category within the glossary.
+     *
+     * @param name of the category to create
+     * @param glossary in which to create the category
+     * @return the created category
+     * @throws AtlanException on any errors creating the category
+     */
+    static GlossaryCategory createCategory(String name, Glossary glossary) throws AtlanException {
+        GlossaryCategory category = GlossaryCategory.creator(name, glossary).build();
+        AssetMutationResponse response = category.save();
+        assertNotNull(response);
+        assertEquals(response.getCreatedAssets().size(), 1);
+        assertEquals(response.getUpdatedAssets().size(), 1);
+        assertEquals(response.getDeletedAssets().size(), 0);
+        assertEquals(response.getUpdatedAssets().get(0).getGuid(), glossary.getGuid());
+        Asset one = response.getCreatedAssets().get(0);
+        assertTrue(one instanceof GlossaryCategory);
+        category = (GlossaryCategory) one;
+        assertNotNull(category.getGuid());
+        assertNotNull(category.getQualifiedName());
+        assertEquals(category.getName(), name);
+        assertNotEquals(category.getQualifiedName(), name);
+        return category.toBuilder().anchor(glossary.trimToReference()).build();
     }
 
     /**
