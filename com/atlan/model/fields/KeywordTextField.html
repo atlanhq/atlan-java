@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -252,18 +252,46 @@ implements <a href="IKeywordSearchable.html" title="interface in com.atlan.model
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>co.elastic.clients.elasticsearch._types.query_dsl.Query</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#in(java.util.List,int)">in</a></span>&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;values,
+  int&nbsp;minMustMatch)</code></th>
+<td class="colLast">
+<div class="block">Returns a query that will match all assets whose provided field has multiple values that exactly equal
+ a specified number of the provided string values.</div>
+</td>
+</tr>
+<tr id="i6" class="altColor">
+<td class="colFirst"><code>co.elastic.clients.elasticsearch._types.query_dsl.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#match(java.lang.String)">match</a></span>&#8203;(java.lang.String&nbsp;value)</code></th>
 <td class="colLast">
 <div class="block">Returns a query that will textually match the provided value against the field.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i7" class="rowColor">
+<td class="colFirst"><code>co.elastic.clients.elasticsearch._types.query_dsl.Query</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#regex(java.lang.String,java.util.Collection,boolean)">regex</a></span>&#8203;(java.lang.String&nbsp;regexp,
+     java.util.Collection&lt;<a href="../enums/ElasticRegexOperator.html" title="enum in com.atlan.model.enums">ElasticRegexOperator</a>&gt;&nbsp;flags,
+     boolean&nbsp;caseInsensitive)</code></th>
+<td class="colLast">
+<div class="block">Returns a query that will match all assets whose provided field has a value that matches the
+ regular expression provided.</div>
+</td>
+</tr>
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>co.elastic.clients.elasticsearch._types.query_dsl.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#startsWith(java.lang.String,boolean)">startsWith</a></span>&#8203;(java.lang.String&nbsp;value,
           boolean&nbsp;caseInsensitive)</code></th>
 <td class="colLast">
 <div class="block">Returns a query that will match all assets whose provided field has a value that starts with
  the provided value.</div>
+</td>
+</tr>
+<tr id="i9" class="rowColor">
+<td class="colFirst"><code>co.elastic.clients.elasticsearch._types.query_dsl.Query</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#wildcard(java.lang.String,boolean)">wildcard</a></span>&#8203;(java.lang.String&nbsp;value,
+        boolean&nbsp;caseInsensitive)</code></th>
+<td class="colLast">
+<div class="block">Returns a query that will match all assets whose provided field has a value that matches the
+ wildcard expression provided.</div>
 </td>
 </tr>
 </table>
@@ -293,7 +321,7 @@ implements <a href="IKeywordSearchable.html" title="interface in com.atlan.model
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;com.atlan.model.fields.<a href="IKeywordSearchable.html" title="interface in com.atlan.model.fields">IKeywordSearchable</a></h3>
-<code><a href="IKeywordSearchable.html#eq(java.lang.String)">eq</a>, <a href="IKeywordSearchable.html#startsWith(java.lang.String)">startsWith</a></code></li>
+<code><a href="IKeywordSearchable.html#eq(java.lang.String)">eq</a>, <a href="IKeywordSearchable.html#regex(java.lang.String)">regex</a>, <a href="IKeywordSearchable.html#regex(java.lang.String,boolean)">regex</a>, <a href="IKeywordSearchable.html#startsWith(java.lang.String)">startsWith</a>, <a href="IKeywordSearchable.html#wildcard(java.lang.String)">wildcard</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.com.atlan.model.fields.ISearchable">
@@ -455,6 +483,72 @@ implements <a href="IKeywordSearchable.html" title="interface in com.atlan.model
 <dd><code>values</code> - the values (strings) to check the field's value is exactly equal to</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>a query that will only match assets whose value for the field is exactly equal to at least one of the string values provided</dd>
+</dl>
+</li>
+</ul>
+<a id="in(java.util.List,int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>in</h4>
+<pre class="methodSignature">public&nbsp;co.elastic.clients.elasticsearch._types.query_dsl.Query&nbsp;in&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;values,
+                                                                  int&nbsp;minMustMatch)</pre>
+<div class="block">Returns a query that will match all assets whose provided field has multiple values that exactly equal
+ a specified number of the provided string values.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="IKeywordSearchable.html#in(java.util.List,int)">in</a></code>&nbsp;in interface&nbsp;<code><a href="IKeywordSearchable.html" title="interface in com.atlan.model.fields">IKeywordSearchable</a></code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>values</code> - the values (strings) to check the field's values are exactly equal to</dd>
+<dd><code>minMustMatch</code> - minimum number of values from the provided list that must be contained in the field's values</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a query that will only match assets whose values for the field are exactly equal to a minimal number of the string values provided</dd>
+</dl>
+</li>
+</ul>
+<a id="wildcard(java.lang.String,boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>wildcard</h4>
+<pre class="methodSignature">public&nbsp;co.elastic.clients.elasticsearch._types.query_dsl.Query&nbsp;wildcard&#8203;(java.lang.String&nbsp;value,
+                                                                        boolean&nbsp;caseInsensitive)</pre>
+<div class="block">Returns a query that will match all assets whose provided field has a value that matches the
+ wildcard expression provided. This is similar to regex matching, but only allows * (match zero or
+ more characters) and ? (match any single character) operators.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="IKeywordSearchable.html#wildcard(java.lang.String,boolean)">wildcard</a></code>&nbsp;in interface&nbsp;<code><a href="IKeywordSearchable.html" title="interface in com.atlan.model.fields">IKeywordSearchable</a></code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>value</code> - the value (containing either * or ?) to match against the field's values</dd>
+<dd><code>caseInsensitive</code> - if true will match the value irrespective of case, otherwise will be a case-sensitive match</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a query that will only match assets whose value for the field matches the wildcard expression provided</dd>
+</dl>
+</li>
+</ul>
+<a id="regex(java.lang.String,java.util.Collection,boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>regex</h4>
+<pre class="methodSignature">public&nbsp;co.elastic.clients.elasticsearch._types.query_dsl.Query&nbsp;regex&#8203;(java.lang.String&nbsp;regexp,
+                                                                     java.util.Collection&lt;<a href="../enums/ElasticRegexOperator.html" title="enum in com.atlan.model.enums">ElasticRegexOperator</a>&gt;&nbsp;flags,
+                                                                     boolean&nbsp;caseInsensitive)</pre>
+<div class="block">Returns a query that will match all assets whose provided field has a value that matches the
+ regular expression provided.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="IKeywordSearchable.html#regex(java.lang.String,java.util.Collection,boolean)">regex</a></code>&nbsp;in interface&nbsp;<code><a href="IKeywordSearchable.html" title="interface in com.atlan.model.fields">IKeywordSearchable</a></code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>regexp</code> - regular expression to match values against</dd>
+<dd><code>flags</code> - optional set of operators to enable in the regular expression engine</dd>
+<dd><code>caseInsensitive</code> - if true will match the value irrespective of case, otherwise will be a case-sensitive match</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a query that will only match assets whose value for the field matches the regular expression provided</dd>
 </dl>
 </li>
 </ul>
