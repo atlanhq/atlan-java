@@ -135,6 +135,24 @@ public class ApiTokensEndpoint extends HeraclesEndpoint {
     }
 
     /**
+     * Retrieves the API token with a unique ID (GUID) that exactly matches the provided string.
+     *
+     * @param guid unique identifier by which to retrieve the API token
+     * @return the API token whose GUID matches the provided string, or null if there is none
+     * @throws AtlanException on any error during API invocation
+     */
+    public ApiToken getByGuid(String guid) throws AtlanException {
+        ApiTokenResponse response = list("{\"id\":\"" + guid + "\"}", "-createdAt", 0, 2);
+        if (response != null
+                && response.getRecords() != null
+                && !response.getRecords().isEmpty()) {
+            return response.getRecords().get(0);
+        } else {
+            return null;
+        }
+    }
+
+    /**
      * Create a new API token with the provided settings.
      *
      * @param displayName human-readable name for the API token
