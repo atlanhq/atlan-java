@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -95,7 +95,7 @@ loadScripts(document, 'script');</script>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>
@@ -166,6 +166,19 @@ implements <a href="INumericallySearchable.html" title="interface in com.atlan.m
 <!--   -->
 </a>
 <h3>Field Summary</h3>
+<table class="memberSummary">
+<caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colSecond" scope="col">Field</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../lineage/LineageFilterFieldNumeric.html" title="class in com.atlan.model.lineage">LineageFilterFieldNumeric</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#inLineage">inLineage</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+</table>
 <ul class="blockList">
 <li class="blockList"><a id="fields.inherited.from.class.com.atlan.model.fields.ISearchable">
 <!--   -->
@@ -239,20 +252,13 @@ implements <a href="INumericallySearchable.html" title="interface in com.atlan.m
 </td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code><a href="../lineage/LineageFilterFieldNumeric.html" title="class in com.atlan.model.lineage">LineageFilterFieldNumeric</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#filterForLineage()">filterForLineage</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Create a filter for this attribute for lineage.</div>
-</td>
-</tr>
-<tr id="i4" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getNumericFieldName()">getNumericFieldName</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns the name of the numeric field index for this attribute in Elastic.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>&lt;T extends java.lang.Number&gt;<br>co.elastic.clients.elasticsearch._types.query_dsl.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#gt(T)">gt</a></span>&#8203;(T&nbsp;value)</code></th>
 <td class="colLast">
@@ -260,7 +266,7 @@ implements <a href="INumericallySearchable.html" title="interface in com.atlan.m
  than the provided numeric value.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>&lt;T extends java.lang.Number&gt;<br>co.elastic.clients.elasticsearch._types.query_dsl.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#gte(T)">gte</a></span>&#8203;(T&nbsp;value)</code></th>
 <td class="colLast">
@@ -268,7 +274,7 @@ implements <a href="INumericallySearchable.html" title="interface in com.atlan.m
  than or equal to the provided numeric value.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>&lt;T extends java.lang.Number&gt;<br>co.elastic.clients.elasticsearch._types.query_dsl.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#lt(T)">lt</a></span>&#8203;(T&nbsp;value)</code></th>
 <td class="colLast">
@@ -276,7 +282,7 @@ implements <a href="INumericallySearchable.html" title="interface in com.atlan.m
  than the provided numeric value.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>&lt;T extends java.lang.Number&gt;<br>co.elastic.clients.elasticsearch._types.query_dsl.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#lte(T)">lte</a></span>&#8203;(T&nbsp;value)</code></th>
 <td class="colLast">
@@ -284,21 +290,21 @@ implements <a href="INumericallySearchable.html" title="interface in com.atlan.m
  than or equal to the provided numeric value.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>co.elastic.clients.elasticsearch._types.aggregations.Aggregation</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#max()">max</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Return criteria to calculate the maximum value of the field across all results.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>co.elastic.clients.elasticsearch._types.aggregations.Aggregation</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#min()">min</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Return criteria to calculate the minimum value of the field across all results.</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>co.elastic.clients.elasticsearch._types.aggregations.Aggregation</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sum()">sum</a></span>()</code></th>
 <td class="colLast">
@@ -343,6 +349,25 @@ implements <a href="INumericallySearchable.html" title="interface in com.atlan.m
 <div class="details">
 <ul class="blockList">
 <li class="blockList">
+<!-- ============ FIELD DETAIL =========== -->
+<section>
+<ul class="blockList">
+<li class="blockList"><a id="field.detail">
+<!--   -->
+</a>
+<h3>Field Detail</h3>
+<a id="inLineage">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>inLineage</h4>
+<pre>public final&nbsp;<a href="../lineage/LineageFilterFieldNumeric.html" title="class in com.atlan.model.lineage">LineageFilterFieldNumeric</a> inLineage</pre>
+</li>
+</ul>
+</li>
+</ul>
+</section>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
 <section>
 <ul class="blockList">
@@ -376,26 +401,6 @@ implements <a href="INumericallySearchable.html" title="interface in com.atlan.m
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="filterForLineage()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>filterForLineage</h4>
-<pre class="methodSignature">public&nbsp;<a href="../lineage/LineageFilterFieldNumeric.html" title="class in com.atlan.model.lineage">LineageFilterFieldNumeric</a>&nbsp;filterForLineage()</pre>
-<div class="block">Create a filter for this attribute for lineage.</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="INumericallySearchable.html#filterForLineage()">filterForLineage</a></code>&nbsp;in interface&nbsp;<code><a href="INumericallySearchable.html" title="interface in com.atlan.model.fields">INumericallySearchable</a></code></dd>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="ISearchable.html#filterForLineage()">filterForLineage</a></code>&nbsp;in interface&nbsp;<code><a href="ISearchable.html" title="interface in com.atlan.model.fields">ISearchable</a></code></dd>
-<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="SearchableField.html#filterForLineage()">filterForLineage</a></code>&nbsp;in class&nbsp;<code><a href="SearchableField.html" title="class in com.atlan.model.fields">SearchableField</a></code></dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>a lineage filter for this attribute</dd>
-</dl>
-</li>
-</ul>
 <a id="getNumericFieldName()">
 <!--   -->
 </a>
@@ -674,7 +679,7 @@ implements <a href="INumericallySearchable.html" title="interface in com.atlan.m
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>

@@ -95,7 +95,7 @@ loadScripts(document, 'script');</script>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>
@@ -161,6 +161,19 @@ extends <a href="SearchableField.html" title="class in com.atlan.model.fields">S
 <!--   -->
 </a>
 <h3>Field Summary</h3>
+<table class="memberSummary">
+<caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colSecond" scope="col">Field</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../lineage/LineageFilterFieldCM.html" title="class in com.atlan.model.lineage">LineageFilterFieldCM</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#inLineage">inLineage</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+</table>
 <ul class="blockList">
 <li class="blockList"><a id="fields.inherited.from.class.com.atlan.model.fields.ISearchable">
 <!--   -->
@@ -253,20 +266,18 @@ extends <a href="SearchableField.html" title="class in com.atlan.model.fields">S
 </td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code><a href="../lineage/LineageFilterFieldCM.html" title="class in com.atlan.model.lineage">LineageFilterFieldCM</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#filterForLineage()">filterForLineage</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Create a filter for this attribute for lineage.</div>
-</td>
-</tr>
-<tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="../typedefs/AttributeDef.html" title="class in com.atlan.model.typedefs">AttributeDef</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAttributeDef()">getAttributeDef</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAttributeName()">getAttributeName</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i7" class="rowColor">
+<td class="colFirst"><code><a href="../lineage/LineageFilterFieldCM.html" title="class in com.atlan.model.lineage">LineageFilterFieldCM</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInLineage()">getInLineage</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
@@ -384,6 +395,25 @@ extends <a href="SearchableField.html" title="class in com.atlan.model.fields">S
 <div class="details">
 <ul class="blockList">
 <li class="blockList">
+<!-- ============ FIELD DETAIL =========== -->
+<section>
+<ul class="blockList">
+<li class="blockList"><a id="field.detail">
+<!--   -->
+</a>
+<h3>Field Detail</h3>
+<a id="inLineage">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>inLineage</h4>
+<pre>public final&nbsp;<a href="../lineage/LineageFilterFieldCM.html" title="class in com.atlan.model.lineage">LineageFilterFieldCM</a> inLineage</pre>
+</li>
+</ul>
+</li>
+</ul>
+</section>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
 <section>
 <ul class="blockList">
@@ -451,24 +481,6 @@ extends <a href="SearchableField.html" title="class in com.atlan.model.fields">S
 <h4>getSearchableFieldName</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getSearchableFieldName()</pre>
 <div class="block">Retrieve the name of the field as it can be searched.</div>
-</li>
-</ul>
-<a id="filterForLineage()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>filterForLineage</h4>
-<pre class="methodSignature">public&nbsp;<a href="../lineage/LineageFilterFieldCM.html" title="class in com.atlan.model.lineage">LineageFilterFieldCM</a>&nbsp;filterForLineage()</pre>
-<div class="block">Create a filter for this attribute for lineage.</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="ISearchable.html#filterForLineage()">filterForLineage</a></code>&nbsp;in interface&nbsp;<code><a href="ISearchable.html" title="interface in com.atlan.model.fields">ISearchable</a></code></dd>
-<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="SearchableField.html#filterForLineage()">filterForLineage</a></code>&nbsp;in class&nbsp;<code><a href="SearchableField.html" title="class in com.atlan.model.fields">SearchableField</a></code></dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>a lineage filter for this attribute</dd>
-</dl>
 </li>
 </ul>
 <a id="startsWith(java.lang.String,boolean)">
@@ -763,10 +775,19 @@ extends <a href="SearchableField.html" title="class in com.atlan.model.fields">S
 <a id="getAttributeDef()">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>getAttributeDef</h4>
 <pre class="methodSignature">public&nbsp;<a href="../typedefs/AttributeDef.html" title="class in com.atlan.model.typedefs">AttributeDef</a>&nbsp;getAttributeDef()</pre>
+</li>
+</ul>
+<a id="getInLineage()">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getInLineage</h4>
+<pre class="methodSignature">public&nbsp;<a href="../lineage/LineageFilterFieldCM.html" title="class in com.atlan.model.lineage">LineageFilterFieldCM</a>&nbsp;getInLineage()</pre>
 </li>
 </ul>
 </li>
@@ -827,7 +848,7 @@ extends <a href="SearchableField.html" title="class in com.atlan.model.fields">S
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>
