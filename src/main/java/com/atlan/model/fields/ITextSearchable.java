@@ -4,7 +4,6 @@ package com.atlan.model.fields;
 
 import co.elastic.clients.elasticsearch._types.query_dsl.MatchQuery;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
-import com.atlan.model.lineage.LineageFilterFieldString;
 
 public interface ITextSearchable {
     /**
@@ -13,13 +12,6 @@ public interface ITextSearchable {
      * @return the field name for the text index on this attribute
      */
     String getTextFieldName();
-
-    /**
-     * Create a filter for this attribute for lineage.
-     *
-     * @return a lineage filter for this string attribute
-     */
-    LineageFilterFieldString filterForLineage();
 
     /**
      * Returns a query that will textually match the provided value against the field. This

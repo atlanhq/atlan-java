@@ -8,17 +8,9 @@ import co.elastic.clients.elasticsearch._types.SortOrder;
 import co.elastic.clients.elasticsearch._types.aggregations.Aggregation;
 import co.elastic.clients.elasticsearch._types.query_dsl.*;
 import co.elastic.clients.elasticsearch.core.search.SourceConfig;
-import com.atlan.model.lineage.LineageFilterField;
 
 public interface ISearchable {
     String EMBEDDED_SOURCE_VALUE = "sourceValue";
-
-    /**
-     * Create a filter for this attribute for lineage.
-     *
-     * @return a lineage filter for this attribute
-     */
-    LineageFilterField filterForLineage();
 
     /**
      * Returns a query that will only match assets that have some non-null, non-empty value

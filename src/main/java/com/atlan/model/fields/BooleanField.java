@@ -10,6 +10,8 @@ import com.atlan.model.lineage.LineageFilterFieldBoolean;
  */
 public class BooleanField extends SearchableField implements IBooleanSearchable {
 
+    public final LineageFilterFieldBoolean inLineage = new LineageFilterFieldBoolean(this);
+
     /**
      * Default constructor.
      *
@@ -18,12 +20,6 @@ public class BooleanField extends SearchableField implements IBooleanSearchable 
      */
     public BooleanField(String atlan, String bool) {
         super(atlan, bool);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public LineageFilterFieldBoolean filterForLineage() {
-        return new LineageFilterFieldBoolean(this);
     }
 
     /** {@inheritDoc} */

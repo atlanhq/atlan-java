@@ -10,6 +10,8 @@ import com.atlan.model.lineage.LineageFilterFieldString;
  */
 public class TextField extends SearchableField implements ITextSearchable {
 
+    public final LineageFilterFieldString inLineage = new LineageFilterFieldString(this);
+
     /**
      * Default constructor.
      *
@@ -24,12 +26,6 @@ public class TextField extends SearchableField implements ITextSearchable {
     @Override
     public String getTextFieldName() {
         return getElasticFieldName();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public LineageFilterFieldString filterForLineage() {
-        return new LineageFilterFieldString(this);
     }
 
     /** {@inheritDoc} */

@@ -14,6 +14,8 @@ import java.util.List;
  */
 public class KeywordTextField extends SearchableField implements IKeywordSearchable, ITextSearchable {
 
+    public final LineageFilterFieldString inLineage = new LineageFilterFieldString(this);
+
     private final String textFieldName;
 
     /**
@@ -26,12 +28,6 @@ public class KeywordTextField extends SearchableField implements IKeywordSearcha
     public KeywordTextField(String atlan, String keyword, String text) {
         super(atlan, keyword);
         this.textFieldName = text;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public LineageFilterFieldString filterForLineage() {
-        return new LineageFilterFieldString(this);
     }
 
     /** {@inheritDoc} */

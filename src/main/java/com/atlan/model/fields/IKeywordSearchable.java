@@ -7,7 +7,6 @@ import co.elastic.clients.elasticsearch._types.ScriptLanguage;
 import co.elastic.clients.elasticsearch._types.query_dsl.*;
 import com.atlan.model.enums.AtlanEnum;
 import com.atlan.model.enums.ElasticRegexOperator;
-import com.atlan.model.lineage.LineageFilterFieldString;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -20,13 +19,6 @@ public interface IKeywordSearchable {
      * @return the field name for the keyword index on this attribute
      */
     String getKeywordFieldName();
-
-    /**
-     * Create a filter for this attribute for lineage.
-     *
-     * @return a lineage filter for this string attribute
-     */
-    LineageFilterFieldString filterForLineage();
 
     /**
      * Returns a query that will match all assets whose provided field has a value that starts with
