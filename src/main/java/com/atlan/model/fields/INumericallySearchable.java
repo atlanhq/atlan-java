@@ -8,7 +8,6 @@ import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import co.elastic.clients.elasticsearch._types.query_dsl.RangeQuery;
 import co.elastic.clients.elasticsearch._types.query_dsl.TermQuery;
 import co.elastic.clients.json.JsonData;
-import com.atlan.model.lineage.LineageFilterFieldNumeric;
 
 public interface INumericallySearchable {
     /**
@@ -17,13 +16,6 @@ public interface INumericallySearchable {
      * @return the field name for the numeric index on this attribute
      */
     String getNumericFieldName();
-
-    /**
-     * Create a filter for this attribute for lineage.
-     *
-     * @return a lineage filter for this numeric attribute
-     */
-    LineageFilterFieldNumeric filterForLineage();
 
     /**
      * Returns a query that will match all assets whose provided field has a value that exactly

@@ -14,6 +14,8 @@ import java.util.List;
  */
 public class KeywordField extends SearchableField implements IKeywordSearchable {
 
+    public final LineageFilterFieldString inLineage = new LineageFilterFieldString(this);
+
     /**
      * Default constructor.
      *
@@ -22,12 +24,6 @@ public class KeywordField extends SearchableField implements IKeywordSearchable 
      */
     public KeywordField(String atlan, String keyword) {
         super(atlan, keyword);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public LineageFilterFieldString filterForLineage() {
-        return new LineageFilterFieldString(this);
     }
 
     /** {@inheritDoc} */

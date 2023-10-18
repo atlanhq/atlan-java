@@ -11,6 +11,8 @@ import com.atlan.model.lineage.LineageFilterFieldNumeric;
  */
 public class NumericField extends SearchableField implements INumericallySearchable {
 
+    public final LineageFilterFieldNumeric inLineage = new LineageFilterFieldNumeric(this);
+
     /**
      * Default constructor.
      *
@@ -19,12 +21,6 @@ public class NumericField extends SearchableField implements INumericallySearcha
      */
     public NumericField(String atlan, String numeric) {
         super(atlan, numeric);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public LineageFilterFieldNumeric filterForLineage() {
-        return new LineageFilterFieldNumeric(this);
     }
 
     /** {@inheritDoc} */

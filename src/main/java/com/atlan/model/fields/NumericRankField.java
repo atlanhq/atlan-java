@@ -14,6 +14,8 @@ public class NumericRankField extends SearchableField implements INumericallySea
 
     private final String rankFieldName;
 
+    public final LineageFilterFieldNumeric inLineage = new LineageFilterFieldNumeric(this);
+
     /**
      * Default constructor.
      *
@@ -24,12 +26,6 @@ public class NumericRankField extends SearchableField implements INumericallySea
     public NumericRankField(String atlan, String numeric, String rank) {
         super(atlan, numeric);
         this.rankFieldName = rank;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public LineageFilterFieldNumeric filterForLineage() {
-        return new LineageFilterFieldNumeric(this);
     }
 
     /** {@inheritDoc} */

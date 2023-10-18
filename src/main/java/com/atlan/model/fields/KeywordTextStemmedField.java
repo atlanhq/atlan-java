@@ -19,6 +19,8 @@ public class KeywordTextStemmedField extends SearchableField
     private final String textFieldName;
     private final String stemmedFieldName;
 
+    public final LineageFilterFieldString inLineage = new LineageFilterFieldString(this);
+
     /**
      * Default constructor.
      *
@@ -31,12 +33,6 @@ public class KeywordTextStemmedField extends SearchableField
         super(atlan, keyword);
         this.textFieldName = text;
         this.stemmedFieldName = stemmed;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public LineageFilterFieldString filterForLineage() {
-        return new LineageFilterFieldString(this);
     }
 
     /** {@inheritDoc} */

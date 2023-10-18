@@ -24,7 +24,7 @@ import lombok.Singular;
 @Builder(builderMethodName = "_internal")
 public class FluentLineage {
 
-    public static final LineageFilter ACTIVE = Asset.STATUS.filterForLineage().eq(AtlanStatus.ACTIVE);
+    public static final LineageFilter ACTIVE = Asset.STATUS.inLineage.eq(AtlanStatus.ACTIVE);
 
     /**
      * Build a fluent lineage request against the provided Atlan tenant.

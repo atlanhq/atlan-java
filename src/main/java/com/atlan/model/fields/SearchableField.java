@@ -6,7 +6,6 @@ import co.elastic.clients.elasticsearch._types.SortOptions;
 import co.elastic.clients.elasticsearch._types.SortOrder;
 import co.elastic.clients.elasticsearch._types.aggregations.Aggregation;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
-import com.atlan.model.lineage.LineageFilterField;
 import lombok.AccessLevel;
 import lombok.Getter;
 
@@ -27,12 +26,6 @@ public class SearchableField extends AtlanField implements ISearchable {
     public SearchableField(String atlan, String elastic) {
         super(atlan);
         this.elasticFieldName = elastic;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public LineageFilterField filterForLineage() {
-        return new LineageFilterField(this);
     }
 
     /** {@inheritDoc} */

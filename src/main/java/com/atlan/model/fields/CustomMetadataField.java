@@ -24,6 +24,8 @@ public class CustomMetadataField extends SearchableField {
     private final String attributeName;
     private final AttributeDef attributeDef;
 
+    public final LineageFilterFieldCM inLineage = new LineageFilterFieldCM(this);
+
     /**
      * Default constructor.
      *
@@ -56,12 +58,6 @@ public class CustomMetadataField extends SearchableField {
     /** Retrieve the name of the field as it can be searched. */
     public String getSearchableFieldName() {
         return super.getElasticFieldName();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public LineageFilterFieldCM filterForLineage() {
-        return new LineageFilterFieldCM(this);
     }
 
     /**
