@@ -14,12 +14,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * Utility class for managing bulk updates in batches.
  */
-@Slf4j
 public class AssetBatch {
 
     public enum CustomMetadataHandling {
@@ -30,7 +28,6 @@ public class AssetBatch {
 
     private final AtlanClient client;
     private List<Asset> _batch;
-    private final String typeName;
     private final int maxSize;
     private final boolean replaceAtlanTags;
     private final CustomMetadataHandling customMetadataHandling;
@@ -56,36 +53,84 @@ public class AssetBatch {
      * Create a new batch of assets to be bulk-saved.
      *
      * @param client connectivity to Atlan
-     * @param typeName name of the type of assets to batch process (used only for logging)
      * @param maxSize maximum size of each batch that should be processed (per API call)
      */
-    public AssetBatch(AtlanClient client, String typeName, int maxSize) {
-        this(client, typeName, maxSize, false, CustomMetadataHandling.IGNORE);
+    public AssetBatch(AtlanClient client, int maxSize) {
+        this(client, maxSize, false, CustomMetadataHandling.IGNORE);
     }
 
     /**
      * Create a new batch of assets to be bulk-saved.
      *
      * @param client connectivity to Atlan
-     * @param typeName name of the type of assets to batch process (used only for logging)
      * @param maxSize maximum size of each batch that should be processed (per API call)
      * @param replaceAtlanTags if true, all Atlan tags on an existing asset will be overwritten; if false, all Atlan tags will be ignored
      * @param customMetadataHandling how to handle custom metadata (ignore it, replace it (wiping out anything pre-existing), or merge it)
      */
+    public AssetBatch(
+            AtlanClient client, int maxSize, boolean replaceAtlanTags, CustomMetadataHandling customMetadataHandling) {
+        this(client, maxSize, replaceAtlanTags, customMetadataHandling, false);
+    }
+
+    /**
+     * Create a new batch of assets to be bulk-saved.
+     *
+     * @param client connectivity to Atlan
+     * @param typeName name of the type of assets to batch process (unused, for backwards compatibility only)
+     * @param maxSize maximum size of each batch that should be processed (per API call)
+     * @deprecated see constructor without typeName parameter
+     */
+    @Deprecated
+    public AssetBatch(AtlanClient client, String typeName, int maxSize) {
+        this(client, maxSize, false, CustomMetadataHandling.IGNORE);
+    }
+
+    /**
+     * Create a new batch of assets to be bulk-saved.
+     *
+     * @param client connectivity to Atlan
+     * @param typeName name of the type of assets to batch process (unused, for backwards compatibility only)
+     * @param maxSize maximum size of each batch that should be processed (per API call)
+     * @param replaceAtlanTags if true, all Atlan tags on an existing asset will be overwritten; if false, all Atlan tags will be ignored
+     * @param customMetadataHandling how to handle custom metadata (ignore it, replace it (wiping out anything pre-existing), or merge it)
+     * @deprecated see constructor without typeName parameter
+     */
+    @Deprecated
     public AssetBatch(
             AtlanClient client,
             String typeName,
             int maxSize,
             boolean replaceAtlanTags,
             CustomMetadataHandling customMetadataHandling) {
-        this(client, typeName, maxSize, replaceAtlanTags, customMetadataHandling, false);
+        this(client, maxSize, replaceAtlanTags, customMetadataHandling, false);
     }
 
     /**
      * Create a new batch of assets to be bulk-saved.
      *
      * @param client connectivity to Atlan
-     * @param typeName name of the type of assets to batch process (used only for logging)
+     * @param typeName name of the type of assets to batch process (unused, for backwards compatibility only)
+     * @param maxSize maximum size of each batch that should be processed (per API call)
+     * @param replaceAtlanTags if true, all Atlan tags on an existing asset will be overwritten; if false, all Atlan tags will be ignored
+     * @param customMetadataHandling how to handle custom metadata (ignore it, replace it (wiping out anything pre-existing), or merge it)
+     * @param captureFailures when true, any failed batches will be captured and retained rather than exceptions being raised (for large amounts of processing this could cause memory issues!)
+     * @deprecated see constructor without typeName parameter
+     */
+    @Deprecated
+    public AssetBatch(
+            AtlanClient client,
+            String typeName,
+            int maxSize,
+            boolean replaceAtlanTags,
+            CustomMetadataHandling customMetadataHandling,
+            boolean captureFailures) {
+        this(client, maxSize, replaceAtlanTags, customMetadataHandling, captureFailures);
+    }
+
+    /**
+     * Create a new batch of assets to be bulk-saved.
+     *
+     * @param client connectivity to Atlan
      * @param maxSize maximum size of each batch that should be processed (per API call)
      * @param replaceAtlanTags if true, all Atlan tags on an existing asset will be overwritten; if false, all Atlan tags will be ignored
      * @param customMetadataHandling how to handle custom metadata (ignore it, replace it (wiping out anything pre-existing), or merge it)
@@ -93,7 +138,6 @@ public class AssetBatch {
      */
     public AssetBatch(
             AtlanClient client,
-            String typeName,
             int maxSize,
             boolean replaceAtlanTags,
             CustomMetadataHandling customMetadataHandling,
@@ -102,7 +146,6 @@ public class AssetBatch {
         _batch = Collections.synchronizedList(new ArrayList<>());
         failures = Collections.synchronizedList(new ArrayList<>());
         resolvedGuids = new ConcurrentHashMap<>();
-        this.typeName = typeName;
         this.maxSize = maxSize;
         this.replaceAtlanTags = replaceAtlanTags;
         this.customMetadataHandling = customMetadataHandling;
@@ -149,7 +192,6 @@ public class AssetBatch {
         AssetMutationResponse response = null;
         if (!_batch.isEmpty()) {
             try {
-                log.debug("... saving next batch of ({}) {}s...", _batch.size(), typeName);
                 switch (customMetadataHandling) {
                     case IGNORE:
                         response = client.assets.save(_batch, replaceAtlanTags);
