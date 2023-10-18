@@ -3,6 +3,7 @@
 package com.atlan.model.fields;
 
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
+import com.atlan.model.lineage.LineageFilterFieldString;
 
 /**
  * Represents any field in Atlan that can only be searched using text-related search operations.
@@ -23,6 +24,12 @@ public class TextField extends SearchableField implements ITextSearchable {
     @Override
     public String getTextFieldName() {
         return getElasticFieldName();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public LineageFilterFieldString filterForLineage() {
+        return new LineageFilterFieldString(this);
     }
 
     /** {@inheritDoc} */

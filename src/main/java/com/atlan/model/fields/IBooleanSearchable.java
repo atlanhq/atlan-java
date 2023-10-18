@@ -4,6 +4,7 @@ package com.atlan.model.fields;
 
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import co.elastic.clients.elasticsearch._types.query_dsl.TermQuery;
+import com.atlan.model.lineage.LineageFilterFieldBoolean;
 
 public interface IBooleanSearchable {
     /**
@@ -12,6 +13,13 @@ public interface IBooleanSearchable {
      * @return the field name for the boolean index on this attribute
      */
     String getBooleanFieldName();
+
+    /**
+     * Create a filter for this attribute for lineage.
+     *
+     * @return a lineage filter for this boolean attribute
+     */
+    LineageFilterFieldBoolean filterForLineage();
 
     /**
      * Returns a query that will match all assets whose provided field has a value that exactly equals

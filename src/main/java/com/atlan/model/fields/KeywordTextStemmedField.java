@@ -5,6 +5,7 @@ package com.atlan.model.fields;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import com.atlan.model.enums.AtlanEnum;
 import com.atlan.model.enums.ElasticRegexOperator;
+import com.atlan.model.lineage.LineageFilterFieldString;
 import java.util.Collection;
 import java.util.List;
 
@@ -30,6 +31,12 @@ public class KeywordTextStemmedField extends SearchableField
         super(atlan, keyword);
         this.textFieldName = text;
         this.stemmedFieldName = stemmed;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public LineageFilterFieldString filterForLineage() {
+        return new LineageFilterFieldString(this);
     }
 
     /** {@inheritDoc} */
