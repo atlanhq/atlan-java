@@ -5,9 +5,7 @@ package com.atlan.model.assets;
 import com.atlan.model.core.AtlanTag;
 import com.atlan.model.core.CustomMetadataAttributes;
 import com.atlan.model.enums.AtlanStatus;
-import com.atlan.model.fields.KeywordField;
-import com.atlan.model.fields.KeywordTextField;
-import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.*;
 import java.util.Map;
 import java.util.SortedSet;
 
@@ -17,39 +15,43 @@ import java.util.SortedSet;
 public interface IReferenceable {
 
     /** Type of the asset. For example Table, Column, and so on. */
-    KeywordTextField TYPE_NAME = new KeywordTextField("typeName", "__typeName.keyword", "__typeName");
+    InternalKeywordTextField TYPE_NAME =
+            new InternalKeywordTextField("typeName", "__typeName", "__typeName.keyword", "__typeName");
 
     /** Globally unique identifier (GUID) of any object in Atlan. */
-    KeywordField GUID = new KeywordField("guid", "__guid");
+    InternalKeywordField GUID = new InternalKeywordField("guid", "__guid", "__guid");
 
     /** Atlan user who created this asset. */
-    KeywordField CREATED_BY = new KeywordField("createdBy", "__createdBy");
+    InternalKeywordField CREATED_BY = new InternalKeywordField("createdBy", "__createdBy", "__createdBy");
 
     /** Atlan user who last updated the asset. */
-    KeywordField UPDATED_BY = new KeywordField("updatedBy", "__modifiedBy");
+    InternalKeywordField UPDATED_BY = new InternalKeywordField("updatedBy", "__modifiedBy", "__modifiedBy");
 
     /** Asset status in Atlan (active vs deleted). */
-    KeywordField STATUS = new KeywordField("status", "__state");
+    InternalKeywordField STATUS = new InternalKeywordField("status", "__state", "__state");
 
     /** All directly-assigned Atlan tags that exist on an asset, searchable by internal hashed-string ID of the Atlan tag. */
-    KeywordTextField ATLAN_TAGS = new KeywordTextField("classifications", "__traitNames", "__classificationsText");
+    InternalKeywordTextField ATLAN_TAGS = new InternalKeywordTextField(
+            "classifications", "__classificationNames", "__traitNames", "__classificationsText");
 
     /** All propagated Atlan tags that exist on an asset, searchable by internal hashed-string ID of the Atlan tag. */
-    KeywordTextField PROPAGATED_ATLAN_TAGS =
-            new KeywordTextField("classifications", "__propagatedTraitNames", "__classificationsText");
+    InternalKeywordTextField PROPAGATED_ATLAN_TAGS = new InternalKeywordTextField(
+            "classifications", "__propagatedClassificationNames", "__propagatedTraitNames", "__classificationsText");
 
     /** All terms attached to an asset, searchable by the term's qualifiedName. */
-    KeywordTextField ASSIGNED_TERMS = new KeywordTextField("meanings", "__meanings", "__meaningsText");
+    InternalKeywordTextField ASSIGNED_TERMS =
+            new InternalKeywordTextField("meanings", "__meanings", "__meanings", "__meaningsText");
 
     /** All super types of an asset. */
-    KeywordTextField SUPER_TYPE_NAMES =
-            new KeywordTextField("typeName", "__superTypeNames.keyword", "__superTypeNames");
+    InternalKeywordTextField SUPER_TYPE_NAMES = new InternalKeywordTextField(
+            "typeName", "__superTypeNames", "__superTypeNames.keyword", "__superTypeNames");
 
     /** Time (in milliseconds) when the asset was created. */
-    NumericField CREATE_TIME = new NumericField("createTime", "__timestamp");
+    InternalNumericField CREATE_TIME = new InternalNumericField("createTime", "__timestamp", "__timestamp");
 
     /** Time (in milliseconds) when the asset was last updated. */
-    NumericField UPDATE_TIME = new NumericField("updateTime", "__modificationTimestamp");
+    InternalNumericField UPDATE_TIME =
+            new InternalNumericField("updateTime", "__modificationTimestamp", "__modificationTimestamp");
 
     /** Name of the type that defines the entity. */
     String getTypeName();

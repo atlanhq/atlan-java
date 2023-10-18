@@ -5,6 +5,7 @@ package com.atlan.model.fields;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import com.atlan.model.enums.AtlanEnum;
 import com.atlan.model.enums.ElasticRegexOperator;
+import com.atlan.model.lineage.LineageFilterFieldString;
 import java.util.Collection;
 import java.util.List;
 
@@ -25,6 +26,12 @@ public class KeywordTextField extends SearchableField implements IKeywordSearcha
     public KeywordTextField(String atlan, String keyword, String text) {
         super(atlan, keyword);
         this.textFieldName = text;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public LineageFilterFieldString filterForLineage() {
+        return new LineageFilterFieldString(this);
     }
 
     /** {@inheritDoc} */

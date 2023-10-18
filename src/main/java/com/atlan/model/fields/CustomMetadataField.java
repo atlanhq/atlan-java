@@ -8,6 +8,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.enums.AtlanEnum;
+import com.atlan.model.lineage.LineageFilterFieldCM;
 import com.atlan.model.typedefs.AttributeDef;
 import com.atlan.util.TypeUtils;
 import java.util.Collection;
@@ -16,14 +17,11 @@ import lombok.Getter;
 /**
  * Utility class to simplify searching for values on custom metadata attributes.
  */
+@Getter
 public class CustomMetadataField extends SearchableField {
 
-    @Getter
     private final String setName;
-
-    @Getter
     private final String attributeName;
-
     private final AttributeDef attributeDef;
 
     /**
@@ -53,6 +51,17 @@ public class CustomMetadataField extends SearchableField {
      */
     public static CustomMetadataField of(AtlanClient client, String set, String attr) throws AtlanException {
         return new CustomMetadataField(client, set, attr);
+    }
+
+    /** Retrieve the name of the field as it can be searched. */
+    public String getSearchableFieldName() {
+        return super.getElasticFieldName();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public LineageFilterFieldCM filterForLineage() {
+        return new LineageFilterFieldCM(this);
     }
 
     /**

@@ -3,6 +3,7 @@
 package com.atlan.model.fields;
 
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
+import com.atlan.model.lineage.LineageFilterFieldBoolean;
 
 /**
  * Represents any field in Atlan that can be searched only by truthiness.
@@ -17,6 +18,12 @@ public class BooleanField extends SearchableField implements IBooleanSearchable 
      */
     public BooleanField(String atlan, String bool) {
         super(atlan, bool);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public LineageFilterFieldBoolean filterForLineage() {
+        return new LineageFilterFieldBoolean(this);
     }
 
     /** {@inheritDoc} */

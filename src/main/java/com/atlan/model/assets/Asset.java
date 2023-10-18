@@ -20,6 +20,7 @@ import com.atlan.model.enums.AtlanDeleteType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.lineage.FluentLineage;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -1004,6 +1005,33 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     }
 
     /**
+     * Start a fluent lineage request that will return all active downstream assets.
+     * Additional conditions can be chained onto the returned builder before any
+     * asset retrieval is attempted, ensuring all conditions are pushed-down for
+     * optimal retrieval. Only active (non-archived) assets will be included.
+     * (To change the default direction of downstream, chain a .direction() call.)
+     *
+     * @return a fluent lineage request that includes all active downstream assets
+     */
+    public FluentLineage.FluentLineageBuilder requestLineage() {
+        return Asset.lineage(getGuid());
+    }
+
+    /**
+     * Start a fluent lineage request that will return all active downstream assets.
+     * Additional conditions can be chained onto the returned builder before any
+     * asset retrieval is attempted, ensuring all conditions are pushed-down for
+     * optimal retrieval. Only active (non-archived) assets will be included.
+     * (To change the default direction of downstream, chain a .direction() call.)
+     *
+     * @param client connectivity to Atlan tenant
+     * @return a fluent lineage request that includes all active downstream assets
+     */
+    public FluentLineage.FluentLineageBuilder requestLineage(AtlanClient client) {
+        return Asset.lineage(client, getGuid());
+    }
+
+    /**
      * Add the API token configured for the default client as an admin to this object.
      *
      * @param assetGuid unique identifier (GUID) of the asset to which we should add this API token as an admin
@@ -1240,6 +1268,72 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
      */
     public static AssetDeletionResponse purge(AtlanClient client, String guid) throws AtlanException {
         return client.assets.delete(guid, AtlanDeleteType.PURGE);
+    }
+
+    /**
+     * Start a fluent lineage request that will return all active downstream assets.
+     * Additional conditions can be chained onto the returned builder before any
+     * asset retrieval is attempted, ensuring all conditions are pushed-down for
+     * optimal retrieval. Only active (non-archived) assets will be included.
+     * (To change the default direction of downstream, chain a .direction() call.)
+     *
+     * @param guid unique identifier (GUID) for the starting point of lineage
+     * @return a fluent lineage request that includes all active downstream assets
+     */
+    public static FluentLineage.FluentLineageBuilder lineage(String guid) {
+        return lineage(Atlan.getDefaultClient(), guid);
+    }
+
+    /**
+     * Start a fluent lineage request that will return all active downstream assets.
+     * Additional conditions can be chained onto the returned builder before any
+     * asset retrieval is attempted, ensuring all conditions are pushed-down for
+     * optimal retrieval. Only active (non-archived) assets will be included.
+     * (To change the default direction of downstream, chain a .direction() call.)
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the assets
+     * @param guid unique identifier (GUID) for the starting point of lineage
+     * @return a fluent lineage request that includes all active downstream assets
+     */
+    public static FluentLineage.FluentLineageBuilder lineage(AtlanClient client, String guid) {
+        return lineage(client, guid, false);
+    }
+
+    /**
+     * Start a fluent lineage request that will return all downstream assets.
+     * Additional conditions can be chained onto the returned builder before any
+     * asset retrieval is attempted, ensuring all conditions are pushed-down for
+     * optimal retrieval. (To change the default direction of downstream, chain a
+     * .direction() call.)
+     *
+     * @param guid unique identifier (GUID) for the starting point of lineage
+     * @param includeArchived when true, archived (soft-deleted) assets in lineage will be included
+     * @return a fluent lineage request that includes all downstream assets
+     */
+    public static FluentLineage.FluentLineageBuilder lineage(String guid, boolean includeArchived) {
+        return lineage(Atlan.getDefaultClient(), guid, includeArchived);
+    }
+
+    /**
+     * Start a fluent lineage request that will return all downstream assets.
+     * Additional conditions can be chained onto the returned builder before any
+     * asset retrieval is attempted, ensuring all conditions are pushed-down for
+     * optimal retrieval. (To change the default direction of downstream, chain a
+     * .direction() call.)
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the lineage
+     * @param guid unique identifier (GUID) for the starting point of lineage
+     * @param includeArchived when true, archived (soft-deleted) assets in lineage will be included
+     * @return a fluent search that includes all downstream assets
+     */
+    public static FluentLineage.FluentLineageBuilder lineage(AtlanClient client, String guid, boolean includeArchived) {
+        FluentLineage.FluentLineageBuilder builder = FluentLineage.builder(client, guid);
+        if (!includeArchived) {
+            builder.whereAsset(FluentLineage.ACTIVE)
+                    .whereRelationship(FluentLineage.ACTIVE)
+                    .includeInResults(FluentLineage.ACTIVE);
+        }
+        return builder;
     }
 
     /**

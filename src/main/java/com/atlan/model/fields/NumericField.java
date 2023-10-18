@@ -4,6 +4,7 @@ package com.atlan.model.fields;
 
 import co.elastic.clients.elasticsearch._types.aggregations.Aggregation;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
+import com.atlan.model.lineage.LineageFilterFieldNumeric;
 
 /**
  * Represents any field in Atlan that can be searched using only numeric search operations.
@@ -18,6 +19,12 @@ public class NumericField extends SearchableField implements INumericallySearcha
      */
     public NumericField(String atlan, String numeric) {
         super(atlan, numeric);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public LineageFilterFieldNumeric filterForLineage() {
+        return new LineageFilterFieldNumeric(this);
     }
 
     /** {@inheritDoc} */
