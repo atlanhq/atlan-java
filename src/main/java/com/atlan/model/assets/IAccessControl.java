@@ -37,13 +37,22 @@ public interface IAccessControl {
     KeywordField CHANNEL_LINK = new KeywordField("channelLink", "channelLink");
 
     /** TBC */
+    KeywordField DEFAULT_NAVIGATION = new KeywordField("defaultNavigation", "defaultNavigation");
+
+    /** TBC */
     KeywordField DENY_ASSET_FILTERS = new KeywordField("denyAssetFilters", "denyAssetFilters");
 
     /** Asset sidebar tabs that should be hidden from this access control object. */
     KeywordField DENY_ASSET_TABS = new KeywordField("denyAssetTabs", "denyAssetTabs");
 
+    /** TBC */
+    KeywordField DENY_ASSET_TYPES = new KeywordField("denyAssetTypes", "denyAssetTypes");
+
     /** Unique identifiers (GUIDs) of custom metadata that should be hidden from this access control object. */
     KeywordField DENY_CUSTOM_METADATA_GUIDS = new KeywordField("denyCustomMetadataGuids", "denyCustomMetadataGuids");
+
+    /** TBC */
+    KeywordField DENY_NAVIGATION_PAGES = new KeywordField("denyNavigationPages", "denyNavigationPages");
 
     /** Whether the access object is activated (true) or deactivated (false). */
     BooleanField IS_ACCESS_CONTROL_ENABLED = new BooleanField("isAccessControlEnabled", "isAccessControlEnabled");
@@ -286,13 +295,22 @@ public interface IAccessControl {
     String getDbtQualifiedName();
 
     /** TBC */
+    String getDefaultNavigation();
+
+    /** TBC */
     SortedSet<String> getDenyAssetFilters();
 
     /** Asset sidebar tabs that should be hidden from this access control object. */
     SortedSet<AssetSidebarTab> getDenyAssetTabs();
 
+    /** TBC */
+    SortedSet<String> getDenyAssetTypes();
+
     /** Unique identifiers (GUIDs) of custom metadata that should be hidden from this access control object. */
     SortedSet<String> getDenyCustomMetadataGuids();
+
+    /** TBC */
+    SortedSet<String> getDenyNavigationPages();
 
     /** TBC */
     String getDescription();

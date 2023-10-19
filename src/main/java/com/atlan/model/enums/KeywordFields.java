@@ -447,6 +447,8 @@ public enum KeywordFields implements AtlanSearchableField {
     /** TBC */
     DEFAULT_DATABASE_QUALIFIED_NAME("defaultDatabaseQualifiedName"),
     /** TBC */
+    DEFAULT_NAVIGATION("defaultNavigation"),
+    /** TBC */
     DEFAULT_SCHEMA_QUALIFIED_NAME("defaultSchemaQualifiedName"),
     /** TBC */
     DEFAULT_VALUE("defaultValue"),
@@ -458,8 +460,12 @@ public enum KeywordFields implements AtlanSearchableField {
     DENY_ASSET_FILTERS("denyAssetFilters"),
     /** Asset sidebar tabs that should be hidden from this access control object. */
     DENY_ASSET_TABS("denyAssetTabs"),
+    /** TBC */
+    DENY_ASSET_TYPES("denyAssetTypes"),
     /** Unique identifiers (GUIDs) of custom metadata that should be hidden from this access control object. */
     DENY_CUSTOM_METADATA_GUIDS("denyCustomMetadataGuids"),
+    /** TBC */
+    DENY_NAVIGATION_PAGES("denyNavigationPages"),
     /** Description of the asset, as crawled from a source. */
     DESCRIPTION("description.keyword"),
     /** List of column names on the report. */
