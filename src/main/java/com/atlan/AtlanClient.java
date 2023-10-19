@@ -157,6 +157,7 @@ public class AtlanClient {
      */
     AtlanClient(final String baseURL) {
         extraHeaders = new ConcurrentHashMap<>();
+        extraHeaders.putAll(Atlan.EXTRA_HEADERS);
         if (baseURL.equals("INTERNAL")) {
             apiBase = null;
             internalAccess = true;
