@@ -154,9 +154,8 @@ public class FluentLineage {
         String attrName = "";
         if (candidate instanceof IInternalSearchable) {
             attrName = ((IInternalSearchable) candidate).getInternalFieldName();
-        } else if (candidate instanceof CustomMetadataField) {
-            attrName = ((CustomMetadataField) candidate).getSearchableFieldName();
-        } else if (candidate != null) {
+            // TODO: filtering lineage by custom metadata not currently possible
+        } else if (candidate != null && !(candidate instanceof CustomMetadataField)) {
             attrName = candidate.getAtlanFieldName();
         }
         return attrName;

@@ -8,7 +8,6 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.enums.AtlanEnum;
-import com.atlan.model.lineage.LineageFilterFieldCM;
 import com.atlan.model.typedefs.AttributeDef;
 import com.atlan.util.TypeUtils;
 import java.util.Collection;
@@ -24,7 +23,7 @@ public class CustomMetadataField extends SearchableField {
     private final String attributeName;
     private final AttributeDef attributeDef;
 
-    public final LineageFilterFieldCM inLineage = new LineageFilterFieldCM(this);
+    // TODO public final LineageFilterFieldCM inLineage = new LineageFilterFieldCM(this);
 
     /**
      * Default constructor.
