@@ -39,6 +39,7 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.KeywordFields;
 import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.UniqueAttributes;
+import com.atlan.model.lineage.FluentLineage;
 import com.atlan.model.search.FluentSearch;
 import com.atlan.model.search.CompoundQuery;
 <#list classAttributes as attribute>
