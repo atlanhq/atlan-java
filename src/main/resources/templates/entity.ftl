@@ -26,6 +26,7 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectionCategory;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanDeleteType;
+import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.AtlanPolicyAction;
 import com.atlan.model.enums.AuthPolicyCategory;

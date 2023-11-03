@@ -101,7 +101,8 @@ public class GeneratorConfig {
             Map.entry("policyResourceCategory", "AuthPolicyResourceCategory"),
             Map.entry("policyActions", "AtlanPolicyAction"),
             Map.entry("denyAssetTabs", "AssetSidebarTab"),
-            Map.entry("policyMaskType", "DataMaskingType"));
+            Map.entry("policyMaskType", "DataMaskingType"),
+            Map.entry("assetIcon", "AtlanIcon"));
 
     private static final Map<String, Map<String, String>> DEFAULT_TYPE_OVERRIDES =
             Map.of("TableauDatasource", Map.of("fields", "TableauField"));
