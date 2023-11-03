@@ -59,6 +59,10 @@ public class Persona extends Asset implements IPersona, IAccessControl, IAsset, 
 
     /** TBC */
     @Attribute
+    String defaultNavigation;
+
+    /** TBC */
+    @Attribute
     @Singular
     SortedSet<String> denyAssetFilters;
 
@@ -70,7 +74,17 @@ public class Persona extends Asset implements IPersona, IAccessControl, IAsset, 
     /** TBC */
     @Attribute
     @Singular
+    SortedSet<String> denyAssetTypes;
+
+    /** TBC */
+    @Attribute
+    @Singular
     SortedSet<String> denyCustomMetadataGuids;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<String> denyNavigationPages;
 
     /** TBC */
     @Attribute

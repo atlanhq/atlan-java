@@ -73,6 +73,9 @@ AccessControl,Base class for Atlan access control assets.,denyCustomMetadataGuid
 AccessControl,Base class for Atlan access control assets.,denyAssetTabs,Asset sidebar tabs that should be hidden from this access control object.
 AccessControl,Base class for Atlan access control assets.,denyAssetFilters,TBC
 AccessControl,Base class for Atlan access control assets.,channelLink,Link to a Slack channel that is used to discuss this access control object.
+AccessControl,Base class for Atlan access control assets.,denyAssetTypes,TBC
+AccessControl,Base class for Atlan access control assets.,denyNavigationPages,TBC
+AccessControl,Base class for Atlan access control assets.,defaultNavigation,TBC
 AccessControl,Base class for Atlan access control assets.,policies,Policies associated with this access control object.
 Airflow,Airflow Assets,airflowTags,TBC
 Airflow,Airflow Assets,airflowRunVersion,Airflow Version of the run

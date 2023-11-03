@@ -275,13 +275,22 @@ public interface IPersona {
     String getDbtQualifiedName();
 
     /** TBC */
+    String getDefaultNavigation();
+
+    /** TBC */
     SortedSet<String> getDenyAssetFilters();
 
     /** TBC */
     SortedSet<AssetSidebarTab> getDenyAssetTabs();
 
     /** TBC */
+    SortedSet<String> getDenyAssetTypes();
+
+    /** TBC */
     SortedSet<String> getDenyCustomMetadataGuids();
+
+    /** TBC */
+    SortedSet<String> getDenyNavigationPages();
 
     /** TBC */
     String getDescription();
