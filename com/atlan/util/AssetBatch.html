@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -210,6 +210,17 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr class="rowColor">
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.atlan.AtlanClient,int,boolean,com.atlan.util.AssetBatch.CustomMetadataHandling,boolean,boolean)">AssetBatch</a></span>&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+          int&nbsp;maxSize,
+          boolean&nbsp;replaceAtlanTags,
+          <a href="AssetBatch.CustomMetadataHandling.html" title="enum in com.atlan.util">AssetBatch.CustomMetadataHandling</a>&nbsp;customMetadataHandling,
+          boolean&nbsp;captureFailures,
+          boolean&nbsp;updateOnly)</code></th>
+<td class="colLast">
+<div class="block">Create a new batch of assets to be bulk-saved.</div>
+</td>
+</tr>
+<tr class="altColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.atlan.AtlanClient,java.lang.String,int)">AssetBatch</a></span>&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
           java.lang.String&nbsp;typeName,
           int&nbsp;maxSize)</code></th>
@@ -219,7 +230,7 @@ extends java.lang.Object</pre>
 </div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.atlan.AtlanClient,java.lang.String,int,boolean,com.atlan.util.AssetBatch.CustomMetadataHandling)">AssetBatch</a></span>&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
           java.lang.String&nbsp;typeName,
           int&nbsp;maxSize,
@@ -231,7 +242,7 @@ extends java.lang.Object</pre>
 </div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.atlan.AtlanClient,java.lang.String,int,boolean,com.atlan.util.AssetBatch.CustomMetadataHandling,boolean)">AssetBatch</a></span>&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
           java.lang.String&nbsp;typeName,
           int&nbsp;maxSize,
@@ -298,6 +309,13 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr id="i5" class="rowColor">
+<td class="colFirst"><code>java.util.List&lt;<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSkipped()">getSkipped</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Assets that were skipped, when updateOnly is requested and the asset does not exist in Atlan.</div>
+</td>
+</tr>
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getUpdated()">getUpdated</a></span>()</code></th>
 <td class="colLast">
@@ -443,7 +461,7 @@ public&nbsp;AssetBatch&#8203;(<a href="../AtlanClient.html" title="class in com.
 <a id="&lt;init&gt;(com.atlan.AtlanClient,int,boolean,com.atlan.util.AssetBatch.CustomMetadataHandling,boolean)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>AssetBatch</h4>
 <pre>public&nbsp;AssetBatch&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
@@ -459,6 +477,30 @@ public&nbsp;AssetBatch&#8203;(<a href="../AtlanClient.html" title="class in com.
 <dd><code>replaceAtlanTags</code> - if true, all Atlan tags on an existing asset will be overwritten; if false, all Atlan tags will be ignored</dd>
 <dd><code>customMetadataHandling</code> - how to handle custom metadata (ignore it, replace it (wiping out anything pre-existing), or merge it)</dd>
 <dd><code>captureFailures</code> - when true, any failed batches will be captured and retained rather than exceptions being raised (for large amounts of processing this could cause memory issues!)</dd>
+</dl>
+</li>
+</ul>
+<a id="&lt;init&gt;(com.atlan.AtlanClient,int,boolean,com.atlan.util.AssetBatch.CustomMetadataHandling,boolean,boolean)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>AssetBatch</h4>
+<pre>public&nbsp;AssetBatch&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+                  int&nbsp;maxSize,
+                  boolean&nbsp;replaceAtlanTags,
+                  <a href="AssetBatch.CustomMetadataHandling.html" title="enum in com.atlan.util">AssetBatch.CustomMetadataHandling</a>&nbsp;customMetadataHandling,
+                  boolean&nbsp;captureFailures,
+                  boolean&nbsp;updateOnly)</pre>
+<div class="block">Create a new batch of assets to be bulk-saved.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>client</code> - connectivity to Atlan</dd>
+<dd><code>maxSize</code> - maximum size of each batch that should be processed (per API call)</dd>
+<dd><code>replaceAtlanTags</code> - if true, all Atlan tags on an existing asset will be overwritten; if false, all Atlan tags will be ignored</dd>
+<dd><code>customMetadataHandling</code> - how to handle custom metadata (ignore it, replace it (wiping out anything pre-existing), or merge it)</dd>
+<dd><code>captureFailures</code> - when true, any failed batches will be captured and retained rather than exceptions being raised (for large amounts of processing this could cause memory issues!)</dd>
+<dd><code>updateOnly</code> - when true, only attempt to update existing assets and do not create any assets (note: this will incur a performance penalty)</dd>
 </dl>
 </li>
 </ul>
@@ -536,6 +578,16 @@ public&nbsp;AssetBatch&#8203;(<a href="../AtlanClient.html" title="class in com.
 <h4>getFailures</h4>
 <pre class="methodSignature">public&nbsp;java.util.List&lt;<a href="AssetBatch.FailedBatch.html" title="class in com.atlan.util">AssetBatch.FailedBatch</a>&gt;&nbsp;getFailures()</pre>
 <div class="block">Batches that failed to be committed (only populated when captureFailures is set to true).</div>
+</li>
+</ul>
+<a id="getSkipped()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getSkipped</h4>
+<pre class="methodSignature">public&nbsp;java.util.List&lt;<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;&nbsp;getSkipped()</pre>
+<div class="block">Assets that were skipped, when updateOnly is requested and the asset does not exist in Atlan.</div>
 </li>
 </ul>
 <a id="getResolvedGuids()">

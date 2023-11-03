@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":6,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":6,"i20":10,"i21":10};
+var data = {"i0":10,"i1":6,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":6,"i27":10,"i28":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -220,85 +220,120 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="Purpose.PurposeBuilder.html" title="type parameter in Purpose.PurposeBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearDenyCustomMetadataGuids()">clearDenyCustomMetadataGuids</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearDenyAssetTypes()">clearDenyAssetTypes</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="Purpose.PurposeBuilder.html" title="type parameter in Purpose.PurposeBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearPolicies()">clearPolicies</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearDenyCustomMetadataGuids()">clearDenyCustomMetadataGuids</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="Purpose.PurposeBuilder.html" title="type parameter in Purpose.PurposeBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearPurposeAtlanTags()">clearPurposeAtlanTags</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearDenyNavigationPages()">clearDenyNavigationPages</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code><a href="Purpose.PurposeBuilder.html" title="type parameter in Purpose.PurposeBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#denyAssetFilter(java.lang.String)">denyAssetFilter</a></span>&#8203;(java.lang.String&nbsp;denyAssetFilter)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearPolicies()">clearPolicies</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code><a href="Purpose.PurposeBuilder.html" title="type parameter in Purpose.PurposeBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#denyAssetFilters(java.util.Collection)">denyAssetFilters</a></span>&#8203;(java.util.Collection&lt;? extends java.lang.String&gt;&nbsp;denyAssetFilters)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearPurposeAtlanTags()">clearPurposeAtlanTags</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code><a href="Purpose.PurposeBuilder.html" title="type parameter in Purpose.PurposeBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#denyAssetTab(com.atlan.model.enums.AssetSidebarTab)">denyAssetTab</a></span>&#8203;(<a href="../enums/AssetSidebarTab.html" title="enum in com.atlan.model.enums">AssetSidebarTab</a>&nbsp;denyAssetTab)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#defaultNavigation(java.lang.String)">defaultNavigation</a></span>&#8203;(java.lang.String&nbsp;defaultNavigation)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code><a href="Purpose.PurposeBuilder.html" title="type parameter in Purpose.PurposeBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#denyAssetTabs(java.util.Collection)">denyAssetTabs</a></span>&#8203;(java.util.Collection&lt;? extends <a href="../enums/AssetSidebarTab.html" title="enum in com.atlan.model.enums">AssetSidebarTab</a>&gt;&nbsp;denyAssetTabs)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#denyAssetFilter(java.lang.String)">denyAssetFilter</a></span>&#8203;(java.lang.String&nbsp;denyAssetFilter)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i12" class="altColor">
 <td class="colFirst"><code><a href="Purpose.PurposeBuilder.html" title="type parameter in Purpose.PurposeBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#denyCustomMetadataGuid(java.lang.String)">denyCustomMetadataGuid</a></span>&#8203;(java.lang.String&nbsp;denyCustomMetadataGuid)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#denyAssetFilters(java.util.Collection)">denyAssetFilters</a></span>&#8203;(java.util.Collection&lt;? extends java.lang.String&gt;&nbsp;denyAssetFilters)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i13" class="rowColor">
 <td class="colFirst"><code><a href="Purpose.PurposeBuilder.html" title="type parameter in Purpose.PurposeBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#denyCustomMetadataGuids(java.util.Collection)">denyCustomMetadataGuids</a></span>&#8203;(java.util.Collection&lt;? extends java.lang.String&gt;&nbsp;denyCustomMetadataGuids)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#denyAssetTab(com.atlan.model.enums.AssetSidebarTab)">denyAssetTab</a></span>&#8203;(<a href="../enums/AssetSidebarTab.html" title="enum in com.atlan.model.enums">AssetSidebarTab</a>&nbsp;denyAssetTab)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i14" class="altColor">
 <td class="colFirst"><code><a href="Purpose.PurposeBuilder.html" title="type parameter in Purpose.PurposeBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isAccessControlEnabled(java.lang.Boolean)">isAccessControlEnabled</a></span>&#8203;(java.lang.Boolean&nbsp;isAccessControlEnabled)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#denyAssetTabs(java.util.Collection)">denyAssetTabs</a></span>&#8203;(java.util.Collection&lt;? extends <a href="../enums/AssetSidebarTab.html" title="enum in com.atlan.model.enums">AssetSidebarTab</a>&gt;&nbsp;denyAssetTabs)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i15" class="rowColor">
 <td class="colFirst"><code><a href="Purpose.PurposeBuilder.html" title="type parameter in Purpose.PurposeBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#policies(java.util.Collection)">policies</a></span>&#8203;(java.util.Collection&lt;? extends <a href="IAuthPolicy.html" title="interface in com.atlan.model.assets">IAuthPolicy</a>&gt;&nbsp;policies)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#denyAssetType(java.lang.String)">denyAssetType</a></span>&#8203;(java.lang.String&nbsp;denyAssetType)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i16" class="altColor">
 <td class="colFirst"><code><a href="Purpose.PurposeBuilder.html" title="type parameter in Purpose.PurposeBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#policy(com.atlan.model.assets.IAuthPolicy)">policy</a></span>&#8203;(<a href="IAuthPolicy.html" title="interface in com.atlan.model.assets">IAuthPolicy</a>&nbsp;policy)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#denyAssetTypes(java.util.Collection)">denyAssetTypes</a></span>&#8203;(java.util.Collection&lt;? extends java.lang.String&gt;&nbsp;denyAssetTypes)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i17" class="rowColor">
 <td class="colFirst"><code><a href="Purpose.PurposeBuilder.html" title="type parameter in Purpose.PurposeBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#purposeAtlanTag(java.lang.String)">purposeAtlanTag</a></span>&#8203;(java.lang.String&nbsp;purposeAtlanTag)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#denyCustomMetadataGuid(java.lang.String)">denyCustomMetadataGuid</a></span>&#8203;(java.lang.String&nbsp;denyCustomMetadataGuid)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i18" class="altColor">
 <td class="colFirst"><code><a href="Purpose.PurposeBuilder.html" title="type parameter in Purpose.PurposeBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#purposeAtlanTags(java.util.Collection)">purposeAtlanTags</a></span>&#8203;(java.util.Collection&lt;? extends java.lang.String&gt;&nbsp;purposeAtlanTags)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#denyCustomMetadataGuids(java.util.Collection)">denyCustomMetadataGuids</a></span>&#8203;(java.util.Collection&lt;? extends java.lang.String&gt;&nbsp;denyCustomMetadataGuids)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i19" class="rowColor">
+<td class="colFirst"><code><a href="Purpose.PurposeBuilder.html" title="type parameter in Purpose.PurposeBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#denyNavigationPage(java.lang.String)">denyNavigationPage</a></span>&#8203;(java.lang.String&nbsp;denyNavigationPage)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i20" class="altColor">
+<td class="colFirst"><code><a href="Purpose.PurposeBuilder.html" title="type parameter in Purpose.PurposeBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#denyNavigationPages(java.util.Collection)">denyNavigationPages</a></span>&#8203;(java.util.Collection&lt;? extends java.lang.String&gt;&nbsp;denyNavigationPages)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i21" class="rowColor">
+<td class="colFirst"><code><a href="Purpose.PurposeBuilder.html" title="type parameter in Purpose.PurposeBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isAccessControlEnabled(java.lang.Boolean)">isAccessControlEnabled</a></span>&#8203;(java.lang.Boolean&nbsp;isAccessControlEnabled)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i22" class="altColor">
+<td class="colFirst"><code><a href="Purpose.PurposeBuilder.html" title="type parameter in Purpose.PurposeBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#policies(java.util.Collection)">policies</a></span>&#8203;(java.util.Collection&lt;? extends <a href="IAuthPolicy.html" title="interface in com.atlan.model.assets">IAuthPolicy</a>&gt;&nbsp;policies)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i23" class="rowColor">
+<td class="colFirst"><code><a href="Purpose.PurposeBuilder.html" title="type parameter in Purpose.PurposeBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#policy(com.atlan.model.assets.IAuthPolicy)">policy</a></span>&#8203;(<a href="IAuthPolicy.html" title="interface in com.atlan.model.assets">IAuthPolicy</a>&nbsp;policy)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i24" class="altColor">
+<td class="colFirst"><code><a href="Purpose.PurposeBuilder.html" title="type parameter in Purpose.PurposeBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#purposeAtlanTag(java.lang.String)">purposeAtlanTag</a></span>&#8203;(java.lang.String&nbsp;purposeAtlanTag)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i25" class="rowColor">
+<td class="colFirst"><code><a href="Purpose.PurposeBuilder.html" title="type parameter in Purpose.PurposeBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#purposeAtlanTags(java.util.Collection)">purposeAtlanTags</a></span>&#8203;(java.util.Collection&lt;? extends java.lang.String&gt;&nbsp;purposeAtlanTags)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i26" class="altColor">
 <td class="colFirst"><code>protected abstract <a href="Purpose.PurposeBuilder.html" title="type parameter in Purpose.PurposeBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#self()">self</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i20" class="altColor">
+<tr id="i27" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i21" class="rowColor">
+<tr id="i28" class="altColor">
 <td class="colFirst"><code><a href="Purpose.PurposeBuilder.html" title="type parameter in Purpose.PurposeBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#typeName(java.lang.String)">typeName</a></span>&#8203;(java.lang.String&nbsp;typeName)</code></th>
 <td class="colLast">&nbsp;</td>
@@ -429,6 +464,19 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 </dl>
 </li>
 </ul>
+<a id="defaultNavigation(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>defaultNavigation</h4>
+<pre class="methodSignature">public&nbsp;<a href="Purpose.PurposeBuilder.html" title="type parameter in Purpose.PurposeBuilder">B</a>&nbsp;defaultNavigation&#8203;(java.lang.String&nbsp;defaultNavigation)</pre>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
 <a id="denyAssetFilter(java.lang.String)">
 <!--   -->
 </a>
@@ -483,6 +531,33 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <pre class="methodSignature">public&nbsp;<a href="Purpose.PurposeBuilder.html" title="type parameter in Purpose.PurposeBuilder">B</a>&nbsp;clearDenyAssetTabs()</pre>
 </li>
 </ul>
+<a id="denyAssetType(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>denyAssetType</h4>
+<pre class="methodSignature">public&nbsp;<a href="Purpose.PurposeBuilder.html" title="type parameter in Purpose.PurposeBuilder">B</a>&nbsp;denyAssetType&#8203;(java.lang.String&nbsp;denyAssetType)</pre>
+</li>
+</ul>
+<a id="denyAssetTypes(java.util.Collection)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>denyAssetTypes</h4>
+<pre class="methodSignature">public&nbsp;<a href="Purpose.PurposeBuilder.html" title="type parameter in Purpose.PurposeBuilder">B</a>&nbsp;denyAssetTypes&#8203;(java.util.Collection&lt;? extends java.lang.String&gt;&nbsp;denyAssetTypes)</pre>
+</li>
+</ul>
+<a id="clearDenyAssetTypes()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clearDenyAssetTypes</h4>
+<pre class="methodSignature">public&nbsp;<a href="Purpose.PurposeBuilder.html" title="type parameter in Purpose.PurposeBuilder">B</a>&nbsp;clearDenyAssetTypes()</pre>
+</li>
+</ul>
 <a id="denyCustomMetadataGuid(java.lang.String)">
 <!--   -->
 </a>
@@ -508,6 +583,33 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>clearDenyCustomMetadataGuids</h4>
 <pre class="methodSignature">public&nbsp;<a href="Purpose.PurposeBuilder.html" title="type parameter in Purpose.PurposeBuilder">B</a>&nbsp;clearDenyCustomMetadataGuids()</pre>
+</li>
+</ul>
+<a id="denyNavigationPage(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>denyNavigationPage</h4>
+<pre class="methodSignature">public&nbsp;<a href="Purpose.PurposeBuilder.html" title="type parameter in Purpose.PurposeBuilder">B</a>&nbsp;denyNavigationPage&#8203;(java.lang.String&nbsp;denyNavigationPage)</pre>
+</li>
+</ul>
+<a id="denyNavigationPages(java.util.Collection)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>denyNavigationPages</h4>
+<pre class="methodSignature">public&nbsp;<a href="Purpose.PurposeBuilder.html" title="type parameter in Purpose.PurposeBuilder">B</a>&nbsp;denyNavigationPages&#8203;(java.util.Collection&lt;? extends java.lang.String&gt;&nbsp;denyNavigationPages)</pre>
+</li>
+</ul>
+<a id="clearDenyNavigationPages()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clearDenyNavigationPages</h4>
+<pre class="methodSignature">public&nbsp;<a href="Purpose.PurposeBuilder.html" title="type parameter in Purpose.PurposeBuilder">B</a>&nbsp;clearDenyNavigationPages()</pre>
 </li>
 </ul>
 <a id="isAccessControlEnabled(java.lang.Boolean)">

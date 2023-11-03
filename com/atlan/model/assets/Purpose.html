@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":41,"i2":41,"i3":41,"i4":41,"i5":41,"i6":41,"i7":41,"i8":41,"i9":9,"i10":9,"i11":9,"i12":9,"i13":10,"i14":9,"i15":9,"i16":9,"i17":9,"i18":9,"i19":10,"i20":9,"i21":9,"i22":9,"i23":9,"i24":9,"i25":9,"i26":9,"i27":9,"i28":9,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10,"i37":10,"i38":9,"i39":9,"i40":9,"i41":9,"i42":9,"i43":9,"i44":9,"i45":9,"i46":9,"i47":9,"i48":41,"i49":41,"i50":41,"i51":41,"i52":9,"i53":9,"i54":9,"i55":9,"i56":10,"i57":10,"i58":10,"i59":10,"i60":9};
+var data = {"i0":9,"i1":41,"i2":41,"i3":41,"i4":41,"i5":41,"i6":41,"i7":41,"i8":41,"i9":9,"i10":9,"i11":9,"i12":9,"i13":10,"i14":9,"i15":9,"i16":9,"i17":9,"i18":9,"i19":10,"i20":9,"i21":9,"i22":9,"i23":9,"i24":9,"i25":9,"i26":9,"i27":9,"i28":9,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10,"i37":10,"i38":10,"i39":10,"i40":10,"i41":9,"i42":9,"i43":9,"i44":9,"i45":9,"i46":9,"i47":9,"i48":9,"i49":9,"i50":9,"i51":41,"i52":41,"i53":41,"i54":41,"i55":9,"i56":9,"i57":9,"i58":9,"i59":10,"i60":10,"i61":10,"i62":10,"i63":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -234,7 +234,7 @@ implements <a href="IPurpose.html" title="interface in com.atlan.model.assets">I
 <!--   -->
 </a>
 <h3>Fields inherited from interface&nbsp;com.atlan.model.assets.<a href="IAccessControl.html" title="interface in com.atlan.model.assets">IAccessControl</a></h3>
-<code><a href="IAccessControl.html#CHANNEL_LINK">CHANNEL_LINK</a>, <a href="IAccessControl.html#DENY_ASSET_FILTERS">DENY_ASSET_FILTERS</a>, <a href="IAccessControl.html#DENY_ASSET_TABS">DENY_ASSET_TABS</a>, <a href="IAccessControl.html#DENY_CUSTOM_METADATA_GUIDS">DENY_CUSTOM_METADATA_GUIDS</a>, <a href="IAccessControl.html#IS_ACCESS_CONTROL_ENABLED">IS_ACCESS_CONTROL_ENABLED</a>, <a href="IAccessControl.html#POLICIES">POLICIES</a></code></li>
+<code><a href="IAccessControl.html#CHANNEL_LINK">CHANNEL_LINK</a>, <a href="IAccessControl.html#DEFAULT_NAVIGATION">DEFAULT_NAVIGATION</a>, <a href="IAccessControl.html#DENY_ASSET_FILTERS">DENY_ASSET_FILTERS</a>, <a href="IAccessControl.html#DENY_ASSET_TABS">DENY_ASSET_TABS</a>, <a href="IAccessControl.html#DENY_ASSET_TYPES">DENY_ASSET_TYPES</a>, <a href="IAccessControl.html#DENY_CUSTOM_METADATA_GUIDS">DENY_CUSTOM_METADATA_GUIDS</a>, <a href="IAccessControl.html#DENY_NAVIGATION_PAGES">DENY_NAVIGATION_PAGES</a>, <a href="IAccessControl.html#IS_ACCESS_CONTROL_ENABLED">IS_ACCESS_CONTROL_ENABLED</a>, <a href="IAccessControl.html#POLICIES">POLICIES</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="fields.inherited.from.class.com.atlan.model.assets.IAsset">
@@ -578,74 +578,95 @@ implements <a href="IPurpose.html" title="interface in com.atlan.model.assets">I
 </td>
 </tr>
 <tr id="i30" class="altColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDefaultNavigation()">getDefaultNavigation</a></span>()</code></th>
+<td class="colLast">
+<div class="block">TBC</div>
+</td>
+</tr>
+<tr id="i31" class="rowColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDenyAssetFilters()">getDenyAssetFilters</a></span>()</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i31" class="rowColor">
+<tr id="i32" class="altColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="../enums/AssetSidebarTab.html" title="enum in com.atlan.model.enums">AssetSidebarTab</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDenyAssetTabs()">getDenyAssetTabs</a></span>()</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i32" class="altColor">
+<tr id="i33" class="rowColor">
+<td class="colFirst"><code>java.util.SortedSet&lt;java.lang.String&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDenyAssetTypes()">getDenyAssetTypes</a></span>()</code></th>
+<td class="colLast">
+<div class="block">TBC</div>
+</td>
+</tr>
+<tr id="i34" class="altColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDenyCustomMetadataGuids()">getDenyCustomMetadataGuids</a></span>()</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i33" class="rowColor">
+<tr id="i35" class="rowColor">
+<td class="colFirst"><code>java.util.SortedSet&lt;java.lang.String&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDenyNavigationPages()">getDenyNavigationPages</a></span>()</code></th>
+<td class="colLast">
+<div class="block">TBC</div>
+</td>
+</tr>
+<tr id="i36" class="altColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIsAccessControlEnabled()">getIsAccessControlEnabled</a></span>()</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i34" class="altColor">
+<tr id="i37" class="rowColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IAuthPolicy.html" title="interface in com.atlan.model.assets">IAuthPolicy</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPolicies()">getPolicies</a></span>()</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i35" class="rowColor">
+<tr id="i38" class="altColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPurposeAtlanTags()">getPurposeAtlanTags</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Tags on which this purpose is applied.</div>
 </td>
 </tr>
-<tr id="i36" class="altColor">
+<tr id="i39" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTypeName()">getTypeName</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Fixed typeName for Purposes.</div>
 </td>
 </tr>
-<tr id="i37" class="rowColor">
+<tr id="i40" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i38" class="altColor">
+<tr id="i41" class="rowColor">
 <td class="colFirst"><code>static <a href="Purpose.html" title="class in com.atlan.model.assets">Purpose</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#refByGuid(java.lang.String)">refByGuid</a></span>&#8203;(java.lang.String&nbsp;guid)</code></th>
 <td class="colLast">
 <div class="block">Reference to a Purpose by GUID.</div>
 </td>
 </tr>
-<tr id="i39" class="rowColor">
+<tr id="i42" class="altColor">
 <td class="colFirst"><code>static <a href="Purpose.html" title="class in com.atlan.model.assets">Purpose</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#refByQualifiedName(java.lang.String)">refByQualifiedName</a></span>&#8203;(java.lang.String&nbsp;qualifiedName)</code></th>
 <td class="colLast">
 <div class="block">Reference to a Purpose by qualifiedName.</div>
 </td>
 </tr>
-<tr id="i40" class="altColor">
+<tr id="i43" class="rowColor">
 <td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeAtlanTag(com.atlan.AtlanClient,java.lang.String,java.lang.String)">removeAtlanTag</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
               java.lang.String&nbsp;qualifiedName,
@@ -654,7 +675,7 @@ implements <a href="IPurpose.html" title="interface in com.atlan.model.assets">I
 <div class="block">Remove an Atlan tag from a Purpose.</div>
 </td>
 </tr>
-<tr id="i41" class="rowColor">
+<tr id="i44" class="altColor">
 <td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeAtlanTag(java.lang.String,java.lang.String)">removeAtlanTag</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
               java.lang.String&nbsp;atlanTagName)</code></th>
@@ -662,7 +683,7 @@ implements <a href="IPurpose.html" title="interface in com.atlan.model.assets">I
 <div class="block">Remove an Atlan tag from a Purpose.</div>
 </td>
 </tr>
-<tr id="i42" class="altColor">
+<tr id="i45" class="rowColor">
 <td class="colFirst"><code>static <a href="Purpose.html" title="class in com.atlan.model.assets">Purpose</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeDescription(com.atlan.AtlanClient,java.lang.String,java.lang.String,boolean)">removeDescription</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
                  java.lang.String&nbsp;qualifiedName,
@@ -672,7 +693,7 @@ implements <a href="IPurpose.html" title="interface in com.atlan.model.assets">I
 <div class="block">Remove the system description from a Purpose.</div>
 </td>
 </tr>
-<tr id="i43" class="rowColor">
+<tr id="i46" class="altColor">
 <td class="colFirst"><code>static <a href="Purpose.html" title="class in com.atlan.model.assets">Purpose</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeDescription(java.lang.String,java.lang.String,boolean)">removeDescription</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                  java.lang.String&nbsp;name,
@@ -681,7 +702,7 @@ implements <a href="IPurpose.html" title="interface in com.atlan.model.assets">I
 <div class="block">Remove the system description from a Purpose.</div>
 </td>
 </tr>
-<tr id="i44" class="altColor">
+<tr id="i47" class="rowColor">
 <td class="colFirst"><code>static <a href="Purpose.html" title="class in com.atlan.model.assets">Purpose</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeUserDescription(com.atlan.AtlanClient,java.lang.String,java.lang.String,boolean)">removeUserDescription</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
                      java.lang.String&nbsp;qualifiedName,
@@ -691,7 +712,7 @@ implements <a href="IPurpose.html" title="interface in com.atlan.model.assets">I
 <div class="block">Remove the user's description from a Purpose.</div>
 </td>
 </tr>
-<tr id="i45" class="rowColor">
+<tr id="i48" class="altColor">
 <td class="colFirst"><code>static <a href="Purpose.html" title="class in com.atlan.model.assets">Purpose</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeUserDescription(java.lang.String,java.lang.String,boolean)">removeUserDescription</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                      java.lang.String&nbsp;name,
@@ -700,7 +721,7 @@ implements <a href="IPurpose.html" title="interface in com.atlan.model.assets">I
 <div class="block">Remove the user's description from a Purpose.</div>
 </td>
 </tr>
-<tr id="i46" class="altColor">
+<tr id="i49" class="rowColor">
 <td class="colFirst"><code>static boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#restore(com.atlan.AtlanClient,java.lang.String)">restore</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
        java.lang.String&nbsp;qualifiedName)</code></th>
@@ -708,14 +729,14 @@ implements <a href="IPurpose.html" title="interface in com.atlan.model.assets">I
 <div class="block">Restore the archived (soft-deleted) Purpose to active.</div>
 </td>
 </tr>
-<tr id="i47" class="rowColor">
+<tr id="i50" class="altColor">
 <td class="colFirst"><code>static boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#restore(java.lang.String)">restore</a></span>&#8203;(java.lang.String&nbsp;qualifiedName)</code></th>
 <td class="colLast">
 <div class="block">Restore the archived (soft-deleted) Purpose to active.</div>
 </td>
 </tr>
-<tr id="i48" class="altColor">
+<tr id="i51" class="rowColor">
 <td class="colFirst"><code>static <a href="Purpose.html" title="class in com.atlan.model.assets">Purpose</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#retrieveByGuid(com.atlan.AtlanClient,java.lang.String)">retrieveByGuid</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
               java.lang.String&nbsp;guid)</code></th>
@@ -725,7 +746,7 @@ implements <a href="IPurpose.html" title="interface in com.atlan.model.assets">I
 </div>
 </td>
 </tr>
-<tr id="i49" class="rowColor">
+<tr id="i52" class="altColor">
 <td class="colFirst"><code>static <a href="Purpose.html" title="class in com.atlan.model.assets">Purpose</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#retrieveByGuid(java.lang.String)">retrieveByGuid</a></span>&#8203;(java.lang.String&nbsp;guid)</code></th>
 <td class="colLast">
@@ -734,7 +755,7 @@ implements <a href="IPurpose.html" title="interface in com.atlan.model.assets">I
 </div>
 </td>
 </tr>
-<tr id="i50" class="altColor">
+<tr id="i53" class="rowColor">
 <td class="colFirst"><code>static <a href="Purpose.html" title="class in com.atlan.model.assets">Purpose</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#retrieveByQualifiedName(com.atlan.AtlanClient,java.lang.String)">retrieveByQualifiedName</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
                        java.lang.String&nbsp;qualifiedName)</code></th>
@@ -744,7 +765,7 @@ implements <a href="IPurpose.html" title="interface in com.atlan.model.assets">I
 </div>
 </td>
 </tr>
-<tr id="i51" class="rowColor">
+<tr id="i54" class="altColor">
 <td class="colFirst"><code>static <a href="Purpose.html" title="class in com.atlan.model.assets">Purpose</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#retrieveByQualifiedName(java.lang.String)">retrieveByQualifiedName</a></span>&#8203;(java.lang.String&nbsp;qualifiedName)</code></th>
 <td class="colLast">
@@ -753,28 +774,28 @@ implements <a href="IPurpose.html" title="interface in com.atlan.model.assets">I
 </div>
 </td>
 </tr>
-<tr id="i52" class="altColor">
+<tr id="i55" class="rowColor">
 <td class="colFirst"><code>static <a href="../search/FluentSearch.FluentSearchBuilder.html" title="class in com.atlan.model.search">FluentSearch.FluentSearchBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#select()">select</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Start a fluent search that will return all Purpose assets.</div>
 </td>
 </tr>
-<tr id="i53" class="rowColor">
+<tr id="i56" class="altColor">
 <td class="colFirst"><code>static <a href="../search/FluentSearch.FluentSearchBuilder.html" title="class in com.atlan.model.search">FluentSearch.FluentSearchBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#select(boolean)">select</a></span>&#8203;(boolean&nbsp;includeArchived)</code></th>
 <td class="colLast">
 <div class="block">Start a fluent search that will return all Purpose assets.</div>
 </td>
 </tr>
-<tr id="i54" class="altColor">
+<tr id="i57" class="rowColor">
 <td class="colFirst"><code>static <a href="../search/FluentSearch.FluentSearchBuilder.html" title="class in com.atlan.model.search">FluentSearch.FluentSearchBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#select(com.atlan.AtlanClient)">select</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)</code></th>
 <td class="colLast">
 <div class="block">Start a fluent search that will return all Purpose assets.</div>
 </td>
 </tr>
-<tr id="i55" class="rowColor">
+<tr id="i58" class="altColor">
 <td class="colFirst"><code>static <a href="../search/FluentSearch.FluentSearchBuilder.html" title="class in com.atlan.model.search">FluentSearch.FluentSearchBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#select(com.atlan.AtlanClient,boolean)">select</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
       boolean&nbsp;includeArchived)</code></th>
@@ -782,16 +803,16 @@ implements <a href="IPurpose.html" title="interface in com.atlan.model.assets">I
 <div class="block">Start a fluent search that will return all Purpose assets.</div>
 </td>
 </tr>
-<tr id="i56" class="altColor">
+<tr id="i59" class="rowColor">
 <td class="colFirst"><code><a href="Purpose.PurposeBuilder.html" title="class in com.atlan.model.assets">Purpose.PurposeBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toBuilder()">toBuilder</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i57" class="rowColor">
+<tr id="i60" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 </tr>
-<tr id="i58" class="altColor">
+<tr id="i61" class="rowColor">
 <td class="colFirst"><code><a href="Purpose.html" title="class in com.atlan.model.assets">Purpose</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#trimToReference()">trimToReference</a></span>()</code></th>
 <td class="colLast">
@@ -799,7 +820,7 @@ implements <a href="IPurpose.html" title="interface in com.atlan.model.assets">I
  more-complete Purpose object.</div>
 </td>
 </tr>
-<tr id="i59" class="rowColor">
+<tr id="i62" class="altColor">
 <td class="colFirst"><code><a href="Purpose.PurposeBuilder.html" title="class in com.atlan.model.assets">Purpose.PurposeBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#trimToRequired()">trimToRequired</a></span>()</code></th>
 <td class="colLast">
@@ -807,7 +828,7 @@ implements <a href="IPurpose.html" title="interface in com.atlan.model.assets">I
  more-complete Purpose object.</div>
 </td>
 </tr>
-<tr id="i60" class="altColor">
+<tr id="i63" class="rowColor">
 <td class="colFirst"><code>static <a href="Purpose.PurposeBuilder.html" title="class in com.atlan.model.assets">Purpose.PurposeBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updater(java.lang.String,java.lang.String,boolean)">updater</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
        java.lang.String&nbsp;name,
@@ -2061,6 +2082,22 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 </dl>
 </li>
 </ul>
+<a id="getDefaultNavigation()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getDefaultNavigation</h4>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getDefaultNavigation()</pre>
+<div class="block">TBC</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="IAccessControl.html#getDefaultNavigation()">getDefaultNavigation</a></code>&nbsp;in interface&nbsp;<code><a href="IAccessControl.html" title="interface in com.atlan.model.assets">IAccessControl</a></code></dd>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="IPurpose.html#getDefaultNavigation()">getDefaultNavigation</a></code>&nbsp;in interface&nbsp;<code><a href="IPurpose.html" title="interface in com.atlan.model.assets">IPurpose</a></code></dd>
+</dl>
+</li>
+</ul>
 <a id="getDenyAssetFilters()">
 <!--   -->
 </a>
@@ -2093,6 +2130,22 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 </dl>
 </li>
 </ul>
+<a id="getDenyAssetTypes()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getDenyAssetTypes</h4>
+<pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;java.lang.String&gt;&nbsp;getDenyAssetTypes()</pre>
+<div class="block">TBC</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="IAccessControl.html#getDenyAssetTypes()">getDenyAssetTypes</a></code>&nbsp;in interface&nbsp;<code><a href="IAccessControl.html" title="interface in com.atlan.model.assets">IAccessControl</a></code></dd>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="IPurpose.html#getDenyAssetTypes()">getDenyAssetTypes</a></code>&nbsp;in interface&nbsp;<code><a href="IPurpose.html" title="interface in com.atlan.model.assets">IPurpose</a></code></dd>
+</dl>
+</li>
+</ul>
 <a id="getDenyCustomMetadataGuids()">
 <!--   -->
 </a>
@@ -2106,6 +2159,22 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <dd><code><a href="IAccessControl.html#getDenyCustomMetadataGuids()">getDenyCustomMetadataGuids</a></code>&nbsp;in interface&nbsp;<code><a href="IAccessControl.html" title="interface in com.atlan.model.assets">IAccessControl</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IPurpose.html#getDenyCustomMetadataGuids()">getDenyCustomMetadataGuids</a></code>&nbsp;in interface&nbsp;<code><a href="IPurpose.html" title="interface in com.atlan.model.assets">IPurpose</a></code></dd>
+</dl>
+</li>
+</ul>
+<a id="getDenyNavigationPages()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getDenyNavigationPages</h4>
+<pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;java.lang.String&gt;&nbsp;getDenyNavigationPages()</pre>
+<div class="block">TBC</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="IAccessControl.html#getDenyNavigationPages()">getDenyNavigationPages</a></code>&nbsp;in interface&nbsp;<code><a href="IAccessControl.html" title="interface in com.atlan.model.assets">IAccessControl</a></code></dd>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="IPurpose.html#getDenyNavigationPages()">getDenyNavigationPages</a></code>&nbsp;in interface&nbsp;<code><a href="IPurpose.html" title="interface in com.atlan.model.assets">IPurpose</a></code></dd>
 </dl>
 </li>
 </ul>
