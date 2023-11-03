@@ -171,6 +171,32 @@
     }
 
     /**
+     * Retrieve the qualifiedNames of all glossaries that exist in Atlan.
+     *
+     * @return list of all glossary qualifiedNames
+     * @throws AtlanException on any API problems
+     */
+    public static List<String> getAllQualifiedNames() throws AtlanException {
+        return getAllQualifiedNames(Atlan.getDefaultClient());
+    }
+
+    /**
+     * Retrieve the qualifiedNames of all glossaries that exist in Atlan.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the qualifiedNames
+     * @return list of all glossary qualifiedNames
+     * @throws AtlanException on any API problems
+     */
+    public static List<String> getAllQualifiedNames(AtlanClient client) throws AtlanException {
+        return Glossary.select(client)
+            .includeOnResults(Glossary.QUALIFIED_NAME)
+            .pageSize(50)
+            .stream()
+            .map(Asset::getQualifiedName)
+            .collect(Collectors.toList());
+    }
+
+    /**
      * Retrieve category hierarchy in this Glossary, in a traversable form. You can traverse in either
      * depth-first ({@link CategoryHierarchy#depthFirst()}) or breadth-first ({@link CategoryHierarchy#breadthFirst()})
      * order. Both return an ordered list of {@link GlossaryCategory} objects.
