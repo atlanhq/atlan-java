@@ -6,17 +6,23 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 
 public enum AssetSidebarTab implements AtlanEnum {
-    INCIDENTS("Incidents"),
-    VISUALS("Visuals"),
+    OVERVIEW("Overview"),
     COLUMNS("Columns"),
     RUNS("Runs"),
     TASKS("Tasks"),
+    COMPONENTS("Components"),
+    PROJECTS("Projects"),
+    COLLECTIONS("Collections"),
     USAGE("Usage"),
     OBJECTS("Objects"),
     LINEAGE("Lineage"),
+    INCIDENTS("Incidents"),
     FIELDS("Fields"),
+    VISUALS("Visuals"),
     VISUALIZATIONS("Visualizations"),
+    SCHEMA_OBJECTS("Schema Objects"),
     RELATIONS("Relations"),
+    FACT_DIM_RELATIONS("Fact-Dim Relations"),
     PROFILE("Profile"),
     ASSETS("Assets"),
     ACTIVITY("Activity"),
@@ -26,8 +32,8 @@ public enum AssetSidebarTab implements AtlanEnum {
     REQUESTS("Requests"),
     PROPERTIES("Properties"),
     MONTE_CARLO("Monte Carlo"),
-    FACT_DIM_RELATIONS("Fact-Dim Relations"),
-    DBT_TEST("dbt Test");
+    DBT_TEST("dbt Test"),
+    SODA("Soda");
 
     @JsonValue
     @Getter(onMethod_ = {@Override})
