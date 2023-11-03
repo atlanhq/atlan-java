@@ -8,11 +8,9 @@ import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.assets.IndistinctAsset;
 import com.atlan.model.core.AssetMutationResponse;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 import lombok.Getter;
 
 /**
@@ -32,6 +30,7 @@ public class AssetBatch {
     private final boolean replaceAtlanTags;
     private final CustomMetadataHandling customMetadataHandling;
     private final boolean captureFailures;
+    private final boolean updateOnly;
 
     /** Assets that were created (minimal info only). */
     @Getter
@@ -44,6 +43,10 @@ public class AssetBatch {
     /** Batches that failed to be committed (only populated when captureFailures is set to true). */
     @Getter
     private final List<FailedBatch> failures;
+
+    /** Assets that were skipped, when updateOnly is requested and the asset does not exist in Atlan. */
+    @Getter
+    private final List<Asset> skipped;
 
     /** Map from placeholder GUID to resolved (actual) GUID, for all assets that were processed through the batch. */
     @Getter
@@ -142,6 +145,26 @@ public class AssetBatch {
             boolean replaceAtlanTags,
             CustomMetadataHandling customMetadataHandling,
             boolean captureFailures) {
+        this(client, maxSize, replaceAtlanTags, customMetadataHandling, captureFailures, false);
+    }
+
+    /**
+     * Create a new batch of assets to be bulk-saved.
+     *
+     * @param client connectivity to Atlan
+     * @param maxSize maximum size of each batch that should be processed (per API call)
+     * @param replaceAtlanTags if true, all Atlan tags on an existing asset will be overwritten; if false, all Atlan tags will be ignored
+     * @param customMetadataHandling how to handle custom metadata (ignore it, replace it (wiping out anything pre-existing), or merge it)
+     * @param captureFailures when true, any failed batches will be captured and retained rather than exceptions being raised (for large amounts of processing this could cause memory issues!)
+     * @param updateOnly when true, only attempt to update existing assets and do not create any assets (note: this will incur a performance penalty)
+     */
+    public AssetBatch(
+            AtlanClient client,
+            int maxSize,
+            boolean replaceAtlanTags,
+            CustomMetadataHandling customMetadataHandling,
+            boolean captureFailures,
+            boolean updateOnly) {
         this.client = client;
         _batch = Collections.synchronizedList(new ArrayList<>());
         failures = Collections.synchronizedList(new ArrayList<>());
@@ -151,7 +174,9 @@ public class AssetBatch {
         this.customMetadataHandling = customMetadataHandling;
         this.created = Collections.synchronizedList(new ArrayList<>());
         this.updated = Collections.synchronizedList(new ArrayList<>());
+        this.skipped = Collections.synchronizedList(new ArrayList<>());
         this.captureFailures = captureFailures;
+        this.updateOnly = updateOnly;
     }
 
     /**
@@ -191,16 +216,34 @@ public class AssetBatch {
     public AssetMutationResponse flush() throws AtlanException {
         AssetMutationResponse response = null;
         if (!_batch.isEmpty()) {
+            List<Asset> revised;
+            if (updateOnly) {
+                Set<String> found = new HashSet<>();
+                List<String> qualifiedNames =
+                        _batch.stream().map(Asset::getQualifiedName).collect(Collectors.toList());
+                client.assets.select().where(Asset.QUALIFIED_NAME.in(qualifiedNames)).pageSize(maxSize).stream()
+                        .forEach(asset -> found.add(asset.getTypeName() + "::" + asset.getQualifiedName()));
+                revised = new ArrayList<>();
+                _batch.forEach(asset -> {
+                    if (found.contains(asset.getTypeName() + "::" + asset.getQualifiedName())) {
+                        revised.add(asset);
+                    } else {
+                        track(skipped, asset);
+                    }
+                });
+            } else {
+                revised = _batch;
+            }
             try {
                 switch (customMetadataHandling) {
                     case IGNORE:
-                        response = client.assets.save(_batch, replaceAtlanTags);
+                        response = client.assets.save(revised, replaceAtlanTags);
                         break;
                     case OVERWRITE:
-                        response = client.assets.saveReplacingCM(_batch, replaceAtlanTags);
+                        response = client.assets.saveReplacingCM(revised, replaceAtlanTags);
                         break;
                     case MERGE:
-                        response = client.assets.saveMergingCM(_batch, replaceAtlanTags);
+                        response = client.assets.saveMergingCM(revised, replaceAtlanTags);
                         break;
                 }
             } catch (AtlanException e) {
