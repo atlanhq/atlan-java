@@ -22098,9 +22098,46 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Whether the attribute should be searchable (true) or not (false).</div>
 </li>
 <li class="blockList">
+<h4>applicableAssetTypes</h4>
+<pre>java.util.Set&lt;java.lang.String&gt; applicableAssetTypes</pre>
+<div class="block">Asset type names to which to restrict the attribute.
+ Only assets of one of these types will have this attribute available.
+ To further restrict the assets for this custom metadata by connection, see <a href="com/atlan/model/typedefs/AttributeDefOptions.html#applicableConnections"><code>AttributeDefOptions.applicableConnections</code></a>.</div>
+</li>
+<li class="blockList">
+<h4>applicableConnections</h4>
+<pre>java.util.Set&lt;java.lang.String&gt; applicableConnections</pre>
+<div class="block">Qualified names of connections to which to restrict the attribute.
+ Only assets within one of these connections will have this attribute available.
+ To further restrict the types of assets within the glossaries, see <a href="com/atlan/model/typedefs/AttributeDefOptions.html#applicableAssetTypes"><code>AttributeDefOptions.applicableAssetTypes</code></a>.</div>
+</li>
+<li class="blockList">
 <h4>applicableEntityTypes</h4>
 <pre>java.util.Set&lt;java.lang.String&gt; applicableEntityTypes</pre>
-<div class="block">Set of entities on which this attribute can be applied.</div>
+<div class="block">Set of entities on which this attribute can be applied.
+ Note: generally this should be left as-is. Any overrides should instead be applied through
+ one or more of <a href="com/atlan/model/typedefs/AttributeDefOptions.html#applicableAssetTypes"><code>AttributeDefOptions.applicableAssetTypes</code></a>, <a href="com/atlan/model/typedefs/AttributeDefOptions.html#applicableGlossaryTypes"><code>AttributeDefOptions.applicableGlossaryTypes</code></a>, or <a href="com/atlan/model/typedefs/AttributeDefOptions.html#applicableOtherAssetTypes"><code>AttributeDefOptions.applicableOtherAssetTypes</code></a>.</div>
+</li>
+<li class="blockList">
+<h4>applicableGlossaries</h4>
+<pre>java.util.Set&lt;java.lang.String&gt; applicableGlossaries</pre>
+<div class="block">Qualified names of glossaries to which to restrict the attribute.
+ Only glossary assets within one of these glossaries will have this attribute available.
+ To further restrict the types of assets within the glossaries, see <a href="com/atlan/model/typedefs/AttributeDefOptions.html#applicableGlossaryTypes"><code>AttributeDefOptions.applicableGlossaryTypes</code></a>.</div>
+</li>
+<li class="blockList">
+<h4>applicableGlossaryTypes</h4>
+<pre>java.util.Set&lt;java.lang.String&gt; applicableGlossaryTypes</pre>
+<div class="block">Glossary type names to which to restrict the attribute.
+ Only glossary assets of one of these types will have this attribute available.
+ To further restrict the glossary content for this custom metadata by glossary, see <a href="com/atlan/model/typedefs/AttributeDefOptions.html#applicableGlossaries"><code>AttributeDefOptions.applicableGlossaries</code></a>.</div>
+</li>
+<li class="blockList">
+<h4>applicableOtherAssetTypes</h4>
+<pre>java.util.Set&lt;java.lang.String&gt; applicableOtherAssetTypes</pre>
+<div class="block">Any other asset type names to which to restrict the attribute.
+ These cover any asset type that is not managed within a connection or a glossary.
+ Only assets of one of these types will have this attribute available.</div>
 </li>
 <li class="blockList">
 <h4>archivedAt</h4>
@@ -22115,7 +22152,16 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <h4>customApplicableEntityTypes</h4>
 <pre>java.util.Set&lt;java.lang.String&gt; customApplicableEntityTypes</pre>
-<div class="block">Set of entities on which this attribute should appear.</div>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">see <a href="com/atlan/model/typedefs/AttributeDefOptions.html#applicableAssetTypes"><code>AttributeDefOptions.applicableAssetTypes</code></a>, <a href="com/atlan/model/typedefs/AttributeDefOptions.html#applicableGlossaryTypes"><code>AttributeDefOptions.applicableGlossaryTypes</code></a>, <a href="com/atlan/model/typedefs/AttributeDefOptions.html#applicableOtherAssetTypes"><code>AttributeDefOptions.applicableOtherAssetTypes</code></a> instead</div>
+</div>
+<div class="block">Set of entities on which this attribute should appear.
+ Note: this is only used when customMetadataVersion is less than v2.</div>
+</li>
+<li class="blockList">
+<h4>customMetadataVersion</h4>
+<pre>java.lang.String customMetadataVersion</pre>
+<div class="block">Indicates the version of the custom metadata structure. This determines which other options are available and used.</div>
 </li>
 <li class="blockList">
 <h4>customType</h4>

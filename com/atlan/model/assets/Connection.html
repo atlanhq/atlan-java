@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":10,"i2":41,"i3":41,"i4":41,"i5":41,"i6":41,"i7":41,"i8":41,"i9":41,"i10":9,"i11":9,"i12":9,"i13":9,"i14":9,"i15":9,"i16":10,"i17":9,"i18":9,"i19":10,"i20":9,"i21":9,"i22":9,"i23":9,"i24":9,"i25":9,"i26":9,"i27":9,"i28":9,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":9,"i37":9,"i38":10,"i39":10,"i40":9,"i41":10,"i42":10,"i43":10,"i44":10,"i45":10,"i46":10,"i47":10,"i48":10,"i49":10,"i50":10,"i51":10,"i52":10,"i53":10,"i54":10,"i55":10,"i56":10,"i57":10,"i58":10,"i59":10,"i60":9,"i61":9,"i62":9,"i63":9,"i64":9,"i65":9,"i66":9,"i67":9,"i68":9,"i69":9,"i70":9,"i71":9,"i72":9,"i73":9,"i74":9,"i75":9,"i76":9,"i77":9,"i78":9,"i79":9,"i80":41,"i81":41,"i82":41,"i83":41,"i84":10,"i85":10,"i86":10,"i87":10,"i88":9,"i89":9,"i90":9,"i91":9,"i92":10,"i93":10,"i94":10,"i95":10,"i96":9,"i97":9,"i98":9,"i99":9,"i100":9,"i101":42,"i102":42};
+var data = {"i0":9,"i1":10,"i2":41,"i3":41,"i4":41,"i5":41,"i6":41,"i7":41,"i8":41,"i9":41,"i10":9,"i11":9,"i12":9,"i13":9,"i14":9,"i15":9,"i16":10,"i17":9,"i18":9,"i19":10,"i20":9,"i21":9,"i22":9,"i23":9,"i24":9,"i25":9,"i26":9,"i27":9,"i28":9,"i29":10,"i30":10,"i31":9,"i32":9,"i33":10,"i34":10,"i35":10,"i36":10,"i37":10,"i38":9,"i39":9,"i40":10,"i41":10,"i42":9,"i43":10,"i44":10,"i45":10,"i46":10,"i47":10,"i48":10,"i49":10,"i50":10,"i51":10,"i52":10,"i53":10,"i54":10,"i55":10,"i56":10,"i57":10,"i58":10,"i59":10,"i60":10,"i61":10,"i62":9,"i63":9,"i64":9,"i65":9,"i66":9,"i67":9,"i68":9,"i69":9,"i70":9,"i71":9,"i72":9,"i73":9,"i74":9,"i75":9,"i76":9,"i77":9,"i78":9,"i79":9,"i80":9,"i81":9,"i82":41,"i83":41,"i84":41,"i85":41,"i86":10,"i87":10,"i88":10,"i89":10,"i90":9,"i91":9,"i92":9,"i93":9,"i94":10,"i95":10,"i96":10,"i97":10,"i98":9,"i99":9,"i100":9,"i101":9,"i102":9,"i103":42,"i104":42};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -571,221 +571,235 @@ implements <a href="IConnection.html" title="interface in com.atlan.model.assets
 </td>
 </tr>
 <tr id="i31" class="rowColor">
+<td class="colFirst"><code>static java.util.List&lt;java.lang.String&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAllQualifiedNames()">getAllQualifiedNames</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Retrieve the qualifiedNames of all connections that exist in Atlan.</div>
+</td>
+</tr>
+<tr id="i32" class="altColor">
+<td class="colFirst"><code>static java.util.List&lt;java.lang.String&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAllQualifiedNames(com.atlan.AtlanClient)">getAllQualifiedNames</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)</code></th>
+<td class="colLast">
+<div class="block">Retrieve the qualifiedNames of all connections that exist in Atlan.</div>
+</td>
+</tr>
+<tr id="i33" class="rowColor">
 <td class="colFirst"><code><a href="../enums/AtlanConnectionCategory.html" title="enum in com.atlan.model.enums">AtlanConnectionCategory</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCategory()">getCategory</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Type of connection.</div>
 </td>
 </tr>
-<tr id="i32" class="altColor">
+<tr id="i34" class="altColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getConnectionDbtEnvironments()">getConnectionDbtEnvironments</a></span>()</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i33" class="rowColor">
+<tr id="i35" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getConnectionSSOCredentialGuid()">getConnectionSSOCredentialGuid</a></span>()</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i34" class="altColor">
+<tr id="i36" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getConnectorIcon()">getConnectorIcon</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Despite the name, this is not used for anything.</div>
 </td>
 </tr>
-<tr id="i35" class="rowColor">
+<tr id="i37" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getConnectorImage()">getConnectorImage</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Despite the name, this is not used for anything.</div>
 </td>
 </tr>
-<tr id="i36" class="altColor">
+<tr id="i38" class="altColor">
 <td class="colFirst"><code>static <a href="../enums/AtlanConnectorType.html" title="enum in com.atlan.model.enums">AtlanConnectorType</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getConnectorTypeFromQualifiedName(java.lang.String)">getConnectorTypeFromQualifiedName</a></span>&#8203;(java.lang.String&nbsp;qualifiedName)</code></th>
 <td class="colLast">
 <div class="block">Determine the connector type from the provided qualifiedName.</div>
 </td>
 </tr>
-<tr id="i37" class="rowColor">
+<tr id="i39" class="rowColor">
 <td class="colFirst"><code>static <a href="../enums/AtlanConnectorType.html" title="enum in com.atlan.model.enums">AtlanConnectorType</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getConnectorTypeFromQualifiedName(java.lang.String%5B%5D)">getConnectorTypeFromQualifiedName</a></span>&#8203;(java.lang.String[]&nbsp;tokens)</code></th>
 <td class="colLast">
 <div class="block">Determine the connector type from the provided qualifiedName.</div>
 </td>
 </tr>
-<tr id="i38" class="altColor">
+<tr id="i40" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCredentialStrategy()">getCredentialStrategy</a></span>()</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i39" class="rowColor">
+<tr id="i41" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDefaultCredentialGuid()">getDefaultCredentialGuid</a></span>()</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i40" class="altColor">
+<tr id="i42" class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getEpochFromQualifiedName(java.lang.String)">getEpochFromQualifiedName</a></span>&#8203;(java.lang.String&nbsp;qualifiedName)</code></th>
 <td class="colLast">
 <div class="block">Retrieve the epoch component of the connection name from its qualifiedName.</div>
 </td>
 </tr>
-<tr id="i41" class="rowColor">
+<tr id="i43" class="rowColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getHasPopularityInsights()">getHasPopularityInsights</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Whether the connection has popularity insights (true) or not (false).</div>
 </td>
 </tr>
-<tr id="i42" class="altColor">
+<tr id="i44" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getHost()">getHost</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Host name of the connection's source.</div>
 </td>
 </tr>
-<tr id="i43" class="rowColor">
+<tr id="i45" class="rowColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIsSampleDataPreviewEnabled()">getIsSampleDataPreviewEnabled</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Whether sample data can be previewed for this connection (true) or not (false).</div>
 </td>
 </tr>
-<tr id="i44" class="altColor">
+<tr id="i46" class="altColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getObjectStorageUploadThreshold()">getObjectStorageUploadThreshold</a></span>()</code></th>
 <td class="colLast">
 <div class="block">A long integer indicating after how many rows heka should start uploading result to storage</div>
 </td>
 </tr>
-<tr id="i45" class="rowColor">
+<tr id="i47" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPolicyStrategy()">getPolicyStrategy</a></span>()</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i46" class="altColor">
+<tr id="i48" class="altColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPopularityInsightsTimeframe()">getPopularityInsightsTimeframe</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Number of days over which popularity is calculated, for example 30 days.</div>
 </td>
 </tr>
-<tr id="i47" class="rowColor">
+<tr id="i49" class="rowColor">
 <td class="colFirst"><code>java.lang.Integer</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPort()">getPort</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Port number to the connection's source.</div>
 </td>
 </tr>
-<tr id="i48" class="altColor">
+<tr id="i50" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPreviewCredentialStrategy()">getPreviewCredentialStrategy</a></span>()</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i49" class="rowColor">
+<tr id="i51" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getQueryConfig()">getQueryConfig</a></span>()</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i50" class="altColor">
+<tr id="i52" class="altColor">
 <td class="colFirst"><code>java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getQueryPreviewConfig()">getQueryPreviewConfig</a></span>()</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i51" class="rowColor">
+<tr id="i53" class="rowColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getQueryTimeout()">getQueryTimeout</a></span>()</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i52" class="altColor">
+<tr id="i54" class="altColor">
 <td class="colFirst"><code><a href="../enums/QueryUsernameStrategy.html" title="enum in com.atlan.model.enums">QueryUsernameStrategy</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getQueryUsernameStrategy()">getQueryUsernameStrategy</a></span>()</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i53" class="rowColor">
+<tr id="i55" class="rowColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRowLimit()">getRowLimit</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Maximum number of rows that can be returned for the source.</div>
 </td>
 </tr>
-<tr id="i54" class="altColor">
+<tr id="i56" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSourceLogo()">getSourceLogo</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Despite the name, this is not used for anything.</div>
 </td>
 </tr>
-<tr id="i55" class="rowColor">
+<tr id="i57" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSubCategory()">getSubCategory</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Subtype of the connection.</div>
 </td>
 </tr>
-<tr id="i56" class="altColor">
+<tr id="i58" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTypeName()">getTypeName</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Fixed typeName for Connections.</div>
 </td>
 </tr>
-<tr id="i57" class="rowColor">
+<tr id="i59" class="rowColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getUseObjectStorage()">getUseObjectStorage</a></span>()</code></th>
 <td class="colLast">
 <div class="block">A Boolean flag indicating whether to upload to S3, GCP, or another storage location</div>
 </td>
 </tr>
-<tr id="i58" class="altColor">
+<tr id="i60" class="altColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getVectorEmbeddingsEnabled()">getVectorEmbeddingsEnabled</a></span>()</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i59" class="rowColor">
+<tr id="i61" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i60" class="altColor">
+<tr id="i62" class="altColor">
 <td class="colFirst"><code>static <a href="Connection.html" title="class in com.atlan.model.assets">Connection</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#refByGuid(java.lang.String)">refByGuid</a></span>&#8203;(java.lang.String&nbsp;guid)</code></th>
 <td class="colLast">
 <div class="block">Reference to a Connection by GUID.</div>
 </td>
 </tr>
-<tr id="i61" class="rowColor">
+<tr id="i63" class="rowColor">
 <td class="colFirst"><code>static <a href="Connection.html" title="class in com.atlan.model.assets">Connection</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#refByQualifiedName(java.lang.String)">refByQualifiedName</a></span>&#8203;(java.lang.String&nbsp;qualifiedName)</code></th>
 <td class="colLast">
 <div class="block">Reference to a Connection by qualifiedName.</div>
 </td>
 </tr>
-<tr id="i62" class="altColor">
+<tr id="i64" class="altColor">
 <td class="colFirst"><code>static <a href="Connection.html" title="class in com.atlan.model.assets">Connection</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeAnnouncement(com.atlan.AtlanClient,java.lang.String,java.lang.String)">removeAnnouncement</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
                   java.lang.String&nbsp;qualifiedName,
@@ -794,7 +808,7 @@ implements <a href="IConnection.html" title="interface in com.atlan.model.assets
 <div class="block">Remove the announcement from a Connection.</div>
 </td>
 </tr>
-<tr id="i63" class="rowColor">
+<tr id="i65" class="rowColor">
 <td class="colFirst"><code>static <a href="Connection.html" title="class in com.atlan.model.assets">Connection</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeAnnouncement(java.lang.String,java.lang.String)">removeAnnouncement</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                   java.lang.String&nbsp;name)</code></th>
@@ -802,7 +816,7 @@ implements <a href="IConnection.html" title="interface in com.atlan.model.assets
 <div class="block">Remove the announcement from a Connection.</div>
 </td>
 </tr>
-<tr id="i64" class="altColor">
+<tr id="i66" class="altColor">
 <td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeAtlanTag(com.atlan.AtlanClient,java.lang.String,java.lang.String)">removeAtlanTag</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
               java.lang.String&nbsp;qualifiedName,
@@ -811,7 +825,7 @@ implements <a href="IConnection.html" title="interface in com.atlan.model.assets
 <div class="block">Remove an Atlan tag from a Connection.</div>
 </td>
 </tr>
-<tr id="i65" class="rowColor">
+<tr id="i67" class="rowColor">
 <td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeAtlanTag(java.lang.String,java.lang.String)">removeAtlanTag</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
               java.lang.String&nbsp;atlanTagName)</code></th>
@@ -819,7 +833,7 @@ implements <a href="IConnection.html" title="interface in com.atlan.model.assets
 <div class="block">Remove an Atlan tag from a Connection.</div>
 </td>
 </tr>
-<tr id="i66" class="altColor">
+<tr id="i68" class="altColor">
 <td class="colFirst"><code>static <a href="Connection.html" title="class in com.atlan.model.assets">Connection</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeCertificate(com.atlan.AtlanClient,java.lang.String,java.lang.String)">removeCertificate</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
                  java.lang.String&nbsp;qualifiedName,
@@ -828,7 +842,7 @@ implements <a href="IConnection.html" title="interface in com.atlan.model.assets
 <div class="block">Remove the certificate from a Connection.</div>
 </td>
 </tr>
-<tr id="i67" class="rowColor">
+<tr id="i69" class="rowColor">
 <td class="colFirst"><code>static <a href="Connection.html" title="class in com.atlan.model.assets">Connection</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeCertificate(java.lang.String,java.lang.String)">removeCertificate</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                  java.lang.String&nbsp;name)</code></th>
@@ -836,7 +850,7 @@ implements <a href="IConnection.html" title="interface in com.atlan.model.assets
 <div class="block">Remove the certificate from a Connection.</div>
 </td>
 </tr>
-<tr id="i68" class="altColor">
+<tr id="i70" class="altColor">
 <td class="colFirst"><code>static <a href="Connection.html" title="class in com.atlan.model.assets">Connection</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeDescription(com.atlan.AtlanClient,java.lang.String,java.lang.String)">removeDescription</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
                  java.lang.String&nbsp;qualifiedName,
@@ -845,7 +859,7 @@ implements <a href="IConnection.html" title="interface in com.atlan.model.assets
 <div class="block">Remove the system description from a Connection.</div>
 </td>
 </tr>
-<tr id="i69" class="rowColor">
+<tr id="i71" class="rowColor">
 <td class="colFirst"><code>static <a href="Connection.html" title="class in com.atlan.model.assets">Connection</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeDescription(java.lang.String,java.lang.String)">removeDescription</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                  java.lang.String&nbsp;name)</code></th>
@@ -853,7 +867,7 @@ implements <a href="IConnection.html" title="interface in com.atlan.model.assets
 <div class="block">Remove the system description from a Connection.</div>
 </td>
 </tr>
-<tr id="i70" class="altColor">
+<tr id="i72" class="altColor">
 <td class="colFirst"><code>static <a href="Connection.html" title="class in com.atlan.model.assets">Connection</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeOwners(com.atlan.AtlanClient,java.lang.String,java.lang.String)">removeOwners</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
             java.lang.String&nbsp;qualifiedName,
@@ -862,7 +876,7 @@ implements <a href="IConnection.html" title="interface in com.atlan.model.assets
 <div class="block">Remove the owners from a Connection.</div>
 </td>
 </tr>
-<tr id="i71" class="rowColor">
+<tr id="i73" class="rowColor">
 <td class="colFirst"><code>static <a href="Connection.html" title="class in com.atlan.model.assets">Connection</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeOwners(java.lang.String,java.lang.String)">removeOwners</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
             java.lang.String&nbsp;name)</code></th>
@@ -870,7 +884,7 @@ implements <a href="IConnection.html" title="interface in com.atlan.model.assets
 <div class="block">Remove the owners from a Connection.</div>
 </td>
 </tr>
-<tr id="i72" class="altColor">
+<tr id="i74" class="altColor">
 <td class="colFirst"><code>static <a href="Connection.html" title="class in com.atlan.model.assets">Connection</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeTerms(com.atlan.AtlanClient,java.lang.String,java.util.List)">removeTerms</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
            java.lang.String&nbsp;qualifiedName,
@@ -879,7 +893,7 @@ implements <a href="IConnection.html" title="interface in com.atlan.model.assets
 <div class="block">Remove terms from a Connection, without replacing all existing terms linked to the Connection.</div>
 </td>
 </tr>
-<tr id="i73" class="rowColor">
+<tr id="i75" class="rowColor">
 <td class="colFirst"><code>static <a href="Connection.html" title="class in com.atlan.model.assets">Connection</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeTerms(java.lang.String,java.util.List)">removeTerms</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
            java.util.List&lt;<a href="IGlossaryTerm.html" title="interface in com.atlan.model.assets">IGlossaryTerm</a>&gt;&nbsp;terms)</code></th>
@@ -887,7 +901,7 @@ implements <a href="IConnection.html" title="interface in com.atlan.model.assets
 <div class="block">Remove terms from a Connection, without replacing all existing terms linked to the Connection.</div>
 </td>
 </tr>
-<tr id="i74" class="altColor">
+<tr id="i76" class="altColor">
 <td class="colFirst"><code>static <a href="Connection.html" title="class in com.atlan.model.assets">Connection</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeUserDescription(com.atlan.AtlanClient,java.lang.String,java.lang.String)">removeUserDescription</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
                      java.lang.String&nbsp;qualifiedName,
@@ -896,7 +910,7 @@ implements <a href="IConnection.html" title="interface in com.atlan.model.assets
 <div class="block">Remove the user's description from a Connection.</div>
 </td>
 </tr>
-<tr id="i75" class="rowColor">
+<tr id="i77" class="rowColor">
 <td class="colFirst"><code>static <a href="Connection.html" title="class in com.atlan.model.assets">Connection</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeUserDescription(java.lang.String,java.lang.String)">removeUserDescription</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                      java.lang.String&nbsp;name)</code></th>
@@ -904,7 +918,7 @@ implements <a href="IConnection.html" title="interface in com.atlan.model.assets
 <div class="block">Remove the user's description from a Connection.</div>
 </td>
 </tr>
-<tr id="i76" class="altColor">
+<tr id="i78" class="altColor">
 <td class="colFirst"><code>static <a href="Connection.html" title="class in com.atlan.model.assets">Connection</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#replaceTerms(com.atlan.AtlanClient,java.lang.String,java.lang.String,java.util.List)">replaceTerms</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
             java.lang.String&nbsp;qualifiedName,
@@ -914,7 +928,7 @@ implements <a href="IConnection.html" title="interface in com.atlan.model.assets
 <div class="block">Replace the terms linked to the Connection.</div>
 </td>
 </tr>
-<tr id="i77" class="rowColor">
+<tr id="i79" class="rowColor">
 <td class="colFirst"><code>static <a href="Connection.html" title="class in com.atlan.model.assets">Connection</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#replaceTerms(java.lang.String,java.lang.String,java.util.List)">replaceTerms</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
             java.lang.String&nbsp;name,
@@ -923,7 +937,7 @@ implements <a href="IConnection.html" title="interface in com.atlan.model.assets
 <div class="block">Replace the terms linked to the Connection.</div>
 </td>
 </tr>
-<tr id="i78" class="altColor">
+<tr id="i80" class="altColor">
 <td class="colFirst"><code>static boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#restore(com.atlan.AtlanClient,java.lang.String)">restore</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
        java.lang.String&nbsp;qualifiedName)</code></th>
@@ -931,14 +945,14 @@ implements <a href="IConnection.html" title="interface in com.atlan.model.assets
 <div class="block">Restore the archived (soft-deleted) Connection to active.</div>
 </td>
 </tr>
-<tr id="i79" class="rowColor">
+<tr id="i81" class="rowColor">
 <td class="colFirst"><code>static boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#restore(java.lang.String)">restore</a></span>&#8203;(java.lang.String&nbsp;qualifiedName)</code></th>
 <td class="colLast">
 <div class="block">Restore the archived (soft-deleted) Connection to active.</div>
 </td>
 </tr>
-<tr id="i80" class="altColor">
+<tr id="i82" class="altColor">
 <td class="colFirst"><code>static <a href="Connection.html" title="class in com.atlan.model.assets">Connection</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#retrieveByGuid(com.atlan.AtlanClient,java.lang.String)">retrieveByGuid</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
               java.lang.String&nbsp;guid)</code></th>
@@ -948,7 +962,7 @@ implements <a href="IConnection.html" title="interface in com.atlan.model.assets
 </div>
 </td>
 </tr>
-<tr id="i81" class="rowColor">
+<tr id="i83" class="rowColor">
 <td class="colFirst"><code>static <a href="Connection.html" title="class in com.atlan.model.assets">Connection</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#retrieveByGuid(java.lang.String)">retrieveByGuid</a></span>&#8203;(java.lang.String&nbsp;guid)</code></th>
 <td class="colLast">
@@ -957,7 +971,7 @@ implements <a href="IConnection.html" title="interface in com.atlan.model.assets
 </div>
 </td>
 </tr>
-<tr id="i82" class="altColor">
+<tr id="i84" class="altColor">
 <td class="colFirst"><code>static <a href="Connection.html" title="class in com.atlan.model.assets">Connection</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#retrieveByQualifiedName(com.atlan.AtlanClient,java.lang.String)">retrieveByQualifiedName</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
                        java.lang.String&nbsp;qualifiedName)</code></th>
@@ -967,7 +981,7 @@ implements <a href="IConnection.html" title="interface in com.atlan.model.assets
 </div>
 </td>
 </tr>
-<tr id="i83" class="rowColor">
+<tr id="i85" class="rowColor">
 <td class="colFirst"><code>static <a href="Connection.html" title="class in com.atlan.model.assets">Connection</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#retrieveByQualifiedName(java.lang.String)">retrieveByQualifiedName</a></span>&#8203;(java.lang.String&nbsp;qualifiedName)</code></th>
 <td class="colLast">
@@ -976,28 +990,28 @@ implements <a href="IConnection.html" title="interface in com.atlan.model.assets
 </div>
 </td>
 </tr>
-<tr id="i84" class="altColor">
+<tr id="i86" class="altColor">
 <td class="colFirst"><code><a href="../core/ConnectionCreationResponse.html" title="class in com.atlan.model.core">ConnectionCreationResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#save()">save</a></span>()</code></th>
 <td class="colLast">
 <div class="block">If an asset with the same qualifiedName exists, updates the existing asset.</div>
 </td>
 </tr>
-<tr id="i85" class="rowColor">
+<tr id="i87" class="rowColor">
 <td class="colFirst"><code><a href="../core/ConnectionCreationResponse.html" title="class in com.atlan.model.core">ConnectionCreationResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#save(boolean)">save</a></span>&#8203;(boolean&nbsp;replaceAtlanTags)</code></th>
 <td class="colLast">
 <div class="block">If no asset exists, has the same behavior as the <a href="#save()"><code>save()</code></a> method.</div>
 </td>
 </tr>
-<tr id="i86" class="altColor">
+<tr id="i88" class="altColor">
 <td class="colFirst"><code><a href="../core/ConnectionCreationResponse.html" title="class in com.atlan.model.core">ConnectionCreationResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#save(com.atlan.AtlanClient)">save</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)</code></th>
 <td class="colLast">
 <div class="block">If an asset with the same qualifiedName exists, updates the existing asset.</div>
 </td>
 </tr>
-<tr id="i87" class="rowColor">
+<tr id="i89" class="rowColor">
 <td class="colFirst"><code><a href="../core/ConnectionCreationResponse.html" title="class in com.atlan.model.core">ConnectionCreationResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#save(com.atlan.AtlanClient,boolean)">save</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
     boolean&nbsp;replaceAtlanTags)</code></th>
@@ -1005,28 +1019,28 @@ implements <a href="IConnection.html" title="interface in com.atlan.model.assets
 <div class="block">If no asset exists, has the same behavior as the <a href="#save()"><code>save()</code></a> method.</div>
 </td>
 </tr>
-<tr id="i88" class="altColor">
+<tr id="i90" class="altColor">
 <td class="colFirst"><code>static <a href="../search/FluentSearch.FluentSearchBuilder.html" title="class in com.atlan.model.search">FluentSearch.FluentSearchBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#select()">select</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Start a fluent search that will return all Connection assets.</div>
 </td>
 </tr>
-<tr id="i89" class="rowColor">
+<tr id="i91" class="rowColor">
 <td class="colFirst"><code>static <a href="../search/FluentSearch.FluentSearchBuilder.html" title="class in com.atlan.model.search">FluentSearch.FluentSearchBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#select(boolean)">select</a></span>&#8203;(boolean&nbsp;includeArchived)</code></th>
 <td class="colLast">
 <div class="block">Start a fluent search that will return all Connection assets.</div>
 </td>
 </tr>
-<tr id="i90" class="altColor">
+<tr id="i92" class="altColor">
 <td class="colFirst"><code>static <a href="../search/FluentSearch.FluentSearchBuilder.html" title="class in com.atlan.model.search">FluentSearch.FluentSearchBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#select(com.atlan.AtlanClient)">select</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)</code></th>
 <td class="colLast">
 <div class="block">Start a fluent search that will return all Connection assets.</div>
 </td>
 </tr>
-<tr id="i91" class="rowColor">
+<tr id="i93" class="rowColor">
 <td class="colFirst"><code>static <a href="../search/FluentSearch.FluentSearchBuilder.html" title="class in com.atlan.model.search">FluentSearch.FluentSearchBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#select(com.atlan.AtlanClient,boolean)">select</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
       boolean&nbsp;includeArchived)</code></th>
@@ -1034,16 +1048,16 @@ implements <a href="IConnection.html" title="interface in com.atlan.model.assets
 <div class="block">Start a fluent search that will return all Connection assets.</div>
 </td>
 </tr>
-<tr id="i92" class="altColor">
+<tr id="i94" class="altColor">
 <td class="colFirst"><code><a href="Connection.ConnectionBuilder.html" title="class in com.atlan.model.assets">Connection.ConnectionBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toBuilder()">toBuilder</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i93" class="rowColor">
+<tr id="i95" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 </tr>
-<tr id="i94" class="altColor">
+<tr id="i96" class="altColor">
 <td class="colFirst"><code><a href="Connection.html" title="class in com.atlan.model.assets">Connection</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#trimToReference()">trimToReference</a></span>()</code></th>
 <td class="colLast">
@@ -1051,7 +1065,7 @@ implements <a href="IConnection.html" title="interface in com.atlan.model.assets
  more-complete Connection object.</div>
 </td>
 </tr>
-<tr id="i95" class="rowColor">
+<tr id="i97" class="rowColor">
 <td class="colFirst"><code><a href="Connection.ConnectionBuilder.html" title="class in com.atlan.model.assets">Connection.ConnectionBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#trimToRequired()">trimToRequired</a></span>()</code></th>
 <td class="colLast">
@@ -1059,7 +1073,7 @@ implements <a href="IConnection.html" title="interface in com.atlan.model.assets
  more-complete Connection object.</div>
 </td>
 </tr>
-<tr id="i96" class="altColor">
+<tr id="i98" class="altColor">
 <td class="colFirst"><code>static <a href="Connection.html" title="class in com.atlan.model.assets">Connection</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateAnnouncement(com.atlan.AtlanClient,java.lang.String,com.atlan.model.enums.AtlanAnnouncementType,java.lang.String,java.lang.String)">updateAnnouncement</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
                   java.lang.String&nbsp;qualifiedName,
@@ -1070,7 +1084,7 @@ implements <a href="IConnection.html" title="interface in com.atlan.model.assets
 <div class="block">Update the announcement on a Connection.</div>
 </td>
 </tr>
-<tr id="i97" class="rowColor">
+<tr id="i99" class="rowColor">
 <td class="colFirst"><code>static <a href="Connection.html" title="class in com.atlan.model.assets">Connection</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateAnnouncement(java.lang.String,com.atlan.model.enums.AtlanAnnouncementType,java.lang.String,java.lang.String)">updateAnnouncement</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                   <a href="../enums/AtlanAnnouncementType.html" title="enum in com.atlan.model.enums">AtlanAnnouncementType</a>&nbsp;type,
@@ -1080,7 +1094,7 @@ implements <a href="IConnection.html" title="interface in com.atlan.model.assets
 <div class="block">Update the announcement on a Connection.</div>
 </td>
 </tr>
-<tr id="i98" class="altColor">
+<tr id="i100" class="altColor">
 <td class="colFirst"><code>static <a href="Connection.html" title="class in com.atlan.model.assets">Connection</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateCertificate(com.atlan.AtlanClient,java.lang.String,com.atlan.model.enums.CertificateStatus,java.lang.String)">updateCertificate</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
                  java.lang.String&nbsp;qualifiedName,
@@ -1090,7 +1104,7 @@ implements <a href="IConnection.html" title="interface in com.atlan.model.assets
 <div class="block">Update the certificate on a Connection.</div>
 </td>
 </tr>
-<tr id="i99" class="rowColor">
+<tr id="i101" class="rowColor">
 <td class="colFirst"><code>static <a href="Connection.html" title="class in com.atlan.model.assets">Connection</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateCertificate(java.lang.String,com.atlan.model.enums.CertificateStatus,java.lang.String)">updateCertificate</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                  <a href="../enums/CertificateStatus.html" title="enum in com.atlan.model.enums">CertificateStatus</a>&nbsp;certificate,
@@ -1099,7 +1113,7 @@ implements <a href="IConnection.html" title="interface in com.atlan.model.assets
 <div class="block">Update the certificate on a Connection.</div>
 </td>
 </tr>
-<tr id="i100" class="altColor">
+<tr id="i102" class="altColor">
 <td class="colFirst"><code>static <a href="Connection.ConnectionBuilder.html" title="class in com.atlan.model.assets">Connection.ConnectionBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updater(java.lang.String,java.lang.String)">updater</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
        java.lang.String&nbsp;name)</code></th>
@@ -1107,7 +1121,7 @@ implements <a href="IConnection.html" title="interface in com.atlan.model.assets
 <div class="block">Builds the minimal object necessary to update a Connection.</div>
 </td>
 </tr>
-<tr id="i101" class="rowColor">
+<tr id="i103" class="rowColor">
 <td class="colFirst"><code><a href="../core/ConnectionCreationResponse.html" title="class in com.atlan.model.core">ConnectionCreationResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#upsert()">upsert</a></span>()</code></th>
 <td class="colLast">
@@ -1116,7 +1130,7 @@ implements <a href="IConnection.html" title="interface in com.atlan.model.assets
 </div>
 </td>
 </tr>
-<tr id="i102" class="altColor">
+<tr id="i104" class="altColor">
 <td class="colFirst"><code><a href="../core/ConnectionCreationResponse.html" title="class in com.atlan.model.core">ConnectionCreationResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#upsert(boolean)">upsert</a></span>&#8203;(boolean&nbsp;replaceAtlanTags)</code></th>
 <td class="colLast">
@@ -2115,6 +2129,42 @@ public&nbsp;<a href="../core/ConnectionCreationResponse.html" title="class in co
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API problems</dd>
 <dd><code><a href="../../exception/NotFoundException.html" title="class in com.atlan.exception">NotFoundException</a></code> - if the connection does not exist</dd>
+</dl>
+</li>
+</ul>
+<a id="getAllQualifiedNames()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getAllQualifiedNames</h4>
+<pre class="methodSignature">public static&nbsp;java.util.List&lt;java.lang.String&gt;&nbsp;getAllQualifiedNames()
+                                                             throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Retrieve the qualifiedNames of all connections that exist in Atlan.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>list of all connection qualifiedNames</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API problems</dd>
+</dl>
+</li>
+</ul>
+<a id="getAllQualifiedNames(com.atlan.AtlanClient)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getAllQualifiedNames</h4>
+<pre class="methodSignature">public static&nbsp;java.util.List&lt;java.lang.String&gt;&nbsp;getAllQualifiedNames&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)
+                                                             throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Retrieve the qualifiedNames of all connections that exist in Atlan.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>client</code> - connectivity to the Atlan tenant from which to retrieve the qualifiedNames</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>list of all connection qualifiedNames</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API problems</dd>
 </dl>
 </li>
 </ul>
