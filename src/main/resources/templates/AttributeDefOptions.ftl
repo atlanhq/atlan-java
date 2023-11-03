@@ -101,7 +101,7 @@ public class AttributeDefOptions extends AtlanObject {
 
     /**
      * Set of entities on which this attribute should appear.
-     * Note: this is only used when customMetadataVersion < v2.
+     * Note: this is only used when customMetadataVersion is less than v2.
      * @deprecated see {@link #applicableAssetTypes}, {@link #applicableGlossaryTypes}, {@link #applicableOtherAssetTypes} instead
      */
     @JsonSerialize(using = SetToStringSerializer.class)
