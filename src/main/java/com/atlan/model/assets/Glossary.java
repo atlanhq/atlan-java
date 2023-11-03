@@ -31,6 +31,7 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -561,6 +562,29 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
             log.warn("Multiple glossaries found with the name '{}', returning only the first.", name);
         }
         return results.get(0);
+    }
+
+    /**
+     * Retrieve the qualifiedNames of all glossaries that exist in Atlan.
+     *
+     * @return list of all glossary qualifiedNames
+     * @throws AtlanException on any API problems
+     */
+    public static List<String> getAllQualifiedNames() throws AtlanException {
+        return getAllQualifiedNames(Atlan.getDefaultClient());
+    }
+
+    /**
+     * Retrieve the qualifiedNames of all glossaries that exist in Atlan.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the qualifiedNames
+     * @return list of all glossary qualifiedNames
+     * @throws AtlanException on any API problems
+     */
+    public static List<String> getAllQualifiedNames(AtlanClient client) throws AtlanException {
+        return Glossary.select(client).includeOnResults(Glossary.QUALIFIED_NAME).pageSize(50).stream()
+                .map(Asset::getQualifiedName)
+                .collect(Collectors.toList());
     }
 
     /**

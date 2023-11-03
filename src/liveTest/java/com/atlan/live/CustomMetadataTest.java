@@ -673,7 +673,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertEquals(extra.getDisplayName(), CM_ATTR_RACI_EXTRA + "-archived-" + removalEpoch);
         assertNotEquals(extra.getName(), CM_ATTR_RACI_EXTRA);
         assertEquals(extra.getTypeName(), AtlanCustomAttributePrimitiveType.STRING.getValue());
-        assertTrue(extra.getOptions().getCustomApplicableEntityTypes().contains(Database.TYPE_NAME));
+        assertTrue(extra.getOptions().getApplicableAssetTypes().contains(Database.TYPE_NAME));
         assertFalse(extra.getOptions().getMultiValueSelect());
         assertTrue(extra.isArchived());
     }
@@ -731,7 +731,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
             assertEquals(extra.getDisplayName(), CM_ATTR_RACI_EXTRA);
             assertNotEquals(extra.getName(), CM_ATTR_RACI_EXTRA);
             assertEquals(extra.getTypeName(), AtlanCustomAttributePrimitiveType.STRING.getValue());
-            assertTrue(extra.getOptions().getCustomApplicableEntityTypes().contains(Database.TYPE_NAME));
+            assertTrue(extra.getOptions().getApplicableAssetTypes().contains(Database.TYPE_NAME));
             assertFalse(extra.isArchived());
         } catch (AtlanException e) {
             e.printStackTrace();
@@ -756,7 +756,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
             assertEquals(extra.getDisplayName(), CM_ATTR_RACI_EXTRA);
             assertNotEquals(extra.getName(), CM_ATTR_RACI_EXTRA);
             assertEquals(extra.getTypeName(), AtlanCustomAttributePrimitiveType.STRING.getValue());
-            assertTrue(extra.getOptions().getCustomApplicableEntityTypes().contains(Database.TYPE_NAME));
+            assertTrue(extra.getOptions().getApplicableAssetTypes().contains(Database.TYPE_NAME));
             assertFalse(extra.isArchived());
         } catch (AtlanException e) {
             e.printStackTrace();
@@ -971,7 +971,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertEquals(one.getDisplayName(), CM_ATTR_RACI_RESPONSIBLE);
         assertNotEquals(one.getName(), CM_ATTR_RACI_RESPONSIBLE);
         assertEquals(one.getTypeName(), "array<" + AtlanCustomAttributePrimitiveType.STRING.getValue() + ">");
-        assertTrue(one.getOptions().getCustomApplicableEntityTypes().contains(Database.TYPE_NAME));
+        assertTrue(one.getOptions().getApplicableAssetTypes().contains(Database.TYPE_NAME));
         assertFalse(one.isArchived());
         assertTrue(one.getOptions().getMultiValueSelect());
         assertEquals(one.getOptions().getCustomType(), AtlanCustomAttributePrimitiveType.USERS.getValue());
@@ -979,7 +979,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertEquals(one.getDisplayName(), CM_ATTR_RACI_ACCOUNTABLE);
         assertNotEquals(one.getName(), CM_ATTR_RACI_ACCOUNTABLE);
         assertEquals(one.getTypeName(), AtlanCustomAttributePrimitiveType.STRING.getValue());
-        assertTrue(one.getOptions().getCustomApplicableEntityTypes().contains(Table.TYPE_NAME));
+        assertTrue(one.getOptions().getApplicableAssetTypes().contains(Table.TYPE_NAME));
         assertFalse(one.isArchived());
         assertFalse(one.getOptions().getMultiValueSelect());
         assertEquals(one.getOptions().getCustomType(), AtlanCustomAttributePrimitiveType.USERS.getValue());
@@ -987,7 +987,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertEquals(one.getDisplayName(), CM_ATTR_RACI_CONSULTED);
         assertNotEquals(one.getName(), CM_ATTR_RACI_CONSULTED);
         assertEquals(one.getTypeName(), "array<" + AtlanCustomAttributePrimitiveType.STRING.getValue() + ">");
-        assertTrue(one.getOptions().getCustomApplicableEntityTypes().contains(Column.TYPE_NAME));
+        assertTrue(one.getOptions().getApplicableAssetTypes().contains(Column.TYPE_NAME));
         assertFalse(one.isArchived());
         assertTrue(one.getOptions().getMultiValueSelect());
         assertEquals(one.getOptions().getCustomType(), AtlanCustomAttributePrimitiveType.GROUPS.getValue());
@@ -995,7 +995,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertEquals(one.getDisplayName(), CM_ATTR_RACI_INFORMED);
         assertNotEquals(one.getName(), CM_ATTR_RACI_INFORMED);
         assertEquals(one.getTypeName(), "array<" + AtlanCustomAttributePrimitiveType.STRING.getValue() + ">");
-        assertTrue(one.getOptions().getCustomApplicableEntityTypes().contains(MaterializedView.TYPE_NAME));
+        assertTrue(one.getOptions().getApplicableAssetTypes().contains(MaterializedView.TYPE_NAME));
         assertFalse(one.isArchived());
         assertTrue(one.getOptions().getMultiValueSelect());
         assertEquals(one.getOptions().getCustomType(), AtlanCustomAttributePrimitiveType.GROUPS.getValue());
@@ -1005,7 +1005,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
             assertEquals(one.getDisplayName(), CM_ATTR_RACI_EXTRA + "-archived-" + removalEpoch);
             assertNotEquals(one.getName(), CM_ATTR_RACI_EXTRA);
             assertEquals(one.getTypeName(), AtlanCustomAttributePrimitiveType.STRING.getValue());
-            assertTrue(one.getOptions().getCustomApplicableEntityTypes().contains(GlossaryTerm.TYPE_NAME));
+            assertTrue(one.getOptions().getApplicableGlossaryTypes().contains(GlossaryTerm.TYPE_NAME));
             assertFalse(one.getOptions().getMultiValueSelect());
             assertTrue(one.isArchived());
         }

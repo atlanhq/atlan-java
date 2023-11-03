@@ -25,7 +25,9 @@ public enum AssetSidebarTab implements AtlanEnum {
     QUERIES("Queries"),
     REQUESTS("Requests"),
     PROPERTIES("Properties"),
-    MONTE_CARLO("Monte Carlo");
+    MONTE_CARLO("Monte Carlo"),
+    FACT_DIM_RELATIONS("Fact-Dim Relations"),
+    DBT_TEST("dbt Test");
 
     @JsonValue
     @Getter(onMethod_ = {@Override})

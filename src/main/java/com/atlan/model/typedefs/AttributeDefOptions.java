@@ -2,11 +2,13 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.typedefs;
 
+import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.*;
 import com.atlan.model.core.AtlanObject;
 import com.atlan.model.enums.AtlanCustomAttributePrimitiveType;
 import com.atlan.serde.SetToStringSerializer;
 import com.atlan.serde.StringToSetDeserializer;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.Set;
@@ -14,6 +16,7 @@ import javax.annotation.processing.Generated;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Singular;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
@@ -30,7 +33,7 @@ import lombok.extern.jackson.Jacksonized;
 public class AttributeDefOptions extends AtlanObject {
     private static final long serialVersionUID = 2L;
 
-    private static final Set<String> defaultTypes = Set.of(
+    public static final Set<String> ALL_ASSET_TYPES = Set.of(
             ADLSAccount.TYPE_NAME,
             ADLSContainer.TYPE_NAME,
             ADLSObject.TYPE_NAME,
@@ -59,14 +62,10 @@ public class AttributeDefOptions extends AtlanObject {
             DbtSource.TYPE_NAME,
             DbtTag.TYPE_NAME,
             DbtTest.TYPE_NAME,
-            File.TYPE_NAME,
             Folder.TYPE_NAME,
             Function.TYPE_NAME,
             GCSBucket.TYPE_NAME,
             GCSObject.TYPE_NAME,
-            Glossary.TYPE_NAME,
-            GlossaryCategory.TYPE_NAME,
-            GlossaryTerm.TYPE_NAME,
             Insight.TYPE_NAME,
             KafkaConsumerGroup.TYPE_NAME,
             KafkaTopic.TYPE_NAME,
@@ -180,15 +179,26 @@ public class AttributeDefOptions extends AtlanObject {
             ThoughtspotDashlet.TYPE_NAME,
             ThoughtspotLiveboard.TYPE_NAME,
             View.TYPE_NAME);
+    public static final Set<String> ALL_GLOSSARY_TYPES =
+            Set.of(Glossary.TYPE_NAME, GlossaryTerm.TYPE_NAME, GlossaryCategory.TYPE_NAME);
+    public static final Set<String> ALL_OTHER_TYPES = Set.of(File.TYPE_NAME);
 
     /**
      * Instantiate a new set of attribute options from the provided parameters.
      * @param type primitive type of the attribute
      * @param optionsName name of the options (enumeration) if the primitive type is an enumeration (can be null otherwise)
      * @return the attribute options
+     * @throws AtlanException on any API issues looking up existing connections and glossaries
      */
-    public static AttributeDefOptions of(AtlanCustomAttributePrimitiveType type, String optionsName) {
-        AttributeDefOptionsBuilder<?, ?> builder = AttributeDefOptions.builder().primitiveType(type);
+    public static AttributeDefOptions of(AtlanCustomAttributePrimitiveType type, String optionsName)
+            throws AtlanException {
+        AttributeDefOptionsBuilder<?, ?> builder = AttributeDefOptions.builder()
+                .primitiveType(type)
+                .applicableConnections(Connection.getAllQualifiedNames())
+                .applicableAssetTypes(ALL_ASSET_TYPES)
+                .applicableGlossaries(Glossary.getAllQualifiedNames())
+                .applicableGlossaryTypes(ALL_GLOSSARY_TYPES)
+                .applicableOtherAssetTypes(ALL_OTHER_TYPES);
         switch (type) {
             case USERS:
             case GROUPS:
@@ -206,20 +216,85 @@ public class AttributeDefOptions extends AtlanObject {
         return builder.build();
     }
 
+    /** Indicates the version of the custom metadata structure. This determines which other options are available and used. */
+    @Builder.Default
+    String customMetadataVersion = "v2";
+
     /** Optional description of the attribute. */
     String description;
 
-    /** Set of entities on which this attribute can be applied. */
+    /**
+     * Set of entities on which this attribute can be applied.
+     * Note: generally this should be left as-is. Any overrides should instead be applied through
+     * one or more of {@link #applicableAssetTypes}, {@link #applicableGlossaryTypes}, or {@link #applicableOtherAssetTypes}.
+     */
     @Builder.Default
     @JsonSerialize(using = SetToStringSerializer.class)
     @JsonDeserialize(using = StringToSetDeserializer.class)
     Set<String> applicableEntityTypes = Set.of("Asset");
 
-    /** Set of entities on which this attribute should appear. */
-    @Builder.Default
+    /**
+     * Set of entities on which this attribute should appear.
+     * Note: this is only used when customMetadataVersion < v2.
+     * @deprecated see {@link #applicableAssetTypes}, {@link #applicableGlossaryTypes}, {@link #applicableOtherAssetTypes} instead
+     */
     @JsonSerialize(using = SetToStringSerializer.class)
     @JsonDeserialize(using = StringToSetDeserializer.class)
-    Set<String> customApplicableEntityTypes = defaultTypes;
+    @Deprecated
+    Set<String> customApplicableEntityTypes;
+
+    /**
+     * Qualified names of connections to which to restrict the attribute.
+     * Only assets within one of these connections will have this attribute available.
+     * To further restrict the types of assets within the glossaries, see {@link #applicableAssetTypes}.
+     */
+    @Singular
+    @JsonSerialize(using = SetToStringSerializer.class)
+    @JsonDeserialize(using = StringToSetDeserializer.class)
+    Set<String> applicableConnections;
+
+    /**
+     * Qualified names of glossaries to which to restrict the attribute.
+     * Only glossary assets within one of these glossaries will have this attribute available.
+     * To further restrict the types of assets within the glossaries, see {@link #applicableGlossaryTypes}.
+     */
+    @Singular
+    @JsonSerialize(using = SetToStringSerializer.class)
+    @JsonDeserialize(using = StringToSetDeserializer.class)
+    Set<String> applicableGlossaries;
+
+    /**
+     * Asset type names to which to restrict the attribute.
+     * Only assets of one of these types will have this attribute available.
+     * To further restrict the assets for this custom metadata by connection, see {@link #applicableConnections}.
+     */
+    @Singular
+    @JsonSerialize(using = SetToStringSerializer.class)
+    @JsonDeserialize(using = StringToSetDeserializer.class)
+    @JsonProperty("assetTypesList")
+    Set<String> applicableAssetTypes;
+
+    /**
+     * Glossary type names to which to restrict the attribute.
+     * Only glossary assets of one of these types will have this attribute available.
+     * To further restrict the glossary content for this custom metadata by glossary, see {@link #applicableGlossaries}.
+     */
+    @Singular
+    @JsonSerialize(using = SetToStringSerializer.class)
+    @JsonDeserialize(using = StringToSetDeserializer.class)
+    @JsonProperty("glossaryTypeList")
+    Set<String> applicableGlossaryTypes;
+
+    /**
+     * Any other asset type names to which to restrict the attribute.
+     * These cover any asset type that is not managed within a connection or a glossary.
+     * Only assets of one of these types will have this attribute available.
+     */
+    @Singular
+    @JsonSerialize(using = SetToStringSerializer.class)
+    @JsonDeserialize(using = StringToSetDeserializer.class)
+    @JsonProperty("otherAssetTypeList")
+    Set<String> applicableOtherAssetTypes;
 
     /** Whether the attribute should be searchable (true) or not (false). */
     @Builder.Default
@@ -297,6 +372,21 @@ public class AttributeDefOptions extends AtlanObject {
         }
         if (options.customApplicableEntityTypes != null) {
             this.customApplicableEntityTypes = options.customApplicableEntityTypes;
+        }
+        if (options.applicableConnections != null) {
+            this.applicableConnections = options.applicableConnections;
+        }
+        if (options.applicableGlossaries != null) {
+            this.applicableGlossaries = options.applicableGlossaries;
+        }
+        if (options.applicableAssetTypes != null) {
+            this.applicableAssetTypes = options.applicableAssetTypes;
+        }
+        if (options.applicableGlossaryTypes != null) {
+            this.applicableGlossaryTypes = options.applicableGlossaryTypes;
+        }
+        if (options.applicableOtherAssetTypes != null) {
+            this.applicableOtherAssetTypes = options.applicableOtherAssetTypes;
         }
         if (options.allowSearch != null) {
             this.allowSearch = options.allowSearch;

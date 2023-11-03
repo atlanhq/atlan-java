@@ -451,4 +451,30 @@
         }
         return results;
     }
+
+    /**
+     * Retrieve the qualifiedNames of all connections that exist in Atlan.
+     *
+     * @return list of all connection qualifiedNames
+     * @throws AtlanException on any API problems
+     */
+    public static List<String> getAllQualifiedNames() throws AtlanException {
+        return getAllQualifiedNames(Atlan.getDefaultClient());
+    }
+
+    /**
+     * Retrieve the qualifiedNames of all connections that exist in Atlan.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the qualifiedNames
+     * @return list of all connection qualifiedNames
+     * @throws AtlanException on any API problems
+     */
+    public static List<String> getAllQualifiedNames(AtlanClient client) throws AtlanException {
+        return Connection.select(client)
+            .includeOnResults(Connection.QUALIFIED_NAME)
+            .pageSize(50)
+            .stream()
+            .map(Asset::getQualifiedName)
+            .collect(Collectors.toList());
+    }
 </#macro>

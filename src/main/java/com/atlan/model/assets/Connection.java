@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -916,6 +917,29 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
             throw new NotFoundException(ErrorCode.CONNECTION_NOT_FOUND_BY_NAME, name, type.getValue());
         }
         return results;
+    }
+
+    /**
+     * Retrieve the qualifiedNames of all connections that exist in Atlan.
+     *
+     * @return list of all connection qualifiedNames
+     * @throws AtlanException on any API problems
+     */
+    public static List<String> getAllQualifiedNames() throws AtlanException {
+        return getAllQualifiedNames(Atlan.getDefaultClient());
+    }
+
+    /**
+     * Retrieve the qualifiedNames of all connections that exist in Atlan.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the qualifiedNames
+     * @return list of all connection qualifiedNames
+     * @throws AtlanException on any API problems
+     */
+    public static List<String> getAllQualifiedNames(AtlanClient client) throws AtlanException {
+        return Connection.select(client).includeOnResults(Connection.QUALIFIED_NAME).pageSize(50).stream()
+                .map(Asset::getQualifiedName)
+                .collect(Collectors.toList());
     }
 
     /**
