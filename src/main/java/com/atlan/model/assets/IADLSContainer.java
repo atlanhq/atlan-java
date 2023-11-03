@@ -6,6 +6,7 @@ import com.atlan.model.enums.ADLSLeaseState;
 import com.atlan.model.enums.ADLSLeaseStatus;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
+import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
@@ -239,7 +240,7 @@ public interface IADLSContainer {
     String getAssetDbtUniqueId();
 
     /** TBC */
-    String getAssetIcon();
+    AtlanIcon getAssetIcon();
 
     /** TBC */
     SortedSet<String> getAssetMcIncidentNames();

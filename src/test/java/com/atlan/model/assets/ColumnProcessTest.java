@@ -123,7 +123,7 @@ public class ColumnProcessTest {
             .assetDbtTag("String1")
             .assetDbtTestStatus("String0")
             .assetDbtUniqueId("String0")
-            .assetIcon("String0")
+            .assetIcon(AtlanIcon.ATLAN_TAG)
             .assetMcIncidentName("String0")
             .assetMcIncidentName("String1")
             .assetMcIncidentQualifiedName("String0")
