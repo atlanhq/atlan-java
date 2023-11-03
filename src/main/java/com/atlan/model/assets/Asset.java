@@ -17,6 +17,7 @@ import com.atlan.model.core.CustomMetadataAttributes;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanDeleteType;
+import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
@@ -265,7 +266,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
 
     /** TBC */
     @Attribute
-    String assetIcon;
+    AtlanIcon assetIcon;
 
     /** TBC */
     @Attribute
