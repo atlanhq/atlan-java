@@ -753,8 +753,8 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
                     children.add(category);
                     fullParent.setChildrenCategories(children);
                     map.put(parent.getGuid(), fullParent);
-                map.put(category.getGuid(), category);
                 }
+                map.put(category.getGuid(), category);
             }
         }
 
