@@ -16,9 +16,9 @@ import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @SuppressWarnings("deprecation")
-public class PurposeTest {
+public class SisenseDatamodelTableTest {
 
-    private static final Purpose full = Purpose._internal()
+    private static final SisenseDatamodelTable full = SisenseDatamodelTable._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -59,21 +59,14 @@ public class PurposeTest {
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
                             .build())
-            .channelLink("String0")
-            .defaultNavigation("String0")
-            .denyAssetFilter("String0")
-            .denyAssetFilter("String1")
-            .denyAssetTab(AssetSidebarTab.OVERVIEW)
-            .denyAssetTab(AssetSidebarTab.COLUMNS)
-            .denyAssetType("String0")
-            .denyAssetType("String1")
-            .denyCustomMetadataGuid("String0")
-            .denyCustomMetadataGuid("String1")
-            .denyNavigationPage("String0")
-            .denyNavigationPage("String1")
-            .isAccessControlEnabled(true)
-            .policy(AuthPolicy.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .policy(AuthPolicy.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .inputToAirflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .inputToAirflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .inputToProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .inputToProcess(LineageProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .outputFromAirflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .outputFromAirflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .outputFromProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .outputFromProcess(LineageProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .adminGroup("String0")
             .adminGroup("String1")
             .adminRole("String0")
@@ -383,22 +376,31 @@ public class PurposeTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
-            .purposeAtlanTag("String0")
-            .purposeAtlanTag("String1")
+            .sisenseDatamodel(SisenseDatamodel.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .sisenseDatamodelQualifiedName("String0")
+            .sisenseDatamodelTableColumnCount(123456789L)
+            .sisenseDatamodelTableExpression("String0")
+            .sisenseDatamodelTableIsHidden(true)
+            .sisenseDatamodelTableIsMaterialized(true)
+            .sisenseDatamodelTableLiveQuerySettings("String0")
+            .sisenseDatamodelTableSchedule("String0")
+            .sisenseDatamodelTableType("String0")
+            .sisenseWidget(SisenseWidget.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .sisenseWidget(SisenseWidget.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .build();
 
     private static final int hash = full.hashCode();
-    private static Purpose frodo;
+    private static SisenseDatamodelTable frodo;
     private static String serialized;
 
-    @Test(groups = {"Purpose.builderEquivalency"})
+    @Test(groups = {"SisenseDatamodelTable.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"Purpose.serialize"},
-            dependsOnGroups = {"Purpose.builderEquivalency"})
+            groups = {"SisenseDatamodelTable.serialize"},
+            dependsOnGroups = {"SisenseDatamodelTable.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson(Atlan.getDefaultClient());
@@ -407,17 +409,17 @@ public class PurposeTest {
     }
 
     @Test(
-            groups = {"Purpose.deserialize"},
-            dependsOnGroups = {"Purpose.serialize"})
+            groups = {"SisenseDatamodelTable.deserialize"},
+            dependsOnGroups = {"SisenseDatamodelTable.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = Atlan.getDefaultClient().readValue(serialized, Purpose.class);
+        frodo = Atlan.getDefaultClient().readValue(serialized, SisenseDatamodelTable.class);
         assertNotNull(frodo);
     }
 
     @Test(
-            groups = {"Purpose.equivalency"},
-            dependsOnGroups = {"Purpose.serialize", "Purpose.deserialize"})
+            groups = {"SisenseDatamodelTable.equivalency"},
+            dependsOnGroups = {"SisenseDatamodelTable.serialize", "SisenseDatamodelTable.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -426,8 +428,8 @@ public class PurposeTest {
     }
 
     @Test(
-            groups = {"Purpose.equivalency"},
-            dependsOnGroups = {"Purpose.serialize", "Purpose.deserialize"})
+            groups = {"SisenseDatamodelTable.equivalency"},
+            dependsOnGroups = {"SisenseDatamodelTable.serialize", "SisenseDatamodelTable.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

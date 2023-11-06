@@ -324,6 +324,20 @@ public enum NumericFields implements AtlanSearchableField {
     SIGMA_DATA_ELEMENT_FIELD_COUNT("sigmaDataElementFieldCount"),
     /** Number of pages that exist within this workbook. */
     SIGMA_PAGE_COUNT("sigmaPageCount"),
+    /** Number of widgets that are present in this dashboard */
+    SISENSE_DASHBOARD_WIDGET_COUNT("sisenseDashboardWidgetCount"),
+    /** Timestamp of when the datamodel was last built */
+    SISENSE_DATAMODEL_LAST_BUILD_TIME("sisenseDatamodelLastBuildTime"),
+    /** Timestamp of when the datamodel was last published */
+    SISENSE_DATAMODEL_LAST_PUBLISH_TIME("sisenseDatamodelLastPublishTime"),
+    /** Timestamp of when the datamodel was last built successfully */
+    SISENSE_DATAMODEL_LAST_SUCCESSFUL_BUILD_TIME("sisenseDatamodelLastSuccessfulBuildTime"),
+    /** Number of columns present in the datamodel table */
+    SISENSE_DATAMODEL_TABLE_COLUMN_COUNT("sisenseDatamodelTableColumnCount"),
+    /** Number of tables present in the datamodel */
+    SISENSE_DATAMODEL_TABLE_COUNT("sisenseDatamodelTableCount"),
+    /** Numbers of columns used in the widget */
+    SISENSE_WIDGET_COLUMN_COUNT("sisenseWidgetColumnCount"),
     /** Size of the materialized view in bytes. */
     SIZE_BYTES("sizeBytes"),
     /** TBC */

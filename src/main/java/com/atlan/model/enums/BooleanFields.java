@@ -172,6 +172,10 @@ public enum BooleanFields implements AtlanSearchableField {
     SCHEMA_REGISTRY_SUBJECT_IS_KEY_SCHEMA("schemaRegistrySubjectIsKeySchema"),
     /** TBC */
     SIGMA_DATA_ELEMENT_FIELD_IS_HIDDEN("sigmaDataElementFieldIsHidden"),
+    /** Boolean indicating if the datamodel table is hidden on sisense */
+    SISENSE_DATAMODEL_TABLE_IS_HIDDEN("sisenseDatamodelTableIsHidden"),
+    /** Boolean indicating if the datamodel table is materialised */
+    SISENSE_DATAMODEL_TABLE_IS_MATERIALIZED("sisenseDatamodelTableIsMaterialized"),
     /** TBC */
     SNOWFLAKE_PIPE_IS_AUTO_INGEST_ENABLED("snowflakePipeIsAutoIngestEnabled"),
     /** TBC */

@@ -1074,6 +1074,36 @@ public enum KeywordFields implements AtlanSearchableField {
     SIGMA_WORKBOOK_NAME("sigmaWorkbookName.keyword"),
     /** TBC */
     SIGMA_WORKBOOK_QUALIFIED_NAME("sigmaWorkbookQualifiedName"),
+    /** Qualified name of the folder in which this dashboard exists */
+    SISENSE_DASHBOARD_FOLDER_QUALIFIED_NAME("sisenseDashboardFolderQualifiedName"),
+    /** Qualified name of the datamodel in which this datamodel table is present */
+    SISENSE_DATAMODEL_QUALIFIED_NAME("sisenseDatamodelQualifiedName"),
+    /** Default relation type for the Datamodel. 'extract' type Datamodels have regular relations by default. 'live' type Datamodels have direct relations by default. */
+    SISENSE_DATAMODEL_RELATION_TYPE("sisenseDatamodelRelationType"),
+    /** Revision of the datamodel */
+    SISENSE_DATAMODEL_REVISION("sisenseDatamodelRevision"),
+    /** Hostname of server on which the Datamodel is created */
+    SISENSE_DATAMODEL_SERVER("sisenseDatamodelServer"),
+    /** Actual SQL expression of the datamodel table */
+    SISENSE_DATAMODEL_TABLE_EXPRESSION("sisenseDatamodelTableExpression"),
+    /** LiveQuery settings of the datamodel table (JSON Object) */
+    SISENSE_DATAMODEL_TABLE_LIVE_QUERY_SETTINGS("sisenseDatamodelTableLiveQuerySettings"),
+    /** Refresh schedule of the datamodel table (JSON Object) */
+    SISENSE_DATAMODEL_TABLE_SCHEDULE("sisenseDatamodelTableSchedule"),
+    /** Type of the datamodel table. 'base' for regular tables, 'custom' for SQL expression-based tables */
+    SISENSE_DATAMODEL_TABLE_TYPE("sisenseDatamodelTableType"),
+    /** Type of the datamodel. It has values 'extract' or 'custom' */
+    SISENSE_DATAMODEL_TYPE("sisenseDatamodelType"),
+    /** Qualified name of the parent folder */
+    SISENSE_FOLDER_PARENT_FOLDER_QUALIFIED_NAME("sisenseFolderParentFolderQualifiedName"),
+    /** Qualified name of the dashboard under which this widget is present */
+    SISENSE_WIDGET_DASHBOARD_QUALIFIED_NAME("sisenseWidgetDashboardQualifiedName"),
+    /** Qualified name of the folder under which this widget is present */
+    SISENSE_WIDGET_FOLDER_QUALIFIED_NAME("sisenseWidgetFolderQualifiedName"),
+    /** Size of the widget */
+    SISENSE_WIDGET_SIZE("sisenseWidgetSize"),
+    /** Sub type of the widget */
+    SISENSE_WIDGET_SUB_TYPE("sisenseWidgetSubType"),
     /** TBC */
     SITE_QUALIFIED_NAME("siteQualifiedName"),
     /** TBC */

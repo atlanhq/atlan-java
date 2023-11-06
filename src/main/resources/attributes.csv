@@ -1162,6 +1162,44 @@ SigmaPage,Instance of a Sigma page in Atlan.,sigmaDataElements,Data elements wit
 SigmaPage,Instance of a Sigma page in Atlan.,sigmaWorkbook,Workbook that contains this page.
 SigmaWorkbook,Instance of a Sigma workbook in Atlan.,sigmaPageCount,Number of pages that exist within this workbook.
 SigmaWorkbook,Instance of a Sigma workbook in Atlan.,sigmaPages,Pages that exist within this workbook.
+SisenseDashboard,The SisenseDashboard type represents a dashboard in sisense. Dashboards in Sisense allow you to place multiple widgets on a single page.,sisenseDashboardFolderQualifiedName,Qualified name of the folder in which this dashboard exists
+SisenseDashboard,The SisenseDashboard type represents a dashboard in sisense. Dashboards in Sisense allow you to place multiple widgets on a single page.,sisenseDashboardWidgetCount,Number of widgets that are present in this dashboard
+SisenseDashboard,The SisenseDashboard type represents a dashboard in sisense. Dashboards in Sisense allow you to place multiple widgets on a single page.,sisenseDatamodels,TBC
+SisenseDashboard,The SisenseDashboard type represents a dashboard in sisense. Dashboards in Sisense allow you to place multiple widgets on a single page.,sisenseWidgets,TBC
+SisenseDashboard,The SisenseDashboard type represents a dashboard in sisense. Dashboards in Sisense allow you to place multiple widgets on a single page.,sisenseFolder,TBC
+SisenseDatamodel,The SisenseDatamodel type represents a datamodel in sisense. Datamodels in sisense are an abstraction to group tables together that you can use to build dashboards,sisenseDatamodelTableCount,Number of tables present in the datamodel
+SisenseDatamodel,The SisenseDatamodel type represents a datamodel in sisense. Datamodels in sisense are an abstraction to group tables together that you can use to build dashboards,sisenseDatamodelServer,Hostname of server on which the Datamodel is created
+SisenseDatamodel,The SisenseDatamodel type represents a datamodel in sisense. Datamodels in sisense are an abstraction to group tables together that you can use to build dashboards,sisenseDatamodelRevision,Revision of the datamodel
+SisenseDatamodel,The SisenseDatamodel type represents a datamodel in sisense. Datamodels in sisense are an abstraction to group tables together that you can use to build dashboards,sisenseDatamodelLastBuildTime,Timestamp of when the datamodel was last built
+SisenseDatamodel,The SisenseDatamodel type represents a datamodel in sisense. Datamodels in sisense are an abstraction to group tables together that you can use to build dashboards,sisenseDatamodelLastSuccessfulBuildTime,Timestamp of when the datamodel was last built successfully
+SisenseDatamodel,The SisenseDatamodel type represents a datamodel in sisense. Datamodels in sisense are an abstraction to group tables together that you can use to build dashboards,sisenseDatamodelLastPublishTime,Timestamp of when the datamodel was last published
+SisenseDatamodel,The SisenseDatamodel type represents a datamodel in sisense. Datamodels in sisense are an abstraction to group tables together that you can use to build dashboards,sisenseDatamodelType,Type of the datamodel. It has values 'extract' or 'custom'
+SisenseDatamodel,The SisenseDatamodel type represents a datamodel in sisense. Datamodels in sisense are an abstraction to group tables together that you can use to build dashboards,sisenseDatamodelRelationType,Default relation type for the Datamodel. 'extract' type Datamodels have regular relations by default. 'live' type Datamodels have direct relations by default.
+SisenseDatamodel,The SisenseDatamodel type represents a datamodel in sisense. Datamodels in sisense are an abstraction to group tables together that you can use to build dashboards,sisenseDatamodelTables,TBC
+SisenseDatamodel,The SisenseDatamodel type represents a datamodel in sisense. Datamodels in sisense are an abstraction to group tables together that you can use to build dashboards,sisenseDashboards,TBC
+SisenseDatamodelTable,The SisenseDatamodelTable type represents a table in a datamodel.,sisenseDatamodelQualifiedName,Qualified name of the datamodel in which this datamodel table is present
+SisenseDatamodelTable,The SisenseDatamodelTable type represents a table in a datamodel.,sisenseDatamodelTableColumnCount,Number of columns present in the datamodel table
+SisenseDatamodelTable,The SisenseDatamodelTable type represents a table in a datamodel.,sisenseDatamodelTableType,"Type of the datamodel table. 'base' for regular tables, 'custom' for SQL expression-based tables"
+SisenseDatamodelTable,The SisenseDatamodelTable type represents a table in a datamodel.,sisenseDatamodelTableExpression,Actual SQL expression of the datamodel table
+SisenseDatamodelTable,The SisenseDatamodelTable type represents a table in a datamodel.,sisenseDatamodelTableIsMaterialized,Boolean indicating if the datamodel table is materialised
+SisenseDatamodelTable,The SisenseDatamodelTable type represents a table in a datamodel.,sisenseDatamodelTableIsHidden,Boolean indicating if the datamodel table is hidden on sisense
+SisenseDatamodelTable,The SisenseDatamodelTable type represents a table in a datamodel.,sisenseDatamodelTableSchedule,Refresh schedule of the datamodel table (JSON Object)
+SisenseDatamodelTable,The SisenseDatamodelTable type represents a table in a datamodel.,sisenseDatamodelTableLiveQuerySettings,LiveQuery settings of the datamodel table (JSON Object)
+SisenseDatamodelTable,The SisenseDatamodelTable type represents a table in a datamodel.,sisenseDatamodel,TBC
+SisenseDatamodelTable,The SisenseDatamodelTable type represents a table in a datamodel.,sisenseWidgets,TBC
+SisenseFolder,The SisenseFolder type represents a folder in Sisense. This type is used to denote both parent folders and nested folders,sisenseFolderParentFolderQualifiedName,Qualified name of the parent folder
+SisenseFolder,The SisenseFolder type represents a folder in Sisense. This type is used to denote both parent folders and nested folders,sisenseChildFolders,TBC
+SisenseFolder,The SisenseFolder type represents a folder in Sisense. This type is used to denote both parent folders and nested folders,sisenseWidgets,TBC
+SisenseFolder,The SisenseFolder type represents a folder in Sisense. This type is used to denote both parent folders and nested folders,sisenseDashboards,TBC
+SisenseFolder,The SisenseFolder type represents a folder in Sisense. This type is used to denote both parent folders and nested folders,sisenseParentFolder,TBC
+SisenseWidget,The SisenseWidget type represents a widget in Sisense.,sisenseWidgetColumnCount,Numbers of columns used in the widget
+SisenseWidget,The SisenseWidget type represents a widget in Sisense.,sisenseWidgetSubType,Sub type of the widget
+SisenseWidget,The SisenseWidget type represents a widget in Sisense.,sisenseWidgetSize,Size of the widget
+SisenseWidget,The SisenseWidget type represents a widget in Sisense.,sisenseWidgetDashboardQualifiedName,Qualified name of the dashboard under which this widget is present
+SisenseWidget,The SisenseWidget type represents a widget in Sisense.,sisenseWidgetFolderQualifiedName,Qualified name of the folder under which this widget is present
+SisenseWidget,The SisenseWidget type represents a widget in Sisense.,sisenseDatamodelTables,TBC
+SisenseWidget,The SisenseWidget type represents a widget in Sisense.,sisenseFolder,TBC
+SisenseWidget,The SisenseWidget type represents a widget in Sisense.,sisenseDashboard,TBC
 SnowflakeDynamicTable,Atlan Snowflake Dynamic Table Asset,definition,SQL statements used to define a Snowflake Dynamic Table
 SnowflakePipe,Instance of a Snowflake Pipe in Atlan.,definition,TBC
 SnowflakePipe,Instance of a Snowflake Pipe in Atlan.,snowflakePipeIsAutoIngestEnabled,TBC
