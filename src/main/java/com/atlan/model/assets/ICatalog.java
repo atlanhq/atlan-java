@@ -395,6 +395,21 @@ public interface ICatalog {
             case SigmaWorkbook.TYPE_NAME:
                 ref = SigmaWorkbook.refByQualifiedName(qualifiedName);
                 break;
+            case SisenseDashboard.TYPE_NAME:
+                ref = SisenseDashboard.refByQualifiedName(qualifiedName);
+                break;
+            case SisenseDatamodel.TYPE_NAME:
+                ref = SisenseDatamodel.refByQualifiedName(qualifiedName);
+                break;
+            case SisenseDatamodelTable.TYPE_NAME:
+                ref = SisenseDatamodelTable.refByQualifiedName(qualifiedName);
+                break;
+            case SisenseFolder.TYPE_NAME:
+                ref = SisenseFolder.refByQualifiedName(qualifiedName);
+                break;
+            case SisenseWidget.TYPE_NAME:
+                ref = SisenseWidget.refByQualifiedName(qualifiedName);
+                break;
             case SnowflakeDynamicTable.TYPE_NAME:
                 ref = SnowflakeDynamicTable.refByQualifiedName(qualifiedName);
                 break;

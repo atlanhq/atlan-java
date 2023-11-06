@@ -16,9 +16,9 @@ import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @SuppressWarnings("deprecation")
-public class PurposeTest {
+public class SisenseDashboardTest {
 
-    private static final Purpose full = Purpose._internal()
+    private static final SisenseDashboard full = SisenseDashboard._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -59,21 +59,14 @@ public class PurposeTest {
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
                             .build())
-            .channelLink("String0")
-            .defaultNavigation("String0")
-            .denyAssetFilter("String0")
-            .denyAssetFilter("String1")
-            .denyAssetTab(AssetSidebarTab.OVERVIEW)
-            .denyAssetTab(AssetSidebarTab.COLUMNS)
-            .denyAssetType("String0")
-            .denyAssetType("String1")
-            .denyCustomMetadataGuid("String0")
-            .denyCustomMetadataGuid("String1")
-            .denyNavigationPage("String0")
-            .denyNavigationPage("String1")
-            .isAccessControlEnabled(true)
-            .policy(AuthPolicy.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .policy(AuthPolicy.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .inputToAirflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .inputToAirflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .inputToProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .inputToProcess(LineageProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .outputFromAirflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .outputFromAirflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .outputFromProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .outputFromProcess(LineageProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .adminGroup("String0")
             .adminGroup("String1")
             .adminRole("String0")
@@ -383,22 +376,27 @@ public class PurposeTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
-            .purposeAtlanTag("String0")
-            .purposeAtlanTag("String1")
+            .sisenseDashboardFolderQualifiedName("String0")
+            .sisenseDashboardWidgetCount(123456789L)
+            .sisenseDatamodel(SisenseDatamodel.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .sisenseDatamodel(SisenseDatamodel.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .sisenseFolder(SisenseFolder.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .sisenseWidget(SisenseWidget.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .sisenseWidget(SisenseWidget.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .build();
 
     private static final int hash = full.hashCode();
-    private static Purpose frodo;
+    private static SisenseDashboard frodo;
     private static String serialized;
 
-    @Test(groups = {"Purpose.builderEquivalency"})
+    @Test(groups = {"SisenseDashboard.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"Purpose.serialize"},
-            dependsOnGroups = {"Purpose.builderEquivalency"})
+            groups = {"SisenseDashboard.serialize"},
+            dependsOnGroups = {"SisenseDashboard.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson(Atlan.getDefaultClient());
@@ -407,17 +405,17 @@ public class PurposeTest {
     }
 
     @Test(
-            groups = {"Purpose.deserialize"},
-            dependsOnGroups = {"Purpose.serialize"})
+            groups = {"SisenseDashboard.deserialize"},
+            dependsOnGroups = {"SisenseDashboard.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = Atlan.getDefaultClient().readValue(serialized, Purpose.class);
+        frodo = Atlan.getDefaultClient().readValue(serialized, SisenseDashboard.class);
         assertNotNull(frodo);
     }
 
     @Test(
-            groups = {"Purpose.equivalency"},
-            dependsOnGroups = {"Purpose.serialize", "Purpose.deserialize"})
+            groups = {"SisenseDashboard.equivalency"},
+            dependsOnGroups = {"SisenseDashboard.serialize", "SisenseDashboard.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -426,8 +424,8 @@ public class PurposeTest {
     }
 
     @Test(
-            groups = {"Purpose.equivalency"},
-            dependsOnGroups = {"Purpose.serialize", "Purpose.deserialize"})
+            groups = {"SisenseDashboard.equivalency"},
+            dependsOnGroups = {"SisenseDashboard.serialize", "SisenseDashboard.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

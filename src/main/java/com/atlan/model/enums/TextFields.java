@@ -350,6 +350,16 @@ public enum TextFields implements AtlanSearchableField {
     SIGMA_WORKBOOK_NAME("sigmaWorkbookName"),
     /** TBC */
     SIGMA_WORKBOOK_QUALIFIED_NAME("sigmaWorkbookQualifiedName.text"),
+    /** Qualified name of the folder in which this dashboard exists */
+    SISENSE_DASHBOARD_FOLDER_QUALIFIED_NAME("sisenseDashboardFolderQualifiedName.text"),
+    /** Qualified name of the datamodel in which this datamodel table is present */
+    SISENSE_DATAMODEL_QUALIFIED_NAME("sisenseDatamodelQualifiedName.text"),
+    /** Qualified name of the parent folder */
+    SISENSE_FOLDER_PARENT_FOLDER_QUALIFIED_NAME("sisenseFolderParentFolderQualifiedName.text"),
+    /** Qualified name of the dashboard under which this widget is present */
+    SISENSE_WIDGET_DASHBOARD_QUALIFIED_NAME("sisenseWidgetDashboardQualifiedName.text"),
+    /** Qualified name of the folder under which this widget is present */
+    SISENSE_WIDGET_FOLDER_QUALIFIED_NAME("sisenseWidgetFolderQualifiedName.text"),
     /** TBC */
     SNOWFLAKE_PIPE_NOTIFICATION_CHANNEL_NAME("snowflakePipeNotificationChannelName.text"),
     /** All super types of an asset. */
