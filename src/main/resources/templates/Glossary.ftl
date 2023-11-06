@@ -362,9 +362,8 @@
                     children.add(category);
                     fullParent.setChildrenCategories(children);
                     map.put(parent.getGuid(), fullParent);
-                } else {
-                    map.put(category.getGuid(), category);
                 }
+                map.put(category.getGuid(), category);
             }
         }
 
