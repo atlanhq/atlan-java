@@ -2,4 +2,4 @@
 rootProject.name = "atlan-java"
 include("sdk")
 include("generate")
-include("liveTest")
+include("integration-tests")

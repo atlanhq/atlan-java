@@ -46,10 +46,6 @@ testing {
     }
 }
 
-/*tasks.named("check") {
-    dependsOn(testing.suites["test"])
-}
-
 /* TODO
 tasks.jacocoTestReport {
     reports {
