@@ -122,7 +122,7 @@ tasks.delombok {
     format = emptyMap()
 }
 
-apply(from = "deploy.gradle")
+// TODO: apply(from = "../deploy.gradle")
 
 testing {
     suites {
@@ -196,7 +196,7 @@ spotless {
     java {
         palantirJavaFormat("2.9.0")
         removeUnusedImports()
-        licenseHeaderFile("LICENSE_HEADER")
+        licenseHeaderFile("../LICENSE_HEADER")
     }
 }
 
