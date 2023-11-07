@@ -32,7 +32,7 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: jar-with-dependencies
-          path: sdk/build/libs/atlan-java-*-jar-with-dependencies.jar
+          path: build/libs/atlan-java-*-jar-with-dependencies.jar
       - uses: actions/upload-artifact@v3
         with:
           name: lambda-layer
