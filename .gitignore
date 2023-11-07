@@ -13,4 +13,4 @@
 build/
 
 # Generated markdown
-src/generate/resources/markdown/**
+generate/src/main/resources/markdown/**
