@@ -1,6 +1,8 @@
 /* SPDX-License-Identifier: Apache-2.0 */
 import net.ltgt.gradle.errorprone.errorprone
 
+val jarPath = "$rootDir/build/libs"
+
 val sdkVersion = providers.gradleProperty("VERSION_NAME").get()
 
 buildscript {
@@ -66,7 +68,14 @@ tasks.jar {
             "Export-Package" to "com.atlan.*")
         archiveVersion.set(sdkVersion)
     }
+    destinationDirectory.set(file(jarPath))
     archiveFileName.set("atlan-java-$sdkVersion.jar")
+}
+
+tasks.shadowJar {
+    destinationDirectory.set(file(jarPath))
+    archiveFileName.set("atlan-java-$sdkVersion-jar-with-dependencies.jar")
+    configurations = listOf(project.configurations.runtimeClasspath.get())
 }
 
 tasks.withType<JavaCompile> {
@@ -201,11 +210,6 @@ spotless {
     }
 }
 
-tasks.shadowJar {
-    archiveFileName.set("atlan-java-$sdkVersion-jar-with-dependencies.jar")
-    configurations = listOf(project.configurations.runtimeClasspath.get())
-}
-
 tasks.jacocoTestReport {
     reports {
         xml.required.set(true) // coveralls plugin depends on xml format report
@@ -215,10 +219,6 @@ tasks.jacocoTestReport {
 
 coveralls {
     jacocoReportPath = "build/reports/jacoco/test/jacocoTestReport.xml"
-}
-
-tasks.gitPublishReset {
-    branch.set("gh-pages")
 }
 
 gitPublish {

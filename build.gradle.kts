@@ -20,7 +20,6 @@ plugins {
     id("signing")
     id("io.freefair.lombok") version "6.3.0"
     id("biz.aQute.bnd.builder") version "6.1.0"
-    id("org.ajoberstar.git-publish") version "3.0.1"
 }
 
 apply(from = "deploy.gradle")
