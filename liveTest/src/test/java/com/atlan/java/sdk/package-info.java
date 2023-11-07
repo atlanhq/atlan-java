@@ -6,4 +6,4 @@
  * 1. Regression test the SDK through any changes, to ensure the code still operates as intended.
  * 2. Provide some deeper examples of "working code" to anyone looking for such examples.
  */
-package com.atlan.live;
+package com.atlan.java.sdk;
