@@ -35,9 +35,6 @@ plugins {
     id("com.adarshr.test-logger") version "3.2.0"
 }
 
-group = providers.gradleProperty("GROUP").get()
-version = providers.gradleProperty("VERSION_NAME").get()
-
 java {
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11

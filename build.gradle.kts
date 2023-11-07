@@ -13,6 +13,9 @@ repositories {
     mavenCentral()
 }
 
+group = providers.gradleProperty("GROUP").get()
+version = providers.gradleProperty("VERSION_NAME").get()
+
 plugins {
     id("java-library")
     id("jvm-test-suite")
