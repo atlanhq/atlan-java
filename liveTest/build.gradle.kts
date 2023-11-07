@@ -49,8 +49,6 @@ tasks.delombok {
     format = emptyMap()
 }
 
-// TODO: apply(from = "../deploy.gradle")
-
 testing {
     suites {
         val liveTest by registering(JvmTestSuite::class) {
@@ -91,21 +89,6 @@ tasks.jacocoTestReport {
 coveralls {
     jacocoReportPath = "build/reports/jacoco/test/jacocoTestReport.xml"
 }
-
-/*
-// TODO: JavaDocs publishing
-gitPublish {
-    repoUri.set("https://github.com/atlanhq/atlan-java.git")
-    branch.set("gh-pages")
-    sign.set(false) // disable commit signing
-
-    contents {
-        from(jdk.javadoc.internal.tool.resources.javadoc()) {
-            into(".")
-        }
-    }
-}
- */
 
 jacoco {
     // test code instrumentation for Java 18
