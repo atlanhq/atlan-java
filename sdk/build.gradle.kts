@@ -1,6 +1,8 @@
 /* SPDX-License-Identifier: Apache-2.0 */
 import net.ltgt.gradle.errorprone.errorprone
 
+val sdkVersion = providers.gradleProperty("VERSION_NAME").get()
+
 buildscript {
     repositories {
         gradlePluginPortal()
@@ -62,8 +64,9 @@ tasks.jar {
             "Implementation-Vendor" to providers.gradleProperty("VENDOR_NAME").get(),
             "Bundle-SymbolicName" to providers.gradleProperty("POM_ARTIFACT_ID").get(),
             "Export-Package" to "com.atlan.*")
-        archiveVersion.set(providers.gradleProperty("VERSION_NAME").get())
+        archiveVersion.set(sdkVersion)
     }
+    archiveFileName.set("atlan-java-$sdkVersion.jar")
 }
 
 tasks.withType<JavaCompile> {
@@ -199,7 +202,7 @@ spotless {
 }
 
 tasks.shadowJar {
-    archiveClassifier.set("jar-with-dependencies")
+    archiveFileName.set("atlan-java-$sdkVersion-jar-with-dependencies.jar")
     configurations = listOf(project.configurations.runtimeClasspath.get())
 }
 
@@ -214,7 +217,10 @@ coveralls {
     jacocoReportPath = "build/reports/jacoco/test/jacocoTestReport.xml"
 }
 
-// TODO: JavaDocs publishing
+tasks.gitPublishReset {
+    branch.set("gh-pages")
+}
+
 gitPublish {
     repoUri.set("https://github.com/atlanhq/atlan-java.git")
     branch.set("gh-pages")
