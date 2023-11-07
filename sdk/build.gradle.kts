@@ -4,11 +4,12 @@ val versionId = providers.gradleProperty("VERSION_NAME").get()
 plugins {
     id("com.atlan.java")
     id("com.atlan.java-test")
-    id("maven-publish")
-    id("signing")
     id("biz.aQute.bnd.builder") version "6.1.0"
-    id("org.ajoberstar.git-publish") version "3.0.1"
     id("com.github.johnrengelman.shadow") version "7.1.2"
+    id("org.ajoberstar.git-publish") version "3.0.1"
+    /*id("maven-publish")
+    id("signing")
+    id("io.github.gradle-nexus.publish-plugin") version "1.3.0"*/
 }
 
 dependencies {
@@ -36,6 +37,10 @@ tasks.jar {
 tasks.shadowJar {
     archiveFileName.set("atlan-java-$versionId-jar-with-dependencies.jar")
     configurations = listOf(project.configurations.runtimeClasspath.get())
+}
+
+tasks.javadoc {
+    title = "Atlan Java SDK $versionId"
 }
 
 gitPublish {

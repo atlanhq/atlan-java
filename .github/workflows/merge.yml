@@ -32,7 +32,7 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: jar-with-dependencies
-          path: build/libs/atlan-java-*-jar-with-dependencies.jar
+          path: sdk/build/libs/atlan-java-*-jar-with-dependencies.jar
       - uses: actions/upload-artifact@v3
         with:
           name: lambda-layer
@@ -72,7 +72,7 @@ jobs:
           GPG_SIGNING_PASSPHRASE: ${{ secrets.GPG_SIGNING_PASSPHRASE }}
       - name: Publish package
         run: |
-          ./gradlew publish -Dorg.gradle.project.NEXUS_USERNAME=$NEXUS_USERNAME -Dorg.gradle.project.NEXUS_PASSWORD=$NEXUS_PASSWORD -Dorg.gradle.project.signing.gnupg.keyName=$GPG_SIGNING_KEYID -Dorg.gradle.project.signing.gnupg.passphrase=$GPG_SIGNING_PASSPHRASE
+          ./gradlew publish -Dorg.gradle.project.sonatypeUsername=$NEXUS_USERNAME -Dorg.gradle.project.sonatypePassword=$NEXUS_PASSWORD -Dorg.gradle.project.signing.gnupg.keyName=$GPG_SIGNING_KEYID -Dorg.gradle.project.signing.gnupg.passphrase=$GPG_SIGNING_PASSPHRASE
         env:
           GH_USERNAME: ${{ github.actor }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
