@@ -1,6 +1,6 @@
+/* SPDX-License-Identifier: Apache-2.0 */
 import net.ltgt.gradle.errorprone.errorprone
 
-/* SPDX-License-Identifier: Apache-2.0 */
 buildscript {
     repositories {
         gradlePluginPortal()
