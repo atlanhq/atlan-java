@@ -1,4 +1,4 @@
-/* SPDX-License-Identifier: Apache-2.0 */
+/* SPDX-License-Identifier: Apache-2.0
 buildscript {
     repositories {
         gradlePluginPortal()
@@ -13,13 +13,15 @@ repositories {
     mavenCentral()
 }
 
+group = providers.gradleProperty("GROUP").get()
+version = providers.gradleProperty("VERSION_NAME").get()
+
 plugins {
     id("java-library")
     id("jvm-test-suite")
-    id("maven-publish")
-    id("signing")
     id("io.freefair.lombok") version "6.3.0"
     id("biz.aQute.bnd.builder") version "6.1.0"
 }
 
 apply(from = "deploy.gradle")
+*/

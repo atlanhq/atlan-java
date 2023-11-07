@@ -194,7 +194,7 @@ public class JacksonUtils {
      */
     public static Boolean deserializeBoolean(JsonNode node, String path) {
         JsonNode value = node.get(path);
-        return value == null || value.isNull() ? null : value.asBoolean();
+        return (value == null || value.isNull()) ? null : value.asBoolean();
     }
 
     /**

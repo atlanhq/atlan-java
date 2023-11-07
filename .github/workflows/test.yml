@@ -18,7 +18,7 @@ jobs:
           java-version: 11
           distribution: adopt
       - name: Run integration tests
-        run: ./gradlew liveTest
+        run: ./gradlew liveTest:test
         env:
           ATLAN_BASE_URL: ${{ secrets.ATLAN_BASE_URL }}
           ATLAN_API_KEY: ${{ secrets.ATLAN_API_KEY }}
