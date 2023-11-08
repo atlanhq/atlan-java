@@ -1,10 +1,9 @@
 /* SPDX-License-Identifier: Apache-2.0 */
-val versionId = providers.gradleProperty("VERSION_NAME").get()
+val versionId: String = providers.gradleProperty("VERSION_NAME").get()
 
 plugins {
     id("com.atlan.java")
     id("com.atlan.java-test")
-    //id("biz.aQute.bnd.builder") version "6.1.0"
     alias(libs.plugins.shadow)
     alias(libs.plugins.git.publish)
     `maven-publish`

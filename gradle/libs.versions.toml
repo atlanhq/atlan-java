@@ -11,6 +11,7 @@ jnanoid = "2.0.0"
 
 [libraries]
 jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson" }
+jackson-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version.ref = "jackson" }
 slf4j = { module = "org.slf4j:slf4j-api", version.ref = "slf4j" }
 elasticsearch-java = { module = "co.elastic.clients:elasticsearch-java", version.ref = "elasticsearch" }
 freemarker = { module = "org.freemarker:freemarker", version.ref = "freemarker" }
