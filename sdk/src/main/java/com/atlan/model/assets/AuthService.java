@@ -27,7 +27,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Instance of an authorization service in Atlan.
+ * Model to store auth service in Atlas
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter

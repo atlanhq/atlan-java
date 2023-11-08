@@ -23,7 +23,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a Looker model in Atlan.
+ * Instance of a Looker model in Atlan. Models combine Explores and dashboards.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -32,22 +32,22 @@ public interface ILookerModel {
 
     public static final String TYPE_NAME = "LookerModel";
 
-    /** TBC */
+    /** Explores that exist within this model. */
     RelationField EXPLORES = new RelationField("explores");
 
-    /** TBC */
+    /** Fields that exist within this model. */
     RelationField FIELDS = new RelationField("fields");
 
-    /** TBC */
+    /** Look that exists for this model. */
     RelationField LOOK = new RelationField("look");
 
-    /** TBC */
+    /** Project in which this model exists. */
     RelationField PROJECT = new RelationField("project");
 
-    /** TBC */
+    /** Name of the project in which the model exists. */
     KeywordField PROJECT_NAME = new KeywordField("projectName", "projectName");
 
-    /** TBC */
+    /** Deprecated. */
     RelationField QUERIES = new RelationField("queries");
 
     /** TBC */
@@ -254,7 +254,7 @@ public interface ILookerModel {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -287,10 +287,10 @@ public interface ILookerModel {
     /** TBC */
     String getDisplayName();
 
-    /** TBC */
+    /** Explores that exist within this model. */
     SortedSet<ILookerExplore> getExplores();
 
-    /** TBC */
+    /** Fields that exist within this model. */
     SortedSet<ILookerField> getFields();
 
     /** TBC */
@@ -302,7 +302,7 @@ public interface ILookerModel {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -326,16 +326,16 @@ public interface ILookerModel {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
-    /** TBC */
+    /** Look that exists for this model. */
     ILookerLook getLook();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -347,7 +347,7 @@ public interface ILookerModel {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -359,19 +359,19 @@ public interface ILookerModel {
     /** TBC */
     Double getPopularityScore();
 
-    /** TBC */
+    /** Project in which this model exists. */
     ILookerProject getProject();
 
-    /** TBC */
+    /** Name of the project in which the model exists. */
     String getProjectName();
 
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** Deprecated. */
     SortedSet<ILookerQuery> getQueries();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

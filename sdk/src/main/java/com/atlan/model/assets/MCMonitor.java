@@ -53,7 +53,7 @@ public class MCMonitor extends Asset
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -77,11 +77,11 @@ public class MCMonitor extends Asset
     @Singular
     SortedSet<IAsset> mcMonitorAssets;
 
-    /** TBC */
+    /** Rate at which this monitor is breached. */
     @Attribute
     Double mcMonitorBreachRate;
 
-    /** Unique identifier for the monitor. */
+    /** Unique identifier for this monitor, from Monte Carlo. */
     @Attribute
     String mcMonitorId;
 
@@ -89,7 +89,7 @@ public class MCMonitor extends Asset
     @Attribute
     Long mcMonitorIncidentCount;
 
-    /** Namespace of the monitor. */
+    /** Namespace of this monitor. */
     @Attribute
     String mcMonitorNamespace;
 
@@ -123,23 +123,23 @@ public class MCMonitor extends Asset
     @Attribute
     String mcMonitorRuleScheduleConfigHumanized;
 
-    /** Type of rule for the monitor. */
+    /** Type of rule for this monitor. */
     @Attribute
     String mcMonitorRuleType;
 
-    /** Type of schedule for the monitor, for example fixed or dynamic. */
+    /** Type of schedule for this monitor, for example: fixed or dynamic. */
     @Attribute
     String mcMonitorScheduleType;
 
-    /** Status of the monitor. */
+    /** Status of this monitor. */
     @Attribute
     String mcMonitorStatus;
 
-    /** Type of monitor, for example field health (stats) or dimension tracking (categories). */
+    /** Type of this monitor, for example: field health (stats) or dimension tracking (categories). */
     @Attribute
     String mcMonitorType;
 
-    /** Name of the warehouse for the monitor. */
+    /** Name of the warehouse for this monitor. */
     @Attribute
     String mcMonitorWarehouse;
 
@@ -148,7 +148,7 @@ public class MCMonitor extends Asset
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;

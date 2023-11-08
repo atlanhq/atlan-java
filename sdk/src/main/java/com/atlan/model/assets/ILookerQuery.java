@@ -23,7 +23,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a Looker query in Atlan.
+ * Deprecated.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -32,25 +32,25 @@ public interface ILookerQuery {
 
     public static final String TYPE_NAME = "LookerQuery";
 
-    /** TBC */
+    /** Deprecated. */
     KeywordField FIELDS = new KeywordField("fields", "fields");
 
-    /** TBC */
+    /** Deprecated. */
     RelationField LOOKS = new RelationField("looks");
 
-    /** TBC */
+    /** Deprecated. */
     RelationField MODEL = new RelationField("model");
 
-    /** TBC */
+    /** Deprecated. */
     KeywordField SOURCE_DEFINITION = new KeywordField("sourceDefinition", "sourceDefinition");
 
-    /** TBC */
+    /** Deprecated. */
     KeywordField SOURCE_DEFINITION_DATABASE = new KeywordField("sourceDefinitionDatabase", "sourceDefinitionDatabase");
 
-    /** TBC */
+    /** Deprecated. */
     KeywordField SOURCE_DEFINITION_SCHEMA = new KeywordField("sourceDefinitionSchema", "sourceDefinitionSchema");
 
-    /** TBC */
+    /** Deprecated. */
     RelationField TILES = new RelationField("tiles");
 
     /** TBC */
@@ -257,7 +257,7 @@ public interface ILookerQuery {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -290,7 +290,7 @@ public interface ILookerQuery {
     /** TBC */
     String getDisplayName();
 
-    /** TBC */
+    /** Deprecated. */
     SortedSet<String> getFields();
 
     /** TBC */
@@ -302,7 +302,7 @@ public interface ILookerQuery {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -326,22 +326,22 @@ public interface ILookerQuery {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
-    /** TBC */
+    /** Deprecated. */
     SortedSet<ILookerLook> getLooks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
     SortedSet<IMetric> getMetrics();
 
-    /** TBC */
+    /** Deprecated. */
     ILookerModel getModel();
 
     /** TBC */
@@ -350,7 +350,7 @@ public interface ILookerQuery {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -365,7 +365,7 @@ public interface ILookerQuery {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */
@@ -386,13 +386,13 @@ public interface ILookerQuery {
     /** TBC */
     String getSourceCreatedBy();
 
-    /** TBC */
+    /** Deprecated. */
     String getSourceDefinition();
 
-    /** TBC */
+    /** Deprecated. */
     String getSourceDefinitionDatabase();
 
-    /** TBC */
+    /** Deprecated. */
     String getSourceDefinitionSchema();
 
     /** TBC */
@@ -467,7 +467,7 @@ public interface ILookerQuery {
     /** TBC */
     String getTenantId();
 
-    /** TBC */
+    /** Deprecated. */
     SortedSet<ILookerTile> getTiles();
 
     /** TBC */

@@ -9,7 +9,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
 /**
- * Atlas Type representing records of multiple users for starred assets
+ * Detailed information about the users who have starred an asset.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -28,16 +28,16 @@ public class StarredDetails extends AtlanStruct {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** The username of the user who starred an asset */
+    /** Username of the user who starred the asset. */
     String assetStarredBy;
 
-    /** Latest timestamp of the operation when a user starred an asset */
+    /** Time at which the user starred the asset. */
     Long assetStarredAt;
 
     /**
      * Quickly create a new StarredDetails.
-     * @param assetStarredBy The username of the user who starred an asset
-     * @param assetStarredAt Latest timestamp of the operation when a user starred an asset
+     * @param assetStarredBy Username of the user who starred the asset.
+     * @param assetStarredAt Time at which the user starred the asset.
      * @return a StarredDetails with the provided information
      */
     public static StarredDetails of(String assetStarredBy, Long assetStarredAt) {

@@ -46,7 +46,7 @@ public class PowerBIColumn extends Asset implements IPowerBIColumn, IPowerBI, IB
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Unique name of the dataset in which this column exists. */
     @Attribute
     String datasetQualifiedName;
 
@@ -55,7 +55,7 @@ public class PowerBIColumn extends Asset implements IPowerBIColumn, IPowerBI, IB
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -65,20 +65,20 @@ public class PowerBIColumn extends Asset implements IPowerBIColumn, IPowerBI, IB
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** TBC */
+    /** Data category that describes the data in this column. */
     @Attribute
     String powerBIColumnDataCategory;
 
-    /** TBC */
+    /** Data type of this column. */
     @Attribute
     String powerBIColumnDataType;
 
-    /** TBC */
+    /** Aggregate function to use for summarizing this column. */
     @Attribute
     String powerBIColumnSummarizeBy;
 
@@ -94,7 +94,7 @@ public class PowerBIColumn extends Asset implements IPowerBIColumn, IPowerBI, IB
     @Attribute
     Boolean powerBIIsHidden;
 
-    /** TBC */
+    /** Name of a column in the same table to use to order this column. */
     @Attribute
     String powerBISortByColumn;
 
@@ -102,11 +102,11 @@ public class PowerBIColumn extends Asset implements IPowerBIColumn, IPowerBI, IB
     @Attribute
     String powerBITableQualifiedName;
 
-    /** TBC */
+    /** Table in which this column exists. */
     @Attribute
     IPowerBITable table;
 
-    /** TBC */
+    /** Unique name of the workspace in which this column exists. */
     @Attribute
     String workspaceQualifiedName;
 

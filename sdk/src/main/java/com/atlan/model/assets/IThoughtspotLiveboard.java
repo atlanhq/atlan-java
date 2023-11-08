@@ -22,7 +22,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a ThoughtSpot Liveboard in Atlan.
+ * Instance of a Thoughtspot liveboard in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -31,7 +31,7 @@ public interface IThoughtspotLiveboard {
 
     public static final String TYPE_NAME = "ThoughtspotLiveboard";
 
-    /** Dashlets within the Liveboard. */
+    /** Dashlets that exist within this liveboard. */
     RelationField THOUGHTSPOT_DASHLETS = new RelationField("thoughtspotDashlets");
 
     /** TBC */
@@ -238,7 +238,7 @@ public interface IThoughtspotLiveboard {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -280,7 +280,7 @@ public interface IThoughtspotLiveboard {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -304,13 +304,13 @@ public interface IThoughtspotLiveboard {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -322,7 +322,7 @@ public interface IThoughtspotLiveboard {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -337,7 +337,7 @@ public interface IThoughtspotLiveboard {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */
@@ -433,7 +433,7 @@ public interface IThoughtspotLiveboard {
     /** TBC */
     String getThoughtspotChartType();
 
-    /** Dashlets within the Liveboard. */
+    /** Dashlets that exist within this liveboard. */
     SortedSet<IThoughtspotDashlet> getThoughtspotDashlets();
 
     /** TBC */

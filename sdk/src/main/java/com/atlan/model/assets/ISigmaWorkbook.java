@@ -32,10 +32,10 @@ public interface ISigmaWorkbook {
 
     public static final String TYPE_NAME = "SigmaWorkbook";
 
-    /** Number of pages that exist within this workbook. */
+    /** Number of pages in this workbook. */
     NumericField SIGMA_PAGE_COUNT = new NumericField("sigmaPageCount", "sigmaPageCount");
 
-    /** Pages that exist within this workbook. */
+    /** Pages that exist in this workbook. */
     RelationField SIGMA_PAGES = new RelationField("sigmaPages");
 
     /** TBC */
@@ -242,7 +242,7 @@ public interface ISigmaWorkbook {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -284,7 +284,7 @@ public interface ISigmaWorkbook {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -308,13 +308,13 @@ public interface ISigmaWorkbook {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -326,7 +326,7 @@ public interface ISigmaWorkbook {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -341,7 +341,7 @@ public interface ISigmaWorkbook {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */
@@ -356,7 +356,7 @@ public interface ISigmaWorkbook {
     /** TBC */
     String getSigmaDataElementQualifiedName();
 
-    /** Number of pages that exist within this workbook. */
+    /** Number of pages in this workbook. */
     Long getSigmaPageCount();
 
     /** TBC */
@@ -365,7 +365,7 @@ public interface ISigmaWorkbook {
     /** TBC */
     String getSigmaPageQualifiedName();
 
-    /** Pages that exist within this workbook. */
+    /** Pages that exist in this workbook. */
     SortedSet<ISigmaPage> getSigmaPages();
 
     /** TBC */

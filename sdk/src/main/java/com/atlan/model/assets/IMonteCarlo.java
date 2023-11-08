@@ -31,10 +31,10 @@ public interface IMonteCarlo {
 
     public static final String TYPE_NAME = "MonteCarlo";
 
-    /** TBC */
+    /** List of unique names of assets that are part of this Monte Carlo asset. */
     KeywordField MC_ASSET_QUALIFIED_NAMES = new KeywordField("mcAssetQualifiedNames", "mcAssetQualifiedNames");
 
-    /** TBC */
+    /** List of labels for this Monte Carlo asset. */
     KeywordField MC_LABELS = new KeywordField("mcLabels", "mcLabels");
 
     /** TBC */
@@ -241,7 +241,7 @@ public interface IMonteCarlo {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -283,7 +283,7 @@ public interface IMonteCarlo {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -307,19 +307,19 @@ public interface IMonteCarlo {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
-    /** TBC */
+    /** List of unique names of assets that are part of this Monte Carlo asset. */
     SortedSet<String> getMcAssetQualifiedNames();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** List of labels for this Monte Carlo asset. */
     SortedSet<String> getMcLabels();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -331,7 +331,7 @@ public interface IMonteCarlo {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -346,7 +346,7 @@ public interface IMonteCarlo {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

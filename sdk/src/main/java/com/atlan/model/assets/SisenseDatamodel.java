@@ -27,7 +27,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * The SisenseDatamodel type represents a datamodel in sisense. Datamodels in sisense are an abstraction to group tables together that you can use to build dashboards
+ * Instance of a Sisense datamodel in Atlan. These group tables together that you can use to build dashboards.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -51,7 +51,7 @@ public class SisenseDatamodel extends Asset
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -61,7 +61,7 @@ public class SisenseDatamodel extends Asset
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
@@ -71,40 +71,40 @@ public class SisenseDatamodel extends Asset
     @Singular
     SortedSet<ISisenseDashboard> sisenseDashboards;
 
-    /** Timestamp of when the datamodel was last built */
+    /** Time (epoch) when this datamodel was last built, in milliseconds. */
     @Attribute
     Long sisenseDatamodelLastBuildTime;
 
-    /** Timestamp of when the datamodel was last published */
+    /** Time (epoch) when this datamodel was last published, in milliseconds. */
     @Attribute
     Long sisenseDatamodelLastPublishTime;
 
-    /** Timestamp of when the datamodel was last built successfully */
+    /** Time (epoch) when this datamodel was last built successfully, in milliseconds. */
     @Attribute
     Long sisenseDatamodelLastSuccessfulBuildTime;
 
-    /** Default relation type for the Datamodel. 'extract' type Datamodels have regular relations by default. 'live' type Datamodels have direct relations by default. */
+    /** Default relation type for this datamodel. 'extract' type Datamodels have regular relations by default. 'live' type Datamodels have direct relations by default. */
     @Attribute
     String sisenseDatamodelRelationType;
 
-    /** Revision of the datamodel */
+    /** Revision of this datamodel. */
     @Attribute
     String sisenseDatamodelRevision;
 
-    /** Hostname of server on which the Datamodel is created */
+    /** Hostname of the server on which this datamodel was created. */
     @Attribute
     String sisenseDatamodelServer;
 
-    /** Number of tables present in the datamodel */
+    /** Number of tables in this datamodel. */
     @Attribute
     Long sisenseDatamodelTableCount;
 
-    /** TBC */
+    /** Datamodel tables that exist within this datamodel. */
     @Attribute
     @Singular
     SortedSet<ISisenseDatamodelTable> sisenseDatamodelTables;
 
-    /** Type of the datamodel. It has values 'extract' or 'custom' */
+    /** Type of this datamodel, for example: 'extract' or 'custom'. */
     @Attribute
     String sisenseDatamodelType;
 

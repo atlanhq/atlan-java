@@ -35,27 +35,27 @@ public interface IAPIPath {
 
     public static final String TYPE_NAME = "APIPath";
 
-    /** TBC */
+    /** List of the operations available on the endpoint. */
     KeywordField API_PATH_AVAILABLE_OPERATIONS =
             new KeywordField("apiPathAvailableOperations", "apiPathAvailableOperations");
 
-    /** TBC */
+    /** Response codes available on the path across all operations. */
     KeywordField API_PATH_AVAILABLE_RESPONSE_CODES =
             new KeywordField("apiPathAvailableResponseCodes", "apiPathAvailableResponseCodes");
 
-    /** TBC */
+    /** Whether the path is exposed as an ingress (true) or not (false). */
     BooleanField API_PATH_IS_INGRESS_EXPOSED = new BooleanField("apiPathIsIngressExposed", "apiPathIsIngressExposed");
 
-    /** TBC */
+    /** Whether the endpoint's path contains replaceable parameters (true) or not (false). */
     BooleanField API_PATH_IS_TEMPLATED = new BooleanField("apiPathIsTemplated", "apiPathIsTemplated");
 
-    /** TBC */
+    /** Absolute path to an individual endpoint. */
     KeywordTextField API_PATH_RAW_URI = new KeywordTextField("apiPathRawURI", "apiPathRawURI", "apiPathRawURI.text");
 
-    /** TBC */
+    /** Descriptive summary intended to apply to all operations in this path. */
     TextField API_PATH_SUMMARY = new TextField("apiPathSummary", "apiPathSummary");
 
-    /** TBC */
+    /** API specification in which this path exists. */
     RelationField API_SPEC = new RelationField("apiSpec");
 
     /** TBC */
@@ -88,25 +88,25 @@ public interface IAPIPath {
     /** TBC */
     Boolean getApiIsAuthOptional();
 
-    /** TBC */
+    /** List of the operations available on the endpoint. */
     SortedSet<String> getApiPathAvailableOperations();
 
-    /** TBC */
+    /** Response codes available on the path across all operations. */
     Map<String, String> getApiPathAvailableResponseCodes();
 
-    /** TBC */
+    /** Whether the path is exposed as an ingress (true) or not (false). */
     Boolean getApiPathIsIngressExposed();
 
-    /** TBC */
+    /** Whether the endpoint's path contains replaceable parameters (true) or not (false). */
     Boolean getApiPathIsTemplated();
 
-    /** TBC */
+    /** Absolute path to an individual endpoint. */
     String getApiPathRawURI();
 
-    /** TBC */
+    /** Descriptive summary intended to apply to all operations in this path. */
     String getApiPathSummary();
 
-    /** TBC */
+    /** API specification in which this path exists. */
     IAPISpec getApiSpec();
 
     /** TBC */
@@ -301,7 +301,7 @@ public interface IAPIPath {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -343,7 +343,7 @@ public interface IAPIPath {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -367,13 +367,13 @@ public interface IAPIPath {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -385,7 +385,7 @@ public interface IAPIPath {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -400,7 +400,7 @@ public interface IAPIPath {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

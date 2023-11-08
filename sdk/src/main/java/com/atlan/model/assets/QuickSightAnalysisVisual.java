@@ -27,7 +27,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Instance of a QuickSight Analysis sheet visual in Atlan.
+ * Instance of a QuickSight analysis visual in Atlan. These represent individual visuals inside an analysis.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -51,7 +51,7 @@ public class QuickSightAnalysisVisual extends Asset
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -61,16 +61,16 @@ public class QuickSightAnalysisVisual extends Asset
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** TBC */
+    /** Analysis in which this visual exists. */
     @Attribute
     IQuickSightAnalysis quickSightAnalysis;
 
-    /** Qualified name of the QuickSight Analysis */
+    /** Unique name of the QuickSight analysis in which this visual exists. */
     @Attribute
     String quickSightAnalysisQualifiedName;
 

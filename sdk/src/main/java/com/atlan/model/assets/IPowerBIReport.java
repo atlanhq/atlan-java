@@ -34,28 +34,28 @@ public interface IPowerBIReport {
 
     public static final String TYPE_NAME = "PowerBIReport";
 
-    /** TBC */
+    /** Dataset from which this report was built. */
     RelationField DATASET = new RelationField("dataset");
 
-    /** TBC */
+    /** Unique name of the dataset used to build this report. */
     KeywordField DATASET_QUALIFIED_NAME = new KeywordField("datasetQualifiedName", "datasetQualifiedName");
 
-    /** TBC */
+    /** Number of pages in this report. */
     NumericField PAGE_COUNT = new NumericField("pageCount", "pageCount");
 
-    /** TBC */
+    /** Pages that exist within this report. */
     RelationField PAGES = new RelationField("pages");
 
-    /** TBC */
+    /** Tiles that exist within this report. */
     RelationField TILES = new RelationField("tiles");
 
-    /** TBC */
+    /** Deprecated. See 'sourceUrl' instead. */
     KeywordField WEB_URL = new KeywordField("webUrl", "webUrl");
 
-    /** TBC */
+    /** Workspace in which this report exists. */
     RelationField WORKSPACE = new RelationField("workspace");
 
-    /** TBC */
+    /** Unique name of the workspace in which this report exists. */
     KeywordField WORKSPACE_QUALIFIED_NAME = new KeywordField("workspaceQualifiedName", "workspaceQualifiedName");
 
     /** TBC */
@@ -262,7 +262,7 @@ public interface IPowerBIReport {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -286,10 +286,10 @@ public interface IPowerBIReport {
     /** TBC */
     AtlanConnectorType getConnectorType();
 
-    /** TBC */
+    /** Dataset from which this report was built. */
     IPowerBIDataset getDataset();
 
-    /** TBC */
+    /** Unique name of the dataset used to build this report. */
     String getDatasetQualifiedName();
 
     /** TBC */
@@ -310,7 +310,7 @@ public interface IPowerBIReport {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -334,13 +334,13 @@ public interface IPowerBIReport {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -352,7 +352,7 @@ public interface IPowerBIReport {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -361,10 +361,10 @@ public interface IPowerBIReport {
     /** TBC */
     SortedSet<String> getOwnerUsers();
 
-    /** TBC */
+    /** Number of pages in this report. */
     Long getPageCount();
 
-    /** TBC */
+    /** Pages that exist within this report. */
     SortedSet<IPowerBIPage> getPages();
 
     /** TBC */
@@ -385,7 +385,7 @@ public interface IPowerBIReport {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */
@@ -478,7 +478,7 @@ public interface IPowerBIReport {
     /** TBC */
     String getTenantId();
 
-    /** TBC */
+    /** Tiles that exist within this report. */
     SortedSet<IPowerBITile> getTiles();
 
     /** TBC */
@@ -493,13 +493,13 @@ public interface IPowerBIReport {
     /** TBC */
     SortedSet<String> getViewerUsers();
 
-    /** TBC */
+    /** Deprecated. See 'sourceUrl' instead. */
     String getWebUrl();
 
-    /** TBC */
+    /** Workspace in which this report exists. */
     IPowerBIWorkspace getWorkspace();
 
-    /** TBC */
+    /** Unique name of the workspace in which this report exists. */
     String getWorkspaceQualifiedName();
 
     /** Name of the type that defines the asset. */

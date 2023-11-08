@@ -28,7 +28,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Atlan Function Asset
+ * Instance of a function in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -79,19 +79,19 @@ public class Function extends Asset implements IFunction, ISQL, ICatalog, IAsset
     @Attribute
     String functionDefinition;
 
-    /** Determines whether the functions is stored or executed externally. */
+    /** Whether the function is stored or executed externally (true) or internally (false). */
     @Attribute
     Boolean functionIsExternal;
 
-    /** Determines whether the function must re-compute or not if there are no underlying changes in the values. */
+    /** Whether the function must re-compute if there are no underlying changes in the values (false) or not (true). */
     @Attribute
     Boolean functionIsMemoizable;
 
-    /** Determines whether sensitive information of the function is omitted for unauthorized users. */
+    /** Whether sensitive information of the function is omitted for unauthorized users (true) or not (false). */
     @Attribute
     Boolean functionIsSecure;
 
-    /** The programming language in which the function is written. */
+    /** Programming language in which the function is written. */
     @Attribute
     String functionLanguage;
 
@@ -99,11 +99,11 @@ public class Function extends Asset implements IFunction, ISQL, ICatalog, IAsset
     @Attribute
     String functionReturnType;
 
-    /** TBC */
+    /** Schema in which this function exists. */
     @Attribute
     ISchema functionSchema;
 
-    /** The type of function. */
+    /** Type of function. */
     @Attribute
     String functionType;
 
@@ -112,7 +112,7 @@ public class Function extends Asset implements IFunction, ISQL, ICatalog, IAsset
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -130,7 +130,7 @@ public class Function extends Asset implements IFunction, ISQL, ICatalog, IAsset
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;

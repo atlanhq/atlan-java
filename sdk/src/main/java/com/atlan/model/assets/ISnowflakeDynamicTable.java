@@ -22,7 +22,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Atlan Snowflake Dynamic Table Asset
+ * Instance of a Snowflake dynamic table in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -31,7 +31,7 @@ public interface ISnowflakeDynamicTable {
 
     public static final String TYPE_NAME = "SnowflakeDynamicTable";
 
-    /** SQL statements used to define a Snowflake Dynamic Table */
+    /** SQL statements used to define the dynamic table. */
     KeywordField DEFINITION = new KeywordField("definition", "definition");
 
     /** TBC */
@@ -241,7 +241,7 @@ public interface ISnowflakeDynamicTable {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -259,7 +259,7 @@ public interface ISnowflakeDynamicTable {
     /** TBC */
     Long getColumnCount();
 
-    /** TBC */
+    /** Columns that exist within this Snowflake dynamic table. */
     SortedSet<IColumn> getColumns();
 
     /** TBC */
@@ -289,7 +289,7 @@ public interface ISnowflakeDynamicTable {
     /** TBC */
     SortedSet<IDbtTest> getDbtTests();
 
-    /** SQL statements used to define a Snowflake Dynamic Table */
+    /** SQL statements used to define the dynamic table. */
     String getDefinition();
 
     /** TBC */
@@ -322,7 +322,7 @@ public interface ISnowflakeDynamicTable {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -361,13 +361,13 @@ public interface ISnowflakeDynamicTable {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -379,7 +379,7 @@ public interface ISnowflakeDynamicTable {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -397,7 +397,7 @@ public interface ISnowflakeDynamicTable {
     /** TBC */
     String getPartitionStrategy();
 
-    /** TBC */
+    /** Partitions that exist within this table. */
     SortedSet<ITablePartition> getPartitions();
 
     /** TBC */
@@ -406,7 +406,7 @@ public interface ISnowflakeDynamicTable {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** Queries that access this table. */
     SortedSet<IAtlanQuery> getQueries();
 
     /** TBC */
@@ -424,7 +424,7 @@ public interface ISnowflakeDynamicTable {
     /** TBC */
     Map<String, Long> getQueryUserMap();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */
@@ -433,7 +433,7 @@ public interface ISnowflakeDynamicTable {
     /** TBC */
     String getSampleDataUrl();
 
-    /** TBC */
+    /** Schema in which this Snowflake dynamic table exists. */
     ISchema getSchema();
 
     /** TBC */

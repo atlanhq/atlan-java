@@ -12,13 +12,13 @@ import lombok.Getter;
 @Deprecated
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 public enum StemmedFields implements AtlanSearchableField {
-    /** Title for the asset. */
+    /** Title of the Google Data Studio asset. */
     DATA_STUDIO_ASSET_TITLE("dataStudioAssetTitle.stemmed"),
-    /** Human-readable name of the asset. */
+    /** Name of this asset. Fallback for display purposes, if displayName is empty. */
     NAME("name.stemmed"),
-    /** Username of the user who last changed the collection. */
+    /** TBC */
     PRESET_DASHBOARD_CHANGED_BY_NAME("presetDashboardChangedByName.stemmed"),
-    /** Name of the data source for the dataset. */
+    /** TBC */
     PRESET_DATASET_DATASOURCE_NAME("presetDatasetDatasourceName.stemmed"),
     ;
 

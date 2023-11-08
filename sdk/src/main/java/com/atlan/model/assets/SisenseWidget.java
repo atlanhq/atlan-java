@@ -27,7 +27,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * The SisenseWidget type represents a widget in Sisense.
+ * Instance of a Sisense widget in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -50,7 +50,7 @@ public class SisenseWidget extends Asset implements ISisenseWidget, ISisense, IB
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -60,12 +60,12 @@ public class SisenseWidget extends Asset implements ISisenseWidget, ISisense, IB
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** TBC */
+    /** Dashboard in which this widget exists. */
     @Attribute
     ISisenseDashboard sisenseDashboard;
 
@@ -74,27 +74,27 @@ public class SisenseWidget extends Asset implements ISisenseWidget, ISisense, IB
     @Singular
     SortedSet<ISisenseDatamodelTable> sisenseDatamodelTables;
 
-    /** TBC */
+    /** Folder in which this widget exists. */
     @Attribute
     ISisenseFolder sisenseFolder;
 
-    /** Numbers of columns used in the widget */
+    /** Number of columns used in this widget. */
     @Attribute
     Long sisenseWidgetColumnCount;
 
-    /** Qualified name of the dashboard under which this widget is present */
+    /** Unique name of the dashboard in which this widget exists. */
     @Attribute
     String sisenseWidgetDashboardQualifiedName;
 
-    /** Qualified name of the folder under which this widget is present */
+    /** Unique name of the folder in which this widget exists. */
     @Attribute
     String sisenseWidgetFolderQualifiedName;
 
-    /** Size of the widget */
+    /** Size of this widget. */
     @Attribute
     String sisenseWidgetSize;
 
-    /** Sub type of the widget */
+    /** Subtype of this widget. */
     @Attribute
     String sisenseWidgetSubType;
 

@@ -29,7 +29,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Instance of a Snowflake Stream in Atlan.
+ * Instance of a Snowflake stream in Atlan. These are used to capture changes in a table.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -76,7 +76,7 @@ public class SnowflakeStream extends Asset implements ISnowflakeStream, ISQL, IC
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -94,7 +94,7 @@ public class SnowflakeStream extends Asset implements ISnowflakeStream, ISQL, IC
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
@@ -116,7 +116,7 @@ public class SnowflakeStream extends Asset implements ISnowflakeStream, ISQL, IC
     @Singular("putQueryUserMap")
     Map<String, Long> queryUserMap;
 
-    /** TBC */
+    /** Schema in which this Snowflake stream exists. */
     @Attribute
     @JsonProperty("atlanSchema")
     ISchema schema;
@@ -129,23 +129,23 @@ public class SnowflakeStream extends Asset implements ISnowflakeStream, ISQL, IC
     @Attribute
     String schemaQualifiedName;
 
-    /** TBC */
+    /** Whether this stream is stale (true) or not (false). */
     @Attribute
     Boolean snowflakeStreamIsStale;
 
-    /** TBC */
+    /** Mode of this stream. */
     @Attribute
     String snowflakeStreamMode;
 
-    /** TBC */
+    /** Type of the source of this stream. */
     @Attribute
     String snowflakeStreamSourceType;
 
-    /** TBC */
+    /** Time (epoch) after which this stream will be stale, in milliseconds. */
     @Attribute
     Long snowflakeStreamStaleAfter;
 
-    /** TBC */
+    /** Type of this stream, for example: standard, append-only, insert-only, etc. */
     @Attribute
     String snowflakeStreamType;
 

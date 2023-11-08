@@ -28,7 +28,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Instance of a Power BI measure in Atlan.
+ * Instance of a Power BI measure in Atlan. Measures define calculations in a DAX model, which helps calculate values based on each row.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -46,7 +46,7 @@ public class PowerBIMeasure extends Asset implements IPowerBIMeasure, IPowerBI, 
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Unique name of the dataset in which this measure exists. */
     @Attribute
     String datasetQualifiedName;
 
@@ -55,7 +55,7 @@ public class PowerBIMeasure extends Asset implements IPowerBIMeasure, IPowerBI, 
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -65,7 +65,7 @@ public class PowerBIMeasure extends Asset implements IPowerBIMeasure, IPowerBI, 
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
@@ -78,7 +78,7 @@ public class PowerBIMeasure extends Asset implements IPowerBIMeasure, IPowerBI, 
     @Attribute
     String powerBIFormatString;
 
-    /** TBC */
+    /** Whether this measure is external (true) or internal (false). */
     @Attribute
     Boolean powerBIIsExternalMeasure;
 
@@ -86,7 +86,7 @@ public class PowerBIMeasure extends Asset implements IPowerBIMeasure, IPowerBI, 
     @Attribute
     Boolean powerBIIsHidden;
 
-    /** TBC */
+    /** DAX expression for this measure. */
     @Attribute
     String powerBIMeasureExpression;
 
@@ -94,11 +94,11 @@ public class PowerBIMeasure extends Asset implements IPowerBIMeasure, IPowerBI, 
     @Attribute
     String powerBITableQualifiedName;
 
-    /** TBC */
+    /** Table in which this measure exists. */
     @Attribute
     IPowerBITable table;
 
-    /** TBC */
+    /** Unique name of the workspace in which this measure exists. */
     @Attribute
     String workspaceQualifiedName;
 

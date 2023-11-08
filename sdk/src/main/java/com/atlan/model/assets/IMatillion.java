@@ -22,7 +22,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * The Matillion type is a super type for all assets ingested from Matillion
+ * Base class for Matillion assets.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -31,7 +31,7 @@ public interface IMatillion {
 
     public static final String TYPE_NAME = "Matillion";
 
-    /** This designates the current point in time state of a project. We can think it to be branch or version control in github */
+    /** Current point in time state of a project. */
     KeywordField MATILLION_VERSION = new KeywordField("matillionVersion", "matillionVersion");
 
     /** TBC */
@@ -238,7 +238,7 @@ public interface IMatillion {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -280,7 +280,7 @@ public interface IMatillion {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -304,16 +304,16 @@ public interface IMatillion {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
-    /** This designates the current point in time state of a project. We can think it to be branch or version control in github */
+    /** Current point in time state of a project. */
     String getMatillionVersion();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -325,7 +325,7 @@ public interface IMatillion {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -340,7 +340,7 @@ public interface IMatillion {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

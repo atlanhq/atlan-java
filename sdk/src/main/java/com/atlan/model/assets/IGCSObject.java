@@ -39,50 +39,50 @@ public interface IGCSObject {
     /** GCS bucket in which the object exists. */
     RelationField GCS_BUCKET = new RelationField("gcsBucket");
 
-    /** Human-readable name of the bucket in which this object exists. */
+    /** Simple name of the bucket in which this object exists. */
     KeywordTextField GCS_BUCKET_NAME = new KeywordTextField("gcsBucketName", "gcsBucketName.keyword", "gcsBucketName");
 
-    /** qualifiedName of the bucket in which this object exists. */
+    /** Unique name of the bucket in which this object exists. */
     KeywordTextField GCS_BUCKET_QUALIFIED_NAME =
             new KeywordTextField("gcsBucketQualifiedName", "gcsBucketQualifiedName", "gcsBucketQualifiedName.text");
 
-    /** TBC */
+    /** CRC32C hash of this object. */
     KeywordField GCS_OBJECT_CRC32C_HASH = new KeywordField("gcsObjectCRC32CHash", "gcsObjectCRC32CHash");
 
-    /** Information about how the object's content should be presented. */
+    /** Information about how this object's content should be presented. */
     KeywordField GCS_OBJECT_CONTENT_DISPOSITION =
             new KeywordField("gcsObjectContentDisposition", "gcsObjectContentDisposition");
 
-    /** TBC */
+    /** Content encoding of this object. */
     KeywordField GCS_OBJECT_CONTENT_ENCODING = new KeywordField("gcsObjectContentEncoding", "gcsObjectContentEncoding");
 
-    /** TBC */
+    /** Language of this object's contents. */
     KeywordField GCS_OBJECT_CONTENT_LANGUAGE = new KeywordField("gcsObjectContentLanguage", "gcsObjectContentLanguage");
 
-    /** Type of content in the object. */
+    /** Type of content in this object. */
     KeywordField GCS_OBJECT_CONTENT_TYPE = new KeywordField("gcsObjectContentType", "gcsObjectContentType");
 
-    /** TBC */
+    /** Time (epoch) at which this object's data was last modified, in milliseconds. */
     NumericField GCS_OBJECT_DATA_LAST_MODIFIED_TIME =
             new NumericField("gcsObjectDataLastModifiedTime", "gcsObjectDataLastModifiedTime");
 
-    /** TBC */
+    /** Generation ID of this object. */
     NumericField GCS_OBJECT_GENERATION_ID = new NumericField("gcsObjectGenerationId", "gcsObjectGenerationId");
 
-    /** TBC */
+    /** Type of hold on this object. */
     KeywordField GCS_OBJECT_HOLD_TYPE = new KeywordField("gcsObjectHoldType", "gcsObjectHoldType");
 
-    /** TBC */
+    /** Key of this object, in GCS. */
     KeywordTextField GCS_OBJECT_KEY = new KeywordTextField("gcsObjectKey", "gcsObjectKey", "gcsObjectKey.text");
 
-    /** TBC */
+    /** MD5 hash of this object. */
     KeywordField GCS_OBJECT_MD5HASH = new KeywordField("gcsObjectMD5Hash", "gcsObjectMD5Hash");
 
-    /** TBC */
+    /** Media link to this object. */
     KeywordTextField GCS_OBJECT_MEDIA_LINK =
             new KeywordTextField("gcsObjectMediaLink", "gcsObjectMediaLink", "gcsObjectMediaLink.text");
 
-    /** TBC */
+    /** Retention expiration date of this object. */
     NumericField GCS_OBJECT_RETENTION_EXPIRATION_DATE =
             new NumericField("gcsObjectRetentionExpirationDate", "gcsObjectRetentionExpirationDate");
 
@@ -293,7 +293,7 @@ public interface IGCSObject {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -335,10 +335,10 @@ public interface IGCSObject {
     /** GCS bucket in which the object exists. */
     IGCSBucket getGcsBucket();
 
-    /** Human-readable name of the bucket in which this object exists. */
+    /** Simple name of the bucket in which this object exists. */
     String getGcsBucketName();
 
-    /** qualifiedName of the bucket in which this object exists. */
+    /** Unique name of the bucket in which this object exists. */
     String getGcsBucketQualifiedName();
 
     /** TBC */
@@ -350,40 +350,40 @@ public interface IGCSObject {
     /** TBC */
     Long getGcsMetaGenerationId();
 
-    /** TBC */
+    /** CRC32C hash of this object. */
     String getGcsObjectCRC32CHash();
 
-    /** Information about how the object's content should be presented. */
+    /** Information about how this object's content should be presented. */
     String getGcsObjectContentDisposition();
 
-    /** TBC */
+    /** Content encoding of this object. */
     String getGcsObjectContentEncoding();
 
-    /** TBC */
+    /** Language of this object's contents. */
     String getGcsObjectContentLanguage();
 
-    /** Type of content in the object. */
+    /** Type of content in this object. */
     String getGcsObjectContentType();
 
-    /** TBC */
+    /** Time (epoch) at which this object's data was last modified, in milliseconds. */
     Long getGcsObjectDataLastModifiedTime();
 
-    /** TBC */
+    /** Generation ID of this object. */
     Long getGcsObjectGenerationId();
 
-    /** TBC */
+    /** Type of hold on this object. */
     String getGcsObjectHoldType();
 
-    /** TBC */
+    /** Key of this object, in GCS. */
     String getGcsObjectKey();
 
-    /** TBC */
+    /** MD5 hash of this object. */
     String getGcsObjectMD5Hash();
 
-    /** TBC */
+    /** Media link to this object. */
     String getGcsObjectMediaLink();
 
-    /** TBC */
+    /** Retention expiration date of this object. */
     Long getGcsObjectRetentionExpirationDate();
 
     /** Object size in bytes. */
@@ -425,7 +425,7 @@ public interface IGCSObject {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -449,13 +449,13 @@ public interface IGCSObject {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -467,7 +467,7 @@ public interface IGCSObject {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -482,7 +482,7 @@ public interface IGCSObject {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

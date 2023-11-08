@@ -12,9 +12,9 @@ import lombok.Getter;
 @Deprecated
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 public enum RankFields implements AtlanSearchableField {
-    /** TBC */
+    /** Popularity score for this asset. */
     POPULARITY_SCORE("popularityScore.rank_feature"),
-    /** TBC */
+    /** View score for this asset. */
     VIEW_SCORE("viewScore.rank_feature"),
     ;
 

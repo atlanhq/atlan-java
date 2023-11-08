@@ -32,10 +32,10 @@ public interface ISigmaDataset {
 
     public static final String TYPE_NAME = "SigmaDataset";
 
-    /** Number of columns that exist within this dataset. */
+    /** Number of columns in this dataset. */
     NumericField SIGMA_DATASET_COLUMN_COUNT = new NumericField("sigmaDatasetColumnCount", "sigmaDatasetColumnCount");
 
-    /** Columns that exist within this dataset. */
+    /** Dataset columns that exist in this dataset. */
     RelationField SIGMA_DATASET_COLUMNS = new RelationField("sigmaDatasetColumns");
 
     /** TBC */
@@ -242,7 +242,7 @@ public interface ISigmaDataset {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -284,7 +284,7 @@ public interface ISigmaDataset {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -308,13 +308,13 @@ public interface ISigmaDataset {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -326,7 +326,7 @@ public interface ISigmaDataset {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -341,7 +341,7 @@ public interface ISigmaDataset {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */
@@ -356,10 +356,10 @@ public interface ISigmaDataset {
     /** TBC */
     String getSigmaDataElementQualifiedName();
 
-    /** Number of columns that exist within this dataset. */
+    /** Number of columns in this dataset. */
     Long getSigmaDatasetColumnCount();
 
-    /** Columns that exist within this dataset. */
+    /** Dataset columns that exist in this dataset. */
     SortedSet<ISigmaDatasetColumn> getSigmaDatasetColumns();
 
     /** TBC */

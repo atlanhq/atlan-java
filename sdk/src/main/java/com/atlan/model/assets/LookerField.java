@@ -45,7 +45,7 @@ public class LookerField extends Asset implements ILookerField, ILooker, IBI, IC
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Explore in which this field exists. */
     @Attribute
     ILookerExplore explore;
 
@@ -54,32 +54,32 @@ public class LookerField extends Asset implements ILookerField, ILooker, IBI, IC
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
-    /** TBC */
+    /** Unique name of the Explore in which this field exists. */
     @Attribute
     String lookerExploreQualifiedName;
 
-    /** TBC */
+    /** Deprecated. */
     @Attribute
     String lookerFieldDataType;
 
-    /** TBC */
+    /** Deprecated. */
     @Attribute
     Integer lookerTimesUsed;
 
-    /** TBC */
+    /** Unique name of the view in which this field exists. */
     @Attribute
     String lookerViewQualifiedName;
 
-    /** TBC */
+    /** Model in which this field exists. */
     @Attribute
     ILookerModel model;
 
-    /** TBC */
+    /** Name of the model in which this field exists. */
     @Attribute
     String modelName;
 
@@ -88,24 +88,24 @@ public class LookerField extends Asset implements ILookerField, ILooker, IBI, IC
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** TBC */
+    /** Project in which this field exists. */
     @Attribute
     ILookerProject project;
 
-    /** TBC */
+    /** Name of the project in which this field exists. */
     @Attribute
     String projectName;
 
-    /** TBC */
+    /** Deprecated. */
     @Attribute
     String sourceDefinition;
 
-    /** TBC */
+    /** View in which this field exists. */
     @Attribute
     ILookerView view;
 

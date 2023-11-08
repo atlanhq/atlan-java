@@ -53,12 +53,12 @@ public class MicroStrategyProject extends Asset
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
-    /** Attributes contained within the project. */
+    /** Attributes that exist within this project. */
     @Attribute
     @Singular
     SortedSet<IMicroStrategyAttribute> microStrategyAttributes;
@@ -81,22 +81,22 @@ public class MicroStrategyProject extends Asset
     @Singular
     SortedSet<String> microStrategyCubeQualifiedNames;
 
-    /** Cubes contained within the project. */
+    /** Cubes that exist within this project. */
     @Attribute
     @Singular
     SortedSet<IMicroStrategyCube> microStrategyCubes;
 
-    /** Documents contained within the project. */
+    /** Documents that exist within this project. */
     @Attribute
     @Singular
     SortedSet<IMicroStrategyDocument> microStrategyDocuments;
 
-    /** Dossiers contained within the project. */
+    /** Dossiers that exist within this project. */
     @Attribute
     @Singular
     SortedSet<IMicroStrategyDossier> microStrategyDossiers;
 
-    /** Facts contained within the project. */
+    /** Facts that exist within this project. */
     @Attribute
     @Singular
     SortedSet<IMicroStrategyFact> microStrategyFacts;
@@ -110,7 +110,7 @@ public class MicroStrategyProject extends Asset
     @Singular("putMicroStrategyLocation")
     List<Map<String, String>> microStrategyLocation;
 
-    /** Metrics contained within the project. */
+    /** Metrics that exist within this project. */
     @Attribute
     @Singular
     SortedSet<IMicroStrategyMetric> microStrategyMetrics;
@@ -133,12 +133,12 @@ public class MicroStrategyProject extends Asset
     @Singular
     SortedSet<String> microStrategyReportQualifiedNames;
 
-    /** Reports contained within the project. */
+    /** Reports that exist within this project. */
     @Attribute
     @Singular
     SortedSet<IMicroStrategyReport> microStrategyReports;
 
-    /** Visualizations contained within the project. */
+    /** Visualizations that exist within this project. */
     @Attribute
     @Singular
     SortedSet<IMicroStrategyVisualization> microStrategyVisualizations;
@@ -148,7 +148,7 @@ public class MicroStrategyProject extends Asset
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;

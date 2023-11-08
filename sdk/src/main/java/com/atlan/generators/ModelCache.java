@@ -34,7 +34,6 @@ public class ModelCache {
 
     private final Map<String, List<String>> subTypeToSuperTypes = new ConcurrentHashMap<>();
 
-    private GeneratorConfig config = null;
     private static ModelCache INSTANCE = null;
 
     private ModelCache() throws AtlanException {
@@ -62,10 +61,9 @@ public class ModelCache {
         }
     }
 
-    private static ModelCache createInstance(GeneratorConfig cfg) {
+    private static ModelCache createInstance() {
         try {
             ModelCache cache = new ModelCache();
-            cache.config = cfg;
             cache.cacheInheritance(cache.getEntityDefCache().values());
             return cache;
         } catch (AtlanException e) {
@@ -74,9 +72,9 @@ public class ModelCache {
         }
     }
 
-    public static ModelCache getInstance(GeneratorConfig cfg) {
+    public static ModelCache getInstance() {
         if (INSTANCE == null) {
-            INSTANCE = createInstance(cfg);
+            INSTANCE = createInstance();
         }
         return INSTANCE;
     }
@@ -156,7 +154,6 @@ public class ModelCache {
 
     public String getTypeDescription(String originalName) {
         String fromTypeDef = null;
-        String fromCSV = AttributeCSVCache.getTypeDescription(originalName);
         TypeDef def = enumDefCache.getOrDefault(originalName, null);
         if (def == null) {
             def = structDefCache.getOrDefault(originalName, null);
@@ -167,12 +164,11 @@ public class ModelCache {
         if (def != null) {
             fromTypeDef = def.getDescription();
         }
-        return getPreferredDescription(fromTypeDef, fromCSV, AttributeCSVCache.DEFAULT_CLASS_DESCRIPTION);
+        return (fromTypeDef != null && !fromTypeDef.isEmpty()) ? fromTypeDef : "TBC";
     }
 
     public String getAttributeDescription(String objectName, String attrName) {
         String fromTypeDef = null;
-        String fromCSV = AttributeCSVCache.getAttributeDescription(objectName, attrName);
         TypeDef def = enumDefCache.getOrDefault(objectName, null);
         if (def == null) {
             def = structDefCache.getOrDefault(objectName, null);
@@ -203,20 +199,7 @@ public class ModelCache {
                 }
             }
         }
-        return getPreferredDescription(fromTypeDef, fromCSV, AttributeCSVCache.DEFAULT_ATTR_DESCRIPTION);
-    }
-
-    private String getPreferredDescription(String fromTypeDef, String fromCSV, String fallback) {
-        final String typeDefIfExists = (fromTypeDef != null && fromTypeDef.length() > 0) ? fromTypeDef : fromCSV;
-        if (config.getPreferTypeDefDescriptions()) {
-            return typeDefIfExists;
-        } else {
-            if (!fromCSV.equals(fallback)) {
-                return fromCSV;
-            } else {
-                return typeDefIfExists;
-            }
-        }
+        return (fromTypeDef != null && !fromTypeDef.isEmpty()) ? fromTypeDef : "TBC";
     }
 
     private void cacheInheritance(Collection<EntityDef> toCache) {
@@ -244,7 +227,7 @@ public class ModelCache {
     }
 
     public void addSearchFieldToCache(String className, String attrName, SearchFieldGenerator.Field field) {
-        String attrQName = AttributeCSVCache.getAttrQualifiedName(className, attrName);
+        String attrQName = getAttrQualifiedName(className, attrName);
         if (!searchCache.containsKey(attrQName)) {
             searchCache.put(attrQName, new TreeSet<>());
         }
@@ -252,7 +235,7 @@ public class ModelCache {
     }
 
     public Set<SearchFieldGenerator.Field> getCachedSearchFields(String className, String attrName) {
-        return searchCache.get(AttributeCSVCache.getAttrQualifiedName(className, attrName));
+        return searchCache.get(getAttrQualifiedName(className, attrName));
     }
 
     public Set<String> getAllSuperTypesForType(String typeName) {
@@ -362,6 +345,10 @@ public class ModelCache {
 
     // Set of attributes that are known to conflict with relationship attributes of the same name
     private static final Set<String> attributesToIgnore = Set.of("inputs", "outputs");
+
+    static String getAttrQualifiedName(String typeName, String attrName) {
+        return typeName + "|" + attrName;
+    }
 
     private void addAndLogAttributeConflicts(
             String typeName, SortedSet<AttributeDef> toAddTo, Collection<AttributeDef> toAdd, String fromSuperType) {

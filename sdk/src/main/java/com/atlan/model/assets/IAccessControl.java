@@ -25,7 +25,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Base class for Atlan access control assets.
+ * Atlan Type representing parent model for Persona, Purpose
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -34,7 +34,7 @@ public interface IAccessControl {
 
     public static final String TYPE_NAME = "AccessControl";
 
-    /** Link to a Slack channel that is used to discuss this access control object. */
+    /** TBC */
     KeywordField CHANNEL_LINK = new KeywordField("channelLink", "channelLink");
 
     /** TBC */
@@ -43,22 +43,22 @@ public interface IAccessControl {
     /** TBC */
     KeywordField DENY_ASSET_FILTERS = new KeywordField("denyAssetFilters", "denyAssetFilters");
 
-    /** Asset sidebar tabs that should be hidden from this access control object. */
+    /** TBC */
     KeywordField DENY_ASSET_TABS = new KeywordField("denyAssetTabs", "denyAssetTabs");
 
     /** TBC */
     KeywordField DENY_ASSET_TYPES = new KeywordField("denyAssetTypes", "denyAssetTypes");
 
-    /** Unique identifiers (GUIDs) of custom metadata that should be hidden from this access control object. */
+    /** TBC */
     KeywordField DENY_CUSTOM_METADATA_GUIDS = new KeywordField("denyCustomMetadataGuids", "denyCustomMetadataGuids");
 
     /** TBC */
     KeywordField DENY_NAVIGATION_PAGES = new KeywordField("denyNavigationPages", "denyNavigationPages");
 
-    /** Whether the access object is activated (true) or deactivated (false). */
+    /** TBC */
     BooleanField IS_ACCESS_CONTROL_ENABLED = new BooleanField("isAccessControlEnabled", "isAccessControlEnabled");
 
-    /** Policies associated with this access control object. */
+    /** TBC */
     RelationField POLICIES = new RelationField("policies");
 
     /** TBC */
@@ -265,7 +265,7 @@ public interface IAccessControl {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -280,7 +280,7 @@ public interface IAccessControl {
     /** TBC */
     String getCertificateUpdatedBy();
 
-    /** Link to a Slack channel that is used to discuss this access control object. */
+    /** TBC */
     String getChannelLink();
 
     /** TBC */
@@ -301,13 +301,13 @@ public interface IAccessControl {
     /** TBC */
     SortedSet<String> getDenyAssetFilters();
 
-    /** Asset sidebar tabs that should be hidden from this access control object. */
+    /** TBC */
     SortedSet<AssetSidebarTab> getDenyAssetTabs();
 
     /** TBC */
     SortedSet<String> getDenyAssetTypes();
 
-    /** Unique identifiers (GUIDs) of custom metadata that should be hidden from this access control object. */
+    /** TBC */
     SortedSet<String> getDenyCustomMetadataGuids();
 
     /** TBC */
@@ -328,7 +328,7 @@ public interface IAccessControl {
     /** TBC */
     Boolean getIsAIGenerated();
 
-    /** Whether the access object is activated (true) or deactivated (false). */
+    /** TBC */
     Boolean getIsAccessControlEnabled();
 
     /** TBC */
@@ -349,13 +349,13 @@ public interface IAccessControl {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -370,7 +370,7 @@ public interface IAccessControl {
     /** TBC */
     SortedSet<String> getOwnerUsers();
 
-    /** Policies associated with this access control object. */
+    /** TBC */
     SortedSet<IAuthPolicy> getPolicies();
 
     /** TBC */
@@ -379,7 +379,7 @@ public interface IAccessControl {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

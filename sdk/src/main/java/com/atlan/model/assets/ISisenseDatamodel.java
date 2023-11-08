@@ -24,7 +24,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * The SisenseDatamodel type represents a datamodel in sisense. Datamodels in sisense are an abstraction to group tables together that you can use to build dashboards
+ * Instance of a Sisense datamodel in Atlan. These group tables together that you can use to build dashboards.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -36,36 +36,36 @@ public interface ISisenseDatamodel {
     /** TBC */
     RelationField SISENSE_DASHBOARDS = new RelationField("sisenseDashboards");
 
-    /** Timestamp of when the datamodel was last built */
+    /** Time (epoch) when this datamodel was last built, in milliseconds. */
     NumericField SISENSE_DATAMODEL_LAST_BUILD_TIME =
             new NumericField("sisenseDatamodelLastBuildTime", "sisenseDatamodelLastBuildTime");
 
-    /** Timestamp of when the datamodel was last published */
+    /** Time (epoch) when this datamodel was last published, in milliseconds. */
     NumericField SISENSE_DATAMODEL_LAST_PUBLISH_TIME =
             new NumericField("sisenseDatamodelLastPublishTime", "sisenseDatamodelLastPublishTime");
 
-    /** Timestamp of when the datamodel was last built successfully */
+    /** Time (epoch) when this datamodel was last built successfully, in milliseconds. */
     NumericField SISENSE_DATAMODEL_LAST_SUCCESSFUL_BUILD_TIME =
             new NumericField("sisenseDatamodelLastSuccessfulBuildTime", "sisenseDatamodelLastSuccessfulBuildTime");
 
-    /** Default relation type for the Datamodel. 'extract' type Datamodels have regular relations by default. 'live' type Datamodels have direct relations by default. */
+    /** Default relation type for this datamodel. 'extract' type Datamodels have regular relations by default. 'live' type Datamodels have direct relations by default. */
     KeywordField SISENSE_DATAMODEL_RELATION_TYPE =
             new KeywordField("sisenseDatamodelRelationType", "sisenseDatamodelRelationType");
 
-    /** Revision of the datamodel */
+    /** Revision of this datamodel. */
     KeywordField SISENSE_DATAMODEL_REVISION = new KeywordField("sisenseDatamodelRevision", "sisenseDatamodelRevision");
 
-    /** Hostname of server on which the Datamodel is created */
+    /** Hostname of the server on which this datamodel was created. */
     KeywordField SISENSE_DATAMODEL_SERVER = new KeywordField("sisenseDatamodelServer", "sisenseDatamodelServer");
 
-    /** Number of tables present in the datamodel */
+    /** Number of tables in this datamodel. */
     NumericField SISENSE_DATAMODEL_TABLE_COUNT =
             new NumericField("sisenseDatamodelTableCount", "sisenseDatamodelTableCount");
 
-    /** TBC */
+    /** Datamodel tables that exist within this datamodel. */
     RelationField SISENSE_DATAMODEL_TABLES = new RelationField("sisenseDatamodelTables");
 
-    /** Type of the datamodel. It has values 'extract' or 'custom' */
+    /** Type of this datamodel, for example: 'extract' or 'custom'. */
     KeywordField SISENSE_DATAMODEL_TYPE = new KeywordField("sisenseDatamodelType", "sisenseDatamodelType");
 
     /** TBC */
@@ -272,7 +272,7 @@ public interface ISisenseDatamodel {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -314,7 +314,7 @@ public interface ISisenseDatamodel {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -338,13 +338,13 @@ public interface ISisenseDatamodel {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -356,7 +356,7 @@ public interface ISisenseDatamodel {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -371,7 +371,7 @@ public interface ISisenseDatamodel {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */
@@ -383,31 +383,31 @@ public interface ISisenseDatamodel {
     /** TBC */
     SortedSet<ISisenseDashboard> getSisenseDashboards();
 
-    /** Timestamp of when the datamodel was last built */
+    /** Time (epoch) when this datamodel was last built, in milliseconds. */
     Long getSisenseDatamodelLastBuildTime();
 
-    /** Timestamp of when the datamodel was last published */
+    /** Time (epoch) when this datamodel was last published, in milliseconds. */
     Long getSisenseDatamodelLastPublishTime();
 
-    /** Timestamp of when the datamodel was last built successfully */
+    /** Time (epoch) when this datamodel was last built successfully, in milliseconds. */
     Long getSisenseDatamodelLastSuccessfulBuildTime();
 
-    /** Default relation type for the Datamodel. 'extract' type Datamodels have regular relations by default. 'live' type Datamodels have direct relations by default. */
+    /** Default relation type for this datamodel. 'extract' type Datamodels have regular relations by default. 'live' type Datamodels have direct relations by default. */
     String getSisenseDatamodelRelationType();
 
-    /** Revision of the datamodel */
+    /** Revision of this datamodel. */
     String getSisenseDatamodelRevision();
 
-    /** Hostname of server on which the Datamodel is created */
+    /** Hostname of the server on which this datamodel was created. */
     String getSisenseDatamodelServer();
 
-    /** Number of tables present in the datamodel */
+    /** Number of tables in this datamodel. */
     Long getSisenseDatamodelTableCount();
 
-    /** TBC */
+    /** Datamodel tables that exist within this datamodel. */
     SortedSet<ISisenseDatamodelTable> getSisenseDatamodelTables();
 
-    /** Type of the datamodel. It has values 'extract' or 'custom' */
+    /** Type of this datamodel, for example: 'extract' or 'custom'. */
     String getSisenseDatamodelType();
 
     /** TBC */

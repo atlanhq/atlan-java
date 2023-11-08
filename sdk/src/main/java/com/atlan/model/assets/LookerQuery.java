@@ -27,7 +27,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Instance of a Looker query in Atlan.
+ * Deprecated.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -45,7 +45,7 @@ public class LookerQuery extends Asset implements ILookerQuery, ILooker, IBI, IC
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Deprecated. */
     @Attribute
     @Singular
     SortedSet<String> fields;
@@ -55,17 +55,17 @@ public class LookerQuery extends Asset implements ILookerQuery, ILooker, IBI, IC
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
-    /** TBC */
+    /** Deprecated. */
     @Attribute
     @Singular
     SortedSet<ILookerLook> looks;
 
-    /** TBC */
+    /** Deprecated. */
     @Attribute
     ILookerModel model;
 
@@ -74,24 +74,24 @@ public class LookerQuery extends Asset implements ILookerQuery, ILooker, IBI, IC
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** TBC */
+    /** Deprecated. */
     @Attribute
     String sourceDefinition;
 
-    /** TBC */
+    /** Deprecated. */
     @Attribute
     String sourceDefinitionDatabase;
 
-    /** TBC */
+    /** Deprecated. */
     @Attribute
     String sourceDefinitionSchema;
 
-    /** TBC */
+    /** Deprecated. */
     @Attribute
     @Singular
     SortedSet<ILookerTile> tiles;

@@ -10,7 +10,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
 /**
- * Detailed information about the conditions for a policy.
+ * Policy condition schedule struct
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter

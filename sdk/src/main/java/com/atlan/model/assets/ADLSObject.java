@@ -71,68 +71,68 @@ public class ADLSObject extends Asset
     @Attribute
     String adlsContainerQualifiedName;
 
-    /** TBC */
+    /** Access tier of this object. */
     @Attribute
     ADLSAccessTier adlsObjectAccessTier;
 
-    /** TBC */
+    /** Time (epoch) when the acccess tier for this object was last modified, in milliseconds. */
     @Attribute
     Long adlsObjectAccessTierLastModifiedTime;
 
-    /** TBC */
+    /** Archive status of this object. */
     @Attribute
     ADLSObjectArchiveStatus adlsObjectArchiveStatus;
 
-    /** TBC */
+    /** Cache control of this object. */
     @Attribute
     String adlsObjectCacheControl;
 
-    /** TBC */
+    /** Language of this object's contents. */
     @Attribute
     String adlsObjectContentLanguage;
 
-    /** TBC */
+    /** MD5 hash of this object's contents. */
     @Attribute
     String adlsObjectContentMD5Hash;
 
-    /** TBC */
+    /** Content type of this object. */
     @Attribute
     String adlsObjectContentType;
 
-    /** TBC */
+    /** State of this object's lease. */
     @Attribute
     ADLSLeaseState adlsObjectLeaseState;
 
-    /** TBC */
+    /** Status of this object's lease. */
     @Attribute
     ADLSLeaseStatus adlsObjectLeaseStatus;
 
-    /** TBC */
+    /** Metadata associated with this object, from ADLS. */
     @Attribute
     @Singular("putAdlsObjectMetadata")
     Map<String, String> adlsObjectMetadata;
 
-    /** TBC */
+    /** Whether this object is server encrypted (true) or not (false). */
     @Attribute
     Boolean adlsObjectServerEncrypted;
 
-    /** TBC */
+    /** Size of this object. */
     @Attribute
     Long adlsObjectSize;
 
-    /** TBC */
+    /** Type of this object. */
     @Attribute
     ADLSObjectType adlsObjectType;
 
-    /** TBC */
+    /** URL of this object. */
     @Attribute
     String adlsObjectUrl;
 
-    /** TBC */
+    /** Identifier of the version of this object, from ADLS. */
     @Attribute
     String adlsObjectVersionId;
 
-    /** TBC */
+    /** Whether this object supports version-level immutability (true) or not (false). */
     @Attribute
     Boolean adlsObjectVersionLevelImmutabilitySupport;
 
@@ -154,7 +154,7 @@ public class ADLSObject extends Asset
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -164,7 +164,7 @@ public class ADLSObject extends Asset
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;

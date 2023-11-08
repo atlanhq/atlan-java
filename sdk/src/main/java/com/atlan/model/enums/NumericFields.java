@@ -12,11 +12,11 @@ import lombok.Getter;
 @Deprecated
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 public enum NumericFields implements AtlanSearchableField {
-    /** TBC */
+    /** Time (epoch) when the acccess tier for this object was last modified, in milliseconds. */
     ADLS_OBJECT_ACCESS_TIER_LAST_MODIFIED_TIME("adlsObjectAccessTierLastModifiedTime"),
     /** Number of objects that exist within this container. */
     ADLS_OBJECT_COUNT("adlsObjectCount"),
-    /** TBC */
+    /** Size of this object. */
     ADLS_OBJECT_SIZE("adlsObjectSize"),
     /** Duration between scheduled runs in seconds */
     AIRFLOW_DAG_SCHEDULE_DELTA("airflowDagScheduleDelta"),
@@ -32,21 +32,21 @@ public enum NumericFields implements AtlanSearchableField {
     AIRFLOW_TASK_RETRY_NUMBER("airflowTaskRetryNumber"),
     /** Time (epoch) at which the announcement was last updated, in milliseconds. */
     ANNOUNCEMENT_UPDATED_AT("announcementUpdatedAt"),
-    /** TBC */
+    /** Time (epoch) at which the job that materialized this asset in dbt last ran, in milliseconds. */
     ASSET_DBT_JOB_LAST_RUN("assetDbtJobLastRun"),
-    /** TBC */
+    /** Time (epoch) at which the job that materialized this asset in dbt was last created, in milliseconds. */
     ASSET_DBT_JOB_LAST_RUN_CREATED_AT("assetDbtJobLastRunCreatedAt"),
-    /** TBC */
+    /** Time (epoch) at which the job that materialized this asset in dbt was dequeued, in milliseconds. */
     ASSET_DBT_JOB_LAST_RUN_DEQUED_AT("assetDbtJobLastRunDequedAt"),
-    /** TBC */
+    /** Time (epoch) at which the job that materialized this asset in dbt was started running, in milliseconds. */
     ASSET_DBT_JOB_LAST_RUN_STARTED_AT("assetDbtJobLastRunStartedAt"),
-    /** TBC */
+    /** Time (epoch) at which the job that materialized this asset in dbt was last updated, in milliseconds. */
     ASSET_DBT_JOB_LAST_RUN_UPDATED_AT("assetDbtJobLastRunUpdatedAt"),
-    /** TBC */
+    /** Time (epoch) when the next run of the job that materializes this asset in dbt is scheduled. */
     ASSET_DBT_JOB_NEXT_RUN("assetDbtJobNextRun"),
-    /** TBC */
+    /** Time (epoch) at which this asset was last synced from Monte Carlo. */
     ASSET_MC_LAST_SYNC_RUN_AT("assetMcLastSyncRunAt"),
-    /** Soda check count */
+    /** Number of checks done via Soda. */
     ASSET_SODA_CHECK_COUNT("assetSodaCheckCount"),
     /** TBC */
     ASSET_SODA_LAST_SCAN_AT("assetSodaLastScanAt"),
@@ -56,21 +56,21 @@ public enum NumericFields implements AtlanSearchableField {
     AUTH_SERVICE_POLICY_LAST_SYNC("authServicePolicyLastSync"),
     /** Time (epoch) at which the certification was last updated, in milliseconds. */
     CERTIFICATE_UPDATED_AT("certificateUpdatedAt"),
-    /** TBC */
+    /** Average value in this column. */
     COLUMN_AVERAGE("columnAverage"),
     /** Average length of values in a string column. */
     COLUMN_AVERAGE_LENGTH("columnAverageLength"),
     /** Number of columns in this materialized view. */
     COLUMN_COUNT("columnCount"),
-    /** Level of nesting, used for STRUCT/NESTED columns */
+    /** Level of nesting of this column, used for STRUCT and NESTED columns. */
     COLUMN_DEPTH_LEVEL("columnDepthLevel"),
     /** Number of rows that contain distinct values. */
     COLUMN_DISTINCT_VALUES_COUNT("columnDistinctValuesCount"),
-    /** TBC */
+    /** Number of rows that contain distinct values. */
     COLUMN_DISTINCT_VALUES_COUNT_LONG("columnDistinctValuesCountLong"),
     /** Number of rows that contain duplicate values. */
     COLUMN_DUPLICATE_VALUES_COUNT("columnDuplicateValuesCount"),
-    /** TBC */
+    /** Number of rows that contain duplicate values. */
     COLUMN_DUPLICATE_VALUES_COUNT_LONG("columnDuplicateValuesCountLong"),
     /** Greatest value in a numeric column. */
     COLUMN_MAX("columnMax"),
@@ -86,7 +86,7 @@ public enum NumericFields implements AtlanSearchableField {
     COLUMN_MINIMUM_STRING_LENGTH("columnMinimumStringLength"),
     /** Number of rows in a column that do not contain content. */
     COLUMN_MISSING_VALUES_COUNT("columnMissingValuesCount"),
-    /** TBC */
+    /** Number of rows in a column that do not contain content. */
     COLUMN_MISSING_VALUES_COUNT_LONG("columnMissingValuesCountLong"),
     /** Percentage of rows in a column that do not contain content. */
     COLUMN_MISSING_VALUES_PERCENTAGE("columnMissingValuesPercentage"),
@@ -94,19 +94,19 @@ public enum NumericFields implements AtlanSearchableField {
     COLUMN_STANDARD_DEVIATION("columnStandardDeviation"),
     /** Calculated sum of the values in a numeric column. */
     COLUMN_SUM("columnSum"),
-    /** Ratio indicating how unique data in the column is: 0 indicates that all values are the same, 100 indicates that all values in the column are unique. */
+    /** Ratio indicating how unique data in this column is: 0 indicates that all values are the same, 100 indicates that all values in this column are unique. */
     COLUMN_UNIQUENESS_PERCENTAGE("columnUniquenessPercentage"),
     /** Number of rows in which a value in this column appears only once. */
     COLUMN_UNIQUE_VALUES_COUNT("columnUniqueValuesCount"),
-    /** TBC */
+    /** Number of rows in which a value in this column appears only once. */
     COLUMN_UNIQUE_VALUES_COUNT_LONG("columnUniqueValuesCountLong"),
     /** Calculated variance of the values in a numeric column. */
     COLUMN_VARIANCE("columnVariance"),
-    /** TBC */
+    /** Number of dashboards in this workspace. */
     DASHBOARD_COUNT("dashboardCount"),
-    /** TBC */
+    /** Number of dataflows in this workspace. */
     DATAFLOW_COUNT("dataflowCount"),
-    /** TBC */
+    /** Number of datasets in this workspace. */
     DATASET_COUNT("datasetCount"),
     /** TBC */
     DBT_JOB_LAST_RUN("dbtJobLastRun"),
@@ -130,59 +130,59 @@ public enum NumericFields implements AtlanSearchableField {
     DBT_MODEL_RUN_GENERATED_AT("dbtModelRunGeneratedAt"),
     /** TBC */
     END_TIME("endTime"),
-    /** Number of fields in the object. */
+    /** Number of fields in this object. */
     FIELD_COUNT("fieldCount"),
-    /** TBC */
+    /** Effective time for retention of objects in this bucket. */
     GCS_BUCKET_RETENTION_EFFECTIVE_TIME("gcsBucketRetentionEffectiveTime"),
-    /** TBC */
+    /** Retention period for objects in this bucket. */
     GCS_BUCKET_RETENTION_PERIOD("gcsBucketRetentionPeriod"),
-    /** TBC */
+    /** Version of metadata for this asset at this generation. Used for preconditions and detecting changes in metadata. A metageneration number is only meaningful in the context of a particular generation of a particular asset. */
     GCS_META_GENERATION_ID("gcsMetaGenerationId"),
-    /** TBC */
+    /** Number of objects within the bucket. */
     GCS_OBJECT_COUNT("gcsObjectCount"),
-    /** TBC */
+    /** Time (epoch) at which this object's data was last modified, in milliseconds. */
     GCS_OBJECT_DATA_LAST_MODIFIED_TIME("gcsObjectDataLastModifiedTime"),
-    /** TBC */
+    /** Generation ID of this object. */
     GCS_OBJECT_GENERATION_ID("gcsObjectGenerationId"),
-    /** TBC */
+    /** Retention expiration date of this object. */
     GCS_OBJECT_RETENTION_EXPIRATION_DATE("gcsObjectRetentionExpirationDate"),
     /** Object size in bytes. */
     GCS_OBJECT_SIZE("gcsObjectSize"),
-    /** TBC */
+    /** Number of the project in which the asset exists. */
     GOOGLE_PROJECT_NUMBER("googleProjectNumber"),
-    /** TBC */
+    /** Number of members in this consumer group. */
     KAFKA_CONSUMER_GROUP_MEMBER_COUNT("kafkaConsumerGroupMemberCount"),
-    /** TBC */
+    /** Number of partitions for this topic. */
     KAFKA_TOPIC_PARTITIONS_COUNT("kafkaTopicPartitionsCount"),
     /** Number of (unexpired) messages in this topic. */
     KAFKA_TOPIC_RECORD_COUNT("kafkaTopicRecordCount"),
-    /** TBC */
+    /** Replication factor for this topic. */
     KAFKA_TOPIC_REPLICATION_FACTOR("kafkaTopicReplicationFactor"),
-    /** TBC */
+    /** Amount of time messages will be retained in this topic, in milliseconds. */
     KAFKA_TOPIC_RETENTION_TIME_IN_MS("kafkaTopicRetentionTimeInMs"),
-    /** TBC */
+    /** Segment size for this topic. */
     KAFKA_TOPIC_SEGMENT_BYTES("kafkaTopicSegmentBytes"),
-    /** TBC */
+    /** Size of this topic, in bytes. */
     KAFKA_TOPIC_SIZE_IN_BYTES("kafkaTopicSizeInBytes"),
-    /** Time (epoch) at which the asset was last profiled, in milliseconds. */
+    /** Time (epoch) at which this asset was last profiled, in milliseconds. */
     LAST_PROFILED_AT("lastProfiledAt"),
-    /** Timestamp of last operation that inserted, updated, or deleted rows. */
+    /** Time (epoch) of the last operation that inserted, updated, or deleted rows, in milliseconds. */
     LAST_ROW_CHANGED_AT("lastRowChangedAt"),
-    /** Time (epoch) at which the asset was last crawled, in milliseconds. */
+    /** Time (epoch) at which this asset was last crawled, in milliseconds. */
     LAST_SYNC_RUN_AT("lastSyncRunAt"),
-    /** TBC */
+    /** Deprecated. */
     LOOKER_TIMES_USED("lookerTimesUsed"),
-    /** TBC */
+    /** Identifier of the Look used to create this tile, from Looker. */
     LOOK_ID("lookId"),
-    /** The count of components under a specific matillion job */
+    /** Number of components within the job. */
     MATILLION_JOB_COMPONENT_COUNT("matillionJobComponentCount"),
-    /** Count of the number of matillion projects under a matillion group */
+    /** Number of projects within the group. */
     MATILLION_PROJECT_COUNT("matillionProjectCount"),
-    /** Count of jobs under a matillion project */
+    /** Number of jobs in the project. */
     MATILLION_PROJECT_JOB_COUNT("matillionProjectJobCount"),
-    /** TBC */
+    /** Maximum length of this field. */
     MAX_LENGTH("maxLength"),
-    /** TBC */
+    /** Rate at which this monitor is breached. */
     MC_MONITOR_BREACH_RATE("mcMonitorBreachRate"),
     /** Number of incidents associated with this monitor. */
     MC_MONITOR_INCIDENT_COUNT("mcMonitorIncidentCount"),
@@ -194,11 +194,11 @@ public enum NumericFields implements AtlanSearchableField {
     METABASE_DASHBOARD_COUNT("metabaseDashboardCount"),
     /** TBC */
     METABASE_QUESTION_COUNT("metabaseQuestionCount"),
-    /** Date when the asset was certified in MicroStrategy. */
+    /** Time (epoch) this asset was certified in MicroStrategy, in milliseconds. */
     MICRO_STRATEGY_CERTIFIED_AT("microStrategyCertifiedAt"),
     /** TBC */
     MODE_CHART_COUNT("modeChartCount"),
-    /** TBC */
+    /** Number of collections in this workspace. */
     MODE_COLLECTION_COUNT("modeCollectionCount"),
     /** TBC */
     MODE_QUERY_COUNT("modeQueryCount"),
@@ -208,101 +208,101 @@ public enum NumericFields implements AtlanSearchableField {
     MODE_REPORT_PUBLISHED_AT("modeReportPublishedAt"),
     /** Time (in milliseconds) when the asset was last updated. */
     MODIFICATION_TIMESTAMP("__modificationTimestamp"),
-    /** The average size of an object in the collection */
+    /** Average size of an object in the collection. */
     MONGO_DB_COLLECTION_AVERAGE_OBJECT_SIZE("mongoDBCollectionAverageObjectSize"),
-    /** Specifies the seconds after which documents in a time series collection or clustered collection expire */
+    /** Seconds after which documents in a time series collection or clustered collection expire. */
     MONGO_DB_COLLECTION_EXPIRE_AFTER_SECONDS("mongoDBCollectionExpireAfterSeconds"),
-    /** The maximum number of documents allowed in the capped collection */
+    /** Maximum number of documents allowed in a capped collection. */
     MONGO_DB_COLLECTION_MAXIMUM_DOCUMENT_COUNT("mongoDBCollectionMaximumDocumentCount"),
-    /** The maximum size allowed in the capped collection */
+    /** Maximum size allowed in a capped collection. */
     MONGO_DB_COLLECTION_MAX_SIZE("mongoDBCollectionMaxSize"),
-    /** The number of indexes on the collection */
+    /** Number of indexes on the collection. */
     MONGO_DB_COLLECTION_NUM_INDEXES("mongoDBCollectionNumIndexes"),
-    /** The number of orphaned documents in the collection */
+    /** Number of orphaned documents in the collection. */
     MONGO_DB_COLLECTION_NUM_ORPHAN_DOCS("mongoDBCollectionNumOrphanDocs"),
-    /** The total size of all indexes */
+    /** Total size of all indexes. */
     MONGO_DB_COLLECTION_TOTAL_INDEX_SIZE("mongoDBCollectionTotalIndexSize"),
-    /** The number of collection in a MongoDB Database */
+    /** Number of collections in the database. */
     MONGO_DB_DATABASE_COLLECTION_COUNT("mongoDBDatabaseCollectionCount"),
-    /** TBC */
+    /** Number of columns nested within this (STRUCT or NESTED) column. */
     NESTED_COLUMN_COUNT("nestedColumnCount"),
     /** Number of digits allowed to the right of the decimal point. */
     NUMERIC_SCALE("numericScale"),
-    /** A long integer indicating after how many rows heka should start uploading result to storage */
+    /** Number of rows after which results should be uploaded to storage. */
     OBJECT_STORAGE_UPLOAD_THRESHOLD("objectStorageUploadThreshold"),
     /** TBC */
     OPERATION_END_TIME("operationEndTime"),
     /** TBC */
     OPERATION_START_TIME("operationStartTime"),
-    /** TBC */
+    /** Order (position) of this field within the object. */
     ORDER("order"),
-    /** TBC */
+    /** Number of pages in this report. */
     PAGE_COUNT("pageCount"),
-    /** TBC */
+    /** Number of sub-partitions of this partition. */
     PARTITION_COUNT("partitionCount"),
-    /** TBC */
+    /** Order (position) of this partition column in the table. */
     PARTITION_ORDER("partitionOrder"),
-    /** TBC */
+    /** Time (epoch) at which this column was pinned, in milliseconds. */
     PINNED_AT("pinnedAt"),
     /** TBC */
     POLICY_PRIORITY("policyPriority"),
     /** Number of days over which popularity is calculated, for example 30 days. */
     POPULARITY_INSIGHTS_TIMEFRAME("popularityInsightsTimeframe"),
-    /** TBC */
+    /** Popularity score for this asset. */
     POPULARITY_SCORE("popularityScore"),
-    /** Port number to the connection's source. */
+    /** Port number to this connection's source. */
     PORT("port"),
-    /** TBC */
+    /** Number of columns in this table. */
     POWER_BI_TABLE_COLUMN_COUNT("powerBITableColumnCount"),
-    /** TBC */
+    /** Number of measures in this table. */
     POWER_BI_TABLE_MEASURE_COUNT("powerBITableMeasureCount"),
-    /** Total number of digits allowed. */
+    /** Total number of digits allowed */
     PRECISION("precision"),
-    /** Number of charts within the collection. */
-    PRESET_DASHBOARD_CHART_COUNT("presetDashboardChartCount"),
-    /** ID of the Preset asset's collection. */
-    PRESET_DASHBOARD_ID("presetDashboardId"),
-    /** ID of the dataset. */
-    PRESET_DATASET_ID("presetDatasetId"),
-    /** ID of the cluster for the Preset workspace. */
-    PRESET_WORKSPACE_CLUSTER_ID("presetWorkspaceClusterId"),
-    /** Number of collections in the workspace. */
-    PRESET_WORKSPACE_DASHBOARD_COUNT("presetWorkspaceDashboardCount"),
-    /** Number of datasets in the workspace. */
-    PRESET_WORKSPACE_DATASET_COUNT("presetWorkspaceDatasetCount"),
-    /** ID of the deployment for the Preset workspace. */
-    PRESET_WORKSPACE_DEPLOYMENT_ID("presetWorkspaceDeploymentId"),
-    /** ID of the Preset asset's workspace. */
-    PRESET_WORKSPACE_ID("presetWorkspaceId"),
-    /** Static space taken up by the app. */
-    QLIK_APP_STATIC_BYTE_SIZE("qlikAppStaticByteSize"),
     /** TBC */
+    PRESET_DASHBOARD_CHART_COUNT("presetDashboardChartCount"),
+    /** Identifier of the dashboard in which this asset exists, in Preset. */
+    PRESET_DASHBOARD_ID("presetDashboardId"),
+    /** TBC */
+    PRESET_DATASET_ID("presetDatasetId"),
+    /** TBC */
+    PRESET_WORKSPACE_CLUSTER_ID("presetWorkspaceClusterId"),
+    /** TBC */
+    PRESET_WORKSPACE_DASHBOARD_COUNT("presetWorkspaceDashboardCount"),
+    /** TBC */
+    PRESET_WORKSPACE_DATASET_COUNT("presetWorkspaceDatasetCount"),
+    /** TBC */
+    PRESET_WORKSPACE_DEPLOYMENT_ID("presetWorkspaceDeploymentId"),
+    /** Identifier of the workspace in which this asset exists, in Preset. */
+    PRESET_WORKSPACE_ID("presetWorkspaceId"),
+    /** Static space used by this app, in bytes. */
+    QLIK_APP_STATIC_BYTE_SIZE("qlikAppStaticByteSize"),
+    /** Number of times this asset has been queried. */
     QUERY_COUNT("queryCount"),
     /** Time (epoch) at which the query count was last updated, in milliseconds. */
     QUERY_COUNT_UPDATED_AT("queryCountUpdatedAt"),
-    /** TBC */
+    /** Identifier for the query used to build this tile, from Looker. */
     QUERY_ID("queryID"),
-    /** TBC */
+    /** Maximum time a query should be allowed to run before timing out. */
     QUERY_TIMEOUT("queryTimeout"),
-    /** TBC */
+    /** Number of unique users who have queried this asset. */
     QUERY_USER_COUNT("queryUserCount"),
-    /** Last published time of dashboard */
+    /** Time (epoch) at which this dashboard was last published, in milliseconds. */
     QUICK_SIGHT_DASHBOARD_LAST_PUBLISHED_TIME("quickSightDashboardLastPublishedTime"),
-    /** Version number of the dashboard published */
+    /** Version number of the published dashboard. */
     QUICK_SIGHT_DASHBOARD_PUBLISHED_VERSION_NUMBER("quickSightDashboardPublishedVersionNumber"),
-    /** Quicksight dataset column count indicates number of columns present in the dataset */
+    /** Number of columns present in this dataset. */
     QUICK_SIGHT_DATASET_COLUMN_COUNT("quickSightDatasetColumnCount"),
-    /** Number of widgets in the Redash dashboard. */
+    /** Number of widgets in this dashboard. */
     REDASH_DASHBOARD_WIDGET_COUNT("redashDashboardWidgetCount"),
-    /** Time when the Redash query was last executed. */
+    /** Time (epoch) when this query was last executed, in milliseconds. */
     REDASH_QUERY_LAST_EXECUTED_AT("redashQueryLastExecutedAt"),
-    /** Elapsed time of the last run of the Redash query. */
+    /** Elapsed time of the last execution of this query. */
     REDASH_QUERY_LAST_EXECUTION_RUNTIME("redashQueryLastExecutionRuntime"),
-    /** TBC */
+    /** Number of reports in this workspace. */
     REPORT_COUNT("reportCount"),
     /** TBC */
     RESULT_COUNT("resultCount"),
-    /** TBC */
+    /** Identifier of the ResultMarkerLookup entry, from Looker. */
     RESULT_MAKER_ID("resultMakerID"),
     /** Number of rows in this materialized view. */
     ROW_COUNT("rowCount"),
@@ -310,63 +310,63 @@ public enum NumericFields implements AtlanSearchableField {
     ROW_LIMIT("rowLimit"),
     /** Number of objects within the bucket. */
     S3OBJECT_COUNT("s3ObjectCount"),
-    /** Time (epoch) at which the object was last updated, in milliseconds, or when it was created if it has never been modified. */
+    /** Time (epoch) at which this object was last updated, in milliseconds, or when it was created if it has never been modified. */
     S3OBJECT_LAST_MODIFIED_TIME("s3ObjectLastModifiedTime"),
     /** Object size in bytes. */
     S3OBJECT_SIZE("s3ObjectSize"),
     /** Number of schemas in this database. */
     SCHEMA_COUNT("schemaCount"),
-    /** Number of columns that exist within this dataset. */
+    /** Number of columns in this dataset. */
     SIGMA_DATASET_COLUMN_COUNT("sigmaDatasetColumnCount"),
-    /** Number of data elements that exist within this page. */
+    /** Number of data elements on this page. */
     SIGMA_DATA_ELEMENT_COUNT("sigmaDataElementCount"),
-    /** Number of data element fields within this data element. */
+    /** Number of fields in this data element. */
     SIGMA_DATA_ELEMENT_FIELD_COUNT("sigmaDataElementFieldCount"),
-    /** Number of pages that exist within this workbook. */
+    /** Number of pages in this workbook. */
     SIGMA_PAGE_COUNT("sigmaPageCount"),
-    /** Number of widgets that are present in this dashboard */
+    /** Number of widgets in this dashboard. */
     SISENSE_DASHBOARD_WIDGET_COUNT("sisenseDashboardWidgetCount"),
-    /** Timestamp of when the datamodel was last built */
+    /** Time (epoch) when this datamodel was last built, in milliseconds. */
     SISENSE_DATAMODEL_LAST_BUILD_TIME("sisenseDatamodelLastBuildTime"),
-    /** Timestamp of when the datamodel was last published */
+    /** Time (epoch) when this datamodel was last published, in milliseconds. */
     SISENSE_DATAMODEL_LAST_PUBLISH_TIME("sisenseDatamodelLastPublishTime"),
-    /** Timestamp of when the datamodel was last built successfully */
+    /** Time (epoch) when this datamodel was last built successfully, in milliseconds. */
     SISENSE_DATAMODEL_LAST_SUCCESSFUL_BUILD_TIME("sisenseDatamodelLastSuccessfulBuildTime"),
-    /** Number of columns present in the datamodel table */
+    /** Number of columns present in this datamodel table. */
     SISENSE_DATAMODEL_TABLE_COLUMN_COUNT("sisenseDatamodelTableColumnCount"),
-    /** Number of tables present in the datamodel */
+    /** Number of tables in this datamodel. */
     SISENSE_DATAMODEL_TABLE_COUNT("sisenseDatamodelTableCount"),
-    /** Numbers of columns used in the widget */
+    /** Number of columns used in this widget. */
     SISENSE_WIDGET_COLUMN_COUNT("sisenseWidgetColumnCount"),
-    /** Size of the materialized view in bytes. */
+    /** Size of this materialized view, in bytes. */
     SIZE_BYTES("sizeBytes"),
-    /** TBC */
+    /** Time (epoch) after which this stream will be stale, in milliseconds. */
     SNOWFLAKE_STREAM_STALE_AFTER("snowflakeStreamStaleAfter"),
     /** TBC */
     SODA_CHECK_INCIDENT_COUNT("sodaCheckIncidentCount"),
     /** TBC */
     SODA_CHECK_LAST_SCAN_AT("sodaCheckLastScanAt"),
-    /** TBC */
+    /** Identifier of the user who last updated the dashboard, from Looker. */
     SOURCELAST_UPDATER_ID("sourcelastUpdaterId"),
-    /** TBC */
+    /** Number of subfolders in this folder. */
     SOURCE_CHILD_COUNT("sourceChildCount"),
-    /** TBC */
+    /** Identifier for the folder's content metadata in Looker. */
     SOURCE_CONTENT_METADATA_ID("sourceContentMetadataId"),
-    /** Time (epoch) at which the asset was created in the source system, in milliseconds. */
+    /** Time (epoch) at which this asset was created in the source system, in milliseconds. */
     SOURCE_CREATED_AT("sourceCreatedAt"),
-    /** TBC */
+    /** Identifier of the user who created the folder, from Looker. */
     SOURCE_CREATOR_ID("sourceCreatorId"),
-    /** TBC */
+    /** Timestamp (epoch) when the dashboard was last accessed by a user, in milliseconds. */
     SOURCE_LAST_ACCESSED_AT("sourceLastAccessedAt"),
     /** Timestamp of most recent read operation. */
     SOURCE_LAST_READ_AT("sourceLastReadAt"),
-    /** TBC */
+    /** Timestamp (epoch) when the dashboard was last viewed by a user. */
     SOURCE_LAST_VIEWED_AT("sourceLastViewedAt"),
-    /** TBC */
+    /** Identifier of the dashboard's content metadata, from Looker. */
     SOURCE_METADATA_ID("sourceMetadataId"),
-    /** TBC */
+    /** Identifier of the parent folder of this folder, from Looker. */
     SOURCE_PARENT_ID("sourceParentID"),
-    /** TBC */
+    /** Identifier of the query for the Look, from Looker. */
     SOURCE_QUERY_ID("sourceQueryId"),
     /** Total count of all read operations at source. */
     SOURCE_READ_COUNT("sourceReadCount"),
@@ -376,27 +376,27 @@ public enum NumericFields implements AtlanSearchableField {
     SOURCE_READ_USER_COUNT("sourceReadUserCount"),
     /** Total cost of all operations at source. */
     SOURCE_TOTAL_COST("sourceTotalCost"),
-    /** Time (epoch) at which the asset was last updated in the source system, in milliseconds. */
+    /** Time (epoch) at which this asset was last updated in the source system, in milliseconds. */
     SOURCE_UPDATED_AT("sourceUpdatedAt"),
-    /** TBC */
+    /** Identifier of the user who created this dashboard, from Looker. */
     SOURCE_USER_ID("sourceUserId"),
-    /** TBC */
+    /** Number of times the dashboard has been viewed through the Looker web UI. */
     SOURCE_VIEW_COUNT("sourceViewCount"),
-    /** TBC */
+    /** Time (epoch) from which this materialized view is stale, in milliseconds. */
     STALE_SINCE_DATE("staleSinceDate"),
-    /** TBC */
+    /** Number of users who have starred this asset. */
     STARRED_COUNT("starredCount"),
     /** TBC */
     START_TIME("startTime"),
     /** Number of tables in this schema. */
     TABLE_COUNT("tableCount"),
-    /** TBC */
+    /** Number of tiles in this table. */
     TILE_COUNT("tileCount"),
     /** Time (in milliseconds) when the asset was created. */
     TIMESTAMP("__timestamp"),
     /** Number of views in this schema. */
     VIEW_COUNT("viewsCount"),
-    /** TBC */
+    /** View score for this asset. */
     VIEW_SCORE("viewScore"),
     ;
 

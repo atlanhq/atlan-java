@@ -28,7 +28,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Azure Event Hub Consumer Group assets, equivalent to Kafka Consumer Groups
+ * Instance of an Azure Event Hub Consumer Group asset, equivalent to Kafka ConsumerGroup.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -58,7 +58,7 @@ public class AzureEventHubConsumerGroup extends Asset
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -82,7 +82,7 @@ public class AzureEventHubConsumerGroup extends Asset
     @Singular
     SortedSet<String> kafkaTopicQualifiedNames;
 
-    /** TBC */
+    /** Topics consumed by this consumer group. */
     @Attribute
     @Singular
     SortedSet<IKafkaTopic> kafkaTopics;
@@ -92,7 +92,7 @@ public class AzureEventHubConsumerGroup extends Asset
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;

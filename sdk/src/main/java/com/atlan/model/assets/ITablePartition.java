@@ -34,61 +34,61 @@ public interface ITablePartition {
 
     public static final String TYPE_NAME = "TablePartition";
 
-    /** TBC */
+    /** Alias for this partition. */
     KeywordField ALIAS = new KeywordField("alias", "alias");
 
-    /** TBC */
+    /** Partitions that exist within this partition. */
     RelationField CHILD_TABLE_PARTITIONS = new RelationField("childTablePartitions");
 
-    /** TBC */
+    /** Number of columns in this partition. */
     NumericField COLUMN_COUNT = new NumericField("columnCount", "columnCount");
 
-    /** TBC */
+    /** Columns that exist within this table partition. */
     RelationField COLUMNS = new RelationField("columns");
 
-    /** TBC */
+    /** Constraint that defines this table partition. */
     KeywordField CONSTRAINT = new KeywordField("constraint", "constraint");
 
-    /** TBC */
+    /** External location of this partition, for example: an S3 object location. */
     KeywordField EXTERNAL_LOCATION = new KeywordField("externalLocation", "externalLocation");
 
-    /** TBC */
+    /** Format of the external location of this partition, for example: JSON, CSV, PARQUET, etc. */
     KeywordField EXTERNAL_LOCATION_FORMAT = new KeywordField("externalLocationFormat", "externalLocationFormat");
 
-    /** TBC */
+    /** Region of the external location of this partition, for example: S3 region. */
     KeywordField EXTERNAL_LOCATION_REGION = new KeywordField("externalLocationRegion", "externalLocationRegion");
 
-    /** TBC */
+    /** Whether this partition is further partitioned (true) or not (false). */
     BooleanField IS_PARTITIONED = new BooleanField("isPartitioned", "isPartitioned");
 
-    /** TBC */
+    /** Whether preview queries for this partition are allowed (true) or not (false). */
     BooleanField IS_QUERY_PREVIEW = new BooleanField("isQueryPreview", "isQueryPreview");
 
-    /** TBC */
+    /** Whether this partition is temporary (true) or not (false). */
     BooleanField IS_TEMPORARY = new BooleanField("isTemporary", "isTemporary");
 
-    /** TBC */
+    /** Table in which this partition exists. */
     RelationField PARENT_TABLE = new RelationField("parentTable");
 
-    /** TBC */
+    /** Partition in which this partition exists. */
     RelationField PARENT_TABLE_PARTITION = new RelationField("parentTablePartition");
 
-    /** TBC */
+    /** Number of sub-partitions of this partition. */
     NumericField PARTITION_COUNT = new NumericField("partitionCount", "partitionCount");
 
-    /** TBC */
+    /** List of sub-partitions in this partition. */
     KeywordField PARTITION_LIST = new KeywordField("partitionList", "partitionList");
 
-    /** TBC */
+    /** Partition strategy of this partition. */
     KeywordField PARTITION_STRATEGY = new KeywordField("partitionStrategy", "partitionStrategy");
 
-    /** TBC */
+    /** Configuration for the preview queries. */
     KeywordField QUERY_PREVIEW_CONFIG = new KeywordField("queryPreviewConfig", "queryPreviewConfig");
 
-    /** TBC */
+    /** Number of rows in this partition. */
     NumericField ROW_COUNT = new NumericField("rowCount", "rowCount");
 
-    /** TBC */
+    /** Size of this partition, in bytes. */
     NumericField SIZE_BYTES = new NumericField("sizeBytes", "sizeBytes");
 
     /** TBC */
@@ -100,7 +100,7 @@ public interface ITablePartition {
     /** TBC */
     SortedSet<String> getAdminUsers();
 
-    /** TBC */
+    /** Alias for this partition. */
     String getAlias();
 
     /** TBC */
@@ -298,7 +298,7 @@ public interface ITablePartition {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -313,13 +313,13 @@ public interface ITablePartition {
     /** TBC */
     String getCertificateUpdatedBy();
 
-    /** TBC */
+    /** Partitions that exist within this partition. */
     SortedSet<ITablePartition> getChildTablePartitions();
 
-    /** TBC */
+    /** Number of columns in this partition. */
     Long getColumnCount();
 
-    /** TBC */
+    /** Columns that exist within this table partition. */
     SortedSet<IColumn> getColumns();
 
     /** TBC */
@@ -331,7 +331,7 @@ public interface ITablePartition {
     /** TBC */
     AtlanConnectorType getConnectorType();
 
-    /** TBC */
+    /** Constraint that defines this table partition. */
     String getConstraint();
 
     /** TBC */
@@ -358,13 +358,13 @@ public interface ITablePartition {
     /** TBC */
     String getDisplayName();
 
-    /** TBC */
+    /** External location of this partition, for example: an S3 object location. */
     String getExternalLocation();
 
-    /** TBC */
+    /** Format of the external location of this partition, for example: JSON, CSV, PARQUET, etc. */
     String getExternalLocationFormat();
 
-    /** TBC */
+    /** Region of the external location of this partition, for example: S3 region. */
     String getExternalLocationRegion();
 
     /** TBC */
@@ -376,7 +376,7 @@ public interface ITablePartition {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -388,16 +388,16 @@ public interface ITablePartition {
     /** TBC */
     Boolean getIsEditable();
 
-    /** TBC */
+    /** Whether this partition is further partitioned (true) or not (false). */
     Boolean getIsPartitioned();
 
     /** TBC */
     Boolean getIsProfiled();
 
-    /** TBC */
+    /** Whether preview queries for this partition are allowed (true) or not (false). */
     Boolean getIsQueryPreview();
 
-    /** TBC */
+    /** Whether this partition is temporary (true) or not (false). */
     Boolean getIsTemporary();
 
     /** TBC */
@@ -415,13 +415,13 @@ public interface ITablePartition {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -433,7 +433,7 @@ public interface ITablePartition {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -442,19 +442,19 @@ public interface ITablePartition {
     /** TBC */
     SortedSet<String> getOwnerUsers();
 
-    /** TBC */
+    /** Table in which this partition exists. */
     ITable getParentTable();
 
-    /** TBC */
+    /** Partition in which this partition exists. */
     ITablePartition getParentTablePartition();
 
-    /** TBC */
+    /** Number of sub-partitions of this partition. */
     Long getPartitionCount();
 
-    /** TBC */
+    /** List of sub-partitions in this partition. */
     String getPartitionList();
 
-    /** TBC */
+    /** Partition strategy of this partition. */
     String getPartitionStrategy();
 
     /** TBC */
@@ -469,7 +469,7 @@ public interface ITablePartition {
     /** TBC */
     Long getQueryCountUpdatedAt();
 
-    /** TBC */
+    /** Configuration for the preview queries. */
     Map<String, String> getQueryPreviewConfig();
 
     /** TBC */
@@ -478,10 +478,10 @@ public interface ITablePartition {
     /** TBC */
     Map<String, Long> getQueryUserMap();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
-    /** TBC */
+    /** Number of rows in this partition. */
     Long getRowCount();
 
     /** TBC */
@@ -496,7 +496,7 @@ public interface ITablePartition {
     /** TBC */
     SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
 
-    /** TBC */
+    /** Size of this partition, in bytes. */
     Long getSizeBytes();
 
     /** TBC */

@@ -23,7 +23,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a Persona access control object in Atlan.
+ * Atlan Type representing a Persona model
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -32,10 +32,10 @@ public interface IPersona {
 
     public static final String TYPE_NAME = "Persona";
 
-    /** Groups for whom this persona is accessible. */
+    /** TBC */
     KeywordField PERSONA_GROUPS = new KeywordField("personaGroups", "personaGroups");
 
-    /** Users for whom this persona is accessible. */
+    /** TBC */
     KeywordField PERSONA_USERS = new KeywordField("personaUsers", "personaUsers");
 
     /** TBC */
@@ -245,7 +245,7 @@ public interface IPersona {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -329,13 +329,13 @@ public interface IPersona {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -350,10 +350,10 @@ public interface IPersona {
     /** TBC */
     SortedSet<String> getOwnerUsers();
 
-    /** Groups for whom this persona is accessible. */
+    /** TBC */
     SortedSet<String> getPersonaGroups();
 
-    /** Users for whom this persona is accessible. */
+    /** TBC */
     SortedSet<String> getPersonaUsers();
 
     /** TBC */
@@ -365,7 +365,7 @@ public interface IPersona {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

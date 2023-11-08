@@ -27,7 +27,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Instance of a QuickSight Dashboard sheet visual in Atlan.
+ * Instance of a QuickSight dashboard visual in Atlan. These represent individual visuals inside a dashboard.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -51,7 +51,7 @@ public class QuickSightDashboardVisual extends Asset
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -61,16 +61,16 @@ public class QuickSightDashboardVisual extends Asset
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** TBC */
+    /** Dashboard in which this visual exists. */
     @Attribute
     IQuickSightDashboard quickSightDashboard;
 
-    /** TBC */
+    /** Unique name of the dashboard in which this visual exists. */
     @Attribute
     String quickSightDashboardQualifiedName;
 

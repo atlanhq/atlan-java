@@ -27,7 +27,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Instance of a Looker explore in Atlan.
+ * Instance of a Looker Explore in Atlan. Explores are views that users can query in Looker.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -45,7 +45,7 @@ public class LookerExplore extends Asset implements ILookerExplore, ILooker, IBI
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Fields that exist within this Explore. */
     @Attribute
     @Singular
     SortedSet<ILookerField> fields;
@@ -55,16 +55,16 @@ public class LookerExplore extends Asset implements ILookerExplore, ILooker, IBI
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
-    /** TBC */
+    /** Model in which this explore exists. */
     @Attribute
     ILookerModel model;
 
-    /** TBC */
+    /** Name of the parent model of this Explore. */
     @Attribute
     String modelName;
 
@@ -73,28 +73,28 @@ public class LookerExplore extends Asset implements ILookerExplore, ILooker, IBI
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** TBC */
+    /** Project in which this explore exists. */
     @Attribute
     ILookerProject project;
 
-    /** TBC */
+    /** Name of the parent project of this Explore. */
     @Attribute
     String projectName;
 
-    /** TBC */
+    /** Connection name for the Explore, from Looker. */
     @Attribute
     String sourceConnectionName;
 
-    /** TBC */
+    /** Name of the SQL table used to declare the Explore. */
     @Attribute
     String sqlTableName;
 
-    /** TBC */
+    /** Name of the view for the Explore. */
     @Attribute
     String viewName;
 

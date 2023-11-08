@@ -23,7 +23,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Schema Registry Assets
+ * Instance of a schema registry in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -32,10 +32,10 @@ public interface ISchemaRegistry {
 
     public static final String TYPE_NAME = "SchemaRegistry";
 
-    /** Unique identifier for schema definition set by the schema registry */
+    /** Unique identifier for schema definition set by the schema registry. */
     KeywordField SCHEMA_REGISTRY_SCHEMA_ID = new KeywordField("schemaRegistrySchemaId", "schemaRegistrySchemaId");
 
-    /** Type of language/specification used to define the schema like JSON, Protobuf etc. */
+    /** Type of language or specification used to define the schema, for example: JSON, Protobuf, etc. */
     KeywordField SCHEMA_REGISTRY_SCHEMA_TYPE = new KeywordField("schemaRegistrySchemaType", "schemaRegistrySchemaType");
 
     /** TBC */
@@ -242,7 +242,7 @@ public interface ISchemaRegistry {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -284,7 +284,7 @@ public interface ISchemaRegistry {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -308,13 +308,13 @@ public interface ISchemaRegistry {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -326,7 +326,7 @@ public interface ISchemaRegistry {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -341,16 +341,16 @@ public interface ISchemaRegistry {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */
     String getSampleDataUrl();
 
-    /** Unique identifier for schema definition set by the schema registry */
+    /** Unique identifier for schema definition set by the schema registry. */
     String getSchemaRegistrySchemaId();
 
-    /** Type of language/specification used to define the schema like JSON, Protobuf etc. */
+    /** Type of language or specification used to define the schema, for example: JSON, Protobuf, etc. */
     SchemaRegistrySchemaType getSchemaRegistrySchemaType();
 
     /** TBC */

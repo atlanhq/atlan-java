@@ -36,16 +36,16 @@ public interface ISalesforceDashboard {
     /** Type of dashboard in Salesforce. */
     KeywordField DASHBOARD_TYPE = new KeywordField("dashboardType", "dashboardType");
 
-    /** TBC */
+    /** Organization in which this dashboard exists. */
     RelationField ORGANIZATION = new RelationField("organization");
 
     /** Number of reports linked to the dashboard in Salesforce. */
     NumericField REPORT_COUNT = new NumericField("reportCount", "reportCount");
 
-    /** Reports linked to the dashboard in Salesforce. */
+    /** TBC */
     RelationField REPORTS = new RelationField("reports");
 
-    /** ID of the dashboard in Salesforce. */
+    /** Identifier of the dashboard in Salesforce. */
     KeywordField SOURCE_ID = new KeywordField("sourceId", "sourceId");
 
     /** TBC */
@@ -255,7 +255,7 @@ public interface ISalesforceDashboard {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -300,7 +300,7 @@ public interface ISalesforceDashboard {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -324,13 +324,13 @@ public interface ISalesforceDashboard {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -339,7 +339,7 @@ public interface ISalesforceDashboard {
     /** TBC */
     String getName();
 
-    /** TBC */
+    /** Organization in which this dashboard exists. */
     ISalesforceOrganization getOrganization();
 
     /** TBC */
@@ -348,7 +348,7 @@ public interface ISalesforceDashboard {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -363,13 +363,13 @@ public interface ISalesforceDashboard {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** Number of reports linked to the dashboard in Salesforce. */
     Long getReportCount();
 
-    /** Reports linked to the dashboard in Salesforce. */
+    /** TBC */
     SortedSet<ISalesforceReport> getReports();
 
     /** TBC */
@@ -393,7 +393,7 @@ public interface ISalesforceDashboard {
     /** TBC */
     String getSourceEmbedURL();
 
-    /** ID of the dashboard in Salesforce. */
+    /** Identifier of the dashboard in Salesforce. */
     String getSourceId();
 
     /** TBC */

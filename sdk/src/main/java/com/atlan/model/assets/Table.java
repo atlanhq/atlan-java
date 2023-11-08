@@ -49,7 +49,7 @@ public class Table extends Asset implements ITable, ISQL, ICatalog, IAsset, IRef
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Alias for this table. */
     @Attribute
     String alias;
 
@@ -90,15 +90,15 @@ public class Table extends Asset implements ITable, ISQL, ICatalog, IAsset, IRef
     @Singular
     SortedSet<ITable> dimensions;
 
-    /** TBC */
+    /** External location of this table, for example: an S3 object location. */
     @Attribute
     String externalLocation;
 
-    /** TBC */
+    /** Format of the external location of this table, for example: JSON, CSV, PARQUET, etc. */
     @Attribute
     String externalLocationFormat;
 
-    /** TBC */
+    /** Region of the external location of this table, for example: S3 region. */
     @Attribute
     String externalLocationRegion;
 
@@ -112,12 +112,12 @@ public class Table extends Asset implements ITable, ISQL, ICatalog, IAsset, IRef
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
-    /** TBC */
+    /** Whether this table is partitioned (true) or not (false). */
     @Attribute
     Boolean isPartitioned;
 
@@ -125,7 +125,7 @@ public class Table extends Asset implements ITable, ISQL, ICatalog, IAsset, IRef
     @Attribute
     Boolean isProfiled;
 
-    /** TBC */
+    /** Whether preview queries are allowed for this table (true) or not (false). */
     @Attribute
     Boolean isQueryPreview;
 
@@ -142,29 +142,29 @@ public class Table extends Asset implements ITable, ISQL, ICatalog, IAsset, IRef
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** TBC */
+    /** Number of partitions in this table. */
     @Attribute
     Long partitionCount;
 
-    /** TBC */
+    /** List of partitions in this table. */
     @Attribute
     String partitionList;
 
-    /** TBC */
+    /** Partition strategy for this table. */
     @Attribute
     String partitionStrategy;
 
-    /** TBC */
+    /** Partitions that exist within this table. */
     @Attribute
     @Singular
     SortedSet<ITablePartition> partitions;
 
-    /** Queries that involve this table. */
+    /** Queries that access this table. */
     @Attribute
     @Singular
     SortedSet<IAtlanQuery> queries;
@@ -177,7 +177,7 @@ public class Table extends Asset implements ITable, ISQL, ICatalog, IAsset, IRef
     @Attribute
     Long queryCountUpdatedAt;
 
-    /** TBC */
+    /** Configuration for preview queries. */
     @Attribute
     @Singular("putQueryPreviewConfig")
     Map<String, String> queryPreviewConfig;
@@ -208,7 +208,7 @@ public class Table extends Asset implements ITable, ISQL, ICatalog, IAsset, IRef
     @Attribute
     String schemaQualifiedName;
 
-    /** Size of the table in bytes. */
+    /** Size of this table, in bytes. */
     @Attribute
     Long sizeBytes;
 

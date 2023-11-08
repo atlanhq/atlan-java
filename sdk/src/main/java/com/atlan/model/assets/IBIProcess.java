@@ -21,7 +21,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Atlan BI Process
+ * Instance of business intelligence lineage in Atlan. These are used to short-circuit lineage from table-like assets directly to dashboard-like assets.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -237,7 +237,7 @@ public interface IBIProcess {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -258,7 +258,7 @@ public interface IBIProcess {
     /** TBC */
     String getCode();
 
-    /** TBC */
+    /** Processes that detail column-level lineage for this process. */
     SortedSet<IColumnProcess> getColumnProcesses();
 
     /** TBC */
@@ -285,7 +285,7 @@ public interface IBIProcess {
     /** TBC */
     Boolean getHasLineage();
 
-    /** TBC */
+    /** Assets that are inputs to this process. */
     SortedSet<ICatalog> getInputs();
 
     /** TBC */
@@ -309,16 +309,16 @@ public interface IBIProcess {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
-    /** TBC */
+    /** Matillion component that contains the logic for this lineage process. */
     IMatillionComponent getMatillionComponent();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -327,7 +327,7 @@ public interface IBIProcess {
     /** TBC */
     String getName();
 
-    /** TBC */
+    /** Assets that are outputs from this process. */
     SortedSet<ICatalog> getOutputs();
 
     /** TBC */
@@ -342,7 +342,7 @@ public interface IBIProcess {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

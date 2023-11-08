@@ -26,7 +26,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * The SisenseDatamodelTable type represents a table in a datamodel.
+ * Instance of a Sisense datamodel table in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -35,38 +35,38 @@ public interface ISisenseDatamodelTable {
 
     public static final String TYPE_NAME = "SisenseDatamodelTable";
 
-    /** TBC */
+    /** Datamodel in which this datamodel table exists. */
     RelationField SISENSE_DATAMODEL = new RelationField("sisenseDatamodel");
 
-    /** Qualified name of the datamodel in which this datamodel table is present */
+    /** Unique name of the datamodel in which this datamodel table exists. */
     KeywordTextField SISENSE_DATAMODEL_QUALIFIED_NAME = new KeywordTextField(
             "sisenseDatamodelQualifiedName", "sisenseDatamodelQualifiedName", "sisenseDatamodelQualifiedName.text");
 
-    /** Number of columns present in the datamodel table */
+    /** Number of columns present in this datamodel table. */
     NumericField SISENSE_DATAMODEL_TABLE_COLUMN_COUNT =
             new NumericField("sisenseDatamodelTableColumnCount", "sisenseDatamodelTableColumnCount");
 
-    /** Actual SQL expression of the datamodel table */
+    /** SQL expression of this datamodel table. */
     KeywordField SISENSE_DATAMODEL_TABLE_EXPRESSION =
             new KeywordField("sisenseDatamodelTableExpression", "sisenseDatamodelTableExpression");
 
-    /** Boolean indicating if the datamodel table is hidden on sisense */
+    /** Whether this datamodel table is hidden in Sisense (true) or not (false). */
     BooleanField SISENSE_DATAMODEL_TABLE_IS_HIDDEN =
             new BooleanField("sisenseDatamodelTableIsHidden", "sisenseDatamodelTableIsHidden");
 
-    /** Boolean indicating if the datamodel table is materialised */
+    /** Whether this datamodel table is materialised (true) or not (false). */
     BooleanField SISENSE_DATAMODEL_TABLE_IS_MATERIALIZED =
             new BooleanField("sisenseDatamodelTableIsMaterialized", "sisenseDatamodelTableIsMaterialized");
 
-    /** LiveQuery settings of the datamodel table (JSON Object) */
+    /** JSON specifying the LiveQuery settings of this datamodel table. */
     KeywordField SISENSE_DATAMODEL_TABLE_LIVE_QUERY_SETTINGS =
             new KeywordField("sisenseDatamodelTableLiveQuerySettings", "sisenseDatamodelTableLiveQuerySettings");
 
-    /** Refresh schedule of the datamodel table (JSON Object) */
+    /** JSON specifying the refresh schedule of this datamodel table. */
     KeywordField SISENSE_DATAMODEL_TABLE_SCHEDULE =
             new KeywordField("sisenseDatamodelTableSchedule", "sisenseDatamodelTableSchedule");
 
-    /** Type of the datamodel table. 'base' for regular tables, 'custom' for SQL expression-based tables */
+    /** Type of this datamodel table, for example: 'base' for regular tables, 'custom' for SQL expression-based tables. */
     KeywordField SISENSE_DATAMODEL_TABLE_TYPE =
             new KeywordField("sisenseDatamodelTableType", "sisenseDatamodelTableType");
 
@@ -277,7 +277,7 @@ public interface ISisenseDatamodelTable {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -319,7 +319,7 @@ public interface ISisenseDatamodelTable {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -343,13 +343,13 @@ public interface ISisenseDatamodelTable {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -361,7 +361,7 @@ public interface ISisenseDatamodelTable {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -376,7 +376,7 @@ public interface ISisenseDatamodelTable {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */
@@ -385,31 +385,31 @@ public interface ISisenseDatamodelTable {
     /** TBC */
     SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
 
-    /** TBC */
+    /** Datamodel in which this datamodel table exists. */
     ISisenseDatamodel getSisenseDatamodel();
 
-    /** Qualified name of the datamodel in which this datamodel table is present */
+    /** Unique name of the datamodel in which this datamodel table exists. */
     String getSisenseDatamodelQualifiedName();
 
-    /** Number of columns present in the datamodel table */
+    /** Number of columns present in this datamodel table. */
     Long getSisenseDatamodelTableColumnCount();
 
-    /** Actual SQL expression of the datamodel table */
+    /** SQL expression of this datamodel table. */
     String getSisenseDatamodelTableExpression();
 
-    /** Boolean indicating if the datamodel table is hidden on sisense */
+    /** Whether this datamodel table is hidden in Sisense (true) or not (false). */
     Boolean getSisenseDatamodelTableIsHidden();
 
-    /** Boolean indicating if the datamodel table is materialised */
+    /** Whether this datamodel table is materialised (true) or not (false). */
     Boolean getSisenseDatamodelTableIsMaterialized();
 
-    /** LiveQuery settings of the datamodel table (JSON Object) */
+    /** JSON specifying the LiveQuery settings of this datamodel table. */
     String getSisenseDatamodelTableLiveQuerySettings();
 
-    /** Refresh schedule of the datamodel table (JSON Object) */
+    /** JSON specifying the refresh schedule of this datamodel table. */
     String getSisenseDatamodelTableSchedule();
 
-    /** Type of the datamodel table. 'base' for regular tables, 'custom' for SQL expression-based tables */
+    /** Type of this datamodel table, for example: 'base' for regular tables, 'custom' for SQL expression-based tables. */
     String getSisenseDatamodelTableType();
 
     /** TBC */

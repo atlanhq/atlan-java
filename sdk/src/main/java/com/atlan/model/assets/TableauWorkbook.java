@@ -28,7 +28,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Instance of a Tableau workbook in Atlan.
+ * Instance of a Tableau workbook in Atlan. These contain one or more worksheets, datasources or dashboards.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -48,12 +48,12 @@ public class TableauWorkbook extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Dashboards that exist within this workbook. */
     @Attribute
     @Singular
     SortedSet<ITableauDashboard> dashboards;
 
-    /** TBC */
+    /** Datasources that exist within this workbook. */
     @Attribute
     @Singular
     SortedSet<ITableauDatasource> datasources;
@@ -63,7 +63,7 @@ public class TableauWorkbook extends Asset
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -73,37 +73,37 @@ public class TableauWorkbook extends Asset
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** TBC */
+    /** Project in which this workbook exists. */
     @Attribute
     ITableauProject project;
 
-    /** TBC */
+    /** List of top-level projects with their nested child projects. */
     @Attribute
     @Singular("addProjectHierarchy")
     List<Map<String, String>> projectHierarchy;
 
-    /** TBC */
+    /** Unique name of the project in which this workbook exists. */
     @Attribute
     String projectQualifiedName;
 
-    /** TBC */
+    /** Unique name of the site in which this workbook exists. */
     @Attribute
     String siteQualifiedName;
 
-    /** TBC */
+    /** Simple name of the top-level project in which this workbook exists. */
     @Attribute
     String topLevelProjectName;
 
-    /** TBC */
+    /** Unique name of the top-level project in which this workbook exists. */
     @Attribute
     String topLevelProjectQualifiedName;
 
-    /** TBC */
+    /** Worksheets that exist within this workbook. */
     @Attribute
     @Singular
     SortedSet<ITableauWorksheet> worksheets;

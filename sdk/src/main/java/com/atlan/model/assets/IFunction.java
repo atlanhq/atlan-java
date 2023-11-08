@@ -24,7 +24,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Atlan Function Asset
+ * Instance of a function in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -39,25 +39,25 @@ public interface IFunction {
     /** Code or set of statements that determine the output of the function. */
     KeywordField FUNCTION_DEFINITION = new KeywordField("functionDefinition", "functionDefinition");
 
-    /** Determines whether the functions is stored or executed externally. */
+    /** Whether the function is stored or executed externally (true) or internally (false). */
     BooleanField FUNCTION_IS_EXTERNAL = new BooleanField("functionIsExternal", "functionIsExternal");
 
-    /** Determines whether the function must re-compute or not if there are no underlying changes in the values. */
+    /** Whether the function must re-compute if there are no underlying changes in the values (false) or not (true). */
     BooleanField FUNCTION_IS_MEMOIZABLE = new BooleanField("functionIsMemoizable", "functionIsMemoizable");
 
-    /** Determines whether sensitive information of the function is omitted for unauthorized users. */
+    /** Whether sensitive information of the function is omitted for unauthorized users (true) or not (false). */
     BooleanField FUNCTION_IS_SECURE = new BooleanField("functionIsSecure", "functionIsSecure");
 
-    /** The programming language in which the function is written. */
+    /** Programming language in which the function is written. */
     KeywordField FUNCTION_LANGUAGE = new KeywordField("functionLanguage", "functionLanguage");
 
     /** Data type of the value returned by the function. */
     KeywordField FUNCTION_RETURN_TYPE = new KeywordField("functionReturnType", "functionReturnType");
 
-    /** TBC */
+    /** Schema in which this function exists. */
     RelationField FUNCTION_SCHEMA = new RelationField("functionSchema");
 
-    /** The type of function. */
+    /** Type of function. */
     KeywordField FUNCTION_TYPE = new KeywordField("functionType", "functionType");
 
     /** TBC */
@@ -264,7 +264,7 @@ public interface IFunction {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -321,25 +321,25 @@ public interface IFunction {
     /** Code or set of statements that determine the output of the function. */
     String getFunctionDefinition();
 
-    /** Determines whether the functions is stored or executed externally. */
+    /** Whether the function is stored or executed externally (true) or internally (false). */
     Boolean getFunctionIsExternal();
 
-    /** Determines whether the function must re-compute or not if there are no underlying changes in the values. */
+    /** Whether the function must re-compute if there are no underlying changes in the values (false) or not (true). */
     Boolean getFunctionIsMemoizable();
 
-    /** Determines whether sensitive information of the function is omitted for unauthorized users. */
+    /** Whether sensitive information of the function is omitted for unauthorized users (true) or not (false). */
     Boolean getFunctionIsSecure();
 
-    /** The programming language in which the function is written. */
+    /** Programming language in which the function is written. */
     String getFunctionLanguage();
 
     /** Data type of the value returned by the function. */
     String getFunctionReturnType();
 
-    /** TBC */
+    /** Schema in which this function exists. */
     ISchema getFunctionSchema();
 
-    /** The type of function. */
+    /** Type of function. */
     String getFunctionType();
 
     /** TBC */
@@ -348,7 +348,7 @@ public interface IFunction {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -378,13 +378,13 @@ public interface IFunction {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -396,7 +396,7 @@ public interface IFunction {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -423,7 +423,7 @@ public interface IFunction {
     /** TBC */
     Map<String, Long> getQueryUserMap();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

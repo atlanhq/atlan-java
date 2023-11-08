@@ -23,7 +23,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a QuickSight Analysis sheet visual in Atlan.
+ * Instance of a QuickSight analysis visual in Atlan. These represent individual visuals inside an analysis.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -32,10 +32,10 @@ public interface IQuickSightAnalysisVisual {
 
     public static final String TYPE_NAME = "QuickSightAnalysisVisual";
 
-    /** TBC */
+    /** Analysis in which this visual exists. */
     RelationField QUICK_SIGHT_ANALYSIS = new RelationField("quickSightAnalysis");
 
-    /** Qualified name of the QuickSight Analysis */
+    /** Unique name of the QuickSight analysis in which this visual exists. */
     KeywordTextField QUICK_SIGHT_ANALYSIS_QUALIFIED_NAME = new KeywordTextField(
             "quickSightAnalysisQualifiedName",
             "quickSightAnalysisQualifiedName",
@@ -245,7 +245,7 @@ public interface IQuickSightAnalysisVisual {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -287,7 +287,7 @@ public interface IQuickSightAnalysisVisual {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -311,13 +311,13 @@ public interface IQuickSightAnalysisVisual {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -329,7 +329,7 @@ public interface IQuickSightAnalysisVisual {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -344,10 +344,10 @@ public interface IQuickSightAnalysisVisual {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** Analysis in which this visual exists. */
     IQuickSightAnalysis getQuickSightAnalysis();
 
-    /** Qualified name of the QuickSight Analysis */
+    /** Unique name of the QuickSight analysis in which this visual exists. */
     String getQuickSightAnalysisQualifiedName();
 
     /** TBC */
@@ -359,7 +359,7 @@ public interface IQuickSightAnalysisVisual {
     /** TBC */
     String getQuickSightSheetName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

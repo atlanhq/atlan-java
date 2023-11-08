@@ -51,7 +51,7 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Average value in this column. */
     @Attribute
     Double columnAverage;
 
@@ -64,7 +64,7 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
     @Singular
     SortedSet<IDbtModelColumn> columnDbtModelColumns;
 
-    /** Level of nesting, used for STRUCT/NESTED columns */
+    /** Level of nesting of this column, used for STRUCT and NESTED columns. */
     @Attribute
     Integer columnDepthLevel;
 
@@ -72,7 +72,7 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
     @Attribute
     Integer columnDistinctValuesCount;
 
-    /** TBC */
+    /** Number of rows that contain distinct values. */
     @Attribute
     Long columnDistinctValuesCountLong;
 
@@ -80,11 +80,11 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
     @Attribute
     Integer columnDuplicateValuesCount;
 
-    /** TBC */
+    /** Number of rows that contain duplicate values. */
     @Attribute
     Long columnDuplicateValuesCountLong;
 
-    /** List of values in a histogram that represents the contents of the column. */
+    /** List of values in a histogram that represents the contents of this column. */
     @Attribute
     @Singular("addColumnHistogram")
     List<Histogram> columnHistogram;
@@ -127,7 +127,7 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
     @Attribute
     Integer columnMissingValuesCount;
 
-    /** TBC */
+    /** Number of rows in a column that do not contain content. */
     @Attribute
     Long columnMissingValuesCountLong;
 
@@ -143,7 +143,7 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
     @Attribute
     Double columnSum;
 
-    /** TBC */
+    /** List of top values in this column. */
     @Attribute
     @Singular
     List<ColumnValueFrequencyMap> columnTopValues;
@@ -152,11 +152,11 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
     @Attribute
     Integer columnUniqueValuesCount;
 
-    /** TBC */
+    /** Number of rows in which a value in this column appears only once. */
     @Attribute
     Long columnUniqueValuesCountLong;
 
-    /** Ratio indicating how unique data in the column is: 0 indicates that all values are the same, 100 indicates that all values in the column are unique. */
+    /** Ratio indicating how unique data in this column is: 0 indicates that all values are the same, 100 indicates that all values in this column are unique. */
     @Attribute
     Double columnUniquenessPercentage;
 
@@ -169,7 +169,7 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
     @Singular
     SortedSet<IMetric> dataQualityMetricDimensions;
 
-    /** Data type of values in the column. */
+    /** Data type of values in this column. */
     @Attribute
     String dataType;
 
@@ -206,15 +206,15 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
     @Singular
     SortedSet<IDbtTest> dbtTests;
 
-    /** TBC */
+    /** Default value for this column. */
     @Attribute
     String defaultValue;
 
-    /** Column this column refers to as a foreign key. */
+    /** Column this foreign key column refers to. */
     @Attribute
     IColumn foreignKeyFrom;
 
-    /** All the columns that refer to this column as a foreign key. NOTE: when providing values to this relationship, isForeign must also be set to true. */
+    /** Columns that use this column as a foreign key. */
     @Attribute
     @Singular("addForeignKeyTo")
     SortedSet<IColumn> foreignKeyTo;
@@ -224,16 +224,16 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
-    /** TBC */
+    /** Whether this column is a clustered column (true) or not (false). */
     @Attribute
     Boolean isClustered;
 
-    /** TBC */
+    /** Whether this column is a distribution column (true) or not (false). */
     @Attribute
     Boolean isDist;
 
@@ -249,11 +249,11 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
     @Attribute
     Boolean isNullable;
 
-    /** TBC */
+    /** Whether this column is a partition column (true) or not (false). */
     @Attribute
     Boolean isPartition;
 
-    /** TBC */
+    /** Whether this column is pinned (true) or not (false). */
     @Attribute
     Boolean isPinned;
 
@@ -265,7 +265,7 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
     @Attribute
     Boolean isProfiled;
 
-    /** TBC */
+    /** Whether this column is a sort column (true) or not (false). */
     @Attribute
     Boolean isSort;
 
@@ -273,7 +273,7 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
     @Attribute
     Long lastProfiledAt;
 
-    /** Materialized view in which this column exists, or empty if the column instead exists in a table or view. */
+    /** Materialized view in which this column exists. */
     @Attribute
     @JsonProperty("materialisedView")
     IMaterializedView materializedView;
@@ -287,11 +287,11 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
     @Singular
     SortedSet<IMetric> metricTimestamps;
 
-    /** TBC */
+    /** Number of columns nested within this (STRUCT or NESTED) column. */
     @Attribute
     Integer nestedColumnCount;
 
-    /** TBC */
+    /** Nested columns that exist within this column. */
     @Attribute
     @Singular
     SortedSet<IColumn> nestedColumns;
@@ -300,7 +300,7 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
     @Attribute
     Double numericScale;
 
-    /** Order (position) in which the column appears in the table (starting at 1). */
+    /** Order (position) in which this column appears in the table (starting at 1). */
     @Attribute
     Integer order;
 
@@ -309,40 +309,40 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** TBC */
+    /** Column in which this sub-column is nested. */
     @Attribute
     IColumn parentColumn;
 
-    /** TBC */
+    /** Simple name of the column this column is nested within, for STRUCT and NESTED columns. */
     @Attribute
     String parentColumnName;
 
-    /** TBC */
+    /** Unique name of the column this column is nested within, for STRUCT and NESTED columns. */
     @Attribute
     String parentColumnQualifiedName;
 
-    /** TBC */
+    /** Order (position) of this partition column in the table. */
     @Attribute
     Integer partitionOrder;
 
-    /** TBC */
+    /** Time (epoch) at which this column was pinned, in milliseconds. */
     @Attribute
     Long pinnedAt;
 
-    /** TBC */
+    /** User who pinned this column. */
     @Attribute
     String pinnedBy;
 
-    /** Total number of digits allowed when the dataType is numeric. */
+    /** Total number of digits allowed, when the dataType is numeric. */
     @Attribute
     Integer precision;
 
-    /** Queries that involve this column. */
+    /** Queries that access this column. */
     @Attribute
     @Singular
     SortedSet<IAtlanQuery> queries;
@@ -376,7 +376,7 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
     @Attribute
     String schemaQualifiedName;
 
-    /** TBC */
+    /** Snowflake dynamic table in which this column exists. */
     @Attribute
     ISnowflakeDynamicTable snowflakeDynamicTable;
 
@@ -390,11 +390,11 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
     @Singular
     SortedSet<IDbtModel> sqlDbtModels;
 
-    /** TBC */
+    /** Sub-data type of this column. */
     @Attribute
     String subDataType;
 
-    /** Table in which this column exists, or empty if the column instead exists in a view or materialized view. */
+    /** Table in which this column exists. */
     @Attribute
     ITable table;
 
@@ -402,7 +402,7 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
     @Attribute
     String tableName;
 
-    /** TBC */
+    /** Table partition that contains this column. */
     @Attribute
     ITablePartition tablePartition;
 
@@ -410,12 +410,12 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
     @Attribute
     String tableQualifiedName;
 
-    /** TBC */
+    /** Validations for this column. */
     @Attribute
     @Singular
     Map<String, String> validations;
 
-    /** View in which this column exists, or empty if the column instead exists in a table or materialized view. */
+    /** View in which this column exists. */
     @Attribute
     IView view;
 

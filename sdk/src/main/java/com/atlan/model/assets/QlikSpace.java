@@ -27,7 +27,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Instance of a Qlik Space in Atlan.
+ * Instance of a Qlik space in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -50,7 +50,7 @@ public class QlikSpace extends Asset implements IQlikSpace, IQlik, IBI, ICatalog
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -60,7 +60,7 @@ public class QlikSpace extends Asset implements IQlikSpace, IQlik, IBI, ICatalog
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
@@ -73,12 +73,12 @@ public class QlikSpace extends Asset implements IQlikSpace, IQlik, IBI, ICatalog
     @Attribute
     String qlikAppQualifiedName;
 
-    /** Apps contained within the space. */
+    /** Apps that exist within this space. */
     @Attribute
     @Singular
     SortedSet<IQlikApp> qlikApps;
 
-    /** Datasets contained within the space. */
+    /** Datasets that exist within this space. */
     @Attribute
     @Singular
     SortedSet<IQlikDataset> qlikDatasets;
@@ -107,7 +107,7 @@ public class QlikSpace extends Asset implements IQlikSpace, IQlik, IBI, ICatalog
     @Attribute
     String qlikSpaceQualifiedName;
 
-    /** Type of space, for example: Private, Shared, etc. */
+    /** Type of this space, for exmaple: Private, Shared, etc. */
     @Attribute
     String qlikSpaceType;
 

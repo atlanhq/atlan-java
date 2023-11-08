@@ -23,7 +23,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a Purpose access control object in Atlan.
+ * Atlan Type representing a Purpose model
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -32,7 +32,7 @@ public interface IPurpose {
 
     public static final String TYPE_NAME = "Purpose";
 
-    /** Tags on which this purpose is applied. */
+    /** TBC */
     KeywordField PURPOSE_ATLAN_TAGS = new KeywordField("purposeClassifications", "purposeClassifications");
 
     /** TBC */
@@ -239,7 +239,7 @@ public interface IPurpose {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -323,13 +323,13 @@ public interface IPurpose {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -350,13 +350,13 @@ public interface IPurpose {
     /** TBC */
     Double getPopularityScore();
 
-    /** Tags on which this purpose is applied. */
+    /** TBC */
     SortedSet<String> getPurposeAtlanTags();
 
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

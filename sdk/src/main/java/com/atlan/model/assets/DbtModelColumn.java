@@ -97,7 +97,7 @@ public class DbtModelColumn extends Asset implements IDbtModelColumn, IDbt, ICat
     @Attribute
     String dbtMeta;
 
-    /** TBC */
+    /** Model in which this dbt column exists. */
     @Attribute
     IDbtModel dbtModel;
 
@@ -149,7 +149,7 @@ public class DbtModelColumn extends Asset implements IDbtModelColumn, IDbt, ICat
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -159,7 +159,7 @@ public class DbtModelColumn extends Asset implements IDbtModelColumn, IDbt, ICat
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;

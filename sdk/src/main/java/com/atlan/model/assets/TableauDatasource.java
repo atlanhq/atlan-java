@@ -28,7 +28,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Instance of a Tableau datasource in Atlan.
+ * Instance of a Tableau datasource in Atlan. These include both published and embedded datasources, and are the link between source data and Tableau.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -48,25 +48,25 @@ public class TableauDatasource extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Notes related to this datasource being cerfified, in Tableau. */
     @Attribute
     String certificationNote;
 
-    /** TBC */
+    /** Users that have marked this datasource as cerified, in Tableau. */
     @Attribute
     @Singular("putCertifier")
     Map<String, String> certifier;
 
-    /** TBC */
+    /** Name of the user who cerified this datasource, in Tableau. */
     @Attribute
     String certifierDisplayName;
 
-    /** TBC */
+    /** Fields that exist within this datasource. */
     @Attribute
     @Singular
     SortedSet<ITableauField> fields;
 
-    /** TBC */
+    /** Whether this datasource has extracts (true) or not (false). */
     @Attribute
     Boolean hasExtracts;
 
@@ -75,16 +75,16 @@ public class TableauDatasource extends Asset
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
-    /** TBC */
+    /** Whether this datasource is certified in Tableau (true) or not (false). */
     @Attribute
     Boolean isCertified;
 
-    /** TBC */
+    /** Whether this datasource is published (true) or embedded (false). */
     @Attribute
     Boolean isPublished;
 
@@ -93,47 +93,47 @@ public class TableauDatasource extends Asset
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** TBC */
+    /** Project in which this datasource exists. */
     @Attribute
     ITableauProject project;
 
-    /** TBC */
+    /** List of top-level projects with their nested child projects. */
     @Attribute
     @Singular("addProjectHierarchy")
     List<Map<String, String>> projectHierarchy;
 
-    /** TBC */
+    /** Unique name of the project in which this datasource exists. */
     @Attribute
     String projectQualifiedName;
 
-    /** TBC */
+    /** Unique name of the site in which this datasource exists. */
     @Attribute
     String siteQualifiedName;
 
-    /** TBC */
+    /** Unique name of the top-level project in which this datasource exists. */
     @Attribute
     String topLevelProjectQualifiedName;
 
-    /** TBC */
+    /** List of datasources that are upstream of this datasource. */
     @Attribute
     @Singular
     List<Map<String, String>> upstreamDatasources;
 
-    /** TBC */
+    /** List of tables that are upstream of this datasource. */
     @Attribute
     @Singular
     List<Map<String, String>> upstreamTables;
 
-    /** TBC */
+    /** Workbook in which this datasource exists. */
     @Attribute
     ITableauWorkbook workbook;
 
-    /** TBC */
+    /** Unique name of the workbook in which this datasource exists. */
     @Attribute
     String workbookQualifiedName;
 

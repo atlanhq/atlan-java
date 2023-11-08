@@ -28,7 +28,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Instance of a Preset collection in Atlan.
+ * Instance of a Preset dashboard in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -51,7 +51,7 @@ public class PresetDashboard extends Asset implements IPresetDashboard, IPreset,
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -61,17 +61,17 @@ public class PresetDashboard extends Asset implements IPresetDashboard, IPreset,
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** Charts contained within the collection. */
+    /** Charts that exist within this dashboard. */
     @Attribute
     @Singular
     SortedSet<IPresetChart> presetCharts;
 
-    /** Username of the user who last changed the collection. */
+    /** TBC */
     @Attribute
     String presetDashboardChangedByName;
 
@@ -79,7 +79,7 @@ public class PresetDashboard extends Asset implements IPresetDashboard, IPreset,
     @Attribute
     String presetDashboardChangedByURL;
 
-    /** Number of charts within the collection. */
+    /** TBC */
     @Attribute
     Long presetDashboardChartCount;
 
@@ -87,11 +87,11 @@ public class PresetDashboard extends Asset implements IPresetDashboard, IPreset,
     @Attribute
     Long presetDashboardId;
 
-    /** Whether the collection is managed externally (true) or not (false). */
+    /** TBC */
     @Attribute
     Boolean presetDashboardIsManagedExternally;
 
-    /** Whether the collection is published (true) or not (false). */
+    /** TBC */
     @Attribute
     Boolean presetDashboardIsPublished;
 
@@ -99,16 +99,16 @@ public class PresetDashboard extends Asset implements IPresetDashboard, IPreset,
     @Attribute
     String presetDashboardQualifiedName;
 
-    /** URL to a thumbnail illustration of the collection. */
+    /** TBC */
     @Attribute
     String presetDashboardThumbnailURL;
 
-    /** Datasets contained within the collection. */
+    /** Datasets that exist within this dashboard. */
     @Attribute
     @Singular
     SortedSet<IPresetDataset> presetDatasets;
 
-    /** Workspace in which the collection exists. */
+    /** Workspace in which this dashboard exists. */
     @Attribute
     IPresetWorkspace presetWorkspace;
 

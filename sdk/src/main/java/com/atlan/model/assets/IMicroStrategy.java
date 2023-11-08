@@ -34,17 +34,17 @@ public interface IMicroStrategy {
 
     public static final String TYPE_NAME = "MicroStrategy";
 
-    /** Date when the asset was certified in MicroStrategy. */
+    /** Time (epoch) this asset was certified in MicroStrategy, in milliseconds. */
     NumericField MICRO_STRATEGY_CERTIFIED_AT = new NumericField("microStrategyCertifiedAt", "microStrategyCertifiedAt");
 
-    /** User who certified the asset in MicroStrategy. */
+    /** User who certified this asset, in MicroStrategy. */
     KeywordField MICRO_STRATEGY_CERTIFIED_BY = new KeywordField("microStrategyCertifiedBy", "microStrategyCertifiedBy");
 
-    /** Simple names of the related MicroStrategy cubes. */
+    /** Simple names of the cubes related to this asset. */
     KeywordTextField MICRO_STRATEGY_CUBE_NAMES =
             new KeywordTextField("microStrategyCubeNames", "microStrategyCubeNames.keyword", "microStrategyCubeNames");
 
-    /** Unique names of the related MicroStrategy cubes. */
+    /** Unique names of the cubes related to this asset. */
     KeywordTextField MICRO_STRATEGY_CUBE_QUALIFIED_NAMES = new KeywordTextField(
             "microStrategyCubeQualifiedNames",
             "microStrategyCubeQualifiedNames",
@@ -53,24 +53,24 @@ public interface IMicroStrategy {
     /** Whether the asset is certified in MicroStrategy (true) or not (false). */
     BooleanField MICRO_STRATEGY_IS_CERTIFIED = new BooleanField("microStrategyIsCertified", "microStrategyIsCertified");
 
-    /** Location of the asset within MicroStrategy. */
+    /** Location of this asset in MicroStrategy. */
     KeywordField MICRO_STRATEGY_LOCATION = new KeywordField("microStrategyLocation", "microStrategyLocation");
 
-    /** Simple name of the related MicroStrategy project. */
+    /** Simple name of the project in which this asset exists. */
     KeywordTextField MICRO_STRATEGY_PROJECT_NAME = new KeywordTextField(
             "microStrategyProjectName", "microStrategyProjectName.keyword", "microStrategyProjectName");
 
-    /** Unique name of the related MicroStrategy project. */
+    /** Unique name of the project in which this asset exists. */
     KeywordTextField MICRO_STRATEGY_PROJECT_QUALIFIED_NAME = new KeywordTextField(
             "microStrategyProjectQualifiedName",
             "microStrategyProjectQualifiedName",
             "microStrategyProjectQualifiedName.text");
 
-    /** Simple names of the related MicroStrategy reports. */
+    /** Simple names of the reports related to this asset. */
     KeywordTextField MICRO_STRATEGY_REPORT_NAMES = new KeywordTextField(
             "microStrategyReportNames", "microStrategyReportNames.keyword", "microStrategyReportNames");
 
-    /** Unique names of the related MicroStrategy reports. */
+    /** Unique names of the reports related to this asset. */
     KeywordTextField MICRO_STRATEGY_REPORT_QUALIFIED_NAMES = new KeywordTextField(
             "microStrategyReportQualifiedNames",
             "microStrategyReportQualifiedNames",
@@ -280,7 +280,7 @@ public interface IMicroStrategy {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -322,7 +322,7 @@ public interface IMicroStrategy {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -346,46 +346,46 @@ public interface IMicroStrategy {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
     SortedSet<IMetric> getMetrics();
 
-    /** Date when the asset was certified in MicroStrategy. */
+    /** Time (epoch) this asset was certified in MicroStrategy, in milliseconds. */
     Long getMicroStrategyCertifiedAt();
 
-    /** User who certified the asset in MicroStrategy. */
+    /** User who certified this asset, in MicroStrategy. */
     String getMicroStrategyCertifiedBy();
 
-    /** Simple names of the related MicroStrategy cubes. */
+    /** Simple names of the cubes related to this asset. */
     SortedSet<String> getMicroStrategyCubeNames();
 
-    /** Unique names of the related MicroStrategy cubes. */
+    /** Unique names of the cubes related to this asset. */
     SortedSet<String> getMicroStrategyCubeQualifiedNames();
 
     /** Whether the asset is certified in MicroStrategy (true) or not (false). */
     Boolean getMicroStrategyIsCertified();
 
-    /** Location of the asset within MicroStrategy. */
+    /** Location of this asset in MicroStrategy. */
     List<Map<String, String>> getMicroStrategyLocation();
 
-    /** Simple name of the related MicroStrategy project. */
+    /** Simple name of the project in which this asset exists. */
     String getMicroStrategyProjectName();
 
-    /** Unique name of the related MicroStrategy project. */
+    /** Unique name of the project in which this asset exists. */
     String getMicroStrategyProjectQualifiedName();
 
-    /** Simple names of the related MicroStrategy reports. */
+    /** Simple names of the reports related to this asset. */
     SortedSet<String> getMicroStrategyReportNames();
 
-    /** Unique names of the related MicroStrategy reports. */
+    /** Unique names of the reports related to this asset. */
     SortedSet<String> getMicroStrategyReportQualifiedNames();
 
     /** TBC */
@@ -394,7 +394,7 @@ public interface IMicroStrategy {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -409,7 +409,7 @@ public interface IMicroStrategy {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

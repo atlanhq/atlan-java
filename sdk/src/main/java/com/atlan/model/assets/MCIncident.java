@@ -27,7 +27,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Instance of a Monte Carlo Incident in Atlan.
+ * Instance of a Monte Carlo incident in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -51,7 +51,7 @@ public class MCIncident extends Asset
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -61,33 +61,33 @@ public class MCIncident extends Asset
     @Singular
     SortedSet<String> mcAssetQualifiedNames;
 
-    /** Assets impacted by the incident. */
+    /** TBC */
     @Attribute
     @Singular
     SortedSet<IAsset> mcIncidentAssets;
 
-    /** Unique identifier for the incident. */
+    /** Identifier of this incident, from Monte Carlo. */
     @Attribute
     String mcIncidentId;
 
-    /** Severity of the incident. */
+    /** Severity of this incident. */
     @Attribute
     String mcIncidentSeverity;
 
-    /** Status of the incident, for example whether it is being investigated or is already fixed. */
+    /** State of this incident. */
     @Attribute
     String mcIncidentState;
 
-    /** TBC */
+    /** Subtypes of this incident. */
     @Attribute
     @Singular
     SortedSet<String> mcIncidentSubTypes;
 
-    /** Type of incident. */
+    /** Type of this incident. */
     @Attribute
     String mcIncidentType;
 
-    /** Name of the warehouse in which the incident occurred. */
+    /** Name of this incident's warehouse. */
     @Attribute
     String mcIncidentWarehouse;
 
@@ -96,7 +96,7 @@ public class MCIncident extends Asset
     @Singular
     SortedSet<String> mcLabels;
 
-    /** Monitor through which this incident occurred. */
+    /** Monitor in which this incident exists. */
     @Attribute
     IMCMonitor mcMonitor;
 
@@ -105,7 +105,7 @@ public class MCIncident extends Asset
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;

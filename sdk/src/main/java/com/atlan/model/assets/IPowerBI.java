@@ -34,16 +34,16 @@ public interface IPowerBI {
 
     public static final String TYPE_NAME = "PowerBI";
 
-    /** TBC */
+    /** Endorsement status of this asset, in Power BI. */
     KeywordField POWER_BI_ENDORSEMENT = new KeywordField("powerBIEndorsement", "powerBIEndorsement");
 
-    /** TBC */
+    /** Format of this asset, as specified in the FORMAT_STRING of the MDX cell property. */
     KeywordField POWER_BI_FORMAT_STRING = new KeywordField("powerBIFormatString", "powerBIFormatString");
 
-    /** TBC */
+    /** Whether this asset is hidden in Power BI (true) or not (false). */
     BooleanField POWER_BI_IS_HIDDEN = new BooleanField("powerBIIsHidden", "powerBIIsHidden");
 
-    /** TBC */
+    /** Unique name of the Power BI table in which this asset exists. */
     KeywordTextField POWER_BI_TABLE_QUALIFIED_NAME = new KeywordTextField(
             "powerBITableQualifiedName", "powerBITableQualifiedName", "powerBITableQualifiedName.text");
 
@@ -251,7 +251,7 @@ public interface IPowerBI {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -293,7 +293,7 @@ public interface IPowerBI {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -317,13 +317,13 @@ public interface IPowerBI {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -335,7 +335,7 @@ public interface IPowerBI {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -347,22 +347,22 @@ public interface IPowerBI {
     /** TBC */
     Double getPopularityScore();
 
-    /** TBC */
+    /** Endorsement status of this asset, in Power BI. */
     PowerBIEndorsementType getPowerBIEndorsement();
 
-    /** TBC */
+    /** Format of this asset, as specified in the FORMAT_STRING of the MDX cell property. */
     String getPowerBIFormatString();
 
-    /** TBC */
+    /** Whether this asset is hidden in Power BI (true) or not (false). */
     Boolean getPowerBIIsHidden();
 
-    /** TBC */
+    /** Unique name of the Power BI table in which this asset exists. */
     String getPowerBITableQualifiedName();
 
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

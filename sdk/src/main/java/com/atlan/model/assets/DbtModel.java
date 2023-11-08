@@ -110,12 +110,12 @@ public class DbtModel extends Asset implements IDbtModel, IDbt, ICatalog, IAsset
     @Attribute
     String dbtMeta;
 
-    /** TBC */
+    /** Metrics that exist within this model. */
     @Attribute
     @Singular
     SortedSet<IDbtMetric> dbtMetrics;
 
-    /** TBC */
+    /** Columns that exist within this dbt model. */
     @Attribute
     @Singular
     SortedSet<IDbtModelColumn> dbtModelColumns;
@@ -196,7 +196,7 @@ public class DbtModel extends Asset implements IDbtModel, IDbt, ICatalog, IAsset
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -206,7 +206,7 @@ public class DbtModel extends Asset implements IDbtModel, IDbt, ICatalog, IAsset
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;

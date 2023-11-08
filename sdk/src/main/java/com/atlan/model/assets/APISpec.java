@@ -57,32 +57,32 @@ public class APISpec extends Asset implements IAPISpec, IAPI, ICatalog, IAsset, 
     @Attribute
     Boolean apiIsAuthOptional;
 
-    /** TBC */
+    /** Paths that exist within this API specification. */
     @Attribute
     @Singular
     SortedSet<IAPIPath> apiPaths;
 
-    /** TBC */
+    /** Email address for a contact responsible for the API specification. */
     @Attribute
     String apiSpecContactEmail;
 
-    /** TBC */
+    /** Name of the contact responsible for the API specification. */
     @Attribute
     String apiSpecContactName;
 
-    /** TBC */
+    /** URL pointing to the contact information. */
     @Attribute
     String apiSpecContactURL;
 
-    /** TBC */
+    /** Version of the contract for the API specification. */
     @Attribute
     String apiSpecContractVersion;
 
-    /** TBC */
+    /** Name of the license under which the API specification is available. */
     @Attribute
     String apiSpecLicenseName;
 
-    /** TBC */
+    /** URL to the license under which the API specification is available. */
     @Attribute
     String apiSpecLicenseURL;
 
@@ -94,11 +94,11 @@ public class APISpec extends Asset implements IAPISpec, IAPI, ICatalog, IAsset, 
     @Attribute
     String apiSpecQualifiedName;
 
-    /** TBC */
+    /** Service alias for the API specification. */
     @Attribute
     String apiSpecServiceAlias;
 
-    /** TBC */
+    /** URL to the terms of service for the API specification. */
     @Attribute
     String apiSpecTermsOfServiceURL;
 
@@ -115,7 +115,7 @@ public class APISpec extends Asset implements IAPISpec, IAPI, ICatalog, IAsset, 
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -125,7 +125,7 @@ public class APISpec extends Asset implements IAPISpec, IAPI, ICatalog, IAsset, 
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;

@@ -32,10 +32,10 @@ public interface ISalesforce {
 
     public static final String TYPE_NAME = "Salesforce";
 
-    /** TBC */
+    /** Name of this asset in the Salesforce API. */
     KeywordTextField API_NAME = new KeywordTextField("apiName", "apiName.keyword", "apiName");
 
-    /** TBC */
+    /** Fully-qualified name of the organization in Salesforce. */
     KeywordField ORGANIZATION_QUALIFIED_NAME =
             new KeywordField("organizationQualifiedName", "organizationQualifiedName");
 
@@ -63,7 +63,7 @@ public interface ISalesforce {
     /** TBC */
     String getAnnouncementUpdatedBy();
 
-    /** TBC */
+    /** Name of this asset in the Salesforce API. */
     String getApiName();
 
     /** TBC */
@@ -246,7 +246,7 @@ public interface ISalesforce {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -288,7 +288,7 @@ public interface ISalesforce {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -312,13 +312,13 @@ public interface ISalesforce {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -327,13 +327,13 @@ public interface ISalesforce {
     /** TBC */
     String getName();
 
-    /** TBC */
+    /** Fully-qualified name of the organization in Salesforce. */
     String getOrganizationQualifiedName();
 
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -348,7 +348,7 @@ public interface ISalesforce {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

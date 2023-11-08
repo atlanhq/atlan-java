@@ -27,7 +27,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Instance of a Looker look in Atlan.
+ * Instance of a Looker Look in Atlan. Looks are saved visualizations used to understand and analyze data. They can be shared and reused in multiple dashboards.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -45,15 +45,15 @@ public class LookerLook extends Asset implements ILookerLook, ILooker, IBI, ICat
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Dashboard in which this Look is used. */
     @Attribute
     ILookerDashboard dashboard;
 
-    /** TBC */
+    /** Folder in which this Look exists. */
     @Attribute
     ILookerFolder folder;
 
-    /** TBC */
+    /** Name of the folder in which the Look is organized. */
     @Attribute
     String folderName;
 
@@ -62,16 +62,16 @@ public class LookerLook extends Asset implements ILookerLook, ILooker, IBI, ICat
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
-    /** TBC */
+    /** Model in which this Look exists. */
     @Attribute
     ILookerModel model;
 
-    /** TBC */
+    /** Name of the model in which this Look exists. */
     @Attribute
     String modelName;
 
@@ -80,44 +80,44 @@ public class LookerLook extends Asset implements ILookerLook, ILooker, IBI, ICat
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** TBC */
+    /** Deprecated. */
     @Attribute
     ILookerQuery query;
 
-    /** TBC */
+    /** Identifier of the Look's content metadata, from Looker. */
     @Attribute
     Integer sourceContentMetadataId;
 
-    /** TBC */
+    /** Time (epoch) when the Look was last accessed by a user, in milliseconds. */
     @Attribute
     Long sourceLastAccessedAt;
 
-    /** TBC */
+    /** Time (epoch) when the Look was last viewed by a user, in milliseconds. */
     @Attribute
     Long sourceLastViewedAt;
 
-    /** TBC */
+    /** Identifier of the query for the Look, from Looker. */
     @Attribute
     Integer sourceQueryId;
 
-    /** TBC */
+    /** Identifier of the user who created the Look, from Looker. */
     @Attribute
     Integer sourceUserId;
 
-    /** TBC */
+    /** Number of times the look has been viewed in the Looker web UI. */
     @Attribute
     Integer sourceViewCount;
 
-    /** TBC */
+    /** Identifier of the user that last updated the Look, from Looker. */
     @Attribute
     Integer sourcelastUpdaterId;
 
-    /** TBC */
+    /** Tiles that exist within this Look. */
     @Attribute
     ILookerTile tile;
 

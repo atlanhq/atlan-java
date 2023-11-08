@@ -53,12 +53,12 @@ public class MicroStrategyCube extends Asset
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
-    /** Attributes used by the cube. */
+    /** Attributes used by this cube. */
     @Attribute
     @Singular
     SortedSet<IMicroStrategyAttribute> microStrategyAttributes;
@@ -85,7 +85,7 @@ public class MicroStrategyCube extends Asset
     @Attribute
     String microStrategyCubeQuery;
 
-    /** Whether the cube is an OLAP or MTDI cube. */
+    /** Type of cube, for example: OLAP or MTDI. */
     @Attribute
     String microStrategyCubeType;
 
@@ -98,12 +98,12 @@ public class MicroStrategyCube extends Asset
     @Singular("putMicroStrategyLocation")
     List<Map<String, String>> microStrategyLocation;
 
-    /** Metrics where the cube is used. */
+    /** Metrics that use this cube. */
     @Attribute
     @Singular
     SortedSet<IMicroStrategyMetric> microStrategyMetrics;
 
-    /** Project containing the cube. */
+    /** Project in which this cube exists. */
     @Attribute
     IMicroStrategyProject microStrategyProject;
 
@@ -130,7 +130,7 @@ public class MicroStrategyCube extends Asset
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;

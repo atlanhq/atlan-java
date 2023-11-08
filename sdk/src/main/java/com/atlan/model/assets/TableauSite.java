@@ -50,7 +50,7 @@ public class TableauSite extends Asset implements ITableauSite, ITableau, IBI, I
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -60,12 +60,12 @@ public class TableauSite extends Asset implements ITableauSite, ITableau, IBI, I
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** TBC */
+    /** Projects that exist within this site. */
     @Attribute
     @Singular
     SortedSet<ITableauProject> projects;

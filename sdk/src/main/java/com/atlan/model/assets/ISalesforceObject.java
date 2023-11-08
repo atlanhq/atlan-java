@@ -33,25 +33,25 @@ public interface ISalesforceObject {
 
     public static final String TYPE_NAME = "SalesforceObject";
 
-    /** Number of fields in the object. */
+    /** Number of fields in this object. */
     NumericField FIELD_COUNT = new NumericField("fieldCount", "fieldCount");
 
-    /** TBC */
+    /** Fields that exist within this object. */
     RelationField FIELDS = new RelationField("fields");
 
-    /** Whether the object is a custom object (true) or not (false). */
+    /** Whether this object is a custom object (true) or not (false). */
     BooleanField IS_CUSTOM = new BooleanField("isCustom", "isCustom");
 
-    /** TBC */
+    /** Whether this object is mergable (true) or not (false). */
     BooleanField IS_MERGABLE = new BooleanField("isMergable", "isMergable");
 
-    /** TBC */
+    /** Whether this object is queryable (true) or not (false). */
     BooleanField IS_QUERYABLE = new BooleanField("isQueryable", "isQueryable");
 
     /** TBC */
     RelationField LOOKUP_FIELDS = new RelationField("lookupFields");
 
-    /** TBC */
+    /** Organization in which this object exists. */
     RelationField ORGANIZATION = new RelationField("organization");
 
     /** TBC */
@@ -261,7 +261,7 @@ public interface ISalesforceObject {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -294,10 +294,10 @@ public interface ISalesforceObject {
     /** TBC */
     String getDisplayName();
 
-    /** Number of fields in the object. */
+    /** Number of fields in this object. */
     Long getFieldCount();
 
-    /** TBC */
+    /** Fields that exist within this object. */
     SortedSet<ISalesforceField> getFields();
 
     /** TBC */
@@ -309,13 +309,13 @@ public interface ISalesforceObject {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
     Boolean getIsAIGenerated();
 
-    /** Whether the object is a custom object (true) or not (false). */
+    /** Whether this object is a custom object (true) or not (false). */
     Boolean getIsCustom();
 
     /** TBC */
@@ -324,10 +324,10 @@ public interface ISalesforceObject {
     /** TBC */
     Boolean getIsEditable();
 
-    /** TBC */
+    /** Whether this object is mergable (true) or not (false). */
     Boolean getIsMergable();
 
-    /** TBC */
+    /** Whether this object is queryable (true) or not (false). */
     Boolean getIsQueryable();
 
     /** TBC */
@@ -342,7 +342,7 @@ public interface ISalesforceObject {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
@@ -351,7 +351,7 @@ public interface ISalesforceObject {
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -360,7 +360,7 @@ public interface ISalesforceObject {
     /** TBC */
     String getName();
 
-    /** TBC */
+    /** Organization in which this object exists. */
     ISalesforceOrganization getOrganization();
 
     /** TBC */
@@ -369,7 +369,7 @@ public interface ISalesforceObject {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -384,7 +384,7 @@ public interface ISalesforceObject {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

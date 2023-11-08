@@ -10,7 +10,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
 /**
- * Detailed information about the attachment of a classification on an Atlan asset, synced from source.
+ * Detailed information about the attachment of a tag to an Atlan asset, synced from source.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -29,40 +29,40 @@ public class SourceTagAttachment extends AtlanStruct {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Name of the tag asset in Atlan. */
+    /** Simple name of the source tag. */
     String sourceTagName;
 
-    /** Unique name of the tag asset in Atlan. */
+    /** Unique name of the source tag, in Atlan. */
     String sourceTagQualifiedName;
 
-    /** Unique identifier of the tag asset in Atlan. */
+    /** Unique identifier (GUID) of the source tag, in Atlan. */
     String sourceTagGuid;
 
-    /** Name of the connector that is the source of the tag. */
+    /** Connector that is the source of the tag. */
     String sourceTagConnectorName;
 
-    /** Value of the attached tag within the source system. */
+    /** Value of the tag attachment, from the source. */
     List<SourceTagAttachmentValue> sourceTagValue;
 
-    /** Whether the tag has been synced with the source (true) or not (false). */
+    /** Whether the tag attachment has been synced at the source (true) or not (false). */
     Boolean isSourceTagSynced;
 
-    /** Time at which the tag was sycned with the source. */
+    /** Time (epoch) when the tag attachment was synced at the source, in milliseconds. */
     Long sourceTagSyncTimestamp;
 
-    /** Error message if the tag sync with the source failed. */
+    /** Error message if the tag attachment sync at the source failed. */
     String sourceTagSyncError;
 
     /**
      * Quickly create a new SourceTagAttachment.
-     * @param sourceTagName Name of the tag asset in Atlan.
-     * @param sourceTagQualifiedName Unique name of the tag asset in Atlan.
-     * @param sourceTagGuid Unique identifier of the tag asset in Atlan.
-     * @param sourceTagConnectorName Name of the connector that is the source of the tag.
-     * @param sourceTagValue Value of the attached tag within the source system.
-     * @param isSourceTagSynced Whether the tag has been synced with the source (true) or not (false).
-     * @param sourceTagSyncTimestamp Time at which the tag was sycned with the source.
-     * @param sourceTagSyncError Error message if the tag sync with the source failed.
+     * @param sourceTagName Simple name of the source tag.
+     * @param sourceTagQualifiedName Unique name of the source tag, in Atlan.
+     * @param sourceTagGuid Unique identifier (GUID) of the source tag, in Atlan.
+     * @param sourceTagConnectorName Connector that is the source of the tag.
+     * @param sourceTagValue Value of the tag attachment, from the source.
+     * @param isSourceTagSynced Whether the tag attachment has been synced at the source (true) or not (false).
+     * @param sourceTagSyncTimestamp Time (epoch) when the tag attachment was synced at the source, in milliseconds.
+     * @param sourceTagSyncError Error message if the tag attachment sync at the source failed.
      * @return a SourceTagAttachment with the provided information
      */
     public static SourceTagAttachment of(

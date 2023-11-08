@@ -50,7 +50,7 @@ public class ADLSContainer extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Account this container exists within. */
+    /** Account in which this container exists. */
     @Attribute
     IADLSAccount adlsAccount;
 
@@ -62,23 +62,23 @@ public class ADLSContainer extends Asset
     @Attribute
     String adlsAccountSecondaryLocation;
 
-    /** TBC */
+    /** Encryption scope of this container. */
     @Attribute
     String adlsContainerEncryptionScope;
 
-    /** TBC */
+    /** Lease state of this container. */
     @Attribute
     ADLSLeaseState adlsContainerLeaseState;
 
-    /** TBC */
+    /** Lease status of this container. */
     @Attribute
     ADLSLeaseStatus adlsContainerLeaseStatus;
 
-    /** TBC */
+    /** URL of this container. */
     @Attribute
     String adlsContainerUrl;
 
-    /** TBC */
+    /** Whether this container supports version-level immutability (true) or not (false). */
     @Attribute
     Boolean adlsContainerVersionLevelImmutabilitySupport;
 
@@ -109,7 +109,7 @@ public class ADLSContainer extends Asset
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -119,7 +119,7 @@ public class ADLSContainer extends Asset
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;

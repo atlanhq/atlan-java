@@ -31,7 +31,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Instance of a category in Atlan.
+ * Instance of a category in Atlan, an organizational construct for glossary terms.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter

@@ -48,19 +48,19 @@ public class TableauDatasourceField extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Datasource in which this field exists. */
     @Attribute
     ITableauDatasource datasource;
 
-    /** TBC */
+    /** Type of this datasource field. */
     @Attribute
     String datasourceFieldType;
 
-    /** TBC */
+    /** Unique name of the datasource in which this datasource field exists. */
     @Attribute
     String datasourceQualifiedName;
 
-    /** TBC */
+    /** Name used internally in Tableau to uniquely identify this field. */
     @Attribute
     String fullyQualifiedName;
 
@@ -69,7 +69,7 @@ public class TableauDatasourceField extends Asset
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -79,68 +79,68 @@ public class TableauDatasourceField extends Asset
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** TBC */
+    /** List of top-level projects and their nested child projects. */
     @Attribute
     @Singular("addProjectHierarchy")
     List<Map<String, String>> projectHierarchy;
 
-    /** TBC */
+    /** Unique name of the project in which this datasource field exists. */
     @Attribute
     String projectQualifiedName;
 
-    /** TBC */
+    /** Unique name of the site in which this datasource field exists. */
     @Attribute
     String siteQualifiedName;
 
-    /** TBC */
+    /** Bin size of this field. */
     @Attribute
     String tableauDatasourceFieldBinSize;
 
-    /** TBC */
+    /** Data category of this field. */
     @Attribute
     String tableauDatasourceFieldDataCategory;
 
-    /** TBC */
+    /** Data type of this field. */
     @Attribute
     String tableauDatasourceFieldDataType;
 
-    /** TBC */
+    /** Formula for this field. */
     @Attribute
     String tableauDatasourceFieldFormula;
 
-    /** TBC */
+    /** Role of this field, for example: 'dimension', 'measure', or 'unknown'. */
     @Attribute
     String tableauDatasourceFieldRole;
 
-    /** TBC */
+    /** Unique name of the top-level project in which this datasource field exists. */
     @Attribute
     String topLevelProjectQualifiedName;
 
-    /** TBC */
+    /** Columns upstream to this field. */
     @Attribute
     @Singular
     List<Map<String, String>> upstreamColumns;
 
-    /** TBC */
+    /** Fields upstream to this field. */
     @Attribute
     @Singular
     List<Map<String, String>> upstreamFields;
 
-    /** TBC */
+    /** Tables upstream to this datasource field. */
     @Attribute
     @Singular
     List<Map<String, String>> upstreamTables;
 
-    /** TBC */
+    /** Unique name of the workbook in which this datasource field exists. */
     @Attribute
     String workbookQualifiedName;
 
-    /** TBC */
+    /** Worksheets that use this datasource field. */
     @Attribute
     @Singular
     SortedSet<ITableauWorksheet> worksheets;

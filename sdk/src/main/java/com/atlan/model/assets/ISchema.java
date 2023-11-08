@@ -35,25 +35,25 @@ public interface ISchema {
     /** Database in which this schema exists. */
     RelationField DATABASE = new RelationField("database");
 
-    /** TBC */
+    /** Functions that exist within this schema. */
     RelationField FUNCTIONS = new RelationField("functions");
 
     /** Materialized views that exist within this schema. */
     RelationField MATERIALIZED_VIEWS = new RelationField("materialisedViews");
 
-    /** Stored procedures (routines) that are defined within this schema. */
+    /** Stored procedures that exist within this schema. */
     RelationField PROCEDURES = new RelationField("procedures");
 
-    /** TBC */
+    /** Snowflake dynamic tables that exist within this schema. */
     RelationField SNOWFLAKE_DYNAMIC_TABLES = new RelationField("snowflakeDynamicTables");
 
-    /** Snowflake Pipes that are defined within this schema. */
+    /** Snowflake pipes that exist within this schema. */
     RelationField SNOWFLAKE_PIPES = new RelationField("snowflakePipes");
 
-    /** Snowflake Streams that are defined within this schema. */
+    /** Snowflake streams that exist within this schema. */
     RelationField SNOWFLAKE_STREAMS = new RelationField("snowflakeStreams");
 
-    /** Tags applied to this schema in Snowflake. */
+    /** Snowflake tags that exist within this schema. */
     RelationField SNOWFLAKE_TAGS = new RelationField("snowflakeTags");
 
     /** Number of tables in this schema. */
@@ -272,7 +272,7 @@ public interface ISchema {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -326,7 +326,7 @@ public interface ISchema {
     /** TBC */
     SortedSet<IFile> getFiles();
 
-    /** TBC */
+    /** Functions that exist within this schema. */
     SortedSet<IFunction> getFunctions();
 
     /** TBC */
@@ -335,7 +335,7 @@ public interface ISchema {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -365,7 +365,7 @@ public interface ISchema {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** Materialized views that exist within this schema. */
@@ -374,7 +374,7 @@ public interface ISchema {
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -386,7 +386,7 @@ public interface ISchema {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -398,7 +398,7 @@ public interface ISchema {
     /** TBC */
     Double getPopularityScore();
 
-    /** Stored procedures (routines) that are defined within this schema. */
+    /** Stored procedures that exist within this schema. */
     SortedSet<IProcedure> getProcedures();
 
     /** TBC */
@@ -416,7 +416,7 @@ public interface ISchema {
     /** TBC */
     Map<String, Long> getQueryUserMap();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */
@@ -431,16 +431,16 @@ public interface ISchema {
     /** TBC */
     SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
 
-    /** TBC */
+    /** Snowflake dynamic tables that exist within this schema. */
     SortedSet<ISnowflakeDynamicTable> getSnowflakeDynamicTables();
 
-    /** Snowflake Pipes that are defined within this schema. */
+    /** Snowflake pipes that exist within this schema. */
     SortedSet<ISnowflakePipe> getSnowflakePipes();
 
-    /** Snowflake Streams that are defined within this schema. */
+    /** Snowflake streams that exist within this schema. */
     SortedSet<ISnowflakeStream> getSnowflakeStreams();
 
-    /** Tags applied to this schema in Snowflake. */
+    /** Snowflake tags that exist within this schema. */
     SortedSet<ISnowflakeTag> getSnowflakeTags();
 
     /** TBC */

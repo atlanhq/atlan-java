@@ -33,13 +33,13 @@ public interface IModeQuery {
 
     public static final String TYPE_NAME = "ModeQuery";
 
-    /** TBC */
+    /** Charts that exist within this query. */
     RelationField MODE_CHARTS = new RelationField("modeCharts");
 
     /** TBC */
     TextField MODE_RAW_QUERY = new TextField("modeRawQuery", "modeRawQuery");
 
-    /** TBC */
+    /** Report in which this query exists. */
     RelationField MODE_REPORT = new RelationField("modeReport");
 
     /** TBC */
@@ -249,7 +249,7 @@ public interface IModeQuery {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -291,7 +291,7 @@ public interface IModeQuery {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -315,19 +315,19 @@ public interface IModeQuery {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
     SortedSet<IMetric> getMetrics();
 
-    /** TBC */
+    /** Charts that exist within this query. */
     SortedSet<IModeChart> getModeCharts();
 
     /** TBC */
@@ -342,7 +342,7 @@ public interface IModeQuery {
     /** TBC */
     String getModeRawQuery();
 
-    /** TBC */
+    /** Report in which this query exists. */
     IModeReport getModeReport();
 
     /** TBC */
@@ -372,7 +372,7 @@ public interface IModeQuery {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -387,7 +387,7 @@ public interface IModeQuery {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

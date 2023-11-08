@@ -24,7 +24,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a QuickSight Analysis asset in Atlan.
+ * Instance of a QuickSight analysis in Atlan. In QuickSight, you analyze and visualize your data in analyses, which can be published as a dashboard to share with others.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -33,25 +33,25 @@ public interface IQuickSightAnalysis {
 
     public static final String TYPE_NAME = "QuickSightAnalysis";
 
-    /** Calculated fields of quicksight analysis  */
+    /** List of field names calculated by this analysis. */
     KeywordField QUICK_SIGHT_ANALYSIS_CALCULATED_FIELDS =
             new KeywordField("quickSightAnalysisCalculatedFields", "quickSightAnalysisCalculatedFields");
 
-    /** Filter groups used for quicksight analysis */
+    /** List of filter groups used for this analysis. */
     KeywordField QUICK_SIGHT_ANALYSIS_FILTER_GROUPS =
             new KeywordField("quickSightAnalysisFilterGroups", "quickSightAnalysisFilterGroups");
 
     /** TBC */
     RelationField QUICK_SIGHT_ANALYSIS_FOLDERS = new RelationField("quickSightAnalysisFolders");
 
-    /** parameters used for quicksight analysis  */
+    /** List of parameters used for this analysis. */
     KeywordField QUICK_SIGHT_ANALYSIS_PARAMETER_DECLARATIONS =
             new KeywordField("quickSightAnalysisParameterDeclarations", "quickSightAnalysisParameterDeclarations");
 
-    /** Status of quicksight analysis */
+    /** Status of this analysis, for example: CREATION_IN_PROGRESS, UPDATE_SUCCESSFUL, etc. */
     KeywordField QUICK_SIGHT_ANALYSIS_STATUS = new KeywordField("quickSightAnalysisStatus", "quickSightAnalysisStatus");
 
-    /** TBC */
+    /** Visuals that exist within this analysis. */
     RelationField QUICK_SIGHT_ANALYSIS_VISUALS = new RelationField("quickSightAnalysisVisuals");
 
     /** TBC */
@@ -258,7 +258,7 @@ public interface IQuickSightAnalysis {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -300,7 +300,7 @@ public interface IQuickSightAnalysis {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -324,13 +324,13 @@ public interface IQuickSightAnalysis {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -342,7 +342,7 @@ public interface IQuickSightAnalysis {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -357,22 +357,22 @@ public interface IQuickSightAnalysis {
     /** TBC */
     String getQualifiedName();
 
-    /** Calculated fields of quicksight analysis  */
+    /** List of field names calculated by this analysis. */
     SortedSet<String> getQuickSightAnalysisCalculatedFields();
 
-    /** Filter groups used for quicksight analysis */
+    /** List of filter groups used for this analysis. */
     SortedSet<String> getQuickSightAnalysisFilterGroups();
 
     /** TBC */
     SortedSet<IQuickSightFolder> getQuickSightAnalysisFolders();
 
-    /** parameters used for quicksight analysis  */
+    /** List of parameters used for this analysis. */
     SortedSet<String> getQuickSightAnalysisParameterDeclarations();
 
-    /** Status of quicksight analysis */
+    /** Status of this analysis, for example: CREATION_IN_PROGRESS, UPDATE_SUCCESSFUL, etc. */
     QuickSightAnalysisStatus getQuickSightAnalysisStatus();
 
-    /** TBC */
+    /** Visuals that exist within this analysis. */
     SortedSet<IQuickSightAnalysisVisual> getQuickSightAnalysisVisuals();
 
     /** TBC */
@@ -384,7 +384,7 @@ public interface IQuickSightAnalysis {
     /** TBC */
     String getQuickSightSheetName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

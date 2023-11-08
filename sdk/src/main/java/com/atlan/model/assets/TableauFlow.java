@@ -47,7 +47,7 @@ public class TableauFlow extends Asset implements ITableauFlow, ITableau, IBI, I
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** List of fields that are inputs to this flow. */
     @Attribute
     @Singular
     List<Map<String, String>> inputFields;
@@ -57,12 +57,12 @@ public class TableauFlow extends Asset implements ITableauFlow, ITableau, IBI, I
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
-    /** TBC */
+    /** List of fields that are outputs from this flow. */
     @Attribute
     @Singular
     List<Map<String, String>> outputFields;
@@ -72,34 +72,34 @@ public class TableauFlow extends Asset implements ITableauFlow, ITableau, IBI, I
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** TBC */
+    /** List of steps that are outputs from this flow. */
     @Attribute
     @Singular
     List<Map<String, String>> outputSteps;
 
-    /** TBC */
+    /** Project in which this flow exists. */
     @Attribute
     ITableauProject project;
 
-    /** TBC */
+    /** List of top-level projects with their nested child projects. */
     @Attribute
     @Singular("addProjectHierarchy")
     List<Map<String, String>> projectHierarchy;
 
-    /** TBC */
+    /** Unique name of the project in which this flow exists. */
     @Attribute
     String projectQualifiedName;
 
-    /** TBC */
+    /** Unique name of the site in which this flow exists. */
     @Attribute
     String siteQualifiedName;
 
-    /** TBC */
+    /** Unique name of the top-level project in which this flow exists. */
     @Attribute
     String topLevelProjectQualifiedName;
 

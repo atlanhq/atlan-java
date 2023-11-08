@@ -50,12 +50,12 @@ public class ModeQuery extends Asset implements IModeQuery, IMode, IBI, ICatalog
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
-    /** TBC */
+    /** Charts that exist within this query. */
     @Attribute
     @Singular
     SortedSet<IModeChart> modeCharts;
@@ -76,7 +76,7 @@ public class ModeQuery extends Asset implements IModeQuery, IMode, IBI, ICatalog
     @Attribute
     String modeRawQuery;
 
-    /** TBC */
+    /** Report in which this query exists. */
     @Attribute
     IModeReport modeReport;
 
@@ -113,7 +113,7 @@ public class ModeQuery extends Asset implements IModeQuery, IMode, IBI, ICatalog
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;

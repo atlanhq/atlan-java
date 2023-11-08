@@ -44,16 +44,16 @@ public interface IMCMonitor {
     /** Assets impacted by this monitor. */
     RelationField MC_MONITOR_ASSETS = new RelationField("mcMonitorAssets");
 
-    /** TBC */
+    /** Rate at which this monitor is breached. */
     NumericField MC_MONITOR_BREACH_RATE = new NumericField("mcMonitorBreachRate", "mcMonitorBreachRate");
 
-    /** Unique identifier for the monitor. */
+    /** Unique identifier for this monitor, from Monte Carlo. */
     KeywordField MC_MONITOR_ID = new KeywordField("mcMonitorId", "mcMonitorId");
 
     /** Number of incidents associated with this monitor. */
     NumericField MC_MONITOR_INCIDENT_COUNT = new NumericField("mcMonitorIncidentCount", "mcMonitorIncidentCount");
 
-    /** Namespace of the monitor. */
+    /** Namespace of this monitor. */
     KeywordTextField MC_MONITOR_NAMESPACE =
             new KeywordTextField("mcMonitorNamespace", "mcMonitorNamespace.keyword", "mcMonitorNamespace");
 
@@ -82,19 +82,19 @@ public interface IMCMonitor {
     TextField MC_MONITOR_RULE_SCHEDULE_CONFIG_HUMANIZED =
             new TextField("mcMonitorRuleScheduleConfigHumanized", "mcMonitorRuleScheduleConfigHumanized");
 
-    /** Type of rule for the monitor. */
+    /** Type of rule for this monitor. */
     KeywordField MC_MONITOR_RULE_TYPE = new KeywordField("mcMonitorRuleType", "mcMonitorRuleType");
 
-    /** Type of schedule for the monitor, for example fixed or dynamic. */
+    /** Type of schedule for this monitor, for example: fixed or dynamic. */
     KeywordField MC_MONITOR_SCHEDULE_TYPE = new KeywordField("mcMonitorScheduleType", "mcMonitorScheduleType");
 
-    /** Status of the monitor. */
+    /** Status of this monitor. */
     KeywordField MC_MONITOR_STATUS = new KeywordField("mcMonitorStatus", "mcMonitorStatus");
 
-    /** Type of monitor, for example field health (stats) or dimension tracking (categories). */
+    /** Type of this monitor, for example: field health (stats) or dimension tracking (categories). */
     KeywordField MC_MONITOR_TYPE = new KeywordField("mcMonitorType", "mcMonitorType");
 
-    /** Name of the warehouse for the monitor. */
+    /** Name of the warehouse for this monitor. */
     KeywordField MC_MONITOR_WAREHOUSE = new KeywordField("mcMonitorWarehouse", "mcMonitorWarehouse");
 
     /** TBC */
@@ -301,7 +301,7 @@ public interface IMCMonitor {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -343,7 +343,7 @@ public interface IMCMonitor {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -367,13 +367,13 @@ public interface IMCMonitor {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<String> getMcAssetQualifiedNames();
 
-    /** TBC */
+    /** Incidents that exist within this monitor. */
     SortedSet<IMCIncident> getMcIncidents();
 
     /** TBC */
@@ -385,16 +385,16 @@ public interface IMCMonitor {
     /** Assets impacted by this monitor. */
     SortedSet<IAsset> getMcMonitorAssets();
 
-    /** TBC */
+    /** Rate at which this monitor is breached. */
     Double getMcMonitorBreachRate();
 
-    /** Unique identifier for the monitor. */
+    /** Unique identifier for this monitor, from Monte Carlo. */
     String getMcMonitorId();
 
     /** Number of incidents associated with this monitor. */
     Long getMcMonitorIncidentCount();
 
-    /** Namespace of the monitor. */
+    /** Namespace of this monitor. */
     String getMcMonitorNamespace();
 
     /** Comparison logic used for the rule. */
@@ -418,22 +418,22 @@ public interface IMCMonitor {
     /** Readable description of the schedule for the rule. */
     String getMcMonitorRuleScheduleConfigHumanized();
 
-    /** Type of rule for the monitor. */
+    /** Type of rule for this monitor. */
     String getMcMonitorRuleType();
 
-    /** Type of schedule for the monitor, for example fixed or dynamic. */
+    /** Type of schedule for this monitor, for example: fixed or dynamic. */
     String getMcMonitorScheduleType();
 
-    /** Status of the monitor. */
+    /** Status of this monitor. */
     String getMcMonitorStatus();
 
-    /** Type of monitor, for example field health (stats) or dimension tracking (categories). */
+    /** Type of this monitor, for example: field health (stats) or dimension tracking (categories). */
     String getMcMonitorType();
 
-    /** Name of the warehouse for the monitor. */
+    /** Name of the warehouse for this monitor. */
     String getMcMonitorWarehouse();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -445,7 +445,7 @@ public interface IMCMonitor {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -460,7 +460,7 @@ public interface IMCMonitor {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

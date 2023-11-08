@@ -25,7 +25,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a QuickSight Dataset in Atlan.
+ * Instance of a QuickSight dataset in Atlan. These are an internal data model built to be used by analysis. In a dataset, data can be pulled from different sources, joined, filtered, and columns translated to more business-friendly names when preparing the data for visualizing in the analysis layer.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -34,17 +34,17 @@ public interface IQuickSightDataset {
 
     public static final String TYPE_NAME = "QuickSightDataset";
 
-    /** Quicksight dataset column count indicates number of columns present in the dataset */
+    /** Number of columns present in this dataset. */
     NumericField QUICK_SIGHT_DATASET_COLUMN_COUNT =
             new NumericField("quickSightDatasetColumnCount", "quickSightDatasetColumnCount");
 
-    /** TBC */
+    /** Fields that exist within this dataset. */
     RelationField QUICK_SIGHT_DATASET_FIELDS = new RelationField("quickSightDatasetFields");
 
     /** TBC */
     RelationField QUICK_SIGHT_DATASET_FOLDERS = new RelationField("quickSightDatasetFolders");
 
-    /** Quicksight dataset importMode indicates a value that indicates whether you want to import the data into SPICE */
+    /** Import mode for this dataset, for example: SPICE or DIRECT_QUERY. */
     KeywordField QUICK_SIGHT_DATASET_IMPORT_MODE =
             new KeywordField("quickSightDatasetImportMode", "quickSightDatasetImportMode");
 
@@ -252,7 +252,7 @@ public interface IQuickSightDataset {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -294,7 +294,7 @@ public interface IQuickSightDataset {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -318,13 +318,13 @@ public interface IQuickSightDataset {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -336,7 +336,7 @@ public interface IQuickSightDataset {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -351,16 +351,16 @@ public interface IQuickSightDataset {
     /** TBC */
     String getQualifiedName();
 
-    /** Quicksight dataset column count indicates number of columns present in the dataset */
+    /** Number of columns present in this dataset. */
     Long getQuickSightDatasetColumnCount();
 
-    /** TBC */
+    /** Fields that exist within this dataset. */
     SortedSet<IQuickSightDatasetField> getQuickSightDatasetFields();
 
     /** TBC */
     SortedSet<IQuickSightFolder> getQuickSightDatasetFolders();
 
-    /** Quicksight dataset importMode indicates a value that indicates whether you want to import the data into SPICE */
+    /** Import mode for this dataset, for example: SPICE or DIRECT_QUERY. */
     QuickSightDatasetImportMode getQuickSightDatasetImportMode();
 
     /** TBC */
@@ -372,7 +372,7 @@ public interface IQuickSightDataset {
     /** TBC */
     String getQuickSightSheetName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

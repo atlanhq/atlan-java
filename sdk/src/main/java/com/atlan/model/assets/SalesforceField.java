@@ -50,19 +50,19 @@ public class SalesforceField extends Asset
     @Attribute
     String apiName;
 
-    /** Data type of values in the field. */
+    /** Data type of values in this field. */
     @Attribute
     String dataType;
 
-    /** TBC */
+    /** Formula for the default value for this field. */
     @Attribute
     String defaultValueFormula;
 
-    /** TBC */
+    /** Formula for this field, if it is a calculated field. */
     @Attribute
     String formula;
 
-    /** TBC */
+    /** Help text for this field. */
     @Attribute
     String inlineHelpText;
 
@@ -71,32 +71,32 @@ public class SalesforceField extends Asset
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
-    /** TBC */
+    /** Whether this field is calculated (true) or not (false). */
     @Attribute
     Boolean isCalculated;
 
-    /** TBC */
+    /** Whether this field is case sensitive (true) or in-sensitive (false). */
     @Attribute
     Boolean isCaseSensitive;
 
-    /** TBC */
+    /** Whether this field is encrypted (true) or not (false). */
     @Attribute
     Boolean isEncrypted;
 
-    /** TBC */
+    /** Whether this field allows null values (true) or not (false). */
     @Attribute
     Boolean isNullable;
 
-    /** Whether the field references a record of multiple objects (true) or not (false). */
+    /** Whether this field references a record of multiple objects (true) or not (false). */
     @Attribute
     Boolean isPolymorphicForeignKey;
 
-    /** TBC */
+    /** Whether this field must have unique values (true) or not (false). */
     @Attribute
     Boolean isUnique;
 
@@ -105,7 +105,7 @@ public class SalesforceField extends Asset
     @Singular
     SortedSet<ISalesforceObject> lookupObjects;
 
-    /** TBC */
+    /** Maximum length of this field. */
     @Attribute
     Long maxLength;
 
@@ -113,15 +113,15 @@ public class SalesforceField extends Asset
     @Attribute
     Double numericScale;
 
-    /** TBC */
+    /** Object in which this field exists. */
     @Attribute
     ISalesforceObject object;
 
-    /** TBC */
+    /** Unique name of the object in which this field exists. */
     @Attribute
     String objectQualifiedName;
 
-    /** TBC */
+    /** Order (position) of this field within the object. */
     @Attribute
     Integer order;
 
@@ -134,7 +134,7 @@ public class SalesforceField extends Asset
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
@@ -144,7 +144,7 @@ public class SalesforceField extends Asset
     @Singular
     SortedSet<String> picklistValues;
 
-    /** Total number of digits allowed. */
+    /** Total number of digits allowed */
     @Attribute
     Integer precision;
 

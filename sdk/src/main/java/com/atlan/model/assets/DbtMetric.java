@@ -114,7 +114,7 @@ public class DbtMetric extends Asset
     @Singular
     List<DbtMetricFilter> dbtMetricFilters;
 
-    /** TBC */
+    /** Model in which this metric exists. */
     @Attribute
     IDbtModel dbtModel;
 
@@ -144,7 +144,7 @@ public class DbtMetric extends Asset
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -180,7 +180,7 @@ public class DbtMetric extends Asset
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;

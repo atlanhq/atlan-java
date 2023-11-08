@@ -47,7 +47,7 @@ public class Link extends Asset implements ILink, IResource, ICatalog, IAsset, I
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Asset to which the link is attached. */
+    /** Asset that this README describes. */
     @Attribute
     IAsset asset;
 
@@ -55,7 +55,7 @@ public class Link extends Asset implements ILink, IResource, ICatalog, IAsset, I
     @Attribute
     String icon;
 
-    /** Type of icon for the link. */
+    /** Type of icon for the link, for example: image or emoji. */
     @Attribute
     IconType iconType;
 
@@ -64,7 +64,7 @@ public class Link extends Asset implements ILink, IResource, ICatalog, IAsset, I
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -82,7 +82,7 @@ public class Link extends Asset implements ILink, IResource, ICatalog, IAsset, I
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;

@@ -27,7 +27,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Instance of a Looker view in Atlan.
+ * Instance of a Looker view in Atlan. Views represent tables of data in Looker, whether the table is database-native or created using Looker's derived table functionality.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -45,7 +45,7 @@ public class LookerView extends Asset implements ILookerView, ILooker, IBI, ICat
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Fields that exist within this view. */
     @Attribute
     @Singular
     SortedSet<ILookerField> fields;
@@ -55,16 +55,16 @@ public class LookerView extends Asset implements ILookerView, ILooker, IBI, ICat
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
-    /** File name of the looker view in the project */
+    /** File name of this view. */
     @Attribute
     String lookerViewFileName;
 
-    /** File path of the looker view in the project */
+    /** File path of this view within the project. */
     @Attribute
     String lookerViewFilePath;
 
@@ -73,16 +73,16 @@ public class LookerView extends Asset implements ILookerView, ILooker, IBI, ICat
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** TBC */
+    /** Project in which this view exists. */
     @Attribute
     ILookerProject project;
 
-    /** TBC */
+    /** Name of the project in which this view exists. */
     @Attribute
     String projectName;
 

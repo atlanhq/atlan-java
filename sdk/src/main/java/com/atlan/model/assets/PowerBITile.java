@@ -28,7 +28,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Instance of a Power BI tile in Atlan.
+ * Instance of a Power BI tile in Atlan. Tiles are snapshots of data, pinned to a dashboard.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -46,15 +46,15 @@ public class PowerBITile extends Asset implements IPowerBITile, IPowerBI, IBI, I
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Dashboard in which this tile exists. */
     @Attribute
     IPowerBIDashboard dashboard;
 
-    /** TBC */
+    /** Unique name of the dashboard in which this tile is pinned. */
     @Attribute
     String dashboardQualifiedName;
 
-    /** TBC */
+    /** Dataset in which this tile exists. */
     @Attribute
     IPowerBIDataset dataset;
 
@@ -63,7 +63,7 @@ public class PowerBITile extends Asset implements IPowerBITile, IPowerBI, IBI, I
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -73,7 +73,7 @@ public class PowerBITile extends Asset implements IPowerBITile, IPowerBI, IBI, I
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
@@ -94,11 +94,11 @@ public class PowerBITile extends Asset implements IPowerBITile, IPowerBI, IBI, I
     @Attribute
     String powerBITableQualifiedName;
 
-    /** TBC */
+    /** Report in which this tile exists. */
     @Attribute
     IPowerBIReport report;
 
-    /** TBC */
+    /** Unique name of the workspace in which this tile exists. */
     @Attribute
     String workspaceQualifiedName;
 

@@ -32,16 +32,16 @@ public interface IModeCollection {
 
     public static final String TYPE_NAME = "ModeCollection";
 
-    /** TBC */
+    /** State of this collection. */
     KeywordField MODE_COLLECTION_STATE = new KeywordField("modeCollectionState", "modeCollectionState");
 
-    /** TBC */
+    /** Type of this collection. */
     KeywordField MODE_COLLECTION_TYPE = new KeywordField("modeCollectionType", "modeCollectionType");
 
     /** TBC */
     RelationField MODE_REPORTS = new RelationField("modeReports");
 
-    /** TBC */
+    /** Workspace in which this collection exists. */
     RelationField MODE_WORKSPACE = new RelationField("modeWorkspace");
 
     /** TBC */
@@ -248,7 +248,7 @@ public interface IModeCollection {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -290,7 +290,7 @@ public interface IModeCollection {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -314,22 +314,22 @@ public interface IModeCollection {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
     SortedSet<IMetric> getMetrics();
 
-    /** TBC */
+    /** State of this collection. */
     String getModeCollectionState();
 
-    /** TBC */
+    /** Type of this collection. */
     String getModeCollectionType();
 
     /** TBC */
@@ -353,7 +353,7 @@ public interface IModeCollection {
     /** TBC */
     String getModeToken();
 
-    /** TBC */
+    /** Workspace in which this collection exists. */
     IModeWorkspace getModeWorkspace();
 
     /** TBC */
@@ -371,7 +371,7 @@ public interface IModeCollection {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -386,7 +386,7 @@ public interface IModeCollection {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

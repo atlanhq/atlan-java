@@ -22,7 +22,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a Redash dashboard in Atlan.
+ * Instance of a Redash dashboard in Atlan. These are collections of widgets.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -31,7 +31,7 @@ public interface IRedashDashboard {
 
     public static final String TYPE_NAME = "RedashDashboard";
 
-    /** Number of widgets in the Redash dashboard. */
+    /** Number of widgets in this dashboard. */
     NumericField REDASH_DASHBOARD_WIDGET_COUNT =
             new NumericField("redashDashboardWidgetCount", "redashDashboardWidgetCount");
 
@@ -239,7 +239,7 @@ public interface IRedashDashboard {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -281,7 +281,7 @@ public interface IRedashDashboard {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -305,13 +305,13 @@ public interface IRedashDashboard {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -323,7 +323,7 @@ public interface IRedashDashboard {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -338,10 +338,10 @@ public interface IRedashDashboard {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
-    /** Number of widgets in the Redash dashboard. */
+    /** Number of widgets in this dashboard. */
     Long getRedashDashboardWidgetCount();
 
     /** TBC */

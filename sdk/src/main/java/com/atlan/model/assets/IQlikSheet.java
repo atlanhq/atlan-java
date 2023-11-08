@@ -23,7 +23,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a Qlik Sheet in Atlan.
+ * Instance of a Qlik sheet in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -32,13 +32,13 @@ public interface IQlikSheet {
 
     public static final String TYPE_NAME = "QlikSheet";
 
-    /** App in which the sheet exists. */
+    /** App in which this sheet exists. */
     RelationField QLIK_APP = new RelationField("qlikApp");
 
-    /** Charts contained within the sheet. */
+    /** Charts that exist within this sheet. */
     RelationField QLIK_CHARTS = new RelationField("qlikCharts");
 
-    /** Whether the sheet is approved (true) or not (false). */
+    /** Whether this is approved (true) or not (false). */
     BooleanField QLIK_SHEET_IS_APPROVED = new BooleanField("qlikSheetIsApproved", "qlikSheetIsApproved");
 
     /** TBC */
@@ -245,7 +245,7 @@ public interface IQlikSheet {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -287,7 +287,7 @@ public interface IQlikSheet {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -311,13 +311,13 @@ public interface IQlikSheet {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -329,7 +329,7 @@ public interface IQlikSheet {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -341,7 +341,7 @@ public interface IQlikSheet {
     /** TBC */
     Double getPopularityScore();
 
-    /** App in which the sheet exists. */
+    /** App in which this sheet exists. */
     IQlikApp getQlikApp();
 
     /** TBC */
@@ -350,7 +350,7 @@ public interface IQlikSheet {
     /** TBC */
     String getQlikAppQualifiedName();
 
-    /** Charts contained within the sheet. */
+    /** Charts that exist within this sheet. */
     SortedSet<IQlikChart> getQlikCharts();
 
     /** TBC */
@@ -365,7 +365,7 @@ public interface IQlikSheet {
     /** TBC */
     String getQlikQRI();
 
-    /** Whether the sheet is approved (true) or not (false). */
+    /** Whether this is approved (true) or not (false). */
     Boolean getQlikSheetIsApproved();
 
     /** TBC */
@@ -377,7 +377,7 @@ public interface IQlikSheet {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

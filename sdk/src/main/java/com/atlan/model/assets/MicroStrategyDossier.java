@@ -53,7 +53,7 @@ public class MicroStrategyDossier extends Asset
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -76,7 +76,7 @@ public class MicroStrategyDossier extends Asset
     @Singular
     SortedSet<String> microStrategyCubeQualifiedNames;
 
-    /** List of names of the dossier chapters. */
+    /** List of chapter names in this dossier. */
     @Attribute
     @Singular
     SortedSet<String> microStrategyDossierChapterNames;
@@ -90,7 +90,7 @@ public class MicroStrategyDossier extends Asset
     @Singular("putMicroStrategyLocation")
     List<Map<String, String>> microStrategyLocation;
 
-    /** Project containing the dossier. */
+    /** Project in which this dossier exists */
     @Attribute
     IMicroStrategyProject microStrategyProject;
 
@@ -112,7 +112,7 @@ public class MicroStrategyDossier extends Asset
     @Singular
     SortedSet<String> microStrategyReportQualifiedNames;
 
-    /** Visualizations used within the dossier. */
+    /** Visualizations that exist within this dossier. */
     @Attribute
     @Singular
     SortedSet<IMicroStrategyVisualization> microStrategyVisualizations;
@@ -122,7 +122,7 @@ public class MicroStrategyDossier extends Asset
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;

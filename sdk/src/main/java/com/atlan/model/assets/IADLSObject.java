@@ -49,55 +49,55 @@ public interface IADLSObject {
     KeywordTextField ADLS_CONTAINER_QUALIFIED_NAME = new KeywordTextField(
             "adlsContainerQualifiedName", "adlsContainerQualifiedName", "adlsContainerQualifiedName.text");
 
-    /** TBC */
+    /** Access tier of this object. */
     KeywordField ADLS_OBJECT_ACCESS_TIER = new KeywordField("adlsObjectAccessTier", "adlsObjectAccessTier");
 
-    /** TBC */
+    /** Time (epoch) when the acccess tier for this object was last modified, in milliseconds. */
     NumericField ADLS_OBJECT_ACCESS_TIER_LAST_MODIFIED_TIME =
             new NumericField("adlsObjectAccessTierLastModifiedTime", "adlsObjectAccessTierLastModifiedTime");
 
-    /** TBC */
+    /** Archive status of this object. */
     KeywordField ADLS_OBJECT_ARCHIVE_STATUS = new KeywordField("adlsObjectArchiveStatus", "adlsObjectArchiveStatus");
 
-    /** TBC */
+    /** Cache control of this object. */
     TextField ADLS_OBJECT_CACHE_CONTROL = new TextField("adlsObjectCacheControl", "adlsObjectCacheControl");
 
-    /** TBC */
+    /** Language of this object's contents. */
     KeywordTextField ADLS_OBJECT_CONTENT_LANGUAGE = new KeywordTextField(
             "adlsObjectContentLanguage", "adlsObjectContentLanguage.keyword", "adlsObjectContentLanguage");
 
-    /** TBC */
+    /** MD5 hash of this object's contents. */
     KeywordField ADLS_OBJECT_CONTENT_MD5HASH = new KeywordField("adlsObjectContentMD5Hash", "adlsObjectContentMD5Hash");
 
-    /** TBC */
+    /** Content type of this object. */
     TextField ADLS_OBJECT_CONTENT_TYPE = new TextField("adlsObjectContentType", "adlsObjectContentType");
 
-    /** TBC */
+    /** State of this object's lease. */
     KeywordField ADLS_OBJECT_LEASE_STATE = new KeywordField("adlsObjectLeaseState", "adlsObjectLeaseState");
 
-    /** TBC */
+    /** Status of this object's lease. */
     KeywordField ADLS_OBJECT_LEASE_STATUS = new KeywordField("adlsObjectLeaseStatus", "adlsObjectLeaseStatus");
 
-    /** TBC */
+    /** Metadata associated with this object, from ADLS. */
     KeywordField ADLS_OBJECT_METADATA = new KeywordField("adlsObjectMetadata", "adlsObjectMetadata");
 
-    /** TBC */
+    /** Whether this object is server encrypted (true) or not (false). */
     BooleanField ADLS_OBJECT_SERVER_ENCRYPTED =
             new BooleanField("adlsObjectServerEncrypted", "adlsObjectServerEncrypted");
 
-    /** TBC */
+    /** Size of this object. */
     NumericField ADLS_OBJECT_SIZE = new NumericField("adlsObjectSize", "adlsObjectSize");
 
-    /** TBC */
+    /** Type of this object. */
     KeywordField ADLS_OBJECT_TYPE = new KeywordField("adlsObjectType", "adlsObjectType");
 
-    /** TBC */
+    /** URL of this object. */
     KeywordTextField ADLS_OBJECT_URL = new KeywordTextField("adlsObjectUrl", "adlsObjectUrl.keyword", "adlsObjectUrl");
 
-    /** TBC */
+    /** Identifier of the version of this object, from ADLS. */
     KeywordField ADLS_OBJECT_VERSION_ID = new KeywordField("adlsObjectVersionId", "adlsObjectVersionId");
 
-    /** TBC */
+    /** Whether this object supports version-level immutability (true) or not (false). */
     BooleanField ADLS_OBJECT_VERSION_LEVEL_IMMUTABILITY_SUPPORT =
             new BooleanField("adlsObjectVersionLevelImmutabilitySupport", "adlsObjectVersionLevelImmutabilitySupport");
 
@@ -113,52 +113,52 @@ public interface IADLSObject {
     /** Unique name of the container this object exists within. */
     String getAdlsContainerQualifiedName();
 
-    /** TBC */
+    /** Access tier of this object. */
     ADLSAccessTier getAdlsObjectAccessTier();
 
-    /** TBC */
+    /** Time (epoch) when the acccess tier for this object was last modified, in milliseconds. */
     Long getAdlsObjectAccessTierLastModifiedTime();
 
-    /** TBC */
+    /** Archive status of this object. */
     ADLSObjectArchiveStatus getAdlsObjectArchiveStatus();
 
-    /** TBC */
+    /** Cache control of this object. */
     String getAdlsObjectCacheControl();
 
-    /** TBC */
+    /** Language of this object's contents. */
     String getAdlsObjectContentLanguage();
 
-    /** TBC */
+    /** MD5 hash of this object's contents. */
     String getAdlsObjectContentMD5Hash();
 
-    /** TBC */
+    /** Content type of this object. */
     String getAdlsObjectContentType();
 
-    /** TBC */
+    /** State of this object's lease. */
     ADLSLeaseState getAdlsObjectLeaseState();
 
-    /** TBC */
+    /** Status of this object's lease. */
     ADLSLeaseStatus getAdlsObjectLeaseStatus();
 
-    /** TBC */
+    /** Metadata associated with this object, from ADLS. */
     Map<String, String> getAdlsObjectMetadata();
 
-    /** TBC */
+    /** Whether this object is server encrypted (true) or not (false). */
     Boolean getAdlsObjectServerEncrypted();
 
-    /** TBC */
+    /** Size of this object. */
     Long getAdlsObjectSize();
 
-    /** TBC */
+    /** Type of this object. */
     ADLSObjectType getAdlsObjectType();
 
-    /** TBC */
+    /** URL of this object. */
     String getAdlsObjectUrl();
 
-    /** TBC */
+    /** Identifier of the version of this object, from ADLS. */
     String getAdlsObjectVersionId();
 
-    /** TBC */
+    /** Whether this object supports version-level immutability (true) or not (false). */
     Boolean getAdlsObjectVersionLevelImmutabilitySupport();
 
     /** TBC */
@@ -365,7 +365,7 @@ public interface IADLSObject {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -416,7 +416,7 @@ public interface IADLSObject {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -440,13 +440,13 @@ public interface IADLSObject {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -458,7 +458,7 @@ public interface IADLSObject {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -473,7 +473,7 @@ public interface IADLSObject {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

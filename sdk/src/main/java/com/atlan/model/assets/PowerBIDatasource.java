@@ -49,12 +49,12 @@ public class PowerBIDatasource extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Connection details of the datasource. */
     @Attribute
     @Singular
     Map<String, String> connectionDetails;
 
-    /** TBC */
+    /** Datasets created by this datasource. */
     @Attribute
     @Singular
     SortedSet<IPowerBIDataset> datasets;
@@ -64,7 +64,7 @@ public class PowerBIDatasource extends Asset
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -74,7 +74,7 @@ public class PowerBIDatasource extends Asset
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;

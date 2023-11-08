@@ -34,28 +34,28 @@ public interface IRedashQuery {
 
     public static final String TYPE_NAME = "RedashQuery";
 
-    /** Time when the Redash query was last executed. */
+    /** Time (epoch) when this query was last executed, in milliseconds. */
     NumericField REDASH_QUERY_LAST_EXECUTED_AT =
             new NumericField("redashQueryLastExecutedAt", "redashQueryLastExecutedAt");
 
-    /** Elapsed time of the last run of the Redash query. */
+    /** Elapsed time of the last execution of this query. */
     NumericField REDASH_QUERY_LAST_EXECUTION_RUNTIME =
             new NumericField("redashQueryLastExecutionRuntime", "redashQueryLastExecutionRuntime");
 
-    /** Parameters for the Redash query. */
+    /** Parameters of this query. */
     KeywordField REDASH_QUERY_PARAMETERS = new KeywordField("redashQueryParameters", "redashQueryParameters");
 
-    /** SQL code of the Redash query. */
+    /** SQL code of this query. */
     KeywordField REDASH_QUERY_SQL = new KeywordField("redashQuerySQL", "redashQuerySQL");
 
-    /** Schedule of the Redash query. */
+    /** Schedule for this query. */
     KeywordField REDASH_QUERY_SCHEDULE = new KeywordField("redashQuerySchedule", "redashQuerySchedule");
 
-    /** Human-readable schedule of the Redash query. */
+    /** Schdule for this query in readable text for overview tab and filtering. */
     KeywordTextField REDASH_QUERY_SCHEDULE_HUMANIZED = new KeywordTextField(
             "redashQueryScheduleHumanized", "redashQueryScheduleHumanized", "redashQueryScheduleHumanized.text");
 
-    /** Visualizations of this Redash query. */
+    /** Visualizations that were created by this query. */
     RelationField REDASH_VISUALIZATIONS = new RelationField("redashVisualizations");
 
     /** TBC */
@@ -262,7 +262,7 @@ public interface IRedashQuery {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -304,7 +304,7 @@ public interface IRedashQuery {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -328,13 +328,13 @@ public interface IRedashQuery {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -346,7 +346,7 @@ public interface IRedashQuery {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -361,31 +361,31 @@ public interface IRedashQuery {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */
     Boolean getRedashIsPublished();
 
-    /** Time when the Redash query was last executed. */
+    /** Time (epoch) when this query was last executed, in milliseconds. */
     Long getRedashQueryLastExecutedAt();
 
-    /** Elapsed time of the last run of the Redash query. */
+    /** Elapsed time of the last execution of this query. */
     Double getRedashQueryLastExecutionRuntime();
 
-    /** Parameters for the Redash query. */
+    /** Parameters of this query. */
     String getRedashQueryParameters();
 
-    /** SQL code of the Redash query. */
+    /** SQL code of this query. */
     String getRedashQuerySQL();
 
-    /** Schedule of the Redash query. */
+    /** Schedule for this query. */
     Map<String, String> getRedashQuerySchedule();
 
-    /** Human-readable schedule of the Redash query. */
+    /** Schdule for this query in readable text for overview tab and filtering. */
     String getRedashQueryScheduleHumanized();
 
-    /** Visualizations of this Redash query. */
+    /** Visualizations that were created by this query. */
     SortedSet<IRedashVisualization> getRedashVisualizations();
 
     /** TBC */

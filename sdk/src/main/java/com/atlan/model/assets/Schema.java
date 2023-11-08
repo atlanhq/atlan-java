@@ -76,7 +76,7 @@ public class Schema extends Asset implements ISchema, ISQL, ICatalog, IAsset, IR
     @Singular
     SortedSet<IDbtTest> dbtTests;
 
-    /** TBC */
+    /** Functions that exist within this schema. */
     @Attribute
     @Singular
     SortedSet<IFunction> functions;
@@ -86,7 +86,7 @@ public class Schema extends Asset implements ISchema, ISQL, ICatalog, IAsset, IR
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -110,12 +110,12 @@ public class Schema extends Asset implements ISchema, ISQL, ICatalog, IAsset, IR
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** Stored procedures (routines) that are defined within this schema. */
+    /** Stored procedures that exist within this schema. */
     @Attribute
     @Singular
     SortedSet<IProcedure> procedures;
@@ -145,22 +145,22 @@ public class Schema extends Asset implements ISchema, ISQL, ICatalog, IAsset, IR
     @Attribute
     String schemaQualifiedName;
 
-    /** TBC */
+    /** Snowflake dynamic tables that exist within this schema. */
     @Attribute
     @Singular
     SortedSet<ISnowflakeDynamicTable> snowflakeDynamicTables;
 
-    /** Snowflake Pipes that are defined within this schema. */
+    /** Snowflake pipes that exist within this schema. */
     @Attribute
     @Singular
     SortedSet<ISnowflakePipe> snowflakePipes;
 
-    /** Snowflake Streams that are defined within this schema. */
+    /** Snowflake streams that exist within this schema. */
     @Attribute
     @Singular
     SortedSet<ISnowflakeStream> snowflakeStreams;
 
-    /** Tags applied to this schema in Snowflake. */
+    /** Snowflake tags that exist within this schema. */
     @Attribute
     @Singular
     SortedSet<ISnowflakeTag> snowflakeTags;

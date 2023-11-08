@@ -23,7 +23,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a Qlik Space in Atlan.
+ * Instance of a Qlik space in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -32,13 +32,13 @@ public interface IQlikSpace {
 
     public static final String TYPE_NAME = "QlikSpace";
 
-    /** Apps contained within the space. */
+    /** Apps that exist within this space. */
     RelationField QLIK_APPS = new RelationField("qlikApps");
 
-    /** Datasets contained within the space. */
+    /** Datasets that exist within this space. */
     RelationField QLIK_DATASETS = new RelationField("qlikDatasets");
 
-    /** Type of space, for example: Private, Shared, etc. */
+    /** Type of this space, for exmaple: Private, Shared, etc. */
     KeywordField QLIK_SPACE_TYPE = new KeywordField("qlikSpaceType", "qlikSpaceType");
 
     /** TBC */
@@ -245,7 +245,7 @@ public interface IQlikSpace {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -287,7 +287,7 @@ public interface IQlikSpace {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -311,13 +311,13 @@ public interface IQlikSpace {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -329,7 +329,7 @@ public interface IQlikSpace {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -347,10 +347,10 @@ public interface IQlikSpace {
     /** TBC */
     String getQlikAppQualifiedName();
 
-    /** Apps contained within the space. */
+    /** Apps that exist within this space. */
     SortedSet<IQlikApp> getQlikApps();
 
-    /** Datasets contained within the space. */
+    /** Datasets that exist within this space. */
     SortedSet<IQlikDataset> getQlikDatasets();
 
     /** TBC */
@@ -371,13 +371,13 @@ public interface IQlikSpace {
     /** TBC */
     String getQlikSpaceQualifiedName();
 
-    /** Type of space, for example: Private, Shared, etc. */
+    /** Type of this space, for exmaple: Private, Shared, etc. */
     String getQlikSpaceType();
 
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

@@ -51,7 +51,7 @@ public class SigmaDatasetColumn extends Asset
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -61,7 +61,7 @@ public class SigmaDatasetColumn extends Asset
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
@@ -74,15 +74,15 @@ public class SigmaDatasetColumn extends Asset
     @Attribute
     String sigmaDataElementQualifiedName;
 
-    /** Dataset that contains this column. */
+    /** Dataset in which this dataset column exists. */
     @Attribute
     ISigmaDataset sigmaDataset;
 
-    /** Human-readable name of the dataset that contains this column. */
+    /** Simple name of the dataset in which this column exists. */
     @Attribute
     String sigmaDatasetName;
 
-    /** Unique name of the dataset that contains this column. */
+    /** Unique name of the dataset in which this column exists. */
     @Attribute
     String sigmaDatasetQualifiedName;
 

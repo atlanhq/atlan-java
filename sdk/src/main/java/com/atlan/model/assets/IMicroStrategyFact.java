@@ -32,14 +32,14 @@ public interface IMicroStrategyFact {
 
     public static final String TYPE_NAME = "MicroStrategyFact";
 
-    /** List of expressions for the fact. */
+    /** List of expressions for this fact. */
     KeywordField MICRO_STRATEGY_FACT_EXPRESSIONS =
             new KeywordField("microStrategyFactExpressions", "microStrategyFactExpressions");
 
-    /** Metrics where the fact is used. */
+    /** Metrics that use this fact. */
     RelationField MICRO_STRATEGY_METRICS = new RelationField("microStrategyMetrics");
 
-    /** Project containing the fact. */
+    /** Project in which this fact exists. */
     RelationField MICRO_STRATEGY_PROJECT = new RelationField("microStrategyProject");
 
     /** TBC */
@@ -246,7 +246,7 @@ public interface IMicroStrategyFact {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -288,7 +288,7 @@ public interface IMicroStrategyFact {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -312,13 +312,13 @@ public interface IMicroStrategyFact {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -336,7 +336,7 @@ public interface IMicroStrategyFact {
     /** TBC */
     SortedSet<String> getMicroStrategyCubeQualifiedNames();
 
-    /** List of expressions for the fact. */
+    /** List of expressions for this fact. */
     SortedSet<String> getMicroStrategyFactExpressions();
 
     /** TBC */
@@ -345,10 +345,10 @@ public interface IMicroStrategyFact {
     /** TBC */
     List<Map<String, String>> getMicroStrategyLocation();
 
-    /** Metrics where the fact is used. */
+    /** Metrics that use this fact. */
     SortedSet<IMicroStrategyMetric> getMicroStrategyMetrics();
 
-    /** Project containing the fact. */
+    /** Project in which this fact exists. */
     IMicroStrategyProject getMicroStrategyProject();
 
     /** TBC */
@@ -369,7 +369,7 @@ public interface IMicroStrategyFact {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -384,7 +384,7 @@ public interface IMicroStrategyFact {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

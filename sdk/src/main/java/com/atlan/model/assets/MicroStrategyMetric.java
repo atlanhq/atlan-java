@@ -53,22 +53,22 @@ public class MicroStrategyMetric extends Asset
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
-    /** Simple names of the related MicroStrategy attributes. */
+    /** List of simple names of attributes related to this metric. */
     @Attribute
     @Singular
     SortedSet<String> microStrategyAttributeNames;
 
-    /** Unique names of the related MicroStrategy attributes. */
+    /** List of unique names of attributes related to this metric. */
     @Attribute
     @Singular
     SortedSet<String> microStrategyAttributeQualifiedNames;
 
-    /** Attributes related to this metric. */
+    /** Attributes this metric uses. */
     @Attribute
     @Singular
     SortedSet<IMicroStrategyAttribute> microStrategyAttributes;
@@ -91,22 +91,22 @@ public class MicroStrategyMetric extends Asset
     @Singular
     SortedSet<String> microStrategyCubeQualifiedNames;
 
-    /** Cubes related to this metric. */
+    /** Cubes this metric uses. */
     @Attribute
     @Singular
     SortedSet<IMicroStrategyCube> microStrategyCubes;
 
-    /** Simple names of the related MicroStrategy facts. */
+    /** List of simple names of facts related to this metric. */
     @Attribute
     @Singular
     SortedSet<String> microStrategyFactNames;
 
-    /** Unique names of the related MicroStrategy facts. */
+    /** List of unique names of facts related to this metric. */
     @Attribute
     @Singular
     SortedSet<String> microStrategyFactQualifiedNames;
 
-    /** Facts related to this metric. */
+    /** Facts this metric uses. */
     @Attribute
     @Singular
     SortedSet<IMicroStrategyFact> microStrategyFacts;
@@ -120,31 +120,31 @@ public class MicroStrategyMetric extends Asset
     @Singular("putMicroStrategyLocation")
     List<Map<String, String>> microStrategyLocation;
 
-    /** Metrics that are children of this metric. */
+    /** Child metrics of this metric. */
     @Attribute
     @Singular
     SortedSet<IMicroStrategyMetric> microStrategyMetricChildren;
 
-    /** Expression that defines the metric. */
+    /** Text specifiying this metric's expression. */
     @Attribute
     String microStrategyMetricExpression;
 
-    /** Simple names of the parent MicroStrategy metrics. */
+    /** List of simple names of parent metrics of this metric. */
     @Attribute
     @Singular
     SortedSet<String> microStrategyMetricParentNames;
 
-    /** Unique names of the parent MicroStrategy metrics. */
+    /** List of unique names of parent metrics of this metric. */
     @Attribute
     @Singular
     SortedSet<String> microStrategyMetricParentQualifiedNames;
 
-    /** Metrics that are parents of this metric. */
+    /** Parent metrics to this metric. */
     @Attribute
     @Singular
     SortedSet<IMicroStrategyMetric> microStrategyMetricParents;
 
-    /** Project containing the metric. */
+    /** Project in which this metric exists. */
     @Attribute
     IMicroStrategyProject microStrategyProject;
 
@@ -166,7 +166,7 @@ public class MicroStrategyMetric extends Asset
     @Singular
     SortedSet<String> microStrategyReportQualifiedNames;
 
-    /** Reports related to this metric. */
+    /** Reports in which this metric is used. */
     @Attribute
     @Singular
     SortedSet<IMicroStrategyReport> microStrategyReports;
@@ -176,7 +176,7 @@ public class MicroStrategyMetric extends Asset
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;

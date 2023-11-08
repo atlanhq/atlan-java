@@ -51,7 +51,7 @@ public class RedashVisualization extends Asset
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -61,7 +61,7 @@ public class RedashVisualization extends Asset
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
@@ -70,19 +70,19 @@ public class RedashVisualization extends Asset
     @Attribute
     Boolean redashIsPublished;
 
-    /** Query from which the visualization was created. */
+    /** Query which created this visualization. */
     @Attribute
     IRedashQuery redashQuery;
 
-    /** Name of the query from which the visualization was created. */
+    /** Simple name of the query from which this visualization is created. */
     @Attribute
     String redashQueryName;
 
-    /** Unique name of the query from which the visualization was created. */
+    /** Unique name of the query from which this visualization is created. */
     @Attribute
     String redashQueryQualifiedName;
 
-    /** Type of the Redash visualization. */
+    /** Type of this visualization. */
     @Attribute
     String redashVisualizationType;
 

@@ -25,7 +25,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Instance of a badge in Atlan.
+ * Instance of a badge in Atlan. Badges visually highlight key information about an asset, surfaced from custom metadata.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -43,12 +43,12 @@ public class Badge extends Asset implements IBadge, IAsset, IReferenceable {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** List of conditions that determine the colors to diplay for various values. */
     @Attribute
     @Singular
     List<BadgeCondition> badgeConditions;
 
-    /** TBC */
+    /** Custom metadata attribute for which to show the badge. */
     @Attribute
     String badgeMetadataAttribute;
 

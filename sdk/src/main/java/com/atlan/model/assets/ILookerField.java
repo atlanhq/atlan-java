@@ -34,39 +34,39 @@ public interface ILookerField {
 
     public static final String TYPE_NAME = "LookerField";
 
-    /** TBC */
+    /** Explore in which this field exists. */
     RelationField EXPLORE = new RelationField("explore");
 
-    /** TBC */
+    /** Unique name of the Explore in which this field exists. */
     KeywordTextField LOOKER_EXPLORE_QUALIFIED_NAME = new KeywordTextField(
             "lookerExploreQualifiedName", "lookerExploreQualifiedName", "lookerExploreQualifiedName.text");
 
-    /** TBC */
+    /** Deprecated. */
     KeywordField LOOKER_FIELD_DATA_TYPE = new KeywordField("lookerFieldDataType", "lookerFieldDataType");
 
-    /** TBC */
+    /** Deprecated. */
     NumericField LOOKER_TIMES_USED = new NumericField("lookerTimesUsed", "lookerTimesUsed");
 
-    /** TBC */
+    /** Unique name of the view in which this field exists. */
     KeywordTextField LOOKER_VIEW_QUALIFIED_NAME =
             new KeywordTextField("lookerViewQualifiedName", "lookerViewQualifiedName", "lookerViewQualifiedName.text");
 
-    /** TBC */
+    /** Model in which this field exists. */
     RelationField MODEL = new RelationField("model");
 
-    /** TBC */
+    /** Name of the model in which this field exists. */
     KeywordField MODEL_NAME = new KeywordField("modelName", "modelName");
 
-    /** TBC */
+    /** Project in which this field exists. */
     RelationField PROJECT = new RelationField("project");
 
-    /** TBC */
+    /** Name of the project in which this field exists. */
     KeywordField PROJECT_NAME = new KeywordField("projectName", "projectName");
 
-    /** TBC */
+    /** Deprecated. */
     KeywordField SOURCE_DEFINITION = new KeywordField("sourceDefinition", "sourceDefinition");
 
-    /** TBC */
+    /** View in which this field exists. */
     RelationField VIEW = new RelationField("view");
 
     /** TBC */
@@ -273,7 +273,7 @@ public interface ILookerField {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -306,7 +306,7 @@ public interface ILookerField {
     /** TBC */
     String getDisplayName();
 
-    /** TBC */
+    /** Explore in which this field exists. */
     ILookerExplore getExplore();
 
     /** TBC */
@@ -318,7 +318,7 @@ public interface ILookerField {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -342,34 +342,34 @@ public interface ILookerField {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
-    /** TBC */
+    /** Unique name of the Explore in which this field exists. */
     String getLookerExploreQualifiedName();
 
-    /** TBC */
+    /** Deprecated. */
     String getLookerFieldDataType();
 
-    /** TBC */
+    /** Deprecated. */
     Integer getLookerTimesUsed();
 
-    /** TBC */
+    /** Unique name of the view in which this field exists. */
     String getLookerViewQualifiedName();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
     SortedSet<IMetric> getMetrics();
 
-    /** TBC */
+    /** Model in which this field exists. */
     ILookerModel getModel();
 
-    /** TBC */
+    /** Name of the model in which this field exists. */
     String getModelName();
 
     /** TBC */
@@ -378,7 +378,7 @@ public interface ILookerField {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -390,16 +390,16 @@ public interface ILookerField {
     /** TBC */
     Double getPopularityScore();
 
-    /** TBC */
+    /** Project in which this field exists. */
     ILookerProject getProject();
 
-    /** TBC */
+    /** Name of the project in which this field exists. */
     String getProjectName();
 
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */
@@ -420,7 +420,7 @@ public interface ILookerField {
     /** TBC */
     String getSourceCreatedBy();
 
-    /** TBC */
+    /** Deprecated. */
     String getSourceDefinition();
 
     /** TBC */
@@ -498,7 +498,7 @@ public interface ILookerField {
     /** TBC */
     String getUserDescription();
 
-    /** TBC */
+    /** View in which this field exists. */
     ILookerView getView();
 
     /** TBC */

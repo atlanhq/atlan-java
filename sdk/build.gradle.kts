@@ -16,7 +16,6 @@ dependencies {
     api("org.slf4j:slf4j-api:2.0.7")
     api("co.elastic.clients:elasticsearch-java:8.8.2")
     api("org.freemarker:freemarker:2.3.32")
-    api("org.apache.commons:commons-csv:1.10.0")
     implementation("io.github.classgraph:classgraph:4.8.160")
 }
 

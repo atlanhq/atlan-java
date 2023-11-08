@@ -26,7 +26,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Base class for Google Cloud Storage assets.
+ * Base class for Google Cloud Storage (GCS) assets.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -35,22 +35,22 @@ public interface IGCS {
 
     public static final String TYPE_NAME = "GCS";
 
-    /** TBC */
+    /** Access control list for this asset. */
     KeywordField GCS_ACCESS_CONTROL = new KeywordField("gcsAccessControl", "gcsAccessControl");
 
     /** Entity tag for the asset. An entity tag is a hash of the object and represents changes to the contents of an object only, not its metadata. */
     KeywordField GCS_E_TAG = new KeywordField("gcsETag", "gcsETag");
 
-    /** TBC */
+    /** Encryption algorithm used to encrypt this asset. */
     KeywordField GCS_ENCRYPTION_TYPE = new KeywordField("gcsEncryptionType", "gcsEncryptionType");
 
-    /** TBC */
+    /** Version of metadata for this asset at this generation. Used for preconditions and detecting changes in metadata. A metageneration number is only meaningful in the context of a particular generation of a particular asset. */
     NumericField GCS_META_GENERATION_ID = new NumericField("gcsMetaGenerationId", "gcsMetaGenerationId");
 
-    /** TBC */
+    /** Whether the requester pays header was sent when this asset was created (true) or not (false). */
     BooleanField GCS_REQUESTER_PAYS = new BooleanField("gcsRequesterPays", "gcsRequesterPays");
 
-    /** TBC */
+    /** Storage class of this asset. */
     KeywordField GCS_STORAGE_CLASS = new KeywordField("gcsStorageClass", "gcsStorageClass");
 
     /** TBC */
@@ -257,7 +257,7 @@ public interface IGCS {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -293,22 +293,22 @@ public interface IGCS {
     /** TBC */
     SortedSet<IFile> getFiles();
 
-    /** TBC */
+    /** Access control list for this asset. */
     String getGcsAccessControl();
 
     /** Entity tag for the asset. An entity tag is a hash of the object and represents changes to the contents of an object only, not its metadata. */
     String getGcsETag();
 
-    /** TBC */
+    /** Encryption algorithm used to encrypt this asset. */
     String getGcsEncryptionType();
 
-    /** TBC */
+    /** Version of metadata for this asset at this generation. Used for preconditions and detecting changes in metadata. A metageneration number is only meaningful in the context of a particular generation of a particular asset. */
     Long getGcsMetaGenerationId();
 
-    /** TBC */
+    /** Whether the requester pays header was sent when this asset was created (true) or not (false). */
     Boolean getGcsRequesterPays();
 
-    /** TBC */
+    /** Storage class of this asset. */
     String getGcsStorageClass();
 
     /** TBC */
@@ -341,7 +341,7 @@ public interface IGCS {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -365,13 +365,13 @@ public interface IGCS {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -383,7 +383,7 @@ public interface IGCS {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -398,7 +398,7 @@ public interface IGCS {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

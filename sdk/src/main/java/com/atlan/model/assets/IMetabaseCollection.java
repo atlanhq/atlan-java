@@ -37,7 +37,7 @@ public interface IMetabaseCollection {
     /** TBC */
     KeywordField METABASE_COLOR = new KeywordField("metabaseColor", "metabaseColor");
 
-    /** TBC */
+    /** Dashboards that exist within this collection. */
     RelationField METABASE_DASHBOARDS = new RelationField("metabaseDashboards");
 
     /** TBC */
@@ -48,7 +48,7 @@ public interface IMetabaseCollection {
     KeywordTextField METABASE_NAMESPACE =
             new KeywordTextField("metabaseNamespace", "metabaseNamespace", "metabaseNamespace.text");
 
-    /** TBC */
+    /** Questions that exist within this collection. */
     RelationField METABASE_QUESTIONS = new RelationField("metabaseQuestions");
 
     /** TBC */
@@ -258,7 +258,7 @@ public interface IMetabaseCollection {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -300,7 +300,7 @@ public interface IMetabaseCollection {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -324,13 +324,13 @@ public interface IMetabaseCollection {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -342,7 +342,7 @@ public interface IMetabaseCollection {
     /** TBC */
     String getMetabaseColor();
 
-    /** TBC */
+    /** Dashboards that exist within this collection. */
     SortedSet<IMetabaseDashboard> getMetabaseDashboards();
 
     /** TBC */
@@ -351,7 +351,7 @@ public interface IMetabaseCollection {
     /** TBC */
     String getMetabaseNamespace();
 
-    /** TBC */
+    /** Questions that exist within this collection. */
     SortedSet<IMetabaseQuestion> getMetabaseQuestions();
 
     /** TBC */
@@ -366,7 +366,7 @@ public interface IMetabaseCollection {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -381,7 +381,7 @@ public interface IMetabaseCollection {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

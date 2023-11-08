@@ -38,32 +38,32 @@ public interface IS3Object {
     /** S3 bucket in which the object exists. */
     RelationField BUCKET = new RelationField("bucket");
 
-    /** Name of the bucket in which the object exists. */
+    /** Simple name of the bucket in which this object exists. */
     KeywordTextField S3BUCKET_NAME = new KeywordTextField("s3BucketName", "s3BucketName", "s3BucketName.text");
 
-    /** qualifiedName of the bucket in which the object exists. */
+    /** Unique name of the bucket in which this object exists. */
     KeywordField S3BUCKET_QUALIFIED_NAME = new KeywordField("s3BucketQualifiedName", "s3BucketQualifiedName");
 
-    /** Information about how the object's content should be presented. */
+    /** Information about how this object's content should be presented. */
     KeywordField S3OBJECT_CONTENT_DISPOSITION =
             new KeywordField("s3ObjectContentDisposition", "s3ObjectContentDisposition");
 
-    /** Type of content in the object. */
+    /** Type of content in this object, for example: text/plain, application/json, etc. */
     KeywordField S3OBJECT_CONTENT_TYPE = new KeywordField("s3ObjectContentType", "s3ObjectContentType");
 
-    /** Unique identity of the object in an S3 bucket. This is usually the concatenation of any prefix (folder) in the S3 bucket with the name of the object (file) itself. */
+    /** Unique identity of this object in an S3 bucket. This is usually the concatenation of any prefix (folder) in the S3 bucket with the name of the object (file) itself. */
     KeywordTextField S3OBJECT_KEY = new KeywordTextField("s3ObjectKey", "s3ObjectKey", "s3ObjectKey.text");
 
-    /** Time (epoch) at which the object was last updated, in milliseconds, or when it was created if it has never been modified. */
+    /** Time (epoch) at which this object was last updated, in milliseconds, or when it was created if it has never been modified. */
     NumericField S3OBJECT_LAST_MODIFIED_TIME = new NumericField("s3ObjectLastModifiedTime", "s3ObjectLastModifiedTime");
 
     /** Object size in bytes. */
     NumericField S3OBJECT_SIZE = new NumericField("s3ObjectSize", "s3ObjectSize");
 
-    /** Storage class used for storing the object. */
+    /** Storage class used for storing this object, for example: standard, intelligent-tiering, glacier, etc. */
     KeywordField S3OBJECT_STORAGE_CLASS = new KeywordField("s3ObjectStorageClass", "s3ObjectStorageClass");
 
-    /** Version of the object. This is only applicable when versioning is enabled on the bucket in which the object exists. */
+    /** Version of this object. This is only applicable when versioning is enabled on the bucket in which this object exists. */
     KeywordField S3OBJECT_VERSION_ID = new KeywordField("s3ObjectVersionId", "s3ObjectVersionId");
 
     /** TBC */
@@ -270,7 +270,7 @@ public interface IS3Object {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -342,7 +342,7 @@ public interface IS3Object {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -366,13 +366,13 @@ public interface IS3Object {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -384,7 +384,7 @@ public interface IS3Object {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -399,13 +399,13 @@ public interface IS3Object {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
-    /** Name of the bucket in which the object exists. */
+    /** Simple name of the bucket in which this object exists. */
     String getS3BucketName();
 
-    /** qualifiedName of the bucket in which the object exists. */
+    /** Unique name of the bucket in which this object exists. */
     String getS3BucketQualifiedName();
 
     /** TBC */
@@ -414,25 +414,25 @@ public interface IS3Object {
     /** TBC */
     String getS3Encryption();
 
-    /** Information about how the object's content should be presented. */
+    /** Information about how this object's content should be presented. */
     String getS3ObjectContentDisposition();
 
-    /** Type of content in the object. */
+    /** Type of content in this object, for example: text/plain, application/json, etc. */
     String getS3ObjectContentType();
 
-    /** Unique identity of the object in an S3 bucket. This is usually the concatenation of any prefix (folder) in the S3 bucket with the name of the object (file) itself. */
+    /** Unique identity of this object in an S3 bucket. This is usually the concatenation of any prefix (folder) in the S3 bucket with the name of the object (file) itself. */
     String getS3ObjectKey();
 
-    /** Time (epoch) at which the object was last updated, in milliseconds, or when it was created if it has never been modified. */
+    /** Time (epoch) at which this object was last updated, in milliseconds, or when it was created if it has never been modified. */
     Long getS3ObjectLastModifiedTime();
 
     /** Object size in bytes. */
     Long getS3ObjectSize();
 
-    /** Storage class used for storing the object. */
+    /** Storage class used for storing this object, for example: standard, intelligent-tiering, glacier, etc. */
     String getS3ObjectStorageClass();
 
-    /** Version of the object. This is only applicable when versioning is enabled on the bucket in which the object exists. */
+    /** Version of this object. This is only applicable when versioning is enabled on the bucket in which this object exists. */
     String getS3ObjectVersionId();
 
     /** TBC */

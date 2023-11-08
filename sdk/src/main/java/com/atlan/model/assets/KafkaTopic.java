@@ -52,7 +52,7 @@ public class KafkaTopic extends Asset implements IKafkaTopic, IKafka, IEventStor
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -62,19 +62,19 @@ public class KafkaTopic extends Asset implements IKafkaTopic, IKafka, IEventStor
     @Singular
     SortedSet<IKafkaConsumerGroup> kafkaConsumerGroups;
 
-    /** TBC */
+    /** Cleanup policy for this topic. */
     @Attribute
     KafkaTopicCleanupPolicy kafkaTopicCleanupPolicy;
 
-    /** TBC */
+    /** Type of compression used for this topic. */
     @Attribute
     KafkaTopicCompressionType kafkaTopicCompressionType;
 
-    /** TBC */
+    /** Whether this topic is an internal topic (true) or not (false). */
     @Attribute
     Boolean kafkaTopicIsInternal;
 
-    /** TBC */
+    /** Number of partitions for this topic. */
     @Attribute
     Long kafkaTopicPartitionsCount;
 
@@ -82,19 +82,19 @@ public class KafkaTopic extends Asset implements IKafkaTopic, IKafka, IEventStor
     @Attribute
     Long kafkaTopicRecordCount;
 
-    /** TBC */
+    /** Replication factor for this topic. */
     @Attribute
     Long kafkaTopicReplicationFactor;
 
-    /** TBC */
+    /** Amount of time messages will be retained in this topic, in milliseconds. */
     @Attribute
     Long kafkaTopicRetentionTimeInMs;
 
-    /** TBC */
+    /** Segment size for this topic. */
     @Attribute
     Long kafkaTopicSegmentBytes;
 
-    /** TBC */
+    /** Size of this topic, in bytes. */
     @Attribute
     Long kafkaTopicSizeInBytes;
 
@@ -103,7 +103,7 @@ public class KafkaTopic extends Asset implements IKafkaTopic, IKafka, IEventStor
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;

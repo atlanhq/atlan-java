@@ -45,11 +45,11 @@ public class LookerDashboard extends Asset implements ILookerDashboard, ILooker,
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Folder in which the dashboard exists. */
     @Attribute
     ILookerFolder folder;
 
-    /** TBC */
+    /** Name of the parent folder in Looker that contains this dashboard. */
     @Attribute
     String folderName;
 
@@ -58,12 +58,12 @@ public class LookerDashboard extends Asset implements ILookerDashboard, ILooker,
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
-    /** TBC */
+    /** Looks that are used within this dashboard. */
     @Attribute
     @Singular
     SortedSet<ILookerLook> looks;
@@ -73,36 +73,36 @@ public class LookerDashboard extends Asset implements ILookerDashboard, ILooker,
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** TBC */
+    /** Timestamp (epoch) when the dashboard was last accessed by a user, in milliseconds. */
     @Attribute
     Long sourceLastAccessedAt;
 
-    /** TBC */
+    /** Timestamp (epoch) when the dashboard was last viewed by a user. */
     @Attribute
     Long sourceLastViewedAt;
 
-    /** TBC */
+    /** Identifier of the dashboard's content metadata, from Looker. */
     @Attribute
     Integer sourceMetadataId;
 
-    /** TBC */
+    /** Identifier of the user who created this dashboard, from Looker. */
     @Attribute
     Integer sourceUserId;
 
-    /** TBC */
+    /** Number of times the dashboard has been viewed through the Looker web UI. */
     @Attribute
     Integer sourceViewCount;
 
-    /** TBC */
+    /** Identifier of the user who last updated the dashboard, from Looker. */
     @Attribute
     Integer sourcelastUpdaterId;
 
-    /** TBC */
+    /** Tiles that exist within this dashboard. */
     @Attribute
     @Singular
     SortedSet<ILookerTile> tiles;

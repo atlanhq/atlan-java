@@ -50,16 +50,16 @@ public class ModeWorkspace extends Asset implements IModeWorkspace, IMode, IBI, 
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
-    /** TBC */
+    /** Number of collections in this workspace. */
     @Attribute
     Long modeCollectionCount;
 
-    /** TBC */
+    /** Collections that exist within this workspace. */
     @Attribute
     @Singular
     SortedSet<IModeCollection> modeCollections;
@@ -105,7 +105,7 @@ public class ModeWorkspace extends Asset implements IModeWorkspace, IMode, IBI, 
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;

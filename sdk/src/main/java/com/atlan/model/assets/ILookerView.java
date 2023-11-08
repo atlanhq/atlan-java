@@ -23,7 +23,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a Looker view in Atlan.
+ * Instance of a Looker view in Atlan. Views represent tables of data in Looker, whether the table is database-native or created using Looker's derived table functionality.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -32,19 +32,19 @@ public interface ILookerView {
 
     public static final String TYPE_NAME = "LookerView";
 
-    /** TBC */
+    /** Fields that exist within this view. */
     RelationField FIELDS = new RelationField("fields");
 
-    /** File name of the looker view in the project */
+    /** File name of this view. */
     KeywordField LOOKER_VIEW_FILE_NAME = new KeywordField("lookerViewFileName", "lookerViewFileName");
 
-    /** File path of the looker view in the project */
+    /** File path of this view within the project. */
     KeywordField LOOKER_VIEW_FILE_PATH = new KeywordField("lookerViewFilePath", "lookerViewFilePath");
 
-    /** TBC */
+    /** Project in which this view exists. */
     RelationField PROJECT = new RelationField("project");
 
-    /** TBC */
+    /** Name of the project in which this view exists. */
     KeywordField PROJECT_NAME = new KeywordField("projectName", "projectName");
 
     /** TBC */
@@ -251,7 +251,7 @@ public interface ILookerView {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -284,7 +284,7 @@ public interface ILookerView {
     /** TBC */
     String getDisplayName();
 
-    /** TBC */
+    /** Fields that exist within this view. */
     SortedSet<ILookerField> getFields();
 
     /** TBC */
@@ -296,7 +296,7 @@ public interface ILookerView {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -320,19 +320,19 @@ public interface ILookerView {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
-    /** File name of the looker view in the project */
+    /** File name of this view. */
     String getLookerViewFileName();
 
-    /** File path of the looker view in the project */
+    /** File path of this view within the project. */
     String getLookerViewFilePath();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -344,7 +344,7 @@ public interface ILookerView {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -356,16 +356,16 @@ public interface ILookerView {
     /** TBC */
     Double getPopularityScore();
 
-    /** TBC */
+    /** Project in which this view exists. */
     ILookerProject getProject();
 
-    /** TBC */
+    /** Name of the project in which this view exists. */
     String getProjectName();
 
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

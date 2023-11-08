@@ -51,7 +51,7 @@ public class SigmaDataElementField extends Asset
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -61,12 +61,12 @@ public class SigmaDataElementField extends Asset
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** Data element that contains this data element field. */
+    /** Data element in which this data element field exists. */
     @Attribute
     ISigmaDataElement sigmaDataElement;
 
@@ -74,7 +74,7 @@ public class SigmaDataElementField extends Asset
     @Attribute
     String sigmaDataElementFieldFormula;
 
-    /** TBC */
+    /** Whether this field is hidden (true) or not (false). */
     @Attribute
     Boolean sigmaDataElementFieldIsHidden;
 

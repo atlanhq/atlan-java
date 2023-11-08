@@ -31,7 +31,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Instance of a term in Atlan.
+ * Instance of a term in Atlan. Terms define concepts in natural language that can be associated with other assets to provide meaning.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter

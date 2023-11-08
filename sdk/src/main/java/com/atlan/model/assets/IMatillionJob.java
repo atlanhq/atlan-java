@@ -26,7 +26,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * The MatillionJob Type repesents a Job in matillion. Jobs in matillion design, organize and execute workflows which are responsible for ETL data processing.
+ * Instance of a Matillion job in Atlan. Jobs in Matillion design, organize and execute workflows which are responsible for ETL data processing.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -35,31 +35,31 @@ public interface IMatillionJob {
 
     public static final String TYPE_NAME = "MatillionJob";
 
-    /** TBC */
+    /** Components that exist within this job. */
     RelationField MATILLION_COMPONENTS = new RelationField("matillionComponents");
 
-    /** The count of components under a specific matillion job */
+    /** Number of components within the job. */
     NumericField MATILLION_JOB_COMPONENT_COUNT =
             new NumericField("matillionJobComponentCount", "matillionJobComponentCount");
 
-    /** The hierarchy path of a job under a matillion project. Jobs can be managed at multiple folder levels under a matillion project */
+    /** Path of the job within the project. Jobs can be managed at multiple folder levels within a project. */
     KeywordTextField MATILLION_JOB_PATH =
             new KeywordTextField("matillionJobPath", "matillionJobPath", "matillionJobPath.text");
 
-    /** Specifies whether a matillion job is scheduled weekly or monthly */
+    /** How the job is scheduled, for example: weekly or monthly. */
     KeywordField MATILLION_JOB_SCHEDULE = new KeywordField("matillionJobSchedule", "matillionJobSchedule");
 
-    /** The type of a job. There are two kinds of jobs in matillion - orchestration and transformation */
+    /** Type of the job, for example: orchestration or transformation. */
     KeywordField MATILLION_JOB_TYPE = new KeywordField("matillionJobType", "matillionJobType");
 
-    /** TBC */
+    /** Project in which the job exists. */
     RelationField MATILLION_PROJECT = new RelationField("matillionProject");
 
-    /** Name of the matillion project to which the matillion job belongs */
+    /** Simple name of the project to which the job belongs. */
     KeywordTextField MATILLION_PROJECT_NAME =
             new KeywordTextField("matillionProjectName", "matillionProjectName.keyword", "matillionProjectName");
 
-    /** Qualified name of the matillion project to which the matillion job belongs */
+    /** Unique name of the project to which the job belongs. */
     KeywordTextField MATILLION_PROJECT_QUALIFIED_NAME = new KeywordTextField(
             "matillionProjectQualifiedName", "matillionProjectQualifiedName", "matillionProjectQualifiedName.text");
 
@@ -267,7 +267,7 @@ public interface IMatillionJob {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -309,7 +309,7 @@ public interface IMatillionJob {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -333,31 +333,31 @@ public interface IMatillionJob {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
-    /** TBC */
+    /** Components that exist within this job. */
     SortedSet<IMatillionComponent> getMatillionComponents();
 
-    /** The count of components under a specific matillion job */
+    /** Number of components within the job. */
     Long getMatillionJobComponentCount();
 
-    /** The hierarchy path of a job under a matillion project. Jobs can be managed at multiple folder levels under a matillion project */
+    /** Path of the job within the project. Jobs can be managed at multiple folder levels within a project. */
     String getMatillionJobPath();
 
-    /** Specifies whether a matillion job is scheduled weekly or monthly */
+    /** How the job is scheduled, for example: weekly or monthly. */
     String getMatillionJobSchedule();
 
-    /** The type of a job. There are two kinds of jobs in matillion - orchestration and transformation */
+    /** Type of the job, for example: orchestration or transformation. */
     MatillionJobType getMatillionJobType();
 
-    /** TBC */
+    /** Project in which the job exists. */
     IMatillionProject getMatillionProject();
 
-    /** Name of the matillion project to which the matillion job belongs */
+    /** Simple name of the project to which the job belongs. */
     String getMatillionProjectName();
 
-    /** Qualified name of the matillion project to which the matillion job belongs */
+    /** Unique name of the project to which the job belongs. */
     String getMatillionProjectQualifiedName();
 
     /** TBC */
@@ -366,7 +366,7 @@ public interface IMatillionJob {
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -378,7 +378,7 @@ public interface IMatillionJob {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -393,7 +393,7 @@ public interface IMatillionJob {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

@@ -25,7 +25,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a Power BI dashboard in Atlan.
+ * Instance of a Power BI dashboard in Atlan. Dashboards are a single page, often called a canvas, that tell a story through visualization.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -34,19 +34,19 @@ public interface IPowerBIDashboard {
 
     public static final String TYPE_NAME = "PowerBIDashboard";
 
-    /** TBC */
+    /** Number of tiles in this table. */
     NumericField TILE_COUNT = new NumericField("tileCount", "tileCount");
 
-    /** TBC */
+    /** Tiles that exist within this dashboard. */
     RelationField TILES = new RelationField("tiles");
 
-    /** TBC */
+    /** Deprecated. See 'sourceUrl' instead. */
     KeywordField WEB_URL = new KeywordField("webUrl", "webUrl");
 
-    /** TBC */
+    /** Workspace in which this dashboard exists. */
     RelationField WORKSPACE = new RelationField("workspace");
 
-    /** TBC */
+    /** Unique name of the workspace in which this dashboard exists. */
     KeywordField WORKSPACE_QUALIFIED_NAME = new KeywordField("workspaceQualifiedName", "workspaceQualifiedName");
 
     /** TBC */
@@ -253,7 +253,7 @@ public interface IPowerBIDashboard {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -295,7 +295,7 @@ public interface IPowerBIDashboard {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -319,13 +319,13 @@ public interface IPowerBIDashboard {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -337,7 +337,7 @@ public interface IPowerBIDashboard {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -364,7 +364,7 @@ public interface IPowerBIDashboard {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */
@@ -457,10 +457,10 @@ public interface IPowerBIDashboard {
     /** TBC */
     String getTenantId();
 
-    /** TBC */
+    /** Number of tiles in this table. */
     Long getTileCount();
 
-    /** TBC */
+    /** Tiles that exist within this dashboard. */
     SortedSet<IPowerBITile> getTiles();
 
     /** TBC */
@@ -475,13 +475,13 @@ public interface IPowerBIDashboard {
     /** TBC */
     SortedSet<String> getViewerUsers();
 
-    /** TBC */
+    /** Deprecated. See 'sourceUrl' instead. */
     String getWebUrl();
 
-    /** TBC */
+    /** Workspace in which this dashboard exists. */
     IPowerBIWorkspace getWorkspace();
 
-    /** TBC */
+    /** Unique name of the workspace in which this dashboard exists. */
     String getWorkspaceQualifiedName();
 
     /** Name of the type that defines the asset. */

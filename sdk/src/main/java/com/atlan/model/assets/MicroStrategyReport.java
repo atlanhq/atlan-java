@@ -53,12 +53,12 @@ public class MicroStrategyReport extends Asset
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
-    /** Attributes related to this report. */
+    /** Attributes used by this report. */
     @Attribute
     @Singular
     SortedSet<IMicroStrategyAttribute> microStrategyAttributes;
@@ -90,12 +90,12 @@ public class MicroStrategyReport extends Asset
     @Singular("putMicroStrategyLocation")
     List<Map<String, String>> microStrategyLocation;
 
-    /** Metrics used within the report. */
+    /** Metrics used by this report. */
     @Attribute
     @Singular
     SortedSet<IMicroStrategyMetric> microStrategyMetrics;
 
-    /** Project containing the report. */
+    /** Project in which this report exists. */
     @Attribute
     IMicroStrategyProject microStrategyProject;
 
@@ -117,7 +117,7 @@ public class MicroStrategyReport extends Asset
     @Singular
     SortedSet<String> microStrategyReportQualifiedNames;
 
-    /** Whether the report is a Grid or Chart. */
+    /** Type of report, for example: Grid or Chart. */
     @Attribute
     String microStrategyReportType;
 
@@ -126,7 +126,7 @@ public class MicroStrategyReport extends Asset
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;

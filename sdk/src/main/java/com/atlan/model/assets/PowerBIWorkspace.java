@@ -28,7 +28,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Instance of a Power BI workspace in Atlan.
+ * Instance of a Power BI workspace in Atlan. Workspaces contain dashboards, reports, workbooks, datasets and dataflows.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -47,29 +47,29 @@ public class PowerBIWorkspace extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Number of dashboards in this workspace. */
     @Attribute
     Long dashboardCount;
 
-    /** TBC */
+    /** Dashboards that exist within this workspace. */
     @Attribute
     @Singular
     SortedSet<IPowerBIDashboard> dashboards;
 
-    /** TBC */
+    /** Number of dataflows in this workspace. */
     @Attribute
     Long dataflowCount;
 
-    /** TBC */
+    /** Dataflows that exist within this workspace. */
     @Attribute
     @Singular
     SortedSet<IPowerBIDataflow> dataflows;
 
-    /** TBC */
+    /** Number of datasets in this workspace. */
     @Attribute
     Long datasetCount;
 
-    /** TBC */
+    /** Datasets that exist within this workspace. */
     @Attribute
     @Singular
     SortedSet<IPowerBIDataset> datasets;
@@ -79,7 +79,7 @@ public class PowerBIWorkspace extends Asset
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -89,7 +89,7 @@ public class PowerBIWorkspace extends Asset
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
@@ -110,16 +110,16 @@ public class PowerBIWorkspace extends Asset
     @Attribute
     String powerBITableQualifiedName;
 
-    /** TBC */
+    /** Number of reports in this workspace. */
     @Attribute
     Long reportCount;
 
-    /** TBC */
+    /** Reports that exist within this workspace. */
     @Attribute
     @Singular
     SortedSet<IPowerBIReport> reports;
 
-    /** TBC */
+    /** Deprecated. */
     @Attribute
     String webUrl;
 

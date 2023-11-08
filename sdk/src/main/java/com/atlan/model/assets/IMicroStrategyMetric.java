@@ -33,61 +33,61 @@ public interface IMicroStrategyMetric {
 
     public static final String TYPE_NAME = "MicroStrategyMetric";
 
-    /** Simple names of the related MicroStrategy attributes. */
+    /** List of simple names of attributes related to this metric. */
     KeywordTextField MICRO_STRATEGY_ATTRIBUTE_NAMES = new KeywordTextField(
             "microStrategyAttributeNames", "microStrategyAttributeNames.keyword", "microStrategyAttributeNames");
 
-    /** Unique names of the related MicroStrategy attributes. */
+    /** List of unique names of attributes related to this metric. */
     KeywordTextField MICRO_STRATEGY_ATTRIBUTE_QUALIFIED_NAMES = new KeywordTextField(
             "microStrategyAttributeQualifiedNames",
             "microStrategyAttributeQualifiedNames",
             "microStrategyAttributeQualifiedNames.text");
 
-    /** Attributes related to this metric. */
+    /** Attributes this metric uses. */
     RelationField MICRO_STRATEGY_ATTRIBUTES = new RelationField("microStrategyAttributes");
 
-    /** Cubes related to this metric. */
+    /** Cubes this metric uses. */
     RelationField MICRO_STRATEGY_CUBES = new RelationField("microStrategyCubes");
 
-    /** Simple names of the related MicroStrategy facts. */
+    /** List of simple names of facts related to this metric. */
     KeywordTextField MICRO_STRATEGY_FACT_NAMES =
             new KeywordTextField("microStrategyFactNames", "microStrategyFactNames.keyword", "microStrategyFactNames");
 
-    /** Unique names of the related MicroStrategy facts. */
+    /** List of unique names of facts related to this metric. */
     KeywordTextField MICRO_STRATEGY_FACT_QUALIFIED_NAMES = new KeywordTextField(
             "microStrategyFactQualifiedNames",
             "microStrategyFactQualifiedNames",
             "microStrategyFactQualifiedNames.text");
 
-    /** Facts related to this metric. */
+    /** Facts this metric uses. */
     RelationField MICRO_STRATEGY_FACTS = new RelationField("microStrategyFacts");
 
-    /** Metrics that are children of this metric. */
+    /** Child metrics of this metric. */
     RelationField MICRO_STRATEGY_METRIC_CHILDREN = new RelationField("microStrategyMetricChildren");
 
-    /** Expression that defines the metric. */
+    /** Text specifiying this metric's expression. */
     KeywordField MICRO_STRATEGY_METRIC_EXPRESSION =
             new KeywordField("microStrategyMetricExpression", "microStrategyMetricExpression");
 
-    /** Simple names of the parent MicroStrategy metrics. */
+    /** List of simple names of parent metrics of this metric. */
     KeywordTextField MICRO_STRATEGY_METRIC_PARENT_NAMES = new KeywordTextField(
             "microStrategyMetricParentNames",
             "microStrategyMetricParentNames.keyword",
             "microStrategyMetricParentNames");
 
-    /** Unique names of the parent MicroStrategy metrics. */
+    /** List of unique names of parent metrics of this metric. */
     KeywordTextField MICRO_STRATEGY_METRIC_PARENT_QUALIFIED_NAMES = new KeywordTextField(
             "microStrategyMetricParentQualifiedNames",
             "microStrategyMetricParentQualifiedNames",
             "microStrategyMetricParentQualifiedNames.text");
 
-    /** Metrics that are parents of this metric. */
+    /** Parent metrics to this metric. */
     RelationField MICRO_STRATEGY_METRIC_PARENTS = new RelationField("microStrategyMetricParents");
 
-    /** Project containing the metric. */
+    /** Project in which this metric exists. */
     RelationField MICRO_STRATEGY_PROJECT = new RelationField("microStrategyProject");
 
-    /** Reports related to this metric. */
+    /** Reports in which this metric is used. */
     RelationField MICRO_STRATEGY_REPORTS = new RelationField("microStrategyReports");
 
     /** TBC */
@@ -294,7 +294,7 @@ public interface IMicroStrategyMetric {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -336,7 +336,7 @@ public interface IMicroStrategyMetric {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -360,25 +360,25 @@ public interface IMicroStrategyMetric {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
     SortedSet<IMetric> getMetrics();
 
-    /** Simple names of the related MicroStrategy attributes. */
+    /** List of simple names of attributes related to this metric. */
     SortedSet<String> getMicroStrategyAttributeNames();
 
-    /** Unique names of the related MicroStrategy attributes. */
+    /** List of unique names of attributes related to this metric. */
     SortedSet<String> getMicroStrategyAttributeQualifiedNames();
 
-    /** Attributes related to this metric. */
+    /** Attributes this metric uses. */
     SortedSet<IMicroStrategyAttribute> getMicroStrategyAttributes();
 
     /** TBC */
@@ -393,16 +393,16 @@ public interface IMicroStrategyMetric {
     /** TBC */
     SortedSet<String> getMicroStrategyCubeQualifiedNames();
 
-    /** Cubes related to this metric. */
+    /** Cubes this metric uses. */
     SortedSet<IMicroStrategyCube> getMicroStrategyCubes();
 
-    /** Simple names of the related MicroStrategy facts. */
+    /** List of simple names of facts related to this metric. */
     SortedSet<String> getMicroStrategyFactNames();
 
-    /** Unique names of the related MicroStrategy facts. */
+    /** List of unique names of facts related to this metric. */
     SortedSet<String> getMicroStrategyFactQualifiedNames();
 
-    /** Facts related to this metric. */
+    /** Facts this metric uses. */
     SortedSet<IMicroStrategyFact> getMicroStrategyFacts();
 
     /** TBC */
@@ -411,22 +411,22 @@ public interface IMicroStrategyMetric {
     /** TBC */
     List<Map<String, String>> getMicroStrategyLocation();
 
-    /** Metrics that are children of this metric. */
+    /** Child metrics of this metric. */
     SortedSet<IMicroStrategyMetric> getMicroStrategyMetricChildren();
 
-    /** Expression that defines the metric. */
+    /** Text specifiying this metric's expression. */
     String getMicroStrategyMetricExpression();
 
-    /** Simple names of the parent MicroStrategy metrics. */
+    /** List of simple names of parent metrics of this metric. */
     SortedSet<String> getMicroStrategyMetricParentNames();
 
-    /** Unique names of the parent MicroStrategy metrics. */
+    /** List of unique names of parent metrics of this metric. */
     SortedSet<String> getMicroStrategyMetricParentQualifiedNames();
 
-    /** Metrics that are parents of this metric. */
+    /** Parent metrics to this metric. */
     SortedSet<IMicroStrategyMetric> getMicroStrategyMetricParents();
 
-    /** Project containing the metric. */
+    /** Project in which this metric exists. */
     IMicroStrategyProject getMicroStrategyProject();
 
     /** TBC */
@@ -441,7 +441,7 @@ public interface IMicroStrategyMetric {
     /** TBC */
     SortedSet<String> getMicroStrategyReportQualifiedNames();
 
-    /** Reports related to this metric. */
+    /** Reports in which this metric is used. */
     SortedSet<IMicroStrategyReport> getMicroStrategyReports();
 
     /** TBC */
@@ -450,7 +450,7 @@ public interface IMicroStrategyMetric {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -465,7 +465,7 @@ public interface IMicroStrategyMetric {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

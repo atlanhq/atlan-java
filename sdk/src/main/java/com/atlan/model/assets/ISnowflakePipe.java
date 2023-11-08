@@ -25,7 +25,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a Snowflake Pipe in Atlan.
+ * Instance of a Snowflake pipe in Atlan. These are used to ingest data from external sources into Snowflake.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -34,17 +34,17 @@ public interface ISnowflakePipe {
 
     public static final String TYPE_NAME = "SnowflakePipe";
 
-    /** TBC */
+    /** SQL definition of this pipe. */
     KeywordField DEFINITION = new KeywordField("definition", "definition");
 
-    /** TBC */
+    /** Schema in which this Snowflake pipe exists. */
     RelationField SCHEMA = new RelationField("atlanSchema");
 
-    /** TBC */
+    /** Whether auto-ingest is enabled for this pipe (true) or not (false). */
     BooleanField SNOWFLAKE_PIPE_IS_AUTO_INGEST_ENABLED =
             new BooleanField("snowflakePipeIsAutoIngestEnabled", "snowflakePipeIsAutoIngestEnabled");
 
-    /** TBC */
+    /** Name of the notification channel for this pipe. */
     KeywordTextField SNOWFLAKE_PIPE_NOTIFICATION_CHANNEL_NAME = new KeywordTextField(
             "snowflakePipeNotificationChannelName",
             "snowflakePipeNotificationChannelName",
@@ -254,7 +254,7 @@ public interface ISnowflakePipe {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -296,7 +296,7 @@ public interface ISnowflakePipe {
     /** TBC */
     SortedSet<IDbtTest> getDbtTests();
 
-    /** TBC */
+    /** SQL definition of this pipe. */
     String getDefinition();
 
     /** TBC */
@@ -314,7 +314,7 @@ public interface ISnowflakePipe {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -344,13 +344,13 @@ public interface ISnowflakePipe {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -362,7 +362,7 @@ public interface ISnowflakePipe {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -389,13 +389,13 @@ public interface ISnowflakePipe {
     /** TBC */
     Map<String, Long> getQueryUserMap();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */
     String getSampleDataUrl();
 
-    /** TBC */
+    /** Schema in which this Snowflake pipe exists. */
     ISchema getSchema();
 
     /** TBC */
@@ -407,10 +407,10 @@ public interface ISnowflakePipe {
     /** TBC */
     SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
 
-    /** TBC */
+    /** Whether auto-ingest is enabled for this pipe (true) or not (false). */
     Boolean getSnowflakePipeIsAutoIngestEnabled();
 
-    /** TBC */
+    /** Name of the notification channel for this pipe. */
     String getSnowflakePipeNotificationChannelName();
 
     /** TBC */

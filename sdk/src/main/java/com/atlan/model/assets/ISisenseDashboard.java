@@ -24,7 +24,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * The SisenseDashboard type represents a dashboard in sisense. Dashboards in Sisense allow you to place multiple widgets on a single page.
+ * Instance of a Sisense dashboard in Atlan. These allow you to place multiple widgets on a single page.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -33,23 +33,23 @@ public interface ISisenseDashboard {
 
     public static final String TYPE_NAME = "SisenseDashboard";
 
-    /** Qualified name of the folder in which this dashboard exists */
+    /** Unique name of the folder in which this dashboard exists. */
     KeywordTextField SISENSE_DASHBOARD_FOLDER_QUALIFIED_NAME = new KeywordTextField(
             "sisenseDashboardFolderQualifiedName",
             "sisenseDashboardFolderQualifiedName",
             "sisenseDashboardFolderQualifiedName.text");
 
-    /** Number of widgets that are present in this dashboard */
+    /** Number of widgets in this dashboard. */
     NumericField SISENSE_DASHBOARD_WIDGET_COUNT =
             new NumericField("sisenseDashboardWidgetCount", "sisenseDashboardWidgetCount");
 
     /** TBC */
     RelationField SISENSE_DATAMODELS = new RelationField("sisenseDatamodels");
 
-    /** TBC */
+    /** Folder in which this dashboard exists. */
     RelationField SISENSE_FOLDER = new RelationField("sisenseFolder");
 
-    /** TBC */
+    /** Widgets that exist in this dashboard. */
     RelationField SISENSE_WIDGETS = new RelationField("sisenseWidgets");
 
     /** TBC */
@@ -256,7 +256,7 @@ public interface ISisenseDashboard {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -298,7 +298,7 @@ public interface ISisenseDashboard {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -322,13 +322,13 @@ public interface ISisenseDashboard {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -340,7 +340,7 @@ public interface ISisenseDashboard {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -355,7 +355,7 @@ public interface ISisenseDashboard {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */
@@ -364,19 +364,19 @@ public interface ISisenseDashboard {
     /** TBC */
     SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
 
-    /** Qualified name of the folder in which this dashboard exists */
+    /** Unique name of the folder in which this dashboard exists. */
     String getSisenseDashboardFolderQualifiedName();
 
-    /** Number of widgets that are present in this dashboard */
+    /** Number of widgets in this dashboard. */
     Long getSisenseDashboardWidgetCount();
 
     /** TBC */
     SortedSet<ISisenseDatamodel> getSisenseDatamodels();
 
-    /** TBC */
+    /** Folder in which this dashboard exists. */
     ISisenseFolder getSisenseFolder();
 
-    /** TBC */
+    /** Widgets that exist in this dashboard. */
     SortedSet<ISisenseWidget> getSisenseWidgets();
 
     /** TBC */

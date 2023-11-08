@@ -29,7 +29,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Azure Event Hub assets, equivalent to Kafka Topics
+ * Instance of an Azure Event Hub asset, equivalent to a Kafka topic.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -57,12 +57,12 @@ public class AzureEventHub extends Asset
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
-    /** TBC */
+    /** Consumer groups subscribed to this topic. */
     @Attribute
     @Singular
     SortedSet<IKafkaConsumerGroup> kafkaConsumerGroups;
@@ -108,7 +108,7 @@ public class AzureEventHub extends Asset
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;

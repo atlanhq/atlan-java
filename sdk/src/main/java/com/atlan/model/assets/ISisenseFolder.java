@@ -23,7 +23,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * The SisenseFolder type represents a folder in Sisense. This type is used to denote both parent folders and nested folders
+ * Instance of a Sisense folder in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -32,22 +32,22 @@ public interface ISisenseFolder {
 
     public static final String TYPE_NAME = "SisenseFolder";
 
-    /** TBC */
+    /** Sub-folders that exist within this folder. */
     RelationField SISENSE_CHILD_FOLDERS = new RelationField("sisenseChildFolders");
 
-    /** TBC */
+    /** Dashboards that exist within this folder. */
     RelationField SISENSE_DASHBOARDS = new RelationField("sisenseDashboards");
 
-    /** Qualified name of the parent folder */
+    /** Unique name of the parent folder in which this folder exists. */
     KeywordTextField SISENSE_FOLDER_PARENT_FOLDER_QUALIFIED_NAME = new KeywordTextField(
             "sisenseFolderParentFolderQualifiedName",
             "sisenseFolderParentFolderQualifiedName",
             "sisenseFolderParentFolderQualifiedName.text");
 
-    /** TBC */
+    /** Folder in which this sub-folder exists. */
     RelationField SISENSE_PARENT_FOLDER = new RelationField("sisenseParentFolder");
 
-    /** TBC */
+    /** Widgets that exist within this folder. */
     RelationField SISENSE_WIDGETS = new RelationField("sisenseWidgets");
 
     /** TBC */
@@ -254,7 +254,7 @@ public interface ISisenseFolder {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -296,7 +296,7 @@ public interface ISisenseFolder {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -320,13 +320,13 @@ public interface ISisenseFolder {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -338,7 +338,7 @@ public interface ISisenseFolder {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -353,7 +353,7 @@ public interface ISisenseFolder {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */
@@ -362,19 +362,19 @@ public interface ISisenseFolder {
     /** TBC */
     SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
 
-    /** TBC */
+    /** Sub-folders that exist within this folder. */
     SortedSet<ISisenseFolder> getSisenseChildFolders();
 
-    /** TBC */
+    /** Dashboards that exist within this folder. */
     SortedSet<ISisenseDashboard> getSisenseDashboards();
 
-    /** Qualified name of the parent folder */
+    /** Unique name of the parent folder in which this folder exists. */
     String getSisenseFolderParentFolderQualifiedName();
 
-    /** TBC */
+    /** Folder in which this sub-folder exists. */
     ISisenseFolder getSisenseParentFolder();
 
-    /** TBC */
+    /** Widgets that exist within this folder. */
     SortedSet<ISisenseWidget> getSisenseWidgets();
 
     /** TBC */

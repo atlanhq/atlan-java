@@ -123,7 +123,8 @@ public class ModelGenerator extends AbstractGenerator {
         if (cfg.getPackageRoot().equals("com.atlan.model")) {
             // Inject all these generated assets into the AttributeDefOptions class (regenerate it)
             Template attributeDefOptionsTemplate = ftl.getTemplate("AttributeDefOptions.ftl");
-            String directory = "src" + File.separator
+            String directory = "sdk" + File.separator
+                    + "src" + File.separator
                     + "main" + File.separator
                     + "java" + File.separator
                     + "com" + File.separator

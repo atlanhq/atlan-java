@@ -28,7 +28,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Instance of a Tableau calculated field in Atlan.
+ * Instance of a Tableau calculated field in Atlan. These are created by combining two or more fields using a formula, and can be created at datasource or worksheet level.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -48,19 +48,19 @@ public class TableauCalculatedField extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Data category of this field. */
     @Attribute
     String dataCategory;
 
-    /** TBC */
+    /** Datasource in which this calculated field exists. */
     @Attribute
     ITableauDatasource datasource;
 
-    /** TBC */
+    /** Unique name of the datasource in which this calculated field exists. */
     @Attribute
     String datasourceQualifiedName;
 
-    /** TBC */
+    /** Formula for this calculated field. */
     @Attribute
     String formula;
 
@@ -69,7 +69,7 @@ public class TableauCalculatedField extends Asset
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -79,46 +79,46 @@ public class TableauCalculatedField extends Asset
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** TBC */
+    /** List of top-level projects and their nested projects. */
     @Attribute
     @Singular("addProjectHierarchy")
     List<Map<String, String>> projectHierarchy;
 
-    /** TBC */
+    /** Unique name of the project in which this calculated field exists. */
     @Attribute
     String projectQualifiedName;
 
-    /** TBC */
+    /** Role of this field, for example: 'dimension', 'measure', or 'unknown'. */
     @Attribute
     String role;
 
-    /** TBC */
+    /** Unique name of the site in which this calculated field exists. */
     @Attribute
     String siteQualifiedName;
 
-    /** TBC */
+    /** Data type of the field, from Tableau. */
     @Attribute
     String tableauDataType;
 
-    /** TBC */
+    /** Unique name of the top-level project in which this calculated field exists. */
     @Attribute
     String topLevelProjectQualifiedName;
 
-    /** TBC */
+    /** List of fields that are upstream to this calculated field. */
     @Attribute
     @Singular
     List<Map<String, String>> upstreamFields;
 
-    /** TBC */
+    /** Unique name of the workbook in which this calculated field exists. */
     @Attribute
     String workbookQualifiedName;
 
-    /** TBC */
+    /** Worksheets that use this calculated field. */
     @Attribute
     @Singular
     SortedSet<ITableauWorksheet> worksheets;

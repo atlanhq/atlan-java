@@ -27,7 +27,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Instance of a Qlik Dataset, Datafile, Datastore or Dataasset in Atlan.
+ * Instance of a Qlik dataset, datafile, datastore or dataasset in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -50,7 +50,7 @@ public class QlikDataset extends Asset implements IQlikDataset, IQlik, IBI, ICat
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -60,7 +60,7 @@ public class QlikDataset extends Asset implements IQlikDataset, IQlik, IBI, ICat
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
@@ -73,19 +73,19 @@ public class QlikDataset extends Asset implements IQlikDataset, IQlik, IBI, ICat
     @Attribute
     String qlikAppQualifiedName;
 
-    /** Subtype of the dataset. */
+    /** Subtype this dataset asset. */
     @Attribute
     String qlikDatasetSubtype;
 
-    /** Technical name of the data asset. */
+    /** Technical name of this asset. */
     @Attribute
     String qlikDatasetTechnicalName;
 
-    /** Type of the data asset, for example: qix-df, snowflake, etc. */
+    /** Type of this data asset, for example: qix-df, snowflake, etc. */
     @Attribute
     String qlikDatasetType;
 
-    /** URI of the dataset. */
+    /** URI of this dataset. */
     @Attribute
     String qlikDatasetUri;
 
@@ -105,7 +105,7 @@ public class QlikDataset extends Asset implements IQlikDataset, IQlik, IBI, ICat
     @Attribute
     String qlikQRI;
 
-    /** Space in which the dataset exists. */
+    /** Space in which this dataset exists. */
     @Attribute
     IQlikSpace qlikSpace;
 

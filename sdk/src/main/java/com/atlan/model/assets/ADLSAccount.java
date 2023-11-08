@@ -55,19 +55,19 @@ public class ADLSAccount extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Access tier of this account. */
     @Attribute
     ADLSAccessTier adlsAccountAccessTier;
 
-    /** TBC */
+    /** Kind of this account. */
     @Attribute
     ADLSStorageKind adlsAccountKind;
 
-    /** TBC */
+    /** Performance of this account. */
     @Attribute
     ADLSPerformance adlsAccountPerformance;
 
-    /** TBC */
+    /** Provision state of this account. */
     @Attribute
     ADLSProvisionState adlsAccountProvisionState;
 
@@ -75,11 +75,11 @@ public class ADLSAccount extends Asset
     @Attribute
     String adlsAccountQualifiedName;
 
-    /** TBC */
+    /** Replication of this account. */
     @Attribute
     ADLSReplicationType adlsAccountReplication;
 
-    /** TBC */
+    /** Resource group for this account. */
     @Attribute
     String adlsAccountResourceGroup;
 
@@ -87,7 +87,7 @@ public class ADLSAccount extends Asset
     @Attribute
     String adlsAccountSecondaryLocation;
 
-    /** TBC */
+    /** Subscription for this account. */
     @Attribute
     String adlsAccountSubscription;
 
@@ -100,11 +100,11 @@ public class ADLSAccount extends Asset
     @Attribute
     String adlsETag;
 
-    /** TBC */
+    /** Type of encryption for this account. */
     @Attribute
     ADLSEncryptionTypes adlsEncryptionType;
 
-    /** TBC */
+    /** Primary disk state of this account. */
     @Attribute
     ADLSAccountStatus adlsPrimaryDiskState;
 
@@ -126,7 +126,7 @@ public class ADLSAccount extends Asset
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -136,7 +136,7 @@ public class ADLSAccount extends Asset
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;

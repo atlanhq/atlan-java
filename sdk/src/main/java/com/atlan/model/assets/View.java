@@ -49,7 +49,7 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Alias for this view. */
     @Attribute
     String alias;
 
@@ -85,7 +85,7 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
     @Singular
     SortedSet<IDbtTest> dbtTests;
 
-    /** Definition of the view (DDL). */
+    /** SQL definition of this view. */
     @Attribute
     String definition;
 
@@ -94,7 +94,7 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -103,7 +103,7 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
     @Attribute
     Boolean isProfiled;
 
-    /** TBC */
+    /** Whether preview queries are allowed on this view (true) or not (false). */
     @Attribute
     Boolean isQueryPreview;
 
@@ -120,12 +120,12 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** Queries that involve this view. */
+    /** Queries that access this view. */
     @Attribute
     @Singular
     SortedSet<IAtlanQuery> queries;
@@ -138,7 +138,7 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
     @Attribute
     Long queryCountUpdatedAt;
 
-    /** TBC */
+    /** Configuration for preview queries on this view. */
     @Attribute
     @Singular("putQueryPreviewConfig")
     Map<String, String> queryPreviewConfig;
@@ -169,7 +169,7 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
     @Attribute
     String schemaQualifiedName;
 
-    /** Size of the view in bytes. */
+    /** Size of this view, in bytes. */
     @Attribute
     Long sizeBytes;
 

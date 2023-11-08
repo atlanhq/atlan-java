@@ -35,7 +35,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Instance of a Purpose access control object in Atlan.
+ * Atlan Type representing a Purpose model
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -95,7 +95,7 @@ public class Purpose extends Asset implements IPurpose, IAccessControl, IAsset, 
     @Singular
     SortedSet<IAuthPolicy> policies;
 
-    /** Tags on which this purpose is applied. */
+    /** TBC */
     @Attribute
     @Singular
     @JsonProperty("purposeClassifications")

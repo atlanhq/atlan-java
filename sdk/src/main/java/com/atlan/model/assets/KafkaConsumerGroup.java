@@ -28,7 +28,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Instance of a Kafka ConsumerGroup in Atlan.
+ * Instance of a Kafka ConsumerGroup in Atlan. These group consumers of topics in Kafka.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -52,31 +52,31 @@ public class KafkaConsumerGroup extends Asset
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
-    /** TBC */
+    /** Number of members in this consumer group. */
     @Attribute
     Long kafkaConsumerGroupMemberCount;
 
-    /** TBC */
+    /** List of consumption properties for Kafka topics, for this consumer group. */
     @Attribute
     @Singular
     List<KafkaTopicConsumption> kafkaConsumerGroupTopicConsumptionProperties;
 
-    /** Names of the topics for this consumer group. */
+    /** Simple names of the topics consumed by this consumer group. */
     @Attribute
     @Singular
     SortedSet<String> kafkaTopicNames;
 
-    /** Unique names of the topics for this consumer group. */
+    /** Unique names of the topics consumed by this consumer group. */
     @Attribute
     @Singular
     SortedSet<String> kafkaTopicQualifiedNames;
 
-    /** Topics for this consumer group. */
+    /** Topics consumed by this consumer group. */
     @Attribute
     @Singular
     SortedSet<IKafkaTopic> kafkaTopics;
@@ -86,7 +86,7 @@ public class KafkaConsumerGroup extends Asset
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;

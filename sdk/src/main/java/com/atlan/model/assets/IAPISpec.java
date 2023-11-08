@@ -33,37 +33,37 @@ public interface IAPISpec {
 
     public static final String TYPE_NAME = "APISpec";
 
-    /** TBC */
+    /** Paths that exist within this API specification. */
     RelationField API_PATHS = new RelationField("apiPaths");
 
-    /** TBC */
+    /** Email address for a contact responsible for the API specification. */
     KeywordTextField API_SPEC_CONTACT_EMAIL =
             new KeywordTextField("apiSpecContactEmail", "apiSpecContactEmail", "apiSpecContactEmail.text");
 
-    /** TBC */
+    /** Name of the contact responsible for the API specification. */
     KeywordTextField API_SPEC_CONTACT_NAME =
             new KeywordTextField("apiSpecContactName", "apiSpecContactName.keyword", "apiSpecContactName");
 
-    /** TBC */
+    /** URL pointing to the contact information. */
     KeywordTextField API_SPEC_CONTACT_URL =
             new KeywordTextField("apiSpecContactURL", "apiSpecContactURL", "apiSpecContactURL.text");
 
-    /** TBC */
+    /** Version of the contract for the API specification. */
     KeywordField API_SPEC_CONTRACT_VERSION = new KeywordField("apiSpecContractVersion", "apiSpecContractVersion");
 
-    /** TBC */
+    /** Name of the license under which the API specification is available. */
     KeywordTextField API_SPEC_LICENSE_NAME =
             new KeywordTextField("apiSpecLicenseName", "apiSpecLicenseName.keyword", "apiSpecLicenseName");
 
-    /** TBC */
+    /** URL to the license under which the API specification is available. */
     KeywordTextField API_SPEC_LICENSE_URL =
             new KeywordTextField("apiSpecLicenseURL", "apiSpecLicenseURL", "apiSpecLicenseURL.text");
 
-    /** TBC */
+    /** Service alias for the API specification. */
     KeywordTextField API_SPEC_SERVICE_ALIAS =
             new KeywordTextField("apiSpecServiceAlias", "apiSpecServiceAlias", "apiSpecServiceAlias.text");
 
-    /** TBC */
+    /** URL to the terms of service for the API specification. */
     KeywordTextField API_SPEC_TERMS_OF_SERVICE_URL = new KeywordTextField(
             "apiSpecTermsOfServiceURL", "apiSpecTermsOfServiceURL", "apiSpecTermsOfServiceURL.text");
 
@@ -97,25 +97,25 @@ public interface IAPISpec {
     /** TBC */
     Boolean getApiIsAuthOptional();
 
-    /** TBC */
+    /** Paths that exist within this API specification. */
     SortedSet<IAPIPath> getApiPaths();
 
-    /** TBC */
+    /** Email address for a contact responsible for the API specification. */
     String getApiSpecContactEmail();
 
-    /** TBC */
+    /** Name of the contact responsible for the API specification. */
     String getApiSpecContactName();
 
-    /** TBC */
+    /** URL pointing to the contact information. */
     String getApiSpecContactURL();
 
-    /** TBC */
+    /** Version of the contract for the API specification. */
     String getApiSpecContractVersion();
 
-    /** TBC */
+    /** Name of the license under which the API specification is available. */
     String getApiSpecLicenseName();
 
-    /** TBC */
+    /** URL to the license under which the API specification is available. */
     String getApiSpecLicenseURL();
 
     /** TBC */
@@ -124,10 +124,10 @@ public interface IAPISpec {
     /** TBC */
     String getApiSpecQualifiedName();
 
-    /** TBC */
+    /** Service alias for the API specification. */
     String getApiSpecServiceAlias();
 
-    /** TBC */
+    /** URL to the terms of service for the API specification. */
     String getApiSpecTermsOfServiceURL();
 
     /** TBC */
@@ -316,7 +316,7 @@ public interface IAPISpec {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -358,7 +358,7 @@ public interface IAPISpec {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -382,13 +382,13 @@ public interface IAPISpec {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -400,7 +400,7 @@ public interface IAPISpec {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -415,7 +415,7 @@ public interface IAPISpec {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

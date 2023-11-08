@@ -13,8 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class AssetDocGenerator extends AssetTestGenerator {
 
-    public static final String DIRECTORY =
-            "src" + File.separator + "generate" + File.separator + "resources" + File.separator + "markdown";
+    public static final String DIRECTORY = "generate" + File.separator + "src" + File.separator + "main"
+            + File.separator + "resources" + File.separator + "markdown";
 
     private final Set<String> superTypes;
 

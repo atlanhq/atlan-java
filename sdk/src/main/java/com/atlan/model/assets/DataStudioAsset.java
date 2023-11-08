@@ -51,15 +51,15 @@ public class DataStudioAsset extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Owner of the asset within Google Data Studio. */
+    /** Owner of the asset, from Google Data Studio. */
     @Attribute
     String dataStudioAssetOwner;
 
-    /** Title for the asset. */
+    /** Title of the Google Data Studio asset. */
     @Attribute
     String dataStudioAssetTitle;
 
-    /** Type of Google Data Studio asset. */
+    /** Type of the Google Data Studio asset, for example: REPORT or DATA_SOURCE. */
     @Attribute
     GoogleDataStudioAssetType dataStudioAssetType;
 
@@ -102,12 +102,12 @@ public class DataStudioAsset extends Asset
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
-    /** Whether the asset is soft-deleted in Google Data Studio (true) or not (false). */
+    /** Whether the Google Data Studio asset has been trashed (true) or not (false). */
     @Attribute
     Boolean isTrashedDataStudioAsset;
 
@@ -116,7 +116,7 @@ public class DataStudioAsset extends Asset
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;

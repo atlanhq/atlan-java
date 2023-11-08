@@ -57,11 +57,11 @@ public class GCSObject extends Asset
     @Attribute
     IGCSBucket gcsBucket;
 
-    /** Human-readable name of the bucket in which this object exists. */
+    /** Simple name of the bucket in which this object exists. */
     @Attribute
     String gcsBucketName;
 
-    /** qualifiedName of the bucket in which this object exists. */
+    /** Unique name of the bucket in which this object exists. */
     @Attribute
     String gcsBucketQualifiedName;
 
@@ -77,51 +77,51 @@ public class GCSObject extends Asset
     @Attribute
     Long gcsMetaGenerationId;
 
-    /** TBC */
+    /** CRC32C hash of this object. */
     @Attribute
     String gcsObjectCRC32CHash;
 
-    /** Information about how the object's content should be presented. */
+    /** Information about how this object's content should be presented. */
     @Attribute
     String gcsObjectContentDisposition;
 
-    /** TBC */
+    /** Content encoding of this object. */
     @Attribute
     String gcsObjectContentEncoding;
 
-    /** TBC */
+    /** Language of this object's contents. */
     @Attribute
     String gcsObjectContentLanguage;
 
-    /** Type of content in the object. */
+    /** Type of content in this object. */
     @Attribute
     String gcsObjectContentType;
 
-    /** TBC */
+    /** Time (epoch) at which this object's data was last modified, in milliseconds. */
     @Attribute
     Long gcsObjectDataLastModifiedTime;
 
-    /** TBC */
+    /** Generation ID of this object. */
     @Attribute
     Long gcsObjectGenerationId;
 
-    /** TBC */
+    /** Type of hold on this object. */
     @Attribute
     String gcsObjectHoldType;
 
-    /** TBC */
+    /** Key of this object, in GCS. */
     @Attribute
     String gcsObjectKey;
 
-    /** TBC */
+    /** MD5 hash of this object. */
     @Attribute
     String gcsObjectMD5Hash;
 
-    /** TBC */
+    /** Media link to this object. */
     @Attribute
     String gcsObjectMediaLink;
 
-    /** TBC */
+    /** Retention expiration date of this object. */
     @Attribute
     Long gcsObjectRetentionExpirationDate;
 
@@ -176,7 +176,7 @@ public class GCSObject extends Asset
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -186,7 +186,7 @@ public class GCSObject extends Asset
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;

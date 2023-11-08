@@ -37,7 +37,7 @@ public interface IColumn {
 
     public static final String TYPE_NAME = "Column";
 
-    /** TBC */
+    /** Average value in this column. */
     NumericField COLUMN_AVERAGE = new NumericField("columnAverage", "columnAverage");
 
     /** Average length of values in a string column. */
@@ -46,14 +46,14 @@ public interface IColumn {
     /** TBC */
     RelationField COLUMN_DBT_MODEL_COLUMNS = new RelationField("columnDbtModelColumns");
 
-    /** Level of nesting, used for STRUCT/NESTED columns */
+    /** Level of nesting of this column, used for STRUCT and NESTED columns. */
     NumericField COLUMN_DEPTH_LEVEL = new NumericField("columnDepthLevel", "columnDepthLevel");
 
     /** Number of rows that contain distinct values. */
     NumericField COLUMN_DISTINCT_VALUES_COUNT =
             new NumericField("columnDistinctValuesCount", "columnDistinctValuesCount");
 
-    /** TBC */
+    /** Number of rows that contain distinct values. */
     NumericField COLUMN_DISTINCT_VALUES_COUNT_LONG =
             new NumericField("columnDistinctValuesCountLong", "columnDistinctValuesCountLong");
 
@@ -61,11 +61,11 @@ public interface IColumn {
     NumericField COLUMN_DUPLICATE_VALUES_COUNT =
             new NumericField("columnDuplicateValuesCount", "columnDuplicateValuesCount");
 
-    /** TBC */
+    /** Number of rows that contain duplicate values. */
     NumericField COLUMN_DUPLICATE_VALUES_COUNT_LONG =
             new NumericField("columnDuplicateValuesCountLong", "columnDuplicateValuesCountLong");
 
-    /** List of values in a histogram that represents the contents of the column. */
+    /** List of values in a histogram that represents the contents of this column. */
     KeywordField COLUMN_HISTOGRAM = new KeywordField("columnHistogram", "columnHistogram");
 
     /** Greatest value in a numeric column. */
@@ -97,7 +97,7 @@ public interface IColumn {
     /** Number of rows in a column that do not contain content. */
     NumericField COLUMN_MISSING_VALUES_COUNT = new NumericField("columnMissingValuesCount", "columnMissingValuesCount");
 
-    /** TBC */
+    /** Number of rows in a column that do not contain content. */
     NumericField COLUMN_MISSING_VALUES_COUNT_LONG =
             new NumericField("columnMissingValuesCountLong", "columnMissingValuesCountLong");
 
@@ -111,17 +111,17 @@ public interface IColumn {
     /** Calculated sum of the values in a numeric column. */
     NumericField COLUMN_SUM = new NumericField("columnSum", "columnSum");
 
-    /** TBC */
+    /** List of top values in this column. */
     KeywordField COLUMN_TOP_VALUES = new KeywordField("columnTopValues", "columnTopValues");
 
     /** Number of rows in which a value in this column appears only once. */
     NumericField COLUMN_UNIQUE_VALUES_COUNT = new NumericField("columnUniqueValuesCount", "columnUniqueValuesCount");
 
-    /** TBC */
+    /** Number of rows in which a value in this column appears only once. */
     NumericField COLUMN_UNIQUE_VALUES_COUNT_LONG =
             new NumericField("columnUniqueValuesCountLong", "columnUniqueValuesCountLong");
 
-    /** Ratio indicating how unique data in the column is: 0 indicates that all values are the same, 100 indicates that all values in the column are unique. */
+    /** Ratio indicating how unique data in this column is: 0 indicates that all values are the same, 100 indicates that all values in this column are unique. */
     NumericField COLUMN_UNIQUENESS_PERCENTAGE =
             new NumericField("columnUniquenessPercentage", "columnUniquenessPercentage");
 
@@ -131,7 +131,7 @@ public interface IColumn {
     /** TBC */
     RelationField DATA_QUALITY_METRIC_DIMENSIONS = new RelationField("dataQualityMetricDimensions");
 
-    /** Data type of values in the column. */
+    /** Data type of values in this column. */
     KeywordTextField DATA_TYPE = new KeywordTextField("dataType", "dataType", "dataType.text");
 
     /** TBC */
@@ -140,19 +140,19 @@ public interface IColumn {
     /** TBC */
     RelationField DBT_MODEL_COLUMNS = new RelationField("dbtModelColumns");
 
-    /** TBC */
+    /** Default value for this column. */
     KeywordField DEFAULT_VALUE = new KeywordField("defaultValue", "defaultValue");
 
-    /** Column this column refers to as a foreign key. */
+    /** Column this foreign key column refers to. */
     RelationField FOREIGN_KEY_FROM = new RelationField("foreignKeyFrom");
 
-    /** All the columns that refer to this column as a foreign key. NOTE: when providing values to this relationship, isForeign must also be set to true. */
+    /** Columns that use this column as a foreign key. */
     RelationField FOREIGN_KEY_TO = new RelationField("foreignKeyTo");
 
-    /** TBC */
+    /** Whether this column is a clustered column (true) or not (false). */
     BooleanField IS_CLUSTERED = new BooleanField("isClustered", "isClustered");
 
-    /** TBC */
+    /** Whether this column is a distribution column (true) or not (false). */
     BooleanField IS_DIST = new BooleanField("isDist", "isDist");
 
     /** When true, this column is a foreign key to another table. NOTE: this must be true when using the foreignKeyTo relationship to specify columns that refer to this column as a foreign key. */
@@ -164,19 +164,19 @@ public interface IColumn {
     /** When true, the values in this column can be null. */
     BooleanField IS_NULLABLE = new BooleanField("isNullable", "isNullable");
 
-    /** TBC */
+    /** Whether this column is a partition column (true) or not (false). */
     BooleanField IS_PARTITION = new BooleanField("isPartition", "isPartition");
 
-    /** TBC */
+    /** Whether this column is pinned (true) or not (false). */
     BooleanField IS_PINNED = new BooleanField("isPinned", "isPinned");
 
     /** When true, this column is the primary key for the table. */
     BooleanField IS_PRIMARY = new BooleanField("isPrimary", "isPrimary");
 
-    /** TBC */
+    /** Whether this column is a sort column (true) or not (false). */
     BooleanField IS_SORT = new BooleanField("isSort", "isSort");
 
-    /** Materialized view in which this column exists, or empty if the column instead exists in a table or view. */
+    /** Materialized view in which this column exists. */
     RelationField MATERIALIZED_VIEW = new RelationField("materialisedView");
 
     /** Maximum length of a value in this column. */
@@ -185,63 +185,63 @@ public interface IColumn {
     /** TBC */
     RelationField METRIC_TIMESTAMPS = new RelationField("metricTimestamps");
 
-    /** TBC */
+    /** Number of columns nested within this (STRUCT or NESTED) column. */
     NumericField NESTED_COLUMN_COUNT = new NumericField("nestedColumnCount", "nestedColumnCount");
 
-    /** TBC */
+    /** Nested columns that exist within this column. */
     RelationField NESTED_COLUMNS = new RelationField("nestedColumns");
 
     /** Number of digits allowed to the right of the decimal point. */
     NumericField NUMERIC_SCALE = new NumericField("numericScale", "numericScale");
 
-    /** Order (position) in which the column appears in the table (starting at 1). */
+    /** Order (position) in which this column appears in the table (starting at 1). */
     NumericField ORDER = new NumericField("order", "order");
 
-    /** TBC */
+    /** Column in which this sub-column is nested. */
     RelationField PARENT_COLUMN = new RelationField("parentColumn");
 
-    /** TBC */
+    /** Simple name of the column this column is nested within, for STRUCT and NESTED columns. */
     KeywordTextField PARENT_COLUMN_NAME =
             new KeywordTextField("parentColumnName", "parentColumnName.keyword", "parentColumnName");
 
-    /** TBC */
+    /** Unique name of the column this column is nested within, for STRUCT and NESTED columns. */
     KeywordTextField PARENT_COLUMN_QUALIFIED_NAME = new KeywordTextField(
             "parentColumnQualifiedName", "parentColumnQualifiedName", "parentColumnQualifiedName.text");
 
-    /** TBC */
+    /** Order (position) of this partition column in the table. */
     NumericField PARTITION_ORDER = new NumericField("partitionOrder", "partitionOrder");
 
-    /** TBC */
+    /** Time (epoch) at which this column was pinned, in milliseconds. */
     NumericField PINNED_AT = new NumericField("pinnedAt", "pinnedAt");
 
-    /** TBC */
+    /** User who pinned this column. */
     KeywordField PINNED_BY = new KeywordField("pinnedBy", "pinnedBy");
 
-    /** Total number of digits allowed when the dataType is numeric. */
+    /** Total number of digits allowed, when the dataType is numeric. */
     NumericField PRECISION = new NumericField("precision", "precision");
 
-    /** Queries that involve this column. */
+    /** Queries that access this column. */
     RelationField QUERIES = new RelationField("queries");
 
     /** TBC */
     KeywordField RAW_DATA_TYPE_DEFINITION = new KeywordField("rawDataTypeDefinition", "rawDataTypeDefinition");
 
-    /** TBC */
+    /** Snowflake dynamic table in which this column exists. */
     RelationField SNOWFLAKE_DYNAMIC_TABLE = new RelationField("snowflakeDynamicTable");
 
-    /** TBC */
+    /** Sub-data type of this column. */
     KeywordField SUB_DATA_TYPE = new KeywordField("subDataType", "subDataType");
 
-    /** Table in which this column exists, or empty if the column instead exists in a view or materialized view. */
+    /** Table in which this column exists. */
     RelationField TABLE = new RelationField("table");
 
-    /** TBC */
+    /** Table partition that contains this column. */
     RelationField TABLE_PARTITION = new RelationField("tablePartition");
 
-    /** TBC */
+    /** Validations for this column. */
     KeywordField VALIDATIONS = new KeywordField("validations", "validations");
 
-    /** View in which this column exists, or empty if the column instead exists in a table or materialized view. */
+    /** View in which this column exists. */
     RelationField VIEW = new RelationField("view");
 
     /** TBC */
@@ -448,7 +448,7 @@ public interface IColumn {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -463,7 +463,7 @@ public interface IColumn {
     /** TBC */
     String getCertificateUpdatedBy();
 
-    /** TBC */
+    /** Average value in this column. */
     Double getColumnAverage();
 
     /** Average length of values in a string column. */
@@ -472,22 +472,22 @@ public interface IColumn {
     /** TBC */
     SortedSet<IDbtModelColumn> getColumnDbtModelColumns();
 
-    /** Level of nesting, used for STRUCT/NESTED columns */
+    /** Level of nesting of this column, used for STRUCT and NESTED columns. */
     Integer getColumnDepthLevel();
 
     /** Number of rows that contain distinct values. */
     Integer getColumnDistinctValuesCount();
 
-    /** TBC */
+    /** Number of rows that contain distinct values. */
     Long getColumnDistinctValuesCountLong();
 
     /** Number of rows that contain duplicate values. */
     Integer getColumnDuplicateValuesCount();
 
-    /** TBC */
+    /** Number of rows that contain duplicate values. */
     Long getColumnDuplicateValuesCountLong();
 
-    /** List of values in a histogram that represents the contents of the column. */
+    /** List of values in a histogram that represents the contents of this column. */
     List<Histogram> getColumnHistogram();
 
     /** Greatest value in a numeric column. */
@@ -517,7 +517,7 @@ public interface IColumn {
     /** Number of rows in a column that do not contain content. */
     Integer getColumnMissingValuesCount();
 
-    /** TBC */
+    /** Number of rows in a column that do not contain content. */
     Long getColumnMissingValuesCountLong();
 
     /** Percentage of rows in a column that do not contain content. */
@@ -529,16 +529,16 @@ public interface IColumn {
     /** Calculated sum of the values in a numeric column. */
     Double getColumnSum();
 
-    /** TBC */
+    /** List of top values in this column. */
     List<ColumnValueFrequencyMap> getColumnTopValues();
 
     /** Number of rows in which a value in this column appears only once. */
     Integer getColumnUniqueValuesCount();
 
-    /** TBC */
+    /** Number of rows in which a value in this column appears only once. */
     Long getColumnUniqueValuesCountLong();
 
-    /** Ratio indicating how unique data in the column is: 0 indicates that all values are the same, 100 indicates that all values in the column are unique. */
+    /** Ratio indicating how unique data in this column is: 0 indicates that all values are the same, 100 indicates that all values in this column are unique. */
     Double getColumnUniquenessPercentage();
 
     /** Calculated variance of the values in a numeric column. */
@@ -556,7 +556,7 @@ public interface IColumn {
     /** TBC */
     SortedSet<IMetric> getDataQualityMetricDimensions();
 
-    /** Data type of values in the column. */
+    /** Data type of values in this column. */
     String getDataType();
 
     /** TBC */
@@ -583,7 +583,7 @@ public interface IColumn {
     /** TBC */
     SortedSet<IDbtTest> getDbtTests();
 
-    /** TBC */
+    /** Default value for this column. */
     String getDefaultValue();
 
     /** TBC */
@@ -595,10 +595,10 @@ public interface IColumn {
     /** TBC */
     SortedSet<IFile> getFiles();
 
-    /** Column this column refers to as a foreign key. */
+    /** Column this foreign key column refers to. */
     IColumn getForeignKeyFrom();
 
-    /** All the columns that refer to this column as a foreign key. NOTE: when providing values to this relationship, isForeign must also be set to true. */
+    /** Columns that use this column as a foreign key. */
     SortedSet<IColumn> getForeignKeyTo();
 
     /** TBC */
@@ -607,19 +607,19 @@ public interface IColumn {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
     Boolean getIsAIGenerated();
 
-    /** TBC */
+    /** Whether this column is a clustered column (true) or not (false). */
     Boolean getIsClustered();
 
     /** TBC */
     Boolean getIsDiscoverable();
 
-    /** TBC */
+    /** Whether this column is a distribution column (true) or not (false). */
     Boolean getIsDist();
 
     /** TBC */
@@ -634,10 +634,10 @@ public interface IColumn {
     /** When true, the values in this column can be null. */
     Boolean getIsNullable();
 
-    /** TBC */
+    /** Whether this column is a partition column (true) or not (false). */
     Boolean getIsPartition();
 
-    /** TBC */
+    /** Whether this column is pinned (true) or not (false). */
     Boolean getIsPinned();
 
     /** When true, this column is the primary key for the table. */
@@ -646,7 +646,7 @@ public interface IColumn {
     /** TBC */
     Boolean getIsProfiled();
 
-    /** TBC */
+    /** Whether this column is a sort column (true) or not (false). */
     Boolean getIsSort();
 
     /** TBC */
@@ -664,10 +664,10 @@ public interface IColumn {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
-    /** Materialized view in which this column exists, or empty if the column instead exists in a table or view. */
+    /** Materialized view in which this column exists. */
     IMaterializedView getMaterializedView();
 
     /** Maximum length of a value in this column. */
@@ -676,7 +676,7 @@ public interface IColumn {
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -688,22 +688,22 @@ public interface IColumn {
     /** TBC */
     String getName();
 
-    /** TBC */
+    /** Number of columns nested within this (STRUCT or NESTED) column. */
     Integer getNestedColumnCount();
 
-    /** TBC */
+    /** Nested columns that exist within this column. */
     SortedSet<IColumn> getNestedColumns();
 
     /** Number of digits allowed to the right of the decimal point. */
     Double getNumericScale();
 
-    /** Order (position) in which the column appears in the table (starting at 1). */
+    /** Order (position) in which this column appears in the table (starting at 1). */
     Integer getOrder();
 
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -712,34 +712,34 @@ public interface IColumn {
     /** TBC */
     SortedSet<String> getOwnerUsers();
 
-    /** TBC */
+    /** Column in which this sub-column is nested. */
     IColumn getParentColumn();
 
-    /** TBC */
+    /** Simple name of the column this column is nested within, for STRUCT and NESTED columns. */
     String getParentColumnName();
 
-    /** TBC */
+    /** Unique name of the column this column is nested within, for STRUCT and NESTED columns. */
     String getParentColumnQualifiedName();
 
-    /** TBC */
+    /** Order (position) of this partition column in the table. */
     Integer getPartitionOrder();
 
-    /** TBC */
+    /** Time (epoch) at which this column was pinned, in milliseconds. */
     Long getPinnedAt();
 
-    /** TBC */
+    /** User who pinned this column. */
     String getPinnedBy();
 
     /** TBC */
     Double getPopularityScore();
 
-    /** Total number of digits allowed when the dataType is numeric. */
+    /** Total number of digits allowed, when the dataType is numeric. */
     Integer getPrecision();
 
     /** TBC */
     String getQualifiedName();
 
-    /** Queries that involve this column. */
+    /** Queries that access this column. */
     SortedSet<IAtlanQuery> getQueries();
 
     /** TBC */
@@ -757,7 +757,7 @@ public interface IColumn {
     /** TBC */
     String getRawDataTypeDefinition();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */
@@ -772,7 +772,7 @@ public interface IColumn {
     /** TBC */
     SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
 
-    /** TBC */
+    /** Snowflake dynamic table in which this column exists. */
     ISnowflakeDynamicTable getSnowflakeDynamicTable();
 
     /** TBC */
@@ -859,19 +859,19 @@ public interface IColumn {
     /** TBC */
     List<StarredDetails> getStarredDetails();
 
-    /** TBC */
+    /** Sub-data type of this column. */
     String getSubDataType();
 
     /** TBC */
     String getSubType();
 
-    /** Table in which this column exists, or empty if the column instead exists in a view or materialized view. */
+    /** Table in which this column exists. */
     ITable getTable();
 
     /** TBC */
     String getTableName();
 
-    /** TBC */
+    /** Table partition that contains this column. */
     ITablePartition getTablePartition();
 
     /** TBC */
@@ -883,10 +883,10 @@ public interface IColumn {
     /** TBC */
     String getUserDescription();
 
-    /** TBC */
+    /** Validations for this column. */
     Map<String, String> getValidations();
 
-    /** View in which this column exists, or empty if the column instead exists in a table or materialized view. */
+    /** View in which this column exists. */
     IView getView();
 
     /** TBC */

@@ -34,30 +34,30 @@ public interface IPowerBITable {
 
     public static final String TYPE_NAME = "PowerBITable";
 
-    /** TBC */
+    /** Columns that exist within this table. */
     RelationField COLUMNS = new RelationField("columns");
 
-    /** TBC */
+    /** Dataset in which this table exists. */
     RelationField DATASET = new RelationField("dataset");
 
-    /** TBC */
+    /** Unique name of the dataset in which this table exists. */
     KeywordField DATASET_QUALIFIED_NAME = new KeywordField("datasetQualifiedName", "datasetQualifiedName");
 
-    /** TBC */
+    /** Measures that exist within this table. */
     RelationField MEASURES = new RelationField("measures");
 
-    /** TBC */
+    /** Number of columns in this table. */
     NumericField POWER_BI_TABLE_COLUMN_COUNT = new NumericField("powerBITableColumnCount", "powerBITableColumnCount");
 
-    /** TBC */
+    /** Number of measures in this table. */
     NumericField POWER_BI_TABLE_MEASURE_COUNT =
             new NumericField("powerBITableMeasureCount", "powerBITableMeasureCount");
 
-    /** TBC */
+    /** Power Query M expressions for the table. */
     KeywordField POWER_BI_TABLE_SOURCE_EXPRESSIONS =
             new KeywordField("powerBITableSourceExpressions", "powerBITableSourceExpressions");
 
-    /** TBC */
+    /** Unique name of the workspace in which this table exists. */
     KeywordField WORKSPACE_QUALIFIED_NAME = new KeywordField("workspaceQualifiedName", "workspaceQualifiedName");
 
     /** TBC */
@@ -264,7 +264,7 @@ public interface IPowerBITable {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -279,7 +279,7 @@ public interface IPowerBITable {
     /** TBC */
     String getCertificateUpdatedBy();
 
-    /** TBC */
+    /** Columns that exist within this table. */
     SortedSet<IPowerBIColumn> getColumns();
 
     /** TBC */
@@ -291,10 +291,10 @@ public interface IPowerBITable {
     /** TBC */
     AtlanConnectorType getConnectorType();
 
-    /** TBC */
+    /** Dataset in which this table exists. */
     IPowerBIDataset getDataset();
 
-    /** TBC */
+    /** Unique name of the dataset in which this table exists. */
     String getDatasetQualifiedName();
 
     /** TBC */
@@ -315,7 +315,7 @@ public interface IPowerBITable {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -339,16 +339,16 @@ public interface IPowerBITable {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
-    /** TBC */
+    /** Measures that exist within this table. */
     SortedSet<IPowerBIMeasure> getMeasures();
 
     /** TBC */
@@ -360,7 +360,7 @@ public interface IPowerBITable {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -381,22 +381,22 @@ public interface IPowerBITable {
     /** TBC */
     Boolean getPowerBIIsHidden();
 
-    /** TBC */
+    /** Number of columns in this table. */
     Long getPowerBITableColumnCount();
 
-    /** TBC */
+    /** Number of measures in this table. */
     Long getPowerBITableMeasureCount();
 
     /** TBC */
     String getPowerBITableQualifiedName();
 
-    /** TBC */
+    /** Power Query M expressions for the table. */
     SortedSet<String> getPowerBITableSourceExpressions();
 
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */
@@ -501,7 +501,7 @@ public interface IPowerBITable {
     /** TBC */
     SortedSet<String> getViewerUsers();
 
-    /** TBC */
+    /** Unique name of the workspace in which this table exists. */
     String getWorkspaceQualifiedName();
 
     /** Name of the type that defines the asset. */

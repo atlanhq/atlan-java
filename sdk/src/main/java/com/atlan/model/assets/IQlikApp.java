@@ -25,7 +25,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a Qlik App in Atlan.
+ * Instance of a Qlik app in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -34,25 +34,25 @@ public interface IQlikApp {
 
     public static final String TYPE_NAME = "QlikApp";
 
-    /** Static space taken up by the app. */
+    /** Static space used by this app, in bytes. */
     NumericField QLIK_APP_STATIC_BYTE_SIZE = new NumericField("qlikAppStaticByteSize", "qlikAppStaticByteSize");
 
-    /** Whether section access or data masking is enabled (true) or not (false). */
+    /** Whether section access or data masking is enabled on the source (true) or not (false). */
     BooleanField QLIK_HAS_SECTION_ACCESS = new BooleanField("qlikHasSectionAccess", "qlikHasSectionAccess");
 
-    /** Whether the app is in direct query mode (true) or not (false). */
+    /** Whether this app is in direct query mode (true) or not (false). */
     BooleanField QLIK_IS_DIRECT_QUERY_MODE = new BooleanField("qlikIsDirectQueryMode", "qlikIsDirectQueryMode");
 
-    /** Whether the app is encrypted (true) or not (false). */
+    /** Whether this app is encrypted (true) or not (false). */
     BooleanField QLIK_IS_ENCRYPTED = new BooleanField("qlikIsEncrypted", "qlikIsEncrypted");
 
-    /** Origin App ID of the Qlik app. */
+    /** Value of originAppId for this app. */
     KeywordField QLIK_ORIGIN_APP_ID = new KeywordField("qlikOriginAppId", "qlikOriginAppId");
 
-    /** Sheets that exist within the app. */
+    /** Sheets that exist within this app. */
     RelationField QLIK_SHEETS = new RelationField("qlikSheets");
 
-    /** Space in which the app exists. */
+    /** Space in which this app exists. */
     RelationField QLIK_SPACE = new RelationField("qlikSpace");
 
     /** TBC */
@@ -259,7 +259,7 @@ public interface IQlikApp {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -301,7 +301,7 @@ public interface IQlikApp {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -325,13 +325,13 @@ public interface IQlikApp {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -343,7 +343,7 @@ public interface IQlikApp {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -361,25 +361,25 @@ public interface IQlikApp {
     /** TBC */
     String getQlikAppQualifiedName();
 
-    /** Static space taken up by the app. */
+    /** Static space used by this app, in bytes. */
     Long getQlikAppStaticByteSize();
 
-    /** Whether section access or data masking is enabled (true) or not (false). */
+    /** Whether section access or data masking is enabled on the source (true) or not (false). */
     Boolean getQlikHasSectionAccess();
 
     /** TBC */
     String getQlikId();
 
-    /** Whether the app is in direct query mode (true) or not (false). */
+    /** Whether this app is in direct query mode (true) or not (false). */
     Boolean getQlikIsDirectQueryMode();
 
-    /** Whether the app is encrypted (true) or not (false). */
+    /** Whether this app is encrypted (true) or not (false). */
     Boolean getQlikIsEncrypted();
 
     /** TBC */
     Boolean getQlikIsPublished();
 
-    /** Origin App ID of the Qlik app. */
+    /** Value of originAppId for this app. */
     String getQlikOriginAppId();
 
     /** TBC */
@@ -388,10 +388,10 @@ public interface IQlikApp {
     /** TBC */
     String getQlikQRI();
 
-    /** Sheets that exist within the app. */
+    /** Sheets that exist within this app. */
     SortedSet<IQlikSheet> getQlikSheets();
 
-    /** Space in which the app exists. */
+    /** Space in which this app exists. */
     IQlikSpace getQlikSpace();
 
     /** TBC */
@@ -403,7 +403,7 @@ public interface IQlikApp {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

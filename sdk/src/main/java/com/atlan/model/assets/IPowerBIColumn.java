@@ -33,27 +33,27 @@ public interface IPowerBIColumn {
 
     public static final String TYPE_NAME = "PowerBIColumn";
 
-    /** TBC */
+    /** Unique name of the dataset in which this column exists. */
     KeywordField DATASET_QUALIFIED_NAME = new KeywordField("datasetQualifiedName", "datasetQualifiedName");
 
-    /** TBC */
+    /** Data category that describes the data in this column. */
     KeywordField POWER_BI_COLUMN_DATA_CATEGORY =
             new KeywordField("powerBIColumnDataCategory", "powerBIColumnDataCategory");
 
-    /** TBC */
+    /** Data type of this column. */
     KeywordField POWER_BI_COLUMN_DATA_TYPE = new KeywordField("powerBIColumnDataType", "powerBIColumnDataType");
 
-    /** TBC */
+    /** Aggregate function to use for summarizing this column. */
     KeywordField POWER_BI_COLUMN_SUMMARIZE_BY =
             new KeywordField("powerBIColumnSummarizeBy", "powerBIColumnSummarizeBy");
 
-    /** TBC */
+    /** Name of a column in the same table to use to order this column. */
     KeywordField POWER_BI_SORT_BY_COLUMN = new KeywordField("powerBISortByColumn", "powerBISortByColumn");
 
-    /** TBC */
+    /** Table in which this column exists. */
     RelationField TABLE = new RelationField("table");
 
-    /** TBC */
+    /** Unique name of the workspace in which this column exists. */
     KeywordField WORKSPACE_QUALIFIED_NAME = new KeywordField("workspaceQualifiedName", "workspaceQualifiedName");
 
     /** TBC */
@@ -260,7 +260,7 @@ public interface IPowerBIColumn {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -284,7 +284,7 @@ public interface IPowerBIColumn {
     /** TBC */
     AtlanConnectorType getConnectorType();
 
-    /** TBC */
+    /** Unique name of the dataset in which this column exists. */
     String getDatasetQualifiedName();
 
     /** TBC */
@@ -305,7 +305,7 @@ public interface IPowerBIColumn {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -329,13 +329,13 @@ public interface IPowerBIColumn {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -347,7 +347,7 @@ public interface IPowerBIColumn {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -359,13 +359,13 @@ public interface IPowerBIColumn {
     /** TBC */
     Double getPopularityScore();
 
-    /** TBC */
+    /** Data category that describes the data in this column. */
     String getPowerBIColumnDataCategory();
 
-    /** TBC */
+    /** Data type of this column. */
     String getPowerBIColumnDataType();
 
-    /** TBC */
+    /** Aggregate function to use for summarizing this column. */
     String getPowerBIColumnSummarizeBy();
 
     /** TBC */
@@ -377,7 +377,7 @@ public interface IPowerBIColumn {
     /** TBC */
     Boolean getPowerBIIsHidden();
 
-    /** TBC */
+    /** Name of a column in the same table to use to order this column. */
     String getPowerBISortByColumn();
 
     /** TBC */
@@ -386,7 +386,7 @@ public interface IPowerBIColumn {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */
@@ -476,7 +476,7 @@ public interface IPowerBIColumn {
     /** TBC */
     String getSubType();
 
-    /** TBC */
+    /** Table in which this column exists. */
     IPowerBITable getTable();
 
     /** TBC */
@@ -494,7 +494,7 @@ public interface IPowerBIColumn {
     /** TBC */
     SortedSet<String> getViewerUsers();
 
-    /** TBC */
+    /** Unique name of the workspace in which this column exists. */
     String getWorkspaceQualifiedName();
 
     /** Name of the type that defines the asset. */

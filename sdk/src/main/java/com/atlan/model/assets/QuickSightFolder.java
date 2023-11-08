@@ -29,7 +29,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Instance of a QuickSight Folder in Atlan.
+ * Instance of a QuickSight folder in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -54,7 +54,7 @@ public class QuickSightFolder extends Asset
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -64,7 +64,7 @@ public class QuickSightFolder extends Asset
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
@@ -84,12 +84,12 @@ public class QuickSightFolder extends Asset
     @Singular
     SortedSet<IQuickSightDataset> quickSightDatasets;
 
-    /** Detailed path of the folder */
+    /** Detailed path of this folder. */
     @Attribute
     @Singular("addQuickSightFolderHierarchy")
     List<Map<String, String>> quickSightFolderHierarchy;
 
-    /** Shared or private type of folder */
+    /** Type of this folder, for example: SHARED. */
     @Attribute
     QuickSightFolderType quickSightFolderType;
 

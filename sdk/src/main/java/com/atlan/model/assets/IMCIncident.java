@@ -23,7 +23,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a Monte Carlo Incident in Atlan.
+ * Instance of a Monte Carlo incident in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -32,28 +32,28 @@ public interface IMCIncident {
 
     public static final String TYPE_NAME = "MCIncident";
 
-    /** Assets impacted by the incident. */
+    /** TBC */
     RelationField MC_INCIDENT_ASSETS = new RelationField("mcIncidentAssets");
 
-    /** Unique identifier for the incident. */
+    /** Identifier of this incident, from Monte Carlo. */
     KeywordField MC_INCIDENT_ID = new KeywordField("mcIncidentId", "mcIncidentId");
 
-    /** Severity of the incident. */
+    /** Severity of this incident. */
     KeywordField MC_INCIDENT_SEVERITY = new KeywordField("mcIncidentSeverity", "mcIncidentSeverity");
 
-    /** Status of the incident, for example whether it is being investigated or is already fixed. */
+    /** State of this incident. */
     KeywordField MC_INCIDENT_STATE = new KeywordField("mcIncidentState", "mcIncidentState");
 
-    /** TBC */
+    /** Subtypes of this incident. */
     KeywordField MC_INCIDENT_SUB_TYPES = new KeywordField("mcIncidentSubTypes", "mcIncidentSubTypes");
 
-    /** Type of incident. */
+    /** Type of this incident. */
     KeywordField MC_INCIDENT_TYPE = new KeywordField("mcIncidentType", "mcIncidentType");
 
-    /** Name of the warehouse in which the incident occurred. */
+    /** Name of this incident's warehouse. */
     KeywordField MC_INCIDENT_WAREHOUSE = new KeywordField("mcIncidentWarehouse", "mcIncidentWarehouse");
 
-    /** Monitor through which this incident occurred. */
+    /** Monitor in which this incident exists. */
     RelationField MC_MONITOR = new RelationField("mcMonitor");
 
     /** TBC */
@@ -260,7 +260,7 @@ public interface IMCIncident {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -302,7 +302,7 @@ public interface IMCIncident {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -326,43 +326,43 @@ public interface IMCIncident {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<String> getMcAssetQualifiedNames();
 
-    /** Assets impacted by the incident. */
+    /** TBC */
     SortedSet<IAsset> getMcIncidentAssets();
 
-    /** Unique identifier for the incident. */
+    /** Identifier of this incident, from Monte Carlo. */
     String getMcIncidentId();
 
-    /** Severity of the incident. */
+    /** Severity of this incident. */
     String getMcIncidentSeverity();
 
-    /** Status of the incident, for example whether it is being investigated or is already fixed. */
+    /** State of this incident. */
     String getMcIncidentState();
 
-    /** TBC */
+    /** Subtypes of this incident. */
     SortedSet<String> getMcIncidentSubTypes();
 
-    /** Type of incident. */
+    /** Type of this incident. */
     String getMcIncidentType();
 
-    /** Name of the warehouse in which the incident occurred. */
+    /** Name of this incident's warehouse. */
     String getMcIncidentWarehouse();
 
-    /** TBC */
+    /** Incidents that exist within this monitor. */
     SortedSet<IMCIncident> getMcIncidents();
 
     /** TBC */
     SortedSet<String> getMcLabels();
 
-    /** Monitor through which this incident occurred. */
+    /** Monitor in which this incident exists. */
     IMCMonitor getMcMonitor();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -374,7 +374,7 @@ public interface IMCIncident {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -389,7 +389,7 @@ public interface IMCIncident {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

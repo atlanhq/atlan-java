@@ -22,7 +22,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a column-level lineage process in Atlan.
+ * Instance of a column-level lineage process in Atlan. Inputs and outputs of these processes should be columns.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -241,7 +241,7 @@ public interface IColumnProcess {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -262,7 +262,7 @@ public interface IColumnProcess {
     /** TBC */
     String getCode();
 
-    /** TBC */
+    /** Processes that detail column-level lineage for this process. */
     SortedSet<IColumnProcess> getColumnProcesses();
 
     /** TBC */
@@ -289,7 +289,7 @@ public interface IColumnProcess {
     /** TBC */
     Boolean getHasLineage();
 
-    /** TBC */
+    /** Assets that are inputs to this process. */
     SortedSet<ICatalog> getInputs();
 
     /** TBC */
@@ -313,16 +313,16 @@ public interface IColumnProcess {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
-    /** TBC */
+    /** Matillion component that contains the logic for this lineage process. */
     IMatillionComponent getMatillionComponent();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -331,7 +331,7 @@ public interface IColumnProcess {
     /** TBC */
     String getName();
 
-    /** TBC */
+    /** Assets that are outputs from this process. */
     SortedSet<ICatalog> getOutputs();
 
     /** TBC */
@@ -349,7 +349,7 @@ public interface IColumnProcess {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

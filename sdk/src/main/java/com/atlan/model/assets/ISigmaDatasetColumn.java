@@ -32,14 +32,14 @@ public interface ISigmaDatasetColumn {
 
     public static final String TYPE_NAME = "SigmaDatasetColumn";
 
-    /** Dataset that contains this column. */
+    /** Dataset in which this dataset column exists. */
     RelationField SIGMA_DATASET = new RelationField("sigmaDataset");
 
-    /** Human-readable name of the dataset that contains this column. */
+    /** Simple name of the dataset in which this column exists. */
     KeywordTextField SIGMA_DATASET_NAME =
             new KeywordTextField("sigmaDatasetName", "sigmaDatasetName.keyword", "sigmaDatasetName");
 
-    /** Unique name of the dataset that contains this column. */
+    /** Unique name of the dataset in which this column exists. */
     KeywordTextField SIGMA_DATASET_QUALIFIED_NAME = new KeywordTextField(
             "sigmaDatasetQualifiedName", "sigmaDatasetQualifiedName", "sigmaDatasetQualifiedName.text");
 
@@ -247,7 +247,7 @@ public interface ISigmaDatasetColumn {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -289,7 +289,7 @@ public interface ISigmaDatasetColumn {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -313,13 +313,13 @@ public interface ISigmaDatasetColumn {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -331,7 +331,7 @@ public interface ISigmaDatasetColumn {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -346,7 +346,7 @@ public interface ISigmaDatasetColumn {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */
@@ -361,13 +361,13 @@ public interface ISigmaDatasetColumn {
     /** TBC */
     String getSigmaDataElementQualifiedName();
 
-    /** Dataset that contains this column. */
+    /** Dataset in which this dataset column exists. */
     ISigmaDataset getSigmaDataset();
 
-    /** Human-readable name of the dataset that contains this column. */
+    /** Simple name of the dataset in which this column exists. */
     String getSigmaDatasetName();
 
-    /** Unique name of the dataset that contains this column. */
+    /** Unique name of the dataset in which this column exists. */
     String getSigmaDatasetQualifiedName();
 
     /** TBC */

@@ -23,7 +23,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a Tableau workbook in Atlan.
+ * Instance of a Tableau workbook in Atlan. These contain one or more worksheets, datasources or dashboards.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -32,32 +32,32 @@ public interface ITableauWorkbook {
 
     public static final String TYPE_NAME = "TableauWorkbook";
 
-    /** TBC */
+    /** Dashboards that exist within this workbook. */
     RelationField DASHBOARDS = new RelationField("dashboards");
 
-    /** TBC */
+    /** Datasources that exist within this workbook. */
     RelationField DATASOURCES = new RelationField("datasources");
 
-    /** TBC */
+    /** Project in which this workbook exists. */
     RelationField PROJECT = new RelationField("project");
 
-    /** TBC */
+    /** List of top-level projects with their nested child projects. */
     KeywordField PROJECT_HIERARCHY = new KeywordField("projectHierarchy", "projectHierarchy");
 
-    /** TBC */
+    /** Unique name of the project in which this workbook exists. */
     KeywordField PROJECT_QUALIFIED_NAME = new KeywordField("projectQualifiedName", "projectQualifiedName");
 
-    /** TBC */
+    /** Unique name of the site in which this workbook exists. */
     KeywordField SITE_QUALIFIED_NAME = new KeywordField("siteQualifiedName", "siteQualifiedName");
 
-    /** TBC */
+    /** Simple name of the top-level project in which this workbook exists. */
     KeywordField TOP_LEVEL_PROJECT_NAME = new KeywordField("topLevelProjectName", "topLevelProjectName");
 
-    /** TBC */
+    /** Unique name of the top-level project in which this workbook exists. */
     KeywordField TOP_LEVEL_PROJECT_QUALIFIED_NAME =
             new KeywordField("topLevelProjectQualifiedName", "topLevelProjectQualifiedName");
 
-    /** TBC */
+    /** Worksheets that exist within this workbook. */
     RelationField WORKSHEETS = new RelationField("worksheets");
 
     /** TBC */
@@ -264,7 +264,7 @@ public interface ITableauWorkbook {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -288,10 +288,10 @@ public interface ITableauWorkbook {
     /** TBC */
     AtlanConnectorType getConnectorType();
 
-    /** TBC */
+    /** Dashboards that exist within this workbook. */
     SortedSet<ITableauDashboard> getDashboards();
 
-    /** TBC */
+    /** Datasources that exist within this workbook. */
     SortedSet<ITableauDatasource> getDatasources();
 
     /** TBC */
@@ -312,7 +312,7 @@ public interface ITableauWorkbook {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -336,13 +336,13 @@ public interface ITableauWorkbook {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -354,7 +354,7 @@ public interface ITableauWorkbook {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -366,19 +366,19 @@ public interface ITableauWorkbook {
     /** TBC */
     Double getPopularityScore();
 
-    /** TBC */
+    /** Project in which this workbook exists. */
     ITableauProject getProject();
 
-    /** TBC */
+    /** List of top-level projects with their nested child projects. */
     List<Map<String, String>> getProjectHierarchy();
 
-    /** TBC */
+    /** Unique name of the project in which this workbook exists. */
     String getProjectQualifiedName();
 
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */
@@ -387,7 +387,7 @@ public interface ITableauWorkbook {
     /** TBC */
     SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
 
-    /** TBC */
+    /** Unique name of the site in which this workbook exists. */
     String getSiteQualifiedName();
 
     /** TBC */
@@ -474,10 +474,10 @@ public interface ITableauWorkbook {
     /** TBC */
     String getTenantId();
 
-    /** TBC */
+    /** Simple name of the top-level project in which this workbook exists. */
     String getTopLevelProjectName();
 
-    /** TBC */
+    /** Unique name of the top-level project in which this workbook exists. */
     String getTopLevelProjectQualifiedName();
 
     /** TBC */
@@ -492,7 +492,7 @@ public interface ITableauWorkbook {
     /** TBC */
     SortedSet<String> getViewerUsers();
 
-    /** TBC */
+    /** Worksheets that exist within this workbook. */
     SortedSet<ITableauWorksheet> getWorksheets();
 
     /** Name of the type that defines the asset. */

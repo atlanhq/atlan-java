@@ -51,7 +51,7 @@ public class PresetWorkspace extends Asset implements IPresetWorkspace, IPreset,
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -61,7 +61,7 @@ public class PresetWorkspace extends Asset implements IPresetWorkspace, IPreset,
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
@@ -74,28 +74,28 @@ public class PresetWorkspace extends Asset implements IPresetWorkspace, IPreset,
     @Attribute
     String presetDashboardQualifiedName;
 
-    /** Collections within this workspace. */
+    /** Dashboards that exist within this workspace. */
     @Attribute
     @Singular
     SortedSet<IPresetDashboard> presetDashboards;
 
-    /** ID of the cluster for the Preset workspace. */
+    /** TBC */
     @Attribute
     Long presetWorkspaceClusterId;
 
-    /** Number of collections in the workspace. */
+    /** TBC */
     @Attribute
     Long presetWorkspaceDashboardCount;
 
-    /** Number of datasets in the workspace. */
+    /** TBC */
     @Attribute
     Long presetWorkspaceDatasetCount;
 
-    /** ID of the deployment for the Preset workspace. */
+    /** TBC */
     @Attribute
     Long presetWorkspaceDeploymentId;
 
-    /** Hostname of the Preset workspace. */
+    /** TBC */
     @Attribute
     String presetWorkspaceHostname;
 
@@ -103,11 +103,11 @@ public class PresetWorkspace extends Asset implements IPresetWorkspace, IPreset,
     @Attribute
     Long presetWorkspaceId;
 
-    /** Whether the workspace is in maintenance mode (true) or not (false). */
+    /** TBC */
     @Attribute
     Boolean presetWorkspaceIsInMaintenanceMode;
 
-    /** Whether public collections are allowed in the workspace (true) or not (false). */
+    /** TBC */
     @Attribute
     Boolean presetWorkspacePublicDashboardsAllowed;
 
@@ -115,11 +115,11 @@ public class PresetWorkspace extends Asset implements IPresetWorkspace, IPreset,
     @Attribute
     String presetWorkspaceQualifiedName;
 
-    /** Region of the workspace. */
+    /** TBC */
     @Attribute
     String presetWorkspaceRegion;
 
-    /** Status of the workspace. */
+    /** TBC */
     @Attribute
     String presetWorkspaceStatus;
 

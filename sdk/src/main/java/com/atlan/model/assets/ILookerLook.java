@@ -24,7 +24,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a Looker look in Atlan.
+ * Instance of a Looker Look in Atlan. Looks are saved visualizations used to understand and analyze data. They can be shared and reused in multiple dashboards.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -33,46 +33,46 @@ public interface ILookerLook {
 
     public static final String TYPE_NAME = "LookerLook";
 
-    /** TBC */
+    /** Dashboard in which this Look is used. */
     RelationField DASHBOARD = new RelationField("dashboard");
 
-    /** TBC */
+    /** Folder in which this Look exists. */
     RelationField FOLDER = new RelationField("folder");
 
-    /** TBC */
+    /** Name of the folder in which the Look is organized. */
     KeywordField FOLDER_NAME = new KeywordField("folderName", "folderName");
 
-    /** TBC */
+    /** Model in which this Look exists. */
     RelationField MODEL = new RelationField("model");
 
-    /** TBC */
+    /** Name of the model in which this Look exists. */
     KeywordField MODEL_NAME = new KeywordField("modelName", "modelName");
 
-    /** TBC */
+    /** Deprecated. */
     RelationField QUERY = new RelationField("query");
 
-    /** TBC */
+    /** Identifier of the Look's content metadata, from Looker. */
     NumericField SOURCE_CONTENT_METADATA_ID = new NumericField("sourceContentMetadataId", "sourceContentMetadataId");
 
-    /** TBC */
+    /** Time (epoch) when the Look was last accessed by a user, in milliseconds. */
     NumericField SOURCE_LAST_ACCESSED_AT = new NumericField("sourceLastAccessedAt", "sourceLastAccessedAt");
 
-    /** TBC */
+    /** Time (epoch) when the Look was last viewed by a user, in milliseconds. */
     NumericField SOURCE_LAST_VIEWED_AT = new NumericField("sourceLastViewedAt", "sourceLastViewedAt");
 
-    /** TBC */
+    /** Identifier of the query for the Look, from Looker. */
     NumericField SOURCE_QUERY_ID = new NumericField("sourceQueryId", "sourceQueryId");
 
-    /** TBC */
+    /** Identifier of the user who created the Look, from Looker. */
     NumericField SOURCE_USER_ID = new NumericField("sourceUserId", "sourceUserId");
 
-    /** TBC */
+    /** Number of times the look has been viewed in the Looker web UI. */
     NumericField SOURCE_VIEW_COUNT = new NumericField("sourceViewCount", "sourceViewCount");
 
-    /** TBC */
+    /** Identifier of the user that last updated the Look, from Looker. */
     NumericField SOURCELAST_UPDATER_ID = new NumericField("sourcelastUpdaterId", "sourcelastUpdaterId");
 
-    /** TBC */
+    /** Tiles that exist within this Look. */
     RelationField TILE = new RelationField("tile");
 
     /** TBC */
@@ -279,7 +279,7 @@ public interface ILookerLook {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -303,7 +303,7 @@ public interface ILookerLook {
     /** TBC */
     AtlanConnectorType getConnectorType();
 
-    /** TBC */
+    /** Dashboard in which this Look is used. */
     ILookerDashboard getDashboard();
 
     /** TBC */
@@ -318,10 +318,10 @@ public interface ILookerLook {
     /** TBC */
     SortedSet<IFile> getFiles();
 
-    /** TBC */
+    /** Folder in which this Look exists. */
     ILookerFolder getFolder();
 
-    /** TBC */
+    /** Name of the folder in which the Look is organized. */
     String getFolderName();
 
     /** TBC */
@@ -330,7 +330,7 @@ public interface ILookerLook {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -354,22 +354,22 @@ public interface ILookerLook {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
     SortedSet<IMetric> getMetrics();
 
-    /** TBC */
+    /** Model in which this Look exists. */
     ILookerModel getModel();
 
-    /** TBC */
+    /** Name of the model in which this Look exists. */
     String getModelName();
 
     /** TBC */
@@ -378,7 +378,7 @@ public interface ILookerLook {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -393,10 +393,10 @@ public interface ILookerLook {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** Deprecated. */
     ILookerQuery getQuery();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */
@@ -408,7 +408,7 @@ public interface ILookerLook {
     /** TBC */
     SortedSet<ISodaCheck> getSodaChecks();
 
-    /** TBC */
+    /** Identifier of the Look's content metadata, from Looker. */
     Integer getSourceContentMetadataId();
 
     /** TBC */
@@ -423,13 +423,13 @@ public interface ILookerLook {
     /** TBC */
     String getSourceEmbedURL();
 
-    /** TBC */
+    /** Time (epoch) when the Look was last accessed by a user, in milliseconds. */
     Long getSourceLastAccessedAt();
 
     /** TBC */
     Long getSourceLastReadAt();
 
-    /** TBC */
+    /** Time (epoch) when the Look was last viewed by a user, in milliseconds. */
     Long getSourceLastViewedAt();
 
     /** TBC */
@@ -441,7 +441,7 @@ public interface ILookerLook {
     /** TBC */
     SortedSet<String> getSourceQueryComputeCosts();
 
-    /** TBC */
+    /** Identifier of the query for the Look, from Looker. */
     Integer getSourceQueryId();
 
     /** TBC */
@@ -486,13 +486,13 @@ public interface ILookerLook {
     /** TBC */
     String getSourceUpdatedBy();
 
-    /** TBC */
+    /** Identifier of the user who created the Look, from Looker. */
     Integer getSourceUserId();
 
-    /** TBC */
+    /** Number of times the look has been viewed in the Looker web UI. */
     Integer getSourceViewCount();
 
-    /** TBC */
+    /** Identifier of the user that last updated the Look, from Looker. */
     Integer getSourcelastUpdaterId();
 
     /** TBC */
@@ -510,7 +510,7 @@ public interface ILookerLook {
     /** TBC */
     String getTenantId();
 
-    /** TBC */
+    /** Tiles that exist within this Look. */
     ILookerTile getTile();
 
     /** TBC */

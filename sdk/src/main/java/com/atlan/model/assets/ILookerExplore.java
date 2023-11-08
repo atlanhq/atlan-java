@@ -24,7 +24,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a Looker explore in Atlan.
+ * Instance of a Looker Explore in Atlan. Explores are views that users can query in Looker.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -33,28 +33,28 @@ public interface ILookerExplore {
 
     public static final String TYPE_NAME = "LookerExplore";
 
-    /** TBC */
+    /** Fields that exist within this Explore. */
     RelationField FIELDS = new RelationField("fields");
 
-    /** TBC */
+    /** Model in which this explore exists. */
     RelationField MODEL = new RelationField("model");
 
-    /** TBC */
+    /** Name of the parent model of this Explore. */
     KeywordField MODEL_NAME = new KeywordField("modelName", "modelName");
 
-    /** TBC */
+    /** Project in which this explore exists. */
     RelationField PROJECT = new RelationField("project");
 
-    /** TBC */
+    /** Name of the parent project of this Explore. */
     KeywordField PROJECT_NAME = new KeywordField("projectName", "projectName");
 
-    /** TBC */
+    /** Connection name for the Explore, from Looker. */
     KeywordField SOURCE_CONNECTION_NAME = new KeywordField("sourceConnectionName", "sourceConnectionName");
 
-    /** TBC */
+    /** Name of the SQL table used to declare the Explore. */
     KeywordField SQL_TABLE_NAME = new KeywordField("sqlTableName", "sqlTableName");
 
-    /** TBC */
+    /** Name of the view for the Explore. */
     KeywordTextField VIEW_NAME = new KeywordTextField("viewName", "viewName.keyword", "viewName");
 
     /** TBC */
@@ -261,7 +261,7 @@ public interface ILookerExplore {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -294,7 +294,7 @@ public interface ILookerExplore {
     /** TBC */
     String getDisplayName();
 
-    /** TBC */
+    /** Fields that exist within this Explore. */
     SortedSet<ILookerField> getFields();
 
     /** TBC */
@@ -306,7 +306,7 @@ public interface ILookerExplore {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -330,22 +330,22 @@ public interface ILookerExplore {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
     SortedSet<IMetric> getMetrics();
 
-    /** TBC */
+    /** Model in which this explore exists. */
     ILookerModel getModel();
 
-    /** TBC */
+    /** Name of the parent model of this Explore. */
     String getModelName();
 
     /** TBC */
@@ -354,7 +354,7 @@ public interface ILookerExplore {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -366,16 +366,16 @@ public interface ILookerExplore {
     /** TBC */
     Double getPopularityScore();
 
-    /** TBC */
+    /** Project in which this explore exists. */
     ILookerProject getProject();
 
-    /** TBC */
+    /** Name of the parent project of this Explore. */
     String getProjectName();
 
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */
@@ -387,7 +387,7 @@ public interface ILookerExplore {
     /** TBC */
     SortedSet<ISodaCheck> getSodaChecks();
 
-    /** TBC */
+    /** Connection name for the Explore, from Looker. */
     String getSourceConnectionName();
 
     /** TBC */
@@ -456,7 +456,7 @@ public interface ILookerExplore {
     /** TBC */
     String getSourceUpdatedBy();
 
-    /** TBC */
+    /** Name of the SQL table used to declare the Explore. */
     String getSqlTableName();
 
     /** TBC */
@@ -477,7 +477,7 @@ public interface ILookerExplore {
     /** TBC */
     String getUserDescription();
 
-    /** TBC */
+    /** Name of the view for the Explore. */
     String getViewName();
 
     /** TBC */

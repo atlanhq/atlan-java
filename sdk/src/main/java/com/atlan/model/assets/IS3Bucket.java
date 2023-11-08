@@ -37,7 +37,7 @@ public interface IS3Bucket {
     /** S3 objects within this bucket. */
     RelationField OBJECTS = new RelationField("objects");
 
-    /** Whether versioning is enabled for the bucket. */
+    /** Whether versioning is enabled for the bucket (true) or not (false). */
     BooleanField S3BUCKET_VERSIONING_ENABLED =
             new BooleanField("s3BucketVersioningEnabled", "s3BucketVersioningEnabled");
 
@@ -248,7 +248,7 @@ public interface IS3Bucket {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -317,7 +317,7 @@ public interface IS3Bucket {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -341,13 +341,13 @@ public interface IS3Bucket {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -362,7 +362,7 @@ public interface IS3Bucket {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -377,10 +377,10 @@ public interface IS3Bucket {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
-    /** Whether versioning is enabled for the bucket. */
+    /** Whether versioning is enabled for the bucket (true) or not (false). */
     Boolean getS3BucketVersioningEnabled();
 
     /** TBC */

@@ -26,7 +26,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a Preset collection in Atlan.
+ * Instance of a Preset dashboard in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -35,10 +35,10 @@ public interface IPresetDashboard {
 
     public static final String TYPE_NAME = "PresetDashboard";
 
-    /** Charts contained within the collection. */
+    /** Charts that exist within this dashboard. */
     RelationField PRESET_CHARTS = new RelationField("presetCharts");
 
-    /** Username of the user who last changed the collection. */
+    /** TBC */
     KeywordTextStemmedField PRESET_DASHBOARD_CHANGED_BY_NAME = new KeywordTextStemmedField(
             "presetDashboardChangedByName",
             "presetDashboardChangedByName.keyword",
@@ -49,26 +49,26 @@ public interface IPresetDashboard {
     KeywordField PRESET_DASHBOARD_CHANGED_BY_URL =
             new KeywordField("presetDashboardChangedByURL", "presetDashboardChangedByURL");
 
-    /** Number of charts within the collection. */
+    /** TBC */
     NumericField PRESET_DASHBOARD_CHART_COUNT =
             new NumericField("presetDashboardChartCount", "presetDashboardChartCount");
 
-    /** Whether the collection is managed externally (true) or not (false). */
+    /** TBC */
     BooleanField PRESET_DASHBOARD_IS_MANAGED_EXTERNALLY =
             new BooleanField("presetDashboardIsManagedExternally", "presetDashboardIsManagedExternally");
 
-    /** Whether the collection is published (true) or not (false). */
+    /** TBC */
     BooleanField PRESET_DASHBOARD_IS_PUBLISHED =
             new BooleanField("presetDashboardIsPublished", "presetDashboardIsPublished");
 
-    /** URL to a thumbnail illustration of the collection. */
+    /** TBC */
     KeywordField PRESET_DASHBOARD_THUMBNAIL_URL =
             new KeywordField("presetDashboardThumbnailURL", "presetDashboardThumbnailURL");
 
-    /** Datasets contained within the collection. */
+    /** Datasets that exist within this dashboard. */
     RelationField PRESET_DATASETS = new RelationField("presetDatasets");
 
-    /** Workspace in which the collection exists. */
+    /** Workspace in which this dashboard exists. */
     RelationField PRESET_WORKSPACE = new RelationField("presetWorkspace");
 
     /** TBC */
@@ -275,7 +275,7 @@ public interface IPresetDashboard {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -317,7 +317,7 @@ public interface IPresetDashboard {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -341,13 +341,13 @@ public interface IPresetDashboard {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -359,7 +359,7 @@ public interface IPresetDashboard {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -371,37 +371,37 @@ public interface IPresetDashboard {
     /** TBC */
     Double getPopularityScore();
 
-    /** Charts contained within the collection. */
+    /** Charts that exist within this dashboard. */
     SortedSet<IPresetChart> getPresetCharts();
 
-    /** Username of the user who last changed the collection. */
+    /** TBC */
     String getPresetDashboardChangedByName();
 
     /** TBC */
     String getPresetDashboardChangedByURL();
 
-    /** Number of charts within the collection. */
+    /** TBC */
     Long getPresetDashboardChartCount();
 
     /** TBC */
     Long getPresetDashboardId();
 
-    /** Whether the collection is managed externally (true) or not (false). */
+    /** TBC */
     Boolean getPresetDashboardIsManagedExternally();
 
-    /** Whether the collection is published (true) or not (false). */
+    /** TBC */
     Boolean getPresetDashboardIsPublished();
 
     /** TBC */
     String getPresetDashboardQualifiedName();
 
-    /** URL to a thumbnail illustration of the collection. */
+    /** TBC */
     String getPresetDashboardThumbnailURL();
 
-    /** Datasets contained within the collection. */
+    /** Datasets that exist within this dashboard. */
     SortedSet<IPresetDataset> getPresetDatasets();
 
-    /** Workspace in which the collection exists. */
+    /** Workspace in which this dashboard exists. */
     IPresetWorkspace getPresetWorkspace();
 
     /** TBC */
@@ -413,7 +413,7 @@ public interface IPresetDashboard {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

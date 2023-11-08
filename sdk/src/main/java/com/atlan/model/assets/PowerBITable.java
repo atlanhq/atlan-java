@@ -46,16 +46,16 @@ public class PowerBITable extends Asset implements IPowerBITable, IPowerBI, IBI,
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Columns that exist within this table. */
     @Attribute
     @Singular
     SortedSet<IPowerBIColumn> columns;
 
-    /** TBC */
+    /** Dataset in which this table exists. */
     @Attribute
     IPowerBIDataset dataset;
 
-    /** TBC */
+    /** Unique name of the dataset in which this table exists. */
     @Attribute
     String datasetQualifiedName;
 
@@ -64,12 +64,12 @@ public class PowerBITable extends Asset implements IPowerBITable, IPowerBI, IBI,
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
-    /** TBC */
+    /** Measures that exist within this table. */
     @Attribute
     @Singular
     SortedSet<IPowerBIMeasure> measures;
@@ -79,7 +79,7 @@ public class PowerBITable extends Asset implements IPowerBITable, IPowerBI, IBI,
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
@@ -96,11 +96,11 @@ public class PowerBITable extends Asset implements IPowerBITable, IPowerBI, IBI,
     @Attribute
     Boolean powerBIIsHidden;
 
-    /** TBC */
+    /** Number of columns in this table. */
     @Attribute
     Long powerBITableColumnCount;
 
-    /** TBC */
+    /** Number of measures in this table. */
     @Attribute
     Long powerBITableMeasureCount;
 
@@ -108,12 +108,12 @@ public class PowerBITable extends Asset implements IPowerBITable, IPowerBI, IBI,
     @Attribute
     String powerBITableQualifiedName;
 
-    /** TBC */
+    /** Power Query M expressions for the table. */
     @Attribute
     @Singular
     SortedSet<String> powerBITableSourceExpressions;
 
-    /** TBC */
+    /** Unique name of the workspace in which this table exists. */
     @Attribute
     String workspaceQualifiedName;
 

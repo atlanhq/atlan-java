@@ -24,7 +24,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a Power BI tile in Atlan.
+ * Instance of a Power BI tile in Atlan. Tiles are snapshots of data, pinned to a dashboard.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -33,19 +33,19 @@ public interface IPowerBITile {
 
     public static final String TYPE_NAME = "PowerBITile";
 
-    /** TBC */
+    /** Dashboard in which this tile exists. */
     RelationField DASHBOARD = new RelationField("dashboard");
 
-    /** TBC */
+    /** Unique name of the dashboard in which this tile is pinned. */
     KeywordField DASHBOARD_QUALIFIED_NAME = new KeywordField("dashboardQualifiedName", "dashboardQualifiedName");
 
-    /** TBC */
+    /** Dataset in which this tile exists. */
     RelationField DATASET = new RelationField("dataset");
 
-    /** TBC */
+    /** Report in which this tile exists. */
     RelationField REPORT = new RelationField("report");
 
-    /** TBC */
+    /** Unique name of the workspace in which this tile exists. */
     KeywordField WORKSPACE_QUALIFIED_NAME = new KeywordField("workspaceQualifiedName", "workspaceQualifiedName");
 
     /** TBC */
@@ -252,7 +252,7 @@ public interface IPowerBITile {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -276,13 +276,13 @@ public interface IPowerBITile {
     /** TBC */
     AtlanConnectorType getConnectorType();
 
-    /** TBC */
+    /** Dashboard in which this tile exists. */
     IPowerBIDashboard getDashboard();
 
-    /** TBC */
+    /** Unique name of the dashboard in which this tile is pinned. */
     String getDashboardQualifiedName();
 
-    /** TBC */
+    /** Dataset in which this tile exists. */
     IPowerBIDataset getDataset();
 
     /** TBC */
@@ -303,7 +303,7 @@ public interface IPowerBITile {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -327,13 +327,13 @@ public interface IPowerBITile {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -345,7 +345,7 @@ public interface IPowerBITile {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -372,10 +372,10 @@ public interface IPowerBITile {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
-    /** TBC */
+    /** Report in which this tile exists. */
     IPowerBIReport getReport();
 
     /** TBC */
@@ -480,7 +480,7 @@ public interface IPowerBITile {
     /** TBC */
     SortedSet<String> getViewerUsers();
 
-    /** TBC */
+    /** Unique name of the workspace in which this tile exists. */
     String getWorkspaceQualifiedName();
 
     /** Name of the type that defines the asset. */

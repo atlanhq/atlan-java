@@ -32,17 +32,17 @@ public interface IPreset {
 
     public static final String TYPE_NAME = "Preset";
 
-    /** ID of the Preset asset's collection. */
+    /** Identifier of the dashboard in which this asset exists, in Preset. */
     NumericField PRESET_DASHBOARD_ID = new NumericField("presetDashboardId", "presetDashboardId");
 
-    /** qualifiedName of the Preset asset's collection. */
+    /** Unique name of the dashboard in which this asset exists. */
     KeywordTextField PRESET_DASHBOARD_QUALIFIED_NAME = new KeywordTextField(
             "presetDashboardQualifiedName", "presetDashboardQualifiedName", "presetDashboardQualifiedName.text");
 
-    /** ID of the Preset asset's workspace. */
+    /** Identifier of the workspace in which this asset exists, in Preset. */
     NumericField PRESET_WORKSPACE_ID = new NumericField("presetWorkspaceId", "presetWorkspaceId");
 
-    /** qualifiedName of the Preset asset's workspace. */
+    /** Unique name of the workspace in which this asset exists. */
     KeywordTextField PRESET_WORKSPACE_QUALIFIED_NAME = new KeywordTextField(
             "presetWorkspaceQualifiedName", "presetWorkspaceQualifiedName", "presetWorkspaceQualifiedName.text");
 
@@ -250,7 +250,7 @@ public interface IPreset {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -292,7 +292,7 @@ public interface IPreset {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -316,13 +316,13 @@ public interface IPreset {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -334,7 +334,7 @@ public interface IPreset {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -346,22 +346,22 @@ public interface IPreset {
     /** TBC */
     Double getPopularityScore();
 
-    /** ID of the Preset asset's collection. */
+    /** Identifier of the dashboard in which this asset exists, in Preset. */
     Long getPresetDashboardId();
 
-    /** qualifiedName of the Preset asset's collection. */
+    /** Unique name of the dashboard in which this asset exists. */
     String getPresetDashboardQualifiedName();
 
-    /** ID of the Preset asset's workspace. */
+    /** Identifier of the workspace in which this asset exists, in Preset. */
     Long getPresetWorkspaceId();
 
-    /** qualifiedName of the Preset asset's workspace. */
+    /** Unique name of the workspace in which this asset exists. */
     String getPresetWorkspaceQualifiedName();
 
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

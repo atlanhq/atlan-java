@@ -53,7 +53,7 @@ public class MicroStrategyFact extends Asset
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -76,7 +76,7 @@ public class MicroStrategyFact extends Asset
     @Singular
     SortedSet<String> microStrategyCubeQualifiedNames;
 
-    /** List of expressions for the fact. */
+    /** List of expressions for this fact. */
     @Attribute
     @Singular
     SortedSet<String> microStrategyFactExpressions;
@@ -90,12 +90,12 @@ public class MicroStrategyFact extends Asset
     @Singular("putMicroStrategyLocation")
     List<Map<String, String>> microStrategyLocation;
 
-    /** Metrics where the fact is used. */
+    /** Metrics that use this fact. */
     @Attribute
     @Singular
     SortedSet<IMicroStrategyMetric> microStrategyMetrics;
 
-    /** Project containing the fact. */
+    /** Project in which this fact exists. */
     @Attribute
     IMicroStrategyProject microStrategyProject;
 
@@ -122,7 +122,7 @@ public class MicroStrategyFact extends Asset
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;

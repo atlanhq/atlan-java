@@ -240,12 +240,27 @@ public class GeneratorConfig {
      */
     public static GeneratorConfigBuilder creator(
             Class<?> generatorClass, File directoryForTemplateLoading, String packageRoot) throws IOException {
+        return creator(generatorClass, directoryForTemplateLoading, packageRoot, null);
+    }
+
+    /**
+     * Configuration for generating using local directory for templates.
+     *
+     * @param generatorClass top-level class that is used to generate the code
+     * @param directoryForTemplateLoading directory containing the Freemarker templates
+     * @param packageRoot root Java package location for the generated models
+     * @param projectName (optional) project name for multi-project builds
+     * @throws IOException if the directory cannot be accessed
+     */
+    public static GeneratorConfigBuilder creator(
+            Class<?> generatorClass, File directoryForTemplateLoading, String packageRoot, String projectName)
+            throws IOException {
         return GeneratorConfig.builder()
                 .generatorName(generatorClass.getCanonicalName())
                 .packageRoot(packageRoot)
                 .freemarkerConfig(createConfig(directoryForTemplateLoading))
-                .packagePath(createPackagePath(packageRoot))
-                .testPath(createTestPath(packageRoot))
+                .packagePath(createPackagePath(packageRoot, projectName))
+                .testPath(createTestPath(packageRoot, projectName))
                 .renameClasses(DEFAULT_CLASS_RENAMES)
                 .singularForAttributes(DEFAULT_SINGULARS)
                 .renameAttributes(DEFAULT_ATTRIBUTE_RENAMES)
@@ -262,7 +277,19 @@ public class GeneratorConfig {
      * @throws IOException if there is any problem configuring the templates through the classloader
      */
     public static GeneratorConfigBuilder getDefault(Class<?> generatorClass) throws IOException {
-        return GeneratorConfig.creator(generatorClass, "com.atlan.model")
+        return getDefault(generatorClass, null);
+    }
+
+    /**
+     * Get the default configuration for the out-of-the-box Atlan model and SDK.
+     *
+     * @param generatorClass top-level class that is used to generate the code
+     * @param projectName (optional) project name, for multi-project builds
+     * @return default configuration
+     * @throws IOException if there is any problem configuring the templates through the classloader
+     */
+    public static GeneratorConfigBuilder getDefault(Class<?> generatorClass, String projectName) throws IOException {
+        return GeneratorConfig.creator(generatorClass, null, "com.atlan.model", projectName)
                 .serviceTypes(TypeDefsEndpoint.RESERVED_SERVICE_TYPES)
                 .preferTypeDefDescriptions(false)
                 .renameClasses(DEFAULT_CLASS_RENAMES)
@@ -472,12 +499,22 @@ public class GeneratorConfig {
         return cfg;
     }
 
-    private static String createPackagePath(String packageRoot) {
-        return createPath("src" + File.separator + "main" + File.separator + "java" + File.separator, packageRoot);
+    private static String createPackagePath(String packageRoot, String projectName) {
+        return projectName == null
+                ? createPath("src" + File.separator + "main" + File.separator + "java" + File.separator, packageRoot)
+                : createPath(
+                        projectName + File.separator + "src" + File.separator + "main" + File.separator + "java"
+                                + File.separator,
+                        packageRoot);
     }
 
-    private static String createTestPath(String packageRoot) {
-        return createPath("src" + File.separator + "test" + File.separator + "java" + File.separator, packageRoot);
+    private static String createTestPath(String packageRoot, String projectName) {
+        return projectName == null
+                ? createPath("src" + File.separator + "test" + File.separator + "java" + File.separator, packageRoot)
+                : createPath(
+                        projectName + File.separator + "src" + File.separator + "test" + File.separator + "java"
+                                + File.separator,
+                        packageRoot);
     }
 
     private static String createPath(String prefix, String packageRoot) {

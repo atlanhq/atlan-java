@@ -32,10 +32,10 @@ public interface IProcedure {
 
     public static final String TYPE_NAME = "Procedure";
 
-    /** Logic of the procedure. */
+    /** SQL definition of the procedure. */
     KeywordField DEFINITION = new KeywordField("definition", "definition");
 
-    /** Schema in which the procedure is contained. */
+    /** Schema in which this stored procedure exists. */
     RelationField SCHEMA = new RelationField("atlanSchema");
 
     /** TBC */
@@ -242,7 +242,7 @@ public interface IProcedure {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -284,7 +284,7 @@ public interface IProcedure {
     /** TBC */
     SortedSet<IDbtTest> getDbtTests();
 
-    /** Logic of the procedure. */
+    /** SQL definition of the procedure. */
     String getDefinition();
 
     /** TBC */
@@ -302,7 +302,7 @@ public interface IProcedure {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -332,13 +332,13 @@ public interface IProcedure {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -350,7 +350,7 @@ public interface IProcedure {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -377,13 +377,13 @@ public interface IProcedure {
     /** TBC */
     Map<String, Long> getQueryUserMap();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */
     String getSampleDataUrl();
 
-    /** Schema in which the procedure is contained. */
+    /** Schema in which this stored procedure exists. */
     ISchema getSchema();
 
     /** TBC */

@@ -32,13 +32,13 @@ public interface ISigmaPage {
 
     public static final String TYPE_NAME = "SigmaPage";
 
-    /** Number of data elements that exist within this page. */
+    /** Number of data elements on this page. */
     NumericField SIGMA_DATA_ELEMENT_COUNT = new NumericField("sigmaDataElementCount", "sigmaDataElementCount");
 
-    /** Data elements within this page. */
+    /** Data elements that exist on this page. */
     RelationField SIGMA_DATA_ELEMENTS = new RelationField("sigmaDataElements");
 
-    /** Workbook that contains this page. */
+    /** Workbook in which this page exists. */
     RelationField SIGMA_WORKBOOK = new RelationField("sigmaWorkbook");
 
     /** TBC */
@@ -245,7 +245,7 @@ public interface ISigmaPage {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -287,7 +287,7 @@ public interface ISigmaPage {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -311,13 +311,13 @@ public interface ISigmaPage {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -329,7 +329,7 @@ public interface ISigmaPage {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -344,7 +344,7 @@ public interface ISigmaPage {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */
@@ -353,7 +353,7 @@ public interface ISigmaPage {
     /** TBC */
     SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
 
-    /** Number of data elements that exist within this page. */
+    /** Number of data elements on this page. */
     Long getSigmaDataElementCount();
 
     /** TBC */
@@ -362,7 +362,7 @@ public interface ISigmaPage {
     /** TBC */
     String getSigmaDataElementQualifiedName();
 
-    /** Data elements within this page. */
+    /** Data elements that exist on this page. */
     SortedSet<ISigmaDataElement> getSigmaDataElements();
 
     /** TBC */
@@ -371,7 +371,7 @@ public interface ISigmaPage {
     /** TBC */
     String getSigmaPageQualifiedName();
 
-    /** Workbook that contains this page. */
+    /** Workbook in which this page exists. */
     ISigmaWorkbook getSigmaWorkbook();
 
     /** TBC */

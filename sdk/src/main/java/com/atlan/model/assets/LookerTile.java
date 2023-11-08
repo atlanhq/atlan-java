@@ -45,7 +45,7 @@ public class LookerTile extends Asset implements ILookerTile, ILooker, IBI, ICat
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Dashboard in which this tile exists. */
     @Attribute
     ILookerDashboard dashboard;
 
@@ -54,28 +54,28 @@ public class LookerTile extends Asset implements ILookerTile, ILooker, IBI, ICat
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
-    /** TBC */
+    /** Look in which this tile exists. */
     @Attribute
     ILookerLook look;
 
-    /** TBC */
+    /** Identifier of the Look used to create this tile, from Looker. */
     @Attribute
     Integer lookId;
 
-    /** TBC */
+    /** Identifier for the LoomML link. */
     @Attribute
     String lookmlLinkId;
 
-    /** TBC */
+    /** Identifier for the merge result. */
     @Attribute
     String mergeResultId;
 
-    /** TBC */
+    /** Text of notes added to the tile. */
     @Attribute
     String noteText;
 
@@ -84,24 +84,24 @@ public class LookerTile extends Asset implements ILookerTile, ILooker, IBI, ICat
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** TBC */
+    /** Deprecated. */
     @Attribute
     ILookerQuery query;
 
-    /** TBC */
+    /** Identifier for the query used to build this tile, from Looker. */
     @Attribute
     Integer queryID;
 
-    /** TBC */
+    /** Identifier of the ResultMarkerLookup entry, from Looker. */
     @Attribute
     Integer resultMakerID;
 
-    /** TBC */
+    /** Text for the subtitle for text tiles. */
     @Attribute
     String subtitleText;
 

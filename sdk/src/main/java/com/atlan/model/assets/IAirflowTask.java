@@ -75,7 +75,7 @@ public interface IAirflowTask {
     /** Trigger rule of the run */
     KeywordField AIRFLOW_TASK_TRIGGER_RULE = new KeywordField("airflowTaskTriggerRule", "airflowTaskTriggerRule");
 
-    /** TBC */
+    /** Assets that are inputs to this process. */
     RelationField INPUTS = new RelationField("inputs");
 
     /** TBC */
@@ -348,7 +348,7 @@ public interface IAirflowTask {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -390,10 +390,10 @@ public interface IAirflowTask {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
-    /** TBC */
+    /** Assets that are inputs to this process. */
     SortedSet<ICatalog> getInputs();
 
     /** TBC */
@@ -417,13 +417,13 @@ public interface IAirflowTask {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -435,7 +435,7 @@ public interface IAirflowTask {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -456,7 +456,7 @@ public interface IAirflowTask {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

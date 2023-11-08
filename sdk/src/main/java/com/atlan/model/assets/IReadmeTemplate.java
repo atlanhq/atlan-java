@@ -32,10 +32,10 @@ public interface IReadmeTemplate {
 
     public static final String TYPE_NAME = "ReadmeTemplate";
 
-    /** TBC */
+    /** Icon to use for the README template. */
     KeywordField ICON = new KeywordField("icon", "icon");
 
-    /** TBC */
+    /** Type of icon, for example: image or emoji. */
     KeywordField ICON_TYPE = new KeywordField("iconType", "iconType");
 
     /** TBC */
@@ -242,7 +242,7 @@ public interface IReadmeTemplate {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -281,16 +281,16 @@ public interface IReadmeTemplate {
     /** TBC */
     Boolean getHasLineage();
 
-    /** TBC */
+    /** Icon to use for the README template. */
     String getIcon();
 
-    /** TBC */
+    /** Type of icon, for example: image or emoji. */
     IconType getIconType();
 
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -320,13 +320,13 @@ public interface IReadmeTemplate {
     /** TBC */
     String getLink();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -338,7 +338,7 @@ public interface IReadmeTemplate {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -353,7 +353,7 @@ public interface IReadmeTemplate {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

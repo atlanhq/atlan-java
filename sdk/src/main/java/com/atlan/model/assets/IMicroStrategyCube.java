@@ -32,19 +32,19 @@ public interface IMicroStrategyCube {
 
     public static final String TYPE_NAME = "MicroStrategyCube";
 
-    /** Attributes used by the cube. */
+    /** Attributes used by this cube. */
     RelationField MICRO_STRATEGY_ATTRIBUTES = new RelationField("microStrategyAttributes");
 
     /** Query used to create the cube. */
     KeywordField MICRO_STRATEGY_CUBE_QUERY = new KeywordField("microStrategyCubeQuery", "microStrategyCubeQuery");
 
-    /** Whether the cube is an OLAP or MTDI cube. */
+    /** Type of cube, for example: OLAP or MTDI. */
     KeywordField MICRO_STRATEGY_CUBE_TYPE = new KeywordField("microStrategyCubeType", "microStrategyCubeType");
 
-    /** Metrics where the cube is used. */
+    /** Metrics that use this cube. */
     RelationField MICRO_STRATEGY_METRICS = new RelationField("microStrategyMetrics");
 
-    /** Project containing the cube. */
+    /** Project in which this cube exists. */
     RelationField MICRO_STRATEGY_PROJECT = new RelationField("microStrategyProject");
 
     /** TBC */
@@ -251,7 +251,7 @@ public interface IMicroStrategyCube {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -293,7 +293,7 @@ public interface IMicroStrategyCube {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -317,19 +317,19 @@ public interface IMicroStrategyCube {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
     SortedSet<IMetric> getMetrics();
 
-    /** Attributes used by the cube. */
+    /** Attributes used by this cube. */
     SortedSet<IMicroStrategyAttribute> getMicroStrategyAttributes();
 
     /** TBC */
@@ -347,7 +347,7 @@ public interface IMicroStrategyCube {
     /** Query used to create the cube. */
     String getMicroStrategyCubeQuery();
 
-    /** Whether the cube is an OLAP or MTDI cube. */
+    /** Type of cube, for example: OLAP or MTDI. */
     String getMicroStrategyCubeType();
 
     /** TBC */
@@ -356,10 +356,10 @@ public interface IMicroStrategyCube {
     /** TBC */
     List<Map<String, String>> getMicroStrategyLocation();
 
-    /** Metrics where the cube is used. */
+    /** Metrics that use this cube. */
     SortedSet<IMicroStrategyMetric> getMicroStrategyMetrics();
 
-    /** Project containing the cube. */
+    /** Project in which this cube exists. */
     IMicroStrategyProject getMicroStrategyProject();
 
     /** TBC */
@@ -380,7 +380,7 @@ public interface IMicroStrategyCube {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -395,7 +395,7 @@ public interface IMicroStrategyCube {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

@@ -17,7 +17,7 @@ public abstract class AbstractGenerator {
     protected AbstractGenerator(GeneratorConfig cfg) {
         this.cfg = cfg;
         this.ftl = cfg.getFreemarkerConfig();
-        this.cache = ModelCache.getInstance(cfg);
+        this.cache = ModelCache.getInstance();
     }
 
     public abstract void generate() throws Exception;

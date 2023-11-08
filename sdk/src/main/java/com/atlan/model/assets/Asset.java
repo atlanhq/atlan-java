@@ -68,17 +68,17 @@ import lombok.extern.slf4j.Slf4j;
 public abstract class Asset extends Reference implements IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
-    /** List of groups who administer the asset. (This is only used for Connection assets.) */
+    /** List of groups who administer this asset. (This is only used for certain asset types.) */
     @Attribute
     @Singular
     SortedSet<String> adminGroups;
 
-    /** List of roles who administer the asset. (This is only used for Connection assets.) */
+    /** List of roles who administer this asset. (This is only used for Connection assets.) */
     @Attribute
     @Singular
     SortedSet<String> adminRoles;
 
-    /** List of users who administer the asset. (This is only used for Connection assets.) */
+    /** List of users who administer this asset. (This is only used for certain asset types.) */
     @Attribute
     @Singular
     SortedSet<String> adminUsers;
@@ -91,7 +91,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Attribute
     String announcementTitle;
 
-    /** Type of announcement on the asset. */
+    /** Type of announcement on this asset. */
     @Attribute
     AtlanAnnouncementType announcementType;
 
@@ -103,211 +103,211 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Attribute
     String announcementUpdatedBy;
 
-    /** TBC */
+    /** Name of the account in which this asset exists in dbt. */
     @Attribute
     String assetDbtAccountName;
 
-    /** TBC */
+    /** Alias of this asset in dbt. */
     @Attribute
     String assetDbtAlias;
 
-    /** TBC */
+    /** Version of the environment in which this asset is materialized in dbt. */
     @Attribute
     String assetDbtEnvironmentDbtVersion;
 
-    /** TBC */
+    /** Name of the environment in which this asset is materialized in dbt. */
     @Attribute
     String assetDbtEnvironmentName;
 
-    /** TBC */
+    /** Time (epoch) at which the job that materialized this asset in dbt last ran, in milliseconds. */
     @Attribute
     Long assetDbtJobLastRun;
 
-    /** TBC */
+    /** Path in S3 to the artifacts saved from the last run of the job that materialized this asset in dbt. */
     @Attribute
     String assetDbtJobLastRunArtifactS3Path;
 
-    /** TBC */
+    /** Whether artifacts were saved from the last run of the job that materialized this asset in dbt (true) or not (false). */
     @Attribute
     Boolean assetDbtJobLastRunArtifactsSaved;
 
-    /** TBC */
+    /** Time (epoch) at which the job that materialized this asset in dbt was last created, in milliseconds. */
     @Attribute
     Long assetDbtJobLastRunCreatedAt;
 
-    /** TBC */
+    /** Time (epoch) at which the job that materialized this asset in dbt was dequeued, in milliseconds. */
     @Attribute
     Long assetDbtJobLastRunDequedAt;
 
-    /** TBC */
+    /** Thread ID of the user who executed the last run of the job that materialized this asset in dbt. */
     @Attribute
     String assetDbtJobLastRunExecutedByThreadId;
 
-    /** TBC */
+    /** Branch in git from which the last run of the job that materialized this asset in dbt ran. */
     @Attribute
     String assetDbtJobLastRunGitBranch;
 
-    /** TBC */
+    /** SHA hash in git for the last run of the job that materialized this asset in dbt. */
     @Attribute
     String assetDbtJobLastRunGitSha;
 
-    /** TBC */
+    /** Whether docs were generated from the last run of the job that materialized this asset in dbt (true) or not (false). */
     @Attribute
     Boolean assetDbtJobLastRunHasDocsGenerated;
 
-    /** TBC */
+    /** Whether sources were generated from the last run of the job that materialized this asset in dbt (true) or not (false). */
     @Attribute
     Boolean assetDbtJobLastRunHasSourcesGenerated;
 
-    /** TBC */
+    /** Whether notifications were sent from the last run of the job that materialized this asset in dbt (true) or not (false). */
     @Attribute
     Boolean assetDbtJobLastRunNotificationsSent;
 
-    /** TBC */
+    /** Thread ID of the owner of the last run of the job that materialized this asset in dbt. */
     @Attribute
     String assetDbtJobLastRunOwnerThreadId;
 
-    /** TBC */
+    /** Total duration the job that materialized this asset in dbt spent being queued. */
     @Attribute
     String assetDbtJobLastRunQueuedDuration;
 
-    /** TBC */
+    /** Human-readable total duration of the last run of the job that materialized this asset in dbt spend being queued. */
     @Attribute
     String assetDbtJobLastRunQueuedDurationHumanized;
 
-    /** TBC */
+    /** Run duration of the last run of the job that materialized this asset in dbt. */
     @Attribute
     String assetDbtJobLastRunRunDuration;
 
-    /** TBC */
+    /** Human-readable run duration of the last run of the job that materialized this asset in dbt. */
     @Attribute
     String assetDbtJobLastRunRunDurationHumanized;
 
-    /** TBC */
+    /** Time (epoch) at which the job that materialized this asset in dbt was started running, in milliseconds. */
     @Attribute
     Long assetDbtJobLastRunStartedAt;
 
-    /** TBC */
+    /** Status message of the last run of the job that materialized this asset in dbt. */
     @Attribute
     String assetDbtJobLastRunStatusMessage;
 
-    /** TBC */
+    /** Total duration of the last run of the job that materialized this asset in dbt. */
     @Attribute
     String assetDbtJobLastRunTotalDuration;
 
-    /** TBC */
+    /** Human-readable total duration of the last run of the job that materialized this asset in dbt. */
     @Attribute
     String assetDbtJobLastRunTotalDurationHumanized;
 
-    /** TBC */
+    /** Time (epoch) at which the job that materialized this asset in dbt was last updated, in milliseconds. */
     @Attribute
     Long assetDbtJobLastRunUpdatedAt;
 
-    /** TBC */
+    /** URL of the last run of the job that materialized this asset in dbt. */
     @Attribute
     String assetDbtJobLastRunUrl;
 
-    /** TBC */
+    /** Name of the job that materialized this asset in dbt. */
     @Attribute
     String assetDbtJobName;
 
-    /** TBC */
+    /** Time (epoch) when the next run of the job that materializes this asset in dbt is scheduled. */
     @Attribute
     Long assetDbtJobNextRun;
 
-    /** TBC */
+    /** Human-readable time when the next run of the job that materializes this asset in dbt is scheduled. */
     @Attribute
     String assetDbtJobNextRunHumanized;
 
-    /** TBC */
+    /** Schedule of the job that materialized this asset in dbt. */
     @Attribute
     String assetDbtJobSchedule;
 
-    /** TBC */
+    /** Human-readable cron schedule of the job that materialized this asset in dbt. */
     @Attribute
     String assetDbtJobScheduleCronHumanized;
 
-    /** TBC */
+    /** Status of the job that materialized this asset in dbt. */
     @Attribute
     String assetDbtJobStatus;
 
-    /** TBC */
+    /** Metadata for this asset in dbt, specifically everything under the 'meta' key in the dbt object. */
     @Attribute
     String assetDbtMeta;
 
-    /** TBC */
+    /** Name of the package in which this asset exists in dbt. */
     @Attribute
     String assetDbtPackageName;
 
-    /** TBC */
+    /** Name of the project in which this asset exists in dbt. */
     @Attribute
     String assetDbtProjectName;
 
-    /** TBC */
+    /** URL of the semantic layer proxy for this asset in dbt. */
     @Attribute
     String assetDbtSemanticLayerProxyUrl;
 
-    /** TBC */
+    /** Freshness criteria for the source of this asset in dbt. */
     @Attribute
     String assetDbtSourceFreshnessCriteria;
 
-    /** TBC */
+    /** List of tags attached to this asset in dbt. */
     @Attribute
     @Singular
     SortedSet<String> assetDbtTags;
 
-    /** All associated dbt test statuses */
+    /** All associated dbt test statuses. */
     @Attribute
     String assetDbtTestStatus;
 
-    /** TBC */
+    /** Unique identifier of this asset in dbt. */
     @Attribute
     String assetDbtUniqueId;
 
-    /** TBC */
+    /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     @Attribute
     AtlanIcon assetIcon;
 
-    /** TBC */
+    /** List of Monte Carlo incident names attached to this asset. */
     @Attribute
     @Singular
     SortedSet<String> assetMcIncidentNames;
 
-    /** TBC */
+    /** List of unique Monte Carlo incident names attached to this asset. */
     @Attribute
     @Singular
     SortedSet<String> assetMcIncidentQualifiedNames;
 
-    /** TBC */
+    /** List of Monte Carlo incident severities associated with this asset. */
     @Attribute
     @Singular
     SortedSet<String> assetMcIncidentSeverities;
 
-    /** TBC */
+    /** List of Monte Carlo incident states associated with this asset. */
     @Attribute
     @Singular
     SortedSet<String> assetMcIncidentStates;
 
-    /** TBC */
+    /** List of Monte Carlo incident sub-types associated with this asset. */
     @Attribute
     @Singular
     SortedSet<String> assetMcIncidentSubTypes;
 
-    /** TBC */
+    /** List of Monte Carlo incident types associated with this asset. */
     @Attribute
     @Singular
     SortedSet<String> assetMcIncidentTypes;
 
-    /** TBC */
+    /** Time (epoch) at which this asset was last synced from Monte Carlo. */
     @Attribute
     Long assetMcLastSyncRunAt;
 
-    /** TBC */
+    /** List of Monte Carlo monitor names attached to this asset. */
     @Attribute
     @Singular
     SortedSet<String> assetMcMonitorNames;
 
-    /** TBC */
+    /** List of unique Monte Carlo monitor names attached to this asset. */
     @Attribute
     @Singular
     SortedSet<String> assetMcMonitorQualifiedNames;
@@ -327,15 +327,15 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Singular
     SortedSet<String> assetMcMonitorTypes;
 
-    /** Soda check count */
+    /** Number of checks done via Soda. */
     @Attribute
     Long assetSodaCheckCount;
 
-    /** All associated soda check statuses */
+    /** All associated Soda check statuses. */
     @Attribute
     String assetSodaCheckStatuses;
 
-    /** Soda DQ Status */
+    /** Status of data quality from Soda. */
     @Attribute
     String assetSodaDQStatus;
 
@@ -351,7 +351,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Attribute
     String assetSodaSourceURL;
 
-    /** TBC */
+    /** List of tags attached to this asset. */
     @Attribute
     @Singular
     SortedSet<String> assetTags;
@@ -362,11 +362,11 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @JsonProperty("meanings")
     SortedSet<IGlossaryTerm> assignedTerms;
 
-    /** Status of the asset's certification. */
+    /** Status of this asset's certification. */
     @Attribute
     CertificateStatus certificateStatus;
 
-    /** Human-readable descriptive message that can optionally be submitted when the certificateStatus is changed. */
+    /** Human-readable descriptive message used to provide further detail to certificateStatus. */
     @Attribute
     String certificateStatusMessage;
 
@@ -374,11 +374,11 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Attribute
     Long certificateUpdatedAt;
 
-    /** Name of the user who last updated the certification of the asset. */
+    /** Name of the user who last updated the certification of this asset. */
     @Attribute
     String certificateUpdatedBy;
 
-    /** TBC */
+    /** Simple name of the connection through which this asset is accessible. */
     @Attribute
     String connectionName;
 
@@ -391,15 +391,15 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @JsonProperty("connectorName")
     AtlanConnectorType connectorType;
 
-    /** TBC */
+    /** Unique name of this asset in dbt. */
     @Attribute
     String dbtQualifiedName;
 
-    /** Description of the asset, as crawled from a source. */
+    /** Description of this asset, for example as crawled from a source. Fallback for display purposes, if userDescription is empty. */
     @Attribute
     String description;
 
-    /** Name used for display purposes (in user interfaces). */
+    /** Human-readable name of this asset used for display purposes (in user interface). */
     @Attribute
     String displayName;
 
@@ -408,7 +408,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Singular
     SortedSet<IFile> files;
 
-    /** Indicates whether this asset has lineage (true) or not. */
+    /** Whether this asset has lineage (true) or not (false). */
     @Attribute
     @JsonProperty("__hasLineage")
     Boolean hasLineage;
@@ -417,15 +417,15 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Attribute
     Boolean isAIGenerated;
 
-    /** TBC */
+    /** Whether this asset is discoverable through the UI (true) or not (false). */
     @Attribute
     Boolean isDiscoverable;
 
-    /** TBC */
+    /** Whether this asset can be edited in the UI (true) or not (false). */
     @Attribute
     Boolean isEditable;
 
-    /** Timestamp of last operation that inserted, updated, or deleted rows. */
+    /** Time (epoch) of the last operation that inserted, updated, or deleted rows, in milliseconds. */
     @Attribute
     Long lastRowChangedAt;
 
@@ -433,7 +433,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Attribute
     String lastSyncRun;
 
-    /** Time (epoch) at which the asset was last crawled, in milliseconds. */
+    /** Time (epoch) at which this asset was last crawled, in milliseconds. */
     @Attribute
     Long lastSyncRunAt;
 
@@ -441,7 +441,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Attribute
     String lastSyncWorkflowName;
 
-    /** Resources that are linked to this asset. */
+    /** Links that are attached to this asset. */
     @Attribute
     @Singular
     SortedSet<ILink> links;
@@ -451,7 +451,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Singular
     SortedSet<IMCIncident> mcIncidents;
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     @Attribute
     @Singular
     SortedSet<IMCMonitor> mcMonitors;
@@ -461,21 +461,21 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Singular
     SortedSet<IMetric> metrics;
 
-    /** Human-readable name of the asset. */
+    /** Name of this asset. Fallback for display purposes, if displayName is empty. */
     @Attribute
     String name;
 
-    /** List of groups who own the asset. */
+    /** List of groups who own this asset. */
     @Attribute
     @Singular
     SortedSet<String> ownerGroups;
 
-    /** List of users who own the asset. */
+    /** List of users who own this asset. */
     @Attribute
     @Singular
     SortedSet<String> ownerUsers;
 
-    /** TBC */
+    /** Popularity score for this asset. */
     @Attribute
     Double popularityScore;
 
@@ -487,7 +487,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Attribute
     IReadme readme;
 
-    /** TBC */
+    /** URL for sample data for this asset. */
     @Attribute
     String sampleDataUrl;
 
@@ -505,11 +505,11 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Attribute
     SourceCostUnitType sourceCostUnit;
 
-    /** Time (epoch) at which the asset was created in the source system, in milliseconds. */
+    /** Time (epoch) at which this asset was created in the source system, in milliseconds. */
     @Attribute
     Long sourceCreatedAt;
 
-    /** Who created the asset, in the source system. */
+    /** Name of the user who created this asset, in the source system. */
     @Attribute
     String sourceCreatedBy;
 
@@ -521,7 +521,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Attribute
     Long sourceLastReadAt;
 
-    /** TBC */
+    /** List of owners of this asset, in the source system. */
     @Attribute
     String sourceOwners;
 
@@ -557,13 +557,13 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Attribute
     Double sourceReadQueryCost;
 
-    /** List of usernames with extra insights for the most recent users who read the asset. */
+    /** List of usernames with extra insights for the most recent users who read this asset. */
     @Attribute
     @Singular
     @JsonProperty("sourceReadRecentUserRecordList")
     List<PopularityInsights> sourceReadRecentUserRecords;
 
-    /** List of usernames of the most recent users who read the asset. */
+    /** List of usernames of the most recent users who read this asset. */
     @Attribute
     @Singular
     @JsonProperty("sourceReadRecentUserList")
@@ -575,13 +575,13 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @JsonProperty("sourceReadSlowQueryRecordList")
     List<PopularityInsights> sourceReadSlowQueryRecords;
 
-    /** List of usernames with extra insights for the users who read the asset the most. */
+    /** List of usernames with extra insights for the users who read this asset the most. */
     @Attribute
     @Singular
     @JsonProperty("sourceReadTopUserRecordList")
     List<PopularityInsights> sourceReadTopUserRecords;
 
-    /** List of usernames of the users who read the asset the most. */
+    /** List of usernames of the users who read this asset the most. */
     @Attribute
     @Singular
     @JsonProperty("sourceReadTopUserList")
@@ -595,15 +595,15 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Attribute
     Double sourceTotalCost;
 
-    /** URL to the resource within the source application. */
+    /** URL to the resource within the source application, used to create a button to view this asset in the source application. */
     @Attribute
     String sourceURL;
 
-    /** Time (epoch) at which the asset was last updated in the source system, in milliseconds. */
+    /** Time (epoch) at which this asset was last updated in the source system, in milliseconds. */
     @Attribute
     Long sourceUpdatedAt;
 
-    /** Who last updated the asset in the source system. */
+    /** Name of the user who last updated this asset, in the source system. */
     @Attribute
     String sourceUpdatedBy;
 
@@ -612,38 +612,38 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Singular("addStarredBy")
     SortedSet<String> starredBy;
 
-    /** TBC */
+    /** Number of users who have starred this asset. */
     @Attribute
     Integer starredCount;
 
-    /** List of usernames with extra information of the users who have starred an asset */
+    /** List of usernames with extra information of the users who have starred an asset. */
     @Attribute
     @Singular
     @JsonProperty("starredDetailsList")
     List<StarredDetails> starredDetails;
 
-    /** TBC */
+    /** Subtype of this asset. */
     @Attribute
     String subType;
 
-    /** Name of the Atlan workspace in which the asset exists. */
+    /** Name of the Atlan workspace in which this asset exists. */
     @Attribute
     String tenantId;
 
-    /** Description of the asset, as provided by a user. If present, this will be used for the description in user interfaces. If not present, the description will be used. */
+    /** Description of this asset, as provided by a user. If present, this will be used for the description in user interface. */
     @Attribute
     String userDescription;
 
-    /** TBC */
+    /** View score for this asset. */
     @Attribute
     Double viewScore;
 
-    /** TBC */
+    /** List of groups who can view assets contained in a collection. (This is only used for certain asset types.) */
     @Attribute
     @Singular
     SortedSet<String> viewerGroups;
 
-    /** TBC */
+    /** List of users who can view assets contained in a collection. (This is only used for certain asset types.) */
     @Attribute
     @Singular
     SortedSet<String> viewerUsers;

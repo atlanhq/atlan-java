@@ -27,7 +27,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Instance of a Looker project in Atlan.
+ * Instance of a Looker project in Atlan. Projects are a collection of files that describe the objects, connections and user interface elements in Looker.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -45,12 +45,12 @@ public class LookerProject extends Asset implements ILookerProject, ILooker, IBI
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Explores that exist within this project. */
     @Attribute
     @Singular
     SortedSet<ILookerExplore> explores;
 
-    /** TBC */
+    /** Fields that exist within this project. */
     @Attribute
     @Singular
     SortedSet<ILookerField> fields;
@@ -60,12 +60,12 @@ public class LookerProject extends Asset implements ILookerProject, ILooker, IBI
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
-    /** TBC */
+    /** Models that exist within this project. */
     @Attribute
     @Singular
     SortedSet<ILookerModel> models;
@@ -75,12 +75,12 @@ public class LookerProject extends Asset implements ILookerProject, ILooker, IBI
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** TBC */
+    /** Views that exist within this project. */
     @Attribute
     @Singular
     SortedSet<ILookerView> views;

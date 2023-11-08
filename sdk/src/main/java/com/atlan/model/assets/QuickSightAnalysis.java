@@ -28,7 +28,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Instance of a QuickSight Analysis asset in Atlan.
+ * Instance of a QuickSight analysis in Atlan. In QuickSight, you analyze and visualize your data in analyses, which can be published as a dashboard to share with others.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -52,7 +52,7 @@ public class QuickSightAnalysis extends Asset
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -62,17 +62,17 @@ public class QuickSightAnalysis extends Asset
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** Calculated fields of quicksight analysis  */
+    /** List of field names calculated by this analysis. */
     @Attribute
     @Singular
     SortedSet<String> quickSightAnalysisCalculatedFields;
 
-    /** Filter groups used for quicksight analysis */
+    /** List of filter groups used for this analysis. */
     @Attribute
     @Singular
     SortedSet<String> quickSightAnalysisFilterGroups;
@@ -82,16 +82,16 @@ public class QuickSightAnalysis extends Asset
     @Singular
     SortedSet<IQuickSightFolder> quickSightAnalysisFolders;
 
-    /** parameters used for quicksight analysis  */
+    /** List of parameters used for this analysis. */
     @Attribute
     @Singular
     SortedSet<String> quickSightAnalysisParameterDeclarations;
 
-    /** Status of quicksight analysis */
+    /** Status of this analysis, for example: CREATION_IN_PROGRESS, UPDATE_SUCCESSFUL, etc. */
     @Attribute
     QuickSightAnalysisStatus quickSightAnalysisStatus;
 
-    /** TBC */
+    /** Visuals that exist within this analysis. */
     @Attribute
     @Singular
     SortedSet<IQuickSightAnalysisVisual> quickSightAnalysisVisuals;

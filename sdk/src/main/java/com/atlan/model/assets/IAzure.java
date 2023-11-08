@@ -33,21 +33,21 @@ public interface IAzure {
 
     public static final String TYPE_NAME = "Azure";
 
-    /** TBC */
+    /** Secondary location of the ADLS account. */
     KeywordField ADLS_ACCOUNT_SECONDARY_LOCATION =
             new KeywordField("adlsAccountSecondaryLocation", "adlsAccountSecondaryLocation");
 
-    /** TBC */
+    /** Location of this asset in Azure. */
     KeywordField AZURE_LOCATION = new KeywordField("azureLocation", "azureLocation");
 
-    /** TBC */
+    /** Resource identifier of this asset in Azure. */
     KeywordTextField AZURE_RESOURCE_ID =
             new KeywordTextField("azureResourceId", "azureResourceId", "azureResourceId.text");
 
-    /** Tags that have been applied to this Azure asset. */
+    /** Tags that have been applied to this asset in Azure. */
     KeywordField AZURE_TAGS = new KeywordField("azureTags", "azureTags");
 
-    /** TBC */
+    /** Secondary location of the ADLS account. */
     String getAdlsAccountSecondaryLocation();
 
     /** TBC */
@@ -254,16 +254,16 @@ public interface IAzure {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
-    /** TBC */
+    /** Location of this asset in Azure. */
     String getAzureLocation();
 
-    /** TBC */
+    /** Resource identifier of this asset in Azure. */
     String getAzureResourceId();
 
-    /** Tags that have been applied to this Azure asset. */
+    /** Tags that have been applied to this asset in Azure. */
     List<AzureTag> getAzureTags();
 
     /** TBC */
@@ -323,13 +323,13 @@ public interface IAzure {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -350,7 +350,7 @@ public interface IAzure {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

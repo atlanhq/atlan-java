@@ -24,7 +24,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a Power BI dataflow in Atlan.
+ * Instance of a Power BI dataflow in Atlan. Dataflows are reusable transformation logic that can be shared by many datasets and reports inside Power BI.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -33,16 +33,16 @@ public interface IPowerBIDataflow {
 
     public static final String TYPE_NAME = "PowerBIDataflow";
 
-    /** TBC */
+    /** Datasets used by this dataflow. */
     RelationField DATASETS = new RelationField("datasets");
 
-    /** TBC */
+    /** Deprecated. See 'sourceUrl' instead. */
     KeywordField WEB_URL = new KeywordField("webUrl", "webUrl");
 
-    /** TBC */
+    /** Workspace in which this dataflow exists. */
     RelationField WORKSPACE = new RelationField("workspace");
 
-    /** TBC */
+    /** Unique name of the workspace in which this dataflow exists. */
     KeywordField WORKSPACE_QUALIFIED_NAME = new KeywordField("workspaceQualifiedName", "workspaceQualifiedName");
 
     /** TBC */
@@ -249,7 +249,7 @@ public interface IPowerBIDataflow {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -273,7 +273,7 @@ public interface IPowerBIDataflow {
     /** TBC */
     AtlanConnectorType getConnectorType();
 
-    /** TBC */
+    /** Datasets used by this dataflow. */
     SortedSet<IPowerBIDataset> getDatasets();
 
     /** TBC */
@@ -294,7 +294,7 @@ public interface IPowerBIDataflow {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -318,13 +318,13 @@ public interface IPowerBIDataflow {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -336,7 +336,7 @@ public interface IPowerBIDataflow {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -363,7 +363,7 @@ public interface IPowerBIDataflow {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */
@@ -468,13 +468,13 @@ public interface IPowerBIDataflow {
     /** TBC */
     SortedSet<String> getViewerUsers();
 
-    /** TBC */
+    /** Deprecated. See 'sourceUrl' instead. */
     String getWebUrl();
 
-    /** TBC */
+    /** Workspace in which this dataflow exists. */
     IPowerBIWorkspace getWorkspace();
 
-    /** TBC */
+    /** Unique name of the workspace in which this dataflow exists. */
     String getWorkspaceQualifiedName();
 
     /** Name of the type that defines the asset. */

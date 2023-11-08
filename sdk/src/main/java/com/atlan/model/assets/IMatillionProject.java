@@ -25,7 +25,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * The MatillionProject Type represents a Project in Matillion. A Project in matillion is a logical grouping of configuration settings and jobs which are responsible for data processing and transformation.
+ * Instance of a Matillion project in Atlan. A project in Matillion is a logical grouping of configuration settings and jobs which are responsible for data processing and transformation.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -34,27 +34,27 @@ public interface IMatillionProject {
 
     public static final String TYPE_NAME = "MatillionProject";
 
-    /** List of environments under a matillion project */
+    /** List of environments in the project. */
     KeywordField MATILLION_ENVIRONMENTS = new KeywordField("matillionEnvironments", "matillionEnvironments");
 
-    /** TBC */
+    /** Matillion group in which the project exists. */
     RelationField MATILLION_GROUP = new RelationField("matillionGroup");
 
-    /** Name of the matillion group to which the matillion project belongs */
+    /** Simple name of the Matillion group to which the project belongs. */
     KeywordTextField MATILLION_GROUP_NAME =
             new KeywordTextField("matillionGroupName", "matillionGroupName.keyword", "matillionGroupName");
 
-    /** Qualified name of the matillion group to which the matillion project belongs */
+    /** Unique name of the Matillion group to which the project belongs. */
     KeywordTextField MATILLION_GROUP_QUALIFIED_NAME = new KeywordTextField(
             "matillionGroupQualifiedName", "matillionGroupQualifiedName", "matillionGroupQualifiedName.text");
 
-    /** TBC */
+    /** Jobs that exist within this project. */
     RelationField MATILLION_JOBS = new RelationField("matillionJobs");
 
-    /** Count of jobs under a matillion project */
+    /** Number of jobs in the project. */
     NumericField MATILLION_PROJECT_JOB_COUNT = new NumericField("matillionProjectJobCount", "matillionProjectJobCount");
 
-    /** List of versions under a matillion project */
+    /** List of versions in the project. */
     KeywordField MATILLION_VERSIONS = new KeywordField("matillionVersions", "matillionVersions");
 
     /** TBC */
@@ -261,7 +261,7 @@ public interface IMatillionProject {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -303,7 +303,7 @@ public interface IMatillionProject {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -327,37 +327,37 @@ public interface IMatillionProject {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
-    /** List of environments under a matillion project */
+    /** List of environments in the project. */
     SortedSet<String> getMatillionEnvironments();
 
-    /** TBC */
+    /** Matillion group in which the project exists. */
     IMatillionGroup getMatillionGroup();
 
-    /** Name of the matillion group to which the matillion project belongs */
+    /** Simple name of the Matillion group to which the project belongs. */
     String getMatillionGroupName();
 
-    /** Qualified name of the matillion group to which the matillion project belongs */
+    /** Unique name of the Matillion group to which the project belongs. */
     String getMatillionGroupQualifiedName();
 
-    /** TBC */
+    /** Jobs that exist within this project. */
     SortedSet<IMatillionJob> getMatillionJobs();
 
-    /** Count of jobs under a matillion project */
+    /** Number of jobs in the project. */
     Long getMatillionProjectJobCount();
 
     /** TBC */
     String getMatillionVersion();
 
-    /** List of versions under a matillion project */
+    /** List of versions in the project. */
     SortedSet<String> getMatillionVersions();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -369,7 +369,7 @@ public interface IMatillionProject {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -384,7 +384,7 @@ public interface IMatillionProject {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

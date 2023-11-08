@@ -33,18 +33,18 @@ public interface IRedashVisualization {
 
     public static final String TYPE_NAME = "RedashVisualization";
 
-    /** Query from which the visualization was created. */
+    /** Query which created this visualization. */
     RelationField REDASH_QUERY = new RelationField("redashQuery");
 
-    /** Name of the query from which the visualization was created. */
+    /** Simple name of the query from which this visualization is created. */
     KeywordTextField REDASH_QUERY_NAME =
             new KeywordTextField("redashQueryName", "redashQueryName.keyword", "redashQueryName");
 
-    /** Unique name of the query from which the visualization was created. */
+    /** Unique name of the query from which this visualization is created. */
     KeywordTextField REDASH_QUERY_QUALIFIED_NAME = new KeywordTextField(
             "redashQueryQualifiedName", "redashQueryQualifiedName", "redashQueryQualifiedName.text");
 
-    /** Type of the Redash visualization. */
+    /** Type of this visualization. */
     KeywordField REDASH_VISUALIZATION_TYPE = new KeywordField("redashVisualizationType", "redashVisualizationType");
 
     /** TBC */
@@ -251,7 +251,7 @@ public interface IRedashVisualization {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -293,7 +293,7 @@ public interface IRedashVisualization {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -317,13 +317,13 @@ public interface IRedashVisualization {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -335,7 +335,7 @@ public interface IRedashVisualization {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -350,22 +350,22 @@ public interface IRedashVisualization {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */
     Boolean getRedashIsPublished();
 
-    /** Query from which the visualization was created. */
+    /** Query which created this visualization. */
     IRedashQuery getRedashQuery();
 
-    /** Name of the query from which the visualization was created. */
+    /** Simple name of the query from which this visualization is created. */
     String getRedashQueryName();
 
-    /** Unique name of the query from which the visualization was created. */
+    /** Unique name of the query from which this visualization is created. */
     String getRedashQueryQualifiedName();
 
-    /** Type of the Redash visualization. */
+    /** Type of this visualization. */
     String getRedashVisualizationType();
 
     /** TBC */

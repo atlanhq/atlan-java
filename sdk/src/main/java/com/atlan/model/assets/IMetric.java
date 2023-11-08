@@ -24,7 +24,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Base class for metrics assets.
+ * Base class for data quality metrics assets.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -39,19 +39,19 @@ public interface IMetric {
     /** TBC */
     RelationField METRIC_DIMENSION_COLUMNS = new RelationField("metricDimensionColumns");
 
-    /** TBC */
+    /** Filters to be applied to the metric query. */
     TextField METRIC_FILTERS = new TextField("metricFilters", "metricFilters");
 
-    /** TBC */
+    /** SQL query used to compute the metric. */
     KeywordField METRIC_SQL = new KeywordField("metricSQL", "metricSQL");
 
-    /** TBC */
+    /** List of time grains to be applied to the metric query. */
     TextField METRIC_TIME_GRAINS = new TextField("metricTimeGrains", "metricTimeGrains");
 
     /** TBC */
     RelationField METRIC_TIMESTAMP_COLUMN = new RelationField("metricTimestampColumn");
 
-    /** TBC */
+    /** Type of the metric. */
     KeywordField METRIC_TYPE = new KeywordField("metricType", "metricType");
 
     /** TBC */
@@ -261,7 +261,7 @@ public interface IMetric {
     /** TBC */
     SortedSet<IAsset> getAssets();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -303,7 +303,7 @@ public interface IMetric {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -327,31 +327,31 @@ public interface IMetric {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
     SortedSet<IColumn> getMetricDimensionColumns();
 
-    /** TBC */
+    /** Filters to be applied to the metric query. */
     String getMetricFilters();
 
-    /** TBC */
+    /** SQL query used to compute the metric. */
     String getMetricSQL();
 
-    /** TBC */
+    /** List of time grains to be applied to the metric query. */
     SortedSet<String> getMetricTimeGrains();
 
     /** TBC */
     IColumn getMetricTimestampColumn();
 
-    /** TBC */
+    /** Type of the metric. */
     String getMetricType();
 
     /** TBC */
@@ -363,7 +363,7 @@ public interface IMetric {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -378,7 +378,7 @@ public interface IMetric {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

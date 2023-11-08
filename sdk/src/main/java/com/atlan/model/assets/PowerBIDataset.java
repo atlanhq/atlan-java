@@ -46,12 +46,12 @@ public class PowerBIDataset extends Asset implements IPowerBIDataset, IPowerBI, 
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Dataflows that use this dataset. */
     @Attribute
     @Singular
     SortedSet<IPowerBIDataflow> dataflows;
 
-    /** TBC */
+    /** Datasources that use this dataset. */
     @Attribute
     @Singular
     SortedSet<IPowerBIDatasource> datasources;
@@ -61,7 +61,7 @@ public class PowerBIDataset extends Asset implements IPowerBIDataset, IPowerBI, 
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -71,7 +71,7 @@ public class PowerBIDataset extends Asset implements IPowerBIDataset, IPowerBI, 
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
@@ -92,30 +92,30 @@ public class PowerBIDataset extends Asset implements IPowerBIDataset, IPowerBI, 
     @Attribute
     String powerBITableQualifiedName;
 
-    /** TBC */
+    /** Reports that were built using this dataset. */
     @Attribute
     @Singular
     SortedSet<IPowerBIReport> reports;
 
-    /** TBC */
+    /** Tables that exist within this dataset. */
     @Attribute
     @Singular
     SortedSet<IPowerBITable> tables;
 
-    /** TBC */
+    /** Tiles that exist within this dataset. */
     @Attribute
     @Singular
     SortedSet<IPowerBITile> tiles;
 
-    /** TBC */
+    /** Deprecated. See 'sourceUrl' instead. */
     @Attribute
     String webUrl;
 
-    /** TBC */
+    /** Workspace in which this dataset exists. */
     @Attribute
     IPowerBIWorkspace workspace;
 
-    /** TBC */
+    /** Unique name of the workspace in which this dataset exists. */
     @Attribute
     String workspaceQualifiedName;
 

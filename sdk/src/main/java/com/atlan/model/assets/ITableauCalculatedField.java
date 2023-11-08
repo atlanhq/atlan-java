@@ -24,7 +24,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a Tableau calculated field in Atlan.
+ * Instance of a Tableau calculated field in Atlan. These are created by combining two or more fields using a formula, and can be created at datasource or worksheet level.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -33,45 +33,45 @@ public interface ITableauCalculatedField {
 
     public static final String TYPE_NAME = "TableauCalculatedField";
 
-    /** TBC */
+    /** Data category of this field. */
     KeywordField DATA_CATEGORY = new KeywordField("dataCategory", "dataCategory");
 
-    /** TBC */
+    /** Datasource in which this calculated field exists. */
     RelationField DATASOURCE = new RelationField("datasource");
 
-    /** TBC */
+    /** Unique name of the datasource in which this calculated field exists. */
     KeywordField DATASOURCE_QUALIFIED_NAME = new KeywordField("datasourceQualifiedName", "datasourceQualifiedName");
 
-    /** TBC */
+    /** Formula for this calculated field. */
     KeywordField FORMULA = new KeywordField("formula", "formula");
 
-    /** TBC */
+    /** List of top-level projects and their nested projects. */
     KeywordField PROJECT_HIERARCHY = new KeywordField("projectHierarchy", "projectHierarchy");
 
-    /** TBC */
+    /** Unique name of the project in which this calculated field exists. */
     KeywordField PROJECT_QUALIFIED_NAME = new KeywordField("projectQualifiedName", "projectQualifiedName");
 
-    /** TBC */
+    /** Role of this field, for example: 'dimension', 'measure', or 'unknown'. */
     KeywordField ROLE = new KeywordField("role", "role");
 
-    /** TBC */
+    /** Unique name of the site in which this calculated field exists. */
     KeywordField SITE_QUALIFIED_NAME = new KeywordField("siteQualifiedName", "siteQualifiedName");
 
-    /** TBC */
+    /** Data type of the field, from Tableau. */
     KeywordTextField TABLEAU_DATA_TYPE =
             new KeywordTextField("tableauDataType", "tableauDataType", "tableauDataType.text");
 
-    /** TBC */
+    /** Unique name of the top-level project in which this calculated field exists. */
     KeywordField TOP_LEVEL_PROJECT_QUALIFIED_NAME =
             new KeywordField("topLevelProjectQualifiedName", "topLevelProjectQualifiedName");
 
-    /** TBC */
+    /** List of fields that are upstream to this calculated field. */
     KeywordField UPSTREAM_FIELDS = new KeywordField("upstreamFields", "upstreamFields");
 
-    /** TBC */
+    /** Unique name of the workbook in which this calculated field exists. */
     KeywordField WORKBOOK_QUALIFIED_NAME = new KeywordField("workbookQualifiedName", "workbookQualifiedName");
 
-    /** TBC */
+    /** Worksheets that use this calculated field. */
     RelationField WORKSHEETS = new RelationField("worksheets");
 
     /** TBC */
@@ -278,7 +278,7 @@ public interface ITableauCalculatedField {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -302,13 +302,13 @@ public interface ITableauCalculatedField {
     /** TBC */
     AtlanConnectorType getConnectorType();
 
-    /** TBC */
+    /** Data category of this field. */
     String getDataCategory();
 
-    /** TBC */
+    /** Datasource in which this calculated field exists. */
     ITableauDatasource getDatasource();
 
-    /** TBC */
+    /** Unique name of the datasource in which this calculated field exists. */
     String getDatasourceQualifiedName();
 
     /** TBC */
@@ -323,7 +323,7 @@ public interface ITableauCalculatedField {
     /** TBC */
     SortedSet<IFile> getFiles();
 
-    /** TBC */
+    /** Formula for this calculated field. */
     String getFormula();
 
     /** TBC */
@@ -332,7 +332,7 @@ public interface ITableauCalculatedField {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -356,13 +356,13 @@ public interface ITableauCalculatedField {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -374,7 +374,7 @@ public interface ITableauCalculatedField {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -386,19 +386,19 @@ public interface ITableauCalculatedField {
     /** TBC */
     Double getPopularityScore();
 
-    /** TBC */
+    /** List of top-level projects and their nested projects. */
     List<Map<String, String>> getProjectHierarchy();
 
-    /** TBC */
+    /** Unique name of the project in which this calculated field exists. */
     String getProjectQualifiedName();
 
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
-    /** TBC */
+    /** Role of this field, for example: 'dimension', 'measure', or 'unknown'. */
     String getRole();
 
     /** TBC */
@@ -407,7 +407,7 @@ public interface ITableauCalculatedField {
     /** TBC */
     SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
 
-    /** TBC */
+    /** Unique name of the site in which this calculated field exists. */
     String getSiteQualifiedName();
 
     /** TBC */
@@ -491,16 +491,16 @@ public interface ITableauCalculatedField {
     /** TBC */
     String getSubType();
 
-    /** TBC */
+    /** Data type of the field, from Tableau. */
     String getTableauDataType();
 
     /** TBC */
     String getTenantId();
 
-    /** TBC */
+    /** Unique name of the top-level project in which this calculated field exists. */
     String getTopLevelProjectQualifiedName();
 
-    /** TBC */
+    /** List of fields that are upstream to this calculated field. */
     List<Map<String, String>> getUpstreamFields();
 
     /** TBC */
@@ -515,10 +515,10 @@ public interface ITableauCalculatedField {
     /** TBC */
     SortedSet<String> getViewerUsers();
 
-    /** TBC */
+    /** Unique name of the workbook in which this calculated field exists. */
     String getWorkbookQualifiedName();
 
-    /** TBC */
+    /** Worksheets that use this calculated field. */
     SortedSet<ITableauWorksheet> getWorksheets();
 
     /** Name of the type that defines the asset. */

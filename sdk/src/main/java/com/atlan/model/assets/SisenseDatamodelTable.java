@@ -27,7 +27,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * The SisenseDatamodelTable type represents a table in a datamodel.
+ * Instance of a Sisense datamodel table in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -51,7 +51,7 @@ public class SisenseDatamodelTable extends Asset
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -61,44 +61,44 @@ public class SisenseDatamodelTable extends Asset
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** TBC */
+    /** Datamodel in which this datamodel table exists. */
     @Attribute
     ISisenseDatamodel sisenseDatamodel;
 
-    /** Qualified name of the datamodel in which this datamodel table is present */
+    /** Unique name of the datamodel in which this datamodel table exists. */
     @Attribute
     String sisenseDatamodelQualifiedName;
 
-    /** Number of columns present in the datamodel table */
+    /** Number of columns present in this datamodel table. */
     @Attribute
     Long sisenseDatamodelTableColumnCount;
 
-    /** Actual SQL expression of the datamodel table */
+    /** SQL expression of this datamodel table. */
     @Attribute
     String sisenseDatamodelTableExpression;
 
-    /** Boolean indicating if the datamodel table is hidden on sisense */
+    /** Whether this datamodel table is hidden in Sisense (true) or not (false). */
     @Attribute
     Boolean sisenseDatamodelTableIsHidden;
 
-    /** Boolean indicating if the datamodel table is materialised */
+    /** Whether this datamodel table is materialised (true) or not (false). */
     @Attribute
     Boolean sisenseDatamodelTableIsMaterialized;
 
-    /** LiveQuery settings of the datamodel table (JSON Object) */
+    /** JSON specifying the LiveQuery settings of this datamodel table. */
     @Attribute
     String sisenseDatamodelTableLiveQuerySettings;
 
-    /** Refresh schedule of the datamodel table (JSON Object) */
+    /** JSON specifying the refresh schedule of this datamodel table. */
     @Attribute
     String sisenseDatamodelTableSchedule;
 
-    /** Type of the datamodel table. 'base' for regular tables, 'custom' for SQL expression-based tables */
+    /** Type of this datamodel table, for example: 'base' for regular tables, 'custom' for SQL expression-based tables. */
     @Attribute
     String sisenseDatamodelTableType;
 

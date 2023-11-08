@@ -51,12 +51,12 @@ public class MetabaseQuestion extends Asset
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
-    /** TBC */
+    /** Collection in which this question exists. */
     @Attribute
     IMetabaseCollection metabaseCollection;
 
@@ -72,7 +72,7 @@ public class MetabaseQuestion extends Asset
     @Attribute
     Long metabaseDashboardCount;
 
-    /** TBC */
+    /** Dashboards in which this question is used. */
     @Attribute
     @Singular
     SortedSet<IMetabaseDashboard> metabaseDashboards;
@@ -90,7 +90,7 @@ public class MetabaseQuestion extends Asset
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
