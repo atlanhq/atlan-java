@@ -3,5 +3,6 @@ rootProject.name = "atlan-java"
 include("sdk")
 include("generate")
 include("integration-tests")
-include("package-toolkit:runtime")
 include("package-toolkit:config")
+include("package-toolkit:events")
+include("package-toolkit:runtime")
