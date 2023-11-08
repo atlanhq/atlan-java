@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.Atlan;
@@ -52,7 +52,7 @@ public class RedashQuery extends Asset implements IRedashQuery, IRedash, IBI, IC
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -62,7 +62,7 @@ public class RedashQuery extends Asset implements IRedashQuery, IRedash, IBI, IC
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
@@ -71,32 +71,32 @@ public class RedashQuery extends Asset implements IRedashQuery, IRedash, IBI, IC
     @Attribute
     Boolean redashIsPublished;
 
-    /** Time when the Redash query was last executed. */
+    /** Time (epoch) when this query was last executed, in milliseconds. */
     @Attribute
     Long redashQueryLastExecutedAt;
 
-    /** Elapsed time of the last run of the Redash query. */
+    /** Elapsed time of the last execution of this query. */
     @Attribute
     Double redashQueryLastExecutionRuntime;
 
-    /** Parameters for the Redash query. */
+    /** Parameters of this query. */
     @Attribute
     String redashQueryParameters;
 
-    /** SQL code of the Redash query. */
+    /** SQL code of this query. */
     @Attribute
     String redashQuerySQL;
 
-    /** Schedule of the Redash query. */
+    /** Schedule for this query. */
     @Attribute
     @Singular("putRedashQuerySchedule")
     Map<String, String> redashQuerySchedule;
 
-    /** Human-readable schedule of the Redash query. */
+    /** Schdule for this query in readable text for overview tab and filtering. */
     @Attribute
     String redashQueryScheduleHumanized;
 
-    /** Visualizations of this Redash query. */
+    /** Visualizations that were created by this query. */
     @Attribute
     @Singular
     SortedSet<IRedashVisualization> redashVisualizations;

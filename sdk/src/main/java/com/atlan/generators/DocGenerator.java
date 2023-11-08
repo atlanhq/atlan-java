@@ -1,22 +1,13 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.generators;
-
-import static java.nio.charset.StandardCharsets.UTF_8;
 
 import com.atlan.model.typedefs.*;
 import freemarker.template.Template;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.List;
 import java.util.Locale;
-import java.util.Set;
-import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVPrinter;
 
 @Slf4j
 public class DocGenerator extends AbstractGenerator {
@@ -31,7 +22,6 @@ public class DocGenerator extends AbstractGenerator {
         generateEnumDocs();
         generateStructDocs();
         generateFullModelDiagram();
-        generateAttributeCSV();
     }
 
     private void generateAssetDocs() throws Exception {
@@ -171,71 +161,5 @@ public class DocGenerator extends AbstractGenerator {
         } catch (IOException e) {
             log.error("Unable to open file output: {}", filename, e);
         }
-    }
-
-    private void generateAttributeCSV() {
-        try (CSVPrinter printer = new CSVPrinter(
-                Files.newBufferedWriter(Paths.get(AttributeCSVCache.DESCRIPTIONS_FILE), UTF_8),
-                CSVFormat.DEFAULT
-                        .builder()
-                        .setHeader(AttributeCSVCache.CSV_HEADER)
-                        .setRecordSeparator("\n")
-                        .build())) {
-            List<String> sortedTypeNames =
-                    cache.getEntityDefCache().keySet().stream().sorted().collect(Collectors.toList());
-            for (String typeName : sortedTypeNames) {
-                addModelToCSV(printer, typeName);
-            }
-            sortedTypeNames = cache.getStructNames();
-            for (String typeName : sortedTypeNames) {
-                addStructToCSV(printer, typeName);
-            }
-        } catch (IOException e) {
-            log.error("Unable to create attributes CSV file as expected.", e);
-            System.exit(1);
-        }
-    }
-
-    private void addModelToCSV(CSVPrinter printer, String typeName) throws IOException {
-        if (!typeName.startsWith("__")) {
-            EntityDef entityDef = cache.getEntityDefCache().get(typeName);
-            // Add all the plain attributes first
-            String description = addAttributesToCSV(printer, entityDef);
-            // And then all the relationship attributes (but only if they are unique to the type and not inherited)
-            Set<String> uniqueRelationships = cache.getUniqueRelationshipsForType(typeName);
-            for (RelationshipAttributeDef relationship : entityDef.getRelationshipAttributeDefs()) {
-                String name = relationship.getName();
-                if (!name.equals("__internal")) {
-                    if (uniqueRelationships.contains(name)) {
-                        printer.printRecord(typeName, description, name, getMergedDescription(typeName, relationship));
-                    }
-                }
-            }
-        }
-    }
-
-    private void addStructToCSV(CSVPrinter printer, String typeName) throws IOException {
-        if (!typeName.startsWith("__")) {
-            StructDef structDef = cache.getStructDefCache().get(typeName);
-            addAttributesToCSV(printer, structDef);
-        }
-    }
-
-    private String addAttributesToCSV(CSVPrinter printer, TypeDef typeDef) throws IOException {
-        String typeName = typeDef.getName();
-        String description = cache.getTypeDescription(typeName);
-        // Add all the plain attributes first
-        for (AttributeDef attribute : typeDef.getAttributeDefs()) {
-            String attrName = attribute.getName();
-            if (!attrName.equals("__internal")) {
-                printer.printRecord(
-                        typeName, description, attribute.getName(), getMergedDescription(typeName, attribute));
-            }
-        }
-        return description;
-    }
-
-    private String getMergedDescription(String typeName, AttributeDef attribute) {
-        return cache.getAttributeDescription(typeName, attribute.getName());
     }
 }

@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -23,7 +23,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a badge in Atlan.
+ * Instance of a badge in Atlan. Badges visually highlight key information about an asset, surfaced from custom metadata.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -32,10 +32,10 @@ public interface IBadge {
 
     public static final String TYPE_NAME = "Badge";
 
-    /** TBC */
+    /** List of conditions that determine the colors to diplay for various values. */
     KeywordField BADGE_CONDITIONS = new KeywordField("badgeConditions", "badgeConditions");
 
-    /** TBC */
+    /** Custom metadata attribute for which to show the badge. */
     KeywordField BADGE_METADATA_ATTRIBUTE = new KeywordField("badgeMetadataAttribute", "badgeMetadataAttribute");
 
     /** TBC */
@@ -242,13 +242,13 @@ public interface IBadge {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
-    /** TBC */
+    /** List of conditions that determine the colors to diplay for various values. */
     List<BadgeCondition> getBadgeConditions();
 
-    /** TBC */
+    /** Custom metadata attribute for which to show the badge. */
     String getBadgeMetadataAttribute();
 
     /** TBC */
@@ -308,13 +308,13 @@ public interface IBadge {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -335,7 +335,7 @@ public interface IBadge {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

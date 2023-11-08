@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.Atlan;
@@ -28,7 +28,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Instance of a Power BI dataflow in Atlan.
+ * Instance of a Power BI dataflow in Atlan. Dataflows are reusable transformation logic that can be shared by many datasets and reports inside Power BI.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -47,7 +47,7 @@ public class PowerBIDataflow extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Datasets used by this dataflow. */
     @Attribute
     @Singular
     SortedSet<IPowerBIDataset> datasets;
@@ -57,7 +57,7 @@ public class PowerBIDataflow extends Asset
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -67,7 +67,7 @@ public class PowerBIDataflow extends Asset
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
@@ -88,15 +88,15 @@ public class PowerBIDataflow extends Asset
     @Attribute
     String powerBITableQualifiedName;
 
-    /** TBC */
+    /** Deprecated. See 'sourceUrl' instead. */
     @Attribute
     String webUrl;
 
-    /** TBC */
+    /** Workspace in which this dataflow exists. */
     @Attribute
     IPowerBIWorkspace workspace;
 
-    /** TBC */
+    /** Unique name of the workspace in which this dataflow exists. */
     @Attribute
     String workspaceQualifiedName;
 

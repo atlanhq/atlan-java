@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.Atlan;
@@ -53,7 +53,7 @@ public class MicroStrategyVisualization extends Asset
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -76,15 +76,15 @@ public class MicroStrategyVisualization extends Asset
     @Singular
     SortedSet<String> microStrategyCubeQualifiedNames;
 
-    /** Dossier containing the visualization. */
+    /** Dossier in which this visualization exists. */
     @Attribute
     IMicroStrategyDossier microStrategyDossier;
 
-    /** Simple name of the dossier containing this visualization. */
+    /** Simple name of the dossier in which this visualization exists. */
     @Attribute
     String microStrategyDossierName;
 
-    /** Unique name of the dossier containing this visualization. */
+    /** Unique name of the dossier in which this visualization exists. */
     @Attribute
     String microStrategyDossierQualifiedName;
 
@@ -97,7 +97,7 @@ public class MicroStrategyVisualization extends Asset
     @Singular("putMicroStrategyLocation")
     List<Map<String, String>> microStrategyLocation;
 
-    /** Project containing the visualization. */
+    /** Project in which this visualization exists. */
     @Attribute
     IMicroStrategyProject microStrategyProject;
 
@@ -128,7 +128,7 @@ public class MicroStrategyVisualization extends Asset
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;

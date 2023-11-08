@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -31,28 +31,28 @@ public interface IMicroStrategyProject {
 
     public static final String TYPE_NAME = "MicroStrategyProject";
 
-    /** Attributes contained within the project. */
+    /** Attributes that exist within this project. */
     RelationField MICRO_STRATEGY_ATTRIBUTES = new RelationField("microStrategyAttributes");
 
-    /** Cubes contained within the project. */
+    /** Cubes that exist within this project. */
     RelationField MICRO_STRATEGY_CUBES = new RelationField("microStrategyCubes");
 
-    /** Documents contained within the project. */
+    /** Documents that exist within this project. */
     RelationField MICRO_STRATEGY_DOCUMENTS = new RelationField("microStrategyDocuments");
 
-    /** Dossiers contained within the project. */
+    /** Dossiers that exist within this project. */
     RelationField MICRO_STRATEGY_DOSSIERS = new RelationField("microStrategyDossiers");
 
-    /** Facts contained within the project. */
+    /** Facts that exist within this project. */
     RelationField MICRO_STRATEGY_FACTS = new RelationField("microStrategyFacts");
 
-    /** Metrics contained within the project. */
+    /** Metrics that exist within this project. */
     RelationField MICRO_STRATEGY_METRICS = new RelationField("microStrategyMetrics");
 
-    /** Reports contained within the project. */
+    /** Reports that exist within this project. */
     RelationField MICRO_STRATEGY_REPORTS = new RelationField("microStrategyReports");
 
-    /** Visualizations contained within the project. */
+    /** Visualizations that exist within this project. */
     RelationField MICRO_STRATEGY_VISUALIZATIONS = new RelationField("microStrategyVisualizations");
 
     /** TBC */
@@ -259,7 +259,7 @@ public interface IMicroStrategyProject {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -301,7 +301,7 @@ public interface IMicroStrategyProject {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -325,19 +325,19 @@ public interface IMicroStrategyProject {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
     SortedSet<IMetric> getMetrics();
 
-    /** Attributes contained within the project. */
+    /** Attributes that exist within this project. */
     SortedSet<IMicroStrategyAttribute> getMicroStrategyAttributes();
 
     /** TBC */
@@ -352,16 +352,16 @@ public interface IMicroStrategyProject {
     /** TBC */
     SortedSet<String> getMicroStrategyCubeQualifiedNames();
 
-    /** Cubes contained within the project. */
+    /** Cubes that exist within this project. */
     SortedSet<IMicroStrategyCube> getMicroStrategyCubes();
 
-    /** Documents contained within the project. */
+    /** Documents that exist within this project. */
     SortedSet<IMicroStrategyDocument> getMicroStrategyDocuments();
 
-    /** Dossiers contained within the project. */
+    /** Dossiers that exist within this project. */
     SortedSet<IMicroStrategyDossier> getMicroStrategyDossiers();
 
-    /** Facts contained within the project. */
+    /** Facts that exist within this project. */
     SortedSet<IMicroStrategyFact> getMicroStrategyFacts();
 
     /** TBC */
@@ -370,7 +370,7 @@ public interface IMicroStrategyProject {
     /** TBC */
     List<Map<String, String>> getMicroStrategyLocation();
 
-    /** Metrics contained within the project. */
+    /** Metrics that exist within this project. */
     SortedSet<IMicroStrategyMetric> getMicroStrategyMetrics();
 
     /** TBC */
@@ -385,10 +385,10 @@ public interface IMicroStrategyProject {
     /** TBC */
     SortedSet<String> getMicroStrategyReportQualifiedNames();
 
-    /** Reports contained within the project. */
+    /** Reports that exist within this project. */
     SortedSet<IMicroStrategyReport> getMicroStrategyReports();
 
-    /** Visualizations contained within the project. */
+    /** Visualizations that exist within this project. */
     SortedSet<IMicroStrategyVisualization> getMicroStrategyVisualizations();
 
     /** TBC */
@@ -397,7 +397,7 @@ public interface IMicroStrategyProject {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -412,7 +412,7 @@ public interface IMicroStrategyProject {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

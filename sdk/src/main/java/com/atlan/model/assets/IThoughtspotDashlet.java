@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -23,7 +23,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a ThoughtSpot Dashlet in Atlan.
+ * Instance of a Thoughtspot dashlet in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -32,14 +32,14 @@ public interface IThoughtspotDashlet {
 
     public static final String TYPE_NAME = "ThoughtspotDashlet";
 
-    /** Liveboard in which the Dashlet exists. */
+    /** Liveboard in which this dashlet exists. */
     RelationField THOUGHTSPOT_LIVEBOARD = new RelationField("thoughtspotLiveboard");
 
-    /** Name of the Liveboard in which the Dashlet exists. */
+    /** Simple name of the liveboard in which this dashlet exists. */
     KeywordTextField THOUGHTSPOT_LIVEBOARD_NAME = new KeywordTextField(
             "thoughtspotLiveboardName", "thoughtspotLiveboardName.keyword", "thoughtspotLiveboardName");
 
-    /** Unique name of the Liveboard in which the Dashlet exists. */
+    /** Unique name of the liveboard in which this dashlet exists. */
     KeywordTextField THOUGHTSPOT_LIVEBOARD_QUALIFIED_NAME = new KeywordTextField(
             "thoughtspotLiveboardQualifiedName",
             "thoughtspotLiveboardQualifiedName",
@@ -249,7 +249,7 @@ public interface IThoughtspotDashlet {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -291,7 +291,7 @@ public interface IThoughtspotDashlet {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -315,13 +315,13 @@ public interface IThoughtspotDashlet {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -333,7 +333,7 @@ public interface IThoughtspotDashlet {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -348,7 +348,7 @@ public interface IThoughtspotDashlet {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */
@@ -444,13 +444,13 @@ public interface IThoughtspotDashlet {
     /** TBC */
     String getThoughtspotChartType();
 
-    /** Liveboard in which the Dashlet exists. */
+    /** Liveboard in which this dashlet exists. */
     IThoughtspotLiveboard getThoughtspotLiveboard();
 
-    /** Name of the Liveboard in which the Dashlet exists. */
+    /** Simple name of the liveboard in which this dashlet exists. */
     String getThoughtspotLiveboardName();
 
-    /** Unique name of the Liveboard in which the Dashlet exists. */
+    /** Unique name of the liveboard in which this dashlet exists. */
     String getThoughtspotLiveboardQualifiedName();
 
     /** TBC */

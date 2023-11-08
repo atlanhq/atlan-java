@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -33,13 +33,13 @@ public interface ILink {
 
     public static final String TYPE_NAME = "Link";
 
-    /** Asset to which the link is attached. */
+    /** Asset that this README describes. */
     RelationField ASSET = new RelationField("asset");
 
     /** Icon for the link. */
     KeywordField ICON = new KeywordField("icon", "icon");
 
-    /** Type of icon for the link. */
+    /** Type of icon for the link, for example: image or emoji. */
     KeywordField ICON_TYPE = new KeywordField("iconType", "iconType");
 
     /** TBC */
@@ -66,7 +66,7 @@ public interface ILink {
     /** TBC */
     String getAnnouncementUpdatedBy();
 
-    /** Asset to which the link is attached. */
+    /** Asset that this README describes. */
     IAsset getAsset();
 
     /** TBC */
@@ -249,7 +249,7 @@ public interface ILink {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -291,13 +291,13 @@ public interface ILink {
     /** Icon for the link. */
     String getIcon();
 
-    /** Type of icon for the link. */
+    /** Type of icon for the link, for example: image or emoji. */
     IconType getIconType();
 
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -333,7 +333,7 @@ public interface ILink {
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -345,7 +345,7 @@ public interface ILink {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -360,7 +360,7 @@ public interface ILink {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

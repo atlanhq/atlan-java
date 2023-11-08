@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -24,7 +24,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a Qlick Chart in Atlan.
+ * Instance of a Qlik chart in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -33,19 +33,19 @@ public interface IQlikChart {
 
     public static final String TYPE_NAME = "QlikChart";
 
-    /** Footnote on the chart. */
+    /** Footnote of this chart. */
     TextField QLIK_CHART_FOOTNOTE = new TextField("qlikChartFootnote", "qlikChartFootnote");
 
-    /** Orientation of the chart. */
+    /** Orientation of this chart. */
     KeywordField QLIK_CHART_ORIENTATION = new KeywordField("qlikChartOrientation", "qlikChartOrientation");
 
-    /** Subtitle of the chart. */
+    /** Subtitle of this chart. */
     TextField QLIK_CHART_SUBTITLE = new TextField("qlikChartSubtitle", "qlikChartSubtitle");
 
-    /** Subtype of the chart, for example: bar, graph, pie, etc. */
+    /** Subtype of this chart, for example: bar, graph, pie, etc. */
     KeywordField QLIK_CHART_TYPE = new KeywordField("qlikChartType", "qlikChartType");
 
-    /** Sheet in which the chart exists. */
+    /** Sheet in which this chart exists. */
     RelationField QLIK_SHEET = new RelationField("qlikSheet");
 
     /** TBC */
@@ -252,7 +252,7 @@ public interface IQlikChart {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -294,7 +294,7 @@ public interface IQlikChart {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -318,13 +318,13 @@ public interface IQlikChart {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -336,7 +336,7 @@ public interface IQlikChart {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -354,16 +354,16 @@ public interface IQlikChart {
     /** TBC */
     String getQlikAppQualifiedName();
 
-    /** Footnote on the chart. */
+    /** Footnote of this chart. */
     String getQlikChartFootnote();
 
-    /** Orientation of the chart. */
+    /** Orientation of this chart. */
     String getQlikChartOrientation();
 
-    /** Subtitle of the chart. */
+    /** Subtitle of this chart. */
     String getQlikChartSubtitle();
 
-    /** Subtype of the chart, for example: bar, graph, pie, etc. */
+    /** Subtype of this chart, for example: bar, graph, pie, etc. */
     String getQlikChartType();
 
     /** TBC */
@@ -378,7 +378,7 @@ public interface IQlikChart {
     /** TBC */
     String getQlikQRI();
 
-    /** Sheet in which the chart exists. */
+    /** Sheet in which this chart exists. */
     IQlikSheet getQlikSheet();
 
     /** TBC */
@@ -390,7 +390,7 @@ public interface IQlikChart {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

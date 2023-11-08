@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -36,20 +36,20 @@ public interface IDataStudioAsset {
 
     public static final String TYPE_NAME = "DataStudioAsset";
 
-    /** Owner of the asset within Google Data Studio. */
+    /** Owner of the asset, from Google Data Studio. */
     KeywordField DATA_STUDIO_ASSET_OWNER = new KeywordField("dataStudioAssetOwner", "dataStudioAssetOwner");
 
-    /** Title for the asset. */
+    /** Title of the Google Data Studio asset. */
     KeywordTextStemmedField DATA_STUDIO_ASSET_TITLE = new KeywordTextStemmedField(
             "dataStudioAssetTitle",
             "dataStudioAssetTitle.keyword",
             "dataStudioAssetTitle",
             "dataStudioAssetTitle.stemmed");
 
-    /** Type of Google Data Studio asset. */
+    /** Type of the Google Data Studio asset, for example: REPORT or DATA_SOURCE. */
     KeywordField DATA_STUDIO_ASSET_TYPE = new KeywordField("dataStudioAssetType", "dataStudioAssetType");
 
-    /** Whether the asset is soft-deleted in Google Data Studio (true) or not (false). */
+    /** Whether the Google Data Studio asset has been trashed (true) or not (false). */
     BooleanField IS_TRASHED_DATA_STUDIO_ASSET =
             new BooleanField("isTrashedDataStudioAsset", "isTrashedDataStudioAsset");
 
@@ -257,7 +257,7 @@ public interface IDataStudioAsset {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -281,13 +281,13 @@ public interface IDataStudioAsset {
     /** TBC */
     AtlanConnectorType getConnectorType();
 
-    /** Owner of the asset within Google Data Studio. */
+    /** Owner of the asset, from Google Data Studio. */
     String getDataStudioAssetOwner();
 
-    /** Title for the asset. */
+    /** Title of the Google Data Studio asset. */
     String getDataStudioAssetTitle();
 
-    /** Type of Google Data Studio asset. */
+    /** Type of the Google Data Studio asset, for example: REPORT or DATA_SOURCE. */
     GoogleDataStudioAssetType getDataStudioAssetType();
 
     /** TBC */
@@ -332,7 +332,7 @@ public interface IDataStudioAsset {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -344,7 +344,7 @@ public interface IDataStudioAsset {
     /** TBC */
     Boolean getIsEditable();
 
-    /** Whether the asset is soft-deleted in Google Data Studio (true) or not (false). */
+    /** Whether the Google Data Studio asset has been trashed (true) or not (false). */
     Boolean getIsTrashedDataStudioAsset();
 
     /** TBC */
@@ -359,13 +359,13 @@ public interface IDataStudioAsset {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -377,7 +377,7 @@ public interface IDataStudioAsset {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -392,7 +392,7 @@ public interface IDataStudioAsset {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

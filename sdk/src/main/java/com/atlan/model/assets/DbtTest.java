@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.Atlan;
@@ -27,7 +27,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * dbt Test Assets
+ * Instance of a dbt test in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -129,35 +129,35 @@ public class DbtTest extends Asset implements IDbtTest, IDbt, ICatalog, IAsset, 
     @Singular
     SortedSet<String> dbtTags;
 
-    /** The compiled code of a test ( tests in dbt can be defined using python ) */
+    /** Compiled code of the test (when the test is defined using Python). */
     @Attribute
     String dbtTestCompiledCode;
 
-    /** The compiled sql of a test */
+    /** Compiled SQL of the test. */
     @Attribute
     String dbtTestCompiledSQL;
 
-    /** The error message in the case of state being "error" */
+    /** Error message in the case of state being "error". */
     @Attribute
     String dbtTestError;
 
-    /** The language in which a dbt test is written. Example: sql,python */
+    /** Language in which the test is written, for example: SQL or Python. */
     @Attribute
     String dbtTestLanguage;
 
-    /** The raw code of a test ( tests in dbt can be defined using python ) */
+    /** Raw code of the test (when the test is defined using Python). */
     @Attribute
     String dbtTestRawCode;
 
-    /** The raw sql of a test */
+    /** Raw SQL of the test. */
     @Attribute
     String dbtTestRawSQL;
 
-    /** The test results. Can be one of, in order of severity, "error", "fail", "warn", "pass" */
+    /** Test results. Can be one of, in order of severity, "error", "fail", "warn", "pass". */
     @Attribute
     String dbtTestState;
 
-    /** Status provides the details of the results of a test. For errors, it reads "ERROR". */
+    /** Details of the results of the test. For errors, it reads "ERROR". */
     @Attribute
     String dbtTestStatus;
 
@@ -170,7 +170,7 @@ public class DbtTest extends Asset implements IDbtTest, IDbt, ICatalog, IAsset, 
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -180,7 +180,7 @@ public class DbtTest extends Asset implements IDbtTest, IDbt, ICatalog, IAsset, 
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;

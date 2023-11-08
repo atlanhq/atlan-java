@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -33,13 +33,13 @@ public interface IMetabaseQuestion {
 
     public static final String TYPE_NAME = "MetabaseQuestion";
 
-    /** TBC */
+    /** Collection in which this question exists. */
     RelationField METABASE_COLLECTION = new RelationField("metabaseCollection");
 
     /** TBC */
     NumericField METABASE_DASHBOARD_COUNT = new NumericField("metabaseDashboardCount", "metabaseDashboardCount");
 
-    /** TBC */
+    /** Dashboards in which this question is used. */
     RelationField METABASE_DASHBOARDS = new RelationField("metabaseDashboards");
 
     /** TBC */
@@ -253,7 +253,7 @@ public interface IMetabaseQuestion {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -295,7 +295,7 @@ public interface IMetabaseQuestion {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -319,16 +319,16 @@ public interface IMetabaseQuestion {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
-    /** TBC */
+    /** Collection in which this question exists. */
     IMetabaseCollection getMetabaseCollection();
 
     /** TBC */
@@ -340,7 +340,7 @@ public interface IMetabaseQuestion {
     /** TBC */
     Long getMetabaseDashboardCount();
 
-    /** TBC */
+    /** Dashboards in which this question is used. */
     SortedSet<IMetabaseDashboard> getMetabaseDashboards();
 
     /** TBC */
@@ -358,7 +358,7 @@ public interface IMetabaseQuestion {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -373,7 +373,7 @@ public interface IMetabaseQuestion {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

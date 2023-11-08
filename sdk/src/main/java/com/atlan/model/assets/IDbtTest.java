@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -24,7 +24,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * dbt Test Assets
+ * Instance of a dbt test in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -42,29 +42,29 @@ public interface IDbtTest {
     /** TBC */
     RelationField DBT_SOURCES = new RelationField("dbtSources");
 
-    /** The compiled code of a test ( tests in dbt can be defined using python ) */
+    /** Compiled code of the test (when the test is defined using Python). */
     KeywordField DBT_TEST_COMPILED_CODE = new KeywordField("dbtTestCompiledCode", "dbtTestCompiledCode");
 
-    /** The compiled sql of a test */
+    /** Compiled SQL of the test. */
     KeywordField DBT_TEST_COMPILED_SQL = new KeywordField("dbtTestCompiledSQL", "dbtTestCompiledSQL");
 
-    /** The error message in the case of state being "error" */
+    /** Error message in the case of state being "error". */
     KeywordField DBT_TEST_ERROR = new KeywordField("dbtTestError", "dbtTestError");
 
-    /** The language in which a dbt test is written. Example: sql,python */
+    /** Language in which the test is written, for example: SQL or Python. */
     KeywordField DBT_TEST_LANGUAGE = new KeywordField("dbtTestLanguage", "dbtTestLanguage");
 
-    /** The raw code of a test ( tests in dbt can be defined using python ) */
+    /** Raw code of the test (when the test is defined using Python). */
     KeywordTextField DBT_TEST_RAW_CODE =
             new KeywordTextField("dbtTestRawCode", "dbtTestRawCode", "dbtTestRawCode.text");
 
-    /** The raw sql of a test */
+    /** Raw SQL of the test. */
     KeywordTextField DBT_TEST_RAW_SQL = new KeywordTextField("dbtTestRawSQL", "dbtTestRawSQL", "dbtTestRawSQL.text");
 
-    /** The test results. Can be one of, in order of severity, "error", "fail", "warn", "pass" */
+    /** Test results. Can be one of, in order of severity, "error", "fail", "warn", "pass". */
     KeywordField DBT_TEST_STATE = new KeywordField("dbtTestState", "dbtTestState");
 
-    /** Status provides the details of the results of a test. For errors, it reads "ERROR". */
+    /** Details of the results of the test. For errors, it reads "ERROR". */
     KeywordField DBT_TEST_STATUS = new KeywordField("dbtTestStatus", "dbtTestStatus");
 
     /** TBC */
@@ -274,7 +274,7 @@ public interface IDbtTest {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -361,28 +361,28 @@ public interface IDbtTest {
     /** TBC */
     SortedSet<String> getDbtTags();
 
-    /** The compiled code of a test ( tests in dbt can be defined using python ) */
+    /** Compiled code of the test (when the test is defined using Python). */
     String getDbtTestCompiledCode();
 
-    /** The compiled sql of a test */
+    /** Compiled SQL of the test. */
     String getDbtTestCompiledSQL();
 
-    /** The error message in the case of state being "error" */
+    /** Error message in the case of state being "error". */
     String getDbtTestError();
 
-    /** The language in which a dbt test is written. Example: sql,python */
+    /** Language in which the test is written, for example: SQL or Python. */
     String getDbtTestLanguage();
 
-    /** The raw code of a test ( tests in dbt can be defined using python ) */
+    /** Raw code of the test (when the test is defined using Python). */
     String getDbtTestRawCode();
 
-    /** The raw sql of a test */
+    /** Raw SQL of the test. */
     String getDbtTestRawSQL();
 
-    /** The test results. Can be one of, in order of severity, "error", "fail", "warn", "pass" */
+    /** Test results. Can be one of, in order of severity, "error", "fail", "warn", "pass". */
     String getDbtTestState();
 
-    /** Status provides the details of the results of a test. For errors, it reads "ERROR". */
+    /** Details of the results of the test. For errors, it reads "ERROR". */
     String getDbtTestStatus();
 
     /** TBC */
@@ -403,7 +403,7 @@ public interface IDbtTest {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -427,13 +427,13 @@ public interface IDbtTest {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -445,7 +445,7 @@ public interface IDbtTest {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -460,7 +460,7 @@ public interface IDbtTest {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

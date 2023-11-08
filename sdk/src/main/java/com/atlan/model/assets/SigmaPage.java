@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.Atlan;
@@ -50,7 +50,7 @@ public class SigmaPage extends Asset implements ISigmaPage, ISigma, IBI, ICatalo
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -60,12 +60,12 @@ public class SigmaPage extends Asset implements ISigmaPage, ISigma, IBI, ICatalo
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** Number of data elements that exist within this page. */
+    /** Number of data elements on this page. */
     @Attribute
     Long sigmaDataElementCount;
 
@@ -77,7 +77,7 @@ public class SigmaPage extends Asset implements ISigmaPage, ISigma, IBI, ICatalo
     @Attribute
     String sigmaDataElementQualifiedName;
 
-    /** Data elements within this page. */
+    /** Data elements that exist on this page. */
     @Attribute
     @Singular
     SortedSet<ISigmaDataElement> sigmaDataElements;
@@ -90,7 +90,7 @@ public class SigmaPage extends Asset implements ISigmaPage, ISigma, IBI, ICatalo
     @Attribute
     String sigmaPageQualifiedName;
 
-    /** Workbook that contains this page. */
+    /** Workbook in which this page exists. */
     @Attribute
     ISigmaWorkbook sigmaWorkbook;
 

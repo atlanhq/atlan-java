@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -50,22 +50,22 @@ public interface ISQL {
     /** TBC */
     RelationField DBT_TESTS = new RelationField("dbtTests");
 
-    /** Whether the asset has been profiled (true) or not (false). */
+    /** Whether this asset has been profiled (true) or not (false). */
     BooleanField IS_PROFILED = new BooleanField("isProfiled", "isProfiled");
 
-    /** Time (epoch) at which the asset was last profiled, in milliseconds. */
+    /** Time (epoch) at which this asset was last profiled, in milliseconds. */
     NumericField LAST_PROFILED_AT = new NumericField("lastProfiledAt", "lastProfiledAt");
 
-    /** TBC */
+    /** Number of times this asset has been queried. */
     NumericField QUERY_COUNT = new NumericField("queryCount", "queryCount");
 
     /** Time (epoch) at which the query count was last updated, in milliseconds. */
     NumericField QUERY_COUNT_UPDATED_AT = new NumericField("queryCountUpdatedAt", "queryCountUpdatedAt");
 
-    /** TBC */
+    /** Number of unique users who have queried this asset. */
     NumericField QUERY_USER_COUNT = new NumericField("queryUserCount", "queryUserCount");
 
-    /** TBC */
+    /** Map of unique users who have queried this asset to the number of times they have queried it. */
     KeywordField QUERY_USER_MAP = new KeywordField("queryUserMap", "queryUserMap");
 
     /** Simple name of the schema in which this SQL asset exists, or empty if it does not exist within a schema. */
@@ -296,7 +296,7 @@ public interface ISQL {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -353,7 +353,7 @@ public interface ISQL {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -365,10 +365,10 @@ public interface ISQL {
     /** TBC */
     Boolean getIsEditable();
 
-    /** Whether the asset has been profiled (true) or not (false). */
+    /** Whether this asset has been profiled (true) or not (false). */
     Boolean getIsProfiled();
 
-    /** Time (epoch) at which the asset was last profiled, in milliseconds. */
+    /** Time (epoch) at which this asset was last profiled, in milliseconds. */
     Long getLastProfiledAt();
 
     /** TBC */
@@ -383,13 +383,13 @@ public interface ISQL {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -401,7 +401,7 @@ public interface ISQL {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -416,19 +416,19 @@ public interface ISQL {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** Number of times this asset has been queried. */
     Long getQueryCount();
 
     /** Time (epoch) at which the query count was last updated, in milliseconds. */
     Long getQueryCountUpdatedAt();
 
-    /** TBC */
+    /** Number of unique users who have queried this asset. */
     Long getQueryUserCount();
 
-    /** TBC */
+    /** Map of unique users who have queried this asset to the number of times they have queried it. */
     Map<String, Long> getQueryUserMap();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

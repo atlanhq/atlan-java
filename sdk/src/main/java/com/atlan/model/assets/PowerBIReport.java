@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.Atlan;
@@ -46,11 +46,11 @@ public class PowerBIReport extends Asset implements IPowerBIReport, IPowerBI, IB
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Dataset from which this report was built. */
     @Attribute
     IPowerBIDataset dataset;
 
-    /** TBC */
+    /** Unique name of the dataset used to build this report. */
     @Attribute
     String datasetQualifiedName;
 
@@ -59,7 +59,7 @@ public class PowerBIReport extends Asset implements IPowerBIReport, IPowerBI, IB
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -69,16 +69,16 @@ public class PowerBIReport extends Asset implements IPowerBIReport, IPowerBI, IB
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** TBC */
+    /** Number of pages in this report. */
     @Attribute
     Long pageCount;
 
-    /** TBC */
+    /** Pages that exist within this report. */
     @Attribute
     @Singular
     SortedSet<IPowerBIPage> pages;
@@ -99,20 +99,20 @@ public class PowerBIReport extends Asset implements IPowerBIReport, IPowerBI, IB
     @Attribute
     String powerBITableQualifiedName;
 
-    /** TBC */
+    /** Tiles that exist within this report. */
     @Attribute
     @Singular
     SortedSet<IPowerBITile> tiles;
 
-    /** TBC */
+    /** Deprecated. See 'sourceUrl' instead. */
     @Attribute
     String webUrl;
 
-    /** TBC */
+    /** Workspace in which this report exists. */
     @Attribute
     IPowerBIWorkspace workspace;
 
-    /** TBC */
+    /** Unique name of the workspace in which this report exists. */
     @Attribute
     String workspaceQualifiedName;
 

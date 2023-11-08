@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.Atlan;
@@ -27,7 +27,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Instance of a ThoughtSpot Dashlet in Atlan.
+ * Instance of a Thoughtspot dashlet in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -51,7 +51,7 @@ public class ThoughtspotDashlet extends Asset
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -61,7 +61,7 @@ public class ThoughtspotDashlet extends Asset
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
@@ -70,15 +70,15 @@ public class ThoughtspotDashlet extends Asset
     @Attribute
     String thoughtspotChartType;
 
-    /** Liveboard in which the Dashlet exists. */
+    /** Liveboard in which this dashlet exists. */
     @Attribute
     IThoughtspotLiveboard thoughtspotLiveboard;
 
-    /** Name of the Liveboard in which the Dashlet exists. */
+    /** Simple name of the liveboard in which this dashlet exists. */
     @Attribute
     String thoughtspotLiveboardName;
 
-    /** Unique name of the Liveboard in which the Dashlet exists. */
+    /** Unique name of the liveboard in which this dashlet exists. */
     @Attribute
     String thoughtspotLiveboardQualifiedName;
 

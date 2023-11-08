@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.Atlan;
@@ -27,7 +27,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Atlan Qlik Stream Asset. This is analogus to Space.
+ * Instance of a Qlik stream in Atlan, which is analogus to a Qlik space.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -50,7 +50,7 @@ public class QlikStream extends Asset implements IQlikStream, IQlikSpace, IQlik,
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -60,7 +60,7 @@ public class QlikStream extends Asset implements IQlikStream, IQlikSpace, IQlik,
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
@@ -73,12 +73,12 @@ public class QlikStream extends Asset implements IQlikStream, IQlikSpace, IQlik,
     @Attribute
     String qlikAppQualifiedName;
 
-    /** TBC */
+    /** Apps that exist within this space. */
     @Attribute
     @Singular
     SortedSet<IQlikApp> qlikApps;
 
-    /** TBC */
+    /** Datasets that exist within this space. */
     @Attribute
     @Singular
     SortedSet<IQlikDataset> qlikDatasets;

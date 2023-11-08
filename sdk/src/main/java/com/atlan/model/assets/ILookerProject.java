@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -22,7 +22,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a Looker project in Atlan.
+ * Instance of a Looker project in Atlan. Projects are a collection of files that describe the objects, connections and user interface elements in Looker.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -31,16 +31,16 @@ public interface ILookerProject {
 
     public static final String TYPE_NAME = "LookerProject";
 
-    /** TBC */
+    /** Explores that exist within this project. */
     RelationField EXPLORES = new RelationField("explores");
 
-    /** TBC */
+    /** Fields that exist within this project. */
     RelationField FIELDS = new RelationField("fields");
 
-    /** TBC */
+    /** Models that exist within this project. */
     RelationField MODELS = new RelationField("models");
 
-    /** TBC */
+    /** Views that exist within this project. */
     RelationField VIEWS = new RelationField("views");
 
     /** TBC */
@@ -247,7 +247,7 @@ public interface ILookerProject {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -280,10 +280,10 @@ public interface ILookerProject {
     /** TBC */
     String getDisplayName();
 
-    /** TBC */
+    /** Explores that exist within this project. */
     SortedSet<ILookerExplore> getExplores();
 
-    /** TBC */
+    /** Fields that exist within this project. */
     SortedSet<ILookerField> getFields();
 
     /** TBC */
@@ -295,7 +295,7 @@ public interface ILookerProject {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -319,19 +319,19 @@ public interface ILookerProject {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
     SortedSet<IMetric> getMetrics();
 
-    /** TBC */
+    /** Models that exist within this project. */
     SortedSet<ILookerModel> getModels();
 
     /** TBC */
@@ -340,7 +340,7 @@ public interface ILookerProject {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -355,7 +355,7 @@ public interface ILookerProject {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */
@@ -460,7 +460,7 @@ public interface ILookerProject {
     /** TBC */
     SortedSet<String> getViewerUsers();
 
-    /** TBC */
+    /** Views that exist within this project. */
     SortedSet<ILookerView> getViews();
 
     /** Name of the type that defines the asset. */

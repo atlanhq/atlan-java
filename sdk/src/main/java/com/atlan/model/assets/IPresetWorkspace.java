@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -35,41 +35,41 @@ public interface IPresetWorkspace {
 
     public static final String TYPE_NAME = "PresetWorkspace";
 
-    /** Collections within this workspace. */
+    /** Dashboards that exist within this workspace. */
     RelationField PRESET_DASHBOARDS = new RelationField("presetDashboards");
 
-    /** ID of the cluster for the Preset workspace. */
+    /** TBC */
     NumericField PRESET_WORKSPACE_CLUSTER_ID = new NumericField("presetWorkspaceClusterId", "presetWorkspaceClusterId");
 
-    /** Number of collections in the workspace. */
+    /** TBC */
     NumericField PRESET_WORKSPACE_DASHBOARD_COUNT =
             new NumericField("presetWorkspaceDashboardCount", "presetWorkspaceDashboardCount");
 
-    /** Number of datasets in the workspace. */
+    /** TBC */
     NumericField PRESET_WORKSPACE_DATASET_COUNT =
             new NumericField("presetWorkspaceDatasetCount", "presetWorkspaceDatasetCount");
 
-    /** ID of the deployment for the Preset workspace. */
+    /** TBC */
     NumericField PRESET_WORKSPACE_DEPLOYMENT_ID =
             new NumericField("presetWorkspaceDeploymentId", "presetWorkspaceDeploymentId");
 
-    /** Hostname of the Preset workspace. */
+    /** TBC */
     KeywordTextField PRESET_WORKSPACE_HOSTNAME =
             new KeywordTextField("presetWorkspaceHostname", "presetWorkspaceHostname", "presetWorkspaceHostname.text");
 
-    /** Whether the workspace is in maintenance mode (true) or not (false). */
+    /** TBC */
     BooleanField PRESET_WORKSPACE_IS_IN_MAINTENANCE_MODE =
             new BooleanField("presetWorkspaceIsInMaintenanceMode", "presetWorkspaceIsInMaintenanceMode");
 
-    /** Whether public collections are allowed in the workspace (true) or not (false). */
+    /** TBC */
     BooleanField PRESET_WORKSPACE_PUBLIC_DASHBOARDS_ALLOWED =
             new BooleanField("presetWorkspacePublicDashboardsAllowed", "presetWorkspacePublicDashboardsAllowed");
 
-    /** Region of the workspace. */
+    /** TBC */
     KeywordTextField PRESET_WORKSPACE_REGION =
             new KeywordTextField("presetWorkspaceRegion", "presetWorkspaceRegion", "presetWorkspaceRegion.text");
 
-    /** Status of the workspace. */
+    /** TBC */
     KeywordField PRESET_WORKSPACE_STATUS = new KeywordField("presetWorkspaceStatus", "presetWorkspaceStatus");
 
     /** TBC */
@@ -276,7 +276,7 @@ public interface IPresetWorkspace {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -318,7 +318,7 @@ public interface IPresetWorkspace {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -342,13 +342,13 @@ public interface IPresetWorkspace {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -360,7 +360,7 @@ public interface IPresetWorkspace {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -378,46 +378,46 @@ public interface IPresetWorkspace {
     /** TBC */
     String getPresetDashboardQualifiedName();
 
-    /** Collections within this workspace. */
+    /** Dashboards that exist within this workspace. */
     SortedSet<IPresetDashboard> getPresetDashboards();
 
-    /** ID of the cluster for the Preset workspace. */
+    /** TBC */
     Long getPresetWorkspaceClusterId();
 
-    /** Number of collections in the workspace. */
+    /** TBC */
     Long getPresetWorkspaceDashboardCount();
 
-    /** Number of datasets in the workspace. */
+    /** TBC */
     Long getPresetWorkspaceDatasetCount();
 
-    /** ID of the deployment for the Preset workspace. */
+    /** TBC */
     Long getPresetWorkspaceDeploymentId();
 
-    /** Hostname of the Preset workspace. */
+    /** TBC */
     String getPresetWorkspaceHostname();
 
     /** TBC */
     Long getPresetWorkspaceId();
 
-    /** Whether the workspace is in maintenance mode (true) or not (false). */
+    /** TBC */
     Boolean getPresetWorkspaceIsInMaintenanceMode();
 
-    /** Whether public collections are allowed in the workspace (true) or not (false). */
+    /** TBC */
     Boolean getPresetWorkspacePublicDashboardsAllowed();
 
     /** TBC */
     String getPresetWorkspaceQualifiedName();
 
-    /** Region of the workspace. */
+    /** TBC */
     String getPresetWorkspaceRegion();
 
-    /** Status of the workspace. */
+    /** TBC */
     String getPresetWorkspaceStatus();
 
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

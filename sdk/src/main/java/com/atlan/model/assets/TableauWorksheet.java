@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.Atlan;
@@ -48,17 +48,17 @@ public class TableauWorksheet extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Calculated fields that are used in this worksheet. */
     @Attribute
     @Singular
     SortedSet<ITableauCalculatedField> calculatedFields;
 
-    /** TBC */
+    /** Dashboards that use this worksheet. */
     @Attribute
     @Singular
     SortedSet<ITableauDashboard> dashboards;
 
-    /** TBC */
+    /** Datasource fields this worksheet uses. */
     @Attribute
     @Singular
     SortedSet<ITableauDatasourceField> datasourceFields;
@@ -68,7 +68,7 @@ public class TableauWorksheet extends Asset
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -78,33 +78,33 @@ public class TableauWorksheet extends Asset
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** TBC */
+    /** List of top-level projects with their nested child projects. */
     @Attribute
     @Singular("addProjectHierarchy")
     List<Map<String, String>> projectHierarchy;
 
-    /** TBC */
+    /** Unique name of the project in which this worksheet exists. */
     @Attribute
     String projectQualifiedName;
 
-    /** TBC */
+    /** Unique name of the site in which this worksheet exists. */
     @Attribute
     String siteQualifiedName;
 
-    /** TBC */
+    /** Unique name of the top-level project in which this worksheet exists. */
     @Attribute
     String topLevelProjectQualifiedName;
 
-    /** TBC */
+    /** Workbook in which this worksheet exists. */
     @Attribute
     ITableauWorkbook workbook;
 
-    /** TBC */
+    /** Unique name of the workbook in which this worksheet exists. */
     @Attribute
     String workbookQualifiedName;
 

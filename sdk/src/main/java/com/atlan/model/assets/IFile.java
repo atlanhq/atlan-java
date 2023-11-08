@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -24,7 +24,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a file in Atlan.
+ * Instance of a static file in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -39,7 +39,7 @@ public interface IFile {
     /** URL giving the online location where the file can be accessed. */
     KeywordField FILE_PATH = new KeywordField("filePath", "filePath");
 
-    /** Type of the file */
+    /** Type (extension) of the file. */
     KeywordField FILE_TYPE = new KeywordField("fileType", "fileType");
 
     /** TBC */
@@ -246,7 +246,7 @@ public interface IFile {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -285,7 +285,7 @@ public interface IFile {
     /** URL giving the online location where the file can be accessed. */
     String getFilePath();
 
-    /** Type of the file */
+    /** Type (extension) of the file. */
     FileType getFileType();
 
     /** TBC */
@@ -297,7 +297,7 @@ public interface IFile {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -327,13 +327,13 @@ public interface IFile {
     /** TBC */
     String getLink();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -345,7 +345,7 @@ public interface IFile {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -360,7 +360,7 @@ public interface IFile {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

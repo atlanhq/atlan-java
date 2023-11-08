@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.Atlan;
@@ -27,7 +27,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Instance of a Qlik App in Atlan.
+ * Instance of a Qlik app in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -50,7 +50,7 @@ public class QlikApp extends Asset implements IQlikApp, IQlik, IBI, ICatalog, IA
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -60,7 +60,7 @@ public class QlikApp extends Asset implements IQlikApp, IQlik, IBI, ICatalog, IA
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
@@ -73,11 +73,11 @@ public class QlikApp extends Asset implements IQlikApp, IQlik, IBI, ICatalog, IA
     @Attribute
     String qlikAppQualifiedName;
 
-    /** Static space taken up by the app. */
+    /** Static space used by this app, in bytes. */
     @Attribute
     Long qlikAppStaticByteSize;
 
-    /** Whether section access or data masking is enabled (true) or not (false). */
+    /** Whether section access or data masking is enabled on the source (true) or not (false). */
     @Attribute
     Boolean qlikHasSectionAccess;
 
@@ -85,11 +85,11 @@ public class QlikApp extends Asset implements IQlikApp, IQlik, IBI, ICatalog, IA
     @Attribute
     String qlikId;
 
-    /** Whether the app is in direct query mode (true) or not (false). */
+    /** Whether this app is in direct query mode (true) or not (false). */
     @Attribute
     Boolean qlikIsDirectQueryMode;
 
-    /** Whether the app is encrypted (true) or not (false). */
+    /** Whether this app is encrypted (true) or not (false). */
     @Attribute
     Boolean qlikIsEncrypted;
 
@@ -97,7 +97,7 @@ public class QlikApp extends Asset implements IQlikApp, IQlik, IBI, ICatalog, IA
     @Attribute
     Boolean qlikIsPublished;
 
-    /** Origin App ID of the Qlik app. */
+    /** Value of originAppId for this app. */
     @Attribute
     String qlikOriginAppId;
 
@@ -109,12 +109,12 @@ public class QlikApp extends Asset implements IQlikApp, IQlik, IBI, ICatalog, IA
     @Attribute
     String qlikQRI;
 
-    /** Sheets that exist within the app. */
+    /** Sheets that exist within this app. */
     @Attribute
     @Singular
     SortedSet<IQlikSheet> qlikSheets;
 
-    /** Space in which the app exists. */
+    /** Space in which this app exists. */
     @Attribute
     IQlikSpace qlikSpace;
 

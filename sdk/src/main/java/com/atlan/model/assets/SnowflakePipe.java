@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.Atlan;
@@ -29,7 +29,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Instance of a Snowflake Pipe in Atlan.
+ * Instance of a Snowflake pipe in Atlan. These are used to ingest data from external sources into Snowflake.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -71,7 +71,7 @@ public class SnowflakePipe extends Asset implements ISnowflakePipe, ISQL, ICatal
     @Singular
     SortedSet<IDbtTest> dbtTests;
 
-    /** TBC */
+    /** SQL definition of this pipe. */
     @Attribute
     String definition;
 
@@ -80,7 +80,7 @@ public class SnowflakePipe extends Asset implements ISnowflakePipe, ISQL, ICatal
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -98,7 +98,7 @@ public class SnowflakePipe extends Asset implements ISnowflakePipe, ISQL, ICatal
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
@@ -120,7 +120,7 @@ public class SnowflakePipe extends Asset implements ISnowflakePipe, ISQL, ICatal
     @Singular("putQueryUserMap")
     Map<String, Long> queryUserMap;
 
-    /** TBC */
+    /** Schema in which this Snowflake pipe exists. */
     @Attribute
     @JsonProperty("atlanSchema")
     ISchema schema;
@@ -133,11 +133,11 @@ public class SnowflakePipe extends Asset implements ISnowflakePipe, ISQL, ICatal
     @Attribute
     String schemaQualifiedName;
 
-    /** TBC */
+    /** Whether auto-ingest is enabled for this pipe (true) or not (false). */
     @Attribute
     Boolean snowflakePipeIsAutoIngestEnabled;
 
-    /** TBC */
+    /** Name of the notification channel for this pipe. */
     @Attribute
     String snowflakePipeNotificationChannelName;
 

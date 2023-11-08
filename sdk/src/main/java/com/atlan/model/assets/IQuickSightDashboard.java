@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -23,7 +23,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a QuickSight Dashboard in Atlan.
+ * Instance of a QuickSight dashboard in Atlan. These are reports in QuickSight, created from analyses.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -35,15 +35,15 @@ public interface IQuickSightDashboard {
     /** TBC */
     RelationField QUICK_SIGHT_DASHBOARD_FOLDERS = new RelationField("quickSightDashboardFolders");
 
-    /** Last published time of dashboard */
+    /** Time (epoch) at which this dashboard was last published, in milliseconds. */
     NumericField QUICK_SIGHT_DASHBOARD_LAST_PUBLISHED_TIME =
             new NumericField("quickSightDashboardLastPublishedTime", "quickSightDashboardLastPublishedTime");
 
-    /** Version number of the dashboard published */
+    /** Version number of the published dashboard. */
     NumericField QUICK_SIGHT_DASHBOARD_PUBLISHED_VERSION_NUMBER =
             new NumericField("quickSightDashboardPublishedVersionNumber", "quickSightDashboardPublishedVersionNumber");
 
-    /** TBC */
+    /** Visuals that exist within this dashboard. */
     RelationField QUICK_SIGHT_DASHBOARD_VISUALS = new RelationField("quickSightDashboardVisuals");
 
     /** TBC */
@@ -250,7 +250,7 @@ public interface IQuickSightDashboard {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -292,7 +292,7 @@ public interface IQuickSightDashboard {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -316,13 +316,13 @@ public interface IQuickSightDashboard {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -334,7 +334,7 @@ public interface IQuickSightDashboard {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -352,13 +352,13 @@ public interface IQuickSightDashboard {
     /** TBC */
     SortedSet<IQuickSightFolder> getQuickSightDashboardFolders();
 
-    /** Last published time of dashboard */
+    /** Time (epoch) at which this dashboard was last published, in milliseconds. */
     Long getQuickSightDashboardLastPublishedTime();
 
-    /** Version number of the dashboard published */
+    /** Version number of the published dashboard. */
     Long getQuickSightDashboardPublishedVersionNumber();
 
-    /** TBC */
+    /** Visuals that exist within this dashboard. */
     SortedSet<IQuickSightDashboardVisual> getQuickSightDashboardVisuals();
 
     /** TBC */
@@ -370,7 +370,7 @@ public interface IQuickSightDashboard {
     /** TBC */
     String getQuickSightSheetName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

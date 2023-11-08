@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.Atlan;
@@ -35,7 +35,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Instance of a Persona access control object in Atlan.
+ * Atlan Type representing a Persona model
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -90,12 +90,12 @@ public class Persona extends Asset implements IPersona, IAccessControl, IAsset, 
     @Attribute
     Boolean isAccessControlEnabled;
 
-    /** Groups for whom this persona is accessible. */
+    /** TBC */
     @Attribute
     @Singular
     SortedSet<String> personaGroups;
 
-    /** Users for whom this persona is accessible. */
+    /** TBC */
     @Attribute
     @Singular
     SortedSet<String> personaUsers;

@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.Atlan;
@@ -48,25 +48,25 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Alias for this partition. */
     @Attribute
     String alias;
 
-    /** TBC */
+    /** Partitions that exist within this partition. */
     @Attribute
     @Singular
     SortedSet<ITablePartition> childTablePartitions;
 
-    /** TBC */
+    /** Number of columns in this partition. */
     @Attribute
     Long columnCount;
 
-    /** TBC */
+    /** Columns that exist within this table partition. */
     @Attribute
     @Singular
     SortedSet<IColumn> columns;
 
-    /** TBC */
+    /** Constraint that defines this table partition. */
     @Attribute
     String constraint;
 
@@ -93,15 +93,15 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
     @Singular
     SortedSet<IDbtTest> dbtTests;
 
-    /** TBC */
+    /** External location of this partition, for example: an S3 object location. */
     @Attribute
     String externalLocation;
 
-    /** TBC */
+    /** Format of the external location of this partition, for example: JSON, CSV, PARQUET, etc. */
     @Attribute
     String externalLocationFormat;
 
-    /** TBC */
+    /** Region of the external location of this partition, for example: S3 region. */
     @Attribute
     String externalLocationRegion;
 
@@ -110,12 +110,12 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
-    /** TBC */
+    /** Whether this partition is further partitioned (true) or not (false). */
     @Attribute
     Boolean isPartitioned;
 
@@ -123,11 +123,11 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
     @Attribute
     Boolean isProfiled;
 
-    /** TBC */
+    /** Whether preview queries for this partition are allowed (true) or not (false). */
     @Attribute
     Boolean isQueryPreview;
 
-    /** TBC */
+    /** Whether this partition is temporary (true) or not (false). */
     @Attribute
     Boolean isTemporary;
 
@@ -140,28 +140,28 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** TBC */
+    /** Table in which this partition exists. */
     @Attribute
     ITable parentTable;
 
-    /** TBC */
+    /** Partition in which this partition exists. */
     @Attribute
     ITablePartition parentTablePartition;
 
-    /** TBC */
+    /** Number of sub-partitions of this partition. */
     @Attribute
     Long partitionCount;
 
-    /** TBC */
+    /** List of sub-partitions in this partition. */
     @Attribute
     String partitionList;
 
-    /** TBC */
+    /** Partition strategy of this partition. */
     @Attribute
     String partitionStrategy;
 
@@ -173,7 +173,7 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
     @Attribute
     Long queryCountUpdatedAt;
 
-    /** TBC */
+    /** Configuration for the preview queries. */
     @Attribute
     @Singular("putQueryPreviewConfig")
     Map<String, String> queryPreviewConfig;
@@ -187,7 +187,7 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
     @Singular("putQueryUserMap")
     Map<String, Long> queryUserMap;
 
-    /** TBC */
+    /** Number of rows in this partition. */
     @Attribute
     Long rowCount;
 
@@ -199,7 +199,7 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
     @Attribute
     String schemaQualifiedName;
 
-    /** TBC */
+    /** Size of this partition, in bytes. */
     @Attribute
     Long sizeBytes;
 

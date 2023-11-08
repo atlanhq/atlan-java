@@ -1,0 +1,28 @@
+[versions]
+jackson = "2.15.2"
+slf4j = "2.0.7"
+elasticsearch = "8.8.2"
+freemarker = "2.3.32"
+classgraph = "4.8.160"
+testng = "7.8.0"
+logback = "1.4.8"
+wiremock = "2.27.2"
+jnanoid = "2.0.0"
+
+[libraries]
+jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson" }
+slf4j = { module = "org.slf4j:slf4j-api", version.ref = "slf4j" }
+elasticsearch-java = { module = "co.elastic.clients:elasticsearch-java", version.ref = "elasticsearch" }
+freemarker = { module = "org.freemarker:freemarker", version.ref = "freemarker" }
+classgraph = { module = "io.github.classgraph:classgraph", version.ref = "classgraph" }
+testng = { module = "org.testng:testng", version.ref = "testng" }
+logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
+wiremock = { module = "com.github.tomakehurst:wiremock", version.ref = "wiremock" }
+jnanoid = { module = "com.aventrix.jnanoid:jnanoid", version.ref = "jnanoid" }
+
+[bundles]
+java-test = [ "jnanoid", "testng", "logback-classic", "wiremock" ]
+
+[plugins]
+shadow = { id = "com.github.johnrengelman.shadow", version = "7.1.2" }
+git-publish = { id = "org.ajoberstar.git-publish", version = "3.0.1" }

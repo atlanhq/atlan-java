@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -33,20 +33,20 @@ public interface IMicroStrategyVisualization {
 
     public static final String TYPE_NAME = "MicroStrategyVisualization";
 
-    /** Dossier containing the visualization. */
+    /** Dossier in which this visualization exists. */
     RelationField MICRO_STRATEGY_DOSSIER = new RelationField("microStrategyDossier");
 
-    /** Simple name of the dossier containing this visualization. */
+    /** Simple name of the dossier in which this visualization exists. */
     KeywordTextField MICRO_STRATEGY_DOSSIER_NAME = new KeywordTextField(
             "microStrategyDossierName", "microStrategyDossierName.keyword", "microStrategyDossierName");
 
-    /** Unique name of the dossier containing this visualization. */
+    /** Unique name of the dossier in which this visualization exists. */
     KeywordTextField MICRO_STRATEGY_DOSSIER_QUALIFIED_NAME = new KeywordTextField(
             "microStrategyDossierQualifiedName",
             "microStrategyDossierQualifiedName",
             "microStrategyDossierQualifiedName.text");
 
-    /** Project containing the visualization. */
+    /** Project in which this visualization exists. */
     RelationField MICRO_STRATEGY_PROJECT = new RelationField("microStrategyProject");
 
     /** Type of visualization. */
@@ -257,7 +257,7 @@ public interface IMicroStrategyVisualization {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -299,7 +299,7 @@ public interface IMicroStrategyVisualization {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -323,13 +323,13 @@ public interface IMicroStrategyVisualization {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -347,13 +347,13 @@ public interface IMicroStrategyVisualization {
     /** TBC */
     SortedSet<String> getMicroStrategyCubeQualifiedNames();
 
-    /** Dossier containing the visualization. */
+    /** Dossier in which this visualization exists. */
     IMicroStrategyDossier getMicroStrategyDossier();
 
-    /** Simple name of the dossier containing this visualization. */
+    /** Simple name of the dossier in which this visualization exists. */
     String getMicroStrategyDossierName();
 
-    /** Unique name of the dossier containing this visualization. */
+    /** Unique name of the dossier in which this visualization exists. */
     String getMicroStrategyDossierQualifiedName();
 
     /** TBC */
@@ -362,7 +362,7 @@ public interface IMicroStrategyVisualization {
     /** TBC */
     List<Map<String, String>> getMicroStrategyLocation();
 
-    /** Project containing the visualization. */
+    /** Project in which this visualization exists. */
     IMicroStrategyProject getMicroStrategyProject();
 
     /** TBC */
@@ -386,7 +386,7 @@ public interface IMicroStrategyVisualization {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -401,7 +401,7 @@ public interface IMicroStrategyVisualization {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

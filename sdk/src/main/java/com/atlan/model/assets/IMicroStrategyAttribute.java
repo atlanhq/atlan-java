@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -32,20 +32,20 @@ public interface IMicroStrategyAttribute {
 
     public static final String TYPE_NAME = "MicroStrategyAttribute";
 
-    /** Attribute form name, description, display format and expression as a JSON string. */
+    /** JSON string specifying the attribute's name, description, displayFormat, etc. */
     KeywordField MICRO_STRATEGY_ATTRIBUTE_FORMS =
             new KeywordField("microStrategyAttributeForms", "microStrategyAttributeForms");
 
-    /** Cubes where the attribute is used. */
+    /** Cubes in which this attribute is used. */
     RelationField MICRO_STRATEGY_CUBES = new RelationField("microStrategyCubes");
 
-    /** Metrics where the attribute is used. */
+    /** Metrics that use this attribute. */
     RelationField MICRO_STRATEGY_METRICS = new RelationField("microStrategyMetrics");
 
-    /** Project containing the attribute. */
+    /** Project in which this attribute exists. */
     RelationField MICRO_STRATEGY_PROJECT = new RelationField("microStrategyProject");
 
-    /** Reports where the attribute is used. */
+    /** Reports in which this attribute is used. */
     RelationField MICRO_STRATEGY_REPORTS = new RelationField("microStrategyReports");
 
     /** TBC */
@@ -252,7 +252,7 @@ public interface IMicroStrategyAttribute {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -294,7 +294,7 @@ public interface IMicroStrategyAttribute {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -318,19 +318,19 @@ public interface IMicroStrategyAttribute {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
     SortedSet<IMetric> getMetrics();
 
-    /** Attribute form name, description, display format and expression as a JSON string. */
+    /** JSON string specifying the attribute's name, description, displayFormat, etc. */
     String getMicroStrategyAttributeForms();
 
     /** TBC */
@@ -345,7 +345,7 @@ public interface IMicroStrategyAttribute {
     /** TBC */
     SortedSet<String> getMicroStrategyCubeQualifiedNames();
 
-    /** Cubes where the attribute is used. */
+    /** Cubes in which this attribute is used. */
     SortedSet<IMicroStrategyCube> getMicroStrategyCubes();
 
     /** TBC */
@@ -354,10 +354,10 @@ public interface IMicroStrategyAttribute {
     /** TBC */
     List<Map<String, String>> getMicroStrategyLocation();
 
-    /** Metrics where the attribute is used. */
+    /** Metrics that use this attribute. */
     SortedSet<IMicroStrategyMetric> getMicroStrategyMetrics();
 
-    /** Project containing the attribute. */
+    /** Project in which this attribute exists. */
     IMicroStrategyProject getMicroStrategyProject();
 
     /** TBC */
@@ -372,7 +372,7 @@ public interface IMicroStrategyAttribute {
     /** TBC */
     SortedSet<String> getMicroStrategyReportQualifiedNames();
 
-    /** Reports where the attribute is used. */
+    /** Reports in which this attribute is used. */
     SortedSet<IMicroStrategyReport> getMicroStrategyReports();
 
     /** TBC */
@@ -381,7 +381,7 @@ public interface IMicroStrategyAttribute {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -396,7 +396,7 @@ public interface IMicroStrategyAttribute {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

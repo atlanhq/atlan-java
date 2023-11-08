@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -32,16 +32,16 @@ public interface ISalesforceOrganization {
 
     public static final String TYPE_NAME = "SalesforceOrganization";
 
-    /** TBC */
+    /** Dashboards that exist within this organization. */
     RelationField DASHBOARDS = new RelationField("dashboards");
 
-    /** TBC */
+    /** Objects that exist within this organization. */
     RelationField OBJECTS = new RelationField("objects");
 
-    /** TBC */
+    /** Reports that exist within this organization. */
     RelationField REPORTS = new RelationField("reports");
 
-    /** ID of the organization in Salesforce. */
+    /** Identifier of the organization in Salesforce. */
     KeywordField SOURCE_ID = new KeywordField("sourceId", "sourceId");
 
     /** TBC */
@@ -251,7 +251,7 @@ public interface ISalesforceOrganization {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -275,7 +275,7 @@ public interface ISalesforceOrganization {
     /** TBC */
     AtlanConnectorType getConnectorType();
 
-    /** TBC */
+    /** Dashboards that exist within this organization. */
     SortedSet<ISalesforceDashboard> getDashboards();
 
     /** TBC */
@@ -296,7 +296,7 @@ public interface ISalesforceOrganization {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -320,13 +320,13 @@ public interface ISalesforceOrganization {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -335,7 +335,7 @@ public interface ISalesforceOrganization {
     /** TBC */
     String getName();
 
-    /** TBC */
+    /** Objects that exist within this organization. */
     SortedSet<ISalesforceObject> getObjects();
 
     /** TBC */
@@ -344,7 +344,7 @@ public interface ISalesforceOrganization {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -359,10 +359,10 @@ public interface ISalesforceOrganization {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
-    /** TBC */
+    /** Reports that exist within this organization. */
     SortedSet<ISalesforceReport> getReports();
 
     /** TBC */
@@ -386,7 +386,7 @@ public interface ISalesforceOrganization {
     /** TBC */
     String getSourceEmbedURL();
 
-    /** ID of the organization in Salesforce. */
+    /** Identifier of the organization in Salesforce. */
     String getSourceId();
 
     /** TBC */

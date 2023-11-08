@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -25,7 +25,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a Snowflake Stream in Atlan.
+ * Instance of a Snowflake stream in Atlan. These are used to capture changes in a table.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -34,24 +34,24 @@ public interface ISnowflakeStream {
 
     public static final String TYPE_NAME = "SnowflakeStream";
 
-    /** TBC */
+    /** Schema in which this Snowflake stream exists. */
     RelationField SCHEMA = new RelationField("atlanSchema");
 
-    /** TBC */
+    /** Whether this stream is stale (true) or not (false). */
     BooleanField SNOWFLAKE_STREAM_IS_STALE = new BooleanField("snowflakeStreamIsStale", "snowflakeStreamIsStale");
 
-    /** TBC */
+    /** Mode of this stream. */
     KeywordField SNOWFLAKE_STREAM_MODE = new KeywordField("snowflakeStreamMode", "snowflakeStreamMode");
 
-    /** TBC */
+    /** Type of the source of this stream. */
     KeywordField SNOWFLAKE_STREAM_SOURCE_TYPE =
             new KeywordField("snowflakeStreamSourceType", "snowflakeStreamSourceType");
 
-    /** TBC */
+    /** Time (epoch) after which this stream will be stale, in milliseconds. */
     NumericField SNOWFLAKE_STREAM_STALE_AFTER =
             new NumericField("snowflakeStreamStaleAfter", "snowflakeStreamStaleAfter");
 
-    /** TBC */
+    /** Type of this stream, for example: standard, append-only, insert-only, etc. */
     KeywordField SNOWFLAKE_STREAM_TYPE = new KeywordField("snowflakeStreamType", "snowflakeStreamType");
 
     /** TBC */
@@ -258,7 +258,7 @@ public interface ISnowflakeStream {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -315,7 +315,7 @@ public interface ISnowflakeStream {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -345,13 +345,13 @@ public interface ISnowflakeStream {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -363,7 +363,7 @@ public interface ISnowflakeStream {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -390,13 +390,13 @@ public interface ISnowflakeStream {
     /** TBC */
     Map<String, Long> getQueryUserMap();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */
     String getSampleDataUrl();
 
-    /** TBC */
+    /** Schema in which this Snowflake stream exists. */
     ISchema getSchema();
 
     /** TBC */
@@ -408,19 +408,19 @@ public interface ISnowflakeStream {
     /** TBC */
     SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
 
-    /** TBC */
+    /** Whether this stream is stale (true) or not (false). */
     Boolean getSnowflakeStreamIsStale();
 
-    /** TBC */
+    /** Mode of this stream. */
     String getSnowflakeStreamMode();
 
-    /** TBC */
+    /** Type of the source of this stream. */
     String getSnowflakeStreamSourceType();
 
-    /** TBC */
+    /** Time (epoch) after which this stream will be stale, in milliseconds. */
     Long getSnowflakeStreamStaleAfter();
 
-    /** TBC */
+    /** Type of this stream, for example: standard, append-only, insert-only, etc. */
     String getSnowflakeStreamType();
 
     /** TBC */

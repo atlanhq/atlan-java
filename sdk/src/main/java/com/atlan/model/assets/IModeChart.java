@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -32,10 +32,10 @@ public interface IModeChart {
 
     public static final String TYPE_NAME = "ModeChart";
 
-    /** TBC */
+    /** Type of chart. */
     KeywordField MODE_CHART_TYPE = new KeywordField("modeChartType", "modeChartType");
 
-    /** TBC */
+    /** Query in which this chart exists. */
     RelationField MODE_QUERY = new RelationField("modeQuery");
 
     /** TBC */
@@ -242,7 +242,7 @@ public interface IModeChart {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -284,7 +284,7 @@ public interface IModeChart {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -308,25 +308,25 @@ public interface IModeChart {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
     SortedSet<IMetric> getMetrics();
 
-    /** TBC */
+    /** Type of chart. */
     String getModeChartType();
 
     /** TBC */
     String getModeId();
 
-    /** TBC */
+    /** Query in which this chart exists. */
     IModeQuery getModeQuery();
 
     /** TBC */
@@ -359,7 +359,7 @@ public interface IModeChart {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -374,7 +374,7 @@ public interface IModeChart {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

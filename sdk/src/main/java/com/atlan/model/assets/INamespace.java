@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -31,10 +31,10 @@ public interface INamespace {
 
     public static final String TYPE_NAME = "Namespace";
 
-    /** TBC */
+    /** Folders that exist within this namespace. */
     RelationField CHILDREN_FOLDERS = new RelationField("childrenFolders");
 
-    /** TBC */
+    /** Queries that exist within this namespace. */
     RelationField CHILDREN_QUERIES = new RelationField("childrenQueries");
 
     /** TBC */
@@ -241,7 +241,7 @@ public interface INamespace {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -256,10 +256,10 @@ public interface INamespace {
     /** TBC */
     String getCertificateUpdatedBy();
 
-    /** TBC */
+    /** Folders that exist within this namespace. */
     SortedSet<IFolder> getChildrenFolders();
 
-    /** TBC */
+    /** Queries that exist within this namespace. */
     SortedSet<IAtlanQuery> getChildrenQueries();
 
     /** TBC */
@@ -307,13 +307,13 @@ public interface INamespace {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -334,7 +334,7 @@ public interface INamespace {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

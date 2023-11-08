@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -33,28 +33,28 @@ public interface IPowerBIDataset {
 
     public static final String TYPE_NAME = "PowerBIDataset";
 
-    /** TBC */
+    /** Dataflows that use this dataset. */
     RelationField DATAFLOWS = new RelationField("dataflows");
 
-    /** TBC */
+    /** Datasources that use this dataset. */
     RelationField DATASOURCES = new RelationField("datasources");
 
-    /** TBC */
+    /** Reports that were built using this dataset. */
     RelationField REPORTS = new RelationField("reports");
 
-    /** TBC */
+    /** Tables that exist within this dataset. */
     RelationField TABLES = new RelationField("tables");
 
-    /** TBC */
+    /** Tiles that exist within this dataset. */
     RelationField TILES = new RelationField("tiles");
 
-    /** TBC */
+    /** Deprecated. See 'sourceUrl' instead. */
     KeywordField WEB_URL = new KeywordField("webUrl", "webUrl");
 
-    /** TBC */
+    /** Workspace in which this dataset exists. */
     RelationField WORKSPACE = new RelationField("workspace");
 
-    /** TBC */
+    /** Unique name of the workspace in which this dataset exists. */
     KeywordField WORKSPACE_QUALIFIED_NAME = new KeywordField("workspaceQualifiedName", "workspaceQualifiedName");
 
     /** TBC */
@@ -261,7 +261,7 @@ public interface IPowerBIDataset {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -285,10 +285,10 @@ public interface IPowerBIDataset {
     /** TBC */
     AtlanConnectorType getConnectorType();
 
-    /** TBC */
+    /** Dataflows that use this dataset. */
     SortedSet<IPowerBIDataflow> getDataflows();
 
-    /** TBC */
+    /** Datasources that use this dataset. */
     SortedSet<IPowerBIDatasource> getDatasources();
 
     /** TBC */
@@ -309,7 +309,7 @@ public interface IPowerBIDataset {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -333,13 +333,13 @@ public interface IPowerBIDataset {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -351,7 +351,7 @@ public interface IPowerBIDataset {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -378,10 +378,10 @@ public interface IPowerBIDataset {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
-    /** TBC */
+    /** Reports that were built using this dataset. */
     SortedSet<IPowerBIReport> getReports();
 
     /** TBC */
@@ -471,13 +471,13 @@ public interface IPowerBIDataset {
     /** TBC */
     String getSubType();
 
-    /** TBC */
+    /** Tables that exist within this dataset. */
     SortedSet<IPowerBITable> getTables();
 
     /** TBC */
     String getTenantId();
 
-    /** TBC */
+    /** Tiles that exist within this dataset. */
     SortedSet<IPowerBITile> getTiles();
 
     /** TBC */
@@ -492,13 +492,13 @@ public interface IPowerBIDataset {
     /** TBC */
     SortedSet<String> getViewerUsers();
 
-    /** TBC */
+    /** Deprecated. See 'sourceUrl' instead. */
     String getWebUrl();
 
-    /** TBC */
+    /** Workspace in which this dataset exists. */
     IPowerBIWorkspace getWorkspace();
 
-    /** TBC */
+    /** Unique name of the workspace in which this dataset exists. */
     String getWorkspaceQualifiedName();
 
     /** Name of the type that defines the asset. */

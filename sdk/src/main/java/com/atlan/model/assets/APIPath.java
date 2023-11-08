@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.Atlan;
@@ -57,33 +57,33 @@ public class APIPath extends Asset implements IAPIPath, IAPI, ICatalog, IAsset, 
     @Attribute
     Boolean apiIsAuthOptional;
 
-    /** TBC */
+    /** List of the operations available on the endpoint. */
     @Attribute
     @Singular
     SortedSet<String> apiPathAvailableOperations;
 
-    /** TBC */
+    /** Response codes available on the path across all operations. */
     @Attribute
     @Singular
     Map<String, String> apiPathAvailableResponseCodes;
 
-    /** TBC */
+    /** Whether the path is exposed as an ingress (true) or not (false). */
     @Attribute
     Boolean apiPathIsIngressExposed;
 
-    /** TBC */
+    /** Whether the endpoint's path contains replaceable parameters (true) or not (false). */
     @Attribute
     Boolean apiPathIsTemplated;
 
-    /** TBC */
+    /** Absolute path to an individual endpoint. */
     @Attribute
     String apiPathRawURI;
 
-    /** TBC */
+    /** Descriptive summary intended to apply to all operations in this path. */
     @Attribute
     String apiPathSummary;
 
-    /** TBC */
+    /** API specification in which this path exists. */
     @Attribute
     IAPISpec apiSpec;
 
@@ -108,7 +108,7 @@ public class APIPath extends Asset implements IAPIPath, IAPI, ICatalog, IAsset, 
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -118,7 +118,7 @@ public class APIPath extends Asset implements IAPIPath, IAPI, ICatalog, IAsset, 
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;

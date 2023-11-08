@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -31,11 +31,11 @@ public interface IMetabase {
 
     public static final String TYPE_NAME = "Metabase";
 
-    /** TBC */
+    /** Simple name of the Metabase collection in which this asset exists. */
     KeywordTextField METABASE_COLLECTION_NAME =
             new KeywordTextField("metabaseCollectionName", "metabaseCollectionName.keyword", "metabaseCollectionName");
 
-    /** TBC */
+    /** Unique name of the Metabase collection in which this asset exists. */
     KeywordTextField METABASE_COLLECTION_QUALIFIED_NAME = new KeywordTextField(
             "metabaseCollectionQualifiedName",
             "metabaseCollectionQualifiedName",
@@ -245,7 +245,7 @@ public interface IMetabase {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -287,7 +287,7 @@ public interface IMetabase {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -311,19 +311,19 @@ public interface IMetabase {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
-    /** TBC */
+    /** Simple name of the Metabase collection in which this asset exists. */
     String getMetabaseCollectionName();
 
-    /** TBC */
+    /** Unique name of the Metabase collection in which this asset exists. */
     String getMetabaseCollectionQualifiedName();
 
     /** TBC */
@@ -335,7 +335,7 @@ public interface IMetabase {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -350,7 +350,7 @@ public interface IMetabase {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

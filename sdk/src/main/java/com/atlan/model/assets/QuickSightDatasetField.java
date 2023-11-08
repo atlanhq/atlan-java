@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.Atlan;
@@ -28,7 +28,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Instance of a QuickSight Dataset field in Atlan.
+ * Instance of a QuickSight dataset field in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -52,7 +52,7 @@ public class QuickSightDatasetField extends Asset
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -62,20 +62,20 @@ public class QuickSightDatasetField extends Asset
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** TBC */
+    /** Dataset in which this field exists. */
     @Attribute
     IQuickSightDataset quickSightDataset;
 
-    /** Datatype of column in the dataset */
+    /** Datatype of this field, for example: STRING, INTEGER, etc. */
     @Attribute
     QuickSightDatasetFieldType quickSightDatasetFieldType;
 
-    /** Qualified name of the parent dataset */
+    /** Unique name of the dataset in which this field exists. */
     @Attribute
     String quickSightDatasetQualifiedName;
 

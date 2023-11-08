@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -32,16 +32,16 @@ public interface IMicroStrategyReport {
 
     public static final String TYPE_NAME = "MicroStrategyReport";
 
-    /** Attributes related to this report. */
+    /** Attributes used by this report. */
     RelationField MICRO_STRATEGY_ATTRIBUTES = new RelationField("microStrategyAttributes");
 
-    /** Metrics used within the report. */
+    /** Metrics used by this report. */
     RelationField MICRO_STRATEGY_METRICS = new RelationField("microStrategyMetrics");
 
-    /** Project containing the report. */
+    /** Project in which this report exists. */
     RelationField MICRO_STRATEGY_PROJECT = new RelationField("microStrategyProject");
 
-    /** Whether the report is a Grid or Chart. */
+    /** Type of report, for example: Grid or Chart. */
     KeywordField MICRO_STRATEGY_REPORT_TYPE = new KeywordField("microStrategyReportType", "microStrategyReportType");
 
     /** TBC */
@@ -248,7 +248,7 @@ public interface IMicroStrategyReport {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -290,7 +290,7 @@ public interface IMicroStrategyReport {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -314,19 +314,19 @@ public interface IMicroStrategyReport {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
     SortedSet<IMetric> getMetrics();
 
-    /** Attributes related to this report. */
+    /** Attributes used by this report. */
     SortedSet<IMicroStrategyAttribute> getMicroStrategyAttributes();
 
     /** TBC */
@@ -347,10 +347,10 @@ public interface IMicroStrategyReport {
     /** TBC */
     List<Map<String, String>> getMicroStrategyLocation();
 
-    /** Metrics used within the report. */
+    /** Metrics used by this report. */
     SortedSet<IMicroStrategyMetric> getMicroStrategyMetrics();
 
-    /** Project containing the report. */
+    /** Project in which this report exists. */
     IMicroStrategyProject getMicroStrategyProject();
 
     /** TBC */
@@ -365,7 +365,7 @@ public interface IMicroStrategyReport {
     /** TBC */
     SortedSet<String> getMicroStrategyReportQualifiedNames();
 
-    /** Whether the report is a Grid or Chart. */
+    /** Type of report, for example: Grid or Chart. */
     String getMicroStrategyReportType();
 
     /** TBC */
@@ -374,7 +374,7 @@ public interface IMicroStrategyReport {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -389,7 +389,7 @@ public interface IMicroStrategyReport {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

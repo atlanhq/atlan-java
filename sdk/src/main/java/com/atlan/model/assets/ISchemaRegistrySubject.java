@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -27,7 +27,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Schema Registry Subject Assets
+ * Instance of a schema registry subject in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -39,7 +39,7 @@ public interface ISchemaRegistrySubject {
     /** TBC */
     RelationField ASSETS = new RelationField("assets");
 
-    /** Base name of the subject (i.e. without -key, -value prefixes) */
+    /** Base name of the subject, without -key, -value prefixes. */
     KeywordField SCHEMA_REGISTRY_SUBJECT_BASE_NAME =
             new KeywordField("schemaRegistrySubjectBaseName", "schemaRegistrySubjectBaseName");
 
@@ -47,7 +47,7 @@ public interface ISchemaRegistrySubject {
     KeywordField SCHEMA_REGISTRY_SUBJECT_GOVERNING_ASSET_QUALIFIED_NAMES = new KeywordField(
             "schemaRegistrySubjectGoverningAssetQualifiedNames", "schemaRegistrySubjectGoverningAssetQualifiedNames");
 
-    /** If the subject is a schema for the keys of the messages. */
+    /** Whether the subject is a schema for the keys of the messages (true) or not (false). */
     BooleanField SCHEMA_REGISTRY_SUBJECT_IS_KEY_SCHEMA =
             new BooleanField("schemaRegistrySubjectIsKeySchema", "schemaRegistrySubjectIsKeySchema");
 
@@ -270,7 +270,7 @@ public interface ISchemaRegistrySubject {
     /** TBC */
     SortedSet<IAsset> getAssets();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -312,7 +312,7 @@ public interface ISchemaRegistrySubject {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -336,13 +336,13 @@ public interface ISchemaRegistrySubject {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -354,7 +354,7 @@ public interface ISchemaRegistrySubject {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -369,7 +369,7 @@ public interface ISchemaRegistrySubject {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */
@@ -381,13 +381,13 @@ public interface ISchemaRegistrySubject {
     /** TBC */
     SchemaRegistrySchemaType getSchemaRegistrySchemaType();
 
-    /** Base name of the subject (i.e. without -key, -value prefixes) */
+    /** Base name of the subject, without -key, -value prefixes. */
     String getSchemaRegistrySubjectBaseName();
 
     /** List of asset qualified names that this subject is governing/validating. */
     SortedSet<String> getSchemaRegistrySubjectGoverningAssetQualifiedNames();
 
-    /** If the subject is a schema for the keys of the messages. */
+    /** Whether the subject is a schema for the keys of the messages (true) or not (false). */
     Boolean getSchemaRegistrySubjectIsKeySchema();
 
     /** Definition of the latest schema in the subject. */

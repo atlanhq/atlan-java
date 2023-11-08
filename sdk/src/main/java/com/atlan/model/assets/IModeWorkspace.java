@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -32,10 +32,10 @@ public interface IModeWorkspace {
 
     public static final String TYPE_NAME = "ModeWorkspace";
 
-    /** TBC */
+    /** Number of collections in this workspace. */
     NumericField MODE_COLLECTION_COUNT = new NumericField("modeCollectionCount", "modeCollectionCount");
 
-    /** TBC */
+    /** Collections that exist within this workspace. */
     RelationField MODE_COLLECTIONS = new RelationField("modeCollections");
 
     /** TBC */
@@ -242,7 +242,7 @@ public interface IModeWorkspace {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -284,7 +284,7 @@ public interface IModeWorkspace {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -308,22 +308,22 @@ public interface IModeWorkspace {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
     SortedSet<IMetric> getMetrics();
 
-    /** TBC */
+    /** Number of collections in this workspace. */
     Long getModeCollectionCount();
 
-    /** TBC */
+    /** Collections that exist within this workspace. */
     SortedSet<IModeCollection> getModeCollections();
 
     /** TBC */
@@ -359,7 +359,7 @@ public interface IModeWorkspace {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -374,7 +374,7 @@ public interface IModeWorkspace {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

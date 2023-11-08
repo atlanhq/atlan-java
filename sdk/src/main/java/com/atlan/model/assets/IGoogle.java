@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -38,10 +38,10 @@ public interface IGoogle {
     /** List of labels that have been applied to the asset in Google. */
     KeywordField GOOGLE_LABELS = new KeywordField("googleLabels", "googleLabels");
 
-    /** TBC */
+    /** Location of this asset in Google. */
     KeywordField GOOGLE_LOCATION = new KeywordField("googleLocation", "googleLocation");
 
-    /** TBC */
+    /** Type of location of this asset in Google. */
     KeywordField GOOGLE_LOCATION_TYPE = new KeywordField("googleLocationType", "googleLocationType");
 
     /** ID of the project in which the asset exists. */
@@ -52,7 +52,7 @@ public interface IGoogle {
     KeywordTextField GOOGLE_PROJECT_NAME =
             new KeywordTextField("googleProjectName", "googleProjectName", "googleProjectName.text");
 
-    /** TBC */
+    /** Number of the project in which the asset exists. */
     NumericField GOOGLE_PROJECT_NUMBER = new NumericField("googleProjectNumber", "googleProjectNumber");
 
     /** Service in Google in which the asset exists. */
@@ -265,7 +265,7 @@ public interface IGoogle {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -304,10 +304,10 @@ public interface IGoogle {
     /** List of labels that have been applied to the asset in Google. */
     List<GoogleLabel> getGoogleLabels();
 
-    /** TBC */
+    /** Location of this asset in Google. */
     String getGoogleLocation();
 
-    /** TBC */
+    /** Type of location of this asset in Google. */
     String getGoogleLocationType();
 
     /** ID of the project in which the asset exists. */
@@ -316,7 +316,7 @@ public interface IGoogle {
     /** Name of the project in which the asset exists. */
     String getGoogleProjectName();
 
-    /** TBC */
+    /** Number of the project in which the asset exists. */
     Long getGoogleProjectNumber();
 
     /** Service in Google in which the asset exists. */
@@ -349,13 +349,13 @@ public interface IGoogle {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -376,7 +376,7 @@ public interface IGoogle {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.Atlan;
@@ -35,7 +35,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Instance of an access control policy in Atlan.
+ * Model to store an accesscontrol policy in Atlas
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -53,20 +53,20 @@ public class AuthPolicy extends Asset implements IAuthPolicy, IAsset, IReference
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Access control object to which this policy belongs. */
+    /** TBC */
     @Attribute
     IAccessControl accessControl;
 
-    /** Whether the policy is activated (true) or deactivated (false). */
+    /** TBC */
     @Attribute
     Boolean isPolicyEnabled;
 
-    /** Actions included in the policy. */
+    /** TBC */
     @Attribute
     @Singular
     SortedSet<AtlanPolicyAction> policyActions;
 
-    /** Category of access control object for the policy (for example, persona vs purpose). */
+    /** TBC */
     @Attribute
     AuthPolicyCategory policyCategory;
 
@@ -79,7 +79,7 @@ public class AuthPolicy extends Asset implements IAuthPolicy, IAsset, IReference
     @Attribute
     Boolean policyDelegateAdmin;
 
-    /** Groups to whom the policy applies. */
+    /** TBC */
     @Attribute
     @Singular
     SortedSet<String> policyGroups;
@@ -100,29 +100,29 @@ public class AuthPolicy extends Asset implements IAuthPolicy, IAsset, IReference
     @Attribute
     String policyResourceSignature;
 
-    /** Resources against which to apply the policy. */
+    /** TBC */
     @Attribute
     @Singular
     SortedSet<String> policyResources;
 
-    /** Roles to whom the policy applies. */
+    /** TBC */
     @Attribute
     @Singular
     SortedSet<String> policyRoles;
 
-    /** Service that handles the policy (for example, atlas vs heka). */
+    /** TBC */
     @Attribute
     String policyServiceName;
 
-    /** Underlying kind of policy (for example, metadata vs data vs glossary). */
+    /** TBC */
     @Attribute
     String policySubCategory;
 
-    /** Kind of policy (for example, allow vs deny). */
+    /** TBC */
     @Attribute
     AuthPolicyType policyType;
 
-    /** Users to whom the policy applies. */
+    /** TBC */
     @Attribute
     @Singular
     SortedSet<String> policyUsers;

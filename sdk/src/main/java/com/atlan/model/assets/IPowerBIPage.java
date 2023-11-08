@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -24,7 +24,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a Power BI page in Atlan.
+ * Instance of a Power BI page in Atlan. Pages organize and subdivide a report in Power BI.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -33,13 +33,13 @@ public interface IPowerBIPage {
 
     public static final String TYPE_NAME = "PowerBIPage";
 
-    /** TBC */
+    /** Report in which this page exists. */
     RelationField REPORT = new RelationField("report");
 
-    /** TBC */
+    /** Unique name of the report in which this page exists. */
     KeywordField REPORT_QUALIFIED_NAME = new KeywordField("reportQualifiedName", "reportQualifiedName");
 
-    /** TBC */
+    /** Unique name of the workspace in which this page exists. */
     KeywordField WORKSPACE_QUALIFIED_NAME = new KeywordField("workspaceQualifiedName", "workspaceQualifiedName");
 
     /** TBC */
@@ -246,7 +246,7 @@ public interface IPowerBIPage {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -288,7 +288,7 @@ public interface IPowerBIPage {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -312,13 +312,13 @@ public interface IPowerBIPage {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -330,7 +330,7 @@ public interface IPowerBIPage {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -357,13 +357,13 @@ public interface IPowerBIPage {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
-    /** TBC */
+    /** Report in which this page exists. */
     IPowerBIReport getReport();
 
-    /** TBC */
+    /** Unique name of the report in which this page exists. */
     String getReportQualifiedName();
 
     /** TBC */
@@ -468,7 +468,7 @@ public interface IPowerBIPage {
     /** TBC */
     SortedSet<String> getViewerUsers();
 
-    /** TBC */
+    /** Unique name of the workspace in which this page exists. */
     String getWorkspaceQualifiedName();
 
     /** Name of the type that defines the asset. */

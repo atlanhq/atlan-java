@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -32,16 +32,16 @@ public interface IResource {
 
     public static final String TYPE_NAME = "Resource";
 
-    /** TBC */
+    /** Whether the resource is global (true) or not (false). */
     BooleanField IS_GLOBAL = new BooleanField("isGlobal", "isGlobal");
 
-    /** TBC */
+    /** URL to the resource. */
     KeywordField LINK = new KeywordField("link", "link");
 
-    /** TBC */
+    /** Reference to the resource. */
     KeywordField REFERENCE = new KeywordField("reference", "reference");
 
-    /** TBC */
+    /** Metadata of the resource. */
     KeywordField RESOURCE_METADATA = new KeywordField("resourceMetadata", "resourceMetadata");
 
     /** TBC */
@@ -248,7 +248,7 @@ public interface IResource {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -290,7 +290,7 @@ public interface IResource {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -302,7 +302,7 @@ public interface IResource {
     /** TBC */
     Boolean getIsEditable();
 
-    /** TBC */
+    /** Whether the resource is global (true) or not (false). */
     Boolean getIsGlobal();
 
     /** TBC */
@@ -317,16 +317,16 @@ public interface IResource {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** URL to the resource. */
     String getLink();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -338,7 +338,7 @@ public interface IResource {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -353,13 +353,13 @@ public interface IResource {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
-    /** TBC */
+    /** Reference to the resource. */
     String getReference();
 
-    /** TBC */
+    /** Metadata of the resource. */
     Map<String, String> getResourceMetadata();
 
     /** TBC */

@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -27,7 +27,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * MongoDB Collection Assets
+ * Instance of a MongoDB collection in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -36,31 +36,31 @@ public interface IMongoDBCollection {
 
     public static final String TYPE_NAME = "MongoDBCollection";
 
-    /** The average size of an object in the collection */
+    /** Average size of an object in the collection. */
     NumericField MONGO_DB_COLLECTION_AVERAGE_OBJECT_SIZE =
             new NumericField("mongoDBCollectionAverageObjectSize", "mongoDBCollectionAverageObjectSize");
 
-    /** Specifies the seconds after which documents in a time series collection or clustered collection expire */
+    /** Seconds after which documents in a time series collection or clustered collection expire. */
     NumericField MONGO_DB_COLLECTION_EXPIRE_AFTER_SECONDS =
             new NumericField("mongoDBCollectionExpireAfterSeconds", "mongoDBCollectionExpireAfterSeconds");
 
-    /** If the collection is a capped collection */
+    /** Whether the collection is capped (true) or not (false). */
     BooleanField MONGO_DB_COLLECTION_IS_CAPPED =
             new BooleanField("mongoDBCollectionIsCapped", "mongoDBCollectionIsCapped");
 
-    /** The maximum size allowed in the capped collection */
+    /** Maximum size allowed in a capped collection. */
     NumericField MONGO_DB_COLLECTION_MAX_SIZE =
             new NumericField("mongoDBCollectionMaxSize", "mongoDBCollectionMaxSize");
 
-    /** The maximum number of documents allowed in the capped collection */
+    /** Maximum number of documents allowed in a capped collection. */
     NumericField MONGO_DB_COLLECTION_MAXIMUM_DOCUMENT_COUNT =
             new NumericField("mongoDBCollectionMaximumDocumentCount", "mongoDBCollectionMaximumDocumentCount");
 
-    /** The number of indexes on the collection */
+    /** Number of indexes on the collection. */
     NumericField MONGO_DB_COLLECTION_NUM_INDEXES =
             new NumericField("mongoDBCollectionNumIndexes", "mongoDBCollectionNumIndexes");
 
-    /** The number of orphaned documents in the collection */
+    /** Number of orphaned documents in the collection. */
     NumericField MONGO_DB_COLLECTION_NUM_ORPHAN_DOCS =
             new NumericField("mongoDBCollectionNumOrphanDocs", "mongoDBCollectionNumOrphanDocs");
 
@@ -68,23 +68,23 @@ public interface IMongoDBCollection {
     TextField MONGO_DB_COLLECTION_SCHEMA_DEFINITION =
             new TextField("mongoDBCollectionSchemaDefinition", "mongoDBCollectionSchemaDefinition");
 
-    /** Subtype of a MongoDB collection (e.g. Capped, Time Series etc.) */
+    /** Subtype of a MongoDB collection, for example: Capped, Time Series, etc. */
     KeywordTextField MONGO_DB_COLLECTION_SUBTYPE = new KeywordTextField(
             "mongoDBCollectionSubtype", "mongoDBCollectionSubtype", "mongoDBCollectionSubtype.text");
 
-    /** The name of the field which contains the date in each time series document */
+    /** Name of the field containing the date in each time series document. */
     KeywordField MONGO_DB_COLLECTION_TIME_FIELD =
             new KeywordField("mongoDBCollectionTimeField", "mongoDBCollectionTimeField");
 
-    /** Set the granularity to the value that is the closest match to the time span between consecutive incoming measurements */
+    /** Closest match to the time span between consecutive incoming measurements. */
     KeywordField MONGO_DB_COLLECTION_TIME_GRANULARITY =
             new KeywordField("mongoDBCollectionTimeGranularity", "mongoDBCollectionTimeGranularity");
 
-    /** The total size of all indexes */
+    /** Total size of all indexes. */
     NumericField MONGO_DB_COLLECTION_TOTAL_INDEX_SIZE =
             new NumericField("mongoDBCollectionTotalIndexSize", "mongoDBCollectionTotalIndexSize");
 
-    /** TBC */
+    /** Database in which the collection exists. */
     RelationField MONGO_DB_DATABASE = new RelationField("mongoDBDatabase");
 
     /** TBC */
@@ -294,7 +294,7 @@ public interface IMongoDBCollection {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -312,7 +312,7 @@ public interface IMongoDBCollection {
     /** TBC */
     Long getColumnCount();
 
-    /** TBC */
+    /** Columns that exist within this table. */
     SortedSet<IColumn> getColumns();
 
     /** TBC */
@@ -372,7 +372,7 @@ public interface IMongoDBCollection {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -411,55 +411,55 @@ public interface IMongoDBCollection {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
     SortedSet<IMetric> getMetrics();
 
-    /** The average size of an object in the collection */
+    /** Average size of an object in the collection. */
     Long getMongoDBCollectionAverageObjectSize();
 
-    /** Specifies the seconds after which documents in a time series collection or clustered collection expire */
+    /** Seconds after which documents in a time series collection or clustered collection expire. */
     Long getMongoDBCollectionExpireAfterSeconds();
 
-    /** If the collection is a capped collection */
+    /** Whether the collection is capped (true) or not (false). */
     Boolean getMongoDBCollectionIsCapped();
 
-    /** The maximum size allowed in the capped collection */
+    /** Maximum size allowed in a capped collection. */
     Long getMongoDBCollectionMaxSize();
 
-    /** The maximum number of documents allowed in the capped collection */
+    /** Maximum number of documents allowed in a capped collection. */
     Long getMongoDBCollectionMaximumDocumentCount();
 
-    /** The number of indexes on the collection */
+    /** Number of indexes on the collection. */
     Long getMongoDBCollectionNumIndexes();
 
-    /** The number of orphaned documents in the collection */
+    /** Number of orphaned documents in the collection. */
     Long getMongoDBCollectionNumOrphanDocs();
 
     /** Definition of the schema applicable for the collection. */
     String getMongoDBCollectionSchemaDefinition();
 
-    /** Subtype of a MongoDB collection (e.g. Capped, Time Series etc.) */
+    /** Subtype of a MongoDB collection, for example: Capped, Time Series, etc. */
     String getMongoDBCollectionSubtype();
 
-    /** The name of the field which contains the date in each time series document */
+    /** Name of the field containing the date in each time series document. */
     String getMongoDBCollectionTimeField();
 
-    /** Set the granularity to the value that is the closest match to the time span between consecutive incoming measurements */
+    /** Closest match to the time span between consecutive incoming measurements. */
     String getMongoDBCollectionTimeGranularity();
 
-    /** The total size of all indexes */
+    /** Total size of all indexes. */
     Long getMongoDBCollectionTotalIndexSize();
 
-    /** TBC */
+    /** Database in which the collection exists. */
     IMongoDBDatabase getMongoDBDatabase();
 
     /** TBC */
@@ -468,7 +468,7 @@ public interface IMongoDBCollection {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -486,7 +486,7 @@ public interface IMongoDBCollection {
     /** TBC */
     String getPartitionStrategy();
 
-    /** TBC */
+    /** Partitions that exist within this table. */
     SortedSet<ITablePartition> getPartitions();
 
     /** TBC */
@@ -495,7 +495,7 @@ public interface IMongoDBCollection {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** Queries that access this table. */
     SortedSet<IAtlanQuery> getQueries();
 
     /** TBC */
@@ -513,7 +513,7 @@ public interface IMongoDBCollection {
     /** TBC */
     Map<String, Long> getQueryUserMap();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */
@@ -522,7 +522,7 @@ public interface IMongoDBCollection {
     /** TBC */
     String getSampleDataUrl();
 
-    /** TBC */
+    /** Schema in which this table exists. */
     ISchema getSchema();
 
     /** TBC */

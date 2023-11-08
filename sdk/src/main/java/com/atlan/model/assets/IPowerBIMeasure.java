@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -26,7 +26,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a Power BI measure in Atlan.
+ * Instance of a Power BI measure in Atlan. Measures define calculations in a DAX model, which helps calculate values based on each row.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -35,20 +35,20 @@ public interface IPowerBIMeasure {
 
     public static final String TYPE_NAME = "PowerBIMeasure";
 
-    /** TBC */
+    /** Unique name of the dataset in which this measure exists. */
     KeywordField DATASET_QUALIFIED_NAME = new KeywordField("datasetQualifiedName", "datasetQualifiedName");
 
-    /** TBC */
+    /** Whether this measure is external (true) or internal (false). */
     BooleanField POWER_BI_IS_EXTERNAL_MEASURE =
             new BooleanField("powerBIIsExternalMeasure", "powerBIIsExternalMeasure");
 
-    /** TBC */
+    /** DAX expression for this measure. */
     TextField POWER_BI_MEASURE_EXPRESSION = new TextField("powerBIMeasureExpression", "powerBIMeasureExpression");
 
-    /** TBC */
+    /** Table in which this measure exists. */
     RelationField TABLE = new RelationField("table");
 
-    /** TBC */
+    /** Unique name of the workspace in which this measure exists. */
     KeywordField WORKSPACE_QUALIFIED_NAME = new KeywordField("workspaceQualifiedName", "workspaceQualifiedName");
 
     /** TBC */
@@ -255,7 +255,7 @@ public interface IPowerBIMeasure {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -279,7 +279,7 @@ public interface IPowerBIMeasure {
     /** TBC */
     AtlanConnectorType getConnectorType();
 
-    /** TBC */
+    /** Unique name of the dataset in which this measure exists. */
     String getDatasetQualifiedName();
 
     /** TBC */
@@ -300,7 +300,7 @@ public interface IPowerBIMeasure {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -324,13 +324,13 @@ public interface IPowerBIMeasure {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -342,7 +342,7 @@ public interface IPowerBIMeasure {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -360,13 +360,13 @@ public interface IPowerBIMeasure {
     /** TBC */
     String getPowerBIFormatString();
 
-    /** TBC */
+    /** Whether this measure is external (true) or internal (false). */
     Boolean getPowerBIIsExternalMeasure();
 
     /** TBC */
     Boolean getPowerBIIsHidden();
 
-    /** TBC */
+    /** DAX expression for this measure. */
     String getPowerBIMeasureExpression();
 
     /** TBC */
@@ -375,7 +375,7 @@ public interface IPowerBIMeasure {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */
@@ -465,7 +465,7 @@ public interface IPowerBIMeasure {
     /** TBC */
     String getSubType();
 
-    /** TBC */
+    /** Table in which this measure exists. */
     IPowerBITable getTable();
 
     /** TBC */
@@ -483,7 +483,7 @@ public interface IPowerBIMeasure {
     /** TBC */
     SortedSet<String> getViewerUsers();
 
-    /** TBC */
+    /** Unique name of the workspace in which this measure exists. */
     String getWorkspaceQualifiedName();
 
     /** Name of the type that defines the asset. */

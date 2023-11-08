@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -22,7 +22,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Azure Event Hub Consumer Group assets, equivalent to Kafka Consumer Groups
+ * Instance of an Azure Event Hub Consumer Group asset, equivalent to Kafka ConsumerGroup.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -235,7 +235,7 @@ public interface IAzureEventHubConsumerGroup {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -277,7 +277,7 @@ public interface IAzureEventHubConsumerGroup {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -301,7 +301,7 @@ public interface IAzureEventHubConsumerGroup {
     /** TBC */
     SortedSet<String> getKafkaTopicQualifiedNames();
 
-    /** TBC */
+    /** Topics consumed by this consumer group. */
     SortedSet<IKafkaTopic> getKafkaTopics();
 
     /** TBC */
@@ -316,13 +316,13 @@ public interface IAzureEventHubConsumerGroup {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -334,7 +334,7 @@ public interface IAzureEventHubConsumerGroup {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -349,7 +349,7 @@ public interface IAzureEventHubConsumerGroup {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

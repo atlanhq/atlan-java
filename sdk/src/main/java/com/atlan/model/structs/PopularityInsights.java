@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.structs;
 
 import com.atlan.model.enums.SourceCostUnitType;
@@ -10,7 +10,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
 /**
- * Detailed information about an asset's usage or popularity.
+ * Detailed information about an asset's usage or popularity based on aggregated queries.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter

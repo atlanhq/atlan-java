@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.Atlan;
@@ -67,12 +67,12 @@ public class SalesforceReport extends Asset
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
-    /** TBC */
+    /** Organization in which this report exists. */
     @Attribute
     ISalesforceOrganization organization;
 
@@ -85,7 +85,7 @@ public class SalesforceReport extends Asset
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
@@ -95,7 +95,7 @@ public class SalesforceReport extends Asset
     @Singular("putReportType")
     Map<String, String> reportType;
 
-    /** ID of the report in Salesforce. */
+    /** Identifier of the report in Salesforce. */
     @Attribute
     String sourceId;
 

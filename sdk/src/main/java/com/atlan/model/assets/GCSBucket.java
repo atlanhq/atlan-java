@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.Atlan;
@@ -53,27 +53,27 @@ public class GCSBucket extends Asset
     @Attribute
     String gcsAccessControl;
 
-    /** TBC */
+    /** Lifecycle rules for this bucket. */
     @Attribute
     String gcsBucketLifecycleRules;
 
-    /** TBC */
+    /** Effective time for retention of objects in this bucket. */
     @Attribute
     Long gcsBucketRetentionEffectiveTime;
 
-    /** TBC */
+    /** Whether retention is locked for this bucket (true) or not (false). */
     @Attribute
     Boolean gcsBucketRetentionLocked;
 
-    /** TBC */
+    /** Retention period for objects in this bucket. */
     @Attribute
     Long gcsBucketRetentionPeriod;
 
-    /** TBC */
+    /** Retention policy for this bucket. */
     @Attribute
     String gcsBucketRetentionPolicy;
 
-    /** TBC */
+    /** Whether versioning is enabled on the bucket (true) or not (false). */
     @Attribute
     Boolean gcsBucketVersioningEnabled;
 
@@ -89,7 +89,7 @@ public class GCSBucket extends Asset
     @Attribute
     Long gcsMetaGenerationId;
 
-    /** TBC */
+    /** Number of objects within the bucket. */
     @Attribute
     Long gcsObjectCount;
 
@@ -145,7 +145,7 @@ public class GCSBucket extends Asset
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -155,7 +155,7 @@ public class GCSBucket extends Asset
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;

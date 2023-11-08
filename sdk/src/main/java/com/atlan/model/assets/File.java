@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.Atlan;
@@ -29,7 +29,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Instance of a file in Atlan.
+ * Instance of a static file in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -56,7 +56,7 @@ public class File extends Asset implements IFile, IResource, ICatalog, IAsset, I
     @Attribute
     String filePath;
 
-    /** Type of the file */
+    /** Type (extension) of the file. */
     @Attribute
     FileType fileType;
 
@@ -65,7 +65,7 @@ public class File extends Asset implements IFile, IResource, ICatalog, IAsset, I
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -83,7 +83,7 @@ public class File extends Asset implements IFile, IResource, ICatalog, IAsset, I
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;

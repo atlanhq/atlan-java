@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.Atlan;
@@ -29,7 +29,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Atlan Snowflake Dynamic Table Asset
+ * Instance of a Snowflake dynamic table in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -57,7 +57,7 @@ public class SnowflakeDynamicTable extends Asset
     @Attribute
     Long columnCount;
 
-    /** TBC */
+    /** Columns that exist within this Snowflake dynamic table. */
     @Attribute
     @Singular
     SortedSet<IColumn> columns;
@@ -85,7 +85,7 @@ public class SnowflakeDynamicTable extends Asset
     @Singular
     SortedSet<IDbtTest> dbtTests;
 
-    /** SQL statements used to define a Snowflake Dynamic Table */
+    /** SQL statements used to define the dynamic table. */
     @Attribute
     String definition;
 
@@ -116,7 +116,7 @@ public class SnowflakeDynamicTable extends Asset
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -146,7 +146,7 @@ public class SnowflakeDynamicTable extends Asset
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
@@ -163,12 +163,12 @@ public class SnowflakeDynamicTable extends Asset
     @Attribute
     String partitionStrategy;
 
-    /** TBC */
+    /** Partitions that exist within this table. */
     @Attribute
     @Singular
     SortedSet<ITablePartition> partitions;
 
-    /** TBC */
+    /** Queries that access this table. */
     @Attribute
     @Singular
     SortedSet<IAtlanQuery> queries;
@@ -199,7 +199,7 @@ public class SnowflakeDynamicTable extends Asset
     @Attribute
     Long rowCount;
 
-    /** TBC */
+    /** Schema in which this Snowflake dynamic table exists. */
     @Attribute
     @JsonProperty("atlanSchema")
     ISchema schema;

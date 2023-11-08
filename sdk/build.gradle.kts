@@ -4,20 +4,20 @@ val versionId = providers.gradleProperty("VERSION_NAME").get()
 plugins {
     id("com.atlan.java")
     id("com.atlan.java-test")
-    id("biz.aQute.bnd.builder") version "6.1.0"
-    id("com.github.johnrengelman.shadow") version "7.1.2"
-    id("org.ajoberstar.git-publish") version "3.0.1"
+    //id("biz.aQute.bnd.builder") version "6.1.0"
+    alias(libs.plugins.shadow)
+    alias(libs.plugins.git.publish)
     `maven-publish`
     signing
 }
 
 dependencies {
-    api("com.fasterxml.jackson.core:jackson-databind:2.15.2")
-    api("org.slf4j:slf4j-api:2.0.7")
-    api("co.elastic.clients:elasticsearch-java:8.8.2")
-    api("org.freemarker:freemarker:2.3.32")
-    api("org.apache.commons:commons-csv:1.10.0")
-    implementation("io.github.classgraph:classgraph:4.8.160")
+    api(libs.jackson.databind)
+    api(libs.slf4j)
+    api(libs.elasticsearch.java)
+    api(libs.freemarker)
+    implementation(libs.classgraph)
+    testImplementation(libs.bundles.java.test)
 }
 
 tasks.jar {

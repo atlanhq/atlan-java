@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.enums;
 
 import javax.annotation.processing.Generated;
@@ -14,21 +14,21 @@ import lombok.Getter;
 public enum TextFields implements AtlanSearchableField {
     /** Unique name of the account for this ADLS asset. */
     ADLS_ACCOUNT_QUALIFIED_NAME("adlsAccountQualifiedName.text"),
-    /** TBC */
+    /** Resource group for this account. */
     ADLS_ACCOUNT_RESOURCE_GROUP("adlsAccountResourceGroup"),
-    /** TBC */
+    /** Subscription for this account. */
     ADLS_ACCOUNT_SUBSCRIPTION("adlsAccountSubscription"),
     /** Unique name of the container this object exists within. */
     ADLS_CONTAINER_QUALIFIED_NAME("adlsContainerQualifiedName.text"),
-    /** TBC */
+    /** URL of this container. */
     ADLS_CONTAINER_URL("adlsContainerUrl"),
-    /** TBC */
+    /** Cache control of this object. */
     ADLS_OBJECT_CACHE_CONTROL("adlsObjectCacheControl"),
-    /** TBC */
+    /** Language of this object's contents. */
     ADLS_OBJECT_CONTENT_LANGUAGE("adlsObjectContentLanguage"),
-    /** TBC */
+    /** Content type of this object. */
     ADLS_OBJECT_CONTENT_TYPE("adlsObjectContentType"),
-    /** TBC */
+    /** URL of this object. */
     ADLS_OBJECT_URL("adlsObjectUrl"),
     /** TBC */
     AIRFLOW_DAG_NAME("airflowDagName"),
@@ -36,63 +36,63 @@ public enum TextFields implements AtlanSearchableField {
     AIRFLOW_TASK_CONNECTION_ID("airflowTaskConnectionId"),
     /** TBC */
     AIRFLOW_TASK_OPERATOR_CLASS("airflowTaskOperatorClass"),
-    /** TBC */
+    /** Name of this asset in the Salesforce API. */
     API_NAME("apiName"),
-    /** TBC */
+    /** Absolute path to an individual endpoint. */
     API_PATH_RAW_URI("apiPathRawURI.text"),
-    /** TBC */
+    /** Descriptive summary intended to apply to all operations in this path. */
     API_PATH_SUMMARY("apiPathSummary"),
-    /** TBC */
+    /** Email address for a contact responsible for the API specification. */
     API_SPEC_CONTACT_EMAIL("apiSpecContactEmail.text"),
-    /** TBC */
+    /** Name of the contact responsible for the API specification. */
     API_SPEC_CONTACT_NAME("apiSpecContactName"),
-    /** TBC */
+    /** URL pointing to the contact information. */
     API_SPEC_CONTACT_URL("apiSpecContactURL.text"),
-    /** TBC */
+    /** Name of the license under which the API specification is available. */
     API_SPEC_LICENSE_NAME("apiSpecLicenseName"),
-    /** TBC */
+    /** URL to the license under which the API specification is available. */
     API_SPEC_LICENSE_URL("apiSpecLicenseURL.text"),
-    /** TBC */
+    /** Simple name of the API spec, if this asset is contained in an API spec. */
     API_SPEC_NAME("apiSpecName"),
-    /** TBC */
+    /** Unique name of the API spec, if this asset is contained in an API spec. */
     API_SPEC_QUALIFIED_NAME("apiSpecQualifiedName.text"),
-    /** TBC */
+    /** Service alias for the API specification. */
     API_SPEC_SERVICE_ALIAS("apiSpecServiceAlias.text"),
-    /** TBC */
+    /** URL to the terms of service for the API specification. */
     API_SPEC_TERMS_OF_SERVICE_URL("apiSpecTermsOfServiceURL.text"),
-    /** TBC */
+    /** Name of the account in which this asset exists in dbt. */
     ASSET_DBT_ACCOUNT_NAME("assetDbtAccountName"),
-    /** TBC */
+    /** Alias of this asset in dbt. */
     ASSET_DBT_ALIAS("assetDbtAlias"),
-    /** TBC */
+    /** Name of the environment in which this asset is materialized in dbt. */
     ASSET_DBT_ENVIRONMENT_NAME("assetDbtEnvironmentName"),
-    /** TBC */
+    /** Branch in git from which the last run of the job that materialized this asset in dbt ran. */
     ASSET_DBT_JOB_LAST_RUN_GIT_BRANCH("assetDbtJobLastRunGitBranch.text"),
-    /** TBC */
+    /** Status message of the last run of the job that materialized this asset in dbt. */
     ASSET_DBT_JOB_LAST_RUN_STATUS_MESSAGE("assetDbtJobLastRunStatusMessage"),
-    /** TBC */
+    /** Name of the job that materialized this asset in dbt. */
     ASSET_DBT_JOB_NAME("assetDbtJobName"),
-    /** TBC */
+    /** Human-readable time when the next run of the job that materializes this asset in dbt is scheduled. */
     ASSET_DBT_JOB_NEXT_RUN_HUMANIZED("assetDbtJobNextRunHumanized"),
-    /** TBC */
+    /** Human-readable cron schedule of the job that materialized this asset in dbt. */
     ASSET_DBT_JOB_SCHEDULE_CRON_HUMANIZED("assetDbtJobScheduleCronHumanized"),
-    /** TBC */
+    /** Name of the package in which this asset exists in dbt. */
     ASSET_DBT_PACKAGE_NAME("assetDbtPackageName"),
-    /** TBC */
+    /** Name of the project in which this asset exists in dbt. */
     ASSET_DBT_PROJECT_NAME("assetDbtProjectName"),
-    /** TBC */
+    /** List of tags attached to this asset in dbt. */
     ASSET_DBT_TAGS("assetDbtTags.text"),
-    /** TBC */
+    /** Unique identifier of this asset in dbt. */
     ASSET_DBT_UNIQUE_ID("assetDbtUniqueId"),
-    /** TBC */
+    /** List of Monte Carlo incident names attached to this asset. */
     ASSET_MC_INCIDENT_NAMES("assetMcIncidentNames"),
-    /** TBC */
+    /** List of unique Monte Carlo incident names attached to this asset. */
     ASSET_MC_INCIDENT_QUALIFIED_NAMES("assetMcIncidentQualifiedNames.text"),
-    /** TBC */
+    /** List of Monte Carlo monitor names attached to this asset. */
     ASSET_MC_MONITOR_NAMES("assetMcMonitorNames"),
-    /** TBC */
+    /** List of unique Monte Carlo monitor names attached to this asset. */
     ASSET_MC_MONITOR_QUALIFIED_NAMES("assetMcMonitorQualifiedNames.text"),
-    /** TBC */
+    /** List of tags attached to this asset. */
     ASSET_TAGS("assetTags.text"),
     /** All Atlan tags that exist on an asset, whether directly assigned or propagated, searchable by the internal hashed-string ID of the Atlan tag. */
     ATLAN_TAGS_TEXT("__classificationsText"),
@@ -100,21 +100,21 @@ public enum TextFields implements AtlanSearchableField {
     AWS_ARN("awsArn.text"),
     /** Root user's name. */
     AWS_OWNER_NAME("awsOwnerName.text"),
-    /** TBC */
+    /** Resource identifier of this asset in Azure. */
     AZURE_RESOURCE_ID("azureResourceId.text"),
-    /** Status of the asset's certification. */
+    /** Status of this asset's certification. */
     CERTIFICATE_STATUS("certificateStatus.text"),
-    /** TBC */
+    /** Unique name of the collection in which this query exists. */
     COLLECTION_QUALIFIED_NAME("collectionQualifiedName.text"),
-    /** TBC */
+    /** Simple name of the connection through which this asset is accessible. */
     CONNECTION_NAME("connectionName.text"),
     /** Unique name of the connection through which this asset is accessible. */
     CONNECTION_QUALIFIED_NAME("connectionQualifiedName.text"),
     /** Simple name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
     DATABASE_NAME("databaseName"),
-    /** Title for the asset. */
+    /** Title of the Google Data Studio asset. */
     DATA_STUDIO_ASSET_TITLE("dataStudioAssetTitle"),
-    /** Data type of values in the field. */
+    /** Data type of values in this field. */
     DATA_TYPE("dataType.text"),
     /** TBC */
     DBT_ACCOUNT_NAME("dbtAccountName"),
@@ -136,69 +136,69 @@ public enum TextFields implements AtlanSearchableField {
     DBT_PACKAGE_NAME("dbtPackageName"),
     /** TBC */
     DBT_PROJECT_NAME("dbtProjectName"),
-    /** TBC */
+    /** Unique name of this asset in dbt. */
     DBT_QUALIFIED_NAME("dbtQualifiedName.text"),
-    /** The raw code of a test ( tests in dbt can be defined using python ) */
+    /** Raw code of the test (when the test is defined using Python). */
     DBT_TEST_RAW_CODE("dbtTestRawCode.text"),
-    /** The raw sql of a test */
+    /** Raw SQL of the test. */
     DBT_TEST_RAW_SQL("dbtTestRawSQL.text"),
     /** TBC */
     DBT_UNIQUE_ID("dbtUniqueId"),
-    /** TBC */
+    /** Unique name of the default database to use for this query. */
     DEFAULT_DATABASE_QUALIFIED_NAME("defaultDatabaseQualifiedName.text"),
-    /** TBC */
+    /** Unique name of the default schema to use for this query. */
     DEFAULT_SCHEMA_QUALIFIED_NAME("defaultSchemaQualifiedName.text"),
-    /** Description of the asset, as crawled from a source. */
+    /** Description of this asset, for example as crawled from a source. Fallback for display purposes, if userDescription is empty. */
     DESCRIPTION("description"),
-    /** Name used for display purposes (in user interfaces). */
+    /** Human-readable name of this asset used for display purposes (in user interface). */
     DISPLAY_NAME("displayName"),
-    /** TBC */
+    /** Lifecycle rules for this bucket. */
     GCS_BUCKET_LIFECYCLE_RULES("gcsBucketLifecycleRules"),
-    /** Human-readable name of the bucket in which this object exists. */
+    /** Simple name of the bucket in which this object exists. */
     GCS_BUCKET_NAME("gcsBucketName"),
-    /** qualifiedName of the bucket in which this object exists. */
+    /** Unique name of the bucket in which this object exists. */
     GCS_BUCKET_QUALIFIED_NAME("gcsBucketQualifiedName.text"),
-    /** TBC */
+    /** Retention policy for this bucket. */
     GCS_BUCKET_RETENTION_POLICY("gcsBucketRetentionPolicy"),
-    /** TBC */
+    /** Key of this object, in GCS. */
     GCS_OBJECT_KEY("gcsObjectKey.text"),
-    /** TBC */
+    /** Media link to this object. */
     GCS_OBJECT_MEDIA_LINK("gcsObjectMediaLink.text"),
     /** ID of the project in which the asset exists. */
     GOOGLE_PROJECT_ID("googleProjectId.text"),
     /** Name of the project in which the asset exists. */
     GOOGLE_PROJECT_NAME("googleProjectName.text"),
-    /** TBC */
+    /** Help text for this field. */
     INLINE_HELP_TEXT("inlineHelpText"),
-    /** TBC */
+    /** Unique name of the Explore in which this field exists. */
     LOOKER_EXPLORE_QUALIFIED_NAME("lookerExploreQualifiedName.text"),
-    /** TBC */
+    /** Unique name of the view in which this field exists. */
     LOOKER_VIEW_QUALIFIED_NAME("lookerViewQualifiedName.text"),
-    /** Name of the matillion group to which the matillion project belongs */
+    /** Simple name of the Matillion group to which the project belongs. */
     MATILLION_GROUP_NAME("matillionGroupName"),
-    /** Qualified name of the matillion group to which the matillion project belongs */
+    /** Unique name of the Matillion group to which the project belongs. */
     MATILLION_GROUP_QUALIFIED_NAME("matillionGroupQualifiedName.text"),
-    /** Name of the matillion job to which the matillion component belongs */
+    /** Simple name of the job to which the component belongs. */
     MATILLION_JOB_NAME("matillionJobName"),
-    /** The hierarchy path of a job under a matillion project. Jobs can be managed at multiple folder levels under a matillion project */
+    /** Path of the job within the project. Jobs can be managed at multiple folder levels within a project. */
     MATILLION_JOB_PATH("matillionJobPath.text"),
-    /** Qualified name of the matillion job to which the matillion component belongs */
+    /** Unique name of the job to which the component belongs. */
     MATILLION_JOB_QUALIFIED_NAME("matillionJobQualifiedName.text"),
-    /** Name of the matillion project to which the matillion job belongs */
+    /** Simple name of the project to which the job belongs. */
     MATILLION_PROJECT_NAME("matillionProjectName"),
-    /** Qualified name of the matillion project to which the matillion job belongs */
+    /** Unique name of the project to which the job belongs. */
     MATILLION_PROJECT_QUALIFIED_NAME("matillionProjectQualifiedName.text"),
     /** Condition on which the monitor produces an alert. */
     MC_MONITOR_ALERT_CONDITION("mcMonitorAlertCondition"),
-    /** Namespace of the monitor. */
+    /** Namespace of this monitor. */
     MC_MONITOR_NAMESPACE("mcMonitorNamespace"),
     /** Readable description of the schedule for the rule. */
     MC_MONITOR_RULE_SCHEDULE_CONFIG_HUMANIZED("mcMonitorRuleScheduleConfigHumanized"),
     /** All terms attached to an asset, as a single comma-separated string. */
     MEANINGS_TEXT("__meaningsText"),
-    /** TBC */
+    /** Simple name of the Metabase collection in which this asset exists. */
     METABASE_COLLECTION_NAME("metabaseCollectionName"),
-    /** TBC */
+    /** Unique name of the Metabase collection in which this asset exists. */
     METABASE_COLLECTION_QUALIFIED_NAME("metabaseCollectionQualifiedName.text"),
     /** TBC */
     METABASE_NAMESPACE("metabaseNamespace.text"),
@@ -208,37 +208,37 @@ public enum TextFields implements AtlanSearchableField {
     METABASE_QUERY_TYPE("metabaseQueryType.text"),
     /** TBC */
     METABASE_SLUG("metabaseSlug.text"),
-    /** TBC */
+    /** Filters to be applied to the metric query. */
     METRIC_FILTERS("metricFilters"),
-    /** TBC */
+    /** List of time grains to be applied to the metric query. */
     METRIC_TIME_GRAINS("metricTimeGrains"),
-    /** Simple names of the related MicroStrategy attributes. */
+    /** List of simple names of attributes related to this metric. */
     MICRO_STRATEGY_ATTRIBUTE_NAMES("microStrategyAttributeNames"),
-    /** Unique names of the related MicroStrategy attributes. */
+    /** List of unique names of attributes related to this metric. */
     MICRO_STRATEGY_ATTRIBUTE_QUALIFIED_NAMES("microStrategyAttributeQualifiedNames.text"),
-    /** Simple names of the related MicroStrategy cubes. */
+    /** Simple names of the cubes related to this asset. */
     MICRO_STRATEGY_CUBE_NAMES("microStrategyCubeNames"),
-    /** Unique names of the related MicroStrategy cubes. */
+    /** Unique names of the cubes related to this asset. */
     MICRO_STRATEGY_CUBE_QUALIFIED_NAMES("microStrategyCubeQualifiedNames.text"),
-    /** Simple name of the dossier containing this visualization. */
+    /** Simple name of the dossier in which this visualization exists. */
     MICRO_STRATEGY_DOSSIER_NAME("microStrategyDossierName"),
-    /** Unique name of the dossier containing this visualization. */
+    /** Unique name of the dossier in which this visualization exists. */
     MICRO_STRATEGY_DOSSIER_QUALIFIED_NAME("microStrategyDossierQualifiedName.text"),
-    /** Simple names of the related MicroStrategy facts. */
+    /** List of simple names of facts related to this metric. */
     MICRO_STRATEGY_FACT_NAMES("microStrategyFactNames"),
-    /** Unique names of the related MicroStrategy facts. */
+    /** List of unique names of facts related to this metric. */
     MICRO_STRATEGY_FACT_QUALIFIED_NAMES("microStrategyFactQualifiedNames.text"),
-    /** Simple names of the parent MicroStrategy metrics. */
+    /** List of simple names of parent metrics of this metric. */
     MICRO_STRATEGY_METRIC_PARENT_NAMES("microStrategyMetricParentNames"),
-    /** Unique names of the parent MicroStrategy metrics. */
+    /** List of unique names of parent metrics of this metric. */
     MICRO_STRATEGY_METRIC_PARENT_QUALIFIED_NAMES("microStrategyMetricParentQualifiedNames.text"),
-    /** Simple name of the related MicroStrategy project. */
+    /** Simple name of the project in which this asset exists. */
     MICRO_STRATEGY_PROJECT_NAME("microStrategyProjectName"),
-    /** Unique name of the related MicroStrategy project. */
+    /** Unique name of the project in which this asset exists. */
     MICRO_STRATEGY_PROJECT_QUALIFIED_NAME("microStrategyProjectQualifiedName.text"),
-    /** Simple names of the related MicroStrategy reports. */
+    /** Simple names of the reports related to this asset. */
     MICRO_STRATEGY_REPORT_NAMES("microStrategyReportNames"),
-    /** Unique names of the related MicroStrategy reports. */
+    /** Unique names of the reports related to this asset. */
     MICRO_STRATEGY_REPORT_QUALIFIED_NAMES("microStrategyReportQualifiedNames.text"),
     /** TBC */
     MODE_QUERY_NAME("modeQueryName"),
@@ -262,127 +262,127 @@ public enum TextFields implements AtlanSearchableField {
     MODE_WORKSPACE_USERNAME("modeWorkspaceUsername.text"),
     /** Definition of the schema applicable for the collection. */
     MONGO_DB_COLLECTION_SCHEMA_DEFINITION("mongoDBCollectionSchemaDefinition"),
-    /** Subtype of a MongoDB collection (e.g. Capped, Time Series etc.) */
+    /** Subtype of a MongoDB collection, for example: Capped, Time Series, etc. */
     MONGO_DB_COLLECTION_SUBTYPE("mongoDBCollectionSubtype.text"),
-    /** Human-readable name of the asset. */
+    /** Name of this asset. Fallback for display purposes, if displayName is empty. */
     NAME("name"),
-    /** TBC */
+    /** Simple name of the column this column is nested within, for STRUCT and NESTED columns. */
     PARENT_COLUMN_NAME("parentColumnName"),
-    /** TBC */
+    /** Unique name of the column this column is nested within, for STRUCT and NESTED columns. */
     PARENT_COLUMN_QUALIFIED_NAME("parentColumnQualifiedName.text"),
-    /** TBC */
+    /** Unique name of the parent collection or folder in which this query exists. */
     PARENT_QUALIFIED_NAME("parentQualifiedName.text"),
-    /** TBC */
+    /** DAX expression for this measure. */
     POWER_BI_MEASURE_EXPRESSION("powerBIMeasureExpression"),
-    /** TBC */
+    /** Unique name of the Power BI table in which this asset exists. */
     POWER_BI_TABLE_QUALIFIED_NAME("powerBITableQualifiedName.text"),
-    /** Markdown-based description of the chart. */
+    /** TBC */
     PRESET_CHART_DESCRIPTION_MARKDOWN("presetChartDescriptionMarkdown"),
-    /** Username of the user who last changed the collection. */
+    /** TBC */
     PRESET_DASHBOARD_CHANGED_BY_NAME("presetDashboardChangedByName"),
-    /** qualifiedName of the Preset asset's collection. */
+    /** Unique name of the dashboard in which this asset exists. */
     PRESET_DASHBOARD_QUALIFIED_NAME("presetDashboardQualifiedName.text"),
-    /** Name of the data source for the dataset. */
+    /** TBC */
     PRESET_DATASET_DATASOURCE_NAME("presetDatasetDatasourceName"),
-    /** Hostname of the Preset workspace. */
+    /** TBC */
     PRESET_WORKSPACE_HOSTNAME("presetWorkspaceHostname.text"),
-    /** qualifiedName of the Preset asset's workspace. */
+    /** Unique name of the workspace in which this asset exists. */
     PRESET_WORKSPACE_QUALIFIED_NAME("presetWorkspaceQualifiedName.text"),
-    /** Region of the workspace. */
+    /** TBC */
     PRESET_WORKSPACE_REGION("presetWorkspaceRegion.text"),
-    /** Unique name of the app where the Qlik asset exists. */
+    /** Unique name of the app where this asset belongs. */
     QLIK_APP_QUALIFIED_NAME("qlikAppQualifiedName.text"),
-    /** Footnote on the chart. */
+    /** Footnote of this chart. */
     QLIK_CHART_FOOTNOTE("qlikChartFootnote"),
-    /** Subtitle of the chart. */
+    /** Subtitle of this chart. */
     QLIK_CHART_SUBTITLE("qlikChartSubtitle"),
-    /** Technical name of the data asset. */
+    /** Technical name of this asset. */
     QLIK_DATASET_TECHNICAL_NAME("qlikDatasetTechnicalName"),
-    /** URI of the dataset. */
+    /** URI of this dataset. */
     QLIK_DATASET_URI("qlikDatasetUri.text"),
-    /** QRI of the Qlik object. */
+    /** Unique QRI of this asset, from Qlik. */
     QLIK_QRI("qlikQRI.text"),
-    /** Unique name of the space where the Qlik asset exists. */
+    /** Unique name of the space in which this asset exists. */
     QLIK_SPACE_QUALIFIED_NAME("qlikSpaceQualifiedName.text"),
     /** Unique fully-qualified name of the asset in Atlan. */
     QUALIFIED_NAME("qualifiedName.text"),
-    /** Qualified name of the QuickSight Analysis */
+    /** Unique name of the QuickSight analysis in which this visual exists. */
     QUICK_SIGHT_ANALYSIS_QUALIFIED_NAME("quickSightAnalysisQualifiedName.text"),
-    /** TBC */
+    /** Unique name of the dashboard in which this visual exists. */
     QUICK_SIGHT_DASHBOARD_QUALIFIED_NAME("quickSightDashboardQualifiedName.text"),
-    /** Qualified name of the parent dataset */
+    /** Unique name of the dataset in which this field exists. */
     QUICK_SIGHT_DATASET_QUALIFIED_NAME("quickSightDatasetQualifiedName.text"),
     /** TBC */
     QUICK_SIGHT_SHEET_NAME("quickSightSheetName"),
-    /** Name of the query from which the visualization was created. */
+    /** Simple name of the query from which this visualization is created. */
     REDASH_QUERY_NAME("redashQueryName"),
-    /** Unique name of the query from which the visualization was created. */
+    /** Unique name of the query from which this visualization is created. */
     REDASH_QUERY_QUALIFIED_NAME("redashQueryQualifiedName.text"),
-    /** Human-readable schedule of the Redash query. */
+    /** Schdule for this query in readable text for overview tab and filtering. */
     REDASH_QUERY_SCHEDULE_HUMANIZED("redashQueryScheduleHumanized.text"),
-    /** Name of the bucket in which the object exists. */
+    /** Simple name of the bucket in which this object exists. */
     S3BUCKET_NAME("s3BucketName.text"),
     /** Entity tag for the asset. An entity tag is a hash of the object and represents changes to the contents of an object only, not its metadata. */
     S3E_TAG("s3ETag.text"),
-    /** Unique identity of the object in an S3 bucket. This is usually the concatenation of any prefix (folder) in the S3 bucket with the name of the object (file) itself. */
+    /** Unique identity of this object in an S3 bucket. This is usually the concatenation of any prefix (folder) in the S3 bucket with the name of the object (file) itself. */
     S3OBJECT_KEY("s3ObjectKey.text"),
-    /** TBC */
+    /** URL for sample data for this asset. */
     SAMPLE_DATA_URL("sampleDataUrl.text"),
     /** Simple name of the schema in which this SQL asset exists, or empty if it does not exist within a schema. */
     SCHEMA_NAME("schemaName"),
     /** Definition of the latest schema in the subject. */
     SCHEMA_REGISTRY_SUBJECT_LATEST_SCHEMA_DEFINITION("schemaRegistrySubjectLatestSchemaDefinition"),
-    /** Human-readable name of the dataset that contains this column. */
+    /** Simple name of the dataset in which this column exists. */
     SIGMA_DATASET_NAME("sigmaDatasetName"),
-    /** Unique name of the dataset that contains this column. */
+    /** Unique name of the dataset in which this column exists. */
     SIGMA_DATASET_QUALIFIED_NAME("sigmaDatasetQualifiedName.text"),
     /** TBC */
     SIGMA_DATA_ELEMENT_FIELD_FORMULA("sigmaDataElementFieldFormula"),
-    /** TBC */
+    /** Simple name of the data element in which this asset exists. */
     SIGMA_DATA_ELEMENT_NAME("sigmaDataElementName"),
-    /** TBC */
+    /** Unique name of the data element in which this asset exists. */
     SIGMA_DATA_ELEMENT_QUALIFIED_NAME("sigmaDataElementQualifiedName.text"),
-    /** TBC */
+    /** Simple name of the page on which this asset exists. */
     SIGMA_PAGE_NAME("sigmaPageName"),
-    /** TBC */
+    /** Unique name of the page on which this asset exists. */
     SIGMA_PAGE_QUALIFIED_NAME("sigmaPageQualifiedName.text"),
-    /** TBC */
+    /** Simple name of the workbook in which this asset exists. */
     SIGMA_WORKBOOK_NAME("sigmaWorkbookName"),
-    /** TBC */
+    /** Unique name of the workbook in which this asset exists. */
     SIGMA_WORKBOOK_QUALIFIED_NAME("sigmaWorkbookQualifiedName.text"),
-    /** Qualified name of the folder in which this dashboard exists */
+    /** Unique name of the folder in which this dashboard exists. */
     SISENSE_DASHBOARD_FOLDER_QUALIFIED_NAME("sisenseDashboardFolderQualifiedName.text"),
-    /** Qualified name of the datamodel in which this datamodel table is present */
+    /** Unique name of the datamodel in which this datamodel table exists. */
     SISENSE_DATAMODEL_QUALIFIED_NAME("sisenseDatamodelQualifiedName.text"),
-    /** Qualified name of the parent folder */
+    /** Unique name of the parent folder in which this folder exists. */
     SISENSE_FOLDER_PARENT_FOLDER_QUALIFIED_NAME("sisenseFolderParentFolderQualifiedName.text"),
-    /** Qualified name of the dashboard under which this widget is present */
+    /** Unique name of the dashboard in which this widget exists. */
     SISENSE_WIDGET_DASHBOARD_QUALIFIED_NAME("sisenseWidgetDashboardQualifiedName.text"),
-    /** Qualified name of the folder under which this widget is present */
+    /** Unique name of the folder in which this widget exists. */
     SISENSE_WIDGET_FOLDER_QUALIFIED_NAME("sisenseWidgetFolderQualifiedName.text"),
-    /** TBC */
+    /** Name of the notification channel for this pipe. */
     SNOWFLAKE_PIPE_NOTIFICATION_CHANNEL_NAME("snowflakePipeNotificationChannelName.text"),
     /** All super types of an asset. */
     SUPER_TYPE_NAMES("__superTypeNames"),
-    /** TBC */
+    /** Data type of this field. */
     TABLEAU_DATASOURCE_FIELD_DATA_TYPE("tableauDatasourceFieldDataType.text"),
-    /** TBC */
+    /** Data type of the field, from Tableau. */
     TABLEAU_DATA_TYPE("tableauDataType.text"),
     /** Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
     TABLE_NAME("tableName"),
     /** Allowed values for the tag in the source system. These are denormalized from tagAttributes for ease of querying. */
     TAG_ALLOWED_VALUES("tagAllowedValues.text"),
-    /** Name of the Liveboard in which the Dashlet exists. */
+    /** Simple name of the liveboard in which this dashlet exists. */
     THOUGHTSPOT_LIVEBOARD_NAME("thoughtspotLiveboardName"),
-    /** Unique name of the Liveboard in which the Dashlet exists. */
+    /** Unique name of the liveboard in which this dashlet exists. */
     THOUGHTSPOT_LIVEBOARD_QUALIFIED_NAME("thoughtspotLiveboardQualifiedName.text"),
     /** TBC */
     THOUGHTSPOT_QUESTION_TEXT("thoughtspotQuestionText"),
     /** Type of the asset. For example Table, Column, and so on. */
     TYPE_NAME("__typeName"),
-    /** Description of the asset, as provided by a user. If present, this will be used for the description in user interfaces. If not present, the description will be used. */
+    /** Description of this asset, as provided by a user. If present, this will be used for the description in user interface. */
     USER_DESCRIPTION("userDescription"),
-    /** TBC */
+    /** Name of the view for the Explore. */
     VIEW_NAME("viewName"),
     ;
 

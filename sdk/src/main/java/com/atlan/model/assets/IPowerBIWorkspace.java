@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -25,7 +25,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a Power BI workspace in Atlan.
+ * Instance of a Power BI workspace in Atlan. Workspaces contain dashboards, reports, workbooks, datasets and dataflows.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -34,31 +34,31 @@ public interface IPowerBIWorkspace {
 
     public static final String TYPE_NAME = "PowerBIWorkspace";
 
-    /** TBC */
+    /** Number of dashboards in this workspace. */
     NumericField DASHBOARD_COUNT = new NumericField("dashboardCount", "dashboardCount");
 
-    /** TBC */
+    /** Dashboards that exist within this workspace. */
     RelationField DASHBOARDS = new RelationField("dashboards");
 
-    /** TBC */
+    /** Number of dataflows in this workspace. */
     NumericField DATAFLOW_COUNT = new NumericField("dataflowCount", "dataflowCount");
 
-    /** TBC */
+    /** Dataflows that exist within this workspace. */
     RelationField DATAFLOWS = new RelationField("dataflows");
 
-    /** TBC */
+    /** Number of datasets in this workspace. */
     NumericField DATASET_COUNT = new NumericField("datasetCount", "datasetCount");
 
-    /** TBC */
+    /** Datasets that exist within this workspace. */
     RelationField DATASETS = new RelationField("datasets");
 
-    /** TBC */
+    /** Number of reports in this workspace. */
     NumericField REPORT_COUNT = new NumericField("reportCount", "reportCount");
 
-    /** TBC */
+    /** Reports that exist within this workspace. */
     RelationField REPORTS = new RelationField("reports");
 
-    /** TBC */
+    /** Deprecated. */
     KeywordField WEB_URL = new KeywordField("webUrl", "webUrl");
 
     /** TBC */
@@ -265,7 +265,7 @@ public interface IPowerBIWorkspace {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -289,22 +289,22 @@ public interface IPowerBIWorkspace {
     /** TBC */
     AtlanConnectorType getConnectorType();
 
-    /** TBC */
+    /** Number of dashboards in this workspace. */
     Long getDashboardCount();
 
-    /** TBC */
+    /** Dashboards that exist within this workspace. */
     SortedSet<IPowerBIDashboard> getDashboards();
 
-    /** TBC */
+    /** Number of dataflows in this workspace. */
     Long getDataflowCount();
 
-    /** TBC */
+    /** Dataflows that exist within this workspace. */
     SortedSet<IPowerBIDataflow> getDataflows();
 
-    /** TBC */
+    /** Number of datasets in this workspace. */
     Long getDatasetCount();
 
-    /** TBC */
+    /** Datasets that exist within this workspace. */
     SortedSet<IPowerBIDataset> getDatasets();
 
     /** TBC */
@@ -325,7 +325,7 @@ public interface IPowerBIWorkspace {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -349,13 +349,13 @@ public interface IPowerBIWorkspace {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -367,7 +367,7 @@ public interface IPowerBIWorkspace {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -394,13 +394,13 @@ public interface IPowerBIWorkspace {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
-    /** TBC */
+    /** Number of reports in this workspace. */
     Long getReportCount();
 
-    /** TBC */
+    /** Reports that exist within this workspace. */
     SortedSet<IPowerBIReport> getReports();
 
     /** TBC */
@@ -505,7 +505,7 @@ public interface IPowerBIWorkspace {
     /** TBC */
     SortedSet<String> getViewerUsers();
 
-    /** TBC */
+    /** Deprecated. */
     String getWebUrl();
 
     /** Name of the type that defines the asset. */

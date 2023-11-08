@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -25,7 +25,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a QuickSight Dataset field in Atlan.
+ * Instance of a QuickSight dataset field in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -34,14 +34,14 @@ public interface IQuickSightDatasetField {
 
     public static final String TYPE_NAME = "QuickSightDatasetField";
 
-    /** TBC */
+    /** Dataset in which this field exists. */
     RelationField QUICK_SIGHT_DATASET = new RelationField("quickSightDataset");
 
-    /** Datatype of column in the dataset */
+    /** Datatype of this field, for example: STRING, INTEGER, etc. */
     KeywordField QUICK_SIGHT_DATASET_FIELD_TYPE =
             new KeywordField("quickSightDatasetFieldType", "quickSightDatasetFieldType");
 
-    /** Qualified name of the parent dataset */
+    /** Unique name of the dataset in which this field exists. */
     KeywordTextField QUICK_SIGHT_DATASET_QUALIFIED_NAME = new KeywordTextField(
             "quickSightDatasetQualifiedName", "quickSightDatasetQualifiedName", "quickSightDatasetQualifiedName.text");
 
@@ -249,7 +249,7 @@ public interface IQuickSightDatasetField {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -291,7 +291,7 @@ public interface IQuickSightDatasetField {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -315,13 +315,13 @@ public interface IQuickSightDatasetField {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -333,7 +333,7 @@ public interface IQuickSightDatasetField {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -348,13 +348,13 @@ public interface IQuickSightDatasetField {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** Dataset in which this field exists. */
     IQuickSightDataset getQuickSightDataset();
 
-    /** Datatype of column in the dataset */
+    /** Datatype of this field, for example: STRING, INTEGER, etc. */
     QuickSightDatasetFieldType getQuickSightDatasetFieldType();
 
-    /** Qualified name of the parent dataset */
+    /** Unique name of the dataset in which this field exists. */
     String getQuickSightDatasetQualifiedName();
 
     /** TBC */
@@ -366,7 +366,7 @@ public interface IQuickSightDatasetField {
     /** TBC */
     String getQuickSightSheetName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

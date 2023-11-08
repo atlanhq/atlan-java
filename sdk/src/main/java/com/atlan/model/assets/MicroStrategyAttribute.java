@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.Atlan;
@@ -53,12 +53,12 @@ public class MicroStrategyAttribute extends Asset
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
-    /** Attribute form name, description, display format and expression as a JSON string. */
+    /** JSON string specifying the attribute's name, description, displayFormat, etc. */
     @Attribute
     String microStrategyAttributeForms;
 
@@ -80,7 +80,7 @@ public class MicroStrategyAttribute extends Asset
     @Singular
     SortedSet<String> microStrategyCubeQualifiedNames;
 
-    /** Cubes where the attribute is used. */
+    /** Cubes in which this attribute is used. */
     @Attribute
     @Singular
     SortedSet<IMicroStrategyCube> microStrategyCubes;
@@ -94,12 +94,12 @@ public class MicroStrategyAttribute extends Asset
     @Singular("putMicroStrategyLocation")
     List<Map<String, String>> microStrategyLocation;
 
-    /** Metrics where the attribute is used. */
+    /** Metrics that use this attribute. */
     @Attribute
     @Singular
     SortedSet<IMicroStrategyMetric> microStrategyMetrics;
 
-    /** Project containing the attribute. */
+    /** Project in which this attribute exists. */
     @Attribute
     IMicroStrategyProject microStrategyProject;
 
@@ -121,7 +121,7 @@ public class MicroStrategyAttribute extends Asset
     @Singular
     SortedSet<String> microStrategyReportQualifiedNames;
 
-    /** Reports where the attribute is used. */
+    /** Reports in which this attribute is used. */
     @Attribute
     @Singular
     SortedSet<IMicroStrategyReport> microStrategyReports;
@@ -131,7 +131,7 @@ public class MicroStrategyAttribute extends Asset
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;

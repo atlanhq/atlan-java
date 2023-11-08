@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.Atlan;
@@ -27,7 +27,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * The SisenseDashboard type represents a dashboard in sisense. Dashboards in Sisense allow you to place multiple widgets on a single page.
+ * Instance of a Sisense dashboard in Atlan. These allow you to place multiple widgets on a single page.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -51,7 +51,7 @@ public class SisenseDashboard extends Asset
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -61,16 +61,16 @@ public class SisenseDashboard extends Asset
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** Qualified name of the folder in which this dashboard exists */
+    /** Unique name of the folder in which this dashboard exists. */
     @Attribute
     String sisenseDashboardFolderQualifiedName;
 
-    /** Number of widgets that are present in this dashboard */
+    /** Number of widgets in this dashboard. */
     @Attribute
     Long sisenseDashboardWidgetCount;
 
@@ -79,11 +79,11 @@ public class SisenseDashboard extends Asset
     @Singular
     SortedSet<ISisenseDatamodel> sisenseDatamodels;
 
-    /** TBC */
+    /** Folder in which this dashboard exists. */
     @Attribute
     ISisenseFolder sisenseFolder;
 
-    /** TBC */
+    /** Widgets that exist in this dashboard. */
     @Attribute
     @Singular
     SortedSet<ISisenseWidget> sisenseWidgets;

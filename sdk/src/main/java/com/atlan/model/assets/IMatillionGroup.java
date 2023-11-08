@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -23,7 +23,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * The MatillionGroup type represents a Group in Matillion. A Group is the top level hierarchy in Matillion where resources are managed and explored.
+ * Instance of a Matillion group in Atlan. A group in Matillion is the top-level hierarchy, where resources are managed and explored.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -32,10 +32,10 @@ public interface IMatillionGroup {
 
     public static final String TYPE_NAME = "MatillionGroup";
 
-    /** Count of the number of matillion projects under a matillion group */
+    /** Number of projects within the group. */
     NumericField MATILLION_PROJECT_COUNT = new NumericField("matillionProjectCount", "matillionProjectCount");
 
-    /** TBC */
+    /** Matillion projects that exist within this group. */
     RelationField MATILLION_PROJECTS = new RelationField("matillionProjects");
 
     /** TBC */
@@ -242,7 +242,7 @@ public interface IMatillionGroup {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -284,7 +284,7 @@ public interface IMatillionGroup {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -308,13 +308,13 @@ public interface IMatillionGroup {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
-    /** Count of the number of matillion projects under a matillion group */
+    /** Number of projects within the group. */
     Long getMatillionProjectCount();
 
-    /** TBC */
+    /** Matillion projects that exist within this group. */
     SortedSet<IMatillionProject> getMatillionProjects();
 
     /** TBC */
@@ -323,7 +323,7 @@ public interface IMatillionGroup {
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -335,7 +335,7 @@ public interface IMatillionGroup {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -350,7 +350,7 @@ public interface IMatillionGroup {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

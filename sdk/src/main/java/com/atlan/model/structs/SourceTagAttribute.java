@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.structs;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -10,7 +10,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
 /**
- * Detailed information about an attribute attached to a tag in a source system.
+ * Detailed information about a source tag's attributes.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -29,20 +29,20 @@ public class SourceTagAttribute extends AtlanStruct {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Attribute key, for example "allowedValues" or "enabled". */
+    /** Attribute key, for example: 'allowedValues' or 'enabled'. */
     String tagAttributeKey;
 
-    /** Attribute value, for example ["Private", "PII"] for allowedValues, or "true" for enabled. */
+    /** Attribute value, for example: '["Private", "PII"]' for allowedValues key or 'true' for enabled key. */
     String tagAttributeValue;
 
-    /** Properties associated with the attribute. */
+    /** Properties of the attribute. */
     Map<String, String> tagAttributeProperties;
 
     /**
      * Quickly create a new SourceTagAttribute.
-     * @param tagAttributeKey Attribute key, for example "allowedValues" or "enabled".
-     * @param tagAttributeValue Attribute value, for example ["Private", "PII"] for allowedValues, or "true" for enabled.
-     * @param tagAttributeProperties Properties associated with the attribute.
+     * @param tagAttributeKey Attribute key, for example: 'allowedValues' or 'enabled'.
+     * @param tagAttributeValue Attribute value, for example: '["Private", "PII"]' for allowedValues key or 'true' for enabled key.
+     * @param tagAttributeProperties Properties of the attribute.
      * @return a SourceTagAttribute with the provided information
      */
     public static SourceTagAttribute of(

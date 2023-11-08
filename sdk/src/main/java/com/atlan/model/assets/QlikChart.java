@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.Atlan;
@@ -27,7 +27,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Instance of a Qlick Chart in Atlan.
+ * Instance of a Qlik chart in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -50,7 +50,7 @@ public class QlikChart extends Asset implements IQlikChart, IQlik, IBI, ICatalog
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -60,7 +60,7 @@ public class QlikChart extends Asset implements IQlikChart, IQlik, IBI, ICatalog
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
@@ -73,19 +73,19 @@ public class QlikChart extends Asset implements IQlikChart, IQlik, IBI, ICatalog
     @Attribute
     String qlikAppQualifiedName;
 
-    /** Footnote on the chart. */
+    /** Footnote of this chart. */
     @Attribute
     String qlikChartFootnote;
 
-    /** Orientation of the chart. */
+    /** Orientation of this chart. */
     @Attribute
     String qlikChartOrientation;
 
-    /** Subtitle of the chart. */
+    /** Subtitle of this chart. */
     @Attribute
     String qlikChartSubtitle;
 
-    /** Subtype of the chart, for example: bar, graph, pie, etc. */
+    /** Subtype of this chart, for example: bar, graph, pie, etc. */
     @Attribute
     String qlikChartType;
 
@@ -105,7 +105,7 @@ public class QlikChart extends Asset implements IQlikChart, IQlik, IBI, ICatalog
     @Attribute
     String qlikQRI;
 
-    /** Sheet in which the chart exists. */
+    /** Sheet in which this chart exists. */
     @Attribute
     IQlikSheet qlikSheet;
 

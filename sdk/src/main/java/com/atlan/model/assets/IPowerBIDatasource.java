@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -33,10 +33,10 @@ public interface IPowerBIDatasource {
 
     public static final String TYPE_NAME = "PowerBIDatasource";
 
-    /** TBC */
+    /** Connection details of the datasource. */
     KeywordField CONNECTION_DETAILS = new KeywordField("connectionDetails", "connectionDetails");
 
-    /** TBC */
+    /** Datasets created by this datasource. */
     RelationField DATASETS = new RelationField("datasets");
 
     /** TBC */
@@ -243,7 +243,7 @@ public interface IPowerBIDatasource {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -258,7 +258,7 @@ public interface IPowerBIDatasource {
     /** TBC */
     String getCertificateUpdatedBy();
 
-    /** TBC */
+    /** Connection details of the datasource. */
     Map<String, String> getConnectionDetails();
 
     /** TBC */
@@ -270,7 +270,7 @@ public interface IPowerBIDatasource {
     /** TBC */
     AtlanConnectorType getConnectorType();
 
-    /** TBC */
+    /** Datasets created by this datasource. */
     SortedSet<IPowerBIDataset> getDatasets();
 
     /** TBC */
@@ -291,7 +291,7 @@ public interface IPowerBIDatasource {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -315,13 +315,13 @@ public interface IPowerBIDatasource {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -333,7 +333,7 @@ public interface IPowerBIDatasource {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -360,7 +360,7 @@ public interface IPowerBIDatasource {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

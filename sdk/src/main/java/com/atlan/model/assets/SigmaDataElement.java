@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.Atlan;
@@ -51,7 +51,7 @@ public class SigmaDataElement extends Asset
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -61,16 +61,16 @@ public class SigmaDataElement extends Asset
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** Number of data element fields within this data element. */
+    /** Number of fields in this data element. */
     @Attribute
     Long sigmaDataElementFieldCount;
 
-    /** Data element fields within this data element. */
+    /** Data element fields that exist in this data element. */
     @Attribute
     @Singular
     SortedSet<ISigmaDataElementField> sigmaDataElementFields;
@@ -91,7 +91,7 @@ public class SigmaDataElement extends Asset
     @Attribute
     String sigmaDataElementType;
 
-    /** Page that contains this data element. */
+    /** Page on which this data element exists. */
     @Attribute
     ISigmaPage sigmaPage;
 

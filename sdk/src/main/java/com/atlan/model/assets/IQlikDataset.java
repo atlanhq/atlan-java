@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -24,7 +24,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a Qlik Dataset, Datafile, Datastore or Dataasset in Atlan.
+ * Instance of a Qlik dataset, datafile, datastore or dataasset in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -33,20 +33,20 @@ public interface IQlikDataset {
 
     public static final String TYPE_NAME = "QlikDataset";
 
-    /** Subtype of the dataset. */
+    /** Subtype this dataset asset. */
     KeywordField QLIK_DATASET_SUBTYPE = new KeywordField("qlikDatasetSubtype", "qlikDatasetSubtype");
 
-    /** Technical name of the data asset. */
+    /** Technical name of this asset. */
     KeywordTextField QLIK_DATASET_TECHNICAL_NAME = new KeywordTextField(
             "qlikDatasetTechnicalName", "qlikDatasetTechnicalName.keyword", "qlikDatasetTechnicalName");
 
-    /** Type of the data asset, for example: qix-df, snowflake, etc. */
+    /** Type of this data asset, for example: qix-df, snowflake, etc. */
     KeywordField QLIK_DATASET_TYPE = new KeywordField("qlikDatasetType", "qlikDatasetType");
 
-    /** URI of the dataset. */
+    /** URI of this dataset. */
     KeywordTextField QLIK_DATASET_URI = new KeywordTextField("qlikDatasetUri", "qlikDatasetUri", "qlikDatasetUri.text");
 
-    /** Space in which the dataset exists. */
+    /** Space in which this dataset exists. */
     RelationField QLIK_SPACE = new RelationField("qlikSpace");
 
     /** TBC */
@@ -253,7 +253,7 @@ public interface IQlikDataset {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -295,7 +295,7 @@ public interface IQlikDataset {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -319,13 +319,13 @@ public interface IQlikDataset {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -337,7 +337,7 @@ public interface IQlikDataset {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -355,16 +355,16 @@ public interface IQlikDataset {
     /** TBC */
     String getQlikAppQualifiedName();
 
-    /** Subtype of the dataset. */
+    /** Subtype this dataset asset. */
     String getQlikDatasetSubtype();
 
-    /** Technical name of the data asset. */
+    /** Technical name of this asset. */
     String getQlikDatasetTechnicalName();
 
-    /** Type of the data asset, for example: qix-df, snowflake, etc. */
+    /** Type of this data asset, for example: qix-df, snowflake, etc. */
     String getQlikDatasetType();
 
-    /** URI of the dataset. */
+    /** URI of this dataset. */
     String getQlikDatasetUri();
 
     /** TBC */
@@ -379,7 +379,7 @@ public interface IQlikDataset {
     /** TBC */
     String getQlikQRI();
 
-    /** Space in which the dataset exists. */
+    /** Space in which this dataset exists. */
     IQlikSpace getQlikSpace();
 
     /** TBC */
@@ -391,7 +391,7 @@ public interface IQlikDataset {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

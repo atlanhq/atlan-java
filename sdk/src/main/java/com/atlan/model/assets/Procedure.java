@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.Atlan;
@@ -71,7 +71,7 @@ public class Procedure extends Asset implements IProcedure, ISQL, ICatalog, IAss
     @Singular
     SortedSet<IDbtTest> dbtTests;
 
-    /** Logic of the procedure. */
+    /** SQL definition of the procedure. */
     @Attribute
     String definition;
 
@@ -80,7 +80,7 @@ public class Procedure extends Asset implements IProcedure, ISQL, ICatalog, IAss
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -98,7 +98,7 @@ public class Procedure extends Asset implements IProcedure, ISQL, ICatalog, IAss
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
@@ -120,7 +120,7 @@ public class Procedure extends Asset implements IProcedure, ISQL, ICatalog, IAss
     @Singular("putQueryUserMap")
     Map<String, Long> queryUserMap;
 
-    /** Schema in which the procedure is contained. */
+    /** Schema in which this stored procedure exists. */
     @Attribute
     @JsonProperty("atlanSchema")
     ISchema schema;

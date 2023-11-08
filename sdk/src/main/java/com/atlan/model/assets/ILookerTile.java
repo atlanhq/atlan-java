@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -33,34 +33,34 @@ public interface ILookerTile {
 
     public static final String TYPE_NAME = "LookerTile";
 
-    /** TBC */
+    /** Dashboard in which this tile exists. */
     RelationField DASHBOARD = new RelationField("dashboard");
 
-    /** TBC */
+    /** Look in which this tile exists. */
     RelationField LOOK = new RelationField("look");
 
-    /** TBC */
+    /** Identifier of the Look used to create this tile, from Looker. */
     NumericField LOOK_ID = new NumericField("lookId", "lookId");
 
-    /** TBC */
+    /** Identifier for the LoomML link. */
     KeywordField LOOKML_LINK_ID = new KeywordField("lookmlLinkId", "lookmlLinkId");
 
-    /** TBC */
+    /** Identifier for the merge result. */
     KeywordField MERGE_RESULT_ID = new KeywordField("mergeResultId", "mergeResultId");
 
-    /** TBC */
+    /** Text of notes added to the tile. */
     KeywordField NOTE_TEXT = new KeywordField("noteText", "noteText");
 
-    /** TBC */
+    /** Deprecated. */
     RelationField QUERY = new RelationField("query");
 
-    /** TBC */
+    /** Identifier for the query used to build this tile, from Looker. */
     NumericField QUERY_ID = new NumericField("queryID", "queryID");
 
-    /** TBC */
+    /** Identifier of the ResultMarkerLookup entry, from Looker. */
     NumericField RESULT_MAKER_ID = new NumericField("resultMakerID", "resultMakerID");
 
-    /** TBC */
+    /** Text for the subtitle for text tiles. */
     KeywordField SUBTITLE_TEXT = new KeywordField("subtitleText", "subtitleText");
 
     /** TBC */
@@ -267,7 +267,7 @@ public interface ILookerTile {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -291,7 +291,7 @@ public interface ILookerTile {
     /** TBC */
     AtlanConnectorType getConnectorType();
 
-    /** TBC */
+    /** Dashboard in which this tile exists. */
     ILookerDashboard getDashboard();
 
     /** TBC */
@@ -312,7 +312,7 @@ public interface ILookerTile {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -336,25 +336,25 @@ public interface ILookerTile {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
-    /** TBC */
+    /** Look in which this tile exists. */
     ILookerLook getLook();
 
-    /** TBC */
+    /** Identifier of the Look used to create this tile, from Looker. */
     Integer getLookId();
 
-    /** TBC */
+    /** Identifier for the LoomML link. */
     String getLookmlLinkId();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
-    /** TBC */
+    /** Identifier for the merge result. */
     String getMergeResultId();
 
     /** TBC */
@@ -363,13 +363,13 @@ public interface ILookerTile {
     /** TBC */
     String getName();
 
-    /** TBC */
+    /** Text of notes added to the tile. */
     String getNoteText();
 
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -384,16 +384,16 @@ public interface ILookerTile {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** Deprecated. */
     ILookerQuery getQuery();
 
-    /** TBC */
+    /** Identifier for the query used to build this tile, from Looker. */
     Integer getQueryID();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
-    /** TBC */
+    /** Identifier of the ResultMarkerLookup entry, from Looker. */
     Integer getResultMakerID();
 
     /** TBC */
@@ -483,7 +483,7 @@ public interface ILookerTile {
     /** TBC */
     String getSubType();
 
-    /** TBC */
+    /** Text for the subtitle for text tiles. */
     String getSubtitleText();
 
     /** TBC */

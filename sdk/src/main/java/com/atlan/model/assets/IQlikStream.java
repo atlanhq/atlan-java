@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -21,7 +21,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Atlan Qlik Stream Asset. This is analogus to Space.
+ * Instance of a Qlik stream in Atlan, which is analogus to a Qlik space.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -234,7 +234,7 @@ public interface IQlikStream {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -276,7 +276,7 @@ public interface IQlikStream {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -300,13 +300,13 @@ public interface IQlikStream {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -318,7 +318,7 @@ public interface IQlikStream {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -336,10 +336,10 @@ public interface IQlikStream {
     /** TBC */
     String getQlikAppQualifiedName();
 
-    /** TBC */
+    /** Apps that exist within this space. */
     SortedSet<IQlikApp> getQlikApps();
 
-    /** TBC */
+    /** Datasets that exist within this space. */
     SortedSet<IQlikDataset> getQlikDatasets();
 
     /** TBC */
@@ -366,7 +366,7 @@ public interface IQlikStream {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -33,14 +33,14 @@ public interface IPresetChart {
 
     public static final String TYPE_NAME = "PresetChart";
 
-    /** Markdown-based description of the chart. */
+    /** TBC */
     TextField PRESET_CHART_DESCRIPTION_MARKDOWN =
             new TextField("presetChartDescriptionMarkdown", "presetChartDescriptionMarkdown");
 
     /** TBC */
     KeywordField PRESET_CHART_FORM_DATA = new KeywordField("presetChartFormData", "presetChartFormData");
 
-    /** Collection in which the chart exists. */
+    /** Dashboard in which this chart exists. */
     RelationField PRESET_DASHBOARD = new RelationField("presetDashboard");
 
     /** TBC */
@@ -247,7 +247,7 @@ public interface IPresetChart {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -289,7 +289,7 @@ public interface IPresetChart {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -313,13 +313,13 @@ public interface IPresetChart {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -331,7 +331,7 @@ public interface IPresetChart {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -343,13 +343,13 @@ public interface IPresetChart {
     /** TBC */
     Double getPopularityScore();
 
-    /** Markdown-based description of the chart. */
+    /** TBC */
     String getPresetChartDescriptionMarkdown();
 
     /** TBC */
     Map<String, String> getPresetChartFormData();
 
-    /** Collection in which the chart exists. */
+    /** Dashboard in which this chart exists. */
     IPresetDashboard getPresetDashboard();
 
     /** TBC */
@@ -367,7 +367,7 @@ public interface IPresetChart {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

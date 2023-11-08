@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.ADLSLeaseState;
@@ -38,24 +38,24 @@ public interface IADLSContainer {
 
     public static final String TYPE_NAME = "ADLSContainer";
 
-    /** Account this container exists within. */
+    /** Account in which this container exists. */
     RelationField ADLS_ACCOUNT = new RelationField("adlsAccount");
 
-    /** TBC */
+    /** Encryption scope of this container. */
     KeywordField ADLS_CONTAINER_ENCRYPTION_SCOPE =
             new KeywordField("adlsContainerEncryptionScope", "adlsContainerEncryptionScope");
 
-    /** TBC */
+    /** Lease state of this container. */
     KeywordField ADLS_CONTAINER_LEASE_STATE = new KeywordField("adlsContainerLeaseState", "adlsContainerLeaseState");
 
-    /** TBC */
+    /** Lease status of this container. */
     KeywordField ADLS_CONTAINER_LEASE_STATUS = new KeywordField("adlsContainerLeaseStatus", "adlsContainerLeaseStatus");
 
-    /** TBC */
+    /** URL of this container. */
     KeywordTextField ADLS_CONTAINER_URL =
             new KeywordTextField("adlsContainerUrl", "adlsContainerUrl.keyword", "adlsContainerUrl");
 
-    /** TBC */
+    /** Whether this container supports version-level immutability (true) or not (false). */
     BooleanField ADLS_CONTAINER_VERSION_LEVEL_IMMUTABILITY_SUPPORT = new BooleanField(
             "adlsContainerVersionLevelImmutabilitySupport", "adlsContainerVersionLevelImmutabilitySupport");
 
@@ -65,7 +65,7 @@ public interface IADLSContainer {
     /** Objects that exist within this container. */
     RelationField ADLS_OBJECTS = new RelationField("adlsObjects");
 
-    /** Account this container exists within. */
+    /** Account in which this container exists. */
     IADLSAccount getAdlsAccount();
 
     /** TBC */
@@ -74,19 +74,19 @@ public interface IADLSContainer {
     /** TBC */
     String getAdlsAccountSecondaryLocation();
 
-    /** TBC */
+    /** Encryption scope of this container. */
     String getAdlsContainerEncryptionScope();
 
-    /** TBC */
+    /** Lease state of this container. */
     ADLSLeaseState getAdlsContainerLeaseState();
 
-    /** TBC */
+    /** Lease status of this container. */
     ADLSLeaseStatus getAdlsContainerLeaseStatus();
 
-    /** TBC */
+    /** URL of this container. */
     String getAdlsContainerUrl();
 
-    /** TBC */
+    /** Whether this container supports version-level immutability (true) or not (false). */
     Boolean getAdlsContainerVersionLevelImmutabilitySupport();
 
     /** Number of objects that exist within this container. */
@@ -299,7 +299,7 @@ public interface IADLSContainer {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -350,7 +350,7 @@ public interface IADLSContainer {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -374,13 +374,13 @@ public interface IADLSContainer {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -392,7 +392,7 @@ public interface IADLSContainer {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -407,7 +407,7 @@ public interface IADLSContainer {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.structs;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -34,18 +34,18 @@ public class KafkaTopicConsumption extends AtlanStruct {
     /** Partition of the Kafka topic. */
     String topicPartition;
 
-    /** TBC */
+    /** Lag of the Kafka topic. */
     Long topicLag;
 
-    /** TBC */
+    /** Current offset of the Kafka topic. */
     Long topicCurrentOffset;
 
     /**
      * Quickly create a new KafkaTopicConsumption.
      * @param topicName Name of the Kafka topic.
      * @param topicPartition Partition of the Kafka topic.
-     * @param topicLag TBC
-     * @param topicCurrentOffset TBC
+     * @param topicLag Lag of the Kafka topic.
+     * @param topicCurrentOffset Current offset of the Kafka topic.
      * @return a KafkaTopicConsumption with the provided information
      */
     public static KafkaTopicConsumption of(

@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -39,7 +39,7 @@ public interface IDbtMetric {
     /** TBC */
     KeywordField DBT_METRIC_FILTERS = new KeywordField("dbtMetricFilters", "dbtMetricFilters");
 
-    /** TBC */
+    /** Model in which this metric exists. */
     RelationField DBT_MODEL = new RelationField("dbtModel");
 
     /** TBC */
@@ -249,7 +249,7 @@ public interface IDbtMetric {
     /** TBC */
     SortedSet<IAsset> getAssets();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -318,7 +318,7 @@ public interface IDbtMetric {
     /** TBC */
     List<DbtMetricFilter> getDbtMetricFilters();
 
-    /** TBC */
+    /** Model in which this metric exists. */
     IDbtModel getDbtModel();
 
     /** TBC */
@@ -354,7 +354,7 @@ public interface IDbtMetric {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -378,13 +378,13 @@ public interface IDbtMetric {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -414,7 +414,7 @@ public interface IDbtMetric {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -429,7 +429,7 @@ public interface IDbtMetric {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

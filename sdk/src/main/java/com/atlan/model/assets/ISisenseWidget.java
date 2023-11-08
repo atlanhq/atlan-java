@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -25,7 +25,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * The SisenseWidget type represents a widget in Sisense.
+ * Instance of a Sisense widget in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -34,34 +34,34 @@ public interface ISisenseWidget {
 
     public static final String TYPE_NAME = "SisenseWidget";
 
-    /** TBC */
+    /** Dashboard in which this widget exists. */
     RelationField SISENSE_DASHBOARD = new RelationField("sisenseDashboard");
 
     /** TBC */
     RelationField SISENSE_DATAMODEL_TABLES = new RelationField("sisenseDatamodelTables");
 
-    /** TBC */
+    /** Folder in which this widget exists. */
     RelationField SISENSE_FOLDER = new RelationField("sisenseFolder");
 
-    /** Numbers of columns used in the widget */
+    /** Number of columns used in this widget. */
     NumericField SISENSE_WIDGET_COLUMN_COUNT = new NumericField("sisenseWidgetColumnCount", "sisenseWidgetColumnCount");
 
-    /** Qualified name of the dashboard under which this widget is present */
+    /** Unique name of the dashboard in which this widget exists. */
     KeywordTextField SISENSE_WIDGET_DASHBOARD_QUALIFIED_NAME = new KeywordTextField(
             "sisenseWidgetDashboardQualifiedName",
             "sisenseWidgetDashboardQualifiedName",
             "sisenseWidgetDashboardQualifiedName.text");
 
-    /** Qualified name of the folder under which this widget is present */
+    /** Unique name of the folder in which this widget exists. */
     KeywordTextField SISENSE_WIDGET_FOLDER_QUALIFIED_NAME = new KeywordTextField(
             "sisenseWidgetFolderQualifiedName",
             "sisenseWidgetFolderQualifiedName",
             "sisenseWidgetFolderQualifiedName.text");
 
-    /** Size of the widget */
+    /** Size of this widget. */
     KeywordField SISENSE_WIDGET_SIZE = new KeywordField("sisenseWidgetSize", "sisenseWidgetSize");
 
-    /** Sub type of the widget */
+    /** Subtype of this widget. */
     KeywordField SISENSE_WIDGET_SUB_TYPE = new KeywordField("sisenseWidgetSubType", "sisenseWidgetSubType");
 
     /** TBC */
@@ -268,7 +268,7 @@ public interface ISisenseWidget {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -310,7 +310,7 @@ public interface ISisenseWidget {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -334,13 +334,13 @@ public interface ISisenseWidget {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -352,7 +352,7 @@ public interface ISisenseWidget {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -367,7 +367,7 @@ public interface ISisenseWidget {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */
@@ -376,28 +376,28 @@ public interface ISisenseWidget {
     /** TBC */
     SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
 
-    /** TBC */
+    /** Dashboard in which this widget exists. */
     ISisenseDashboard getSisenseDashboard();
 
     /** TBC */
     SortedSet<ISisenseDatamodelTable> getSisenseDatamodelTables();
 
-    /** TBC */
+    /** Folder in which this widget exists. */
     ISisenseFolder getSisenseFolder();
 
-    /** Numbers of columns used in the widget */
+    /** Number of columns used in this widget. */
     Long getSisenseWidgetColumnCount();
 
-    /** Qualified name of the dashboard under which this widget is present */
+    /** Unique name of the dashboard in which this widget exists. */
     String getSisenseWidgetDashboardQualifiedName();
 
-    /** Qualified name of the folder under which this widget is present */
+    /** Unique name of the folder in which this widget exists. */
     String getSisenseWidgetFolderQualifiedName();
 
-    /** Size of the widget */
+    /** Size of this widget. */
     String getSisenseWidgetSize();
 
-    /** Sub type of the widget */
+    /** Subtype of this widget. */
     String getSisenseWidgetSubType();
 
     /** TBC */

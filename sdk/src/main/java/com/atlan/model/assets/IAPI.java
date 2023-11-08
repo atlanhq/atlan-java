@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -33,23 +33,23 @@ public interface IAPI {
 
     public static final String TYPE_NAME = "API";
 
-    /** TBC */
+    /** External documentation of the API. */
     KeywordField API_EXTERNAL_DOCS = new KeywordField("apiExternalDocs", "apiExternalDocs");
 
-    /** TBC */
+    /** Whether authentication is optional (true) or required (false). */
     BooleanField API_IS_AUTH_OPTIONAL = new BooleanField("apiIsAuthOptional", "apiIsAuthOptional");
 
-    /** TBC */
+    /** Simple name of the API spec, if this asset is contained in an API spec. */
     KeywordTextField API_SPEC_NAME = new KeywordTextField("apiSpecName", "apiSpecName.keyword", "apiSpecName");
 
-    /** TBC */
+    /** Unique name of the API spec, if this asset is contained in an API spec. */
     KeywordTextField API_SPEC_QUALIFIED_NAME =
             new KeywordTextField("apiSpecQualifiedName", "apiSpecQualifiedName", "apiSpecQualifiedName.text");
 
-    /** TBC */
+    /** Type of API, for example: OpenAPI, GraphQL, etc. */
     KeywordField API_SPEC_TYPE = new KeywordField("apiSpecType", "apiSpecType");
 
-    /** TBC */
+    /** Version of the API specification. */
     KeywordField API_SPEC_VERSION = new KeywordField("apiSpecVersion", "apiSpecVersion");
 
     /** TBC */
@@ -76,22 +76,22 @@ public interface IAPI {
     /** TBC */
     String getAnnouncementUpdatedBy();
 
-    /** TBC */
+    /** External documentation of the API. */
     Map<String, String> getApiExternalDocs();
 
-    /** TBC */
+    /** Whether authentication is optional (true) or required (false). */
     Boolean getApiIsAuthOptional();
 
-    /** TBC */
+    /** Simple name of the API spec, if this asset is contained in an API spec. */
     String getApiSpecName();
 
-    /** TBC */
+    /** Unique name of the API spec, if this asset is contained in an API spec. */
     String getApiSpecQualifiedName();
 
-    /** TBC */
+    /** Type of API, for example: OpenAPI, GraphQL, etc. */
     String getApiSpecType();
 
-    /** TBC */
+    /** Version of the API specification. */
     String getApiSpecVersion();
 
     /** TBC */
@@ -274,7 +274,7 @@ public interface IAPI {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -316,7 +316,7 @@ public interface IAPI {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -340,13 +340,13 @@ public interface IAPI {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -358,7 +358,7 @@ public interface IAPI {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -373,7 +373,7 @@ public interface IAPI {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

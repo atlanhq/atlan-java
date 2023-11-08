@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -36,27 +36,27 @@ public interface IGCSBucket {
 
     public static final String TYPE_NAME = "GCSBucket";
 
-    /** TBC */
+    /** Lifecycle rules for this bucket. */
     TextField GCS_BUCKET_LIFECYCLE_RULES = new TextField("gcsBucketLifecycleRules", "gcsBucketLifecycleRules");
 
-    /** TBC */
+    /** Effective time for retention of objects in this bucket. */
     NumericField GCS_BUCKET_RETENTION_EFFECTIVE_TIME =
             new NumericField("gcsBucketRetentionEffectiveTime", "gcsBucketRetentionEffectiveTime");
 
-    /** TBC */
+    /** Whether retention is locked for this bucket (true) or not (false). */
     BooleanField GCS_BUCKET_RETENTION_LOCKED = new BooleanField("gcsBucketRetentionLocked", "gcsBucketRetentionLocked");
 
-    /** TBC */
+    /** Retention period for objects in this bucket. */
     NumericField GCS_BUCKET_RETENTION_PERIOD = new NumericField("gcsBucketRetentionPeriod", "gcsBucketRetentionPeriod");
 
-    /** TBC */
+    /** Retention policy for this bucket. */
     TextField GCS_BUCKET_RETENTION_POLICY = new TextField("gcsBucketRetentionPolicy", "gcsBucketRetentionPolicy");
 
-    /** TBC */
+    /** Whether versioning is enabled on the bucket (true) or not (false). */
     BooleanField GCS_BUCKET_VERSIONING_ENABLED =
             new BooleanField("gcsBucketVersioningEnabled", "gcsBucketVersioningEnabled");
 
-    /** TBC */
+    /** Number of objects within the bucket. */
     NumericField GCS_OBJECT_COUNT = new NumericField("gcsObjectCount", "gcsObjectCount");
 
     /** GCS objects within this bucket. */
@@ -266,7 +266,7 @@ public interface IGCSBucket {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -305,22 +305,22 @@ public interface IGCSBucket {
     /** TBC */
     String getGcsAccessControl();
 
-    /** TBC */
+    /** Lifecycle rules for this bucket. */
     String getGcsBucketLifecycleRules();
 
-    /** TBC */
+    /** Effective time for retention of objects in this bucket. */
     Long getGcsBucketRetentionEffectiveTime();
 
-    /** TBC */
+    /** Whether retention is locked for this bucket (true) or not (false). */
     Boolean getGcsBucketRetentionLocked();
 
-    /** TBC */
+    /** Retention period for objects in this bucket. */
     Long getGcsBucketRetentionPeriod();
 
-    /** TBC */
+    /** Retention policy for this bucket. */
     String getGcsBucketRetentionPolicy();
 
-    /** TBC */
+    /** Whether versioning is enabled on the bucket (true) or not (false). */
     Boolean getGcsBucketVersioningEnabled();
 
     /** TBC */
@@ -332,7 +332,7 @@ public interface IGCSBucket {
     /** TBC */
     Long getGcsMetaGenerationId();
 
-    /** TBC */
+    /** Number of objects within the bucket. */
     Long getGcsObjectCount();
 
     /** GCS objects within this bucket. */
@@ -374,7 +374,7 @@ public interface IGCSBucket {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -398,13 +398,13 @@ public interface IGCSBucket {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -416,7 +416,7 @@ public interface IGCSBucket {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -431,7 +431,7 @@ public interface IGCSBucket {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

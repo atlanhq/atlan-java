@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -34,7 +34,7 @@ public interface ITable {
 
     public static final String TYPE_NAME = "Table";
 
-    /** TBC */
+    /** Alias for this table. */
     KeywordField ALIAS = new KeywordField("alias", "alias");
 
     /** Number of columns in this table. */
@@ -46,43 +46,43 @@ public interface ITable {
     /** TBC */
     RelationField DIMENSIONS = new RelationField("dimensions");
 
-    /** TBC */
+    /** External location of this table, for example: an S3 object location. */
     KeywordField EXTERNAL_LOCATION = new KeywordField("externalLocation", "externalLocation");
 
-    /** TBC */
+    /** Format of the external location of this table, for example: JSON, CSV, PARQUET, etc. */
     KeywordField EXTERNAL_LOCATION_FORMAT = new KeywordField("externalLocationFormat", "externalLocationFormat");
 
-    /** TBC */
+    /** Region of the external location of this table, for example: S3 region. */
     KeywordField EXTERNAL_LOCATION_REGION = new KeywordField("externalLocationRegion", "externalLocationRegion");
 
     /** TBC */
     RelationField FACTS = new RelationField("facts");
 
-    /** TBC */
+    /** Whether this table is partitioned (true) or not (false). */
     BooleanField IS_PARTITIONED = new BooleanField("isPartitioned", "isPartitioned");
 
-    /** TBC */
+    /** Whether preview queries are allowed for this table (true) or not (false). */
     BooleanField IS_QUERY_PREVIEW = new BooleanField("isQueryPreview", "isQueryPreview");
 
     /** Whether this table is temporary (true) or not (false). */
     BooleanField IS_TEMPORARY = new BooleanField("isTemporary", "isTemporary");
 
-    /** TBC */
+    /** Number of partitions in this table. */
     NumericField PARTITION_COUNT = new NumericField("partitionCount", "partitionCount");
 
-    /** TBC */
+    /** List of partitions in this table. */
     KeywordField PARTITION_LIST = new KeywordField("partitionList", "partitionList");
 
-    /** TBC */
+    /** Partition strategy for this table. */
     KeywordField PARTITION_STRATEGY = new KeywordField("partitionStrategy", "partitionStrategy");
 
-    /** TBC */
+    /** Partitions that exist within this table. */
     RelationField PARTITIONS = new RelationField("partitions");
 
-    /** Queries that involve this table. */
+    /** Queries that access this table. */
     RelationField QUERIES = new RelationField("queries");
 
-    /** TBC */
+    /** Configuration for preview queries. */
     KeywordField QUERY_PREVIEW_CONFIG = new KeywordField("queryPreviewConfig", "queryPreviewConfig");
 
     /** Number of rows in this table. */
@@ -91,7 +91,7 @@ public interface ITable {
     /** Schema in which this table exists. */
     RelationField SCHEMA = new RelationField("atlanSchema");
 
-    /** Size of the table in bytes. */
+    /** Size of this table, in bytes. */
     NumericField SIZE_BYTES = new NumericField("sizeBytes", "sizeBytes");
 
     /** TBC */
@@ -103,7 +103,7 @@ public interface ITable {
     /** TBC */
     SortedSet<String> getAdminUsers();
 
-    /** TBC */
+    /** Alias for this table. */
     String getAlias();
 
     /** TBC */
@@ -301,7 +301,7 @@ public interface ITable {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -358,13 +358,13 @@ public interface ITable {
     /** TBC */
     String getDisplayName();
 
-    /** TBC */
+    /** External location of this table, for example: an S3 object location. */
     String getExternalLocation();
 
-    /** TBC */
+    /** Format of the external location of this table, for example: JSON, CSV, PARQUET, etc. */
     String getExternalLocationFormat();
 
-    /** TBC */
+    /** Region of the external location of this table, for example: S3 region. */
     String getExternalLocationRegion();
 
     /** TBC */
@@ -379,7 +379,7 @@ public interface ITable {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -391,13 +391,13 @@ public interface ITable {
     /** TBC */
     Boolean getIsEditable();
 
-    /** TBC */
+    /** Whether this table is partitioned (true) or not (false). */
     Boolean getIsPartitioned();
 
     /** TBC */
     Boolean getIsProfiled();
 
-    /** TBC */
+    /** Whether preview queries are allowed for this table (true) or not (false). */
     Boolean getIsQueryPreview();
 
     /** Whether this table is temporary (true) or not (false). */
@@ -418,13 +418,13 @@ public interface ITable {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -436,7 +436,7 @@ public interface ITable {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -445,16 +445,16 @@ public interface ITable {
     /** TBC */
     SortedSet<String> getOwnerUsers();
 
-    /** TBC */
+    /** Number of partitions in this table. */
     Long getPartitionCount();
 
-    /** TBC */
+    /** List of partitions in this table. */
     String getPartitionList();
 
-    /** TBC */
+    /** Partition strategy for this table. */
     String getPartitionStrategy();
 
-    /** TBC */
+    /** Partitions that exist within this table. */
     SortedSet<ITablePartition> getPartitions();
 
     /** TBC */
@@ -463,7 +463,7 @@ public interface ITable {
     /** TBC */
     String getQualifiedName();
 
-    /** Queries that involve this table. */
+    /** Queries that access this table. */
     SortedSet<IAtlanQuery> getQueries();
 
     /** TBC */
@@ -472,7 +472,7 @@ public interface ITable {
     /** TBC */
     Long getQueryCountUpdatedAt();
 
-    /** TBC */
+    /** Configuration for preview queries. */
     Map<String, String> getQueryPreviewConfig();
 
     /** TBC */
@@ -481,7 +481,7 @@ public interface ITable {
     /** TBC */
     Map<String, Long> getQueryUserMap();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** Number of rows in this table. */
@@ -502,7 +502,7 @@ public interface ITable {
     /** TBC */
     SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
 
-    /** Size of the table in bytes. */
+    /** Size of this table, in bytes. */
     Long getSizeBytes();
 
     /** TBC */

@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -23,7 +23,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a Snowflake Tag in Atlan.
+ * Instance of a Snowflake tag in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -32,7 +32,7 @@ public interface ISnowflakeTag {
 
     public static final String TYPE_NAME = "SnowflakeTag";
 
-    /** Database schemas to which this tag is applied. */
+    /** Schema in which this Snowflake tag exists. */
     RelationField SCHEMA = new RelationField("atlanSchema");
 
     /** TBC */
@@ -239,7 +239,7 @@ public interface ISnowflakeTag {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -296,7 +296,7 @@ public interface ISnowflakeTag {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -326,7 +326,7 @@ public interface ISnowflakeTag {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
@@ -335,7 +335,7 @@ public interface ISnowflakeTag {
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -347,7 +347,7 @@ public interface ISnowflakeTag {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -374,13 +374,13 @@ public interface ISnowflakeTag {
     /** TBC */
     Map<String, Long> getQueryUserMap();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */
     String getSampleDataUrl();
 
-    /** Database schemas to which this tag is applied. */
+    /** Schema in which this Snowflake tag exists. */
     ISchema getSchema();
 
     /** TBC */

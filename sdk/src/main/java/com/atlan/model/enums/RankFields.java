@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.enums;
 
 import javax.annotation.processing.Generated;
@@ -12,9 +12,9 @@ import lombok.Getter;
 @Deprecated
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 public enum RankFields implements AtlanSearchableField {
-    /** TBC */
+    /** Popularity score for this asset. */
     POPULARITY_SCORE("popularityScore.rank_feature"),
-    /** TBC */
+    /** View score for this asset. */
     VIEW_SCORE("viewScore.rank_feature"),
     ;
 

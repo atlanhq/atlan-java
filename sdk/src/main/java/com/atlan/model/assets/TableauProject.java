@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.Atlan;
@@ -28,7 +28,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Instance of a Tableau project in Atlan.
+ * Instance of a Tableau project in Atlan. These are used to organize other assets and for access control, and can be nested.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -47,17 +47,17 @@ public class TableauProject extends Asset implements ITableauProject, ITableau, 
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Sub-projects that exist within this project. */
     @Attribute
     @Singular
     SortedSet<ITableauProject> childProjects;
 
-    /** TBC */
+    /** Datasources that exist within this project. */
     @Attribute
     @Singular
     SortedSet<ITableauDatasource> datasources;
 
-    /** TBC */
+    /** Flows that exist within this project. */
     @Attribute
     @Singular
     SortedSet<ITableauFlow> flows;
@@ -67,12 +67,12 @@ public class TableauProject extends Asset implements ITableauProject, ITableau, 
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
-    /** TBC */
+    /** Whether this project is a top-level project (true) or not (false). */
     @Attribute
     Boolean isTopLevelProject;
 
@@ -81,33 +81,33 @@ public class TableauProject extends Asset implements ITableauProject, ITableau, 
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** TBC */
+    /** Project in which this sub-project exists. */
     @Attribute
     ITableauProject parentProject;
 
-    /** TBC */
+    /** List of top-level projects with their nested child projects. */
     @Attribute
     @Singular("addProjectHierarchy")
     List<Map<String, String>> projectHierarchy;
 
-    /** TBC */
+    /** Site in which this project exists. */
     @Attribute
     ITableauSite site;
 
-    /** TBC */
+    /** Unique name of the site in which this project exists. */
     @Attribute
     String siteQualifiedName;
 
-    /** TBC */
+    /** Unique name of the top-level project in which this project exists, if this is a nested project. */
     @Attribute
     String topLevelProjectQualifiedName;
 
-    /** TBC */
+    /** Workbooks that exist within this project. */
     @Attribute
     @Singular
     SortedSet<ITableauWorkbook> workbooks;

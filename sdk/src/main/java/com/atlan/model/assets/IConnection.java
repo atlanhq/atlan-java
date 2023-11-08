@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -26,7 +26,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a connection in Atlan.
+ * Instance of a connection to a data source in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -35,85 +35,85 @@ public interface IConnection {
 
     public static final String TYPE_NAME = "Connection";
 
-    /** When true, allow the source to be queried. */
+    /** Whether using this connection to run queries on the source is allowed (true) or not (false). */
     BooleanField ALLOW_QUERY = new BooleanField("allowQuery", "allowQuery");
 
-    /** When true, allow data previews of the source. */
+    /** Whether using this connection to run preview queries on the source is allowed (true) or not (false). */
     BooleanField ALLOW_QUERY_PREVIEW = new BooleanField("allowQueryPreview", "allowQueryPreview");
 
-    /** Type of connection. */
+    /** Type of connection, for example WAREHOUSE, RDBMS, etc. */
     KeywordField CATEGORY = new KeywordField("category", "category");
 
     /** TBC */
     KeywordField CONNECTION_DBT_ENVIRONMENTS =
             new KeywordField("connectionDbtEnvironments", "connectionDbtEnvironments");
 
-    /** TBC */
+    /** Unique identifier (GUID) for the SSO credentials to use for this connection. */
     KeywordField CONNECTION_SSO_CREDENTIAL_GUID =
             new KeywordField("connectionSSOCredentialGuid", "connectionSSOCredentialGuid");
 
-    /** Despite the name, this is not used for anything. Only the value of connectorName impacts icons. */
+    /** Unused. Only the value of connectorType impacts icons. */
     KeywordField CONNECTOR_ICON = new KeywordField("connectorIcon", "connectorIcon");
 
-    /** Despite the name, this is not used for anything. Only the value of connectorName impacts icons. */
+    /** Unused. Only the value of connectorType impacts icons. */
     KeywordField CONNECTOR_IMAGE = new KeywordField("connectorImage", "connectorImage");
 
-    /** TBC */
+    /** Credential strategy to use for this connection for queries. */
     KeywordField CREDENTIAL_STRATEGY = new KeywordField("credentialStrategy", "credentialStrategy");
 
-    /** TBC */
+    /** Unique identifier (GUID) for the default credentials to use for this connection. */
     KeywordField DEFAULT_CREDENTIAL_GUID = new KeywordField("defaultCredentialGuid", "defaultCredentialGuid");
 
-    /** Whether the connection has popularity insights (true) or not (false). */
+    /** Whether this connection has popularity insights (true) or not (false). */
     BooleanField HAS_POPULARITY_INSIGHTS = new BooleanField("hasPopularityInsights", "hasPopularityInsights");
 
-    /** Host name of the connection's source. */
+    /** Host name of this connection's source. */
     KeywordField HOST = new KeywordField("host", "host");
 
     /** Whether sample data can be previewed for this connection (true) or not (false). */
     BooleanField IS_SAMPLE_DATA_PREVIEW_ENABLED =
             new BooleanField("isSampleDataPreviewEnabled", "isSampleDataPreviewEnabled");
 
-    /** A long integer indicating after how many rows heka should start uploading result to storage */
+    /** Number of rows after which results should be uploaded to storage. */
     NumericField OBJECT_STORAGE_UPLOAD_THRESHOLD =
             new NumericField("objectStorageUploadThreshold", "objectStorageUploadThreshold");
 
-    /** TBC */
+    /** Policy strategy to use for this connection. */
     KeywordField POLICY_STRATEGY = new KeywordField("policyStrategy", "policyStrategy");
 
     /** Number of days over which popularity is calculated, for example 30 days. */
     NumericField POPULARITY_INSIGHTS_TIMEFRAME =
             new NumericField("popularityInsightsTimeframe", "popularityInsightsTimeframe");
 
-    /** Port number to the connection's source. */
+    /** Port number to this connection's source. */
     NumericField PORT = new NumericField("port", "port");
 
-    /** TBC */
+    /** Credential strategy to use for this connection for preview queries. */
     KeywordField PREVIEW_CREDENTIAL_STRATEGY =
             new KeywordField("previewCredentialStrategy", "previewCredentialStrategy");
 
-    /** TBC */
+    /** Query config for this connection. */
     KeywordField QUERY_CONFIG = new KeywordField("queryConfig", "queryConfig");
 
-    /** TBC */
+    /** Configuration for preview queries. */
     KeywordField QUERY_PREVIEW_CONFIG = new KeywordField("queryPreviewConfig", "queryPreviewConfig");
 
-    /** TBC */
+    /** Maximum time a query should be allowed to run before timing out. */
     NumericField QUERY_TIMEOUT = new NumericField("queryTimeout", "queryTimeout");
 
-    /** TBC */
+    /** Username strategy to use for this connection for queries. */
     KeywordField QUERY_USERNAME_STRATEGY = new KeywordField("queryUsernameStrategy", "queryUsernameStrategy");
 
     /** Maximum number of rows that can be returned for the source. */
     NumericField ROW_LIMIT = new NumericField("rowLimit", "rowLimit");
 
-    /** Despite the name, this is not used for anything. Only the value of connectorName impacts icons. */
+    /** Unused. Only the value of connectorType impacts icons. */
     KeywordField SOURCE_LOGO = new KeywordField("sourceLogo", "sourceLogo");
 
-    /** Subtype of the connection. */
+    /** Subcategory of this connection. */
     KeywordField SUB_CATEGORY = new KeywordField("subCategory", "subCategory");
 
-    /** A Boolean flag indicating whether to upload to S3, GCP, or another storage location */
+    /** Whether to upload to S3, GCP, or another storage location (true) or not (false). */
     BooleanField USE_OBJECT_STORAGE = new BooleanField("useObjectStorage", "useObjectStorage");
 
     /** TBC */
@@ -128,10 +128,10 @@ public interface IConnection {
     /** TBC */
     SortedSet<String> getAdminUsers();
 
-    /** When true, allow the source to be queried. */
+    /** Whether using this connection to run queries on the source is allowed (true) or not (false). */
     Boolean getAllowQuery();
 
-    /** When true, allow data previews of the source. */
+    /** Whether using this connection to run preview queries on the source is allowed (true) or not (false). */
     Boolean getAllowQueryPreview();
 
     /** TBC */
@@ -329,10 +329,10 @@ public interface IConnection {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
-    /** Type of connection. */
+    /** Type of connection, for example WAREHOUSE, RDBMS, etc. */
     AtlanConnectionCategory getCategory();
 
     /** TBC */
@@ -356,25 +356,25 @@ public interface IConnection {
     /** TBC */
     String getConnectionQualifiedName();
 
-    /** TBC */
+    /** Unique identifier (GUID) for the SSO credentials to use for this connection. */
     String getConnectionSSOCredentialGuid();
 
-    /** Despite the name, this is not used for anything. Only the value of connectorName impacts icons. */
+    /** Unused. Only the value of connectorType impacts icons. */
     String getConnectorIcon();
 
-    /** Despite the name, this is not used for anything. Only the value of connectorName impacts icons. */
+    /** Unused. Only the value of connectorType impacts icons. */
     String getConnectorImage();
 
     /** TBC */
     AtlanConnectorType getConnectorType();
 
-    /** TBC */
+    /** Credential strategy to use for this connection for queries. */
     String getCredentialStrategy();
 
     /** TBC */
     String getDbtQualifiedName();
 
-    /** TBC */
+    /** Unique identifier (GUID) for the default credentials to use for this connection. */
     String getDefaultCredentialGuid();
 
     /** TBC */
@@ -389,10 +389,10 @@ public interface IConnection {
     /** TBC */
     Boolean getHasLineage();
 
-    /** Whether the connection has popularity insights (true) or not (false). */
+    /** Whether this connection has popularity insights (true) or not (false). */
     Boolean getHasPopularityInsights();
 
-    /** Host name of the connection's source. */
+    /** Host name of this connection's source. */
     String getHost();
 
     /** TBC */
@@ -419,13 +419,13 @@ public interface IConnection {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -434,7 +434,7 @@ public interface IConnection {
     /** TBC */
     String getName();
 
-    /** A long integer indicating after how many rows heka should start uploading result to storage */
+    /** Number of rows after which results should be uploaded to storage. */
     Long getObjectStorageUploadThreshold();
 
     /** TBC */
@@ -443,7 +443,7 @@ public interface IConnection {
     /** TBC */
     SortedSet<String> getOwnerUsers();
 
-    /** TBC */
+    /** Policy strategy to use for this connection. */
     String getPolicyStrategy();
 
     /** Number of days over which popularity is calculated, for example 30 days. */
@@ -452,28 +452,28 @@ public interface IConnection {
     /** TBC */
     Double getPopularityScore();
 
-    /** Port number to the connection's source. */
+    /** Port number to this connection's source. */
     Integer getPort();
 
-    /** TBC */
+    /** Credential strategy to use for this connection for preview queries. */
     String getPreviewCredentialStrategy();
 
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** Query config for this connection. */
     String getQueryConfig();
 
-    /** TBC */
+    /** Configuration for preview queries. */
     Map<String, String> getQueryPreviewConfig();
 
-    /** TBC */
+    /** Maximum time a query should be allowed to run before timing out. */
     Long getQueryTimeout();
 
-    /** TBC */
+    /** Username strategy to use for this connection for queries. */
     QueryUsernameStrategy getQueryUsernameStrategy();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** Maximum number of rows that can be returned for the source. */
@@ -503,7 +503,7 @@ public interface IConnection {
     /** TBC */
     Long getSourceLastReadAt();
 
-    /** Despite the name, this is not used for anything. Only the value of connectorName impacts icons. */
+    /** Unused. Only the value of connectorType impacts icons. */
     String getSourceLogo();
 
     /** TBC */
@@ -566,7 +566,7 @@ public interface IConnection {
     /** TBC */
     List<StarredDetails> getStarredDetails();
 
-    /** Subtype of the connection. */
+    /** Subcategory of this connection. */
     String getSubCategory();
 
     /** TBC */
@@ -575,7 +575,7 @@ public interface IConnection {
     /** TBC */
     String getTenantId();
 
-    /** A Boolean flag indicating whether to upload to S3, GCP, or another storage location */
+    /** Whether to upload to S3, GCP, or another storage location (true) or not (false). */
     Boolean getUseObjectStorage();
 
     /** TBC */

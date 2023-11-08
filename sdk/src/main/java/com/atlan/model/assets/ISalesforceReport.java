@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -38,13 +38,13 @@ public interface ISalesforceReport {
     /** List of column names on the report. */
     KeywordField DETAIL_COLUMNS = new KeywordField("detailColumns", "detailColumns");
 
-    /** TBC */
+    /** Organization in which this report exists. */
     RelationField ORGANIZATION = new RelationField("organization");
 
     /** Type of report in Salesforce. */
     KeywordField REPORT_TYPE = new KeywordField("reportType", "reportType");
 
-    /** ID of the report in Salesforce. */
+    /** Identifier of the report in Salesforce. */
     KeywordField SOURCE_ID = new KeywordField("sourceId", "sourceId");
 
     /** TBC */
@@ -254,7 +254,7 @@ public interface ISalesforceReport {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -302,7 +302,7 @@ public interface ISalesforceReport {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -326,13 +326,13 @@ public interface ISalesforceReport {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -341,7 +341,7 @@ public interface ISalesforceReport {
     /** TBC */
     String getName();
 
-    /** TBC */
+    /** Organization in which this report exists. */
     ISalesforceOrganization getOrganization();
 
     /** TBC */
@@ -350,7 +350,7 @@ public interface ISalesforceReport {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -365,7 +365,7 @@ public interface ISalesforceReport {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** Type of report in Salesforce. */
@@ -392,7 +392,7 @@ public interface ISalesforceReport {
     /** TBC */
     String getSourceEmbedURL();
 
-    /** ID of the report in Salesforce. */
+    /** Identifier of the report in Salesforce. */
     String getSourceId();
 
     /** TBC */

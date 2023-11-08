@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -32,32 +32,32 @@ public interface ITableauWorksheet {
 
     public static final String TYPE_NAME = "TableauWorksheet";
 
-    /** TBC */
+    /** Calculated fields that are used in this worksheet. */
     RelationField CALCULATED_FIELDS = new RelationField("calculatedFields");
 
-    /** TBC */
+    /** Dashboards that use this worksheet. */
     RelationField DASHBOARDS = new RelationField("dashboards");
 
-    /** TBC */
+    /** Datasource fields this worksheet uses. */
     RelationField DATASOURCE_FIELDS = new RelationField("datasourceFields");
 
-    /** TBC */
+    /** List of top-level projects with their nested child projects. */
     KeywordField PROJECT_HIERARCHY = new KeywordField("projectHierarchy", "projectHierarchy");
 
-    /** TBC */
+    /** Unique name of the project in which this worksheet exists. */
     KeywordField PROJECT_QUALIFIED_NAME = new KeywordField("projectQualifiedName", "projectQualifiedName");
 
-    /** TBC */
+    /** Unique name of the site in which this worksheet exists. */
     KeywordField SITE_QUALIFIED_NAME = new KeywordField("siteQualifiedName", "siteQualifiedName");
 
-    /** TBC */
+    /** Unique name of the top-level project in which this worksheet exists. */
     KeywordField TOP_LEVEL_PROJECT_QUALIFIED_NAME =
             new KeywordField("topLevelProjectQualifiedName", "topLevelProjectQualifiedName");
 
-    /** TBC */
+    /** Workbook in which this worksheet exists. */
     RelationField WORKBOOK = new RelationField("workbook");
 
-    /** TBC */
+    /** Unique name of the workbook in which this worksheet exists. */
     KeywordField WORKBOOK_QUALIFIED_NAME = new KeywordField("workbookQualifiedName", "workbookQualifiedName");
 
     /** TBC */
@@ -264,10 +264,10 @@ public interface ITableauWorksheet {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
-    /** TBC */
+    /** Calculated fields that are used in this worksheet. */
     SortedSet<ITableauCalculatedField> getCalculatedFields();
 
     /** TBC */
@@ -291,10 +291,10 @@ public interface ITableauWorksheet {
     /** TBC */
     AtlanConnectorType getConnectorType();
 
-    /** TBC */
+    /** Dashboards that use this worksheet. */
     SortedSet<ITableauDashboard> getDashboards();
 
-    /** TBC */
+    /** Datasource fields this worksheet uses. */
     SortedSet<ITableauDatasourceField> getDatasourceFields();
 
     /** TBC */
@@ -315,7 +315,7 @@ public interface ITableauWorksheet {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -339,13 +339,13 @@ public interface ITableauWorksheet {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -357,7 +357,7 @@ public interface ITableauWorksheet {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -369,16 +369,16 @@ public interface ITableauWorksheet {
     /** TBC */
     Double getPopularityScore();
 
-    /** TBC */
+    /** List of top-level projects with their nested child projects. */
     List<Map<String, String>> getProjectHierarchy();
 
-    /** TBC */
+    /** Unique name of the project in which this worksheet exists. */
     String getProjectQualifiedName();
 
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */
@@ -387,7 +387,7 @@ public interface ITableauWorksheet {
     /** TBC */
     SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
 
-    /** TBC */
+    /** Unique name of the site in which this worksheet exists. */
     String getSiteQualifiedName();
 
     /** TBC */
@@ -474,7 +474,7 @@ public interface ITableauWorksheet {
     /** TBC */
     String getTenantId();
 
-    /** TBC */
+    /** Unique name of the top-level project in which this worksheet exists. */
     String getTopLevelProjectQualifiedName();
 
     /** TBC */
@@ -489,10 +489,10 @@ public interface ITableauWorksheet {
     /** TBC */
     SortedSet<String> getViewerUsers();
 
-    /** TBC */
+    /** Workbook in which this worksheet exists. */
     ITableauWorkbook getWorkbook();
 
-    /** TBC */
+    /** Unique name of the workbook in which this worksheet exists. */
     String getWorkbookQualifiedName();
 
     /** Name of the type that defines the asset. */

@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.Atlan;
@@ -38,7 +38,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Instance of a connection in Atlan.
+ * Instance of a connection to a data source in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -57,15 +57,15 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** When true, allow the source to be queried. */
+    /** Whether using this connection to run queries on the source is allowed (true) or not (false). */
     @Attribute
     Boolean allowQuery;
 
-    /** When true, allow data previews of the source. */
+    /** Whether using this connection to run preview queries on the source is allowed (true) or not (false). */
     @Attribute
     Boolean allowQueryPreview;
 
-    /** Type of connection. */
+    /** Type of connection, for example WAREHOUSE, RDBMS, etc. */
     @Attribute
     AtlanConnectionCategory category;
 
@@ -74,31 +74,31 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
     @Singular
     SortedSet<String> connectionDbtEnvironments;
 
-    /** TBC */
+    /** Unique identifier (GUID) for the SSO credentials to use for this connection. */
     @Attribute
     String connectionSSOCredentialGuid;
 
-    /** Despite the name, this is not used for anything. Only the value of connectorName impacts icons. */
+    /** Unused. Only the value of connectorType impacts icons. */
     @Attribute
     String connectorIcon;
 
-    /** Despite the name, this is not used for anything. Only the value of connectorName impacts icons. */
+    /** Unused. Only the value of connectorType impacts icons. */
     @Attribute
     String connectorImage;
 
-    /** TBC */
+    /** Credential strategy to use for this connection for queries. */
     @Attribute
     String credentialStrategy;
 
-    /** TBC */
+    /** Unique identifier (GUID) for the default credentials to use for this connection. */
     @Attribute
     String defaultCredentialGuid;
 
-    /** Whether the connection has popularity insights (true) or not (false). */
+    /** Whether this connection has popularity insights (true) or not (false). */
     @Attribute
     Boolean hasPopularityInsights;
 
-    /** Host name of the connection's source. */
+    /** Host name of this connection's source. */
     @Attribute
     String host;
 
@@ -106,11 +106,11 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
     @Attribute
     Boolean isSampleDataPreviewEnabled;
 
-    /** A long integer indicating after how many rows heka should start uploading result to storage */
+    /** Number of rows after which results should be uploaded to storage. */
     @Attribute
     Long objectStorageUploadThreshold;
 
-    /** TBC */
+    /** Policy strategy to use for this connection. */
     @Attribute
     String policyStrategy;
 
@@ -118,28 +118,28 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
     @Attribute
     Long popularityInsightsTimeframe;
 
-    /** Port number to the connection's source. */
+    /** Port number to this connection's source. */
     @Attribute
     Integer port;
 
-    /** TBC */
+    /** Credential strategy to use for this connection for preview queries. */
     @Attribute
     String previewCredentialStrategy;
 
-    /** TBC */
+    /** Query config for this connection. */
     @Attribute
     String queryConfig;
 
-    /** TBC */
+    /** Configuration for preview queries. */
     @Attribute
     @Singular("putQueryPreviewConfig")
     Map<String, String> queryPreviewConfig;
 
-    /** TBC */
+    /** Maximum time a query should be allowed to run before timing out. */
     @Attribute
     Long queryTimeout;
 
-    /** TBC */
+    /** Username strategy to use for this connection for queries. */
     @Attribute
     QueryUsernameStrategy queryUsernameStrategy;
 
@@ -147,15 +147,15 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
     @Attribute
     Long rowLimit;
 
-    /** Despite the name, this is not used for anything. Only the value of connectorName impacts icons. */
+    /** Unused. Only the value of connectorType impacts icons. */
     @Attribute
     String sourceLogo;
 
-    /** Subtype of the connection. */
+    /** Subcategory of this connection. */
     @Attribute
     String subCategory;
 
-    /** A Boolean flag indicating whether to upload to S3, GCP, or another storage location */
+    /** Whether to upload to S3, GCP, or another storage location (true) or not (false). */
     @Attribute
     Boolean useObjectStorage;
 

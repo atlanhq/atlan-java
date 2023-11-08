@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.Atlan;
@@ -28,7 +28,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * The MatillionJob Type repesents a Job in matillion. Jobs in matillion design, organize and execute workflows which are responsible for ETL data processing.
+ * Instance of a Matillion job in Atlan. Jobs in Matillion design, organize and execute workflows which are responsible for ETL data processing.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -51,41 +51,41 @@ public class MatillionJob extends Asset implements IMatillionJob, IMatillion, IC
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
-    /** TBC */
+    /** Components that exist within this job. */
     @Attribute
     @Singular
     SortedSet<IMatillionComponent> matillionComponents;
 
-    /** The count of components under a specific matillion job */
+    /** Number of components within the job. */
     @Attribute
     Long matillionJobComponentCount;
 
-    /** The hierarchy path of a job under a matillion project. Jobs can be managed at multiple folder levels under a matillion project */
+    /** Path of the job within the project. Jobs can be managed at multiple folder levels within a project. */
     @Attribute
     String matillionJobPath;
 
-    /** Specifies whether a matillion job is scheduled weekly or monthly */
+    /** How the job is scheduled, for example: weekly or monthly. */
     @Attribute
     String matillionJobSchedule;
 
-    /** The type of a job. There are two kinds of jobs in matillion - orchestration and transformation */
+    /** Type of the job, for example: orchestration or transformation. */
     @Attribute
     MatillionJobType matillionJobType;
 
-    /** TBC */
+    /** Project in which the job exists. */
     @Attribute
     IMatillionProject matillionProject;
 
-    /** Name of the matillion project to which the matillion job belongs */
+    /** Simple name of the project to which the job belongs. */
     @Attribute
     String matillionProjectName;
 
-    /** Qualified name of the matillion project to which the matillion job belongs */
+    /** Unique name of the project to which the job belongs. */
     @Attribute
     String matillionProjectQualifiedName;
 
@@ -98,7 +98,7 @@ public class MatillionJob extends Asset implements IMatillionJob, IMatillion, IC
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;

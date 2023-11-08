@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.Atlan;
@@ -51,7 +51,7 @@ public class MetabaseCollection extends Asset
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -68,7 +68,7 @@ public class MetabaseCollection extends Asset
     @Attribute
     String metabaseColor;
 
-    /** TBC */
+    /** Dashboards that exist within this collection. */
     @Attribute
     @Singular
     SortedSet<IMetabaseDashboard> metabaseDashboards;
@@ -81,7 +81,7 @@ public class MetabaseCollection extends Asset
     @Attribute
     String metabaseNamespace;
 
-    /** TBC */
+    /** Questions that exist within this collection. */
     @Attribute
     @Singular
     SortedSet<IMetabaseQuestion> metabaseQuestions;
@@ -95,7 +95,7 @@ public class MetabaseCollection extends Asset
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;

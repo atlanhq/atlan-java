@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -34,20 +34,20 @@ public interface IPresetDataset {
 
     public static final String TYPE_NAME = "PresetDataset";
 
-    /** Collection in which the dataset exists. */
+    /** Dashboard in which this dataset exists. */
     RelationField PRESET_DASHBOARD = new RelationField("presetDashboard");
 
-    /** Name of the data source for the dataset. */
+    /** TBC */
     KeywordTextStemmedField PRESET_DATASET_DATASOURCE_NAME = new KeywordTextStemmedField(
             "presetDatasetDatasourceName",
             "presetDatasetDatasourceName.keyword",
             "presetDatasetDatasourceName",
             "presetDatasetDatasourceName.stemmed");
 
-    /** ID of the dataset. */
+    /** TBC */
     NumericField PRESET_DATASET_ID = new NumericField("presetDatasetId", "presetDatasetId");
 
-    /** Type of the dataset. */
+    /** TBC */
     KeywordField PRESET_DATASET_TYPE = new KeywordField("presetDatasetType", "presetDatasetType");
 
     /** TBC */
@@ -254,7 +254,7 @@ public interface IPresetDataset {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -296,7 +296,7 @@ public interface IPresetDataset {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -320,13 +320,13 @@ public interface IPresetDataset {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -338,7 +338,7 @@ public interface IPresetDataset {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -350,7 +350,7 @@ public interface IPresetDataset {
     /** TBC */
     Double getPopularityScore();
 
-    /** Collection in which the dataset exists. */
+    /** Dashboard in which this dataset exists. */
     IPresetDashboard getPresetDashboard();
 
     /** TBC */
@@ -359,13 +359,13 @@ public interface IPresetDataset {
     /** TBC */
     String getPresetDashboardQualifiedName();
 
-    /** Name of the data source for the dataset. */
+    /** TBC */
     String getPresetDatasetDatasourceName();
 
-    /** ID of the dataset. */
+    /** TBC */
     Long getPresetDatasetId();
 
-    /** Type of the dataset. */
+    /** TBC */
     String getPresetDatasetType();
 
     /** TBC */
@@ -377,7 +377,7 @@ public interface IPresetDataset {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

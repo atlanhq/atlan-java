@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.Atlan;
@@ -94,7 +94,7 @@ public class S3Object extends Asset
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -104,16 +104,16 @@ public class S3Object extends Asset
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** Name of the bucket in which the object exists. */
+    /** Simple name of the bucket in which this object exists. */
     @Attribute
     String s3BucketName;
 
-    /** qualifiedName of the bucket in which the object exists. */
+    /** Unique name of the bucket in which this object exists. */
     @Attribute
     String s3BucketQualifiedName;
 
@@ -125,19 +125,19 @@ public class S3Object extends Asset
     @Attribute
     String s3Encryption;
 
-    /** Information about how the object's content should be presented. */
+    /** Information about how this object's content should be presented. */
     @Attribute
     String s3ObjectContentDisposition;
 
-    /** Type of content in the object. */
+    /** Type of content in this object, for example: text/plain, application/json, etc. */
     @Attribute
     String s3ObjectContentType;
 
-    /** Unique identity of the object in an S3 bucket. This is usually the concatenation of any prefix (folder) in the S3 bucket with the name of the object (file) itself. */
+    /** Unique identity of this object in an S3 bucket. This is usually the concatenation of any prefix (folder) in the S3 bucket with the name of the object (file) itself. */
     @Attribute
     String s3ObjectKey;
 
-    /** Time (epoch) at which the object was last updated, in milliseconds, or when it was created if it has never been modified. */
+    /** Time (epoch) at which this object was last updated, in milliseconds, or when it was created if it has never been modified. */
     @Attribute
     Long s3ObjectLastModifiedTime;
 
@@ -145,11 +145,11 @@ public class S3Object extends Asset
     @Attribute
     Long s3ObjectSize;
 
-    /** Storage class used for storing the object. */
+    /** Storage class used for storing this object, for example: standard, intelligent-tiering, glacier, etc. */
     @Attribute
     String s3ObjectStorageClass;
 
-    /** Version of the object. This is only applicable when versioning is enabled on the bucket in which the object exists. */
+    /** Version of this object. This is only applicable when versioning is enabled on the bucket in which this object exists. */
     @Attribute
     String s3ObjectVersionId;
 

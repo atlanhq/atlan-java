@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.Atlan;
@@ -51,7 +51,7 @@ public class PresetDataset extends Asset implements IPresetDataset, IPreset, IBI
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -61,12 +61,12 @@ public class PresetDataset extends Asset implements IPresetDataset, IPreset, IBI
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** Collection in which the dataset exists. */
+    /** Dashboard in which this dataset exists. */
     @Attribute
     IPresetDashboard presetDashboard;
 
@@ -78,15 +78,15 @@ public class PresetDataset extends Asset implements IPresetDataset, IPreset, IBI
     @Attribute
     String presetDashboardQualifiedName;
 
-    /** Name of the data source for the dataset. */
+    /** TBC */
     @Attribute
     String presetDatasetDatasourceName;
 
-    /** ID of the dataset. */
+    /** TBC */
     @Attribute
     Long presetDatasetId;
 
-    /** Type of the dataset. */
+    /** TBC */
     @Attribute
     String presetDatasetType;
 

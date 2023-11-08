@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.generators;
 
 import com.atlan.model.typedefs.TypeDef;
@@ -30,7 +30,7 @@ public abstract class TypeGenerator {
 
     protected TypeGenerator(GeneratorConfig cfg) {
         this.cfg = cfg;
-        this.cache = ModelCache.getInstance(cfg);
+        this.cache = ModelCache.getInstance();
         this.packageRoot = cfg.getPackageRoot();
         this.generatorName = cfg.getGeneratorName();
     }
@@ -38,7 +38,7 @@ public abstract class TypeGenerator {
     protected TypeGenerator(TypeDef typeDef, GeneratorConfig cfg) {
         this.originalName = typeDef.getDisplayName() == null ? typeDef.getName() : typeDef.getDisplayName();
         this.cfg = cfg;
-        this.cache = ModelCache.getInstance(cfg);
+        this.cache = ModelCache.getInstance();
         this.packageRoot = cfg.getPackageRoot();
         this.generatorName = cfg.getGeneratorName();
     }

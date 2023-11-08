@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.Atlan;
@@ -28,7 +28,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Instance of a Power BI dashboard in Atlan.
+ * Instance of a Power BI dashboard in Atlan. Dashboards are a single page, often called a canvas, that tell a story through visualization.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -52,7 +52,7 @@ public class PowerBIDashboard extends Asset
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -62,7 +62,7 @@ public class PowerBIDashboard extends Asset
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
@@ -83,24 +83,24 @@ public class PowerBIDashboard extends Asset
     @Attribute
     String powerBITableQualifiedName;
 
-    /** TBC */
+    /** Number of tiles in this table. */
     @Attribute
     Long tileCount;
 
-    /** TBC */
+    /** Tiles that exist within this dashboard. */
     @Attribute
     @Singular
     SortedSet<IPowerBITile> tiles;
 
-    /** TBC */
+    /** Deprecated. See 'sourceUrl' instead. */
     @Attribute
     String webUrl;
 
-    /** TBC */
+    /** Workspace in which this dashboard exists. */
     @Attribute
     IPowerBIWorkspace workspace;
 
-    /** TBC */
+    /** Unique name of the workspace in which this dashboard exists. */
     @Attribute
     String workspaceQualifiedName;
 

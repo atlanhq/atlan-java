@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.structs;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -37,7 +37,7 @@ public class MCRuleSchedule extends AtlanStruct {
     /** When the first execution of the rule should occur (blank means immediate). */
     Long mcRuleScheduleStartTime;
 
-    /** TBC */
+    /** Crontab for the schedule. */
     String mcRuleScheduleCrontab;
 
     /**
@@ -45,7 +45,7 @@ public class MCRuleSchedule extends AtlanStruct {
      * @param mcRuleScheduleType Type of schedule for the rule, for example dynamic or manual.
      * @param mcRuleScheduleIntervalInMinutes How often the monitor should run, in minutes.
      * @param mcRuleScheduleStartTime When the first execution of the rule should occur (blank means immediate).
-     * @param mcRuleScheduleCrontab TBC
+     * @param mcRuleScheduleCrontab Crontab for the schedule.
      * @return a MCRuleSchedule with the provided information
      */
     public static MCRuleSchedule of(

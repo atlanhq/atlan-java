@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.Atlan;
@@ -45,17 +45,17 @@ public class Folder extends Asset implements IFolder, INamespace, IAsset, IRefer
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Folders that exist within this namespace. */
     @Attribute
     @Singular
     SortedSet<IFolder> childrenFolders;
 
-    /** TBC */
+    /** Queries that exist within this namespace. */
     @Attribute
     @Singular
     SortedSet<IAtlanQuery> childrenQueries;
 
-    /** qualifiedName of the collection in which this folder exists. */
+    /** Unique name of the collection in which this folder exists. */
     @Attribute
     String collectionQualifiedName;
 
@@ -63,7 +63,7 @@ public class Folder extends Asset implements IFolder, INamespace, IAsset, IRefer
     @Attribute
     INamespace parent;
 
-    /** TBC */
+    /** Unique name of the parent folder or collection in which this folder exists. */
     @Attribute
     String parentQualifiedName;
 

@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -24,7 +24,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Soda Check
+ * Instance of a Soda check in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -39,14 +39,14 @@ public interface ISodaCheck {
     /** TBC */
     RelationField SODA_CHECK_COLUMNS = new RelationField("sodaCheckColumns");
 
-    /** Check definition */
+    /** Definition of the check in Soda. */
     KeywordField SODA_CHECK_DEFINITION = new KeywordField("sodaCheckDefinition", "sodaCheckDefinition");
 
-    /** Check status */
+    /** Status of the check in Soda. */
     KeywordField SODA_CHECK_EVALUATION_STATUS =
             new KeywordField("sodaCheckEvaluationStatus", "sodaCheckEvaluationStatus");
 
-    /** Check Id */
+    /** Identifier of the check in Soda. */
     KeywordField SODA_CHECK_ID = new KeywordField("sodaCheckId", "sodaCheckId");
 
     /** TBC */
@@ -259,7 +259,7 @@ public interface ISodaCheck {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -301,7 +301,7 @@ public interface ISodaCheck {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -325,13 +325,13 @@ public interface ISodaCheck {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -343,7 +343,7 @@ public interface ISodaCheck {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -358,7 +358,7 @@ public interface ISodaCheck {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */
@@ -373,13 +373,13 @@ public interface ISodaCheck {
     /** TBC */
     SortedSet<IColumn> getSodaCheckColumns();
 
-    /** Check definition */
+    /** Definition of the check in Soda. */
     String getSodaCheckDefinition();
 
-    /** Check status */
+    /** Status of the check in Soda. */
     String getSodaCheckEvaluationStatus();
 
-    /** Check Id */
+    /** Identifier of the check in Soda. */
     String getSodaCheckId();
 
     /** TBC */

@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -33,34 +33,34 @@ public interface ILookerDashboard {
 
     public static final String TYPE_NAME = "LookerDashboard";
 
-    /** TBC */
+    /** Folder in which the dashboard exists. */
     RelationField FOLDER = new RelationField("folder");
 
-    /** TBC */
+    /** Name of the parent folder in Looker that contains this dashboard. */
     KeywordField FOLDER_NAME = new KeywordField("folderName", "folderName");
 
-    /** TBC */
+    /** Looks that are used within this dashboard. */
     RelationField LOOKS = new RelationField("looks");
 
-    /** TBC */
+    /** Timestamp (epoch) when the dashboard was last accessed by a user, in milliseconds. */
     NumericField SOURCE_LAST_ACCESSED_AT = new NumericField("sourceLastAccessedAt", "sourceLastAccessedAt");
 
-    /** TBC */
+    /** Timestamp (epoch) when the dashboard was last viewed by a user. */
     NumericField SOURCE_LAST_VIEWED_AT = new NumericField("sourceLastViewedAt", "sourceLastViewedAt");
 
-    /** TBC */
+    /** Identifier of the dashboard's content metadata, from Looker. */
     NumericField SOURCE_METADATA_ID = new NumericField("sourceMetadataId", "sourceMetadataId");
 
-    /** TBC */
+    /** Identifier of the user who created this dashboard, from Looker. */
     NumericField SOURCE_USER_ID = new NumericField("sourceUserId", "sourceUserId");
 
-    /** TBC */
+    /** Number of times the dashboard has been viewed through the Looker web UI. */
     NumericField SOURCE_VIEW_COUNT = new NumericField("sourceViewCount", "sourceViewCount");
 
-    /** TBC */
+    /** Identifier of the user who last updated the dashboard, from Looker. */
     NumericField SOURCELAST_UPDATER_ID = new NumericField("sourcelastUpdaterId", "sourcelastUpdaterId");
 
-    /** TBC */
+    /** Tiles that exist within this dashboard. */
     RelationField TILES = new RelationField("tiles");
 
     /** TBC */
@@ -267,7 +267,7 @@ public interface ILookerDashboard {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -303,10 +303,10 @@ public interface ILookerDashboard {
     /** TBC */
     SortedSet<IFile> getFiles();
 
-    /** TBC */
+    /** Folder in which the dashboard exists. */
     ILookerFolder getFolder();
 
-    /** TBC */
+    /** Name of the parent folder in Looker that contains this dashboard. */
     String getFolderName();
 
     /** TBC */
@@ -315,7 +315,7 @@ public interface ILookerDashboard {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -339,16 +339,16 @@ public interface ILookerDashboard {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
-    /** TBC */
+    /** Looks that are used within this dashboard. */
     SortedSet<ILookerLook> getLooks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -360,7 +360,7 @@ public interface ILookerDashboard {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -375,7 +375,7 @@ public interface ILookerDashboard {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */
@@ -399,16 +399,16 @@ public interface ILookerDashboard {
     /** TBC */
     String getSourceEmbedURL();
 
-    /** TBC */
+    /** Timestamp (epoch) when the dashboard was last accessed by a user, in milliseconds. */
     Long getSourceLastAccessedAt();
 
     /** TBC */
     Long getSourceLastReadAt();
 
-    /** TBC */
+    /** Timestamp (epoch) when the dashboard was last viewed by a user. */
     Long getSourceLastViewedAt();
 
-    /** TBC */
+    /** Identifier of the dashboard's content metadata, from Looker. */
     Integer getSourceMetadataId();
 
     /** TBC */
@@ -462,13 +462,13 @@ public interface ILookerDashboard {
     /** TBC */
     String getSourceUpdatedBy();
 
-    /** TBC */
+    /** Identifier of the user who created this dashboard, from Looker. */
     Integer getSourceUserId();
 
-    /** TBC */
+    /** Number of times the dashboard has been viewed through the Looker web UI. */
     Integer getSourceViewCount();
 
-    /** TBC */
+    /** Identifier of the user who last updated the dashboard, from Looker. */
     Integer getSourcelastUpdaterId();
 
     /** TBC */
@@ -486,7 +486,7 @@ public interface ILookerDashboard {
     /** TBC */
     String getTenantId();
 
-    /** TBC */
+    /** Tiles that exist within this dashboard. */
     SortedSet<ILookerTile> getTiles();
 
     /** TBC */

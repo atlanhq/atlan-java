@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.Atlan;
@@ -50,11 +50,11 @@ public class SalesforceObject extends Asset
     @Attribute
     String apiName;
 
-    /** Number of fields in the object. */
+    /** Number of fields in this object. */
     @Attribute
     Long fieldCount;
 
-    /** TBC */
+    /** Fields that exist within this object. */
     @Attribute
     @Singular
     SortedSet<ISalesforceField> fields;
@@ -64,20 +64,20 @@ public class SalesforceObject extends Asset
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
-    /** Whether the object is a custom object (true) or not (false). */
+    /** Whether this object is a custom object (true) or not (false). */
     @Attribute
     Boolean isCustom;
 
-    /** TBC */
+    /** Whether this object is mergable (true) or not (false). */
     @Attribute
     Boolean isMergable;
 
-    /** TBC */
+    /** Whether this object is queryable (true) or not (false). */
     @Attribute
     Boolean isQueryable;
 
@@ -86,7 +86,7 @@ public class SalesforceObject extends Asset
     @Singular
     SortedSet<ISalesforceField> lookupFields;
 
-    /** TBC */
+    /** Organization in which this object exists. */
     @Attribute
     ISalesforceOrganization organization;
 
@@ -99,7 +99,7 @@ public class SalesforceObject extends Asset
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;

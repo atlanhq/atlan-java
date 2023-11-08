@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.Atlan;
@@ -27,7 +27,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Soda Check
+ * Instance of a Soda check in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -50,7 +50,7 @@ public class SodaCheck extends Asset implements ISodaCheck, ISoda, IDataQuality,
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -60,7 +60,7 @@ public class SodaCheck extends Asset implements ISodaCheck, ISoda, IDataQuality,
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
@@ -75,15 +75,15 @@ public class SodaCheck extends Asset implements ISodaCheck, ISoda, IDataQuality,
     @Singular
     SortedSet<IColumn> sodaCheckColumns;
 
-    /** Check definition */
+    /** Definition of the check in Soda. */
     @Attribute
     String sodaCheckDefinition;
 
-    /** Check status */
+    /** Status of the check in Soda. */
     @Attribute
     String sodaCheckEvaluationStatus;
 
-    /** Check Id */
+    /** Identifier of the check in Soda. */
     @Attribute
     String sodaCheckId;
 

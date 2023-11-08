@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.Atlan;
@@ -29,7 +29,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Schema Registry Subject Assets
+ * Instance of a schema registry subject in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -58,7 +58,7 @@ public class SchemaRegistrySubject extends Asset
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -68,7 +68,7 @@ public class SchemaRegistrySubject extends Asset
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
@@ -81,7 +81,7 @@ public class SchemaRegistrySubject extends Asset
     @Attribute
     SchemaRegistrySchemaType schemaRegistrySchemaType;
 
-    /** Base name of the subject (i.e. without -key, -value prefixes) */
+    /** Base name of the subject, without -key, -value prefixes. */
     @Attribute
     String schemaRegistrySubjectBaseName;
 
@@ -90,7 +90,7 @@ public class SchemaRegistrySubject extends Asset
     @Singular
     SortedSet<String> schemaRegistrySubjectGoverningAssetQualifiedNames;
 
-    /** If the subject is a schema for the keys of the messages. */
+    /** Whether the subject is a schema for the keys of the messages (true) or not (false). */
     @Attribute
     Boolean schemaRegistrySubjectIsKeySchema;
 

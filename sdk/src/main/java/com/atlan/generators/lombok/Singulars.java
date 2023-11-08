@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2015 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2015 Atlan Pte. Ltd. */
 package com.atlan.generators.lombok;
 
 import static java.nio.charset.StandardCharsets.UTF_8;

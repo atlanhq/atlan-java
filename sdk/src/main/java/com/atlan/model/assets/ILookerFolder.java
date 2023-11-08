@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -23,7 +23,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a Looker folder in Atlan.
+ * Instance of a Looker folder in Atlan. Folders in Looker are used to organize content in a hierarchical structure and granting access.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -32,28 +32,28 @@ public interface ILookerFolder {
 
     public static final String TYPE_NAME = "LookerFolder";
 
-    /** TBC */
+    /** Dashboards that exist within this folder. */
     RelationField DASHBOARDS = new RelationField("dashboards");
 
-    /** TBC */
+    /** Folder in which this subfolder exists. */
     RelationField LOOKER_PARENT_FOLDER = new RelationField("lookerParentFolder");
 
-    /** TBC */
+    /** Subfolders that exist within this folder. */
     RelationField LOOKER_SUB_FOLDERS = new RelationField("lookerSubFolders");
 
-    /** TBC */
+    /** Looks that exist within this folder. */
     RelationField LOOKS = new RelationField("looks");
 
-    /** TBC */
+    /** Number of subfolders in this folder. */
     NumericField SOURCE_CHILD_COUNT = new NumericField("sourceChildCount", "sourceChildCount");
 
-    /** TBC */
+    /** Identifier for the folder's content metadata in Looker. */
     NumericField SOURCE_CONTENT_METADATA_ID = new NumericField("sourceContentMetadataId", "sourceContentMetadataId");
 
-    /** TBC */
+    /** Identifier of the user who created the folder, from Looker. */
     NumericField SOURCE_CREATOR_ID = new NumericField("sourceCreatorId", "sourceCreatorId");
 
-    /** TBC */
+    /** Identifier of the parent folder of this folder, from Looker. */
     NumericField SOURCE_PARENT_ID = new NumericField("sourceParentID", "sourceParentID");
 
     /** TBC */
@@ -260,7 +260,7 @@ public interface ILookerFolder {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -284,7 +284,7 @@ public interface ILookerFolder {
     /** TBC */
     AtlanConnectorType getConnectorType();
 
-    /** TBC */
+    /** Dashboards that exist within this folder. */
     SortedSet<ILookerDashboard> getDashboards();
 
     /** TBC */
@@ -305,7 +305,7 @@ public interface ILookerFolder {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -329,22 +329,22 @@ public interface ILookerFolder {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
-    /** TBC */
+    /** Folder in which this subfolder exists. */
     ILookerFolder getLookerParentFolder();
 
-    /** TBC */
+    /** Subfolders that exist within this folder. */
     SortedSet<ILookerFolder> getLookerSubFolders();
 
-    /** TBC */
+    /** Looks that exist within this folder. */
     SortedSet<ILookerLook> getLooks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -356,7 +356,7 @@ public interface ILookerFolder {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -371,7 +371,7 @@ public interface ILookerFolder {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */
@@ -383,10 +383,10 @@ public interface ILookerFolder {
     /** TBC */
     SortedSet<ISodaCheck> getSodaChecks();
 
-    /** TBC */
+    /** Number of subfolders in this folder. */
     Integer getSourceChildCount();
 
-    /** TBC */
+    /** Identifier for the folder's content metadata in Looker. */
     Integer getSourceContentMetadataId();
 
     /** TBC */
@@ -398,7 +398,7 @@ public interface ILookerFolder {
     /** TBC */
     String getSourceCreatedBy();
 
-    /** TBC */
+    /** Identifier of the user who created the folder, from Looker. */
     Integer getSourceCreatorId();
 
     /** TBC */
@@ -410,7 +410,7 @@ public interface ILookerFolder {
     /** TBC */
     String getSourceOwners();
 
-    /** TBC */
+    /** Identifier of the parent folder of this folder, from Looker. */
     Integer getSourceParentID();
 
     /** TBC */

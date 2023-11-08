@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -32,19 +32,19 @@ public interface ITableauMetric {
 
     public static final String TYPE_NAME = "TableauMetric";
 
-    /** TBC */
+    /** Project in which this metric exists. */
     RelationField PROJECT = new RelationField("project");
 
-    /** TBC */
+    /** List of top-level projects with their nested child projects. */
     KeywordField PROJECT_HIERARCHY = new KeywordField("projectHierarchy", "projectHierarchy");
 
-    /** TBC */
+    /** Unique name of the project in which this metric exists. */
     KeywordField PROJECT_QUALIFIED_NAME = new KeywordField("projectQualifiedName", "projectQualifiedName");
 
-    /** TBC */
+    /** Unique name of the site in which this metric exists. */
     KeywordField SITE_QUALIFIED_NAME = new KeywordField("siteQualifiedName", "siteQualifiedName");
 
-    /** TBC */
+    /** Unique name of the top-level project in which this metric exists. */
     KeywordField TOP_LEVEL_PROJECT_QUALIFIED_NAME =
             new KeywordField("topLevelProjectQualifiedName", "topLevelProjectQualifiedName");
 
@@ -252,7 +252,7 @@ public interface ITableauMetric {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -294,7 +294,7 @@ public interface ITableauMetric {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -318,16 +318,16 @@ public interface ITableauMetric {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
-    /** TBC */
+    /** Metrics that exist within this project. */
     SortedSet<IMetric> getMetrics();
 
     /** TBC */
@@ -336,7 +336,7 @@ public interface ITableauMetric {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -348,19 +348,19 @@ public interface ITableauMetric {
     /** TBC */
     Double getPopularityScore();
 
-    /** TBC */
+    /** Project in which this metric exists. */
     ITableauProject getProject();
 
-    /** TBC */
+    /** List of top-level projects with their nested child projects. */
     List<Map<String, String>> getProjectHierarchy();
 
-    /** TBC */
+    /** Unique name of the project in which this metric exists. */
     String getProjectQualifiedName();
 
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */
@@ -369,7 +369,7 @@ public interface ITableauMetric {
     /** TBC */
     SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
 
-    /** TBC */
+    /** Unique name of the site in which this metric exists. */
     String getSiteQualifiedName();
 
     /** TBC */
@@ -456,7 +456,7 @@ public interface ITableauMetric {
     /** TBC */
     String getTenantId();
 
-    /** TBC */
+    /** Unique name of the top-level project in which this metric exists. */
     String getTopLevelProjectQualifiedName();
 
     /** TBC */

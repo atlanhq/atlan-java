@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -23,7 +23,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * MongoDB Database Assets
+ * Instance of a MongoDB database in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -32,10 +32,10 @@ public interface IMongoDBDatabase {
 
     public static final String TYPE_NAME = "MongoDBDatabase";
 
-    /** TBC */
+    /** Collections that exist within this database. */
     RelationField MONGO_DB_COLLECTIONS = new RelationField("mongoDBCollections");
 
-    /** The number of collection in a MongoDB Database */
+    /** Number of collections in the database. */
     NumericField MONGO_DB_DATABASE_COLLECTION_COUNT =
             new NumericField("mongoDBDatabaseCollectionCount", "mongoDBDatabaseCollectionCount");
 
@@ -243,7 +243,7 @@ public interface IMongoDBDatabase {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -300,7 +300,7 @@ public interface IMongoDBDatabase {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -330,22 +330,22 @@ public interface IMongoDBDatabase {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
     SortedSet<IMetric> getMetrics();
 
-    /** TBC */
+    /** Collections that exist within this database. */
     SortedSet<IMongoDBCollection> getMongoDBCollections();
 
-    /** The number of collection in a MongoDB Database */
+    /** Number of collections in the database. */
     Integer getMongoDBDatabaseCollectionCount();
 
     /** TBC */
@@ -354,7 +354,7 @@ public interface IMongoDBDatabase {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -381,7 +381,7 @@ public interface IMongoDBDatabase {
     /** TBC */
     Map<String, Long> getQueryUserMap();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */
@@ -399,7 +399,7 @@ public interface IMongoDBDatabase {
     /** TBC */
     SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
 
-    /** TBC */
+    /** Schemas that exist within this database. */
     SortedSet<ISchema> getSchemas();
 
     /** TBC */

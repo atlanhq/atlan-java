@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -34,7 +34,7 @@ public interface IView {
 
     public static final String TYPE_NAME = "View";
 
-    /** TBC */
+    /** Alias for this view. */
     KeywordField ALIAS = new KeywordField("alias", "alias");
 
     /** Number of columns in this view. */
@@ -43,19 +43,19 @@ public interface IView {
     /** Columns that exist within this view. */
     RelationField COLUMNS = new RelationField("columns");
 
-    /** Definition of the view (DDL). */
+    /** SQL definition of this view. */
     KeywordField DEFINITION = new KeywordField("definition", "definition");
 
-    /** TBC */
+    /** Whether preview queries are allowed on this view (true) or not (false). */
     BooleanField IS_QUERY_PREVIEW = new BooleanField("isQueryPreview", "isQueryPreview");
 
     /** Whether this view is temporary (true) or not (false). */
     BooleanField IS_TEMPORARY = new BooleanField("isTemporary", "isTemporary");
 
-    /** Queries that involve this view. */
+    /** Queries that access this view. */
     RelationField QUERIES = new RelationField("queries");
 
-    /** TBC */
+    /** Configuration for preview queries on this view. */
     KeywordField QUERY_PREVIEW_CONFIG = new KeywordField("queryPreviewConfig", "queryPreviewConfig");
 
     /** Number of rows in this view. */
@@ -64,7 +64,7 @@ public interface IView {
     /** Schema in which this view exists. */
     RelationField SCHEMA = new RelationField("atlanSchema");
 
-    /** Size of the view in bytes. */
+    /** Size of this view, in bytes. */
     NumericField SIZE_BYTES = new NumericField("sizeBytes", "sizeBytes");
 
     /** TBC */
@@ -76,7 +76,7 @@ public interface IView {
     /** TBC */
     SortedSet<String> getAdminUsers();
 
-    /** TBC */
+    /** Alias for this view. */
     String getAlias();
 
     /** TBC */
@@ -274,7 +274,7 @@ public interface IView {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -322,7 +322,7 @@ public interface IView {
     /** TBC */
     SortedSet<IDbtTest> getDbtTests();
 
-    /** Definition of the view (DDL). */
+    /** SQL definition of this view. */
     String getDefinition();
 
     /** TBC */
@@ -340,7 +340,7 @@ public interface IView {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -355,7 +355,7 @@ public interface IView {
     /** TBC */
     Boolean getIsProfiled();
 
-    /** TBC */
+    /** Whether preview queries are allowed on this view (true) or not (false). */
     Boolean getIsQueryPreview();
 
     /** Whether this view is temporary (true) or not (false). */
@@ -376,13 +376,13 @@ public interface IView {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -394,7 +394,7 @@ public interface IView {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -409,7 +409,7 @@ public interface IView {
     /** TBC */
     String getQualifiedName();
 
-    /** Queries that involve this view. */
+    /** Queries that access this view. */
     SortedSet<IAtlanQuery> getQueries();
 
     /** TBC */
@@ -418,7 +418,7 @@ public interface IView {
     /** TBC */
     Long getQueryCountUpdatedAt();
 
-    /** TBC */
+    /** Configuration for preview queries on this view. */
     Map<String, String> getQueryPreviewConfig();
 
     /** TBC */
@@ -427,7 +427,7 @@ public interface IView {
     /** TBC */
     Map<String, Long> getQueryUserMap();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** Number of rows in this view. */
@@ -448,7 +448,7 @@ public interface IView {
     /** TBC */
     SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
 
-    /** Size of the view in bytes. */
+    /** Size of this view, in bytes. */
     Long getSizeBytes();
 
     /** TBC */

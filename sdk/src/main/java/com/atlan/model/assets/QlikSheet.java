@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.Atlan;
@@ -27,7 +27,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Instance of a Qlik Sheet in Atlan.
+ * Instance of a Qlik sheet in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -50,7 +50,7 @@ public class QlikSheet extends Asset implements IQlikSheet, IQlik, IBI, ICatalog
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -60,12 +60,12 @@ public class QlikSheet extends Asset implements IQlikSheet, IQlik, IBI, ICatalog
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** App in which the sheet exists. */
+    /** App in which this sheet exists. */
     @Attribute
     IQlikApp qlikApp;
 
@@ -77,7 +77,7 @@ public class QlikSheet extends Asset implements IQlikSheet, IQlik, IBI, ICatalog
     @Attribute
     String qlikAppQualifiedName;
 
-    /** Charts contained within the sheet. */
+    /** Charts that exist within this sheet. */
     @Attribute
     @Singular
     SortedSet<IQlikChart> qlikCharts;
@@ -98,7 +98,7 @@ public class QlikSheet extends Asset implements IQlikSheet, IQlik, IBI, ICatalog
     @Attribute
     String qlikQRI;
 
-    /** Whether the sheet is approved (true) or not (false). */
+    /** Whether this is approved (true) or not (false). */
     @Attribute
     Boolean qlikSheetIsApproved;
 

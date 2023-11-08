@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.Atlan;
@@ -27,7 +27,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Instance of a Looker model in Atlan.
+ * Instance of a Looker model in Atlan. Models combine Explores and dashboards.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -45,12 +45,12 @@ public class LookerModel extends Asset implements ILookerModel, ILooker, IBI, IC
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Explores that exist within this model. */
     @Attribute
     @Singular
     SortedSet<ILookerExplore> explores;
 
-    /** TBC */
+    /** Fields that exist within this model. */
     @Attribute
     @Singular
     SortedSet<ILookerField> fields;
@@ -60,12 +60,12 @@ public class LookerModel extends Asset implements ILookerModel, ILooker, IBI, IC
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
-    /** TBC */
+    /** Look that exists for this model. */
     @Attribute
     ILookerLook look;
 
@@ -74,20 +74,20 @@ public class LookerModel extends Asset implements ILookerModel, ILooker, IBI, IC
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** TBC */
+    /** Project in which this model exists. */
     @Attribute
     ILookerProject project;
 
-    /** TBC */
+    /** Name of the project in which the model exists. */
     @Attribute
     String projectName;
 
-    /** TBC */
+    /** Deprecated. */
     @Attribute
     @Singular
     SortedSet<ILookerQuery> queries;

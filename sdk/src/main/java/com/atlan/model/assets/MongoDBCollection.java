@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.Atlan;
@@ -29,7 +29,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * MongoDB Collection Assets
+ * Instance of a MongoDB collection in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -57,7 +57,7 @@ public class MongoDBCollection extends Asset
     @Attribute
     Long columnCount;
 
-    /** TBC */
+    /** Columns that exist within this table. */
     @Attribute
     @Singular
     SortedSet<IColumn> columns;
@@ -112,7 +112,7 @@ public class MongoDBCollection extends Asset
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -137,31 +137,31 @@ public class MongoDBCollection extends Asset
     @Attribute
     Long lastProfiledAt;
 
-    /** The average size of an object in the collection */
+    /** Average size of an object in the collection. */
     @Attribute
     Long mongoDBCollectionAverageObjectSize;
 
-    /** Specifies the seconds after which documents in a time series collection or clustered collection expire */
+    /** Seconds after which documents in a time series collection or clustered collection expire. */
     @Attribute
     Long mongoDBCollectionExpireAfterSeconds;
 
-    /** If the collection is a capped collection */
+    /** Whether the collection is capped (true) or not (false). */
     @Attribute
     Boolean mongoDBCollectionIsCapped;
 
-    /** The maximum size allowed in the capped collection */
+    /** Maximum size allowed in a capped collection. */
     @Attribute
     Long mongoDBCollectionMaxSize;
 
-    /** The maximum number of documents allowed in the capped collection */
+    /** Maximum number of documents allowed in a capped collection. */
     @Attribute
     Long mongoDBCollectionMaximumDocumentCount;
 
-    /** The number of indexes on the collection */
+    /** Number of indexes on the collection. */
     @Attribute
     Long mongoDBCollectionNumIndexes;
 
-    /** The number of orphaned documents in the collection */
+    /** Number of orphaned documents in the collection. */
     @Attribute
     Long mongoDBCollectionNumOrphanDocs;
 
@@ -169,23 +169,23 @@ public class MongoDBCollection extends Asset
     @Attribute
     String mongoDBCollectionSchemaDefinition;
 
-    /** Subtype of a MongoDB collection (e.g. Capped, Time Series etc.) */
+    /** Subtype of a MongoDB collection, for example: Capped, Time Series, etc. */
     @Attribute
     String mongoDBCollectionSubtype;
 
-    /** The name of the field which contains the date in each time series document */
+    /** Name of the field containing the date in each time series document. */
     @Attribute
     String mongoDBCollectionTimeField;
 
-    /** Set the granularity to the value that is the closest match to the time span between consecutive incoming measurements */
+    /** Closest match to the time span between consecutive incoming measurements. */
     @Attribute
     String mongoDBCollectionTimeGranularity;
 
-    /** The total size of all indexes */
+    /** Total size of all indexes. */
     @Attribute
     Long mongoDBCollectionTotalIndexSize;
 
-    /** TBC */
+    /** Database in which the collection exists. */
     @Attribute
     IMongoDBDatabase mongoDBDatabase;
 
@@ -194,7 +194,7 @@ public class MongoDBCollection extends Asset
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
@@ -211,12 +211,12 @@ public class MongoDBCollection extends Asset
     @Attribute
     String partitionStrategy;
 
-    /** TBC */
+    /** Partitions that exist within this table. */
     @Attribute
     @Singular
     SortedSet<ITablePartition> partitions;
 
-    /** TBC */
+    /** Queries that access this table. */
     @Attribute
     @Singular
     SortedSet<IAtlanQuery> queries;
@@ -247,7 +247,7 @@ public class MongoDBCollection extends Asset
     @Attribute
     Long rowCount;
 
-    /** TBC */
+    /** Schema in which this table exists. */
     @Attribute
     @JsonProperty("atlanSchema")
     ISchema schema;

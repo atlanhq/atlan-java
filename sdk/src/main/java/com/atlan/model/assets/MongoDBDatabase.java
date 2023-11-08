@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.Atlan;
@@ -28,7 +28,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * MongoDB Database Assets
+ * Instance of a MongoDB database in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -76,7 +76,7 @@ public class MongoDBDatabase extends Asset
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -89,12 +89,12 @@ public class MongoDBDatabase extends Asset
     @Attribute
     Long lastProfiledAt;
 
-    /** TBC */
+    /** Collections that exist within this database. */
     @Attribute
     @Singular
     SortedSet<IMongoDBCollection> mongoDBCollections;
 
-    /** The number of collection in a MongoDB Database */
+    /** Number of collections in the database. */
     @Attribute
     Integer mongoDBDatabaseCollectionCount;
 
@@ -103,7 +103,7 @@ public class MongoDBDatabase extends Asset
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
@@ -137,7 +137,7 @@ public class MongoDBDatabase extends Asset
     @Attribute
     String schemaQualifiedName;
 
-    /** TBC */
+    /** Schemas that exist within this database. */
     @Attribute
     @Singular
     SortedSet<ISchema> schemas;

@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -32,14 +32,14 @@ public interface IFolder {
 
     public static final String TYPE_NAME = "Folder";
 
-    /** qualifiedName of the collection in which this folder exists. */
+    /** Unique name of the collection in which this folder exists. */
     KeywordTextField COLLECTION_QUALIFIED_NAME =
             new KeywordTextField("collectionQualifiedName", "collectionQualifiedName", "collectionQualifiedName.text");
 
     /** Namespace in which this folder exists. */
     RelationField PARENT = new RelationField("parent");
 
-    /** TBC */
+    /** Unique name of the parent folder or collection in which this folder exists. */
     KeywordTextField PARENT_QUALIFIED_NAME =
             new KeywordTextField("parentQualifiedName", "parentQualifiedName", "parentQualifiedName.text");
 
@@ -247,7 +247,7 @@ public interface IFolder {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -262,13 +262,13 @@ public interface IFolder {
     /** TBC */
     String getCertificateUpdatedBy();
 
-    /** TBC */
+    /** Folders that exist within this namespace. */
     SortedSet<IFolder> getChildrenFolders();
 
-    /** TBC */
+    /** Queries that exist within this namespace. */
     SortedSet<IAtlanQuery> getChildrenQueries();
 
-    /** qualifiedName of the collection in which this folder exists. */
+    /** Unique name of the collection in which this folder exists. */
     String getCollectionQualifiedName();
 
     /** TBC */
@@ -316,13 +316,13 @@ public interface IFolder {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -340,7 +340,7 @@ public interface IFolder {
     /** Namespace in which this folder exists. */
     INamespace getParent();
 
-    /** TBC */
+    /** Unique name of the parent folder or collection in which this folder exists. */
     String getParentQualifiedName();
 
     /** TBC */
@@ -349,7 +349,7 @@ public interface IFolder {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

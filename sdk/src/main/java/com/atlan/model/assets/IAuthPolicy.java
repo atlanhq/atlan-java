@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -32,7 +32,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of an access control policy in Atlan.
+ * Model to store an accesscontrol policy in Atlas
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -41,16 +41,16 @@ public interface IAuthPolicy {
 
     public static final String TYPE_NAME = "AuthPolicy";
 
-    /** Access control object to which this policy belongs. */
+    /** TBC */
     RelationField ACCESS_CONTROL = new RelationField("accessControl");
 
-    /** Whether the policy is activated (true) or deactivated (false). */
+    /** TBC */
     BooleanField IS_POLICY_ENABLED = new BooleanField("isPolicyEnabled", "isPolicyEnabled");
 
-    /** Actions included in the policy. */
+    /** TBC */
     KeywordField POLICY_ACTIONS = new KeywordField("policyActions", "policyActions");
 
-    /** Category of access control object for the policy (for example, persona vs purpose). */
+    /** TBC */
     KeywordField POLICY_CATEGORY = new KeywordField("policyCategory", "policyCategory");
 
     /** TBC */
@@ -59,7 +59,7 @@ public interface IAuthPolicy {
     /** TBC */
     BooleanField POLICY_DELEGATE_ADMIN = new BooleanField("policyDelegateAdmin", "policyDelegateAdmin");
 
-    /** Groups to whom the policy applies. */
+    /** TBC */
     KeywordField POLICY_GROUPS = new KeywordField("policyGroups", "policyGroups");
 
     /** TBC */
@@ -74,28 +74,28 @@ public interface IAuthPolicy {
     /** TBC */
     KeywordField POLICY_RESOURCE_SIGNATURE = new KeywordField("policyResourceSignature", "policyResourceSignature");
 
-    /** Resources against which to apply the policy. */
+    /** TBC */
     KeywordField POLICY_RESOURCES = new KeywordField("policyResources", "policyResources");
 
-    /** Roles to whom the policy applies. */
+    /** TBC */
     KeywordField POLICY_ROLES = new KeywordField("policyRoles", "policyRoles");
 
-    /** Service that handles the policy (for example, atlas vs heka). */
+    /** TBC */
     KeywordField POLICY_SERVICE_NAME = new KeywordField("policyServiceName", "policyServiceName");
 
-    /** Underlying kind of policy (for example, metadata vs data vs glossary). */
+    /** TBC */
     KeywordField POLICY_SUB_CATEGORY = new KeywordField("policySubCategory", "policySubCategory");
 
-    /** Kind of policy (for example, allow vs deny). */
+    /** TBC */
     KeywordField POLICY_TYPE = new KeywordField("policyType", "policyType");
 
-    /** Users to whom the policy applies. */
+    /** TBC */
     KeywordField POLICY_USERS = new KeywordField("policyUsers", "policyUsers");
 
     /** TBC */
     KeywordField POLICY_VALIDITY_SCHEDULE = new KeywordField("policyValiditySchedule", "policyValiditySchedule");
 
-    /** Access control object to which this policy belongs. */
+    /** TBC */
     IAccessControl getAccessControl();
 
     /** TBC */
@@ -302,7 +302,7 @@ public interface IAuthPolicy {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -350,7 +350,7 @@ public interface IAuthPolicy {
     /** TBC */
     Boolean getIsEditable();
 
-    /** Whether the policy is activated (true) or deactivated (false). */
+    /** TBC */
     Boolean getIsPolicyEnabled();
 
     /** TBC */
@@ -365,13 +365,13 @@ public interface IAuthPolicy {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -386,10 +386,10 @@ public interface IAuthPolicy {
     /** TBC */
     SortedSet<String> getOwnerUsers();
 
-    /** Actions included in the policy. */
+    /** TBC */
     SortedSet<AtlanPolicyAction> getPolicyActions();
 
-    /** Category of access control object for the policy (for example, persona vs purpose). */
+    /** TBC */
     AuthPolicyCategory getPolicyCategory();
 
     /** TBC */
@@ -398,7 +398,7 @@ public interface IAuthPolicy {
     /** TBC */
     Boolean getPolicyDelegateAdmin();
 
-    /** Groups to whom the policy applies. */
+    /** TBC */
     SortedSet<String> getPolicyGroups();
 
     /** TBC */
@@ -413,22 +413,22 @@ public interface IAuthPolicy {
     /** TBC */
     String getPolicyResourceSignature();
 
-    /** Resources against which to apply the policy. */
+    /** TBC */
     SortedSet<String> getPolicyResources();
 
-    /** Roles to whom the policy applies. */
+    /** TBC */
     SortedSet<String> getPolicyRoles();
 
-    /** Service that handles the policy (for example, atlas vs heka). */
+    /** TBC */
     String getPolicyServiceName();
 
-    /** Underlying kind of policy (for example, metadata vs data vs glossary). */
+    /** TBC */
     String getPolicySubCategory();
 
-    /** Kind of policy (for example, allow vs deny). */
+    /** TBC */
     AuthPolicyType getPolicyType();
 
-    /** Users to whom the policy applies. */
+    /** TBC */
     SortedSet<String> getPolicyUsers();
 
     /** TBC */
@@ -440,7 +440,7 @@ public interface IAuthPolicy {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

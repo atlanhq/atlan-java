@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -32,14 +32,14 @@ public interface IMicroStrategyDossier {
 
     public static final String TYPE_NAME = "MicroStrategyDossier";
 
-    /** List of names of the dossier chapters. */
+    /** List of chapter names in this dossier. */
     KeywordField MICRO_STRATEGY_DOSSIER_CHAPTER_NAMES =
             new KeywordField("microStrategyDossierChapterNames", "microStrategyDossierChapterNames");
 
-    /** Project containing the dossier. */
+    /** Project in which this dossier exists */
     RelationField MICRO_STRATEGY_PROJECT = new RelationField("microStrategyProject");
 
-    /** Visualizations used within the dossier. */
+    /** Visualizations that exist within this dossier. */
     RelationField MICRO_STRATEGY_VISUALIZATIONS = new RelationField("microStrategyVisualizations");
 
     /** TBC */
@@ -246,7 +246,7 @@ public interface IMicroStrategyDossier {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -288,7 +288,7 @@ public interface IMicroStrategyDossier {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -312,13 +312,13 @@ public interface IMicroStrategyDossier {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -336,7 +336,7 @@ public interface IMicroStrategyDossier {
     /** TBC */
     SortedSet<String> getMicroStrategyCubeQualifiedNames();
 
-    /** List of names of the dossier chapters. */
+    /** List of chapter names in this dossier. */
     SortedSet<String> getMicroStrategyDossierChapterNames();
 
     /** TBC */
@@ -345,7 +345,7 @@ public interface IMicroStrategyDossier {
     /** TBC */
     List<Map<String, String>> getMicroStrategyLocation();
 
-    /** Project containing the dossier. */
+    /** Project in which this dossier exists */
     IMicroStrategyProject getMicroStrategyProject();
 
     /** TBC */
@@ -360,7 +360,7 @@ public interface IMicroStrategyDossier {
     /** TBC */
     SortedSet<String> getMicroStrategyReportQualifiedNames();
 
-    /** Visualizations used within the dossier. */
+    /** Visualizations that exist within this dossier. */
     SortedSet<IMicroStrategyVisualization> getMicroStrategyVisualizations();
 
     /** TBC */
@@ -369,7 +369,7 @@ public interface IMicroStrategyDossier {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -384,7 +384,7 @@ public interface IMicroStrategyDossier {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

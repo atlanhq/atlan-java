@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.Atlan;
@@ -27,7 +27,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Instance of a QuickSight Dashboard in Atlan.
+ * Instance of a QuickSight dashboard in Atlan. These are reports in QuickSight, created from analyses.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -51,7 +51,7 @@ public class QuickSightDashboard extends Asset
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -61,7 +61,7 @@ public class QuickSightDashboard extends Asset
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
@@ -71,15 +71,15 @@ public class QuickSightDashboard extends Asset
     @Singular
     SortedSet<IQuickSightFolder> quickSightDashboardFolders;
 
-    /** Last published time of dashboard */
+    /** Time (epoch) at which this dashboard was last published, in milliseconds. */
     @Attribute
     Long quickSightDashboardLastPublishedTime;
 
-    /** Version number of the dashboard published */
+    /** Version number of the published dashboard. */
     @Attribute
     Long quickSightDashboardPublishedVersionNumber;
 
-    /** TBC */
+    /** Visuals that exist within this dashboard. */
     @Attribute
     @Singular
     SortedSet<IQuickSightDashboardVisual> quickSightDashboardVisuals;

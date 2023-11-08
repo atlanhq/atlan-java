@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -39,35 +39,35 @@ public interface IKafkaTopic {
     /** Consumer groups subscribed to this topic. */
     RelationField KAFKA_CONSUMER_GROUPS = new RelationField("kafkaConsumerGroups");
 
-    /** TBC */
+    /** Cleanup policy for this topic. */
     KeywordField KAFKA_TOPIC_CLEANUP_POLICY = new KeywordField("kafkaTopicCleanupPolicy", "kafkaTopicCleanupPolicy");
 
-    /** TBC */
+    /** Type of compression used for this topic. */
     KeywordField KAFKA_TOPIC_COMPRESSION_TYPE =
             new KeywordField("kafkaTopicCompressionType", "kafkaTopicCompressionType");
 
-    /** TBC */
+    /** Whether this topic is an internal topic (true) or not (false). */
     BooleanField KAFKA_TOPIC_IS_INTERNAL = new BooleanField("kafkaTopicIsInternal", "kafkaTopicIsInternal");
 
-    /** TBC */
+    /** Number of partitions for this topic. */
     NumericField KAFKA_TOPIC_PARTITIONS_COUNT =
             new NumericField("kafkaTopicPartitionsCount", "kafkaTopicPartitionsCount");
 
     /** Number of (unexpired) messages in this topic. */
     NumericField KAFKA_TOPIC_RECORD_COUNT = new NumericField("kafkaTopicRecordCount", "kafkaTopicRecordCount");
 
-    /** TBC */
+    /** Replication factor for this topic. */
     NumericField KAFKA_TOPIC_REPLICATION_FACTOR =
             new NumericField("kafkaTopicReplicationFactor", "kafkaTopicReplicationFactor");
 
-    /** TBC */
+    /** Amount of time messages will be retained in this topic, in milliseconds. */
     NumericField KAFKA_TOPIC_RETENTION_TIME_IN_MS =
             new NumericField("kafkaTopicRetentionTimeInMs", "kafkaTopicRetentionTimeInMs");
 
-    /** TBC */
+    /** Segment size for this topic. */
     NumericField KAFKA_TOPIC_SEGMENT_BYTES = new NumericField("kafkaTopicSegmentBytes", "kafkaTopicSegmentBytes");
 
-    /** TBC */
+    /** Size of this topic, in bytes. */
     NumericField KAFKA_TOPIC_SIZE_IN_BYTES = new NumericField("kafkaTopicSizeInBytes", "kafkaTopicSizeInBytes");
 
     /** TBC */
@@ -274,7 +274,7 @@ public interface IKafkaTopic {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -316,7 +316,7 @@ public interface IKafkaTopic {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -331,31 +331,31 @@ public interface IKafkaTopic {
     /** Consumer groups subscribed to this topic. */
     SortedSet<IKafkaConsumerGroup> getKafkaConsumerGroups();
 
-    /** TBC */
+    /** Cleanup policy for this topic. */
     KafkaTopicCleanupPolicy getKafkaTopicCleanupPolicy();
 
-    /** TBC */
+    /** Type of compression used for this topic. */
     KafkaTopicCompressionType getKafkaTopicCompressionType();
 
-    /** TBC */
+    /** Whether this topic is an internal topic (true) or not (false). */
     Boolean getKafkaTopicIsInternal();
 
-    /** TBC */
+    /** Number of partitions for this topic. */
     Long getKafkaTopicPartitionsCount();
 
     /** Number of (unexpired) messages in this topic. */
     Long getKafkaTopicRecordCount();
 
-    /** TBC */
+    /** Replication factor for this topic. */
     Long getKafkaTopicReplicationFactor();
 
-    /** TBC */
+    /** Amount of time messages will be retained in this topic, in milliseconds. */
     Long getKafkaTopicRetentionTimeInMs();
 
-    /** TBC */
+    /** Segment size for this topic. */
     Long getKafkaTopicSegmentBytes();
 
-    /** TBC */
+    /** Size of this topic, in bytes. */
     Long getKafkaTopicSizeInBytes();
 
     /** TBC */
@@ -370,13 +370,13 @@ public interface IKafkaTopic {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -388,7 +388,7 @@ public interface IKafkaTopic {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -403,7 +403,7 @@ public interface IKafkaTopic {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

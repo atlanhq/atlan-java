@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.Atlan;
@@ -27,7 +27,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Instance of a Looker folder in Atlan.
+ * Instance of a Looker folder in Atlan. Folders in Looker are used to organize content in a hierarchical structure and granting access.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -45,7 +45,7 @@ public class LookerFolder extends Asset implements ILookerFolder, ILooker, IBI, 
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Dashboards that exist within this folder. */
     @Attribute
     @Singular
     SortedSet<ILookerDashboard> dashboards;
@@ -55,21 +55,21 @@ public class LookerFolder extends Asset implements ILookerFolder, ILooker, IBI, 
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
-    /** TBC */
+    /** Folder in which this subfolder exists. */
     @Attribute
     ILookerFolder lookerParentFolder;
 
-    /** TBC */
+    /** Subfolders that exist within this folder. */
     @Attribute
     @Singular
     SortedSet<ILookerFolder> lookerSubFolders;
 
-    /** TBC */
+    /** Looks that exist within this folder. */
     @Attribute
     @Singular
     SortedSet<ILookerLook> looks;
@@ -79,24 +79,24 @@ public class LookerFolder extends Asset implements ILookerFolder, ILooker, IBI, 
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** TBC */
+    /** Number of subfolders in this folder. */
     @Attribute
     Integer sourceChildCount;
 
-    /** TBC */
+    /** Identifier for the folder's content metadata in Looker. */
     @Attribute
     Integer sourceContentMetadataId;
 
-    /** TBC */
+    /** Identifier of the user who created the folder, from Looker. */
     @Attribute
     Integer sourceCreatorId;
 
-    /** TBC */
+    /** Identifier of the parent folder of this folder, from Looker. */
     @Attribute
     Integer sourceParentID;
 

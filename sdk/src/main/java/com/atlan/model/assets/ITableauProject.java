@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -24,7 +24,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a Tableau project in Atlan.
+ * Instance of a Tableau project in Atlan. These are used to organize other assets and for access control, and can be nested.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -33,35 +33,35 @@ public interface ITableauProject {
 
     public static final String TYPE_NAME = "TableauProject";
 
-    /** TBC */
+    /** Sub-projects that exist within this project. */
     RelationField CHILD_PROJECTS = new RelationField("childProjects");
 
-    /** TBC */
+    /** Datasources that exist within this project. */
     RelationField DATASOURCES = new RelationField("datasources");
 
-    /** TBC */
+    /** Flows that exist within this project. */
     RelationField FLOWS = new RelationField("flows");
 
-    /** TBC */
+    /** Whether this project is a top-level project (true) or not (false). */
     BooleanField IS_TOP_LEVEL_PROJECT = new BooleanField("isTopLevelProject", "isTopLevelProject");
 
-    /** TBC */
+    /** Project in which this sub-project exists. */
     RelationField PARENT_PROJECT = new RelationField("parentProject");
 
-    /** TBC */
+    /** List of top-level projects with their nested child projects. */
     KeywordField PROJECT_HIERARCHY = new KeywordField("projectHierarchy", "projectHierarchy");
 
-    /** TBC */
+    /** Site in which this project exists. */
     RelationField SITE = new RelationField("site");
 
-    /** TBC */
+    /** Unique name of the site in which this project exists. */
     KeywordField SITE_QUALIFIED_NAME = new KeywordField("siteQualifiedName", "siteQualifiedName");
 
-    /** TBC */
+    /** Unique name of the top-level project in which this project exists, if this is a nested project. */
     KeywordField TOP_LEVEL_PROJECT_QUALIFIED_NAME =
             new KeywordField("topLevelProjectQualifiedName", "topLevelProjectQualifiedName");
 
-    /** TBC */
+    /** Workbooks that exist within this project. */
     RelationField WORKBOOKS = new RelationField("workbooks");
 
     /** TBC */
@@ -268,7 +268,7 @@ public interface ITableauProject {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -283,7 +283,7 @@ public interface ITableauProject {
     /** TBC */
     String getCertificateUpdatedBy();
 
-    /** TBC */
+    /** Sub-projects that exist within this project. */
     SortedSet<ITableauProject> getChildProjects();
 
     /** TBC */
@@ -295,7 +295,7 @@ public interface ITableauProject {
     /** TBC */
     AtlanConnectorType getConnectorType();
 
-    /** TBC */
+    /** Datasources that exist within this project. */
     SortedSet<ITableauDatasource> getDatasources();
 
     /** TBC */
@@ -310,7 +310,7 @@ public interface ITableauProject {
     /** TBC */
     SortedSet<IFile> getFiles();
 
-    /** TBC */
+    /** Flows that exist within this project. */
     SortedSet<ITableauFlow> getFlows();
 
     /** TBC */
@@ -319,7 +319,7 @@ public interface ITableauProject {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -331,7 +331,7 @@ public interface ITableauProject {
     /** TBC */
     Boolean getIsEditable();
 
-    /** TBC */
+    /** Whether this project is a top-level project (true) or not (false). */
     Boolean getIsTopLevelProject();
 
     /** TBC */
@@ -346,16 +346,16 @@ public interface ITableauProject {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
-    /** TBC */
+    /** Metrics that exist within this project. */
     SortedSet<IMetric> getMetrics();
 
     /** TBC */
@@ -364,7 +364,7 @@ public interface ITableauProject {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -373,19 +373,19 @@ public interface ITableauProject {
     /** TBC */
     SortedSet<String> getOwnerUsers();
 
-    /** TBC */
+    /** Project in which this sub-project exists. */
     ITableauProject getParentProject();
 
     /** TBC */
     Double getPopularityScore();
 
-    /** TBC */
+    /** List of top-level projects with their nested child projects. */
     List<Map<String, String>> getProjectHierarchy();
 
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */
@@ -394,10 +394,10 @@ public interface ITableauProject {
     /** TBC */
     SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
 
-    /** TBC */
+    /** Site in which this project exists. */
     ITableauSite getSite();
 
-    /** TBC */
+    /** Unique name of the site in which this project exists. */
     String getSiteQualifiedName();
 
     /** TBC */
@@ -484,7 +484,7 @@ public interface ITableauProject {
     /** TBC */
     String getTenantId();
 
-    /** TBC */
+    /** Unique name of the top-level project in which this project exists, if this is a nested project. */
     String getTopLevelProjectQualifiedName();
 
     /** TBC */
@@ -499,7 +499,7 @@ public interface ITableauProject {
     /** TBC */
     SortedSet<String> getViewerUsers();
 
-    /** TBC */
+    /** Workbooks that exist within this project. */
     SortedSet<ITableauWorkbook> getWorkbooks();
 
     /** Name of the type that defines the asset. */

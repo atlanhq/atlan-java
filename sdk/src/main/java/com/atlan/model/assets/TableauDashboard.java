@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.Atlan;
@@ -28,7 +28,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Instance of a Tableau dashboard in Atlan.
+ * Instance of a Tableau dashboard in Atlan. These are collections of several views, letting you compare a variety of data simultaneously.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -53,7 +53,7 @@ public class TableauDashboard extends Asset
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -63,37 +63,37 @@ public class TableauDashboard extends Asset
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** TBC */
+    /** List of top-level projects and their nested child projects. */
     @Attribute
     @Singular("addProjectHierarchy")
     List<Map<String, String>> projectHierarchy;
 
-    /** TBC */
+    /** Unique name of the project in which this dashboard exists. */
     @Attribute
     String projectQualifiedName;
 
-    /** TBC */
+    /** Unique name of the site in which this dashboard exists. */
     @Attribute
     String siteQualifiedName;
 
-    /** TBC */
+    /** Unique name of the top-level project in which this dashboard exists. */
     @Attribute
     String topLevelProjectQualifiedName;
 
-    /** TBC */
+    /** Workbook in which this dashboard exists. */
     @Attribute
     ITableauWorkbook workbook;
 
-    /** TBC */
+    /** Unique name of the workbook in which this dashboard exists. */
     @Attribute
     String workbookQualifiedName;
 
-    /** TBC */
+    /** Worksheets that use this dashboard. */
     @Attribute
     @Singular
     SortedSet<ITableauWorksheet> worksheets;

@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -36,58 +36,58 @@ public interface ISalesforceField {
 
     public static final String TYPE_NAME = "SalesforceField";
 
-    /** Data type of values in the field. */
+    /** Data type of values in this field. */
     KeywordTextField DATA_TYPE = new KeywordTextField("dataType", "dataType", "dataType.text");
 
-    /** TBC */
+    /** Formula for the default value for this field. */
     KeywordField DEFAULT_VALUE_FORMULA = new KeywordField("defaultValueFormula", "defaultValueFormula");
 
-    /** TBC */
+    /** Formula for this field, if it is a calculated field. */
     KeywordField FORMULA = new KeywordField("formula", "formula");
 
-    /** TBC */
+    /** Help text for this field. */
     TextField INLINE_HELP_TEXT = new TextField("inlineHelpText", "inlineHelpText.text");
 
-    /** TBC */
+    /** Whether this field is calculated (true) or not (false). */
     BooleanField IS_CALCULATED = new BooleanField("isCalculated", "isCalculated");
 
-    /** TBC */
+    /** Whether this field is case sensitive (true) or in-sensitive (false). */
     BooleanField IS_CASE_SENSITIVE = new BooleanField("isCaseSensitive", "isCaseSensitive");
 
-    /** TBC */
+    /** Whether this field is encrypted (true) or not (false). */
     BooleanField IS_ENCRYPTED = new BooleanField("isEncrypted", "isEncrypted");
 
-    /** TBC */
+    /** Whether this field allows null values (true) or not (false). */
     BooleanField IS_NULLABLE = new BooleanField("isNullable", "isNullable");
 
-    /** Whether the field references a record of multiple objects (true) or not (false). */
+    /** Whether this field references a record of multiple objects (true) or not (false). */
     BooleanField IS_POLYMORPHIC_FOREIGN_KEY = new BooleanField("isPolymorphicForeignKey", "isPolymorphicForeignKey");
 
-    /** TBC */
+    /** Whether this field must have unique values (true) or not (false). */
     BooleanField IS_UNIQUE = new BooleanField("isUnique", "isUnique");
 
     /** TBC */
     RelationField LOOKUP_OBJECTS = new RelationField("lookupObjects");
 
-    /** TBC */
+    /** Maximum length of this field. */
     NumericField MAX_LENGTH = new NumericField("maxLength", "maxLength");
 
     /** Number of digits allowed to the right of the decimal point. */
     NumericField NUMERIC_SCALE = new NumericField("numericScale", "numericScale");
 
-    /** TBC */
+    /** Object in which this field exists. */
     RelationField OBJECT = new RelationField("object");
 
-    /** TBC */
+    /** Unique name of the object in which this field exists. */
     KeywordField OBJECT_QUALIFIED_NAME = new KeywordField("objectQualifiedName", "objectQualifiedName");
 
-    /** TBC */
+    /** Order (position) of this field within the object. */
     NumericField ORDER = new NumericField("order", "order");
 
     /** List of values from which a user can pick while adding a record. */
     KeywordField PICKLIST_VALUES = new KeywordField("picklistValues", "picklistValues");
 
-    /** Total number of digits allowed. */
+    /** Total number of digits allowed */
     NumericField PRECISION = new NumericField("precision", "precision");
 
     /** TBC */
@@ -297,7 +297,7 @@ public interface ISalesforceField {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -321,13 +321,13 @@ public interface ISalesforceField {
     /** TBC */
     AtlanConnectorType getConnectorType();
 
-    /** Data type of values in the field. */
+    /** Data type of values in this field. */
     String getDataType();
 
     /** TBC */
     String getDbtQualifiedName();
 
-    /** TBC */
+    /** Formula for the default value for this field. */
     String getDefaultValueFormula();
 
     /** TBC */
@@ -339,28 +339,28 @@ public interface ISalesforceField {
     /** TBC */
     SortedSet<IFile> getFiles();
 
-    /** TBC */
+    /** Formula for this field, if it is a calculated field. */
     String getFormula();
 
     /** TBC */
     Boolean getHasLineage();
 
-    /** TBC */
+    /** Help text for this field. */
     String getInlineHelpText();
 
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
     Boolean getIsAIGenerated();
 
-    /** TBC */
+    /** Whether this field is calculated (true) or not (false). */
     Boolean getIsCalculated();
 
-    /** TBC */
+    /** Whether this field is case sensitive (true) or in-sensitive (false). */
     Boolean getIsCaseSensitive();
 
     /** TBC */
@@ -369,16 +369,16 @@ public interface ISalesforceField {
     /** TBC */
     Boolean getIsEditable();
 
-    /** TBC */
+    /** Whether this field is encrypted (true) or not (false). */
     Boolean getIsEncrypted();
 
-    /** TBC */
+    /** Whether this field allows null values (true) or not (false). */
     Boolean getIsNullable();
 
-    /** Whether the field references a record of multiple objects (true) or not (false). */
+    /** Whether this field references a record of multiple objects (true) or not (false). */
     Boolean getIsPolymorphicForeignKey();
 
-    /** TBC */
+    /** Whether this field must have unique values (true) or not (false). */
     Boolean getIsUnique();
 
     /** TBC */
@@ -393,19 +393,19 @@ public interface ISalesforceField {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<ISalesforceObject> getLookupObjects();
 
-    /** TBC */
+    /** Maximum length of this field. */
     Long getMaxLength();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -417,13 +417,13 @@ public interface ISalesforceField {
     /** Number of digits allowed to the right of the decimal point. */
     Double getNumericScale();
 
-    /** TBC */
+    /** Object in which this field exists. */
     ISalesforceObject getObject();
 
-    /** TBC */
+    /** Unique name of the object in which this field exists. */
     String getObjectQualifiedName();
 
-    /** TBC */
+    /** Order (position) of this field within the object. */
     Integer getOrder();
 
     /** TBC */
@@ -432,7 +432,7 @@ public interface ISalesforceField {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -447,13 +447,13 @@ public interface ISalesforceField {
     /** TBC */
     Double getPopularityScore();
 
-    /** Total number of digits allowed. */
+    /** Total number of digits allowed */
     Integer getPrecision();
 
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

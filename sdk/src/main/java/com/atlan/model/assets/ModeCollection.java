@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.Atlan;
@@ -50,16 +50,16 @@ public class ModeCollection extends Asset implements IModeCollection, IMode, IBI
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
-    /** TBC */
+    /** State of this collection. */
     @Attribute
     String modeCollectionState;
 
-    /** TBC */
+    /** Type of this collection. */
     @Attribute
     String modeCollectionType;
 
@@ -92,7 +92,7 @@ public class ModeCollection extends Asset implements IModeCollection, IMode, IBI
     @Attribute
     String modeToken;
 
-    /** TBC */
+    /** Workspace in which this collection exists. */
     @Attribute
     IModeWorkspace modeWorkspace;
 
@@ -113,7 +113,7 @@ public class ModeCollection extends Asset implements IModeCollection, IMode, IBI
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;

@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.Atlan;
@@ -28,7 +28,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Instance of a QuickSight Dataset in Atlan.
+ * Instance of a QuickSight dataset in Atlan. These are an internal data model built to be used by analysis. In a dataset, data can be pulled from different sources, joined, filtered, and columns translated to more business-friendly names when preparing the data for visualizing in the analysis layer.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -52,7 +52,7 @@ public class QuickSightDataset extends Asset
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -62,16 +62,16 @@ public class QuickSightDataset extends Asset
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** Quicksight dataset column count indicates number of columns present in the dataset */
+    /** Number of columns present in this dataset. */
     @Attribute
     Long quickSightDatasetColumnCount;
 
-    /** TBC */
+    /** Fields that exist within this dataset. */
     @Attribute
     @Singular
     SortedSet<IQuickSightDatasetField> quickSightDatasetFields;
@@ -81,7 +81,7 @@ public class QuickSightDataset extends Asset
     @Singular
     SortedSet<IQuickSightFolder> quickSightDatasetFolders;
 
-    /** Quicksight dataset importMode indicates a value that indicates whether you want to import the data into SPICE */
+    /** Import mode for this dataset, for example: SPICE or DIRECT_QUERY. */
     @Attribute
     QuickSightDatasetImportMode quickSightDatasetImportMode;
 

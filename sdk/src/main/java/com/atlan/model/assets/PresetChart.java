@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.Atlan;
@@ -53,7 +53,7 @@ public class PresetChart extends Asset implements IPresetChart, IPreset, IBI, IC
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -63,12 +63,12 @@ public class PresetChart extends Asset implements IPresetChart, IPreset, IBI, IC
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** Markdown-based description of the chart. */
+    /** TBC */
     @Attribute
     String presetChartDescriptionMarkdown;
 
@@ -77,7 +77,7 @@ public class PresetChart extends Asset implements IPresetChart, IPreset, IBI, IC
     @Singular("putPresetChartFormData")
     Map<String, String> presetChartFormData;
 
-    /** Collection in which the chart exists. */
+    /** Dashboard in which this chart exists. */
     @Attribute
     IPresetDashboard presetDashboard;
 

@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.core;
 
 import com.atlan.model.assets.Asset;
@@ -152,11 +152,17 @@ public class AssetMutationResponse extends ApiResource {
      */
     @JsonIgnore
     public String getAssignedGuid(Asset input) {
-        if (input == null || guidAssignments == null || guidAssignments.isEmpty()) {
+        if (input == null) {
             return null;
         }
         String guid = input.getGuid();
-        return StringUtils.isUUID(guid) ? guid : guidAssignments.getOrDefault(guid, null);
+        if (StringUtils.isUUID(guid)) {
+            return guid;
+        } else if (guidAssignments != null) {
+            return guidAssignments.getOrDefault(guid, null);
+        } else {
+            return null;
+        }
     }
 
     /**

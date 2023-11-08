@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.Atlan;
@@ -58,7 +58,7 @@ public class DbtProcess extends Asset implements IDbtProcess, IDbt, ILineageProc
     @Attribute
     String code;
 
-    /** TBC */
+    /** Processes that detail column-level lineage for this process. */
     @Attribute
     @Singular
     SortedSet<IColumnProcess> columnProcesses;
@@ -145,17 +145,17 @@ public class DbtProcess extends Asset implements IDbtProcess, IDbt, ILineageProc
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
-    /** TBC */
+    /** Assets that are inputs to this process. */
     @Attribute
     @Singular
     SortedSet<ICatalog> inputs;
 
-    /** TBC */
+    /** Matillion component that contains the logic for this lineage process. */
     @Attribute
     IMatillionComponent matillionComponent;
 
@@ -164,12 +164,12 @@ public class DbtProcess extends Asset implements IDbtProcess, IDbt, ILineageProc
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** TBC */
+    /** Assets that are outputs from this process. */
     @Attribute
     @Singular
     SortedSet<ICatalog> outputs;

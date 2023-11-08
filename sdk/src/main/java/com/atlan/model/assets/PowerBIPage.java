@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.Atlan;
@@ -28,7 +28,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Instance of a Power BI page in Atlan.
+ * Instance of a Power BI page in Atlan. Pages organize and subdivide a report in Power BI.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -51,7 +51,7 @@ public class PowerBIPage extends Asset implements IPowerBIPage, IPowerBI, IBI, I
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -61,7 +61,7 @@ public class PowerBIPage extends Asset implements IPowerBIPage, IPowerBI, IBI, I
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
@@ -82,15 +82,15 @@ public class PowerBIPage extends Asset implements IPowerBIPage, IPowerBI, IBI, I
     @Attribute
     String powerBITableQualifiedName;
 
-    /** TBC */
+    /** Report in which this page exists. */
     @Attribute
     IPowerBIReport report;
 
-    /** TBC */
+    /** Unique name of the report in which this page exists. */
     @Attribute
     String reportQualifiedName;
 
-    /** TBC */
+    /** Unique name of the workspace in which this page exists. */
     @Attribute
     String workspaceQualifiedName;
 

@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -25,7 +25,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a Kafka ConsumerGroup in Atlan.
+ * Instance of a Kafka ConsumerGroup in Atlan. These group consumers of topics in Kafka.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -34,21 +34,21 @@ public interface IKafkaConsumerGroup {
 
     public static final String TYPE_NAME = "KafkaConsumerGroup";
 
-    /** TBC */
+    /** Number of members in this consumer group. */
     NumericField KAFKA_CONSUMER_GROUP_MEMBER_COUNT =
             new NumericField("kafkaConsumerGroupMemberCount", "kafkaConsumerGroupMemberCount");
 
-    /** TBC */
+    /** List of consumption properties for Kafka topics, for this consumer group. */
     KeywordField KAFKA_CONSUMER_GROUP_TOPIC_CONSUMPTION_PROPERTIES = new KeywordField(
             "kafkaConsumerGroupTopicConsumptionProperties", "kafkaConsumerGroupTopicConsumptionProperties");
 
-    /** Names of the topics for this consumer group. */
+    /** Simple names of the topics consumed by this consumer group. */
     KeywordField KAFKA_TOPIC_NAMES = new KeywordField("kafkaTopicNames", "kafkaTopicNames");
 
-    /** Unique names of the topics for this consumer group. */
+    /** Unique names of the topics consumed by this consumer group. */
     KeywordField KAFKA_TOPIC_QUALIFIED_NAMES = new KeywordField("kafkaTopicQualifiedNames", "kafkaTopicQualifiedNames");
 
-    /** Topics for this consumer group. */
+    /** Topics consumed by this consumer group. */
     RelationField KAFKA_TOPICS = new RelationField("kafkaTopics");
 
     /** TBC */
@@ -255,7 +255,7 @@ public interface IKafkaConsumerGroup {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -297,7 +297,7 @@ public interface IKafkaConsumerGroup {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -309,19 +309,19 @@ public interface IKafkaConsumerGroup {
     /** TBC */
     Boolean getIsEditable();
 
-    /** TBC */
+    /** Number of members in this consumer group. */
     Long getKafkaConsumerGroupMemberCount();
 
-    /** TBC */
+    /** List of consumption properties for Kafka topics, for this consumer group. */
     List<KafkaTopicConsumption> getKafkaConsumerGroupTopicConsumptionProperties();
 
-    /** Names of the topics for this consumer group. */
+    /** Simple names of the topics consumed by this consumer group. */
     SortedSet<String> getKafkaTopicNames();
 
-    /** Unique names of the topics for this consumer group. */
+    /** Unique names of the topics consumed by this consumer group. */
     SortedSet<String> getKafkaTopicQualifiedNames();
 
-    /** Topics for this consumer group. */
+    /** Topics consumed by this consumer group. */
     SortedSet<IKafkaTopic> getKafkaTopics();
 
     /** TBC */
@@ -336,13 +336,13 @@ public interface IKafkaConsumerGroup {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -354,7 +354,7 @@ public interface IKafkaConsumerGroup {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -369,7 +369,7 @@ public interface IKafkaConsumerGroup {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -33,14 +33,14 @@ public interface ISigmaDataElementField {
 
     public static final String TYPE_NAME = "SigmaDataElementField";
 
-    /** Data element that contains this data element field. */
+    /** Data element in which this data element field exists. */
     RelationField SIGMA_DATA_ELEMENT = new RelationField("sigmaDataElement");
 
     /** TBC */
     TextField SIGMA_DATA_ELEMENT_FIELD_FORMULA =
             new TextField("sigmaDataElementFieldFormula", "sigmaDataElementFieldFormula");
 
-    /** TBC */
+    /** Whether this field is hidden (true) or not (false). */
     BooleanField SIGMA_DATA_ELEMENT_FIELD_IS_HIDDEN =
             new BooleanField("sigmaDataElementFieldIsHidden", "sigmaDataElementFieldIsHidden");
 
@@ -248,7 +248,7 @@ public interface ISigmaDataElementField {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -290,7 +290,7 @@ public interface ISigmaDataElementField {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -314,13 +314,13 @@ public interface ISigmaDataElementField {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -332,7 +332,7 @@ public interface ISigmaDataElementField {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -347,7 +347,7 @@ public interface ISigmaDataElementField {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */
@@ -356,13 +356,13 @@ public interface ISigmaDataElementField {
     /** TBC */
     SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
 
-    /** Data element that contains this data element field. */
+    /** Data element in which this data element field exists. */
     ISigmaDataElement getSigmaDataElement();
 
     /** TBC */
     String getSigmaDataElementFieldFormula();
 
-    /** TBC */
+    /** Whether this field is hidden (true) or not (false). */
     Boolean getSigmaDataElementFieldIsHidden();
 
     /** TBC */

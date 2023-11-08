@@ -11,6 +11,10 @@
 !gradle/**
 .gradle/
 build/
+jars/**
 
 # Generated markdown
 generate/src/main/resources/markdown/**
+
+# Generated logs
+**/test.log

@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.ADLSAccessTier;
@@ -41,27 +41,27 @@ public interface IADLSAccount {
 
     public static final String TYPE_NAME = "ADLSAccount";
 
-    /** TBC */
+    /** Access tier of this account. */
     KeywordField ADLS_ACCOUNT_ACCESS_TIER = new KeywordField("adlsAccountAccessTier", "adlsAccountAccessTier");
 
-    /** TBC */
+    /** Kind of this account. */
     KeywordField ADLS_ACCOUNT_KIND = new KeywordField("adlsAccountKind", "adlsAccountKind");
 
-    /** TBC */
+    /** Performance of this account. */
     KeywordField ADLS_ACCOUNT_PERFORMANCE = new KeywordField("adlsAccountPerformance", "adlsAccountPerformance");
 
-    /** TBC */
+    /** Provision state of this account. */
     KeywordField ADLS_ACCOUNT_PROVISION_STATE =
             new KeywordField("adlsAccountProvisionState", "adlsAccountProvisionState");
 
-    /** TBC */
+    /** Replication of this account. */
     KeywordField ADLS_ACCOUNT_REPLICATION = new KeywordField("adlsAccountReplication", "adlsAccountReplication");
 
-    /** TBC */
+    /** Resource group for this account. */
     KeywordTextField ADLS_ACCOUNT_RESOURCE_GROUP = new KeywordTextField(
             "adlsAccountResourceGroup", "adlsAccountResourceGroup.keyword", "adlsAccountResourceGroup");
 
-    /** TBC */
+    /** Subscription for this account. */
     KeywordTextField ADLS_ACCOUNT_SUBSCRIPTION = new KeywordTextField(
             "adlsAccountSubscription", "adlsAccountSubscription.keyword", "adlsAccountSubscription");
 
@@ -71,37 +71,37 @@ public interface IADLSAccount {
     /** Entity tag for the asset. An entity tag is a hash of the object and represents changes to the contents of an object only, not its metadata. */
     KeywordField ADLS_E_TAG = new KeywordField("adlsETag", "adlsETag");
 
-    /** TBC */
+    /** Type of encryption for this account. */
     KeywordField ADLS_ENCRYPTION_TYPE = new KeywordField("adlsEncryptionType", "adlsEncryptionType");
 
-    /** TBC */
+    /** Primary disk state of this account. */
     KeywordField ADLS_PRIMARY_DISK_STATE = new KeywordField("adlsPrimaryDiskState", "adlsPrimaryDiskState");
 
-    /** TBC */
+    /** Access tier of this account. */
     ADLSAccessTier getAdlsAccountAccessTier();
 
-    /** TBC */
+    /** Kind of this account. */
     ADLSStorageKind getAdlsAccountKind();
 
-    /** TBC */
+    /** Performance of this account. */
     ADLSPerformance getAdlsAccountPerformance();
 
-    /** TBC */
+    /** Provision state of this account. */
     ADLSProvisionState getAdlsAccountProvisionState();
 
     /** TBC */
     String getAdlsAccountQualifiedName();
 
-    /** TBC */
+    /** Replication of this account. */
     ADLSReplicationType getAdlsAccountReplication();
 
-    /** TBC */
+    /** Resource group for this account. */
     String getAdlsAccountResourceGroup();
 
     /** TBC */
     String getAdlsAccountSecondaryLocation();
 
-    /** TBC */
+    /** Subscription for this account. */
     String getAdlsAccountSubscription();
 
     /** Containers that exist within this account. */
@@ -110,10 +110,10 @@ public interface IADLSAccount {
     /** Entity tag for the asset. An entity tag is a hash of the object and represents changes to the contents of an object only, not its metadata. */
     String getAdlsETag();
 
-    /** TBC */
+    /** Type of encryption for this account. */
     ADLSEncryptionTypes getAdlsEncryptionType();
 
-    /** TBC */
+    /** Primary disk state of this account. */
     ADLSAccountStatus getAdlsPrimaryDiskState();
 
     /** TBC */
@@ -320,7 +320,7 @@ public interface IADLSAccount {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -371,7 +371,7 @@ public interface IADLSAccount {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -395,13 +395,13 @@ public interface IADLSAccount {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -413,7 +413,7 @@ public interface IADLSAccount {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -428,7 +428,7 @@ public interface IADLSAccount {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

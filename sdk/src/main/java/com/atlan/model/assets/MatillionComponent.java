@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.Atlan;
@@ -28,7 +28,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * The MatillionComponent type represents a Component in matillion. Components are a part of a matillion job where each one of them is responsible for accomplising a task based on the type of component used
+ * Instance of a Matillion component in Atlan. Components in Matillion are a part of a job, where each component is responsible for accomplishing a task based on the type of component used.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -53,50 +53,50 @@ public class MatillionComponent extends Asset
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
-    /** Unique id of a matillion component */
+    /** Unique identifier of the component in Matillion. */
     @Attribute
     String matillionComponentId;
 
-    /** Unique id which represents the type of a component in matillion */
+    /** Unique identifier for the type of the component in Matillion. */
     @Attribute
     String matillionComponentImplementationId;
 
-    /** The last five run status of a matillion component under a matillion job */
+    /** Last five run statuses of the component within a job. */
     @Attribute
     String matillionComponentLastFiveRunStatus;
 
-    /** The latest run status of a matillion component under a matillion job */
+    /** Latest run status of the component within a job. */
     @Attribute
     String matillionComponentLastRunStatus;
 
-    /** Job details of the matillion job to which the matillion component internally links to */
+    /** Job details of the job to which the component internally links. */
     @Attribute
     @Singular("putMatillionComponentLinkedJob")
     Map<String, String> matillionComponentLinkedJob;
 
-    /** SQL Query involved with a matillion component */
+    /** SQL queries used by the component. */
     @Attribute
     @Singular
     SortedSet<String> matillionComponentSqls;
 
-    /** TBC */
+    /** Job in which this component exists. */
     @Attribute
     IMatillionJob matillionJob;
 
-    /** Name of the matillion job to which the matillion component belongs */
+    /** Simple name of the job to which the component belongs. */
     @Attribute
     String matillionJobName;
 
-    /** Qualified name of the matillion job to which the matillion component belongs */
+    /** Unique name of the job to which the component belongs. */
     @Attribute
     String matillionJobQualifiedName;
 
-    /** TBC */
+    /** Lineage process that represents this Matillion component. */
     @Attribute
     ILineageProcess matillionProcess;
 
@@ -109,7 +109,7 @@ public class MatillionComponent extends Asset
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;

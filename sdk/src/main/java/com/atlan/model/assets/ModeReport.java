@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.Atlan;
@@ -50,7 +50,7 @@ public class ModeReport extends Asset implements IModeReport, IMode, IBI, ICatal
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -80,7 +80,7 @@ public class ModeReport extends Asset implements IModeReport, IMode, IBI, ICatal
     @Attribute
     Boolean modeIsShared;
 
-    /** TBC */
+    /** Queries that exist within this report. */
     @Attribute
     @Singular
     SortedSet<IModeQuery> modeQueries;
@@ -134,7 +134,7 @@ public class ModeReport extends Asset implements IModeReport, IMode, IBI, ICatal
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;

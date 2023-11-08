@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -31,7 +31,7 @@ public interface IMicroStrategyDocument {
 
     public static final String TYPE_NAME = "MicroStrategyDocument";
 
-    /** Project containing the document. */
+    /** Project in which this document exists. */
     RelationField MICRO_STRATEGY_PROJECT = new RelationField("microStrategyProject");
 
     /** TBC */
@@ -238,7 +238,7 @@ public interface IMicroStrategyDocument {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -280,7 +280,7 @@ public interface IMicroStrategyDocument {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -304,13 +304,13 @@ public interface IMicroStrategyDocument {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -334,7 +334,7 @@ public interface IMicroStrategyDocument {
     /** TBC */
     List<Map<String, String>> getMicroStrategyLocation();
 
-    /** Project containing the document. */
+    /** Project in which this document exists. */
     IMicroStrategyProject getMicroStrategyProject();
 
     /** TBC */
@@ -355,7 +355,7 @@ public interface IMicroStrategyDocument {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -370,7 +370,7 @@ public interface IMicroStrategyDocument {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

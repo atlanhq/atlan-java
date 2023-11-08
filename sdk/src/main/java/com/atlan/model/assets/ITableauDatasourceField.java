@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -33,64 +33,64 @@ public interface ITableauDatasourceField {
 
     public static final String TYPE_NAME = "TableauDatasourceField";
 
-    /** TBC */
+    /** Datasource in which this field exists. */
     RelationField DATASOURCE = new RelationField("datasource");
 
-    /** TBC */
+    /** Type of this datasource field. */
     KeywordField DATASOURCE_FIELD_TYPE = new KeywordField("datasourceFieldType", "datasourceFieldType");
 
-    /** TBC */
+    /** Unique name of the datasource in which this datasource field exists. */
     KeywordField DATASOURCE_QUALIFIED_NAME = new KeywordField("datasourceQualifiedName", "datasourceQualifiedName");
 
-    /** TBC */
+    /** Name used internally in Tableau to uniquely identify this field. */
     KeywordField FULLY_QUALIFIED_NAME = new KeywordField("fullyQualifiedName", "fullyQualifiedName");
 
-    /** TBC */
+    /** List of top-level projects and their nested child projects. */
     KeywordField PROJECT_HIERARCHY = new KeywordField("projectHierarchy", "projectHierarchy");
 
-    /** TBC */
+    /** Unique name of the project in which this datasource field exists. */
     KeywordField PROJECT_QUALIFIED_NAME = new KeywordField("projectQualifiedName", "projectQualifiedName");
 
-    /** TBC */
+    /** Unique name of the site in which this datasource field exists. */
     KeywordField SITE_QUALIFIED_NAME = new KeywordField("siteQualifiedName", "siteQualifiedName");
 
-    /** TBC */
+    /** Bin size of this field. */
     KeywordField TABLEAU_DATASOURCE_FIELD_BIN_SIZE =
             new KeywordField("tableauDatasourceFieldBinSize", "tableauDatasourceFieldBinSize");
 
-    /** TBC */
+    /** Data category of this field. */
     KeywordField TABLEAU_DATASOURCE_FIELD_DATA_CATEGORY =
             new KeywordField("tableauDatasourceFieldDataCategory", "tableauDatasourceFieldDataCategory");
 
-    /** TBC */
+    /** Data type of this field. */
     KeywordTextField TABLEAU_DATASOURCE_FIELD_DATA_TYPE = new KeywordTextField(
             "tableauDatasourceFieldDataType", "tableauDatasourceFieldDataType", "tableauDatasourceFieldDataType.text");
 
-    /** TBC */
+    /** Formula for this field. */
     KeywordField TABLEAU_DATASOURCE_FIELD_FORMULA =
             new KeywordField("tableauDatasourceFieldFormula", "tableauDatasourceFieldFormula");
 
-    /** TBC */
+    /** Role of this field, for example: 'dimension', 'measure', or 'unknown'. */
     KeywordField TABLEAU_DATASOURCE_FIELD_ROLE =
             new KeywordField("tableauDatasourceFieldRole", "tableauDatasourceFieldRole");
 
-    /** TBC */
+    /** Unique name of the top-level project in which this datasource field exists. */
     KeywordField TOP_LEVEL_PROJECT_QUALIFIED_NAME =
             new KeywordField("topLevelProjectQualifiedName", "topLevelProjectQualifiedName");
 
-    /** TBC */
+    /** Columns upstream to this field. */
     KeywordField UPSTREAM_COLUMNS = new KeywordField("upstreamColumns", "upstreamColumns");
 
-    /** TBC */
+    /** Fields upstream to this field. */
     KeywordField UPSTREAM_FIELDS = new KeywordField("upstreamFields", "upstreamFields");
 
-    /** TBC */
+    /** Tables upstream to this datasource field. */
     KeywordField UPSTREAM_TABLES = new KeywordField("upstreamTables", "upstreamTables");
 
-    /** TBC */
+    /** Unique name of the workbook in which this datasource field exists. */
     KeywordField WORKBOOK_QUALIFIED_NAME = new KeywordField("workbookQualifiedName", "workbookQualifiedName");
 
-    /** TBC */
+    /** Worksheets that use this datasource field. */
     RelationField WORKSHEETS = new RelationField("worksheets");
 
     /** TBC */
@@ -297,7 +297,7 @@ public interface ITableauDatasourceField {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -321,13 +321,13 @@ public interface ITableauDatasourceField {
     /** TBC */
     AtlanConnectorType getConnectorType();
 
-    /** TBC */
+    /** Datasource in which this field exists. */
     ITableauDatasource getDatasource();
 
-    /** TBC */
+    /** Type of this datasource field. */
     String getDatasourceFieldType();
 
-    /** TBC */
+    /** Unique name of the datasource in which this datasource field exists. */
     String getDatasourceQualifiedName();
 
     /** TBC */
@@ -342,7 +342,7 @@ public interface ITableauDatasourceField {
     /** TBC */
     SortedSet<IFile> getFiles();
 
-    /** TBC */
+    /** Name used internally in Tableau to uniquely identify this field. */
     String getFullyQualifiedName();
 
     /** TBC */
@@ -351,7 +351,7 @@ public interface ITableauDatasourceField {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -375,13 +375,13 @@ public interface ITableauDatasourceField {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -393,7 +393,7 @@ public interface ITableauDatasourceField {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -405,16 +405,16 @@ public interface ITableauDatasourceField {
     /** TBC */
     Double getPopularityScore();
 
-    /** TBC */
+    /** List of top-level projects and their nested child projects. */
     List<Map<String, String>> getProjectHierarchy();
 
-    /** TBC */
+    /** Unique name of the project in which this datasource field exists. */
     String getProjectQualifiedName();
 
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */
@@ -423,7 +423,7 @@ public interface ITableauDatasourceField {
     /** TBC */
     SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
 
-    /** TBC */
+    /** Unique name of the site in which this datasource field exists. */
     String getSiteQualifiedName();
 
     /** TBC */
@@ -507,34 +507,34 @@ public interface ITableauDatasourceField {
     /** TBC */
     String getSubType();
 
-    /** TBC */
+    /** Bin size of this field. */
     String getTableauDatasourceFieldBinSize();
 
-    /** TBC */
+    /** Data category of this field. */
     String getTableauDatasourceFieldDataCategory();
 
-    /** TBC */
+    /** Data type of this field. */
     String getTableauDatasourceFieldDataType();
 
-    /** TBC */
+    /** Formula for this field. */
     String getTableauDatasourceFieldFormula();
 
-    /** TBC */
+    /** Role of this field, for example: 'dimension', 'measure', or 'unknown'. */
     String getTableauDatasourceFieldRole();
 
     /** TBC */
     String getTenantId();
 
-    /** TBC */
+    /** Unique name of the top-level project in which this datasource field exists. */
     String getTopLevelProjectQualifiedName();
 
-    /** TBC */
+    /** Columns upstream to this field. */
     List<Map<String, String>> getUpstreamColumns();
 
-    /** TBC */
+    /** Fields upstream to this field. */
     List<Map<String, String>> getUpstreamFields();
 
-    /** TBC */
+    /** Tables upstream to this datasource field. */
     List<Map<String, String>> getUpstreamTables();
 
     /** TBC */
@@ -549,10 +549,10 @@ public interface ITableauDatasourceField {
     /** TBC */
     SortedSet<String> getViewerUsers();
 
-    /** TBC */
+    /** Unique name of the workbook in which this datasource field exists. */
     String getWorkbookQualifiedName();
 
-    /** TBC */
+    /** Worksheets that use this datasource field. */
     SortedSet<ITableauWorksheet> getWorksheets();
 
     /** Name of the type that defines the asset. */

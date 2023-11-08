@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -24,7 +24,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a Tableau datasource in Atlan.
+ * Instance of a Tableau datasource in Atlan. These include both published and embedded datasources, and are the link between source data and Tableau.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -33,53 +33,53 @@ public interface ITableauDatasource {
 
     public static final String TYPE_NAME = "TableauDatasource";
 
-    /** TBC */
+    /** Notes related to this datasource being cerfified, in Tableau. */
     KeywordField CERTIFICATION_NOTE = new KeywordField("certificationNote", "certificationNote");
 
-    /** TBC */
+    /** Users that have marked this datasource as cerified, in Tableau. */
     KeywordField CERTIFIER = new KeywordField("certifier", "certifier");
 
-    /** TBC */
+    /** Name of the user who cerified this datasource, in Tableau. */
     KeywordField CERTIFIER_DISPLAY_NAME = new KeywordField("certifierDisplayName", "certifierDisplayName");
 
-    /** TBC */
+    /** Fields that exist within this datasource. */
     RelationField FIELDS = new RelationField("fields");
 
-    /** TBC */
+    /** Whether this datasource has extracts (true) or not (false). */
     BooleanField HAS_EXTRACTS = new BooleanField("hasExtracts", "hasExtracts");
 
-    /** TBC */
+    /** Whether this datasource is certified in Tableau (true) or not (false). */
     BooleanField IS_CERTIFIED = new BooleanField("isCertified", "isCertified");
 
-    /** TBC */
+    /** Whether this datasource is published (true) or embedded (false). */
     BooleanField IS_PUBLISHED = new BooleanField("isPublished", "isPublished");
 
-    /** TBC */
+    /** Project in which this datasource exists. */
     RelationField PROJECT = new RelationField("project");
 
-    /** TBC */
+    /** List of top-level projects with their nested child projects. */
     KeywordField PROJECT_HIERARCHY = new KeywordField("projectHierarchy", "projectHierarchy");
 
-    /** TBC */
+    /** Unique name of the project in which this datasource exists. */
     KeywordField PROJECT_QUALIFIED_NAME = new KeywordField("projectQualifiedName", "projectQualifiedName");
 
-    /** TBC */
+    /** Unique name of the site in which this datasource exists. */
     KeywordField SITE_QUALIFIED_NAME = new KeywordField("siteQualifiedName", "siteQualifiedName");
 
-    /** TBC */
+    /** Unique name of the top-level project in which this datasource exists. */
     KeywordField TOP_LEVEL_PROJECT_QUALIFIED_NAME =
             new KeywordField("topLevelProjectQualifiedName", "topLevelProjectQualifiedName");
 
-    /** TBC */
+    /** List of datasources that are upstream of this datasource. */
     KeywordField UPSTREAM_DATASOURCES = new KeywordField("upstreamDatasources", "upstreamDatasources");
 
-    /** TBC */
+    /** List of tables that are upstream of this datasource. */
     KeywordField UPSTREAM_TABLES = new KeywordField("upstreamTables", "upstreamTables");
 
-    /** TBC */
+    /** Workbook in which this datasource exists. */
     RelationField WORKBOOK = new RelationField("workbook");
 
-    /** TBC */
+    /** Unique name of the workbook in which this datasource exists. */
     KeywordField WORKBOOK_QUALIFIED_NAME = new KeywordField("workbookQualifiedName", "workbookQualifiedName");
 
     /** TBC */
@@ -286,7 +286,7 @@ public interface ITableauDatasource {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -301,13 +301,13 @@ public interface ITableauDatasource {
     /** TBC */
     String getCertificateUpdatedBy();
 
-    /** TBC */
+    /** Notes related to this datasource being cerfified, in Tableau. */
     String getCertificationNote();
 
-    /** TBC */
+    /** Users that have marked this datasource as cerified, in Tableau. */
     Map<String, String> getCertifier();
 
-    /** TBC */
+    /** Name of the user who cerified this datasource, in Tableau. */
     String getCertifierDisplayName();
 
     /** TBC */
@@ -328,13 +328,13 @@ public interface ITableauDatasource {
     /** TBC */
     String getDisplayName();
 
-    /** TBC */
+    /** Fields that exist within this datasource. */
     SortedSet<ITableauField> getFields();
 
     /** TBC */
     SortedSet<IFile> getFiles();
 
-    /** TBC */
+    /** Whether this datasource has extracts (true) or not (false). */
     Boolean getHasExtracts();
 
     /** TBC */
@@ -343,13 +343,13 @@ public interface ITableauDatasource {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
     Boolean getIsAIGenerated();
 
-    /** TBC */
+    /** Whether this datasource is certified in Tableau (true) or not (false). */
     Boolean getIsCertified();
 
     /** TBC */
@@ -358,7 +358,7 @@ public interface ITableauDatasource {
     /** TBC */
     Boolean getIsEditable();
 
-    /** TBC */
+    /** Whether this datasource is published (true) or embedded (false). */
     Boolean getIsPublished();
 
     /** TBC */
@@ -373,13 +373,13 @@ public interface ITableauDatasource {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -391,7 +391,7 @@ public interface ITableauDatasource {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -403,19 +403,19 @@ public interface ITableauDatasource {
     /** TBC */
     Double getPopularityScore();
 
-    /** TBC */
+    /** Project in which this datasource exists. */
     ITableauProject getProject();
 
-    /** TBC */
+    /** List of top-level projects with their nested child projects. */
     List<Map<String, String>> getProjectHierarchy();
 
-    /** TBC */
+    /** Unique name of the project in which this datasource exists. */
     String getProjectQualifiedName();
 
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */
@@ -424,7 +424,7 @@ public interface ITableauDatasource {
     /** TBC */
     SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
 
-    /** TBC */
+    /** Unique name of the site in which this datasource exists. */
     String getSiteQualifiedName();
 
     /** TBC */
@@ -511,13 +511,13 @@ public interface ITableauDatasource {
     /** TBC */
     String getTenantId();
 
-    /** TBC */
+    /** Unique name of the top-level project in which this datasource exists. */
     String getTopLevelProjectQualifiedName();
 
-    /** TBC */
+    /** List of datasources that are upstream of this datasource. */
     List<Map<String, String>> getUpstreamDatasources();
 
-    /** TBC */
+    /** List of tables that are upstream of this datasource. */
     List<Map<String, String>> getUpstreamTables();
 
     /** TBC */
@@ -532,10 +532,10 @@ public interface ITableauDatasource {
     /** TBC */
     SortedSet<String> getViewerUsers();
 
-    /** TBC */
+    /** Workbook in which this datasource exists. */
     ITableauWorkbook getWorkbook();
 
-    /** TBC */
+    /** Unique name of the workbook in which this datasource exists. */
     String getWorkbookQualifiedName();
 
     /** Name of the type that defines the asset. */

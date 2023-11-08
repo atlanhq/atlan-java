@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.Atlan;
@@ -46,11 +46,11 @@ public class ReadmeTemplate extends Asset implements IReadmeTemplate, IResource,
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Icon to use for the README template. */
     @Attribute
     String icon;
 
-    /** TBC */
+    /** Type of icon, for example: image or emoji. */
     @Attribute
     IconType iconType;
 
@@ -59,7 +59,7 @@ public class ReadmeTemplate extends Asset implements IReadmeTemplate, IResource,
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -77,7 +77,7 @@ public class ReadmeTemplate extends Asset implements IReadmeTemplate, IResource,
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;

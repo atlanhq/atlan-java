@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.Atlan;
@@ -27,7 +27,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * The SisenseFolder type represents a folder in Sisense. This type is used to denote both parent folders and nested folders
+ * Instance of a Sisense folder in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -50,7 +50,7 @@ public class SisenseFolder extends Asset implements ISisenseFolder, ISisense, IB
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -60,30 +60,30 @@ public class SisenseFolder extends Asset implements ISisenseFolder, ISisense, IB
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** TBC */
+    /** Sub-folders that exist within this folder. */
     @Attribute
     @Singular
     SortedSet<ISisenseFolder> sisenseChildFolders;
 
-    /** TBC */
+    /** Dashboards that exist within this folder. */
     @Attribute
     @Singular
     SortedSet<ISisenseDashboard> sisenseDashboards;
 
-    /** Qualified name of the parent folder */
+    /** Unique name of the parent folder in which this folder exists. */
     @Attribute
     String sisenseFolderParentFolderQualifiedName;
 
-    /** TBC */
+    /** Folder in which this sub-folder exists. */
     @Attribute
     ISisenseFolder sisenseParentFolder;
 
-    /** TBC */
+    /** Widgets that exist within this folder. */
     @Attribute
     @Singular
     SortedSet<ISisenseWidget> sisenseWidgets;

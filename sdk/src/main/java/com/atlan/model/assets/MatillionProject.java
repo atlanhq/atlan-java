@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.Atlan;
@@ -27,7 +27,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * The MatillionProject Type represents a Project in Matillion. A Project in matillion is a logical grouping of configuration settings and jobs which are responsible for data processing and transformation.
+ * Instance of a Matillion project in Atlan. A project in Matillion is a logical grouping of configuration settings and jobs which are responsible for data processing and transformation.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -50,34 +50,34 @@ public class MatillionProject extends Asset implements IMatillionProject, IMatil
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
-    /** List of environments under a matillion project */
+    /** List of environments in the project. */
     @Attribute
     @Singular
     SortedSet<String> matillionEnvironments;
 
-    /** TBC */
+    /** Matillion group in which the project exists. */
     @Attribute
     IMatillionGroup matillionGroup;
 
-    /** Name of the matillion group to which the matillion project belongs */
+    /** Simple name of the Matillion group to which the project belongs. */
     @Attribute
     String matillionGroupName;
 
-    /** Qualified name of the matillion group to which the matillion project belongs */
+    /** Unique name of the Matillion group to which the project belongs. */
     @Attribute
     String matillionGroupQualifiedName;
 
-    /** TBC */
+    /** Jobs that exist within this project. */
     @Attribute
     @Singular
     SortedSet<IMatillionJob> matillionJobs;
 
-    /** Count of jobs under a matillion project */
+    /** Number of jobs in the project. */
     @Attribute
     Long matillionProjectJobCount;
 
@@ -85,7 +85,7 @@ public class MatillionProject extends Asset implements IMatillionProject, IMatil
     @Attribute
     String matillionVersion;
 
-    /** List of versions under a matillion project */
+    /** List of versions in the project. */
     @Attribute
     @Singular("addMatillionVersion")
     SortedSet<String> matillionVersions;
@@ -95,7 +95,7 @@ public class MatillionProject extends Asset implements IMatillionProject, IMatil
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;

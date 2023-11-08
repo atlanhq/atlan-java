@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -24,7 +24,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * The MatillionComponent type represents a Component in matillion. Components are a part of a matillion job where each one of them is responsible for accomplising a task based on the type of component used
+ * Instance of a Matillion component in Atlan. Components in Matillion are a part of a job, where each component is responsible for accomplishing a task based on the type of component used.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -33,40 +33,40 @@ public interface IMatillionComponent {
 
     public static final String TYPE_NAME = "MatillionComponent";
 
-    /** Unique id of a matillion component */
+    /** Unique identifier of the component in Matillion. */
     KeywordField MATILLION_COMPONENT_ID = new KeywordField("matillionComponentId", "matillionComponentId");
 
-    /** Unique id which represents the type of a component in matillion */
+    /** Unique identifier for the type of the component in Matillion. */
     KeywordField MATILLION_COMPONENT_IMPLEMENTATION_ID =
             new KeywordField("matillionComponentImplementationId", "matillionComponentImplementationId");
 
-    /** The last five run status of a matillion component under a matillion job */
+    /** Last five run statuses of the component within a job. */
     KeywordField MATILLION_COMPONENT_LAST_FIVE_RUN_STATUS =
             new KeywordField("matillionComponentLastFiveRunStatus", "matillionComponentLastFiveRunStatus");
 
-    /** The latest run status of a matillion component under a matillion job */
+    /** Latest run status of the component within a job. */
     KeywordField MATILLION_COMPONENT_LAST_RUN_STATUS =
             new KeywordField("matillionComponentLastRunStatus", "matillionComponentLastRunStatus");
 
-    /** Job details of the matillion job to which the matillion component internally links to */
+    /** Job details of the job to which the component internally links. */
     KeywordField MATILLION_COMPONENT_LINKED_JOB =
             new KeywordField("matillionComponentLinkedJob", "matillionComponentLinkedJob");
 
-    /** SQL Query involved with a matillion component */
+    /** SQL queries used by the component. */
     KeywordField MATILLION_COMPONENT_SQLS = new KeywordField("matillionComponentSqls", "matillionComponentSqls");
 
-    /** TBC */
+    /** Job in which this component exists. */
     RelationField MATILLION_JOB = new RelationField("matillionJob");
 
-    /** Name of the matillion job to which the matillion component belongs */
+    /** Simple name of the job to which the component belongs. */
     KeywordTextField MATILLION_JOB_NAME =
             new KeywordTextField("matillionJobName", "matillionJobName.keyword", "matillionJobName");
 
-    /** Qualified name of the matillion job to which the matillion component belongs */
+    /** Unique name of the job to which the component belongs. */
     KeywordTextField MATILLION_JOB_QUALIFIED_NAME = new KeywordTextField(
             "matillionJobQualifiedName", "matillionJobQualifiedName", "matillionJobQualifiedName.text");
 
-    /** TBC */
+    /** Lineage process that represents this Matillion component. */
     RelationField MATILLION_PROCESS = new RelationField("matillionProcess");
 
     /** TBC */
@@ -273,7 +273,7 @@ public interface IMatillionComponent {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -315,7 +315,7 @@ public interface IMatillionComponent {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -339,37 +339,37 @@ public interface IMatillionComponent {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
-    /** Unique id of a matillion component */
+    /** Unique identifier of the component in Matillion. */
     String getMatillionComponentId();
 
-    /** Unique id which represents the type of a component in matillion */
+    /** Unique identifier for the type of the component in Matillion. */
     String getMatillionComponentImplementationId();
 
-    /** The last five run status of a matillion component under a matillion job */
+    /** Last five run statuses of the component within a job. */
     String getMatillionComponentLastFiveRunStatus();
 
-    /** The latest run status of a matillion component under a matillion job */
+    /** Latest run status of the component within a job. */
     String getMatillionComponentLastRunStatus();
 
-    /** Job details of the matillion job to which the matillion component internally links to */
+    /** Job details of the job to which the component internally links. */
     Map<String, String> getMatillionComponentLinkedJob();
 
-    /** SQL Query involved with a matillion component */
+    /** SQL queries used by the component. */
     SortedSet<String> getMatillionComponentSqls();
 
-    /** TBC */
+    /** Job in which this component exists. */
     IMatillionJob getMatillionJob();
 
-    /** Name of the matillion job to which the matillion component belongs */
+    /** Simple name of the job to which the component belongs. */
     String getMatillionJobName();
 
-    /** Qualified name of the matillion job to which the matillion component belongs */
+    /** Unique name of the job to which the component belongs. */
     String getMatillionJobQualifiedName();
 
-    /** TBC */
+    /** Lineage process that represents this Matillion component. */
     ILineageProcess getMatillionProcess();
 
     /** TBC */
@@ -378,7 +378,7 @@ public interface IMatillionComponent {
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -390,7 +390,7 @@ public interface IMatillionComponent {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -405,7 +405,7 @@ public interface IMatillionComponent {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

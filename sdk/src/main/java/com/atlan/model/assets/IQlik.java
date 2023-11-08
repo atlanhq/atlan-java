@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -33,29 +33,29 @@ public interface IQlik {
 
     public static final String TYPE_NAME = "Qlik";
 
-    /** Unique identifier (in Qlik) of the app where the asset exists. */
+    /** Identifier of the app in which this asset belongs, from Qlik. */
     KeywordField QLIK_APP_ID = new KeywordField("qlikAppId", "qlikAppId");
 
-    /** Unique name of the app where the Qlik asset exists. */
+    /** Unique name of the app where this asset belongs. */
     KeywordTextField QLIK_APP_QUALIFIED_NAME =
             new KeywordTextField("qlikAppQualifiedName", "qlikAppQualifiedName", "qlikAppQualifiedName.text");
 
-    /** Unique identifier of the Qlik asset in Qlik. */
+    /** Identifier of this asset, from Qlik. */
     KeywordField QLIK_ID = new KeywordField("qlikId", "qlikId");
 
-    /** Whether the asset is published in Qlik (true) or not (false). */
+    /** Whether this asset is published in Qlik (true) or not (false). */
     BooleanField QLIK_IS_PUBLISHED = new BooleanField("qlikIsPublished", "qlikIsPublished");
 
-    /** Unique identifier (in Qlik) of the owner of the asset. */
+    /** Identifier of the owner of this asset, in Qlik. */
     KeywordField QLIK_OWNER_ID = new KeywordField("qlikOwnerId", "qlikOwnerId");
 
-    /** QRI of the Qlik object. */
+    /** Unique QRI of this asset, from Qlik. */
     KeywordTextField QLIK_QRI = new KeywordTextField("qlikQRI", "qlikQRI", "qlikQRI.text");
 
-    /** Unique identifier (in Qlik) of the space where the asset exists. */
+    /** Identifier of the space in which this asset exists, from Qlik. */
     KeywordField QLIK_SPACE_ID = new KeywordField("qlikSpaceId", "qlikSpaceId");
 
-    /** Unique name of the space where the Qlik asset exists. */
+    /** Unique name of the space in which this asset exists. */
     KeywordTextField QLIK_SPACE_QUALIFIED_NAME =
             new KeywordTextField("qlikSpaceQualifiedName", "qlikSpaceQualifiedName", "qlikSpaceQualifiedName.text");
 
@@ -263,7 +263,7 @@ public interface IQlik {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -305,7 +305,7 @@ public interface IQlik {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -329,13 +329,13 @@ public interface IQlik {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -347,7 +347,7 @@ public interface IQlik {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -359,34 +359,34 @@ public interface IQlik {
     /** TBC */
     Double getPopularityScore();
 
-    /** Unique identifier (in Qlik) of the app where the asset exists. */
+    /** Identifier of the app in which this asset belongs, from Qlik. */
     String getQlikAppId();
 
-    /** Unique name of the app where the Qlik asset exists. */
+    /** Unique name of the app where this asset belongs. */
     String getQlikAppQualifiedName();
 
-    /** Unique identifier of the Qlik asset in Qlik. */
+    /** Identifier of this asset, from Qlik. */
     String getQlikId();
 
-    /** Whether the asset is published in Qlik (true) or not (false). */
+    /** Whether this asset is published in Qlik (true) or not (false). */
     Boolean getQlikIsPublished();
 
-    /** Unique identifier (in Qlik) of the owner of the asset. */
+    /** Identifier of the owner of this asset, in Qlik. */
     String getQlikOwnerId();
 
-    /** QRI of the Qlik object. */
+    /** Unique QRI of this asset, from Qlik. */
     String getQlikQRI();
 
-    /** Unique identifier (in Qlik) of the space where the asset exists. */
+    /** Identifier of the space in which this asset exists, from Qlik. */
     String getQlikSpaceId();
 
-    /** Unique name of the space where the Qlik asset exists. */
+    /** Unique name of the space in which this asset exists. */
     String getQlikSpaceQualifiedName();
 
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */

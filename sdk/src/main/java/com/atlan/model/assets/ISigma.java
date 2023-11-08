@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -31,26 +31,26 @@ public interface ISigma {
 
     public static final String TYPE_NAME = "Sigma";
 
-    /** TBC */
+    /** Simple name of the data element in which this asset exists. */
     KeywordTextField SIGMA_DATA_ELEMENT_NAME =
             new KeywordTextField("sigmaDataElementName", "sigmaDataElementName.keyword", "sigmaDataElementName");
 
-    /** TBC */
+    /** Unique name of the data element in which this asset exists. */
     KeywordTextField SIGMA_DATA_ELEMENT_QUALIFIED_NAME = new KeywordTextField(
             "sigmaDataElementQualifiedName", "sigmaDataElementQualifiedName", "sigmaDataElementQualifiedName.text");
 
-    /** TBC */
+    /** Simple name of the page on which this asset exists. */
     KeywordTextField SIGMA_PAGE_NAME = new KeywordTextField("sigmaPageName", "sigmaPageName.keyword", "sigmaPageName");
 
-    /** TBC */
+    /** Unique name of the page on which this asset exists. */
     KeywordTextField SIGMA_PAGE_QUALIFIED_NAME =
             new KeywordTextField("sigmaPageQualifiedName", "sigmaPageQualifiedName", "sigmaPageQualifiedName.text");
 
-    /** TBC */
+    /** Simple name of the workbook in which this asset exists. */
     KeywordTextField SIGMA_WORKBOOK_NAME =
             new KeywordTextField("sigmaWorkbookName", "sigmaWorkbookName.keyword", "sigmaWorkbookName");
 
-    /** TBC */
+    /** Unique name of the workbook in which this asset exists. */
     KeywordTextField SIGMA_WORKBOOK_QUALIFIED_NAME = new KeywordTextField(
             "sigmaWorkbookQualifiedName", "sigmaWorkbookQualifiedName", "sigmaWorkbookQualifiedName.text");
 
@@ -258,7 +258,7 @@ public interface ISigma {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -300,7 +300,7 @@ public interface ISigma {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
@@ -324,13 +324,13 @@ public interface ISigma {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -342,7 +342,7 @@ public interface ISigma {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
@@ -357,7 +357,7 @@ public interface ISigma {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */
@@ -366,22 +366,22 @@ public interface ISigma {
     /** TBC */
     SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
 
-    /** TBC */
+    /** Simple name of the data element in which this asset exists. */
     String getSigmaDataElementName();
 
-    /** TBC */
+    /** Unique name of the data element in which this asset exists. */
     String getSigmaDataElementQualifiedName();
 
-    /** TBC */
+    /** Simple name of the page on which this asset exists. */
     String getSigmaPageName();
 
-    /** TBC */
+    /** Unique name of the page on which this asset exists. */
     String getSigmaPageQualifiedName();
 
-    /** TBC */
+    /** Simple name of the workbook in which this asset exists. */
     String getSigmaWorkbookName();
 
-    /** TBC */
+    /** Unique name of the workbook in which this asset exists. */
     String getSigmaWorkbookQualifiedName();
 
     /** TBC */

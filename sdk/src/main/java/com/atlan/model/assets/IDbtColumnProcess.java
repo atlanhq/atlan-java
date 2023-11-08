@@ -1,5 +1,5 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -242,7 +242,7 @@ public interface IDbtColumnProcess {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -263,7 +263,7 @@ public interface IDbtColumnProcess {
     /** TBC */
     String getCode();
 
-    /** TBC */
+    /** Processes that detail column-level lineage for this process. */
     SortedSet<IColumnProcess> getColumnProcesses();
 
     /** TBC */
@@ -350,10 +350,10 @@ public interface IDbtColumnProcess {
     /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
-    /** TBC */
+    /** Assets that are inputs to this process. */
     SortedSet<ICatalog> getInputs();
 
     /** TBC */
@@ -377,16 +377,16 @@ public interface IDbtColumnProcess {
     /** TBC */
     String getLastSyncWorkflowName();
 
-    /** TBC */
+    /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
-    /** TBC */
+    /** Matillion component that contains the logic for this lineage process. */
     IMatillionComponent getMatillionComponent();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
-    /** TBC */
+    /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
     /** TBC */
@@ -398,10 +398,10 @@ public interface IDbtColumnProcess {
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
-    /** TBC */
+    /** Assets that are outputs from this process. */
     SortedSet<ICatalog> getOutputs();
 
     /** TBC */
@@ -413,13 +413,13 @@ public interface IDbtColumnProcess {
     /** TBC */
     Double getPopularityScore();
 
-    /** TBC */
+    /** Parent process that contains this column-level process. */
     ILineageProcess getProcess();
 
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** README that is linked to this asset. */
     IReadme getReadme();
 
     /** TBC */
