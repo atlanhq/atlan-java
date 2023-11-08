@@ -1,11 +1,9 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-val versionId: String = providers.gradleProperty("VERSION_NAME").get()
-val jarName = "atlan-java"
-version = versionId
+// SPDX-License-Identifier: Apache-2.0
+version = providers.gradleProperty("VERSION_NAME").get()
+val jarName = "package-toolkit-config"
 
 plugins {
-    id("com.atlan.java")
-    id("com.atlan.java-test")
+    id("com.atlan.kotlin")
     alias(libs.plugins.shadow)
     alias(libs.plugins.git.publish)
     `maven-publish`
@@ -13,58 +11,30 @@ plugins {
 }
 
 dependencies {
-    api(libs.jackson.databind)
-    api(libs.slf4j)
-    api(libs.elasticsearch.java)
-    api(libs.freemarker)
-    implementation(libs.classgraph)
-    testImplementation(libs.bundles.java.test)
+    implementation(libs.jackson.kotlin)
+    implementation(libs.jackson.yaml)
 }
 
-tasks.jar {
-    manifest {
-        attributes(
-            "Implementation-Title" to providers.gradleProperty("SDK_ARTIFACT_ID").get(),
-            "Implementation-Version" to versionId,
-            "Implementation-Vendor" to providers.gradleProperty("VENDOR_NAME").get(),
-            "Bundle-SymbolicName" to providers.gradleProperty("SDK_ARTIFACT_ID").get(),
-            "Export-Package" to "${providers.gradleProperty("GROUP").get()}.*")
-        archiveVersion.set(versionId)
-    }
-    archiveBaseName.set(jarName)
-}
-
-tasks.shadowJar {
-    archiveBaseName.set(jarName)
-    archiveClassifier.set("jar-with-dependencies")
-    configurations = listOf(project.configurations.runtimeClasspath.get())
-}
-
-tasks.javadoc {
-    title = "Atlan Java SDK $versionId"
-}
-
-gitPublish {
-    repoUri.set("https://github.com/atlanhq/atlan-java.git")
-    branch.set("gh-pages")
-    sign.set(false) // disable commit signing
-
-    contents {
-        from(tasks.javadoc) {
-            into(".")
+tasks {
+    shadowJar {
+        isZip64 = true
+        archiveBaseName.set(jarName)
+        archiveClassifier.set("jar-with-dependencies")
+        dependencies {
+            include(dependency("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:.*"))
         }
+        mergeServiceFiles()
     }
-}
 
-tasks.create<Zip>("buildZip") {
-    into("java/lib") {
-        from(tasks.shadowJar)
+    jar {
+        archiveBaseName.set(jarName)
+        dependsOn(shadowJar)
     }
 }
 
 tasks.create<Jar>("sourcesJar") {
     archiveClassifier.set("sources")
-    from(tasks.delombok)
+    from(sourceSets.main)
 }
 
 tasks.create<Jar>("javadocJar") {
@@ -74,16 +44,16 @@ tasks.create<Jar>("javadocJar") {
 
 publishing {
     publications {
-        create<MavenPublication>("mavenJavaSdk") {
+        create<MavenPublication>("mavenJavaPkgCfg") {
             groupId = providers.gradleProperty("GROUP").get()
-            artifactId = providers.gradleProperty("SDK_ARTIFACT_ID").get()
-            version = versionId
+            artifactId = providers.gradleProperty("PKG_CFG_ARTIFACT_ID").get()
+            version = providers.gradleProperty("VERSION_NAME").get()
             from(components["java"])
             artifact(tasks["sourcesJar"])
             artifact(tasks["javadocJar"])
             pom {
-                name.set(providers.gradleProperty("SDK_ARTIFACT_ID").get())
-                description.set(providers.gradleProperty("SDK_DESCRIPTION").get())
+                name.set(providers.gradleProperty("PKG_CFG_ARTIFACT_ID").get())
+                description.set(providers.gradleProperty("PKG_CFG_DESCRIPTION").get())
                 url.set(providers.gradleProperty("POM_URL").get())
                 packaging = providers.gradleProperty("POM_PACKAGING").get()
                 licenses {
@@ -116,5 +86,5 @@ publishing {
 
 signing {
     useGpgCmd()
-    sign(publishing.publications["mavenJavaSdk"])
+    sign(publishing.publications["mavenJavaPkgCfg"])
 }

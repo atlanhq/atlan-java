@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
-val jarPath = "$rootDir/jars"
-val versionId: String = providers.gradleProperty("VERSION_NAME").get()
-val jarFile = "package-toolkit-runtime-$versionId.jar"
+version = providers.gradleProperty("VERSION_NAME").get()
+val jarName = "package-toolkit-runtime"
 
 plugins {
     id("com.atlan.kotlin")
@@ -11,8 +10,8 @@ plugins {
 tasks {
     shadowJar {
         isZip64 = true
-        archiveFileName.set(jarFile)
-        destinationDirectory.set(file(jarPath))
+        archiveBaseName.set(jarName)
+        archiveClassifier.set("jar-with-dependencies")
         dependencies {
             include(dependency("org.jetbrains.kotlin:.*:.*"))
             include(dependency("io.github.microutils:kotlin-logging-jvm:.*"))
@@ -24,6 +23,7 @@ tasks {
     }
 
     jar {
+        archiveBaseName.set(jarName)
         dependsOn(shadowJar)
         // Necessary to avoid log4j falling back to a non-performant way to walk the stack
         manifest {
