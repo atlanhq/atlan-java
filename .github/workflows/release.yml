@@ -42,6 +42,10 @@ jobs:
           path: package-toolkit/runtime/build/libs/package-toolkit-runtime-*-jar-with-dependencies.jar
       - uses: actions/upload-artifact@v3
         with:
+          name: events
+          path: package-toolkit/events/build/libs/package-toolkit-events-*-jar-with-dependencies.jar
+      - uses: actions/upload-artifact@v3
+        with:
           name: lambda-layer
           path: sdk/build/distributions/sdk-*.zip
   publish-release:
@@ -93,6 +97,10 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: runtime
+          path: ./containers/assembly
+      - uses: actions/download-artifact@v3
+        with:
+          name: events
           path: ./containers/assembly
       - name: Build and publish container image
         uses: docker/build-push-action@v4
