@@ -110,10 +110,6 @@ jobs:
           path: ./containers/assembly
       - uses: actions/download-artifact@v3
         with:
-          name: config
-          path: ./containers/assembly
-      - uses: actions/download-artifact@v3
-        with:
           name: runtime
           path: ./containers/assembly
       - name: Build and publish container image
