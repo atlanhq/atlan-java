@@ -7,13 +7,24 @@
 [![Development](https://img.shields.io/nexus/s/com.atlan/atlan-java?label=development&server=https%3A%2F%2Fs01.oss.sonatype.org)](https://s01.oss.sonatype.org/content/repositories/snapshots/com/atlan/atlan-java/)
 <!--[![CodeQL](https://github.com/atlanhq/atlan-java/workflows/CodeQL/badge.svg)](https://github.com/atlanhq/atlan-java/actions/workflows/codeql-analysis.yml) -->
 
-# Atlan Java SDK
+# Atlan Java
 
-This repository houses the code for a Java SDK to interact with [Atlan](https://atlan.com).
+This repository houses the Java-based utilities for interacting with [Atlan](https://atlan.com):
+
+- `sdk` the Atlan Java SDK (client library), that ultimately calls through to Atlan's REST APIs
+- `package-toolkit` for configuring, running and testing custom packages
+- `integration-tests` for automated regression-testing
+- `generate` to generate components of the SDK that are model-driven
+
+These additional directories serve other purposes:
+
+- `containers` defines the container image that bundles the SDK and runtime custom package toolkits
+- `gradle` contains Gradle build bootstrapping and dependency version catalog
+- `buildSrc` contains code for the Gradle multi-project build process (in particular, convention plugins)
 
 ## [Documentation](https://developer.atlan.com/getting-started/java-sdk/)
 
-[https://developer.atlan.com/getting-started/java-sdk/](https://developer.atlan.com/getting-started/java-sdk/)
+For guides on actually using the various utilities housed in this repository, see: [https://developer.atlan.com/getting-started/java-sdk/](https://developer.atlan.com/getting-started/java-sdk/)
 
 ## Attribution
 
