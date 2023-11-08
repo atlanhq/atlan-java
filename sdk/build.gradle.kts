@@ -62,14 +62,12 @@ tasks.create<Zip>("buildZip") {
 
 tasks.create<Jar>("sourcesJar") {
     archiveClassifier.set("sources")
-    //classifier = "sources"
     from(tasks.delombok)
 }
 
 tasks.create<Jar>("javadocJar") {
     archiveClassifier.set("javadoc")
-    //classifier = "javadoc"
-    from(tasks.javadoc.get().destinationDir)
+    from(tasks.javadoc)
 }
 
 publishing {
