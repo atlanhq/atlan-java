@@ -154,7 +154,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 public class <span class="typeNameLabel">Function</span>
 extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a>
 implements <a href="IFunction.html" title="interface in com.atlan.model.assets">IFunction</a>, <a href="ISQL.html" title="interface in com.atlan.model.assets">ISQL</a>, <a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a>, <a href="IAsset.html" title="interface in com.atlan.model.assets">IAsset</a>, <a href="IReferenceable.html" title="interface in com.atlan.model.assets">IReferenceable</a></pre>
-<div class="block">Atlan Function Asset</div>
+<div class="block">Instance of a function in Atlan.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../serialized-form.html#com.atlan.model.assets.Function">Serialized Form</a></dd>
@@ -538,28 +538,28 @@ implements <a href="IFunction.html" title="interface in com.atlan.model.assets">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getFunctionIsExternal()">getFunctionIsExternal</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Determines whether the functions is stored or executed externally.</div>
+<div class="block">Whether the function is stored or executed externally (true) or internally (false).</div>
 </td>
 </tr>
 <tr id="i28" class="altColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getFunctionIsMemoizable()">getFunctionIsMemoizable</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Determines whether the function must re-compute or not if there are no underlying changes in the values.</div>
+<div class="block">Whether the function must re-compute if there are no underlying changes in the values (false) or not (true).</div>
 </td>
 </tr>
 <tr id="i29" class="rowColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getFunctionIsSecure()">getFunctionIsSecure</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Determines whether sensitive information of the function is omitted for unauthorized users.</div>
+<div class="block">Whether sensitive information of the function is omitted for unauthorized users (true) or not (false).</div>
 </td>
 </tr>
 <tr id="i30" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getFunctionLanguage()">getFunctionLanguage</a></span>()</code></th>
 <td class="colLast">
-<div class="block">The programming language in which the function is written.</div>
+<div class="block">Programming language in which the function is written.</div>
 </td>
 </tr>
 <tr id="i31" class="rowColor">
@@ -573,14 +573,14 @@ implements <a href="IFunction.html" title="interface in com.atlan.model.assets">
 <td class="colFirst"><code><a href="ISchema.html" title="interface in com.atlan.model.assets">ISchema</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getFunctionSchema()">getFunctionSchema</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Schema in which this function exists.</div>
 </td>
 </tr>
 <tr id="i33" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getFunctionType()">getFunctionType</a></span>()</code></th>
 <td class="colLast">
-<div class="block">The type of function.</div>
+<div class="block">Type of function.</div>
 </td>
 </tr>
 <tr id="i34" class="altColor">
@@ -594,7 +594,7 @@ implements <a href="IFunction.html" title="interface in com.atlan.model.assets">
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInputToProcesses()">getInputToProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 </td>
 </tr>
 <tr id="i36" class="altColor">
@@ -622,7 +622,7 @@ implements <a href="IFunction.html" title="interface in com.atlan.model.assets">
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOutputFromProcesses()">getOutputFromProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 </td>
 </tr>
 <tr id="i40" class="altColor">
@@ -2464,7 +2464,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getFunctionIsExternal</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Boolean&nbsp;getFunctionIsExternal()</pre>
-<div class="block">Determines whether the functions is stored or executed externally.</div>
+<div class="block">Whether the function is stored or executed externally (true) or internally (false).</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IFunction.html#getFunctionIsExternal()">getFunctionIsExternal</a></code>&nbsp;in interface&nbsp;<code><a href="IFunction.html" title="interface in com.atlan.model.assets">IFunction</a></code></dd>
@@ -2478,7 +2478,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getFunctionIsMemoizable</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Boolean&nbsp;getFunctionIsMemoizable()</pre>
-<div class="block">Determines whether the function must re-compute or not if there are no underlying changes in the values.</div>
+<div class="block">Whether the function must re-compute if there are no underlying changes in the values (false) or not (true).</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IFunction.html#getFunctionIsMemoizable()">getFunctionIsMemoizable</a></code>&nbsp;in interface&nbsp;<code><a href="IFunction.html" title="interface in com.atlan.model.assets">IFunction</a></code></dd>
@@ -2492,7 +2492,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getFunctionIsSecure</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Boolean&nbsp;getFunctionIsSecure()</pre>
-<div class="block">Determines whether sensitive information of the function is omitted for unauthorized users.</div>
+<div class="block">Whether sensitive information of the function is omitted for unauthorized users (true) or not (false).</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IFunction.html#getFunctionIsSecure()">getFunctionIsSecure</a></code>&nbsp;in interface&nbsp;<code><a href="IFunction.html" title="interface in com.atlan.model.assets">IFunction</a></code></dd>
@@ -2506,7 +2506,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getFunctionLanguage</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getFunctionLanguage()</pre>
-<div class="block">The programming language in which the function is written.</div>
+<div class="block">Programming language in which the function is written.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IFunction.html#getFunctionLanguage()">getFunctionLanguage</a></code>&nbsp;in interface&nbsp;<code><a href="IFunction.html" title="interface in com.atlan.model.assets">IFunction</a></code></dd>
@@ -2534,7 +2534,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getFunctionSchema</h4>
 <pre class="methodSignature">public&nbsp;<a href="ISchema.html" title="interface in com.atlan.model.assets">ISchema</a>&nbsp;getFunctionSchema()</pre>
-<div class="block">TBC</div>
+<div class="block">Schema in which this function exists.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IFunction.html#getFunctionSchema()">getFunctionSchema</a></code>&nbsp;in interface&nbsp;<code><a href="IFunction.html" title="interface in com.atlan.model.assets">IFunction</a></code></dd>
@@ -2548,7 +2548,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getFunctionType</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getFunctionType()</pre>
-<div class="block">The type of function.</div>
+<div class="block">Type of function.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IFunction.html#getFunctionType()">getFunctionType</a></code>&nbsp;in interface&nbsp;<code><a href="IFunction.html" title="interface in com.atlan.model.assets">IFunction</a></code></dd>
@@ -2580,7 +2580,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getInputToProcesses</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getInputToProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ICatalog.html#getInputToProcesses()">getInputToProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a></code></dd>
@@ -2648,7 +2648,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getOutputFromProcesses</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getOutputFromProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ICatalog.html#getOutputFromProcesses()">getOutputFromProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a></code></dd>

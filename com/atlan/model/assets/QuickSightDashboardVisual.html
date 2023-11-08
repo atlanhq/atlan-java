@@ -154,7 +154,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 public class <span class="typeNameLabel">QuickSightDashboardVisual</span>
 extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a>
 implements <a href="IQuickSightDashboardVisual.html" title="interface in com.atlan.model.assets">IQuickSightDashboardVisual</a>, <a href="IQuickSight.html" title="interface in com.atlan.model.assets">IQuickSight</a>, <a href="IBI.html" title="interface in com.atlan.model.assets">IBI</a>, <a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a>, <a href="IAsset.html" title="interface in com.atlan.model.assets">IAsset</a>, <a href="IReferenceable.html" title="interface in com.atlan.model.assets">IReferenceable</a></pre>
-<div class="block">Instance of a QuickSight Dashboard sheet visual in Atlan.</div>
+<div class="block">Instance of a QuickSight dashboard visual in Atlan. These represent individual visuals inside a dashboard.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../serialized-form.html#com.atlan.model.assets.QuickSightDashboardVisual">Serialized Form</a></dd>
@@ -496,7 +496,7 @@ implements <a href="IQuickSightDashboardVisual.html" title="interface in com.atl
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInputToProcesses()">getInputToProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 </td>
 </tr>
 <tr id="i22" class="altColor">
@@ -510,21 +510,21 @@ implements <a href="IQuickSightDashboardVisual.html" title="interface in com.atl
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOutputFromProcesses()">getOutputFromProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 </td>
 </tr>
 <tr id="i24" class="altColor">
 <td class="colFirst"><code><a href="IQuickSightDashboard.html" title="interface in com.atlan.model.assets">IQuickSightDashboard</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getQuickSightDashboard()">getQuickSightDashboard</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Dashboard in which this visual exists.</div>
 </td>
 </tr>
 <tr id="i25" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getQuickSightDashboardQualifiedName()">getQuickSightDashboardQualifiedName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Unique name of the dashboard in which this visual exists.</div>
 </td>
 </tr>
 <tr id="i26" class="altColor">
@@ -2222,7 +2222,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getInputToProcesses</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getInputToProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IBI.html#getInputToProcesses()">getInputToProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="IBI.html" title="interface in com.atlan.model.assets">IBI</a></code></dd>
@@ -2262,7 +2262,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getOutputFromProcesses</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getOutputFromProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IBI.html#getOutputFromProcesses()">getOutputFromProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="IBI.html" title="interface in com.atlan.model.assets">IBI</a></code></dd>
@@ -2282,7 +2282,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getQuickSightDashboard</h4>
 <pre class="methodSignature">public&nbsp;<a href="IQuickSightDashboard.html" title="interface in com.atlan.model.assets">IQuickSightDashboard</a>&nbsp;getQuickSightDashboard()</pre>
-<div class="block">TBC</div>
+<div class="block">Dashboard in which this visual exists.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IQuickSightDashboardVisual.html#getQuickSightDashboard()">getQuickSightDashboard</a></code>&nbsp;in interface&nbsp;<code><a href="IQuickSightDashboardVisual.html" title="interface in com.atlan.model.assets">IQuickSightDashboardVisual</a></code></dd>
@@ -2296,7 +2296,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getQuickSightDashboardQualifiedName</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getQuickSightDashboardQualifiedName()</pre>
-<div class="block">TBC</div>
+<div class="block">Unique name of the dashboard in which this visual exists.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IQuickSightDashboardVisual.html#getQuickSightDashboardQualifiedName()">getQuickSightDashboardQualifiedName</a></code>&nbsp;in interface&nbsp;<code><a href="IQuickSightDashboardVisual.html" title="interface in com.atlan.model.assets">IQuickSightDashboardVisual</a></code></dd>

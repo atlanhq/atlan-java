@@ -520,7 +520,7 @@ implements <a href="IADLSContainer.html" title="interface in com.atlan.model.ass
 <td class="colFirst"><code><a href="IADLSAccount.html" title="interface in com.atlan.model.assets">IADLSAccount</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAdlsAccount()">getAdlsAccount</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Account this container exists within.</div>
+<div class="block">Account in which this container exists.</div>
 </td>
 </tr>
 <tr id="i24" class="altColor">
@@ -541,35 +541,35 @@ implements <a href="IADLSContainer.html" title="interface in com.atlan.model.ass
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAdlsContainerEncryptionScope()">getAdlsContainerEncryptionScope</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Encryption scope of this container.</div>
 </td>
 </tr>
 <tr id="i27" class="rowColor">
 <td class="colFirst"><code><a href="../enums/ADLSLeaseState.html" title="enum in com.atlan.model.enums">ADLSLeaseState</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAdlsContainerLeaseState()">getAdlsContainerLeaseState</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Lease state of this container.</div>
 </td>
 </tr>
 <tr id="i28" class="altColor">
 <td class="colFirst"><code><a href="../enums/ADLSLeaseStatus.html" title="enum in com.atlan.model.enums">ADLSLeaseStatus</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAdlsContainerLeaseStatus()">getAdlsContainerLeaseStatus</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Lease status of this container.</div>
 </td>
 </tr>
 <tr id="i29" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAdlsContainerUrl()">getAdlsContainerUrl</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">URL of this container.</div>
 </td>
 </tr>
 <tr id="i30" class="altColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAdlsContainerVersionLevelImmutabilitySupport()">getAdlsContainerVersionLevelImmutabilitySupport</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Whether this container supports version-level immutability (true) or not (false).</div>
 </td>
 </tr>
 <tr id="i31" class="rowColor">
@@ -618,7 +618,7 @@ implements <a href="IADLSContainer.html" title="interface in com.atlan.model.ass
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInputToProcesses()">getInputToProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 </td>
 </tr>
 <tr id="i38" class="altColor">
@@ -632,7 +632,7 @@ implements <a href="IADLSContainer.html" title="interface in com.atlan.model.ass
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOutputFromProcesses()">getOutputFromProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 </td>
 </tr>
 <tr id="i40" class="altColor">
@@ -2361,7 +2361,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getAdlsAccount</h4>
 <pre class="methodSignature">public&nbsp;<a href="IADLSAccount.html" title="interface in com.atlan.model.assets">IADLSAccount</a>&nbsp;getAdlsAccount()</pre>
-<div class="block">Account this container exists within.</div>
+<div class="block">Account in which this container exists.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IADLSContainer.html#getAdlsAccount()">getAdlsAccount</a></code>&nbsp;in interface&nbsp;<code><a href="IADLSContainer.html" title="interface in com.atlan.model.assets">IADLSContainer</a></code></dd>
@@ -2409,7 +2409,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getAdlsContainerEncryptionScope</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getAdlsContainerEncryptionScope()</pre>
-<div class="block">TBC</div>
+<div class="block">Encryption scope of this container.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IADLSContainer.html#getAdlsContainerEncryptionScope()">getAdlsContainerEncryptionScope</a></code>&nbsp;in interface&nbsp;<code><a href="IADLSContainer.html" title="interface in com.atlan.model.assets">IADLSContainer</a></code></dd>
@@ -2423,7 +2423,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getAdlsContainerLeaseState</h4>
 <pre class="methodSignature">public&nbsp;<a href="../enums/ADLSLeaseState.html" title="enum in com.atlan.model.enums">ADLSLeaseState</a>&nbsp;getAdlsContainerLeaseState()</pre>
-<div class="block">TBC</div>
+<div class="block">Lease state of this container.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IADLSContainer.html#getAdlsContainerLeaseState()">getAdlsContainerLeaseState</a></code>&nbsp;in interface&nbsp;<code><a href="IADLSContainer.html" title="interface in com.atlan.model.assets">IADLSContainer</a></code></dd>
@@ -2437,7 +2437,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getAdlsContainerLeaseStatus</h4>
 <pre class="methodSignature">public&nbsp;<a href="../enums/ADLSLeaseStatus.html" title="enum in com.atlan.model.enums">ADLSLeaseStatus</a>&nbsp;getAdlsContainerLeaseStatus()</pre>
-<div class="block">TBC</div>
+<div class="block">Lease status of this container.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IADLSContainer.html#getAdlsContainerLeaseStatus()">getAdlsContainerLeaseStatus</a></code>&nbsp;in interface&nbsp;<code><a href="IADLSContainer.html" title="interface in com.atlan.model.assets">IADLSContainer</a></code></dd>
@@ -2451,7 +2451,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getAdlsContainerUrl</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getAdlsContainerUrl()</pre>
-<div class="block">TBC</div>
+<div class="block">URL of this container.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IADLSContainer.html#getAdlsContainerUrl()">getAdlsContainerUrl</a></code>&nbsp;in interface&nbsp;<code><a href="IADLSContainer.html" title="interface in com.atlan.model.assets">IADLSContainer</a></code></dd>
@@ -2465,7 +2465,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getAdlsContainerVersionLevelImmutabilitySupport</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Boolean&nbsp;getAdlsContainerVersionLevelImmutabilitySupport()</pre>
-<div class="block">TBC</div>
+<div class="block">Whether this container supports version-level immutability (true) or not (false).</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IADLSContainer.html#getAdlsContainerVersionLevelImmutabilitySupport()">getAdlsContainerVersionLevelImmutabilitySupport</a></code>&nbsp;in interface&nbsp;<code><a href="IADLSContainer.html" title="interface in com.atlan.model.assets">IADLSContainer</a></code></dd>
@@ -2581,7 +2581,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getInputToProcesses</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getInputToProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IADLS.html#getInputToProcesses()">getInputToProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="IADLS.html" title="interface in com.atlan.model.assets">IADLS</a></code></dd>
@@ -2621,7 +2621,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getOutputFromProcesses</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getOutputFromProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IADLS.html#getOutputFromProcesses()">getOutputFromProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="IADLS.html" title="interface in com.atlan.model.assets">IADLS</a></code></dd>

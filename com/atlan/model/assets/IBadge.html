@@ -129,7 +129,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <hr>
 <pre>@Generated("com.atlan.generators.ModelGeneratorV2")
 public interface <span class="typeNameLabel">IBadge</span></pre>
-<div class="block">Instance of a badge in Atlan.</div>
+<div class="block">Instance of a badge in Atlan. Badges visually highlight key information about an asset, surfaced from custom metadata.</div>
 </li>
 </ul>
 </div>
@@ -154,14 +154,14 @@ public interface <span class="typeNameLabel">IBadge</span></pre>
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#BADGE_CONDITIONS">BADGE_CONDITIONS</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">List of conditions that determine the colors to diplay for various values.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#BADGE_METADATA_ATTRIBUTE">BADGE_METADATA_ATTRIBUTE</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Custom metadata attribute for which to show the badge.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -667,21 +667,21 @@ public interface <span class="typeNameLabel">IBadge</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IGlossaryTerm.html" title="interface in com.atlan.model.assets">IGlossaryTerm</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssignedTerms()">getAssignedTerms</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Glossary terms that are linked to this asset.</div>
 </td>
 </tr>
 <tr id="i69" class="rowColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="../structs/BadgeCondition.html" title="class in com.atlan.model.structs">BadgeCondition</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getBadgeConditions()">getBadgeConditions</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">List of conditions that determine the colors to diplay for various values.</div>
 </td>
 </tr>
 <tr id="i70" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getBadgeMetadataAttribute()">getBadgeMetadataAttribute</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Custom metadata attribute for which to show the badge.</div>
 </td>
 </tr>
 <tr id="i71" class="rowColor">
@@ -842,7 +842,7 @@ public interface <span class="typeNameLabel">IBadge</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILink.html" title="interface in com.atlan.model.assets">ILink</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLinks()">getLinks</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Links that are attached to this asset.</div>
 </td>
 </tr>
 <tr id="i94" class="altColor">
@@ -856,7 +856,7 @@ public interface <span class="typeNameLabel">IBadge</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IMCMonitor.html" title="interface in com.atlan.model.assets">IMCMonitor</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMcMonitors()">getMcMonitors</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Monitors that observe this asset.</div>
 </td>
 </tr>
 <tr id="i96" class="altColor">
@@ -905,7 +905,7 @@ public interface <span class="typeNameLabel">IBadge</span></pre>
 <td class="colFirst"><code><a href="IReadme.html" title="interface in com.atlan.model.assets">IReadme</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getReadme()">getReadme</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">README that is linked to this asset.</div>
 </td>
 </tr>
 <tr id="i103" class="rowColor">
@@ -1246,7 +1246,7 @@ public interface <span class="typeNameLabel">IBadge</span></pre>
 <li class="blockList">
 <h4>BADGE_CONDITIONS</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> BADGE_CONDITIONS</pre>
-<div class="block">TBC</div>
+<div class="block">List of conditions that determine the colors to diplay for various values.</div>
 </li>
 </ul>
 <a id="BADGE_METADATA_ATTRIBUTE">
@@ -1256,7 +1256,7 @@ public interface <span class="typeNameLabel">IBadge</span></pre>
 <li class="blockList">
 <h4>BADGE_METADATA_ATTRIBUTE</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> BADGE_METADATA_ATTRIBUTE</pre>
-<div class="block">TBC</div>
+<div class="block">Custom metadata attribute for which to show the badge.</div>
 </li>
 </ul>
 </li>
@@ -1956,7 +1956,7 @@ public interface <span class="typeNameLabel">IBadge</span></pre>
 <li class="blockList">
 <h4>getAssignedTerms</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="IGlossaryTerm.html" title="interface in com.atlan.model.assets">IGlossaryTerm</a>&gt;&nbsp;getAssignedTerms()</pre>
-<div class="block">TBC</div>
+<div class="block">Glossary terms that are linked to this asset.</div>
 </li>
 </ul>
 <a id="getBadgeConditions()">
@@ -1966,7 +1966,7 @@ public interface <span class="typeNameLabel">IBadge</span></pre>
 <li class="blockList">
 <h4>getBadgeConditions</h4>
 <pre class="methodSignature">java.util.List&lt;<a href="../structs/BadgeCondition.html" title="class in com.atlan.model.structs">BadgeCondition</a>&gt;&nbsp;getBadgeConditions()</pre>
-<div class="block">TBC</div>
+<div class="block">List of conditions that determine the colors to diplay for various values.</div>
 </li>
 </ul>
 <a id="getBadgeMetadataAttribute()">
@@ -1976,7 +1976,7 @@ public interface <span class="typeNameLabel">IBadge</span></pre>
 <li class="blockList">
 <h4>getBadgeMetadataAttribute</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getBadgeMetadataAttribute()</pre>
-<div class="block">TBC</div>
+<div class="block">Custom metadata attribute for which to show the badge.</div>
 </li>
 </ul>
 <a id="getCertificateStatus()">
@@ -2176,7 +2176,7 @@ public interface <span class="typeNameLabel">IBadge</span></pre>
 <li class="blockList">
 <h4>getLinks</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="ILink.html" title="interface in com.atlan.model.assets">ILink</a>&gt;&nbsp;getLinks()</pre>
-<div class="block">TBC</div>
+<div class="block">Links that are attached to this asset.</div>
 </li>
 </ul>
 <a id="getMcIncidents()">
@@ -2196,7 +2196,7 @@ public interface <span class="typeNameLabel">IBadge</span></pre>
 <li class="blockList">
 <h4>getMcMonitors</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="IMCMonitor.html" title="interface in com.atlan.model.assets">IMCMonitor</a>&gt;&nbsp;getMcMonitors()</pre>
-<div class="block">TBC</div>
+<div class="block">Monitors that observe this asset.</div>
 </li>
 </ul>
 <a id="getMetrics()">
@@ -2266,7 +2266,7 @@ public interface <span class="typeNameLabel">IBadge</span></pre>
 <li class="blockList">
 <h4>getReadme</h4>
 <pre class="methodSignature"><a href="IReadme.html" title="interface in com.atlan.model.assets">IReadme</a>&nbsp;getReadme()</pre>
-<div class="block">TBC</div>
+<div class="block">README that is linked to this asset.</div>
 </li>
 </ul>
 <a id="getSampleDataUrl()">

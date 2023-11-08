@@ -496,14 +496,14 @@ implements <a href="IMicroStrategyReport.html" title="interface in com.atlan.mod
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInputToProcesses()">getInputToProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 </td>
 </tr>
 <tr id="i22" class="altColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IMicroStrategyAttribute.html" title="interface in com.atlan.model.assets">IMicroStrategyAttribute</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMicroStrategyAttributes()">getMicroStrategyAttributes</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Attributes related to this report.</div>
+<div class="block">Attributes used by this report.</div>
 </td>
 </tr>
 <tr id="i23" class="rowColor">
@@ -552,14 +552,14 @@ implements <a href="IMicroStrategyReport.html" title="interface in com.atlan.mod
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IMicroStrategyMetric.html" title="interface in com.atlan.model.assets">IMicroStrategyMetric</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMicroStrategyMetrics()">getMicroStrategyMetrics</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Metrics used within the report.</div>
+<div class="block">Metrics used by this report.</div>
 </td>
 </tr>
 <tr id="i30" class="altColor">
 <td class="colFirst"><code><a href="IMicroStrategyProject.html" title="interface in com.atlan.model.assets">IMicroStrategyProject</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMicroStrategyProject()">getMicroStrategyProject</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Project containing the report.</div>
+<div class="block">Project in which this report exists.</div>
 </td>
 </tr>
 <tr id="i31" class="rowColor">
@@ -594,7 +594,7 @@ implements <a href="IMicroStrategyReport.html" title="interface in com.atlan.mod
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMicroStrategyReportType()">getMicroStrategyReportType</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Whether the report is a Grid or Chart.</div>
+<div class="block">Type of report, for example: Grid or Chart.</div>
 </td>
 </tr>
 <tr id="i36" class="altColor">
@@ -608,7 +608,7 @@ implements <a href="IMicroStrategyReport.html" title="interface in com.atlan.mod
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOutputFromProcesses()">getOutputFromProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 </td>
 </tr>
 <tr id="i38" class="altColor">
@@ -2285,7 +2285,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getInputToProcesses</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getInputToProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IBI.html#getInputToProcesses()">getInputToProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="IBI.html" title="interface in com.atlan.model.assets">IBI</a></code></dd>
@@ -2305,7 +2305,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getMicroStrategyAttributes</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="IMicroStrategyAttribute.html" title="interface in com.atlan.model.assets">IMicroStrategyAttribute</a>&gt;&nbsp;getMicroStrategyAttributes()</pre>
-<div class="block">Attributes related to this report.</div>
+<div class="block">Attributes used by this report.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IMicroStrategyReport.html#getMicroStrategyAttributes()">getMicroStrategyAttributes</a></code>&nbsp;in interface&nbsp;<code><a href="IMicroStrategyReport.html" title="interface in com.atlan.model.assets">IMicroStrategyReport</a></code></dd>
@@ -2415,7 +2415,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getMicroStrategyMetrics</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="IMicroStrategyMetric.html" title="interface in com.atlan.model.assets">IMicroStrategyMetric</a>&gt;&nbsp;getMicroStrategyMetrics()</pre>
-<div class="block">Metrics used within the report.</div>
+<div class="block">Metrics used by this report.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IMicroStrategyReport.html#getMicroStrategyMetrics()">getMicroStrategyMetrics</a></code>&nbsp;in interface&nbsp;<code><a href="IMicroStrategyReport.html" title="interface in com.atlan.model.assets">IMicroStrategyReport</a></code></dd>
@@ -2429,7 +2429,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getMicroStrategyProject</h4>
 <pre class="methodSignature">public&nbsp;<a href="IMicroStrategyProject.html" title="interface in com.atlan.model.assets">IMicroStrategyProject</a>&nbsp;getMicroStrategyProject()</pre>
-<div class="block">Project containing the report.</div>
+<div class="block">Project in which this report exists.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IMicroStrategyReport.html#getMicroStrategyProject()">getMicroStrategyProject</a></code>&nbsp;in interface&nbsp;<code><a href="IMicroStrategyReport.html" title="interface in com.atlan.model.assets">IMicroStrategyReport</a></code></dd>
@@ -2507,7 +2507,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getMicroStrategyReportType</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getMicroStrategyReportType()</pre>
-<div class="block">Whether the report is a Grid or Chart.</div>
+<div class="block">Type of report, for example: Grid or Chart.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IMicroStrategyReport.html#getMicroStrategyReportType()">getMicroStrategyReportType</a></code>&nbsp;in interface&nbsp;<code><a href="IMicroStrategyReport.html" title="interface in com.atlan.model.assets">IMicroStrategyReport</a></code></dd>
@@ -2541,7 +2541,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getOutputFromProcesses</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getOutputFromProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IBI.html#getOutputFromProcesses()">getOutputFromProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="IBI.html" title="interface in com.atlan.model.assets">IBI</a></code></dd>

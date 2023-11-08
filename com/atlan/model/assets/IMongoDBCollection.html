@@ -129,7 +129,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <hr>
 <pre>@Generated("com.atlan.generators.ModelGeneratorV2")
 public interface <span class="typeNameLabel">IMongoDBCollection</span></pre>
-<div class="block">MongoDB Collection Assets</div>
+<div class="block">Instance of a MongoDB collection in Atlan.</div>
 </li>
 </ul>
 </div>
@@ -154,49 +154,49 @@ public interface <span class="typeNameLabel">IMongoDBCollection</span></pre>
 <td class="colFirst"><code>static <a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#MONGO_DB_COLLECTION_AVERAGE_OBJECT_SIZE">MONGO_DB_COLLECTION_AVERAGE_OBJECT_SIZE</a></span></code></th>
 <td class="colLast">
-<div class="block">The average size of an object in the collection</div>
+<div class="block">Average size of an object in the collection.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#MONGO_DB_COLLECTION_EXPIRE_AFTER_SECONDS">MONGO_DB_COLLECTION_EXPIRE_AFTER_SECONDS</a></span></code></th>
 <td class="colLast">
-<div class="block">Specifies the seconds after which documents in a time series collection or clustered collection expire</div>
+<div class="block">Seconds after which documents in a time series collection or clustered collection expire.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/BooleanField.html" title="class in com.atlan.model.fields">BooleanField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#MONGO_DB_COLLECTION_IS_CAPPED">MONGO_DB_COLLECTION_IS_CAPPED</a></span></code></th>
 <td class="colLast">
-<div class="block">If the collection is a capped collection</div>
+<div class="block">Whether the collection is capped (true) or not (false).</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#MONGO_DB_COLLECTION_MAX_SIZE">MONGO_DB_COLLECTION_MAX_SIZE</a></span></code></th>
 <td class="colLast">
-<div class="block">The maximum size allowed in the capped collection</div>
+<div class="block">Maximum size allowed in a capped collection.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#MONGO_DB_COLLECTION_MAXIMUM_DOCUMENT_COUNT">MONGO_DB_COLLECTION_MAXIMUM_DOCUMENT_COUNT</a></span></code></th>
 <td class="colLast">
-<div class="block">The maximum number of documents allowed in the capped collection</div>
+<div class="block">Maximum number of documents allowed in a capped collection.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#MONGO_DB_COLLECTION_NUM_INDEXES">MONGO_DB_COLLECTION_NUM_INDEXES</a></span></code></th>
 <td class="colLast">
-<div class="block">The number of indexes on the collection</div>
+<div class="block">Number of indexes on the collection.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#MONGO_DB_COLLECTION_NUM_ORPHAN_DOCS">MONGO_DB_COLLECTION_NUM_ORPHAN_DOCS</a></span></code></th>
 <td class="colLast">
-<div class="block">The number of orphaned documents in the collection</div>
+<div class="block">Number of orphaned documents in the collection.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -210,35 +210,35 @@ public interface <span class="typeNameLabel">IMongoDBCollection</span></pre>
 <td class="colFirst"><code>static <a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#MONGO_DB_COLLECTION_SUBTYPE">MONGO_DB_COLLECTION_SUBTYPE</a></span></code></th>
 <td class="colLast">
-<div class="block">Subtype of a MongoDB collection (e.g.</div>
+<div class="block">Subtype of a MongoDB collection, for example: Capped, Time Series, etc.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#MONGO_DB_COLLECTION_TIME_FIELD">MONGO_DB_COLLECTION_TIME_FIELD</a></span></code></th>
 <td class="colLast">
-<div class="block">The name of the field which contains the date in each time series document</div>
+<div class="block">Name of the field containing the date in each time series document.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#MONGO_DB_COLLECTION_TIME_GRANULARITY">MONGO_DB_COLLECTION_TIME_GRANULARITY</a></span></code></th>
 <td class="colLast">
-<div class="block">Set the granularity to the value that is the closest match to the time span between consecutive incoming measurements</div>
+<div class="block">Closest match to the time span between consecutive incoming measurements.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#MONGO_DB_COLLECTION_TOTAL_INDEX_SIZE">MONGO_DB_COLLECTION_TOTAL_INDEX_SIZE</a></span></code></th>
 <td class="colLast">
-<div class="block">The total size of all indexes</div>
+<div class="block">Total size of all indexes.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/RelationField.html" title="class in com.atlan.model.fields">RelationField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#MONGO_DB_DATABASE">MONGO_DB_DATABASE</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Database in which the collection exists.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -751,7 +751,7 @@ public interface <span class="typeNameLabel">IMongoDBCollection</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IGlossaryTerm.html" title="interface in com.atlan.model.assets">IGlossaryTerm</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssignedTerms()">getAssignedTerms</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Glossary terms that are linked to this asset.</div>
 </td>
 </tr>
 <tr id="i70" class="altColor">
@@ -793,7 +793,7 @@ public interface <span class="typeNameLabel">IMongoDBCollection</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IColumn.html" title="interface in com.atlan.model.assets">IColumn</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getColumns()">getColumns</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Columns that exist within this table.</div>
 </td>
 </tr>
 <tr id="i76" class="altColor">
@@ -954,7 +954,7 @@ public interface <span class="typeNameLabel">IMongoDBCollection</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInputToProcesses()">getInputToProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 </td>
 </tr>
 <tr id="i99" class="rowColor">
@@ -1045,7 +1045,7 @@ public interface <span class="typeNameLabel">IMongoDBCollection</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILink.html" title="interface in com.atlan.model.assets">ILink</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLinks()">getLinks</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Links that are attached to this asset.</div>
 </td>
 </tr>
 <tr id="i112" class="altColor">
@@ -1059,7 +1059,7 @@ public interface <span class="typeNameLabel">IMongoDBCollection</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IMCMonitor.html" title="interface in com.atlan.model.assets">IMCMonitor</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMcMonitors()">getMcMonitors</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Monitors that observe this asset.</div>
 </td>
 </tr>
 <tr id="i114" class="altColor">
@@ -1073,49 +1073,49 @@ public interface <span class="typeNameLabel">IMongoDBCollection</span></pre>
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMongoDBCollectionAverageObjectSize()">getMongoDBCollectionAverageObjectSize</a></span>()</code></th>
 <td class="colLast">
-<div class="block">The average size of an object in the collection</div>
+<div class="block">Average size of an object in the collection.</div>
 </td>
 </tr>
 <tr id="i116" class="altColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMongoDBCollectionExpireAfterSeconds()">getMongoDBCollectionExpireAfterSeconds</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Specifies the seconds after which documents in a time series collection or clustered collection expire</div>
+<div class="block">Seconds after which documents in a time series collection or clustered collection expire.</div>
 </td>
 </tr>
 <tr id="i117" class="rowColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMongoDBCollectionIsCapped()">getMongoDBCollectionIsCapped</a></span>()</code></th>
 <td class="colLast">
-<div class="block">If the collection is a capped collection</div>
+<div class="block">Whether the collection is capped (true) or not (false).</div>
 </td>
 </tr>
 <tr id="i118" class="altColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMongoDBCollectionMaximumDocumentCount()">getMongoDBCollectionMaximumDocumentCount</a></span>()</code></th>
 <td class="colLast">
-<div class="block">The maximum number of documents allowed in the capped collection</div>
+<div class="block">Maximum number of documents allowed in a capped collection.</div>
 </td>
 </tr>
 <tr id="i119" class="rowColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMongoDBCollectionMaxSize()">getMongoDBCollectionMaxSize</a></span>()</code></th>
 <td class="colLast">
-<div class="block">The maximum size allowed in the capped collection</div>
+<div class="block">Maximum size allowed in a capped collection.</div>
 </td>
 </tr>
 <tr id="i120" class="altColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMongoDBCollectionNumIndexes()">getMongoDBCollectionNumIndexes</a></span>()</code></th>
 <td class="colLast">
-<div class="block">The number of indexes on the collection</div>
+<div class="block">Number of indexes on the collection.</div>
 </td>
 </tr>
 <tr id="i121" class="rowColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMongoDBCollectionNumOrphanDocs()">getMongoDBCollectionNumOrphanDocs</a></span>()</code></th>
 <td class="colLast">
-<div class="block">The number of orphaned documents in the collection</div>
+<div class="block">Number of orphaned documents in the collection.</div>
 </td>
 </tr>
 <tr id="i122" class="altColor">
@@ -1129,35 +1129,35 @@ public interface <span class="typeNameLabel">IMongoDBCollection</span></pre>
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMongoDBCollectionSubtype()">getMongoDBCollectionSubtype</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Subtype of a MongoDB collection (e.g.</div>
+<div class="block">Subtype of a MongoDB collection, for example: Capped, Time Series, etc.</div>
 </td>
 </tr>
 <tr id="i124" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMongoDBCollectionTimeField()">getMongoDBCollectionTimeField</a></span>()</code></th>
 <td class="colLast">
-<div class="block">The name of the field which contains the date in each time series document</div>
+<div class="block">Name of the field containing the date in each time series document.</div>
 </td>
 </tr>
 <tr id="i125" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMongoDBCollectionTimeGranularity()">getMongoDBCollectionTimeGranularity</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Set the granularity to the value that is the closest match to the time span between consecutive incoming measurements</div>
+<div class="block">Closest match to the time span between consecutive incoming measurements.</div>
 </td>
 </tr>
 <tr id="i126" class="altColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMongoDBCollectionTotalIndexSize()">getMongoDBCollectionTotalIndexSize</a></span>()</code></th>
 <td class="colLast">
-<div class="block">The total size of all indexes</div>
+<div class="block">Total size of all indexes.</div>
 </td>
 </tr>
 <tr id="i127" class="rowColor">
 <td class="colFirst"><code><a href="IMongoDBDatabase.html" title="interface in com.atlan.model.assets">IMongoDBDatabase</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMongoDBDatabase()">getMongoDBDatabase</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Database in which the collection exists.</div>
 </td>
 </tr>
 <tr id="i128" class="altColor">
@@ -1178,7 +1178,7 @@ public interface <span class="typeNameLabel">IMongoDBCollection</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOutputFromProcesses()">getOutputFromProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 </td>
 </tr>
 <tr id="i131" class="rowColor">
@@ -1213,7 +1213,7 @@ public interface <span class="typeNameLabel">IMongoDBCollection</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ITablePartition.html" title="interface in com.atlan.model.assets">ITablePartition</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPartitions()">getPartitions</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Partitions that exist within this table.</div>
 </td>
 </tr>
 <tr id="i136" class="altColor">
@@ -1241,7 +1241,7 @@ public interface <span class="typeNameLabel">IMongoDBCollection</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IAtlanQuery.html" title="interface in com.atlan.model.assets">IAtlanQuery</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getQueries()">getQueries</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Queries that access this table.</div>
 </td>
 </tr>
 <tr id="i140" class="altColor">
@@ -1283,7 +1283,7 @@ public interface <span class="typeNameLabel">IMongoDBCollection</span></pre>
 <td class="colFirst"><code><a href="IReadme.html" title="interface in com.atlan.model.assets">IReadme</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getReadme()">getReadme</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">README that is linked to this asset.</div>
 </td>
 </tr>
 <tr id="i146" class="altColor">
@@ -1332,7 +1332,7 @@ public interface <span class="typeNameLabel">IMongoDBCollection</span></pre>
 <td class="colFirst"><code><a href="ISchema.html" title="interface in com.atlan.model.assets">ISchema</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSchema()">getSchema</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Schema in which this table exists.</div>
 </td>
 </tr>
 <tr id="i153" class="rowColor">
@@ -1701,7 +1701,7 @@ public interface <span class="typeNameLabel">IMongoDBCollection</span></pre>
 <li class="blockList">
 <h4>MONGO_DB_COLLECTION_AVERAGE_OBJECT_SIZE</h4>
 <pre>static final&nbsp;<a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a> MONGO_DB_COLLECTION_AVERAGE_OBJECT_SIZE</pre>
-<div class="block">The average size of an object in the collection</div>
+<div class="block">Average size of an object in the collection.</div>
 </li>
 </ul>
 <a id="MONGO_DB_COLLECTION_EXPIRE_AFTER_SECONDS">
@@ -1711,7 +1711,7 @@ public interface <span class="typeNameLabel">IMongoDBCollection</span></pre>
 <li class="blockList">
 <h4>MONGO_DB_COLLECTION_EXPIRE_AFTER_SECONDS</h4>
 <pre>static final&nbsp;<a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a> MONGO_DB_COLLECTION_EXPIRE_AFTER_SECONDS</pre>
-<div class="block">Specifies the seconds after which documents in a time series collection or clustered collection expire</div>
+<div class="block">Seconds after which documents in a time series collection or clustered collection expire.</div>
 </li>
 </ul>
 <a id="MONGO_DB_COLLECTION_IS_CAPPED">
@@ -1721,7 +1721,7 @@ public interface <span class="typeNameLabel">IMongoDBCollection</span></pre>
 <li class="blockList">
 <h4>MONGO_DB_COLLECTION_IS_CAPPED</h4>
 <pre>static final&nbsp;<a href="../fields/BooleanField.html" title="class in com.atlan.model.fields">BooleanField</a> MONGO_DB_COLLECTION_IS_CAPPED</pre>
-<div class="block">If the collection is a capped collection</div>
+<div class="block">Whether the collection is capped (true) or not (false).</div>
 </li>
 </ul>
 <a id="MONGO_DB_COLLECTION_MAX_SIZE">
@@ -1731,7 +1731,7 @@ public interface <span class="typeNameLabel">IMongoDBCollection</span></pre>
 <li class="blockList">
 <h4>MONGO_DB_COLLECTION_MAX_SIZE</h4>
 <pre>static final&nbsp;<a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a> MONGO_DB_COLLECTION_MAX_SIZE</pre>
-<div class="block">The maximum size allowed in the capped collection</div>
+<div class="block">Maximum size allowed in a capped collection.</div>
 </li>
 </ul>
 <a id="MONGO_DB_COLLECTION_MAXIMUM_DOCUMENT_COUNT">
@@ -1741,7 +1741,7 @@ public interface <span class="typeNameLabel">IMongoDBCollection</span></pre>
 <li class="blockList">
 <h4>MONGO_DB_COLLECTION_MAXIMUM_DOCUMENT_COUNT</h4>
 <pre>static final&nbsp;<a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a> MONGO_DB_COLLECTION_MAXIMUM_DOCUMENT_COUNT</pre>
-<div class="block">The maximum number of documents allowed in the capped collection</div>
+<div class="block">Maximum number of documents allowed in a capped collection.</div>
 </li>
 </ul>
 <a id="MONGO_DB_COLLECTION_NUM_INDEXES">
@@ -1751,7 +1751,7 @@ public interface <span class="typeNameLabel">IMongoDBCollection</span></pre>
 <li class="blockList">
 <h4>MONGO_DB_COLLECTION_NUM_INDEXES</h4>
 <pre>static final&nbsp;<a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a> MONGO_DB_COLLECTION_NUM_INDEXES</pre>
-<div class="block">The number of indexes on the collection</div>
+<div class="block">Number of indexes on the collection.</div>
 </li>
 </ul>
 <a id="MONGO_DB_COLLECTION_NUM_ORPHAN_DOCS">
@@ -1761,7 +1761,7 @@ public interface <span class="typeNameLabel">IMongoDBCollection</span></pre>
 <li class="blockList">
 <h4>MONGO_DB_COLLECTION_NUM_ORPHAN_DOCS</h4>
 <pre>static final&nbsp;<a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a> MONGO_DB_COLLECTION_NUM_ORPHAN_DOCS</pre>
-<div class="block">The number of orphaned documents in the collection</div>
+<div class="block">Number of orphaned documents in the collection.</div>
 </li>
 </ul>
 <a id="MONGO_DB_COLLECTION_SCHEMA_DEFINITION">
@@ -1781,7 +1781,7 @@ public interface <span class="typeNameLabel">IMongoDBCollection</span></pre>
 <li class="blockList">
 <h4>MONGO_DB_COLLECTION_SUBTYPE</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a> MONGO_DB_COLLECTION_SUBTYPE</pre>
-<div class="block">Subtype of a MongoDB collection (e.g. Capped, Time Series etc.)</div>
+<div class="block">Subtype of a MongoDB collection, for example: Capped, Time Series, etc.</div>
 </li>
 </ul>
 <a id="MONGO_DB_COLLECTION_TIME_FIELD">
@@ -1791,7 +1791,7 @@ public interface <span class="typeNameLabel">IMongoDBCollection</span></pre>
 <li class="blockList">
 <h4>MONGO_DB_COLLECTION_TIME_FIELD</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> MONGO_DB_COLLECTION_TIME_FIELD</pre>
-<div class="block">The name of the field which contains the date in each time series document</div>
+<div class="block">Name of the field containing the date in each time series document.</div>
 </li>
 </ul>
 <a id="MONGO_DB_COLLECTION_TIME_GRANULARITY">
@@ -1801,7 +1801,7 @@ public interface <span class="typeNameLabel">IMongoDBCollection</span></pre>
 <li class="blockList">
 <h4>MONGO_DB_COLLECTION_TIME_GRANULARITY</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> MONGO_DB_COLLECTION_TIME_GRANULARITY</pre>
-<div class="block">Set the granularity to the value that is the closest match to the time span between consecutive incoming measurements</div>
+<div class="block">Closest match to the time span between consecutive incoming measurements.</div>
 </li>
 </ul>
 <a id="MONGO_DB_COLLECTION_TOTAL_INDEX_SIZE">
@@ -1811,7 +1811,7 @@ public interface <span class="typeNameLabel">IMongoDBCollection</span></pre>
 <li class="blockList">
 <h4>MONGO_DB_COLLECTION_TOTAL_INDEX_SIZE</h4>
 <pre>static final&nbsp;<a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a> MONGO_DB_COLLECTION_TOTAL_INDEX_SIZE</pre>
-<div class="block">The total size of all indexes</div>
+<div class="block">Total size of all indexes.</div>
 </li>
 </ul>
 <a id="MONGO_DB_DATABASE">
@@ -1821,7 +1821,7 @@ public interface <span class="typeNameLabel">IMongoDBCollection</span></pre>
 <li class="blockList">
 <h4>MONGO_DB_DATABASE</h4>
 <pre>static final&nbsp;<a href="../fields/RelationField.html" title="class in com.atlan.model.fields">RelationField</a> MONGO_DB_DATABASE</pre>
-<div class="block">TBC</div>
+<div class="block">Database in which the collection exists.</div>
 </li>
 </ul>
 </li>
@@ -2531,7 +2531,7 @@ public interface <span class="typeNameLabel">IMongoDBCollection</span></pre>
 <li class="blockList">
 <h4>getAssignedTerms</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="IGlossaryTerm.html" title="interface in com.atlan.model.assets">IGlossaryTerm</a>&gt;&nbsp;getAssignedTerms()</pre>
-<div class="block">TBC</div>
+<div class="block">Glossary terms that are linked to this asset.</div>
 </li>
 </ul>
 <a id="getCertificateStatus()">
@@ -2591,7 +2591,7 @@ public interface <span class="typeNameLabel">IMongoDBCollection</span></pre>
 <li class="blockList">
 <h4>getColumns</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="IColumn.html" title="interface in com.atlan.model.assets">IColumn</a>&gt;&nbsp;getColumns()</pre>
-<div class="block">TBC</div>
+<div class="block">Columns that exist within this table.</div>
 </li>
 </ul>
 <a id="getConnectionName()">
@@ -2791,7 +2791,7 @@ public interface <span class="typeNameLabel">IMongoDBCollection</span></pre>
 <li class="blockList">
 <h4>getInputToProcesses</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getInputToProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 </li>
 </ul>
 <a id="getIsAIGenerated()">
@@ -2921,7 +2921,7 @@ public interface <span class="typeNameLabel">IMongoDBCollection</span></pre>
 <li class="blockList">
 <h4>getLinks</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="ILink.html" title="interface in com.atlan.model.assets">ILink</a>&gt;&nbsp;getLinks()</pre>
-<div class="block">TBC</div>
+<div class="block">Links that are attached to this asset.</div>
 </li>
 </ul>
 <a id="getMcIncidents()">
@@ -2941,7 +2941,7 @@ public interface <span class="typeNameLabel">IMongoDBCollection</span></pre>
 <li class="blockList">
 <h4>getMcMonitors</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="IMCMonitor.html" title="interface in com.atlan.model.assets">IMCMonitor</a>&gt;&nbsp;getMcMonitors()</pre>
-<div class="block">TBC</div>
+<div class="block">Monitors that observe this asset.</div>
 </li>
 </ul>
 <a id="getMetrics()">
@@ -2961,7 +2961,7 @@ public interface <span class="typeNameLabel">IMongoDBCollection</span></pre>
 <li class="blockList">
 <h4>getMongoDBCollectionAverageObjectSize</h4>
 <pre class="methodSignature">java.lang.Long&nbsp;getMongoDBCollectionAverageObjectSize()</pre>
-<div class="block">The average size of an object in the collection</div>
+<div class="block">Average size of an object in the collection.</div>
 </li>
 </ul>
 <a id="getMongoDBCollectionExpireAfterSeconds()">
@@ -2971,7 +2971,7 @@ public interface <span class="typeNameLabel">IMongoDBCollection</span></pre>
 <li class="blockList">
 <h4>getMongoDBCollectionExpireAfterSeconds</h4>
 <pre class="methodSignature">java.lang.Long&nbsp;getMongoDBCollectionExpireAfterSeconds()</pre>
-<div class="block">Specifies the seconds after which documents in a time series collection or clustered collection expire</div>
+<div class="block">Seconds after which documents in a time series collection or clustered collection expire.</div>
 </li>
 </ul>
 <a id="getMongoDBCollectionIsCapped()">
@@ -2981,7 +2981,7 @@ public interface <span class="typeNameLabel">IMongoDBCollection</span></pre>
 <li class="blockList">
 <h4>getMongoDBCollectionIsCapped</h4>
 <pre class="methodSignature">java.lang.Boolean&nbsp;getMongoDBCollectionIsCapped()</pre>
-<div class="block">If the collection is a capped collection</div>
+<div class="block">Whether the collection is capped (true) or not (false).</div>
 </li>
 </ul>
 <a id="getMongoDBCollectionMaxSize()">
@@ -2991,7 +2991,7 @@ public interface <span class="typeNameLabel">IMongoDBCollection</span></pre>
 <li class="blockList">
 <h4>getMongoDBCollectionMaxSize</h4>
 <pre class="methodSignature">java.lang.Long&nbsp;getMongoDBCollectionMaxSize()</pre>
-<div class="block">The maximum size allowed in the capped collection</div>
+<div class="block">Maximum size allowed in a capped collection.</div>
 </li>
 </ul>
 <a id="getMongoDBCollectionMaximumDocumentCount()">
@@ -3001,7 +3001,7 @@ public interface <span class="typeNameLabel">IMongoDBCollection</span></pre>
 <li class="blockList">
 <h4>getMongoDBCollectionMaximumDocumentCount</h4>
 <pre class="methodSignature">java.lang.Long&nbsp;getMongoDBCollectionMaximumDocumentCount()</pre>
-<div class="block">The maximum number of documents allowed in the capped collection</div>
+<div class="block">Maximum number of documents allowed in a capped collection.</div>
 </li>
 </ul>
 <a id="getMongoDBCollectionNumIndexes()">
@@ -3011,7 +3011,7 @@ public interface <span class="typeNameLabel">IMongoDBCollection</span></pre>
 <li class="blockList">
 <h4>getMongoDBCollectionNumIndexes</h4>
 <pre class="methodSignature">java.lang.Long&nbsp;getMongoDBCollectionNumIndexes()</pre>
-<div class="block">The number of indexes on the collection</div>
+<div class="block">Number of indexes on the collection.</div>
 </li>
 </ul>
 <a id="getMongoDBCollectionNumOrphanDocs()">
@@ -3021,7 +3021,7 @@ public interface <span class="typeNameLabel">IMongoDBCollection</span></pre>
 <li class="blockList">
 <h4>getMongoDBCollectionNumOrphanDocs</h4>
 <pre class="methodSignature">java.lang.Long&nbsp;getMongoDBCollectionNumOrphanDocs()</pre>
-<div class="block">The number of orphaned documents in the collection</div>
+<div class="block">Number of orphaned documents in the collection.</div>
 </li>
 </ul>
 <a id="getMongoDBCollectionSchemaDefinition()">
@@ -3041,7 +3041,7 @@ public interface <span class="typeNameLabel">IMongoDBCollection</span></pre>
 <li class="blockList">
 <h4>getMongoDBCollectionSubtype</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getMongoDBCollectionSubtype()</pre>
-<div class="block">Subtype of a MongoDB collection (e.g. Capped, Time Series etc.)</div>
+<div class="block">Subtype of a MongoDB collection, for example: Capped, Time Series, etc.</div>
 </li>
 </ul>
 <a id="getMongoDBCollectionTimeField()">
@@ -3051,7 +3051,7 @@ public interface <span class="typeNameLabel">IMongoDBCollection</span></pre>
 <li class="blockList">
 <h4>getMongoDBCollectionTimeField</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getMongoDBCollectionTimeField()</pre>
-<div class="block">The name of the field which contains the date in each time series document</div>
+<div class="block">Name of the field containing the date in each time series document.</div>
 </li>
 </ul>
 <a id="getMongoDBCollectionTimeGranularity()">
@@ -3061,7 +3061,7 @@ public interface <span class="typeNameLabel">IMongoDBCollection</span></pre>
 <li class="blockList">
 <h4>getMongoDBCollectionTimeGranularity</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getMongoDBCollectionTimeGranularity()</pre>
-<div class="block">Set the granularity to the value that is the closest match to the time span between consecutive incoming measurements</div>
+<div class="block">Closest match to the time span between consecutive incoming measurements.</div>
 </li>
 </ul>
 <a id="getMongoDBCollectionTotalIndexSize()">
@@ -3071,7 +3071,7 @@ public interface <span class="typeNameLabel">IMongoDBCollection</span></pre>
 <li class="blockList">
 <h4>getMongoDBCollectionTotalIndexSize</h4>
 <pre class="methodSignature">java.lang.Long&nbsp;getMongoDBCollectionTotalIndexSize()</pre>
-<div class="block">The total size of all indexes</div>
+<div class="block">Total size of all indexes.</div>
 </li>
 </ul>
 <a id="getMongoDBDatabase()">
@@ -3081,7 +3081,7 @@ public interface <span class="typeNameLabel">IMongoDBCollection</span></pre>
 <li class="blockList">
 <h4>getMongoDBDatabase</h4>
 <pre class="methodSignature"><a href="IMongoDBDatabase.html" title="interface in com.atlan.model.assets">IMongoDBDatabase</a>&nbsp;getMongoDBDatabase()</pre>
-<div class="block">TBC</div>
+<div class="block">Database in which the collection exists.</div>
 </li>
 </ul>
 <a id="getName()">
@@ -3111,7 +3111,7 @@ public interface <span class="typeNameLabel">IMongoDBCollection</span></pre>
 <li class="blockList">
 <h4>getOutputFromProcesses</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getOutputFromProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 </li>
 </ul>
 <a id="getOwnerGroups()">
@@ -3171,7 +3171,7 @@ public interface <span class="typeNameLabel">IMongoDBCollection</span></pre>
 <li class="blockList">
 <h4>getPartitions</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="ITablePartition.html" title="interface in com.atlan.model.assets">ITablePartition</a>&gt;&nbsp;getPartitions()</pre>
-<div class="block">TBC</div>
+<div class="block">Partitions that exist within this table.</div>
 </li>
 </ul>
 <a id="getPopularityScore()">
@@ -3201,7 +3201,7 @@ public interface <span class="typeNameLabel">IMongoDBCollection</span></pre>
 <li class="blockList">
 <h4>getQueries</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="IAtlanQuery.html" title="interface in com.atlan.model.assets">IAtlanQuery</a>&gt;&nbsp;getQueries()</pre>
-<div class="block">TBC</div>
+<div class="block">Queries that access this table.</div>
 </li>
 </ul>
 <a id="getQueryCount()">
@@ -3261,7 +3261,7 @@ public interface <span class="typeNameLabel">IMongoDBCollection</span></pre>
 <li class="blockList">
 <h4>getReadme</h4>
 <pre class="methodSignature"><a href="IReadme.html" title="interface in com.atlan.model.assets">IReadme</a>&nbsp;getReadme()</pre>
-<div class="block">TBC</div>
+<div class="block">README that is linked to this asset.</div>
 </li>
 </ul>
 <a id="getRowCount()">
@@ -3291,7 +3291,7 @@ public interface <span class="typeNameLabel">IMongoDBCollection</span></pre>
 <li class="blockList">
 <h4>getSchema</h4>
 <pre class="methodSignature"><a href="ISchema.html" title="interface in com.atlan.model.assets">ISchema</a>&nbsp;getSchema()</pre>
-<div class="block">TBC</div>
+<div class="block">Schema in which this table exists.</div>
 </li>
 </ul>
 <a id="getSchemaName()">

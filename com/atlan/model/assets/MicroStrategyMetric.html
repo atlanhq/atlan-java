@@ -496,28 +496,28 @@ implements <a href="IMicroStrategyMetric.html" title="interface in com.atlan.mod
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInputToProcesses()">getInputToProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 </td>
 </tr>
 <tr id="i22" class="altColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMicroStrategyAttributeNames()">getMicroStrategyAttributeNames</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Simple names of the related MicroStrategy attributes.</div>
+<div class="block">List of simple names of attributes related to this metric.</div>
 </td>
 </tr>
 <tr id="i23" class="rowColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMicroStrategyAttributeQualifiedNames()">getMicroStrategyAttributeQualifiedNames</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Unique names of the related MicroStrategy attributes.</div>
+<div class="block">List of unique names of attributes related to this metric.</div>
 </td>
 </tr>
 <tr id="i24" class="altColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IMicroStrategyAttribute.html" title="interface in com.atlan.model.assets">IMicroStrategyAttribute</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMicroStrategyAttributes()">getMicroStrategyAttributes</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Attributes related to this metric.</div>
+<div class="block">Attributes this metric uses.</div>
 </td>
 </tr>
 <tr id="i25" class="rowColor">
@@ -552,28 +552,28 @@ implements <a href="IMicroStrategyMetric.html" title="interface in com.atlan.mod
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IMicroStrategyCube.html" title="interface in com.atlan.model.assets">IMicroStrategyCube</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMicroStrategyCubes()">getMicroStrategyCubes</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Cubes related to this metric.</div>
+<div class="block">Cubes this metric uses.</div>
 </td>
 </tr>
 <tr id="i30" class="altColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMicroStrategyFactNames()">getMicroStrategyFactNames</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Simple names of the related MicroStrategy facts.</div>
+<div class="block">List of simple names of facts related to this metric.</div>
 </td>
 </tr>
 <tr id="i31" class="rowColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMicroStrategyFactQualifiedNames()">getMicroStrategyFactQualifiedNames</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Unique names of the related MicroStrategy facts.</div>
+<div class="block">List of unique names of facts related to this metric.</div>
 </td>
 </tr>
 <tr id="i32" class="altColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IMicroStrategyFact.html" title="interface in com.atlan.model.assets">IMicroStrategyFact</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMicroStrategyFacts()">getMicroStrategyFacts</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Facts related to this metric.</div>
+<div class="block">Facts this metric uses.</div>
 </td>
 </tr>
 <tr id="i33" class="rowColor">
@@ -594,42 +594,42 @@ implements <a href="IMicroStrategyMetric.html" title="interface in com.atlan.mod
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IMicroStrategyMetric.html" title="interface in com.atlan.model.assets">IMicroStrategyMetric</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMicroStrategyMetricChildren()">getMicroStrategyMetricChildren</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Metrics that are children of this metric.</div>
+<div class="block">Child metrics of this metric.</div>
 </td>
 </tr>
 <tr id="i36" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMicroStrategyMetricExpression()">getMicroStrategyMetricExpression</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Expression that defines the metric.</div>
+<div class="block">Text specifiying this metric's expression.</div>
 </td>
 </tr>
 <tr id="i37" class="rowColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMicroStrategyMetricParentNames()">getMicroStrategyMetricParentNames</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Simple names of the parent MicroStrategy metrics.</div>
+<div class="block">List of simple names of parent metrics of this metric.</div>
 </td>
 </tr>
 <tr id="i38" class="altColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMicroStrategyMetricParentQualifiedNames()">getMicroStrategyMetricParentQualifiedNames</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Unique names of the parent MicroStrategy metrics.</div>
+<div class="block">List of unique names of parent metrics of this metric.</div>
 </td>
 </tr>
 <tr id="i39" class="rowColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IMicroStrategyMetric.html" title="interface in com.atlan.model.assets">IMicroStrategyMetric</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMicroStrategyMetricParents()">getMicroStrategyMetricParents</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Metrics that are parents of this metric.</div>
+<div class="block">Parent metrics to this metric.</div>
 </td>
 </tr>
 <tr id="i40" class="altColor">
 <td class="colFirst"><code><a href="IMicroStrategyProject.html" title="interface in com.atlan.model.assets">IMicroStrategyProject</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMicroStrategyProject()">getMicroStrategyProject</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Project containing the metric.</div>
+<div class="block">Project in which this metric exists.</div>
 </td>
 </tr>
 <tr id="i41" class="rowColor">
@@ -664,7 +664,7 @@ implements <a href="IMicroStrategyMetric.html" title="interface in com.atlan.mod
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IMicroStrategyReport.html" title="interface in com.atlan.model.assets">IMicroStrategyReport</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMicroStrategyReports()">getMicroStrategyReports</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Reports related to this metric.</div>
+<div class="block">Reports in which this metric is used.</div>
 </td>
 </tr>
 <tr id="i46" class="altColor">
@@ -678,7 +678,7 @@ implements <a href="IMicroStrategyMetric.html" title="interface in com.atlan.mod
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOutputFromProcesses()">getOutputFromProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 </td>
 </tr>
 <tr id="i48" class="altColor">
@@ -2355,7 +2355,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getInputToProcesses</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getInputToProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IBI.html#getInputToProcesses()">getInputToProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="IBI.html" title="interface in com.atlan.model.assets">IBI</a></code></dd>
@@ -2375,7 +2375,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getMicroStrategyAttributeNames</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;java.lang.String&gt;&nbsp;getMicroStrategyAttributeNames()</pre>
-<div class="block">Simple names of the related MicroStrategy attributes.</div>
+<div class="block">List of simple names of attributes related to this metric.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IMicroStrategyMetric.html#getMicroStrategyAttributeNames()">getMicroStrategyAttributeNames</a></code>&nbsp;in interface&nbsp;<code><a href="IMicroStrategyMetric.html" title="interface in com.atlan.model.assets">IMicroStrategyMetric</a></code></dd>
@@ -2389,7 +2389,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getMicroStrategyAttributeQualifiedNames</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;java.lang.String&gt;&nbsp;getMicroStrategyAttributeQualifiedNames()</pre>
-<div class="block">Unique names of the related MicroStrategy attributes.</div>
+<div class="block">List of unique names of attributes related to this metric.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IMicroStrategyMetric.html#getMicroStrategyAttributeQualifiedNames()">getMicroStrategyAttributeQualifiedNames</a></code>&nbsp;in interface&nbsp;<code><a href="IMicroStrategyMetric.html" title="interface in com.atlan.model.assets">IMicroStrategyMetric</a></code></dd>
@@ -2403,7 +2403,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getMicroStrategyAttributes</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="IMicroStrategyAttribute.html" title="interface in com.atlan.model.assets">IMicroStrategyAttribute</a>&gt;&nbsp;getMicroStrategyAttributes()</pre>
-<div class="block">Attributes related to this metric.</div>
+<div class="block">Attributes this metric uses.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IMicroStrategyMetric.html#getMicroStrategyAttributes()">getMicroStrategyAttributes</a></code>&nbsp;in interface&nbsp;<code><a href="IMicroStrategyMetric.html" title="interface in com.atlan.model.assets">IMicroStrategyMetric</a></code></dd>
@@ -2481,7 +2481,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getMicroStrategyCubes</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="IMicroStrategyCube.html" title="interface in com.atlan.model.assets">IMicroStrategyCube</a>&gt;&nbsp;getMicroStrategyCubes()</pre>
-<div class="block">Cubes related to this metric.</div>
+<div class="block">Cubes this metric uses.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IMicroStrategyMetric.html#getMicroStrategyCubes()">getMicroStrategyCubes</a></code>&nbsp;in interface&nbsp;<code><a href="IMicroStrategyMetric.html" title="interface in com.atlan.model.assets">IMicroStrategyMetric</a></code></dd>
@@ -2495,7 +2495,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getMicroStrategyFactNames</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;java.lang.String&gt;&nbsp;getMicroStrategyFactNames()</pre>
-<div class="block">Simple names of the related MicroStrategy facts.</div>
+<div class="block">List of simple names of facts related to this metric.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IMicroStrategyMetric.html#getMicroStrategyFactNames()">getMicroStrategyFactNames</a></code>&nbsp;in interface&nbsp;<code><a href="IMicroStrategyMetric.html" title="interface in com.atlan.model.assets">IMicroStrategyMetric</a></code></dd>
@@ -2509,7 +2509,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getMicroStrategyFactQualifiedNames</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;java.lang.String&gt;&nbsp;getMicroStrategyFactQualifiedNames()</pre>
-<div class="block">Unique names of the related MicroStrategy facts.</div>
+<div class="block">List of unique names of facts related to this metric.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IMicroStrategyMetric.html#getMicroStrategyFactQualifiedNames()">getMicroStrategyFactQualifiedNames</a></code>&nbsp;in interface&nbsp;<code><a href="IMicroStrategyMetric.html" title="interface in com.atlan.model.assets">IMicroStrategyMetric</a></code></dd>
@@ -2523,7 +2523,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getMicroStrategyFacts</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="IMicroStrategyFact.html" title="interface in com.atlan.model.assets">IMicroStrategyFact</a>&gt;&nbsp;getMicroStrategyFacts()</pre>
-<div class="block">Facts related to this metric.</div>
+<div class="block">Facts this metric uses.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IMicroStrategyMetric.html#getMicroStrategyFacts()">getMicroStrategyFacts</a></code>&nbsp;in interface&nbsp;<code><a href="IMicroStrategyMetric.html" title="interface in com.atlan.model.assets">IMicroStrategyMetric</a></code></dd>
@@ -2569,7 +2569,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getMicroStrategyMetricChildren</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="IMicroStrategyMetric.html" title="interface in com.atlan.model.assets">IMicroStrategyMetric</a>&gt;&nbsp;getMicroStrategyMetricChildren()</pre>
-<div class="block">Metrics that are children of this metric.</div>
+<div class="block">Child metrics of this metric.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IMicroStrategyMetric.html#getMicroStrategyMetricChildren()">getMicroStrategyMetricChildren</a></code>&nbsp;in interface&nbsp;<code><a href="IMicroStrategyMetric.html" title="interface in com.atlan.model.assets">IMicroStrategyMetric</a></code></dd>
@@ -2583,7 +2583,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getMicroStrategyMetricExpression</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getMicroStrategyMetricExpression()</pre>
-<div class="block">Expression that defines the metric.</div>
+<div class="block">Text specifiying this metric's expression.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IMicroStrategyMetric.html#getMicroStrategyMetricExpression()">getMicroStrategyMetricExpression</a></code>&nbsp;in interface&nbsp;<code><a href="IMicroStrategyMetric.html" title="interface in com.atlan.model.assets">IMicroStrategyMetric</a></code></dd>
@@ -2597,7 +2597,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getMicroStrategyMetricParentNames</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;java.lang.String&gt;&nbsp;getMicroStrategyMetricParentNames()</pre>
-<div class="block">Simple names of the parent MicroStrategy metrics.</div>
+<div class="block">List of simple names of parent metrics of this metric.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IMicroStrategyMetric.html#getMicroStrategyMetricParentNames()">getMicroStrategyMetricParentNames</a></code>&nbsp;in interface&nbsp;<code><a href="IMicroStrategyMetric.html" title="interface in com.atlan.model.assets">IMicroStrategyMetric</a></code></dd>
@@ -2611,7 +2611,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getMicroStrategyMetricParentQualifiedNames</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;java.lang.String&gt;&nbsp;getMicroStrategyMetricParentQualifiedNames()</pre>
-<div class="block">Unique names of the parent MicroStrategy metrics.</div>
+<div class="block">List of unique names of parent metrics of this metric.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IMicroStrategyMetric.html#getMicroStrategyMetricParentQualifiedNames()">getMicroStrategyMetricParentQualifiedNames</a></code>&nbsp;in interface&nbsp;<code><a href="IMicroStrategyMetric.html" title="interface in com.atlan.model.assets">IMicroStrategyMetric</a></code></dd>
@@ -2625,7 +2625,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getMicroStrategyMetricParents</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="IMicroStrategyMetric.html" title="interface in com.atlan.model.assets">IMicroStrategyMetric</a>&gt;&nbsp;getMicroStrategyMetricParents()</pre>
-<div class="block">Metrics that are parents of this metric.</div>
+<div class="block">Parent metrics to this metric.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IMicroStrategyMetric.html#getMicroStrategyMetricParents()">getMicroStrategyMetricParents</a></code>&nbsp;in interface&nbsp;<code><a href="IMicroStrategyMetric.html" title="interface in com.atlan.model.assets">IMicroStrategyMetric</a></code></dd>
@@ -2639,7 +2639,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getMicroStrategyProject</h4>
 <pre class="methodSignature">public&nbsp;<a href="IMicroStrategyProject.html" title="interface in com.atlan.model.assets">IMicroStrategyProject</a>&nbsp;getMicroStrategyProject()</pre>
-<div class="block">Project containing the metric.</div>
+<div class="block">Project in which this metric exists.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IMicroStrategyMetric.html#getMicroStrategyProject()">getMicroStrategyProject</a></code>&nbsp;in interface&nbsp;<code><a href="IMicroStrategyMetric.html" title="interface in com.atlan.model.assets">IMicroStrategyMetric</a></code></dd>
@@ -2717,7 +2717,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getMicroStrategyReports</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="IMicroStrategyReport.html" title="interface in com.atlan.model.assets">IMicroStrategyReport</a>&gt;&nbsp;getMicroStrategyReports()</pre>
-<div class="block">Reports related to this metric.</div>
+<div class="block">Reports in which this metric is used.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IMicroStrategyMetric.html#getMicroStrategyReports()">getMicroStrategyReports</a></code>&nbsp;in interface&nbsp;<code><a href="IMicroStrategyMetric.html" title="interface in com.atlan.model.assets">IMicroStrategyMetric</a></code></dd>
@@ -2751,7 +2751,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getOutputFromProcesses</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getOutputFromProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IBI.html#getOutputFromProcesses()">getOutputFromProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="IBI.html" title="interface in com.atlan.model.assets">IBI</a></code></dd>

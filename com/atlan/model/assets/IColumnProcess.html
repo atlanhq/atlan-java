@@ -129,7 +129,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <hr>
 <pre>@Generated("com.atlan.generators.ModelGeneratorV2")
 public interface <span class="typeNameLabel">IColumnProcess</span></pre>
-<div class="block">Instance of a column-level lineage process in Atlan.</div>
+<div class="block">Instance of a column-level lineage process in Atlan. Inputs and outputs of these processes should be columns.</div>
 </li>
 </ul>
 </div>
@@ -667,7 +667,7 @@ public interface <span class="typeNameLabel">IColumnProcess</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IGlossaryTerm.html" title="interface in com.atlan.model.assets">IGlossaryTerm</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssignedTerms()">getAssignedTerms</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Glossary terms that are linked to this asset.</div>
 </td>
 </tr>
 <tr id="i70" class="altColor">
@@ -716,7 +716,7 @@ public interface <span class="typeNameLabel">IColumnProcess</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IColumnProcess.html" title="interface in com.atlan.model.assets">IColumnProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getColumnProcesses()">getColumnProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes that detail column-level lineage for this process.</div>
 </td>
 </tr>
 <tr id="i77" class="rowColor">
@@ -800,7 +800,7 @@ public interface <span class="typeNameLabel">IColumnProcess</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInputs()">getInputs</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Assets that are inputs to this process.</div>
 </td>
 </tr>
 <tr id="i89" class="rowColor">
@@ -856,14 +856,14 @@ public interface <span class="typeNameLabel">IColumnProcess</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILink.html" title="interface in com.atlan.model.assets">ILink</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLinks()">getLinks</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Links that are attached to this asset.</div>
 </td>
 </tr>
 <tr id="i97" class="rowColor">
 <td class="colFirst"><code><a href="IMatillionComponent.html" title="interface in com.atlan.model.assets">IMatillionComponent</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMatillionComponent()">getMatillionComponent</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Matillion component that contains the logic for this lineage process.</div>
 </td>
 </tr>
 <tr id="i98" class="altColor">
@@ -877,7 +877,7 @@ public interface <span class="typeNameLabel">IColumnProcess</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IMCMonitor.html" title="interface in com.atlan.model.assets">IMCMonitor</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMcMonitors()">getMcMonitors</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Monitors that observe this asset.</div>
 </td>
 </tr>
 <tr id="i100" class="altColor">
@@ -898,7 +898,7 @@ public interface <span class="typeNameLabel">IColumnProcess</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOutputs()">getOutputs</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Assets that are outputs from this process.</div>
 </td>
 </tr>
 <tr id="i103" class="rowColor">
@@ -940,7 +940,7 @@ public interface <span class="typeNameLabel">IColumnProcess</span></pre>
 <td class="colFirst"><code><a href="IReadme.html" title="interface in com.atlan.model.assets">IReadme</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getReadme()">getReadme</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">README that is linked to this asset.</div>
 </td>
 </tr>
 <tr id="i109" class="rowColor">
@@ -1998,7 +1998,7 @@ public interface <span class="typeNameLabel">IColumnProcess</span></pre>
 <li class="blockList">
 <h4>getAssignedTerms</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="IGlossaryTerm.html" title="interface in com.atlan.model.assets">IGlossaryTerm</a>&gt;&nbsp;getAssignedTerms()</pre>
-<div class="block">TBC</div>
+<div class="block">Glossary terms that are linked to this asset.</div>
 </li>
 </ul>
 <a id="getAst()">
@@ -2068,7 +2068,7 @@ public interface <span class="typeNameLabel">IColumnProcess</span></pre>
 <li class="blockList">
 <h4>getColumnProcesses</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="IColumnProcess.html" title="interface in com.atlan.model.assets">IColumnProcess</a>&gt;&nbsp;getColumnProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes that detail column-level lineage for this process.</div>
 </li>
 </ul>
 <a id="getConnectionName()">
@@ -2158,7 +2158,7 @@ public interface <span class="typeNameLabel">IColumnProcess</span></pre>
 <li class="blockList">
 <h4>getInputs</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a>&gt;&nbsp;getInputs()</pre>
-<div class="block">TBC</div>
+<div class="block">Assets that are inputs to this process.</div>
 </li>
 </ul>
 <a id="getIsAIGenerated()">
@@ -2238,7 +2238,7 @@ public interface <span class="typeNameLabel">IColumnProcess</span></pre>
 <li class="blockList">
 <h4>getLinks</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="ILink.html" title="interface in com.atlan.model.assets">ILink</a>&gt;&nbsp;getLinks()</pre>
-<div class="block">TBC</div>
+<div class="block">Links that are attached to this asset.</div>
 </li>
 </ul>
 <a id="getMatillionComponent()">
@@ -2248,7 +2248,7 @@ public interface <span class="typeNameLabel">IColumnProcess</span></pre>
 <li class="blockList">
 <h4>getMatillionComponent</h4>
 <pre class="methodSignature"><a href="IMatillionComponent.html" title="interface in com.atlan.model.assets">IMatillionComponent</a>&nbsp;getMatillionComponent()</pre>
-<div class="block">TBC</div>
+<div class="block">Matillion component that contains the logic for this lineage process.</div>
 </li>
 </ul>
 <a id="getMcIncidents()">
@@ -2268,7 +2268,7 @@ public interface <span class="typeNameLabel">IColumnProcess</span></pre>
 <li class="blockList">
 <h4>getMcMonitors</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="IMCMonitor.html" title="interface in com.atlan.model.assets">IMCMonitor</a>&gt;&nbsp;getMcMonitors()</pre>
-<div class="block">TBC</div>
+<div class="block">Monitors that observe this asset.</div>
 </li>
 </ul>
 <a id="getMetrics()">
@@ -2298,7 +2298,7 @@ public interface <span class="typeNameLabel">IColumnProcess</span></pre>
 <li class="blockList">
 <h4>getOutputs</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a>&gt;&nbsp;getOutputs()</pre>
-<div class="block">TBC</div>
+<div class="block">Assets that are outputs from this process.</div>
 </li>
 </ul>
 <a id="getOwnerGroups()">
@@ -2358,7 +2358,7 @@ public interface <span class="typeNameLabel">IColumnProcess</span></pre>
 <li class="blockList">
 <h4>getReadme</h4>
 <pre class="methodSignature"><a href="IReadme.html" title="interface in com.atlan.model.assets">IReadme</a>&nbsp;getReadme()</pre>
-<div class="block">TBC</div>
+<div class="block">README that is linked to this asset.</div>
 </li>
 </ul>
 <a id="getSampleDataUrl()">

@@ -154,7 +154,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 public class <span class="typeNameLabel">QlikApp</span>
 extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a>
 implements <a href="IQlikApp.html" title="interface in com.atlan.model.assets">IQlikApp</a>, <a href="IQlik.html" title="interface in com.atlan.model.assets">IQlik</a>, <a href="IBI.html" title="interface in com.atlan.model.assets">IBI</a>, <a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a>, <a href="IAsset.html" title="interface in com.atlan.model.assets">IAsset</a>, <a href="IReferenceable.html" title="interface in com.atlan.model.assets">IReferenceable</a></pre>
-<div class="block">Instance of a Qlik App in Atlan.</div>
+<div class="block">Instance of a Qlik app in Atlan.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../serialized-form.html#com.atlan.model.assets.QlikApp">Serialized Form</a></dd>
@@ -496,7 +496,7 @@ implements <a href="IQlikApp.html" title="interface in com.atlan.model.assets">I
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInputToProcesses()">getInputToProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 </td>
 </tr>
 <tr id="i22" class="altColor">
@@ -510,7 +510,7 @@ implements <a href="IQlikApp.html" title="interface in com.atlan.model.assets">I
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOutputFromProcesses()">getOutputFromProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 </td>
 </tr>
 <tr id="i24" class="altColor">
@@ -531,14 +531,14 @@ implements <a href="IQlikApp.html" title="interface in com.atlan.model.assets">I
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getQlikAppStaticByteSize()">getQlikAppStaticByteSize</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Static space taken up by the app.</div>
+<div class="block">Static space used by this app, in bytes.</div>
 </td>
 </tr>
 <tr id="i27" class="rowColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getQlikHasSectionAccess()">getQlikHasSectionAccess</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Whether section access or data masking is enabled (true) or not (false).</div>
+<div class="block">Whether section access or data masking is enabled on the source (true) or not (false).</div>
 </td>
 </tr>
 <tr id="i28" class="altColor">
@@ -552,14 +552,14 @@ implements <a href="IQlikApp.html" title="interface in com.atlan.model.assets">I
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getQlikIsDirectQueryMode()">getQlikIsDirectQueryMode</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Whether the app is in direct query mode (true) or not (false).</div>
+<div class="block">Whether this app is in direct query mode (true) or not (false).</div>
 </td>
 </tr>
 <tr id="i30" class="altColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getQlikIsEncrypted()">getQlikIsEncrypted</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Whether the app is encrypted (true) or not (false).</div>
+<div class="block">Whether this app is encrypted (true) or not (false).</div>
 </td>
 </tr>
 <tr id="i31" class="rowColor">
@@ -573,7 +573,7 @@ implements <a href="IQlikApp.html" title="interface in com.atlan.model.assets">I
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getQlikOriginAppId()">getQlikOriginAppId</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Origin App ID of the Qlik app.</div>
+<div class="block">Value of originAppId for this app.</div>
 </td>
 </tr>
 <tr id="i33" class="rowColor">
@@ -594,14 +594,14 @@ implements <a href="IQlikApp.html" title="interface in com.atlan.model.assets">I
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IQlikSheet.html" title="interface in com.atlan.model.assets">IQlikSheet</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getQlikSheets()">getQlikSheets</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Sheets that exist within the app.</div>
+<div class="block">Sheets that exist within this app.</div>
 </td>
 </tr>
 <tr id="i36" class="altColor">
 <td class="colFirst"><code><a href="IQlikSpace.html" title="interface in com.atlan.model.assets">IQlikSpace</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getQlikSpace()">getQlikSpace</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Space in which the app exists.</div>
+<div class="block">Space in which this app exists.</div>
 </td>
 </tr>
 <tr id="i37" class="rowColor">
@@ -2292,7 +2292,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getInputToProcesses</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getInputToProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IBI.html#getInputToProcesses()">getInputToProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="IBI.html" title="interface in com.atlan.model.assets">IBI</a></code></dd>
@@ -2332,7 +2332,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getOutputFromProcesses</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getOutputFromProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IBI.html#getOutputFromProcesses()">getOutputFromProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="IBI.html" title="interface in com.atlan.model.assets">IBI</a></code></dd>
@@ -2384,7 +2384,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getQlikAppStaticByteSize</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Long&nbsp;getQlikAppStaticByteSize()</pre>
-<div class="block">Static space taken up by the app.</div>
+<div class="block">Static space used by this app, in bytes.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IQlikApp.html#getQlikAppStaticByteSize()">getQlikAppStaticByteSize</a></code>&nbsp;in interface&nbsp;<code><a href="IQlikApp.html" title="interface in com.atlan.model.assets">IQlikApp</a></code></dd>
@@ -2398,7 +2398,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getQlikHasSectionAccess</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Boolean&nbsp;getQlikHasSectionAccess()</pre>
-<div class="block">Whether section access or data masking is enabled (true) or not (false).</div>
+<div class="block">Whether section access or data masking is enabled on the source (true) or not (false).</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IQlikApp.html#getQlikHasSectionAccess()">getQlikHasSectionAccess</a></code>&nbsp;in interface&nbsp;<code><a href="IQlikApp.html" title="interface in com.atlan.model.assets">IQlikApp</a></code></dd>
@@ -2428,7 +2428,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getQlikIsDirectQueryMode</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Boolean&nbsp;getQlikIsDirectQueryMode()</pre>
-<div class="block">Whether the app is in direct query mode (true) or not (false).</div>
+<div class="block">Whether this app is in direct query mode (true) or not (false).</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IQlikApp.html#getQlikIsDirectQueryMode()">getQlikIsDirectQueryMode</a></code>&nbsp;in interface&nbsp;<code><a href="IQlikApp.html" title="interface in com.atlan.model.assets">IQlikApp</a></code></dd>
@@ -2442,7 +2442,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getQlikIsEncrypted</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Boolean&nbsp;getQlikIsEncrypted()</pre>
-<div class="block">Whether the app is encrypted (true) or not (false).</div>
+<div class="block">Whether this app is encrypted (true) or not (false).</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IQlikApp.html#getQlikIsEncrypted()">getQlikIsEncrypted</a></code>&nbsp;in interface&nbsp;<code><a href="IQlikApp.html" title="interface in com.atlan.model.assets">IQlikApp</a></code></dd>
@@ -2472,7 +2472,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getQlikOriginAppId</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getQlikOriginAppId()</pre>
-<div class="block">Origin App ID of the Qlik app.</div>
+<div class="block">Value of originAppId for this app.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IQlikApp.html#getQlikOriginAppId()">getQlikOriginAppId</a></code>&nbsp;in interface&nbsp;<code><a href="IQlikApp.html" title="interface in com.atlan.model.assets">IQlikApp</a></code></dd>
@@ -2518,7 +2518,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getQlikSheets</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="IQlikSheet.html" title="interface in com.atlan.model.assets">IQlikSheet</a>&gt;&nbsp;getQlikSheets()</pre>
-<div class="block">Sheets that exist within the app.</div>
+<div class="block">Sheets that exist within this app.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IQlikApp.html#getQlikSheets()">getQlikSheets</a></code>&nbsp;in interface&nbsp;<code><a href="IQlikApp.html" title="interface in com.atlan.model.assets">IQlikApp</a></code></dd>
@@ -2532,7 +2532,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getQlikSpace</h4>
 <pre class="methodSignature">public&nbsp;<a href="IQlikSpace.html" title="interface in com.atlan.model.assets">IQlikSpace</a>&nbsp;getQlikSpace()</pre>
-<div class="block">Space in which the app exists.</div>
+<div class="block">Space in which this app exists.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IQlikApp.html#getQlikSpace()">getQlikSpace</a></code>&nbsp;in interface&nbsp;<code><a href="IQlikApp.html" title="interface in com.atlan.model.assets">IQlikApp</a></code></dd>

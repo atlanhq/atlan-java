@@ -154,7 +154,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 public class <span class="typeNameLabel">SisenseDashboard</span>
 extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a>
 implements <a href="ISisenseDashboard.html" title="interface in com.atlan.model.assets">ISisenseDashboard</a>, <a href="ISisense.html" title="interface in com.atlan.model.assets">ISisense</a>, <a href="IBI.html" title="interface in com.atlan.model.assets">IBI</a>, <a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a>, <a href="IAsset.html" title="interface in com.atlan.model.assets">IAsset</a>, <a href="IReferenceable.html" title="interface in com.atlan.model.assets">IReferenceable</a></pre>
-<div class="block">The SisenseDashboard type represents a dashboard in sisense. Dashboards in Sisense allow you to place multiple widgets on a single page.</div>
+<div class="block">Instance of a Sisense dashboard in Atlan. These allow you to place multiple widgets on a single page.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../serialized-form.html#com.atlan.model.assets.SisenseDashboard">Serialized Form</a></dd>
@@ -489,7 +489,7 @@ implements <a href="ISisenseDashboard.html" title="interface in com.atlan.model.
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInputToProcesses()">getInputToProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 </td>
 </tr>
 <tr id="i22" class="altColor">
@@ -503,21 +503,21 @@ implements <a href="ISisenseDashboard.html" title="interface in com.atlan.model.
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOutputFromProcesses()">getOutputFromProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 </td>
 </tr>
 <tr id="i24" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSisenseDashboardFolderQualifiedName()">getSisenseDashboardFolderQualifiedName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Qualified name of the folder in which this dashboard exists</div>
+<div class="block">Unique name of the folder in which this dashboard exists.</div>
 </td>
 </tr>
 <tr id="i25" class="rowColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSisenseDashboardWidgetCount()">getSisenseDashboardWidgetCount</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Number of widgets that are present in this dashboard</div>
+<div class="block">Number of widgets in this dashboard.</div>
 </td>
 </tr>
 <tr id="i26" class="altColor">
@@ -531,14 +531,14 @@ implements <a href="ISisenseDashboard.html" title="interface in com.atlan.model.
 <td class="colFirst"><code><a href="ISisenseFolder.html" title="interface in com.atlan.model.assets">ISisenseFolder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSisenseFolder()">getSisenseFolder</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Folder in which this dashboard exists.</div>
 </td>
 </tr>
 <tr id="i28" class="altColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ISisenseWidget.html" title="interface in com.atlan.model.assets">ISisenseWidget</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSisenseWidgets()">getSisenseWidgets</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Widgets that exist in this dashboard.</div>
 </td>
 </tr>
 <tr id="i29" class="rowColor">
@@ -2215,7 +2215,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getInputToProcesses</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getInputToProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IBI.html#getInputToProcesses()">getInputToProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="IBI.html" title="interface in com.atlan.model.assets">IBI</a></code></dd>
@@ -2255,7 +2255,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getOutputFromProcesses</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getOutputFromProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IBI.html#getOutputFromProcesses()">getOutputFromProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="IBI.html" title="interface in com.atlan.model.assets">IBI</a></code></dd>
@@ -2275,7 +2275,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getSisenseDashboardFolderQualifiedName</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getSisenseDashboardFolderQualifiedName()</pre>
-<div class="block">Qualified name of the folder in which this dashboard exists</div>
+<div class="block">Unique name of the folder in which this dashboard exists.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISisenseDashboard.html#getSisenseDashboardFolderQualifiedName()">getSisenseDashboardFolderQualifiedName</a></code>&nbsp;in interface&nbsp;<code><a href="ISisenseDashboard.html" title="interface in com.atlan.model.assets">ISisenseDashboard</a></code></dd>
@@ -2289,7 +2289,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getSisenseDashboardWidgetCount</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Long&nbsp;getSisenseDashboardWidgetCount()</pre>
-<div class="block">Number of widgets that are present in this dashboard</div>
+<div class="block">Number of widgets in this dashboard.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISisenseDashboard.html#getSisenseDashboardWidgetCount()">getSisenseDashboardWidgetCount</a></code>&nbsp;in interface&nbsp;<code><a href="ISisenseDashboard.html" title="interface in com.atlan.model.assets">ISisenseDashboard</a></code></dd>
@@ -2317,7 +2317,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getSisenseFolder</h4>
 <pre class="methodSignature">public&nbsp;<a href="ISisenseFolder.html" title="interface in com.atlan.model.assets">ISisenseFolder</a>&nbsp;getSisenseFolder()</pre>
-<div class="block">TBC</div>
+<div class="block">Folder in which this dashboard exists.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISisenseDashboard.html#getSisenseFolder()">getSisenseFolder</a></code>&nbsp;in interface&nbsp;<code><a href="ISisenseDashboard.html" title="interface in com.atlan.model.assets">ISisenseDashboard</a></code></dd>
@@ -2331,7 +2331,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getSisenseWidgets</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ISisenseWidget.html" title="interface in com.atlan.model.assets">ISisenseWidget</a>&gt;&nbsp;getSisenseWidgets()</pre>
-<div class="block">TBC</div>
+<div class="block">Widgets that exist in this dashboard.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISisenseDashboard.html#getSisenseWidgets()">getSisenseWidgets</a></code>&nbsp;in interface&nbsp;<code><a href="ISisenseDashboard.html" title="interface in com.atlan.model.assets">ISisenseDashboard</a></code></dd>

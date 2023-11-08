@@ -154,7 +154,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 public class <span class="typeNameLabel">QuickSightFolder</span>
 extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a>
 implements <a href="IQuickSightFolder.html" title="interface in com.atlan.model.assets">IQuickSightFolder</a>, <a href="IQuickSight.html" title="interface in com.atlan.model.assets">IQuickSight</a>, <a href="IBI.html" title="interface in com.atlan.model.assets">IBI</a>, <a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a>, <a href="IAsset.html" title="interface in com.atlan.model.assets">IAsset</a>, <a href="IReferenceable.html" title="interface in com.atlan.model.assets">IReferenceable</a></pre>
-<div class="block">Instance of a QuickSight Folder in Atlan.</div>
+<div class="block">Instance of a QuickSight folder in Atlan.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../serialized-form.html#com.atlan.model.assets.QuickSightFolder">Serialized Form</a></dd>
@@ -496,7 +496,7 @@ implements <a href="IQuickSightFolder.html" title="interface in com.atlan.model.
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInputToProcesses()">getInputToProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 </td>
 </tr>
 <tr id="i22" class="altColor">
@@ -510,7 +510,7 @@ implements <a href="IQuickSightFolder.html" title="interface in com.atlan.model.
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOutputFromProcesses()">getOutputFromProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 </td>
 </tr>
 <tr id="i24" class="altColor">
@@ -538,14 +538,14 @@ implements <a href="IQuickSightFolder.html" title="interface in com.atlan.model.
 <td class="colFirst"><code>java.util.List&lt;java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getQuickSightFolderHierarchy()">getQuickSightFolderHierarchy</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Detailed path of the folder</div>
+<div class="block">Detailed path of this folder.</div>
 </td>
 </tr>
 <tr id="i28" class="altColor">
 <td class="colFirst"><code><a href="../enums/QuickSightFolderType.html" title="enum in com.atlan.model.enums">QuickSightFolderType</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getQuickSightFolderType()">getQuickSightFolderType</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Shared or private type of folder</div>
+<div class="block">Type of this folder, for example: SHARED.</div>
 </td>
 </tr>
 <tr id="i29" class="rowColor">
@@ -2243,7 +2243,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getInputToProcesses</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getInputToProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IBI.html#getInputToProcesses()">getInputToProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="IBI.html" title="interface in com.atlan.model.assets">IBI</a></code></dd>
@@ -2283,7 +2283,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getOutputFromProcesses</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getOutputFromProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IBI.html#getOutputFromProcesses()">getOutputFromProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="IBI.html" title="interface in com.atlan.model.assets">IBI</a></code></dd>
@@ -2345,7 +2345,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getQuickSightFolderHierarchy</h4>
 <pre class="methodSignature">public&nbsp;java.util.List&lt;java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&gt;&nbsp;getQuickSightFolderHierarchy()</pre>
-<div class="block">Detailed path of the folder</div>
+<div class="block">Detailed path of this folder.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IQuickSightFolder.html#getQuickSightFolderHierarchy()">getQuickSightFolderHierarchy</a></code>&nbsp;in interface&nbsp;<code><a href="IQuickSightFolder.html" title="interface in com.atlan.model.assets">IQuickSightFolder</a></code></dd>
@@ -2359,7 +2359,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getQuickSightFolderType</h4>
 <pre class="methodSignature">public&nbsp;<a href="../enums/QuickSightFolderType.html" title="enum in com.atlan.model.enums">QuickSightFolderType</a>&nbsp;getQuickSightFolderType()</pre>
-<div class="block">Shared or private type of folder</div>
+<div class="block">Type of this folder, for example: SHARED.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IQuickSightFolder.html#getQuickSightFolderType()">getQuickSightFolderType</a></code>&nbsp;in interface&nbsp;<code><a href="IQuickSightFolder.html" title="interface in com.atlan.model.assets">IQuickSightFolder</a></code></dd>

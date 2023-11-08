@@ -154,7 +154,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 public class <span class="typeNameLabel">PowerBIWorkspace</span>
 extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a>
 implements <a href="IPowerBIWorkspace.html" title="interface in com.atlan.model.assets">IPowerBIWorkspace</a>, <a href="IPowerBI.html" title="interface in com.atlan.model.assets">IPowerBI</a>, <a href="IBI.html" title="interface in com.atlan.model.assets">IBI</a>, <a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a>, <a href="IAsset.html" title="interface in com.atlan.model.assets">IAsset</a>, <a href="IReferenceable.html" title="interface in com.atlan.model.assets">IReferenceable</a></pre>
-<div class="block">Instance of a Power BI workspace in Atlan.</div>
+<div class="block">Instance of a Power BI workspace in Atlan. Workspaces contain dashboards, reports, workbooks, datasets and dataflows.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../serialized-form.html#com.atlan.model.assets.PowerBIWorkspace">Serialized Form</a></dd>
@@ -489,42 +489,42 @@ implements <a href="IPowerBIWorkspace.html" title="interface in com.atlan.model.
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDashboardCount()">getDashboardCount</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Number of dashboards in this workspace.</div>
 </td>
 </tr>
 <tr id="i21" class="rowColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IPowerBIDashboard.html" title="interface in com.atlan.model.assets">IPowerBIDashboard</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDashboards()">getDashboards</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Dashboards that exist within this workspace.</div>
 </td>
 </tr>
 <tr id="i22" class="altColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDataflowCount()">getDataflowCount</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Number of dataflows in this workspace.</div>
 </td>
 </tr>
 <tr id="i23" class="rowColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IPowerBIDataflow.html" title="interface in com.atlan.model.assets">IPowerBIDataflow</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDataflows()">getDataflows</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Dataflows that exist within this workspace.</div>
 </td>
 </tr>
 <tr id="i24" class="altColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDatasetCount()">getDatasetCount</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Number of datasets in this workspace.</div>
 </td>
 </tr>
 <tr id="i25" class="rowColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IPowerBIDataset.html" title="interface in com.atlan.model.assets">IPowerBIDataset</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDatasets()">getDatasets</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Datasets that exist within this workspace.</div>
 </td>
 </tr>
 <tr id="i26" class="altColor">
@@ -538,7 +538,7 @@ implements <a href="IPowerBIWorkspace.html" title="interface in com.atlan.model.
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInputToProcesses()">getInputToProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 </td>
 </tr>
 <tr id="i28" class="altColor">
@@ -552,7 +552,7 @@ implements <a href="IPowerBIWorkspace.html" title="interface in com.atlan.model.
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOutputFromProcesses()">getOutputFromProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 </td>
 </tr>
 <tr id="i30" class="altColor">
@@ -587,14 +587,14 @@ implements <a href="IPowerBIWorkspace.html" title="interface in com.atlan.model.
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getReportCount()">getReportCount</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Number of reports in this workspace.</div>
 </td>
 </tr>
 <tr id="i35" class="rowColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IPowerBIReport.html" title="interface in com.atlan.model.assets">IPowerBIReport</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getReports()">getReports</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Reports that exist within this workspace.</div>
 </td>
 </tr>
 <tr id="i36" class="altColor">
@@ -608,7 +608,7 @@ implements <a href="IPowerBIWorkspace.html" title="interface in com.atlan.model.
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getWebUrl()">getWebUrl</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Deprecated.</div>
 </td>
 </tr>
 <tr id="i38" class="altColor">
@@ -2258,7 +2258,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getDashboardCount</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Long&nbsp;getDashboardCount()</pre>
-<div class="block">TBC</div>
+<div class="block">Number of dashboards in this workspace.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IPowerBIWorkspace.html#getDashboardCount()">getDashboardCount</a></code>&nbsp;in interface&nbsp;<code><a href="IPowerBIWorkspace.html" title="interface in com.atlan.model.assets">IPowerBIWorkspace</a></code></dd>
@@ -2272,7 +2272,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getDashboards</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="IPowerBIDashboard.html" title="interface in com.atlan.model.assets">IPowerBIDashboard</a>&gt;&nbsp;getDashboards()</pre>
-<div class="block">TBC</div>
+<div class="block">Dashboards that exist within this workspace.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IPowerBIWorkspace.html#getDashboards()">getDashboards</a></code>&nbsp;in interface&nbsp;<code><a href="IPowerBIWorkspace.html" title="interface in com.atlan.model.assets">IPowerBIWorkspace</a></code></dd>
@@ -2286,7 +2286,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getDataflowCount</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Long&nbsp;getDataflowCount()</pre>
-<div class="block">TBC</div>
+<div class="block">Number of dataflows in this workspace.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IPowerBIWorkspace.html#getDataflowCount()">getDataflowCount</a></code>&nbsp;in interface&nbsp;<code><a href="IPowerBIWorkspace.html" title="interface in com.atlan.model.assets">IPowerBIWorkspace</a></code></dd>
@@ -2300,7 +2300,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getDataflows</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="IPowerBIDataflow.html" title="interface in com.atlan.model.assets">IPowerBIDataflow</a>&gt;&nbsp;getDataflows()</pre>
-<div class="block">TBC</div>
+<div class="block">Dataflows that exist within this workspace.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IPowerBIWorkspace.html#getDataflows()">getDataflows</a></code>&nbsp;in interface&nbsp;<code><a href="IPowerBIWorkspace.html" title="interface in com.atlan.model.assets">IPowerBIWorkspace</a></code></dd>
@@ -2314,7 +2314,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getDatasetCount</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Long&nbsp;getDatasetCount()</pre>
-<div class="block">TBC</div>
+<div class="block">Number of datasets in this workspace.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IPowerBIWorkspace.html#getDatasetCount()">getDatasetCount</a></code>&nbsp;in interface&nbsp;<code><a href="IPowerBIWorkspace.html" title="interface in com.atlan.model.assets">IPowerBIWorkspace</a></code></dd>
@@ -2328,7 +2328,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getDatasets</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="IPowerBIDataset.html" title="interface in com.atlan.model.assets">IPowerBIDataset</a>&gt;&nbsp;getDatasets()</pre>
-<div class="block">TBC</div>
+<div class="block">Datasets that exist within this workspace.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IPowerBIWorkspace.html#getDatasets()">getDatasets</a></code>&nbsp;in interface&nbsp;<code><a href="IPowerBIWorkspace.html" title="interface in com.atlan.model.assets">IPowerBIWorkspace</a></code></dd>
@@ -2362,7 +2362,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getInputToProcesses</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getInputToProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IBI.html#getInputToProcesses()">getInputToProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="IBI.html" title="interface in com.atlan.model.assets">IBI</a></code></dd>
@@ -2402,7 +2402,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getOutputFromProcesses</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getOutputFromProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IBI.html#getOutputFromProcesses()">getOutputFromProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="IBI.html" title="interface in com.atlan.model.assets">IBI</a></code></dd>
@@ -2486,7 +2486,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getReportCount</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Long&nbsp;getReportCount()</pre>
-<div class="block">TBC</div>
+<div class="block">Number of reports in this workspace.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IPowerBIWorkspace.html#getReportCount()">getReportCount</a></code>&nbsp;in interface&nbsp;<code><a href="IPowerBIWorkspace.html" title="interface in com.atlan.model.assets">IPowerBIWorkspace</a></code></dd>
@@ -2500,7 +2500,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getReports</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="IPowerBIReport.html" title="interface in com.atlan.model.assets">IPowerBIReport</a>&gt;&nbsp;getReports()</pre>
-<div class="block">TBC</div>
+<div class="block">Reports that exist within this workspace.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IPowerBIWorkspace.html#getReports()">getReports</a></code>&nbsp;in interface&nbsp;<code><a href="IPowerBIWorkspace.html" title="interface in com.atlan.model.assets">IPowerBIWorkspace</a></code></dd>
@@ -2514,7 +2514,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getWebUrl</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getWebUrl()</pre>
-<div class="block">TBC</div>
+<div class="block">Deprecated.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IPowerBIWorkspace.html#getWebUrl()">getWebUrl</a></code>&nbsp;in interface&nbsp;<code><a href="IPowerBIWorkspace.html" title="interface in com.atlan.model.assets">IPowerBIWorkspace</a></code></dd>

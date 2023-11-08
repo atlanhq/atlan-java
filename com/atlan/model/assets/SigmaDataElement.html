@@ -496,7 +496,7 @@ implements <a href="ISigmaDataElement.html" title="interface in com.atlan.model.
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInputToProcesses()">getInputToProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 </td>
 </tr>
 <tr id="i22" class="altColor">
@@ -510,21 +510,21 @@ implements <a href="ISigmaDataElement.html" title="interface in com.atlan.model.
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOutputFromProcesses()">getOutputFromProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 </td>
 </tr>
 <tr id="i24" class="altColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSigmaDataElementFieldCount()">getSigmaDataElementFieldCount</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Number of data element fields within this data element.</div>
+<div class="block">Number of fields in this data element.</div>
 </td>
 </tr>
 <tr id="i25" class="rowColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ISigmaDataElementField.html" title="interface in com.atlan.model.assets">ISigmaDataElementField</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSigmaDataElementFields()">getSigmaDataElementFields</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Data element fields within this data element.</div>
+<div class="block">Data element fields that exist in this data element.</div>
 </td>
 </tr>
 <tr id="i26" class="altColor">
@@ -559,7 +559,7 @@ implements <a href="ISigmaDataElement.html" title="interface in com.atlan.model.
 <td class="colFirst"><code><a href="ISigmaPage.html" title="interface in com.atlan.model.assets">ISigmaPage</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSigmaPage()">getSigmaPage</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Page that contains this data element.</div>
+<div class="block">Page on which this data element exists.</div>
 </td>
 </tr>
 <tr id="i31" class="rowColor">
@@ -2264,7 +2264,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getInputToProcesses</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getInputToProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IBI.html#getInputToProcesses()">getInputToProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="IBI.html" title="interface in com.atlan.model.assets">IBI</a></code></dd>
@@ -2304,7 +2304,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getOutputFromProcesses</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getOutputFromProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IBI.html#getOutputFromProcesses()">getOutputFromProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="IBI.html" title="interface in com.atlan.model.assets">IBI</a></code></dd>
@@ -2324,7 +2324,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getSigmaDataElementFieldCount</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Long&nbsp;getSigmaDataElementFieldCount()</pre>
-<div class="block">Number of data element fields within this data element.</div>
+<div class="block">Number of fields in this data element.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISigmaDataElement.html#getSigmaDataElementFieldCount()">getSigmaDataElementFieldCount</a></code>&nbsp;in interface&nbsp;<code><a href="ISigmaDataElement.html" title="interface in com.atlan.model.assets">ISigmaDataElement</a></code></dd>
@@ -2338,7 +2338,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getSigmaDataElementFields</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ISigmaDataElementField.html" title="interface in com.atlan.model.assets">ISigmaDataElementField</a>&gt;&nbsp;getSigmaDataElementFields()</pre>
-<div class="block">Data element fields within this data element.</div>
+<div class="block">Data element fields that exist in this data element.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISigmaDataElement.html#getSigmaDataElementFields()">getSigmaDataElementFields</a></code>&nbsp;in interface&nbsp;<code><a href="ISigmaDataElement.html" title="interface in com.atlan.model.assets">ISigmaDataElement</a></code></dd>
@@ -2412,7 +2412,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getSigmaPage</h4>
 <pre class="methodSignature">public&nbsp;<a href="ISigmaPage.html" title="interface in com.atlan.model.assets">ISigmaPage</a>&nbsp;getSigmaPage()</pre>
-<div class="block">Page that contains this data element.</div>
+<div class="block">Page on which this data element exists.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISigmaDataElement.html#getSigmaPage()">getSigmaPage</a></code>&nbsp;in interface&nbsp;<code><a href="ISigmaDataElement.html" title="interface in com.atlan.model.assets">ISigmaDataElement</a></code></dd>

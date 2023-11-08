@@ -175,14 +175,14 @@ public interface <span class="typeNameLabel">IDbtModel</span></pre>
 <td class="colFirst"><code>static <a href="../fields/RelationField.html" title="class in com.atlan.model.fields">RelationField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#DBT_METRICS">DBT_METRICS</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Metrics that exist within this model.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/RelationField.html" title="class in com.atlan.model.fields">RelationField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#DBT_MODEL_COLUMNS">DBT_MODEL_COLUMNS</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Columns that exist within this dbt model.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -779,7 +779,7 @@ public interface <span class="typeNameLabel">IDbtModel</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IGlossaryTerm.html" title="interface in com.atlan.model.assets">IGlossaryTerm</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssignedTerms()">getAssignedTerms</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Glossary terms that are linked to this asset.</div>
 </td>
 </tr>
 <tr id="i69" class="rowColor">
@@ -947,14 +947,14 @@ public interface <span class="typeNameLabel">IDbtModel</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IDbtMetric.html" title="interface in com.atlan.model.assets">IDbtMetric</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDbtMetrics()">getDbtMetrics</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Metrics that exist within this model.</div>
 </td>
 </tr>
 <tr id="i93" class="rowColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IDbtModelColumn.html" title="interface in com.atlan.model.assets">IDbtModelColumn</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDbtModelColumns()">getDbtModelColumns</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Columns that exist within this dbt model.</div>
 </td>
 </tr>
 <tr id="i94" class="altColor">
@@ -1143,7 +1143,7 @@ public interface <span class="typeNameLabel">IDbtModel</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInputToProcesses()">getInputToProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 </td>
 </tr>
 <tr id="i121" class="rowColor">
@@ -1199,7 +1199,7 @@ public interface <span class="typeNameLabel">IDbtModel</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILink.html" title="interface in com.atlan.model.assets">ILink</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLinks()">getLinks</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Links that are attached to this asset.</div>
 </td>
 </tr>
 <tr id="i129" class="rowColor">
@@ -1213,7 +1213,7 @@ public interface <span class="typeNameLabel">IDbtModel</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IMCMonitor.html" title="interface in com.atlan.model.assets">IMCMonitor</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMcMonitors()">getMcMonitors</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Monitors that observe this asset.</div>
 </td>
 </tr>
 <tr id="i131" class="rowColor">
@@ -1241,7 +1241,7 @@ public interface <span class="typeNameLabel">IDbtModel</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOutputFromProcesses()">getOutputFromProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 </td>
 </tr>
 <tr id="i135" class="rowColor">
@@ -1283,7 +1283,7 @@ public interface <span class="typeNameLabel">IDbtModel</span></pre>
 <td class="colFirst"><code><a href="IReadme.html" title="interface in com.atlan.model.assets">IReadme</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getReadme()">getReadme</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">README that is linked to this asset.</div>
 </td>
 </tr>
 <tr id="i141" class="rowColor">
@@ -1654,7 +1654,7 @@ public interface <span class="typeNameLabel">IDbtModel</span></pre>
 <li class="blockList">
 <h4>DBT_METRICS</h4>
 <pre>static final&nbsp;<a href="../fields/RelationField.html" title="class in com.atlan.model.fields">RelationField</a> DBT_METRICS</pre>
-<div class="block">TBC</div>
+<div class="block">Metrics that exist within this model.</div>
 </li>
 </ul>
 <a id="DBT_MODEL_COLUMNS">
@@ -1664,7 +1664,7 @@ public interface <span class="typeNameLabel">IDbtModel</span></pre>
 <li class="blockList">
 <h4>DBT_MODEL_COLUMNS</h4>
 <pre>static final&nbsp;<a href="../fields/RelationField.html" title="class in com.atlan.model.fields">RelationField</a> DBT_MODEL_COLUMNS</pre>
-<div class="block">TBC</div>
+<div class="block">Columns that exist within this dbt model.</div>
 </li>
 </ul>
 <a id="DBT_MODEL_COMPILE_COMPLETED_AT">
@@ -2494,7 +2494,7 @@ public interface <span class="typeNameLabel">IDbtModel</span></pre>
 <li class="blockList">
 <h4>getAssignedTerms</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="IGlossaryTerm.html" title="interface in com.atlan.model.assets">IGlossaryTerm</a>&gt;&nbsp;getAssignedTerms()</pre>
-<div class="block">TBC</div>
+<div class="block">Glossary terms that are linked to this asset.</div>
 </li>
 </ul>
 <a id="getCertificateStatus()">
@@ -2734,7 +2734,7 @@ public interface <span class="typeNameLabel">IDbtModel</span></pre>
 <li class="blockList">
 <h4>getDbtMetrics</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="IDbtMetric.html" title="interface in com.atlan.model.assets">IDbtMetric</a>&gt;&nbsp;getDbtMetrics()</pre>
-<div class="block">TBC</div>
+<div class="block">Metrics that exist within this model.</div>
 </li>
 </ul>
 <a id="getDbtModelColumns()">
@@ -2744,7 +2744,7 @@ public interface <span class="typeNameLabel">IDbtModel</span></pre>
 <li class="blockList">
 <h4>getDbtModelColumns</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="IDbtModelColumn.html" title="interface in com.atlan.model.assets">IDbtModelColumn</a>&gt;&nbsp;getDbtModelColumns()</pre>
-<div class="block">TBC</div>
+<div class="block">Columns that exist within this dbt model.</div>
 </li>
 </ul>
 <a id="getDbtModelCompileCompletedAt()">
@@ -2984,7 +2984,7 @@ public interface <span class="typeNameLabel">IDbtModel</span></pre>
 <li class="blockList">
 <h4>getInputToProcesses</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getInputToProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 </li>
 </ul>
 <a id="getIsAIGenerated()">
@@ -3064,7 +3064,7 @@ public interface <span class="typeNameLabel">IDbtModel</span></pre>
 <li class="blockList">
 <h4>getLinks</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="ILink.html" title="interface in com.atlan.model.assets">ILink</a>&gt;&nbsp;getLinks()</pre>
-<div class="block">TBC</div>
+<div class="block">Links that are attached to this asset.</div>
 </li>
 </ul>
 <a id="getMcIncidents()">
@@ -3084,7 +3084,7 @@ public interface <span class="typeNameLabel">IDbtModel</span></pre>
 <li class="blockList">
 <h4>getMcMonitors</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="IMCMonitor.html" title="interface in com.atlan.model.assets">IMCMonitor</a>&gt;&nbsp;getMcMonitors()</pre>
-<div class="block">TBC</div>
+<div class="block">Monitors that observe this asset.</div>
 </li>
 </ul>
 <a id="getMetrics()">
@@ -3124,7 +3124,7 @@ public interface <span class="typeNameLabel">IDbtModel</span></pre>
 <li class="blockList">
 <h4>getOutputFromProcesses</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getOutputFromProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 </li>
 </ul>
 <a id="getOwnerGroups()">
@@ -3184,7 +3184,7 @@ public interface <span class="typeNameLabel">IDbtModel</span></pre>
 <li class="blockList">
 <h4>getReadme</h4>
 <pre class="methodSignature"><a href="IReadme.html" title="interface in com.atlan.model.assets">IReadme</a>&nbsp;getReadme()</pre>
-<div class="block">TBC</div>
+<div class="block">README that is linked to this asset.</div>
 </li>
 </ul>
 <a id="getSampleDataUrl()">

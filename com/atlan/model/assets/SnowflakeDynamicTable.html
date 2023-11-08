@@ -154,7 +154,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 public class <span class="typeNameLabel">SnowflakeDynamicTable</span>
 extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a>
 implements <a href="ISnowflakeDynamicTable.html" title="interface in com.atlan.model.assets">ISnowflakeDynamicTable</a>, <a href="ITable.html" title="interface in com.atlan.model.assets">ITable</a>, <a href="ISQL.html" title="interface in com.atlan.model.assets">ISQL</a>, <a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a>, <a href="IAsset.html" title="interface in com.atlan.model.assets">IAsset</a>, <a href="IReferenceable.html" title="interface in com.atlan.model.assets">IReferenceable</a></pre>
-<div class="block">Atlan Snowflake Dynamic Table Asset</div>
+<div class="block">Instance of a Snowflake dynamic table in Atlan.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../serialized-form.html#com.atlan.model.assets.SnowflakeDynamicTable">Serialized Form</a></dd>
@@ -510,7 +510,7 @@ implements <a href="ISnowflakeDynamicTable.html" title="interface in com.atlan.m
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IColumn.html" title="interface in com.atlan.model.assets">IColumn</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getColumns()">getColumns</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Columns that exist within this Snowflake dynamic table.</div>
 </td>
 </tr>
 <tr id="i23" class="rowColor">
@@ -552,7 +552,7 @@ implements <a href="ISnowflakeDynamicTable.html" title="interface in com.atlan.m
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDefinition()">getDefinition</a></span>()</code></th>
 <td class="colLast">
-<div class="block">SQL statements used to define a Snowflake Dynamic Table</div>
+<div class="block">SQL statements used to define the dynamic table.</div>
 </td>
 </tr>
 <tr id="i29" class="rowColor">
@@ -601,7 +601,7 @@ implements <a href="ISnowflakeDynamicTable.html" title="interface in com.atlan.m
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInputToProcesses()">getInputToProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 </td>
 </tr>
 <tr id="i36" class="altColor">
@@ -650,7 +650,7 @@ implements <a href="ISnowflakeDynamicTable.html" title="interface in com.atlan.m
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOutputFromProcesses()">getOutputFromProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 </td>
 </tr>
 <tr id="i43" class="rowColor">
@@ -671,7 +671,7 @@ implements <a href="ISnowflakeDynamicTable.html" title="interface in com.atlan.m
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ITablePartition.html" title="interface in com.atlan.model.assets">ITablePartition</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPartitions()">getPartitions</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Partitions that exist within this table.</div>
 </td>
 </tr>
 <tr id="i46" class="altColor">
@@ -685,7 +685,7 @@ implements <a href="ISnowflakeDynamicTable.html" title="interface in com.atlan.m
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IAtlanQuery.html" title="interface in com.atlan.model.assets">IAtlanQuery</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getQueries()">getQueries</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Queries that access this table.</div>
 </td>
 </tr>
 <tr id="i48" class="altColor">
@@ -734,7 +734,7 @@ implements <a href="ISnowflakeDynamicTable.html" title="interface in com.atlan.m
 <td class="colFirst"><code><a href="ISchema.html" title="interface in com.atlan.model.assets">ISchema</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSchema()">getSchema</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Schema in which this Snowflake dynamic table exists.</div>
 </td>
 </tr>
 <tr id="i55" class="rowColor">
@@ -2486,7 +2486,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getColumns</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="IColumn.html" title="interface in com.atlan.model.assets">IColumn</a>&gt;&nbsp;getColumns()</pre>
-<div class="block">TBC</div>
+<div class="block">Columns that exist within this Snowflake dynamic table.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISnowflakeDynamicTable.html#getColumns()">getColumns</a></code>&nbsp;in interface&nbsp;<code><a href="ISnowflakeDynamicTable.html" title="interface in com.atlan.model.assets">ISnowflakeDynamicTable</a></code></dd>
@@ -2592,7 +2592,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getDefinition</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getDefinition()</pre>
-<div class="block">SQL statements used to define a Snowflake Dynamic Table</div>
+<div class="block">SQL statements used to define the dynamic table.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISnowflakeDynamicTable.html#getDefinition()">getDefinition</a></code>&nbsp;in interface&nbsp;<code><a href="ISnowflakeDynamicTable.html" title="interface in com.atlan.model.assets">ISnowflakeDynamicTable</a></code></dd>
@@ -2706,7 +2706,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getInputToProcesses</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getInputToProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ICatalog.html#getInputToProcesses()">getInputToProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a></code></dd>
@@ -2830,7 +2830,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getOutputFromProcesses</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getOutputFromProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ICatalog.html#getOutputFromProcesses()">getOutputFromProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a></code></dd>
@@ -2898,7 +2898,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getPartitions</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ITablePartition.html" title="interface in com.atlan.model.assets">ITablePartition</a>&gt;&nbsp;getPartitions()</pre>
-<div class="block">TBC</div>
+<div class="block">Partitions that exist within this table.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISnowflakeDynamicTable.html#getPartitions()">getPartitions</a></code>&nbsp;in interface&nbsp;<code><a href="ISnowflakeDynamicTable.html" title="interface in com.atlan.model.assets">ISnowflakeDynamicTable</a></code></dd>
@@ -2914,7 +2914,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getQueries</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="IAtlanQuery.html" title="interface in com.atlan.model.assets">IAtlanQuery</a>&gt;&nbsp;getQueries()</pre>
-<div class="block">TBC</div>
+<div class="block">Queries that access this table.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISnowflakeDynamicTable.html#getQueries()">getQueries</a></code>&nbsp;in interface&nbsp;<code><a href="ISnowflakeDynamicTable.html" title="interface in com.atlan.model.assets">ISnowflakeDynamicTable</a></code></dd>
@@ -3034,7 +3034,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getSchema</h4>
 <pre class="methodSignature">public&nbsp;<a href="ISchema.html" title="interface in com.atlan.model.assets">ISchema</a>&nbsp;getSchema()</pre>
-<div class="block">TBC</div>
+<div class="block">Schema in which this Snowflake dynamic table exists.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISnowflakeDynamicTable.html#getSchema()">getSchema</a></code>&nbsp;in interface&nbsp;<code><a href="ISnowflakeDynamicTable.html" title="interface in com.atlan.model.assets">ISnowflakeDynamicTable</a></code></dd>

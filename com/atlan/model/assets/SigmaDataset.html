@@ -496,7 +496,7 @@ implements <a href="ISigmaDataset.html" title="interface in com.atlan.model.asse
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInputToProcesses()">getInputToProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 </td>
 </tr>
 <tr id="i22" class="altColor">
@@ -510,7 +510,7 @@ implements <a href="ISigmaDataset.html" title="interface in com.atlan.model.asse
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOutputFromProcesses()">getOutputFromProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 </td>
 </tr>
 <tr id="i24" class="altColor">
@@ -531,14 +531,14 @@ implements <a href="ISigmaDataset.html" title="interface in com.atlan.model.asse
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSigmaDatasetColumnCount()">getSigmaDatasetColumnCount</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Number of columns that exist within this dataset.</div>
+<div class="block">Number of columns in this dataset.</div>
 </td>
 </tr>
 <tr id="i27" class="rowColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ISigmaDatasetColumn.html" title="interface in com.atlan.model.assets">ISigmaDatasetColumn</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSigmaDatasetColumns()">getSigmaDatasetColumns</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Columns that exist within this dataset.</div>
+<div class="block">Dataset columns that exist in this dataset.</div>
 </td>
 </tr>
 <tr id="i28" class="altColor">
@@ -2243,7 +2243,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getInputToProcesses</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getInputToProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IBI.html#getInputToProcesses()">getInputToProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="IBI.html" title="interface in com.atlan.model.assets">IBI</a></code></dd>
@@ -2283,7 +2283,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getOutputFromProcesses</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getOutputFromProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IBI.html#getOutputFromProcesses()">getOutputFromProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="IBI.html" title="interface in com.atlan.model.assets">IBI</a></code></dd>
@@ -2335,7 +2335,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getSigmaDatasetColumnCount</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Long&nbsp;getSigmaDatasetColumnCount()</pre>
-<div class="block">Number of columns that exist within this dataset.</div>
+<div class="block">Number of columns in this dataset.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISigmaDataset.html#getSigmaDatasetColumnCount()">getSigmaDatasetColumnCount</a></code>&nbsp;in interface&nbsp;<code><a href="ISigmaDataset.html" title="interface in com.atlan.model.assets">ISigmaDataset</a></code></dd>
@@ -2349,7 +2349,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getSigmaDatasetColumns</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ISigmaDatasetColumn.html" title="interface in com.atlan.model.assets">ISigmaDatasetColumn</a>&gt;&nbsp;getSigmaDatasetColumns()</pre>
-<div class="block">Columns that exist within this dataset.</div>
+<div class="block">Dataset columns that exist in this dataset.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISigmaDataset.html#getSigmaDatasetColumns()">getSigmaDatasetColumns</a></code>&nbsp;in interface&nbsp;<code><a href="ISigmaDataset.html" title="interface in com.atlan.model.assets">ISigmaDataset</a></code></dd>

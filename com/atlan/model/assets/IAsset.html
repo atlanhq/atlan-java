@@ -154,21 +154,21 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ADMIN_GROUPS">ADMIN_GROUPS</a></span></code></th>
 <td class="colLast">
-<div class="block">List of groups who administer the asset.</div>
+<div class="block">List of groups who administer this asset.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ADMIN_ROLES">ADMIN_ROLES</a></span></code></th>
 <td class="colLast">
-<div class="block">List of roles who administer the asset.</div>
+<div class="block">List of roles who administer this asset.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ADMIN_USERS">ADMIN_USERS</a></span></code></th>
 <td class="colLast">
-<div class="block">List of users who administer the asset.</div>
+<div class="block">List of users who administer this asset.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -189,7 +189,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ANNOUNCEMENT_TYPE">ANNOUNCEMENT_TYPE</a></span></code></th>
 <td class="colLast">
-<div class="block">Type of announcement on the asset.</div>
+<div class="block">Type of announcement on this asset.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -210,350 +210,350 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <td class="colFirst"><code>static <a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ASSET_DBT_ACCOUNT_NAME">ASSET_DBT_ACCOUNT_NAME</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Name of the account in which this asset exists in dbt.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ASSET_DBT_ALIAS">ASSET_DBT_ALIAS</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Alias of this asset in dbt.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ASSET_DBT_ENVIRONMENT_DBT_VERSION">ASSET_DBT_ENVIRONMENT_DBT_VERSION</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Version of the environment in which this asset is materialized in dbt.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ASSET_DBT_ENVIRONMENT_NAME">ASSET_DBT_ENVIRONMENT_NAME</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Name of the environment in which this asset is materialized in dbt.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ASSET_DBT_JOB_LAST_RUN">ASSET_DBT_JOB_LAST_RUN</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Time (epoch) at which the job that materialized this asset in dbt last ran, in milliseconds.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ASSET_DBT_JOB_LAST_RUN_ARTIFACT_S3PATH">ASSET_DBT_JOB_LAST_RUN_ARTIFACT_S3PATH</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Path in S3 to the artifacts saved from the last run of the job that materialized this asset in dbt.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/BooleanField.html" title="class in com.atlan.model.fields">BooleanField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ASSET_DBT_JOB_LAST_RUN_ARTIFACTS_SAVED">ASSET_DBT_JOB_LAST_RUN_ARTIFACTS_SAVED</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Whether artifacts were saved from the last run of the job that materialized this asset in dbt (true) or not (false).</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ASSET_DBT_JOB_LAST_RUN_CREATED_AT">ASSET_DBT_JOB_LAST_RUN_CREATED_AT</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Time (epoch) at which the job that materialized this asset in dbt was last created, in milliseconds.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ASSET_DBT_JOB_LAST_RUN_DEQUED_AT">ASSET_DBT_JOB_LAST_RUN_DEQUED_AT</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Time (epoch) at which the job that materialized this asset in dbt was dequeued, in milliseconds.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ASSET_DBT_JOB_LAST_RUN_EXECUTED_BY_THREAD_ID">ASSET_DBT_JOB_LAST_RUN_EXECUTED_BY_THREAD_ID</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Thread ID of the user who executed the last run of the job that materialized this asset in dbt.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ASSET_DBT_JOB_LAST_RUN_GIT_BRANCH">ASSET_DBT_JOB_LAST_RUN_GIT_BRANCH</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Branch in git from which the last run of the job that materialized this asset in dbt ran.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ASSET_DBT_JOB_LAST_RUN_GIT_SHA">ASSET_DBT_JOB_LAST_RUN_GIT_SHA</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">SHA hash in git for the last run of the job that materialized this asset in dbt.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/BooleanField.html" title="class in com.atlan.model.fields">BooleanField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ASSET_DBT_JOB_LAST_RUN_HAS_DOCS_GENERATED">ASSET_DBT_JOB_LAST_RUN_HAS_DOCS_GENERATED</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Whether docs were generated from the last run of the job that materialized this asset in dbt (true) or not (false).</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/BooleanField.html" title="class in com.atlan.model.fields">BooleanField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ASSET_DBT_JOB_LAST_RUN_HAS_SOURCES_GENERATED">ASSET_DBT_JOB_LAST_RUN_HAS_SOURCES_GENERATED</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Whether sources were generated from the last run of the job that materialized this asset in dbt (true) or not (false).</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/BooleanField.html" title="class in com.atlan.model.fields">BooleanField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ASSET_DBT_JOB_LAST_RUN_NOTIFICATIONS_SENT">ASSET_DBT_JOB_LAST_RUN_NOTIFICATIONS_SENT</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Whether notifications were sent from the last run of the job that materialized this asset in dbt (true) or not (false).</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ASSET_DBT_JOB_LAST_RUN_OWNER_THREAD_ID">ASSET_DBT_JOB_LAST_RUN_OWNER_THREAD_ID</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Thread ID of the owner of the last run of the job that materialized this asset in dbt.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ASSET_DBT_JOB_LAST_RUN_QUEUED_DURATION">ASSET_DBT_JOB_LAST_RUN_QUEUED_DURATION</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Total duration the job that materialized this asset in dbt spent being queued.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ASSET_DBT_JOB_LAST_RUN_QUEUED_DURATION_HUMANIZED">ASSET_DBT_JOB_LAST_RUN_QUEUED_DURATION_HUMANIZED</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Human-readable total duration of the last run of the job that materialized this asset in dbt spend being queued.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ASSET_DBT_JOB_LAST_RUN_RUN_DURATION">ASSET_DBT_JOB_LAST_RUN_RUN_DURATION</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Run duration of the last run of the job that materialized this asset in dbt.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ASSET_DBT_JOB_LAST_RUN_RUN_DURATION_HUMANIZED">ASSET_DBT_JOB_LAST_RUN_RUN_DURATION_HUMANIZED</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Human-readable run duration of the last run of the job that materialized this asset in dbt.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ASSET_DBT_JOB_LAST_RUN_STARTED_AT">ASSET_DBT_JOB_LAST_RUN_STARTED_AT</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Time (epoch) at which the job that materialized this asset in dbt was started running, in milliseconds.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ASSET_DBT_JOB_LAST_RUN_STATUS_MESSAGE">ASSET_DBT_JOB_LAST_RUN_STATUS_MESSAGE</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Status message of the last run of the job that materialized this asset in dbt.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ASSET_DBT_JOB_LAST_RUN_TOTAL_DURATION">ASSET_DBT_JOB_LAST_RUN_TOTAL_DURATION</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Total duration of the last run of the job that materialized this asset in dbt.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ASSET_DBT_JOB_LAST_RUN_TOTAL_DURATION_HUMANIZED">ASSET_DBT_JOB_LAST_RUN_TOTAL_DURATION_HUMANIZED</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Human-readable total duration of the last run of the job that materialized this asset in dbt.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ASSET_DBT_JOB_LAST_RUN_UPDATED_AT">ASSET_DBT_JOB_LAST_RUN_UPDATED_AT</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Time (epoch) at which the job that materialized this asset in dbt was last updated, in milliseconds.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ASSET_DBT_JOB_LAST_RUN_URL">ASSET_DBT_JOB_LAST_RUN_URL</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">URL of the last run of the job that materialized this asset in dbt.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ASSET_DBT_JOB_NAME">ASSET_DBT_JOB_NAME</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Name of the job that materialized this asset in dbt.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ASSET_DBT_JOB_NEXT_RUN">ASSET_DBT_JOB_NEXT_RUN</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Time (epoch) when the next run of the job that materializes this asset in dbt is scheduled.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ASSET_DBT_JOB_NEXT_RUN_HUMANIZED">ASSET_DBT_JOB_NEXT_RUN_HUMANIZED</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Human-readable time when the next run of the job that materializes this asset in dbt is scheduled.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ASSET_DBT_JOB_SCHEDULE">ASSET_DBT_JOB_SCHEDULE</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Schedule of the job that materialized this asset in dbt.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/TextField.html" title="class in com.atlan.model.fields">TextField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ASSET_DBT_JOB_SCHEDULE_CRON_HUMANIZED">ASSET_DBT_JOB_SCHEDULE_CRON_HUMANIZED</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Human-readable cron schedule of the job that materialized this asset in dbt.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ASSET_DBT_JOB_STATUS">ASSET_DBT_JOB_STATUS</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Status of the job that materialized this asset in dbt.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ASSET_DBT_META">ASSET_DBT_META</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Metadata for this asset in dbt, specifically everything under the 'meta' key in the dbt object.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ASSET_DBT_PACKAGE_NAME">ASSET_DBT_PACKAGE_NAME</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Name of the package in which this asset exists in dbt.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ASSET_DBT_PROJECT_NAME">ASSET_DBT_PROJECT_NAME</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Name of the project in which this asset exists in dbt.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ASSET_DBT_SEMANTIC_LAYER_PROXY_URL">ASSET_DBT_SEMANTIC_LAYER_PROXY_URL</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">URL of the semantic layer proxy for this asset in dbt.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ASSET_DBT_SOURCE_FRESHNESS_CRITERIA">ASSET_DBT_SOURCE_FRESHNESS_CRITERIA</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Freshness criteria for the source of this asset in dbt.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ASSET_DBT_TAGS">ASSET_DBT_TAGS</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">List of tags attached to this asset in dbt.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ASSET_DBT_TEST_STATUS">ASSET_DBT_TEST_STATUS</a></span></code></th>
 <td class="colLast">
-<div class="block">All associated dbt test statuses</div>
+<div class="block">All associated dbt test statuses.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ASSET_DBT_UNIQUE_ID">ASSET_DBT_UNIQUE_ID</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Unique identifier of this asset in dbt.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ASSET_ICON">ASSET_ICON</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Name of the icon to use for this asset.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ASSET_MC_INCIDENT_NAMES">ASSET_MC_INCIDENT_NAMES</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">List of Monte Carlo incident names attached to this asset.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ASSET_MC_INCIDENT_QUALIFIED_NAMES">ASSET_MC_INCIDENT_QUALIFIED_NAMES</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">List of unique Monte Carlo incident names attached to this asset.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ASSET_MC_INCIDENT_SEVERITIES">ASSET_MC_INCIDENT_SEVERITIES</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">List of Monte Carlo incident severities associated with this asset.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ASSET_MC_INCIDENT_STATES">ASSET_MC_INCIDENT_STATES</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">List of Monte Carlo incident states associated with this asset.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ASSET_MC_INCIDENT_SUB_TYPES">ASSET_MC_INCIDENT_SUB_TYPES</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">List of Monte Carlo incident sub-types associated with this asset.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ASSET_MC_INCIDENT_TYPES">ASSET_MC_INCIDENT_TYPES</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">List of Monte Carlo incident types associated with this asset.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ASSET_MC_LAST_SYNC_RUN_AT">ASSET_MC_LAST_SYNC_RUN_AT</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Time (epoch) at which this asset was last synced from Monte Carlo.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ASSET_MC_MONITOR_NAMES">ASSET_MC_MONITOR_NAMES</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">List of Monte Carlo monitor names attached to this asset.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ASSET_MC_MONITOR_QUALIFIED_NAMES">ASSET_MC_MONITOR_QUALIFIED_NAMES</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">List of unique Monte Carlo monitor names attached to this asset.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -581,21 +581,21 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <td class="colFirst"><code>static <a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ASSET_SODA_CHECK_COUNT">ASSET_SODA_CHECK_COUNT</a></span></code></th>
 <td class="colLast">
-<div class="block">Soda check count</div>
+<div class="block">Number of checks done via Soda.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ASSET_SODA_CHECK_STATUSES">ASSET_SODA_CHECK_STATUSES</a></span></code></th>
 <td class="colLast">
-<div class="block">All associated soda check statuses</div>
+<div class="block">All associated Soda check statuses.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ASSET_SODA_DQ_STATUS">ASSET_SODA_DQ_STATUS</a></span></code></th>
 <td class="colLast">
-<div class="block">Soda DQ Status</div>
+<div class="block">Status of data quality from Soda.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -623,21 +623,21 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <td class="colFirst"><code>static <a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ASSET_TAGS">ASSET_TAGS</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">List of tags attached to this asset.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#CERTIFICATE_STATUS">CERTIFICATE_STATUS</a></span></code></th>
 <td class="colLast">
-<div class="block">Status of the asset's certification.</div>
+<div class="block">Status of this asset's certification.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#CERTIFICATE_STATUS_MESSAGE">CERTIFICATE_STATUS_MESSAGE</a></span></code></th>
 <td class="colLast">
-<div class="block">Human-readable descriptive message that can optionally be submitted when the certificateStatus is changed.</div>
+<div class="block">Human-readable descriptive message used to provide further detail to certificateStatus.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -651,14 +651,14 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#CERTIFICATE_UPDATED_BY">CERTIFICATE_UPDATED_BY</a></span></code></th>
 <td class="colLast">
-<div class="block">Name of the user who last updated the certification of the asset.</div>
+<div class="block">Name of the user who last updated the certification of this asset.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#CONNECTION_NAME">CONNECTION_NAME</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Simple name of the connection through which this asset is accessible.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -679,21 +679,21 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <td class="colFirst"><code>static <a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#DBT_QUALIFIED_NAME">DBT_QUALIFIED_NAME</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Unique name of this asset in dbt.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#DESCRIPTION">DESCRIPTION</a></span></code></th>
 <td class="colLast">
-<div class="block">Description of the asset, as crawled from a source.</div>
+<div class="block">Description of this asset, for example as crawled from a source.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#DISPLAY_NAME">DISPLAY_NAME</a></span></code></th>
 <td class="colLast">
-<div class="block">Name used for display purposes (in user interfaces).</div>
+<div class="block">Human-readable name of this asset used for display purposes (in user interface).</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -707,7 +707,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <td class="colFirst"><code>static <a href="../fields/BooleanField.html" title="class in com.atlan.model.fields">BooleanField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#HAS_LINEAGE">HAS_LINEAGE</a></span></code></th>
 <td class="colLast">
-<div class="block">Indicates whether this asset has lineage (true) or not.</div>
+<div class="block">Whether this asset has lineage (true) or not (false).</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -721,21 +721,21 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <td class="colFirst"><code>static <a href="../fields/BooleanField.html" title="class in com.atlan.model.fields">BooleanField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#IS_DISCOVERABLE">IS_DISCOVERABLE</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Whether this asset is discoverable through the UI (true) or not (false).</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/BooleanField.html" title="class in com.atlan.model.fields">BooleanField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#IS_EDITABLE">IS_EDITABLE</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Whether this asset can be edited in the UI (true) or not (false).</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#LAST_ROW_CHANGED_AT">LAST_ROW_CHANGED_AT</a></span></code></th>
 <td class="colLast">
-<div class="block">Timestamp of last operation that inserted, updated, or deleted rows.</div>
+<div class="block">Time (epoch) of the last operation that inserted, updated, or deleted rows, in milliseconds.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -749,7 +749,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <td class="colFirst"><code>static <a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#LAST_SYNC_RUN_AT">LAST_SYNC_RUN_AT</a></span></code></th>
 <td class="colLast">
-<div class="block">Time (epoch) at which the asset was last crawled, in milliseconds.</div>
+<div class="block">Time (epoch) at which this asset was last crawled, in milliseconds.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -763,7 +763,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <td class="colFirst"><code>static <a href="../fields/SearchableRelationship.html" title="class in com.atlan.model.fields">SearchableRelationship</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#LINKS">LINKS</a></span></code></th>
 <td class="colLast">
-<div class="block">Resources that are linked to this asset.</div>
+<div class="block">Links that are attached to this asset.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -777,7 +777,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <td class="colFirst"><code>static <a href="../fields/RelationField.html" title="class in com.atlan.model.fields">RelationField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#MC_MONITORS">MC_MONITORS</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Monitors that observe this asset.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -791,28 +791,28 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <td class="colFirst"><code>static <a href="../fields/KeywordTextStemmedField.html" title="class in com.atlan.model.fields">KeywordTextStemmedField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#NAME">NAME</a></span></code></th>
 <td class="colLast">
-<div class="block">Human-readable name of the asset.</div>
+<div class="block">Name of this asset.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#OWNER_GROUPS">OWNER_GROUPS</a></span></code></th>
 <td class="colLast">
-<div class="block">List of groups who own the asset.</div>
+<div class="block">List of groups who own this asset.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#OWNER_USERS">OWNER_USERS</a></span></code></th>
 <td class="colLast">
-<div class="block">List of users who own the asset.</div>
+<div class="block">List of users who own this asset.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/NumericRankField.html" title="class in com.atlan.model.fields">NumericRankField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#POPULARITY_SCORE">POPULARITY_SCORE</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Popularity score for this asset.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -833,7 +833,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <td class="colFirst"><code>static <a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SAMPLE_DATA_URL">SAMPLE_DATA_URL</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">URL for sample data for this asset.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -861,14 +861,14 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <td class="colFirst"><code>static <a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SOURCE_CREATED_AT">SOURCE_CREATED_AT</a></span></code></th>
 <td class="colLast">
-<div class="block">Time (epoch) at which the asset was created in the source system, in milliseconds.</div>
+<div class="block">Time (epoch) at which this asset was created in the source system, in milliseconds.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SOURCE_CREATED_BY">SOURCE_CREATED_BY</a></span></code></th>
 <td class="colLast">
-<div class="block">Who created the asset, in the source system.</div>
+<div class="block">Name of the user who created this asset, in the source system.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -889,7 +889,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SOURCE_OWNERS">SOURCE_OWNERS</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">List of owners of this asset, in the source system.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -938,14 +938,14 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SOURCE_READ_RECENT_USER_RECORDS">SOURCE_READ_RECENT_USER_RECORDS</a></span></code></th>
 <td class="colLast">
-<div class="block">List of usernames with extra insights for the most recent users who read the asset.</div>
+<div class="block">List of usernames with extra insights for the most recent users who read this asset.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SOURCE_READ_RECENT_USERS">SOURCE_READ_RECENT_USERS</a></span></code></th>
 <td class="colLast">
-<div class="block">List of usernames of the most recent users who read the asset.</div>
+<div class="block">List of usernames of the most recent users who read this asset.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -959,14 +959,14 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SOURCE_READ_TOP_USER_RECORDS">SOURCE_READ_TOP_USER_RECORDS</a></span></code></th>
 <td class="colLast">
-<div class="block">List of usernames with extra insights for the users who read the asset the most.</div>
+<div class="block">List of usernames with extra insights for the users who read this asset the most.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SOURCE_READ_TOP_USERS">SOURCE_READ_TOP_USERS</a></span></code></th>
 <td class="colLast">
-<div class="block">List of usernames of the users who read the asset the most.</div>
+<div class="block">List of usernames of the users who read this asset the most.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -987,21 +987,21 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <td class="colFirst"><code>static <a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SOURCE_UPDATED_AT">SOURCE_UPDATED_AT</a></span></code></th>
 <td class="colLast">
-<div class="block">Time (epoch) at which the asset was last updated in the source system, in milliseconds.</div>
+<div class="block">Time (epoch) at which this asset was last updated in the source system, in milliseconds.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SOURCE_UPDATED_BY">SOURCE_UPDATED_BY</a></span></code></th>
 <td class="colLast">
-<div class="block">Who last updated the asset in the source system.</div>
+<div class="block">Name of the user who last updated this asset, in the source system.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SOURCE_URL">SOURCE_URL</a></span></code></th>
 <td class="colLast">
-<div class="block">URL to the resource within the source application.</div>
+<div class="block">URL to the resource within the source application, used to create a button to view this asset in the source application.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -1015,56 +1015,56 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <td class="colFirst"><code>static <a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#STARRED_COUNT">STARRED_COUNT</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Number of users who have starred this asset.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#STARRED_DETAILS">STARRED_DETAILS</a></span></code></th>
 <td class="colLast">
-<div class="block">List of usernames with extra information of the users who have starred an asset</div>
+<div class="block">List of usernames with extra information of the users who have starred an asset.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SUB_TYPE">SUB_TYPE</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Subtype of this asset.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#TENANT_ID">TENANT_ID</a></span></code></th>
 <td class="colLast">
-<div class="block">Name of the Atlan workspace in which the asset exists.</div>
+<div class="block">Name of the Atlan workspace in which this asset exists.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#USER_DESCRIPTION">USER_DESCRIPTION</a></span></code></th>
 <td class="colLast">
-<div class="block">Description of the asset, as provided by a user.</div>
+<div class="block">Description of this asset, as provided by a user.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/NumericRankField.html" title="class in com.atlan.model.fields">NumericRankField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#VIEW_SCORE">VIEW_SCORE</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">View score for this asset.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#VIEWER_GROUPS">VIEWER_GROUPS</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">List of groups who can view assets contained in a collection.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#VIEWER_USERS">VIEWER_USERS</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">List of users who can view assets contained in a collection.</div>
 </td>
 </tr>
 </table>
@@ -1089,21 +1089,21 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAdminGroups()">getAdminGroups</a></span>()</code></th>
 <td class="colLast">
-<div class="block">List of groups who administer the asset.</div>
+<div class="block">List of groups who administer this asset.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAdminRoles()">getAdminRoles</a></span>()</code></th>
 <td class="colLast">
-<div class="block">List of roles who administer the asset.</div>
+<div class="block">List of roles who administer this asset.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAdminUsers()">getAdminUsers</a></span>()</code></th>
 <td class="colLast">
-<div class="block">List of users who administer the asset.</div>
+<div class="block">List of users who administer this asset.</div>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
@@ -1124,7 +1124,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <td class="colFirst"><code><a href="../enums/AtlanAnnouncementType.html" title="enum in com.atlan.model.enums">AtlanAnnouncementType</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAnnouncementType()">getAnnouncementType</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Type of announcement on the asset.</div>
+<div class="block">Type of announcement on this asset.</div>
 </td>
 </tr>
 <tr id="i6" class="altColor">
@@ -1145,350 +1145,350 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssetDbtAccountName()">getAssetDbtAccountName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Name of the account in which this asset exists in dbt.</div>
 </td>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssetDbtAlias()">getAssetDbtAlias</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Alias of this asset in dbt.</div>
 </td>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssetDbtEnvironmentDbtVersion()">getAssetDbtEnvironmentDbtVersion</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Version of the environment in which this asset is materialized in dbt.</div>
 </td>
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssetDbtEnvironmentName()">getAssetDbtEnvironmentName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Name of the environment in which this asset is materialized in dbt.</div>
 </td>
 </tr>
 <tr id="i12" class="altColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssetDbtJobLastRun()">getAssetDbtJobLastRun</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Time (epoch) at which the job that materialized this asset in dbt last ran, in milliseconds.</div>
 </td>
 </tr>
 <tr id="i13" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssetDbtJobLastRunArtifactS3Path()">getAssetDbtJobLastRunArtifactS3Path</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Path in S3 to the artifacts saved from the last run of the job that materialized this asset in dbt.</div>
 </td>
 </tr>
 <tr id="i14" class="altColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssetDbtJobLastRunArtifactsSaved()">getAssetDbtJobLastRunArtifactsSaved</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Whether artifacts were saved from the last run of the job that materialized this asset in dbt (true) or not (false).</div>
 </td>
 </tr>
 <tr id="i15" class="rowColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssetDbtJobLastRunCreatedAt()">getAssetDbtJobLastRunCreatedAt</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Time (epoch) at which the job that materialized this asset in dbt was last created, in milliseconds.</div>
 </td>
 </tr>
 <tr id="i16" class="altColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssetDbtJobLastRunDequedAt()">getAssetDbtJobLastRunDequedAt</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Time (epoch) at which the job that materialized this asset in dbt was dequeued, in milliseconds.</div>
 </td>
 </tr>
 <tr id="i17" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssetDbtJobLastRunExecutedByThreadId()">getAssetDbtJobLastRunExecutedByThreadId</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Thread ID of the user who executed the last run of the job that materialized this asset in dbt.</div>
 </td>
 </tr>
 <tr id="i18" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssetDbtJobLastRunGitBranch()">getAssetDbtJobLastRunGitBranch</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Branch in git from which the last run of the job that materialized this asset in dbt ran.</div>
 </td>
 </tr>
 <tr id="i19" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssetDbtJobLastRunGitSha()">getAssetDbtJobLastRunGitSha</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">SHA hash in git for the last run of the job that materialized this asset in dbt.</div>
 </td>
 </tr>
 <tr id="i20" class="altColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssetDbtJobLastRunHasDocsGenerated()">getAssetDbtJobLastRunHasDocsGenerated</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Whether docs were generated from the last run of the job that materialized this asset in dbt (true) or not (false).</div>
 </td>
 </tr>
 <tr id="i21" class="rowColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssetDbtJobLastRunHasSourcesGenerated()">getAssetDbtJobLastRunHasSourcesGenerated</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Whether sources were generated from the last run of the job that materialized this asset in dbt (true) or not (false).</div>
 </td>
 </tr>
 <tr id="i22" class="altColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssetDbtJobLastRunNotificationsSent()">getAssetDbtJobLastRunNotificationsSent</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Whether notifications were sent from the last run of the job that materialized this asset in dbt (true) or not (false).</div>
 </td>
 </tr>
 <tr id="i23" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssetDbtJobLastRunOwnerThreadId()">getAssetDbtJobLastRunOwnerThreadId</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Thread ID of the owner of the last run of the job that materialized this asset in dbt.</div>
 </td>
 </tr>
 <tr id="i24" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssetDbtJobLastRunQueuedDuration()">getAssetDbtJobLastRunQueuedDuration</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Total duration the job that materialized this asset in dbt spent being queued.</div>
 </td>
 </tr>
 <tr id="i25" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssetDbtJobLastRunQueuedDurationHumanized()">getAssetDbtJobLastRunQueuedDurationHumanized</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Human-readable total duration of the last run of the job that materialized this asset in dbt spend being queued.</div>
 </td>
 </tr>
 <tr id="i26" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssetDbtJobLastRunRunDuration()">getAssetDbtJobLastRunRunDuration</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Run duration of the last run of the job that materialized this asset in dbt.</div>
 </td>
 </tr>
 <tr id="i27" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssetDbtJobLastRunRunDurationHumanized()">getAssetDbtJobLastRunRunDurationHumanized</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Human-readable run duration of the last run of the job that materialized this asset in dbt.</div>
 </td>
 </tr>
 <tr id="i28" class="altColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssetDbtJobLastRunStartedAt()">getAssetDbtJobLastRunStartedAt</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Time (epoch) at which the job that materialized this asset in dbt was started running, in milliseconds.</div>
 </td>
 </tr>
 <tr id="i29" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssetDbtJobLastRunStatusMessage()">getAssetDbtJobLastRunStatusMessage</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Status message of the last run of the job that materialized this asset in dbt.</div>
 </td>
 </tr>
 <tr id="i30" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssetDbtJobLastRunTotalDuration()">getAssetDbtJobLastRunTotalDuration</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Total duration of the last run of the job that materialized this asset in dbt.</div>
 </td>
 </tr>
 <tr id="i31" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssetDbtJobLastRunTotalDurationHumanized()">getAssetDbtJobLastRunTotalDurationHumanized</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Human-readable total duration of the last run of the job that materialized this asset in dbt.</div>
 </td>
 </tr>
 <tr id="i32" class="altColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssetDbtJobLastRunUpdatedAt()">getAssetDbtJobLastRunUpdatedAt</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Time (epoch) at which the job that materialized this asset in dbt was last updated, in milliseconds.</div>
 </td>
 </tr>
 <tr id="i33" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssetDbtJobLastRunUrl()">getAssetDbtJobLastRunUrl</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">URL of the last run of the job that materialized this asset in dbt.</div>
 </td>
 </tr>
 <tr id="i34" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssetDbtJobName()">getAssetDbtJobName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Name of the job that materialized this asset in dbt.</div>
 </td>
 </tr>
 <tr id="i35" class="rowColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssetDbtJobNextRun()">getAssetDbtJobNextRun</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Time (epoch) when the next run of the job that materializes this asset in dbt is scheduled.</div>
 </td>
 </tr>
 <tr id="i36" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssetDbtJobNextRunHumanized()">getAssetDbtJobNextRunHumanized</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Human-readable time when the next run of the job that materializes this asset in dbt is scheduled.</div>
 </td>
 </tr>
 <tr id="i37" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssetDbtJobSchedule()">getAssetDbtJobSchedule</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Schedule of the job that materialized this asset in dbt.</div>
 </td>
 </tr>
 <tr id="i38" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssetDbtJobScheduleCronHumanized()">getAssetDbtJobScheduleCronHumanized</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Human-readable cron schedule of the job that materialized this asset in dbt.</div>
 </td>
 </tr>
 <tr id="i39" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssetDbtJobStatus()">getAssetDbtJobStatus</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Status of the job that materialized this asset in dbt.</div>
 </td>
 </tr>
 <tr id="i40" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssetDbtMeta()">getAssetDbtMeta</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Metadata for this asset in dbt, specifically everything under the 'meta' key in the dbt object.</div>
 </td>
 </tr>
 <tr id="i41" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssetDbtPackageName()">getAssetDbtPackageName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Name of the package in which this asset exists in dbt.</div>
 </td>
 </tr>
 <tr id="i42" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssetDbtProjectName()">getAssetDbtProjectName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Name of the project in which this asset exists in dbt.</div>
 </td>
 </tr>
 <tr id="i43" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssetDbtSemanticLayerProxyUrl()">getAssetDbtSemanticLayerProxyUrl</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">URL of the semantic layer proxy for this asset in dbt.</div>
 </td>
 </tr>
 <tr id="i44" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssetDbtSourceFreshnessCriteria()">getAssetDbtSourceFreshnessCriteria</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Freshness criteria for the source of this asset in dbt.</div>
 </td>
 </tr>
 <tr id="i45" class="rowColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssetDbtTags()">getAssetDbtTags</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">List of tags attached to this asset in dbt.</div>
 </td>
 </tr>
 <tr id="i46" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssetDbtTestStatus()">getAssetDbtTestStatus</a></span>()</code></th>
 <td class="colLast">
-<div class="block">All associated dbt test statuses</div>
+<div class="block">All associated dbt test statuses.</div>
 </td>
 </tr>
 <tr id="i47" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssetDbtUniqueId()">getAssetDbtUniqueId</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Unique identifier of this asset in dbt.</div>
 </td>
 </tr>
 <tr id="i48" class="altColor">
 <td class="colFirst"><code><a href="../enums/AtlanIcon.html" title="enum in com.atlan.model.enums">AtlanIcon</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssetIcon()">getAssetIcon</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Name of the icon to use for this asset.</div>
 </td>
 </tr>
 <tr id="i49" class="rowColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssetMcIncidentNames()">getAssetMcIncidentNames</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">List of Monte Carlo incident names attached to this asset.</div>
 </td>
 </tr>
 <tr id="i50" class="altColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssetMcIncidentQualifiedNames()">getAssetMcIncidentQualifiedNames</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">List of unique Monte Carlo incident names attached to this asset.</div>
 </td>
 </tr>
 <tr id="i51" class="rowColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssetMcIncidentSeverities()">getAssetMcIncidentSeverities</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">List of Monte Carlo incident severities associated with this asset.</div>
 </td>
 </tr>
 <tr id="i52" class="altColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssetMcIncidentStates()">getAssetMcIncidentStates</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">List of Monte Carlo incident states associated with this asset.</div>
 </td>
 </tr>
 <tr id="i53" class="rowColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssetMcIncidentSubTypes()">getAssetMcIncidentSubTypes</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">List of Monte Carlo incident sub-types associated with this asset.</div>
 </td>
 </tr>
 <tr id="i54" class="altColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssetMcIncidentTypes()">getAssetMcIncidentTypes</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">List of Monte Carlo incident types associated with this asset.</div>
 </td>
 </tr>
 <tr id="i55" class="rowColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssetMcLastSyncRunAt()">getAssetMcLastSyncRunAt</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Time (epoch) at which this asset was last synced from Monte Carlo.</div>
 </td>
 </tr>
 <tr id="i56" class="altColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssetMcMonitorNames()">getAssetMcMonitorNames</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">List of Monte Carlo monitor names attached to this asset.</div>
 </td>
 </tr>
 <tr id="i57" class="rowColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssetMcMonitorQualifiedNames()">getAssetMcMonitorQualifiedNames</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">List of unique Monte Carlo monitor names attached to this asset.</div>
 </td>
 </tr>
 <tr id="i58" class="altColor">
@@ -1516,21 +1516,21 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssetSodaCheckCount()">getAssetSodaCheckCount</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Soda check count</div>
+<div class="block">Number of checks done via Soda.</div>
 </td>
 </tr>
 <tr id="i62" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssetSodaCheckStatuses()">getAssetSodaCheckStatuses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">All associated soda check statuses</div>
+<div class="block">All associated Soda check statuses.</div>
 </td>
 </tr>
 <tr id="i63" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssetSodaDQStatus()">getAssetSodaDQStatus</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Soda DQ Status</div>
+<div class="block">Status of data quality from Soda.</div>
 </td>
 </tr>
 <tr id="i64" class="altColor">
@@ -1558,7 +1558,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssetTags()">getAssetTags</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">List of tags attached to this asset.</div>
 </td>
 </tr>
 <tr id="i68" class="altColor">
@@ -1572,14 +1572,14 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <td class="colFirst"><code><a href="../enums/CertificateStatus.html" title="enum in com.atlan.model.enums">CertificateStatus</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCertificateStatus()">getCertificateStatus</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Status of the asset's certification.</div>
+<div class="block">Status of this asset's certification.</div>
 </td>
 </tr>
 <tr id="i70" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCertificateStatusMessage()">getCertificateStatusMessage</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Human-readable descriptive message that can optionally be submitted when the certificateStatus is changed.</div>
+<div class="block">Human-readable descriptive message used to provide further detail to certificateStatus.</div>
 </td>
 </tr>
 <tr id="i71" class="rowColor">
@@ -1593,14 +1593,14 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCertificateUpdatedBy()">getCertificateUpdatedBy</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Name of the user who last updated the certification of the asset.</div>
+<div class="block">Name of the user who last updated the certification of this asset.</div>
 </td>
 </tr>
 <tr id="i73" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getConnectionName()">getConnectionName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Simple name of the connection through which this asset is accessible.</div>
 </td>
 </tr>
 <tr id="i74" class="altColor">
@@ -1621,21 +1621,21 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDbtQualifiedName()">getDbtQualifiedName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Unique name of this asset in dbt.</div>
 </td>
 </tr>
 <tr id="i77" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDescription()">getDescription</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Description of the asset, as crawled from a source.</div>
+<div class="block">Description of this asset, for example as crawled from a source.</div>
 </td>
 </tr>
 <tr id="i78" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDisplayName()">getDisplayName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Name used for display purposes (in user interfaces).</div>
+<div class="block">Human-readable name of this asset used for display purposes (in user interface).</div>
 </td>
 </tr>
 <tr id="i79" class="rowColor">
@@ -1670,7 +1670,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getHasLineage()">getHasLineage</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Indicates whether this asset has lineage (true) or not.</div>
+<div class="block">Whether this asset has lineage (true) or not (false).</div>
 </td>
 </tr>
 <tr id="i84" class="altColor">
@@ -1684,21 +1684,21 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIsDiscoverable()">getIsDiscoverable</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Whether this asset is discoverable through the UI (true) or not (false).</div>
 </td>
 </tr>
 <tr id="i86" class="altColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIsEditable()">getIsEditable</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Whether this asset can be edited in the UI (true) or not (false).</div>
 </td>
 </tr>
 <tr id="i87" class="rowColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLastRowChangedAt()">getLastRowChangedAt</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Timestamp of last operation that inserted, updated, or deleted rows.</div>
+<div class="block">Time (epoch) of the last operation that inserted, updated, or deleted rows, in milliseconds.</div>
 </td>
 </tr>
 <tr id="i88" class="altColor">
@@ -1712,7 +1712,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLastSyncRunAt()">getLastSyncRunAt</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Time (epoch) at which the asset was last crawled, in milliseconds.</div>
+<div class="block">Time (epoch) at which this asset was last crawled, in milliseconds.</div>
 </td>
 </tr>
 <tr id="i90" class="altColor">
@@ -1726,7 +1726,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILink.html" title="interface in com.atlan.model.assets">ILink</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLinks()">getLinks</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Resources that are linked to this asset.</div>
+<div class="block">Links that are attached to this asset.</div>
 </td>
 </tr>
 <tr id="i92" class="altColor">
@@ -1740,7 +1740,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IMCMonitor.html" title="interface in com.atlan.model.assets">IMCMonitor</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMcMonitors()">getMcMonitors</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Monitors that observe this asset.</div>
 </td>
 </tr>
 <tr id="i94" class="altColor">
@@ -1754,28 +1754,28 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getName()">getName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Human-readable name of the asset.</div>
+<div class="block">Name of this asset.</div>
 </td>
 </tr>
 <tr id="i96" class="altColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOwnerGroups()">getOwnerGroups</a></span>()</code></th>
 <td class="colLast">
-<div class="block">List of groups who own the asset.</div>
+<div class="block">List of groups who own this asset.</div>
 </td>
 </tr>
 <tr id="i97" class="rowColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOwnerUsers()">getOwnerUsers</a></span>()</code></th>
 <td class="colLast">
-<div class="block">List of users who own the asset.</div>
+<div class="block">List of users who own this asset.</div>
 </td>
 </tr>
 <tr id="i98" class="altColor">
 <td class="colFirst"><code>java.lang.Double</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPopularityScore()">getPopularityScore</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Popularity score for this asset.</div>
 </td>
 </tr>
 <tr id="i99" class="rowColor">
@@ -1824,7 +1824,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSampleDataUrl()">getSampleDataUrl</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">URL for sample data for this asset.</div>
 </td>
 </tr>
 <tr id="i106" class="altColor">
@@ -1852,14 +1852,14 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSourceCreatedAt()">getSourceCreatedAt</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Time (epoch) at which the asset was created in the source system, in milliseconds.</div>
+<div class="block">Time (epoch) at which this asset was created in the source system, in milliseconds.</div>
 </td>
 </tr>
 <tr id="i110" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSourceCreatedBy()">getSourceCreatedBy</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Who created the asset, in the source system.</div>
+<div class="block">Name of the user who created this asset, in the source system.</div>
 </td>
 </tr>
 <tr id="i111" class="rowColor">
@@ -1880,7 +1880,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSourceOwners()">getSourceOwners</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">List of owners of this asset, in the source system.</div>
 </td>
 </tr>
 <tr id="i114" class="altColor">
@@ -1929,14 +1929,14 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <td class="colFirst"><code>java.util.List&lt;<a href="../structs/PopularityInsights.html" title="class in com.atlan.model.structs">PopularityInsights</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSourceReadRecentUserRecords()">getSourceReadRecentUserRecords</a></span>()</code></th>
 <td class="colLast">
-<div class="block">List of usernames with extra insights for the most recent users who read the asset.</div>
+<div class="block">List of usernames with extra insights for the most recent users who read this asset.</div>
 </td>
 </tr>
 <tr id="i121" class="rowColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSourceReadRecentUsers()">getSourceReadRecentUsers</a></span>()</code></th>
 <td class="colLast">
-<div class="block">List of usernames of the most recent users who read the asset.</div>
+<div class="block">List of usernames of the most recent users who read this asset.</div>
 </td>
 </tr>
 <tr id="i122" class="altColor">
@@ -1950,14 +1950,14 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <td class="colFirst"><code>java.util.List&lt;<a href="../structs/PopularityInsights.html" title="class in com.atlan.model.structs">PopularityInsights</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSourceReadTopUserRecords()">getSourceReadTopUserRecords</a></span>()</code></th>
 <td class="colLast">
-<div class="block">List of usernames with extra insights for the users who read the asset the most.</div>
+<div class="block">List of usernames with extra insights for the users who read this asset the most.</div>
 </td>
 </tr>
 <tr id="i124" class="altColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSourceReadTopUsers()">getSourceReadTopUsers</a></span>()</code></th>
 <td class="colLast">
-<div class="block">List of usernames of the users who read the asset the most.</div>
+<div class="block">List of usernames of the users who read this asset the most.</div>
 </td>
 </tr>
 <tr id="i125" class="rowColor">
@@ -1978,21 +1978,21 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSourceUpdatedAt()">getSourceUpdatedAt</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Time (epoch) at which the asset was last updated in the source system, in milliseconds.</div>
+<div class="block">Time (epoch) at which this asset was last updated in the source system, in milliseconds.</div>
 </td>
 </tr>
 <tr id="i128" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSourceUpdatedBy()">getSourceUpdatedBy</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Who last updated the asset in the source system.</div>
+<div class="block">Name of the user who last updated this asset, in the source system.</div>
 </td>
 </tr>
 <tr id="i129" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSourceURL()">getSourceURL</a></span>()</code></th>
 <td class="colLast">
-<div class="block">URL to the resource within the source application.</div>
+<div class="block">URL to the resource within the source application, used to create a button to view this asset in the source application.</div>
 </td>
 </tr>
 <tr id="i130" class="altColor">
@@ -2006,28 +2006,28 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <td class="colFirst"><code>java.lang.Integer</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getStarredCount()">getStarredCount</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Number of users who have starred this asset.</div>
 </td>
 </tr>
 <tr id="i132" class="altColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="../structs/StarredDetails.html" title="class in com.atlan.model.structs">StarredDetails</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getStarredDetails()">getStarredDetails</a></span>()</code></th>
 <td class="colLast">
-<div class="block">List of usernames with extra information of the users who have starred an asset</div>
+<div class="block">List of usernames with extra information of the users who have starred an asset.</div>
 </td>
 </tr>
 <tr id="i133" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSubType()">getSubType</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Subtype of this asset.</div>
 </td>
 </tr>
 <tr id="i134" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTenantId()">getTenantId</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Name of the Atlan workspace in which the asset exists.</div>
+<div class="block">Name of the Atlan workspace in which this asset exists.</div>
 </td>
 </tr>
 <tr id="i135" class="rowColor">
@@ -2048,28 +2048,28 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getUserDescription()">getUserDescription</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Description of the asset, as provided by a user.</div>
+<div class="block">Description of this asset, as provided by a user.</div>
 </td>
 </tr>
 <tr id="i138" class="altColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getViewerGroups()">getViewerGroups</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">List of groups who can view assets contained in a collection.</div>
 </td>
 </tr>
 <tr id="i139" class="rowColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getViewerUsers()">getViewerUsers</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">List of users who can view assets contained in a collection.</div>
 </td>
 </tr>
 <tr id="i140" class="altColor">
 <td class="colFirst"><code>java.lang.Double</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getViewScore()">getViewScore</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">View score for this asset.</div>
 </td>
 </tr>
 <tr id="i141" class="rowColor">
@@ -2117,7 +2117,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>ADMIN_GROUPS</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> ADMIN_GROUPS</pre>
-<div class="block">List of groups who administer the asset. (This is only used for Connection assets.)</div>
+<div class="block">List of groups who administer this asset. (This is only used for certain asset types.)</div>
 </li>
 </ul>
 <a id="ADMIN_ROLES">
@@ -2127,7 +2127,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>ADMIN_ROLES</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> ADMIN_ROLES</pre>
-<div class="block">List of roles who administer the asset. (This is only used for Connection assets.)</div>
+<div class="block">List of roles who administer this asset. (This is only used for Connection assets.)</div>
 </li>
 </ul>
 <a id="ADMIN_USERS">
@@ -2137,7 +2137,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>ADMIN_USERS</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> ADMIN_USERS</pre>
-<div class="block">List of users who administer the asset. (This is only used for Connection assets.)</div>
+<div class="block">List of users who administer this asset. (This is only used for certain asset types.)</div>
 </li>
 </ul>
 <a id="ANNOUNCEMENT_MESSAGE">
@@ -2167,7 +2167,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>ANNOUNCEMENT_TYPE</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> ANNOUNCEMENT_TYPE</pre>
-<div class="block">Type of announcement on the asset.</div>
+<div class="block">Type of announcement on this asset.</div>
 </li>
 </ul>
 <a id="ANNOUNCEMENT_UPDATED_AT">
@@ -2197,7 +2197,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>ASSET_DBT_ACCOUNT_NAME</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a> ASSET_DBT_ACCOUNT_NAME</pre>
-<div class="block">TBC</div>
+<div class="block">Name of the account in which this asset exists in dbt.</div>
 </li>
 </ul>
 <a id="ASSET_DBT_ALIAS">
@@ -2207,7 +2207,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>ASSET_DBT_ALIAS</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a> ASSET_DBT_ALIAS</pre>
-<div class="block">TBC</div>
+<div class="block">Alias of this asset in dbt.</div>
 </li>
 </ul>
 <a id="ASSET_DBT_ENVIRONMENT_DBT_VERSION">
@@ -2217,7 +2217,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>ASSET_DBT_ENVIRONMENT_DBT_VERSION</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> ASSET_DBT_ENVIRONMENT_DBT_VERSION</pre>
-<div class="block">TBC</div>
+<div class="block">Version of the environment in which this asset is materialized in dbt.</div>
 </li>
 </ul>
 <a id="ASSET_DBT_ENVIRONMENT_NAME">
@@ -2227,7 +2227,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>ASSET_DBT_ENVIRONMENT_NAME</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a> ASSET_DBT_ENVIRONMENT_NAME</pre>
-<div class="block">TBC</div>
+<div class="block">Name of the environment in which this asset is materialized in dbt.</div>
 </li>
 </ul>
 <a id="ASSET_DBT_JOB_LAST_RUN">
@@ -2237,7 +2237,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>ASSET_DBT_JOB_LAST_RUN</h4>
 <pre>static final&nbsp;<a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a> ASSET_DBT_JOB_LAST_RUN</pre>
-<div class="block">TBC</div>
+<div class="block">Time (epoch) at which the job that materialized this asset in dbt last ran, in milliseconds.</div>
 </li>
 </ul>
 <a id="ASSET_DBT_JOB_LAST_RUN_ARTIFACT_S3PATH">
@@ -2247,7 +2247,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>ASSET_DBT_JOB_LAST_RUN_ARTIFACT_S3PATH</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> ASSET_DBT_JOB_LAST_RUN_ARTIFACT_S3PATH</pre>
-<div class="block">TBC</div>
+<div class="block">Path in S3 to the artifacts saved from the last run of the job that materialized this asset in dbt.</div>
 </li>
 </ul>
 <a id="ASSET_DBT_JOB_LAST_RUN_ARTIFACTS_SAVED">
@@ -2257,7 +2257,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>ASSET_DBT_JOB_LAST_RUN_ARTIFACTS_SAVED</h4>
 <pre>static final&nbsp;<a href="../fields/BooleanField.html" title="class in com.atlan.model.fields">BooleanField</a> ASSET_DBT_JOB_LAST_RUN_ARTIFACTS_SAVED</pre>
-<div class="block">TBC</div>
+<div class="block">Whether artifacts were saved from the last run of the job that materialized this asset in dbt (true) or not (false).</div>
 </li>
 </ul>
 <a id="ASSET_DBT_JOB_LAST_RUN_CREATED_AT">
@@ -2267,7 +2267,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>ASSET_DBT_JOB_LAST_RUN_CREATED_AT</h4>
 <pre>static final&nbsp;<a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a> ASSET_DBT_JOB_LAST_RUN_CREATED_AT</pre>
-<div class="block">TBC</div>
+<div class="block">Time (epoch) at which the job that materialized this asset in dbt was last created, in milliseconds.</div>
 </li>
 </ul>
 <a id="ASSET_DBT_JOB_LAST_RUN_DEQUED_AT">
@@ -2277,7 +2277,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>ASSET_DBT_JOB_LAST_RUN_DEQUED_AT</h4>
 <pre>static final&nbsp;<a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a> ASSET_DBT_JOB_LAST_RUN_DEQUED_AT</pre>
-<div class="block">TBC</div>
+<div class="block">Time (epoch) at which the job that materialized this asset in dbt was dequeued, in milliseconds.</div>
 </li>
 </ul>
 <a id="ASSET_DBT_JOB_LAST_RUN_EXECUTED_BY_THREAD_ID">
@@ -2287,7 +2287,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>ASSET_DBT_JOB_LAST_RUN_EXECUTED_BY_THREAD_ID</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> ASSET_DBT_JOB_LAST_RUN_EXECUTED_BY_THREAD_ID</pre>
-<div class="block">TBC</div>
+<div class="block">Thread ID of the user who executed the last run of the job that materialized this asset in dbt.</div>
 </li>
 </ul>
 <a id="ASSET_DBT_JOB_LAST_RUN_GIT_BRANCH">
@@ -2297,7 +2297,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>ASSET_DBT_JOB_LAST_RUN_GIT_BRANCH</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a> ASSET_DBT_JOB_LAST_RUN_GIT_BRANCH</pre>
-<div class="block">TBC</div>
+<div class="block">Branch in git from which the last run of the job that materialized this asset in dbt ran.</div>
 </li>
 </ul>
 <a id="ASSET_DBT_JOB_LAST_RUN_GIT_SHA">
@@ -2307,7 +2307,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>ASSET_DBT_JOB_LAST_RUN_GIT_SHA</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> ASSET_DBT_JOB_LAST_RUN_GIT_SHA</pre>
-<div class="block">TBC</div>
+<div class="block">SHA hash in git for the last run of the job that materialized this asset in dbt.</div>
 </li>
 </ul>
 <a id="ASSET_DBT_JOB_LAST_RUN_HAS_DOCS_GENERATED">
@@ -2317,7 +2317,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>ASSET_DBT_JOB_LAST_RUN_HAS_DOCS_GENERATED</h4>
 <pre>static final&nbsp;<a href="../fields/BooleanField.html" title="class in com.atlan.model.fields">BooleanField</a> ASSET_DBT_JOB_LAST_RUN_HAS_DOCS_GENERATED</pre>
-<div class="block">TBC</div>
+<div class="block">Whether docs were generated from the last run of the job that materialized this asset in dbt (true) or not (false).</div>
 </li>
 </ul>
 <a id="ASSET_DBT_JOB_LAST_RUN_HAS_SOURCES_GENERATED">
@@ -2327,7 +2327,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>ASSET_DBT_JOB_LAST_RUN_HAS_SOURCES_GENERATED</h4>
 <pre>static final&nbsp;<a href="../fields/BooleanField.html" title="class in com.atlan.model.fields">BooleanField</a> ASSET_DBT_JOB_LAST_RUN_HAS_SOURCES_GENERATED</pre>
-<div class="block">TBC</div>
+<div class="block">Whether sources were generated from the last run of the job that materialized this asset in dbt (true) or not (false).</div>
 </li>
 </ul>
 <a id="ASSET_DBT_JOB_LAST_RUN_NOTIFICATIONS_SENT">
@@ -2337,7 +2337,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>ASSET_DBT_JOB_LAST_RUN_NOTIFICATIONS_SENT</h4>
 <pre>static final&nbsp;<a href="../fields/BooleanField.html" title="class in com.atlan.model.fields">BooleanField</a> ASSET_DBT_JOB_LAST_RUN_NOTIFICATIONS_SENT</pre>
-<div class="block">TBC</div>
+<div class="block">Whether notifications were sent from the last run of the job that materialized this asset in dbt (true) or not (false).</div>
 </li>
 </ul>
 <a id="ASSET_DBT_JOB_LAST_RUN_OWNER_THREAD_ID">
@@ -2347,7 +2347,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>ASSET_DBT_JOB_LAST_RUN_OWNER_THREAD_ID</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> ASSET_DBT_JOB_LAST_RUN_OWNER_THREAD_ID</pre>
-<div class="block">TBC</div>
+<div class="block">Thread ID of the owner of the last run of the job that materialized this asset in dbt.</div>
 </li>
 </ul>
 <a id="ASSET_DBT_JOB_LAST_RUN_QUEUED_DURATION">
@@ -2357,7 +2357,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>ASSET_DBT_JOB_LAST_RUN_QUEUED_DURATION</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> ASSET_DBT_JOB_LAST_RUN_QUEUED_DURATION</pre>
-<div class="block">TBC</div>
+<div class="block">Total duration the job that materialized this asset in dbt spent being queued.</div>
 </li>
 </ul>
 <a id="ASSET_DBT_JOB_LAST_RUN_QUEUED_DURATION_HUMANIZED">
@@ -2367,7 +2367,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>ASSET_DBT_JOB_LAST_RUN_QUEUED_DURATION_HUMANIZED</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> ASSET_DBT_JOB_LAST_RUN_QUEUED_DURATION_HUMANIZED</pre>
-<div class="block">TBC</div>
+<div class="block">Human-readable total duration of the last run of the job that materialized this asset in dbt spend being queued.</div>
 </li>
 </ul>
 <a id="ASSET_DBT_JOB_LAST_RUN_RUN_DURATION">
@@ -2377,7 +2377,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>ASSET_DBT_JOB_LAST_RUN_RUN_DURATION</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> ASSET_DBT_JOB_LAST_RUN_RUN_DURATION</pre>
-<div class="block">TBC</div>
+<div class="block">Run duration of the last run of the job that materialized this asset in dbt.</div>
 </li>
 </ul>
 <a id="ASSET_DBT_JOB_LAST_RUN_RUN_DURATION_HUMANIZED">
@@ -2387,7 +2387,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>ASSET_DBT_JOB_LAST_RUN_RUN_DURATION_HUMANIZED</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> ASSET_DBT_JOB_LAST_RUN_RUN_DURATION_HUMANIZED</pre>
-<div class="block">TBC</div>
+<div class="block">Human-readable run duration of the last run of the job that materialized this asset in dbt.</div>
 </li>
 </ul>
 <a id="ASSET_DBT_JOB_LAST_RUN_STARTED_AT">
@@ -2397,7 +2397,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>ASSET_DBT_JOB_LAST_RUN_STARTED_AT</h4>
 <pre>static final&nbsp;<a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a> ASSET_DBT_JOB_LAST_RUN_STARTED_AT</pre>
-<div class="block">TBC</div>
+<div class="block">Time (epoch) at which the job that materialized this asset in dbt was started running, in milliseconds.</div>
 </li>
 </ul>
 <a id="ASSET_DBT_JOB_LAST_RUN_STATUS_MESSAGE">
@@ -2407,7 +2407,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>ASSET_DBT_JOB_LAST_RUN_STATUS_MESSAGE</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a> ASSET_DBT_JOB_LAST_RUN_STATUS_MESSAGE</pre>
-<div class="block">TBC</div>
+<div class="block">Status message of the last run of the job that materialized this asset in dbt.</div>
 </li>
 </ul>
 <a id="ASSET_DBT_JOB_LAST_RUN_TOTAL_DURATION">
@@ -2417,7 +2417,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>ASSET_DBT_JOB_LAST_RUN_TOTAL_DURATION</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> ASSET_DBT_JOB_LAST_RUN_TOTAL_DURATION</pre>
-<div class="block">TBC</div>
+<div class="block">Total duration of the last run of the job that materialized this asset in dbt.</div>
 </li>
 </ul>
 <a id="ASSET_DBT_JOB_LAST_RUN_TOTAL_DURATION_HUMANIZED">
@@ -2427,7 +2427,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>ASSET_DBT_JOB_LAST_RUN_TOTAL_DURATION_HUMANIZED</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> ASSET_DBT_JOB_LAST_RUN_TOTAL_DURATION_HUMANIZED</pre>
-<div class="block">TBC</div>
+<div class="block">Human-readable total duration of the last run of the job that materialized this asset in dbt.</div>
 </li>
 </ul>
 <a id="ASSET_DBT_JOB_LAST_RUN_UPDATED_AT">
@@ -2437,7 +2437,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>ASSET_DBT_JOB_LAST_RUN_UPDATED_AT</h4>
 <pre>static final&nbsp;<a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a> ASSET_DBT_JOB_LAST_RUN_UPDATED_AT</pre>
-<div class="block">TBC</div>
+<div class="block">Time (epoch) at which the job that materialized this asset in dbt was last updated, in milliseconds.</div>
 </li>
 </ul>
 <a id="ASSET_DBT_JOB_LAST_RUN_URL">
@@ -2447,7 +2447,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>ASSET_DBT_JOB_LAST_RUN_URL</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> ASSET_DBT_JOB_LAST_RUN_URL</pre>
-<div class="block">TBC</div>
+<div class="block">URL of the last run of the job that materialized this asset in dbt.</div>
 </li>
 </ul>
 <a id="ASSET_DBT_JOB_NAME">
@@ -2457,7 +2457,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>ASSET_DBT_JOB_NAME</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a> ASSET_DBT_JOB_NAME</pre>
-<div class="block">TBC</div>
+<div class="block">Name of the job that materialized this asset in dbt.</div>
 </li>
 </ul>
 <a id="ASSET_DBT_JOB_NEXT_RUN">
@@ -2467,7 +2467,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>ASSET_DBT_JOB_NEXT_RUN</h4>
 <pre>static final&nbsp;<a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a> ASSET_DBT_JOB_NEXT_RUN</pre>
-<div class="block">TBC</div>
+<div class="block">Time (epoch) when the next run of the job that materializes this asset in dbt is scheduled.</div>
 </li>
 </ul>
 <a id="ASSET_DBT_JOB_NEXT_RUN_HUMANIZED">
@@ -2477,7 +2477,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>ASSET_DBT_JOB_NEXT_RUN_HUMANIZED</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a> ASSET_DBT_JOB_NEXT_RUN_HUMANIZED</pre>
-<div class="block">TBC</div>
+<div class="block">Human-readable time when the next run of the job that materializes this asset in dbt is scheduled.</div>
 </li>
 </ul>
 <a id="ASSET_DBT_JOB_SCHEDULE">
@@ -2487,7 +2487,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>ASSET_DBT_JOB_SCHEDULE</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> ASSET_DBT_JOB_SCHEDULE</pre>
-<div class="block">TBC</div>
+<div class="block">Schedule of the job that materialized this asset in dbt.</div>
 </li>
 </ul>
 <a id="ASSET_DBT_JOB_SCHEDULE_CRON_HUMANIZED">
@@ -2497,7 +2497,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>ASSET_DBT_JOB_SCHEDULE_CRON_HUMANIZED</h4>
 <pre>static final&nbsp;<a href="../fields/TextField.html" title="class in com.atlan.model.fields">TextField</a> ASSET_DBT_JOB_SCHEDULE_CRON_HUMANIZED</pre>
-<div class="block">TBC</div>
+<div class="block">Human-readable cron schedule of the job that materialized this asset in dbt.</div>
 </li>
 </ul>
 <a id="ASSET_DBT_JOB_STATUS">
@@ -2507,7 +2507,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>ASSET_DBT_JOB_STATUS</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> ASSET_DBT_JOB_STATUS</pre>
-<div class="block">TBC</div>
+<div class="block">Status of the job that materialized this asset in dbt.</div>
 </li>
 </ul>
 <a id="ASSET_DBT_META">
@@ -2517,7 +2517,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>ASSET_DBT_META</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> ASSET_DBT_META</pre>
-<div class="block">TBC</div>
+<div class="block">Metadata for this asset in dbt, specifically everything under the 'meta' key in the dbt object.</div>
 </li>
 </ul>
 <a id="ASSET_DBT_PACKAGE_NAME">
@@ -2527,7 +2527,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>ASSET_DBT_PACKAGE_NAME</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a> ASSET_DBT_PACKAGE_NAME</pre>
-<div class="block">TBC</div>
+<div class="block">Name of the package in which this asset exists in dbt.</div>
 </li>
 </ul>
 <a id="ASSET_DBT_PROJECT_NAME">
@@ -2537,7 +2537,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>ASSET_DBT_PROJECT_NAME</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a> ASSET_DBT_PROJECT_NAME</pre>
-<div class="block">TBC</div>
+<div class="block">Name of the project in which this asset exists in dbt.</div>
 </li>
 </ul>
 <a id="ASSET_DBT_SEMANTIC_LAYER_PROXY_URL">
@@ -2547,7 +2547,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>ASSET_DBT_SEMANTIC_LAYER_PROXY_URL</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> ASSET_DBT_SEMANTIC_LAYER_PROXY_URL</pre>
-<div class="block">TBC</div>
+<div class="block">URL of the semantic layer proxy for this asset in dbt.</div>
 </li>
 </ul>
 <a id="ASSET_DBT_SOURCE_FRESHNESS_CRITERIA">
@@ -2557,7 +2557,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>ASSET_DBT_SOURCE_FRESHNESS_CRITERIA</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> ASSET_DBT_SOURCE_FRESHNESS_CRITERIA</pre>
-<div class="block">TBC</div>
+<div class="block">Freshness criteria for the source of this asset in dbt.</div>
 </li>
 </ul>
 <a id="ASSET_DBT_TAGS">
@@ -2567,7 +2567,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>ASSET_DBT_TAGS</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a> ASSET_DBT_TAGS</pre>
-<div class="block">TBC</div>
+<div class="block">List of tags attached to this asset in dbt.</div>
 </li>
 </ul>
 <a id="ASSET_DBT_TEST_STATUS">
@@ -2577,7 +2577,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>ASSET_DBT_TEST_STATUS</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> ASSET_DBT_TEST_STATUS</pre>
-<div class="block">All associated dbt test statuses</div>
+<div class="block">All associated dbt test statuses.</div>
 </li>
 </ul>
 <a id="ASSET_DBT_UNIQUE_ID">
@@ -2587,7 +2587,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>ASSET_DBT_UNIQUE_ID</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a> ASSET_DBT_UNIQUE_ID</pre>
-<div class="block">TBC</div>
+<div class="block">Unique identifier of this asset in dbt.</div>
 </li>
 </ul>
 <a id="ASSET_ICON">
@@ -2597,7 +2597,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>ASSET_ICON</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> ASSET_ICON</pre>
-<div class="block">TBC</div>
+<div class="block">Name of the icon to use for this asset. (Only applies to glossaries, currently.)</div>
 </li>
 </ul>
 <a id="ASSET_MC_INCIDENT_NAMES">
@@ -2607,7 +2607,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>ASSET_MC_INCIDENT_NAMES</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a> ASSET_MC_INCIDENT_NAMES</pre>
-<div class="block">TBC</div>
+<div class="block">List of Monte Carlo incident names attached to this asset.</div>
 </li>
 </ul>
 <a id="ASSET_MC_INCIDENT_QUALIFIED_NAMES">
@@ -2617,7 +2617,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>ASSET_MC_INCIDENT_QUALIFIED_NAMES</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a> ASSET_MC_INCIDENT_QUALIFIED_NAMES</pre>
-<div class="block">TBC</div>
+<div class="block">List of unique Monte Carlo incident names attached to this asset.</div>
 </li>
 </ul>
 <a id="ASSET_MC_INCIDENT_SEVERITIES">
@@ -2627,7 +2627,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>ASSET_MC_INCIDENT_SEVERITIES</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> ASSET_MC_INCIDENT_SEVERITIES</pre>
-<div class="block">TBC</div>
+<div class="block">List of Monte Carlo incident severities associated with this asset.</div>
 </li>
 </ul>
 <a id="ASSET_MC_INCIDENT_STATES">
@@ -2637,7 +2637,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>ASSET_MC_INCIDENT_STATES</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> ASSET_MC_INCIDENT_STATES</pre>
-<div class="block">TBC</div>
+<div class="block">List of Monte Carlo incident states associated with this asset.</div>
 </li>
 </ul>
 <a id="ASSET_MC_INCIDENT_SUB_TYPES">
@@ -2647,7 +2647,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>ASSET_MC_INCIDENT_SUB_TYPES</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> ASSET_MC_INCIDENT_SUB_TYPES</pre>
-<div class="block">TBC</div>
+<div class="block">List of Monte Carlo incident sub-types associated with this asset.</div>
 </li>
 </ul>
 <a id="ASSET_MC_INCIDENT_TYPES">
@@ -2657,7 +2657,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>ASSET_MC_INCIDENT_TYPES</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> ASSET_MC_INCIDENT_TYPES</pre>
-<div class="block">TBC</div>
+<div class="block">List of Monte Carlo incident types associated with this asset.</div>
 </li>
 </ul>
 <a id="ASSET_MC_LAST_SYNC_RUN_AT">
@@ -2667,7 +2667,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>ASSET_MC_LAST_SYNC_RUN_AT</h4>
 <pre>static final&nbsp;<a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a> ASSET_MC_LAST_SYNC_RUN_AT</pre>
-<div class="block">TBC</div>
+<div class="block">Time (epoch) at which this asset was last synced from Monte Carlo.</div>
 </li>
 </ul>
 <a id="ASSET_MC_MONITOR_NAMES">
@@ -2677,7 +2677,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>ASSET_MC_MONITOR_NAMES</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a> ASSET_MC_MONITOR_NAMES</pre>
-<div class="block">TBC</div>
+<div class="block">List of Monte Carlo monitor names attached to this asset.</div>
 </li>
 </ul>
 <a id="ASSET_MC_MONITOR_QUALIFIED_NAMES">
@@ -2687,7 +2687,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>ASSET_MC_MONITOR_QUALIFIED_NAMES</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a> ASSET_MC_MONITOR_QUALIFIED_NAMES</pre>
-<div class="block">TBC</div>
+<div class="block">List of unique Monte Carlo monitor names attached to this asset.</div>
 </li>
 </ul>
 <a id="ASSET_MC_MONITOR_SCHEDULE_TYPES">
@@ -2727,7 +2727,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>ASSET_SODA_CHECK_COUNT</h4>
 <pre>static final&nbsp;<a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a> ASSET_SODA_CHECK_COUNT</pre>
-<div class="block">Soda check count</div>
+<div class="block">Number of checks done via Soda.</div>
 </li>
 </ul>
 <a id="ASSET_SODA_CHECK_STATUSES">
@@ -2737,7 +2737,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>ASSET_SODA_CHECK_STATUSES</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> ASSET_SODA_CHECK_STATUSES</pre>
-<div class="block">All associated soda check statuses</div>
+<div class="block">All associated Soda check statuses.</div>
 </li>
 </ul>
 <a id="ASSET_SODA_DQ_STATUS">
@@ -2747,7 +2747,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>ASSET_SODA_DQ_STATUS</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> ASSET_SODA_DQ_STATUS</pre>
-<div class="block">Soda DQ Status</div>
+<div class="block">Status of data quality from Soda.</div>
 </li>
 </ul>
 <a id="ASSET_SODA_LAST_SCAN_AT">
@@ -2787,7 +2787,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>ASSET_TAGS</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a> ASSET_TAGS</pre>
-<div class="block">TBC</div>
+<div class="block">List of tags attached to this asset.</div>
 </li>
 </ul>
 <a id="CERTIFICATE_STATUS">
@@ -2797,7 +2797,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>CERTIFICATE_STATUS</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a> CERTIFICATE_STATUS</pre>
-<div class="block">Status of the asset's certification.</div>
+<div class="block">Status of this asset's certification.</div>
 </li>
 </ul>
 <a id="CERTIFICATE_STATUS_MESSAGE">
@@ -2807,7 +2807,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>CERTIFICATE_STATUS_MESSAGE</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> CERTIFICATE_STATUS_MESSAGE</pre>
-<div class="block">Human-readable descriptive message that can optionally be submitted when the certificateStatus is changed.</div>
+<div class="block">Human-readable descriptive message used to provide further detail to certificateStatus.</div>
 </li>
 </ul>
 <a id="CERTIFICATE_UPDATED_AT">
@@ -2827,7 +2827,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>CERTIFICATE_UPDATED_BY</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> CERTIFICATE_UPDATED_BY</pre>
-<div class="block">Name of the user who last updated the certification of the asset.</div>
+<div class="block">Name of the user who last updated the certification of this asset.</div>
 </li>
 </ul>
 <a id="CONNECTION_NAME">
@@ -2837,7 +2837,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>CONNECTION_NAME</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a> CONNECTION_NAME</pre>
-<div class="block">TBC</div>
+<div class="block">Simple name of the connection through which this asset is accessible.</div>
 </li>
 </ul>
 <a id="CONNECTION_QUALIFIED_NAME">
@@ -2867,7 +2867,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>DBT_QUALIFIED_NAME</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a> DBT_QUALIFIED_NAME</pre>
-<div class="block">TBC</div>
+<div class="block">Unique name of this asset in dbt.</div>
 </li>
 </ul>
 <a id="DESCRIPTION">
@@ -2877,7 +2877,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>DESCRIPTION</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a> DESCRIPTION</pre>
-<div class="block">Description of the asset, as crawled from a source.</div>
+<div class="block">Description of this asset, for example as crawled from a source. Fallback for display purposes, if userDescription is empty.</div>
 </li>
 </ul>
 <a id="DISPLAY_NAME">
@@ -2887,7 +2887,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>DISPLAY_NAME</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a> DISPLAY_NAME</pre>
-<div class="block">Name used for display purposes (in user interfaces).</div>
+<div class="block">Human-readable name of this asset used for display purposes (in user interface).</div>
 </li>
 </ul>
 <a id="FILES">
@@ -2907,7 +2907,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>HAS_LINEAGE</h4>
 <pre>static final&nbsp;<a href="../fields/BooleanField.html" title="class in com.atlan.model.fields">BooleanField</a> HAS_LINEAGE</pre>
-<div class="block">Indicates whether this asset has lineage (true) or not.</div>
+<div class="block">Whether this asset has lineage (true) or not (false).</div>
 </li>
 </ul>
 <a id="IS_AI_GENERATED">
@@ -2927,7 +2927,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>IS_DISCOVERABLE</h4>
 <pre>static final&nbsp;<a href="../fields/BooleanField.html" title="class in com.atlan.model.fields">BooleanField</a> IS_DISCOVERABLE</pre>
-<div class="block">TBC</div>
+<div class="block">Whether this asset is discoverable through the UI (true) or not (false).</div>
 </li>
 </ul>
 <a id="IS_EDITABLE">
@@ -2937,7 +2937,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>IS_EDITABLE</h4>
 <pre>static final&nbsp;<a href="../fields/BooleanField.html" title="class in com.atlan.model.fields">BooleanField</a> IS_EDITABLE</pre>
-<div class="block">TBC</div>
+<div class="block">Whether this asset can be edited in the UI (true) or not (false).</div>
 </li>
 </ul>
 <a id="LAST_ROW_CHANGED_AT">
@@ -2947,7 +2947,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>LAST_ROW_CHANGED_AT</h4>
 <pre>static final&nbsp;<a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a> LAST_ROW_CHANGED_AT</pre>
-<div class="block">Timestamp of last operation that inserted, updated, or deleted rows.</div>
+<div class="block">Time (epoch) of the last operation that inserted, updated, or deleted rows, in milliseconds.</div>
 </li>
 </ul>
 <a id="LAST_SYNC_RUN">
@@ -2967,7 +2967,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>LAST_SYNC_RUN_AT</h4>
 <pre>static final&nbsp;<a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a> LAST_SYNC_RUN_AT</pre>
-<div class="block">Time (epoch) at which the asset was last crawled, in milliseconds.</div>
+<div class="block">Time (epoch) at which this asset was last crawled, in milliseconds.</div>
 </li>
 </ul>
 <a id="LAST_SYNC_WORKFLOW_NAME">
@@ -2987,7 +2987,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>LINKS</h4>
 <pre>static final&nbsp;<a href="../fields/SearchableRelationship.html" title="class in com.atlan.model.fields">SearchableRelationship</a> LINKS</pre>
-<div class="block">Resources that are linked to this asset.</div>
+<div class="block">Links that are attached to this asset.</div>
 </li>
 </ul>
 <a id="MC_INCIDENTS">
@@ -3007,7 +3007,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>MC_MONITORS</h4>
 <pre>static final&nbsp;<a href="../fields/RelationField.html" title="class in com.atlan.model.fields">RelationField</a> MC_MONITORS</pre>
-<div class="block">TBC</div>
+<div class="block">Monitors that observe this asset.</div>
 </li>
 </ul>
 <a id="METRICS">
@@ -3027,7 +3027,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>NAME</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordTextStemmedField.html" title="class in com.atlan.model.fields">KeywordTextStemmedField</a> NAME</pre>
-<div class="block">Human-readable name of the asset.</div>
+<div class="block">Name of this asset. Fallback for display purposes, if displayName is empty.</div>
 </li>
 </ul>
 <a id="OWNER_GROUPS">
@@ -3037,7 +3037,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>OWNER_GROUPS</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> OWNER_GROUPS</pre>
-<div class="block">List of groups who own the asset.</div>
+<div class="block">List of groups who own this asset.</div>
 </li>
 </ul>
 <a id="OWNER_USERS">
@@ -3047,7 +3047,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>OWNER_USERS</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> OWNER_USERS</pre>
-<div class="block">List of users who own the asset.</div>
+<div class="block">List of users who own this asset.</div>
 </li>
 </ul>
 <a id="POPULARITY_SCORE">
@@ -3057,7 +3057,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>POPULARITY_SCORE</h4>
 <pre>static final&nbsp;<a href="../fields/NumericRankField.html" title="class in com.atlan.model.fields">NumericRankField</a> POPULARITY_SCORE</pre>
-<div class="block">TBC</div>
+<div class="block">Popularity score for this asset.</div>
 </li>
 </ul>
 <a id="README">
@@ -3077,7 +3077,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>SAMPLE_DATA_URL</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a> SAMPLE_DATA_URL</pre>
-<div class="block">TBC</div>
+<div class="block">URL for sample data for this asset.</div>
 </li>
 </ul>
 <a id="SCHEMA_REGISTRY_SUBJECTS">
@@ -3117,7 +3117,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>SOURCE_CREATED_AT</h4>
 <pre>static final&nbsp;<a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a> SOURCE_CREATED_AT</pre>
-<div class="block">Time (epoch) at which the asset was created in the source system, in milliseconds.</div>
+<div class="block">Time (epoch) at which this asset was created in the source system, in milliseconds.</div>
 </li>
 </ul>
 <a id="SOURCE_CREATED_BY">
@@ -3127,7 +3127,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>SOURCE_CREATED_BY</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> SOURCE_CREATED_BY</pre>
-<div class="block">Who created the asset, in the source system.</div>
+<div class="block">Name of the user who created this asset, in the source system.</div>
 </li>
 </ul>
 <a id="SOURCE_EMBED_URL">
@@ -3157,7 +3157,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>SOURCE_OWNERS</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> SOURCE_OWNERS</pre>
-<div class="block">TBC</div>
+<div class="block">List of owners of this asset, in the source system.</div>
 </li>
 </ul>
 <a id="SOURCE_QUERY_COMPUTE_COST_RECORDS">
@@ -3227,7 +3227,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>SOURCE_READ_RECENT_USER_RECORDS</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> SOURCE_READ_RECENT_USER_RECORDS</pre>
-<div class="block">List of usernames with extra insights for the most recent users who read the asset.</div>
+<div class="block">List of usernames with extra insights for the most recent users who read this asset.</div>
 </li>
 </ul>
 <a id="SOURCE_READ_RECENT_USERS">
@@ -3237,7 +3237,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>SOURCE_READ_RECENT_USERS</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> SOURCE_READ_RECENT_USERS</pre>
-<div class="block">List of usernames of the most recent users who read the asset.</div>
+<div class="block">List of usernames of the most recent users who read this asset.</div>
 </li>
 </ul>
 <a id="SOURCE_READ_SLOW_QUERY_RECORDS">
@@ -3257,7 +3257,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>SOURCE_READ_TOP_USER_RECORDS</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> SOURCE_READ_TOP_USER_RECORDS</pre>
-<div class="block">List of usernames with extra insights for the users who read the asset the most.</div>
+<div class="block">List of usernames with extra insights for the users who read this asset the most.</div>
 </li>
 </ul>
 <a id="SOURCE_READ_TOP_USERS">
@@ -3267,7 +3267,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>SOURCE_READ_TOP_USERS</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> SOURCE_READ_TOP_USERS</pre>
-<div class="block">List of usernames of the users who read the asset the most.</div>
+<div class="block">List of usernames of the users who read this asset the most.</div>
 </li>
 </ul>
 <a id="SOURCE_READ_USER_COUNT">
@@ -3297,7 +3297,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>SOURCE_URL</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> SOURCE_URL</pre>
-<div class="block">URL to the resource within the source application.</div>
+<div class="block">URL to the resource within the source application, used to create a button to view this asset in the source application.</div>
 </li>
 </ul>
 <a id="SOURCE_UPDATED_AT">
@@ -3307,7 +3307,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>SOURCE_UPDATED_AT</h4>
 <pre>static final&nbsp;<a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a> SOURCE_UPDATED_AT</pre>
-<div class="block">Time (epoch) at which the asset was last updated in the source system, in milliseconds.</div>
+<div class="block">Time (epoch) at which this asset was last updated in the source system, in milliseconds.</div>
 </li>
 </ul>
 <a id="SOURCE_UPDATED_BY">
@@ -3317,7 +3317,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>SOURCE_UPDATED_BY</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> SOURCE_UPDATED_BY</pre>
-<div class="block">Who last updated the asset in the source system.</div>
+<div class="block">Name of the user who last updated this asset, in the source system.</div>
 </li>
 </ul>
 <a id="STARRED_BY">
@@ -3337,7 +3337,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>STARRED_COUNT</h4>
 <pre>static final&nbsp;<a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a> STARRED_COUNT</pre>
-<div class="block">TBC</div>
+<div class="block">Number of users who have starred this asset.</div>
 </li>
 </ul>
 <a id="STARRED_DETAILS">
@@ -3347,7 +3347,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>STARRED_DETAILS</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> STARRED_DETAILS</pre>
-<div class="block">List of usernames with extra information of the users who have starred an asset</div>
+<div class="block">List of usernames with extra information of the users who have starred an asset.</div>
 </li>
 </ul>
 <a id="SUB_TYPE">
@@ -3357,7 +3357,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>SUB_TYPE</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> SUB_TYPE</pre>
-<div class="block">TBC</div>
+<div class="block">Subtype of this asset.</div>
 </li>
 </ul>
 <a id="TENANT_ID">
@@ -3367,7 +3367,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>TENANT_ID</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> TENANT_ID</pre>
-<div class="block">Name of the Atlan workspace in which the asset exists.</div>
+<div class="block">Name of the Atlan workspace in which this asset exists.</div>
 </li>
 </ul>
 <a id="USER_DESCRIPTION">
@@ -3377,7 +3377,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>USER_DESCRIPTION</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a> USER_DESCRIPTION</pre>
-<div class="block">Description of the asset, as provided by a user. If present, this will be used for the description in user interfaces. If not present, the description will be used.</div>
+<div class="block">Description of this asset, as provided by a user. If present, this will be used for the description in user interface.</div>
 </li>
 </ul>
 <a id="VIEW_SCORE">
@@ -3387,7 +3387,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>VIEW_SCORE</h4>
 <pre>static final&nbsp;<a href="../fields/NumericRankField.html" title="class in com.atlan.model.fields">NumericRankField</a> VIEW_SCORE</pre>
-<div class="block">TBC</div>
+<div class="block">View score for this asset.</div>
 </li>
 </ul>
 <a id="VIEWER_GROUPS">
@@ -3397,7 +3397,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>VIEWER_GROUPS</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> VIEWER_GROUPS</pre>
-<div class="block">TBC</div>
+<div class="block">List of groups who can view assets contained in a collection. (This is only used for certain asset types.)</div>
 </li>
 </ul>
 <a id="VIEWER_USERS">
@@ -3407,7 +3407,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>VIEWER_USERS</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> VIEWER_USERS</pre>
-<div class="block">TBC</div>
+<div class="block">List of users who can view assets contained in a collection. (This is only used for certain asset types.)</div>
 </li>
 </ul>
 <a id="QUALIFIED_NAME">
@@ -3437,7 +3437,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getAdminGroups</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;java.lang.String&gt;&nbsp;getAdminGroups()</pre>
-<div class="block">List of groups who administer the asset. (This is only used for Connection assets.)</div>
+<div class="block">List of groups who administer this asset. (This is only used for certain asset types.)</div>
 </li>
 </ul>
 <a id="getAdminRoles()">
@@ -3447,7 +3447,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getAdminRoles</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;java.lang.String&gt;&nbsp;getAdminRoles()</pre>
-<div class="block">List of roles who administer the asset. (This is only used for Connection assets.)</div>
+<div class="block">List of roles who administer this asset. (This is only used for Connection assets.)</div>
 </li>
 </ul>
 <a id="getAdminUsers()">
@@ -3457,7 +3457,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getAdminUsers</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;java.lang.String&gt;&nbsp;getAdminUsers()</pre>
-<div class="block">List of users who administer the asset. (This is only used for Connection assets.)</div>
+<div class="block">List of users who administer this asset. (This is only used for certain asset types.)</div>
 </li>
 </ul>
 <a id="getAnnouncementMessage()">
@@ -3487,7 +3487,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getAnnouncementType</h4>
 <pre class="methodSignature"><a href="../enums/AtlanAnnouncementType.html" title="enum in com.atlan.model.enums">AtlanAnnouncementType</a>&nbsp;getAnnouncementType()</pre>
-<div class="block">Type of announcement on the asset.</div>
+<div class="block">Type of announcement on this asset.</div>
 </li>
 </ul>
 <a id="getAnnouncementUpdatedAt()">
@@ -3517,7 +3517,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getAssetDbtAccountName</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getAssetDbtAccountName()</pre>
-<div class="block">TBC</div>
+<div class="block">Name of the account in which this asset exists in dbt.</div>
 </li>
 </ul>
 <a id="getAssetDbtAlias()">
@@ -3527,7 +3527,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getAssetDbtAlias</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getAssetDbtAlias()</pre>
-<div class="block">TBC</div>
+<div class="block">Alias of this asset in dbt.</div>
 </li>
 </ul>
 <a id="getAssetDbtEnvironmentDbtVersion()">
@@ -3537,7 +3537,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getAssetDbtEnvironmentDbtVersion</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getAssetDbtEnvironmentDbtVersion()</pre>
-<div class="block">TBC</div>
+<div class="block">Version of the environment in which this asset is materialized in dbt.</div>
 </li>
 </ul>
 <a id="getAssetDbtEnvironmentName()">
@@ -3547,7 +3547,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getAssetDbtEnvironmentName</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getAssetDbtEnvironmentName()</pre>
-<div class="block">TBC</div>
+<div class="block">Name of the environment in which this asset is materialized in dbt.</div>
 </li>
 </ul>
 <a id="getAssetDbtJobLastRun()">
@@ -3557,7 +3557,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getAssetDbtJobLastRun</h4>
 <pre class="methodSignature">java.lang.Long&nbsp;getAssetDbtJobLastRun()</pre>
-<div class="block">TBC</div>
+<div class="block">Time (epoch) at which the job that materialized this asset in dbt last ran, in milliseconds.</div>
 </li>
 </ul>
 <a id="getAssetDbtJobLastRunArtifactS3Path()">
@@ -3567,7 +3567,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getAssetDbtJobLastRunArtifactS3Path</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getAssetDbtJobLastRunArtifactS3Path()</pre>
-<div class="block">TBC</div>
+<div class="block">Path in S3 to the artifacts saved from the last run of the job that materialized this asset in dbt.</div>
 </li>
 </ul>
 <a id="getAssetDbtJobLastRunArtifactsSaved()">
@@ -3577,7 +3577,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getAssetDbtJobLastRunArtifactsSaved</h4>
 <pre class="methodSignature">java.lang.Boolean&nbsp;getAssetDbtJobLastRunArtifactsSaved()</pre>
-<div class="block">TBC</div>
+<div class="block">Whether artifacts were saved from the last run of the job that materialized this asset in dbt (true) or not (false).</div>
 </li>
 </ul>
 <a id="getAssetDbtJobLastRunCreatedAt()">
@@ -3587,7 +3587,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getAssetDbtJobLastRunCreatedAt</h4>
 <pre class="methodSignature">java.lang.Long&nbsp;getAssetDbtJobLastRunCreatedAt()</pre>
-<div class="block">TBC</div>
+<div class="block">Time (epoch) at which the job that materialized this asset in dbt was last created, in milliseconds.</div>
 </li>
 </ul>
 <a id="getAssetDbtJobLastRunDequedAt()">
@@ -3597,7 +3597,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getAssetDbtJobLastRunDequedAt</h4>
 <pre class="methodSignature">java.lang.Long&nbsp;getAssetDbtJobLastRunDequedAt()</pre>
-<div class="block">TBC</div>
+<div class="block">Time (epoch) at which the job that materialized this asset in dbt was dequeued, in milliseconds.</div>
 </li>
 </ul>
 <a id="getAssetDbtJobLastRunExecutedByThreadId()">
@@ -3607,7 +3607,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getAssetDbtJobLastRunExecutedByThreadId</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getAssetDbtJobLastRunExecutedByThreadId()</pre>
-<div class="block">TBC</div>
+<div class="block">Thread ID of the user who executed the last run of the job that materialized this asset in dbt.</div>
 </li>
 </ul>
 <a id="getAssetDbtJobLastRunGitBranch()">
@@ -3617,7 +3617,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getAssetDbtJobLastRunGitBranch</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getAssetDbtJobLastRunGitBranch()</pre>
-<div class="block">TBC</div>
+<div class="block">Branch in git from which the last run of the job that materialized this asset in dbt ran.</div>
 </li>
 </ul>
 <a id="getAssetDbtJobLastRunGitSha()">
@@ -3627,7 +3627,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getAssetDbtJobLastRunGitSha</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getAssetDbtJobLastRunGitSha()</pre>
-<div class="block">TBC</div>
+<div class="block">SHA hash in git for the last run of the job that materialized this asset in dbt.</div>
 </li>
 </ul>
 <a id="getAssetDbtJobLastRunHasDocsGenerated()">
@@ -3637,7 +3637,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getAssetDbtJobLastRunHasDocsGenerated</h4>
 <pre class="methodSignature">java.lang.Boolean&nbsp;getAssetDbtJobLastRunHasDocsGenerated()</pre>
-<div class="block">TBC</div>
+<div class="block">Whether docs were generated from the last run of the job that materialized this asset in dbt (true) or not (false).</div>
 </li>
 </ul>
 <a id="getAssetDbtJobLastRunHasSourcesGenerated()">
@@ -3647,7 +3647,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getAssetDbtJobLastRunHasSourcesGenerated</h4>
 <pre class="methodSignature">java.lang.Boolean&nbsp;getAssetDbtJobLastRunHasSourcesGenerated()</pre>
-<div class="block">TBC</div>
+<div class="block">Whether sources were generated from the last run of the job that materialized this asset in dbt (true) or not (false).</div>
 </li>
 </ul>
 <a id="getAssetDbtJobLastRunNotificationsSent()">
@@ -3657,7 +3657,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getAssetDbtJobLastRunNotificationsSent</h4>
 <pre class="methodSignature">java.lang.Boolean&nbsp;getAssetDbtJobLastRunNotificationsSent()</pre>
-<div class="block">TBC</div>
+<div class="block">Whether notifications were sent from the last run of the job that materialized this asset in dbt (true) or not (false).</div>
 </li>
 </ul>
 <a id="getAssetDbtJobLastRunOwnerThreadId()">
@@ -3667,7 +3667,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getAssetDbtJobLastRunOwnerThreadId</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getAssetDbtJobLastRunOwnerThreadId()</pre>
-<div class="block">TBC</div>
+<div class="block">Thread ID of the owner of the last run of the job that materialized this asset in dbt.</div>
 </li>
 </ul>
 <a id="getAssetDbtJobLastRunQueuedDuration()">
@@ -3677,7 +3677,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getAssetDbtJobLastRunQueuedDuration</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getAssetDbtJobLastRunQueuedDuration()</pre>
-<div class="block">TBC</div>
+<div class="block">Total duration the job that materialized this asset in dbt spent being queued.</div>
 </li>
 </ul>
 <a id="getAssetDbtJobLastRunQueuedDurationHumanized()">
@@ -3687,7 +3687,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getAssetDbtJobLastRunQueuedDurationHumanized</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getAssetDbtJobLastRunQueuedDurationHumanized()</pre>
-<div class="block">TBC</div>
+<div class="block">Human-readable total duration of the last run of the job that materialized this asset in dbt spend being queued.</div>
 </li>
 </ul>
 <a id="getAssetDbtJobLastRunRunDuration()">
@@ -3697,7 +3697,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getAssetDbtJobLastRunRunDuration</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getAssetDbtJobLastRunRunDuration()</pre>
-<div class="block">TBC</div>
+<div class="block">Run duration of the last run of the job that materialized this asset in dbt.</div>
 </li>
 </ul>
 <a id="getAssetDbtJobLastRunRunDurationHumanized()">
@@ -3707,7 +3707,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getAssetDbtJobLastRunRunDurationHumanized</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getAssetDbtJobLastRunRunDurationHumanized()</pre>
-<div class="block">TBC</div>
+<div class="block">Human-readable run duration of the last run of the job that materialized this asset in dbt.</div>
 </li>
 </ul>
 <a id="getAssetDbtJobLastRunStartedAt()">
@@ -3717,7 +3717,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getAssetDbtJobLastRunStartedAt</h4>
 <pre class="methodSignature">java.lang.Long&nbsp;getAssetDbtJobLastRunStartedAt()</pre>
-<div class="block">TBC</div>
+<div class="block">Time (epoch) at which the job that materialized this asset in dbt was started running, in milliseconds.</div>
 </li>
 </ul>
 <a id="getAssetDbtJobLastRunStatusMessage()">
@@ -3727,7 +3727,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getAssetDbtJobLastRunStatusMessage</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getAssetDbtJobLastRunStatusMessage()</pre>
-<div class="block">TBC</div>
+<div class="block">Status message of the last run of the job that materialized this asset in dbt.</div>
 </li>
 </ul>
 <a id="getAssetDbtJobLastRunTotalDuration()">
@@ -3737,7 +3737,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getAssetDbtJobLastRunTotalDuration</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getAssetDbtJobLastRunTotalDuration()</pre>
-<div class="block">TBC</div>
+<div class="block">Total duration of the last run of the job that materialized this asset in dbt.</div>
 </li>
 </ul>
 <a id="getAssetDbtJobLastRunTotalDurationHumanized()">
@@ -3747,7 +3747,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getAssetDbtJobLastRunTotalDurationHumanized</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getAssetDbtJobLastRunTotalDurationHumanized()</pre>
-<div class="block">TBC</div>
+<div class="block">Human-readable total duration of the last run of the job that materialized this asset in dbt.</div>
 </li>
 </ul>
 <a id="getAssetDbtJobLastRunUpdatedAt()">
@@ -3757,7 +3757,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getAssetDbtJobLastRunUpdatedAt</h4>
 <pre class="methodSignature">java.lang.Long&nbsp;getAssetDbtJobLastRunUpdatedAt()</pre>
-<div class="block">TBC</div>
+<div class="block">Time (epoch) at which the job that materialized this asset in dbt was last updated, in milliseconds.</div>
 </li>
 </ul>
 <a id="getAssetDbtJobLastRunUrl()">
@@ -3767,7 +3767,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getAssetDbtJobLastRunUrl</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getAssetDbtJobLastRunUrl()</pre>
-<div class="block">TBC</div>
+<div class="block">URL of the last run of the job that materialized this asset in dbt.</div>
 </li>
 </ul>
 <a id="getAssetDbtJobName()">
@@ -3777,7 +3777,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getAssetDbtJobName</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getAssetDbtJobName()</pre>
-<div class="block">TBC</div>
+<div class="block">Name of the job that materialized this asset in dbt.</div>
 </li>
 </ul>
 <a id="getAssetDbtJobNextRun()">
@@ -3787,7 +3787,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getAssetDbtJobNextRun</h4>
 <pre class="methodSignature">java.lang.Long&nbsp;getAssetDbtJobNextRun()</pre>
-<div class="block">TBC</div>
+<div class="block">Time (epoch) when the next run of the job that materializes this asset in dbt is scheduled.</div>
 </li>
 </ul>
 <a id="getAssetDbtJobNextRunHumanized()">
@@ -3797,7 +3797,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getAssetDbtJobNextRunHumanized</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getAssetDbtJobNextRunHumanized()</pre>
-<div class="block">TBC</div>
+<div class="block">Human-readable time when the next run of the job that materializes this asset in dbt is scheduled.</div>
 </li>
 </ul>
 <a id="getAssetDbtJobSchedule()">
@@ -3807,7 +3807,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getAssetDbtJobSchedule</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getAssetDbtJobSchedule()</pre>
-<div class="block">TBC</div>
+<div class="block">Schedule of the job that materialized this asset in dbt.</div>
 </li>
 </ul>
 <a id="getAssetDbtJobScheduleCronHumanized()">
@@ -3817,7 +3817,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getAssetDbtJobScheduleCronHumanized</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getAssetDbtJobScheduleCronHumanized()</pre>
-<div class="block">TBC</div>
+<div class="block">Human-readable cron schedule of the job that materialized this asset in dbt.</div>
 </li>
 </ul>
 <a id="getAssetDbtJobStatus()">
@@ -3827,7 +3827,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getAssetDbtJobStatus</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getAssetDbtJobStatus()</pre>
-<div class="block">TBC</div>
+<div class="block">Status of the job that materialized this asset in dbt.</div>
 </li>
 </ul>
 <a id="getAssetDbtMeta()">
@@ -3837,7 +3837,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getAssetDbtMeta</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getAssetDbtMeta()</pre>
-<div class="block">TBC</div>
+<div class="block">Metadata for this asset in dbt, specifically everything under the 'meta' key in the dbt object.</div>
 </li>
 </ul>
 <a id="getAssetDbtPackageName()">
@@ -3847,7 +3847,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getAssetDbtPackageName</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getAssetDbtPackageName()</pre>
-<div class="block">TBC</div>
+<div class="block">Name of the package in which this asset exists in dbt.</div>
 </li>
 </ul>
 <a id="getAssetDbtProjectName()">
@@ -3857,7 +3857,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getAssetDbtProjectName</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getAssetDbtProjectName()</pre>
-<div class="block">TBC</div>
+<div class="block">Name of the project in which this asset exists in dbt.</div>
 </li>
 </ul>
 <a id="getAssetDbtSemanticLayerProxyUrl()">
@@ -3867,7 +3867,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getAssetDbtSemanticLayerProxyUrl</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getAssetDbtSemanticLayerProxyUrl()</pre>
-<div class="block">TBC</div>
+<div class="block">URL of the semantic layer proxy for this asset in dbt.</div>
 </li>
 </ul>
 <a id="getAssetDbtSourceFreshnessCriteria()">
@@ -3877,7 +3877,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getAssetDbtSourceFreshnessCriteria</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getAssetDbtSourceFreshnessCriteria()</pre>
-<div class="block">TBC</div>
+<div class="block">Freshness criteria for the source of this asset in dbt.</div>
 </li>
 </ul>
 <a id="getAssetDbtTags()">
@@ -3887,7 +3887,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getAssetDbtTags</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;java.lang.String&gt;&nbsp;getAssetDbtTags()</pre>
-<div class="block">TBC</div>
+<div class="block">List of tags attached to this asset in dbt.</div>
 </li>
 </ul>
 <a id="getAssetDbtTestStatus()">
@@ -3897,7 +3897,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getAssetDbtTestStatus</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getAssetDbtTestStatus()</pre>
-<div class="block">All associated dbt test statuses</div>
+<div class="block">All associated dbt test statuses.</div>
 </li>
 </ul>
 <a id="getAssetDbtUniqueId()">
@@ -3907,7 +3907,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getAssetDbtUniqueId</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getAssetDbtUniqueId()</pre>
-<div class="block">TBC</div>
+<div class="block">Unique identifier of this asset in dbt.</div>
 </li>
 </ul>
 <a id="getAssetIcon()">
@@ -3917,7 +3917,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getAssetIcon</h4>
 <pre class="methodSignature"><a href="../enums/AtlanIcon.html" title="enum in com.atlan.model.enums">AtlanIcon</a>&nbsp;getAssetIcon()</pre>
-<div class="block">TBC</div>
+<div class="block">Name of the icon to use for this asset. (Only applies to glossaries, currently.)</div>
 </li>
 </ul>
 <a id="getAssetMcIncidentNames()">
@@ -3927,7 +3927,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getAssetMcIncidentNames</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;java.lang.String&gt;&nbsp;getAssetMcIncidentNames()</pre>
-<div class="block">TBC</div>
+<div class="block">List of Monte Carlo incident names attached to this asset.</div>
 </li>
 </ul>
 <a id="getAssetMcIncidentQualifiedNames()">
@@ -3937,7 +3937,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getAssetMcIncidentQualifiedNames</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;java.lang.String&gt;&nbsp;getAssetMcIncidentQualifiedNames()</pre>
-<div class="block">TBC</div>
+<div class="block">List of unique Monte Carlo incident names attached to this asset.</div>
 </li>
 </ul>
 <a id="getAssetMcIncidentSeverities()">
@@ -3947,7 +3947,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getAssetMcIncidentSeverities</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;java.lang.String&gt;&nbsp;getAssetMcIncidentSeverities()</pre>
-<div class="block">TBC</div>
+<div class="block">List of Monte Carlo incident severities associated with this asset.</div>
 </li>
 </ul>
 <a id="getAssetMcIncidentStates()">
@@ -3957,7 +3957,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getAssetMcIncidentStates</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;java.lang.String&gt;&nbsp;getAssetMcIncidentStates()</pre>
-<div class="block">TBC</div>
+<div class="block">List of Monte Carlo incident states associated with this asset.</div>
 </li>
 </ul>
 <a id="getAssetMcIncidentSubTypes()">
@@ -3967,7 +3967,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getAssetMcIncidentSubTypes</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;java.lang.String&gt;&nbsp;getAssetMcIncidentSubTypes()</pre>
-<div class="block">TBC</div>
+<div class="block">List of Monte Carlo incident sub-types associated with this asset.</div>
 </li>
 </ul>
 <a id="getAssetMcIncidentTypes()">
@@ -3977,7 +3977,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getAssetMcIncidentTypes</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;java.lang.String&gt;&nbsp;getAssetMcIncidentTypes()</pre>
-<div class="block">TBC</div>
+<div class="block">List of Monte Carlo incident types associated with this asset.</div>
 </li>
 </ul>
 <a id="getAssetMcLastSyncRunAt()">
@@ -3987,7 +3987,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getAssetMcLastSyncRunAt</h4>
 <pre class="methodSignature">java.lang.Long&nbsp;getAssetMcLastSyncRunAt()</pre>
-<div class="block">TBC</div>
+<div class="block">Time (epoch) at which this asset was last synced from Monte Carlo.</div>
 </li>
 </ul>
 <a id="getAssetMcMonitorNames()">
@@ -3997,7 +3997,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getAssetMcMonitorNames</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;java.lang.String&gt;&nbsp;getAssetMcMonitorNames()</pre>
-<div class="block">TBC</div>
+<div class="block">List of Monte Carlo monitor names attached to this asset.</div>
 </li>
 </ul>
 <a id="getAssetMcMonitorQualifiedNames()">
@@ -4007,7 +4007,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getAssetMcMonitorQualifiedNames</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;java.lang.String&gt;&nbsp;getAssetMcMonitorQualifiedNames()</pre>
-<div class="block">TBC</div>
+<div class="block">List of unique Monte Carlo monitor names attached to this asset.</div>
 </li>
 </ul>
 <a id="getAssetMcMonitorScheduleTypes()">
@@ -4047,7 +4047,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getAssetSodaCheckCount</h4>
 <pre class="methodSignature">java.lang.Long&nbsp;getAssetSodaCheckCount()</pre>
-<div class="block">Soda check count</div>
+<div class="block">Number of checks done via Soda.</div>
 </li>
 </ul>
 <a id="getAssetSodaCheckStatuses()">
@@ -4057,7 +4057,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getAssetSodaCheckStatuses</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getAssetSodaCheckStatuses()</pre>
-<div class="block">All associated soda check statuses</div>
+<div class="block">All associated Soda check statuses.</div>
 </li>
 </ul>
 <a id="getAssetSodaDQStatus()">
@@ -4067,7 +4067,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getAssetSodaDQStatus</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getAssetSodaDQStatus()</pre>
-<div class="block">Soda DQ Status</div>
+<div class="block">Status of data quality from Soda.</div>
 </li>
 </ul>
 <a id="getAssetSodaLastScanAt()">
@@ -4107,7 +4107,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getAssetTags</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;java.lang.String&gt;&nbsp;getAssetTags()</pre>
-<div class="block">TBC</div>
+<div class="block">List of tags attached to this asset.</div>
 </li>
 </ul>
 <a id="getAssignedTerms()">
@@ -4127,7 +4127,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getCertificateStatus</h4>
 <pre class="methodSignature"><a href="../enums/CertificateStatus.html" title="enum in com.atlan.model.enums">CertificateStatus</a>&nbsp;getCertificateStatus()</pre>
-<div class="block">Status of the asset's certification.</div>
+<div class="block">Status of this asset's certification.</div>
 </li>
 </ul>
 <a id="getCertificateStatusMessage()">
@@ -4137,7 +4137,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getCertificateStatusMessage</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getCertificateStatusMessage()</pre>
-<div class="block">Human-readable descriptive message that can optionally be submitted when the certificateStatus is changed.</div>
+<div class="block">Human-readable descriptive message used to provide further detail to certificateStatus.</div>
 </li>
 </ul>
 <a id="getCertificateUpdatedAt()">
@@ -4157,7 +4157,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getCertificateUpdatedBy</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getCertificateUpdatedBy()</pre>
-<div class="block">Name of the user who last updated the certification of the asset.</div>
+<div class="block">Name of the user who last updated the certification of this asset.</div>
 </li>
 </ul>
 <a id="getConnectionName()">
@@ -4167,7 +4167,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getConnectionName</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getConnectionName()</pre>
-<div class="block">TBC</div>
+<div class="block">Simple name of the connection through which this asset is accessible.</div>
 </li>
 </ul>
 <a id="getConnectionQualifiedName()">
@@ -4197,7 +4197,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getDbtQualifiedName</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getDbtQualifiedName()</pre>
-<div class="block">TBC</div>
+<div class="block">Unique name of this asset in dbt.</div>
 </li>
 </ul>
 <a id="getDescription()">
@@ -4207,7 +4207,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getDescription</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getDescription()</pre>
-<div class="block">Description of the asset, as crawled from a source.</div>
+<div class="block">Description of this asset, for example as crawled from a source. Fallback for display purposes, if userDescription is empty.</div>
 </li>
 </ul>
 <a id="getDisplayName()">
@@ -4217,7 +4217,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getDisplayName</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getDisplayName()</pre>
-<div class="block">Name used for display purposes (in user interfaces).</div>
+<div class="block">Human-readable name of this asset used for display purposes (in user interface).</div>
 </li>
 </ul>
 <a id="getFiles()">
@@ -4237,7 +4237,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getHasLineage</h4>
 <pre class="methodSignature">java.lang.Boolean&nbsp;getHasLineage()</pre>
-<div class="block">Indicates whether this asset has lineage (true) or not.</div>
+<div class="block">Whether this asset has lineage (true) or not (false).</div>
 </li>
 </ul>
 <a id="getIsAIGenerated()">
@@ -4257,7 +4257,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getIsDiscoverable</h4>
 <pre class="methodSignature">java.lang.Boolean&nbsp;getIsDiscoverable()</pre>
-<div class="block">TBC</div>
+<div class="block">Whether this asset is discoverable through the UI (true) or not (false).</div>
 </li>
 </ul>
 <a id="getIsEditable()">
@@ -4267,7 +4267,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getIsEditable</h4>
 <pre class="methodSignature">java.lang.Boolean&nbsp;getIsEditable()</pre>
-<div class="block">TBC</div>
+<div class="block">Whether this asset can be edited in the UI (true) or not (false).</div>
 </li>
 </ul>
 <a id="getLastRowChangedAt()">
@@ -4277,7 +4277,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getLastRowChangedAt</h4>
 <pre class="methodSignature">java.lang.Long&nbsp;getLastRowChangedAt()</pre>
-<div class="block">Timestamp of last operation that inserted, updated, or deleted rows.</div>
+<div class="block">Time (epoch) of the last operation that inserted, updated, or deleted rows, in milliseconds.</div>
 </li>
 </ul>
 <a id="getLastSyncRun()">
@@ -4297,7 +4297,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getLastSyncRunAt</h4>
 <pre class="methodSignature">java.lang.Long&nbsp;getLastSyncRunAt()</pre>
-<div class="block">Time (epoch) at which the asset was last crawled, in milliseconds.</div>
+<div class="block">Time (epoch) at which this asset was last crawled, in milliseconds.</div>
 </li>
 </ul>
 <a id="getLastSyncWorkflowName()">
@@ -4317,7 +4317,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getLinks</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="ILink.html" title="interface in com.atlan.model.assets">ILink</a>&gt;&nbsp;getLinks()</pre>
-<div class="block">Resources that are linked to this asset.</div>
+<div class="block">Links that are attached to this asset.</div>
 </li>
 </ul>
 <a id="getMcIncidents()">
@@ -4337,7 +4337,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getMcMonitors</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="IMCMonitor.html" title="interface in com.atlan.model.assets">IMCMonitor</a>&gt;&nbsp;getMcMonitors()</pre>
-<div class="block">TBC</div>
+<div class="block">Monitors that observe this asset.</div>
 </li>
 </ul>
 <a id="getMetrics()">
@@ -4357,7 +4357,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getName</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getName()</pre>
-<div class="block">Human-readable name of the asset.</div>
+<div class="block">Name of this asset. Fallback for display purposes, if displayName is empty.</div>
 </li>
 </ul>
 <a id="getOwnerGroups()">
@@ -4367,7 +4367,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getOwnerGroups</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;java.lang.String&gt;&nbsp;getOwnerGroups()</pre>
-<div class="block">List of groups who own the asset.</div>
+<div class="block">List of groups who own this asset.</div>
 </li>
 </ul>
 <a id="getOwnerUsers()">
@@ -4377,7 +4377,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getOwnerUsers</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;java.lang.String&gt;&nbsp;getOwnerUsers()</pre>
-<div class="block">List of users who own the asset.</div>
+<div class="block">List of users who own this asset.</div>
 </li>
 </ul>
 <a id="getPopularityScore()">
@@ -4387,7 +4387,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getPopularityScore</h4>
 <pre class="methodSignature">java.lang.Double&nbsp;getPopularityScore()</pre>
-<div class="block">TBC</div>
+<div class="block">Popularity score for this asset.</div>
 </li>
 </ul>
 <a id="getQualifiedName()">
@@ -4417,7 +4417,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getSampleDataUrl</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getSampleDataUrl()</pre>
-<div class="block">TBC</div>
+<div class="block">URL for sample data for this asset.</div>
 </li>
 </ul>
 <a id="getSchemaRegistrySubjects()">
@@ -4457,7 +4457,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getSourceCreatedAt</h4>
 <pre class="methodSignature">java.lang.Long&nbsp;getSourceCreatedAt()</pre>
-<div class="block">Time (epoch) at which the asset was created in the source system, in milliseconds.</div>
+<div class="block">Time (epoch) at which this asset was created in the source system, in milliseconds.</div>
 </li>
 </ul>
 <a id="getSourceCreatedBy()">
@@ -4467,7 +4467,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getSourceCreatedBy</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getSourceCreatedBy()</pre>
-<div class="block">Who created the asset, in the source system.</div>
+<div class="block">Name of the user who created this asset, in the source system.</div>
 </li>
 </ul>
 <a id="getSourceEmbedURL()">
@@ -4497,7 +4497,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getSourceOwners</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getSourceOwners()</pre>
-<div class="block">TBC</div>
+<div class="block">List of owners of this asset, in the source system.</div>
 </li>
 </ul>
 <a id="getSourceQueryComputeCostRecords()">
@@ -4567,7 +4567,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getSourceReadRecentUserRecords</h4>
 <pre class="methodSignature">java.util.List&lt;<a href="../structs/PopularityInsights.html" title="class in com.atlan.model.structs">PopularityInsights</a>&gt;&nbsp;getSourceReadRecentUserRecords()</pre>
-<div class="block">List of usernames with extra insights for the most recent users who read the asset.</div>
+<div class="block">List of usernames with extra insights for the most recent users who read this asset.</div>
 </li>
 </ul>
 <a id="getSourceReadRecentUsers()">
@@ -4577,7 +4577,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getSourceReadRecentUsers</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;java.lang.String&gt;&nbsp;getSourceReadRecentUsers()</pre>
-<div class="block">List of usernames of the most recent users who read the asset.</div>
+<div class="block">List of usernames of the most recent users who read this asset.</div>
 </li>
 </ul>
 <a id="getSourceReadSlowQueryRecords()">
@@ -4597,7 +4597,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getSourceReadTopUserRecords</h4>
 <pre class="methodSignature">java.util.List&lt;<a href="../structs/PopularityInsights.html" title="class in com.atlan.model.structs">PopularityInsights</a>&gt;&nbsp;getSourceReadTopUserRecords()</pre>
-<div class="block">List of usernames with extra insights for the users who read the asset the most.</div>
+<div class="block">List of usernames with extra insights for the users who read this asset the most.</div>
 </li>
 </ul>
 <a id="getSourceReadTopUsers()">
@@ -4607,7 +4607,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getSourceReadTopUsers</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;java.lang.String&gt;&nbsp;getSourceReadTopUsers()</pre>
-<div class="block">List of usernames of the users who read the asset the most.</div>
+<div class="block">List of usernames of the users who read this asset the most.</div>
 </li>
 </ul>
 <a id="getSourceReadUserCount()">
@@ -4637,7 +4637,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getSourceURL</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getSourceURL()</pre>
-<div class="block">URL to the resource within the source application.</div>
+<div class="block">URL to the resource within the source application, used to create a button to view this asset in the source application.</div>
 </li>
 </ul>
 <a id="getSourceUpdatedAt()">
@@ -4647,7 +4647,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getSourceUpdatedAt</h4>
 <pre class="methodSignature">java.lang.Long&nbsp;getSourceUpdatedAt()</pre>
-<div class="block">Time (epoch) at which the asset was last updated in the source system, in milliseconds.</div>
+<div class="block">Time (epoch) at which this asset was last updated in the source system, in milliseconds.</div>
 </li>
 </ul>
 <a id="getSourceUpdatedBy()">
@@ -4657,7 +4657,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getSourceUpdatedBy</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getSourceUpdatedBy()</pre>
-<div class="block">Who last updated the asset in the source system.</div>
+<div class="block">Name of the user who last updated this asset, in the source system.</div>
 </li>
 </ul>
 <a id="getStarredBy()">
@@ -4677,7 +4677,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getStarredCount</h4>
 <pre class="methodSignature">java.lang.Integer&nbsp;getStarredCount()</pre>
-<div class="block">TBC</div>
+<div class="block">Number of users who have starred this asset.</div>
 </li>
 </ul>
 <a id="getStarredDetails()">
@@ -4687,7 +4687,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getStarredDetails</h4>
 <pre class="methodSignature">java.util.List&lt;<a href="../structs/StarredDetails.html" title="class in com.atlan.model.structs">StarredDetails</a>&gt;&nbsp;getStarredDetails()</pre>
-<div class="block">List of usernames with extra information of the users who have starred an asset</div>
+<div class="block">List of usernames with extra information of the users who have starred an asset.</div>
 </li>
 </ul>
 <a id="getSubType()">
@@ -4697,7 +4697,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getSubType</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getSubType()</pre>
-<div class="block">TBC</div>
+<div class="block">Subtype of this asset.</div>
 </li>
 </ul>
 <a id="getTenantId()">
@@ -4707,7 +4707,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getTenantId</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getTenantId()</pre>
-<div class="block">Name of the Atlan workspace in which the asset exists.</div>
+<div class="block">Name of the Atlan workspace in which this asset exists.</div>
 </li>
 </ul>
 <a id="getUserDescription()">
@@ -4717,7 +4717,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getUserDescription</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getUserDescription()</pre>
-<div class="block">Description of the asset, as provided by a user. If present, this will be used for the description in user interfaces. If not present, the description will be used.</div>
+<div class="block">Description of this asset, as provided by a user. If present, this will be used for the description in user interface.</div>
 </li>
 </ul>
 <a id="getViewScore()">
@@ -4727,7 +4727,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getViewScore</h4>
 <pre class="methodSignature">java.lang.Double&nbsp;getViewScore()</pre>
-<div class="block">TBC</div>
+<div class="block">View score for this asset.</div>
 </li>
 </ul>
 <a id="getViewerGroups()">
@@ -4737,7 +4737,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getViewerGroups</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;java.lang.String&gt;&nbsp;getViewerGroups()</pre>
-<div class="block">TBC</div>
+<div class="block">List of groups who can view assets contained in a collection. (This is only used for certain asset types.)</div>
 </li>
 </ul>
 <a id="getViewerUsers()">
@@ -4747,7 +4747,7 @@ public interface <span class="typeNameLabel">IAsset</span></pre>
 <li class="blockList">
 <h4>getViewerUsers</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;java.lang.String&gt;&nbsp;getViewerUsers()</pre>
-<div class="block">TBC</div>
+<div class="block">List of users who can view assets contained in a collection. (This is only used for certain asset types.)</div>
 </li>
 </ul>
 <a id="getTypeName()">

@@ -496,7 +496,7 @@ implements <a href="IMCMonitor.html" title="interface in com.atlan.model.assets"
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInputToProcesses()">getInputToProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 </td>
 </tr>
 <tr id="i22" class="altColor">
@@ -531,14 +531,14 @@ implements <a href="IMCMonitor.html" title="interface in com.atlan.model.assets"
 <td class="colFirst"><code>java.lang.Double</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMcMonitorBreachRate()">getMcMonitorBreachRate</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Rate at which this monitor is breached.</div>
 </td>
 </tr>
 <tr id="i27" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMcMonitorId()">getMcMonitorId</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Unique identifier for the monitor.</div>
+<div class="block">Unique identifier for this monitor, from Monte Carlo.</div>
 </td>
 </tr>
 <tr id="i28" class="altColor">
@@ -552,7 +552,7 @@ implements <a href="IMCMonitor.html" title="interface in com.atlan.model.assets"
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMcMonitorNamespace()">getMcMonitorNamespace</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Namespace of the monitor.</div>
+<div class="block">Namespace of this monitor.</div>
 </td>
 </tr>
 <tr id="i30" class="altColor">
@@ -608,35 +608,35 @@ implements <a href="IMCMonitor.html" title="interface in com.atlan.model.assets"
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMcMonitorRuleType()">getMcMonitorRuleType</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Type of rule for the monitor.</div>
+<div class="block">Type of rule for this monitor.</div>
 </td>
 </tr>
 <tr id="i38" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMcMonitorScheduleType()">getMcMonitorScheduleType</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Type of schedule for the monitor, for example fixed or dynamic.</div>
+<div class="block">Type of schedule for this monitor, for example: fixed or dynamic.</div>
 </td>
 </tr>
 <tr id="i39" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMcMonitorStatus()">getMcMonitorStatus</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Status of the monitor.</div>
+<div class="block">Status of this monitor.</div>
 </td>
 </tr>
 <tr id="i40" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMcMonitorType()">getMcMonitorType</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Type of monitor, for example field health (stats) or dimension tracking (categories).</div>
+<div class="block">Type of this monitor, for example: field health (stats) or dimension tracking (categories).</div>
 </td>
 </tr>
 <tr id="i41" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMcMonitorWarehouse()">getMcMonitorWarehouse</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Name of the warehouse for the monitor.</div>
+<div class="block">Name of the warehouse for this monitor.</div>
 </td>
 </tr>
 <tr id="i42" class="altColor">
@@ -650,7 +650,7 @@ implements <a href="IMCMonitor.html" title="interface in com.atlan.model.assets"
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOutputFromProcesses()">getOutputFromProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 </td>
 </tr>
 <tr id="i44" class="altColor">
@@ -2327,7 +2327,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getInputToProcesses</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getInputToProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ICatalog.html#getInputToProcesses()">getInputToProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a></code></dd>
@@ -2407,7 +2407,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getMcMonitorBreachRate</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Double&nbsp;getMcMonitorBreachRate()</pre>
-<div class="block">TBC</div>
+<div class="block">Rate at which this monitor is breached.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IMCMonitor.html#getMcMonitorBreachRate()">getMcMonitorBreachRate</a></code>&nbsp;in interface&nbsp;<code><a href="IMCMonitor.html" title="interface in com.atlan.model.assets">IMCMonitor</a></code></dd>
@@ -2421,7 +2421,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getMcMonitorId</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getMcMonitorId()</pre>
-<div class="block">Unique identifier for the monitor.</div>
+<div class="block">Unique identifier for this monitor, from Monte Carlo.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IMCMonitor.html#getMcMonitorId()">getMcMonitorId</a></code>&nbsp;in interface&nbsp;<code><a href="IMCMonitor.html" title="interface in com.atlan.model.assets">IMCMonitor</a></code></dd>
@@ -2449,7 +2449,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getMcMonitorNamespace</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getMcMonitorNamespace()</pre>
-<div class="block">Namespace of the monitor.</div>
+<div class="block">Namespace of this monitor.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IMCMonitor.html#getMcMonitorNamespace()">getMcMonitorNamespace</a></code>&nbsp;in interface&nbsp;<code><a href="IMCMonitor.html" title="interface in com.atlan.model.assets">IMCMonitor</a></code></dd>
@@ -2561,7 +2561,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getMcMonitorRuleType</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getMcMonitorRuleType()</pre>
-<div class="block">Type of rule for the monitor.</div>
+<div class="block">Type of rule for this monitor.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IMCMonitor.html#getMcMonitorRuleType()">getMcMonitorRuleType</a></code>&nbsp;in interface&nbsp;<code><a href="IMCMonitor.html" title="interface in com.atlan.model.assets">IMCMonitor</a></code></dd>
@@ -2575,7 +2575,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getMcMonitorScheduleType</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getMcMonitorScheduleType()</pre>
-<div class="block">Type of schedule for the monitor, for example fixed or dynamic.</div>
+<div class="block">Type of schedule for this monitor, for example: fixed or dynamic.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IMCMonitor.html#getMcMonitorScheduleType()">getMcMonitorScheduleType</a></code>&nbsp;in interface&nbsp;<code><a href="IMCMonitor.html" title="interface in com.atlan.model.assets">IMCMonitor</a></code></dd>
@@ -2589,7 +2589,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getMcMonitorStatus</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getMcMonitorStatus()</pre>
-<div class="block">Status of the monitor.</div>
+<div class="block">Status of this monitor.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IMCMonitor.html#getMcMonitorStatus()">getMcMonitorStatus</a></code>&nbsp;in interface&nbsp;<code><a href="IMCMonitor.html" title="interface in com.atlan.model.assets">IMCMonitor</a></code></dd>
@@ -2603,7 +2603,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getMcMonitorType</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getMcMonitorType()</pre>
-<div class="block">Type of monitor, for example field health (stats) or dimension tracking (categories).</div>
+<div class="block">Type of this monitor, for example: field health (stats) or dimension tracking (categories).</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IMCMonitor.html#getMcMonitorType()">getMcMonitorType</a></code>&nbsp;in interface&nbsp;<code><a href="IMCMonitor.html" title="interface in com.atlan.model.assets">IMCMonitor</a></code></dd>
@@ -2617,7 +2617,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getMcMonitorWarehouse</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getMcMonitorWarehouse()</pre>
-<div class="block">Name of the warehouse for the monitor.</div>
+<div class="block">Name of the warehouse for this monitor.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IMCMonitor.html#getMcMonitorWarehouse()">getMcMonitorWarehouse</a></code>&nbsp;in interface&nbsp;<code><a href="IMCMonitor.html" title="interface in com.atlan.model.assets">IMCMonitor</a></code></dd>
@@ -2651,7 +2651,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getOutputFromProcesses</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getOutputFromProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ICatalog.html#getOutputFromProcesses()">getOutputFromProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a></code></dd>

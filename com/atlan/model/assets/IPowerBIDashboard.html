@@ -129,7 +129,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <hr>
 <pre>@Generated("com.atlan.generators.ModelGeneratorV2")
 public interface <span class="typeNameLabel">IPowerBIDashboard</span></pre>
-<div class="block">Instance of a Power BI dashboard in Atlan.</div>
+<div class="block">Instance of a Power BI dashboard in Atlan. Dashboards are a single page, often called a canvas, that tell a story through visualization.</div>
 </li>
 </ul>
 </div>
@@ -154,14 +154,14 @@ public interface <span class="typeNameLabel">IPowerBIDashboard</span></pre>
 <td class="colFirst"><code>static <a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#TILE_COUNT">TILE_COUNT</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Number of tiles in this table.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/RelationField.html" title="class in com.atlan.model.fields">RelationField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#TILES">TILES</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Tiles that exist within this dashboard.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -173,21 +173,21 @@ public interface <span class="typeNameLabel">IPowerBIDashboard</span></pre>
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#WEB_URL">WEB_URL</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Deprecated.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/RelationField.html" title="class in com.atlan.model.fields">RelationField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#WORKSPACE">WORKSPACE</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Workspace in which this dashboard exists.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#WORKSPACE_QUALIFIED_NAME">WORKSPACE_QUALIFIED_NAME</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Unique name of the workspace in which this dashboard exists.</div>
 </td>
 </tr>
 </table>
@@ -688,7 +688,7 @@ public interface <span class="typeNameLabel">IPowerBIDashboard</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IGlossaryTerm.html" title="interface in com.atlan.model.assets">IGlossaryTerm</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssignedTerms()">getAssignedTerms</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Glossary terms that are linked to this asset.</div>
 </td>
 </tr>
 <tr id="i69" class="rowColor">
@@ -807,7 +807,7 @@ public interface <span class="typeNameLabel">IPowerBIDashboard</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInputToProcesses()">getInputToProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 </td>
 </tr>
 <tr id="i86" class="altColor">
@@ -863,7 +863,7 @@ public interface <span class="typeNameLabel">IPowerBIDashboard</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILink.html" title="interface in com.atlan.model.assets">ILink</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLinks()">getLinks</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Links that are attached to this asset.</div>
 </td>
 </tr>
 <tr id="i94" class="altColor">
@@ -877,7 +877,7 @@ public interface <span class="typeNameLabel">IPowerBIDashboard</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IMCMonitor.html" title="interface in com.atlan.model.assets">IMCMonitor</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMcMonitors()">getMcMonitors</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Monitors that observe this asset.</div>
 </td>
 </tr>
 <tr id="i96" class="altColor">
@@ -905,7 +905,7 @@ public interface <span class="typeNameLabel">IPowerBIDashboard</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOutputFromProcesses()">getOutputFromProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 </td>
 </tr>
 <tr id="i100" class="altColor">
@@ -968,7 +968,7 @@ public interface <span class="typeNameLabel">IPowerBIDashboard</span></pre>
 <td class="colFirst"><code><a href="IReadme.html" title="interface in com.atlan.model.assets">IReadme</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getReadme()">getReadme</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">README that is linked to this asset.</div>
 </td>
 </tr>
 <tr id="i109" class="rowColor">
@@ -1213,14 +1213,14 @@ public interface <span class="typeNameLabel">IPowerBIDashboard</span></pre>
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTileCount()">getTileCount</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Number of tiles in this table.</div>
 </td>
 </tr>
 <tr id="i144" class="altColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IPowerBITile.html" title="interface in com.atlan.model.assets">IPowerBITile</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTiles()">getTiles</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Tiles that exist within this dashboard.</div>
 </td>
 </tr>
 <tr id="i145" class="rowColor">
@@ -1269,21 +1269,21 @@ public interface <span class="typeNameLabel">IPowerBIDashboard</span></pre>
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getWebUrl()">getWebUrl</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Deprecated.</div>
 </td>
 </tr>
 <tr id="i152" class="altColor">
 <td class="colFirst"><code><a href="IPowerBIWorkspace.html" title="interface in com.atlan.model.assets">IPowerBIWorkspace</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getWorkspace()">getWorkspace</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Workspace in which this dashboard exists.</div>
 </td>
 </tr>
 <tr id="i153" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getWorkspaceQualifiedName()">getWorkspaceQualifiedName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Unique name of the workspace in which this dashboard exists.</div>
 </td>
 </tr>
 <tr id="i154" class="altColor">
@@ -1344,7 +1344,7 @@ public interface <span class="typeNameLabel">IPowerBIDashboard</span></pre>
 <li class="blockList">
 <h4>TILE_COUNT</h4>
 <pre>static final&nbsp;<a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a> TILE_COUNT</pre>
-<div class="block">TBC</div>
+<div class="block">Number of tiles in this table.</div>
 </li>
 </ul>
 <a id="TILES">
@@ -1354,7 +1354,7 @@ public interface <span class="typeNameLabel">IPowerBIDashboard</span></pre>
 <li class="blockList">
 <h4>TILES</h4>
 <pre>static final&nbsp;<a href="../fields/RelationField.html" title="class in com.atlan.model.fields">RelationField</a> TILES</pre>
-<div class="block">TBC</div>
+<div class="block">Tiles that exist within this dashboard.</div>
 </li>
 </ul>
 <a id="WEB_URL">
@@ -1364,7 +1364,7 @@ public interface <span class="typeNameLabel">IPowerBIDashboard</span></pre>
 <li class="blockList">
 <h4>WEB_URL</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> WEB_URL</pre>
-<div class="block">TBC</div>
+<div class="block">Deprecated. See 'sourceUrl' instead.</div>
 </li>
 </ul>
 <a id="WORKSPACE">
@@ -1374,7 +1374,7 @@ public interface <span class="typeNameLabel">IPowerBIDashboard</span></pre>
 <li class="blockList">
 <h4>WORKSPACE</h4>
 <pre>static final&nbsp;<a href="../fields/RelationField.html" title="class in com.atlan.model.fields">RelationField</a> WORKSPACE</pre>
-<div class="block">TBC</div>
+<div class="block">Workspace in which this dashboard exists.</div>
 </li>
 </ul>
 <a id="WORKSPACE_QUALIFIED_NAME">
@@ -1384,7 +1384,7 @@ public interface <span class="typeNameLabel">IPowerBIDashboard</span></pre>
 <li class="blockList">
 <h4>WORKSPACE_QUALIFIED_NAME</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> WORKSPACE_QUALIFIED_NAME</pre>
-<div class="block">TBC</div>
+<div class="block">Unique name of the workspace in which this dashboard exists.</div>
 </li>
 </ul>
 </li>
@@ -2084,7 +2084,7 @@ public interface <span class="typeNameLabel">IPowerBIDashboard</span></pre>
 <li class="blockList">
 <h4>getAssignedTerms</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="IGlossaryTerm.html" title="interface in com.atlan.model.assets">IGlossaryTerm</a>&gt;&nbsp;getAssignedTerms()</pre>
-<div class="block">TBC</div>
+<div class="block">Glossary terms that are linked to this asset.</div>
 </li>
 </ul>
 <a id="getCertificateStatus()">
@@ -2224,7 +2224,7 @@ public interface <span class="typeNameLabel">IPowerBIDashboard</span></pre>
 <li class="blockList">
 <h4>getInputToProcesses</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getInputToProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 </li>
 </ul>
 <a id="getIsAIGenerated()">
@@ -2304,7 +2304,7 @@ public interface <span class="typeNameLabel">IPowerBIDashboard</span></pre>
 <li class="blockList">
 <h4>getLinks</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="ILink.html" title="interface in com.atlan.model.assets">ILink</a>&gt;&nbsp;getLinks()</pre>
-<div class="block">TBC</div>
+<div class="block">Links that are attached to this asset.</div>
 </li>
 </ul>
 <a id="getMcIncidents()">
@@ -2324,7 +2324,7 @@ public interface <span class="typeNameLabel">IPowerBIDashboard</span></pre>
 <li class="blockList">
 <h4>getMcMonitors</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="IMCMonitor.html" title="interface in com.atlan.model.assets">IMCMonitor</a>&gt;&nbsp;getMcMonitors()</pre>
-<div class="block">TBC</div>
+<div class="block">Monitors that observe this asset.</div>
 </li>
 </ul>
 <a id="getMetrics()">
@@ -2364,7 +2364,7 @@ public interface <span class="typeNameLabel">IPowerBIDashboard</span></pre>
 <li class="blockList">
 <h4>getOutputFromProcesses</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getOutputFromProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 </li>
 </ul>
 <a id="getOwnerGroups()">
@@ -2454,7 +2454,7 @@ public interface <span class="typeNameLabel">IPowerBIDashboard</span></pre>
 <li class="blockList">
 <h4>getReadme</h4>
 <pre class="methodSignature"><a href="IReadme.html" title="interface in com.atlan.model.assets">IReadme</a>&nbsp;getReadme()</pre>
-<div class="block">TBC</div>
+<div class="block">README that is linked to this asset.</div>
 </li>
 </ul>
 <a id="getSampleDataUrl()">
@@ -2764,7 +2764,7 @@ public interface <span class="typeNameLabel">IPowerBIDashboard</span></pre>
 <li class="blockList">
 <h4>getTileCount</h4>
 <pre class="methodSignature">java.lang.Long&nbsp;getTileCount()</pre>
-<div class="block">TBC</div>
+<div class="block">Number of tiles in this table.</div>
 </li>
 </ul>
 <a id="getTiles()">
@@ -2774,7 +2774,7 @@ public interface <span class="typeNameLabel">IPowerBIDashboard</span></pre>
 <li class="blockList">
 <h4>getTiles</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="IPowerBITile.html" title="interface in com.atlan.model.assets">IPowerBITile</a>&gt;&nbsp;getTiles()</pre>
-<div class="block">TBC</div>
+<div class="block">Tiles that exist within this dashboard.</div>
 </li>
 </ul>
 <a id="getUserDescription()">
@@ -2824,7 +2824,7 @@ public interface <span class="typeNameLabel">IPowerBIDashboard</span></pre>
 <li class="blockList">
 <h4>getWebUrl</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getWebUrl()</pre>
-<div class="block">TBC</div>
+<div class="block">Deprecated. See 'sourceUrl' instead.</div>
 </li>
 </ul>
 <a id="getWorkspace()">
@@ -2834,7 +2834,7 @@ public interface <span class="typeNameLabel">IPowerBIDashboard</span></pre>
 <li class="blockList">
 <h4>getWorkspace</h4>
 <pre class="methodSignature"><a href="IPowerBIWorkspace.html" title="interface in com.atlan.model.assets">IPowerBIWorkspace</a>&nbsp;getWorkspace()</pre>
-<div class="block">TBC</div>
+<div class="block">Workspace in which this dashboard exists.</div>
 </li>
 </ul>
 <a id="getWorkspaceQualifiedName()">
@@ -2844,7 +2844,7 @@ public interface <span class="typeNameLabel">IPowerBIDashboard</span></pre>
 <li class="blockList">
 <h4>getWorkspaceQualifiedName</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getWorkspaceQualifiedName()</pre>
-<div class="block">TBC</div>
+<div class="block">Unique name of the workspace in which this dashboard exists.</div>
 </li>
 </ul>
 <a id="getTypeName()">

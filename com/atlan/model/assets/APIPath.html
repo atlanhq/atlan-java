@@ -519,49 +519,49 @@ implements <a href="IAPIPath.html" title="interface in com.atlan.model.assets">I
 <td class="colFirst"><code>java.util.SortedSet&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getApiPathAvailableOperations()">getApiPathAvailableOperations</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">List of the operations available on the endpoint.</div>
 </td>
 </tr>
 <tr id="i25" class="rowColor">
 <td class="colFirst"><code>java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getApiPathAvailableResponseCodes()">getApiPathAvailableResponseCodes</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Response codes available on the path across all operations.</div>
 </td>
 </tr>
 <tr id="i26" class="altColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getApiPathIsIngressExposed()">getApiPathIsIngressExposed</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Whether the path is exposed as an ingress (true) or not (false).</div>
 </td>
 </tr>
 <tr id="i27" class="rowColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getApiPathIsTemplated()">getApiPathIsTemplated</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Whether the endpoint's path contains replaceable parameters (true) or not (false).</div>
 </td>
 </tr>
 <tr id="i28" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getApiPathRawURI()">getApiPathRawURI</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Absolute path to an individual endpoint.</div>
 </td>
 </tr>
 <tr id="i29" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getApiPathSummary()">getApiPathSummary</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Descriptive summary intended to apply to all operations in this path.</div>
 </td>
 </tr>
 <tr id="i30" class="altColor">
 <td class="colFirst"><code><a href="IAPISpec.html" title="interface in com.atlan.model.assets">IAPISpec</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getApiSpec()">getApiSpec</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">API specification in which this path exists.</div>
 </td>
 </tr>
 <tr id="i31" class="rowColor">
@@ -603,7 +603,7 @@ implements <a href="IAPIPath.html" title="interface in com.atlan.model.assets">I
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInputToProcesses()">getInputToProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 </td>
 </tr>
 <tr id="i37" class="rowColor">
@@ -617,7 +617,7 @@ implements <a href="IAPIPath.html" title="interface in com.atlan.model.assets">I
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOutputFromProcesses()">getOutputFromProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 </td>
 </tr>
 <tr id="i39" class="rowColor">
@@ -2339,7 +2339,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getApiPathAvailableOperations</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;java.lang.String&gt;&nbsp;getApiPathAvailableOperations()</pre>
-<div class="block">TBC</div>
+<div class="block">List of the operations available on the endpoint.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IAPIPath.html#getApiPathAvailableOperations()">getApiPathAvailableOperations</a></code>&nbsp;in interface&nbsp;<code><a href="IAPIPath.html" title="interface in com.atlan.model.assets">IAPIPath</a></code></dd>
@@ -2353,7 +2353,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getApiPathAvailableResponseCodes</h4>
 <pre class="methodSignature">public&nbsp;java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;getApiPathAvailableResponseCodes()</pre>
-<div class="block">TBC</div>
+<div class="block">Response codes available on the path across all operations.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IAPIPath.html#getApiPathAvailableResponseCodes()">getApiPathAvailableResponseCodes</a></code>&nbsp;in interface&nbsp;<code><a href="IAPIPath.html" title="interface in com.atlan.model.assets">IAPIPath</a></code></dd>
@@ -2367,7 +2367,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getApiPathIsIngressExposed</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Boolean&nbsp;getApiPathIsIngressExposed()</pre>
-<div class="block">TBC</div>
+<div class="block">Whether the path is exposed as an ingress (true) or not (false).</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IAPIPath.html#getApiPathIsIngressExposed()">getApiPathIsIngressExposed</a></code>&nbsp;in interface&nbsp;<code><a href="IAPIPath.html" title="interface in com.atlan.model.assets">IAPIPath</a></code></dd>
@@ -2381,7 +2381,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getApiPathIsTemplated</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Boolean&nbsp;getApiPathIsTemplated()</pre>
-<div class="block">TBC</div>
+<div class="block">Whether the endpoint's path contains replaceable parameters (true) or not (false).</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IAPIPath.html#getApiPathIsTemplated()">getApiPathIsTemplated</a></code>&nbsp;in interface&nbsp;<code><a href="IAPIPath.html" title="interface in com.atlan.model.assets">IAPIPath</a></code></dd>
@@ -2395,7 +2395,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getApiPathRawURI</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getApiPathRawURI()</pre>
-<div class="block">TBC</div>
+<div class="block">Absolute path to an individual endpoint.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IAPIPath.html#getApiPathRawURI()">getApiPathRawURI</a></code>&nbsp;in interface&nbsp;<code><a href="IAPIPath.html" title="interface in com.atlan.model.assets">IAPIPath</a></code></dd>
@@ -2409,7 +2409,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getApiPathSummary</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getApiPathSummary()</pre>
-<div class="block">TBC</div>
+<div class="block">Descriptive summary intended to apply to all operations in this path.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IAPIPath.html#getApiPathSummary()">getApiPathSummary</a></code>&nbsp;in interface&nbsp;<code><a href="IAPIPath.html" title="interface in com.atlan.model.assets">IAPIPath</a></code></dd>
@@ -2423,7 +2423,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getApiSpec</h4>
 <pre class="methodSignature">public&nbsp;<a href="IAPISpec.html" title="interface in com.atlan.model.assets">IAPISpec</a>&nbsp;getApiSpec()</pre>
-<div class="block">TBC</div>
+<div class="block">API specification in which this path exists.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IAPIPath.html#getApiSpec()">getApiSpec</a></code>&nbsp;in interface&nbsp;<code><a href="IAPIPath.html" title="interface in com.atlan.model.assets">IAPIPath</a></code></dd>
@@ -2519,7 +2519,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getInputToProcesses</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getInputToProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IAPI.html#getInputToProcesses()">getInputToProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="IAPI.html" title="interface in com.atlan.model.assets">IAPI</a></code></dd>
@@ -2555,7 +2555,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getOutputFromProcesses</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getOutputFromProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IAPI.html#getOutputFromProcesses()">getOutputFromProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="IAPI.html" title="interface in com.atlan.model.assets">IAPI</a></code></dd>

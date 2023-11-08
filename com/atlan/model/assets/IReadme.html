@@ -154,7 +154,7 @@ public interface <span class="typeNameLabel">IReadme</span></pre>
 <td class="colFirst"><code>static <a href="../fields/RelationField.html" title="class in com.atlan.model.fields">RelationField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ASSET">ASSET</a></span></code></th>
 <td class="colLast">
-<div class="block">Asset to which the README is linked.</div>
+<div class="block">Asset that this README describes.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -247,7 +247,7 @@ public interface <span class="typeNameLabel">IReadme</span></pre>
 <td class="colFirst"><code><a href="IAsset.html" title="interface in com.atlan.model.assets">IAsset</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAsset()">getAsset</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Asset to which the README is linked.</div>
+<div class="block">Asset that this README describes.</div>
 </td>
 </tr>
 <tr id="i9" class="rowColor">
@@ -674,7 +674,7 @@ public interface <span class="typeNameLabel">IReadme</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IGlossaryTerm.html" title="interface in com.atlan.model.assets">IGlossaryTerm</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssignedTerms()">getAssignedTerms</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Glossary terms that are linked to this asset.</div>
 </td>
 </tr>
 <tr id="i70" class="altColor">
@@ -793,7 +793,7 @@ public interface <span class="typeNameLabel">IReadme</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInputToProcesses()">getInputToProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 </td>
 </tr>
 <tr id="i87" class="rowColor">
@@ -863,7 +863,7 @@ public interface <span class="typeNameLabel">IReadme</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILink.html" title="interface in com.atlan.model.assets">ILink</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLinks()">getLinks</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Links that are attached to this asset.</div>
 </td>
 </tr>
 <tr id="i97" class="rowColor">
@@ -877,7 +877,7 @@ public interface <span class="typeNameLabel">IReadme</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IMCMonitor.html" title="interface in com.atlan.model.assets">IMCMonitor</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMcMonitors()">getMcMonitors</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Monitors that observe this asset.</div>
 </td>
 </tr>
 <tr id="i99" class="rowColor">
@@ -905,7 +905,7 @@ public interface <span class="typeNameLabel">IReadme</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOutputFromProcesses()">getOutputFromProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 </td>
 </tr>
 <tr id="i103" class="rowColor">
@@ -940,7 +940,7 @@ public interface <span class="typeNameLabel">IReadme</span></pre>
 <td class="colFirst"><code><a href="IReadme.html" title="interface in com.atlan.model.assets">IReadme</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getReadme()">getReadme</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">README that is linked to this asset.</div>
 </td>
 </tr>
 <tr id="i108" class="altColor">
@@ -1302,7 +1302,7 @@ public interface <span class="typeNameLabel">IReadme</span></pre>
 <li class="blockList">
 <h4>ASSET</h4>
 <pre>static final&nbsp;<a href="../fields/RelationField.html" title="class in com.atlan.model.fields">RelationField</a> ASSET</pre>
-<div class="block">Asset to which the README is linked.</div>
+<div class="block">Asset that this README describes.</div>
 </li>
 </ul>
 <a id="SEE_ALSO">
@@ -1412,7 +1412,7 @@ public interface <span class="typeNameLabel">IReadme</span></pre>
 <li class="blockList">
 <h4>getAsset</h4>
 <pre class="methodSignature"><a href="IAsset.html" title="interface in com.atlan.model.assets">IAsset</a>&nbsp;getAsset()</pre>
-<div class="block">Asset to which the README is linked.</div>
+<div class="block">Asset that this README describes.</div>
 </li>
 </ul>
 <a id="getAssetDbtAccountName()">
@@ -2022,7 +2022,7 @@ public interface <span class="typeNameLabel">IReadme</span></pre>
 <li class="blockList">
 <h4>getAssignedTerms</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="IGlossaryTerm.html" title="interface in com.atlan.model.assets">IGlossaryTerm</a>&gt;&nbsp;getAssignedTerms()</pre>
-<div class="block">TBC</div>
+<div class="block">Glossary terms that are linked to this asset.</div>
 </li>
 </ul>
 <a id="getCertificateStatus()">
@@ -2162,7 +2162,7 @@ public interface <span class="typeNameLabel">IReadme</span></pre>
 <li class="blockList">
 <h4>getInputToProcesses</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getInputToProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 </li>
 </ul>
 <a id="getIsAIGenerated()">
@@ -2262,7 +2262,7 @@ public interface <span class="typeNameLabel">IReadme</span></pre>
 <li class="blockList">
 <h4>getLinks</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="ILink.html" title="interface in com.atlan.model.assets">ILink</a>&gt;&nbsp;getLinks()</pre>
-<div class="block">TBC</div>
+<div class="block">Links that are attached to this asset.</div>
 </li>
 </ul>
 <a id="getMcIncidents()">
@@ -2282,7 +2282,7 @@ public interface <span class="typeNameLabel">IReadme</span></pre>
 <li class="blockList">
 <h4>getMcMonitors</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="IMCMonitor.html" title="interface in com.atlan.model.assets">IMCMonitor</a>&gt;&nbsp;getMcMonitors()</pre>
-<div class="block">TBC</div>
+<div class="block">Monitors that observe this asset.</div>
 </li>
 </ul>
 <a id="getMetrics()">
@@ -2322,7 +2322,7 @@ public interface <span class="typeNameLabel">IReadme</span></pre>
 <li class="blockList">
 <h4>getOutputFromProcesses</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getOutputFromProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 </li>
 </ul>
 <a id="getOwnerGroups()">
@@ -2372,7 +2372,7 @@ public interface <span class="typeNameLabel">IReadme</span></pre>
 <li class="blockList">
 <h4>getReadme</h4>
 <pre class="methodSignature"><a href="IReadme.html" title="interface in com.atlan.model.assets">IReadme</a>&nbsp;getReadme()</pre>
-<div class="block">TBC</div>
+<div class="block">README that is linked to this asset.</div>
 </li>
 </ul>
 <a id="getReference()">

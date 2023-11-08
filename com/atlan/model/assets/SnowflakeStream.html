@@ -154,7 +154,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 public class <span class="typeNameLabel">SnowflakeStream</span>
 extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a>
 implements <a href="ISnowflakeStream.html" title="interface in com.atlan.model.assets">ISnowflakeStream</a>, <a href="ISQL.html" title="interface in com.atlan.model.assets">ISQL</a>, <a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a>, <a href="IAsset.html" title="interface in com.atlan.model.assets">IAsset</a>, <a href="IReferenceable.html" title="interface in com.atlan.model.assets">IReferenceable</a></pre>
-<div class="block">Instance of a Snowflake Stream in Atlan.</div>
+<div class="block">Instance of a Snowflake stream in Atlan. These are used to capture changes in a table.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../serialized-form.html#com.atlan.model.assets.SnowflakeStream">Serialized Form</a></dd>
@@ -531,7 +531,7 @@ implements <a href="ISnowflakeStream.html" title="interface in com.atlan.model.a
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInputToProcesses()">getInputToProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 </td>
 </tr>
 <tr id="i27" class="rowColor">
@@ -559,7 +559,7 @@ implements <a href="ISnowflakeStream.html" title="interface in com.atlan.model.a
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOutputFromProcesses()">getOutputFromProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 </td>
 </tr>
 <tr id="i31" class="rowColor">
@@ -594,7 +594,7 @@ implements <a href="ISnowflakeStream.html" title="interface in com.atlan.model.a
 <td class="colFirst"><code><a href="ISchema.html" title="interface in com.atlan.model.assets">ISchema</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSchema()">getSchema</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Schema in which this Snowflake stream exists.</div>
 </td>
 </tr>
 <tr id="i36" class="altColor">
@@ -615,35 +615,35 @@ implements <a href="ISnowflakeStream.html" title="interface in com.atlan.model.a
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSnowflakeStreamIsStale()">getSnowflakeStreamIsStale</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Whether this stream is stale (true) or not (false).</div>
 </td>
 </tr>
 <tr id="i39" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSnowflakeStreamMode()">getSnowflakeStreamMode</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Mode of this stream.</div>
 </td>
 </tr>
 <tr id="i40" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSnowflakeStreamSourceType()">getSnowflakeStreamSourceType</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Type of the source of this stream.</div>
 </td>
 </tr>
 <tr id="i41" class="rowColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSnowflakeStreamStaleAfter()">getSnowflakeStreamStaleAfter</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Time (epoch) after which this stream will be stale, in milliseconds.</div>
 </td>
 </tr>
 <tr id="i42" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSnowflakeStreamType()">getSnowflakeStreamType</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Type of this stream, for example: standard, append-only, insert-only, etc.</div>
 </td>
 </tr>
 <tr id="i43" class="rowColor">
@@ -2433,7 +2433,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getInputToProcesses</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getInputToProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ICatalog.html#getInputToProcesses()">getInputToProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a></code></dd>
@@ -2501,7 +2501,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getOutputFromProcesses</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getOutputFromProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ICatalog.html#getOutputFromProcesses()">getOutputFromProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a></code></dd>
@@ -2583,7 +2583,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getSchema</h4>
 <pre class="methodSignature">public&nbsp;<a href="ISchema.html" title="interface in com.atlan.model.assets">ISchema</a>&nbsp;getSchema()</pre>
-<div class="block">TBC</div>
+<div class="block">Schema in which this Snowflake stream exists.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISnowflakeStream.html#getSchema()">getSchema</a></code>&nbsp;in interface&nbsp;<code><a href="ISnowflakeStream.html" title="interface in com.atlan.model.assets">ISnowflakeStream</a></code></dd>
@@ -2629,7 +2629,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getSnowflakeStreamIsStale</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Boolean&nbsp;getSnowflakeStreamIsStale()</pre>
-<div class="block">TBC</div>
+<div class="block">Whether this stream is stale (true) or not (false).</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISnowflakeStream.html#getSnowflakeStreamIsStale()">getSnowflakeStreamIsStale</a></code>&nbsp;in interface&nbsp;<code><a href="ISnowflakeStream.html" title="interface in com.atlan.model.assets">ISnowflakeStream</a></code></dd>
@@ -2643,7 +2643,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getSnowflakeStreamMode</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getSnowflakeStreamMode()</pre>
-<div class="block">TBC</div>
+<div class="block">Mode of this stream.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISnowflakeStream.html#getSnowflakeStreamMode()">getSnowflakeStreamMode</a></code>&nbsp;in interface&nbsp;<code><a href="ISnowflakeStream.html" title="interface in com.atlan.model.assets">ISnowflakeStream</a></code></dd>
@@ -2657,7 +2657,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getSnowflakeStreamSourceType</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getSnowflakeStreamSourceType()</pre>
-<div class="block">TBC</div>
+<div class="block">Type of the source of this stream.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISnowflakeStream.html#getSnowflakeStreamSourceType()">getSnowflakeStreamSourceType</a></code>&nbsp;in interface&nbsp;<code><a href="ISnowflakeStream.html" title="interface in com.atlan.model.assets">ISnowflakeStream</a></code></dd>
@@ -2671,7 +2671,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getSnowflakeStreamStaleAfter</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Long&nbsp;getSnowflakeStreamStaleAfter()</pre>
-<div class="block">TBC</div>
+<div class="block">Time (epoch) after which this stream will be stale, in milliseconds.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISnowflakeStream.html#getSnowflakeStreamStaleAfter()">getSnowflakeStreamStaleAfter</a></code>&nbsp;in interface&nbsp;<code><a href="ISnowflakeStream.html" title="interface in com.atlan.model.assets">ISnowflakeStream</a></code></dd>
@@ -2685,7 +2685,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getSnowflakeStreamType</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getSnowflakeStreamType()</pre>
-<div class="block">TBC</div>
+<div class="block">Type of this stream, for example: standard, append-only, insert-only, etc.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISnowflakeStream.html#getSnowflakeStreamType()">getSnowflakeStreamType</a></code>&nbsp;in interface&nbsp;<code><a href="ISnowflakeStream.html" title="interface in com.atlan.model.assets">ISnowflakeStream</a></code></dd>

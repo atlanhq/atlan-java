@@ -154,7 +154,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 public class <span class="typeNameLabel">PowerBIDataflow</span>
 extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a>
 implements <a href="IPowerBIDataflow.html" title="interface in com.atlan.model.assets">IPowerBIDataflow</a>, <a href="IPowerBI.html" title="interface in com.atlan.model.assets">IPowerBI</a>, <a href="IBI.html" title="interface in com.atlan.model.assets">IBI</a>, <a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a>, <a href="IAsset.html" title="interface in com.atlan.model.assets">IAsset</a>, <a href="IReferenceable.html" title="interface in com.atlan.model.assets">IReferenceable</a></pre>
-<div class="block">Instance of a Power BI dataflow in Atlan.</div>
+<div class="block">Instance of a Power BI dataflow in Atlan. Dataflows are reusable transformation logic that can be shared by many datasets and reports inside Power BI.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../serialized-form.html#com.atlan.model.assets.PowerBIDataflow">Serialized Form</a></dd>
@@ -489,7 +489,7 @@ implements <a href="IPowerBIDataflow.html" title="interface in com.atlan.model.a
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IPowerBIDataset.html" title="interface in com.atlan.model.assets">IPowerBIDataset</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDatasets()">getDatasets</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Datasets used by this dataflow.</div>
 </td>
 </tr>
 <tr id="i21" class="rowColor">
@@ -503,7 +503,7 @@ implements <a href="IPowerBIDataflow.html" title="interface in com.atlan.model.a
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInputToProcesses()">getInputToProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 </td>
 </tr>
 <tr id="i23" class="rowColor">
@@ -517,7 +517,7 @@ implements <a href="IPowerBIDataflow.html" title="interface in com.atlan.model.a
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOutputFromProcesses()">getOutputFromProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 </td>
 </tr>
 <tr id="i25" class="rowColor">
@@ -559,21 +559,21 @@ implements <a href="IPowerBIDataflow.html" title="interface in com.atlan.model.a
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getWebUrl()">getWebUrl</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Deprecated.</div>
 </td>
 </tr>
 <tr id="i31" class="rowColor">
 <td class="colFirst"><code><a href="IPowerBIWorkspace.html" title="interface in com.atlan.model.assets">IPowerBIWorkspace</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getWorkspace()">getWorkspace</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Workspace in which this dataflow exists.</div>
 </td>
 </tr>
 <tr id="i32" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getWorkspaceQualifiedName()">getWorkspaceQualifiedName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Unique name of the workspace in which this dataflow exists.</div>
 </td>
 </tr>
 <tr id="i33" class="rowColor">
@@ -2223,7 +2223,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getDatasets</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="IPowerBIDataset.html" title="interface in com.atlan.model.assets">IPowerBIDataset</a>&gt;&nbsp;getDatasets()</pre>
-<div class="block">TBC</div>
+<div class="block">Datasets used by this dataflow.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IPowerBIDataflow.html#getDatasets()">getDatasets</a></code>&nbsp;in interface&nbsp;<code><a href="IPowerBIDataflow.html" title="interface in com.atlan.model.assets">IPowerBIDataflow</a></code></dd>
@@ -2257,7 +2257,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getInputToProcesses</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getInputToProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IBI.html#getInputToProcesses()">getInputToProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="IBI.html" title="interface in com.atlan.model.assets">IBI</a></code></dd>
@@ -2297,7 +2297,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getOutputFromProcesses</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getOutputFromProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IBI.html#getOutputFromProcesses()">getOutputFromProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="IBI.html" title="interface in com.atlan.model.assets">IBI</a></code></dd>
@@ -2381,7 +2381,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getWebUrl</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getWebUrl()</pre>
-<div class="block">TBC</div>
+<div class="block">Deprecated. See 'sourceUrl' instead.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IPowerBIDataflow.html#getWebUrl()">getWebUrl</a></code>&nbsp;in interface&nbsp;<code><a href="IPowerBIDataflow.html" title="interface in com.atlan.model.assets">IPowerBIDataflow</a></code></dd>
@@ -2395,7 +2395,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getWorkspace</h4>
 <pre class="methodSignature">public&nbsp;<a href="IPowerBIWorkspace.html" title="interface in com.atlan.model.assets">IPowerBIWorkspace</a>&nbsp;getWorkspace()</pre>
-<div class="block">TBC</div>
+<div class="block">Workspace in which this dataflow exists.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IPowerBIDataflow.html#getWorkspace()">getWorkspace</a></code>&nbsp;in interface&nbsp;<code><a href="IPowerBIDataflow.html" title="interface in com.atlan.model.assets">IPowerBIDataflow</a></code></dd>
@@ -2409,7 +2409,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getWorkspaceQualifiedName</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getWorkspaceQualifiedName()</pre>
-<div class="block">TBC</div>
+<div class="block">Unique name of the workspace in which this dataflow exists.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IPowerBIDataflow.html#getWorkspaceQualifiedName()">getWorkspaceQualifiedName</a></code>&nbsp;in interface&nbsp;<code><a href="IPowerBIDataflow.html" title="interface in com.atlan.model.assets">IPowerBIDataflow</a></code></dd>

@@ -154,7 +154,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 public class <span class="typeNameLabel">BIProcess</span>
 extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a>
 implements <a href="IBIProcess.html" title="interface in com.atlan.model.assets">IBIProcess</a>, <a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>, <a href="IAsset.html" title="interface in com.atlan.model.assets">IAsset</a>, <a href="IReferenceable.html" title="interface in com.atlan.model.assets">IReferenceable</a></pre>
-<div class="block">Atlan BI Process</div>
+<div class="block">Instance of business intelligence lineage in Atlan. These are used to short-circuit lineage from table-like assets directly to dashboard-like assets.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../serialized-form.html#com.atlan.model.assets.BIProcess">Serialized Form</a></dd>
@@ -496,28 +496,28 @@ implements <a href="IBIProcess.html" title="interface in com.atlan.model.assets"
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IColumnProcess.html" title="interface in com.atlan.model.assets">IColumnProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getColumnProcesses()">getColumnProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes that detail column-level lineage for this process.</div>
 </td>
 </tr>
 <tr id="i24" class="altColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInputs()">getInputs</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Assets that are inputs to this process.</div>
 </td>
 </tr>
 <tr id="i25" class="rowColor">
 <td class="colFirst"><code><a href="IMatillionComponent.html" title="interface in com.atlan.model.assets">IMatillionComponent</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMatillionComponent()">getMatillionComponent</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Matillion component that contains the logic for this lineage process.</div>
 </td>
 </tr>
 <tr id="i26" class="altColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOutputs()">getOutputs</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Assets that are outputs from this process.</div>
 </td>
 </tr>
 <tr id="i27" class="rowColor">
@@ -2215,7 +2215,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getColumnProcesses</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="IColumnProcess.html" title="interface in com.atlan.model.assets">IColumnProcess</a>&gt;&nbsp;getColumnProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes that detail column-level lineage for this process.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IBIProcess.html#getColumnProcesses()">getColumnProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="IBIProcess.html" title="interface in com.atlan.model.assets">IBIProcess</a></code></dd>
@@ -2231,7 +2231,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getInputs</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a>&gt;&nbsp;getInputs()</pre>
-<div class="block">TBC</div>
+<div class="block">Assets that are inputs to this process.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IBIProcess.html#getInputs()">getInputs</a></code>&nbsp;in interface&nbsp;<code><a href="IBIProcess.html" title="interface in com.atlan.model.assets">IBIProcess</a></code></dd>
@@ -2247,7 +2247,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getMatillionComponent</h4>
 <pre class="methodSignature">public&nbsp;<a href="IMatillionComponent.html" title="interface in com.atlan.model.assets">IMatillionComponent</a>&nbsp;getMatillionComponent()</pre>
-<div class="block">TBC</div>
+<div class="block">Matillion component that contains the logic for this lineage process.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IBIProcess.html#getMatillionComponent()">getMatillionComponent</a></code>&nbsp;in interface&nbsp;<code><a href="IBIProcess.html" title="interface in com.atlan.model.assets">IBIProcess</a></code></dd>
@@ -2263,7 +2263,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getOutputs</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a>&gt;&nbsp;getOutputs()</pre>
-<div class="block">TBC</div>
+<div class="block">Assets that are outputs from this process.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IBIProcess.html#getOutputs()">getOutputs</a></code>&nbsp;in interface&nbsp;<code><a href="IBIProcess.html" title="interface in com.atlan.model.assets">IBIProcess</a></code></dd>

@@ -496,7 +496,7 @@ implements <a href="IMicroStrategyDossier.html" title="interface in com.atlan.mo
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInputToProcesses()">getInputToProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 </td>
 </tr>
 <tr id="i22" class="altColor">
@@ -531,7 +531,7 @@ implements <a href="IMicroStrategyDossier.html" title="interface in com.atlan.mo
 <td class="colFirst"><code>java.util.SortedSet&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMicroStrategyDossierChapterNames()">getMicroStrategyDossierChapterNames</a></span>()</code></th>
 <td class="colLast">
-<div class="block">List of names of the dossier chapters.</div>
+<div class="block">List of chapter names in this dossier.</div>
 </td>
 </tr>
 <tr id="i27" class="rowColor">
@@ -552,7 +552,7 @@ implements <a href="IMicroStrategyDossier.html" title="interface in com.atlan.mo
 <td class="colFirst"><code><a href="IMicroStrategyProject.html" title="interface in com.atlan.model.assets">IMicroStrategyProject</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMicroStrategyProject()">getMicroStrategyProject</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Project containing the dossier.</div>
+<div class="block">Project in which this dossier exists</div>
 </td>
 </tr>
 <tr id="i30" class="altColor">
@@ -587,7 +587,7 @@ implements <a href="IMicroStrategyDossier.html" title="interface in com.atlan.mo
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IMicroStrategyVisualization.html" title="interface in com.atlan.model.assets">IMicroStrategyVisualization</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMicroStrategyVisualizations()">getMicroStrategyVisualizations</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Visualizations used within the dossier.</div>
+<div class="block">Visualizations that exist within this dossier.</div>
 </td>
 </tr>
 <tr id="i35" class="rowColor">
@@ -601,7 +601,7 @@ implements <a href="IMicroStrategyDossier.html" title="interface in com.atlan.mo
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOutputFromProcesses()">getOutputFromProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 </td>
 </tr>
 <tr id="i37" class="rowColor">
@@ -2278,7 +2278,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getInputToProcesses</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getInputToProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IBI.html#getInputToProcesses()">getInputToProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="IBI.html" title="interface in com.atlan.model.assets">IBI</a></code></dd>
@@ -2362,7 +2362,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getMicroStrategyDossierChapterNames</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;java.lang.String&gt;&nbsp;getMicroStrategyDossierChapterNames()</pre>
-<div class="block">List of names of the dossier chapters.</div>
+<div class="block">List of chapter names in this dossier.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IMicroStrategyDossier.html#getMicroStrategyDossierChapterNames()">getMicroStrategyDossierChapterNames</a></code>&nbsp;in interface&nbsp;<code><a href="IMicroStrategyDossier.html" title="interface in com.atlan.model.assets">IMicroStrategyDossier</a></code></dd>
@@ -2408,7 +2408,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getMicroStrategyProject</h4>
 <pre class="methodSignature">public&nbsp;<a href="IMicroStrategyProject.html" title="interface in com.atlan.model.assets">IMicroStrategyProject</a>&nbsp;getMicroStrategyProject()</pre>
-<div class="block">Project containing the dossier.</div>
+<div class="block">Project in which this dossier exists</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IMicroStrategyDossier.html#getMicroStrategyProject()">getMicroStrategyProject</a></code>&nbsp;in interface&nbsp;<code><a href="IMicroStrategyDossier.html" title="interface in com.atlan.model.assets">IMicroStrategyDossier</a></code></dd>
@@ -2486,7 +2486,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getMicroStrategyVisualizations</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="IMicroStrategyVisualization.html" title="interface in com.atlan.model.assets">IMicroStrategyVisualization</a>&gt;&nbsp;getMicroStrategyVisualizations()</pre>
-<div class="block">Visualizations used within the dossier.</div>
+<div class="block">Visualizations that exist within this dossier.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IMicroStrategyDossier.html#getMicroStrategyVisualizations()">getMicroStrategyVisualizations</a></code>&nbsp;in interface&nbsp;<code><a href="IMicroStrategyDossier.html" title="interface in com.atlan.model.assets">IMicroStrategyDossier</a></code></dd>
@@ -2520,7 +2520,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getOutputFromProcesses</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getOutputFromProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IBI.html#getOutputFromProcesses()">getOutputFromProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="IBI.html" title="interface in com.atlan.model.assets">IBI</a></code></dd>

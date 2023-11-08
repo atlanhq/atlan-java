@@ -154,7 +154,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <td class="colFirst"><code>static <a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#COLUMN_AVERAGE">COLUMN_AVERAGE</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Average value in this column.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -175,7 +175,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <td class="colFirst"><code>static <a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#COLUMN_DEPTH_LEVEL">COLUMN_DEPTH_LEVEL</a></span></code></th>
 <td class="colLast">
-<div class="block">Level of nesting, used for STRUCT/NESTED columns</div>
+<div class="block">Level of nesting of this column, used for STRUCT and NESTED columns.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -189,7 +189,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <td class="colFirst"><code>static <a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#COLUMN_DISTINCT_VALUES_COUNT_LONG">COLUMN_DISTINCT_VALUES_COUNT_LONG</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Number of rows that contain distinct values.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -203,14 +203,14 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <td class="colFirst"><code>static <a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#COLUMN_DUPLICATE_VALUES_COUNT_LONG">COLUMN_DUPLICATE_VALUES_COUNT_LONG</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Number of rows that contain duplicate values.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#COLUMN_HISTOGRAM">COLUMN_HISTOGRAM</a></span></code></th>
 <td class="colLast">
-<div class="block">List of values in a histogram that represents the contents of the column.</div>
+<div class="block">List of values in a histogram that represents the contents of this column.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -280,7 +280,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <td class="colFirst"><code>static <a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#COLUMN_MISSING_VALUES_COUNT_LONG">COLUMN_MISSING_VALUES_COUNT_LONG</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Number of rows in a column that do not contain content.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -308,7 +308,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#COLUMN_TOP_VALUES">COLUMN_TOP_VALUES</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">List of top values in this column.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -322,14 +322,14 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <td class="colFirst"><code>static <a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#COLUMN_UNIQUE_VALUES_COUNT_LONG">COLUMN_UNIQUE_VALUES_COUNT_LONG</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Number of rows in which a value in this column appears only once.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#COLUMN_UNIQUENESS_PERCENTAGE">COLUMN_UNIQUENESS_PERCENTAGE</a></span></code></th>
 <td class="colLast">
-<div class="block">Ratio indicating how unique data in the column is: 0 indicates that all values are the same, 100 indicates that all values in the column are unique.</div>
+<div class="block">Ratio indicating how unique data in this column is: 0 indicates that all values are the same, 100 indicates that all values in this column are unique.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -350,7 +350,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <td class="colFirst"><code>static <a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#DATA_TYPE">DATA_TYPE</a></span></code></th>
 <td class="colLast">
-<div class="block">Data type of values in the column.</div>
+<div class="block">Data type of values in this column.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -371,35 +371,35 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#DEFAULT_VALUE">DEFAULT_VALUE</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Default value for this column.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/RelationField.html" title="class in com.atlan.model.fields">RelationField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#FOREIGN_KEY_FROM">FOREIGN_KEY_FROM</a></span></code></th>
 <td class="colLast">
-<div class="block">Column this column refers to as a foreign key.</div>
+<div class="block">Column this foreign key column refers to.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/RelationField.html" title="class in com.atlan.model.fields">RelationField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#FOREIGN_KEY_TO">FOREIGN_KEY_TO</a></span></code></th>
 <td class="colLast">
-<div class="block">All the columns that refer to this column as a foreign key.</div>
+<div class="block">Columns that use this column as a foreign key.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/BooleanField.html" title="class in com.atlan.model.fields">BooleanField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#IS_CLUSTERED">IS_CLUSTERED</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Whether this column is a clustered column (true) or not (false).</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/BooleanField.html" title="class in com.atlan.model.fields">BooleanField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#IS_DIST">IS_DIST</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Whether this column is a distribution column (true) or not (false).</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -427,14 +427,14 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <td class="colFirst"><code>static <a href="../fields/BooleanField.html" title="class in com.atlan.model.fields">BooleanField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#IS_PARTITION">IS_PARTITION</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Whether this column is a partition column (true) or not (false).</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/BooleanField.html" title="class in com.atlan.model.fields">BooleanField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#IS_PINNED">IS_PINNED</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Whether this column is pinned (true) or not (false).</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -448,14 +448,14 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <td class="colFirst"><code>static <a href="../fields/BooleanField.html" title="class in com.atlan.model.fields">BooleanField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#IS_SORT">IS_SORT</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Whether this column is a sort column (true) or not (false).</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/RelationField.html" title="class in com.atlan.model.fields">RelationField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#MATERIALIZED_VIEW">MATERIALIZED_VIEW</a></span></code></th>
 <td class="colLast">
-<div class="block">Materialized view in which this column exists, or empty if the column instead exists in a table or view.</div>
+<div class="block">Materialized view in which this column exists.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -476,14 +476,14 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <td class="colFirst"><code>static <a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#NESTED_COLUMN_COUNT">NESTED_COLUMN_COUNT</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Number of columns nested within this (STRUCT or NESTED) column.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/RelationField.html" title="class in com.atlan.model.fields">RelationField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#NESTED_COLUMNS">NESTED_COLUMNS</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Nested columns that exist within this column.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -497,63 +497,63 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <td class="colFirst"><code>static <a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ORDER">ORDER</a></span></code></th>
 <td class="colLast">
-<div class="block">Order (position) in which the column appears in the table (starting at 1).</div>
+<div class="block">Order (position) in which this column appears in the table (starting at 1).</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/RelationField.html" title="class in com.atlan.model.fields">RelationField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#PARENT_COLUMN">PARENT_COLUMN</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Column in which this sub-column is nested.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#PARENT_COLUMN_NAME">PARENT_COLUMN_NAME</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Simple name of the column this column is nested within, for STRUCT and NESTED columns.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#PARENT_COLUMN_QUALIFIED_NAME">PARENT_COLUMN_QUALIFIED_NAME</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Unique name of the column this column is nested within, for STRUCT and NESTED columns.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#PARTITION_ORDER">PARTITION_ORDER</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Order (position) of this partition column in the table.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#PINNED_AT">PINNED_AT</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Time (epoch) at which this column was pinned, in milliseconds.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#PINNED_BY">PINNED_BY</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">User who pinned this column.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#PRECISION">PRECISION</a></span></code></th>
 <td class="colLast">
-<div class="block">Total number of digits allowed when the dataType is numeric.</div>
+<div class="block">Total number of digits allowed, when the dataType is numeric.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/RelationField.html" title="class in com.atlan.model.fields">RelationField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#QUERIES">QUERIES</a></span></code></th>
 <td class="colLast">
-<div class="block">Queries that involve this column.</div>
+<div class="block">Queries that access this column.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -567,28 +567,28 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <td class="colFirst"><code>static <a href="../fields/RelationField.html" title="class in com.atlan.model.fields">RelationField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SNOWFLAKE_DYNAMIC_TABLE">SNOWFLAKE_DYNAMIC_TABLE</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Snowflake dynamic table in which this column exists.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SUB_DATA_TYPE">SUB_DATA_TYPE</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Sub-data type of this column.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/RelationField.html" title="class in com.atlan.model.fields">RelationField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#TABLE">TABLE</a></span></code></th>
 <td class="colLast">
-<div class="block">Table in which this column exists, or empty if the column instead exists in a view or materialized view.</div>
+<div class="block">Table in which this column exists.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/RelationField.html" title="class in com.atlan.model.fields">RelationField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#TABLE_PARTITION">TABLE_PARTITION</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Table partition that contains this column.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -600,14 +600,14 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#VALIDATIONS">VALIDATIONS</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Validations for this column.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/RelationField.html" title="class in com.atlan.model.fields">RelationField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#VIEW">VIEW</a></span></code></th>
 <td class="colLast">
-<div class="block">View in which this column exists, or empty if the column instead exists in a table or materialized view.</div>
+<div class="block">View in which this column exists.</div>
 </td>
 </tr>
 </table>
@@ -1108,7 +1108,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IGlossaryTerm.html" title="interface in com.atlan.model.assets">IGlossaryTerm</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssignedTerms()">getAssignedTerms</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Glossary terms that are linked to this asset.</div>
 </td>
 </tr>
 <tr id="i69" class="rowColor">
@@ -1143,7 +1143,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <td class="colFirst"><code>java.lang.Double</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getColumnAverage()">getColumnAverage</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Average value in this column.</div>
 </td>
 </tr>
 <tr id="i74" class="altColor">
@@ -1164,7 +1164,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <td class="colFirst"><code>java.lang.Integer</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getColumnDepthLevel()">getColumnDepthLevel</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Level of nesting, used for STRUCT/NESTED columns</div>
+<div class="block">Level of nesting of this column, used for STRUCT and NESTED columns.</div>
 </td>
 </tr>
 <tr id="i77" class="rowColor">
@@ -1178,7 +1178,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getColumnDistinctValuesCountLong()">getColumnDistinctValuesCountLong</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Number of rows that contain distinct values.</div>
 </td>
 </tr>
 <tr id="i79" class="rowColor">
@@ -1192,14 +1192,14 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getColumnDuplicateValuesCountLong()">getColumnDuplicateValuesCountLong</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Number of rows that contain duplicate values.</div>
 </td>
 </tr>
 <tr id="i81" class="rowColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="../structs/Histogram.html" title="class in com.atlan.model.structs">Histogram</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getColumnHistogram()">getColumnHistogram</a></span>()</code></th>
 <td class="colLast">
-<div class="block">List of values in a histogram that represents the contents of the column.</div>
+<div class="block">List of values in a histogram that represents the contents of this column.</div>
 </td>
 </tr>
 <tr id="i82" class="altColor">
@@ -1269,7 +1269,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getColumnMissingValuesCountLong()">getColumnMissingValuesCountLong</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Number of rows in a column that do not contain content.</div>
 </td>
 </tr>
 <tr id="i92" class="altColor">
@@ -1297,14 +1297,14 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <td class="colFirst"><code>java.util.List&lt;<a href="../structs/ColumnValueFrequencyMap.html" title="class in com.atlan.model.structs">ColumnValueFrequencyMap</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getColumnTopValues()">getColumnTopValues</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">List of top values in this column.</div>
 </td>
 </tr>
 <tr id="i96" class="altColor">
 <td class="colFirst"><code>java.lang.Double</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getColumnUniquenessPercentage()">getColumnUniquenessPercentage</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Ratio indicating how unique data in the column is: 0 indicates that all values are the same, 100 indicates that all values in the column are unique.</div>
+<div class="block">Ratio indicating how unique data in this column is: 0 indicates that all values are the same, 100 indicates that all values in this column are unique.</div>
 </td>
 </tr>
 <tr id="i97" class="rowColor">
@@ -1318,7 +1318,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getColumnUniqueValuesCountLong()">getColumnUniqueValuesCountLong</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Number of rows in which a value in this column appears only once.</div>
 </td>
 </tr>
 <tr id="i99" class="rowColor">
@@ -1374,7 +1374,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDataType()">getDataType</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Data type of values in the column.</div>
+<div class="block">Data type of values in this column.</div>
 </td>
 </tr>
 <tr id="i107" class="rowColor">
@@ -1423,7 +1423,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDefaultValue()">getDefaultValue</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Default value for this column.</div>
 </td>
 </tr>
 <tr id="i114" class="altColor">
@@ -1465,14 +1465,14 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <td class="colFirst"><code><a href="IColumn.html" title="interface in com.atlan.model.assets">IColumn</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getForeignKeyFrom()">getForeignKeyFrom</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Column this column refers to as a foreign key.</div>
+<div class="block">Column this foreign key column refers to.</div>
 </td>
 </tr>
 <tr id="i120" class="altColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IColumn.html" title="interface in com.atlan.model.assets">IColumn</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getForeignKeyTo()">getForeignKeyTo</a></span>()</code></th>
 <td class="colLast">
-<div class="block">All the columns that refer to this column as a foreign key.</div>
+<div class="block">Columns that use this column as a foreign key.</div>
 </td>
 </tr>
 <tr id="i121" class="rowColor">
@@ -1500,7 +1500,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInputToProcesses()">getInputToProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 </td>
 </tr>
 <tr id="i125" class="rowColor">
@@ -1514,7 +1514,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIsClustered()">getIsClustered</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Whether this column is a clustered column (true) or not (false).</div>
 </td>
 </tr>
 <tr id="i127" class="rowColor">
@@ -1528,7 +1528,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIsDist()">getIsDist</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Whether this column is a distribution column (true) or not (false).</div>
 </td>
 </tr>
 <tr id="i129" class="rowColor">
@@ -1563,14 +1563,14 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIsPartition()">getIsPartition</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Whether this column is a partition column (true) or not (false).</div>
 </td>
 </tr>
 <tr id="i134" class="altColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIsPinned()">getIsPinned</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Whether this column is pinned (true) or not (false).</div>
 </td>
 </tr>
 <tr id="i135" class="rowColor">
@@ -1591,7 +1591,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIsSort()">getIsSort</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Whether this column is a sort column (true) or not (false).</div>
 </td>
 </tr>
 <tr id="i138" class="altColor">
@@ -1633,14 +1633,14 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILink.html" title="interface in com.atlan.model.assets">ILink</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLinks()">getLinks</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Links that are attached to this asset.</div>
 </td>
 </tr>
 <tr id="i144" class="altColor">
 <td class="colFirst"><code><a href="IMaterializedView.html" title="interface in com.atlan.model.assets">IMaterializedView</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMaterializedView()">getMaterializedView</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Materialized view in which this column exists, or empty if the column instead exists in a table or view.</div>
+<div class="block">Materialized view in which this column exists.</div>
 </td>
 </tr>
 <tr id="i145" class="rowColor">
@@ -1661,7 +1661,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IMCMonitor.html" title="interface in com.atlan.model.assets">IMCMonitor</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMcMonitors()">getMcMonitors</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Monitors that observe this asset.</div>
 </td>
 </tr>
 <tr id="i148" class="altColor">
@@ -1689,14 +1689,14 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <td class="colFirst"><code>java.lang.Integer</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getNestedColumnCount()">getNestedColumnCount</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Number of columns nested within this (STRUCT or NESTED) column.</div>
 </td>
 </tr>
 <tr id="i152" class="altColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IColumn.html" title="interface in com.atlan.model.assets">IColumn</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getNestedColumns()">getNestedColumns</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Nested columns that exist within this column.</div>
 </td>
 </tr>
 <tr id="i153" class="rowColor">
@@ -1710,7 +1710,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <td class="colFirst"><code>java.lang.Integer</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOrder()">getOrder</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Order (position) in which the column appears in the table (starting at 1).</div>
+<div class="block">Order (position) in which this column appears in the table (starting at 1).</div>
 </td>
 </tr>
 <tr id="i155" class="rowColor">
@@ -1724,7 +1724,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOutputFromProcesses()">getOutputFromProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 </td>
 </tr>
 <tr id="i157" class="rowColor">
@@ -1745,42 +1745,42 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <td class="colFirst"><code><a href="IColumn.html" title="interface in com.atlan.model.assets">IColumn</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getParentColumn()">getParentColumn</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Column in which this sub-column is nested.</div>
 </td>
 </tr>
 <tr id="i160" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getParentColumnName()">getParentColumnName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Simple name of the column this column is nested within, for STRUCT and NESTED columns.</div>
 </td>
 </tr>
 <tr id="i161" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getParentColumnQualifiedName()">getParentColumnQualifiedName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Unique name of the column this column is nested within, for STRUCT and NESTED columns.</div>
 </td>
 </tr>
 <tr id="i162" class="altColor">
 <td class="colFirst"><code>java.lang.Integer</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPartitionOrder()">getPartitionOrder</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Order (position) of this partition column in the table.</div>
 </td>
 </tr>
 <tr id="i163" class="rowColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPinnedAt()">getPinnedAt</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Time (epoch) at which this column was pinned, in milliseconds.</div>
 </td>
 </tr>
 <tr id="i164" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPinnedBy()">getPinnedBy</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">User who pinned this column.</div>
 </td>
 </tr>
 <tr id="i165" class="rowColor">
@@ -1794,7 +1794,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <td class="colFirst"><code>java.lang.Integer</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPrecision()">getPrecision</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Total number of digits allowed when the dataType is numeric.</div>
+<div class="block">Total number of digits allowed, when the dataType is numeric.</div>
 </td>
 </tr>
 <tr id="i167" class="rowColor">
@@ -1808,7 +1808,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IAtlanQuery.html" title="interface in com.atlan.model.assets">IAtlanQuery</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getQueries()">getQueries</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Queries that involve this column.</div>
+<div class="block">Queries that access this column.</div>
 </td>
 </tr>
 <tr id="i169" class="rowColor">
@@ -1850,7 +1850,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <td class="colFirst"><code><a href="IReadme.html" title="interface in com.atlan.model.assets">IReadme</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getReadme()">getReadme</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">README that is linked to this asset.</div>
 </td>
 </tr>
 <tr id="i175" class="rowColor">
@@ -1913,7 +1913,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <td class="colFirst"><code><a href="ISnowflakeDynamicTable.html" title="interface in com.atlan.model.assets">ISnowflakeDynamicTable</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSnowflakeDynamicTable()">getSnowflakeDynamicTable</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Snowflake dynamic table in which this column exists.</div>
 </td>
 </tr>
 <tr id="i184" class="altColor">
@@ -2116,7 +2116,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSubDataType()">getSubDataType</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Sub-data type of this column.</div>
 </td>
 </tr>
 <tr id="i213" class="rowColor">
@@ -2130,7 +2130,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <td class="colFirst"><code><a href="ITable.html" title="interface in com.atlan.model.assets">ITable</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTable()">getTable</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Table in which this column exists, or empty if the column instead exists in a view or materialized view.</div>
+<div class="block">Table in which this column exists.</div>
 </td>
 </tr>
 <tr id="i215" class="rowColor">
@@ -2144,7 +2144,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <td class="colFirst"><code><a href="ITablePartition.html" title="interface in com.atlan.model.assets">ITablePartition</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTablePartition()">getTablePartition</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Table partition that contains this column.</div>
 </td>
 </tr>
 <tr id="i217" class="rowColor">
@@ -2186,14 +2186,14 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <td class="colFirst"><code>java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getValidations()">getValidations</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Validations for this column.</div>
 </td>
 </tr>
 <tr id="i223" class="rowColor">
 <td class="colFirst"><code><a href="IView.html" title="interface in com.atlan.model.assets">IView</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getView()">getView</a></span>()</code></th>
 <td class="colLast">
-<div class="block">View in which this column exists, or empty if the column instead exists in a table or materialized view.</div>
+<div class="block">View in which this column exists.</div>
 </td>
 </tr>
 <tr id="i224" class="altColor">
@@ -2289,7 +2289,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>COLUMN_AVERAGE</h4>
 <pre>static final&nbsp;<a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a> COLUMN_AVERAGE</pre>
-<div class="block">TBC</div>
+<div class="block">Average value in this column.</div>
 </li>
 </ul>
 <a id="COLUMN_AVERAGE_LENGTH">
@@ -2319,7 +2319,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>COLUMN_DEPTH_LEVEL</h4>
 <pre>static final&nbsp;<a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a> COLUMN_DEPTH_LEVEL</pre>
-<div class="block">Level of nesting, used for STRUCT/NESTED columns</div>
+<div class="block">Level of nesting of this column, used for STRUCT and NESTED columns.</div>
 </li>
 </ul>
 <a id="COLUMN_DISTINCT_VALUES_COUNT">
@@ -2339,7 +2339,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>COLUMN_DISTINCT_VALUES_COUNT_LONG</h4>
 <pre>static final&nbsp;<a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a> COLUMN_DISTINCT_VALUES_COUNT_LONG</pre>
-<div class="block">TBC</div>
+<div class="block">Number of rows that contain distinct values.</div>
 </li>
 </ul>
 <a id="COLUMN_DUPLICATE_VALUES_COUNT">
@@ -2359,7 +2359,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>COLUMN_DUPLICATE_VALUES_COUNT_LONG</h4>
 <pre>static final&nbsp;<a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a> COLUMN_DUPLICATE_VALUES_COUNT_LONG</pre>
-<div class="block">TBC</div>
+<div class="block">Number of rows that contain duplicate values.</div>
 </li>
 </ul>
 <a id="COLUMN_HISTOGRAM">
@@ -2369,7 +2369,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>COLUMN_HISTOGRAM</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> COLUMN_HISTOGRAM</pre>
-<div class="block">List of values in a histogram that represents the contents of the column.</div>
+<div class="block">List of values in a histogram that represents the contents of this column.</div>
 </li>
 </ul>
 <a id="COLUMN_MAX">
@@ -2469,7 +2469,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>COLUMN_MISSING_VALUES_COUNT_LONG</h4>
 <pre>static final&nbsp;<a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a> COLUMN_MISSING_VALUES_COUNT_LONG</pre>
-<div class="block">TBC</div>
+<div class="block">Number of rows in a column that do not contain content.</div>
 </li>
 </ul>
 <a id="COLUMN_MISSING_VALUES_PERCENTAGE">
@@ -2509,7 +2509,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>COLUMN_TOP_VALUES</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> COLUMN_TOP_VALUES</pre>
-<div class="block">TBC</div>
+<div class="block">List of top values in this column.</div>
 </li>
 </ul>
 <a id="COLUMN_UNIQUE_VALUES_COUNT">
@@ -2529,7 +2529,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>COLUMN_UNIQUE_VALUES_COUNT_LONG</h4>
 <pre>static final&nbsp;<a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a> COLUMN_UNIQUE_VALUES_COUNT_LONG</pre>
-<div class="block">TBC</div>
+<div class="block">Number of rows in which a value in this column appears only once.</div>
 </li>
 </ul>
 <a id="COLUMN_UNIQUENESS_PERCENTAGE">
@@ -2539,7 +2539,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>COLUMN_UNIQUENESS_PERCENTAGE</h4>
 <pre>static final&nbsp;<a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a> COLUMN_UNIQUENESS_PERCENTAGE</pre>
-<div class="block">Ratio indicating how unique data in the column is: 0 indicates that all values are the same, 100 indicates that all values in the column are unique.</div>
+<div class="block">Ratio indicating how unique data in this column is: 0 indicates that all values are the same, 100 indicates that all values in this column are unique.</div>
 </li>
 </ul>
 <a id="COLUMN_VARIANCE">
@@ -2569,7 +2569,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>DATA_TYPE</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a> DATA_TYPE</pre>
-<div class="block">Data type of values in the column.</div>
+<div class="block">Data type of values in this column.</div>
 </li>
 </ul>
 <a id="DBT_METRICS">
@@ -2599,7 +2599,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>DEFAULT_VALUE</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> DEFAULT_VALUE</pre>
-<div class="block">TBC</div>
+<div class="block">Default value for this column.</div>
 </li>
 </ul>
 <a id="FOREIGN_KEY_FROM">
@@ -2609,7 +2609,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>FOREIGN_KEY_FROM</h4>
 <pre>static final&nbsp;<a href="../fields/RelationField.html" title="class in com.atlan.model.fields">RelationField</a> FOREIGN_KEY_FROM</pre>
-<div class="block">Column this column refers to as a foreign key.</div>
+<div class="block">Column this foreign key column refers to.</div>
 </li>
 </ul>
 <a id="FOREIGN_KEY_TO">
@@ -2619,7 +2619,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>FOREIGN_KEY_TO</h4>
 <pre>static final&nbsp;<a href="../fields/RelationField.html" title="class in com.atlan.model.fields">RelationField</a> FOREIGN_KEY_TO</pre>
-<div class="block">All the columns that refer to this column as a foreign key. NOTE: when providing values to this relationship, isForeign must also be set to true.</div>
+<div class="block">Columns that use this column as a foreign key.</div>
 </li>
 </ul>
 <a id="IS_CLUSTERED">
@@ -2629,7 +2629,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>IS_CLUSTERED</h4>
 <pre>static final&nbsp;<a href="../fields/BooleanField.html" title="class in com.atlan.model.fields">BooleanField</a> IS_CLUSTERED</pre>
-<div class="block">TBC</div>
+<div class="block">Whether this column is a clustered column (true) or not (false).</div>
 </li>
 </ul>
 <a id="IS_DIST">
@@ -2639,7 +2639,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>IS_DIST</h4>
 <pre>static final&nbsp;<a href="../fields/BooleanField.html" title="class in com.atlan.model.fields">BooleanField</a> IS_DIST</pre>
-<div class="block">TBC</div>
+<div class="block">Whether this column is a distribution column (true) or not (false).</div>
 </li>
 </ul>
 <a id="IS_FOREIGN">
@@ -2679,7 +2679,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>IS_PARTITION</h4>
 <pre>static final&nbsp;<a href="../fields/BooleanField.html" title="class in com.atlan.model.fields">BooleanField</a> IS_PARTITION</pre>
-<div class="block">TBC</div>
+<div class="block">Whether this column is a partition column (true) or not (false).</div>
 </li>
 </ul>
 <a id="IS_PINNED">
@@ -2689,7 +2689,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>IS_PINNED</h4>
 <pre>static final&nbsp;<a href="../fields/BooleanField.html" title="class in com.atlan.model.fields">BooleanField</a> IS_PINNED</pre>
-<div class="block">TBC</div>
+<div class="block">Whether this column is pinned (true) or not (false).</div>
 </li>
 </ul>
 <a id="IS_PRIMARY">
@@ -2709,7 +2709,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>IS_SORT</h4>
 <pre>static final&nbsp;<a href="../fields/BooleanField.html" title="class in com.atlan.model.fields">BooleanField</a> IS_SORT</pre>
-<div class="block">TBC</div>
+<div class="block">Whether this column is a sort column (true) or not (false).</div>
 </li>
 </ul>
 <a id="MATERIALIZED_VIEW">
@@ -2719,7 +2719,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>MATERIALIZED_VIEW</h4>
 <pre>static final&nbsp;<a href="../fields/RelationField.html" title="class in com.atlan.model.fields">RelationField</a> MATERIALIZED_VIEW</pre>
-<div class="block">Materialized view in which this column exists, or empty if the column instead exists in a table or view.</div>
+<div class="block">Materialized view in which this column exists.</div>
 </li>
 </ul>
 <a id="MAX_LENGTH">
@@ -2749,7 +2749,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>NESTED_COLUMN_COUNT</h4>
 <pre>static final&nbsp;<a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a> NESTED_COLUMN_COUNT</pre>
-<div class="block">TBC</div>
+<div class="block">Number of columns nested within this (STRUCT or NESTED) column.</div>
 </li>
 </ul>
 <a id="NESTED_COLUMNS">
@@ -2759,7 +2759,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>NESTED_COLUMNS</h4>
 <pre>static final&nbsp;<a href="../fields/RelationField.html" title="class in com.atlan.model.fields">RelationField</a> NESTED_COLUMNS</pre>
-<div class="block">TBC</div>
+<div class="block">Nested columns that exist within this column.</div>
 </li>
 </ul>
 <a id="NUMERIC_SCALE">
@@ -2779,7 +2779,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>ORDER</h4>
 <pre>static final&nbsp;<a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a> ORDER</pre>
-<div class="block">Order (position) in which the column appears in the table (starting at 1).</div>
+<div class="block">Order (position) in which this column appears in the table (starting at 1).</div>
 </li>
 </ul>
 <a id="PARENT_COLUMN">
@@ -2789,7 +2789,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>PARENT_COLUMN</h4>
 <pre>static final&nbsp;<a href="../fields/RelationField.html" title="class in com.atlan.model.fields">RelationField</a> PARENT_COLUMN</pre>
-<div class="block">TBC</div>
+<div class="block">Column in which this sub-column is nested.</div>
 </li>
 </ul>
 <a id="PARENT_COLUMN_NAME">
@@ -2799,7 +2799,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>PARENT_COLUMN_NAME</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a> PARENT_COLUMN_NAME</pre>
-<div class="block">TBC</div>
+<div class="block">Simple name of the column this column is nested within, for STRUCT and NESTED columns.</div>
 </li>
 </ul>
 <a id="PARENT_COLUMN_QUALIFIED_NAME">
@@ -2809,7 +2809,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>PARENT_COLUMN_QUALIFIED_NAME</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a> PARENT_COLUMN_QUALIFIED_NAME</pre>
-<div class="block">TBC</div>
+<div class="block">Unique name of the column this column is nested within, for STRUCT and NESTED columns.</div>
 </li>
 </ul>
 <a id="PARTITION_ORDER">
@@ -2819,7 +2819,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>PARTITION_ORDER</h4>
 <pre>static final&nbsp;<a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a> PARTITION_ORDER</pre>
-<div class="block">TBC</div>
+<div class="block">Order (position) of this partition column in the table.</div>
 </li>
 </ul>
 <a id="PINNED_AT">
@@ -2829,7 +2829,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>PINNED_AT</h4>
 <pre>static final&nbsp;<a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a> PINNED_AT</pre>
-<div class="block">TBC</div>
+<div class="block">Time (epoch) at which this column was pinned, in milliseconds.</div>
 </li>
 </ul>
 <a id="PINNED_BY">
@@ -2839,7 +2839,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>PINNED_BY</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> PINNED_BY</pre>
-<div class="block">TBC</div>
+<div class="block">User who pinned this column.</div>
 </li>
 </ul>
 <a id="PRECISION">
@@ -2849,7 +2849,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>PRECISION</h4>
 <pre>static final&nbsp;<a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a> PRECISION</pre>
-<div class="block">Total number of digits allowed when the dataType is numeric.</div>
+<div class="block">Total number of digits allowed, when the dataType is numeric.</div>
 </li>
 </ul>
 <a id="QUERIES">
@@ -2859,7 +2859,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>QUERIES</h4>
 <pre>static final&nbsp;<a href="../fields/RelationField.html" title="class in com.atlan.model.fields">RelationField</a> QUERIES</pre>
-<div class="block">Queries that involve this column.</div>
+<div class="block">Queries that access this column.</div>
 </li>
 </ul>
 <a id="RAW_DATA_TYPE_DEFINITION">
@@ -2879,7 +2879,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>SNOWFLAKE_DYNAMIC_TABLE</h4>
 <pre>static final&nbsp;<a href="../fields/RelationField.html" title="class in com.atlan.model.fields">RelationField</a> SNOWFLAKE_DYNAMIC_TABLE</pre>
-<div class="block">TBC</div>
+<div class="block">Snowflake dynamic table in which this column exists.</div>
 </li>
 </ul>
 <a id="SUB_DATA_TYPE">
@@ -2889,7 +2889,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>SUB_DATA_TYPE</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> SUB_DATA_TYPE</pre>
-<div class="block">TBC</div>
+<div class="block">Sub-data type of this column.</div>
 </li>
 </ul>
 <a id="TABLE">
@@ -2899,7 +2899,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>TABLE</h4>
 <pre>static final&nbsp;<a href="../fields/RelationField.html" title="class in com.atlan.model.fields">RelationField</a> TABLE</pre>
-<div class="block">Table in which this column exists, or empty if the column instead exists in a view or materialized view.</div>
+<div class="block">Table in which this column exists.</div>
 </li>
 </ul>
 <a id="TABLE_PARTITION">
@@ -2909,7 +2909,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>TABLE_PARTITION</h4>
 <pre>static final&nbsp;<a href="../fields/RelationField.html" title="class in com.atlan.model.fields">RelationField</a> TABLE_PARTITION</pre>
-<div class="block">TBC</div>
+<div class="block">Table partition that contains this column.</div>
 </li>
 </ul>
 <a id="VALIDATIONS">
@@ -2919,7 +2919,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>VALIDATIONS</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> VALIDATIONS</pre>
-<div class="block">TBC</div>
+<div class="block">Validations for this column.</div>
 </li>
 </ul>
 <a id="VIEW">
@@ -2929,7 +2929,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>VIEW</h4>
 <pre>static final&nbsp;<a href="../fields/RelationField.html" title="class in com.atlan.model.fields">RelationField</a> VIEW</pre>
-<div class="block">View in which this column exists, or empty if the column instead exists in a table or materialized view.</div>
+<div class="block">View in which this column exists.</div>
 </li>
 </ul>
 </li>
@@ -3629,7 +3629,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>getAssignedTerms</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="IGlossaryTerm.html" title="interface in com.atlan.model.assets">IGlossaryTerm</a>&gt;&nbsp;getAssignedTerms()</pre>
-<div class="block">TBC</div>
+<div class="block">Glossary terms that are linked to this asset.</div>
 </li>
 </ul>
 <a id="getCertificateStatus()">
@@ -3679,7 +3679,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>getColumnAverage</h4>
 <pre class="methodSignature">java.lang.Double&nbsp;getColumnAverage()</pre>
-<div class="block">TBC</div>
+<div class="block">Average value in this column.</div>
 </li>
 </ul>
 <a id="getColumnAverageLength()">
@@ -3709,7 +3709,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>getColumnDepthLevel</h4>
 <pre class="methodSignature">java.lang.Integer&nbsp;getColumnDepthLevel()</pre>
-<div class="block">Level of nesting, used for STRUCT/NESTED columns</div>
+<div class="block">Level of nesting of this column, used for STRUCT and NESTED columns.</div>
 </li>
 </ul>
 <a id="getColumnDistinctValuesCount()">
@@ -3729,7 +3729,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>getColumnDistinctValuesCountLong</h4>
 <pre class="methodSignature">java.lang.Long&nbsp;getColumnDistinctValuesCountLong()</pre>
-<div class="block">TBC</div>
+<div class="block">Number of rows that contain distinct values.</div>
 </li>
 </ul>
 <a id="getColumnDuplicateValuesCount()">
@@ -3749,7 +3749,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>getColumnDuplicateValuesCountLong</h4>
 <pre class="methodSignature">java.lang.Long&nbsp;getColumnDuplicateValuesCountLong()</pre>
-<div class="block">TBC</div>
+<div class="block">Number of rows that contain duplicate values.</div>
 </li>
 </ul>
 <a id="getColumnHistogram()">
@@ -3759,7 +3759,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>getColumnHistogram</h4>
 <pre class="methodSignature">java.util.List&lt;<a href="../structs/Histogram.html" title="class in com.atlan.model.structs">Histogram</a>&gt;&nbsp;getColumnHistogram()</pre>
-<div class="block">List of values in a histogram that represents the contents of the column.</div>
+<div class="block">List of values in a histogram that represents the contents of this column.</div>
 </li>
 </ul>
 <a id="getColumnMax()">
@@ -3859,7 +3859,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>getColumnMissingValuesCountLong</h4>
 <pre class="methodSignature">java.lang.Long&nbsp;getColumnMissingValuesCountLong()</pre>
-<div class="block">TBC</div>
+<div class="block">Number of rows in a column that do not contain content.</div>
 </li>
 </ul>
 <a id="getColumnMissingValuesPercentage()">
@@ -3899,7 +3899,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>getColumnTopValues</h4>
 <pre class="methodSignature">java.util.List&lt;<a href="../structs/ColumnValueFrequencyMap.html" title="class in com.atlan.model.structs">ColumnValueFrequencyMap</a>&gt;&nbsp;getColumnTopValues()</pre>
-<div class="block">TBC</div>
+<div class="block">List of top values in this column.</div>
 </li>
 </ul>
 <a id="getColumnUniqueValuesCount()">
@@ -3919,7 +3919,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>getColumnUniqueValuesCountLong</h4>
 <pre class="methodSignature">java.lang.Long&nbsp;getColumnUniqueValuesCountLong()</pre>
-<div class="block">TBC</div>
+<div class="block">Number of rows in which a value in this column appears only once.</div>
 </li>
 </ul>
 <a id="getColumnUniquenessPercentage()">
@@ -3929,7 +3929,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>getColumnUniquenessPercentage</h4>
 <pre class="methodSignature">java.lang.Double&nbsp;getColumnUniquenessPercentage()</pre>
-<div class="block">Ratio indicating how unique data in the column is: 0 indicates that all values are the same, 100 indicates that all values in the column are unique.</div>
+<div class="block">Ratio indicating how unique data in this column is: 0 indicates that all values are the same, 100 indicates that all values in this column are unique.</div>
 </li>
 </ul>
 <a id="getColumnVariance()">
@@ -3989,7 +3989,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>getDataType</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getDataType()</pre>
-<div class="block">Data type of values in the column.</div>
+<div class="block">Data type of values in this column.</div>
 </li>
 </ul>
 <a id="getDatabaseName()">
@@ -4079,7 +4079,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>getDefaultValue</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getDefaultValue()</pre>
-<div class="block">TBC</div>
+<div class="block">Default value for this column.</div>
 </li>
 </ul>
 <a id="getDescription()">
@@ -4119,7 +4119,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>getForeignKeyFrom</h4>
 <pre class="methodSignature"><a href="IColumn.html" title="interface in com.atlan.model.assets">IColumn</a>&nbsp;getForeignKeyFrom()</pre>
-<div class="block">Column this column refers to as a foreign key.</div>
+<div class="block">Column this foreign key column refers to.</div>
 </li>
 </ul>
 <a id="getForeignKeyTo()">
@@ -4129,7 +4129,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>getForeignKeyTo</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="IColumn.html" title="interface in com.atlan.model.assets">IColumn</a>&gt;&nbsp;getForeignKeyTo()</pre>
-<div class="block">All the columns that refer to this column as a foreign key. NOTE: when providing values to this relationship, isForeign must also be set to true.</div>
+<div class="block">Columns that use this column as a foreign key.</div>
 </li>
 </ul>
 <a id="getHasLineage()">
@@ -4159,7 +4159,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>getInputToProcesses</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getInputToProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 </li>
 </ul>
 <a id="getIsAIGenerated()">
@@ -4179,7 +4179,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>getIsClustered</h4>
 <pre class="methodSignature">java.lang.Boolean&nbsp;getIsClustered()</pre>
-<div class="block">TBC</div>
+<div class="block">Whether this column is a clustered column (true) or not (false).</div>
 </li>
 </ul>
 <a id="getIsDiscoverable()">
@@ -4199,7 +4199,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>getIsDist</h4>
 <pre class="methodSignature">java.lang.Boolean&nbsp;getIsDist()</pre>
-<div class="block">TBC</div>
+<div class="block">Whether this column is a distribution column (true) or not (false).</div>
 </li>
 </ul>
 <a id="getIsEditable()">
@@ -4249,7 +4249,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>getIsPartition</h4>
 <pre class="methodSignature">java.lang.Boolean&nbsp;getIsPartition()</pre>
-<div class="block">TBC</div>
+<div class="block">Whether this column is a partition column (true) or not (false).</div>
 </li>
 </ul>
 <a id="getIsPinned()">
@@ -4259,7 +4259,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>getIsPinned</h4>
 <pre class="methodSignature">java.lang.Boolean&nbsp;getIsPinned()</pre>
-<div class="block">TBC</div>
+<div class="block">Whether this column is pinned (true) or not (false).</div>
 </li>
 </ul>
 <a id="getIsPrimary()">
@@ -4289,7 +4289,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>getIsSort</h4>
 <pre class="methodSignature">java.lang.Boolean&nbsp;getIsSort()</pre>
-<div class="block">TBC</div>
+<div class="block">Whether this column is a sort column (true) or not (false).</div>
 </li>
 </ul>
 <a id="getLastProfiledAt()">
@@ -4349,7 +4349,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>getLinks</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="ILink.html" title="interface in com.atlan.model.assets">ILink</a>&gt;&nbsp;getLinks()</pre>
-<div class="block">TBC</div>
+<div class="block">Links that are attached to this asset.</div>
 </li>
 </ul>
 <a id="getMaterializedView()">
@@ -4359,7 +4359,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>getMaterializedView</h4>
 <pre class="methodSignature"><a href="IMaterializedView.html" title="interface in com.atlan.model.assets">IMaterializedView</a>&nbsp;getMaterializedView()</pre>
-<div class="block">Materialized view in which this column exists, or empty if the column instead exists in a table or view.</div>
+<div class="block">Materialized view in which this column exists.</div>
 </li>
 </ul>
 <a id="getMaxLength()">
@@ -4389,7 +4389,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>getMcMonitors</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="IMCMonitor.html" title="interface in com.atlan.model.assets">IMCMonitor</a>&gt;&nbsp;getMcMonitors()</pre>
-<div class="block">TBC</div>
+<div class="block">Monitors that observe this asset.</div>
 </li>
 </ul>
 <a id="getMetricTimestamps()">
@@ -4429,7 +4429,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>getNestedColumnCount</h4>
 <pre class="methodSignature">java.lang.Integer&nbsp;getNestedColumnCount()</pre>
-<div class="block">TBC</div>
+<div class="block">Number of columns nested within this (STRUCT or NESTED) column.</div>
 </li>
 </ul>
 <a id="getNestedColumns()">
@@ -4439,7 +4439,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>getNestedColumns</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="IColumn.html" title="interface in com.atlan.model.assets">IColumn</a>&gt;&nbsp;getNestedColumns()</pre>
-<div class="block">TBC</div>
+<div class="block">Nested columns that exist within this column.</div>
 </li>
 </ul>
 <a id="getNumericScale()">
@@ -4459,7 +4459,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>getOrder</h4>
 <pre class="methodSignature">java.lang.Integer&nbsp;getOrder()</pre>
-<div class="block">Order (position) in which the column appears in the table (starting at 1).</div>
+<div class="block">Order (position) in which this column appears in the table (starting at 1).</div>
 </li>
 </ul>
 <a id="getOutputFromAirflowTasks()">
@@ -4479,7 +4479,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>getOutputFromProcesses</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getOutputFromProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 </li>
 </ul>
 <a id="getOwnerGroups()">
@@ -4509,7 +4509,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>getParentColumn</h4>
 <pre class="methodSignature"><a href="IColumn.html" title="interface in com.atlan.model.assets">IColumn</a>&nbsp;getParentColumn()</pre>
-<div class="block">TBC</div>
+<div class="block">Column in which this sub-column is nested.</div>
 </li>
 </ul>
 <a id="getParentColumnName()">
@@ -4519,7 +4519,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>getParentColumnName</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getParentColumnName()</pre>
-<div class="block">TBC</div>
+<div class="block">Simple name of the column this column is nested within, for STRUCT and NESTED columns.</div>
 </li>
 </ul>
 <a id="getParentColumnQualifiedName()">
@@ -4529,7 +4529,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>getParentColumnQualifiedName</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getParentColumnQualifiedName()</pre>
-<div class="block">TBC</div>
+<div class="block">Unique name of the column this column is nested within, for STRUCT and NESTED columns.</div>
 </li>
 </ul>
 <a id="getPartitionOrder()">
@@ -4539,7 +4539,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>getPartitionOrder</h4>
 <pre class="methodSignature">java.lang.Integer&nbsp;getPartitionOrder()</pre>
-<div class="block">TBC</div>
+<div class="block">Order (position) of this partition column in the table.</div>
 </li>
 </ul>
 <a id="getPinnedAt()">
@@ -4549,7 +4549,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>getPinnedAt</h4>
 <pre class="methodSignature">java.lang.Long&nbsp;getPinnedAt()</pre>
-<div class="block">TBC</div>
+<div class="block">Time (epoch) at which this column was pinned, in milliseconds.</div>
 </li>
 </ul>
 <a id="getPinnedBy()">
@@ -4559,7 +4559,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>getPinnedBy</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getPinnedBy()</pre>
-<div class="block">TBC</div>
+<div class="block">User who pinned this column.</div>
 </li>
 </ul>
 <a id="getPopularityScore()">
@@ -4579,7 +4579,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>getPrecision</h4>
 <pre class="methodSignature">java.lang.Integer&nbsp;getPrecision()</pre>
-<div class="block">Total number of digits allowed when the dataType is numeric.</div>
+<div class="block">Total number of digits allowed, when the dataType is numeric.</div>
 </li>
 </ul>
 <a id="getQualifiedName()">
@@ -4599,7 +4599,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>getQueries</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="IAtlanQuery.html" title="interface in com.atlan.model.assets">IAtlanQuery</a>&gt;&nbsp;getQueries()</pre>
-<div class="block">Queries that involve this column.</div>
+<div class="block">Queries that access this column.</div>
 </li>
 </ul>
 <a id="getQueryCount()">
@@ -4659,7 +4659,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>getReadme</h4>
 <pre class="methodSignature"><a href="IReadme.html" title="interface in com.atlan.model.assets">IReadme</a>&nbsp;getReadme()</pre>
-<div class="block">TBC</div>
+<div class="block">README that is linked to this asset.</div>
 </li>
 </ul>
 <a id="getSampleDataUrl()">
@@ -4709,7 +4709,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>getSnowflakeDynamicTable</h4>
 <pre class="methodSignature"><a href="ISnowflakeDynamicTable.html" title="interface in com.atlan.model.assets">ISnowflakeDynamicTable</a>&nbsp;getSnowflakeDynamicTable()</pre>
-<div class="block">TBC</div>
+<div class="block">Snowflake dynamic table in which this column exists.</div>
 </li>
 </ul>
 <a id="getSodaChecks()">
@@ -4999,7 +4999,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>getSubDataType</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getSubDataType()</pre>
-<div class="block">TBC</div>
+<div class="block">Sub-data type of this column.</div>
 </li>
 </ul>
 <a id="getSubType()">
@@ -5019,7 +5019,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>getTable</h4>
 <pre class="methodSignature"><a href="ITable.html" title="interface in com.atlan.model.assets">ITable</a>&nbsp;getTable()</pre>
-<div class="block">Table in which this column exists, or empty if the column instead exists in a view or materialized view.</div>
+<div class="block">Table in which this column exists.</div>
 </li>
 </ul>
 <a id="getTableName()">
@@ -5039,7 +5039,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>getTablePartition</h4>
 <pre class="methodSignature"><a href="ITablePartition.html" title="interface in com.atlan.model.assets">ITablePartition</a>&nbsp;getTablePartition()</pre>
-<div class="block">TBC</div>
+<div class="block">Table partition that contains this column.</div>
 </li>
 </ul>
 <a id="getTableQualifiedName()">
@@ -5079,7 +5079,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>getValidations</h4>
 <pre class="methodSignature">java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;getValidations()</pre>
-<div class="block">TBC</div>
+<div class="block">Validations for this column.</div>
 </li>
 </ul>
 <a id="getView()">
@@ -5089,7 +5089,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>getView</h4>
 <pre class="methodSignature"><a href="IView.html" title="interface in com.atlan.model.assets">IView</a>&nbsp;getView()</pre>
-<div class="block">View in which this column exists, or empty if the column instead exists in a table or materialized view.</div>
+<div class="block">View in which this column exists.</div>
 </li>
 </ul>
 <a id="getViewName()">

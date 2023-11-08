@@ -129,7 +129,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <hr>
 <pre>@Generated("com.atlan.generators.ModelGeneratorV2")
 public interface <span class="typeNameLabel">ISisenseWidget</span></pre>
-<div class="block">The SisenseWidget type represents a widget in Sisense.</div>
+<div class="block">Instance of a Sisense widget in Atlan.</div>
 </li>
 </ul>
 </div>
@@ -154,7 +154,7 @@ public interface <span class="typeNameLabel">ISisenseWidget</span></pre>
 <td class="colFirst"><code>static <a href="../fields/RelationField.html" title="class in com.atlan.model.fields">RelationField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SISENSE_DASHBOARD">SISENSE_DASHBOARD</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Dashboard in which this widget exists.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -168,42 +168,42 @@ public interface <span class="typeNameLabel">ISisenseWidget</span></pre>
 <td class="colFirst"><code>static <a href="../fields/RelationField.html" title="class in com.atlan.model.fields">RelationField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SISENSE_FOLDER">SISENSE_FOLDER</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Folder in which this widget exists.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SISENSE_WIDGET_COLUMN_COUNT">SISENSE_WIDGET_COLUMN_COUNT</a></span></code></th>
 <td class="colLast">
-<div class="block">Numbers of columns used in the widget</div>
+<div class="block">Number of columns used in this widget.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SISENSE_WIDGET_DASHBOARD_QUALIFIED_NAME">SISENSE_WIDGET_DASHBOARD_QUALIFIED_NAME</a></span></code></th>
 <td class="colLast">
-<div class="block">Qualified name of the dashboard under which this widget is present</div>
+<div class="block">Unique name of the dashboard in which this widget exists.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SISENSE_WIDGET_FOLDER_QUALIFIED_NAME">SISENSE_WIDGET_FOLDER_QUALIFIED_NAME</a></span></code></th>
 <td class="colLast">
-<div class="block">Qualified name of the folder under which this widget is present</div>
+<div class="block">Unique name of the folder in which this widget exists.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SISENSE_WIDGET_SIZE">SISENSE_WIDGET_SIZE</a></span></code></th>
 <td class="colLast">
-<div class="block">Size of the widget</div>
+<div class="block">Size of this widget.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SISENSE_WIDGET_SUB_TYPE">SISENSE_WIDGET_SUB_TYPE</a></span></code></th>
 <td class="colLast">
-<div class="block">Sub type of the widget</div>
+<div class="block">Subtype of this widget.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -709,7 +709,7 @@ public interface <span class="typeNameLabel">ISisenseWidget</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IGlossaryTerm.html" title="interface in com.atlan.model.assets">IGlossaryTerm</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssignedTerms()">getAssignedTerms</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Glossary terms that are linked to this asset.</div>
 </td>
 </tr>
 <tr id="i69" class="rowColor">
@@ -828,7 +828,7 @@ public interface <span class="typeNameLabel">ISisenseWidget</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInputToProcesses()">getInputToProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 </td>
 </tr>
 <tr id="i86" class="altColor">
@@ -884,7 +884,7 @@ public interface <span class="typeNameLabel">ISisenseWidget</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILink.html" title="interface in com.atlan.model.assets">ILink</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLinks()">getLinks</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Links that are attached to this asset.</div>
 </td>
 </tr>
 <tr id="i94" class="altColor">
@@ -898,7 +898,7 @@ public interface <span class="typeNameLabel">ISisenseWidget</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IMCMonitor.html" title="interface in com.atlan.model.assets">IMCMonitor</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMcMonitors()">getMcMonitors</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Monitors that observe this asset.</div>
 </td>
 </tr>
 <tr id="i96" class="altColor">
@@ -926,7 +926,7 @@ public interface <span class="typeNameLabel">ISisenseWidget</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOutputFromProcesses()">getOutputFromProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 </td>
 </tr>
 <tr id="i100" class="altColor">
@@ -961,7 +961,7 @@ public interface <span class="typeNameLabel">ISisenseWidget</span></pre>
 <td class="colFirst"><code><a href="IReadme.html" title="interface in com.atlan.model.assets">IReadme</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getReadme()">getReadme</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">README that is linked to this asset.</div>
 </td>
 </tr>
 <tr id="i105" class="rowColor">
@@ -1010,7 +1010,7 @@ public interface <span class="typeNameLabel">ISisenseWidget</span></pre>
 <td class="colFirst"><code><a href="ISisenseDashboard.html" title="interface in com.atlan.model.assets">ISisenseDashboard</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSisenseDashboard()">getSisenseDashboard</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Dashboard in which this widget exists.</div>
 </td>
 </tr>
 <tr id="i112" class="altColor">
@@ -1024,42 +1024,42 @@ public interface <span class="typeNameLabel">ISisenseWidget</span></pre>
 <td class="colFirst"><code><a href="ISisenseFolder.html" title="interface in com.atlan.model.assets">ISisenseFolder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSisenseFolder()">getSisenseFolder</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Folder in which this widget exists.</div>
 </td>
 </tr>
 <tr id="i114" class="altColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSisenseWidgetColumnCount()">getSisenseWidgetColumnCount</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Numbers of columns used in the widget</div>
+<div class="block">Number of columns used in this widget.</div>
 </td>
 </tr>
 <tr id="i115" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSisenseWidgetDashboardQualifiedName()">getSisenseWidgetDashboardQualifiedName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Qualified name of the dashboard under which this widget is present</div>
+<div class="block">Unique name of the dashboard in which this widget exists.</div>
 </td>
 </tr>
 <tr id="i116" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSisenseWidgetFolderQualifiedName()">getSisenseWidgetFolderQualifiedName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Qualified name of the folder under which this widget is present</div>
+<div class="block">Unique name of the folder in which this widget exists.</div>
 </td>
 </tr>
 <tr id="i117" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSisenseWidgetSize()">getSisenseWidgetSize</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Size of the widget</div>
+<div class="block">Size of this widget.</div>
 </td>
 </tr>
 <tr id="i118" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSisenseWidgetSubType()">getSisenseWidgetSubType</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Sub type of the widget</div>
+<div class="block">Subtype of this widget.</div>
 </td>
 </tr>
 <tr id="i119" class="rowColor">
@@ -1358,7 +1358,7 @@ public interface <span class="typeNameLabel">ISisenseWidget</span></pre>
 <li class="blockList">
 <h4>SISENSE_DASHBOARD</h4>
 <pre>static final&nbsp;<a href="../fields/RelationField.html" title="class in com.atlan.model.fields">RelationField</a> SISENSE_DASHBOARD</pre>
-<div class="block">TBC</div>
+<div class="block">Dashboard in which this widget exists.</div>
 </li>
 </ul>
 <a id="SISENSE_DATAMODEL_TABLES">
@@ -1378,7 +1378,7 @@ public interface <span class="typeNameLabel">ISisenseWidget</span></pre>
 <li class="blockList">
 <h4>SISENSE_FOLDER</h4>
 <pre>static final&nbsp;<a href="../fields/RelationField.html" title="class in com.atlan.model.fields">RelationField</a> SISENSE_FOLDER</pre>
-<div class="block">TBC</div>
+<div class="block">Folder in which this widget exists.</div>
 </li>
 </ul>
 <a id="SISENSE_WIDGET_COLUMN_COUNT">
@@ -1388,7 +1388,7 @@ public interface <span class="typeNameLabel">ISisenseWidget</span></pre>
 <li class="blockList">
 <h4>SISENSE_WIDGET_COLUMN_COUNT</h4>
 <pre>static final&nbsp;<a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a> SISENSE_WIDGET_COLUMN_COUNT</pre>
-<div class="block">Numbers of columns used in the widget</div>
+<div class="block">Number of columns used in this widget.</div>
 </li>
 </ul>
 <a id="SISENSE_WIDGET_DASHBOARD_QUALIFIED_NAME">
@@ -1398,7 +1398,7 @@ public interface <span class="typeNameLabel">ISisenseWidget</span></pre>
 <li class="blockList">
 <h4>SISENSE_WIDGET_DASHBOARD_QUALIFIED_NAME</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a> SISENSE_WIDGET_DASHBOARD_QUALIFIED_NAME</pre>
-<div class="block">Qualified name of the dashboard under which this widget is present</div>
+<div class="block">Unique name of the dashboard in which this widget exists.</div>
 </li>
 </ul>
 <a id="SISENSE_WIDGET_FOLDER_QUALIFIED_NAME">
@@ -1408,7 +1408,7 @@ public interface <span class="typeNameLabel">ISisenseWidget</span></pre>
 <li class="blockList">
 <h4>SISENSE_WIDGET_FOLDER_QUALIFIED_NAME</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a> SISENSE_WIDGET_FOLDER_QUALIFIED_NAME</pre>
-<div class="block">Qualified name of the folder under which this widget is present</div>
+<div class="block">Unique name of the folder in which this widget exists.</div>
 </li>
 </ul>
 <a id="SISENSE_WIDGET_SIZE">
@@ -1418,7 +1418,7 @@ public interface <span class="typeNameLabel">ISisenseWidget</span></pre>
 <li class="blockList">
 <h4>SISENSE_WIDGET_SIZE</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> SISENSE_WIDGET_SIZE</pre>
-<div class="block">Size of the widget</div>
+<div class="block">Size of this widget.</div>
 </li>
 </ul>
 <a id="SISENSE_WIDGET_SUB_TYPE">
@@ -1428,7 +1428,7 @@ public interface <span class="typeNameLabel">ISisenseWidget</span></pre>
 <li class="blockList">
 <h4>SISENSE_WIDGET_SUB_TYPE</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> SISENSE_WIDGET_SUB_TYPE</pre>
-<div class="block">Sub type of the widget</div>
+<div class="block">Subtype of this widget.</div>
 </li>
 </ul>
 </li>
@@ -2128,7 +2128,7 @@ public interface <span class="typeNameLabel">ISisenseWidget</span></pre>
 <li class="blockList">
 <h4>getAssignedTerms</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="IGlossaryTerm.html" title="interface in com.atlan.model.assets">IGlossaryTerm</a>&gt;&nbsp;getAssignedTerms()</pre>
-<div class="block">TBC</div>
+<div class="block">Glossary terms that are linked to this asset.</div>
 </li>
 </ul>
 <a id="getCertificateStatus()">
@@ -2268,7 +2268,7 @@ public interface <span class="typeNameLabel">ISisenseWidget</span></pre>
 <li class="blockList">
 <h4>getInputToProcesses</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getInputToProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 </li>
 </ul>
 <a id="getIsAIGenerated()">
@@ -2348,7 +2348,7 @@ public interface <span class="typeNameLabel">ISisenseWidget</span></pre>
 <li class="blockList">
 <h4>getLinks</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="ILink.html" title="interface in com.atlan.model.assets">ILink</a>&gt;&nbsp;getLinks()</pre>
-<div class="block">TBC</div>
+<div class="block">Links that are attached to this asset.</div>
 </li>
 </ul>
 <a id="getMcIncidents()">
@@ -2368,7 +2368,7 @@ public interface <span class="typeNameLabel">ISisenseWidget</span></pre>
 <li class="blockList">
 <h4>getMcMonitors</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="IMCMonitor.html" title="interface in com.atlan.model.assets">IMCMonitor</a>&gt;&nbsp;getMcMonitors()</pre>
-<div class="block">TBC</div>
+<div class="block">Monitors that observe this asset.</div>
 </li>
 </ul>
 <a id="getMetrics()">
@@ -2408,7 +2408,7 @@ public interface <span class="typeNameLabel">ISisenseWidget</span></pre>
 <li class="blockList">
 <h4>getOutputFromProcesses</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getOutputFromProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 </li>
 </ul>
 <a id="getOwnerGroups()">
@@ -2458,7 +2458,7 @@ public interface <span class="typeNameLabel">ISisenseWidget</span></pre>
 <li class="blockList">
 <h4>getReadme</h4>
 <pre class="methodSignature"><a href="IReadme.html" title="interface in com.atlan.model.assets">IReadme</a>&nbsp;getReadme()</pre>
-<div class="block">TBC</div>
+<div class="block">README that is linked to this asset.</div>
 </li>
 </ul>
 <a id="getSampleDataUrl()">
@@ -2488,7 +2488,7 @@ public interface <span class="typeNameLabel">ISisenseWidget</span></pre>
 <li class="blockList">
 <h4>getSisenseDashboard</h4>
 <pre class="methodSignature"><a href="ISisenseDashboard.html" title="interface in com.atlan.model.assets">ISisenseDashboard</a>&nbsp;getSisenseDashboard()</pre>
-<div class="block">TBC</div>
+<div class="block">Dashboard in which this widget exists.</div>
 </li>
 </ul>
 <a id="getSisenseDatamodelTables()">
@@ -2508,7 +2508,7 @@ public interface <span class="typeNameLabel">ISisenseWidget</span></pre>
 <li class="blockList">
 <h4>getSisenseFolder</h4>
 <pre class="methodSignature"><a href="ISisenseFolder.html" title="interface in com.atlan.model.assets">ISisenseFolder</a>&nbsp;getSisenseFolder()</pre>
-<div class="block">TBC</div>
+<div class="block">Folder in which this widget exists.</div>
 </li>
 </ul>
 <a id="getSisenseWidgetColumnCount()">
@@ -2518,7 +2518,7 @@ public interface <span class="typeNameLabel">ISisenseWidget</span></pre>
 <li class="blockList">
 <h4>getSisenseWidgetColumnCount</h4>
 <pre class="methodSignature">java.lang.Long&nbsp;getSisenseWidgetColumnCount()</pre>
-<div class="block">Numbers of columns used in the widget</div>
+<div class="block">Number of columns used in this widget.</div>
 </li>
 </ul>
 <a id="getSisenseWidgetDashboardQualifiedName()">
@@ -2528,7 +2528,7 @@ public interface <span class="typeNameLabel">ISisenseWidget</span></pre>
 <li class="blockList">
 <h4>getSisenseWidgetDashboardQualifiedName</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getSisenseWidgetDashboardQualifiedName()</pre>
-<div class="block">Qualified name of the dashboard under which this widget is present</div>
+<div class="block">Unique name of the dashboard in which this widget exists.</div>
 </li>
 </ul>
 <a id="getSisenseWidgetFolderQualifiedName()">
@@ -2538,7 +2538,7 @@ public interface <span class="typeNameLabel">ISisenseWidget</span></pre>
 <li class="blockList">
 <h4>getSisenseWidgetFolderQualifiedName</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getSisenseWidgetFolderQualifiedName()</pre>
-<div class="block">Qualified name of the folder under which this widget is present</div>
+<div class="block">Unique name of the folder in which this widget exists.</div>
 </li>
 </ul>
 <a id="getSisenseWidgetSize()">
@@ -2548,7 +2548,7 @@ public interface <span class="typeNameLabel">ISisenseWidget</span></pre>
 <li class="blockList">
 <h4>getSisenseWidgetSize</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getSisenseWidgetSize()</pre>
-<div class="block">Size of the widget</div>
+<div class="block">Size of this widget.</div>
 </li>
 </ul>
 <a id="getSisenseWidgetSubType()">
@@ -2558,7 +2558,7 @@ public interface <span class="typeNameLabel">ISisenseWidget</span></pre>
 <li class="blockList">
 <h4>getSisenseWidgetSubType</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getSisenseWidgetSubType()</pre>
-<div class="block">Sub type of the widget</div>
+<div class="block">Subtype of this widget.</div>
 </li>
 </ul>
 <a id="getSodaChecks()">

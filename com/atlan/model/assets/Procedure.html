@@ -524,7 +524,7 @@ implements <a href="IProcedure.html" title="interface in com.atlan.model.assets"
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDefinition()">getDefinition</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Logic of the procedure.</div>
+<div class="block">SQL definition of the procedure.</div>
 </td>
 </tr>
 <tr id="i26" class="altColor">
@@ -538,7 +538,7 @@ implements <a href="IProcedure.html" title="interface in com.atlan.model.assets"
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInputToProcesses()">getInputToProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 </td>
 </tr>
 <tr id="i28" class="altColor">
@@ -566,7 +566,7 @@ implements <a href="IProcedure.html" title="interface in com.atlan.model.assets"
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOutputFromProcesses()">getOutputFromProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 </td>
 </tr>
 <tr id="i32" class="altColor">
@@ -601,7 +601,7 @@ implements <a href="IProcedure.html" title="interface in com.atlan.model.assets"
 <td class="colFirst"><code><a href="ISchema.html" title="interface in com.atlan.model.assets">ISchema</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSchema()">getSchema</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Schema in which the procedure is contained.</div>
+<div class="block">Schema in which this stored procedure exists.</div>
 </td>
 </tr>
 <tr id="i37" class="rowColor">
@@ -2387,7 +2387,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getDefinition</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getDefinition()</pre>
-<div class="block">Logic of the procedure.</div>
+<div class="block">SQL definition of the procedure.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IProcedure.html#getDefinition()">getDefinition</a></code>&nbsp;in interface&nbsp;<code><a href="IProcedure.html" title="interface in com.atlan.model.assets">IProcedure</a></code></dd>
@@ -2419,7 +2419,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getInputToProcesses</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getInputToProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ICatalog.html#getInputToProcesses()">getInputToProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a></code></dd>
@@ -2487,7 +2487,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getOutputFromProcesses</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getOutputFromProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ICatalog.html#getOutputFromProcesses()">getOutputFromProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a></code></dd>
@@ -2569,7 +2569,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getSchema</h4>
 <pre class="methodSignature">public&nbsp;<a href="ISchema.html" title="interface in com.atlan.model.assets">ISchema</a>&nbsp;getSchema()</pre>
-<div class="block">Schema in which the procedure is contained.</div>
+<div class="block">Schema in which this stored procedure exists.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IProcedure.html#getSchema()">getSchema</a></code>&nbsp;in interface&nbsp;<code><a href="IProcedure.html" title="interface in com.atlan.model.assets">IProcedure</a></code></dd>

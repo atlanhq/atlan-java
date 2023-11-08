@@ -129,7 +129,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <hr>
 <pre>@Generated("com.atlan.generators.ModelGeneratorV2")
 public interface <span class="typeNameLabel">IMatillionComponent</span></pre>
-<div class="block">The MatillionComponent type represents a Component in matillion. Components are a part of a matillion job where each one of them is responsible for accomplising a task based on the type of component used</div>
+<div class="block">Instance of a Matillion component in Atlan. Components in Matillion are a part of a job, where each component is responsible for accomplishing a task based on the type of component used.</div>
 </li>
 </ul>
 </div>
@@ -154,70 +154,70 @@ public interface <span class="typeNameLabel">IMatillionComponent</span></pre>
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#MATILLION_COMPONENT_ID">MATILLION_COMPONENT_ID</a></span></code></th>
 <td class="colLast">
-<div class="block">Unique id of a matillion component</div>
+<div class="block">Unique identifier of the component in Matillion.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#MATILLION_COMPONENT_IMPLEMENTATION_ID">MATILLION_COMPONENT_IMPLEMENTATION_ID</a></span></code></th>
 <td class="colLast">
-<div class="block">Unique id which represents the type of a component in matillion</div>
+<div class="block">Unique identifier for the type of the component in Matillion.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#MATILLION_COMPONENT_LAST_FIVE_RUN_STATUS">MATILLION_COMPONENT_LAST_FIVE_RUN_STATUS</a></span></code></th>
 <td class="colLast">
-<div class="block">The last five run status of a matillion component under a matillion job</div>
+<div class="block">Last five run statuses of the component within a job.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#MATILLION_COMPONENT_LAST_RUN_STATUS">MATILLION_COMPONENT_LAST_RUN_STATUS</a></span></code></th>
 <td class="colLast">
-<div class="block">The latest run status of a matillion component under a matillion job</div>
+<div class="block">Latest run status of the component within a job.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#MATILLION_COMPONENT_LINKED_JOB">MATILLION_COMPONENT_LINKED_JOB</a></span></code></th>
 <td class="colLast">
-<div class="block">Job details of the matillion job to which the matillion component internally links to</div>
+<div class="block">Job details of the job to which the component internally links.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#MATILLION_COMPONENT_SQLS">MATILLION_COMPONENT_SQLS</a></span></code></th>
 <td class="colLast">
-<div class="block">SQL Query involved with a matillion component</div>
+<div class="block">SQL queries used by the component.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/RelationField.html" title="class in com.atlan.model.fields">RelationField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#MATILLION_JOB">MATILLION_JOB</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Job in which this component exists.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#MATILLION_JOB_NAME">MATILLION_JOB_NAME</a></span></code></th>
 <td class="colLast">
-<div class="block">Name of the matillion job to which the matillion component belongs</div>
+<div class="block">Simple name of the job to which the component belongs.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#MATILLION_JOB_QUALIFIED_NAME">MATILLION_JOB_QUALIFIED_NAME</a></span></code></th>
 <td class="colLast">
-<div class="block">Qualified name of the matillion job to which the matillion component belongs</div>
+<div class="block">Unique name of the job to which the component belongs.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/RelationField.html" title="class in com.atlan.model.fields">RelationField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#MATILLION_PROCESS">MATILLION_PROCESS</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Lineage process that represents this Matillion component.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -723,7 +723,7 @@ public interface <span class="typeNameLabel">IMatillionComponent</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IGlossaryTerm.html" title="interface in com.atlan.model.assets">IGlossaryTerm</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssignedTerms()">getAssignedTerms</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Glossary terms that are linked to this asset.</div>
 </td>
 </tr>
 <tr id="i69" class="rowColor">
@@ -842,7 +842,7 @@ public interface <span class="typeNameLabel">IMatillionComponent</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInputToProcesses()">getInputToProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 </td>
 </tr>
 <tr id="i86" class="altColor">
@@ -898,77 +898,77 @@ public interface <span class="typeNameLabel">IMatillionComponent</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILink.html" title="interface in com.atlan.model.assets">ILink</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLinks()">getLinks</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Links that are attached to this asset.</div>
 </td>
 </tr>
 <tr id="i94" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMatillionComponentId()">getMatillionComponentId</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Unique id of a matillion component</div>
+<div class="block">Unique identifier of the component in Matillion.</div>
 </td>
 </tr>
 <tr id="i95" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMatillionComponentImplementationId()">getMatillionComponentImplementationId</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Unique id which represents the type of a component in matillion</div>
+<div class="block">Unique identifier for the type of the component in Matillion.</div>
 </td>
 </tr>
 <tr id="i96" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMatillionComponentLastFiveRunStatus()">getMatillionComponentLastFiveRunStatus</a></span>()</code></th>
 <td class="colLast">
-<div class="block">The last five run status of a matillion component under a matillion job</div>
+<div class="block">Last five run statuses of the component within a job.</div>
 </td>
 </tr>
 <tr id="i97" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMatillionComponentLastRunStatus()">getMatillionComponentLastRunStatus</a></span>()</code></th>
 <td class="colLast">
-<div class="block">The latest run status of a matillion component under a matillion job</div>
+<div class="block">Latest run status of the component within a job.</div>
 </td>
 </tr>
 <tr id="i98" class="altColor">
 <td class="colFirst"><code>java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMatillionComponentLinkedJob()">getMatillionComponentLinkedJob</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Job details of the matillion job to which the matillion component internally links to</div>
+<div class="block">Job details of the job to which the component internally links.</div>
 </td>
 </tr>
 <tr id="i99" class="rowColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMatillionComponentSqls()">getMatillionComponentSqls</a></span>()</code></th>
 <td class="colLast">
-<div class="block">SQL Query involved with a matillion component</div>
+<div class="block">SQL queries used by the component.</div>
 </td>
 </tr>
 <tr id="i100" class="altColor">
 <td class="colFirst"><code><a href="IMatillionJob.html" title="interface in com.atlan.model.assets">IMatillionJob</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMatillionJob()">getMatillionJob</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Job in which this component exists.</div>
 </td>
 </tr>
 <tr id="i101" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMatillionJobName()">getMatillionJobName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Name of the matillion job to which the matillion component belongs</div>
+<div class="block">Simple name of the job to which the component belongs.</div>
 </td>
 </tr>
 <tr id="i102" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMatillionJobQualifiedName()">getMatillionJobQualifiedName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Qualified name of the matillion job to which the matillion component belongs</div>
+<div class="block">Unique name of the job to which the component belongs.</div>
 </td>
 </tr>
 <tr id="i103" class="rowColor">
 <td class="colFirst"><code><a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMatillionProcess()">getMatillionProcess</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Lineage process that represents this Matillion component.</div>
 </td>
 </tr>
 <tr id="i104" class="altColor">
@@ -989,7 +989,7 @@ public interface <span class="typeNameLabel">IMatillionComponent</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IMCMonitor.html" title="interface in com.atlan.model.assets">IMCMonitor</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMcMonitors()">getMcMonitors</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Monitors that observe this asset.</div>
 </td>
 </tr>
 <tr id="i107" class="rowColor">
@@ -1017,7 +1017,7 @@ public interface <span class="typeNameLabel">IMatillionComponent</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOutputFromProcesses()">getOutputFromProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 </td>
 </tr>
 <tr id="i111" class="rowColor">
@@ -1052,7 +1052,7 @@ public interface <span class="typeNameLabel">IMatillionComponent</span></pre>
 <td class="colFirst"><code><a href="IReadme.html" title="interface in com.atlan.model.assets">IReadme</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getReadme()">getReadme</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">README that is linked to this asset.</div>
 </td>
 </tr>
 <tr id="i116" class="altColor">
@@ -1393,7 +1393,7 @@ public interface <span class="typeNameLabel">IMatillionComponent</span></pre>
 <li class="blockList">
 <h4>MATILLION_COMPONENT_ID</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> MATILLION_COMPONENT_ID</pre>
-<div class="block">Unique id of a matillion component</div>
+<div class="block">Unique identifier of the component in Matillion.</div>
 </li>
 </ul>
 <a id="MATILLION_COMPONENT_IMPLEMENTATION_ID">
@@ -1403,7 +1403,7 @@ public interface <span class="typeNameLabel">IMatillionComponent</span></pre>
 <li class="blockList">
 <h4>MATILLION_COMPONENT_IMPLEMENTATION_ID</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> MATILLION_COMPONENT_IMPLEMENTATION_ID</pre>
-<div class="block">Unique id which represents the type of a component in matillion</div>
+<div class="block">Unique identifier for the type of the component in Matillion.</div>
 </li>
 </ul>
 <a id="MATILLION_COMPONENT_LAST_FIVE_RUN_STATUS">
@@ -1413,7 +1413,7 @@ public interface <span class="typeNameLabel">IMatillionComponent</span></pre>
 <li class="blockList">
 <h4>MATILLION_COMPONENT_LAST_FIVE_RUN_STATUS</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> MATILLION_COMPONENT_LAST_FIVE_RUN_STATUS</pre>
-<div class="block">The last five run status of a matillion component under a matillion job</div>
+<div class="block">Last five run statuses of the component within a job.</div>
 </li>
 </ul>
 <a id="MATILLION_COMPONENT_LAST_RUN_STATUS">
@@ -1423,7 +1423,7 @@ public interface <span class="typeNameLabel">IMatillionComponent</span></pre>
 <li class="blockList">
 <h4>MATILLION_COMPONENT_LAST_RUN_STATUS</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> MATILLION_COMPONENT_LAST_RUN_STATUS</pre>
-<div class="block">The latest run status of a matillion component under a matillion job</div>
+<div class="block">Latest run status of the component within a job.</div>
 </li>
 </ul>
 <a id="MATILLION_COMPONENT_LINKED_JOB">
@@ -1433,7 +1433,7 @@ public interface <span class="typeNameLabel">IMatillionComponent</span></pre>
 <li class="blockList">
 <h4>MATILLION_COMPONENT_LINKED_JOB</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> MATILLION_COMPONENT_LINKED_JOB</pre>
-<div class="block">Job details of the matillion job to which the matillion component internally links to</div>
+<div class="block">Job details of the job to which the component internally links.</div>
 </li>
 </ul>
 <a id="MATILLION_COMPONENT_SQLS">
@@ -1443,7 +1443,7 @@ public interface <span class="typeNameLabel">IMatillionComponent</span></pre>
 <li class="blockList">
 <h4>MATILLION_COMPONENT_SQLS</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> MATILLION_COMPONENT_SQLS</pre>
-<div class="block">SQL Query involved with a matillion component</div>
+<div class="block">SQL queries used by the component.</div>
 </li>
 </ul>
 <a id="MATILLION_JOB">
@@ -1453,7 +1453,7 @@ public interface <span class="typeNameLabel">IMatillionComponent</span></pre>
 <li class="blockList">
 <h4>MATILLION_JOB</h4>
 <pre>static final&nbsp;<a href="../fields/RelationField.html" title="class in com.atlan.model.fields">RelationField</a> MATILLION_JOB</pre>
-<div class="block">TBC</div>
+<div class="block">Job in which this component exists.</div>
 </li>
 </ul>
 <a id="MATILLION_JOB_NAME">
@@ -1463,7 +1463,7 @@ public interface <span class="typeNameLabel">IMatillionComponent</span></pre>
 <li class="blockList">
 <h4>MATILLION_JOB_NAME</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a> MATILLION_JOB_NAME</pre>
-<div class="block">Name of the matillion job to which the matillion component belongs</div>
+<div class="block">Simple name of the job to which the component belongs.</div>
 </li>
 </ul>
 <a id="MATILLION_JOB_QUALIFIED_NAME">
@@ -1473,7 +1473,7 @@ public interface <span class="typeNameLabel">IMatillionComponent</span></pre>
 <li class="blockList">
 <h4>MATILLION_JOB_QUALIFIED_NAME</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a> MATILLION_JOB_QUALIFIED_NAME</pre>
-<div class="block">Qualified name of the matillion job to which the matillion component belongs</div>
+<div class="block">Unique name of the job to which the component belongs.</div>
 </li>
 </ul>
 <a id="MATILLION_PROCESS">
@@ -1483,7 +1483,7 @@ public interface <span class="typeNameLabel">IMatillionComponent</span></pre>
 <li class="blockList">
 <h4>MATILLION_PROCESS</h4>
 <pre>static final&nbsp;<a href="../fields/RelationField.html" title="class in com.atlan.model.fields">RelationField</a> MATILLION_PROCESS</pre>
-<div class="block">TBC</div>
+<div class="block">Lineage process that represents this Matillion component.</div>
 </li>
 </ul>
 </li>
@@ -2183,7 +2183,7 @@ public interface <span class="typeNameLabel">IMatillionComponent</span></pre>
 <li class="blockList">
 <h4>getAssignedTerms</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="IGlossaryTerm.html" title="interface in com.atlan.model.assets">IGlossaryTerm</a>&gt;&nbsp;getAssignedTerms()</pre>
-<div class="block">TBC</div>
+<div class="block">Glossary terms that are linked to this asset.</div>
 </li>
 </ul>
 <a id="getCertificateStatus()">
@@ -2323,7 +2323,7 @@ public interface <span class="typeNameLabel">IMatillionComponent</span></pre>
 <li class="blockList">
 <h4>getInputToProcesses</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getInputToProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 </li>
 </ul>
 <a id="getIsAIGenerated()">
@@ -2403,7 +2403,7 @@ public interface <span class="typeNameLabel">IMatillionComponent</span></pre>
 <li class="blockList">
 <h4>getLinks</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="ILink.html" title="interface in com.atlan.model.assets">ILink</a>&gt;&nbsp;getLinks()</pre>
-<div class="block">TBC</div>
+<div class="block">Links that are attached to this asset.</div>
 </li>
 </ul>
 <a id="getMatillionComponentId()">
@@ -2413,7 +2413,7 @@ public interface <span class="typeNameLabel">IMatillionComponent</span></pre>
 <li class="blockList">
 <h4>getMatillionComponentId</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getMatillionComponentId()</pre>
-<div class="block">Unique id of a matillion component</div>
+<div class="block">Unique identifier of the component in Matillion.</div>
 </li>
 </ul>
 <a id="getMatillionComponentImplementationId()">
@@ -2423,7 +2423,7 @@ public interface <span class="typeNameLabel">IMatillionComponent</span></pre>
 <li class="blockList">
 <h4>getMatillionComponentImplementationId</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getMatillionComponentImplementationId()</pre>
-<div class="block">Unique id which represents the type of a component in matillion</div>
+<div class="block">Unique identifier for the type of the component in Matillion.</div>
 </li>
 </ul>
 <a id="getMatillionComponentLastFiveRunStatus()">
@@ -2433,7 +2433,7 @@ public interface <span class="typeNameLabel">IMatillionComponent</span></pre>
 <li class="blockList">
 <h4>getMatillionComponentLastFiveRunStatus</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getMatillionComponentLastFiveRunStatus()</pre>
-<div class="block">The last five run status of a matillion component under a matillion job</div>
+<div class="block">Last five run statuses of the component within a job.</div>
 </li>
 </ul>
 <a id="getMatillionComponentLastRunStatus()">
@@ -2443,7 +2443,7 @@ public interface <span class="typeNameLabel">IMatillionComponent</span></pre>
 <li class="blockList">
 <h4>getMatillionComponentLastRunStatus</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getMatillionComponentLastRunStatus()</pre>
-<div class="block">The latest run status of a matillion component under a matillion job</div>
+<div class="block">Latest run status of the component within a job.</div>
 </li>
 </ul>
 <a id="getMatillionComponentLinkedJob()">
@@ -2453,7 +2453,7 @@ public interface <span class="typeNameLabel">IMatillionComponent</span></pre>
 <li class="blockList">
 <h4>getMatillionComponentLinkedJob</h4>
 <pre class="methodSignature">java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;getMatillionComponentLinkedJob()</pre>
-<div class="block">Job details of the matillion job to which the matillion component internally links to</div>
+<div class="block">Job details of the job to which the component internally links.</div>
 </li>
 </ul>
 <a id="getMatillionComponentSqls()">
@@ -2463,7 +2463,7 @@ public interface <span class="typeNameLabel">IMatillionComponent</span></pre>
 <li class="blockList">
 <h4>getMatillionComponentSqls</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;java.lang.String&gt;&nbsp;getMatillionComponentSqls()</pre>
-<div class="block">SQL Query involved with a matillion component</div>
+<div class="block">SQL queries used by the component.</div>
 </li>
 </ul>
 <a id="getMatillionJob()">
@@ -2473,7 +2473,7 @@ public interface <span class="typeNameLabel">IMatillionComponent</span></pre>
 <li class="blockList">
 <h4>getMatillionJob</h4>
 <pre class="methodSignature"><a href="IMatillionJob.html" title="interface in com.atlan.model.assets">IMatillionJob</a>&nbsp;getMatillionJob()</pre>
-<div class="block">TBC</div>
+<div class="block">Job in which this component exists.</div>
 </li>
 </ul>
 <a id="getMatillionJobName()">
@@ -2483,7 +2483,7 @@ public interface <span class="typeNameLabel">IMatillionComponent</span></pre>
 <li class="blockList">
 <h4>getMatillionJobName</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getMatillionJobName()</pre>
-<div class="block">Name of the matillion job to which the matillion component belongs</div>
+<div class="block">Simple name of the job to which the component belongs.</div>
 </li>
 </ul>
 <a id="getMatillionJobQualifiedName()">
@@ -2493,7 +2493,7 @@ public interface <span class="typeNameLabel">IMatillionComponent</span></pre>
 <li class="blockList">
 <h4>getMatillionJobQualifiedName</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getMatillionJobQualifiedName()</pre>
-<div class="block">Qualified name of the matillion job to which the matillion component belongs</div>
+<div class="block">Unique name of the job to which the component belongs.</div>
 </li>
 </ul>
 <a id="getMatillionProcess()">
@@ -2503,7 +2503,7 @@ public interface <span class="typeNameLabel">IMatillionComponent</span></pre>
 <li class="blockList">
 <h4>getMatillionProcess</h4>
 <pre class="methodSignature"><a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&nbsp;getMatillionProcess()</pre>
-<div class="block">TBC</div>
+<div class="block">Lineage process that represents this Matillion component.</div>
 </li>
 </ul>
 <a id="getMatillionVersion()">
@@ -2533,7 +2533,7 @@ public interface <span class="typeNameLabel">IMatillionComponent</span></pre>
 <li class="blockList">
 <h4>getMcMonitors</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="IMCMonitor.html" title="interface in com.atlan.model.assets">IMCMonitor</a>&gt;&nbsp;getMcMonitors()</pre>
-<div class="block">TBC</div>
+<div class="block">Monitors that observe this asset.</div>
 </li>
 </ul>
 <a id="getMetrics()">
@@ -2573,7 +2573,7 @@ public interface <span class="typeNameLabel">IMatillionComponent</span></pre>
 <li class="blockList">
 <h4>getOutputFromProcesses</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getOutputFromProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 </li>
 </ul>
 <a id="getOwnerGroups()">
@@ -2623,7 +2623,7 @@ public interface <span class="typeNameLabel">IMatillionComponent</span></pre>
 <li class="blockList">
 <h4>getReadme</h4>
 <pre class="methodSignature"><a href="IReadme.html" title="interface in com.atlan.model.assets">IReadme</a>&nbsp;getReadme()</pre>
-<div class="block">TBC</div>
+<div class="block">README that is linked to this asset.</div>
 </li>
 </ul>
 <a id="getSampleDataUrl()">

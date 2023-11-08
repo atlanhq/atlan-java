@@ -482,14 +482,14 @@ implements <a href="ILookerDashboard.html" title="interface in com.atlan.model.a
 <td class="colFirst"><code><a href="ILookerFolder.html" title="interface in com.atlan.model.assets">ILookerFolder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getFolder()">getFolder</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Folder in which the dashboard exists.</div>
 </td>
 </tr>
 <tr id="i21" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getFolderName()">getFolderName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Name of the parent folder in Looker that contains this dashboard.</div>
 </td>
 </tr>
 <tr id="i22" class="altColor">
@@ -503,14 +503,14 @@ implements <a href="ILookerDashboard.html" title="interface in com.atlan.model.a
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInputToProcesses()">getInputToProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 </td>
 </tr>
 <tr id="i24" class="altColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILookerLook.html" title="interface in com.atlan.model.assets">ILookerLook</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLooks()">getLooks</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Looks that are used within this dashboard.</div>
 </td>
 </tr>
 <tr id="i25" class="rowColor">
@@ -524,56 +524,56 @@ implements <a href="ILookerDashboard.html" title="interface in com.atlan.model.a
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOutputFromProcesses()">getOutputFromProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 </td>
 </tr>
 <tr id="i27" class="rowColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSourceLastAccessedAt()">getSourceLastAccessedAt</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Timestamp (epoch) when the dashboard was last accessed by a user, in milliseconds.</div>
 </td>
 </tr>
 <tr id="i28" class="altColor">
 <td class="colFirst"><code>java.lang.Integer</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSourcelastUpdaterId()">getSourcelastUpdaterId</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Identifier of the user who last updated the dashboard, from Looker.</div>
 </td>
 </tr>
 <tr id="i29" class="rowColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSourceLastViewedAt()">getSourceLastViewedAt</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Timestamp (epoch) when the dashboard was last viewed by a user.</div>
 </td>
 </tr>
 <tr id="i30" class="altColor">
 <td class="colFirst"><code>java.lang.Integer</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSourceMetadataId()">getSourceMetadataId</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Identifier of the dashboard's content metadata, from Looker.</div>
 </td>
 </tr>
 <tr id="i31" class="rowColor">
 <td class="colFirst"><code>java.lang.Integer</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSourceUserId()">getSourceUserId</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Identifier of the user who created this dashboard, from Looker.</div>
 </td>
 </tr>
 <tr id="i32" class="altColor">
 <td class="colFirst"><code>java.lang.Integer</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSourceViewCount()">getSourceViewCount</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Number of times the dashboard has been viewed through the Looker web UI.</div>
 </td>
 </tr>
 <tr id="i33" class="rowColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILookerTile.html" title="interface in com.atlan.model.assets">ILookerTile</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTiles()">getTiles</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Tiles that exist within this dashboard.</div>
 </td>
 </tr>
 <tr id="i34" class="altColor">
@@ -2230,7 +2230,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getFolder</h4>
 <pre class="methodSignature">public&nbsp;<a href="ILookerFolder.html" title="interface in com.atlan.model.assets">ILookerFolder</a>&nbsp;getFolder()</pre>
-<div class="block">TBC</div>
+<div class="block">Folder in which the dashboard exists.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ILookerDashboard.html#getFolder()">getFolder</a></code>&nbsp;in interface&nbsp;<code><a href="ILookerDashboard.html" title="interface in com.atlan.model.assets">ILookerDashboard</a></code></dd>
@@ -2244,7 +2244,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getFolderName</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getFolderName()</pre>
-<div class="block">TBC</div>
+<div class="block">Name of the parent folder in Looker that contains this dashboard.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ILookerDashboard.html#getFolderName()">getFolderName</a></code>&nbsp;in interface&nbsp;<code><a href="ILookerDashboard.html" title="interface in com.atlan.model.assets">ILookerDashboard</a></code></dd>
@@ -2278,7 +2278,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getInputToProcesses</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getInputToProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IBI.html#getInputToProcesses()">getInputToProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="IBI.html" title="interface in com.atlan.model.assets">IBI</a></code></dd>
@@ -2298,7 +2298,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getLooks</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILookerLook.html" title="interface in com.atlan.model.assets">ILookerLook</a>&gt;&nbsp;getLooks()</pre>
-<div class="block">TBC</div>
+<div class="block">Looks that are used within this dashboard.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ILookerDashboard.html#getLooks()">getLooks</a></code>&nbsp;in interface&nbsp;<code><a href="ILookerDashboard.html" title="interface in com.atlan.model.assets">ILookerDashboard</a></code></dd>
@@ -2332,7 +2332,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getOutputFromProcesses</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getOutputFromProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IBI.html#getOutputFromProcesses()">getOutputFromProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="IBI.html" title="interface in com.atlan.model.assets">IBI</a></code></dd>
@@ -2352,7 +2352,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getSourceLastAccessedAt</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Long&nbsp;getSourceLastAccessedAt()</pre>
-<div class="block">TBC</div>
+<div class="block">Timestamp (epoch) when the dashboard was last accessed by a user, in milliseconds.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ILookerDashboard.html#getSourceLastAccessedAt()">getSourceLastAccessedAt</a></code>&nbsp;in interface&nbsp;<code><a href="ILookerDashboard.html" title="interface in com.atlan.model.assets">ILookerDashboard</a></code></dd>
@@ -2366,7 +2366,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getSourceLastViewedAt</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Long&nbsp;getSourceLastViewedAt()</pre>
-<div class="block">TBC</div>
+<div class="block">Timestamp (epoch) when the dashboard was last viewed by a user.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ILookerDashboard.html#getSourceLastViewedAt()">getSourceLastViewedAt</a></code>&nbsp;in interface&nbsp;<code><a href="ILookerDashboard.html" title="interface in com.atlan.model.assets">ILookerDashboard</a></code></dd>
@@ -2380,7 +2380,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getSourceMetadataId</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Integer&nbsp;getSourceMetadataId()</pre>
-<div class="block">TBC</div>
+<div class="block">Identifier of the dashboard's content metadata, from Looker.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ILookerDashboard.html#getSourceMetadataId()">getSourceMetadataId</a></code>&nbsp;in interface&nbsp;<code><a href="ILookerDashboard.html" title="interface in com.atlan.model.assets">ILookerDashboard</a></code></dd>
@@ -2394,7 +2394,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getSourceUserId</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Integer&nbsp;getSourceUserId()</pre>
-<div class="block">TBC</div>
+<div class="block">Identifier of the user who created this dashboard, from Looker.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ILookerDashboard.html#getSourceUserId()">getSourceUserId</a></code>&nbsp;in interface&nbsp;<code><a href="ILookerDashboard.html" title="interface in com.atlan.model.assets">ILookerDashboard</a></code></dd>
@@ -2408,7 +2408,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getSourceViewCount</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Integer&nbsp;getSourceViewCount()</pre>
-<div class="block">TBC</div>
+<div class="block">Number of times the dashboard has been viewed through the Looker web UI.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ILookerDashboard.html#getSourceViewCount()">getSourceViewCount</a></code>&nbsp;in interface&nbsp;<code><a href="ILookerDashboard.html" title="interface in com.atlan.model.assets">ILookerDashboard</a></code></dd>
@@ -2422,7 +2422,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getSourcelastUpdaterId</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Integer&nbsp;getSourcelastUpdaterId()</pre>
-<div class="block">TBC</div>
+<div class="block">Identifier of the user who last updated the dashboard, from Looker.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ILookerDashboard.html#getSourcelastUpdaterId()">getSourcelastUpdaterId</a></code>&nbsp;in interface&nbsp;<code><a href="ILookerDashboard.html" title="interface in com.atlan.model.assets">ILookerDashboard</a></code></dd>
@@ -2436,7 +2436,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getTiles</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILookerTile.html" title="interface in com.atlan.model.assets">ILookerTile</a>&gt;&nbsp;getTiles()</pre>
-<div class="block">TBC</div>
+<div class="block">Tiles that exist within this dashboard.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ILookerDashboard.html#getTiles()">getTiles</a></code>&nbsp;in interface&nbsp;<code><a href="ILookerDashboard.html" title="interface in com.atlan.model.assets">ILookerDashboard</a></code></dd>

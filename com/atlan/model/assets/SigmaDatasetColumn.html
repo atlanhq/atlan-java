@@ -496,7 +496,7 @@ implements <a href="ISigmaDatasetColumn.html" title="interface in com.atlan.mode
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInputToProcesses()">getInputToProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 </td>
 </tr>
 <tr id="i22" class="altColor">
@@ -510,7 +510,7 @@ implements <a href="ISigmaDatasetColumn.html" title="interface in com.atlan.mode
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOutputFromProcesses()">getOutputFromProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 </td>
 </tr>
 <tr id="i24" class="altColor">
@@ -531,21 +531,21 @@ implements <a href="ISigmaDatasetColumn.html" title="interface in com.atlan.mode
 <td class="colFirst"><code><a href="ISigmaDataset.html" title="interface in com.atlan.model.assets">ISigmaDataset</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSigmaDataset()">getSigmaDataset</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Dataset that contains this column.</div>
+<div class="block">Dataset in which this dataset column exists.</div>
 </td>
 </tr>
 <tr id="i27" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSigmaDatasetName()">getSigmaDatasetName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Human-readable name of the dataset that contains this column.</div>
+<div class="block">Simple name of the dataset in which this column exists.</div>
 </td>
 </tr>
 <tr id="i28" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSigmaDatasetQualifiedName()">getSigmaDatasetQualifiedName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Unique name of the dataset that contains this column.</div>
+<div class="block">Unique name of the dataset in which this column exists.</div>
 </td>
 </tr>
 <tr id="i29" class="rowColor">
@@ -2250,7 +2250,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getInputToProcesses</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getInputToProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IBI.html#getInputToProcesses()">getInputToProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="IBI.html" title="interface in com.atlan.model.assets">IBI</a></code></dd>
@@ -2290,7 +2290,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getOutputFromProcesses</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getOutputFromProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IBI.html#getOutputFromProcesses()">getOutputFromProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="IBI.html" title="interface in com.atlan.model.assets">IBI</a></code></dd>
@@ -2342,7 +2342,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getSigmaDataset</h4>
 <pre class="methodSignature">public&nbsp;<a href="ISigmaDataset.html" title="interface in com.atlan.model.assets">ISigmaDataset</a>&nbsp;getSigmaDataset()</pre>
-<div class="block">Dataset that contains this column.</div>
+<div class="block">Dataset in which this dataset column exists.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISigmaDatasetColumn.html#getSigmaDataset()">getSigmaDataset</a></code>&nbsp;in interface&nbsp;<code><a href="ISigmaDatasetColumn.html" title="interface in com.atlan.model.assets">ISigmaDatasetColumn</a></code></dd>
@@ -2356,7 +2356,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getSigmaDatasetName</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getSigmaDatasetName()</pre>
-<div class="block">Human-readable name of the dataset that contains this column.</div>
+<div class="block">Simple name of the dataset in which this column exists.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISigmaDatasetColumn.html#getSigmaDatasetName()">getSigmaDatasetName</a></code>&nbsp;in interface&nbsp;<code><a href="ISigmaDatasetColumn.html" title="interface in com.atlan.model.assets">ISigmaDatasetColumn</a></code></dd>
@@ -2370,7 +2370,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getSigmaDatasetQualifiedName</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getSigmaDatasetQualifiedName()</pre>
-<div class="block">Unique name of the dataset that contains this column.</div>
+<div class="block">Unique name of the dataset in which this column exists.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISigmaDatasetColumn.html#getSigmaDatasetQualifiedName()">getSigmaDatasetQualifiedName</a></code>&nbsp;in interface&nbsp;<code><a href="ISigmaDatasetColumn.html" title="interface in com.atlan.model.assets">ISigmaDatasetColumn</a></code></dd>

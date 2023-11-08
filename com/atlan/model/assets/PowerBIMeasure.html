@@ -154,7 +154,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 public class <span class="typeNameLabel">PowerBIMeasure</span>
 extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a>
 implements <a href="IPowerBIMeasure.html" title="interface in com.atlan.model.assets">IPowerBIMeasure</a>, <a href="IPowerBI.html" title="interface in com.atlan.model.assets">IPowerBI</a>, <a href="IBI.html" title="interface in com.atlan.model.assets">IBI</a>, <a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a>, <a href="IAsset.html" title="interface in com.atlan.model.assets">IAsset</a>, <a href="IReferenceable.html" title="interface in com.atlan.model.assets">IReferenceable</a></pre>
-<div class="block">Instance of a Power BI measure in Atlan.</div>
+<div class="block">Instance of a Power BI measure in Atlan. Measures define calculations in a DAX model, which helps calculate values based on each row.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../serialized-form.html#com.atlan.model.assets.PowerBIMeasure">Serialized Form</a></dd>
@@ -489,7 +489,7 @@ implements <a href="IPowerBIMeasure.html" title="interface in com.atlan.model.as
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDatasetQualifiedName()">getDatasetQualifiedName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Unique name of the dataset in which this measure exists.</div>
 </td>
 </tr>
 <tr id="i21" class="rowColor">
@@ -503,7 +503,7 @@ implements <a href="IPowerBIMeasure.html" title="interface in com.atlan.model.as
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInputToProcesses()">getInputToProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 </td>
 </tr>
 <tr id="i23" class="rowColor">
@@ -517,7 +517,7 @@ implements <a href="IPowerBIMeasure.html" title="interface in com.atlan.model.as
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOutputFromProcesses()">getOutputFromProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 </td>
 </tr>
 <tr id="i25" class="rowColor">
@@ -538,7 +538,7 @@ implements <a href="IPowerBIMeasure.html" title="interface in com.atlan.model.as
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPowerBIIsExternalMeasure()">getPowerBIIsExternalMeasure</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Whether this measure is external (true) or internal (false).</div>
 </td>
 </tr>
 <tr id="i28" class="altColor">
@@ -552,7 +552,7 @@ implements <a href="IPowerBIMeasure.html" title="interface in com.atlan.model.as
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPowerBIMeasureExpression()">getPowerBIMeasureExpression</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">DAX expression for this measure.</div>
 </td>
 </tr>
 <tr id="i30" class="altColor">
@@ -566,7 +566,7 @@ implements <a href="IPowerBIMeasure.html" title="interface in com.atlan.model.as
 <td class="colFirst"><code><a href="IPowerBITable.html" title="interface in com.atlan.model.assets">IPowerBITable</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTable()">getTable</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Table in which this measure exists.</div>
 </td>
 </tr>
 <tr id="i32" class="altColor">
@@ -580,7 +580,7 @@ implements <a href="IPowerBIMeasure.html" title="interface in com.atlan.model.as
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getWorkspaceQualifiedName()">getWorkspaceQualifiedName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Unique name of the workspace in which this measure exists.</div>
 </td>
 </tr>
 <tr id="i34" class="altColor">
@@ -2230,7 +2230,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getDatasetQualifiedName</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getDatasetQualifiedName()</pre>
-<div class="block">TBC</div>
+<div class="block">Unique name of the dataset in which this measure exists.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IPowerBIMeasure.html#getDatasetQualifiedName()">getDatasetQualifiedName</a></code>&nbsp;in interface&nbsp;<code><a href="IPowerBIMeasure.html" title="interface in com.atlan.model.assets">IPowerBIMeasure</a></code></dd>
@@ -2264,7 +2264,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getInputToProcesses</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getInputToProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IBI.html#getInputToProcesses()">getInputToProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="IBI.html" title="interface in com.atlan.model.assets">IBI</a></code></dd>
@@ -2304,7 +2304,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getOutputFromProcesses</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getOutputFromProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IBI.html#getOutputFromProcesses()">getOutputFromProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="IBI.html" title="interface in com.atlan.model.assets">IBI</a></code></dd>
@@ -2356,7 +2356,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getPowerBIIsExternalMeasure</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Boolean&nbsp;getPowerBIIsExternalMeasure()</pre>
-<div class="block">TBC</div>
+<div class="block">Whether this measure is external (true) or internal (false).</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IPowerBIMeasure.html#getPowerBIIsExternalMeasure()">getPowerBIIsExternalMeasure</a></code>&nbsp;in interface&nbsp;<code><a href="IPowerBIMeasure.html" title="interface in com.atlan.model.assets">IPowerBIMeasure</a></code></dd>
@@ -2386,7 +2386,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getPowerBIMeasureExpression</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getPowerBIMeasureExpression()</pre>
-<div class="block">TBC</div>
+<div class="block">DAX expression for this measure.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IPowerBIMeasure.html#getPowerBIMeasureExpression()">getPowerBIMeasureExpression</a></code>&nbsp;in interface&nbsp;<code><a href="IPowerBIMeasure.html" title="interface in com.atlan.model.assets">IPowerBIMeasure</a></code></dd>
@@ -2416,7 +2416,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getTable</h4>
 <pre class="methodSignature">public&nbsp;<a href="IPowerBITable.html" title="interface in com.atlan.model.assets">IPowerBITable</a>&nbsp;getTable()</pre>
-<div class="block">TBC</div>
+<div class="block">Table in which this measure exists.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IPowerBIMeasure.html#getTable()">getTable</a></code>&nbsp;in interface&nbsp;<code><a href="IPowerBIMeasure.html" title="interface in com.atlan.model.assets">IPowerBIMeasure</a></code></dd>
@@ -2430,7 +2430,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getWorkspaceQualifiedName</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getWorkspaceQualifiedName()</pre>
-<div class="block">TBC</div>
+<div class="block">Unique name of the workspace in which this measure exists.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IPowerBIMeasure.html#getWorkspaceQualifiedName()">getWorkspaceQualifiedName</a></code>&nbsp;in interface&nbsp;<code><a href="IPowerBIMeasure.html" title="interface in com.atlan.model.assets">IPowerBIMeasure</a></code></dd>

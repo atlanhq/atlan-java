@@ -154,28 +154,28 @@ public interface <span class="typeNameLabel">IMicroStrategy</span></pre>
 <td class="colFirst"><code>static <a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#MICRO_STRATEGY_CERTIFIED_AT">MICRO_STRATEGY_CERTIFIED_AT</a></span></code></th>
 <td class="colLast">
-<div class="block">Date when the asset was certified in MicroStrategy.</div>
+<div class="block">Time (epoch) this asset was certified in MicroStrategy, in milliseconds.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#MICRO_STRATEGY_CERTIFIED_BY">MICRO_STRATEGY_CERTIFIED_BY</a></span></code></th>
 <td class="colLast">
-<div class="block">User who certified the asset in MicroStrategy.</div>
+<div class="block">User who certified this asset, in MicroStrategy.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#MICRO_STRATEGY_CUBE_NAMES">MICRO_STRATEGY_CUBE_NAMES</a></span></code></th>
 <td class="colLast">
-<div class="block">Simple names of the related MicroStrategy cubes.</div>
+<div class="block">Simple names of the cubes related to this asset.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#MICRO_STRATEGY_CUBE_QUALIFIED_NAMES">MICRO_STRATEGY_CUBE_QUALIFIED_NAMES</a></span></code></th>
 <td class="colLast">
-<div class="block">Unique names of the related MicroStrategy cubes.</div>
+<div class="block">Unique names of the cubes related to this asset.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -189,35 +189,35 @@ public interface <span class="typeNameLabel">IMicroStrategy</span></pre>
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#MICRO_STRATEGY_LOCATION">MICRO_STRATEGY_LOCATION</a></span></code></th>
 <td class="colLast">
-<div class="block">Location of the asset within MicroStrategy.</div>
+<div class="block">Location of this asset in MicroStrategy.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#MICRO_STRATEGY_PROJECT_NAME">MICRO_STRATEGY_PROJECT_NAME</a></span></code></th>
 <td class="colLast">
-<div class="block">Simple name of the related MicroStrategy project.</div>
+<div class="block">Simple name of the project in which this asset exists.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#MICRO_STRATEGY_PROJECT_QUALIFIED_NAME">MICRO_STRATEGY_PROJECT_QUALIFIED_NAME</a></span></code></th>
 <td class="colLast">
-<div class="block">Unique name of the related MicroStrategy project.</div>
+<div class="block">Unique name of the project in which this asset exists.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#MICRO_STRATEGY_REPORT_NAMES">MICRO_STRATEGY_REPORT_NAMES</a></span></code></th>
 <td class="colLast">
-<div class="block">Simple names of the related MicroStrategy reports.</div>
+<div class="block">Simple names of the reports related to this asset.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#MICRO_STRATEGY_REPORT_QUALIFIED_NAMES">MICRO_STRATEGY_REPORT_QUALIFIED_NAMES</a></span></code></th>
 <td class="colLast">
-<div class="block">Unique names of the related MicroStrategy reports.</div>
+<div class="block">Unique names of the reports related to this asset.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -723,7 +723,7 @@ public interface <span class="typeNameLabel">IMicroStrategy</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IGlossaryTerm.html" title="interface in com.atlan.model.assets">IGlossaryTerm</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssignedTerms()">getAssignedTerms</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Glossary terms that are linked to this asset.</div>
 </td>
 </tr>
 <tr id="i69" class="rowColor">
@@ -842,7 +842,7 @@ public interface <span class="typeNameLabel">IMicroStrategy</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInputToProcesses()">getInputToProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 </td>
 </tr>
 <tr id="i86" class="altColor">
@@ -898,7 +898,7 @@ public interface <span class="typeNameLabel">IMicroStrategy</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILink.html" title="interface in com.atlan.model.assets">ILink</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLinks()">getLinks</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Links that are attached to this asset.</div>
 </td>
 </tr>
 <tr id="i94" class="altColor">
@@ -912,7 +912,7 @@ public interface <span class="typeNameLabel">IMicroStrategy</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IMCMonitor.html" title="interface in com.atlan.model.assets">IMCMonitor</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMcMonitors()">getMcMonitors</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Monitors that observe this asset.</div>
 </td>
 </tr>
 <tr id="i96" class="altColor">
@@ -926,28 +926,28 @@ public interface <span class="typeNameLabel">IMicroStrategy</span></pre>
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMicroStrategyCertifiedAt()">getMicroStrategyCertifiedAt</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Date when the asset was certified in MicroStrategy.</div>
+<div class="block">Time (epoch) this asset was certified in MicroStrategy, in milliseconds.</div>
 </td>
 </tr>
 <tr id="i98" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMicroStrategyCertifiedBy()">getMicroStrategyCertifiedBy</a></span>()</code></th>
 <td class="colLast">
-<div class="block">User who certified the asset in MicroStrategy.</div>
+<div class="block">User who certified this asset, in MicroStrategy.</div>
 </td>
 </tr>
 <tr id="i99" class="rowColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMicroStrategyCubeNames()">getMicroStrategyCubeNames</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Simple names of the related MicroStrategy cubes.</div>
+<div class="block">Simple names of the cubes related to this asset.</div>
 </td>
 </tr>
 <tr id="i100" class="altColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMicroStrategyCubeQualifiedNames()">getMicroStrategyCubeQualifiedNames</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Unique names of the related MicroStrategy cubes.</div>
+<div class="block">Unique names of the cubes related to this asset.</div>
 </td>
 </tr>
 <tr id="i101" class="rowColor">
@@ -961,35 +961,35 @@ public interface <span class="typeNameLabel">IMicroStrategy</span></pre>
 <td class="colFirst"><code>java.util.List&lt;java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMicroStrategyLocation()">getMicroStrategyLocation</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Location of the asset within MicroStrategy.</div>
+<div class="block">Location of this asset in MicroStrategy.</div>
 </td>
 </tr>
 <tr id="i103" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMicroStrategyProjectName()">getMicroStrategyProjectName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Simple name of the related MicroStrategy project.</div>
+<div class="block">Simple name of the project in which this asset exists.</div>
 </td>
 </tr>
 <tr id="i104" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMicroStrategyProjectQualifiedName()">getMicroStrategyProjectQualifiedName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Unique name of the related MicroStrategy project.</div>
+<div class="block">Unique name of the project in which this asset exists.</div>
 </td>
 </tr>
 <tr id="i105" class="rowColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMicroStrategyReportNames()">getMicroStrategyReportNames</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Simple names of the related MicroStrategy reports.</div>
+<div class="block">Simple names of the reports related to this asset.</div>
 </td>
 </tr>
 <tr id="i106" class="altColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMicroStrategyReportQualifiedNames()">getMicroStrategyReportQualifiedNames</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Unique names of the related MicroStrategy reports.</div>
+<div class="block">Unique names of the reports related to this asset.</div>
 </td>
 </tr>
 <tr id="i107" class="rowColor">
@@ -1010,7 +1010,7 @@ public interface <span class="typeNameLabel">IMicroStrategy</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOutputFromProcesses()">getOutputFromProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 </td>
 </tr>
 <tr id="i110" class="altColor">
@@ -1045,7 +1045,7 @@ public interface <span class="typeNameLabel">IMicroStrategy</span></pre>
 <td class="colFirst"><code><a href="IReadme.html" title="interface in com.atlan.model.assets">IReadme</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getReadme()">getReadme</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">README that is linked to this asset.</div>
 </td>
 </tr>
 <tr id="i115" class="rowColor">
@@ -1386,7 +1386,7 @@ public interface <span class="typeNameLabel">IMicroStrategy</span></pre>
 <li class="blockList">
 <h4>MICRO_STRATEGY_CERTIFIED_AT</h4>
 <pre>static final&nbsp;<a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a> MICRO_STRATEGY_CERTIFIED_AT</pre>
-<div class="block">Date when the asset was certified in MicroStrategy.</div>
+<div class="block">Time (epoch) this asset was certified in MicroStrategy, in milliseconds.</div>
 </li>
 </ul>
 <a id="MICRO_STRATEGY_CERTIFIED_BY">
@@ -1396,7 +1396,7 @@ public interface <span class="typeNameLabel">IMicroStrategy</span></pre>
 <li class="blockList">
 <h4>MICRO_STRATEGY_CERTIFIED_BY</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> MICRO_STRATEGY_CERTIFIED_BY</pre>
-<div class="block">User who certified the asset in MicroStrategy.</div>
+<div class="block">User who certified this asset, in MicroStrategy.</div>
 </li>
 </ul>
 <a id="MICRO_STRATEGY_CUBE_NAMES">
@@ -1406,7 +1406,7 @@ public interface <span class="typeNameLabel">IMicroStrategy</span></pre>
 <li class="blockList">
 <h4>MICRO_STRATEGY_CUBE_NAMES</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a> MICRO_STRATEGY_CUBE_NAMES</pre>
-<div class="block">Simple names of the related MicroStrategy cubes.</div>
+<div class="block">Simple names of the cubes related to this asset.</div>
 </li>
 </ul>
 <a id="MICRO_STRATEGY_CUBE_QUALIFIED_NAMES">
@@ -1416,7 +1416,7 @@ public interface <span class="typeNameLabel">IMicroStrategy</span></pre>
 <li class="blockList">
 <h4>MICRO_STRATEGY_CUBE_QUALIFIED_NAMES</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a> MICRO_STRATEGY_CUBE_QUALIFIED_NAMES</pre>
-<div class="block">Unique names of the related MicroStrategy cubes.</div>
+<div class="block">Unique names of the cubes related to this asset.</div>
 </li>
 </ul>
 <a id="MICRO_STRATEGY_IS_CERTIFIED">
@@ -1436,7 +1436,7 @@ public interface <span class="typeNameLabel">IMicroStrategy</span></pre>
 <li class="blockList">
 <h4>MICRO_STRATEGY_LOCATION</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> MICRO_STRATEGY_LOCATION</pre>
-<div class="block">Location of the asset within MicroStrategy.</div>
+<div class="block">Location of this asset in MicroStrategy.</div>
 </li>
 </ul>
 <a id="MICRO_STRATEGY_PROJECT_NAME">
@@ -1446,7 +1446,7 @@ public interface <span class="typeNameLabel">IMicroStrategy</span></pre>
 <li class="blockList">
 <h4>MICRO_STRATEGY_PROJECT_NAME</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a> MICRO_STRATEGY_PROJECT_NAME</pre>
-<div class="block">Simple name of the related MicroStrategy project.</div>
+<div class="block">Simple name of the project in which this asset exists.</div>
 </li>
 </ul>
 <a id="MICRO_STRATEGY_PROJECT_QUALIFIED_NAME">
@@ -1456,7 +1456,7 @@ public interface <span class="typeNameLabel">IMicroStrategy</span></pre>
 <li class="blockList">
 <h4>MICRO_STRATEGY_PROJECT_QUALIFIED_NAME</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a> MICRO_STRATEGY_PROJECT_QUALIFIED_NAME</pre>
-<div class="block">Unique name of the related MicroStrategy project.</div>
+<div class="block">Unique name of the project in which this asset exists.</div>
 </li>
 </ul>
 <a id="MICRO_STRATEGY_REPORT_NAMES">
@@ -1466,7 +1466,7 @@ public interface <span class="typeNameLabel">IMicroStrategy</span></pre>
 <li class="blockList">
 <h4>MICRO_STRATEGY_REPORT_NAMES</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a> MICRO_STRATEGY_REPORT_NAMES</pre>
-<div class="block">Simple names of the related MicroStrategy reports.</div>
+<div class="block">Simple names of the reports related to this asset.</div>
 </li>
 </ul>
 <a id="MICRO_STRATEGY_REPORT_QUALIFIED_NAMES">
@@ -1476,7 +1476,7 @@ public interface <span class="typeNameLabel">IMicroStrategy</span></pre>
 <li class="blockList">
 <h4>MICRO_STRATEGY_REPORT_QUALIFIED_NAMES</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a> MICRO_STRATEGY_REPORT_QUALIFIED_NAMES</pre>
-<div class="block">Unique names of the related MicroStrategy reports.</div>
+<div class="block">Unique names of the reports related to this asset.</div>
 </li>
 </ul>
 </li>
@@ -2176,7 +2176,7 @@ public interface <span class="typeNameLabel">IMicroStrategy</span></pre>
 <li class="blockList">
 <h4>getAssignedTerms</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="IGlossaryTerm.html" title="interface in com.atlan.model.assets">IGlossaryTerm</a>&gt;&nbsp;getAssignedTerms()</pre>
-<div class="block">TBC</div>
+<div class="block">Glossary terms that are linked to this asset.</div>
 </li>
 </ul>
 <a id="getCertificateStatus()">
@@ -2316,7 +2316,7 @@ public interface <span class="typeNameLabel">IMicroStrategy</span></pre>
 <li class="blockList">
 <h4>getInputToProcesses</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getInputToProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 </li>
 </ul>
 <a id="getIsAIGenerated()">
@@ -2396,7 +2396,7 @@ public interface <span class="typeNameLabel">IMicroStrategy</span></pre>
 <li class="blockList">
 <h4>getLinks</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="ILink.html" title="interface in com.atlan.model.assets">ILink</a>&gt;&nbsp;getLinks()</pre>
-<div class="block">TBC</div>
+<div class="block">Links that are attached to this asset.</div>
 </li>
 </ul>
 <a id="getMcIncidents()">
@@ -2416,7 +2416,7 @@ public interface <span class="typeNameLabel">IMicroStrategy</span></pre>
 <li class="blockList">
 <h4>getMcMonitors</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="IMCMonitor.html" title="interface in com.atlan.model.assets">IMCMonitor</a>&gt;&nbsp;getMcMonitors()</pre>
-<div class="block">TBC</div>
+<div class="block">Monitors that observe this asset.</div>
 </li>
 </ul>
 <a id="getMetrics()">
@@ -2436,7 +2436,7 @@ public interface <span class="typeNameLabel">IMicroStrategy</span></pre>
 <li class="blockList">
 <h4>getMicroStrategyCertifiedAt</h4>
 <pre class="methodSignature">java.lang.Long&nbsp;getMicroStrategyCertifiedAt()</pre>
-<div class="block">Date when the asset was certified in MicroStrategy.</div>
+<div class="block">Time (epoch) this asset was certified in MicroStrategy, in milliseconds.</div>
 </li>
 </ul>
 <a id="getMicroStrategyCertifiedBy()">
@@ -2446,7 +2446,7 @@ public interface <span class="typeNameLabel">IMicroStrategy</span></pre>
 <li class="blockList">
 <h4>getMicroStrategyCertifiedBy</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getMicroStrategyCertifiedBy()</pre>
-<div class="block">User who certified the asset in MicroStrategy.</div>
+<div class="block">User who certified this asset, in MicroStrategy.</div>
 </li>
 </ul>
 <a id="getMicroStrategyCubeNames()">
@@ -2456,7 +2456,7 @@ public interface <span class="typeNameLabel">IMicroStrategy</span></pre>
 <li class="blockList">
 <h4>getMicroStrategyCubeNames</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;java.lang.String&gt;&nbsp;getMicroStrategyCubeNames()</pre>
-<div class="block">Simple names of the related MicroStrategy cubes.</div>
+<div class="block">Simple names of the cubes related to this asset.</div>
 </li>
 </ul>
 <a id="getMicroStrategyCubeQualifiedNames()">
@@ -2466,7 +2466,7 @@ public interface <span class="typeNameLabel">IMicroStrategy</span></pre>
 <li class="blockList">
 <h4>getMicroStrategyCubeQualifiedNames</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;java.lang.String&gt;&nbsp;getMicroStrategyCubeQualifiedNames()</pre>
-<div class="block">Unique names of the related MicroStrategy cubes.</div>
+<div class="block">Unique names of the cubes related to this asset.</div>
 </li>
 </ul>
 <a id="getMicroStrategyIsCertified()">
@@ -2486,7 +2486,7 @@ public interface <span class="typeNameLabel">IMicroStrategy</span></pre>
 <li class="blockList">
 <h4>getMicroStrategyLocation</h4>
 <pre class="methodSignature">java.util.List&lt;java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&gt;&nbsp;getMicroStrategyLocation()</pre>
-<div class="block">Location of the asset within MicroStrategy.</div>
+<div class="block">Location of this asset in MicroStrategy.</div>
 </li>
 </ul>
 <a id="getMicroStrategyProjectName()">
@@ -2496,7 +2496,7 @@ public interface <span class="typeNameLabel">IMicroStrategy</span></pre>
 <li class="blockList">
 <h4>getMicroStrategyProjectName</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getMicroStrategyProjectName()</pre>
-<div class="block">Simple name of the related MicroStrategy project.</div>
+<div class="block">Simple name of the project in which this asset exists.</div>
 </li>
 </ul>
 <a id="getMicroStrategyProjectQualifiedName()">
@@ -2506,7 +2506,7 @@ public interface <span class="typeNameLabel">IMicroStrategy</span></pre>
 <li class="blockList">
 <h4>getMicroStrategyProjectQualifiedName</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getMicroStrategyProjectQualifiedName()</pre>
-<div class="block">Unique name of the related MicroStrategy project.</div>
+<div class="block">Unique name of the project in which this asset exists.</div>
 </li>
 </ul>
 <a id="getMicroStrategyReportNames()">
@@ -2516,7 +2516,7 @@ public interface <span class="typeNameLabel">IMicroStrategy</span></pre>
 <li class="blockList">
 <h4>getMicroStrategyReportNames</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;java.lang.String&gt;&nbsp;getMicroStrategyReportNames()</pre>
-<div class="block">Simple names of the related MicroStrategy reports.</div>
+<div class="block">Simple names of the reports related to this asset.</div>
 </li>
 </ul>
 <a id="getMicroStrategyReportQualifiedNames()">
@@ -2526,7 +2526,7 @@ public interface <span class="typeNameLabel">IMicroStrategy</span></pre>
 <li class="blockList">
 <h4>getMicroStrategyReportQualifiedNames</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;java.lang.String&gt;&nbsp;getMicroStrategyReportQualifiedNames()</pre>
-<div class="block">Unique names of the related MicroStrategy reports.</div>
+<div class="block">Unique names of the reports related to this asset.</div>
 </li>
 </ul>
 <a id="getName()">
@@ -2556,7 +2556,7 @@ public interface <span class="typeNameLabel">IMicroStrategy</span></pre>
 <li class="blockList">
 <h4>getOutputFromProcesses</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getOutputFromProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 </li>
 </ul>
 <a id="getOwnerGroups()">
@@ -2606,7 +2606,7 @@ public interface <span class="typeNameLabel">IMicroStrategy</span></pre>
 <li class="blockList">
 <h4>getReadme</h4>
 <pre class="methodSignature"><a href="IReadme.html" title="interface in com.atlan.model.assets">IReadme</a>&nbsp;getReadme()</pre>
-<div class="block">TBC</div>
+<div class="block">README that is linked to this asset.</div>
 </li>
 </ul>
 <a id="getSampleDataUrl()">

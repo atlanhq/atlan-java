@@ -189,21 +189,21 @@ public interface <span class="typeNameLabel">ISQL</span></pre>
 <td class="colFirst"><code>static <a href="../fields/BooleanField.html" title="class in com.atlan.model.fields">BooleanField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#IS_PROFILED">IS_PROFILED</a></span></code></th>
 <td class="colLast">
-<div class="block">Whether the asset has been profiled (true) or not (false).</div>
+<div class="block">Whether this asset has been profiled (true) or not (false).</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#LAST_PROFILED_AT">LAST_PROFILED_AT</a></span></code></th>
 <td class="colLast">
-<div class="block">Time (epoch) at which the asset was last profiled, in milliseconds.</div>
+<div class="block">Time (epoch) at which this asset was last profiled, in milliseconds.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#QUERY_COUNT">QUERY_COUNT</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Number of times this asset has been queried.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -217,14 +217,14 @@ public interface <span class="typeNameLabel">ISQL</span></pre>
 <td class="colFirst"><code>static <a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#QUERY_USER_COUNT">QUERY_USER_COUNT</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Number of unique users who have queried this asset.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#QUERY_USER_MAP">QUERY_USER_MAP</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Map of unique users who have queried this asset to the number of times they have queried it.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -786,7 +786,7 @@ public interface <span class="typeNameLabel">ISQL</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IGlossaryTerm.html" title="interface in com.atlan.model.assets">IGlossaryTerm</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssignedTerms()">getAssignedTerms</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Glossary terms that are linked to this asset.</div>
 </td>
 </tr>
 <tr id="i69" class="rowColor">
@@ -940,7 +940,7 @@ public interface <span class="typeNameLabel">ISQL</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInputToProcesses()">getInputToProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 </td>
 </tr>
 <tr id="i91" class="rowColor">
@@ -968,14 +968,14 @@ public interface <span class="typeNameLabel">ISQL</span></pre>
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIsProfiled()">getIsProfiled</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Whether the asset has been profiled (true) or not (false).</div>
+<div class="block">Whether this asset has been profiled (true) or not (false).</div>
 </td>
 </tr>
 <tr id="i95" class="rowColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLastProfiledAt()">getLastProfiledAt</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Time (epoch) at which the asset was last profiled, in milliseconds.</div>
+<div class="block">Time (epoch) at which this asset was last profiled, in milliseconds.</div>
 </td>
 </tr>
 <tr id="i96" class="altColor">
@@ -1010,7 +1010,7 @@ public interface <span class="typeNameLabel">ISQL</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILink.html" title="interface in com.atlan.model.assets">ILink</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLinks()">getLinks</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Links that are attached to this asset.</div>
 </td>
 </tr>
 <tr id="i101" class="rowColor">
@@ -1024,7 +1024,7 @@ public interface <span class="typeNameLabel">ISQL</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IMCMonitor.html" title="interface in com.atlan.model.assets">IMCMonitor</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMcMonitors()">getMcMonitors</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Monitors that observe this asset.</div>
 </td>
 </tr>
 <tr id="i103" class="rowColor">
@@ -1052,7 +1052,7 @@ public interface <span class="typeNameLabel">ISQL</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOutputFromProcesses()">getOutputFromProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 </td>
 </tr>
 <tr id="i107" class="rowColor">
@@ -1087,7 +1087,7 @@ public interface <span class="typeNameLabel">ISQL</span></pre>
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getQueryCount()">getQueryCount</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Number of times this asset has been queried.</div>
 </td>
 </tr>
 <tr id="i112" class="altColor">
@@ -1101,21 +1101,21 @@ public interface <span class="typeNameLabel">ISQL</span></pre>
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getQueryUserCount()">getQueryUserCount</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Number of unique users who have queried this asset.</div>
 </td>
 </tr>
 <tr id="i114" class="altColor">
 <td class="colFirst"><code>java.util.Map&lt;java.lang.String,&#8203;java.lang.Long&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getQueryUserMap()">getQueryUserMap</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Map of unique users who have queried this asset to the number of times they have queried it.</div>
 </td>
 </tr>
 <tr id="i115" class="rowColor">
 <td class="colFirst"><code><a href="IReadme.html" title="interface in com.atlan.model.assets">IReadme</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getReadme()">getReadme</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">README that is linked to this asset.</div>
 </td>
 </tr>
 <tr id="i116" class="altColor">
@@ -1562,7 +1562,7 @@ public interface <span class="typeNameLabel">ISQL</span></pre>
 <li class="blockList">
 <h4>IS_PROFILED</h4>
 <pre>static final&nbsp;<a href="../fields/BooleanField.html" title="class in com.atlan.model.fields">BooleanField</a> IS_PROFILED</pre>
-<div class="block">Whether the asset has been profiled (true) or not (false).</div>
+<div class="block">Whether this asset has been profiled (true) or not (false).</div>
 </li>
 </ul>
 <a id="LAST_PROFILED_AT">
@@ -1572,7 +1572,7 @@ public interface <span class="typeNameLabel">ISQL</span></pre>
 <li class="blockList">
 <h4>LAST_PROFILED_AT</h4>
 <pre>static final&nbsp;<a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a> LAST_PROFILED_AT</pre>
-<div class="block">Time (epoch) at which the asset was last profiled, in milliseconds.</div>
+<div class="block">Time (epoch) at which this asset was last profiled, in milliseconds.</div>
 </li>
 </ul>
 <a id="QUERY_COUNT">
@@ -1582,7 +1582,7 @@ public interface <span class="typeNameLabel">ISQL</span></pre>
 <li class="blockList">
 <h4>QUERY_COUNT</h4>
 <pre>static final&nbsp;<a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a> QUERY_COUNT</pre>
-<div class="block">TBC</div>
+<div class="block">Number of times this asset has been queried.</div>
 </li>
 </ul>
 <a id="QUERY_COUNT_UPDATED_AT">
@@ -1602,7 +1602,7 @@ public interface <span class="typeNameLabel">ISQL</span></pre>
 <li class="blockList">
 <h4>QUERY_USER_COUNT</h4>
 <pre>static final&nbsp;<a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a> QUERY_USER_COUNT</pre>
-<div class="block">TBC</div>
+<div class="block">Number of unique users who have queried this asset.</div>
 </li>
 </ul>
 <a id="QUERY_USER_MAP">
@@ -1612,7 +1612,7 @@ public interface <span class="typeNameLabel">ISQL</span></pre>
 <li class="blockList">
 <h4>QUERY_USER_MAP</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> QUERY_USER_MAP</pre>
-<div class="block">TBC</div>
+<div class="block">Map of unique users who have queried this asset to the number of times they have queried it.</div>
 </li>
 </ul>
 <a id="SCHEMA_NAME">
@@ -2392,7 +2392,7 @@ public interface <span class="typeNameLabel">ISQL</span></pre>
 <li class="blockList">
 <h4>getAssignedTerms</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="IGlossaryTerm.html" title="interface in com.atlan.model.assets">IGlossaryTerm</a>&gt;&nbsp;getAssignedTerms()</pre>
-<div class="block">TBC</div>
+<div class="block">Glossary terms that are linked to this asset.</div>
 </li>
 </ul>
 <a id="getCertificateStatus()">
@@ -2582,7 +2582,7 @@ public interface <span class="typeNameLabel">ISQL</span></pre>
 <li class="blockList">
 <h4>getInputToProcesses</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getInputToProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 </li>
 </ul>
 <a id="getIsAIGenerated()">
@@ -2622,7 +2622,7 @@ public interface <span class="typeNameLabel">ISQL</span></pre>
 <li class="blockList">
 <h4>getIsProfiled</h4>
 <pre class="methodSignature">java.lang.Boolean&nbsp;getIsProfiled()</pre>
-<div class="block">Whether the asset has been profiled (true) or not (false).</div>
+<div class="block">Whether this asset has been profiled (true) or not (false).</div>
 </li>
 </ul>
 <a id="getLastProfiledAt()">
@@ -2632,7 +2632,7 @@ public interface <span class="typeNameLabel">ISQL</span></pre>
 <li class="blockList">
 <h4>getLastProfiledAt</h4>
 <pre class="methodSignature">java.lang.Long&nbsp;getLastProfiledAt()</pre>
-<div class="block">Time (epoch) at which the asset was last profiled, in milliseconds.</div>
+<div class="block">Time (epoch) at which this asset was last profiled, in milliseconds.</div>
 </li>
 </ul>
 <a id="getLastRowChangedAt()">
@@ -2682,7 +2682,7 @@ public interface <span class="typeNameLabel">ISQL</span></pre>
 <li class="blockList">
 <h4>getLinks</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="ILink.html" title="interface in com.atlan.model.assets">ILink</a>&gt;&nbsp;getLinks()</pre>
-<div class="block">TBC</div>
+<div class="block">Links that are attached to this asset.</div>
 </li>
 </ul>
 <a id="getMcIncidents()">
@@ -2702,7 +2702,7 @@ public interface <span class="typeNameLabel">ISQL</span></pre>
 <li class="blockList">
 <h4>getMcMonitors</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="IMCMonitor.html" title="interface in com.atlan.model.assets">IMCMonitor</a>&gt;&nbsp;getMcMonitors()</pre>
-<div class="block">TBC</div>
+<div class="block">Monitors that observe this asset.</div>
 </li>
 </ul>
 <a id="getMetrics()">
@@ -2742,7 +2742,7 @@ public interface <span class="typeNameLabel">ISQL</span></pre>
 <li class="blockList">
 <h4>getOutputFromProcesses</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getOutputFromProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 </li>
 </ul>
 <a id="getOwnerGroups()">
@@ -2792,7 +2792,7 @@ public interface <span class="typeNameLabel">ISQL</span></pre>
 <li class="blockList">
 <h4>getQueryCount</h4>
 <pre class="methodSignature">java.lang.Long&nbsp;getQueryCount()</pre>
-<div class="block">TBC</div>
+<div class="block">Number of times this asset has been queried.</div>
 </li>
 </ul>
 <a id="getQueryCountUpdatedAt()">
@@ -2812,7 +2812,7 @@ public interface <span class="typeNameLabel">ISQL</span></pre>
 <li class="blockList">
 <h4>getQueryUserCount</h4>
 <pre class="methodSignature">java.lang.Long&nbsp;getQueryUserCount()</pre>
-<div class="block">TBC</div>
+<div class="block">Number of unique users who have queried this asset.</div>
 </li>
 </ul>
 <a id="getQueryUserMap()">
@@ -2822,7 +2822,7 @@ public interface <span class="typeNameLabel">ISQL</span></pre>
 <li class="blockList">
 <h4>getQueryUserMap</h4>
 <pre class="methodSignature">java.util.Map&lt;java.lang.String,&#8203;java.lang.Long&gt;&nbsp;getQueryUserMap()</pre>
-<div class="block">TBC</div>
+<div class="block">Map of unique users who have queried this asset to the number of times they have queried it.</div>
 </li>
 </ul>
 <a id="getReadme()">
@@ -2832,7 +2832,7 @@ public interface <span class="typeNameLabel">ISQL</span></pre>
 <li class="blockList">
 <h4>getReadme</h4>
 <pre class="methodSignature"><a href="IReadme.html" title="interface in com.atlan.model.assets">IReadme</a>&nbsp;getReadme()</pre>
-<div class="block">TBC</div>
+<div class="block">README that is linked to this asset.</div>
 </li>
 </ul>
 <a id="getSampleDataUrl()">

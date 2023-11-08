@@ -154,7 +154,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 public class <span class="typeNameLabel">MatillionJob</span>
 extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a>
 implements <a href="IMatillionJob.html" title="interface in com.atlan.model.assets">IMatillionJob</a>, <a href="IMatillion.html" title="interface in com.atlan.model.assets">IMatillion</a>, <a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a>, <a href="IAsset.html" title="interface in com.atlan.model.assets">IAsset</a>, <a href="IReferenceable.html" title="interface in com.atlan.model.assets">IReferenceable</a></pre>
-<div class="block">The MatillionJob Type repesents a Job in matillion. Jobs in matillion design, organize and execute workflows which are responsible for ETL data processing.</div>
+<div class="block">Instance of a Matillion job in Atlan. Jobs in Matillion design, organize and execute workflows which are responsible for ETL data processing.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../serialized-form.html#com.atlan.model.assets.MatillionJob">Serialized Form</a></dd>
@@ -496,63 +496,63 @@ implements <a href="IMatillionJob.html" title="interface in com.atlan.model.asse
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInputToProcesses()">getInputToProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 </td>
 </tr>
 <tr id="i22" class="altColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IMatillionComponent.html" title="interface in com.atlan.model.assets">IMatillionComponent</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMatillionComponents()">getMatillionComponents</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Components that exist within this job.</div>
 </td>
 </tr>
 <tr id="i23" class="rowColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMatillionJobComponentCount()">getMatillionJobComponentCount</a></span>()</code></th>
 <td class="colLast">
-<div class="block">The count of components under a specific matillion job</div>
+<div class="block">Number of components within the job.</div>
 </td>
 </tr>
 <tr id="i24" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMatillionJobPath()">getMatillionJobPath</a></span>()</code></th>
 <td class="colLast">
-<div class="block">The hierarchy path of a job under a matillion project.</div>
+<div class="block">Path of the job within the project.</div>
 </td>
 </tr>
 <tr id="i25" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMatillionJobSchedule()">getMatillionJobSchedule</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Specifies whether a matillion job is scheduled weekly or monthly</div>
+<div class="block">How the job is scheduled, for example: weekly or monthly.</div>
 </td>
 </tr>
 <tr id="i26" class="altColor">
 <td class="colFirst"><code><a href="../enums/MatillionJobType.html" title="enum in com.atlan.model.enums">MatillionJobType</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMatillionJobType()">getMatillionJobType</a></span>()</code></th>
 <td class="colLast">
-<div class="block">The type of a job.</div>
+<div class="block">Type of the job, for example: orchestration or transformation.</div>
 </td>
 </tr>
 <tr id="i27" class="rowColor">
 <td class="colFirst"><code><a href="IMatillionProject.html" title="interface in com.atlan.model.assets">IMatillionProject</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMatillionProject()">getMatillionProject</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Project in which the job exists.</div>
 </td>
 </tr>
 <tr id="i28" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMatillionProjectName()">getMatillionProjectName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Name of the matillion project to which the matillion job belongs</div>
+<div class="block">Simple name of the project to which the job belongs.</div>
 </td>
 </tr>
 <tr id="i29" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMatillionProjectQualifiedName()">getMatillionProjectQualifiedName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Qualified name of the matillion project to which the matillion job belongs</div>
+<div class="block">Unique name of the project to which the job belongs.</div>
 </td>
 </tr>
 <tr id="i30" class="altColor">
@@ -573,7 +573,7 @@ implements <a href="IMatillionJob.html" title="interface in com.atlan.model.asse
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOutputFromProcesses()">getOutputFromProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 </td>
 </tr>
 <tr id="i33" class="rowColor">
@@ -2241,7 +2241,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getInputToProcesses</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getInputToProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ICatalog.html#getInputToProcesses()">getInputToProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a></code></dd>
@@ -2259,7 +2259,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getMatillionComponents</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="IMatillionComponent.html" title="interface in com.atlan.model.assets">IMatillionComponent</a>&gt;&nbsp;getMatillionComponents()</pre>
-<div class="block">TBC</div>
+<div class="block">Components that exist within this job.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IMatillionJob.html#getMatillionComponents()">getMatillionComponents</a></code>&nbsp;in interface&nbsp;<code><a href="IMatillionJob.html" title="interface in com.atlan.model.assets">IMatillionJob</a></code></dd>
@@ -2273,7 +2273,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getMatillionJobComponentCount</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Long&nbsp;getMatillionJobComponentCount()</pre>
-<div class="block">The count of components under a specific matillion job</div>
+<div class="block">Number of components within the job.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IMatillionJob.html#getMatillionJobComponentCount()">getMatillionJobComponentCount</a></code>&nbsp;in interface&nbsp;<code><a href="IMatillionJob.html" title="interface in com.atlan.model.assets">IMatillionJob</a></code></dd>
@@ -2287,7 +2287,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getMatillionJobPath</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getMatillionJobPath()</pre>
-<div class="block">The hierarchy path of a job under a matillion project. Jobs can be managed at multiple folder levels under a matillion project</div>
+<div class="block">Path of the job within the project. Jobs can be managed at multiple folder levels within a project.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IMatillionJob.html#getMatillionJobPath()">getMatillionJobPath</a></code>&nbsp;in interface&nbsp;<code><a href="IMatillionJob.html" title="interface in com.atlan.model.assets">IMatillionJob</a></code></dd>
@@ -2301,7 +2301,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getMatillionJobSchedule</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getMatillionJobSchedule()</pre>
-<div class="block">Specifies whether a matillion job is scheduled weekly or monthly</div>
+<div class="block">How the job is scheduled, for example: weekly or monthly.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IMatillionJob.html#getMatillionJobSchedule()">getMatillionJobSchedule</a></code>&nbsp;in interface&nbsp;<code><a href="IMatillionJob.html" title="interface in com.atlan.model.assets">IMatillionJob</a></code></dd>
@@ -2315,7 +2315,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getMatillionJobType</h4>
 <pre class="methodSignature">public&nbsp;<a href="../enums/MatillionJobType.html" title="enum in com.atlan.model.enums">MatillionJobType</a>&nbsp;getMatillionJobType()</pre>
-<div class="block">The type of a job. There are two kinds of jobs in matillion - orchestration and transformation</div>
+<div class="block">Type of the job, for example: orchestration or transformation.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IMatillionJob.html#getMatillionJobType()">getMatillionJobType</a></code>&nbsp;in interface&nbsp;<code><a href="IMatillionJob.html" title="interface in com.atlan.model.assets">IMatillionJob</a></code></dd>
@@ -2329,7 +2329,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getMatillionProject</h4>
 <pre class="methodSignature">public&nbsp;<a href="IMatillionProject.html" title="interface in com.atlan.model.assets">IMatillionProject</a>&nbsp;getMatillionProject()</pre>
-<div class="block">TBC</div>
+<div class="block">Project in which the job exists.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IMatillionJob.html#getMatillionProject()">getMatillionProject</a></code>&nbsp;in interface&nbsp;<code><a href="IMatillionJob.html" title="interface in com.atlan.model.assets">IMatillionJob</a></code></dd>
@@ -2343,7 +2343,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getMatillionProjectName</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getMatillionProjectName()</pre>
-<div class="block">Name of the matillion project to which the matillion job belongs</div>
+<div class="block">Simple name of the project to which the job belongs.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IMatillionJob.html#getMatillionProjectName()">getMatillionProjectName</a></code>&nbsp;in interface&nbsp;<code><a href="IMatillionJob.html" title="interface in com.atlan.model.assets">IMatillionJob</a></code></dd>
@@ -2357,7 +2357,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getMatillionProjectQualifiedName</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getMatillionProjectQualifiedName()</pre>
-<div class="block">Qualified name of the matillion project to which the matillion job belongs</div>
+<div class="block">Unique name of the project to which the job belongs.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IMatillionJob.html#getMatillionProjectQualifiedName()">getMatillionProjectQualifiedName</a></code>&nbsp;in interface&nbsp;<code><a href="IMatillionJob.html" title="interface in com.atlan.model.assets">IMatillionJob</a></code></dd>
@@ -2405,7 +2405,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getOutputFromProcesses</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getOutputFromProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ICatalog.html#getOutputFromProcesses()">getOutputFromProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a></code></dd>

@@ -148,7 +148,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <pre>@Generated("com.atlan.generators.ModelGeneratorV2")
 public class <span class="typeNameLabel">SourceTagAttribute</span>
 extends <a href="AtlanStruct.html" title="class in com.atlan.model.structs">AtlanStruct</a></pre>
-<div class="block">Detailed information about an attribute attached to a tag in a source system.</div>
+<div class="block">Detailed information about a source tag's attributes.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../serialized-form.html#com.atlan.model.structs.SourceTagAttribute">Serialized Form</a></dd>
@@ -275,21 +275,21 @@ extends <a href="AtlanStruct.html" title="class in com.atlan.model.structs">Atla
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTagAttributeKey()">getTagAttributeKey</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Attribute key, for example "allowedValues" or "enabled".</div>
+<div class="block">Attribute key, for example: 'allowedValues' or 'enabled'.</div>
 </td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTagAttributeProperties()">getTagAttributeProperties</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Properties associated with the attribute.</div>
+<div class="block">Properties of the attribute.</div>
 </td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTagAttributeValue()">getTagAttributeValue</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Attribute value, for example ["Private", "PII"] for allowedValues, or "true" for enabled.</div>
+<div class="block">Attribute value, for example: '["Private", "PII"]' for allowedValues key or 'true' for enabled key.</div>
 </td>
 </tr>
 <tr id="i6" class="altColor">
@@ -407,9 +407,9 @@ extends <a href="AtlanStruct.html" title="class in com.atlan.model.structs">Atla
 <div class="block">Quickly create a new SourceTagAttribute.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>tagAttributeKey</code> - Attribute key, for example "allowedValues" or "enabled".</dd>
-<dd><code>tagAttributeValue</code> - Attribute value, for example ["Private", "PII"] for allowedValues, or "true" for enabled.</dd>
-<dd><code>tagAttributeProperties</code> - Properties associated with the attribute.</dd>
+<dd><code>tagAttributeKey</code> - Attribute key, for example: 'allowedValues' or 'enabled'.</dd>
+<dd><code>tagAttributeValue</code> - Attribute value, for example: '["Private", "PII"]' for allowedValues key or 'true' for enabled key.</dd>
+<dd><code>tagAttributeProperties</code> - Properties of the attribute.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>a SourceTagAttribute with the provided information</dd>
 </dl>
@@ -440,7 +440,7 @@ extends <a href="AtlanStruct.html" title="class in com.atlan.model.structs">Atla
 <li class="blockList">
 <h4>getTagAttributeKey</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getTagAttributeKey()</pre>
-<div class="block">Attribute key, for example "allowedValues" or "enabled".</div>
+<div class="block">Attribute key, for example: 'allowedValues' or 'enabled'.</div>
 </li>
 </ul>
 <a id="getTagAttributeValue()">
@@ -450,7 +450,7 @@ extends <a href="AtlanStruct.html" title="class in com.atlan.model.structs">Atla
 <li class="blockList">
 <h4>getTagAttributeValue</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getTagAttributeValue()</pre>
-<div class="block">Attribute value, for example ["Private", "PII"] for allowedValues, or "true" for enabled.</div>
+<div class="block">Attribute value, for example: '["Private", "PII"]' for allowedValues key or 'true' for enabled key.</div>
 </li>
 </ul>
 <a id="getTagAttributeProperties()">
@@ -460,7 +460,7 @@ extends <a href="AtlanStruct.html" title="class in com.atlan.model.structs">Atla
 <li class="blockList">
 <h4>getTagAttributeProperties</h4>
 <pre class="methodSignature">public&nbsp;java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;getTagAttributeProperties()</pre>
-<div class="block">Properties associated with the attribute.</div>
+<div class="block">Properties of the attribute.</div>
 </li>
 </ul>
 <a id="equals(java.lang.Object)">

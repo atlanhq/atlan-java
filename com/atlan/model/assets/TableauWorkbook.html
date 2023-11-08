@@ -154,7 +154,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 public class <span class="typeNameLabel">TableauWorkbook</span>
 extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a>
 implements <a href="ITableauWorkbook.html" title="interface in com.atlan.model.assets">ITableauWorkbook</a>, <a href="ITableau.html" title="interface in com.atlan.model.assets">ITableau</a>, <a href="IBI.html" title="interface in com.atlan.model.assets">IBI</a>, <a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a>, <a href="IAsset.html" title="interface in com.atlan.model.assets">IAsset</a>, <a href="IReferenceable.html" title="interface in com.atlan.model.assets">IReferenceable</a></pre>
-<div class="block">Instance of a Tableau workbook in Atlan.</div>
+<div class="block">Instance of a Tableau workbook in Atlan. These contain one or more worksheets, datasources or dashboards.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../serialized-form.html#com.atlan.model.assets.TableauWorkbook">Serialized Form</a></dd>
@@ -482,14 +482,14 @@ implements <a href="ITableauWorkbook.html" title="interface in com.atlan.model.a
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ITableauDashboard.html" title="interface in com.atlan.model.assets">ITableauDashboard</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDashboards()">getDashboards</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Dashboards that exist within this workbook.</div>
 </td>
 </tr>
 <tr id="i21" class="rowColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ITableauDatasource.html" title="interface in com.atlan.model.assets">ITableauDatasource</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDatasources()">getDatasources</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Datasources that exist within this workbook.</div>
 </td>
 </tr>
 <tr id="i22" class="altColor">
@@ -503,7 +503,7 @@ implements <a href="ITableauWorkbook.html" title="interface in com.atlan.model.a
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInputToProcesses()">getInputToProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 </td>
 </tr>
 <tr id="i24" class="altColor">
@@ -517,49 +517,49 @@ implements <a href="ITableauWorkbook.html" title="interface in com.atlan.model.a
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOutputFromProcesses()">getOutputFromProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 </td>
 </tr>
 <tr id="i26" class="altColor">
 <td class="colFirst"><code><a href="ITableauProject.html" title="interface in com.atlan.model.assets">ITableauProject</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getProject()">getProject</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Project in which this workbook exists.</div>
 </td>
 </tr>
 <tr id="i27" class="rowColor">
 <td class="colFirst"><code>java.util.List&lt;java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getProjectHierarchy()">getProjectHierarchy</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">List of top-level projects with their nested child projects.</div>
 </td>
 </tr>
 <tr id="i28" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getProjectQualifiedName()">getProjectQualifiedName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Unique name of the project in which this workbook exists.</div>
 </td>
 </tr>
 <tr id="i29" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSiteQualifiedName()">getSiteQualifiedName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Unique name of the site in which this workbook exists.</div>
 </td>
 </tr>
 <tr id="i30" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTopLevelProjectName()">getTopLevelProjectName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Simple name of the top-level project in which this workbook exists.</div>
 </td>
 </tr>
 <tr id="i31" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTopLevelProjectQualifiedName()">getTopLevelProjectQualifiedName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Unique name of the top-level project in which this workbook exists.</div>
 </td>
 </tr>
 <tr id="i32" class="altColor">
@@ -573,7 +573,7 @@ implements <a href="ITableauWorkbook.html" title="interface in com.atlan.model.a
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ITableauWorksheet.html" title="interface in com.atlan.model.assets">ITableauWorksheet</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getWorksheets()">getWorksheets</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Worksheets that exist within this workbook.</div>
 </td>
 </tr>
 <tr id="i34" class="altColor">
@@ -2223,7 +2223,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getDashboards</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ITableauDashboard.html" title="interface in com.atlan.model.assets">ITableauDashboard</a>&gt;&nbsp;getDashboards()</pre>
-<div class="block">TBC</div>
+<div class="block">Dashboards that exist within this workbook.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ITableauWorkbook.html#getDashboards()">getDashboards</a></code>&nbsp;in interface&nbsp;<code><a href="ITableauWorkbook.html" title="interface in com.atlan.model.assets">ITableauWorkbook</a></code></dd>
@@ -2237,7 +2237,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getDatasources</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ITableauDatasource.html" title="interface in com.atlan.model.assets">ITableauDatasource</a>&gt;&nbsp;getDatasources()</pre>
-<div class="block">TBC</div>
+<div class="block">Datasources that exist within this workbook.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ITableauWorkbook.html#getDatasources()">getDatasources</a></code>&nbsp;in interface&nbsp;<code><a href="ITableauWorkbook.html" title="interface in com.atlan.model.assets">ITableauWorkbook</a></code></dd>
@@ -2271,7 +2271,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getInputToProcesses</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getInputToProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IBI.html#getInputToProcesses()">getInputToProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="IBI.html" title="interface in com.atlan.model.assets">IBI</a></code></dd>
@@ -2311,7 +2311,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getOutputFromProcesses</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getOutputFromProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IBI.html#getOutputFromProcesses()">getOutputFromProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="IBI.html" title="interface in com.atlan.model.assets">IBI</a></code></dd>
@@ -2331,7 +2331,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getProject</h4>
 <pre class="methodSignature">public&nbsp;<a href="ITableauProject.html" title="interface in com.atlan.model.assets">ITableauProject</a>&nbsp;getProject()</pre>
-<div class="block">TBC</div>
+<div class="block">Project in which this workbook exists.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ITableauWorkbook.html#getProject()">getProject</a></code>&nbsp;in interface&nbsp;<code><a href="ITableauWorkbook.html" title="interface in com.atlan.model.assets">ITableauWorkbook</a></code></dd>
@@ -2345,7 +2345,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getProjectHierarchy</h4>
 <pre class="methodSignature">public&nbsp;java.util.List&lt;java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&gt;&nbsp;getProjectHierarchy()</pre>
-<div class="block">TBC</div>
+<div class="block">List of top-level projects with their nested child projects.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ITableauWorkbook.html#getProjectHierarchy()">getProjectHierarchy</a></code>&nbsp;in interface&nbsp;<code><a href="ITableauWorkbook.html" title="interface in com.atlan.model.assets">ITableauWorkbook</a></code></dd>
@@ -2359,7 +2359,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getProjectQualifiedName</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getProjectQualifiedName()</pre>
-<div class="block">TBC</div>
+<div class="block">Unique name of the project in which this workbook exists.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ITableauWorkbook.html#getProjectQualifiedName()">getProjectQualifiedName</a></code>&nbsp;in interface&nbsp;<code><a href="ITableauWorkbook.html" title="interface in com.atlan.model.assets">ITableauWorkbook</a></code></dd>
@@ -2373,7 +2373,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getSiteQualifiedName</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getSiteQualifiedName()</pre>
-<div class="block">TBC</div>
+<div class="block">Unique name of the site in which this workbook exists.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ITableauWorkbook.html#getSiteQualifiedName()">getSiteQualifiedName</a></code>&nbsp;in interface&nbsp;<code><a href="ITableauWorkbook.html" title="interface in com.atlan.model.assets">ITableauWorkbook</a></code></dd>
@@ -2387,7 +2387,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getTopLevelProjectName</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getTopLevelProjectName()</pre>
-<div class="block">TBC</div>
+<div class="block">Simple name of the top-level project in which this workbook exists.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ITableauWorkbook.html#getTopLevelProjectName()">getTopLevelProjectName</a></code>&nbsp;in interface&nbsp;<code><a href="ITableauWorkbook.html" title="interface in com.atlan.model.assets">ITableauWorkbook</a></code></dd>
@@ -2401,7 +2401,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getTopLevelProjectQualifiedName</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getTopLevelProjectQualifiedName()</pre>
-<div class="block">TBC</div>
+<div class="block">Unique name of the top-level project in which this workbook exists.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ITableauWorkbook.html#getTopLevelProjectQualifiedName()">getTopLevelProjectQualifiedName</a></code>&nbsp;in interface&nbsp;<code><a href="ITableauWorkbook.html" title="interface in com.atlan.model.assets">ITableauWorkbook</a></code></dd>
@@ -2415,7 +2415,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getWorksheets</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ITableauWorksheet.html" title="interface in com.atlan.model.assets">ITableauWorksheet</a>&gt;&nbsp;getWorksheets()</pre>
-<div class="block">TBC</div>
+<div class="block">Worksheets that exist within this workbook.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ITableauWorkbook.html#getWorksheets()">getWorksheets</a></code>&nbsp;in interface&nbsp;<code><a href="ITableauWorkbook.html" title="interface in com.atlan.model.assets">ITableauWorkbook</a></code></dd>

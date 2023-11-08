@@ -154,7 +154,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 public class <span class="typeNameLabel">QlikSheet</span>
 extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a>
 implements <a href="IQlikSheet.html" title="interface in com.atlan.model.assets">IQlikSheet</a>, <a href="IQlik.html" title="interface in com.atlan.model.assets">IQlik</a>, <a href="IBI.html" title="interface in com.atlan.model.assets">IBI</a>, <a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a>, <a href="IAsset.html" title="interface in com.atlan.model.assets">IAsset</a>, <a href="IReferenceable.html" title="interface in com.atlan.model.assets">IReferenceable</a></pre>
-<div class="block">Instance of a Qlik Sheet in Atlan.</div>
+<div class="block">Instance of a Qlik sheet in Atlan.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../serialized-form.html#com.atlan.model.assets.QlikSheet">Serialized Form</a></dd>
@@ -496,7 +496,7 @@ implements <a href="IQlikSheet.html" title="interface in com.atlan.model.assets"
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInputToProcesses()">getInputToProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 </td>
 </tr>
 <tr id="i22" class="altColor">
@@ -510,14 +510,14 @@ implements <a href="IQlikSheet.html" title="interface in com.atlan.model.assets"
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOutputFromProcesses()">getOutputFromProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 </td>
 </tr>
 <tr id="i24" class="altColor">
 <td class="colFirst"><code><a href="IQlikApp.html" title="interface in com.atlan.model.assets">IQlikApp</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getQlikApp()">getQlikApp</a></span>()</code></th>
 <td class="colLast">
-<div class="block">App in which the sheet exists.</div>
+<div class="block">App in which this sheet exists.</div>
 </td>
 </tr>
 <tr id="i25" class="rowColor">
@@ -538,7 +538,7 @@ implements <a href="IQlikSheet.html" title="interface in com.atlan.model.assets"
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IQlikChart.html" title="interface in com.atlan.model.assets">IQlikChart</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getQlikCharts()">getQlikCharts</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Charts contained within the sheet.</div>
+<div class="block">Charts that exist within this sheet.</div>
 </td>
 </tr>
 <tr id="i28" class="altColor">
@@ -573,7 +573,7 @@ implements <a href="IQlikSheet.html" title="interface in com.atlan.model.assets"
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getQlikSheetIsApproved()">getQlikSheetIsApproved</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Whether the sheet is approved (true) or not (false).</div>
+<div class="block">Whether this is approved (true) or not (false).</div>
 </td>
 </tr>
 <tr id="i33" class="rowColor">
@@ -2264,7 +2264,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getInputToProcesses</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getInputToProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IBI.html#getInputToProcesses()">getInputToProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="IBI.html" title="interface in com.atlan.model.assets">IBI</a></code></dd>
@@ -2304,7 +2304,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getOutputFromProcesses</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getOutputFromProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IBI.html#getOutputFromProcesses()">getOutputFromProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="IBI.html" title="interface in com.atlan.model.assets">IBI</a></code></dd>
@@ -2324,7 +2324,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getQlikApp</h4>
 <pre class="methodSignature">public&nbsp;<a href="IQlikApp.html" title="interface in com.atlan.model.assets">IQlikApp</a>&nbsp;getQlikApp()</pre>
-<div class="block">App in which the sheet exists.</div>
+<div class="block">App in which this sheet exists.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IQlikSheet.html#getQlikApp()">getQlikApp</a></code>&nbsp;in interface&nbsp;<code><a href="IQlikSheet.html" title="interface in com.atlan.model.assets">IQlikSheet</a></code></dd>
@@ -2370,7 +2370,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getQlikCharts</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="IQlikChart.html" title="interface in com.atlan.model.assets">IQlikChart</a>&gt;&nbsp;getQlikCharts()</pre>
-<div class="block">Charts contained within the sheet.</div>
+<div class="block">Charts that exist within this sheet.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IQlikSheet.html#getQlikCharts()">getQlikCharts</a></code>&nbsp;in interface&nbsp;<code><a href="IQlikSheet.html" title="interface in com.atlan.model.assets">IQlikSheet</a></code></dd>
@@ -2448,7 +2448,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getQlikSheetIsApproved</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Boolean&nbsp;getQlikSheetIsApproved()</pre>
-<div class="block">Whether the sheet is approved (true) or not (false).</div>
+<div class="block">Whether this is approved (true) or not (false).</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IQlikSheet.html#getQlikSheetIsApproved()">getQlikSheetIsApproved</a></code>&nbsp;in interface&nbsp;<code><a href="IQlikSheet.html" title="interface in com.atlan.model.assets">IQlikSheet</a></code></dd>

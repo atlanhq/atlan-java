@@ -129,7 +129,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <hr>
 <pre>@Generated("com.atlan.generators.ModelGeneratorV2")
 public interface <span class="typeNameLabel">ISisenseDatamodelTable</span></pre>
-<div class="block">The SisenseDatamodelTable type represents a table in a datamodel.</div>
+<div class="block">Instance of a Sisense datamodel table in Atlan.</div>
 </li>
 </ul>
 </div>
@@ -154,63 +154,63 @@ public interface <span class="typeNameLabel">ISisenseDatamodelTable</span></pre>
 <td class="colFirst"><code>static <a href="../fields/RelationField.html" title="class in com.atlan.model.fields">RelationField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SISENSE_DATAMODEL">SISENSE_DATAMODEL</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Datamodel in which this datamodel table exists.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SISENSE_DATAMODEL_QUALIFIED_NAME">SISENSE_DATAMODEL_QUALIFIED_NAME</a></span></code></th>
 <td class="colLast">
-<div class="block">Qualified name of the datamodel in which this datamodel table is present</div>
+<div class="block">Unique name of the datamodel in which this datamodel table exists.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SISENSE_DATAMODEL_TABLE_COLUMN_COUNT">SISENSE_DATAMODEL_TABLE_COLUMN_COUNT</a></span></code></th>
 <td class="colLast">
-<div class="block">Number of columns present in the datamodel table</div>
+<div class="block">Number of columns present in this datamodel table.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SISENSE_DATAMODEL_TABLE_EXPRESSION">SISENSE_DATAMODEL_TABLE_EXPRESSION</a></span></code></th>
 <td class="colLast">
-<div class="block">Actual SQL expression of the datamodel table</div>
+<div class="block">SQL expression of this datamodel table.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/BooleanField.html" title="class in com.atlan.model.fields">BooleanField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SISENSE_DATAMODEL_TABLE_IS_HIDDEN">SISENSE_DATAMODEL_TABLE_IS_HIDDEN</a></span></code></th>
 <td class="colLast">
-<div class="block">Boolean indicating if the datamodel table is hidden on sisense</div>
+<div class="block">Whether this datamodel table is hidden in Sisense (true) or not (false).</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/BooleanField.html" title="class in com.atlan.model.fields">BooleanField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SISENSE_DATAMODEL_TABLE_IS_MATERIALIZED">SISENSE_DATAMODEL_TABLE_IS_MATERIALIZED</a></span></code></th>
 <td class="colLast">
-<div class="block">Boolean indicating if the datamodel table is materialised</div>
+<div class="block">Whether this datamodel table is materialised (true) or not (false).</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SISENSE_DATAMODEL_TABLE_LIVE_QUERY_SETTINGS">SISENSE_DATAMODEL_TABLE_LIVE_QUERY_SETTINGS</a></span></code></th>
 <td class="colLast">
-<div class="block">LiveQuery settings of the datamodel table (JSON Object)</div>
+<div class="block">JSON specifying the LiveQuery settings of this datamodel table.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SISENSE_DATAMODEL_TABLE_SCHEDULE">SISENSE_DATAMODEL_TABLE_SCHEDULE</a></span></code></th>
 <td class="colLast">
-<div class="block">Refresh schedule of the datamodel table (JSON Object)</div>
+<div class="block">JSON specifying the refresh schedule of this datamodel table.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#SISENSE_DATAMODEL_TABLE_TYPE">SISENSE_DATAMODEL_TABLE_TYPE</a></span></code></th>
 <td class="colLast">
-<div class="block">Type of the datamodel table.</div>
+<div class="block">Type of this datamodel table, for example: 'base' for regular tables, 'custom' for SQL expression-based tables.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -723,7 +723,7 @@ public interface <span class="typeNameLabel">ISisenseDatamodelTable</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IGlossaryTerm.html" title="interface in com.atlan.model.assets">IGlossaryTerm</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssignedTerms()">getAssignedTerms</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Glossary terms that are linked to this asset.</div>
 </td>
 </tr>
 <tr id="i69" class="rowColor">
@@ -842,7 +842,7 @@ public interface <span class="typeNameLabel">ISisenseDatamodelTable</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInputToProcesses()">getInputToProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 </td>
 </tr>
 <tr id="i86" class="altColor">
@@ -898,7 +898,7 @@ public interface <span class="typeNameLabel">ISisenseDatamodelTable</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILink.html" title="interface in com.atlan.model.assets">ILink</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLinks()">getLinks</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Links that are attached to this asset.</div>
 </td>
 </tr>
 <tr id="i94" class="altColor">
@@ -912,7 +912,7 @@ public interface <span class="typeNameLabel">ISisenseDatamodelTable</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IMCMonitor.html" title="interface in com.atlan.model.assets">IMCMonitor</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMcMonitors()">getMcMonitors</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Monitors that observe this asset.</div>
 </td>
 </tr>
 <tr id="i96" class="altColor">
@@ -940,7 +940,7 @@ public interface <span class="typeNameLabel">ISisenseDatamodelTable</span></pre>
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOutputFromProcesses()">getOutputFromProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 </td>
 </tr>
 <tr id="i100" class="altColor">
@@ -975,7 +975,7 @@ public interface <span class="typeNameLabel">ISisenseDatamodelTable</span></pre>
 <td class="colFirst"><code><a href="IReadme.html" title="interface in com.atlan.model.assets">IReadme</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getReadme()">getReadme</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">README that is linked to this asset.</div>
 </td>
 </tr>
 <tr id="i105" class="rowColor">
@@ -1024,63 +1024,63 @@ public interface <span class="typeNameLabel">ISisenseDatamodelTable</span></pre>
 <td class="colFirst"><code><a href="ISisenseDatamodel.html" title="interface in com.atlan.model.assets">ISisenseDatamodel</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSisenseDatamodel()">getSisenseDatamodel</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Datamodel in which this datamodel table exists.</div>
 </td>
 </tr>
 <tr id="i112" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSisenseDatamodelQualifiedName()">getSisenseDatamodelQualifiedName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Qualified name of the datamodel in which this datamodel table is present</div>
+<div class="block">Unique name of the datamodel in which this datamodel table exists.</div>
 </td>
 </tr>
 <tr id="i113" class="rowColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSisenseDatamodelTableColumnCount()">getSisenseDatamodelTableColumnCount</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Number of columns present in the datamodel table</div>
+<div class="block">Number of columns present in this datamodel table.</div>
 </td>
 </tr>
 <tr id="i114" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSisenseDatamodelTableExpression()">getSisenseDatamodelTableExpression</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Actual SQL expression of the datamodel table</div>
+<div class="block">SQL expression of this datamodel table.</div>
 </td>
 </tr>
 <tr id="i115" class="rowColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSisenseDatamodelTableIsHidden()">getSisenseDatamodelTableIsHidden</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Boolean indicating if the datamodel table is hidden on sisense</div>
+<div class="block">Whether this datamodel table is hidden in Sisense (true) or not (false).</div>
 </td>
 </tr>
 <tr id="i116" class="altColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSisenseDatamodelTableIsMaterialized()">getSisenseDatamodelTableIsMaterialized</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Boolean indicating if the datamodel table is materialised</div>
+<div class="block">Whether this datamodel table is materialised (true) or not (false).</div>
 </td>
 </tr>
 <tr id="i117" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSisenseDatamodelTableLiveQuerySettings()">getSisenseDatamodelTableLiveQuerySettings</a></span>()</code></th>
 <td class="colLast">
-<div class="block">LiveQuery settings of the datamodel table (JSON Object)</div>
+<div class="block">JSON specifying the LiveQuery settings of this datamodel table.</div>
 </td>
 </tr>
 <tr id="i118" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSisenseDatamodelTableSchedule()">getSisenseDatamodelTableSchedule</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Refresh schedule of the datamodel table (JSON Object)</div>
+<div class="block">JSON specifying the refresh schedule of this datamodel table.</div>
 </td>
 </tr>
 <tr id="i119" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSisenseDatamodelTableType()">getSisenseDatamodelTableType</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Type of the datamodel table.</div>
+<div class="block">Type of this datamodel table, for example: 'base' for regular tables, 'custom' for SQL expression-based tables.</div>
 </td>
 </tr>
 <tr id="i120" class="altColor">
@@ -1386,7 +1386,7 @@ public interface <span class="typeNameLabel">ISisenseDatamodelTable</span></pre>
 <li class="blockList">
 <h4>SISENSE_DATAMODEL</h4>
 <pre>static final&nbsp;<a href="../fields/RelationField.html" title="class in com.atlan.model.fields">RelationField</a> SISENSE_DATAMODEL</pre>
-<div class="block">TBC</div>
+<div class="block">Datamodel in which this datamodel table exists.</div>
 </li>
 </ul>
 <a id="SISENSE_DATAMODEL_QUALIFIED_NAME">
@@ -1396,7 +1396,7 @@ public interface <span class="typeNameLabel">ISisenseDatamodelTable</span></pre>
 <li class="blockList">
 <h4>SISENSE_DATAMODEL_QUALIFIED_NAME</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordTextField.html" title="class in com.atlan.model.fields">KeywordTextField</a> SISENSE_DATAMODEL_QUALIFIED_NAME</pre>
-<div class="block">Qualified name of the datamodel in which this datamodel table is present</div>
+<div class="block">Unique name of the datamodel in which this datamodel table exists.</div>
 </li>
 </ul>
 <a id="SISENSE_DATAMODEL_TABLE_COLUMN_COUNT">
@@ -1406,7 +1406,7 @@ public interface <span class="typeNameLabel">ISisenseDatamodelTable</span></pre>
 <li class="blockList">
 <h4>SISENSE_DATAMODEL_TABLE_COLUMN_COUNT</h4>
 <pre>static final&nbsp;<a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a> SISENSE_DATAMODEL_TABLE_COLUMN_COUNT</pre>
-<div class="block">Number of columns present in the datamodel table</div>
+<div class="block">Number of columns present in this datamodel table.</div>
 </li>
 </ul>
 <a id="SISENSE_DATAMODEL_TABLE_EXPRESSION">
@@ -1416,7 +1416,7 @@ public interface <span class="typeNameLabel">ISisenseDatamodelTable</span></pre>
 <li class="blockList">
 <h4>SISENSE_DATAMODEL_TABLE_EXPRESSION</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> SISENSE_DATAMODEL_TABLE_EXPRESSION</pre>
-<div class="block">Actual SQL expression of the datamodel table</div>
+<div class="block">SQL expression of this datamodel table.</div>
 </li>
 </ul>
 <a id="SISENSE_DATAMODEL_TABLE_IS_HIDDEN">
@@ -1426,7 +1426,7 @@ public interface <span class="typeNameLabel">ISisenseDatamodelTable</span></pre>
 <li class="blockList">
 <h4>SISENSE_DATAMODEL_TABLE_IS_HIDDEN</h4>
 <pre>static final&nbsp;<a href="../fields/BooleanField.html" title="class in com.atlan.model.fields">BooleanField</a> SISENSE_DATAMODEL_TABLE_IS_HIDDEN</pre>
-<div class="block">Boolean indicating if the datamodel table is hidden on sisense</div>
+<div class="block">Whether this datamodel table is hidden in Sisense (true) or not (false).</div>
 </li>
 </ul>
 <a id="SISENSE_DATAMODEL_TABLE_IS_MATERIALIZED">
@@ -1436,7 +1436,7 @@ public interface <span class="typeNameLabel">ISisenseDatamodelTable</span></pre>
 <li class="blockList">
 <h4>SISENSE_DATAMODEL_TABLE_IS_MATERIALIZED</h4>
 <pre>static final&nbsp;<a href="../fields/BooleanField.html" title="class in com.atlan.model.fields">BooleanField</a> SISENSE_DATAMODEL_TABLE_IS_MATERIALIZED</pre>
-<div class="block">Boolean indicating if the datamodel table is materialised</div>
+<div class="block">Whether this datamodel table is materialised (true) or not (false).</div>
 </li>
 </ul>
 <a id="SISENSE_DATAMODEL_TABLE_LIVE_QUERY_SETTINGS">
@@ -1446,7 +1446,7 @@ public interface <span class="typeNameLabel">ISisenseDatamodelTable</span></pre>
 <li class="blockList">
 <h4>SISENSE_DATAMODEL_TABLE_LIVE_QUERY_SETTINGS</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> SISENSE_DATAMODEL_TABLE_LIVE_QUERY_SETTINGS</pre>
-<div class="block">LiveQuery settings of the datamodel table (JSON Object)</div>
+<div class="block">JSON specifying the LiveQuery settings of this datamodel table.</div>
 </li>
 </ul>
 <a id="SISENSE_DATAMODEL_TABLE_SCHEDULE">
@@ -1456,7 +1456,7 @@ public interface <span class="typeNameLabel">ISisenseDatamodelTable</span></pre>
 <li class="blockList">
 <h4>SISENSE_DATAMODEL_TABLE_SCHEDULE</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> SISENSE_DATAMODEL_TABLE_SCHEDULE</pre>
-<div class="block">Refresh schedule of the datamodel table (JSON Object)</div>
+<div class="block">JSON specifying the refresh schedule of this datamodel table.</div>
 </li>
 </ul>
 <a id="SISENSE_DATAMODEL_TABLE_TYPE">
@@ -1466,7 +1466,7 @@ public interface <span class="typeNameLabel">ISisenseDatamodelTable</span></pre>
 <li class="blockList">
 <h4>SISENSE_DATAMODEL_TABLE_TYPE</h4>
 <pre>static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> SISENSE_DATAMODEL_TABLE_TYPE</pre>
-<div class="block">Type of the datamodel table. 'base' for regular tables, 'custom' for SQL expression-based tables</div>
+<div class="block">Type of this datamodel table, for example: 'base' for regular tables, 'custom' for SQL expression-based tables.</div>
 </li>
 </ul>
 <a id="SISENSE_WIDGETS">
@@ -2176,7 +2176,7 @@ public interface <span class="typeNameLabel">ISisenseDatamodelTable</span></pre>
 <li class="blockList">
 <h4>getAssignedTerms</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="IGlossaryTerm.html" title="interface in com.atlan.model.assets">IGlossaryTerm</a>&gt;&nbsp;getAssignedTerms()</pre>
-<div class="block">TBC</div>
+<div class="block">Glossary terms that are linked to this asset.</div>
 </li>
 </ul>
 <a id="getCertificateStatus()">
@@ -2316,7 +2316,7 @@ public interface <span class="typeNameLabel">ISisenseDatamodelTable</span></pre>
 <li class="blockList">
 <h4>getInputToProcesses</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getInputToProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 </li>
 </ul>
 <a id="getIsAIGenerated()">
@@ -2396,7 +2396,7 @@ public interface <span class="typeNameLabel">ISisenseDatamodelTable</span></pre>
 <li class="blockList">
 <h4>getLinks</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="ILink.html" title="interface in com.atlan.model.assets">ILink</a>&gt;&nbsp;getLinks()</pre>
-<div class="block">TBC</div>
+<div class="block">Links that are attached to this asset.</div>
 </li>
 </ul>
 <a id="getMcIncidents()">
@@ -2416,7 +2416,7 @@ public interface <span class="typeNameLabel">ISisenseDatamodelTable</span></pre>
 <li class="blockList">
 <h4>getMcMonitors</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="IMCMonitor.html" title="interface in com.atlan.model.assets">IMCMonitor</a>&gt;&nbsp;getMcMonitors()</pre>
-<div class="block">TBC</div>
+<div class="block">Monitors that observe this asset.</div>
 </li>
 </ul>
 <a id="getMetrics()">
@@ -2456,7 +2456,7 @@ public interface <span class="typeNameLabel">ISisenseDatamodelTable</span></pre>
 <li class="blockList">
 <h4>getOutputFromProcesses</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getOutputFromProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 </li>
 </ul>
 <a id="getOwnerGroups()">
@@ -2506,7 +2506,7 @@ public interface <span class="typeNameLabel">ISisenseDatamodelTable</span></pre>
 <li class="blockList">
 <h4>getReadme</h4>
 <pre class="methodSignature"><a href="IReadme.html" title="interface in com.atlan.model.assets">IReadme</a>&nbsp;getReadme()</pre>
-<div class="block">TBC</div>
+<div class="block">README that is linked to this asset.</div>
 </li>
 </ul>
 <a id="getSampleDataUrl()">
@@ -2536,7 +2536,7 @@ public interface <span class="typeNameLabel">ISisenseDatamodelTable</span></pre>
 <li class="blockList">
 <h4>getSisenseDatamodel</h4>
 <pre class="methodSignature"><a href="ISisenseDatamodel.html" title="interface in com.atlan.model.assets">ISisenseDatamodel</a>&nbsp;getSisenseDatamodel()</pre>
-<div class="block">TBC</div>
+<div class="block">Datamodel in which this datamodel table exists.</div>
 </li>
 </ul>
 <a id="getSisenseDatamodelQualifiedName()">
@@ -2546,7 +2546,7 @@ public interface <span class="typeNameLabel">ISisenseDatamodelTable</span></pre>
 <li class="blockList">
 <h4>getSisenseDatamodelQualifiedName</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getSisenseDatamodelQualifiedName()</pre>
-<div class="block">Qualified name of the datamodel in which this datamodel table is present</div>
+<div class="block">Unique name of the datamodel in which this datamodel table exists.</div>
 </li>
 </ul>
 <a id="getSisenseDatamodelTableColumnCount()">
@@ -2556,7 +2556,7 @@ public interface <span class="typeNameLabel">ISisenseDatamodelTable</span></pre>
 <li class="blockList">
 <h4>getSisenseDatamodelTableColumnCount</h4>
 <pre class="methodSignature">java.lang.Long&nbsp;getSisenseDatamodelTableColumnCount()</pre>
-<div class="block">Number of columns present in the datamodel table</div>
+<div class="block">Number of columns present in this datamodel table.</div>
 </li>
 </ul>
 <a id="getSisenseDatamodelTableExpression()">
@@ -2566,7 +2566,7 @@ public interface <span class="typeNameLabel">ISisenseDatamodelTable</span></pre>
 <li class="blockList">
 <h4>getSisenseDatamodelTableExpression</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getSisenseDatamodelTableExpression()</pre>
-<div class="block">Actual SQL expression of the datamodel table</div>
+<div class="block">SQL expression of this datamodel table.</div>
 </li>
 </ul>
 <a id="getSisenseDatamodelTableIsHidden()">
@@ -2576,7 +2576,7 @@ public interface <span class="typeNameLabel">ISisenseDatamodelTable</span></pre>
 <li class="blockList">
 <h4>getSisenseDatamodelTableIsHidden</h4>
 <pre class="methodSignature">java.lang.Boolean&nbsp;getSisenseDatamodelTableIsHidden()</pre>
-<div class="block">Boolean indicating if the datamodel table is hidden on sisense</div>
+<div class="block">Whether this datamodel table is hidden in Sisense (true) or not (false).</div>
 </li>
 </ul>
 <a id="getSisenseDatamodelTableIsMaterialized()">
@@ -2586,7 +2586,7 @@ public interface <span class="typeNameLabel">ISisenseDatamodelTable</span></pre>
 <li class="blockList">
 <h4>getSisenseDatamodelTableIsMaterialized</h4>
 <pre class="methodSignature">java.lang.Boolean&nbsp;getSisenseDatamodelTableIsMaterialized()</pre>
-<div class="block">Boolean indicating if the datamodel table is materialised</div>
+<div class="block">Whether this datamodel table is materialised (true) or not (false).</div>
 </li>
 </ul>
 <a id="getSisenseDatamodelTableLiveQuerySettings()">
@@ -2596,7 +2596,7 @@ public interface <span class="typeNameLabel">ISisenseDatamodelTable</span></pre>
 <li class="blockList">
 <h4>getSisenseDatamodelTableLiveQuerySettings</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getSisenseDatamodelTableLiveQuerySettings()</pre>
-<div class="block">LiveQuery settings of the datamodel table (JSON Object)</div>
+<div class="block">JSON specifying the LiveQuery settings of this datamodel table.</div>
 </li>
 </ul>
 <a id="getSisenseDatamodelTableSchedule()">
@@ -2606,7 +2606,7 @@ public interface <span class="typeNameLabel">ISisenseDatamodelTable</span></pre>
 <li class="blockList">
 <h4>getSisenseDatamodelTableSchedule</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getSisenseDatamodelTableSchedule()</pre>
-<div class="block">Refresh schedule of the datamodel table (JSON Object)</div>
+<div class="block">JSON specifying the refresh schedule of this datamodel table.</div>
 </li>
 </ul>
 <a id="getSisenseDatamodelTableType()">
@@ -2616,7 +2616,7 @@ public interface <span class="typeNameLabel">ISisenseDatamodelTable</span></pre>
 <li class="blockList">
 <h4>getSisenseDatamodelTableType</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getSisenseDatamodelTableType()</pre>
-<div class="block">Type of the datamodel table. 'base' for regular tables, 'custom' for SQL expression-based tables</div>
+<div class="block">Type of this datamodel table, for example: 'base' for regular tables, 'custom' for SQL expression-based tables.</div>
 </li>
 </ul>
 <a id="getSisenseWidgets()">

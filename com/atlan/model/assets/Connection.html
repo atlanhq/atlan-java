@@ -154,7 +154,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 public class <span class="typeNameLabel">Connection</span>
 extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a>
 implements <a href="IConnection.html" title="interface in com.atlan.model.assets">IConnection</a>, <a href="IAsset.html" title="interface in com.atlan.model.assets">IAsset</a>, <a href="IReferenceable.html" title="interface in com.atlan.model.assets">IReferenceable</a></pre>
-<div class="block">Instance of a connection in Atlan.</div>
+<div class="block">Instance of a connection to a data source in Atlan.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../serialized-form.html#com.atlan.model.assets.Connection">Serialized Form</a></dd>
@@ -560,14 +560,14 @@ implements <a href="IConnection.html" title="interface in com.atlan.model.assets
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAllowQuery()">getAllowQuery</a></span>()</code></th>
 <td class="colLast">
-<div class="block">When true, allow the source to be queried.</div>
+<div class="block">Whether using this connection to run queries on the source is allowed (true) or not (false).</div>
 </td>
 </tr>
 <tr id="i30" class="altColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAllowQueryPreview()">getAllowQueryPreview</a></span>()</code></th>
 <td class="colLast">
-<div class="block">When true, allow data previews of the source.</div>
+<div class="block">Whether using this connection to run preview queries on the source is allowed (true) or not (false).</div>
 </td>
 </tr>
 <tr id="i31" class="rowColor">
@@ -588,7 +588,7 @@ implements <a href="IConnection.html" title="interface in com.atlan.model.assets
 <td class="colFirst"><code><a href="../enums/AtlanConnectionCategory.html" title="enum in com.atlan.model.enums">AtlanConnectionCategory</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCategory()">getCategory</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Type of connection.</div>
+<div class="block">Type of connection, for example WAREHOUSE, RDBMS, etc.</div>
 </td>
 </tr>
 <tr id="i34" class="altColor">
@@ -602,21 +602,21 @@ implements <a href="IConnection.html" title="interface in com.atlan.model.assets
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getConnectionSSOCredentialGuid()">getConnectionSSOCredentialGuid</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Unique identifier (GUID) for the SSO credentials to use for this connection.</div>
 </td>
 </tr>
 <tr id="i36" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getConnectorIcon()">getConnectorIcon</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Despite the name, this is not used for anything.</div>
+<div class="block">Unused.</div>
 </td>
 </tr>
 <tr id="i37" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getConnectorImage()">getConnectorImage</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Despite the name, this is not used for anything.</div>
+<div class="block">Unused.</div>
 </td>
 </tr>
 <tr id="i38" class="altColor">
@@ -637,14 +637,14 @@ implements <a href="IConnection.html" title="interface in com.atlan.model.assets
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCredentialStrategy()">getCredentialStrategy</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Credential strategy to use for this connection for queries.</div>
 </td>
 </tr>
 <tr id="i41" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDefaultCredentialGuid()">getDefaultCredentialGuid</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Unique identifier (GUID) for the default credentials to use for this connection.</div>
 </td>
 </tr>
 <tr id="i42" class="altColor">
@@ -658,14 +658,14 @@ implements <a href="IConnection.html" title="interface in com.atlan.model.assets
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getHasPopularityInsights()">getHasPopularityInsights</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Whether the connection has popularity insights (true) or not (false).</div>
+<div class="block">Whether this connection has popularity insights (true) or not (false).</div>
 </td>
 </tr>
 <tr id="i44" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getHost()">getHost</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Host name of the connection's source.</div>
+<div class="block">Host name of this connection's source.</div>
 </td>
 </tr>
 <tr id="i45" class="rowColor">
@@ -679,14 +679,14 @@ implements <a href="IConnection.html" title="interface in com.atlan.model.assets
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getObjectStorageUploadThreshold()">getObjectStorageUploadThreshold</a></span>()</code></th>
 <td class="colLast">
-<div class="block">A long integer indicating after how many rows heka should start uploading result to storage</div>
+<div class="block">Number of rows after which results should be uploaded to storage.</div>
 </td>
 </tr>
 <tr id="i47" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPolicyStrategy()">getPolicyStrategy</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Policy strategy to use for this connection.</div>
 </td>
 </tr>
 <tr id="i48" class="altColor">
@@ -700,42 +700,42 @@ implements <a href="IConnection.html" title="interface in com.atlan.model.assets
 <td class="colFirst"><code>java.lang.Integer</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPort()">getPort</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Port number to the connection's source.</div>
+<div class="block">Port number to this connection's source.</div>
 </td>
 </tr>
 <tr id="i50" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPreviewCredentialStrategy()">getPreviewCredentialStrategy</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Credential strategy to use for this connection for preview queries.</div>
 </td>
 </tr>
 <tr id="i51" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getQueryConfig()">getQueryConfig</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Query config for this connection.</div>
 </td>
 </tr>
 <tr id="i52" class="altColor">
 <td class="colFirst"><code>java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getQueryPreviewConfig()">getQueryPreviewConfig</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Configuration for preview queries.</div>
 </td>
 </tr>
 <tr id="i53" class="rowColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getQueryTimeout()">getQueryTimeout</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Maximum time a query should be allowed to run before timing out.</div>
 </td>
 </tr>
 <tr id="i54" class="altColor">
 <td class="colFirst"><code><a href="../enums/QueryUsernameStrategy.html" title="enum in com.atlan.model.enums">QueryUsernameStrategy</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getQueryUsernameStrategy()">getQueryUsernameStrategy</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Username strategy to use for this connection for queries.</div>
 </td>
 </tr>
 <tr id="i55" class="rowColor">
@@ -749,14 +749,14 @@ implements <a href="IConnection.html" title="interface in com.atlan.model.assets
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSourceLogo()">getSourceLogo</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Despite the name, this is not used for anything.</div>
+<div class="block">Unused.</div>
 </td>
 </tr>
 <tr id="i57" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSubCategory()">getSubCategory</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Subtype of the connection.</div>
+<div class="block">Subcategory of this connection.</div>
 </td>
 </tr>
 <tr id="i58" class="altColor">
@@ -770,7 +770,7 @@ implements <a href="IConnection.html" title="interface in com.atlan.model.assets
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getUseObjectStorage()">getUseObjectStorage</a></span>()</code></th>
 <td class="colLast">
-<div class="block">A Boolean flag indicating whether to upload to S3, GCP, or another storage location</div>
+<div class="block">Whether to upload to S3, GCP, or another storage location (true) or not (false).</div>
 </td>
 </tr>
 <tr id="i60" class="altColor">
@@ -2917,7 +2917,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getAllowQuery</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Boolean&nbsp;getAllowQuery()</pre>
-<div class="block">When true, allow the source to be queried.</div>
+<div class="block">Whether using this connection to run queries on the source is allowed (true) or not (false).</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IConnection.html#getAllowQuery()">getAllowQuery</a></code>&nbsp;in interface&nbsp;<code><a href="IConnection.html" title="interface in com.atlan.model.assets">IConnection</a></code></dd>
@@ -2931,7 +2931,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getAllowQueryPreview</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Boolean&nbsp;getAllowQueryPreview()</pre>
-<div class="block">When true, allow data previews of the source.</div>
+<div class="block">Whether using this connection to run preview queries on the source is allowed (true) or not (false).</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IConnection.html#getAllowQueryPreview()">getAllowQueryPreview</a></code>&nbsp;in interface&nbsp;<code><a href="IConnection.html" title="interface in com.atlan.model.assets">IConnection</a></code></dd>
@@ -2945,7 +2945,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getCategory</h4>
 <pre class="methodSignature">public&nbsp;<a href="../enums/AtlanConnectionCategory.html" title="enum in com.atlan.model.enums">AtlanConnectionCategory</a>&nbsp;getCategory()</pre>
-<div class="block">Type of connection.</div>
+<div class="block">Type of connection, for example WAREHOUSE, RDBMS, etc.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IConnection.html#getCategory()">getCategory</a></code>&nbsp;in interface&nbsp;<code><a href="IConnection.html" title="interface in com.atlan.model.assets">IConnection</a></code></dd>
@@ -2973,7 +2973,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getConnectionSSOCredentialGuid</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getConnectionSSOCredentialGuid()</pre>
-<div class="block">TBC</div>
+<div class="block">Unique identifier (GUID) for the SSO credentials to use for this connection.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IConnection.html#getConnectionSSOCredentialGuid()">getConnectionSSOCredentialGuid</a></code>&nbsp;in interface&nbsp;<code><a href="IConnection.html" title="interface in com.atlan.model.assets">IConnection</a></code></dd>
@@ -2987,7 +2987,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getConnectorIcon</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getConnectorIcon()</pre>
-<div class="block">Despite the name, this is not used for anything. Only the value of connectorName impacts icons.</div>
+<div class="block">Unused. Only the value of connectorType impacts icons.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IConnection.html#getConnectorIcon()">getConnectorIcon</a></code>&nbsp;in interface&nbsp;<code><a href="IConnection.html" title="interface in com.atlan.model.assets">IConnection</a></code></dd>
@@ -3001,7 +3001,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getConnectorImage</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getConnectorImage()</pre>
-<div class="block">Despite the name, this is not used for anything. Only the value of connectorName impacts icons.</div>
+<div class="block">Unused. Only the value of connectorType impacts icons.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IConnection.html#getConnectorImage()">getConnectorImage</a></code>&nbsp;in interface&nbsp;<code><a href="IConnection.html" title="interface in com.atlan.model.assets">IConnection</a></code></dd>
@@ -3015,7 +3015,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getCredentialStrategy</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getCredentialStrategy()</pre>
-<div class="block">TBC</div>
+<div class="block">Credential strategy to use for this connection for queries.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IConnection.html#getCredentialStrategy()">getCredentialStrategy</a></code>&nbsp;in interface&nbsp;<code><a href="IConnection.html" title="interface in com.atlan.model.assets">IConnection</a></code></dd>
@@ -3029,7 +3029,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getDefaultCredentialGuid</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getDefaultCredentialGuid()</pre>
-<div class="block">TBC</div>
+<div class="block">Unique identifier (GUID) for the default credentials to use for this connection.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IConnection.html#getDefaultCredentialGuid()">getDefaultCredentialGuid</a></code>&nbsp;in interface&nbsp;<code><a href="IConnection.html" title="interface in com.atlan.model.assets">IConnection</a></code></dd>
@@ -3043,7 +3043,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getHasPopularityInsights</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Boolean&nbsp;getHasPopularityInsights()</pre>
-<div class="block">Whether the connection has popularity insights (true) or not (false).</div>
+<div class="block">Whether this connection has popularity insights (true) or not (false).</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IConnection.html#getHasPopularityInsights()">getHasPopularityInsights</a></code>&nbsp;in interface&nbsp;<code><a href="IConnection.html" title="interface in com.atlan.model.assets">IConnection</a></code></dd>
@@ -3057,7 +3057,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getHost</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getHost()</pre>
-<div class="block">Host name of the connection's source.</div>
+<div class="block">Host name of this connection's source.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IConnection.html#getHost()">getHost</a></code>&nbsp;in interface&nbsp;<code><a href="IConnection.html" title="interface in com.atlan.model.assets">IConnection</a></code></dd>
@@ -3085,7 +3085,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getObjectStorageUploadThreshold</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Long&nbsp;getObjectStorageUploadThreshold()</pre>
-<div class="block">A long integer indicating after how many rows heka should start uploading result to storage</div>
+<div class="block">Number of rows after which results should be uploaded to storage.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IConnection.html#getObjectStorageUploadThreshold()">getObjectStorageUploadThreshold</a></code>&nbsp;in interface&nbsp;<code><a href="IConnection.html" title="interface in com.atlan.model.assets">IConnection</a></code></dd>
@@ -3099,7 +3099,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getPolicyStrategy</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getPolicyStrategy()</pre>
-<div class="block">TBC</div>
+<div class="block">Policy strategy to use for this connection.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IConnection.html#getPolicyStrategy()">getPolicyStrategy</a></code>&nbsp;in interface&nbsp;<code><a href="IConnection.html" title="interface in com.atlan.model.assets">IConnection</a></code></dd>
@@ -3127,7 +3127,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getPort</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Integer&nbsp;getPort()</pre>
-<div class="block">Port number to the connection's source.</div>
+<div class="block">Port number to this connection's source.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IConnection.html#getPort()">getPort</a></code>&nbsp;in interface&nbsp;<code><a href="IConnection.html" title="interface in com.atlan.model.assets">IConnection</a></code></dd>
@@ -3141,7 +3141,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getPreviewCredentialStrategy</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getPreviewCredentialStrategy()</pre>
-<div class="block">TBC</div>
+<div class="block">Credential strategy to use for this connection for preview queries.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IConnection.html#getPreviewCredentialStrategy()">getPreviewCredentialStrategy</a></code>&nbsp;in interface&nbsp;<code><a href="IConnection.html" title="interface in com.atlan.model.assets">IConnection</a></code></dd>
@@ -3155,7 +3155,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getQueryConfig</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getQueryConfig()</pre>
-<div class="block">TBC</div>
+<div class="block">Query config for this connection.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IConnection.html#getQueryConfig()">getQueryConfig</a></code>&nbsp;in interface&nbsp;<code><a href="IConnection.html" title="interface in com.atlan.model.assets">IConnection</a></code></dd>
@@ -3169,7 +3169,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getQueryPreviewConfig</h4>
 <pre class="methodSignature">public&nbsp;java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;getQueryPreviewConfig()</pre>
-<div class="block">TBC</div>
+<div class="block">Configuration for preview queries.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IConnection.html#getQueryPreviewConfig()">getQueryPreviewConfig</a></code>&nbsp;in interface&nbsp;<code><a href="IConnection.html" title="interface in com.atlan.model.assets">IConnection</a></code></dd>
@@ -3183,7 +3183,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getQueryTimeout</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Long&nbsp;getQueryTimeout()</pre>
-<div class="block">TBC</div>
+<div class="block">Maximum time a query should be allowed to run before timing out.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IConnection.html#getQueryTimeout()">getQueryTimeout</a></code>&nbsp;in interface&nbsp;<code><a href="IConnection.html" title="interface in com.atlan.model.assets">IConnection</a></code></dd>
@@ -3197,7 +3197,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getQueryUsernameStrategy</h4>
 <pre class="methodSignature">public&nbsp;<a href="../enums/QueryUsernameStrategy.html" title="enum in com.atlan.model.enums">QueryUsernameStrategy</a>&nbsp;getQueryUsernameStrategy()</pre>
-<div class="block">TBC</div>
+<div class="block">Username strategy to use for this connection for queries.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IConnection.html#getQueryUsernameStrategy()">getQueryUsernameStrategy</a></code>&nbsp;in interface&nbsp;<code><a href="IConnection.html" title="interface in com.atlan.model.assets">IConnection</a></code></dd>
@@ -3225,7 +3225,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getSourceLogo</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getSourceLogo()</pre>
-<div class="block">Despite the name, this is not used for anything. Only the value of connectorName impacts icons.</div>
+<div class="block">Unused. Only the value of connectorType impacts icons.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IConnection.html#getSourceLogo()">getSourceLogo</a></code>&nbsp;in interface&nbsp;<code><a href="IConnection.html" title="interface in com.atlan.model.assets">IConnection</a></code></dd>
@@ -3239,7 +3239,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getSubCategory</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getSubCategory()</pre>
-<div class="block">Subtype of the connection.</div>
+<div class="block">Subcategory of this connection.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IConnection.html#getSubCategory()">getSubCategory</a></code>&nbsp;in interface&nbsp;<code><a href="IConnection.html" title="interface in com.atlan.model.assets">IConnection</a></code></dd>
@@ -3253,7 +3253,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getUseObjectStorage</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Boolean&nbsp;getUseObjectStorage()</pre>
-<div class="block">A Boolean flag indicating whether to upload to S3, GCP, or another storage location</div>
+<div class="block">Whether to upload to S3, GCP, or another storage location (true) or not (false).</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IConnection.html#getUseObjectStorage()">getUseObjectStorage</a></code>&nbsp;in interface&nbsp;<code><a href="IConnection.html" title="interface in com.atlan.model.assets">IConnection</a></code></dd>

@@ -154,7 +154,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 public class <span class="typeNameLabel">DbtTest</span>
 extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a>
 implements <a href="IDbtTest.html" title="interface in com.atlan.model.assets">IDbtTest</a>, <a href="IDbt.html" title="interface in com.atlan.model.assets">IDbt</a>, <a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a>, <a href="IAsset.html" title="interface in com.atlan.model.assets">IAsset</a>, <a href="IReferenceable.html" title="interface in com.atlan.model.assets">IReferenceable</a></pre>
-<div class="block">dbt Test Assets</div>
+<div class="block">Instance of a dbt test in Atlan.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../serialized-form.html#com.atlan.model.assets.DbtTest">Serialized Form</a></dd>
@@ -629,56 +629,56 @@ implements <a href="IDbtTest.html" title="interface in com.atlan.model.assets">I
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDbtTestCompiledCode()">getDbtTestCompiledCode</a></span>()</code></th>
 <td class="colLast">
-<div class="block">The compiled code of a test ( tests in dbt can be defined using python )</div>
+<div class="block">Compiled code of the test (when the test is defined using Python).</div>
 </td>
 </tr>
 <tr id="i41" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDbtTestCompiledSQL()">getDbtTestCompiledSQL</a></span>()</code></th>
 <td class="colLast">
-<div class="block">The compiled sql of a test</div>
+<div class="block">Compiled SQL of the test.</div>
 </td>
 </tr>
 <tr id="i42" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDbtTestError()">getDbtTestError</a></span>()</code></th>
 <td class="colLast">
-<div class="block">The error message in the case of state being "error"</div>
+<div class="block">Error message in the case of state being "error".</div>
 </td>
 </tr>
 <tr id="i43" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDbtTestLanguage()">getDbtTestLanguage</a></span>()</code></th>
 <td class="colLast">
-<div class="block">The language in which a dbt test is written.</div>
+<div class="block">Language in which the test is written, for example: SQL or Python.</div>
 </td>
 </tr>
 <tr id="i44" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDbtTestRawCode()">getDbtTestRawCode</a></span>()</code></th>
 <td class="colLast">
-<div class="block">The raw code of a test ( tests in dbt can be defined using python )</div>
+<div class="block">Raw code of the test (when the test is defined using Python).</div>
 </td>
 </tr>
 <tr id="i45" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDbtTestRawSQL()">getDbtTestRawSQL</a></span>()</code></th>
 <td class="colLast">
-<div class="block">The raw sql of a test</div>
+<div class="block">Raw SQL of the test.</div>
 </td>
 </tr>
 <tr id="i46" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDbtTestState()">getDbtTestState</a></span>()</code></th>
 <td class="colLast">
-<div class="block">The test results.</div>
+<div class="block">Test results.</div>
 </td>
 </tr>
 <tr id="i47" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDbtTestStatus()">getDbtTestStatus</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Status provides the details of the results of a test.</div>
+<div class="block">Details of the results of the test.</div>
 </td>
 </tr>
 <tr id="i48" class="altColor">
@@ -699,7 +699,7 @@ implements <a href="IDbtTest.html" title="interface in com.atlan.model.assets">I
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInputToProcesses()">getInputToProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 </td>
 </tr>
 <tr id="i51" class="rowColor">
@@ -713,7 +713,7 @@ implements <a href="IDbtTest.html" title="interface in com.atlan.model.assets">I
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOutputFromProcesses()">getOutputFromProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 </td>
 </tr>
 <tr id="i53" class="rowColor">
@@ -2684,7 +2684,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getDbtTestCompiledCode</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getDbtTestCompiledCode()</pre>
-<div class="block">The compiled code of a test ( tests in dbt can be defined using python )</div>
+<div class="block">Compiled code of the test (when the test is defined using Python).</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IDbtTest.html#getDbtTestCompiledCode()">getDbtTestCompiledCode</a></code>&nbsp;in interface&nbsp;<code><a href="IDbtTest.html" title="interface in com.atlan.model.assets">IDbtTest</a></code></dd>
@@ -2698,7 +2698,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getDbtTestCompiledSQL</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getDbtTestCompiledSQL()</pre>
-<div class="block">The compiled sql of a test</div>
+<div class="block">Compiled SQL of the test.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IDbtTest.html#getDbtTestCompiledSQL()">getDbtTestCompiledSQL</a></code>&nbsp;in interface&nbsp;<code><a href="IDbtTest.html" title="interface in com.atlan.model.assets">IDbtTest</a></code></dd>
@@ -2712,7 +2712,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getDbtTestError</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getDbtTestError()</pre>
-<div class="block">The error message in the case of state being "error"</div>
+<div class="block">Error message in the case of state being "error".</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IDbtTest.html#getDbtTestError()">getDbtTestError</a></code>&nbsp;in interface&nbsp;<code><a href="IDbtTest.html" title="interface in com.atlan.model.assets">IDbtTest</a></code></dd>
@@ -2726,7 +2726,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getDbtTestLanguage</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getDbtTestLanguage()</pre>
-<div class="block">The language in which a dbt test is written. Example: sql,python</div>
+<div class="block">Language in which the test is written, for example: SQL or Python.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IDbtTest.html#getDbtTestLanguage()">getDbtTestLanguage</a></code>&nbsp;in interface&nbsp;<code><a href="IDbtTest.html" title="interface in com.atlan.model.assets">IDbtTest</a></code></dd>
@@ -2740,7 +2740,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getDbtTestRawCode</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getDbtTestRawCode()</pre>
-<div class="block">The raw code of a test ( tests in dbt can be defined using python )</div>
+<div class="block">Raw code of the test (when the test is defined using Python).</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IDbtTest.html#getDbtTestRawCode()">getDbtTestRawCode</a></code>&nbsp;in interface&nbsp;<code><a href="IDbtTest.html" title="interface in com.atlan.model.assets">IDbtTest</a></code></dd>
@@ -2754,7 +2754,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getDbtTestRawSQL</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getDbtTestRawSQL()</pre>
-<div class="block">The raw sql of a test</div>
+<div class="block">Raw SQL of the test.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IDbtTest.html#getDbtTestRawSQL()">getDbtTestRawSQL</a></code>&nbsp;in interface&nbsp;<code><a href="IDbtTest.html" title="interface in com.atlan.model.assets">IDbtTest</a></code></dd>
@@ -2768,7 +2768,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getDbtTestState</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getDbtTestState()</pre>
-<div class="block">The test results. Can be one of, in order of severity, "error", "fail", "warn", "pass"</div>
+<div class="block">Test results. Can be one of, in order of severity, "error", "fail", "warn", "pass".</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IDbtTest.html#getDbtTestState()">getDbtTestState</a></code>&nbsp;in interface&nbsp;<code><a href="IDbtTest.html" title="interface in com.atlan.model.assets">IDbtTest</a></code></dd>
@@ -2782,7 +2782,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getDbtTestStatus</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getDbtTestStatus()</pre>
-<div class="block">Status provides the details of the results of a test. For errors, it reads "ERROR".</div>
+<div class="block">Details of the results of the test. For errors, it reads "ERROR".</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IDbtTest.html#getDbtTestStatus()">getDbtTestStatus</a></code>&nbsp;in interface&nbsp;<code><a href="IDbtTest.html" title="interface in com.atlan.model.assets">IDbtTest</a></code></dd>
@@ -2830,7 +2830,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getInputToProcesses</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getInputToProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ICatalog.html#getInputToProcesses()">getInputToProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a></code></dd>
@@ -2866,7 +2866,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getOutputFromProcesses</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getOutputFromProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ICatalog.html#getOutputFromProcesses()">getOutputFromProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a></code></dd>

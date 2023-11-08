@@ -154,7 +154,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 public class <span class="typeNameLabel">QlikSpace</span>
 extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a>
 implements <a href="IQlikSpace.html" title="interface in com.atlan.model.assets">IQlikSpace</a>, <a href="IQlik.html" title="interface in com.atlan.model.assets">IQlik</a>, <a href="IBI.html" title="interface in com.atlan.model.assets">IBI</a>, <a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a>, <a href="IAsset.html" title="interface in com.atlan.model.assets">IAsset</a>, <a href="IReferenceable.html" title="interface in com.atlan.model.assets">IReferenceable</a></pre>
-<div class="block">Instance of a Qlik Space in Atlan.</div>
+<div class="block">Instance of a Qlik space in Atlan.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../serialized-form.html#com.atlan.model.assets.QlikSpace">Serialized Form</a></dd>
@@ -496,7 +496,7 @@ implements <a href="IQlikSpace.html" title="interface in com.atlan.model.assets"
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInputToProcesses()">getInputToProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 </td>
 </tr>
 <tr id="i22" class="altColor">
@@ -510,7 +510,7 @@ implements <a href="IQlikSpace.html" title="interface in com.atlan.model.assets"
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOutputFromProcesses()">getOutputFromProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 </td>
 </tr>
 <tr id="i24" class="altColor">
@@ -531,14 +531,14 @@ implements <a href="IQlikSpace.html" title="interface in com.atlan.model.assets"
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IQlikApp.html" title="interface in com.atlan.model.assets">IQlikApp</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getQlikApps()">getQlikApps</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Apps contained within the space.</div>
+<div class="block">Apps that exist within this space.</div>
 </td>
 </tr>
 <tr id="i27" class="rowColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IQlikDataset.html" title="interface in com.atlan.model.assets">IQlikDataset</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getQlikDatasets()">getQlikDatasets</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Datasets contained within the space.</div>
+<div class="block">Datasets that exist within this space.</div>
 </td>
 </tr>
 <tr id="i28" class="altColor">
@@ -587,7 +587,7 @@ implements <a href="IQlikSpace.html" title="interface in com.atlan.model.assets"
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getQlikSpaceType()">getQlikSpaceType</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Type of space, for example: Private, Shared, etc.</div>
+<div class="block">Type of this space, for exmaple: Private, Shared, etc.</div>
 </td>
 </tr>
 <tr id="i35" class="rowColor">
@@ -2264,7 +2264,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getInputToProcesses</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getInputToProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IBI.html#getInputToProcesses()">getInputToProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="IBI.html" title="interface in com.atlan.model.assets">IBI</a></code></dd>
@@ -2304,7 +2304,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getOutputFromProcesses</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getOutputFromProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IBI.html#getOutputFromProcesses()">getOutputFromProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="IBI.html" title="interface in com.atlan.model.assets">IBI</a></code></dd>
@@ -2356,7 +2356,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getQlikApps</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="IQlikApp.html" title="interface in com.atlan.model.assets">IQlikApp</a>&gt;&nbsp;getQlikApps()</pre>
-<div class="block">Apps contained within the space.</div>
+<div class="block">Apps that exist within this space.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IQlikSpace.html#getQlikApps()">getQlikApps</a></code>&nbsp;in interface&nbsp;<code><a href="IQlikSpace.html" title="interface in com.atlan.model.assets">IQlikSpace</a></code></dd>
@@ -2370,7 +2370,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getQlikDatasets</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="IQlikDataset.html" title="interface in com.atlan.model.assets">IQlikDataset</a>&gt;&nbsp;getQlikDatasets()</pre>
-<div class="block">Datasets contained within the space.</div>
+<div class="block">Datasets that exist within this space.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IQlikSpace.html#getQlikDatasets()">getQlikDatasets</a></code>&nbsp;in interface&nbsp;<code><a href="IQlikSpace.html" title="interface in com.atlan.model.assets">IQlikSpace</a></code></dd>
@@ -2480,7 +2480,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getQlikSpaceType</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getQlikSpaceType()</pre>
-<div class="block">Type of space, for example: Private, Shared, etc.</div>
+<div class="block">Type of this space, for exmaple: Private, Shared, etc.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IQlikSpace.html#getQlikSpaceType()">getQlikSpaceType</a></code>&nbsp;in interface&nbsp;<code><a href="IQlikSpace.html" title="interface in com.atlan.model.assets">IQlikSpace</a></code></dd>

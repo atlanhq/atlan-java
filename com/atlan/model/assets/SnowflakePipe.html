@@ -154,7 +154,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 public class <span class="typeNameLabel">SnowflakePipe</span>
 extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a>
 implements <a href="ISnowflakePipe.html" title="interface in com.atlan.model.assets">ISnowflakePipe</a>, <a href="ISQL.html" title="interface in com.atlan.model.assets">ISQL</a>, <a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a>, <a href="IAsset.html" title="interface in com.atlan.model.assets">IAsset</a>, <a href="IReferenceable.html" title="interface in com.atlan.model.assets">IReferenceable</a></pre>
-<div class="block">Instance of a Snowflake Pipe in Atlan.</div>
+<div class="block">Instance of a Snowflake pipe in Atlan. These are used to ingest data from external sources into Snowflake.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../serialized-form.html#com.atlan.model.assets.SnowflakePipe">Serialized Form</a></dd>
@@ -524,7 +524,7 @@ implements <a href="ISnowflakePipe.html" title="interface in com.atlan.model.ass
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDefinition()">getDefinition</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">SQL definition of this pipe.</div>
 </td>
 </tr>
 <tr id="i26" class="altColor">
@@ -538,7 +538,7 @@ implements <a href="ISnowflakePipe.html" title="interface in com.atlan.model.ass
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInputToProcesses()">getInputToProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 </td>
 </tr>
 <tr id="i28" class="altColor">
@@ -566,7 +566,7 @@ implements <a href="ISnowflakePipe.html" title="interface in com.atlan.model.ass
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOutputFromProcesses()">getOutputFromProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 </td>
 </tr>
 <tr id="i32" class="altColor">
@@ -601,7 +601,7 @@ implements <a href="ISnowflakePipe.html" title="interface in com.atlan.model.ass
 <td class="colFirst"><code><a href="ISchema.html" title="interface in com.atlan.model.assets">ISchema</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSchema()">getSchema</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Schema in which this Snowflake pipe exists.</div>
 </td>
 </tr>
 <tr id="i37" class="rowColor">
@@ -622,14 +622,14 @@ implements <a href="ISnowflakePipe.html" title="interface in com.atlan.model.ass
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSnowflakePipeIsAutoIngestEnabled()">getSnowflakePipeIsAutoIngestEnabled</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Whether auto-ingest is enabled for this pipe (true) or not (false).</div>
 </td>
 </tr>
 <tr id="i40" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSnowflakePipeNotificationChannelName()">getSnowflakePipeNotificationChannelName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Name of the notification channel for this pipe.</div>
 </td>
 </tr>
 <tr id="i41" class="rowColor">
@@ -2401,7 +2401,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getDefinition</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getDefinition()</pre>
-<div class="block">TBC</div>
+<div class="block">SQL definition of this pipe.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISnowflakePipe.html#getDefinition()">getDefinition</a></code>&nbsp;in interface&nbsp;<code><a href="ISnowflakePipe.html" title="interface in com.atlan.model.assets">ISnowflakePipe</a></code></dd>
@@ -2433,7 +2433,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getInputToProcesses</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getInputToProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ICatalog.html#getInputToProcesses()">getInputToProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a></code></dd>
@@ -2501,7 +2501,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getOutputFromProcesses</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getOutputFromProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ICatalog.html#getOutputFromProcesses()">getOutputFromProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a></code></dd>
@@ -2583,7 +2583,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getSchema</h4>
 <pre class="methodSignature">public&nbsp;<a href="ISchema.html" title="interface in com.atlan.model.assets">ISchema</a>&nbsp;getSchema()</pre>
-<div class="block">TBC</div>
+<div class="block">Schema in which this Snowflake pipe exists.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISnowflakePipe.html#getSchema()">getSchema</a></code>&nbsp;in interface&nbsp;<code><a href="ISnowflakePipe.html" title="interface in com.atlan.model.assets">ISnowflakePipe</a></code></dd>
@@ -2629,7 +2629,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getSnowflakePipeIsAutoIngestEnabled</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Boolean&nbsp;getSnowflakePipeIsAutoIngestEnabled()</pre>
-<div class="block">TBC</div>
+<div class="block">Whether auto-ingest is enabled for this pipe (true) or not (false).</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISnowflakePipe.html#getSnowflakePipeIsAutoIngestEnabled()">getSnowflakePipeIsAutoIngestEnabled</a></code>&nbsp;in interface&nbsp;<code><a href="ISnowflakePipe.html" title="interface in com.atlan.model.assets">ISnowflakePipe</a></code></dd>
@@ -2643,7 +2643,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getSnowflakePipeNotificationChannelName</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getSnowflakePipeNotificationChannelName()</pre>
-<div class="block">TBC</div>
+<div class="block">Name of the notification channel for this pipe.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISnowflakePipe.html#getSnowflakePipeNotificationChannelName()">getSnowflakePipeNotificationChannelName</a></code>&nbsp;in interface&nbsp;<code><a href="ISnowflakePipe.html" title="interface in com.atlan.model.assets">ISnowflakePipe</a></code></dd>

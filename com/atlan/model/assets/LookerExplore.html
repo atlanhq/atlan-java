@@ -154,7 +154,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 public class <span class="typeNameLabel">LookerExplore</span>
 extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a>
 implements <a href="ILookerExplore.html" title="interface in com.atlan.model.assets">ILookerExplore</a>, <a href="ILooker.html" title="interface in com.atlan.model.assets">ILooker</a>, <a href="IBI.html" title="interface in com.atlan.model.assets">IBI</a>, <a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a>, <a href="IAsset.html" title="interface in com.atlan.model.assets">IAsset</a>, <a href="IReferenceable.html" title="interface in com.atlan.model.assets">IReferenceable</a></pre>
-<div class="block">Instance of a Looker explore in Atlan.</div>
+<div class="block">Instance of a Looker Explore in Atlan. Explores are views that users can query in Looker.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../serialized-form.html#com.atlan.model.assets.LookerExplore">Serialized Form</a></dd>
@@ -482,7 +482,7 @@ implements <a href="ILookerExplore.html" title="interface in com.atlan.model.ass
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILookerField.html" title="interface in com.atlan.model.assets">ILookerField</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getFields()">getFields</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Fields that exist within this Explore.</div>
 </td>
 </tr>
 <tr id="i21" class="rowColor">
@@ -496,21 +496,21 @@ implements <a href="ILookerExplore.html" title="interface in com.atlan.model.ass
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInputToProcesses()">getInputToProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 </td>
 </tr>
 <tr id="i23" class="rowColor">
 <td class="colFirst"><code><a href="ILookerModel.html" title="interface in com.atlan.model.assets">ILookerModel</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getModel()">getModel</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Model in which this explore exists.</div>
 </td>
 </tr>
 <tr id="i24" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getModelName()">getModelName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Name of the parent model of this Explore.</div>
 </td>
 </tr>
 <tr id="i25" class="rowColor">
@@ -524,35 +524,35 @@ implements <a href="ILookerExplore.html" title="interface in com.atlan.model.ass
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOutputFromProcesses()">getOutputFromProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 </td>
 </tr>
 <tr id="i27" class="rowColor">
 <td class="colFirst"><code><a href="ILookerProject.html" title="interface in com.atlan.model.assets">ILookerProject</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getProject()">getProject</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Project in which this explore exists.</div>
 </td>
 </tr>
 <tr id="i28" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getProjectName()">getProjectName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Name of the parent project of this Explore.</div>
 </td>
 </tr>
 <tr id="i29" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSourceConnectionName()">getSourceConnectionName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Connection name for the Explore, from Looker.</div>
 </td>
 </tr>
 <tr id="i30" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSqlTableName()">getSqlTableName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Name of the SQL table used to declare the Explore.</div>
 </td>
 </tr>
 <tr id="i31" class="rowColor">
@@ -566,7 +566,7 @@ implements <a href="ILookerExplore.html" title="interface in com.atlan.model.ass
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getViewName()">getViewName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Name of the view for the Explore.</div>
 </td>
 </tr>
 <tr id="i33" class="rowColor">
@@ -2216,7 +2216,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getFields</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILookerField.html" title="interface in com.atlan.model.assets">ILookerField</a>&gt;&nbsp;getFields()</pre>
-<div class="block">TBC</div>
+<div class="block">Fields that exist within this Explore.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ILookerExplore.html#getFields()">getFields</a></code>&nbsp;in interface&nbsp;<code><a href="ILookerExplore.html" title="interface in com.atlan.model.assets">ILookerExplore</a></code></dd>
@@ -2250,7 +2250,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getInputToProcesses</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getInputToProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IBI.html#getInputToProcesses()">getInputToProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="IBI.html" title="interface in com.atlan.model.assets">IBI</a></code></dd>
@@ -2270,7 +2270,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getModel</h4>
 <pre class="methodSignature">public&nbsp;<a href="ILookerModel.html" title="interface in com.atlan.model.assets">ILookerModel</a>&nbsp;getModel()</pre>
-<div class="block">TBC</div>
+<div class="block">Model in which this explore exists.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ILookerExplore.html#getModel()">getModel</a></code>&nbsp;in interface&nbsp;<code><a href="ILookerExplore.html" title="interface in com.atlan.model.assets">ILookerExplore</a></code></dd>
@@ -2284,7 +2284,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getModelName</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getModelName()</pre>
-<div class="block">TBC</div>
+<div class="block">Name of the parent model of this Explore.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ILookerExplore.html#getModelName()">getModelName</a></code>&nbsp;in interface&nbsp;<code><a href="ILookerExplore.html" title="interface in com.atlan.model.assets">ILookerExplore</a></code></dd>
@@ -2318,7 +2318,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getOutputFromProcesses</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getOutputFromProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IBI.html#getOutputFromProcesses()">getOutputFromProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="IBI.html" title="interface in com.atlan.model.assets">IBI</a></code></dd>
@@ -2338,7 +2338,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getProject</h4>
 <pre class="methodSignature">public&nbsp;<a href="ILookerProject.html" title="interface in com.atlan.model.assets">ILookerProject</a>&nbsp;getProject()</pre>
-<div class="block">TBC</div>
+<div class="block">Project in which this explore exists.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ILookerExplore.html#getProject()">getProject</a></code>&nbsp;in interface&nbsp;<code><a href="ILookerExplore.html" title="interface in com.atlan.model.assets">ILookerExplore</a></code></dd>
@@ -2352,7 +2352,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getProjectName</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getProjectName()</pre>
-<div class="block">TBC</div>
+<div class="block">Name of the parent project of this Explore.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ILookerExplore.html#getProjectName()">getProjectName</a></code>&nbsp;in interface&nbsp;<code><a href="ILookerExplore.html" title="interface in com.atlan.model.assets">ILookerExplore</a></code></dd>
@@ -2366,7 +2366,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getSourceConnectionName</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getSourceConnectionName()</pre>
-<div class="block">TBC</div>
+<div class="block">Connection name for the Explore, from Looker.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ILookerExplore.html#getSourceConnectionName()">getSourceConnectionName</a></code>&nbsp;in interface&nbsp;<code><a href="ILookerExplore.html" title="interface in com.atlan.model.assets">ILookerExplore</a></code></dd>
@@ -2380,7 +2380,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getSqlTableName</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getSqlTableName()</pre>
-<div class="block">TBC</div>
+<div class="block">Name of the SQL table used to declare the Explore.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ILookerExplore.html#getSqlTableName()">getSqlTableName</a></code>&nbsp;in interface&nbsp;<code><a href="ILookerExplore.html" title="interface in com.atlan.model.assets">ILookerExplore</a></code></dd>
@@ -2394,7 +2394,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getViewName</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getViewName()</pre>
-<div class="block">TBC</div>
+<div class="block">Name of the view for the Explore.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ILookerExplore.html#getViewName()">getViewName</a></code>&nbsp;in interface&nbsp;<code><a href="ILookerExplore.html" title="interface in com.atlan.model.assets">ILookerExplore</a></code></dd>

@@ -148,7 +148,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <pre>@Generated("com.atlan.generators.ModelGeneratorV2")
 public class <span class="typeNameLabel">SourceTagAttachment</span>
 extends <a href="AtlanStruct.html" title="class in com.atlan.model.structs">AtlanStruct</a></pre>
-<div class="block">Detailed information about the attachment of a classification on an Atlan asset, synced from source.</div>
+<div class="block">Detailed information about the attachment of a tag to an Atlan asset, synced from source.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../serialized-form.html#com.atlan.model.structs.SourceTagAttachment">Serialized Form</a></dd>
@@ -275,56 +275,56 @@ extends <a href="AtlanStruct.html" title="class in com.atlan.model.structs">Atla
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIsSourceTagSynced()">getIsSourceTagSynced</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Whether the tag has been synced with the source (true) or not (false).</div>
+<div class="block">Whether the tag attachment has been synced at the source (true) or not (false).</div>
 </td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSourceTagConnectorName()">getSourceTagConnectorName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Name of the connector that is the source of the tag.</div>
+<div class="block">Connector that is the source of the tag.</div>
 </td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSourceTagGuid()">getSourceTagGuid</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Unique identifier of the tag asset in Atlan.</div>
+<div class="block">Unique identifier (GUID) of the source tag, in Atlan.</div>
 </td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSourceTagName()">getSourceTagName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Name of the tag asset in Atlan.</div>
+<div class="block">Simple name of the source tag.</div>
 </td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSourceTagQualifiedName()">getSourceTagQualifiedName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Unique name of the tag asset in Atlan.</div>
+<div class="block">Unique name of the source tag, in Atlan.</div>
 </td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSourceTagSyncError()">getSourceTagSyncError</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Error message if the tag sync with the source failed.</div>
+<div class="block">Error message if the tag attachment sync at the source failed.</div>
 </td>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSourceTagSyncTimestamp()">getSourceTagSyncTimestamp</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Time at which the tag was sycned with the source.</div>
+<div class="block">Time (epoch) when the tag attachment was synced at the source, in milliseconds.</div>
 </td>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="SourceTagAttachmentValue.html" title="class in com.atlan.model.structs">SourceTagAttachmentValue</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSourceTagValue()">getSourceTagValue</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Value of the attached tag within the source system.</div>
+<div class="block">Value of the tag attachment, from the source.</div>
 </td>
 </tr>
 <tr id="i11" class="rowColor">
@@ -452,14 +452,14 @@ extends <a href="AtlanStruct.html" title="class in com.atlan.model.structs">Atla
 <div class="block">Quickly create a new SourceTagAttachment.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>sourceTagName</code> - Name of the tag asset in Atlan.</dd>
-<dd><code>sourceTagQualifiedName</code> - Unique name of the tag asset in Atlan.</dd>
-<dd><code>sourceTagGuid</code> - Unique identifier of the tag asset in Atlan.</dd>
-<dd><code>sourceTagConnectorName</code> - Name of the connector that is the source of the tag.</dd>
-<dd><code>sourceTagValue</code> - Value of the attached tag within the source system.</dd>
-<dd><code>isSourceTagSynced</code> - Whether the tag has been synced with the source (true) or not (false).</dd>
-<dd><code>sourceTagSyncTimestamp</code> - Time at which the tag was sycned with the source.</dd>
-<dd><code>sourceTagSyncError</code> - Error message if the tag sync with the source failed.</dd>
+<dd><code>sourceTagName</code> - Simple name of the source tag.</dd>
+<dd><code>sourceTagQualifiedName</code> - Unique name of the source tag, in Atlan.</dd>
+<dd><code>sourceTagGuid</code> - Unique identifier (GUID) of the source tag, in Atlan.</dd>
+<dd><code>sourceTagConnectorName</code> - Connector that is the source of the tag.</dd>
+<dd><code>sourceTagValue</code> - Value of the tag attachment, from the source.</dd>
+<dd><code>isSourceTagSynced</code> - Whether the tag attachment has been synced at the source (true) or not (false).</dd>
+<dd><code>sourceTagSyncTimestamp</code> - Time (epoch) when the tag attachment was synced at the source, in milliseconds.</dd>
+<dd><code>sourceTagSyncError</code> - Error message if the tag attachment sync at the source failed.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>a SourceTagAttachment with the provided information</dd>
 </dl>
@@ -490,7 +490,7 @@ extends <a href="AtlanStruct.html" title="class in com.atlan.model.structs">Atla
 <li class="blockList">
 <h4>getSourceTagName</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getSourceTagName()</pre>
-<div class="block">Name of the tag asset in Atlan.</div>
+<div class="block">Simple name of the source tag.</div>
 </li>
 </ul>
 <a id="getSourceTagQualifiedName()">
@@ -500,7 +500,7 @@ extends <a href="AtlanStruct.html" title="class in com.atlan.model.structs">Atla
 <li class="blockList">
 <h4>getSourceTagQualifiedName</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getSourceTagQualifiedName()</pre>
-<div class="block">Unique name of the tag asset in Atlan.</div>
+<div class="block">Unique name of the source tag, in Atlan.</div>
 </li>
 </ul>
 <a id="getSourceTagGuid()">
@@ -510,7 +510,7 @@ extends <a href="AtlanStruct.html" title="class in com.atlan.model.structs">Atla
 <li class="blockList">
 <h4>getSourceTagGuid</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getSourceTagGuid()</pre>
-<div class="block">Unique identifier of the tag asset in Atlan.</div>
+<div class="block">Unique identifier (GUID) of the source tag, in Atlan.</div>
 </li>
 </ul>
 <a id="getSourceTagConnectorName()">
@@ -520,7 +520,7 @@ extends <a href="AtlanStruct.html" title="class in com.atlan.model.structs">Atla
 <li class="blockList">
 <h4>getSourceTagConnectorName</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getSourceTagConnectorName()</pre>
-<div class="block">Name of the connector that is the source of the tag.</div>
+<div class="block">Connector that is the source of the tag.</div>
 </li>
 </ul>
 <a id="getSourceTagValue()">
@@ -530,7 +530,7 @@ extends <a href="AtlanStruct.html" title="class in com.atlan.model.structs">Atla
 <li class="blockList">
 <h4>getSourceTagValue</h4>
 <pre class="methodSignature">public&nbsp;java.util.List&lt;<a href="SourceTagAttachmentValue.html" title="class in com.atlan.model.structs">SourceTagAttachmentValue</a>&gt;&nbsp;getSourceTagValue()</pre>
-<div class="block">Value of the attached tag within the source system.</div>
+<div class="block">Value of the tag attachment, from the source.</div>
 </li>
 </ul>
 <a id="getIsSourceTagSynced()">
@@ -540,7 +540,7 @@ extends <a href="AtlanStruct.html" title="class in com.atlan.model.structs">Atla
 <li class="blockList">
 <h4>getIsSourceTagSynced</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Boolean&nbsp;getIsSourceTagSynced()</pre>
-<div class="block">Whether the tag has been synced with the source (true) or not (false).</div>
+<div class="block">Whether the tag attachment has been synced at the source (true) or not (false).</div>
 </li>
 </ul>
 <a id="getSourceTagSyncTimestamp()">
@@ -550,7 +550,7 @@ extends <a href="AtlanStruct.html" title="class in com.atlan.model.structs">Atla
 <li class="blockList">
 <h4>getSourceTagSyncTimestamp</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Long&nbsp;getSourceTagSyncTimestamp()</pre>
-<div class="block">Time at which the tag was sycned with the source.</div>
+<div class="block">Time (epoch) when the tag attachment was synced at the source, in milliseconds.</div>
 </li>
 </ul>
 <a id="getSourceTagSyncError()">
@@ -560,7 +560,7 @@ extends <a href="AtlanStruct.html" title="class in com.atlan.model.structs">Atla
 <li class="blockList">
 <h4>getSourceTagSyncError</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getSourceTagSyncError()</pre>
-<div class="block">Error message if the tag sync with the source failed.</div>
+<div class="block">Error message if the tag attachment sync at the source failed.</div>
 </li>
 </ul>
 <a id="equals(java.lang.Object)">

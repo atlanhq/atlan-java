@@ -154,7 +154,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 public class <span class="typeNameLabel">LookerFolder</span>
 extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a>
 implements <a href="ILookerFolder.html" title="interface in com.atlan.model.assets">ILookerFolder</a>, <a href="ILooker.html" title="interface in com.atlan.model.assets">ILooker</a>, <a href="IBI.html" title="interface in com.atlan.model.assets">IBI</a>, <a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a>, <a href="IAsset.html" title="interface in com.atlan.model.assets">IAsset</a>, <a href="IReferenceable.html" title="interface in com.atlan.model.assets">IReferenceable</a></pre>
-<div class="block">Instance of a Looker folder in Atlan.</div>
+<div class="block">Instance of a Looker folder in Atlan. Folders in Looker are used to organize content in a hierarchical structure and granting access.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../serialized-form.html#com.atlan.model.assets.LookerFolder">Serialized Form</a></dd>
@@ -482,7 +482,7 @@ implements <a href="ILookerFolder.html" title="interface in com.atlan.model.asse
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILookerDashboard.html" title="interface in com.atlan.model.assets">ILookerDashboard</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDashboards()">getDashboards</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Dashboards that exist within this folder.</div>
 </td>
 </tr>
 <tr id="i21" class="rowColor">
@@ -496,28 +496,28 @@ implements <a href="ILookerFolder.html" title="interface in com.atlan.model.asse
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInputToProcesses()">getInputToProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 </td>
 </tr>
 <tr id="i23" class="rowColor">
 <td class="colFirst"><code><a href="ILookerFolder.html" title="interface in com.atlan.model.assets">ILookerFolder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLookerParentFolder()">getLookerParentFolder</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Folder in which this subfolder exists.</div>
 </td>
 </tr>
 <tr id="i24" class="altColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILookerFolder.html" title="interface in com.atlan.model.assets">ILookerFolder</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLookerSubFolders()">getLookerSubFolders</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Subfolders that exist within this folder.</div>
 </td>
 </tr>
 <tr id="i25" class="rowColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILookerLook.html" title="interface in com.atlan.model.assets">ILookerLook</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLooks()">getLooks</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Looks that exist within this folder.</div>
 </td>
 </tr>
 <tr id="i26" class="altColor">
@@ -531,35 +531,35 @@ implements <a href="ILookerFolder.html" title="interface in com.atlan.model.asse
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOutputFromProcesses()">getOutputFromProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 </td>
 </tr>
 <tr id="i28" class="altColor">
 <td class="colFirst"><code>java.lang.Integer</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSourceChildCount()">getSourceChildCount</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Number of subfolders in this folder.</div>
 </td>
 </tr>
 <tr id="i29" class="rowColor">
 <td class="colFirst"><code>java.lang.Integer</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSourceContentMetadataId()">getSourceContentMetadataId</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Identifier for the folder's content metadata in Looker.</div>
 </td>
 </tr>
 <tr id="i30" class="altColor">
 <td class="colFirst"><code>java.lang.Integer</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSourceCreatorId()">getSourceCreatorId</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Identifier of the user who created the folder, from Looker.</div>
 </td>
 </tr>
 <tr id="i31" class="rowColor">
 <td class="colFirst"><code>java.lang.Integer</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSourceParentID()">getSourceParentID</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Identifier of the parent folder of this folder, from Looker.</div>
 </td>
 </tr>
 <tr id="i32" class="altColor">
@@ -2216,7 +2216,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getDashboards</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILookerDashboard.html" title="interface in com.atlan.model.assets">ILookerDashboard</a>&gt;&nbsp;getDashboards()</pre>
-<div class="block">TBC</div>
+<div class="block">Dashboards that exist within this folder.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ILookerFolder.html#getDashboards()">getDashboards</a></code>&nbsp;in interface&nbsp;<code><a href="ILookerFolder.html" title="interface in com.atlan.model.assets">ILookerFolder</a></code></dd>
@@ -2250,7 +2250,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getInputToProcesses</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getInputToProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IBI.html#getInputToProcesses()">getInputToProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="IBI.html" title="interface in com.atlan.model.assets">IBI</a></code></dd>
@@ -2270,7 +2270,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getLookerParentFolder</h4>
 <pre class="methodSignature">public&nbsp;<a href="ILookerFolder.html" title="interface in com.atlan.model.assets">ILookerFolder</a>&nbsp;getLookerParentFolder()</pre>
-<div class="block">TBC</div>
+<div class="block">Folder in which this subfolder exists.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ILookerFolder.html#getLookerParentFolder()">getLookerParentFolder</a></code>&nbsp;in interface&nbsp;<code><a href="ILookerFolder.html" title="interface in com.atlan.model.assets">ILookerFolder</a></code></dd>
@@ -2284,7 +2284,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getLookerSubFolders</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILookerFolder.html" title="interface in com.atlan.model.assets">ILookerFolder</a>&gt;&nbsp;getLookerSubFolders()</pre>
-<div class="block">TBC</div>
+<div class="block">Subfolders that exist within this folder.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ILookerFolder.html#getLookerSubFolders()">getLookerSubFolders</a></code>&nbsp;in interface&nbsp;<code><a href="ILookerFolder.html" title="interface in com.atlan.model.assets">ILookerFolder</a></code></dd>
@@ -2298,7 +2298,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getLooks</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILookerLook.html" title="interface in com.atlan.model.assets">ILookerLook</a>&gt;&nbsp;getLooks()</pre>
-<div class="block">TBC</div>
+<div class="block">Looks that exist within this folder.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ILookerFolder.html#getLooks()">getLooks</a></code>&nbsp;in interface&nbsp;<code><a href="ILookerFolder.html" title="interface in com.atlan.model.assets">ILookerFolder</a></code></dd>
@@ -2332,7 +2332,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getOutputFromProcesses</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getOutputFromProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IBI.html#getOutputFromProcesses()">getOutputFromProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="IBI.html" title="interface in com.atlan.model.assets">IBI</a></code></dd>
@@ -2352,7 +2352,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getSourceChildCount</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Integer&nbsp;getSourceChildCount()</pre>
-<div class="block">TBC</div>
+<div class="block">Number of subfolders in this folder.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ILookerFolder.html#getSourceChildCount()">getSourceChildCount</a></code>&nbsp;in interface&nbsp;<code><a href="ILookerFolder.html" title="interface in com.atlan.model.assets">ILookerFolder</a></code></dd>
@@ -2366,7 +2366,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getSourceContentMetadataId</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Integer&nbsp;getSourceContentMetadataId()</pre>
-<div class="block">TBC</div>
+<div class="block">Identifier for the folder's content metadata in Looker.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ILookerFolder.html#getSourceContentMetadataId()">getSourceContentMetadataId</a></code>&nbsp;in interface&nbsp;<code><a href="ILookerFolder.html" title="interface in com.atlan.model.assets">ILookerFolder</a></code></dd>
@@ -2380,7 +2380,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getSourceCreatorId</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Integer&nbsp;getSourceCreatorId()</pre>
-<div class="block">TBC</div>
+<div class="block">Identifier of the user who created the folder, from Looker.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ILookerFolder.html#getSourceCreatorId()">getSourceCreatorId</a></code>&nbsp;in interface&nbsp;<code><a href="ILookerFolder.html" title="interface in com.atlan.model.assets">ILookerFolder</a></code></dd>
@@ -2394,7 +2394,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getSourceParentID</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Integer&nbsp;getSourceParentID()</pre>
-<div class="block">TBC</div>
+<div class="block">Identifier of the parent folder of this folder, from Looker.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ILookerFolder.html#getSourceParentID()">getSourceParentID</a></code>&nbsp;in interface&nbsp;<code><a href="ILookerFolder.html" title="interface in com.atlan.model.assets">ILookerFolder</a></code></dd>

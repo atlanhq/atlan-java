@@ -496,7 +496,7 @@ implements <a href="IMicroStrategyFact.html" title="interface in com.atlan.model
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInputToProcesses()">getInputToProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 </td>
 </tr>
 <tr id="i22" class="altColor">
@@ -531,7 +531,7 @@ implements <a href="IMicroStrategyFact.html" title="interface in com.atlan.model
 <td class="colFirst"><code>java.util.SortedSet&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMicroStrategyFactExpressions()">getMicroStrategyFactExpressions</a></span>()</code></th>
 <td class="colLast">
-<div class="block">List of expressions for the fact.</div>
+<div class="block">List of expressions for this fact.</div>
 </td>
 </tr>
 <tr id="i27" class="rowColor">
@@ -552,14 +552,14 @@ implements <a href="IMicroStrategyFact.html" title="interface in com.atlan.model
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IMicroStrategyMetric.html" title="interface in com.atlan.model.assets">IMicroStrategyMetric</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMicroStrategyMetrics()">getMicroStrategyMetrics</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Metrics where the fact is used.</div>
+<div class="block">Metrics that use this fact.</div>
 </td>
 </tr>
 <tr id="i30" class="altColor">
 <td class="colFirst"><code><a href="IMicroStrategyProject.html" title="interface in com.atlan.model.assets">IMicroStrategyProject</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMicroStrategyProject()">getMicroStrategyProject</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Project containing the fact.</div>
+<div class="block">Project in which this fact exists.</div>
 </td>
 </tr>
 <tr id="i31" class="rowColor">
@@ -601,7 +601,7 @@ implements <a href="IMicroStrategyFact.html" title="interface in com.atlan.model
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOutputFromProcesses()">getOutputFromProcesses</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 </td>
 </tr>
 <tr id="i37" class="rowColor">
@@ -2278,7 +2278,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getInputToProcesses</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getInputToProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes to which this asset provides input.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IBI.html#getInputToProcesses()">getInputToProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="IBI.html" title="interface in com.atlan.model.assets">IBI</a></code></dd>
@@ -2362,7 +2362,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getMicroStrategyFactExpressions</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;java.lang.String&gt;&nbsp;getMicroStrategyFactExpressions()</pre>
-<div class="block">List of expressions for the fact.</div>
+<div class="block">List of expressions for this fact.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IMicroStrategyFact.html#getMicroStrategyFactExpressions()">getMicroStrategyFactExpressions</a></code>&nbsp;in interface&nbsp;<code><a href="IMicroStrategyFact.html" title="interface in com.atlan.model.assets">IMicroStrategyFact</a></code></dd>
@@ -2408,7 +2408,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getMicroStrategyMetrics</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="IMicroStrategyMetric.html" title="interface in com.atlan.model.assets">IMicroStrategyMetric</a>&gt;&nbsp;getMicroStrategyMetrics()</pre>
-<div class="block">Metrics where the fact is used.</div>
+<div class="block">Metrics that use this fact.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IMicroStrategyFact.html#getMicroStrategyMetrics()">getMicroStrategyMetrics</a></code>&nbsp;in interface&nbsp;<code><a href="IMicroStrategyFact.html" title="interface in com.atlan.model.assets">IMicroStrategyFact</a></code></dd>
@@ -2422,7 +2422,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getMicroStrategyProject</h4>
 <pre class="methodSignature">public&nbsp;<a href="IMicroStrategyProject.html" title="interface in com.atlan.model.assets">IMicroStrategyProject</a>&nbsp;getMicroStrategyProject()</pre>
-<div class="block">Project containing the fact.</div>
+<div class="block">Project in which this fact exists.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IMicroStrategyFact.html#getMicroStrategyProject()">getMicroStrategyProject</a></code>&nbsp;in interface&nbsp;<code><a href="IMicroStrategyFact.html" title="interface in com.atlan.model.assets">IMicroStrategyFact</a></code></dd>
@@ -2520,7 +2520,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getOutputFromProcesses</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;getOutputFromProcesses()</pre>
-<div class="block">TBC</div>
+<div class="block">Processes from which this asset is produced as output.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IBI.html#getOutputFromProcesses()">getOutputFromProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="IBI.html" title="interface in com.atlan.model.assets">IBI</a></code></dd>
