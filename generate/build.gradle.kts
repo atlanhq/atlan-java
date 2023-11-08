@@ -5,5 +5,5 @@ plugins {
 
 dependencies {
     implementation(project(":sdk"))
-    implementation("ch.qos.logback:logback-classic:1.4.8")
+    implementation(libs.logback.classic)
 }
