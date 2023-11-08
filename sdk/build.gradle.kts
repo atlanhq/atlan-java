@@ -35,6 +35,7 @@ tasks.jar {
 
 tasks.shadowJar {
     archiveClassifier.set("jar-with-dependencies")
+    archiveFileName.set("atlan-java-$versionId-${archiveClassifier.get()}.jar")
     configurations = listOf(project.configurations.runtimeClasspath.get())
 }
 
