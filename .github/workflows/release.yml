@@ -31,7 +31,10 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: jar-with-dependencies
-          path: sdk/build/libs/atlan-java-*-jar-with-dependencies.jar
+          path: |
+            sdk/build/libs/atlan-java-*-jar-with-dependencies.jar
+            package-toolkit/config/build/libs/package-toolkit-config-*-jar-with-dependencies.jar
+            package-toolkit/runtime/build/libs/package-toolkit-runtime-*-jar-with-dependencies.jar
       - uses: actions/upload-artifact@v3
         with:
           name: lambda-layer
