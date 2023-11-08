@@ -22,15 +22,8 @@ dependencies {
 
 testing {
     suites {
-        getting(JvmTestSuite::class) {
+        val test by getting(JvmTestSuite::class) {
             useTestNG()
-            targets {
-                all {
-                    testTask.configure {
-                        testLogging.showStandardStreams = true
-                    }
-                }
-            }
             dependencies {
                 implementation(project())
                 implementation("org.testng:testng:7.8.0")

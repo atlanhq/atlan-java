@@ -72,7 +72,7 @@ jobs:
           GPG_SIGNING_PASSPHRASE: ${{ secrets.GPG_SIGNING_PASSPHRASE }}
       - name: Publish package
         run: |
-          ./gradlew publish -Dorg.gradle.project.sonatypeUsername=$NEXUS_USERNAME -Dorg.gradle.project.sonatypePassword=$NEXUS_PASSWORD -Dorg.gradle.project.signing.gnupg.keyName=$GPG_SIGNING_KEYID -Dorg.gradle.project.signing.gnupg.passphrase=$GPG_SIGNING_PASSPHRASE
+          ./gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository -Dorg.gradle.project.sonatypeUsername=$NEXUS_USERNAME -Dorg.gradle.project.sonatypePassword=$NEXUS_PASSWORD -Dorg.gradle.project.signing.gnupg.keyName=$GPG_SIGNING_KEYID -Dorg.gradle.project.signing.gnupg.passphrase=$GPG_SIGNING_PASSPHRASE
         env:
           GH_USERNAME: ${{ github.actor }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
