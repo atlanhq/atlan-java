@@ -34,7 +34,7 @@ tasks.jar {
 }
 
 tasks.shadowJar {
-    archiveFileName.set("atlan-java-$versionId-jar-with-dependencies.jar")
+    archiveClassifier.set("jar-with-dependencies")
     configurations = listOf(project.configurations.runtimeClasspath.get())
 }
 
@@ -62,14 +62,12 @@ tasks.create<Zip>("buildZip") {
 
 tasks.create<Jar>("sourcesJar") {
     archiveClassifier.set("sources")
-    //classifier = "sources"
     from(tasks.delombok)
 }
 
 tasks.create<Jar>("javadocJar") {
     archiveClassifier.set("javadoc")
-    //classifier = "javadoc"
-    from(tasks.javadoc.get().destinationDir)
+    from(tasks.javadoc)
 }
 
 publishing {
