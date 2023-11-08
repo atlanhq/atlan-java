@@ -2,9 +2,9 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.serde.cell
 
-import com.atlan.pkg.serde.cache.TermCache
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.GlossaryTerm
+import com.atlan.pkg.serde.cache.TermCache
 import mu.KotlinLogging
 
 /**

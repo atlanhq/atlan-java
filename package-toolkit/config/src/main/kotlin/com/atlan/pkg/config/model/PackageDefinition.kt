@@ -23,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder
     "repository",
     "license",
     "bugs",
-    "config"
+    "config",
 )
 class PackageDefinition(
     @JsonProperty("name") val packageId: String,

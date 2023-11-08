@@ -9,11 +9,11 @@ import com.atlan.model.core.CustomMetadataAttributes
 import com.atlan.model.core.CustomMetadataAttributes.CustomMetadataAttributesBuilder
 import com.atlan.model.fields.AtlanField
 import com.atlan.model.fields.CustomMetadataField
-import com.atlan.serde.Serde
-import mu.KotlinLogging
 import com.atlan.pkg.serde.cell.AssetRefXformer
 import com.atlan.pkg.serde.cell.CellXformer
 import com.atlan.pkg.serde.cell.CellXformer.LIST_DELIMITER
+import com.atlan.serde.Serde
+import mu.KotlinLogging
 import java.lang.reflect.Method
 import java.util.concurrent.ThreadLocalRandom
 

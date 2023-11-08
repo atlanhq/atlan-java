@@ -7,8 +7,8 @@ import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Glossary
 import com.atlan.model.assets.GlossaryTerm
 import com.atlan.model.fields.AtlanField
-import mu.KotlinLogging
 import com.atlan.pkg.serde.cell.AssignedTermXformer
+import mu.KotlinLogging
 
 object TermCache : AssetCache() {
     private val logger = KotlinLogging.logger {}
