@@ -31,11 +31,16 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/upload-artifact@v3
         with:
-          name: jar-with-dependencies
-          path: |
-            sdk/build/libs/atlan-java-*-jar-with-dependencies.jar
-            package-toolkit/config/build/libs/package-toolkit-config-*-jar-with-dependencies.jar
-            package-toolkit/runtime/build/libs/package-toolkit-runtime-*-jar-with-dependencies.jar
+          name: sdk
+          path: sdk/build/libs/atlan-java-*-jar-with-dependencies.jar
+      - uses: actions/upload-artifact@v3
+        with:
+          name: config
+          path: package-toolkit/config/build/libs/package-toolkit-config-*-jar-with-dependencies.jar
+      - uses: actions/upload-artifact@v3
+        with:
+          name: runtime
+          path: package-toolkit/runtime/build/libs/package-toolkit-runtime-*-jar-with-dependencies.jar
       - uses: actions/upload-artifact@v3
         with:
           name: lambda-layer
@@ -101,7 +106,15 @@ jobs:
           mkdir -p ./containers/assembly
       - uses: actions/download-artifact@v3
         with:
-          name: jar-with-dependencies
+          name: sdk
+          path: ./containers/assembly
+      - uses: actions/download-artifact@v3
+        with:
+          name: config
+          path: ./containers/assembly
+      - uses: actions/download-artifact@v3
+        with:
+          name: runtime
           path: ./containers/assembly
       - name: Build and publish container image
         if: ${{ github.ref == 'refs/heads/main'}}
