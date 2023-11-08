@@ -8,6 +8,7 @@ import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.admin.*;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +26,7 @@ public class AdminTest extends AtlanLiveTest {
     private static final String EMAIL_DOMAIN = "@atlan.com";
 
     private static final DateTimeFormatter SIMPLE_DATE = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    private static final LocalDate NOW = LocalDate.now();
+    private static final LocalDate NOW = LocalDate.now(ZoneId.of("UTC"));
     private static final LocalDate BEFORE = NOW.minusDays(1);
     private static final String TODAY = SIMPLE_DATE.format(NOW);
     private static final String YESTERDAY = SIMPLE_DATE.format(BEFORE);

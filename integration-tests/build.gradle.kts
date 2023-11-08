@@ -8,11 +8,27 @@ dependencies {
     implementation(project(":sdk"))
 }
 
-testing.suites.getting(JvmTestSuite::class) {
-    targets {
-        all {
-            testTask.configure {
-                testLogging.showStandardStreams = true
+testing {
+    suites {
+       val test by getting(JvmTestSuite::class) {
+            useTestNG()
+            targets {
+                all {
+                    testTask.configure {
+                        testLogging.showStandardStreams = true
+                    }
+                }
+            }
+            dependencies {
+                implementation(project())
+                implementation("org.testng:testng:7.8.0")
+                implementation("ch.qos.logback:logback-classic:1.4.8")
+                implementation("com.github.tomakehurst:wiremock:2.27.2")
+            }
+            sources {
+                java {
+                    setSrcDirs(listOf("src/test/java"))
+                }
             }
         }
     }

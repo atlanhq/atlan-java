@@ -7,9 +7,6 @@ plugins {
     id("biz.aQute.bnd.builder") version "6.1.0"
     id("com.github.johnrengelman.shadow") version "7.1.2"
     id("org.ajoberstar.git-publish") version "3.0.1"
-    /*id("maven-publish")
-    id("signing")
-    id("io.github.gradle-nexus.publish-plugin") version "1.3.0"*/
 }
 
 dependencies {
