@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
-val jarPath = "$rootDir/jars"
-val versionId: String = providers.gradleProperty("VERSION_NAME").get()
-val jarFile = "package-toolkit-serde-$version.jar"
+version = providers.gradleProperty("VERSION_NAME").get()
+val jarName = "package-toolkit-serde"
 
 plugins {
     id("com.atlan.kotlin")
@@ -15,8 +14,8 @@ dependencies {
 tasks {
     shadowJar {
         isZip64 = true
-        archiveFileName.set(jarFile)
-        destinationDirectory.set(file(jarPath))
+        archiveBaseName.set(jarName)
+        archiveClassifier.set("jar-with-dependencies")
         dependencies {
             include(dependency("org.jetbrains.kotlin:kotlin-reflect:.*"))
             include(dependency("com.fasterxml.jackson.module:jackson-module-kotlin:.*"))
@@ -25,6 +24,7 @@ tasks {
     }
 
     jar {
+        archiveBaseName.set(jarName)
         dependsOn(shadowJar)
     }
 }
