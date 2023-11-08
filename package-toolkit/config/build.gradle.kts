@@ -5,7 +5,6 @@ val jarName = "package-toolkit-config"
 plugins {
     id("com.atlan.kotlin")
     alias(libs.plugins.shadow)
-    alias(libs.plugins.git.publish)
     `maven-publish`
     signing
 }
@@ -21,6 +20,7 @@ tasks {
         archiveBaseName.set(jarName)
         archiveClassifier.set("jar-with-dependencies")
         dependencies {
+            include(dependency("com.fasterxml.jackson.module:jackson-module-kotlin:.*"))
             include(dependency("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:.*"))
         }
         mergeServiceFiles()
@@ -34,7 +34,7 @@ tasks {
 
 tasks.create<Jar>("sourcesJar") {
     archiveClassifier.set("sources")
-    from(sourceSets.main)
+    from(sourceSets.main.get())
 }
 
 tasks.create<Jar>("javadocJar") {
