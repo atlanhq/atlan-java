@@ -9,6 +9,10 @@ plugins {
     signing
 }
 
+dependencies {
+    api(libs.jackson.kotlin)
+}
+
 tasks {
     shadowJar {
         isZip64 = true
@@ -20,6 +24,8 @@ tasks {
             include(dependency("org.apache.logging.log4j:log4j-api:.*"))
             include(dependency("org.apache.logging.log4j:log4j-core:.*"))
             include(dependency("org.apache.logging.log4j:log4j-slf4j2-impl:.*"))
+            include(dependency("org.jetbrains.kotlin:kotlin-reflect:.*"))
+            include(dependency("com.fasterxml.jackson.module:jackson-module-kotlin:.*"))
         }
         mergeServiceFiles()
     }
