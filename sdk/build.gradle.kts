@@ -7,6 +7,8 @@ plugins {
     id("biz.aQute.bnd.builder") version "6.1.0"
     id("com.github.johnrengelman.shadow") version "7.1.2"
     id("org.ajoberstar.git-publish") version "3.0.1"
+    `maven-publish`
+    signing
 }
 
 dependencies {
@@ -56,4 +58,63 @@ tasks.create<Zip>("buildZip") {
     into("java/lib") {
         from(tasks.shadowJar)
     }
+}
+
+tasks.create<Jar>("sourcesJar") {
+    archiveClassifier.set("sources")
+    //classifier = "sources"
+    from(tasks.delombok)
+}
+
+tasks.create<Jar>("javadocJar") {
+    archiveClassifier.set("javadoc")
+    //classifier = "javadoc"
+    from(tasks.javadoc.get().destinationDir)
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("mavenJavaSdk") {
+            groupId = providers.gradleProperty("GROUP").get()
+            artifactId = providers.gradleProperty("POM_ARTIFACT_ID").get()
+            version = providers.gradleProperty("VERSION_NAME").get()
+            from(components["java"])
+            artifact(tasks["sourcesJar"])
+            artifact(tasks["javadocJar"])
+            pom {
+                name.set(providers.gradleProperty("POM_NAME").get())
+                description.set(providers.gradleProperty("POM_DESCRIPTION").get())
+                url.set(providers.gradleProperty("POM_URL").get())
+                packaging = providers.gradleProperty("POM_PACKAGING").get()
+                licenses {
+                    license {
+                        name.set(providers.gradleProperty("POM_LICENCE_NAME").get())
+                        url.set(providers.gradleProperty("POM_LICENCE_URL").get())
+                        distribution.set(providers.gradleProperty("POM_LICENCE_DIST").get())
+                    }
+                }
+                developers {
+                    developer {
+                        id.set(providers.gradleProperty("POM_DEVELOPER_ID").get())
+                        name.set(providers.gradleProperty("POM_DEVELOPER_NAME").get())
+                        email.set(providers.gradleProperty("POM_DEVELOPER_EMAIL").get())
+                    }
+                }
+                organization {
+                    name.set(providers.gradleProperty("POM_DEVELOPER_NAME").get())
+                    url.set(providers.gradleProperty("POM_ORGANIZATION_URL").get())
+                }
+                scm {
+                    connection.set(providers.gradleProperty("POM_SCM_CONNECTION").get())
+                    developerConnection.set(providers.gradleProperty("POM_SCM_DEV_CONNECTION").get())
+                    url.set(providers.gradleProperty("POM_SCM_URL").get())
+                }
+            }
+        }
+    }
+}
+
+signing {
+    useGpgCmd()
+    sign(publishing.publications["mavenJavaSdk"])
 }
