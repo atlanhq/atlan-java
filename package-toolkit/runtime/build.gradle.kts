@@ -5,6 +5,8 @@ val jarName = "package-toolkit-runtime"
 plugins {
     id("com.atlan.kotlin")
     alias(libs.plugins.shadow)
+    `maven-publish`
+    signing
 }
 
 tasks {
@@ -30,4 +32,54 @@ tasks {
             attributes(Pair("Multi-Release", "true"))
         }
     }
+}
+
+java {
+    withSourcesJar()
+    withJavadocJar()
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("mavenJavaPkgRun") {
+            groupId = providers.gradleProperty("GROUP").get()
+            artifactId = providers.gradleProperty("PKG_RUN_ARTIFACT_ID").get()
+            version = providers.gradleProperty("VERSION_NAME").get()
+            from(components["java"])
+            pom {
+                name.set(providers.gradleProperty("PKG_RUN_ARTIFACT_ID").get())
+                description.set(providers.gradleProperty("PKG_RUN_DESCRIPTION").get())
+                url.set(providers.gradleProperty("POM_URL").get())
+                packaging = providers.gradleProperty("POM_PACKAGING").get()
+                licenses {
+                    license {
+                        name.set(providers.gradleProperty("POM_LICENCE_NAME").get())
+                        url.set(providers.gradleProperty("POM_LICENCE_URL").get())
+                        distribution.set(providers.gradleProperty("POM_LICENCE_DIST").get())
+                    }
+                }
+                developers {
+                    developer {
+                        id.set(providers.gradleProperty("POM_DEVELOPER_ID").get())
+                        name.set(providers.gradleProperty("POM_DEVELOPER_NAME").get())
+                        email.set(providers.gradleProperty("POM_DEVELOPER_EMAIL").get())
+                    }
+                }
+                organization {
+                    name.set(providers.gradleProperty("POM_DEVELOPER_NAME").get())
+                    url.set(providers.gradleProperty("POM_ORGANIZATION_URL").get())
+                }
+                scm {
+                    connection.set(providers.gradleProperty("POM_SCM_CONNECTION").get())
+                    developerConnection.set(providers.gradleProperty("POM_SCM_DEV_CONNECTION").get())
+                    url.set(providers.gradleProperty("POM_SCM_URL").get())
+                }
+            }
+        }
+    }
+}
+
+signing {
+    useGpgCmd()
+    sign(publishing.publications["mavenJavaPkgRun"])
 }

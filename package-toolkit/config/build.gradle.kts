@@ -37,16 +37,6 @@ java {
     withJavadocJar()
 }
 
-/*tasks.create<Jar>("sourcesJar") {
-    archiveClassifier.set("sources")
-    from(sourceSets.main.get())
-}
-
-tasks.create<Jar>("javadocJar") {
-    archiveClassifier.set("javadoc")
-    from(tasks.javadoc)
-}*/
-
 publishing {
     publications {
         create<MavenPublication>("mavenJavaPkgCfg") {
@@ -54,8 +44,6 @@ publishing {
             artifactId = providers.gradleProperty("PKG_CFG_ARTIFACT_ID").get()
             version = providers.gradleProperty("VERSION_NAME").get()
             from(components["java"])
-            /*artifact(tasks["sourcesJar"])
-            artifact(tasks["javadocJar"])*/
             pom {
                 name.set(providers.gradleProperty("PKG_CFG_ARTIFACT_ID").get())
                 description.set(providers.gradleProperty("PKG_CFG_DESCRIPTION").get())
