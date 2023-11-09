@@ -88,6 +88,7 @@ open class CustomPackage(
             path.endsWith(File.separator) -> path
             else -> path + File.separator
         }
+        File(prefix).mkdirs()
         File(prefix + "index.js").writeText(indexJS())
         File(prefix + "package.json").writeText(packageJSON())
         File(prefix + "configmaps").mkdirs()
