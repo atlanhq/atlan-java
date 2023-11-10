@@ -34,16 +34,40 @@ jobs:
           path: sdk/build/libs/atlan-java-*-jar-with-dependencies.jar
       - uses: actions/upload-artifact@v3
         with:
-          name: config
+          name: package-toolkit-config
           path: package-toolkit/config/build/libs/package-toolkit-config-*-jar-with-dependencies.jar
       - uses: actions/upload-artifact@v3
         with:
-          name: runtime
+          name: package-toolkit-runtime
           path: package-toolkit/runtime/build/libs/package-toolkit-runtime-*-jar-with-dependencies.jar
       - uses: actions/upload-artifact@v3
         with:
-          name: events
+          name: package-toolkit-events
           path: package-toolkit/events/build/libs/package-toolkit-events-*-jar-with-dependencies.jar
+      - uses: actions/upload-artifact@v3
+        with:
+          name: api-token-connection-admin
+          path: jars/api-token-connection-admin-*.jar
+      - uses: actions/upload-artifact@v3
+        with:
+          name: asset-export-basic
+          path: jars/asset-export-basic-*.jar
+      - uses: actions/upload-artifact@v3
+        with:
+          name: asset-import
+          path: jars/asset-import-*.jar
+      - uses: actions/upload-artifact@v3
+        with:
+          name: duplicate-detector
+          path: jars/duplicate-detector-*.jar
+      - uses: actions/upload-artifact@v3
+        with:
+          name: openapi-spec-loader
+          path: jars/openapi-spec-loader-*.jar
+      - uses: actions/upload-artifact@v3
+        with:
+          name: owner-propagator
+          path: jars/owner-propagator-*.jar
       - uses: actions/upload-artifact@v3
         with:
           name: lambda-layer
@@ -66,7 +90,7 @@ jobs:
           GPG_SIGNING_PASSPHRASE: ${{ secrets.GPG_SIGNING_PASSPHRASE }}
       - name: Stage release
         run: |
-          ./gradlew buildZip publish -Dorg.gradle.project.NEXUS_USERNAME=$NEXUS_USERNAME -Dorg.gradle.project.NEXUS_PASSWORD=$NEXUS_PASSWORD -Dorg.gradle.project.signing.gnupg.keyName=$GPG_SIGNING_KEYID -Dorg.gradle.project.signing.gnupg.passphrase=$GPG_SIGNING_PASSPHRASE
+          ./gradlew buildZip publishToSonatype closeAndReleaseSonatypeStagingRepository -Dorg.gradle.project.sonatypeUsername=$NEXUS_USERNAME -Dorg.gradle.project.sonatypePassword=$NEXUS_PASSWORD -Dorg.gradle.project.signing.gnupg.keyName=$GPG_SIGNING_KEYID -Dorg.gradle.project.signing.gnupg.passphrase=$GPG_SIGNING_PASSPHRASE
         env:
           GH_USERNAME: ${{ github.actor }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -74,7 +98,7 @@ jobs:
           NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
           GPG_SIGNING_KEYID: ${{ secrets.GPG_SIGNING_KEYID }}
           GPG_SIGNING_PASSPHRASE: ${{ secrets.GPG_SIGNING_PASSPHRASE }}
-  publish-images:
+  publish-base-image:
     needs: merge-build
     runs-on: ubuntu-latest
     name: "Containers"
@@ -89,23 +113,40 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Create assembly area
         run: |
-          mkdir -p ./containers/assembly
+          mkdir -p ./containers/base/assembly
       - uses: actions/download-artifact@v3
         with:
           name: sdk
-          path: ./containers/assembly
+          path: ./containers/base/assembly
       - uses: actions/download-artifact@v3
         with:
-          name: runtime
-          path: ./containers/assembly
+          name: package-toolkit-runtime
+          path: ./containers/base/assembly
       - uses: actions/download-artifact@v3
         with:
-          name: events
-          path: ./containers/assembly
+          name: package-toolkit-events
+          path: ./containers/base/assembly
       - name: Build and publish container image
         uses: docker/build-push-action@v4
         with:
           push: true
           tags: ghcr.io/atlanhq/atlan-java:${{ needs.merge-build.outputs.version }}
-          context: ./containers
+          context: ./containers/base
           platforms: linux/amd64
+  custom-package-images:
+    strategy:
+      matrix:
+        package_name:
+          - api-token-connection-admin
+          - asset-export-basic
+          - asset-import
+          - duplicate-detector
+          - openapi-spec-loader
+          - owner-propagator
+    needs:
+      - merge-build
+      - publish-base-image
+    uses: atlanhq/atlan-java/.github/workflows/custom-package-container.yml@main
+    with:
+      package_name: ${{ matrix.package_name }}
+      version: ${{ needs.merge-build.outputs.version }}

@@ -33,7 +33,6 @@ jobs:
           name: "${{inputs.package_name}}"
           path: ./containers/custom-package/assembly
       - name: Build and publish container image
-        if: ${{ github.ref == 'refs/heads/main'}}
         uses: docker/build-push-action@v4
         with:
           build-args: |
