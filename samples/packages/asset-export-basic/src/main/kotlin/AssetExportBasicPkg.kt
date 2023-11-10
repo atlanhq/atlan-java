@@ -1,5 +1,6 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2023 Atlan Pte. Ltd. */
+import com.atlan.Atlan
 import com.atlan.pkg.CustomPackage
 import com.atlan.pkg.config.model.ui.UIConfig
 import com.atlan.pkg.config.model.ui.UIRule
@@ -17,7 +18,7 @@ object AssetExportBasicPkg : CustomPackage(
     "Asset Export (Basic)",
     "Export assets with all enrichment that could be made against them via the Atlan UI.",
     "http://assets.atlan.com/assets/ph-cloud-arrow-down-light.svg",
-    "https://atlanhq.github.io/marketplace-csa-scripts/asset-export/basic/",
+    "https://solutions.atlan.com/asset-export-basic/",
     uiConfig = UIConfig(
         steps = listOf(
             UIStep(
@@ -68,7 +69,7 @@ object AssetExportBasicPkg : CustomPackage(
             ),
         ),
     ),
-    containerImage = "ghcr.io/atlanhq/atlan-kotlin-samples:0.5.0-SNAPSHOT",
+    containerImage = "ghcr.io/atlanhq/csa-asset-export-basic:${Atlan.VERSION}",
     containerImagePullPolicy = "Always",
     containerCommand = listOf("/dumb-init", "--", "java", "ExporterKt"),
     outputs = WorkflowOutputs(
