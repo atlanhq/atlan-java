@@ -18,3 +18,8 @@ generate/src/main/resources/markdown/**
 
 # Generated logs
 **/test.log
+**/debug.log
+
+### Generated packages ###
+samples/packages/**/resources/**
+samples/pipelines/**/resources/**

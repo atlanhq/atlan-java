@@ -15,6 +15,7 @@ This repository houses the Java-based utilities for interacting with [Atlan](htt
 - `package-toolkit` for configuring, running and testing custom packages
 - `integration-tests` for automated regression-testing
 - `generate` to generate components of the SDK that are model-driven
+- `samples` illustrating how the other components can be used for real automations and integrations
 
 These additional directories serve other purposes:
 
