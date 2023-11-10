@@ -136,32 +136,15 @@ jobs:
     needs:
       - merge-build
       - publish-base-image
-    runs-on: ubuntu-latest
-    name: "API token connection admin container"
-    steps:
-      - uses: actions/checkout@v3
-      - uses: docker/setup-buildx-action@v2
-      - name: Log in to container registry
-        uses: docker/login-action@v2
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Create assembly area
-        run: |
-          mkdir -p ./containers/custom-package/assembly
-      - uses: actions/download-artifact@v3
-        with:
-          name: api-token-connection-admin
-          path: ./containers/custom-package/assembly
-      - name: Build and publish container image
-        if: ${{ github.ref == 'refs/heads/main'}}
-        uses: docker/build-push-action@v4
-        with:
-          build-args: |
-            VERSION=${{ needs.merge-build.outputs.version }}
-            PKG_NAME=api-token-connection-admin
-          push: true
-          tags: ghcr.io/atlanhq/csa-api-token-connection-admin:${{ needs.merge-build.outputs.version }}, ghcr.io/atlanhq/csa-api-token-connection-admin:latest
-          context: ./containers/custom-package
-          platforms: linux/amd64
+    uses: atlanhq/atlan-java/.github/workflows/custom-package-container.yml@main
+    with:
+      package_name: api-token-connection-admin
+      version: ${{ needs.merge-build.outputs.version }}
+  asset-export-basic:
+    needs:
+      - merge-build
+      - publish-base-image
+    uses: atlanhq/atlan-java/.github/workflows/custom-package-container.yml@main
+    with:
+      package_name: asset-export-basic
+      version: ${{ needs.merge-build.outputs.version }}
