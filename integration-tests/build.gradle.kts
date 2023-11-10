@@ -1,7 +1,8 @@
 /* SPDX-License-Identifier: Apache-2.0 */
 plugins {
     id("com.atlan.java")
-    id("com.atlan.java-test")
+    id("jvm-test-suite")
+    id("com.adarshr.test-logger")
 }
 
 dependencies {
@@ -11,7 +12,7 @@ dependencies {
 
 testing {
     suites {
-       val test by getting(JvmTestSuite::class) {
+       val integrationTest by registering(JvmTestSuite::class) {
             useTestNG()
             targets {
                 all {
