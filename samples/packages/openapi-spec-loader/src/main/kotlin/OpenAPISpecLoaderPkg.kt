@@ -1,5 +1,6 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2023 Atlan Pte. Ltd. */
+import com.atlan.Atlan
 import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.pkg.CustomPackage
 import com.atlan.pkg.config.model.ui.UIConfig
@@ -19,7 +20,7 @@ object OpenAPISpecLoaderPkg : CustomPackage(
     "OpenAPI Spec Loader",
     "Loads API specs and paths from an OpenAPI (v3) definition.",
     "http://assets.atlan.com/assets/apispec.png",
-    "https://atlanhq.github.io/marketplace-csa-scripts/openapi-spec-loader/",
+    "https://solutions.atlan.com/openapi-spec-loader/",
     uiConfig = UIConfig(
         steps = listOf(
             UIStep(
@@ -73,7 +74,7 @@ object OpenAPISpecLoaderPkg : CustomPackage(
             ),
         ),
     ),
-    containerImage = "ghcr.io/atlanhq/atlan-kotlin-samples:0.5.0-SNAPSHOT",
+    containerImage = "ghcr.io/atlanhq/csa-openapi-spec-loader:${Atlan.VERSION}",
     containerImagePullPolicy = "Always",
     containerCommand = listOf("/dumb-init", "--", "java", "OpenAPISpecLoaderKt"),
     outputs = WorkflowOutputs(mapOf("debug-logs" to "/tmp/debug.log")),

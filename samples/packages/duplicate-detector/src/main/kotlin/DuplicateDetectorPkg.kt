@@ -1,5 +1,6 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2023 Atlan Pte. Ltd. */
+import com.atlan.Atlan
 import com.atlan.pkg.CustomPackage
 import com.atlan.pkg.config.model.ui.UIConfig
 import com.atlan.pkg.config.model.ui.UIRule
@@ -18,7 +19,7 @@ object DuplicateDetectorPkg : CustomPackage(
     "Duplicate Detector",
     "Detect possible duplicate tables, views and materialized views based on their columns.",
     "http://assets.atlan.com/assets/ph-copy-light.svg",
-    "https://atlanhq.github.io/marketplace-csa-scripts/duplicate-detector/",
+    "https://solutions.atlan.com/duplicate-detector/",
     uiConfig = UIConfig(
         steps = listOf(
             UIStep(
@@ -71,7 +72,7 @@ object DuplicateDetectorPkg : CustomPackage(
             ),
         ),
     ),
-    containerImage = "ghcr.io/atlanhq/atlan-kotlin-samples:0.5.0-SNAPSHOT",
+    containerImage = "ghcr.io/atlanhq/csa-duplicate-detector:${Atlan.VERSION}",
     containerImagePullPolicy = "Always",
     containerCommand = listOf("/dumb-init", "--", "java", "DuplicateDetectorKt"),
     outputs = WorkflowOutputs(mapOf("debug-logs" to "/tmp/debug.log")),
