@@ -133,7 +133,9 @@ jobs:
           context: ./containers/base
           platforms: linux/amd64
   api-token-connection-admin:
-    needs: publish-base-image
+    needs:
+      - merge-build
+      - publish-base-image
     runs-on: ubuntu-latest
     name: "API token connection admin container"
     steps:
