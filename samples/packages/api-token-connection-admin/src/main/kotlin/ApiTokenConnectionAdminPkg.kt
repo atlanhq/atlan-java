@@ -1,5 +1,6 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2023 Atlan Pte. Ltd. */
+import com.atlan.Atlan
 import com.atlan.pkg.CustomPackage
 import com.atlan.pkg.config.model.ui.UIConfig
 import com.atlan.pkg.config.model.ui.UIStep
@@ -15,7 +16,7 @@ object ApiTokenConnectionAdminPkg : CustomPackage(
     "API Token Connection Admin",
     "Assigns an API token as a connection admin for an existing connection.",
     "http://assets.atlan.com/assets/ph-key-light.svg",
-    "https://atlanhq.github.io/marketplace-csa-scripts/api-token-connection-admin/",
+    "https://solutions.atlan.com/api-token-connection-admin/",
     uiConfig = UIConfig(
         steps = listOf(
             UIStep(
@@ -39,7 +40,7 @@ object ApiTokenConnectionAdminPkg : CustomPackage(
             ),
         ),
     ),
-    containerImage = "ghcr.io/atlanhq/atlan-kotlin-samples:0.5.0-SNAPSHOT",
+    containerImage = "ghcr.io/atlanhq/csa-api-token-connection-admin:${Atlan.VERSION}",
     containerImagePullPolicy = "Always",
     containerCommand = listOf("/dumb-init", "--", "java", "ApiTokenConnectionAdminKt"),
     outputs = WorkflowOutputs(mapOf("debug-logs" to "/tmp/debug.log")),
