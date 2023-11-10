@@ -19,6 +19,7 @@ dependencies {
     api(libs.freemarker)
     implementation(libs.classgraph)
     testImplementation(libs.bundles.java.test)
+    testImplementation(project(":mocks"))
 }
 
 tasks.jar {
