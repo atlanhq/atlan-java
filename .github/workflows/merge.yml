@@ -51,6 +51,22 @@ jobs:
           path: jars/api-token-connection-admin-*.jar
       - uses: actions/upload-artifact@v3
         with:
+          name: asset-export-basic
+          path: jars/asset-export-basic-*.jar
+      - uses: actions/upload-artifact@v3
+        with:
+          name: asset-import
+          path: jars/asset-import-*.jar
+      - uses: actions/upload-artifact@v3
+        with:
+          name: duplicate-detector
+          path: jars/duplicate-detector-*.jar
+      - uses: actions/upload-artifact@v3
+        with:
+          name: owner-propagator
+          path: jars/owner-propagator-*.jar
+      - uses: actions/upload-artifact@v3
+        with:
           name: lambda-layer
           path: sdk/build/distributions/sdk-*.zip
   publish-docs:
@@ -132,19 +148,20 @@ jobs:
           tags: ghcr.io/atlanhq/atlan-java:${{ needs.merge-build.outputs.version }}, ghcr.io/atlanhq/atlan-java:latest
           context: ./containers/base
           platforms: linux/amd64
-  api-token-connection-admin:
+  custom-package-images:
+    strategy:
+      matrix:
+        package_name:
+          - api-token-connection-admin
+          - asset-export-basic
+          - asset-import
+          - duplicate-detector
+          - openapi-spec-loader
+          - owner-propagator
     needs:
       - merge-build
       - publish-base-image
     uses: atlanhq/atlan-java/.github/workflows/custom-package-container.yml@main
     with:
-      package_name: api-token-connection-admin
-      version: ${{ needs.merge-build.outputs.version }}
-  asset-export-basic:
-    needs:
-      - merge-build
-      - publish-base-image
-    uses: atlanhq/atlan-java/.github/workflows/custom-package-container.yml@main
-    with:
-      package_name: asset-export-basic
+      package_name: ${{ matrix.package_name }}
       version: ${{ needs.merge-build.outputs.version }}

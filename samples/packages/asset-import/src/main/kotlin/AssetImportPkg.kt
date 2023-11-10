@@ -1,5 +1,6 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2023 Atlan Pte. Ltd. */
+import com.atlan.Atlan
 import com.atlan.pkg.CustomPackage
 import com.atlan.pkg.config.model.ui.UIConfig
 import com.atlan.pkg.config.model.ui.UIRule
@@ -18,7 +19,7 @@ object AssetImportPkg : CustomPackage(
     "Asset Import",
     "Import assets from a CSV file.",
     "http://assets.atlan.com/assets/ph-cloud-arrow-up-light.svg",
-    "https://atlanhq.github.io/marketplace-csa-scripts/asset-import/",
+    "https://solutions.atlan.com/asset-import/",
     uiConfig = UIConfig(
         steps = listOf(
             UIStep(
@@ -87,7 +88,7 @@ object AssetImportPkg : CustomPackage(
             ),
         ),
     ),
-    containerImage = "ghcr.io/atlanhq/atlan-kotlin-samples:0.5.0-SNAPSHOT",
+    containerImage = "ghcr.io/atlanhq/csa-asset-import:${Atlan.VERSION}",
     containerImagePullPolicy = "Always",
     containerCommand = listOf("/dumb-init", "--", "java", "ImporterKt"),
     outputs = WorkflowOutputs(mapOf("debug-logs" to "/tmp/debug.log")),

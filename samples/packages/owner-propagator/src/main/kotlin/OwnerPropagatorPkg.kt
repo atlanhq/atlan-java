@@ -1,5 +1,6 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2023 Atlan Pte. Ltd. */
+import com.atlan.Atlan
 import com.atlan.pkg.CustomPackage
 import com.atlan.pkg.config.model.ui.UIConfig
 import com.atlan.pkg.config.model.ui.UIStep
@@ -13,9 +14,9 @@ object OwnerPropagatorPkg : CustomPackage(
     packageId = "@csa/owner-propagator",
     packageName = "Owner Propagator",
     description = "Propagate owners from schema downwards.",
-    docsUrl = "https://solutions.atlan.com/.../",
+    docsUrl = "https://solutions.atlan.com/",
     iconUrl = "https://assets.atlan.com/assets/ph-user-switch-light.svg",
-    containerImage = "ghcr.io/atlanhq/atlan-kotlin-samples:0.5.0-SNAPSHOT",
+    containerImage = "ghcr.io/atlanhq/csa-owner-propagator:${Atlan.VERSION}",
     containerCommand = listOf(
         "/dumb-init",
         "--",
