@@ -35,15 +35,15 @@ jobs:
           path: sdk/build/libs/atlan-java-*-jar-with-dependencies.jar
       - uses: actions/upload-artifact@v3
         with:
-          name: config
+          name: package-toolkit-config
           path: package-toolkit/config/build/libs/package-toolkit-config-*-jar-with-dependencies.jar
       - uses: actions/upload-artifact@v3
         with:
-          name: runtime
+          name: package-toolkit-runtime
           path: package-toolkit/runtime/build/libs/package-toolkit-runtime-*-jar-with-dependencies.jar
       - uses: actions/upload-artifact@v3
         with:
-          name: events
+          name: package-toolkit-events
           path: package-toolkit/events/build/libs/package-toolkit-events-*-jar-with-dependencies.jar
       - uses: actions/upload-artifact@v3
         with:
@@ -61,6 +61,10 @@ jobs:
         with:
           name: duplicate-detector
           path: jars/duplicate-detector-*.jar
+      - uses: actions/upload-artifact@v3
+        with:
+          name: openapi-spec-loader
+          path: jars/openapi-spec-loader-*.jar
       - uses: actions/upload-artifact@v3
         with:
           name: owner-propagator
@@ -134,11 +138,11 @@ jobs:
           path: ./containers/base/assembly
       - uses: actions/download-artifact@v3
         with:
-          name: runtime
+          name: package-toolkit-runtime
           path: ./containers/base/assembly
       - uses: actions/download-artifact@v3
         with:
-          name: events
+          name: package-toolkit-events
           path: ./containers/base/assembly
       - name: Build and publish container image
         if: ${{ github.ref == 'refs/heads/main'}}

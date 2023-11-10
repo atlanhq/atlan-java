@@ -1,5 +1,4 @@
 val jarPath = "$rootDir/jars"
-val jarFile = "migration-assistant-export-$version.jar"
 
 plugins {
     id("com.atlan.kotlin-custom-package")
@@ -13,7 +12,6 @@ dependencies {
 tasks {
     shadowJar {
         isZip64 = true
-        archiveFileName.set(jarFile)
         destinationDirectory.set(file(jarPath))
         dependencies {
             include(dependency("de.siegmar:fastcsv:.*"))

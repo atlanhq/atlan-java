@@ -1,5 +1,4 @@
 val jarPath = "$rootDir/jars"
-val jarFile = "openapi-spec-loader-$version.jar"
 
 plugins {
     id("com.atlan.kotlin-custom-package")
@@ -13,7 +12,6 @@ dependencies {
 tasks {
     shadowJar {
         isZip64 = true
-        archiveFileName.set(jarFile)
         destinationDirectory.set(file(jarPath))
         dependencies {
             include(dependency("io.swagger.parser.v3:swagger-parser:.*"))
