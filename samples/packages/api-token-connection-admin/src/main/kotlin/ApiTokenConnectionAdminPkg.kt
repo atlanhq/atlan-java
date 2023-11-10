@@ -49,6 +49,6 @@ object ApiTokenConnectionAdminPkg : CustomPackage(
 ) {
     @JvmStatic
     fun main(args: Array<String>) {
-        createPackageFiles("samples/packages/api-token-connection-admin/src/main/resources")
+        createPackageFiles("generated-packages/api-token-connection-admin")
     }
 }

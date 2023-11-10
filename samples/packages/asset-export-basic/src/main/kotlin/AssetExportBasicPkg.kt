@@ -83,6 +83,6 @@ object AssetExportBasicPkg : CustomPackage(
 ) {
     @JvmStatic
     fun main(args: Array<String>) {
-        createPackageFiles("samples/packages/asset-export-basic/src/main/resources")
+        createPackageFiles("generated-packages/asset-export-basic")
     }
 }

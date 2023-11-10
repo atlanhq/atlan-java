@@ -97,6 +97,6 @@ object AssetImportPkg : CustomPackage(
 ) {
     @JvmStatic
     fun main(args: Array<String>) {
-        createPackageFiles("samples/packages/asset-import/src/main/resources")
+        createPackageFiles("generated-packages/asset-import")
     }
 }
