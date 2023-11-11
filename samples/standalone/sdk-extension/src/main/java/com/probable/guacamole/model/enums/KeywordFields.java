@@ -23,7 +23,35 @@ public enum KeywordFields implements AtlanSearchableField {
     ADMIN_ROLES("adminRoles"),
     /** List of users who administer this asset. (This is only used for certain asset types.) */
     ADMIN_USERS("adminUsers"),
-    /** Alias for this table. */
+    /** TBC */
+    AIRFLOW_DAG_NAME("airflowDagName.keyword"),
+    /** TBC */
+    AIRFLOW_DAG_QUALIFIED_NAME("airflowDagQualifiedName"),
+    /** Name of the run */
+    AIRFLOW_RUN_NAME("airflowRunName"),
+    /** OpenLineage state of the run */
+    AIRFLOW_RUN_OPEN_LINEAGE_STATE("airflowRunOpenLineageState"),
+    /** OpenLineage Version of the run */
+    AIRFLOW_RUN_OPEN_LINEAGE_VERSION("airflowRunOpenLineageVersion"),
+    /** Type of the run */
+    AIRFLOW_RUN_TYPE("airflowRunType"),
+    /** Airflow Version of the run */
+    AIRFLOW_RUN_VERSION("airflowRunVersion"),
+    /** TBC */
+    AIRFLOW_TAGS("airflowTags"),
+    /** TBC */
+    AIRFLOW_TASK_CONNECTION_ID("airflowTaskConnectionId.keyword"),
+    /** TBC */
+    AIRFLOW_TASK_OPERATOR_CLASS("airflowTaskOperatorClass.keyword"),
+    /** Pool on which this run happened */
+    AIRFLOW_TASK_POOL("airflowTaskPool"),
+    /** Queue on which this run happened */
+    AIRFLOW_TASK_QUEUE("airflowTaskQueue"),
+    /** TBC */
+    AIRFLOW_TASK_SQL("airflowTaskSql"),
+    /** Trigger rule of the run */
+    AIRFLOW_TASK_TRIGGER_RULE("airflowTaskTriggerRule"),
+    /** Alias for this materialized view. */
     ALIAS("alias"),
     /** Detailed message to include in the announcement on this asset. */
     ANNOUNCEMENT_MESSAGE("announcementMessage"),
@@ -153,6 +181,8 @@ public enum KeywordFields implements AtlanSearchableField {
     CONNECTION_QUALIFIED_NAME("connectionQualifiedName"),
     /** Type of the connector through which this asset is accessible. */
     CONNECTOR_TYPE("connectorName"),
+    /** Constraint that defines this table partition. */
+    CONSTRAINT("constraint"),
     /** Atlan user who created this asset. */
     CREATED_BY("__createdBy"),
     /** Simple name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
@@ -161,15 +191,85 @@ public enum KeywordFields implements AtlanSearchableField {
     DATABASE_QUALIFIED_NAME("databaseQualifiedName"),
     /** Data type of values in this column. */
     DATA_TYPE("dataType"),
+    /** TBC */
+    DBT_ACCOUNT_NAME("dbtAccountName.keyword"),
+    /** TBC */
+    DBT_ALIAS("dbtAlias.keyword"),
+    /** TBC */
+    DBT_COMPILED_SQL("dbtCompiledSQL"),
+    /** TBC */
+    DBT_CONNECTION_CONTEXT("dbtConnectionContext"),
+    /** TBC */
+    DBT_ENVIRONMENT_DBT_VERSION("dbtEnvironmentDbtVersion.keyword"),
+    /** TBC */
+    DBT_ENVIRONMENT_NAME("dbtEnvironmentName.keyword"),
+    /** TBC */
+    DBT_ERROR("dbtError"),
+    /** TBC */
+    DBT_FRESHNESS_CRITERIA("dbtFreshnessCriteria"),
+    /** TBC */
+    DBT_JOB_NAME("dbtJobName.keyword"),
+    /** TBC */
+    DBT_JOB_NEXT_RUN_HUMANIZED("dbtJobNextRunHumanized.keyword"),
+    /** TBC */
+    DBT_JOB_SCHEDULE("dbtJobSchedule"),
+    /** TBC */
+    DBT_JOB_SCHEDULE_CRON_HUMANIZED("dbtJobScheduleCronHumanized.keyword"),
+    /** TBC */
+    DBT_JOB_STATUS("dbtJobStatus"),
+    /** TBC */
+    DBT_MATERIALIZATION_TYPE("dbtMaterializationType"),
+    /** TBC */
+    DBT_META("dbtMeta"),
+    /** TBC */
+    DBT_METRIC_FILTERS("dbtMetricFilters"),
+    /** TBC */
+    DBT_MODEL_COLUMN_DATA_TYPE("dbtModelColumnDataType"),
+    /** TBC */
+    DBT_MODEL_QUALIFIED_NAME("dbtModelQualifiedName"),
+    /** TBC */
+    DBT_PACKAGE_NAME("dbtPackageName.keyword"),
+    /** TBC */
+    DBT_PROJECT_NAME("dbtProjectName.keyword"),
     /** Unique name of this asset in dbt. */
     DBT_QUALIFIED_NAME("dbtQualifiedName"),
+    /** TBC */
+    DBT_RAW_SQL("dbtRawSQL"),
+    /** TBC */
+    DBT_SEMANTIC_LAYER_PROXY_URL("dbtSemanticLayerProxyUrl"),
+    /** TBC */
+    DBT_STATE("dbtState"),
+    /** TBC */
+    DBT_STATS("dbtStats"),
+    /** TBC */
+    DBT_STATUS("dbtStatus"),
+    /** TBC */
+    DBT_TAGS("dbtTags"),
+    /** Compiled code of the test (when the test is defined using Python). */
+    DBT_TEST_COMPILED_CODE("dbtTestCompiledCode"),
+    /** Compiled SQL of the test. */
+    DBT_TEST_COMPILED_SQL("dbtTestCompiledSQL"),
+    /** Error message in the case of state being "error". */
+    DBT_TEST_ERROR("dbtTestError"),
+    /** Language in which the test is written, for example: SQL or Python. */
+    DBT_TEST_LANGUAGE("dbtTestLanguage"),
+    /** Raw code of the test (when the test is defined using Python). */
+    DBT_TEST_RAW_CODE("dbtTestRawCode"),
+    /** Raw SQL of the test. */
+    DBT_TEST_RAW_SQL("dbtTestRawSQL"),
+    /** Test results. Can be one of, in order of severity, "error", "fail", "warn", "pass". */
+    DBT_TEST_STATE("dbtTestState"),
+    /** Details of the results of the test. For errors, it reads "ERROR". */
+    DBT_TEST_STATUS("dbtTestStatus"),
+    /** TBC */
+    DBT_UNIQUE_ID("dbtUniqueId.keyword"),
     /** Unique name of the default database to use for this query. */
     DEFAULT_DATABASE_QUALIFIED_NAME("defaultDatabaseQualifiedName"),
     /** Unique name of the default schema to use for this query. */
     DEFAULT_SCHEMA_QUALIFIED_NAME("defaultSchemaQualifiedName"),
     /** Default value for this column. */
     DEFAULT_VALUE("defaultValue"),
-    /** SQL definition of this materialized view. */
+    /** SQL statements used to define the dynamic table. */
     DEFINITION("definition"),
     /** Description of this asset, for example as crawled from a source. Fallback for display purposes, if userDescription is empty. */
     DESCRIPTION("description.keyword"),
@@ -177,28 +277,78 @@ public enum KeywordFields implements AtlanSearchableField {
     DISPLAY_NAME("displayName.keyword"),
     /** Unused. Exmaples of the term. */
     EXAMPLES("examples"),
-    /** External location of this table, for example: an S3 object location. */
+    /** External location of this partition, for example: an S3 object location. */
     EXTERNAL_LOCATION("externalLocation"),
-    /** Format of the external location of this table, for example: JSON, CSV, PARQUET, etc. */
+    /** Format of the external location of this partition, for example: JSON, CSV, PARQUET, etc. */
     EXTERNAL_LOCATION_FORMAT("externalLocationFormat"),
-    /** Region of the external location of this table, for example: S3 region. */
+    /** Region of the external location of this partition, for example: S3 region. */
     EXTERNAL_LOCATION_REGION("externalLocationRegion"),
+    /** URL giving the online location where the file can be accessed. */
+    FILE_PATH("filePath"),
+    /** Type (extension) of the file. */
+    FILE_TYPE("fileType"),
     /** Glossary in which the asset is contained, searchable by the qualifiedName of the glossary. */
     GLOSSARY("__glossary"),
     /** Rough measure of the IOPS allocated to the table's processing. */
     GUACAMOLE_TEMPERATURE("guacamoleTemperature"),
     /** Globally unique identifier (GUID) of any object in Atlan. */
     GUID("__guid"),
+    /** Icon for the link. */
+    ICON("icon"),
+    /** Type of icon for the link, for example: image or emoji. */
+    ICON_TYPE("iconType"),
     /** Assets that are inputs to this process. */
     INPUTS("inputs"),
     /** Name of the last run of the crawler that last synchronized this asset. */
     LAST_SYNC_RUN("lastSyncRun"),
     /** Name of the crawler that last synchronized this asset. */
     LAST_SYNC_WORKFLOW_NAME("lastSyncWorkflowName"),
+    /** URL to the resource. */
+    LINK("link"),
     /** Unused. Detailed definition of the term. See 'readme' instead. */
     LONG_DESCRIPTION("longDescription"),
     /** Raw SQL query string. */
     LONG_RAW_QUERY("longRawQuery"),
+    /** List of unique names of assets that are part of this Monte Carlo asset. */
+    MC_ASSET_QUALIFIED_NAMES("mcAssetQualifiedNames"),
+    /** Identifier of this incident, from Monte Carlo. */
+    MC_INCIDENT_ID("mcIncidentId"),
+    /** Severity of this incident. */
+    MC_INCIDENT_SEVERITY("mcIncidentSeverity"),
+    /** State of this incident. */
+    MC_INCIDENT_STATE("mcIncidentState"),
+    /** Subtypes of this incident. */
+    MC_INCIDENT_SUB_TYPES("mcIncidentSubTypes"),
+    /** Type of this incident. */
+    MC_INCIDENT_TYPE("mcIncidentType"),
+    /** Name of this incident's warehouse. */
+    MC_INCIDENT_WAREHOUSE("mcIncidentWarehouse"),
+    /** List of labels for this Monte Carlo asset. */
+    MC_LABELS("mcLabels"),
+    /** Unique identifier for this monitor, from Monte Carlo. */
+    MC_MONITOR_ID("mcMonitorId"),
+    /** Namespace of this monitor. */
+    MC_MONITOR_NAMESPACE("mcMonitorNamespace.keyword"),
+    /** Comparison logic used for the rule. */
+    MC_MONITOR_RULE_COMPARISONS("mcMonitorRuleComparisons"),
+    /** SQL code for custom SQL rules. */
+    MC_MONITOR_RULE_CUSTOM_SQL("mcMonitorRuleCustomSql"),
+    /** Schedule details for the rule. */
+    MC_MONITOR_RULE_SCHEDULE_CONFIG("mcMonitorRuleScheduleConfig"),
+    /** Type of rule for this monitor. */
+    MC_MONITOR_RULE_TYPE("mcMonitorRuleType"),
+    /** Type of schedule for this monitor, for example: fixed or dynamic. */
+    MC_MONITOR_SCHEDULE_TYPE("mcMonitorScheduleType"),
+    /** Status of this monitor. */
+    MC_MONITOR_STATUS("mcMonitorStatus"),
+    /** Type of this monitor, for example: field health (stats) or dimension tracking (categories). */
+    MC_MONITOR_TYPE("mcMonitorType"),
+    /** Name of the warehouse for this monitor. */
+    MC_MONITOR_WAREHOUSE("mcMonitorWarehouse"),
+    /** SQL query used to compute the metric. */
+    METRIC_SQL("metricSQL"),
+    /** Type of the metric. */
+    METRIC_TYPE("metricType"),
     /** Atlan user who last updated the asset. */
     MODIFIED_BY("__modifiedBy"),
     /** Name of this asset. Fallback for display purposes, if displayName is empty. */
@@ -217,9 +367,9 @@ public enum KeywordFields implements AtlanSearchableField {
     PARENT_COLUMN_QUALIFIED_NAME("parentColumnQualifiedName"),
     /** Unique name of the parent collection or folder in which this query exists. */
     PARENT_QUALIFIED_NAME("parentQualifiedName"),
-    /** List of partitions in this table. */
+    /** List of sub-partitions in this partition. */
     PARTITION_LIST("partitionList"),
-    /** Partition strategy for this table. */
+    /** Partition strategy of this partition. */
     PARTITION_STRATEGY("partitionStrategy"),
     /** User who pinned this column. */
     PINNED_BY("pinnedBy"),
@@ -227,7 +377,7 @@ public enum KeywordFields implements AtlanSearchableField {
     PROPAGATED_TRAIT_NAMES("__propagatedTraitNames"),
     /** Unique fully-qualified name of the asset in Atlan. */
     QUALIFIED_NAME("qualifiedName"),
-    /** Configuration for preview queries. */
+    /** Configuration for the query preview of this materialized view. */
     QUERY_PREVIEW_CONFIG("queryPreviewConfig"),
     /** Map of unique users who have queried this asset to the number of times they have queried it. */
     QUERY_USER_MAP("queryUserMap"),
@@ -235,6 +385,8 @@ public enum KeywordFields implements AtlanSearchableField {
     RAW_DATA_TYPE_DEFINITION("rawDataTypeDefinition"),
     /** Deprecated. See 'longRawQuery' instead. */
     RAW_QUERY("rawQuery"),
+    /** Reference to the resource. */
+    REFERENCE("reference"),
     /** Refresh method for this materialized view. */
     REFRESH_METHOD("refreshMethod"),
     /** Refresh mode for this materialized view. */
@@ -243,14 +395,34 @@ public enum KeywordFields implements AtlanSearchableField {
     REPLICATED_FROM("replicatedFrom"),
     /** Unused. List of servers where this entity is replicated to. */
     REPLICATED_TO("replicatedTo"),
+    /** Metadata of the resource. */
+    RESOURCE_METADATA("resourceMetadata"),
     /** URL for sample data for this asset. */
     SAMPLE_DATA_URL("sampleDataUrl"),
     /** Simple name of the schema in which this SQL asset exists, or empty if it does not exist within a schema. */
     SCHEMA_NAME("schemaName.keyword"),
     /** Unique name of the schema in which this SQL asset exists, or empty if it does not exist within a schema. */
     SCHEMA_QUALIFIED_NAME("schemaQualifiedName"),
+    /** Unique identifier for schema definition set by the schema registry. */
+    SCHEMA_REGISTRY_SCHEMA_ID("schemaRegistrySchemaId"),
+    /** Type of language or specification used to define the schema, for example: JSON, Protobuf, etc. */
+    SCHEMA_REGISTRY_SCHEMA_TYPE("schemaRegistrySchemaType"),
+    /** Base name of the subject, without -key, -value prefixes. */
+    SCHEMA_REGISTRY_SUBJECT_BASE_NAME("schemaRegistrySubjectBaseName"),
+    /** List of asset qualified names that this subject is governing/validating. */
+    SCHEMA_REGISTRY_SUBJECT_GOVERNING_ASSET_QUALIFIED_NAMES("schemaRegistrySubjectGoverningAssetQualifiedNames"),
+    /** Latest schema version of the subject. */
+    SCHEMA_REGISTRY_SUBJECT_LATEST_SCHEMA_VERSION("schemaRegistrySubjectLatestSchemaVersion"),
+    /** Compatibility of the schema across versions. */
+    SCHEMA_REGISTRY_SUBJECT_SCHEMA_COMPATIBILITY("schemaRegistrySubjectSchemaCompatibility"),
     /** Unused. Brief summary of the term. See 'description' and 'userDescription' instead. */
     SHORT_DESCRIPTION("shortDescription"),
+    /** Definition of the check in Soda. */
+    SODA_CHECK_DEFINITION("sodaCheckDefinition"),
+    /** Status of the check in Soda. */
+    SODA_CHECK_EVALUATION_STATUS("sodaCheckEvaluationStatus"),
+    /** Identifier of the check in Soda. */
+    SODA_CHECK_ID("sodaCheckId"),
     /** The unit of measure for sourceTotalCost. */
     SOURCE_COST_UNIT("sourceCostUnit"),
     /** Name of the user who created this asset, in the source system. */

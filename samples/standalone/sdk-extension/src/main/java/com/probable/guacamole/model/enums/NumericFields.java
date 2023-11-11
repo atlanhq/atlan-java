@@ -13,6 +13,16 @@ import lombok.Getter;
 @Deprecated
 @Generated(value = "com.probable.guacamole.generators.POJOGenerator")
 public enum NumericFields implements AtlanSearchableField {
+    /** End time of the run */
+    AIRFLOW_RUN_END_TIME("airflowRunEndTime"),
+    /** Start time of the run */
+    AIRFLOW_RUN_START_TIME("airflowRunStartTime"),
+    /** Pool slots used for the run */
+    AIRFLOW_TASK_POOL_SLOTS("airflowTaskPoolSlots"),
+    /** Priority weight of the run */
+    AIRFLOW_TASK_PRIORITY_WEIGHT("airflowTaskPriorityWeight"),
+    /** Retry required for the run */
+    AIRFLOW_TASK_RETRY_NUMBER("airflowTaskRetryNumber"),
     /** Time (epoch) at which the announcement was last updated, in milliseconds. */
     ANNOUNCEMENT_UPDATED_AT("announcementUpdatedAt"),
     /** Time (epoch) at which the job that materialized this asset in dbt last ran, in milliseconds. */
@@ -41,7 +51,7 @@ public enum NumericFields implements AtlanSearchableField {
     COLUMN_AVERAGE("columnAverage"),
     /** Average length of values in a string column. */
     COLUMN_AVERAGE_LENGTH("columnAverageLength"),
-    /** Number of columns in this table. */
+    /** Number of columns in this materialized view. */
     COLUMN_COUNT("columnCount"),
     /** Level of nesting of this column, used for STRUCT and NESTED columns. */
     COLUMN_DEPTH_LEVEL("columnDepthLevel"),
@@ -83,6 +93,26 @@ public enum NumericFields implements AtlanSearchableField {
     COLUMN_UNIQUE_VALUES_COUNT_LONG("columnUniqueValuesCountLong"),
     /** Calculated variance of the values in a numeric column. */
     COLUMN_VARIANCE("columnVariance"),
+    /** TBC */
+    DBT_JOB_LAST_RUN("dbtJobLastRun"),
+    /** TBC */
+    DBT_JOB_NEXT_RUN("dbtJobNextRun"),
+    /** TBC */
+    DBT_MODEL_COLUMN_ORDER("dbtModelColumnOrder"),
+    /** TBC */
+    DBT_MODEL_COMPILE_COMPLETED_AT("dbtModelCompileCompletedAt"),
+    /** TBC */
+    DBT_MODEL_COMPILE_STARTED_AT("dbtModelCompileStartedAt"),
+    /** TBC */
+    DBT_MODEL_EXECUTE_COMPLETED_AT("dbtModelExecuteCompletedAt"),
+    /** TBC */
+    DBT_MODEL_EXECUTE_STARTED_AT("dbtModelExecuteStartedAt"),
+    /** TBC */
+    DBT_MODEL_EXECUTION_TIME("dbtModelExecutionTime"),
+    /** TBC */
+    DBT_MODEL_RUN_ELAPSED_TIME("dbtModelRunElapsedTime"),
+    /** TBC */
+    DBT_MODEL_RUN_GENERATED_AT("dbtModelRunGeneratedAt"),
     /** Time (epoch) when this column was imagined, in milliseconds. */
     GUACAMOLE_CONCEPTUALIZED("guacamoleConceptualized"),
     /** Consolidated quantification metric spanning number of columns, rows, and sparsity of population. */
@@ -97,6 +127,14 @@ public enum NumericFields implements AtlanSearchableField {
     LAST_SYNC_RUN_AT("lastSyncRunAt"),
     /** Maximum length of a value in this column. */
     MAX_LENGTH("maxLength"),
+    /** Rate at which this monitor is breached. */
+    MC_MONITOR_BREACH_RATE("mcMonitorBreachRate"),
+    /** Number of incidents associated with this monitor. */
+    MC_MONITOR_INCIDENT_COUNT("mcMonitorIncidentCount"),
+    /** Time at which the next execution of the rule should occur. */
+    MC_MONITOR_RULE_NEXT_EXECUTION_TIME("mcMonitorRuleNextExecutionTime"),
+    /** Time at which the previous execution of the rule occurred. */
+    MC_MONITOR_RULE_PREVIOUS_EXECUTION_TIME("mcMonitorRulePreviousExecutionTime"),
     /** Time (in milliseconds) when the asset was last updated. */
     MODIFICATION_TIMESTAMP("__modificationTimestamp"),
     /** Number of columns nested within this (STRUCT or NESTED) column. */
@@ -105,7 +143,7 @@ public enum NumericFields implements AtlanSearchableField {
     NUMERIC_SCALE("numericScale"),
     /** Order (position) in which this column appears in the table (starting at 1). */
     ORDER("order"),
-    /** Number of partitions in this table. */
+    /** Number of sub-partitions of this partition. */
     PARTITION_COUNT("partitionCount"),
     /** Order (position) of this partition column in the table. */
     PARTITION_ORDER("partitionOrder"),
@@ -121,10 +159,14 @@ public enum NumericFields implements AtlanSearchableField {
     QUERY_COUNT_UPDATED_AT("queryCountUpdatedAt"),
     /** Number of unique users who have queried this asset. */
     QUERY_USER_COUNT("queryUserCount"),
-    /** Number of rows in this table. */
+    /** Number of rows in this materialized view. */
     ROW_COUNT("rowCount"),
-    /** Size of this table, in bytes. */
+    /** Size of this materialized view, in bytes. */
     SIZE_BYTES("sizeBytes"),
+    /** TBC */
+    SODA_CHECK_INCIDENT_COUNT("sodaCheckIncidentCount"),
+    /** TBC */
+    SODA_CHECK_LAST_SCAN_AT("sodaCheckLastScanAt"),
     /** Time (epoch) at which this asset was created in the source system, in milliseconds. */
     SOURCE_CREATED_AT("sourceCreatedAt"),
     /** Timestamp of most recent read operation. */
@@ -143,8 +185,12 @@ public enum NumericFields implements AtlanSearchableField {
     STALE_SINCE_DATE("staleSinceDate"),
     /** Number of users who have starred this asset. */
     STARRED_COUNT("starredCount"),
+    /** Number of tables in this schema. */
+    TABLE_COUNT("tableCount"),
     /** Time (in milliseconds) when the asset was created. */
     TIMESTAMP("__timestamp"),
+    /** Number of views in this schema. */
+    VIEW_COUNT("viewsCount"),
     /** View score for this asset. */
     VIEW_SCORE("viewScore"),
     ;

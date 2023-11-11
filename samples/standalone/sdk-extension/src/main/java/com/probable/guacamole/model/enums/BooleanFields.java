@@ -37,13 +37,15 @@ public enum BooleanFields implements AtlanSearchableField {
     IS_EDITABLE("isEditable"),
     /** When true, this column is a foreign key to another table. NOTE: this must be true when using the foreignKeyTo relationship to specify columns that refer to this column as a foreign key. */
     IS_FOREIGN("isForeign"),
+    /** Whether the resource is global (true) or not (false). */
+    IS_GLOBAL("isGlobal"),
     /** When true, this column is indexed in the database. */
     IS_INDEXED("isIndexed"),
     /** When true, the values in this column can be null. */
     IS_NULLABLE("isNullable"),
     /** Whether this column is a partition column (true) or not (false). */
     IS_PARTITION("isPartition"),
-    /** Whether this table is partitioned (true) or not (false). */
+    /** Whether this partition is further partitioned (true) or not (false). */
     IS_PARTITIONED("isPartitioned"),
     /** Whether this column is pinned (true) or not (false). */
     IS_PINNED("isPinned"),
@@ -53,16 +55,20 @@ public enum BooleanFields implements AtlanSearchableField {
     IS_PRIVATE("isPrivate"),
     /** Whether this asset has been profiled (true) or not (false). */
     IS_PROFILED("isProfiled"),
-    /** Whether preview queries are allowed for this table (true) or not (false). */
+    /** Whether it's possible to run a preview query on this materialized view (true) or not (false). */
     IS_QUERY_PREVIEW("isQueryPreview"),
     /** Whether this column is a sort column (true) or not (false). */
     IS_SORT("isSort"),
     /** Whether this query is a SQL snippet (true) or not (false). */
     IS_SQL_SNIPPET("isSqlSnippet"),
-    /** Whether this table is temporary (true) or not (false). */
+    /** Whether this materialized view is temporary (true) or not (false). */
     IS_TEMPORARY("isTemporary"),
     /** Whether this query is a visual query (true) or not (false). */
     IS_VISUAL_QUERY("isVisualQuery"),
+    /** Whether the rule is currently snoozed (true) or not (false). */
+    MC_MONITOR_RULE_IS_SNOOZED("mcMonitorRuleIsSnoozed"),
+    /** Whether the subject is a schema for the keys of the messages (true) or not (false). */
+    SCHEMA_REGISTRY_SUBJECT_IS_KEY_SCHEMA("schemaRegistrySubjectIsKeySchema"),
     ;
 
     @Getter(onMethod_ = {@Override})

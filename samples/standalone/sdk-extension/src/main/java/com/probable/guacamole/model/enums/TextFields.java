@@ -13,6 +13,12 @@ import lombok.Getter;
 @Deprecated
 @Generated(value = "com.probable.guacamole.generators.POJOGenerator")
 public enum TextFields implements AtlanSearchableField {
+    /** TBC */
+    AIRFLOW_DAG_NAME("airflowDagName"),
+    /** TBC */
+    AIRFLOW_TASK_CONNECTION_ID("airflowTaskConnectionId"),
+    /** TBC */
+    AIRFLOW_TASK_OPERATOR_CLASS("airflowTaskOperatorClass"),
     /** Name of the account in which this asset exists in dbt. */
     ASSET_DBT_ACCOUNT_NAME("assetDbtAccountName"),
     /** Alias of this asset in dbt. */
@@ -61,8 +67,34 @@ public enum TextFields implements AtlanSearchableField {
     DATABASE_NAME("databaseName"),
     /** Data type of values in this column. */
     DATA_TYPE("dataType.text"),
+    /** TBC */
+    DBT_ACCOUNT_NAME("dbtAccountName"),
+    /** TBC */
+    DBT_ALIAS("dbtAlias"),
+    /** TBC */
+    DBT_ENVIRONMENT_DBT_VERSION("dbtEnvironmentDbtVersion"),
+    /** TBC */
+    DBT_ENVIRONMENT_NAME("dbtEnvironmentName"),
+    /** TBC */
+    DBT_JOB_NAME("dbtJobName"),
+    /** TBC */
+    DBT_JOB_NEXT_RUN_HUMANIZED("dbtJobNextRunHumanized"),
+    /** TBC */
+    DBT_JOB_SCHEDULE_CRON_HUMANIZED("dbtJobScheduleCronHumanized"),
+    /** TBC */
+    DBT_MODEL_QUALIFIED_NAME("dbtModelQualifiedName.text"),
+    /** TBC */
+    DBT_PACKAGE_NAME("dbtPackageName"),
+    /** TBC */
+    DBT_PROJECT_NAME("dbtProjectName"),
     /** Unique name of this asset in dbt. */
     DBT_QUALIFIED_NAME("dbtQualifiedName.text"),
+    /** Raw code of the test (when the test is defined using Python). */
+    DBT_TEST_RAW_CODE("dbtTestRawCode.text"),
+    /** Raw SQL of the test. */
+    DBT_TEST_RAW_SQL("dbtTestRawSQL.text"),
+    /** TBC */
+    DBT_UNIQUE_ID("dbtUniqueId"),
     /** Unique name of the default database to use for this query. */
     DEFAULT_DATABASE_QUALIFIED_NAME("defaultDatabaseQualifiedName.text"),
     /** Unique name of the default schema to use for this query. */
@@ -71,8 +103,18 @@ public enum TextFields implements AtlanSearchableField {
     DESCRIPTION("description"),
     /** Human-readable name of this asset used for display purposes (in user interface). */
     DISPLAY_NAME("displayName"),
+    /** Condition on which the monitor produces an alert. */
+    MC_MONITOR_ALERT_CONDITION("mcMonitorAlertCondition"),
+    /** Namespace of this monitor. */
+    MC_MONITOR_NAMESPACE("mcMonitorNamespace"),
+    /** Readable description of the schedule for the rule. */
+    MC_MONITOR_RULE_SCHEDULE_CONFIG_HUMANIZED("mcMonitorRuleScheduleConfigHumanized"),
     /** All terms attached to an asset, as a single comma-separated string. */
     MEANINGS_TEXT("__meaningsText"),
+    /** Filters to be applied to the metric query. */
+    METRIC_FILTERS("metricFilters"),
+    /** List of time grains to be applied to the metric query. */
+    METRIC_TIME_GRAINS("metricTimeGrains"),
     /** Name of this asset. Fallback for display purposes, if displayName is empty. */
     NAME("name"),
     /** Simple name of the column this column is nested within, for STRUCT and NESTED columns. */
@@ -87,6 +129,8 @@ public enum TextFields implements AtlanSearchableField {
     SAMPLE_DATA_URL("sampleDataUrl.text"),
     /** Simple name of the schema in which this SQL asset exists, or empty if it does not exist within a schema. */
     SCHEMA_NAME("schemaName"),
+    /** Definition of the latest schema in the subject. */
+    SCHEMA_REGISTRY_SUBJECT_LATEST_SCHEMA_DEFINITION("schemaRegistrySubjectLatestSchemaDefinition"),
     /** All super types of an asset. */
     SUPER_TYPE_NAMES("__superTypeNames"),
     /** Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
