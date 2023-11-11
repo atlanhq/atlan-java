@@ -2,29 +2,12 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.probable.guacamole.model.assets;
 
-import com.atlan.model.assets.IAirflowTask;
 import com.atlan.model.assets.IAtlanQuery;
 import com.atlan.model.assets.IColumn;
-import com.atlan.model.assets.IDbtMetric;
-import com.atlan.model.assets.IDbtModel;
-import com.atlan.model.assets.IDbtModelColumn;
-import com.atlan.model.assets.IDbtSource;
-import com.atlan.model.assets.IDbtTest;
-import com.atlan.model.assets.IFile;
 import com.atlan.model.assets.IGlossaryTerm;
 import com.atlan.model.assets.ILineageProcess;
-import com.atlan.model.assets.ILink;
-import com.atlan.model.assets.IMCIncident;
-import com.atlan.model.assets.IMCMonitor;
 import com.atlan.model.assets.IMaterializedView;
-import com.atlan.model.assets.IMetric;
-import com.atlan.model.assets.IReadme;
-import com.atlan.model.assets.ISchemaRegistrySubject;
-import com.atlan.model.assets.ISnowflakeDynamicTable;
-import com.atlan.model.assets.ISodaCheck;
 import com.atlan.model.assets.ITable;
-import com.atlan.model.assets.ITablePartition;
-import com.atlan.model.assets.IView;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanIcon;

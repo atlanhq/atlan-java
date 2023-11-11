@@ -13,14 +13,8 @@ import lombok.Getter;
 @Deprecated
 @Generated(value = "com.probable.guacamole.generators.POJOGenerator")
 public enum StemmedFields implements AtlanSearchableField {
-    /** Title of the Google Data Studio asset. */
-    DATA_STUDIO_ASSET_TITLE("dataStudioAssetTitle.stemmed"),
     /** Name of this asset. Fallback for display purposes, if displayName is empty. */
     NAME("name.stemmed"),
-    /** TBC */
-    PRESET_DASHBOARD_CHANGED_BY_NAME("presetDashboardChangedByName.stemmed"),
-    /** TBC */
-    PRESET_DATASET_DATASOURCE_NAME("presetDatasetDatasourceName.stemmed"),
     ;
 
     @Getter(onMethod_ = {@Override})

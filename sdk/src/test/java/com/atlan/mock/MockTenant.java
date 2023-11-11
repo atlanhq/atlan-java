@@ -10,6 +10,7 @@ public class MockTenant extends MockAtlanTenant {
     void start() {
         startServer();
     }
+
     @AfterSuite
     void stop() {
         stopServer();
