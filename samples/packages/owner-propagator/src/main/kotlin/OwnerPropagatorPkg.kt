@@ -51,6 +51,6 @@ object OwnerPropagatorPkg : CustomPackage(
 ) {
     @JvmStatic
     fun main(args: Array<String>) {
-        createPackageFiles("samples/packages/owner-propagator/src/main/resources")
+        createPackageFiles("generated-packages/owner-propagator")
     }
 }

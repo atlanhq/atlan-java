@@ -84,6 +84,6 @@ object OpenAPISpecLoaderPkg : CustomPackage(
 ) {
     @JvmStatic
     fun main(args: Array<String>) {
-        createPackageFiles("samples/packages/openapi-spec-loader/src/main/resources")
+        createPackageFiles("generated-packages/openapi-spec-loader")
     }
 }

@@ -21,5 +21,4 @@ generate/src/main/resources/markdown/**
 **/debug.log
 
 ### Generated packages ###
-samples/packages/**/resources/**
-samples/pipelines/**/resources/**
+generated-packages/**

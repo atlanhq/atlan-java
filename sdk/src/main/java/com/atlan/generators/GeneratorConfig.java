@@ -120,6 +120,7 @@ public class GeneratorConfig {
             "AtlanConnectionCategory",
             "AtlanConnectorType",
             "AtlanDeleteType",
+            "AtlanIcon",
             "AtlanStatus",
             "AtlanPolicyAction",
             "PersonaMetadataAction",

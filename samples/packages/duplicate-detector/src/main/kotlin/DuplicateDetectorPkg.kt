@@ -81,6 +81,6 @@ object DuplicateDetectorPkg : CustomPackage(
 ) {
     @JvmStatic
     fun main(args: Array<String>) {
-        createPackageFiles("samples/packages/duplicate-detector/src/main/resources")
+        createPackageFiles("generated-packages/duplicate-detector")
     }
 }
