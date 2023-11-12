@@ -46,7 +46,7 @@ jobs:
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
       - name: Unit tests
-        run: ./gradlew sdk:test
+        run: ./gradlew test
         env:
           GH_USERNAME: ${{ github.actor }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
