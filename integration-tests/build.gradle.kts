@@ -12,7 +12,7 @@ dependencies {
 
 testing {
     suites {
-       val integrationTest by registering(JvmTestSuite::class) {
+       val test by getting(JvmTestSuite::class) {
             useTestNG()
             targets {
                 all {
@@ -26,6 +26,14 @@ testing {
                     setSrcDirs(listOf("src/test/java"))
                 }
             }
+        }
+    }
+}
+
+tasks {
+    test {
+        onlyIf {
+            project.hasProperty("integrationTests")
         }
     }
 }

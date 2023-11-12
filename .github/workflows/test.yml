@@ -18,7 +18,7 @@ jobs:
           java-version: 11
           distribution: adopt
       - name: Integration tests
-        run: ./gradlew integration-tests:integrationTest
+        run: ./gradlew -PintegrationTests integration-tests:test
         env:
           ATLAN_BASE_URL: ${{ secrets.ATLAN_BASE_URL }}
           ATLAN_API_KEY: ${{ secrets.ATLAN_API_KEY }}
@@ -26,4 +26,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: log
-          path: test.log
+          path: integration-tests/test.log
