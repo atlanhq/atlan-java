@@ -16,10 +16,11 @@ This repository houses the Java-based utilities for interacting with [Atlan](htt
 - `integration-tests` for automated regression-testing
 - `generate` to generate components of the SDK that are model-driven
 - `samples` illustrating how the other components can be used for real automations and integrations
+- `mocks` bundle wire mocks that are reused in unit tests across different projects
 
 These additional directories serve other purposes:
 
-- `containers` defines the container image that bundles the SDK and runtime custom package toolkits
+- `containers` defines the container image that bundles the SDK and custom package toolkits, and container images for each custom package sample
 - `gradle` contains Gradle build bootstrapping and dependency version catalog
 - `buildSrc` contains code for the Gradle multi-project build process (in particular, convention plugins)
 
