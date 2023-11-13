@@ -64,13 +64,15 @@ class CSVReader @JvmOverloads constructor(path: String, private val updateOnly: 
      * @param rowToAsset translator from a row of CSV values to an asset object
      * @param batchSize maximum number of Assets to bulk-save in Atlan per API request
      * @param logger through which to report the overall progress
+     * @return true if all rows were processed successfully, or false if there were any failures
      */
-    fun streamRows(rowToAsset: AssetGenerator, batchSize: Int, logger: KLogger) {
+    fun streamRows(rowToAsset: AssetGenerator, batchSize: Int, logger: KLogger): Boolean {
         // Note that for proper parallelism we need to manage a separate AssetBatch per thread
         val batchMap: MutableMap<Long, AssetBatch> = ConcurrentHashMap()
         val relatedMap: MutableMap<Long, AssetBatch> = ConcurrentHashMap()
         val relatedHolds: MutableMap<Long, MutableMap<String, RelatedAssetHold>> = ConcurrentHashMap()
         val deferDeletes: MutableMap<Long, MutableMap<String, Set<AtlanField>>> = ConcurrentHashMap()
+        var someFailure = false
 
         // Step 1: load the main assets
         logger.info("Loading a total of {} assets...", totalRowCount)
@@ -131,6 +133,7 @@ class CSVReader @JvmOverloads constructor(path: String, private val updateOnly: 
             batch.flush()
             totalCreates.getAndAdd(batch.created.size.toLong())
             totalUpdates.getAndAdd(batch.updated.size.toLong())
+            someFailure = someFailure || batch.failures.isNotEmpty()
             logFailures(batch, logger, totalFailures)
             for (hold in relatedHolds[threadId]!!) {
                 val placeholderGuid = hold.key
@@ -162,6 +165,7 @@ class CSVReader @JvmOverloads constructor(path: String, private val updateOnly: 
             b.flush()
             totalCreatesR.getAndAdd(b.created.size.toLong())
             totalUpdatesR.getAndAdd(b.updated.size.toLong())
+            someFailure = someFailure || b.failures.isNotEmpty()
             logFailures(b, logger, totalFailuresR)
         }
         logger.info("Total related assets created: {}", totalCreatesR)
@@ -203,6 +207,7 @@ class CSVReader @JvmOverloads constructor(path: String, private val updateOnly: 
             Utils.logProgress(totalScanned, totalToScan, logger, batchSize)
         }
         logger.info("Total READMEs deleted: {}", totalDeleted)
+        return someFailure
     }
 
     private fun logFailures(b: AssetBatch, logger: KLogger, totalFailures: AtomicLong) {
