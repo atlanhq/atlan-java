@@ -142,6 +142,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <hr>
 <pre>public class <span class="typeNameLabel">WorkflowMetadata</span>
 extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a></pre>
+<div class="block">Metadata that describes a workflow.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../serialized-form.html#com.atlan.model.workflow.WorkflowMetadata">Serialized Form</a></dd>
@@ -237,52 +238,72 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAnnotations()">getAnnotations</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Annotations that describe the workflow.</div>
+</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCreationTimestamp()">getCreationTimestamp</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Time at which the workflow was created, as a formatted string.</div>
+</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getGenerateName()">getGenerateName</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">TBC</div>
+</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getGeneration()">getGeneration</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Indication of the version of this workflow.</div>
+</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLabels()">getLabels</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Labels that describe the workflow.</div>
+</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>java.util.List&lt;java.lang.Object&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getManagedFields()">getManagedFields</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">TBC *</div>
+</td>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getName()">getName</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Name of the workflow.</div>
+</td>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getNamespace()">getNamespace</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Kubernetes namespace in which the workflow is defined.</div>
+</td>
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getResourceVersion()">getResourceVersion</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">TBC</div>
+</td>
 </tr>
 <tr id="i12" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getUid()">getUid</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Unique identifier (GUID) of the workflow.</div>
+</td>
 </tr>
 <tr id="i13" class="rowColor">
 <td class="colFirst"><code>int</code></td>
@@ -373,6 +394,9 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <li class="blockList">
 <h4>getLabels</h4>
 <pre class="methodSignature">public&nbsp;java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;getLabels()</pre>
+<div class="block">Labels that describe the workflow. These are usually a combination of keys that
+ start with <code>orchestration.atlan.com</code>, <code>package.argoproj.io</code>, and
+ <code>workflows.argoproj.io</code>.</div>
 </li>
 </ul>
 <a id="getAnnotations()">
@@ -382,6 +406,8 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <li class="blockList">
 <h4>getAnnotations</h4>
 <pre class="methodSignature">public&nbsp;java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;getAnnotations()</pre>
+<div class="block">Annotations that describe the workflow. These are usually a combination of keys that
+ start with <code>orchestration.atlan.com</code> and <code>package.argoproj.io</code>.</div>
 </li>
 </ul>
 <a id="getName()">
@@ -391,6 +417,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <li class="blockList">
 <h4>getName</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getName()</pre>
+<div class="block">Name of the workflow.</div>
 </li>
 </ul>
 <a id="getNamespace()">
@@ -400,6 +427,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <li class="blockList">
 <h4>getNamespace</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getNamespace()</pre>
+<div class="block">Kubernetes namespace in which the workflow is defined.</div>
 </li>
 </ul>
 <a id="getUid()">
@@ -409,6 +437,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <li class="blockList">
 <h4>getUid</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getUid()</pre>
+<div class="block">Unique identifier (GUID) of the workflow.</div>
 </li>
 </ul>
 <a id="getResourceVersion()">
@@ -418,6 +447,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <li class="blockList">
 <h4>getResourceVersion</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getResourceVersion()</pre>
+<div class="block">TBC</div>
 </li>
 </ul>
 <a id="getGenerateName()">
@@ -427,6 +457,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <li class="blockList">
 <h4>getGenerateName</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getGenerateName()</pre>
+<div class="block">TBC</div>
 </li>
 </ul>
 <a id="getGeneration()">
@@ -436,6 +467,9 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <li class="blockList">
 <h4>getGeneration</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Long&nbsp;getGeneration()</pre>
+<div class="block">Indication of the version of this workflow. Each modification to the workflow will increment the
+ generation, such that a generation of <code>1</code> is the initial workflow definition, a generation of
+ <code>2</code> is the first time the workflow's configuration has been modified, and so on.</div>
 </li>
 </ul>
 <a id="getCreationTimestamp()">
@@ -445,6 +479,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <li class="blockList">
 <h4>getCreationTimestamp</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getCreationTimestamp()</pre>
+<div class="block">Time at which the workflow was created, as a formatted string.</div>
 </li>
 </ul>
 <a id="getManagedFields()">
@@ -454,6 +489,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <li class="blockList">
 <h4>getManagedFields</h4>
 <pre class="methodSignature">public&nbsp;java.util.List&lt;java.lang.Object&gt;&nbsp;getManagedFields()</pre>
+<div class="block">TBC *</div>
 </li>
 </ul>
 <a id="equals(java.lang.Object)">

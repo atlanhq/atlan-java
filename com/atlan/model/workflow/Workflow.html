@@ -142,6 +142,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <hr>
 <pre>public class <span class="typeNameLabel">Workflow</span>
 extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a></pre>
+<div class="block">Definition of a runnable workflow in Atlan.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../serialized-form.html#com.atlan.model.workflow.Workflow">Serialized Form</a></dd>
@@ -237,17 +238,23 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="WorkflowMetadata.html" title="class in com.atlan.model.workflow">WorkflowMetadata</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMetadata()">getMetadata</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Metadata that describes the workflow.</div>
+</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="../admin/PackageParameter.html" title="class in com.atlan.model.admin">PackageParameter</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPayload()">getPayload</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Parameters to send to the workflow as a whole (not an individual task).</div>
+</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="WorkflowSpec.html" title="class in com.atlan.model.workflow">WorkflowSpec</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSpec()">getSpec</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Specification of the workflow: per-task inputs, outputs, and logic.</div>
+</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>int</code></td>
@@ -388,6 +395,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <li class="blockList">
 <h4>getMetadata</h4>
 <pre class="methodSignature">public&nbsp;<a href="WorkflowMetadata.html" title="class in com.atlan.model.workflow">WorkflowMetadata</a>&nbsp;getMetadata()</pre>
+<div class="block">Metadata that describes the workflow.</div>
 </li>
 </ul>
 <a id="getSpec()">
@@ -397,6 +405,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <li class="blockList">
 <h4>getSpec</h4>
 <pre class="methodSignature">public&nbsp;<a href="WorkflowSpec.html" title="class in com.atlan.model.workflow">WorkflowSpec</a>&nbsp;getSpec()</pre>
+<div class="block">Specification of the workflow: per-task inputs, outputs, and logic.</div>
 </li>
 </ul>
 <a id="getPayload()">
@@ -406,6 +415,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <li class="blockList">
 <h4>getPayload</h4>
 <pre class="methodSignature">public&nbsp;java.util.List&lt;<a href="../admin/PackageParameter.html" title="class in com.atlan.model.admin">PackageParameter</a>&gt;&nbsp;getPayload()</pre>
+<div class="block">Parameters to send to the workflow as a whole (not an individual task).</div>
 </li>
 </ul>
 <a id="equals(java.lang.Object)">

@@ -142,6 +142,9 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <hr>
 <pre>public class <span class="typeNameLabel">WorkflowTemplateRef</span>
 extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a></pre>
+<div class="block">Reference to an existing workflow template.
+ These are typically used within a task, within a step of a workflow, to reuse
+ an existing workflow template to run the logic of that task.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../serialized-form.html#com.atlan.model.workflow.WorkflowTemplateRef">Serialized Form</a></dd>
@@ -237,17 +240,23 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getClusterScope()">getClusterScope</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">TBC</div>
+</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getName()">getName</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Name of the existing workflow template.</div>
+</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTemplate()">getTemplate</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Entry point to begin executing the referenced workflow template.</div>
+</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>int</code></td>
@@ -338,6 +347,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <li class="blockList">
 <h4>getName</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getName()</pre>
+<div class="block">Name of the existing workflow template.</div>
 </li>
 </ul>
 <a id="getTemplate()">
@@ -347,6 +357,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <li class="blockList">
 <h4>getTemplate</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getTemplate()</pre>
+<div class="block">Entry point to begin executing the referenced workflow template.</div>
 </li>
 </ul>
 <a id="getClusterScope()">
@@ -356,6 +367,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <li class="blockList">
 <h4>getClusterScope</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Boolean&nbsp;getClusterScope()</pre>
+<div class="block">TBC</div>
 </li>
 </ul>
 <a id="equals(java.lang.Object)">

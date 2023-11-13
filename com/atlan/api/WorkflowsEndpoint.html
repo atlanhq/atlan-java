@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -281,6 +281,23 @@ extends <a href="HeraclesEndpoint.html" title="class in com.atlan.api">HeraclesE
 <div class="block">Search for workflow runs that meet the provided criteria.</div>
 </td>
 </tr>
+<tr id="i10" class="altColor">
+<td class="colFirst"><code><a href="../model/workflow/Workflow.html" title="class in com.atlan.model.workflow">Workflow</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#update(java.lang.String,com.atlan.model.workflow.Workflow)">update</a></span>&#8203;(java.lang.String&nbsp;workflowName,
+      <a href="../model/workflow/Workflow.html" title="class in com.atlan.model.workflow">Workflow</a>&nbsp;request)</code></th>
+<td class="colLast">
+<div class="block">Update a given workflow's configuration.</div>
+</td>
+</tr>
+<tr id="i11" class="rowColor">
+<td class="colFirst"><code><a href="../model/workflow/Workflow.html" title="class in com.atlan.model.workflow">Workflow</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#update(java.lang.String,com.atlan.model.workflow.Workflow,com.atlan.net.RequestOptions)">update</a></span>&#8203;(java.lang.String&nbsp;workflowName,
+      <a href="../model/workflow/Workflow.html" title="class in com.atlan.model.workflow">Workflow</a>&nbsp;request,
+      <a href="../net/RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)</code></th>
+<td class="colLast">
+<div class="block">Update a given workflow's configuration.</div>
+</td>
+</tr>
 </table>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.com.atlan.api.HeraclesEndpoint">
@@ -516,7 +533,7 @@ extends <a href="HeraclesEndpoint.html" title="class in com.atlan.api">HeraclesE
 <a id="search(com.atlan.model.workflow.WorkflowSearchRequest,com.atlan.net.RequestOptions)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>search</h4>
 <pre class="methodSignature">public&nbsp;<a href="../model/workflow/WorkflowSearchResponse.html" title="class in com.atlan.model.workflow">WorkflowSearchResponse</a>&nbsp;search&#8203;(<a href="../model/workflow/WorkflowSearchRequest.html" title="class in com.atlan.model.workflow">WorkflowSearchRequest</a>&nbsp;request,
@@ -529,6 +546,50 @@ extends <a href="HeraclesEndpoint.html" title="class in com.atlan.api">HeraclesE
 <dd><code>options</code> - to override default client settings</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the matching workflows</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication issue</dd>
+</dl>
+</li>
+</ul>
+<a id="update(java.lang.String,com.atlan.model.workflow.Workflow)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>update</h4>
+<pre class="methodSignature">public&nbsp;<a href="../model/workflow/Workflow.html" title="class in com.atlan.model.workflow">Workflow</a>&nbsp;update&#8203;(java.lang.String&nbsp;workflowName,
+                       <a href="../model/workflow/Workflow.html" title="class in com.atlan.model.workflow">Workflow</a>&nbsp;request)
+                throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Update a given workflow's configuration.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>workflowName</code> - name of the workflow to update</dd>
+<dd><code>request</code> - full details of the workflow's revised configuration</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the updated workflow configuration</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication issue</dd>
+</dl>
+</li>
+</ul>
+<a id="update(java.lang.String,com.atlan.model.workflow.Workflow,com.atlan.net.RequestOptions)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>update</h4>
+<pre class="methodSignature">public&nbsp;<a href="../model/workflow/Workflow.html" title="class in com.atlan.model.workflow">Workflow</a>&nbsp;update&#8203;(java.lang.String&nbsp;workflowName,
+                       <a href="../model/workflow/Workflow.html" title="class in com.atlan.model.workflow">Workflow</a>&nbsp;request,
+                       <a href="../net/RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)
+                throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Update a given workflow's configuration.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>workflowName</code> - name of the workflow to update</dd>
+<dd><code>request</code> - full details of the workflow's revised configuration</dd>
+<dd><code>options</code> - to override default client settings</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the updated workflow configuration</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication issue</dd>
 </dl>

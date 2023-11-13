@@ -23134,10 +23134,12 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <h4>name</h4>
 <pre>java.lang.String name</pre>
+<div class="block">Name or key of the pair.</div>
 </li>
 <li class="blockListLast">
 <h4>value</h4>
 <pre>java.lang.Object value</pre>
+<div class="block">Value for the pair.</div>
 </li>
 </ul>
 </li>
@@ -23333,14 +23335,17 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <h4>metadata</h4>
 <pre><a href="com/atlan/model/workflow/WorkflowMetadata.html" title="class in com.atlan.model.workflow">WorkflowMetadata</a> metadata</pre>
+<div class="block">Metadata that describes the workflow.</div>
 </li>
 <li class="blockList">
 <h4>payload</h4>
 <pre>java.util.List&lt;<a href="com/atlan/model/admin/PackageParameter.html" title="class in com.atlan.model.admin">PackageParameter</a>&gt; payload</pre>
+<div class="block">Parameters to send to the workflow as a whole (not an individual task).</div>
 </li>
 <li class="blockListLast">
 <h4>spec</h4>
 <pre><a href="com/atlan/model/workflow/WorkflowSpec.html" title="class in com.atlan.model.workflow">WorkflowSpec</a> spec</pre>
+<div class="block">Specification of the workflow: per-task inputs, outputs, and logic.</div>
 </li>
 </ul>
 </li>
@@ -23361,6 +23366,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockListLast">
 <h4>tasks</h4>
 <pre>java.util.List&lt;<a href="com/atlan/model/workflow/WorkflowTask.html" title="class in com.atlan.model.workflow">WorkflowTask</a>&gt; tasks</pre>
+<div class="block">Tasks within this step.</div>
 </li>
 </ul>
 </li>
@@ -23381,42 +23387,57 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <h4>annotations</h4>
 <pre>java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt; annotations</pre>
+<div class="block">Annotations that describe the workflow. These are usually a combination of keys that
+ start with <code>orchestration.atlan.com</code> and <code>package.argoproj.io</code>.</div>
 </li>
 <li class="blockList">
 <h4>creationTimestamp</h4>
 <pre>java.lang.String creationTimestamp</pre>
+<div class="block">Time at which the workflow was created, as a formatted string.</div>
 </li>
 <li class="blockList">
 <h4>generateName</h4>
 <pre>java.lang.String generateName</pre>
+<div class="block">TBC</div>
 </li>
 <li class="blockList">
 <h4>generation</h4>
 <pre>java.lang.Long generation</pre>
+<div class="block">Indication of the version of this workflow. Each modification to the workflow will increment the
+ generation, such that a generation of <code>1</code> is the initial workflow definition, a generation of
+ <code>2</code> is the first time the workflow's configuration has been modified, and so on.</div>
 </li>
 <li class="blockList">
 <h4>labels</h4>
 <pre>java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt; labels</pre>
+<div class="block">Labels that describe the workflow. These are usually a combination of keys that
+ start with <code>orchestration.atlan.com</code>, <code>package.argoproj.io</code>, and
+ <code>workflows.argoproj.io</code>.</div>
 </li>
 <li class="blockList">
 <h4>managedFields</h4>
 <pre>java.util.List&lt;java.lang.Object&gt; managedFields</pre>
+<div class="block">TBC *</div>
 </li>
 <li class="blockList">
 <h4>name</h4>
 <pre>java.lang.String name</pre>
+<div class="block">Name of the workflow.</div>
 </li>
 <li class="blockList">
 <h4>namespace</h4>
 <pre>java.lang.String namespace</pre>
+<div class="block">Kubernetes namespace in which the workflow is defined.</div>
 </li>
 <li class="blockList">
 <h4>resourceVersion</h4>
 <pre>java.lang.String resourceVersion</pre>
+<div class="block">TBC</div>
 </li>
 <li class="blockListLast">
 <h4>uid</h4>
 <pre>java.lang.String uid</pre>
+<div class="block">Unique identifier (GUID) of the workflow.</div>
 </li>
 </ul>
 </li>
@@ -23437,6 +23458,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockListLast">
 <h4>parameters</h4>
 <pre>java.util.List&lt;<a href="com/atlan/model/workflow/NameValuePair.html" title="class in com.atlan.model.workflow">NameValuePair</a>&gt; parameters</pre>
+<div class="block">List of parameters used when running a task.</div>
 </li>
 </ul>
 </li>
@@ -23615,22 +23637,27 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <h4>apiVersion</h4>
 <pre>java.lang.String apiVersion</pre>
+<div class="block">Version of the kubernetes object.</div>
 </li>
 <li class="blockList">
 <h4>kind</h4>
 <pre>java.lang.String kind</pre>
+<div class="block">Type of workflow.</div>
 </li>
 <li class="blockList">
 <h4>metadata</h4>
 <pre><a href="com/atlan/model/workflow/WorkflowMetadata.html" title="class in com.atlan.model.workflow">WorkflowMetadata</a> metadata</pre>
+<div class="block">Metadata that describes the workflow.</div>
 </li>
 <li class="blockList">
 <h4>spec</h4>
 <pre><a href="com/atlan/model/workflow/WorkflowSpec.html" title="class in com.atlan.model.workflow">WorkflowSpec</a> spec</pre>
+<div class="block">Definition of the workflow.</div>
 </li>
 <li class="blockListLast">
 <h4>status</h4>
 <pre><a href="com/atlan/model/workflow/WorkflowSearchResultStatus.html" title="class in com.atlan.model.workflow">WorkflowSearchResultStatus</a> status</pre>
+<div class="block">Status of the workflow (if run).</div>
 </li>
 </ul>
 </li>
@@ -23727,22 +23754,27 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <h4>arguments</h4>
 <pre>java.lang.Object arguments</pre>
+<div class="block">TBC</div>
 </li>
 <li class="blockList">
 <h4>entrypoint</h4>
 <pre>java.lang.String entrypoint</pre>
+<div class="block">Name of the template to use as the starting point when running the workflow.</div>
 </li>
 <li class="blockList">
 <h4>templates</h4>
 <pre>java.util.List&lt;<a href="com/atlan/model/workflow/WorkflowTemplate.html" title="class in com.atlan.model.workflow">WorkflowTemplate</a>&gt; templates</pre>
+<div class="block">List of specific steps in the overall workflow process.</div>
 </li>
 <li class="blockList">
 <h4>workflowMetadata</h4>
 <pre><a href="com/atlan/model/workflow/WorkflowMetadata.html" title="class in com.atlan.model.workflow">WorkflowMetadata</a> workflowMetadata</pre>
+<div class="block">Metadata about the workflow, typically the <code>package.argoproj.io/name</code> annotation.</div>
 </li>
 <li class="blockListLast">
 <h4>workflowTemplateRef</h4>
 <pre>java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt; workflowTemplateRef</pre>
+<div class="block">TBC</div>
 </li>
 </ul>
 </li>
@@ -23763,14 +23795,17 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <h4>arguments</h4>
 <pre><a href="com/atlan/model/workflow/WorkflowParameters.html" title="class in com.atlan.model.workflow">WorkflowParameters</a> arguments</pre>
+<div class="block">Arguments the task uses in its execution.</div>
 </li>
 <li class="blockList">
 <h4>name</h4>
 <pre>java.lang.String name</pre>
+<div class="block">Name of the task.</div>
 </li>
 <li class="blockListLast">
 <h4>templateRef</h4>
 <pre><a href="com/atlan/model/workflow/WorkflowTemplateRef.html" title="class in com.atlan.model.workflow">WorkflowTemplateRef</a> templateRef</pre>
+<div class="block">Reference to another workflow template that will be used to run this task.</div>
 </li>
 </ul>
 </li>
@@ -23791,22 +23826,27 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <h4>dag</h4>
 <pre><a href="com/atlan/model/workflow/WorkflowDAG.html" title="class in com.atlan.model.workflow">WorkflowDAG</a> dag</pre>
+<div class="block">Definition of the tasks within the step.</div>
 </li>
 <li class="blockList">
 <h4>inputs</h4>
 <pre>java.lang.Object inputs</pre>
+<div class="block">Inputs to this step.</div>
 </li>
 <li class="blockList">
 <h4>metadata</h4>
 <pre>java.lang.Object metadata</pre>
+<div class="block">Metadata describing the step.</div>
 </li>
 <li class="blockList">
 <h4>name</h4>
 <pre>java.lang.String name</pre>
+<div class="block">Name of this step.</div>
 </li>
 <li class="blockListLast">
 <h4>outputs</h4>
 <pre>java.lang.Object outputs</pre>
+<div class="block">Outputs from this step.</div>
 </li>
 </ul>
 </li>
@@ -23827,14 +23867,17 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <h4>clusterScope</h4>
 <pre>java.lang.Boolean clusterScope</pre>
+<div class="block">TBC</div>
 </li>
 <li class="blockList">
 <h4>name</h4>
 <pre>java.lang.String name</pre>
+<div class="block">Name of the existing workflow template.</div>
 </li>
 <li class="blockListLast">
 <h4>template</h4>
 <pre>java.lang.String template</pre>
+<div class="block">Entry point to begin executing the referenced workflow template.</div>
 </li>
 </ul>
 </li>
