@@ -13,6 +13,7 @@ import com.atlan.pkg.serde.cell.AssetRefXformer
 import com.atlan.serde.Serde
 import mu.KotlinLogging
 import java.lang.reflect.InvocationTargetException
+import kotlin.system.exitProcess
 
 private val logger = KotlinLogging.logger {}
 
@@ -48,8 +49,12 @@ class Importer(private val config: Map<String, String>) : AssetGenerator {
     fun import() {
         CSVReader(filename, updateOnly).use { csv ->
             val start = System.currentTimeMillis()
-            csv.streamRows(this, batchSize, logger)
+            val anyFailures = csv.streamRows(this, batchSize, logger)
             logger.info("Total time taken: {} ms", System.currentTimeMillis() - start)
+            if (anyFailures) {
+                logger.error("Some errors detected, failing the workflow.")
+                exitProcess(1)
+            }
         }
     }
 
