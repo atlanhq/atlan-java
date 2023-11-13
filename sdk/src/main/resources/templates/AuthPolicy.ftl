@@ -21,20 +21,6 @@
     }
 
     /**
-     * Builds the minimal object necessary to update an AuthPolicy.
-     *
-     * @param qualifiedName of the AuthPolicy
-     * @param name of the AuthPolicy
-     * @return the minimal request necessary to update the AuthPolicy, as a builder
-     */
-    public static AuthPolicyBuilder<?, ?> updater(String qualifiedName, String name) {
-        return AuthPolicy._internal()
-                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
-                .qualifiedName(qualifiedName)
-                .name(name);
-    }
-
-    /**
      * Builds the minimal object necessary to apply an update to an AuthPolicy, from a potentially
      * more-complete AuthPolicy object.
      *
@@ -43,17 +29,6 @@
      */
     @Override
     public AuthPolicyBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        List<String> missing = new ArrayList<>();
-        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
-            missing.add("qualifiedName");
-        }
-        if (this.getName() == null || this.getName().length() == 0) {
-            missing.add("name");
-        }
-        if (!missing.isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "AuthPolicy", String.join(",", missing));
-        }
-        return updater(this.getQualifiedName(), this.getName());
+        throw new InvalidRequestException(ErrorCode.FULL_UPDATE_ONLY, "AuthPolicy");
     }
 </#macro>

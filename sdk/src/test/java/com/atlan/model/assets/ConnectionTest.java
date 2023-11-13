@@ -396,6 +396,7 @@ public class ConnectionTest {
             .subCategory("String0")
             .useObjectStorage(true)
             .vectorEmbeddingsEnabled(true)
+            .vectorEmbeddingsUpdatedAt(123456789L)
             .build();
 
     private static final int hash = full.hashCode();

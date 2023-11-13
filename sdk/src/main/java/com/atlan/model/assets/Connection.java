@@ -163,6 +163,10 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
     @Attribute
     Boolean vectorEmbeddingsEnabled;
 
+    /** TBC */
+    @Attribute
+    Long vectorEmbeddingsUpdatedAt;
+
     /**
      * Builds the minimal object necessary to create a relationship to a Connection, from a potentially
      * more-complete Connection object.

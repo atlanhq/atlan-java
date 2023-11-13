@@ -227,6 +227,11 @@ public enum ErrorCode implements ExceptionMessageSet {
             "ATLAN-JAVA-400-040",
             "Missing privileged credentials to impersonate users.",
             "You must have both CLIENT_ID and CLIENT_SECRET configured to be able to impersonate users."),
+    FULL_UPDATE_ONLY(
+            400,
+            "ATLAN-JAVA-400-041",
+            "Objects of type {0} should only be updated in full.",
+            "For objects of this type you should not use trimToRequired but instead update the object in full."),
 
     AUTHENTICATION_PASSTHROUGH(
             401,
