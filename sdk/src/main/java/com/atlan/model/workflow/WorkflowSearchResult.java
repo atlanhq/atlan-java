@@ -12,6 +12,9 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
+/**
+ * Encapsulation of a single search result for workflows.
+ */
 @Getter
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)

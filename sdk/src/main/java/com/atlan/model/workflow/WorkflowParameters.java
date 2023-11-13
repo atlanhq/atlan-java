@@ -11,6 +11,9 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
+/**
+ * Definition of the parameters used when running a task.
+ */
 @Getter
 @Jacksonized
 @SuperBuilder(toBuilder = true)
@@ -19,6 +22,7 @@ import lombok.extern.jackson.Jacksonized;
 public class WorkflowParameters extends AtlanObject {
     private static final long serialVersionUID = 2L;
 
+    /** List of parameters used when running a task. */
     @Singular
     List<NameValuePair> parameters;
 }

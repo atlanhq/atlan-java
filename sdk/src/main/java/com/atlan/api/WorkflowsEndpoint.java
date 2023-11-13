@@ -8,6 +8,17 @@ import com.atlan.model.core.AtlanObject;
 import com.atlan.model.workflow.*;
 import com.atlan.net.ApiResource;
 import com.atlan.net.RequestOptions;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import com.fasterxml.jackson.databind.ser.std.StdSerializer;
+import java.io.IOException;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -106,7 +117,7 @@ public class WorkflowsEndpoint extends HeraclesEndpoint {
     public void archive(String workflowName, RequestOptions options) throws AtlanException {
         String url =
                 String.format("%s%s", getBaseUrl(), String.format("%s/%s/archive", workflows_endpoint, workflowName));
-        ApiResource.request(client, ApiResource.RequestMethod.POST, url, "", null, options);
+        ApiResource.request(client, ApiResource.RequestMethod.POST, url, "", options);
     }
 
     /**
@@ -161,6 +172,37 @@ public class WorkflowsEndpoint extends HeraclesEndpoint {
     }
 
     /**
+     * Update a given workflow's configuration.
+     *
+     * @param workflowName name of the workflow to update
+     * @param request full details of the workflow's revised configuration
+     * @return the updated workflow configuration
+     * @throws AtlanException on any API communication issue
+     */
+    public Workflow update(String workflowName, Workflow request) throws AtlanException {
+        return update(workflowName, request, null);
+    }
+
+    /**
+     * Update a given workflow's configuration.
+     *
+     * @param workflowName name of the workflow to update
+     * @param request full details of the workflow's revised configuration
+     * @param options to override default client settings
+     * @return the updated workflow configuration
+     * @throws AtlanException on any API communication issue
+     */
+    public Workflow update(String workflowName, Workflow request, RequestOptions options) throws AtlanException {
+        String url = String.format("%s%s/%s", getBaseUrl(), workflows_endpoint, workflowName);
+        WrappedWorkflow response = ApiResource.request(
+                client, ApiResource.RequestMethod.POST, url, request, WrappedWorkflow.class, options);
+        if (response != null) {
+            return response.getWorkflow();
+        }
+        return null;
+    }
+
+    /**
      * Request class for re-running a pre-existing workflow.
      */
     @Getter
@@ -179,5 +221,69 @@ public class WorkflowsEndpoint extends HeraclesEndpoint {
 
         /** Name of the workflow. */
         String resourceName;
+    }
+
+    /**
+     * Necessary for handling responses that are plain Workflow without any wrapping.
+     */
+    @Getter
+    @JsonSerialize(using = WrappedWorkflowSerializer.class)
+    @JsonDeserialize(using = WrappedWorkflowDeserializer.class)
+    @EqualsAndHashCode(callSuper = false)
+    private static final class WrappedWorkflow extends ApiResource {
+        private static final long serialVersionUID = 2L;
+
+        Workflow workflow;
+
+        public WrappedWorkflow(Workflow workflow) {
+            this.workflow = workflow;
+        }
+    }
+
+    private static class WrappedWorkflowDeserializer extends StdDeserializer<WrappedWorkflow> {
+        private static final long serialVersionUID = 2L;
+
+        public WrappedWorkflowDeserializer() {
+            this(WrappedWorkflow.class);
+        }
+
+        public WrappedWorkflowDeserializer(Class<?> t) {
+            super(t);
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public WrappedWorkflow deserialize(JsonParser parser, DeserializationContext context) throws IOException {
+            Workflow workflow = parser.getCodec().readValue(parser, new TypeReference<>() {});
+            return new WrappedWorkflow(workflow);
+        }
+    }
+
+    private static class WrappedWorkflowSerializer extends StdSerializer<WrappedWorkflow> {
+        private static final long serialVersionUID = 2L;
+
+        private final AtlanClient client;
+
+        @SuppressWarnings("UnusedMethod")
+        public WrappedWorkflowSerializer(AtlanClient client) {
+            this(WrappedWorkflow.class, client);
+        }
+
+        public WrappedWorkflowSerializer(Class<WrappedWorkflow> t, AtlanClient client) {
+            super(t);
+            this.client = client;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void serialize(WrappedWorkflow wrappedWorkflow, JsonGenerator gen, SerializerProvider sp)
+                throws IOException, JsonProcessingException {
+            Workflow workflow = wrappedWorkflow.getWorkflow();
+            client.writeValue(gen, workflow);
+        }
     }
 }

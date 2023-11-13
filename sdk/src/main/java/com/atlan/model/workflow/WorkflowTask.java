@@ -9,6 +9,9 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
+/**
+ * Definition of a single task within a single step of a workflow.
+ */
 @Getter
 @Jacksonized
 @SuperBuilder(toBuilder = true)
@@ -17,7 +20,12 @@ import lombok.extern.jackson.Jacksonized;
 public class WorkflowTask extends AtlanObject {
     private static final long serialVersionUID = 2L;
 
+    /** Name of the task. */
     String name;
+
+    /** Arguments the task uses in its execution. */
     WorkflowParameters arguments;
+
+    /** Reference to another workflow template that will be used to run this task. */
     WorkflowTemplateRef templateRef;
 }

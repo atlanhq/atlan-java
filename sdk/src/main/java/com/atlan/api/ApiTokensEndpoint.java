@@ -248,7 +248,7 @@ public class ApiTokensEndpoint extends HeraclesEndpoint {
      */
     public void purge(String guid, RequestOptions options) throws AtlanException {
         String url = String.format("%s%s/%s", getBaseUrl(), endpoint, guid);
-        ApiResource.request(client, ApiResource.RequestMethod.DELETE, url, "", null, options);
+        ApiResource.request(client, ApiResource.RequestMethod.DELETE, url, "", options);
     }
 
     /**

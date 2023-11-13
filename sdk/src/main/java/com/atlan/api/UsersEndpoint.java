@@ -351,7 +351,7 @@ public class UsersEndpoint extends HeraclesEndpoint {
                     .roleId(client.getRoleCache().getIdForName(roleName))
                     .build());
         }
-        ApiResource.request(client, ApiResource.RequestMethod.POST, url, cur.build(), null, options);
+        ApiResource.request(client, ApiResource.RequestMethod.POST, url, cur.build(), options);
     }
 
     /**
@@ -431,7 +431,7 @@ public class UsersEndpoint extends HeraclesEndpoint {
     public void addToGroups(String id, List<String> groupIds, RequestOptions options) throws AtlanException {
         String url = String.format("%s%s/%s/groups", getBaseUrl(), endpoint, id);
         AddToGroupsRequest atgr = AddToGroupsRequest.builder().groups(groupIds).build();
-        ApiResource.request(client, ApiResource.RequestMethod.POST, url, atgr, null, options);
+        ApiResource.request(client, ApiResource.RequestMethod.POST, url, atgr, options);
     }
 
     /**
@@ -456,7 +456,7 @@ public class UsersEndpoint extends HeraclesEndpoint {
     public void changeRole(String id, String roleId, RequestOptions options) throws AtlanException {
         String url = String.format("%s%s/%s/roles/update", getBaseUrl(), endpoint, id);
         ChangeRoleRequest crr = ChangeRoleRequest.builder().roleId(roleId).build();
-        ApiResource.request(client, ApiResource.RequestMethod.POST, url, crr, null, options);
+        ApiResource.request(client, ApiResource.RequestMethod.POST, url, crr, options);
     }
 
     /**

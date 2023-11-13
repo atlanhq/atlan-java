@@ -11,6 +11,9 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
+/**
+ * Definition of the tasks within a workflow step.
+ */
 @Getter
 @Jacksonized
 @SuperBuilder(toBuilder = true)
@@ -19,6 +22,7 @@ import lombok.extern.jackson.Jacksonized;
 public class WorkflowDAG extends AtlanObject {
     private static final long serialVersionUID = 2L;
 
+    /** Tasks within this step. */
     @Singular
     List<WorkflowTask> tasks;
 }

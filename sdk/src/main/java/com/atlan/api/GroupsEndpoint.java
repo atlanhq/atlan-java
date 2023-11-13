@@ -267,7 +267,7 @@ public class GroupsEndpoint extends HeraclesEndpoint {
      */
     public void update(String id, AtlanGroup group, RequestOptions options) throws AtlanException {
         String url = String.format("%s%s/%s", getBaseUrl(), endpoint, id);
-        ApiResource.request(client, ApiResource.RequestMethod.POST, url, group, null, options);
+        ApiResource.request(client, ApiResource.RequestMethod.POST, url, group, options);
     }
 
     /**
@@ -317,7 +317,7 @@ public class GroupsEndpoint extends HeraclesEndpoint {
         String url = String.format("%s%s/%s/members/remove", getBaseUrl(), endpoint, id);
         RemoveFromGroupRequest rfgr =
                 RemoveFromGroupRequest.builder().users(userIds).build();
-        ApiResource.request(client, ApiResource.RequestMethod.POST, url, rfgr, null, options);
+        ApiResource.request(client, ApiResource.RequestMethod.POST, url, rfgr, options);
     }
 
     /**
@@ -339,7 +339,7 @@ public class GroupsEndpoint extends HeraclesEndpoint {
      */
     public void purge(String id, RequestOptions options) throws AtlanException {
         String url = String.format("%s%s/%s/delete", getBaseUrl(), endpoint, id);
-        ApiResource.request(client, ApiResource.RequestMethod.POST, url, "", null, options);
+        ApiResource.request(client, ApiResource.RequestMethod.POST, url, "", options);
     }
 
     /**

@@ -240,7 +240,57 @@ public abstract class ApiResource extends AtlanObject implements AtlanResponseIn
     }
 
     /**
-     * Pass-through to the request-handling method after confirming thatthe provided payload is non-null.
+     * Pass-through to the request-handling method after confirming that the provided payload is non-null,
+     * for calls that do not expect a response.
+     *
+     * @param client connectivity to Atlan
+     * @param method for the request
+     * @param url of the request
+     * @param payload to send in the request
+     * @param options for sending the request (or null to use global defaults)
+     * @throws AtlanException on any API interaction problem
+     */
+    public static void request(
+            AtlanClient client,
+            ApiResource.RequestMethod method,
+            String url,
+            AtlanObject payload,
+            RequestOptions options)
+            throws AtlanException {
+        checkNullTypedParams(url, payload);
+        request(client, method, url, payload.toJson(client), options);
+    }
+
+    /**
+     * Pass-through the request to the request-handling method.
+     * This method wraps debug-level logging lines around the request to show precisely what was constructed and sent
+     * to Atlan. Since this method is used when no response is expected, no response will be logged.
+     *
+     * @param client connectivity to Atlan
+     * @param method for the request
+     * @param url of the request
+     * @param body to send in the request, if any (to not send any use an empty string)
+     * @param options for sending the request (or null to use global defaults)
+     * @throws AtlanException on any API interaction problem
+     */
+    public static void request(
+            AtlanClient client, ApiResource.RequestMethod method, String url, String body, RequestOptions options)
+            throws AtlanException {
+        // Create a unique ID for every request, and add it to the logging context and header
+        String requestId = UUID.randomUUID().toString();
+        MDC.put("X-Atlan-Request-Id", requestId);
+        log.debug("({}) {} with: {}", method, url, body);
+        ApiResource.atlanResponseGetter.request(client, method, url, body, options, requestId);
+        // Ensure we reset the Atlan request ID, so we always have the context from the original
+        // request that was made (even if it in turn triggered off other requests)
+        MDC.put("X-Atlan-Request-Id", requestId);
+        if (log.isDebugEnabled()) {
+            log.debug(" ... empty response.");
+        }
+    }
+
+    /**
+     * Pass-through to the request-handling method after confirming that the provided payload is non-null.
      *
      * @param client connectivity to Atlan
      * @param method for the request

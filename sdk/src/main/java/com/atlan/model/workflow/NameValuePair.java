@@ -9,6 +9,9 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
+/**
+ * Definition of arbitrary name-value pairs.
+ */
 @Getter
 @Jacksonized
 @SuperBuilder(toBuilder = true)
@@ -17,7 +20,10 @@ import lombok.extern.jackson.Jacksonized;
 public class NameValuePair extends AtlanObject {
     private static final long serialVersionUID = 2L;
 
+    /** Name or key of the pair. */
     String name;
+
+    /** Value for the pair. */
     Object value;
 
     /**
