@@ -394,6 +394,8 @@ public enum NumericFields implements AtlanSearchableField {
     TILE_COUNT("tileCount"),
     /** Time (in milliseconds) when the asset was created. */
     TIMESTAMP("__timestamp"),
+    /** TBC */
+    VECTOR_EMBEDDINGS_UPDATED_AT("vectorEmbeddingsUpdatedAt"),
     /** Number of views in this schema. */
     VIEW_COUNT("viewsCount"),
     /** View score for this asset. */

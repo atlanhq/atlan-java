@@ -516,7 +516,7 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
 </#if>
 
 <#if !abstract>
-<#if className != "Glossary" && className != "GlossaryCategory" && className != "GlossaryTerm" && className != "Persona" && className != "Purpose" && className != "AtlanQuery">
+<#if className != "Glossary" && className != "GlossaryCategory" && className != "GlossaryTerm" && className != "Persona" && className != "Purpose" && className != "AtlanQuery" && className != "AuthPolicy">
     /**
      * Remove the system description from a ${className}.
      *

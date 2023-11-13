@@ -120,6 +120,10 @@ public interface IConnection {
     BooleanField VECTOR_EMBEDDINGS_ENABLED = new BooleanField("vectorEmbeddingsEnabled", "vectorEmbeddingsEnabled");
 
     /** TBC */
+    NumericField VECTOR_EMBEDDINGS_UPDATED_AT =
+            new NumericField("vectorEmbeddingsUpdatedAt", "vectorEmbeddingsUpdatedAt");
+
+    /** TBC */
     SortedSet<String> getAdminGroups();
 
     /** TBC */
@@ -583,6 +587,9 @@ public interface IConnection {
 
     /** TBC */
     Boolean getVectorEmbeddingsEnabled();
+
+    /** TBC */
+    Long getVectorEmbeddingsUpdatedAt();
 
     /** TBC */
     Double getViewScore();
