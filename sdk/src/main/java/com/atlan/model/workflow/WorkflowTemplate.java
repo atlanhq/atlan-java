@@ -9,6 +9,9 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
+/**
+ * Definition of a specific step in a workflow process.
+ */
 @Getter
 @Jacksonized
 @SuperBuilder(toBuilder = true)
@@ -17,9 +20,18 @@ import lombok.extern.jackson.Jacksonized;
 public class WorkflowTemplate extends AtlanObject {
     private static final long serialVersionUID = 2L;
 
+    /** Name of this step. */
     String name;
+
+    /** Inputs to this step. */
     final Object inputs;
+
+    /** Outputs from this step. */
     final Object outputs;
+
+    /** Metadata describing the step. */
     final Object metadata;
+
+    /** Definition of the tasks within the step. */
     WorkflowDAG dag;
 }

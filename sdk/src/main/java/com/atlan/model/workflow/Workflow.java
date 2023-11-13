@@ -14,6 +14,9 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
+/**
+ * Definition of a runnable workflow in Atlan.
+ */
 @Getter
 @Jacksonized
 @SuperBuilder(toBuilder = true)
@@ -22,8 +25,13 @@ import lombok.extern.jackson.Jacksonized;
 public class Workflow extends AtlanObject {
     private static final long serialVersionUID = 2L;
 
+    /** Metadata that describes the workflow. */
     WorkflowMetadata metadata;
+
+    /** Specification of the workflow: per-task inputs, outputs, and logic. */
     WorkflowSpec spec;
+
+    /** Parameters to send to the workflow as a whole (not an individual task). */
     List<PackageParameter> payload;
 
     /**

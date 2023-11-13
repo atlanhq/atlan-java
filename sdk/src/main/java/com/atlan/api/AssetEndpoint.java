@@ -525,7 +525,7 @@ public class AssetEndpoint extends AtlasEndpoint {
                     String.format(
                             "%s%s/businessmetadata?isOverwrite=false", guid_endpoint, ApiResource.urlEncodeId(guid)));
             CustomMetadataUpdateRequest cmur = new CustomMetadataUpdateRequest(cmName, values.getAttributes(), true);
-            ApiResource.request(client, ApiResource.RequestMethod.POST, url, cmur, null, options);
+            ApiResource.request(client, ApiResource.RequestMethod.POST, url, cmur, options);
         }
     }
 
@@ -567,7 +567,7 @@ public class AssetEndpoint extends AtlasEndpoint {
                         "%s%s/businessmetadata/%s",
                         guid_endpoint, ApiResource.urlEncodeId(guid), ApiResource.urlEncodeId(cmId)));
         CustomMetadataUpdateRequest cmur = new CustomMetadataUpdateRequest(cmName, baseMap, false);
-        ApiResource.request(client, ApiResource.RequestMethod.POST, url, cmur, null, options);
+        ApiResource.request(client, ApiResource.RequestMethod.POST, url, cmur, options);
     }
 
     /**
@@ -794,7 +794,7 @@ public class AssetEndpoint extends AtlasEndpoint {
                 String.format(
                         "%s%s/classifications?attr:qualifiedName=%s",
                         unique_attr_endpoint, typeName, ApiResource.urlEncode(qualifiedName)));
-        ApiResource.request(client, ApiResource.RequestMethod.POST, url, new AtlanTagList(tags), null, options);
+        ApiResource.request(client, ApiResource.RequestMethod.POST, url, new AtlanTagList(tags), options);
     }
 
     /**
@@ -840,7 +840,7 @@ public class AssetEndpoint extends AtlasEndpoint {
                         "%s%s/classification/%s?attr:qualifiedName=%s",
                         unique_attr_endpoint, typeName, atlanTagId, ApiResource.urlEncode(qualifiedName)));
         try {
-            ApiResource.request(client, ApiResource.RequestMethod.DELETE, url, "", null, options);
+            ApiResource.request(client, ApiResource.RequestMethod.DELETE, url, "", options);
         } catch (InvalidRequestException e) {
             if (idempotent && e.getMessage().equals("ATLAS-400-00-06D")) {
                 log.debug(

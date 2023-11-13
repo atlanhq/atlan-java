@@ -9,6 +9,11 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
+/**
+ * Reference to an existing workflow template.
+ * These are typically used within a task, within a step of a workflow, to reuse
+ * an existing workflow template to run the logic of that task.
+ */
 @Getter
 @Jacksonized
 @SuperBuilder(toBuilder = true)
@@ -17,7 +22,12 @@ import lombok.extern.jackson.Jacksonized;
 public class WorkflowTemplateRef extends AtlanObject {
     private static final long serialVersionUID = 2L;
 
+    /** Name of the existing workflow template. */
     String name;
+
+    /** Entry point to begin executing the referenced workflow template. */
     String template;
+
+    /** TBC */
     Boolean clusterScope;
 }

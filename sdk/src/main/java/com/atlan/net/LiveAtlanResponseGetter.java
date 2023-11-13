@@ -35,20 +35,35 @@ public class LiveAtlanResponseGetter implements AtlanResponseGetter {
         this.httpClient = (httpClient != null) ? httpClient : buildDefaultHttpClient();
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public void request(
+            AtlanClient client,
+            ApiResource.RequestMethod method,
+            String url,
+            String body,
+            RequestOptions options,
+            String requestId)
+            throws AtlanException {
+        AtlanRequest request = new AtlanRequest(client, method, url, body, options, requestId);
+        request(request);
+    }
+
     /**
-     * Makes a request to an Atlan's API.
+     * Send a request to Atlan, when no response is expected.
      *
-     * @param client connectivity to Atlan
-     * @param method to use for the request
-     * @param url of the endpoint (with all path and query parameters) for the request
-     * @param body payload for the request, if any
-     * @param clazz the expected response object type from the request
-     * @param options any alternative options to use for the request, or null to use default options
-     * @param requestId unique identifier (GUID) of a single request to Atlan
-     * @return the response of the request
-     * @param <T> the type of the response of the request
-     * @throws AtlanException on any API interaction problem, indicating the type of problem encountered
+     * @param request bundle of all information about the request that should be sent
+     * @throws AtlanException on any API issues
      */
+    private void request(AtlanRequest request) throws AtlanException {
+        AtlanResponse response = httpClient.requestWithRetries(request);
+        int responseCode = response.code();
+        if (responseCode < 200 || responseCode >= 300) {
+            handleApiError(response);
+        }
+    }
+
+    /** {@inheritDoc} */
     @Override
     public <T extends AtlanResponseInterface> T request(
             AtlanClient client,
@@ -63,22 +78,7 @@ public class LiveAtlanResponseGetter implements AtlanResponseGetter {
         return request(request, clazz);
     }
 
-    /**
-     * Makes a request to Atlan's API, to upload a file.
-     *
-     * @param client connectivity to Atlan
-     * @param method to use for the request
-     * @param url of the endpoint (with all path and query parameters) for the request
-     * @param upload file to be uploaded
-     * @param filename name of the file the InputStream is reading
-     * @param clazz the expected response object type from the request
-     * @param extras (optional) additional form-encoded parameters to send
-     * @param options any alternative options to use for the request, or null to use default options
-     * @param requestId unique identifier (GUID) of a single request to Atlan
-     * @return the response of the request
-     * @param <T> the type of the response of the request
-     * @throws AtlanException on any API interaction problems, indicating the type of problem encountered
-     */
+    /** {@inheritDoc} */
     @Override
     public <T extends AtlanResponseInterface> T request(
             AtlanClient client,
@@ -95,20 +95,7 @@ public class LiveAtlanResponseGetter implements AtlanResponseGetter {
         return request(request, clazz);
     }
 
-    /**
-     * Makes a request to Atlan's API, to form-urlencode parameters.
-     *
-     * @param client connectivity to Atlan
-     * @param method to use for the request
-     * @param url of the endpoint (with all path and query parameters) for the request
-     * @param map of key-value pairs to be form-urlencoded
-     * @param clazz the expected response object type from the request
-     * @param options any alternative options to use for the request, or null to use default options
-     * @param requestId unique identifier (GUID) of a single request to Atlan
-     * @return the response of the request
-     * @param <T> the type of the response of the request
-     * @throws AtlanException on any API interaction problems, indicating the type of problem encountered
-     */
+    /** {@inheritDoc} */
     @Override
     public <T extends AtlanResponseInterface> T request(
             AtlanClient client,
