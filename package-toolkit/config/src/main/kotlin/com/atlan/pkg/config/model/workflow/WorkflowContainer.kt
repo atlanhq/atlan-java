@@ -16,6 +16,7 @@ class WorkflowContainer(
 ) {
     val env: List<NamedPair>
     init {
+        val nestedConfig = mutableListOf<String>()
         val builder = mutableListOf<NamedPair>()
         builder.add(NameValuePair("ATLAN_BASE_URL", "INTERNAL"))
         builder.add(NameValuePair("ATLAN_USER_ID", "{{=sprig.dig('labels', 'workflows', 'argoproj', 'io/creator', '', workflow)}}"))
@@ -31,7 +32,9 @@ class WorkflowContainer(
             } else {
                 builder.add(NameValuePair(k.uppercase(), "{{inputs.parameters.$k}}"))
             }
+            nestedConfig.add(k)
         }
+        builder.add(NestedConfig("NESTED_CONFIG", nestedConfig))
         env = builder.toList()
     }
 }

@@ -11,6 +11,7 @@ import com.atlan.pkg.config.model.workflow.WorkflowContainer
 import com.atlan.pkg.config.model.workflow.WorkflowOutputs
 import com.atlan.pkg.config.model.workflow.WorkflowTemplateDefinition
 import com.fasterxml.jackson.annotation.JsonInclude
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
@@ -20,12 +21,21 @@ import java.io.File
 /**
  * Single class through which you can define a custom package.
  *
- * @param name of the custom package
+ * @param packageId unique identifier for the package, including its namespace
+ * @param packageName display name for the package, as it should be shown in the UI
+ * @param description description for the package, as it should be shown in the UI
+ * @param iconUrl link to an icon to use for the package, as it should be shown in the UI
+ * @param docsUrl link to an online document describing the package
  * @param uiConfig configuration for the UI of the custom package
  * @param containerImage container image to run the logic of the custom package
  * @param containerCommand the full command to run in the container image, as a list rather than spaced
  * @param containerImagePullPolicy (optional) override the default IfNotPresent policy
  * @param outputs (optional) any outputs that the custom package logic is expected to produce
+ * @param keywords (optional) list of any keyword labels to apply to the package
+ * @param allowSchedule (optional) whether to allow the package to be scheduled (default, true) or only run immediately (false)
+ * @param certified (optional) whether the package should be listed as certified (default, true) or not (false)
+ * @param preview (optional) whether the package should be labeled as an early preview in the UI (true) or not (default, false)
+ * @param connectorType (optional) if the package needs to configure a connector, specify its type here
  */
 open class CustomPackage(
     private val packageId: String,
@@ -70,32 +80,9 @@ open class CustomPackage(
                 containerImagePullPolicy,
             ),
             outputs,
+            name,
         ),
     )
-
-    /**
-     * Create the necessary directories and files to capture the definition of the custom package.
-     * - index.js
-     * - package.json
-     * - configmaps/default.yaml
-     * - templates/default.yaml
-     *
-     * @param path (optional) in which to create the package definition files
-     */
-    fun createPackageFiles(path: String = "") {
-        val prefix = when {
-            path.isEmpty() -> path
-            path.endsWith(File.separator) -> path
-            else -> path + File.separator
-        }
-        File(prefix).mkdirs()
-        File(prefix + "index.js").writeText(indexJS())
-        File(prefix + "package.json").writeText(packageJSON())
-        File(prefix + "configmaps").mkdirs()
-        File(prefix + "templates").mkdirs()
-        File(prefix + "configmaps" + File.separator + "default.yaml").writeText(configMapYAML())
-        File(prefix + "templates" + File.separator + "default.yaml").writeText(workflowTemplateYAML())
-    }
 
     /**
      * Retrieve the JavaScript for the index.js of the custom package.
@@ -147,6 +134,21 @@ open class CustomPackage(
             .enable(YAMLGenerator.Feature.LITERAL_BLOCK_STYLE)
             .build()
             .registerKotlinModule()
-        val json = jacksonObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL)
+        val json: ObjectMapper = jacksonObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL)
+
+        fun createPackageFiles(pkg: CustomPackage, path: String = "generated-packages") {
+            val prefix = when {
+                path.isEmpty() -> path
+                path.endsWith(File.separator) -> path
+                else -> path + File.separator
+            } + File.separator + pkg.name + File.separator
+            File(prefix).mkdirs()
+            File(prefix + "index.js").writeText(pkg.indexJS())
+            File(prefix + "package.json").writeText(pkg.packageJSON())
+            File(prefix + "configmaps").mkdirs()
+            File(prefix + "templates").mkdirs()
+            File(prefix + "configmaps" + File.separator + "default.yaml").writeText(pkg.configMapYAML())
+            File(prefix + "templates" + File.separator + "default.yaml").writeText(pkg.workflowTemplateYAML())
+        }
     }
 }

@@ -27,6 +27,13 @@ dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test:1.8.10")
 }
 
+tasks.create<JavaExec>("generatePackageConfig") {
+    dependsOn(tasks.build)
+    mainClass.set("PackageConfig")
+    classpath = sourceSets.main.get().runtimeClasspath
+    workingDir = rootDir
+}
+
 tasks {
     jar {
         destinationDirectory.set(file(jarPath))

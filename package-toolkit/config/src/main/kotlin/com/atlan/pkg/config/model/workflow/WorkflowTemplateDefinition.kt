@@ -12,7 +12,8 @@ class WorkflowTemplateDefinition(
     @JsonIgnore val config: UIConfig,
     val container: WorkflowContainer,
     @JsonInclude(JsonInclude.Include.NON_NULL) val outputs: WorkflowOutputs? = null,
+    @JsonIgnore val pkgName: String = "",
 ) {
     val name = "main"
-    val inputs = WorkflowInputs(config)
+    val inputs = WorkflowInputs(config, pkgName)
 }

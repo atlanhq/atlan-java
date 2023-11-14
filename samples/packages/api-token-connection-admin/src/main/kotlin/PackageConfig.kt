@@ -11,7 +11,7 @@ import com.atlan.pkg.config.widgets.ConnectionSelector
 /**
  * Definition for the APITokenConnectionAdmin custom package.
  */
-object ApiTokenConnectionAdminPkg : CustomPackage(
+object PackageConfig : CustomPackage(
     "@csa/api-token-connection-admin",
     "API Token Connection Admin",
     "Assigns an API token as a connection admin for an existing connection.",
@@ -49,6 +49,6 @@ object ApiTokenConnectionAdminPkg : CustomPackage(
 ) {
     @JvmStatic
     fun main(args: Array<String>) {
-        createPackageFiles("generated-packages/api-token-connection-admin")
+        createPackageFiles(this)
     }
 }

@@ -10,7 +10,7 @@ import com.atlan.pkg.config.widgets.TextInput
 /**
  * Definition for the OwnerPropagator example custom package.
  */
-object OwnerPropagatorPkg : CustomPackage(
+object PackageConfig : CustomPackage(
     packageId = "@csa/owner-propagator",
     packageName = "Owner Propagator",
     description = "Propagate owners from schema downwards.",
@@ -51,6 +51,6 @@ object OwnerPropagatorPkg : CustomPackage(
 ) {
     @JvmStatic
     fun main(args: Array<String>) {
-        createPackageFiles("generated-packages/owner-propagator")
+        createPackageFiles(this)
     }
 }
