@@ -30,12 +30,13 @@ class MultiSelectDeserializer : StdDeserializer<List<String>>(
     }
 
     companion object {
+        // Creates a single static mapper to use across calls, since we will need one anyway
+        // for any direct calls for deserialization
+        private val mapper = jacksonObjectMapper()
         fun deserialize(value: String?): List<String> {
             if (!value.isNullOrEmpty()) {
                 return if (value.startsWith("[")) {
-                    // TODO: probably a better way to get the mapper from the parser or context,
-                    //  but far less hassle to just create one...
-                    return jacksonObjectMapper().readValue<List<String>>(value)
+                    return mapper.readValue<List<String>>(value)
                 } else {
                     listOf(value)
                 }
