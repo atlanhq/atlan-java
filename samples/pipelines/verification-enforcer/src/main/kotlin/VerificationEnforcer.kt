@@ -23,6 +23,7 @@ import org.slf4j.Logger
  */
 object VerificationEnforcer : AbstractNumaflowHandler(Handler) {
 
+    const val DEFAULT_ENFORCEMENT_MESSAGE = "To be verified, an asset must have a description, at least one owner, and lineage."
     private lateinit var config: Cfg
 
     @JvmStatic
@@ -74,7 +75,7 @@ object VerificationEnforcer : AbstractNumaflowHandler(Handler) {
         private fun setup() {
             MUST_HAVES = config.mustHaves ?: listOf()
             ASSET_TYPES = config.assetTypes ?: listOf()
-            ENFORCEMENT_MESSAGE = config.enforcementMessage ?: "To be verified, an asset must have a description, at least one owner, and lineage."
+            ENFORCEMENT_MESSAGE = config.enforcementMessage ?: DEFAULT_ENFORCEMENT_MESSAGE
         }
 
         // Note: we can just re-use the default validatePrerequisites

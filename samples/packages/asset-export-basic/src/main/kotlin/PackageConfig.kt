@@ -13,7 +13,7 @@ import com.atlan.pkg.config.widgets.TextInput
 /**
  * Definition for the Asset Export (Basic) custom package.
  */
-object AssetExportBasicPkg : CustomPackage(
+object PackageConfig : CustomPackage(
     "@csa/asset-export-basic",
     "Asset Export (Basic)",
     "Export assets with all enrichment that could be made against them via the Atlan UI.",
@@ -83,6 +83,6 @@ object AssetExportBasicPkg : CustomPackage(
 ) {
     @JvmStatic
     fun main(args: Array<String>) {
-        createPackageFiles("generated-packages/asset-export-basic")
+        createPackageFiles(this)
     }
 }

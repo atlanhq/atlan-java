@@ -14,7 +14,7 @@ import com.atlan.pkg.config.widgets.TextInput
 /**
  * Definition for the DuplicateDetector custom package.
  */
-object DuplicateDetectorPkg : CustomPackage(
+object PackageConfig : CustomPackage(
     "@csa/duplicate-detector",
     "Duplicate Detector",
     "Detect possible duplicate tables, views and materialized views based on their columns.",
@@ -81,6 +81,6 @@ object DuplicateDetectorPkg : CustomPackage(
 ) {
     @JvmStatic
     fun main(args: Array<String>) {
-        createPackageFiles("generated-packages/duplicate-detector")
+        createPackageFiles(this)
     }
 }

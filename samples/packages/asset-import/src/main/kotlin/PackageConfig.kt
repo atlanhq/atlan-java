@@ -14,7 +14,7 @@ import com.atlan.pkg.config.widgets.Radio
 /**
  * Definition for the Asset Import custom package.
  */
-object AssetImportPkg : CustomPackage(
+object PackageConfig : CustomPackage(
     "@csa/asset-import",
     "Asset Import",
     "Import assets from a CSV file.",
@@ -97,6 +97,6 @@ object AssetImportPkg : CustomPackage(
 ) {
     @JvmStatic
     fun main(args: Array<String>) {
-        createPackageFiles("generated-packages/asset-import")
+        createPackageFiles(this)
     }
 }

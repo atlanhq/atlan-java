@@ -15,7 +15,7 @@ import com.atlan.pkg.config.widgets.TextInput
 /**
  * Definition for the OpenAPISpecLoader custom package.
  */
-object OpenAPISpecLoaderPkg : CustomPackage(
+object PackageConfig : CustomPackage(
     "@csa/openapi-spec-loader",
     "OpenAPI Spec Loader",
     "Loads API specs and paths from an OpenAPI (v3) definition.",
@@ -84,6 +84,6 @@ object OpenAPISpecLoaderPkg : CustomPackage(
 ) {
     @JvmStatic
     fun main(args: Array<String>) {
-        createPackageFiles("generated-packages/openapi-spec-loader")
+        createPackageFiles(this)
     }
 }
