@@ -10,6 +10,7 @@ import com.atlan.pkg.config.model.ui.UIConfig
 import com.atlan.pkg.config.model.workflow.WorkflowContainer
 import com.atlan.pkg.config.model.workflow.WorkflowOutputs
 import com.atlan.pkg.config.model.workflow.WorkflowTemplateDefinition
+import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator
@@ -36,6 +37,7 @@ import java.io.File
  * @param certified (optional) whether the package should be listed as certified (default, true) or not (false)
  * @param preview (optional) whether the package should be labeled as an early preview in the UI (true) or not (default, false)
  * @param connectorType (optional) if the package needs to configure a connector, specify its type here
+ * @param category name of the pill under which the package should be categorized in the marketplace in the UI
  */
 open class CustomPackage(
     private val packageId: String,
@@ -53,6 +55,7 @@ open class CustomPackage(
     private val certified: Boolean = true,
     private val preview: Boolean = false,
     private val connectorType: AtlanConnectorType? = null,
+    private val category: String = "custom",
 ) {
     private val pkg = PackageDefinition(
         packageId,
@@ -65,8 +68,10 @@ open class CustomPackage(
         certified,
         preview,
         connectorType,
+        category,
     )
-    private val name = packageId.replace("@", "").replace("/", "-")
+
+    @JsonIgnore val name = packageId.replace("@", "").replace("/", "-")
     private val configMap = ConfigMap(name, uiConfig)
     private val workflowTemplate = WorkflowTemplate(
         name,
@@ -136,7 +141,7 @@ open class CustomPackage(
             .registerKotlinModule()
         val json: ObjectMapper = jacksonObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL)
 
-        fun createPackageFiles(pkg: CustomPackage, path: String = "generated-packages") {
+        fun createPackageFiles(pkg: CustomPackage, path: String = "generated-packages"): String {
             val prefix = when {
                 path.isEmpty() -> path
                 path.endsWith(File.separator) -> path
@@ -149,6 +154,7 @@ open class CustomPackage(
             File(prefix + "templates").mkdirs()
             File(prefix + "configmaps" + File.separator + "default.yaml").writeText(pkg.configMapYAML())
             File(prefix + "templates" + File.separator + "default.yaml").writeText(pkg.workflowTemplateYAML())
+            return prefix
         }
     }
 }

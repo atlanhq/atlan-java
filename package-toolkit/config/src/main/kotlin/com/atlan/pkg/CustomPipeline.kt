@@ -3,9 +3,11 @@
 package com.atlan.pkg
 
 import com.atlan.model.enums.AtlanConnectorType
+import com.atlan.pkg.config.model.Pipeline
 import com.atlan.pkg.config.model.ui.UIConfig
 import com.atlan.pkg.config.model.workflow.S3Artifact
 import com.atlan.pkg.config.model.workflow.WorkflowOutputs
+import java.io.File
 
 /**
  * Single class through which you can define a custom pipeline.
@@ -16,14 +18,17 @@ import com.atlan.pkg.config.model.workflow.WorkflowOutputs
  * @param iconUrl link to an icon to use for the pipeline, as it should be shown in the UI
  * @param docsUrl link to an online document describing the pipeline
  * @param uiConfig configuration for the UI of the custom pipeline
- * @param containerCommand (optional) command to run to sync the pipeline's configuration, as a list rather than string
+ * @param logicCommand command to run the pipeline's custom processing logic, as a list rather than string
+ * @param configCommand (optional) command to run to sync the pipeline's configuration, as a list rather than string
  * @param containerImage container image to run the logic of the custom pipeline
  * @param containerImagePullPolicy (optional) override the default IfNotPresent policy
+ * @param filter (optional) sprig expression used to filter the messages that will be processed by the pipeline
  * @param keywords (optional) list of any keyword labels to apply to the package
  * @param allowSchedule (optional) whether to allow the package to be scheduled (default, true) or only run immediately (false)
  * @param certified (optional) whether the package should be listed as certified (default, true) or not (false)
  * @param preview (optional) whether the package should be labeled as an early preview in the UI (true) or not (default, false)
  * @param connectorType (optional) if the package needs to configure a connector, specify its type here
+ * @param category name of the pill under which the package should be categorized in the marketplace in the UI
  */
 open class CustomPipeline(
     packageId: String,
@@ -33,13 +38,16 @@ open class CustomPipeline(
     docsUrl: String,
     uiConfig: UIConfig,
     containerImage: String,
-    containerCommand: List<String> = listOf("/dumb-init", "--", "java", "WriteConfig"),
+    private val logicCommand: List<String>,
+    private val configCommand: List<String> = listOf("/dumb-init", "--", "java", "WriteConfig"),
     containerImagePullPolicy: String = "IfNotPresent",
+    private val filter: String = "",
     keywords: List<String> = listOf(),
     allowSchedule: Boolean = true,
     certified: Boolean = true,
     preview: Boolean = false,
     connectorType: AtlanConnectorType? = null,
+    category: String = "always-on",
 ) : CustomPackage(
     packageId = packageId,
     packageName = packageName,
@@ -48,7 +56,7 @@ open class CustomPipeline(
     docsUrl = docsUrl,
     uiConfig = uiConfig,
     containerImage = containerImage,
-    containerCommand = containerCommand,
+    containerCommand = configCommand,
     containerImagePullPolicy = containerImagePullPolicy,
     outputs = WorkflowOutputs(
         files = mapOf(
@@ -64,8 +72,32 @@ open class CustomPipeline(
     certified = certified,
     preview = preview,
     connectorType = connectorType,
+    category = category,
 ) {
+    private val pipeline = Pipeline(
+        name,
+        containerImage,
+        logicCommand,
+        containerImagePullPolicy,
+        description,
+        filter,
+    )
+
+    /**
+     * Retrieve the YAML for the WorkflowTemplate of the custom package.
+     *
+     * @return templates/default.yaml content
+     */
+    fun pipelineYAML(): String {
+        return yaml.writeValueAsString(pipeline)
+    }
+
     companion object {
         const val S3_CONFIG_PREFIX = "output_prefix"
+        fun createPipelineFiles(pkg: CustomPipeline, path: String = "generated-packages") {
+            val prefix = createPackageFiles(pkg, path)
+            File(prefix + "pipelines").mkdirs()
+            File(prefix + "pipelines" + File.separator + "default.yaml").writeText(pkg.pipelineYAML())
+        }
     }
 }
