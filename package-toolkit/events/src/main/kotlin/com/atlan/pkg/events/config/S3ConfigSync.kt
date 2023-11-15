@@ -53,8 +53,12 @@ class S3ConfigSync {
         val s3FilesToDownload = mutableListOf<String>()
         s3Client.listObjectsV2(request).contents().forEach { file ->
             val key = File(file.key()).relativeTo(File(configPrefix)).path
-            if (key !in localFilesLastModified || file.lastModified().toEpochMilli() > localFilesLastModified[key]!!) {
-                s3FilesToDownload.add(key)
+            if (key.isNotBlank()) {
+                if (key !in localFilesLastModified ||
+                    file.lastModified().toEpochMilli() > localFilesLastModified[key]!!
+                ) {
+                    s3FilesToDownload.add(key)
+                }
             }
         }
 

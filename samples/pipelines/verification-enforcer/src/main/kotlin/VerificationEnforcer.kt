@@ -42,11 +42,11 @@ object VerificationEnforcer : AbstractNumaflowHandler(Handler) {
     @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
     data class Cfg(
         @JsonDeserialize(using = MultiSelectDeserializer::class)
-        @JsonProperty("must-haves") val mustHaves: List<String>?,
-        @JsonProperty("enforcement-message") val enforcementMessage: String?,
+        @JsonProperty("must_haves") val mustHaves: List<String>?,
+        @JsonProperty("enforcement_message") val enforcementMessage: String?,
         @JsonDeserialize(using = MultiSelectDeserializer::class)
-        @JsonProperty("asset-types") val assetTypes: List<String>?,
-        @JsonProperty("api-token") val apiTokenId: String?,
+        @JsonProperty("asset_types") val assetTypes: List<String>?,
+        @JsonProperty("api_token") val apiTokenId: String?,
     ) : EventConfig()
 
     /**
