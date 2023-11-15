@@ -3,6 +3,7 @@
 package com.atlan.generators;
 
 import com.atlan.model.typedefs.AttributeDef;
+import com.atlan.util.StringUtils;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -35,7 +36,7 @@ public class AttributeGenerator extends TypeGenerator {
     }
 
     protected void resolveName() {
-        this.renamed = GeneratorConfig.getLowerCamelCase(getOriginalName());
+        this.renamed = StringUtils.getLowerCamelCase(getOriginalName());
     }
 
     protected void resolveType(AttributeDef attributeDef) {
