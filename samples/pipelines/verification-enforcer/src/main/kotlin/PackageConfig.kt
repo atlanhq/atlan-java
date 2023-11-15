@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 import com.atlan.Atlan
 import com.atlan.pkg.CustomPipeline
+import com.atlan.pkg.CustomPipeline.Companion.createPipelineFiles
 import com.atlan.pkg.config.model.ui.UIConfig
 import com.atlan.pkg.config.model.ui.UIRule
 import com.atlan.pkg.config.model.ui.UIStep
@@ -92,12 +93,14 @@ object PackageConfig : CustomPipeline(
         ),
     ),
     containerImage = "ghcr.io/atlanhq/csa-verification-enforcer:${Atlan.VERSION}",
+    logicCommand = listOf("/dumb-init", "--", "java", "VerificationEnforcer"),
     containerImagePullPolicy = "Always",
+    filter = "json(payload).message.operationType in [\"ENTITY_CREATE\", \"ENTITY_UPDATE\"] && json(payload).message.entity.attributes.certificateStatus in [\"VERIFIED\"]",
     keywords = listOf("kotlin", "governance", "pipeline"),
     preview = true,
 ) {
     @JvmStatic
     fun main(args: Array<String>) {
-        createPackageFiles(this)
+        createPipelineFiles(this)
     }
 }
