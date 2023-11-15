@@ -92,8 +92,14 @@ open class CustomPipeline(
 
     companion object {
         const val S3_CONFIG_PREFIX = "output_prefix"
-        fun createPipelineFiles(pkg: CustomPipeline, path: String = "generated-packages") {
-            val prefix = createPackageFiles(pkg, path)
+        fun generate(pkg: CustomPipeline, args: Array<String>) {
+            CustomPackage.generate(pkg, args)
+            if (args[0] == "package") {
+                createPipelineFiles(pkg, args.drop(1))
+            }
+        }
+        fun createPipelineFiles(pkg: CustomPipeline, args: List<String>) {
+            val prefix = createPackageFiles(pkg, args)
             File(prefix + "pipelines").mkdirs()
             File(prefix + "pipelines" + File.separator + "default.yaml").writeText(pkg.pipelineYAML())
         }

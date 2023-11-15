@@ -6,6 +6,9 @@ import com.atlan.Atlan
 import com.atlan.exception.AtlanException
 import com.atlan.exception.NotFoundException
 import com.atlan.model.assets.Connection
+import com.atlan.pkg.Utils.getEnvVar
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import mu.KLogger
 import mu.KotlinLogging
 import java.io.IOException
@@ -18,7 +21,21 @@ import kotlin.system.exitProcess
  * Common utilities for using the Atlan SDK within Kotlin.
  */
 object Utils {
-    private val logger = KotlinLogging.logger {}
+    val logger = KotlinLogging.logger {}
+    val MAPPER = jacksonObjectMapper()
+
+    /**
+     * Set up the event-processing options, and start up the event processor.
+     *
+     * @return the configuration used to set up the event-processing handler, or null if no configuration was found
+     */
+    inline fun <reified T : CustomConfig> setPackageOps(): T {
+        logger.info("Looking for configuration in environment variables...")
+        val config = parseConfigFromEnv<T>()
+        setClient(config.runtime.userId ?: "")
+        setWorkflowOpts(config.runtime)
+        return config
+    }
 
     /**
      * Set up the default Atlan client, based on environment variables.
@@ -60,7 +77,7 @@ object Utils {
      */
     fun getEnvVar(
         name: String,
-        default: String,
+        default: String = "",
     ): String {
         val candidate = System.getenv(name)
         return if (candidate != null && candidate.isNotEmpty()) candidate else default
@@ -141,6 +158,107 @@ object Utils {
             map["BATCH_SIZE"] = "50"
         }
         return map
+    }
+
+    /**
+     * Parse configuration from environment variables.
+     *
+     * @return the complete configuration for the custom package
+     */
+    inline fun <reified T : CustomConfig> parseConfigFromEnv(): T {
+        logger.info("Constructing configuration from environment variables...")
+        val builder = StringBuilder()
+            .append("{\n")
+        val constructor = T::class.java.declaredConstructors[0]
+        val annotations = constructor.parameterAnnotations
+        // Note that we must reflect on the constructor's parameters, sine the CustomConfig
+        // will be a data class (the annotations are on the parameters to the constructor
+        // for a data class, not the fields themselves)
+        annotations.forEach { parameterAnnotations ->
+            parameterAnnotations.forEach { annotation ->
+                if (annotation is JsonProperty) {
+                    val propertyName = annotation.value
+                    val propertyValue = getEnvVar(propertyName.uppercase())
+                    builder.append("\"$propertyName\": \"$propertyValue\",\n")
+                }
+            }
+        }
+        if (annotations.isNotEmpty()) {
+            // Remove the final comma, if there is one (leaving the newline)
+            builder.deleteCharAt(builder.length - 2)
+        }
+        builder.append("}")
+        val runtime = buildRuntimeConfig()
+        return parseConfig(builder.toString(), runtime)
+    }
+
+    /**
+     * Parse configuration from the provided input strings.
+     *
+     * @param config the event-processing-specific configuration
+     * @param runtime the general runtime configuration from the workflow
+     * @return the complete configuration for the event-handling pipeline
+     */
+    inline fun <reified T : CustomConfig> parseConfig(config: String, runtime: String): T {
+        logger.info("Parsing configuration...")
+        val type = MAPPER.typeFactory.constructType(T::class.java)
+        val cfg = MAPPER.readValue<T>(config, type)
+        cfg.runtime = MAPPER.readValue(runtime, RuntimeConfig::class.java)
+        return cfg
+    }
+
+    /**
+     * Return the provided configuration value only if it is non-null and not empty,
+     * otherwise return the provided default value instead.
+     *
+     * @param configValue to return if there is a non-null, non-empty value
+     * @param default to return if the configValue is either null or empty
+     * @return the actual value or a default, if the actual is null or empty
+     */
+    @Suppress("UNCHECKED_CAST")
+    inline fun <reified T> getOrDefault(configValue: String?, default: T): T {
+        if (configValue.isNullOrEmpty()) {
+            return default
+        }
+        return when (default) {
+            // TODO: likely need to extend to other types
+            is Int -> configValue.toInt() as T
+            is List<*> -> getOrDefault(null, default as List<String>) as T
+            else -> configValue as T
+        }
+    }
+
+    /**
+     * Return the provided configuration value only if it is non-null and not empty,
+     * otherwise return the provided default value instead.
+     *
+     * @param configValue to return if there is a non-null, non-empty value
+     * @param default to return if the configValue is either null or empty
+     * @return the actual value or a default, if the actual is null or empty
+     */
+    fun getOrDefault(configValue: List<String>?, default: List<String>): List<String> {
+        return if (configValue.isNullOrEmpty()) default else configValue
+    }
+
+    /**
+     * Construct a JSON representation of the runtime configuration of the workflow, drawn from
+     * a standard set of environment variables about the workflow.
+     */
+    fun buildRuntimeConfig(): String {
+        val userId = getEnvVar("ATLAN_USER_ID", "")
+        val agent = getEnvVar("X_ATLAN_AGENT", "")
+        val agentId = getEnvVar("X_ATLAN_AGENT_ID", "")
+        val agentPkg = getEnvVar("X_ATLAN_AGENT_PACKAGE_NAME", "")
+        val agentWfl = getEnvVar("X_ATLAN_AGENT_WORKFLOW_ID", "")
+        return """
+    {
+        "user-id": "$userId",
+        "x-atlan-agent": "$agent",
+        "x-atlan-agent-id": "$agentId",
+        "x-atlan-agent-package-name": "$agentPkg",
+        "x-atlan-agent-workflow-id": "$agentWfl"
+    }
+        """.trimIndent()
     }
 
     /**

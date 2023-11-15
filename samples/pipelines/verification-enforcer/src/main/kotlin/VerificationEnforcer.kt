@@ -10,11 +10,6 @@ import com.atlan.model.assets.ICatalog
 import com.atlan.model.enums.CertificateStatus
 import com.atlan.pkg.events.AbstractNumaflowHandler
 import com.atlan.pkg.events.EventUtils
-import com.atlan.pkg.events.config.EventConfig
-import com.atlan.pkg.serde.MultiSelectDeserializer
-import com.fasterxml.jackson.annotation.JsonAutoDetect
-import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import org.slf4j.Logger
 
 /**
@@ -24,30 +19,16 @@ import org.slf4j.Logger
 object VerificationEnforcer : AbstractNumaflowHandler(Handler) {
 
     const val DEFAULT_ENFORCEMENT_MESSAGE = "To be verified, an asset must have a description, at least one owner, and lineage."
-    private lateinit var config: Cfg
+    private lateinit var config: VerificationEnforcerCfg
 
     @JvmStatic
     fun main(args: Array<String>) {
-        val configCandidate = EventUtils.setEventOps<Cfg>()
-        if (configCandidate != null) {
-            config = configCandidate
-            EventUtils.useApiToken(config.apiTokenId)
+        EventUtils.setEventOps<VerificationEnforcerCfg>()?.let {
+            config = it
+            EventUtils.useApiToken(config.apiToken)
             EventUtils.startHandler(this)
         }
     }
-
-    /**
-     * Expected configuration for the event processing.
-     */
-    @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
-    data class Cfg(
-        @JsonDeserialize(using = MultiSelectDeserializer::class)
-        @JsonProperty("must_haves") val mustHaves: List<String>?,
-        @JsonProperty("enforcement_message") val enforcementMessage: String?,
-        @JsonDeserialize(using = MultiSelectDeserializer::class)
-        @JsonProperty("asset_types") val assetTypes: List<String>?,
-        @JsonProperty("api_token") val apiTokenId: String?,
-    ) : EventConfig()
 
     /**
      * Logic for the event processing.
@@ -73,6 +54,8 @@ object VerificationEnforcer : AbstractNumaflowHandler(Handler) {
         private lateinit var ENFORCEMENT_MESSAGE: String
 
         private fun setup() {
+            // We must initialize constants _after_ the instantiation of the object,
+            // since the config itself will only be populated after instantiation
             MUST_HAVES = config.mustHaves ?: listOf()
             ASSET_TYPES = config.assetTypes ?: listOf()
             ENFORCEMENT_MESSAGE = config.enforcementMessage ?: DEFAULT_ENFORCEMENT_MESSAGE

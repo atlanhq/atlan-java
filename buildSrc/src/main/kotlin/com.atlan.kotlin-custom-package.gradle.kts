@@ -27,11 +27,29 @@ dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test:1.8.10")
 }
 
-tasks.create<JavaExec>("generatePackageConfig") {
+tasks.create<JavaExec>("customPkgCfg") {
     dependsOn(tasks.build)
     mainClass.set("PackageConfig")
     classpath = sourceSets.main.get().runtimeClasspath
+    args = listOf(
+        "config",
+        "src/main/kotlin",
+    )
+}
+
+tasks.create<JavaExec>("customPkgGen") {
+    dependsOn(tasks.getByName("customPkgCfg"))
+    mainClass.set("PackageConfig")
+    classpath = sourceSets.main.get().runtimeClasspath
     workingDir = rootDir
+    args = listOf(
+        "package",
+        "generated-packages",
+    )
+}
+
+tasks.create("customPkg") {
+    dependsOn(tasks.getByName("customPkgGen"))
 }
 
 tasks {

@@ -2,7 +2,6 @@
    Copyright 2023 Atlan Pte. Ltd. */
 import com.atlan.Atlan
 import com.atlan.pkg.CustomPipeline
-import com.atlan.pkg.CustomPipeline.Companion.createPipelineFiles
 import com.atlan.pkg.config.model.ui.UIConfig
 import com.atlan.pkg.config.model.ui.UIRule
 import com.atlan.pkg.config.model.ui.UIStep
@@ -101,6 +100,6 @@ object PackageConfig : CustomPipeline(
 ) {
     @JvmStatic
     fun main(args: Array<String>) {
-        createPipelineFiles(this)
+        generate(this, args)
     }
 }

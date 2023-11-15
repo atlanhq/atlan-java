@@ -10,6 +10,8 @@ import com.atlan.pkg.config.model.ui.UIConfig
 import com.atlan.pkg.config.model.workflow.WorkflowContainer
 import com.atlan.pkg.config.model.workflow.WorkflowOutputs
 import com.atlan.pkg.config.model.workflow.WorkflowTemplateDefinition
+import com.atlan.pkg.config.widgets.DropDown
+import com.atlan.util.StringUtils
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -130,6 +132,46 @@ open class CustomPackage(
         return yaml.writeValueAsString(workflowTemplate)
     }
 
+    /**
+     * Generates a data class from the package's UI configuration items.
+     */
+    fun cfgDataClass(className: String): String {
+        val builder = StringBuilder()
+        builder.append(
+            """
+            /* SPDX-License-Identifier: Apache-2.0
+               Copyright 2023 Atlan Pte. Ltd. */
+            import com.atlan.pkg.CustomConfig
+            import com.atlan.pkg.serde.MultiSelectDeserializer
+            import com.fasterxml.jackson.annotation.JsonAutoDetect
+            import com.fasterxml.jackson.annotation.JsonProperty
+            import com.fasterxml.jackson.databind.annotation.JsonDeserialize
+            import javax.annotation.processing.Generated;
+
+            /**
+             * Expected configuration for the $packageName custom package.
+             */
+            @Generated("com.atlan.pkg.CustomPackage")
+            @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
+            data class $className(
+            """.trimIndent(),
+        ).append("\n")
+        uiConfig.properties.forEach { (k, u) ->
+            var type = "String"
+            if (u.ui is DropDown.DropDownWidget) {
+                builder.append("    @JsonDeserialize(using = MultiSelectDeserializer::class)\n")
+                type = "List<String>"
+            }
+            builder.append("    @JsonProperty(\"$k\") val ${StringUtils.getLowerCamelCase(k)}: $type?,\n")
+        }
+        builder.append(
+            """
+            ) : CustomConfig()
+            """.trimIndent(),
+        ).append("\n")
+        return builder.toString()
+    }
+
     companion object {
         val yaml = YAMLMapper.builder()
             .disable(YAMLGenerator.Feature.WRITE_DOC_START_MARKER)
@@ -141,11 +183,19 @@ open class CustomPackage(
             .registerKotlinModule()
         val json: ObjectMapper = jacksonObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL)
 
-        fun createPackageFiles(pkg: CustomPackage, path: String = "generated-packages"): String {
+        fun generate(pkg: CustomPackage, args: Array<String>) {
+            when (args[0]) {
+                "package" -> createPackageFiles(pkg, args.drop(1))
+                "config" -> createConfigClass(pkg, args.drop(1))
+            }
+        }
+
+        fun createPackageFiles(pkg: CustomPackage, args: List<String>): String {
+            val path = args[0]
             val prefix = when {
                 path.isEmpty() -> path
                 path.endsWith(File.separator) -> path
-                else -> path + File.separator
+                else -> path
             } + File.separator + pkg.name + File.separator
             File(prefix).mkdirs()
             File(prefix + "index.js").writeText(pkg.indexJS())
@@ -155,6 +205,17 @@ open class CustomPackage(
             File(prefix + "configmaps" + File.separator + "default.yaml").writeText(pkg.configMapYAML())
             File(prefix + "templates" + File.separator + "default.yaml").writeText(pkg.workflowTemplateYAML())
             return prefix
+        }
+
+        fun createConfigClass(pkg: CustomPackage, args: List<String>) {
+            val path = args[0]
+            val className = "${StringUtils.getUpperCamelCase(pkg.packageName)}Cfg"
+            val filename = when {
+                path.isEmpty() -> path
+                path.endsWith(File.separator) -> path
+                else -> path
+            } + File.separator + "$className.kt"
+            File(filename).writeText(pkg.cfgDataClass(className))
         }
     }
 }

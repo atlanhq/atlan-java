@@ -84,6 +84,6 @@ object PackageConfig : CustomPackage(
 ) {
     @JvmStatic
     fun main(args: Array<String>) {
-        createPackageFiles(this)
+        generate(this, args)
     }
 }

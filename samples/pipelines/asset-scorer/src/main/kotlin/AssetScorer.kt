@@ -16,11 +16,6 @@ import com.atlan.model.enums.CertificateStatus
 import com.atlan.model.events.AtlanEvent
 import com.atlan.pkg.events.AbstractNumaflowHandler
 import com.atlan.pkg.events.EventUtils
-import com.atlan.pkg.events.config.EventConfig
-import com.atlan.pkg.serde.MultiSelectDeserializer
-import com.fasterxml.jackson.annotation.JsonAutoDetect
-import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import org.slf4j.Logger
 import java.math.RoundingMode
 import java.text.DecimalFormat
@@ -31,27 +26,16 @@ import java.text.DecimalFormat
  */
 object AssetScorer : AbstractNumaflowHandler(Handler) {
 
-    private lateinit var config: Cfg
+    private lateinit var config: AssetScorerCfg
 
     @JvmStatic
     fun main(args: Array<String>) {
-        val configCandidate = EventUtils.setEventOps<Cfg>()
-        if (configCandidate != null) {
-            config = configCandidate
-            EventUtils.useApiToken(config.apiTokenId)
+        EventUtils.setEventOps<AssetScorerCfg>()?.let {
+            config = it
+            EventUtils.useApiToken(config.apiToken)
             EventUtils.startHandler(this)
         }
     }
-
-    /**
-     * Expected configuration for the event processing.
-     */
-    @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
-    data class Cfg(
-        @JsonDeserialize(using = MultiSelectDeserializer::class)
-        @JsonProperty("asset_types") val assetTypes: List<String>?,
-        @JsonProperty("api_token") val apiTokenId: String?,
-    ) : EventConfig()
 
     object Handler : AtlanEventHandler {
 

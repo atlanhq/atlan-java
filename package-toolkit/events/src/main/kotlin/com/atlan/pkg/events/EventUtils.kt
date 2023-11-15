@@ -3,11 +3,9 @@
 package com.atlan.pkg.events
 
 import com.atlan.Atlan
-import com.atlan.pkg.RuntimeConfig
+import com.atlan.pkg.CustomConfig
 import com.atlan.pkg.Utils
-import com.atlan.pkg.events.config.EventConfig
 import com.atlan.pkg.events.config.S3ConfigSync
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import io.numaproj.numaflow.function.FunctionServer
 import mu.KotlinLogging
 
@@ -17,14 +15,13 @@ import mu.KotlinLogging
 object EventUtils {
 
     val logger = KotlinLogging.logger {}
-    val MAPPER = jacksonObjectMapper()
 
     /**
      * Set up the event-processing options, and start up the event processor.
      *
      * @return the configuration used to set up the event-processing handler, or null if no configuration was found
      */
-    inline fun <reified T : EventConfig> setEventOps(): T? {
+    inline fun <reified T : CustomConfig> setEventOps(): T? {
         logger.info("Looking for configuration in S3...")
         val config = S3ConfigSync().sync<T>()
         if (config == null) {
@@ -35,21 +32,6 @@ object EventUtils {
             Utils.setWorkflowOpts(config.runtime)
         }
         return config
-    }
-
-    /**
-     * Parse configuration from the provided input strings.
-     *
-     * @param config the event-processing-specific configuration
-     * @param runtime the general runtime configuration from the workflow
-     * @return the complete configuration for the event-handling pipeline
-     */
-    inline fun <reified T : EventConfig> parseConfig(config: String, runtime: String): T {
-        logger.info("Parsing configuration...")
-        val type = MAPPER.typeFactory.constructType(T::class.java)
-        val cfg = MAPPER.readValue<T>(config, type)
-        cfg.runtime = MAPPER.readValue(runtime, RuntimeConfig::class.java)
-        return cfg
     }
 
     /**

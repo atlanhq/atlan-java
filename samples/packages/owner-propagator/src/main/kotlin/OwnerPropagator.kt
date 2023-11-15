@@ -15,11 +15,10 @@ private val logger = KotlinLogging.logger {}
  * Actually run the logic to propagate owners from schema down to children tables.
  */
 fun main() {
-    Utils.setClient()
-    Utils.setWorkflowOpts()
+    val config = Utils.setPackageOps<OwnerPropagatorCfg>()
 
-    val qnPrefix = Utils.getEnvVar("QN_PREFIX", "default")
-    val batchSize = Utils.getEnvVar("BATCH_SIZE", "50").toInt()
+    val qnPrefix = Utils.getOrDefault(config.qnPrefix, "default")
+    val batchSize = Utils.getOrDefault(config.batchSize, 50)
 
     val tables = findTables(qnPrefix, batchSize)
     propagateOwner(tables, batchSize)
