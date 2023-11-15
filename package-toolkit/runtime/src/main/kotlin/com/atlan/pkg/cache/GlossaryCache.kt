@@ -36,6 +36,7 @@ object GlossaryCache : AssetCache() {
         } catch (e: AtlanException) {
             logger.error("Unable to lookup or find glossary: {}", guid, e)
         }
+        logger.warn("Unable to find glossary with GUID: {}", guid)
         return null
     }
 
