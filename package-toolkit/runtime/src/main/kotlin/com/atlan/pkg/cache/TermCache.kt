@@ -66,6 +66,7 @@ object TermCache : AssetCache() {
         } catch (e: AtlanException) {
             logger.error("Unable to lookup or find term: {}", guid, e)
         }
+        logger.warn("Unable to find term with GUID: {}", guid)
         return null
     }
 

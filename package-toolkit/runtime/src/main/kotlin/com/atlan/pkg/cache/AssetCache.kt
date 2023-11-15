@@ -35,11 +35,13 @@ abstract class AssetCache {
      */
     fun getByGuid(guid: String): Asset? {
         if (!this.containsGuid(guid)) {
-            val asset = lookupAssetByGuid(guid)!!
-            byIdentity[getIdentityForAsset(asset)] = guid
-            byGuid[guid] = asset
+            val asset = lookupAssetByGuid(guid)
+            if (asset != null) {
+                byIdentity[getIdentityForAsset(asset)] = guid
+                byGuid[guid] = asset
+            }
         }
-        return byGuid[guid]
+        return byGuid.getOrDefault(guid, null)
     }
 
     /**
