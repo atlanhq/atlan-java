@@ -24,7 +24,6 @@ import java.io.File
  * @param containerImagePullPolicy (optional) override the default IfNotPresent policy
  * @param filter (optional) sprig expression used to filter the messages that will be processed by the pipeline
  * @param keywords (optional) list of any keyword labels to apply to the package
- * @param allowSchedule (optional) whether to allow the package to be scheduled (default, true) or only run immediately (false)
  * @param certified (optional) whether the package should be listed as certified (default, true) or not (false)
  * @param preview (optional) whether the package should be labeled as an early preview in the UI (true) or not (default, false)
  * @param connectorType (optional) if the package needs to configure a connector, specify its type here
@@ -39,11 +38,10 @@ open class CustomPipeline(
     uiConfig: UIConfig,
     containerImage: String,
     private val logicCommand: List<String>,
-    private val configCommand: List<String> = listOf("/dumb-init", "--", "java", "WriteConfig"),
+    private val configCommand: List<String> = listOf("/dumb-init", "--", "java", "com.atlan.pkg.events.WriteConfig"),
     containerImagePullPolicy: String = "IfNotPresent",
     private val filter: String = "",
     keywords: List<String> = listOf(),
-    allowSchedule: Boolean = true,
     certified: Boolean = true,
     preview: Boolean = false,
     connectorType: AtlanConnectorType? = null,
@@ -68,7 +66,7 @@ open class CustomPipeline(
         ),
     ),
     keywords = keywords,
-    allowSchedule = allowSchedule,
+    allowSchedule = false,
     certified = certified,
     preview = preview,
     connectorType = connectorType,

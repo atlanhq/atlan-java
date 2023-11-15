@@ -20,8 +20,8 @@ object PackageConfig : CustomPipeline(
     uiConfig = UIConfig(
         steps = listOf(
             UIStep(
-                title = "Configuration",
-                description = "Set up options",
+                title = "Logic",
+                description = "Configure pipeline",
                 inputs = mapOf(
                     "asset_types" to DropDown(
                         label = "Asset types",
@@ -87,7 +87,7 @@ object PackageConfig : CustomPipeline(
         ),
         rules = listOf(
             UIRule(
-                whenInputs = mapOf("connection_usage" to "TOKEN"),
+                whenInputs = mapOf("credential_usage" to "TOKEN"),
                 required = listOf("api_token"),
             ),
         ),
