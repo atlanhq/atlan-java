@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 import com.atlan.Atlan
 import com.atlan.pkg.CustomPipeline
+import com.atlan.pkg.CustomPipeline.Companion.createPipelineFiles
 import com.atlan.pkg.config.model.ui.UIConfig
 import com.atlan.pkg.config.model.ui.UIRule
 import com.atlan.pkg.config.model.ui.UIStep
@@ -18,8 +19,8 @@ object PackageConfig : CustomPipeline(
     uiConfig = UIConfig(
         steps = listOf(
             UIStep(
-                title = "Configuration",
-                description = "Set up options",
+                title = "Logic",
+                description = "Configure pipeline",
                 inputs = mapOf(
                     "asset_types" to DropDown(
                         label = "Asset types",
@@ -61,19 +62,21 @@ object PackageConfig : CustomPipeline(
         ),
         rules = listOf(
             UIRule(
-                whenInputs = mapOf("connection_usage" to "TOKEN"),
+                whenInputs = mapOf("credential_usage" to "TOKEN"),
                 required = listOf("api_token"),
             ),
         ),
     ),
     containerImage = "ghcr.io/atlanhq/csa-asset-scorer:${Atlan.VERSION}",
     containerImagePullPolicy = "Always",
-    containerCommand = listOf("/dumb-init", "--", "java", "CreateCMWriteConfig"),
+    logicCommand = listOf("/dumb-init", "--", "java", "AssetScorer"),
+    configCommand = listOf("/dumb-init", "--", "java", "CreateCMWriteConfig"),
+    filter = "json(payload).message.operationType in [\"ENTITY_CREATE\", \"ENTITY_UPDATE\", \"BUSINESS_ATTRIBUTE_UPDATE\", \"CLASSIFICATION_ADD\", \"CLASSIFICATION_DELETE\"]",
     keywords = listOf("kotlin", "governance", "pipeline"),
     preview = true,
 ) {
     @JvmStatic
     fun main(args: Array<String>) {
-        createPackageFiles(this)
+        createPipelineFiles(this)
     }
 }
