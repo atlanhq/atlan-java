@@ -3,14 +3,19 @@
 package com.atlan.pkg.cache
 
 import com.atlan.model.assets.Asset
+import com.atlan.model.enums.AtlanStatus
+import mu.KotlinLogging
 import java.util.concurrent.ConcurrentHashMap
 
 /**
  * Utility class for lazy-loading a cache of assets based on some human-constructable identity.
  */
 abstract class AssetCache {
+    private val logger = KotlinLogging.logger {}
+
     private val byIdentity: MutableMap<String, String?> = ConcurrentHashMap()
     private val byGuid: MutableMap<String, Asset?> = ConcurrentHashMap()
+    private val ignoreArchived: MutableMap<String, String?> = ConcurrentHashMap()
 
     /**
      * Retrieve an asset from the cache by its human-readable identity, lazily-loading it on any cache misses.
@@ -19,10 +24,18 @@ abstract class AssetCache {
      * @return the asset with the specified identity
      */
     fun getByIdentity(identity: String): Asset? {
+        if (this.ignoreArchived.containsKey(identity)) {
+            return null
+        }
         if (!this.containsIdentity(identity)) {
-            val asset = lookupAssetByIdentity(identity)!!
-            byIdentity[identity] = asset.guid
-            byGuid[asset.guid] = asset
+            val asset = lookupAssetByIdentity(identity)
+            if (asset == null || asset.status != AtlanStatus.ACTIVE) {
+                ignoreArchived[identity] = identity
+                logger.warn("Unable to cache archived asset: {}", identity)
+            } else {
+                byIdentity[identity] = asset.guid
+                byGuid[asset.guid] = asset
+            }
         }
         return byGuid[byIdentity[identity]]
     }
@@ -34,9 +47,15 @@ abstract class AssetCache {
      * @return the asset with the specified GUID
      */
     fun getByGuid(guid: String): Asset? {
+        if (this.ignoreArchived.containsKey(guid)) {
+            return null
+        }
         if (!this.containsGuid(guid)) {
             val asset = lookupAssetByGuid(guid)
-            if (asset != null) {
+            if (asset == null || asset.status != AtlanStatus.ACTIVE) {
+                ignoreArchived[guid] = guid
+                logger.warn("Unable to cache archived asset: {}", guid)
+            } else {
                 byIdentity[getIdentityForAsset(asset)] = guid
                 byGuid[guid] = asset
             }

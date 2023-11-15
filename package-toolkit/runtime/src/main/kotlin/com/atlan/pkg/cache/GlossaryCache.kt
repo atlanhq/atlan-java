@@ -24,9 +24,10 @@ object GlossaryCache : AssetCache() {
     override fun lookupAssetByGuid(guid: String?): Asset? {
         try {
             val glossary =
-                Glossary.select()
+                Glossary.select(true)
                     .where(Glossary.GUID.eq(guid))
                     .includeOnResults(Glossary.NAME)
+                    .includeOnResults(Glossary.STATUS)
                     .pageSize(2)
                     .stream()
                     .findFirst()
@@ -36,7 +37,6 @@ object GlossaryCache : AssetCache() {
         } catch (e: AtlanException) {
             logger.error("Unable to lookup or find glossary: {}", guid, e)
         }
-        logger.warn("Unable to find glossary with GUID: {}", guid)
         return null
     }
 
