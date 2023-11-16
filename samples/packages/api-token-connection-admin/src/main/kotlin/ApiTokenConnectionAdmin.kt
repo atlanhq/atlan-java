@@ -15,11 +15,10 @@ private val logger = KotlinLogging.logger {}
  * Actually run the logic to add the API token as a connection admin.
  */
 fun main() {
-    Utils.setClient()
-    Utils.setWorkflowOpts()
+    val config = Utils.setPackageOps<APITokenConnectionAdminCfg>()
 
-    val connectionQN = Utils.reuseConnection("CONNECTION_QUALIFIED_NAME")
-    val apiTokenGuid = Utils.getEnvVar("API_TOKEN_GUID", "")
+    val connectionQN = Utils.reuseConnection(config.connectionQualifiedName)
+    val apiTokenGuid = Utils.getOrDefault(config.apiTokenGuid, "")
 
     if (connectionQN == "" || apiTokenGuid == "") {
         logger.error("Missing required parameter - you must provide BOTH a connection and the name of an API token.")

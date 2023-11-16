@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.config.model.pipeline
 
+import com.atlan.pkg.config.model.workflow.ConfigMapEntry
 import com.atlan.pkg.config.model.workflow.NameValuePair
 import com.atlan.pkg.config.model.workflow.NamedSecret
 import com.fasterxml.jackson.annotation.JsonInclude
@@ -118,8 +119,8 @@ class PipelineSpec(
                     NameValuePair("CONFIG_PREFIX", name),
                     NamedSecret("CLIENT_ID", "argo-client-creds", "login"),
                     NamedSecret("CLIENT_SECRET", "argo-client-creds", "password"),
-                    NamedSecret("AWS_S3_BUCKET_NAME", "atlan-defaults", "bucket"),
-                    NamedSecret("AWS_S3_REGION", "atlan-defaults", "region"),
+                    ConfigMapEntry("AWS_S3_BUCKET_NAME", "atlan-defaults", "bucket"),
+                    ConfigMapEntry("AWS_S3_REGION", "atlan-defaults", "region"),
                     mapOf(
                         "name" to "ATLAN_BASE_URL",
                         "value" to "INTERNAL",

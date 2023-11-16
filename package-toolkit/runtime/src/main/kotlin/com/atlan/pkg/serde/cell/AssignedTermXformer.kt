@@ -29,7 +29,6 @@ object AssignedTermXformer {
                 if (term is GlossaryTerm) {
                     "${term.name}$TERM_GLOSSARY_DELIMITER${term.anchor.name}"
                 } else {
-                    logger.error("Unable to find any term with GUID: {}", asset.guid)
                     ""
                 }
             }

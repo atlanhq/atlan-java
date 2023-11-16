@@ -13,7 +13,6 @@ import com.atlan.model.assets.View
 import com.atlan.model.enums.CertificateStatus
 import com.atlan.model.search.CompoundQuery
 import com.atlan.pkg.Utils
-import com.atlan.pkg.serde.MultiSelectDeserializer
 import com.atlan.util.AssetBatch
 import mu.KotlinLogging
 import java.util.concurrent.ConcurrentHashMap
@@ -30,12 +29,11 @@ private val hashToColumns = ConcurrentHashMap<Int, Set<String>>()
 private val uniqueContainers = ConcurrentHashMap<AssetKey, AssetKey>()
 
 fun main() {
-    Utils.setClient()
-    Utils.setWorkflowOpts()
+    val config = Utils.setPackageOps<DuplicateDetectorCfg>()
 
-    val qnPrefix = Utils.getEnvVar("QN_PREFIX", "default")
-    val types = MultiSelectDeserializer.deserialize(Utils.getEnvVar("ASSET_TYPES", "[\"Table\",\"View\",\"MaterialisedView\"]"))
-    val batchSize = Utils.getEnvVar("BATCH_SIZE", "50").toInt()
+    val qnPrefix = Utils.getOrDefault(config.qnPrefix, "default")
+    val types = Utils.getOrDefault(config.assetTypes, listOf(Table.TYPE_NAME, View.TYPE_NAME, MaterializedView.TYPE_NAME))
+    val batchSize = Utils.getOrDefault(config.batchSize, 50)
 
     logger.info("Detecting duplicates across {} (for prefix {}) on: {}", types, qnPrefix, Atlan.getDefaultClient().baseUrl)
     findAssets(qnPrefix, types, batchSize)

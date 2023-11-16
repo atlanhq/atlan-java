@@ -34,7 +34,7 @@ class ConnectionSelector(
         start,
     ),
 ) {
-    private class ConnectionSelectorWidget(
+    class ConnectionSelectorWidget(
         label: String,
         hidden: Boolean = false,
         help: String = "",

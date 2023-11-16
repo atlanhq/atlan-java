@@ -26,10 +26,11 @@ object TermCache : AssetCache() {
             if (glossary != null) {
                 try {
                     val term =
-                        GlossaryTerm.select()
+                        GlossaryTerm.select(true)
                             .where(GlossaryTerm.NAME.eq(termName))
                             .where(GlossaryTerm.ANCHOR.eq(glossary.qualifiedName))
                             .includesOnResults(includesOnResults)
+                            .includeOnResults(GlossaryTerm.STATUS)
                             .includesOnRelations(includesOnRelations)
                             .pageSize(2)
                             .stream()
@@ -53,7 +54,7 @@ object TermCache : AssetCache() {
     override fun lookupAssetByGuid(guid: String?): Asset? {
         try {
             val term =
-                GlossaryTerm.select()
+                GlossaryTerm.select(true)
                     .where(GlossaryTerm.GUID.eq(guid))
                     .includesOnResults(includesOnResults)
                     .includesOnRelations(includesOnRelations)

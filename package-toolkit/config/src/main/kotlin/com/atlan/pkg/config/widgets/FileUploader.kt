@@ -31,7 +31,7 @@ class FileUploader(
         placeholder,
     ),
 ) {
-    private class FileUploaderWidget(
+    class FileUploaderWidget(
         label: String,
         fileTypes: List<String>,
         hidden: Boolean = false,

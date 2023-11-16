@@ -10,6 +10,6 @@ data class S3Artifact(
     val name: String,
     val path: String = "/tmp/$name.json",
     val archive: Map<String, Map<String, String>> = mapOf("none" to mapOf()),
-    val s3: Map<String, String> = mapOf("key" to "{{inputs.parameters.${CustomPipeline.S3_CONFIG_PREFIX}}}"),
+    val s3: Map<String, String> = mapOf("key" to "{{inputs.parameters.${CustomPipeline.S3_CONFIG_PREFIX}}}/$name.json"),
     val artifactGC: Map<String, String> = mapOf("strategy" to "OnWorkflowDeletion"),
 ) : NamedPair(name)

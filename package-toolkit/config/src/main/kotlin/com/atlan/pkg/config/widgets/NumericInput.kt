@@ -31,7 +31,7 @@ class NumericInput(
         grid,
     ),
 ) {
-    private class NumericInputWidget(
+    class NumericInputWidget(
         label: String,
         hidden: Boolean = false,
         help: String = "",

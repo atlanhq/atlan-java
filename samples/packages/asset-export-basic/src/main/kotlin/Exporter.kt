@@ -27,10 +27,8 @@ private val logger = KotlinLogging.logger {}
  * Note: all parameters should be passed through environment variables.
  */
 fun main() {
-    Utils.setClient()
-    Utils.setWorkflowOpts()
-
-    val exporter = Exporter(Utils.environmentVariables())
+    val config = Utils.setPackageOps<AssetExportBasicCfg>()
+    val exporter = Exporter(config)
     exporter.export()
 }
 
@@ -44,9 +42,9 @@ fun main() {
  *
  * @param config configuration to use for the exporter, typically driven by environment variables
  */
-class Exporter(private val config: Map<String, String>) : RowGenerator {
+class Exporter(private val config: AssetExportBasicCfg) : RowGenerator {
 
-    private val batchSize = config.getOrDefault("BATCH_SIZE", "50").toInt()
+    private val batchSize = Utils.getOrDefault(config.batchSize, 50)
     private val filename = "tmp" + File.separator + "asset-export.csv"
 
     fun export() {
@@ -73,10 +71,10 @@ class Exporter(private val config: Map<String, String>) : RowGenerator {
     }
 
     private fun getAssetsToExtract(): FluentSearch.FluentSearchBuilder<*, *> {
-        val scope = config.getOrDefault("EXPORT_SCOPE", "ENRICHED_ONLY")
+        val scope = Utils.getOrDefault(config.exportScope, "ENRICHED_ONLY")
         val builder = Atlan.getDefaultClient().assets
             .select()
-            .where(Asset.QUALIFIED_NAME.startsWith(config.getOrDefault("QN_PREFIX", "default")))
+            .where(Asset.QUALIFIED_NAME.startsWith(Utils.getOrDefault(config.qnPrefix, "default")))
             .whereNot(FluentSearch.superTypes(listOf(IAccessControl.TYPE_NAME, INamespace.TYPE_NAME)))
             .whereNot(FluentSearch.assetTypes(listOf(AuthPolicy.TYPE_NAME, Procedure.TYPE_NAME, AtlanQuery.TYPE_NAME)))
         if (scope == "ENRICHED_ONLY") {

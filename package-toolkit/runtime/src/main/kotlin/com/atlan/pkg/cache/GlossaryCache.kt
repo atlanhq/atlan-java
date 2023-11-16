@@ -24,9 +24,10 @@ object GlossaryCache : AssetCache() {
     override fun lookupAssetByGuid(guid: String?): Asset? {
         try {
             val glossary =
-                Glossary.select()
+                Glossary.select(true)
                     .where(Glossary.GUID.eq(guid))
                     .includeOnResults(Glossary.NAME)
+                    .includeOnResults(Glossary.STATUS)
                     .pageSize(2)
                     .stream()
                     .findFirst()
