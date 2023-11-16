@@ -3,10 +3,9 @@
 import com.atlan.Atlan
 import com.atlan.pkg.CustomPackage
 import com.atlan.pkg.config.model.ui.UIConfig
-import com.atlan.pkg.config.model.ui.UIRule
 import com.atlan.pkg.config.model.ui.UIStep
 import com.atlan.pkg.config.model.workflow.WorkflowOutputs
-import com.atlan.pkg.config.widgets.NumericInput
+import com.atlan.pkg.config.widgets.BooleanInput
 import com.atlan.pkg.config.widgets.Radio
 import com.atlan.pkg.config.widgets.TextInput
 
@@ -22,8 +21,8 @@ object PackageConfig : CustomPackage(
     uiConfig = UIConfig(
         steps = listOf(
             UIStep(
-                title = "Configuration",
-                description = "Export configuration",
+                title = "Assets",
+                description = "Asset scope",
                 inputs = mapOf(
                     "export_scope" to Radio(
                         label = "Export scope",
@@ -36,36 +35,19 @@ object PackageConfig : CustomPackage(
                         help = "Whether to export only those assets that were enriched by users, or all assets with the qualified name prefix.",
                     ),
                     "qn_prefix" to TextInput(
-                        label = "Qualified name prefix",
+                        label = "Qualified name prefix (for assets)",
                         required = false,
                         help = "Starting value for a qualifiedName that will determine which assets to export.",
                         placeholder = "default",
-                        grid = 6,
+                        grid = 4,
                     ),
-                    "control_config_strategy" to Radio(
-                        label = "Options",
-                        required = true,
-                        possibleValues = mapOf(
-                            "default" to "Default",
-                            "advanced" to "Advanced",
-                        ),
-                        default = "default",
-                        help = "Options to optimize how the utility runs.",
-                    ),
-                    "batch_size" to NumericInput(
-                        label = "Batch size",
+                    "include_glossaries" to BooleanInput(
+                        label = "Include glossaries?",
                         required = false,
-                        help = "Maximum number of results to process at a time (per API request).",
-                        placeholder = "50",
+                        help = "Whether glossaries (and their terms and categories) should be exported, too.",
                         grid = 4,
                     ),
                 ),
-            ),
-        ),
-        rules = listOf(
-            UIRule(
-                whenInputs = mapOf("control_config_strategy" to "advanced"),
-                required = listOf("batch_size"),
             ),
         ),
     ),

@@ -13,6 +13,5 @@ import javax.annotation.processing.Generated
 data class AssetExportBasicCfg(
     @JsonProperty("export_scope") val exportScope: String?,
     @JsonProperty("qn_prefix") val qnPrefix: String?,
-    @JsonProperty("control_config_strategy") val controlConfigStrategy: String?,
-    @JsonProperty("batch_size") val batchSize: String?,
+    @JsonProperty("include_glossaries") val includeGlossaries: Boolean?,
 ) : CustomConfig()

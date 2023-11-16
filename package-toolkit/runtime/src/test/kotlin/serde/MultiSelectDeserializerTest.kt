@@ -2,7 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package serde
 
-import com.atlan.pkg.serde.MultiSelectDeserializer
+import com.atlan.pkg.serde.WidgetSerde
 import com.fasterxml.jackson.annotation.JsonAutoDetect
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
@@ -15,7 +15,7 @@ import kotlin.test.assertTrue
 class MultiSelectDeserializerTest {
     @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
     data class TestClass(
-        @JsonDeserialize(using = MultiSelectDeserializer::class) val property: List<String>?,
+        @JsonDeserialize(using = WidgetSerde.MultiSelectDeserializer::class) val property: List<String>?,
     )
 
     companion object {

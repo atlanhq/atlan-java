@@ -3,46 +3,48 @@
 package com.atlan.pkg.config.widgets
 
 /**
- * Widget that allows you to enter an arbitrary number into a single-line text input field,
- * and returns the value of the number that was entered.
+ * Widget that allows you to select from the types of connectors that exist in the tenant
+ * (for example "Snowflake"), without needing to select a specific instance of a connection
+ * (for example, the "production" connection for Snowflake). Will return a string-encoded
+ * object giving the connection type that was selected and a list of all connections in the tenant
+ * that have that type.
  *
  * @param label name to show in the UI for the widget
  * @param required whether a value must be selected to proceed with the UI setup
  * @param hidden whether the widget will be shown in the UI (false) or not (true)
  * @param help informational text to place in a hover-over to describe the use of the input
- * @param placeholder example text to place within the widget to exemplify its use
  * @param grid sizing of the input on the UI (8 is full-width, 4 is half-width)
+ * @param start TBC
  */
-class NumericInput(
+class ConnectorTypeSelector(
     label: String,
     required: Boolean = false,
     hidden: Boolean = false,
     help: String = "",
-    placeholder: String = "",
-    grid: Int = 8,
+    grid: Int = 4,
+    start: Int = 1,
 ) : UIElement(
-    "number",
+    type = "string",
     required,
-    NumericInputWidget(
+    ConnectorTypeSelectorWidget(
         label,
         hidden,
         help,
-        placeholder,
         grid,
+        start,
     ),
 ) {
-    class NumericInputWidget(
+    class ConnectorTypeSelectorWidget(
         label: String,
         hidden: Boolean = false,
         help: String = "",
-        placeholder: String = "",
-        grid: Int = 8,
+        grid: Int = 4,
+        val start: Int = 1,
     ) : Widget(
-        "inputNumber",
-        label,
-        hidden,
-        help,
-        placeholder,
-        grid,
+        "sourceConnectionSelector",
+        label = label,
+        hidden = hidden,
+        help = help,
+        grid = grid,
     )
 }

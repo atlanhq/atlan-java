@@ -2,25 +2,20 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package serde
 
-import com.atlan.model.assets.Connection
-import com.atlan.model.enums.AtlanConnectorType
-import com.atlan.pkg.serde.WidgetSerde
 import com.fasterxml.jackson.annotation.JsonAutoDetect
 import com.fasterxml.jackson.databind.JsonMappingException
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
+import org.testng.Assert.assertNull
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
-import kotlin.test.assertNull
 
-class ConnectionDeserializerTest {
+class NumericInputTest {
     @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
     data class TestClass(
-        @JsonDeserialize(using = WidgetSerde.ConnectionDeserializer::class)
-        val connection: Connection?,
+        val test: Number?,
     )
 
     companion object {
@@ -29,17 +24,27 @@ class ConnectionDeserializerTest {
         """
         private const val NULL = """
             {
-                "connection": null
+                "test": null
             }
         """
         private const val INVALID = """
             {
-                "connection": "ONE"
+                "test": "ONE"
             }
         """
-        private const val VALID = """
+        private const val VALID_INT = """
             {
-                "connection": "{\"attributes\":{\"name\":\"swagger3\",\"qualifiedName\":\"default/api/1700144027\",\"allowQuery\":true,\"allowQueryPreview\":true,\"rowLimit\":\"10000\",\"defaultCredentialGuid\":\"\",\"connectorName\":\"api\",\"sourceLogo\":\"http://assets.atlan.com/assets/apispec.png\",\"isDiscoverable\":true,\"isEditable\":false,\"category\":\"API\",\"adminUsers\":[\"jsmith\"],\"adminGroups\":[],\"adminRoles\":[\"db6d07eb-b3e9-493b-ad1a-b82027da37d5\"]},\"typeName\":\"Connection\"}"
+                "test": 123
+            }
+        """
+        private const val VALID_LONG = """
+            {
+                "test": 1234567890123456789
+            }
+        """
+        private const val VALID_FLOAT = """
+            {
+                "test": 123.456
             }
         """
         private val MAPPER = jacksonObjectMapper()
@@ -48,13 +53,13 @@ class ConnectionDeserializerTest {
     @Test
     fun testEmpty() {
         val result = MAPPER.readValue<TestClass>(EMPTY)
-        assertNull(result.connection)
+        assertNull(result.test)
     }
 
     @Test
     fun testNull() {
         val result = MAPPER.readValue<TestClass>(NULL)
-        assertNull(result.connection)
+        assertNull(result.test)
     }
 
     @Test
@@ -68,10 +73,23 @@ class ConnectionDeserializerTest {
     }
 
     @Test
-    fun testValid() {
-        val result = MAPPER.readValue<TestClass>(VALID)
-        assertNotNull(result.connection)
-        assertEquals("swagger3", result.connection.name)
-        assertEquals(AtlanConnectorType.API, result.connection.connectorType)
+    fun testValidInt() {
+        val result = MAPPER.readValue<TestClass>(VALID_INT)
+        assertNotNull(result.test)
+        assertEquals(123, result.test)
+    }
+
+    @Test
+    fun testValidLong() {
+        val result = MAPPER.readValue<TestClass>(VALID_LONG)
+        assertNotNull(result.test)
+        assertEquals(1234567890123456789, result.test)
+    }
+
+    @Test
+    fun testValidFloat() {
+        val result = MAPPER.readValue<TestClass>(VALID_FLOAT)
+        assertNotNull(result.test)
+        assertEquals(123.456, result.test)
     }
 }

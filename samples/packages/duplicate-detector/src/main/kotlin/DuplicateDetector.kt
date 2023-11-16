@@ -33,7 +33,7 @@ fun main() {
 
     val qnPrefix = Utils.getOrDefault(config.qnPrefix, "default")
     val types = Utils.getOrDefault(config.assetTypes, listOf(Table.TYPE_NAME, View.TYPE_NAME, MaterializedView.TYPE_NAME))
-    val batchSize = Utils.getOrDefault(config.batchSize, 50)
+    val batchSize = 20
 
     logger.info("Detecting duplicates across {} (for prefix {}) on: {}", types, qnPrefix, Atlan.getDefaultClient().baseUrl)
     findAssets(qnPrefix, types, batchSize)

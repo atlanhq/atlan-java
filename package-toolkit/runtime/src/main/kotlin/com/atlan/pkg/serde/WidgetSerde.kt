@@ -1,0 +1,97 @@
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
+package com.atlan.pkg.serde
+
+import com.atlan.Atlan
+import com.atlan.AtlanClient
+import com.atlan.model.assets.Connection
+import com.atlan.pkg.model.ConnectorAndConnections
+import com.fasterxml.jackson.core.JsonParser
+import com.fasterxml.jackson.databind.DeserializationContext
+import com.fasterxml.jackson.databind.JsonNode
+import com.fasterxml.jackson.databind.deser.std.StdDeserializer
+import com.fasterxml.jackson.databind.jsontype.TypeDeserializer
+import com.fasterxml.jackson.databind.type.TypeFactory
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
+
+object WidgetSerde {
+
+    // Creates a single static mapper to use across calls
+    private val mapper = jacksonObjectMapper()
+
+    fun getClient(): AtlanClient {
+        return try {
+            Atlan.getDefaultClient()
+        } catch (e: IllegalStateException) {
+            // Bootstrap a client for deserialization, if none is already configured
+            Atlan.setBaseUrl("INTERNAL")
+            Atlan.getDefaultClient()
+        }
+    }
+
+    class MultiSelectDeserializer : StdDeserializer<List<String>>(
+        TypeFactory.defaultInstance().constructCollectionType(List::class.java, String::class.java),
+    ) {
+        override fun deserialize(p: JsonParser?, ctxt: DeserializationContext?): List<String> {
+            val root = p?.codec?.readTree<JsonNode>(p)
+            if (root != null && !root.isNull && root.isTextual) {
+                val value = root.textValue()
+                if (!value.isNullOrEmpty()) {
+                    return if (value.startsWith("[")) {
+                        return mapper.readValue<List<String>>(value)
+                    } else {
+                        listOf(value)
+                    }
+                }
+            }
+            return listOf()
+        }
+    }
+
+    class ConnectorAndConnectionsDeserializer : StdDeserializer<ConnectorAndConnections>(
+        ConnectorAndConnections::class.java,
+    ) {
+        override fun deserializeWithType(
+            p: JsonParser?,
+            ctxt: DeserializationContext?,
+            typeDeserializer: TypeDeserializer?,
+        ): ConnectorAndConnections? {
+            return deserialize(p, ctxt)
+        }
+
+        override fun deserialize(p: JsonParser?, ctxt: DeserializationContext?): ConnectorAndConnections? {
+            val root = p?.codec?.readTree<JsonNode>(p)
+            if (root != null && !root.isNull && root.isTextual) {
+                val value = root.textValue()
+                if (!value.isNullOrEmpty()) {
+                    return mapper.readValue<ConnectorAndConnections>(value)
+                }
+            }
+            return null
+        }
+    }
+
+    class ConnectionDeserializer : StdDeserializer<Connection>(
+        Connection::class.java,
+    ) {
+        override fun deserializeWithType(
+            p: JsonParser?,
+            ctxt: DeserializationContext?,
+            typeDeserializer: TypeDeserializer?,
+        ): Connection? {
+            return deserialize(p, ctxt)
+        }
+
+        override fun deserialize(p: JsonParser?, ctxt: DeserializationContext?): Connection? {
+            val root = p?.codec?.readTree<JsonNode>(p)
+            if (root != null && !root.isNull && root.isTextual) {
+                val value = root.textValue()
+                if (!value.isNullOrEmpty()) {
+                    return getClient().readValue(value, Connection::class.java)
+                }
+            }
+            return null
+        }
+    }
+}

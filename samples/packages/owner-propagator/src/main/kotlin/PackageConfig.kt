@@ -4,7 +4,6 @@ import com.atlan.Atlan
 import com.atlan.pkg.CustomPackage
 import com.atlan.pkg.config.model.ui.UIConfig
 import com.atlan.pkg.config.model.ui.UIStep
-import com.atlan.pkg.config.widgets.NumericInput
 import com.atlan.pkg.config.widgets.TextInput
 
 /**
@@ -35,13 +34,6 @@ object PackageConfig : CustomPackage(
                         help = "Provide the starting name for schemas from which to propagate ownership",
                         required = false,
                         placeholder = "default/snowflake/1234567890",
-                        grid = 4,
-                    ),
-                    "batch_size" to NumericInput(
-                        label = "Batch size",
-                        help = "Maximum number of updates to attempt in a given API call",
-                        required = false,
-                        placeholder = "50",
                         grid = 4,
                     ),
                 ),

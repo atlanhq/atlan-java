@@ -18,7 +18,7 @@ fun main() {
     val config = Utils.setPackageOps<OwnerPropagatorCfg>()
 
     val qnPrefix = Utils.getOrDefault(config.qnPrefix, "default")
-    val batchSize = Utils.getOrDefault(config.batchSize, 50)
+    val batchSize = 20
 
     val tables = findTables(qnPrefix, batchSize)
     propagateOwner(tables, batchSize)

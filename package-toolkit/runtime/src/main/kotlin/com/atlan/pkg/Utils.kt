@@ -198,7 +198,6 @@ object Utils {
         }
         return when (default) {
             // TODO: likely need to extend to other types
-            is Int -> configValue.toInt() as T
             is List<*> -> getOrDefault(null, default as List<String>) as T
             else -> configValue as T
         }
@@ -214,6 +213,18 @@ object Utils {
      */
     fun getOrDefault(configValue: List<String>?, default: List<String>): List<String> {
         return if (configValue.isNullOrEmpty()) default else configValue
+    }
+
+    /**
+     * Return the provided configuration value only if it is non-null and not empty,
+     * otherwise return the provided default value instead.
+     *
+     * @param configValue to return if there is a non-null, non-empty value
+     * @param default to return if the configValue is either null or empty
+     * @return the actual value or a default, if the actual is null or empty
+     */
+    fun getOrDefault(configValue: Number?, default: Number): Number {
+        return configValue ?: default
     }
 
     /**

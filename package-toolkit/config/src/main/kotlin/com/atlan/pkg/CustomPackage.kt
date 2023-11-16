@@ -10,8 +10,13 @@ import com.atlan.pkg.config.model.ui.UIConfig
 import com.atlan.pkg.config.model.workflow.WorkflowContainer
 import com.atlan.pkg.config.model.workflow.WorkflowOutputs
 import com.atlan.pkg.config.model.workflow.WorkflowTemplateDefinition
+import com.atlan.pkg.config.widgets.BooleanInput
 import com.atlan.pkg.config.widgets.ConnectionCreator
+import com.atlan.pkg.config.widgets.ConnectorTypeSelector
 import com.atlan.pkg.config.widgets.DropDown
+import com.atlan.pkg.config.widgets.MultipleGroups
+import com.atlan.pkg.config.widgets.MultipleUsers
+import com.atlan.pkg.config.widgets.NumericInput
 import com.atlan.util.StringUtils
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonInclude
@@ -144,8 +149,8 @@ open class CustomPackage(
                Copyright 2023 Atlan Pte. Ltd. */
             import com.atlan.model.assets.Connection
             import com.atlan.pkg.CustomConfig
-            import com.atlan.pkg.serde.ConnectionDeserializer
-            import com.atlan.pkg.serde.MultiSelectDeserializer
+            import com.atlan.pkg.model.ConnectorAndConnections
+            import com.atlan.pkg.serde.WidgetSerde
             import com.fasterxml.jackson.annotation.JsonAutoDetect
             import com.fasterxml.jackson.annotation.JsonProperty
             import com.fasterxml.jackson.databind.annotation.JsonDeserialize
@@ -163,12 +168,30 @@ open class CustomPackage(
             var type = "String"
             when (u.ui) {
                 is DropDown.DropDownWidget -> {
-                    builder.append("    @JsonDeserialize(using = MultiSelectDeserializer::class)\n")
+                    builder.append("    @JsonDeserialize(using = WidgetSerde.MultiSelectDeserializer::class)\n")
+                    type = "List<String>"
+                }
+                is MultipleGroups.MultipleGroupsWidget -> {
+                    builder.append("    @JsonDeserialize(using = WidgetSerde.MultiSelectDeserializer::class)\n")
+                    type = "List<String>"
+                }
+                is MultipleUsers.MultipleUsersWidget -> {
+                    builder.append("    @JsonDeserialize(using = WidgetSerde.MultiSelectDeserializer::class)\n")
                     type = "List<String>"
                 }
                 is ConnectionCreator.ConnectionCreatorWidget -> {
-                    builder.append("    @JsonDeserialize(using = ConnectionDeserializer::class)\n")
+                    builder.append("    @JsonDeserialize(using = WidgetSerde.ConnectionDeserializer::class)\n")
                     type = "Connection"
+                }
+                is ConnectorTypeSelector.ConnectorTypeSelectorWidget -> {
+                    builder.append("    @JsonDeserialize(using = WidgetSerde.ConnectorAndConnectionsDeserializer::class)\n")
+                    type = "ConnectorAndConnections"
+                }
+                is BooleanInput.BooleanInputWidget -> {
+                    type = "Boolean"
+                }
+                is NumericInput.NumericInputWidget -> {
+                    type = "Number"
                 }
             }
             builder.append("    @JsonProperty(\"$k\") val ${StringUtils.getLowerCamelCase(k)}: $type?,\n")

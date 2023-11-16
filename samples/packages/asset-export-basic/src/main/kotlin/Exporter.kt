@@ -44,7 +44,7 @@ fun main() {
  */
 class Exporter(private val config: AssetExportBasicCfg) : RowGenerator {
 
-    private val batchSize = Utils.getOrDefault(config.batchSize, 50)
+    private val batchSize = 20
     private val filename = "tmp" + File.separator + "asset-export.csv"
 
     fun export() {

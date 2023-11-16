@@ -3,11 +3,9 @@
 import com.atlan.Atlan
 import com.atlan.pkg.CustomPackage
 import com.atlan.pkg.config.model.ui.UIConfig
-import com.atlan.pkg.config.model.ui.UIRule
 import com.atlan.pkg.config.model.ui.UIStep
 import com.atlan.pkg.config.model.workflow.WorkflowOutputs
 import com.atlan.pkg.config.widgets.DropDown
-import com.atlan.pkg.config.widgets.NumericInput
 import com.atlan.pkg.config.widgets.Radio
 import com.atlan.pkg.config.widgets.TextInput
 
@@ -55,20 +53,7 @@ object PackageConfig : CustomPackage(
                         multiSelect = true,
                         grid = 4,
                     ),
-                    "batch_size" to NumericInput(
-                        label = "Batch size",
-                        required = false,
-                        help = "Maximum number of results to process at a time (per API request).",
-                        placeholder = "20",
-                        grid = 4,
-                    ),
                 ),
-            ),
-        ),
-        rules = listOf(
-            UIRule(
-                whenInputs = mapOf("control_config_strategy" to "advanced"),
-                required = listOf("asset_types", "batch_size"),
             ),
         ),
     ),
