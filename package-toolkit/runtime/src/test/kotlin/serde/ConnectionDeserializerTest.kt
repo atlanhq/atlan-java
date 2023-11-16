@@ -63,7 +63,7 @@ class ConnectionDeserializerTest {
             exceptionClass = JsonMappingException::class,
             block = {
                 MAPPER.readValue<TestClass>(INVALID)
-            }
+            },
         )
     }
 
