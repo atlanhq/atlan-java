@@ -8,6 +8,7 @@ import com.atlan.exception.NotFoundException
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.ICatalog
 import com.atlan.model.enums.CertificateStatus
+import com.atlan.pkg.Utils
 import com.atlan.pkg.events.AbstractNumaflowHandler
 import com.atlan.pkg.events.EventUtils
 import org.slf4j.Logger
@@ -56,9 +57,9 @@ object VerificationEnforcer : AbstractNumaflowHandler(Handler) {
         private fun setup() {
             // We must initialize constants _after_ the instantiation of the object,
             // since the config itself will only be populated after instantiation
-            MUST_HAVES = config.mustHaves ?: listOf()
-            ASSET_TYPES = config.assetTypes ?: listOf()
-            ENFORCEMENT_MESSAGE = config.enforcementMessage ?: DEFAULT_ENFORCEMENT_MESSAGE
+            MUST_HAVES = Utils.getOrDefault(config.mustHaves, listOf())
+            ASSET_TYPES = Utils.getOrDefault(config.assetTypes, listOf())
+            ENFORCEMENT_MESSAGE = Utils.getOrDefault(config.enforcementMessage, DEFAULT_ENFORCEMENT_MESSAGE)
         }
 
         // Note: we can just re-use the default validatePrerequisites

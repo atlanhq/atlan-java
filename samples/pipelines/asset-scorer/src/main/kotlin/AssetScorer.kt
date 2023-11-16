@@ -14,6 +14,7 @@ import com.atlan.model.assets.ICatalog
 import com.atlan.model.core.CustomMetadataAttributes
 import com.atlan.model.enums.CertificateStatus
 import com.atlan.model.events.AtlanEvent
+import com.atlan.pkg.Utils
 import com.atlan.pkg.events.AbstractNumaflowHandler
 import com.atlan.pkg.events.EventUtils
 import org.slf4j.Logger
@@ -58,7 +59,7 @@ object AssetScorer : AbstractNumaflowHandler(Handler) {
         private lateinit var ASSET_TYPES: List<String>
 
         private fun setup() {
-            ASSET_TYPES = config.assetTypes ?: listOf()
+            ASSET_TYPES = Utils.getOrDefault(config.assetTypes, listOf())
         }
 
         /** {@inheritDoc}  */
