@@ -5,7 +5,7 @@ import com.atlan.pkg.CustomPackage
 import com.atlan.pkg.config.model.ui.UIConfig
 import com.atlan.pkg.config.model.ui.UIStep
 import com.atlan.pkg.config.model.workflow.WorkflowOutputs
-import com.atlan.pkg.config.widgets.DropDown
+import com.atlan.pkg.config.widgets.BooleanInput
 import com.atlan.pkg.config.widgets.Radio
 import com.atlan.pkg.config.widgets.TextInput
 
@@ -41,14 +41,10 @@ object PackageConfig : CustomPackage(
                         placeholder = "default",
                         grid = 4,
                     ),
-                    "include_glossaries" to DropDown(
+                    "include_glossaries" to BooleanInput(
                         label = "Include glossaries?",
                         required = false,
                         help = "Whether glossaries (and their terms and categories) should be exported, too.",
-                        possibleValues = mapOf(
-                            "YES" to "Yes",
-                            "NO" to "No",
-                        ),
                         grid = 4,
                     ),
                 ),
