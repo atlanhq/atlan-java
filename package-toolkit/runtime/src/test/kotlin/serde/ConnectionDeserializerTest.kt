@@ -39,7 +39,7 @@ class ConnectionDeserializerTest {
         """
         private const val VALID = """
             {
-                "connection": "{\"typeName\": \"Connection\", \"attributes\": {\"name\": \"Test123\", \"connectorName\": \"snowflake\", \"qualifiedName\": \"default/snowflake/1234567890\"}}"
+                "connection": "{\"attributes\":{\"name\":\"swagger3\",\"qualifiedName\":\"default/api/1700144027\",\"allowQuery\":true,\"allowQueryPreview\":true,\"rowLimit\":\"10000\",\"defaultCredentialGuid\":\"\",\"connectorName\":\"api\",\"sourceLogo\":\"http://assets.atlan.com/assets/apispec.png\",\"isDiscoverable\":true,\"isEditable\":false,\"category\":\"API\",\"adminUsers\":[\"jsmith\"],\"adminGroups\":[],\"adminRoles\":[\"db6d07eb-b3e9-493b-ad1a-b82027da37d5\"]},\"typeName\":\"Connection\"}"
             }
         """
         private val MAPPER = jacksonObjectMapper()
@@ -71,7 +71,7 @@ class ConnectionDeserializerTest {
     fun testValid() {
         val result = MAPPER.readValue<TestClass>(VALID)
         assertNotNull(result.connection)
-        assertEquals(result.connection.name, "Test123")
-        assertEquals(result.connection.connectorType, AtlanConnectorType.SNOWFLAKE)
+        assertEquals("swagger3", result.connection.name)
+        assertEquals(AtlanConnectorType.API, result.connection.connectorType)
     }
 }
