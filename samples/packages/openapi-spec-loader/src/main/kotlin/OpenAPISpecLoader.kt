@@ -22,12 +22,12 @@ private val logger = KotlinLogging.logger {}
  * Note: all parameters should be passed through environment variables.
  */
 fun main() {
-    Utils.setClient()
-    Utils.setWorkflowOpts()
+    val config = Utils.setPackageOps<OpenAPISpecLoaderCfg>()
 
-    val specUrl = Utils.getEnvVar("SPEC_URL", "")
-    val batchSize = Utils.getEnvVar("BATCH_SIZE", "50").toInt()
-    val connectionQN = Utils.createOrReuseConnection("CONNECTION_USAGE", "CONNECTION_QUALIFIED_NAME", "CONNECTION")
+    val specUrl = Utils.getOrDefault(config.specUrl, "")
+    val batchSize = 20
+
+    val connectionQN = Utils.createOrReuseConnection(config.connectionUsage, config.connectionQualifiedName, config.connection)
 
     if (connectionQN == "" || specUrl == "") {
         logger.error("Missing required parameter - you must provide BOTH a connection name and specification URL.")

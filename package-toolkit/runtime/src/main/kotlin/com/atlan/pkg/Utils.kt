@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import mu.KLogger
 import mu.KotlinLogging
-import java.io.IOException
 import java.util.concurrent.ThreadLocalRandom
 import java.util.concurrent.atomic.AtomicLong
 import kotlin.math.round
@@ -268,50 +267,41 @@ object Utils {
      * - it is unable to even parse the specified connection details (rc = 2)
      * - it is unable to create a new connection with the specified details (rc = 3)
      *
-     * @param varForAction name of the environment variable containing the action to take: CREATE to create a new connection, or REUSE to reuse an existing connection
-     * @param varForReuse name of the environment variable that should contain a connection qualifiedName, to reuse an existing connection
-     * @param varForCreate name of the environment variable that should contain a full connection object, to create a new connection
+     * @param action to take: CREATE to create a new connection, or REUSE to reuse an existing connection (default if empty)
+     * @param connectionQN qualifiedName of the connection to reuse (only applies when action is REUSE)
+     * @param connection connection object to use to create a new connection (only applies when action is CREATE)
      * @return the qualifiedName of the connection to use, whether reusing or creating, or an empty string if neither variable has any data in it
      */
     fun createOrReuseConnection(
-        varForAction: String,
-        varForReuse: String,
-        varForCreate: String,
+        action: String?,
+        connectionQN: String?,
+        connection: Connection?,
     ): String {
-        val action = getEnvVar(varForAction, "REUSE")
-        return if (action == "REUSE") {
-            reuseConnection(varForReuse)
+        return if (getOrDefault(action, "REUSE") == "REUSE") {
+            reuseConnection(connectionQN)
         } else {
-            createConnection(varForCreate)
+            createConnection(connection)
         }
     }
 
     /**
-     * Create a connection using the details provided through the provided environment variable.
+     * Create a connection using the details provided.
      *
-     * @param varWithConnectionString name of the environment variable containing a full connection object, as a string
-     * @return the qualifiedName of the connection that is created, or an empty string if no connection details exist in the environment variable
+     * @param connection a connection object, defining the connection to be created
+     * @return the qualifiedName of the connection that is created, or an empty string if no connection details were provided
      */
-    fun createConnection(varWithConnectionString: String): String {
-        val connectionString = getEnvVar(varWithConnectionString, "")
-        return if (connectionString != "") {
+    fun createConnection(connection: Connection?): String {
+        return if (connection != null) {
             logger.info("Attempting to create new connection...")
             try {
-                val toCreate =
-                    Atlan.getDefaultClient().readValue(connectionString, Connection::class.java)
-                        .toBuilder()
-                        .guid("-${ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1)}")
-                        .build()
+                val toCreate = connection
+                    .toBuilder()
+                    .guid("-${ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1)}")
+                    .build()
                 val response = toCreate.save().block()
                 response.getResult(toCreate).qualifiedName
-            } catch (e: IOException) {
-                logger.error("Unable to deserialize the connection details: {}", connectionString, e)
-                exitProcess(2)
-            } catch (e: IllegalArgumentException) {
-                logger.error("Unable to deserialize the connection details: {}", connectionString, e)
-                exitProcess(2)
             } catch (e: AtlanException) {
-                logger.error("Unable to create connection: {}", connectionString, e)
+                logger.error("Unable to create connection: {}", connection, e)
                 exitProcess(3)
             }
         } else {
@@ -322,18 +312,19 @@ object Utils {
     /**
      * Validate the provided connection exists, and if so return its qualifiedName.
      *
-     * @param varWithConnectionQN name of the environment variable containing a connection's qualifiedName
+     * @param providedConnectionQN qualifiedName of connection to reuse
      * @return the qualifiedName of the connection, so long as it exists, otherwise an empty string
      */
-    fun reuseConnection(varWithConnectionQN: String): String {
-        val providedConnectionQN = getEnvVar(varWithConnectionQN, "")
-        return try {
-            logger.info("Attempting to reuse connection: {}", providedConnectionQN)
-            Connection.get(Atlan.getDefaultClient(), providedConnectionQN, false)
-            providedConnectionQN
-        } catch (e: NotFoundException) {
-            logger.error("Unable to find connection with the provided qualifiedName: {}", providedConnectionQN, e)
-            ""
-        }
+    fun reuseConnection(providedConnectionQN: String?): String {
+        return providedConnectionQN?.let {
+            try {
+                logger.info("Attempting to reuse connection: {}", providedConnectionQN)
+                Connection.get(Atlan.getDefaultClient(), providedConnectionQN, false)
+                providedConnectionQN
+            } catch (e: NotFoundException) {
+                logger.error("Unable to find connection with the provided qualifiedName: {}", providedConnectionQN, e)
+                ""
+            }
+        } ?: ""
     }
 }

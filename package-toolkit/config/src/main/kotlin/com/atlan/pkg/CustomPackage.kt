@@ -10,6 +10,7 @@ import com.atlan.pkg.config.model.ui.UIConfig
 import com.atlan.pkg.config.model.workflow.WorkflowContainer
 import com.atlan.pkg.config.model.workflow.WorkflowOutputs
 import com.atlan.pkg.config.model.workflow.WorkflowTemplateDefinition
+import com.atlan.pkg.config.widgets.ConnectionCreator
 import com.atlan.pkg.config.widgets.DropDown
 import com.atlan.util.StringUtils
 import com.fasterxml.jackson.annotation.JsonIgnore
@@ -141,7 +142,9 @@ open class CustomPackage(
             """
             /* SPDX-License-Identifier: Apache-2.0
                Copyright 2023 Atlan Pte. Ltd. */
+            import com.atlan.model.assets.Connection
             import com.atlan.pkg.CustomConfig
+            import com.atlan.pkg.serde.ConnectionDeserializer
             import com.atlan.pkg.serde.MultiSelectDeserializer
             import com.fasterxml.jackson.annotation.JsonAutoDetect
             import com.fasterxml.jackson.annotation.JsonProperty
@@ -158,9 +161,15 @@ open class CustomPackage(
         ).append("\n")
         uiConfig.properties.forEach { (k, u) ->
             var type = "String"
-            if (u.ui is DropDown.DropDownWidget) {
-                builder.append("    @JsonDeserialize(using = MultiSelectDeserializer::class)\n")
-                type = "List<String>"
+            when (u.ui) {
+                is DropDown.DropDownWidget -> {
+                    builder.append("    @JsonDeserialize(using = MultiSelectDeserializer::class)\n")
+                    type = "List<String>"
+                }
+                is ConnectionCreator.ConnectionCreatorWidget -> {
+                    builder.append("    @JsonDeserialize(using = ConnectionDeserializer::class)\n")
+                    type = "Connection"
+                }
             }
             builder.append("    @JsonProperty(\"$k\") val ${StringUtils.getLowerCamelCase(k)}: $type?,\n")
         }
