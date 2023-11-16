@@ -28,7 +28,7 @@ class ConnectionCreator(
         placeholder,
     ),
 ) {
-    private class ConnectionCreatorWidget(
+    class ConnectionCreatorWidget(
         label: String,
         hidden: Boolean = false,
         help: String = "",

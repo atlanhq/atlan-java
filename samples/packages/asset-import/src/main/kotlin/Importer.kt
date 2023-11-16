@@ -22,10 +22,8 @@ private val logger = KotlinLogging.logger {}
  * Note: all parameters should be passed through environment variables.
  */
 fun main() {
-    Utils.setClient()
-    Utils.setWorkflowOpts()
-
-    val importer = Importer(Utils.environmentVariables())
+    val config = Utils.setPackageOps<AssetImportCfg>()
+    val importer = Importer(config)
     importer.import()
 }
 
@@ -39,11 +37,11 @@ fun main() {
  *
  * @param config configuration to use for the importer, typically driven by environment variables
  */
-class Importer(private val config: Map<String, String>) : AssetGenerator {
+class Importer(private val config: AssetImportCfg) : AssetGenerator {
 
-    private val batchSize = config.getOrDefault("BATCH_SIZE", "50").toInt()
-    private val filename = config.getOrDefault("UPLOADED_FILE", "")
-    private val updateOnly = config.getOrDefault("UPSERT_SEMANTIC", "update") == "update"
+    private val batchSize = Utils.getOrDefault(config.batchSize, 50)
+    private val filename = Utils.getOrDefault(config.uploadedFile, "")
+    private val updateOnly = Utils.getOrDefault(config.upsertSemantic, "update") == "update"
     private val attrsToOverwrite = attributesToClear()
 
     fun import() {

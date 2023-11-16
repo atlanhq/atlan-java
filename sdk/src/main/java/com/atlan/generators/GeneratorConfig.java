@@ -4,6 +4,7 @@ package com.atlan.generators;
 
 import com.atlan.api.TypeDefsEndpoint;
 import com.atlan.model.typedefs.TypeDef;
+import com.atlan.util.StringUtils;
 import freemarker.cache.ClassTemplateLoader;
 import freemarker.cache.FileTemplateLoader;
 import freemarker.cache.MultiTemplateLoader;
@@ -342,7 +343,7 @@ public class GeneratorConfig {
      * @return the resolved name for the POJO class for the type's model
      */
     public String resolveClassName(String originalName) {
-        return renameClasses.getOrDefault(originalName, getUpperCamelCase(originalName));
+        return renameClasses.getOrDefault(originalName, StringUtils.getUpperCamelCase(originalName));
     }
 
     /**
@@ -364,7 +365,7 @@ public class GeneratorConfig {
      * @return the resolved name for the attribute in the POJO
      */
     public String resolveAttributeName(String originalName) {
-        return renameAttributes.getOrDefault(originalName, getLowerCamelCase(originalName));
+        return renameAttributes.getOrDefault(originalName, StringUtils.getLowerCamelCase(originalName));
     }
 
     /**
@@ -442,32 +443,6 @@ public class GeneratorConfig {
      */
     public String getSearchableRelationship(String field) {
         return searchableRelationships.getOrDefault(field, null);
-    }
-
-    private static String getUpperCamelCase(String text) {
-        String[] words = text.split("[\\W_]+");
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < words.length; i++) {
-            String word = words[i];
-            word = word.isEmpty() ? word : Character.toUpperCase(word.charAt(0)) + word.substring(1);
-            builder.append(word);
-        }
-        return builder.toString();
-    }
-
-    protected static String getLowerCamelCase(String text) {
-        String[] words = text.split("[\\W_]+");
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < words.length; i++) {
-            String word = words[i];
-            if (i == 0) {
-                word = word.isEmpty() ? word : Character.toLowerCase(word.charAt(0)) + word.substring(1);
-            } else {
-                word = word.isEmpty() ? word : Character.toUpperCase(word.charAt(0)) + word.substring(1);
-            }
-            builder.append(word);
-        }
-        return builder.toString();
     }
 
     private static Configuration createConfig(File directoryForTemplateLoading) throws IOException {

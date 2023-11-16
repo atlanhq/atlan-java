@@ -6,9 +6,11 @@ import com.atlan.Atlan
 import com.atlan.exception.AtlanException
 import com.atlan.exception.NotFoundException
 import com.atlan.model.assets.Connection
+import com.atlan.pkg.Utils.getEnvVar
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import mu.KLogger
 import mu.KotlinLogging
-import java.io.IOException
 import java.util.concurrent.ThreadLocalRandom
 import java.util.concurrent.atomic.AtomicLong
 import kotlin.math.round
@@ -18,7 +20,21 @@ import kotlin.system.exitProcess
  * Common utilities for using the Atlan SDK within Kotlin.
  */
 object Utils {
-    private val logger = KotlinLogging.logger {}
+    val logger = KotlinLogging.logger {}
+    val MAPPER = jacksonObjectMapper()
+
+    /**
+     * Set up the event-processing options, and start up the event processor.
+     *
+     * @return the configuration used to set up the event-processing handler, or null if no configuration was found
+     */
+    inline fun <reified T : CustomConfig> setPackageOps(): T {
+        logger.info("Looking for configuration in environment variables...")
+        val config = parseConfigFromEnv<T>()
+        setClient(config.runtime.userId ?: "")
+        setWorkflowOpts(config.runtime)
+        return config
+    }
 
     /**
      * Set up the default Atlan client, based on environment variables.
@@ -60,7 +76,7 @@ object Utils {
      */
     fun getEnvVar(
         name: String,
-        default: String,
+        default: String = "",
     ): String {
         val candidate = System.getenv(name)
         return if (candidate != null && candidate.isNotEmpty()) candidate else default
@@ -144,56 +160,148 @@ object Utils {
     }
 
     /**
+     * Parse configuration from environment variables.
+     *
+     * @return the complete configuration for the custom package
+     */
+    inline fun <reified T : CustomConfig> parseConfigFromEnv(): T {
+        logger.info("Constructing configuration from environment variables...")
+        val builder = StringBuilder()
+            .append("{\n")
+        val constructor = T::class.java.declaredConstructors[0]
+        val annotations = constructor.parameterAnnotations
+        // Note that we must reflect on the constructor's parameters, sine the CustomConfig
+        // will be a data class (the annotations are on the parameters to the constructor
+        // for a data class, not the fields themselves)
+        annotations.forEach { parameterAnnotations ->
+            parameterAnnotations.forEach { annotation ->
+                if (annotation is JsonProperty) {
+                    val propertyName = annotation.value
+                    val propertyValue = getEnvVar(propertyName.uppercase())
+                    builder.append("\"$propertyName\": \"$propertyValue\",\n")
+                }
+            }
+        }
+        if (annotations.isNotEmpty()) {
+            // Remove the final comma, if there is one (leaving the newline)
+            builder.deleteCharAt(builder.length - 2)
+        }
+        builder.append("}")
+        val runtime = buildRuntimeConfig()
+        return parseConfig(builder.toString(), runtime)
+    }
+
+    /**
+     * Parse configuration from the provided input strings.
+     *
+     * @param config the event-processing-specific configuration
+     * @param runtime the general runtime configuration from the workflow
+     * @return the complete configuration for the event-handling pipeline
+     */
+    inline fun <reified T : CustomConfig> parseConfig(config: String, runtime: String): T {
+        logger.info("Parsing configuration...")
+        val type = MAPPER.typeFactory.constructType(T::class.java)
+        val cfg = MAPPER.readValue<T>(config, type)
+        cfg.runtime = MAPPER.readValue(runtime, RuntimeConfig::class.java)
+        return cfg
+    }
+
+    /**
+     * Return the provided configuration value only if it is non-null and not empty,
+     * otherwise return the provided default value instead.
+     *
+     * @param configValue to return if there is a non-null, non-empty value
+     * @param default to return if the configValue is either null or empty
+     * @return the actual value or a default, if the actual is null or empty
+     */
+    @Suppress("UNCHECKED_CAST")
+    inline fun <reified T> getOrDefault(configValue: String?, default: T): T {
+        if (configValue.isNullOrEmpty()) {
+            return default
+        }
+        return when (default) {
+            // TODO: likely need to extend to other types
+            is Int -> configValue.toInt() as T
+            is List<*> -> getOrDefault(null, default as List<String>) as T
+            else -> configValue as T
+        }
+    }
+
+    /**
+     * Return the provided configuration value only if it is non-null and not empty,
+     * otherwise return the provided default value instead.
+     *
+     * @param configValue to return if there is a non-null, non-empty value
+     * @param default to return if the configValue is either null or empty
+     * @return the actual value or a default, if the actual is null or empty
+     */
+    fun getOrDefault(configValue: List<String>?, default: List<String>): List<String> {
+        return if (configValue.isNullOrEmpty()) default else configValue
+    }
+
+    /**
+     * Construct a JSON representation of the runtime configuration of the workflow, drawn from
+     * a standard set of environment variables about the workflow.
+     */
+    fun buildRuntimeConfig(): String {
+        val userId = getEnvVar("ATLAN_USER_ID", "")
+        val agent = getEnvVar("X_ATLAN_AGENT", "")
+        val agentId = getEnvVar("X_ATLAN_AGENT_ID", "")
+        val agentPkg = getEnvVar("X_ATLAN_AGENT_PACKAGE_NAME", "")
+        val agentWfl = getEnvVar("X_ATLAN_AGENT_WORKFLOW_ID", "")
+        return """
+    {
+        "user-id": "$userId",
+        "x-atlan-agent": "$agent",
+        "x-atlan-agent-id": "$agentId",
+        "x-atlan-agent-package-name": "$agentPkg",
+        "x-atlan-agent-workflow-id": "$agentWfl"
+    }
+        """.trimIndent()
+    }
+
+    /**
      * Either reuse (top priority) or create a new connection, based on the parameters provided.
      * Note that this method will exit if:
      * - it is unable to find a connection with the specified qualifiedName (rc = 1)
      * - it is unable to even parse the specified connection details (rc = 2)
      * - it is unable to create a new connection with the specified details (rc = 3)
      *
-     * @param varForAction name of the environment variable containing the action to take: CREATE to create a new connection, or REUSE to reuse an existing connection
-     * @param varForReuse name of the environment variable that should contain a connection qualifiedName, to reuse an existing connection
-     * @param varForCreate name of the environment variable that should contain a full connection object, to create a new connection
+     * @param action to take: CREATE to create a new connection, or REUSE to reuse an existing connection (default if empty)
+     * @param connectionQN qualifiedName of the connection to reuse (only applies when action is REUSE)
+     * @param connection connection object to use to create a new connection (only applies when action is CREATE)
      * @return the qualifiedName of the connection to use, whether reusing or creating, or an empty string if neither variable has any data in it
      */
     fun createOrReuseConnection(
-        varForAction: String,
-        varForReuse: String,
-        varForCreate: String,
+        action: String?,
+        connectionQN: String?,
+        connection: Connection?,
     ): String {
-        val action = getEnvVar(varForAction, "REUSE")
-        return if (action == "REUSE") {
-            reuseConnection(varForReuse)
+        return if (getOrDefault(action, "REUSE") == "REUSE") {
+            reuseConnection(connectionQN)
         } else {
-            createConnection(varForCreate)
+            createConnection(connection)
         }
     }
 
     /**
-     * Create a connection using the details provided through the provided environment variable.
+     * Create a connection using the details provided.
      *
-     * @param varWithConnectionString name of the environment variable containing a full connection object, as a string
-     * @return the qualifiedName of the connection that is created, or an empty string if no connection details exist in the environment variable
+     * @param connection a connection object, defining the connection to be created
+     * @return the qualifiedName of the connection that is created, or an empty string if no connection details were provided
      */
-    fun createConnection(varWithConnectionString: String): String {
-        val connectionString = getEnvVar(varWithConnectionString, "")
-        return if (connectionString != "") {
+    fun createConnection(connection: Connection?): String {
+        return if (connection != null) {
             logger.info("Attempting to create new connection...")
             try {
-                val toCreate =
-                    Atlan.getDefaultClient().readValue(connectionString, Connection::class.java)
-                        .toBuilder()
-                        .guid("-${ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1)}")
-                        .build()
+                val toCreate = connection
+                    .toBuilder()
+                    .guid("-${ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1)}")
+                    .build()
                 val response = toCreate.save().block()
                 response.getResult(toCreate).qualifiedName
-            } catch (e: IOException) {
-                logger.error("Unable to deserialize the connection details: {}", connectionString, e)
-                exitProcess(2)
-            } catch (e: IllegalArgumentException) {
-                logger.error("Unable to deserialize the connection details: {}", connectionString, e)
-                exitProcess(2)
             } catch (e: AtlanException) {
-                logger.error("Unable to create connection: {}", connectionString, e)
+                logger.error("Unable to create connection: {}", connection, e)
                 exitProcess(3)
             }
         } else {
@@ -204,18 +312,19 @@ object Utils {
     /**
      * Validate the provided connection exists, and if so return its qualifiedName.
      *
-     * @param varWithConnectionQN name of the environment variable containing a connection's qualifiedName
+     * @param providedConnectionQN qualifiedName of connection to reuse
      * @return the qualifiedName of the connection, so long as it exists, otherwise an empty string
      */
-    fun reuseConnection(varWithConnectionQN: String): String {
-        val providedConnectionQN = getEnvVar(varWithConnectionQN, "")
-        return try {
-            logger.info("Attempting to reuse connection: {}", providedConnectionQN)
-            Connection.get(Atlan.getDefaultClient(), providedConnectionQN, false)
-            providedConnectionQN
-        } catch (e: NotFoundException) {
-            logger.error("Unable to find connection with the provided qualifiedName: {}", providedConnectionQN, e)
-            ""
-        }
+    fun reuseConnection(providedConnectionQN: String?): String {
+        return providedConnectionQN?.let {
+            try {
+                logger.info("Attempting to reuse connection: {}", providedConnectionQN)
+                Connection.get(Atlan.getDefaultClient(), providedConnectionQN, false)
+                providedConnectionQN
+            } catch (e: NotFoundException) {
+                logger.error("Unable to find connection with the provided qualifiedName: {}", providedConnectionQN, e)
+                ""
+            }
+        } ?: ""
     }
 }

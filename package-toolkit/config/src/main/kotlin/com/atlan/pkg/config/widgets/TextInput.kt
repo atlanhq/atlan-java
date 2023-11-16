@@ -31,7 +31,7 @@ class TextInput(
         grid,
     ),
 ) {
-    private class TextInputWidget(
+    class TextInputWidget(
         label: String,
         hidden: Boolean = false,
         help: String = "",

@@ -161,4 +161,42 @@ public final class StringUtils {
     public static boolean isUUID(String str) {
         return str != null && uuidPattern.matcher(str).find();
     }
+
+    /**
+     * Convert the provided string into UpperCamelCase.
+     *
+     * @param text to convert
+     * @return the original text, in UpperCamelCase
+     */
+    public static String getUpperCamelCase(String text) {
+        String[] words = text.split("[\\W_]+");
+        StringBuilder builder = new StringBuilder();
+        for (String s : words) {
+            String word = s;
+            word = word.isEmpty() ? word : Character.toUpperCase(word.charAt(0)) + word.substring(1);
+            builder.append(word);
+        }
+        return builder.toString();
+    }
+
+    /**
+     * Convert the provided string to lowerCamelCase.
+     *
+     * @param text to convert
+     * @return the original text, in lowerCamelCase
+     */
+    public static String getLowerCamelCase(String text) {
+        String[] words = text.split("[\\W_]+");
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < words.length; i++) {
+            String word = words[i];
+            if (i == 0) {
+                word = word.isEmpty() ? word : Character.toLowerCase(word.charAt(0)) + word.substring(1);
+            } else {
+                word = word.isEmpty() ? word : Character.toUpperCase(word.charAt(0)) + word.substring(1);
+            }
+            builder.append(word);
+        }
+        return builder.toString();
+    }
 }

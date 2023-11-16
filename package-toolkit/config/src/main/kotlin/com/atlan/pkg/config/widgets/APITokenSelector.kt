@@ -30,7 +30,7 @@ class APITokenSelector(
         grid,
     ),
 ) {
-    private class APITokenSelectorWidget(
+    class APITokenSelectorWidget(
         label: String,
         hidden: Boolean = false,
         help: String = "",

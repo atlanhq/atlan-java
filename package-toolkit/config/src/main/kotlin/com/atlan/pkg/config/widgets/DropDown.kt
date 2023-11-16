@@ -33,7 +33,7 @@ class DropDown(
         grid,
     ),
 ) {
-    private class DropDownWidget(
+    class DropDownWidget(
         label: String,
         val mode: String,
         hidden: Boolean = false,

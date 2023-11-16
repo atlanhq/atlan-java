@@ -35,7 +35,7 @@ class Radio(
         placeholder,
     ),
 ) {
-    private class RadioWidget(
+    class RadioWidget(
         label: String,
         hidden: Boolean = false,
         help: String = "",

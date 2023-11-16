@@ -2,8 +2,8 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.events.config
 
+import com.atlan.pkg.CustomConfig
 import com.atlan.pkg.Utils
-import com.atlan.pkg.events.EventUtils
 import mu.KotlinLogging
 import software.amazon.awssdk.regions.Region
 import software.amazon.awssdk.services.s3.S3Client
@@ -37,7 +37,7 @@ class S3ConfigSync {
      *
      * @return the synced configuration, if any, otherwise null
      */
-    inline fun <reified T : EventConfig> sync(): T? {
+    inline fun <reified T : CustomConfig> sync(): T? {
         logger.info("Syncing configuration from s3://$bucketName/$configPrefix to $localPath")
 
         val s3Client = S3Client.builder().region(Region.of(region)).build()
@@ -82,7 +82,7 @@ class S3ConfigSync {
         }
 
         return if (anySynced) {
-            EventUtils.parseConfig(File(CONFIG_FILE).readText(), File(RUNTIME_FILE).readText())
+            Utils.parseConfig(File(CONFIG_FILE).readText(), File(RUNTIME_FILE).readText())
         } else {
             null
         }
