@@ -6,8 +6,6 @@ import com.atlan.Atlan
 import com.atlan.exception.AtlanException
 import com.atlan.exception.NotFoundException
 import com.atlan.model.assets.Connection
-import com.atlan.pkg.Utils.getEnvVar
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import mu.KLogger
 import mu.KotlinLogging
@@ -166,29 +164,8 @@ object Utils {
      */
     inline fun <reified T : CustomConfig> parseConfigFromEnv(): T {
         logger.info("Constructing configuration from environment variables...")
-        val builder = StringBuilder()
-            .append("{\n")
-        val constructor = T::class.java.declaredConstructors[0]
-        val annotations = constructor.parameterAnnotations
-        // Note that we must reflect on the constructor's parameters, sine the CustomConfig
-        // will be a data class (the annotations are on the parameters to the constructor
-        // for a data class, not the fields themselves)
-        annotations.forEach { parameterAnnotations ->
-            parameterAnnotations.forEach { annotation ->
-                if (annotation is JsonProperty) {
-                    val propertyName = annotation.value
-                    val propertyValue = getEnvVar(propertyName.uppercase())
-                    builder.append("\"$propertyName\": \"$propertyValue\",\n")
-                }
-            }
-        }
-        if (annotations.isNotEmpty()) {
-            // Remove the final comma, if there is one (leaving the newline)
-            builder.deleteCharAt(builder.length - 2)
-        }
-        builder.append("}")
         val runtime = buildRuntimeConfig()
-        return parseConfig(builder.toString(), runtime)
+        return parseConfig(getEnvVar("NESTED_CONFIG"), runtime)
     }
 
     /**
