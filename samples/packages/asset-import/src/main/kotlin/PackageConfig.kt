@@ -3,12 +3,10 @@
 import com.atlan.Atlan
 import com.atlan.pkg.CustomPackage
 import com.atlan.pkg.config.model.ui.UIConfig
-import com.atlan.pkg.config.model.ui.UIRule
 import com.atlan.pkg.config.model.ui.UIStep
 import com.atlan.pkg.config.model.workflow.WorkflowOutputs
 import com.atlan.pkg.config.widgets.DropDown
 import com.atlan.pkg.config.widgets.FileUploader
-import com.atlan.pkg.config.widgets.NumericInput
 import com.atlan.pkg.config.widgets.Radio
 
 /**
@@ -61,30 +59,7 @@ object PackageConfig : CustomPackage(
                         default = "update",
                         help = "Whether to allow the creation of new assets from the input CSV, or ensure assets are only updated if they already exist in Atlan.",
                     ),
-                    "control_config_strategy" to Radio(
-                        label = "Options",
-                        required = true,
-                        possibleValues = mapOf(
-                            "default" to "Default",
-                            "advanced" to "Advanced",
-                        ),
-                        default = "default",
-                        help = "Options to optimize how the utility runs.",
-                    ),
-                    "batch_size" to NumericInput(
-                        label = "Batch size",
-                        required = false,
-                        help = "Maximum number of results to process at a time (per API request).",
-                        placeholder = "50",
-                        grid = 4,
-                    ),
                 ),
-            ),
-        ),
-        rules = listOf(
-            UIRule(
-                whenInputs = mapOf("control_config_strategy" to "advanced"),
-                required = listOf("batch_size"),
             ),
         ),
     ),

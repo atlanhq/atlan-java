@@ -4,7 +4,7 @@ package serde
 
 import com.atlan.model.assets.Connection
 import com.atlan.model.enums.AtlanConnectorType
-import com.atlan.pkg.serde.ConnectionDeserializer
+import com.atlan.pkg.serde.WidgetSerde
 import com.fasterxml.jackson.annotation.JsonAutoDetect
 import com.fasterxml.jackson.databind.JsonMappingException
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
@@ -19,7 +19,7 @@ import kotlin.test.assertNull
 class ConnectionDeserializerTest {
     @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
     data class TestClass(
-        @JsonDeserialize(using = ConnectionDeserializer::class)
+        @JsonDeserialize(using = WidgetSerde.ConnectionDeserializer::class)
         val connection: Connection?,
     )
 

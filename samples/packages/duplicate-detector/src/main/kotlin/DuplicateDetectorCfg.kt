@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2023 Atlan Pte. Ltd. */
 import com.atlan.pkg.CustomConfig
-import com.atlan.pkg.serde.MultiSelectDeserializer
+import com.atlan.pkg.serde.WidgetSerde
 import com.fasterxml.jackson.annotation.JsonAutoDetect
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
@@ -15,7 +15,6 @@ import javax.annotation.processing.Generated
 data class DuplicateDetectorCfg(
     @JsonProperty("qn_prefix") val qnPrefix: String?,
     @JsonProperty("control_config_strategy") val controlConfigStrategy: String?,
-    @JsonDeserialize(using = MultiSelectDeserializer::class)
+    @JsonDeserialize(using = WidgetSerde.MultiSelectDeserializer::class)
     @JsonProperty("asset_types") val assetTypes: List<String>?,
-    @JsonProperty("batch_size") val batchSize: String?,
 ) : CustomConfig()

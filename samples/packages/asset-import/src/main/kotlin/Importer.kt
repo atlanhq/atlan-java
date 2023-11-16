@@ -6,7 +6,6 @@ import com.atlan.model.assets.Asset.AssetBuilder
 import com.atlan.model.fields.AtlanField
 import com.atlan.model.fields.SearchableField
 import com.atlan.pkg.Utils
-import com.atlan.pkg.serde.MultiSelectDeserializer
 import com.atlan.pkg.serde.RowDeserialization
 import com.atlan.pkg.serde.RowDeserializer
 import com.atlan.pkg.serde.cell.AssetRefXformer
@@ -39,7 +38,7 @@ fun main() {
  */
 class Importer(private val config: AssetImportCfg) : AssetGenerator {
 
-    private val batchSize = Utils.getOrDefault(config.batchSize, 50)
+    private val batchSize = 20
     private val filename = Utils.getOrDefault(config.uploadedFile, "")
     private val updateOnly = Utils.getOrDefault(config.upsertSemantic, "update") == "update"
     private val attrsToOverwrite = attributesToClear()
@@ -62,7 +61,7 @@ class Importer(private val config: AssetImportCfg) : AssetGenerator {
      * @return parsed list of attribute names to be cleared
      */
     private fun attributesToClear(): List<AtlanField> {
-        val attrNames: MutableList<String> = MultiSelectDeserializer.deserialize(Utils.getEnvVar("ATTR_TO_OVERWRITE", "")).toMutableList()
+        val attrNames: MutableList<String> = Utils.getOrDefault(config.attrToOverwrite, listOf()).toMutableList()
         if (attrNames.contains(Asset.CERTIFICATE_STATUS.atlanFieldName)) {
             attrNames.add(Asset.CERTIFICATE_STATUS_MESSAGE.atlanFieldName)
         }
