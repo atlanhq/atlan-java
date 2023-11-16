@@ -6,11 +6,13 @@ import com.atlan.model.assets.Connection
 import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.pkg.serde.ConnectionDeserializer
 import com.fasterxml.jackson.annotation.JsonAutoDetect
+import com.fasterxml.jackson.databind.JsonMappingException
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
@@ -55,11 +57,15 @@ class ConnectionDeserializerTest {
         assertNull(result.connection)
     }
 
-    /*@Test
+    @Test
     fun testInvalid() {
-        // TODO: assert this throws an exception
-        val result = MAPPER.readValue<TestClass>(INVALID)
-    }*/
+        assertFailsWith(
+            exceptionClass = JsonMappingException::class,
+            block = {
+                MAPPER.readValue<TestClass>(INVALID)
+            },
+        )
+    }
 
     @Test
     fun testValid() {

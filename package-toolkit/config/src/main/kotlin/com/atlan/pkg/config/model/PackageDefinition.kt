@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.config.model
 
+import com.atlan.Atlan
 import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.pkg.config.model.pkg.PackageConfig
 import com.fasterxml.jackson.annotation.JsonIgnore
@@ -50,7 +51,7 @@ class PackageDefinition(
     @JsonIgnore val connectorType: AtlanConnectorType? = null,
     @JsonIgnore val category: String = "custom",
 ) {
-    val version = "0.0.1"
+    val version = Atlan.VERSION
     val homepage = "https://packages.atlan.com/-/web/detail/$packageId"
     val main = "index.js"
     val scripts = mapOf<String, String>()

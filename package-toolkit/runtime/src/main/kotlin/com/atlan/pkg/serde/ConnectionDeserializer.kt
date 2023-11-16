@@ -39,8 +39,15 @@ class ConnectionDeserializer : StdDeserializer<Connection>(
 
     companion object {
         fun deserialize(value: String?): Connection? {
+            val client = try {
+                Atlan.getDefaultClient()
+            } catch (e: IllegalStateException) {
+                // Bootstrap a client for deserialization, if none is already configured
+                Atlan.setBaseUrl("INTERNAL")
+                Atlan.getDefaultClient()
+            }
             if (!value.isNullOrEmpty()) {
-                return Atlan.getDefaultClient().readValue(value, Connection::class.java)
+                return client.readValue(value, Connection::class.java)
             }
             return null
         }
