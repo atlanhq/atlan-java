@@ -3,46 +3,42 @@
 package com.atlan.pkg.config.widgets
 
 /**
- * Widget that allows you to enter an arbitrary number into a single-line text input field,
- * and returns the value of the number that was entered.
+ * Widget that allows you to generate a unique key that could be used for securing an exchange
+ * or other unique identification purposes, and provides buttons to regenerate the key or copy its
+ * text. Will return the generated key as clear text.
  *
  * @param label name to show in the UI for the widget
  * @param required whether a value must be selected to proceed with the UI setup
  * @param hidden whether the widget will be shown in the UI (false) or not (true)
  * @param help informational text to place in a hover-over to describe the use of the input
- * @param placeholder example text to place within the widget to exemplify its use
  * @param grid sizing of the input on the UI (8 is full-width, 4 is half-width)
  */
-class NumericInput(
+class KeygenInput(
     label: String,
     required: Boolean = false,
     hidden: Boolean = false,
     help: String = "",
-    placeholder: String = "",
     grid: Int = 8,
 ) : UIElement(
-    "number",
+    "string",
     required,
-    NumericInputWidget(
+    KeygenInputWidget(
         label,
         hidden,
         help,
-        placeholder,
         grid,
     ),
 ) {
-    class NumericInputWidget(
+    class KeygenInputWidget(
         label: String,
         hidden: Boolean = false,
         help: String = "",
-        placeholder: String = "",
         grid: Int = 8,
     ) : Widget(
-        "inputNumber",
-        label,
-        hidden,
-        help,
-        placeholder,
-        grid,
+        "keygen",
+        label = label,
+        hidden = hidden,
+        help = help,
+        grid = grid,
     )
 }
