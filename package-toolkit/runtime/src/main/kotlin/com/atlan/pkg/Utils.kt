@@ -228,6 +228,18 @@ object Utils {
     }
 
     /**
+     * Return the provided configuration value only if it is non-null and not empty,
+     * otherwise return the provided default value instead.
+     *
+     * @param configValue to return if there is a non-null, non-empty value
+     * @param default to return if the configValue is either null or empty
+     * @return the actual value or a default, if the actual is null or empty
+     */
+    fun getOrDefault(configValue: Boolean?, default: Boolean): Boolean {
+        return configValue ?: default
+    }
+
+    /**
      * Construct a JSON representation of the runtime configuration of the workflow, drawn from
      * a standard set of environment variables about the workflow.
      */

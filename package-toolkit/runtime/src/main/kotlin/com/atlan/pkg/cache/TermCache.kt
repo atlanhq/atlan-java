@@ -7,7 +7,7 @@ import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Glossary
 import com.atlan.model.assets.GlossaryTerm
 import com.atlan.model.fields.AtlanField
-import com.atlan.pkg.serde.cell.AssignedTermXformer
+import com.atlan.pkg.serde.cell.GlossaryXformer
 import mu.KotlinLogging
 
 object TermCache : AssetCache() {
@@ -18,7 +18,7 @@ object TermCache : AssetCache() {
 
     /** {@inheritDoc}  */
     override fun lookupAssetByIdentity(identity: String?): Asset? {
-        val tokens = identity?.split(AssignedTermXformer.TERM_GLOSSARY_DELIMITER)
+        val tokens = identity?.split(GlossaryXformer.GLOSSARY_DELIMITER)
         if (tokens?.size == 2) {
             val termName = tokens[0]
             val glossaryName = tokens[1]
@@ -74,7 +74,7 @@ object TermCache : AssetCache() {
     override fun getIdentityForAsset(asset: Asset): String {
         return when (asset) {
             is GlossaryTerm -> {
-                "${asset.name}${AssignedTermXformer.TERM_GLOSSARY_DELIMITER}${asset.anchor.name}"
+                "${asset.name}${GlossaryXformer.GLOSSARY_DELIMITER}${asset.anchor.name}"
             }
             else -> ""
         }

@@ -3,27 +3,28 @@
 package com.atlan.pkg.serde.cell
 
 import com.atlan.model.assets.Asset
-import com.atlan.model.assets.GlossaryTerm
-import com.atlan.pkg.cache.TermCache
-import com.atlan.pkg.serde.cell.GlossaryXformer.GLOSSARY_DELIMITER
+import com.atlan.model.assets.GlossaryCategory
+import com.atlan.pkg.cache.CategoryCache
 
 /**
- * Static object to transform term assignment references.
+ * Static object to transform category references.
  */
-object AssignedTermXformer {
+object GlossaryCategoryXformer {
+
+    const val CATEGORY_DELIMITER = "@"
+
     /**
-     * Encodes (serializes) a term assignment into a string form.
+     * Encodes (serializes) a category reference into a string form.
      *
      * @param asset to be encoded
      * @return the string-encoded form for that asset
      */
     fun encode(asset: Asset): String {
-        // Handle some assets as direct embeds
         return when (asset) {
-            is GlossaryTerm -> {
-                val term = TermCache.getByGuid(asset.guid)
-                if (term is GlossaryTerm) {
-                    "${term.name}$GLOSSARY_DELIMITER${term.anchor.name}"
+            is GlossaryCategory -> {
+                val category = CategoryCache.getByGuid(asset.guid)
+                if (category is GlossaryCategory) {
+                    CategoryCache.getIdentity(category.guid) ?: ""
                 } else {
                     ""
                 }
@@ -33,18 +34,19 @@ object AssignedTermXformer {
     }
 
     /**
-     * Decodes (deserializes) a string form into a term assignment object.
+     * Decodes (deserializes) a string form into a category reference object.
      *
      * @param assetRef the string form to be decoded
      * @param fieldName the name of the field containing the string-encoded value
-     * @return the term assignment represented by the string
+     * @return the category reference represented by the string
      */
     fun decode(
         assetRef: String,
         fieldName: String,
     ): Asset {
         return when (fieldName) {
-            "assignedTerms" -> TermCache.getByIdentity(assetRef)?.trimToReference()!!
+            "parentCategory" -> CategoryCache.getByIdentity(assetRef)?.trimToReference()!!
+            "categories" -> CategoryCache.getByIdentity(assetRef)?.trimToReference()!!
             else -> AssetRefXformer.decode(assetRef, fieldName)
         }
     }

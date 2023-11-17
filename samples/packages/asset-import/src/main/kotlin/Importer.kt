@@ -39,12 +39,13 @@ fun main() {
 class Importer(private val config: AssetImportCfg) : AssetGenerator {
 
     private val batchSize = 20
-    private val filename = Utils.getOrDefault(config.uploadedFile, "")
+    private val assetsFilename = Utils.getOrDefault(config.assetsFile, "")
+    private val glossariesFilename = Utils.getOrDefault(config.glossariesFile, "")
     private val updateOnly = Utils.getOrDefault(config.upsertSemantic, "update") == "update"
     private val attrsToOverwrite = attributesToClear()
 
     fun import() {
-        CSVReader(filename, updateOnly).use { csv ->
+        CSVReader(assetsFilename, updateOnly).use { csv ->
             val start = System.currentTimeMillis()
             val anyFailures = csv.streamRows(this, batchSize, logger)
             logger.info("Total time taken: {} ms", System.currentTimeMillis() - start)

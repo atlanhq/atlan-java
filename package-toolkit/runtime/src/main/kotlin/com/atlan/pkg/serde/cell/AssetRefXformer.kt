@@ -4,6 +4,8 @@ package com.atlan.pkg.serde.cell
 
 import com.atlan.Atlan
 import com.atlan.model.assets.Asset
+import com.atlan.model.assets.Glossary
+import com.atlan.model.assets.GlossaryCategory
 import com.atlan.model.assets.GlossaryTerm
 import com.atlan.model.assets.Link
 import com.atlan.model.assets.Readme
@@ -33,6 +35,8 @@ object AssetRefXformer {
                     .build()
                     .toJson(Atlan.getDefaultClient())
             }
+            is Glossary -> GlossaryXformer.encode(asset)
+            is GlossaryCategory -> GlossaryCategoryXformer.encode(asset)
             is GlossaryTerm -> AssignedTermXformer.encode(asset)
             else -> {
                 var qualifiedName = asset.qualifiedName
@@ -59,6 +63,9 @@ object AssetRefXformer {
             "readme" -> Readme._internal().description(assetRef).build()
             "links" -> Atlan.getDefaultClient().readValue(assetRef, Link::class.java)
             "assignedTerms" -> AssignedTermXformer.decode(assetRef, fieldName)
+            "parentCategory" -> GlossaryCategoryXformer.decode(assetRef, fieldName)
+            "categories" -> GlossaryCategoryXformer.decode(assetRef, fieldName)
+            "anchor" -> GlossaryXformer.decode(assetRef, fieldName)
             else -> {
                 val tokens = assetRef.split(TYPE_QN_DELIMITER)
                 val typeName = tokens[0]

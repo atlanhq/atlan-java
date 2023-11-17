@@ -24,12 +24,19 @@ object PackageConfig : CustomPackage(
                 title = "Configuration",
                 description = "Import configuration",
                 inputs = mapOf(
-                    "uploaded_file" to FileUploader(
-                        label = "Input file",
+                    "assets_file" to FileUploader(
+                        label = "Assets file",
                         fileTypes = listOf("text/csv"),
-                        required = true,
-                        help = "Select the file to import, produced by one of the Asset Export packages.",
-                        placeholder = "Select a CSV file",
+                        required = false,
+                        help = "Select the file containing assets to import, produced by one of the Asset Export packages.",
+                        placeholder = "Select assets CSV file",
+                    ),
+                    "glossaries_file" to FileUploader(
+                        label = "Assets file",
+                        fileTypes = listOf("text/csv"),
+                        required = false,
+                        help = "Select the file containing glossaries, categories and terms to import, produced by one of the Asset Export packages.",
+                        placeholder = "Select glossaries CSV file",
                     ),
                     "attr_to_overwrite" to DropDown(
                         label = "Remove attributes, if empty",

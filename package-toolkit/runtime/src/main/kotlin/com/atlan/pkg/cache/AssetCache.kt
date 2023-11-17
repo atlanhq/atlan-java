@@ -14,6 +14,7 @@ abstract class AssetCache {
     private val logger = KotlinLogging.logger {}
 
     private val byIdentity: MutableMap<String, String?> = ConcurrentHashMap()
+    private val toIdentity: MutableMap<String, String?> = ConcurrentHashMap()
     private val byGuid: MutableMap<String, Asset?> = ConcurrentHashMap()
     private val ignoreArchived: MutableMap<String, String?> = ConcurrentHashMap()
 
@@ -29,13 +30,7 @@ abstract class AssetCache {
         }
         if (!this.containsIdentity(identity)) {
             val asset = lookupAssetByIdentity(identity)
-            if (asset == null || asset.status != AtlanStatus.ACTIVE) {
-                ignoreArchived[identity] = identity
-                logger.warn("Unable to cache archived asset: {}", identity)
-            } else {
-                byIdentity[identity] = asset.guid
-                byGuid[asset.guid] = asset
-            }
+            addByIdentity(identity, asset)
         }
         return byGuid[byIdentity[identity]]
     }
@@ -52,15 +47,19 @@ abstract class AssetCache {
         }
         if (!this.containsGuid(guid)) {
             val asset = lookupAssetByGuid(guid)
-            if (asset == null || asset.status != AtlanStatus.ACTIVE) {
-                ignoreArchived[guid] = guid
-                logger.warn("Unable to cache archived asset: {}", guid)
-            } else {
-                byIdentity[getIdentityForAsset(asset)] = guid
-                byGuid[guid] = asset
-            }
+            addByGuid(guid, asset)
         }
         return byGuid.getOrDefault(guid, null)
+    }
+
+    /**
+     * Retrieve the unique identity of an asset from the cache by its globally-unique identifier.
+     *
+     * @param guid unique identifier (GUID) of the asset to retrieve
+     * @return the identity of the specified GUID, or null if no identity could be found
+     */
+    fun getIdentity(guid: String): String? {
+        return toIdentity.getOrDefault(guid, null)
     }
 
     /**
@@ -81,6 +80,51 @@ abstract class AssetCache {
      */
     fun containsGuid(guid: String): Boolean {
         return byGuid.containsKey(guid)
+    }
+
+    /**
+     * Add an asset to the cache using its GUID.
+     *
+     * @param guid unique identifier (GUID) of the asset
+     * @param asset to cache
+     */
+    protected fun addByGuid(guid: String, asset: Asset?) {
+        if (!isArchived(guid, asset)) {
+            val identity = getIdentityForAsset(asset!!)
+            byIdentity[identity] = guid
+            toIdentity[guid] = identity
+            byGuid[guid] = asset
+        }
+    }
+
+    /**
+     * Add an asset to the cache using its identity.
+     *
+     * @param identity of the asset
+     * @param asset to cache
+     */
+    protected fun addByIdentity(identity: String, asset: Asset?) {
+        if (!isArchived(identity, asset)) {
+            byIdentity[identity] = asset!!.guid
+            toIdentity[asset.guid] = identity
+            byGuid[asset.guid] = asset
+        }
+    }
+
+    /**
+     * Check whether the asset is archived, and if so mark it to be ignored.
+     *
+     * @param id any identity for the asset, either GUID or string identity
+     * @param asset the asset to check
+     */
+    private fun isArchived(id: String, asset: Asset?): Boolean {
+        return if (asset == null || asset.status != AtlanStatus.ACTIVE) {
+            ignoreArchived[id] = id
+            logger.warn("Unable to cache archived asset: {}", id)
+            true
+        } else {
+            false
+        }
     }
 
     /**

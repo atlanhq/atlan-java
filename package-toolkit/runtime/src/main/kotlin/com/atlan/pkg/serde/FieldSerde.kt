@@ -12,7 +12,7 @@ import java.lang.reflect.Method
 /**
  * Static object to (de)serialize a single field's value for a given asset.
  */
-internal object FieldSerde {
+object FieldSerde {
     /**
      * Serialize a single field's value from an asset object.
      *
