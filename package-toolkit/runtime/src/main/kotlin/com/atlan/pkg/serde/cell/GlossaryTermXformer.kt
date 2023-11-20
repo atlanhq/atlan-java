@@ -8,11 +8,11 @@ import com.atlan.pkg.cache.TermCache
 import com.atlan.pkg.serde.cell.GlossaryXformer.GLOSSARY_DELIMITER
 
 /**
- * Static object to transform term assignment references.
+ * Static object to transform term references.
  */
-object AssignedTermXformer {
+object GlossaryTermXformer {
     /**
-     * Encodes (serializes) a term assignment into a string form.
+     * Encodes (serializes) a term reference into a string form.
      *
      * @param asset to be encoded
      * @return the string-encoded form for that asset
@@ -33,18 +33,22 @@ object AssignedTermXformer {
     }
 
     /**
-     * Decodes (deserializes) a string form into a term assignment object.
+     * Decodes (deserializes) a string form into a term reference object.
      *
      * @param assetRef the string form to be decoded
      * @param fieldName the name of the field containing the string-encoded value
-     * @return the term assignment represented by the string
+     * @return the term reference represented by the string
      */
     fun decode(
         assetRef: String,
         fieldName: String,
     ): Asset {
         return when (fieldName) {
-            "assignedTerms" -> TermCache.getByIdentity(assetRef)?.trimToReference()!!
+            "assignedTerms", "seeAlso", "preferredTerms", "preferredToTerms",
+            "synonyms", "antonyms", "translatedTerms", "translationTerms",
+            "validValuesFor", "validValues", "classifies", "isA", "replacedBy",
+            "replacementTerms",
+            -> TermCache.getByIdentity(assetRef)?.trimToReference()!!
             else -> AssetRefXformer.decode(assetRef, fieldName)
         }
     }

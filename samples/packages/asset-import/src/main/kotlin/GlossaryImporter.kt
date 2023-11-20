@@ -36,11 +36,10 @@ class GlossaryImporter(
     }
 
     /** {@inheritDoc} */
-    override fun getFallbackQualifiedName(row: List<String>, header: List<String>, typeIdx: Int, qnIdx: Int): String {
-        return if (row.size > qnIdx && row[qnIdx].isNotBlank()) {
-            row[qnIdx]
-        } else if (row.size > header.indexOf(Glossary.NAME.atlanFieldName)) {
-            row[header.indexOf(Glossary.NAME.atlanFieldName)]
+    override fun getCacheId(row: List<String>, header: List<String>): String {
+        val nameIdx = header.indexOf(Glossary.NAME.atlanFieldName)
+        return if (nameIdx >= 0) {
+            row[nameIdx]
         } else {
             ""
         }

@@ -2,6 +2,9 @@
    Copyright 2023 Atlan Pte. Ltd. */
 import Importer.clearField
 import com.atlan.model.assets.Asset
+import com.atlan.model.assets.Glossary
+import com.atlan.model.assets.GlossaryCategory
+import com.atlan.model.assets.GlossaryTerm
 import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.cache.AssetCache
 import com.atlan.pkg.serde.RowDeserialization
@@ -57,25 +60,20 @@ abstract class GTCImporter(
      *
      * @param map from GUID to asset that was created
      */
-    open fun cacheCreated(map: Map<String, Asset>) {
+    fun cacheCreated(map: Map<String, Asset>) {
         // Cache any assets that were created by processing
         map.forEach { (k, v) ->
-            cache.addByGuid(k, v)
-        }
-    }
-
-    /**
-     * For terms and categories, we must look up the asset and then cache it to ensure that
-     * we have the necessary identity characteristics (since these are not inherent in the normal
-     * attributes or qualifiedName).
-     *
-     * @param map from GUID to asset that was created
-     */
-    protected fun lookupAndCache(map: Map<String, Asset>) {
-        map.forEach { (k, v) ->
-            val result = cache.lookupAssetByGuid(k, maxRetries = 5)
-            result?.let {
-                cache.addByGuid(k, result)
+            when (v) {
+                is Glossary -> cache.addByGuid(k, v)
+                is GlossaryTerm, is GlossaryCategory -> {
+                    // For terms and categories, we must look up the asset and then cache to ensure
+                    // we have the necessary identity characteristics (Since these are not inherent in
+                    // the normal attributes or qualifiedName)
+                    val result = cache.lookupAssetByGuid(k, maxRetries = 5)
+                    result?.let {
+                        cache.addByGuid(k, result)
+                    }
+                }
             }
         }
     }
@@ -94,18 +92,12 @@ abstract class GTCImporter(
         // Deserialize the objects represented in that row (could be more than one due to flattening
         // of in particular things like READMEs and Links)
         if (includeRow(row, header, typeIdx, qnIdx)) {
-            val fallbackQN = getFallbackQualifiedName(row, header, typeIdx, qnIdx)
-            val assets = RowDeserializer(header, row, typeIdx, qnIdx, fallbackQN).getAssets()
+            val revisedRow = generateQualifiedName(row, header, typeIdx, qnIdx)
+            val assets = RowDeserializer(header, revisedRow, typeIdx, qnIdx).getAssets()
             if (assets != null) {
                 val builder = assets.primary
                 val candidate = builder.build()
-                val cacheId = cache.getIdentityForAsset(candidate)
-                val qualifiedName = cache.getByIdentity(cacheId)?.qualifiedName ?: cacheId
-                if (qualifiedName == cacheId) {
-                    // Inject the qualifiedName if there was none in the CSV
-                    builder.qualifiedName(cacheId)
-                }
-                val identity = RowDeserialization.AssetIdentity(candidate.typeName, qualifiedName)
+                val identity = RowDeserialization.AssetIdentity(candidate.typeName, candidate.qualifiedName)
                 // Then apply any field clearances based on attributes configured in the job
                 for (field in attrsToOverwrite) {
                     clearField(field, candidate, builder)
@@ -132,6 +124,33 @@ abstract class GTCImporter(
     }
 
     /**
+     * Calculate a fallback qualifiedName, if the qualifiedName value in this row is empty.
+     *
+     * @param row of values
+     * @param header column names
+     * @param typeIdx index of the typeName
+     * @param qnIdx index of the qualifiedName
+     * @return the original row of data with a qualifiedName filled in, if it was blank to begin with
+     */
+    fun generateQualifiedName(row: List<String>, header: List<String>, typeIdx: Int, qnIdx: Int): List<String> {
+        val revised = mutableListOf<String>()
+        for (i in row.indices) {
+            when {
+                i == qnIdx -> {
+                    revised.add(
+                        row[i].ifBlank {
+                            val cacheId = getCacheId(row, header)
+                            cache.getByIdentity(cacheId)?.qualifiedName ?: cacheId
+                        },
+                    )
+                }
+                else -> revised.add(row[i])
+            }
+        }
+        return revised
+    }
+
+    /**
      * Check whether to include this row as part of the processing (true) or not (false).
      *
      * @param row of values
@@ -143,13 +162,11 @@ abstract class GTCImporter(
     abstract fun includeRow(row: List<String>, header: List<String>, typeIdx: Int, qnIdx: Int): Boolean
 
     /**
-     * Calculate a fallback qualifiedName, if the qualifiedName value in this row is empty.
+     * Calculate the cache identity for this row of the CSV, based purely on the information in the CSV.
      *
      * @param row of values
      * @param header column names
-     * @param typeIdx index of the typeName
-     * @param qnIdx index of the qualifiedName
-     * @return a qualifiedName to use as a placeholder for when none is specified
+     * @return the cache identity for the row
      */
-    abstract fun getFallbackQualifiedName(row: List<String>, header: List<String>, typeIdx: Int, qnIdx: Int): String
+    abstract fun getCacheId(row: List<String>, header: List<String>): String
 }

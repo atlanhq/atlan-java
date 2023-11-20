@@ -19,14 +19,12 @@ import java.util.concurrent.ThreadLocalRandom
  * @param row values for each field in a single row, representing a single asset
  * @param typeIdx the numeric index for the type in the list of columns
  * @param qnIdx the numeric index for the qualifiedName in the list of columns
- * @param fallbackQN value to use as a fallback qualifiedName for the row, if the qualifiedName column is blank
  */
 class RowDeserializer(
     private val heading: List<String>,
     private val row: List<String>,
     private val typeIdx: Int,
     private val qnIdx: Int,
-    private val fallbackQN: String = "",
 ) {
     private val logger = KotlinLogging.logger {}
 
@@ -39,7 +37,7 @@ class RowDeserializer(
     fun getAssets(): RowDeserialization? {
         val typeName = row.getOrElse(typeIdx) { "" }
         val qualifiedName = row.getOrElse(qnIdx) { "" }
-        if (typeName.isBlank() || (qualifiedName.isBlank() && fallbackQN.isBlank())) {
+        if (typeName.isBlank() || qualifiedName.isBlank()) {
             logger.warn("No qualifiedName or typeName found on row, cannot deserialize: {}", row)
         } else {
             val assetClass = Serde.getAssetClassForType(typeName)
@@ -68,8 +66,12 @@ class RowDeserializer(
                         if (setter != null) {
                             val value = FieldSerde.getValueFromCell(rValue, setter)
                             if (value != null) {
-                                if (AssetRefXformer.requiresHandling(value)) {
-                                    deserialization.related[fieldName] = value as Asset
+                                if (AssetRefXformer.requiresHandling(fieldName, value)) {
+                                    if (value is Collection<*>) {
+                                        deserialization.related[fieldName] = value as Collection<Asset>
+                                    } else {
+                                        deserialization.related[fieldName] = listOf(value as Asset)
+                                    }
                                 } else {
                                     // Only set the value on the asset directly if it does not require
                                     // special handling, otherwise leave it to the special handling

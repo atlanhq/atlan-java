@@ -30,7 +30,9 @@ abstract class AssetCache {
         }
         if (!this.containsIdentity(identity)) {
             val asset = lookupAssetByIdentity(identity)
-            addByIdentity(identity, asset)
+            asset?.let {
+                addByIdentity(identity, asset)
+            }
         }
         return if (byIdentity.containsKey(identity)) {
             byGuid.getOrDefault(byIdentity[identity], null)
@@ -52,7 +54,9 @@ abstract class AssetCache {
         }
         if (!this.containsGuid(guid)) {
             val asset = lookupAssetByGuid(guid, maxRetries)
-            addByGuid(guid, asset)
+            asset?.let {
+                addByGuid(guid, asset)
+            }
         }
         return byGuid.getOrDefault(guid, null)
     }

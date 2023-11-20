@@ -148,11 +148,17 @@ class CSVReader @JvmOverloads constructor(path: String, private val updateOnly: 
                 val relatedAssetHold = hold.value
                 val resolvedGuid = batch.resolvedGuids[placeholderGuid]
                 val resolvedAsset = relatedAssetHold.fromAsset.toBuilder().guid(resolvedGuid).build() as Asset
-                for (related in relatedAssetHold.relatedMap.values) {
-                    val resolvedRelated = rowToAsset.buildRelated(resolvedAsset, related)
-                    logger.info("Loading related for asset {}: {}", resolvedAsset.guid, resolvedRelated.toJson(Atlan.getDefaultClient()))
-                    relatedBatch!!.add(resolvedRelated)
-                    Utils.logProgress(count, totalRelated.get(), logger, batchSize)
+                for (relatives in relatedAssetHold.relatedMap.values) {
+                    for (related in relatives) {
+                        val resolvedRelated = rowToAsset.buildRelated(resolvedAsset, related)
+                        logger.info(
+                            "Loading related for asset {}: {}",
+                            resolvedAsset.guid,
+                            resolvedRelated.toJson(Atlan.getDefaultClient()),
+                        )
+                        relatedBatch!!.add(resolvedRelated)
+                        Utils.logProgress(count, totalRelated.get(), logger, batchSize)
+                    }
                 }
             }
             for (delete in deferDeletes[threadId]!!) {
@@ -243,6 +249,6 @@ class CSVReader @JvmOverloads constructor(path: String, private val updateOnly: 
 
     data class RelatedAssetHold(
         val fromAsset: Asset,
-        val relatedMap: Map<String, Asset>,
+        val relatedMap: Map<String, Collection<Asset>>,
     )
 }
