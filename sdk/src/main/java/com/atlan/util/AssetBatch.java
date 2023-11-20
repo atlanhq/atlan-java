@@ -8,6 +8,9 @@ import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.assets.IndistinctAsset;
 import com.atlan.model.core.AssetMutationResponse;
+import com.atlan.serde.Serde;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
@@ -275,11 +278,24 @@ public class AssetBatch {
         try {
             tracker.add(candidate.trimToRequired().name(candidate.getName()).build());
         } catch (InvalidRequestException e) {
-            tracker.add(IndistinctAsset._internal()
-                    .typeName(candidate.getTypeName())
-                    .guid(candidate.getGuid())
-                    .qualifiedName(candidate.getQualifiedName())
-                    .build());
+            try {
+                Class<?> assetClass = Serde.getAssetClassForType(candidate.getTypeName());
+                Method method = assetClass.getMethod("_internal");
+                Object result = method.invoke(null);
+                Asset.AssetBuilder<?, ?> builder = (Asset.AssetBuilder<?, ?>) result;
+                tracker.add(builder.guid(candidate.getGuid())
+                        .qualifiedName(candidate.getQualifiedName())
+                        .build());
+            } catch (ClassNotFoundException
+                    | NoSuchMethodException
+                    | InvocationTargetException
+                    | IllegalAccessException eRef) {
+                tracker.add(IndistinctAsset._internal()
+                        .typeName(candidate.getTypeName())
+                        .guid(candidate.getGuid())
+                        .qualifiedName(candidate.getQualifiedName())
+                        .build());
+            }
         }
     }
 
