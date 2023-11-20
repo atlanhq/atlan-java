@@ -234,23 +234,25 @@ public class AssetBatch {
             } else {
                 revised = _batch;
             }
-            try {
-                switch (customMetadataHandling) {
-                    case IGNORE:
-                        response = client.assets.save(revised, replaceAtlanTags);
-                        break;
-                    case OVERWRITE:
-                        response = client.assets.saveReplacingCM(revised, replaceAtlanTags);
-                        break;
-                    case MERGE:
-                        response = client.assets.saveMergingCM(revised, replaceAtlanTags);
-                        break;
-                }
-            } catch (AtlanException e) {
-                if (captureFailures) {
-                    failures.add(new FailedBatch(_batch, e));
-                } else {
-                    throw e;
+            if (!revised.isEmpty()) {
+                try {
+                    switch (customMetadataHandling) {
+                        case IGNORE:
+                            response = client.assets.save(revised, replaceAtlanTags);
+                            break;
+                        case OVERWRITE:
+                            response = client.assets.saveReplacingCM(revised, replaceAtlanTags);
+                            break;
+                        case MERGE:
+                            response = client.assets.saveMergingCM(revised, replaceAtlanTags);
+                            break;
+                    }
+                } catch (AtlanException e) {
+                    if (captureFailures) {
+                        failures.add(new FailedBatch(_batch, e));
+                    } else {
+                        throw e;
+                    }
                 }
             }
             _batch = Collections.synchronizedList(new ArrayList<>());
