@@ -3,10 +3,12 @@
 package com.atlan.pkg.cache
 
 import com.atlan.exception.AtlanException
+import com.atlan.exception.NotFoundException
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Glossary
 import com.atlan.model.assets.GlossaryTerm
 import com.atlan.model.fields.AtlanField
+import com.atlan.net.HttpClient
 import com.atlan.pkg.serde.cell.GlossaryXformer
 import mu.KotlinLogging
 
@@ -51,7 +53,7 @@ object TermCache : AssetCache() {
     }
 
     /** {@inheritDoc}  */
-    override fun lookupAssetByGuid(guid: String?): Asset? {
+    override fun lookupAssetByGuid(guid: String?, currentAttempt: Int, maxRetries: Int): Asset? {
         try {
             val term =
                 GlossaryTerm.select(true)
@@ -63,6 +65,13 @@ object TermCache : AssetCache() {
                     .findFirst()
             if (term.isPresent) {
                 return term.get()
+            }
+        } catch (e: NotFoundException) {
+            if (currentAttempt >= maxRetries) {
+                logger.error("No term found with GUID: {}", guid, e)
+            } else {
+                Thread.sleep(HttpClient.waitTime(currentAttempt).toMillis())
+                return lookupAssetByGuid(guid, currentAttempt + 1, maxRetries)
             }
         } catch (e: AtlanException) {
             logger.error("Unable to lookup or find term: {}", guid, e)
@@ -78,5 +87,17 @@ object TermCache : AssetCache() {
             }
             else -> ""
         }
+    }
+
+    /** {@inheritDoc} */
+    override fun preload() {
+        logger.info("Caching all terms, up-front...")
+        GlossaryTerm.select()
+            .includesOnResults(includesOnResults)
+            .includesOnRelations(includesOnRelations)
+            .stream(true)
+            .forEach { term ->
+                addByGuid(term.guid, term)
+            }
     }
 }

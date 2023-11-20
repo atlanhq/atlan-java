@@ -3,12 +3,17 @@
 package com.atlan.pkg.cache
 
 import com.atlan.exception.AtlanException
+import com.atlan.exception.NotFoundException
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Glossary
+import com.atlan.model.fields.AtlanField
+import com.atlan.net.HttpClient
 import mu.KotlinLogging
 
 object GlossaryCache : AssetCache() {
     private val logger = KotlinLogging.logger {}
+
+    private val includesOnResults: List<AtlanField> = listOf(Glossary.NAME, Glossary.STATUS)
 
     /** {@inheritDoc}  */
     override fun lookupAssetByIdentity(identity: String?): Asset? {
@@ -21,18 +26,24 @@ object GlossaryCache : AssetCache() {
     }
 
     /** {@inheritDoc}  */
-    override fun lookupAssetByGuid(guid: String?): Asset? {
+    override fun lookupAssetByGuid(guid: String?, currentAttempt: Int, maxRetries: Int): Asset? {
         try {
             val glossary =
                 Glossary.select(true)
                     .where(Glossary.GUID.eq(guid))
-                    .includeOnResults(Glossary.NAME)
-                    .includeOnResults(Glossary.STATUS)
+                    .includesOnResults(includesOnResults)
                     .pageSize(2)
                     .stream()
                     .findFirst()
             if (glossary.isPresent) {
                 return glossary.get()
+            }
+        } catch (e: NotFoundException) {
+            if (currentAttempt >= maxRetries) {
+                logger.error("No glossary found with GUID: {}", guid, e)
+            } else {
+                Thread.sleep(HttpClient.waitTime(currentAttempt).toMillis())
+                return lookupAssetByGuid(guid, currentAttempt + 1, maxRetries)
             }
         } catch (e: AtlanException) {
             logger.error("Unable to lookup or find glossary: {}", guid, e)
@@ -43,5 +54,16 @@ object GlossaryCache : AssetCache() {
     /** {@inheritDoc}  */
     override fun getIdentityForAsset(asset: Asset): String {
         return asset.name
+    }
+
+    /** {@inheritDoc} */
+    override fun preload() {
+        logger.info("Caching all glossaries, up-front...")
+        Glossary.select()
+            .includesOnResults(includesOnResults)
+            .stream(true)
+            .forEach { glossary ->
+                addByGuid(glossary.guid, glossary)
+            }
     }
 }

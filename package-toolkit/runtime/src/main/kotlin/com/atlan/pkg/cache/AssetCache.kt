@@ -16,7 +16,7 @@ abstract class AssetCache {
     private val byIdentity: MutableMap<String, String?> = ConcurrentHashMap()
     private val toIdentity: MutableMap<String, String?> = ConcurrentHashMap()
     private val byGuid: MutableMap<String, Asset?> = ConcurrentHashMap()
-    private val ignoreArchived: MutableMap<String, String?> = ConcurrentHashMap()
+    private val ignore: MutableMap<String, String?> = ConcurrentHashMap()
 
     /**
      * Retrieve an asset from the cache by its human-readable identity, lazily-loading it on any cache misses.
@@ -25,28 +25,33 @@ abstract class AssetCache {
      * @return the asset with the specified identity
      */
     fun getByIdentity(identity: String): Asset? {
-        if (this.ignoreArchived.containsKey(identity)) {
+        if (this.ignore.containsKey(identity)) {
             return null
         }
         if (!this.containsIdentity(identity)) {
             val asset = lookupAssetByIdentity(identity)
             addByIdentity(identity, asset)
         }
-        return byGuid[byIdentity[identity]]
+        return if (byIdentity.containsKey(identity)) {
+            byGuid.getOrDefault(byIdentity[identity], null)
+        } else {
+            null
+        }
     }
 
     /**
      * Retrieve an asset from the cache by its globally-unique identifier, lazily-loading it on any cache misses.
      *
      * @param guid unique identifier (GUID) of the asset to retrieve
+     * @param maxRetries maximum number of times to retry the lookup if not found immediately
      * @return the asset with the specified GUID
      */
-    fun getByGuid(guid: String): Asset? {
-        if (this.ignoreArchived.containsKey(guid)) {
+    fun getByGuid(guid: String, maxRetries: Int = 0): Asset? {
+        if (this.ignore.containsKey(guid)) {
             return null
         }
         if (!this.containsGuid(guid)) {
-            val asset = lookupAssetByGuid(guid)
+            val asset = lookupAssetByGuid(guid, maxRetries)
             addByGuid(guid, asset)
         }
         return byGuid.getOrDefault(guid, null)
@@ -88,12 +93,14 @@ abstract class AssetCache {
      * @param guid unique identifier (GUID) of the asset
      * @param asset to cache
      */
-    protected fun addByGuid(guid: String, asset: Asset?) {
-        if (!isArchived(guid, asset)) {
-            val identity = getIdentityForAsset(asset!!)
+    fun addByGuid(guid: String, asset: Asset?) {
+        if (asset != null && !isArchived(guid, asset)) {
+            val identity = getIdentityForAsset(asset)
             byIdentity[identity] = guid
             toIdentity[guid] = identity
             byGuid[guid] = asset
+            ignore.remove(guid)
+            ignore.remove(identity)
         }
     }
 
@@ -103,11 +110,13 @@ abstract class AssetCache {
      * @param identity of the asset
      * @param asset to cache
      */
-    protected fun addByIdentity(identity: String, asset: Asset?) {
-        if (!isArchived(identity, asset)) {
-            byIdentity[identity] = asset!!.guid
+    fun addByIdentity(identity: String, asset: Asset?) {
+        if (asset != null && !isArchived(identity, asset)) {
+            byIdentity[identity] = asset.guid
             toIdentity[asset.guid] = identity
             byGuid[asset.guid] = asset
+            ignore.remove(identity)
+            ignore.remove(asset.guid)
         }
     }
 
@@ -117,10 +126,10 @@ abstract class AssetCache {
      * @param id any identity for the asset, either GUID or string identity
      * @param asset the asset to check
      */
-    private fun isArchived(id: String, asset: Asset?): Boolean {
-        return if (asset == null || asset.status != AtlanStatus.ACTIVE) {
-            ignoreArchived[id] = id
+    private fun isArchived(id: String, asset: Asset): Boolean {
+        return if (asset.status != AtlanStatus.ACTIVE) {
             logger.warn("Unable to cache archived asset: {}", id)
+            ignore[id] = id
             true
         } else {
             false
@@ -141,9 +150,11 @@ abstract class AssetCache {
      * Note: this should also populate the byIdentity cache
      *
      * @param guid unique identifier (GUID) of the asset to lookup
+     * @param currentAttempt current retry attempt, if not found on first lookup
+     * @param maxRetries maximum number of retries to attempt if not found on first lookup
      * @return the asset, from Atlan
      */
-    protected abstract fun lookupAssetByGuid(guid: String?): Asset?
+    abstract fun lookupAssetByGuid(guid: String?, currentAttempt: Int = 0, maxRetries: Int = 0): Asset?
 
     /**
      * Create a unique, reconstructable identity for the provided asset.
@@ -151,5 +162,10 @@ abstract class AssetCache {
      * @param asset for which to construct the identity
      * @return the identity of the asset
      */
-    protected abstract fun getIdentityForAsset(asset: Asset): String
+    abstract fun getIdentityForAsset(asset: Asset): String
+
+    /**
+     * Preload the cache, by bulk-retrieving all assets up-front.
+     */
+    abstract fun preload()
 }
