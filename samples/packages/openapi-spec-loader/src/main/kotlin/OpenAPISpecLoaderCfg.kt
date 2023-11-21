@@ -6,6 +6,7 @@ import com.atlan.pkg.serde.WidgetSerde
 import com.fasterxml.jackson.annotation.JsonAutoDetect
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
+import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import javax.annotation.processing.Generated
 
 /**
@@ -17,6 +18,7 @@ data class OpenAPISpecLoaderCfg(
     @JsonProperty("spec_url") val specUrl: String?,
     @JsonProperty("connection_usage") val connectionUsage: String?,
     @JsonDeserialize(using = WidgetSerde.ConnectionDeserializer::class)
+    @JsonSerialize(using = WidgetSerde.ConnectionSerializer::class)
     @JsonProperty("connection") val connection: Connection?,
     @JsonProperty("connection_qualified_name") val connectionQualifiedName: String?,
 ) : CustomConfig()

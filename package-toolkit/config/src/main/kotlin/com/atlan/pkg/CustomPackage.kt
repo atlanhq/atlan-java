@@ -154,6 +154,7 @@ open class CustomPackage(
             import com.fasterxml.jackson.annotation.JsonAutoDetect
             import com.fasterxml.jackson.annotation.JsonProperty
             import com.fasterxml.jackson.databind.annotation.JsonDeserialize
+            import com.fasterxml.jackson.databind.annotation.JsonSerialize
             import javax.annotation.processing.Generated;
 
             /**
@@ -169,22 +170,27 @@ open class CustomPackage(
             when (u.ui) {
                 is DropDown.DropDownWidget -> {
                     builder.append("    @JsonDeserialize(using = WidgetSerde.MultiSelectDeserializer::class)\n")
+                    builder.append("    @JsonSerialize(using = WidgetSerde.MultiSelectSerializer::class)\n")
                     type = "List<String>"
                 }
                 is MultipleGroups.MultipleGroupsWidget -> {
                     builder.append("    @JsonDeserialize(using = WidgetSerde.MultiSelectDeserializer::class)\n")
+                    builder.append("    @JsonSerialize(using = WidgetSerde.MultiSelectSerializer::class)\n")
                     type = "List<String>"
                 }
                 is MultipleUsers.MultipleUsersWidget -> {
                     builder.append("    @JsonDeserialize(using = WidgetSerde.MultiSelectDeserializer::class)\n")
+                    builder.append("    @JsonSerialize(using = WidgetSerde.MultiSelectSerializer::class)\n")
                     type = "List<String>"
                 }
                 is ConnectionCreator.ConnectionCreatorWidget -> {
                     builder.append("    @JsonDeserialize(using = WidgetSerde.ConnectionDeserializer::class)\n")
+                    builder.append("    @JsonSerialize(using = WidgetSerde.ConnectionSerializer::class)\n")
                     type = "Connection"
                 }
                 is ConnectorTypeSelector.ConnectorTypeSelectorWidget -> {
                     builder.append("    @JsonDeserialize(using = WidgetSerde.ConnectorAndConnectionsDeserializer::class)\n")
+                    builder.append("    @JsonSerialize(using = WidgetSerde.ConnectorAndConnectionsSerializer::class)\n")
                     type = "ConnectorAndConnections"
                 }
                 is BooleanInput.BooleanInputWidget -> {

@@ -5,6 +5,7 @@ import com.atlan.pkg.serde.WidgetSerde
 import com.fasterxml.jackson.annotation.JsonAutoDetect
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
+import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import javax.annotation.processing.Generated
 
 /**
@@ -16,5 +17,6 @@ data class DuplicateDetectorCfg(
     @JsonProperty("qn_prefix") val qnPrefix: String?,
     @JsonProperty("control_config_strategy") val controlConfigStrategy: String?,
     @JsonDeserialize(using = WidgetSerde.MultiSelectDeserializer::class)
+    @JsonSerialize(using = WidgetSerde.MultiSelectSerializer::class)
     @JsonProperty("asset_types") val assetTypes: List<String>?,
 ) : CustomConfig()

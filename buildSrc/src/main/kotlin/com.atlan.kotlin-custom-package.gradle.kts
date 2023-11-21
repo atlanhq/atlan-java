@@ -4,6 +4,8 @@ val jarPath = "$rootDir/jars"
 plugins {
     kotlin("jvm")
     id("com.diffplug.spotless")
+    id("jvm-test-suite")
+    id("com.adarshr.test-logger")
 }
 
 group = providers.gradleProperty("GROUP").get()
@@ -24,6 +26,9 @@ dependencies {
     implementation("io.github.microutils:kotlin-logging-jvm:3.0.5")
     runtimeOnly("org.apache.logging.log4j:log4j-core:2.20.0")
     runtimeOnly("org.apache.logging.log4j:log4j-slf4j2-impl:2.20.0")
+    testImplementation(project(":package-toolkit:testing"))
+    // In your own project, you would use this in place of the 1 dependency above:
+    //testImplementation("com.atlan:package-toolkit-testing:+")
     testImplementation("org.jetbrains.kotlin:kotlin-test:1.8.10")
 }
 
@@ -52,12 +57,35 @@ tasks.create("customPkg") {
     dependsOn(tasks.getByName("customPkgGen"))
 }
 
+testing {
+    suites {
+        val test by getting(JvmTestSuite::class) {
+            useTestNG()
+            targets {
+                all {
+                    testTask.configure {
+                        testLogging.showStandardStreams = true
+                    }
+                }
+            }
+            sources {
+                java {
+                    setSrcDirs(listOf("src/test/kotlin"))
+                }
+            }
+        }
+    }
+}
+
 tasks {
     jar {
         destinationDirectory.set(file(jarPath))
     }
     test {
         useTestNG()
+        onlyIf {
+            project.hasProperty("packageTests")
+        }
     }
     clean {
         delete(jarPath)
