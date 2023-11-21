@@ -8,4 +8,6 @@ plugins {
 
 dependencies {
     implementation(project(":package-toolkit:runtime"))
+    api(libs.system.stubs)
+    api(libs.bundles.java.test)
 }

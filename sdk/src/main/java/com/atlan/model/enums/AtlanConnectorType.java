@@ -105,8 +105,7 @@ public enum AtlanConnectorType implements AtlanEnum {
     AIRFLOW_CLOUD_COMPOSER("airflow-cloud-composer", AtlanConnectionCategory.ELT),
     SPARK("spark", AtlanConnectionCategory.ELT),
     MPARTICLE("mparticle", AtlanConnectionCategory.DATABASE),
-    GENERIC("genericdb", AtlanConnectionCategory.DATABASE)
-    ;
+    GENERIC("genericdb", AtlanConnectionCategory.DATABASE);
 
     @JsonValue
     @Getter(onMethod_ = {@Override})

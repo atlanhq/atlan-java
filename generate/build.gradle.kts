@@ -5,5 +5,5 @@ plugins {
 
 dependencies {
     implementation(project(":sdk"))
-    implementation(libs.logback.classic)
+    implementation(libs.bundles.log4j)
 }
