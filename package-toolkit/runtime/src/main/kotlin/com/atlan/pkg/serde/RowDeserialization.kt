@@ -10,13 +10,13 @@ import com.atlan.model.fields.AtlanField
  *
  * @param identity unique identity of the asset
  * @param primary the primary asset represented by the row of tabular data
- * @param related a map from field name to the related asset that is embedded for that field
+ * @param related a map from field name to the related asset(s) that are embedded for that field
  * @param delete a set of fields representing values that should be cleared (deleted) from an asset
  */
 data class RowDeserialization(
     val identity: AssetIdentity,
     val primary: Asset.AssetBuilder<*, *>,
-    val related: MutableMap<String, Asset> = mutableMapOf(),
+    val related: MutableMap<String, Collection<Asset>> = mutableMapOf(),
     val delete: MutableSet<AtlanField> = mutableSetOf(),
 ) {
     /**

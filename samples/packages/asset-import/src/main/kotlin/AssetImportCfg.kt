@@ -13,8 +13,12 @@ import javax.annotation.processing.Generated
 @Generated("com.atlan.pkg.CustomPackage")
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 data class AssetImportCfg(
-    @JsonProperty("uploaded_file") val uploadedFile: String?,
+    @JsonProperty("assets_file") val assetsFile: String?,
     @JsonDeserialize(using = WidgetSerde.MultiSelectDeserializer::class)
-    @JsonProperty("attr_to_overwrite") val attrToOverwrite: List<String>?,
-    @JsonProperty("upsert_semantic") val upsertSemantic: String?,
+    @JsonProperty("assets_attr_to_overwrite") val assetsAttrToOverwrite: List<String>?,
+    @JsonProperty("assets_upsert_semantic") val assetsUpsertSemantic: String?,
+    @JsonProperty("glossaries_file") val glossariesFile: String?,
+    @JsonDeserialize(using = WidgetSerde.MultiSelectDeserializer::class)
+    @JsonProperty("glossaries_attr_to_overwrite") val glossariesAttrToOverwrite: List<String>?,
+    @JsonProperty("glossaries_upsert_semantic") val glossariesUpsertSemantic: String?,
 ) : CustomConfig()

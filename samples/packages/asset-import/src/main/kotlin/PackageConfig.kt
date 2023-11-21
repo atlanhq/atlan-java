@@ -21,17 +21,17 @@ object PackageConfig : CustomPackage(
     uiConfig = UIConfig(
         steps = listOf(
             UIStep(
-                title = "Configuration",
-                description = "Import configuration",
+                title = "Assets",
+                description = "Assets to import",
                 inputs = mapOf(
-                    "uploaded_file" to FileUploader(
-                        label = "Input file",
+                    "assets_file" to FileUploader(
+                        label = "Assets file",
                         fileTypes = listOf("text/csv"),
-                        required = true,
-                        help = "Select the file to import, produced by one of the Asset Export packages.",
-                        placeholder = "Select a CSV file",
+                        required = false,
+                        help = "Select the file containing assets to import, produced by one of the Asset Export packages.",
+                        placeholder = "Select assets CSV file",
                     ),
-                    "attr_to_overwrite" to DropDown(
+                    "assets_attr_to_overwrite" to DropDown(
                         label = "Remove attributes, if empty",
                         required = false,
                         possibleValues = mapOf(
@@ -49,7 +49,7 @@ object PackageConfig : CustomPackage(
                         multiSelect = true,
                         grid = 8,
                     ),
-                    "upsert_semantic" to Radio(
+                    "assets_upsert_semantic" to Radio(
                         label = "Input handling",
                         required = true,
                         possibleValues = mapOf(
@@ -61,11 +61,52 @@ object PackageConfig : CustomPackage(
                     ),
                 ),
             ),
+            UIStep(
+                title = "Glossaries",
+                description = "Glossaries to import",
+                inputs = mapOf(
+                    "glossaries_file" to FileUploader(
+                        label = "Glossaries file",
+                        fileTypes = listOf("text/csv"),
+                        required = false,
+                        help = "Select the file containing glossaries, categories and terms to import, produced by one of the Asset Export packages.",
+                        placeholder = "Select glossaries CSV file",
+                    ),
+                    "glossaries_attr_to_overwrite" to DropDown(
+                        label = "Remove attributes, if empty",
+                        required = false,
+                        possibleValues = mapOf(
+                            "certificateStatus" to "Certificate",
+                            "announcementType" to "Announcement",
+                            "displayName" to "Display name",
+                            "description" to "Description (system)",
+                            "userDescription" to "Description (user)",
+                            "ownerUsers" to "Owners (users)",
+                            "ownerGroups" to "Owners (groups)",
+                            "assignedTerms" to "Assigned terms",
+                            "readme" to "README",
+                        ),
+                        help = "Select attributes you want to clear (remove) from glossaries, categories and terms if their value is blank in the provided file.",
+                        multiSelect = true,
+                        grid = 8,
+                    ),
+                    "glossaries_upsert_semantic" to Radio(
+                        label = "Input handling",
+                        required = true,
+                        possibleValues = mapOf(
+                            "upsert" to "Create and update",
+                            "update" to "Update only",
+                        ),
+                        default = "update",
+                        help = "Whether to allow the creation of new glossaries, categories and terms from the input CSV, or ensure these are only updated if they already exist in Atlan.",
+                    ),
+                ),
+            ),
         ),
     ),
     containerImage = "ghcr.io/atlanhq/csa-asset-import:${Atlan.VERSION}",
     containerImagePullPolicy = "Always",
-    containerCommand = listOf("/dumb-init", "--", "java", "ImporterKt"),
+    containerCommand = listOf("/dumb-init", "--", "java", "Importer"),
     outputs = WorkflowOutputs(mapOf("debug-logs" to "/tmp/debug.log")),
     keywords = listOf("kotlin", "utility"),
     preview = true,

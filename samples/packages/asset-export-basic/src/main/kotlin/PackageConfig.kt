@@ -21,8 +21,8 @@ object PackageConfig : CustomPackage(
     uiConfig = UIConfig(
         steps = listOf(
             UIStep(
-                title = "Assets",
-                description = "Asset scope",
+                title = "Scope",
+                description = "Assets to include",
                 inputs = mapOf(
                     "export_scope" to Radio(
                         label = "Export scope",
@@ -39,11 +39,11 @@ object PackageConfig : CustomPackage(
                         required = false,
                         help = "Starting value for a qualifiedName that will determine which assets to export.",
                         placeholder = "default",
-                        grid = 4,
+                        grid = 6,
                     ),
                     "include_glossaries" to BooleanInput(
                         label = "Include glossaries?",
-                        required = false,
+                        required = true,
                         help = "Whether glossaries (and their terms and categories) should be exported, too.",
                         grid = 4,
                     ),
@@ -53,11 +53,12 @@ object PackageConfig : CustomPackage(
     ),
     containerImage = "ghcr.io/atlanhq/csa-asset-export-basic:${Atlan.VERSION}",
     containerImagePullPolicy = "Always",
-    containerCommand = listOf("/dumb-init", "--", "java", "ExporterKt"),
+    containerCommand = listOf("/dumb-init", "--", "java", "Exporter"),
     outputs = WorkflowOutputs(
         mapOf(
             "debug-logs" to "/tmp/debug.log",
             "assets-csv" to "/tmp/asset-export.csv",
+            "glossaries-csv" to "/tmp/glossary-export.csv",
         ),
     ),
     keywords = listOf("kotlin", "utility"),

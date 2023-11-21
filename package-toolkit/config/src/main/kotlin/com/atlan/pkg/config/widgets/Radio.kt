@@ -13,7 +13,6 @@ package com.atlan.pkg.config.widgets
  * @param required whether a value must be selected to proceed with the UI setup
  * @param hidden whether the widget will be shown in the UI (false) or not (true)
  * @param help informational text to place in a hover-over to describe the use of the input
- * @param placeholder example text to place within the widget to exemplify its use
  */
 class Radio(
     label: String,
@@ -22,7 +21,6 @@ class Radio(
     required: Boolean = false,
     hidden: Boolean = false,
     help: String = "",
-    placeholder: String = "",
 ) : UIElementWithEnum(
     type = "string",
     required,
@@ -32,19 +30,16 @@ class Radio(
         label,
         hidden,
         help,
-        placeholder,
     ),
 ) {
     class RadioWidget(
         label: String,
         hidden: Boolean = false,
         help: String = "",
-        placeholder: String = "",
     ) : Widget(
         "radio",
         label,
         hidden,
         help,
-        placeholder,
     )
 }

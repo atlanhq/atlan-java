@@ -31,6 +31,8 @@ class CSVReader @JvmOverloads constructor(path: String, private val updateOnly: 
     private val typeIdx: Int
     private val qualifiedNameIdx: Int
 
+    val created: ConcurrentHashMap<String, Asset>
+
     init {
         val inputFile = Paths.get(path)
         val builder = CsvReader.builder()
@@ -52,6 +54,7 @@ class CSVReader @JvmOverloads constructor(path: String, private val updateOnly: 
                 "Unable to find either (or both) the columns 'typeName' and / or 'qualifiedName'. These are both mandatory columns in the input CSV.",
             )
         }
+        created = ConcurrentHashMap()
         reader = builder.build(inputFile)
     }
 
@@ -121,6 +124,7 @@ class CSVReader @JvmOverloads constructor(path: String, private val updateOnly: 
         // Step 2: load the deferred related assets (and final-flush the main asset batches, too)
         val totalCreates = AtomicLong(0)
         val totalUpdates = AtomicLong(0)
+        val totalSkipped = AtomicLong(0)
         val totalFailures = AtomicLong(0)
         val totalRelated = AtomicLong(0)
         val searchAndDelete = mutableMapOf<String, Set<AtlanField>>()
@@ -129,10 +133,14 @@ class CSVReader @JvmOverloads constructor(path: String, private val updateOnly: 
         batchMap.entries.parallelStream().forEach { entry: MutableMap.MutableEntry<Long, AssetBatch> ->
             val threadId = entry.key
             val batch = entry.value
-            val relatedBatch = relatedMap[threadId]
+            val relatedBatch = relatedMap[threadId]!!
             batch.flush()
+            batch.created.forEach { asset ->
+                created[asset.guid] = asset
+            }
             totalCreates.getAndAdd(batch.created.size.toLong())
             totalUpdates.getAndAdd(batch.updated.size.toLong())
+            totalSkipped.getAndAdd(batch.skipped.size.toLong())
             someFailure = someFailure || batch.failures.isNotEmpty()
             logFailures(batch, logger, totalFailures)
             for (hold in relatedHolds[threadId]!!) {
@@ -140,12 +148,7 @@ class CSVReader @JvmOverloads constructor(path: String, private val updateOnly: 
                 val relatedAssetHold = hold.value
                 val resolvedGuid = batch.resolvedGuids[placeholderGuid]
                 val resolvedAsset = relatedAssetHold.fromAsset.toBuilder().guid(resolvedGuid).build() as Asset
-                for (related in relatedAssetHold.relatedMap.values) {
-                    val resolvedRelated = rowToAsset.buildRelated(resolvedAsset, related)
-                    logger.info("Loading related for asset {}: {}", resolvedAsset.guid, resolvedRelated.toJson(Atlan.getDefaultClient()))
-                    relatedBatch!!.add(resolvedRelated)
-                    Utils.logProgress(count, totalRelated.get(), logger, batchSize)
-                }
+                rowToAsset.batchRelated(resolvedAsset, relatedAssetHold.relatedMap, relatedBatch, count, totalRelated, logger, batchSize)
             }
             for (delete in deferDeletes[threadId]!!) {
                 val placeholderGuid = delete.key
@@ -155,6 +158,7 @@ class CSVReader @JvmOverloads constructor(path: String, private val updateOnly: 
         }
         logger.info("Total assets created: {}", totalCreates)
         logger.info("Total assets updated: {}", totalUpdates)
+        logger.info("Total assets skipped: {}", totalSkipped)
         logger.info("Total assets failed : {}", totalFailures)
 
         // Step 3: final-flush the deferred related assets
@@ -234,6 +238,6 @@ class CSVReader @JvmOverloads constructor(path: String, private val updateOnly: 
 
     data class RelatedAssetHold(
         val fromAsset: Asset,
-        val relatedMap: Map<String, Asset>,
+        val relatedMap: Map<String, Collection<Asset>>,
     )
 }

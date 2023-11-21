@@ -60,15 +60,37 @@ class CSVWriter @JvmOverloads constructor(path: String, fieldSeparator: Char = '
         val count = AtomicLong(0)
         val map = ConcurrentHashMap<String, String>()
         stream.forEach { a: Asset ->
-            val duplicate = map.put(a.guid, a.typeName + "::" + a.guid)
-            if (duplicate != null) {
-                logger.warn("Hit a duplicate asset entry — there could be page skew: {}", duplicate)
-            }
-            val values = assetToRow.buildFromAsset(a)
-            synchronized(writer) { writer.writeRow(values) }
-            Utils.logProgress(count, totalAssetCount, logger, pageSize)
+            writeAsset(a, assetToRow, count, totalAssetCount, pageSize, map, logger)
         }
         logger.info("Total unique assets extracted: {}", map.size)
+    }
+
+    /**
+     * Append assets that have already been retrieved (not being streamed) into the CSV file.
+     * This is useful, for example, where information is cached up-front and thus need not be re-retrieved.
+     *
+     * @param list of assets, pre-retrieved
+     * @param assetToRow translator from an asset object into a row of CSV values
+     * @param totalAssetCount the total number of assets that will be output (used for logging / completion tracking)
+     * @param pageSize the page size to use for periodically logging progress
+     * @param logger through which to report the overall progress
+     */
+    fun appendAssets(list: List<Asset>, assetToRow: RowGenerator, totalAssetCount: Long, pageSize: Int, logger: KLogger) {
+        val count = AtomicLong(0)
+        val map = ConcurrentHashMap<String, String>()
+        list.forEach { a: Asset ->
+            writeAsset(a, assetToRow, count, totalAssetCount, pageSize, map, logger)
+        }
+    }
+
+    private fun writeAsset(a: Asset, assetToRow: RowGenerator, count: AtomicLong, totalAssetCount: Long, pageSize: Int, map: ConcurrentHashMap<String, String>, logger: KLogger) {
+        val duplicate = map.put(a.guid, a.typeName + "::" + a.guid)
+        if (duplicate != null) {
+            logger.warn("Hit a duplicate asset entry — there could be page skew: {}", duplicate)
+        }
+        val values = assetToRow.buildFromAsset(a)
+        synchronized(writer) { writer.writeRow(values) }
+        Utils.logProgress(count, totalAssetCount, logger, pageSize)
     }
 
     /** {@inheritDoc}  */
