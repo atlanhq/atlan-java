@@ -9,7 +9,6 @@ import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.cache.AssetCache
 import com.atlan.pkg.serde.RowDeserialization
 import com.atlan.pkg.serde.RowDeserializer
-import com.atlan.pkg.serde.cell.AssetRefXformer
 import mu.KotlinLogging
 import kotlin.system.exitProcess
 
@@ -110,17 +109,6 @@ abstract class GTCImporter(
             }
         }
         return null
-    }
-
-    /**
-     * Build a complete related asset object from the provided asset and (partial) related asset details.
-     *
-     * @param asset the asset to which another asset is to be related (should have at least its GUID and name)
-     * @param related the (partial) asset that should be related to the asset, which needs to be completed
-     * @return a completed related asset that can be idempotently saved
-     */
-    override fun buildRelated(asset: Asset, related: Asset): Asset {
-        return AssetRefXformer.getRelated(asset, related)
     }
 
     /**

@@ -5,6 +5,7 @@ import com.atlan.model.assets.Asset
 import com.atlan.model.fields.AtlanField
 import com.atlan.model.fields.SearchableField
 import com.atlan.pkg.Utils
+import com.atlan.pkg.cache.LinkCache
 import com.atlan.serde.Serde
 import mu.KotlinLogging
 import java.lang.reflect.InvocationTargetException
@@ -35,6 +36,8 @@ object Importer {
             logger.error("No input file was provided for either glossaries or assets.")
             exitProcess(1)
         }
+
+        LinkCache.preload()
 
         if (glossariesFilename.isNotBlank()) {
             logger.info("Importing glossaries...")

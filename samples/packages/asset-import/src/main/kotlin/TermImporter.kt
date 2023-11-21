@@ -1,6 +1,5 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2023 Atlan Pte. Ltd. */
-import com.atlan.model.assets.Asset
 import com.atlan.model.assets.GlossaryTerm
 import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.cache.TermCache
@@ -33,27 +32,20 @@ class TermImporter(
     typeNameFilter = GlossaryTerm.TYPE_NAME,
 ) {
     /** {@inheritDoc} */
-    override fun cacheCreated(map: Map<String, Asset>) {
-        lookupAndCache(map)
-    }
-
-    /** {@inheritDoc} */
     override fun includeRow(row: List<String>, header: List<String>, typeIdx: Int, qnIdx: Int): Boolean {
         return row[typeIdx] == typeNameFilter
     }
 
     /** {@inheritDoc} */
-    override fun getFallbackQualifiedName(row: List<String>, header: List<String>, typeIdx: Int, qnIdx: Int): String {
-        return if (row.size > qnIdx && row[qnIdx].isNotBlank()) {
-            row[qnIdx]
-        } else if (row.size > header.indexOf(GlossaryTerm.NAME.atlanFieldName) &&
-            row.size > header.indexOf(GlossaryTerm.ANCHOR.atlanFieldName) &&
-            row[header.indexOf(GlossaryTerm.NAME.atlanFieldName)].isNotBlank() &&
-            row[header.indexOf(GlossaryTerm.ANCHOR.atlanFieldName)].isNotBlank()
-        ) {
-            return "${row[header.indexOf(GlossaryTerm.NAME.atlanFieldName)]}${GlossaryXformer.GLOSSARY_DELIMITER}${row[header.indexOf(GlossaryTerm.ANCHOR.atlanFieldName)]}"
+    override fun getCacheId(row: List<String>, header: List<String>): String {
+        val nameIdx = header.indexOf(GlossaryTerm.NAME.atlanFieldName)
+        val anchorIdx = header.indexOf(GlossaryTerm.ANCHOR.atlanFieldName)
+        return if (nameIdx >= 0 && anchorIdx >= 0) {
+            val glossaryName = row[anchorIdx]
+            val termName = row[nameIdx]
+            "$termName${GlossaryXformer.GLOSSARY_DELIMITER}$glossaryName"
         } else {
-            return ""
+            ""
         }
     }
 }
