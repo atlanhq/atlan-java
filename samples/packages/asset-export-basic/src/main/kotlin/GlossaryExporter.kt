@@ -9,6 +9,7 @@ import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.cache.CategoryCache
 import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.RowSerde
+import mu.KLogger
 import mu.KotlinLogging
 import java.util.stream.Collectors
 import java.util.stream.Stream
@@ -127,7 +128,7 @@ class GlossaryExporter(
      * @return the values, as an iterable set of strings
      */
     override fun buildFromAsset(asset: Asset): Iterable<String> {
-        return GlossaryRowSerializer(asset, getAttributesToExtract()).getRow()
+        return GlossaryRowSerializer(asset, getAttributesToExtract(), logger).getRow()
     }
 
     /**
@@ -136,8 +137,13 @@ class GlossaryExporter(
      *
      * @param asset the asset to be serialized
      * @param fields the full list of fields to be serialized from the asset, in the order they should be serialized
+     * @param logger through which to record any problems
      */
-    class GlossaryRowSerializer(private val asset: Asset, private val fields: List<AtlanField>) {
+    class GlossaryRowSerializer(
+        private val asset: Asset,
+        private val fields: List<AtlanField>,
+        private val logger: KLogger,
+    ) {
         /**
          * Actually serialize the provided inputs into a list of string values.
          *
@@ -145,8 +151,8 @@ class GlossaryExporter(
          */
         fun getRow(): Iterable<String> {
             val row = mutableListOf<String>()
-            row.add(FieldSerde.getValueForField(asset, Asset.QUALIFIED_NAME))
-            row.add(FieldSerde.getValueForField(asset, Asset.TYPE_NAME))
+            row.add(FieldSerde.getValueForField(asset, Asset.QUALIFIED_NAME, logger))
+            row.add(FieldSerde.getValueForField(asset, Asset.TYPE_NAME, logger))
             for (field in fields) {
                 if (field != Asset.QUALIFIED_NAME && field != Asset.TYPE_NAME) {
                     if (asset !is GlossaryTerm && field == GlossaryTerm.CATEGORIES) {
@@ -154,7 +160,7 @@ class GlossaryExporter(
                         // glossary object types
                         row.add("")
                     } else {
-                        row.add(FieldSerde.getValueForField(asset, field))
+                        row.add(FieldSerde.getValueForField(asset, field, logger))
                     }
                 }
             }

@@ -3,6 +3,7 @@
 import com.atlan.model.assets.Glossary
 import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.cache.GlossaryCache
+import mu.KotlinLogging
 
 /**
  * Import glossaries (only) into Atlan from a provided CSV file.
@@ -29,6 +30,7 @@ class GlossaryImporter(
     batchSize = batchSize,
     cache = GlossaryCache,
     typeNameFilter = Glossary.TYPE_NAME,
+    logger = KotlinLogging.logger {},
 ) {
     /** {@inheritDoc} */
     override fun includeRow(row: List<String>, header: List<String>, typeIdx: Int, qnIdx: Int): Boolean {

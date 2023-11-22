@@ -23,13 +23,28 @@ import kotlin.math.min
 
 /**
  * Base class that all package integration tests should extend.
+ *
+ * @param uniqueDirectory (optional) unique directory into which to read/write any files - if not specified, will be generated
  */
-abstract class PackageTest(val testDirectory: String = makeUnique("dir")) {
+abstract class PackageTest(private val uniqueDirectory: String = "") {
+    private val nanoId = NanoIdUtils.randomNanoId(Random(), ALPHABET, 5)
     private val vars = EnvironmentVariables()
+    protected val testDirectory: String
 
     init {
+        testDirectory = uniqueDirectory.ifBlank { makeUnique("dir") }
         System.setProperty("logDirectory", testDirectory)
         File(testDirectory).mkdirs()
+    }
+
+    /**
+     * Make a unique string from the provided input.
+     *
+     * @param input the string to make unique
+     * @return the string with a unique suffix
+     */
+    fun makeUnique(input: String): String {
+        return "$PREFIX${input}_$nanoId"
     }
 
     /**
@@ -45,6 +60,28 @@ abstract class PackageTest(val testDirectory: String = makeUnique("dir")) {
                 assertFalse(line.substring(0, min(line.length, 80)).contains("ERROR"), "Found an ERROR in log file.")
             }
         }
+    }
+
+    /**
+     * Check whether the message appears in the log at the level indicated.
+     *
+     * @param level of the log entry (INFO, WARN, etc)
+     * @param message body of the log entry (without timestamps, etc, of course)
+     * @param filename for the log file
+     * @param relativeTo (optional) path under which the log file should be present
+     * @return true if the line appears in the log, and false otherwise
+     */
+    fun logHasMessage(level: String, message: String, filename: String = "debug.log", relativeTo: String = testDirectory): Boolean {
+        val file = getFile(filename, relativeTo)
+        file.useLines { lines ->
+            lines.forEach { line ->
+                if (line.contains(message) && line.contains(level)) {
+                    // short-circuit
+                    return true
+                }
+            }
+        }
+        return false
     }
 
     /**
@@ -79,22 +116,11 @@ abstract class PackageTest(val testDirectory: String = makeUnique("dir")) {
             'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
             'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
         )
-        private val NANO_ID = NanoIdUtils.randomNanoId(Random(), ALPHABET, 5)
         private const val PREFIX = "jpkg_"
 
         // Necessary combination to both (de)serialize Atlan objects (like connections)
         // and use the JsonProperty annotations inherent in the configuration data classes
         private val mapper = Serde.createMapper(client).registerKotlinModule()
-
-        /**
-         * Make a unique string from the provided input.
-         *
-         * @param input the string to make unique
-         * @return the string with a unique suffix
-         */
-        fun makeUnique(input: String): String {
-            return "$PREFIX${input}_$NANO_ID"
-        }
 
         /**
          * Remove these files.

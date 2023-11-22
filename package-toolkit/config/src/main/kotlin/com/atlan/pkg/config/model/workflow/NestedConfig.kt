@@ -27,7 +27,7 @@ class NestedConfig(
                     builder.append("\"").append(k).append("\": ")
                     when (ui) {
                         is FileUploader.FileUploaderWidget,
-                        -> builder.append("\"/tmp/original_file/{{inputs.parameters.").append(k).append("}}\",\n")
+                        -> builder.append("\"/tmp/$k/{{inputs.parameters.").append(k).append("}}\",\n")
                         is NumericInput.NumericInputWidget,
                         is DateInput.DateInputWidget,
                         is BooleanInput.BooleanInputWidget,

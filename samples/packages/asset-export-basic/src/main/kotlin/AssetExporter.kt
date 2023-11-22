@@ -128,6 +128,6 @@ class AssetExporter(
      * @return the values, as an iterable set of strings
      */
     override fun buildFromAsset(asset: Asset): Iterable<String> {
-        return RowSerializer(asset, getAttributesToExtract()).getRow()
+        return RowSerializer(asset, getAttributesToExtract(), logger).getRow()
     }
 }

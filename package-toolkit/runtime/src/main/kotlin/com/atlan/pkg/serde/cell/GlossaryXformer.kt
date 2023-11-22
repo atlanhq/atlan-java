@@ -4,6 +4,7 @@ package com.atlan.pkg.serde.cell
 
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Glossary
+import com.atlan.model.assets.GlossaryTerm
 import com.atlan.pkg.cache.GlossaryCache
 
 /**
@@ -45,7 +46,10 @@ object GlossaryXformer {
         fieldName: String,
     ): Asset {
         return when (fieldName) {
-            "anchor" -> GlossaryCache.getByIdentity(assetRef)?.trimToReference()!!
+            GlossaryTerm.ANCHOR.atlanFieldName -> {
+                GlossaryCache.getByIdentity(assetRef)?.trimToReference()
+                    ?: throw NoSuchElementException("Parent glossary $assetRef not found.")
+            }
             else -> AssetRefXformer.decode(assetRef, fieldName)
         }
     }

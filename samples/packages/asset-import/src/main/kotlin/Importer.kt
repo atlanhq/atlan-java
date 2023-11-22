@@ -6,6 +6,7 @@ import com.atlan.model.fields.AtlanField
 import com.atlan.model.fields.SearchableField
 import com.atlan.pkg.Utils
 import com.atlan.pkg.cache.LinkCache
+import com.atlan.pkg.serde.FieldSerde
 import com.atlan.serde.Serde
 import mu.KotlinLogging
 import java.lang.reflect.InvocationTargetException
@@ -27,10 +28,12 @@ object Importer {
         val glossariesFilename = Utils.getOrDefault(config.glossariesFile, "")
         val assetAttrsToOverwrite =
             attributesToClear(Utils.getOrDefault(config.assetsAttrToOverwrite, listOf()).toMutableList(), "assets")
+        val assetsFailOnErrors = Utils.getOrDefault(config.assetsFailOnErrors, true)
         val glossaryAttrsToOverwrite =
             attributesToClear(Utils.getOrDefault(config.glossariesAttrToOverwrite, listOf()).toMutableList(), "glossaries")
         val assetsUpdateOnly = Utils.getOrDefault(config.assetsUpsertSemantic, "update") == "update"
         val glossariesUpdateOnly = Utils.getOrDefault(config.glossariesUpsertSemantic, "update") == "update"
+        val glossariesFailOnErrors = Utils.getOrDefault(config.glossariesFailOnErrors, true)
 
         if (glossariesFilename.isBlank() && assetsFilename.isBlank()) {
             logger.error("No input file was provided for either glossaries or assets.")
@@ -40,6 +43,7 @@ object Importer {
         LinkCache.preload()
 
         if (glossariesFilename.isNotBlank()) {
+            FieldSerde.FAIL_ON_ERRORS.set(glossariesFailOnErrors)
             logger.info("=== Importing glossaries... ===")
             val glossaryImporter =
                 GlossaryImporter(glossariesFilename, glossaryAttrsToOverwrite, glossariesUpdateOnly, batchSize)
@@ -54,6 +58,7 @@ object Importer {
             termImporter.import()
         }
         if (assetsFilename.isNotBlank()) {
+            FieldSerde.FAIL_ON_ERRORS.set(assetsFailOnErrors)
             logger.info("=== Importing assets... ===")
             val assetImporter = AssetImporter(assetsFilename, assetAttrsToOverwrite, assetsUpdateOnly, batchSize)
             assetImporter.import()

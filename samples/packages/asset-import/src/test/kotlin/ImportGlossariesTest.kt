@@ -118,9 +118,11 @@ class ImportGlossariesTest : PackageTest() {
                 assetsFile = null,
                 assetsUpsertSemantic = null,
                 assetsAttrToOverwrite = null,
+                assetsFailOnErrors = true,
                 glossariesFile = Paths.get(testDirectory, testFile).toString(),
                 glossariesUpsertSemantic = "upsert",
                 glossariesAttrToOverwrite = listOf(),
+                glossariesFailOnErrors = true,
             ),
         )
         Importer.main(arrayOf())

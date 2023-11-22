@@ -33,9 +33,8 @@ class TermImporter(
     batchSize = batchSize,
     cache = TermCache,
     typeNameFilter = GlossaryTerm.TYPE_NAME,
+    logger = KotlinLogging.logger {},
 ) {
-    private val logger = KotlinLogging.logger {}
-
     private val secondPassIgnore = setOf(
         GlossaryTerm.LINKS.atlanFieldName,
         GlossaryTerm.ATLAN_TAGS.atlanFieldName,

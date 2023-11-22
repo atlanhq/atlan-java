@@ -1,0 +1,3 @@
+qualifiedName,typeName,name,anchor,parentCategory,categories,displayName,description,userDescription,ownerUsers,ownerGroups,certificateStatus,certificateStatusMessage,announcementType,announcementTitle,announcementMessage,atlanTags,links,readme,starredDetails,seeAlso,preferredTerms,synonyms,antonyms,translatedTerms,validValuesFor,classifies
+,AtlasGlossary,{{GLOSSARY1}},,,,,,Test glossary for asset import package.,invalidUser,,VERIFIED,,,,,,,,,,,,,,,
+,AtlasGlossary,{{GLOSSARY2}},,,,,,Test glossary for asset import package.,,invalidGroup,DRAFT,With a message!,,,,,,,,,,,,,,
