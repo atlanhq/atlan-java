@@ -21,6 +21,10 @@ object Utils {
     val logger = KotlinLogging.logger {}
     val MAPPER = jacksonObjectMapper()
 
+    // Note: this default value is necessary to avoid internal Argo errors if the
+    // file is actually optional (only value that seems likely to be in all tenants' S3 buckets)
+    const val DEFAULT_FILE = "argo-artifacts/atlan-update/last-run-timestamp.txt"
+
     /**
      * Set up the event-processing options, and start up the event processor.
      *
@@ -200,7 +204,15 @@ object Utils {
         return when (default) {
             // TODO: likely need to extend to other types
             is List<*> -> getOrDefault(null, default as List<String>) as T
-            else -> configValue as T
+            else -> {
+                // Recognize the default file location, and if found treat it as
+                // a blank value
+                if (configValue == "/tmp/original_file/$DEFAULT_FILE") {
+                    default
+                } else {
+                    configValue as T
+                }
+            }
         }
     }
 

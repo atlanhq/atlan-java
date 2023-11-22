@@ -4,6 +4,7 @@ package com.atlan.pkg.config.model.workflow
 
 import com.atlan.model.workflow.NameValuePair
 import com.atlan.pkg.CustomPipeline
+import com.atlan.pkg.Utils
 import com.atlan.pkg.config.model.ui.UIConfig
 import com.atlan.pkg.config.widgets.FileUploader
 import com.fasterxml.jackson.annotation.JsonIgnore
@@ -21,10 +22,13 @@ class WorkflowInputs(
             params.add(NameValuePair.of(CustomPipeline.S3_CONFIG_PREFIX, pkgName))
         }
         config.properties.forEach { (k, u) ->
-            if (u.ui is FileUploader.FileUploaderWidget) {
-                arts.add(NamePathS3Tuple(k))
+            when (u.ui) {
+                is FileUploader.FileUploaderWidget -> {
+                    arts.add(NamePathS3Tuple(k))
+                    params.add(NameValuePair.of(k, Utils.DEFAULT_FILE))
+                }
+                else -> params.add(NameValuePair.of(k, ""))
             }
-            params.add(NameValuePair.of(k, ""))
         }
         parameters = params.toList()
         artifacts = arts.toList()
