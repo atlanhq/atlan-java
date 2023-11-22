@@ -4,6 +4,7 @@ package com.atlan.pkg.serde.cell
 
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.GlossaryCategory
+import com.atlan.model.assets.GlossaryTerm
 import com.atlan.pkg.cache.CategoryCache
 
 /**
@@ -45,8 +46,14 @@ object GlossaryCategoryXformer {
         fieldName: String,
     ): Asset {
         return when (fieldName) {
-            "parentCategory" -> CategoryCache.getByIdentity(assetRef)?.trimToReference() ?: throw IllegalStateException("Parent category $assetRef not found.")
-            "categories" -> CategoryCache.getByIdentity(assetRef)?.trimToReference() ?: throw IllegalStateException("Category relationship $assetRef not found.")
+            GlossaryCategory.PARENT_CATEGORY.atlanFieldName -> {
+                CategoryCache.getByIdentity(assetRef)?.trimToReference()
+                    ?: throw NoSuchElementException("Parent category $assetRef not found.")
+            }
+            GlossaryTerm.CATEGORIES.atlanFieldName -> {
+                CategoryCache.getByIdentity(assetRef)?.trimToReference()
+                    ?: throw NoSuchElementException("Category relationship $assetRef not found.")
+            }
             else -> AssetRefXformer.decode(assetRef, fieldName)
         }
     }

@@ -6,7 +6,7 @@ import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.cache.AssetCache
 import com.atlan.pkg.serde.RowDeserialization
 import com.atlan.pkg.serde.RowDeserializer
-import mu.KotlinLogging
+import mu.KLogger
 import kotlin.system.exitProcess
 
 /**
@@ -23,6 +23,7 @@ import kotlin.system.exitProcess
  * @param batchSize maximum number of records to save per API request
  * @param cache of existing glossaries, terms or categories (will be preloaded by import)
  * @param typeNameFilter name of the specific type that should be handled by this importer
+ * @param logger through which to log any problems
  */
 abstract class GTCImporter(
     private val filename: String,
@@ -31,9 +32,8 @@ abstract class GTCImporter(
     private val batchSize: Int,
     protected val cache: AssetCache,
     protected val typeNameFilter: String,
+    protected val logger: KLogger,
 ) : AssetGenerator {
-    private val logger = KotlinLogging.logger {}
-
     /**
      * Actually run the import.
      */
@@ -84,7 +84,7 @@ abstract class GTCImporter(
         // of in particular things like READMEs and Links)
         if (includeRow(row, header, typeIdx, qnIdx)) {
             val revisedRow = generateQualifiedName(row, header, typeIdx, qnIdx)
-            val assets = RowDeserializer(header, revisedRow, typeIdx, qnIdx, skipColumns).getAssets()
+            val assets = RowDeserializer(header, revisedRow, typeIdx, qnIdx, logger, skipColumns).getAssets()
             if (assets != null) {
                 val builder = assets.primary
                 val candidate = builder.build()

@@ -7,7 +7,7 @@ import com.atlan.model.assets.Asset
 import com.atlan.model.core.CustomMetadataAttributes
 import com.atlan.pkg.serde.RowSerde.CM_HEADING_DELIMITER
 import com.atlan.pkg.serde.cell.AssetRefXformer
-import mu.KotlinLogging
+import mu.KLogger
 import java.util.concurrent.ThreadLocalRandom
 
 /**
@@ -18,6 +18,7 @@ import java.util.concurrent.ThreadLocalRandom
  * @param row values for each field in a single row, representing a single asset
  * @param typeIdx the numeric index for the type in the list of columns
  * @param qnIdx the numeric index for the qualifiedName in the list of columns
+ * @param logger through which to record any problems
  * @param skipColumns columns to skip, i.e. that need to be processed in a later pass
  */
 class RowDeserializer(
@@ -25,10 +26,9 @@ class RowDeserializer(
     private val row: List<String>,
     private val typeIdx: Int,
     private val qnIdx: Int,
+    private val logger: KLogger,
     private val skipColumns: Set<String>,
 ) {
-    private val logger = KotlinLogging.logger {}
-
     /**
      * Actually deserialize the provided inputs into a builder for an asset object.
      *
@@ -65,7 +65,7 @@ class RowDeserializer(
                             // "Normal" field...
                             val setter = ReflectionCache.getSetter(builder.javaClass, fieldName)
                             if (setter != null) {
-                                val value = FieldSerde.getValueFromCell(rValue, setter)
+                                val value = FieldSerde.getValueFromCell(rValue, setter, logger)
                                 if (value != null) {
                                     if (AssetRefXformer.requiresHandling(fieldName, value)) {
                                         if (value is Collection<*>) {

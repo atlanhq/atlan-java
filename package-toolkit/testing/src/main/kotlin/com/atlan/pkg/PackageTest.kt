@@ -48,6 +48,28 @@ abstract class PackageTest(val testDirectory: String = makeUnique("dir")) {
     }
 
     /**
+     * Check whether the message appears in the log at the level indicated.
+     *
+     * @param level of the log entry (INFO, WARN, etc)
+     * @param message body of the log entry (without timestamps, etc, of course)
+     * @param filename for the log file
+     * @param relativeTo (optional) path under which the log file should be present
+     * @return true if the line appears in the log, and false otherwise
+     */
+    fun logHasMessage(level: String, message: String, filename: String = "debug.log", relativeTo: String = testDirectory): Boolean {
+        val file = getFile(filename, relativeTo)
+        file.useLines { lines ->
+            lines.forEach { line ->
+                if (line.contains(message) && line.contains(level)) {
+                    // short-circuit
+                    return true
+                }
+            }
+        }
+        return false
+    }
+
+    /**
      * Validate (through assertions) that these file exist and are non-empty files.
      *
      * @param files list of filenames

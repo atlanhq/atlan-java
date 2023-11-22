@@ -35,8 +35,8 @@ class CategoryImporter(
     batchSize = batchSize,
     cache = CategoryCache,
     typeNameFilter = GlossaryCategory.TYPE_NAME,
+    logger = KotlinLogging.logger {},
 ) {
-    private val logger = KotlinLogging.logger {}
     private var levelToProcess = 0
 
     // Maximum depth of any category in the CSV -- will be updated on first pass through the CSV

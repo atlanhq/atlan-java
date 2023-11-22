@@ -5,6 +5,7 @@ import com.atlan.pkg.CustomPackage
 import com.atlan.pkg.config.model.ui.UIConfig
 import com.atlan.pkg.config.model.ui.UIStep
 import com.atlan.pkg.config.model.workflow.WorkflowOutputs
+import com.atlan.pkg.config.widgets.BooleanInput
 import com.atlan.pkg.config.widgets.DropDown
 import com.atlan.pkg.config.widgets.FileUploader
 import com.atlan.pkg.config.widgets.Radio
@@ -59,6 +60,11 @@ object PackageConfig : CustomPackage(
                         default = "update",
                         help = "Whether to allow the creation of new assets from the input CSV, or ensure assets are only updated if they already exist in Atlan.",
                     ),
+                    "assets_fail_on_errors" to BooleanInput(
+                        label = "Fail on errors",
+                        required = true,
+                        help = "Whether an invalid value in a field should cause the import to fail (Yes) or log a warning, skip that value, and proceed (No).",
+                    ),
                 ),
             ),
             UIStep(
@@ -97,8 +103,13 @@ object PackageConfig : CustomPackage(
                             "upsert" to "Create and update",
                             "update" to "Update only",
                         ),
-                        default = "update",
+                        default = "upsert",
                         help = "Whether to allow the creation of new glossaries, categories and terms from the input CSV, or ensure these are only updated if they already exist in Atlan.",
+                    ),
+                    "glossaries_fail_on_errors" to BooleanInput(
+                        label = "Fail on errors",
+                        required = true,
+                        help = "Whether an invalid value in a field should cause the import to fail (Yes) or log a warning, skip that value, and proceed (No).",
                     ),
                 ),
             ),

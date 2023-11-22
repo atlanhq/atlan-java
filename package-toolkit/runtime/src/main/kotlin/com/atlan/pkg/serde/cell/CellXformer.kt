@@ -53,7 +53,11 @@ object CellXformer {
         return if (value.isNullOrEmpty()) {
             null
         } else if (String::class.java.isAssignableFrom(type)) {
-            value
+            when (fieldName) {
+                in UserXformer.FIELDS -> UserXformer.decode(value, fieldName)
+                in GroupXformer.FIELDS -> GroupXformer.decode(value, fieldName)
+                else -> value
+            }
         } else if (Boolean::class.java.isAssignableFrom(type)) {
             value.toBoolean()
         } else if (Integer::class.java.isAssignableFrom(type)) {
