@@ -3,6 +3,8 @@
 package com.atlan.pkg.config.model.workflow
 
 import com.atlan.pkg.config.model.ui.UIConfig
+import com.atlan.pkg.config.widgets.FileUploader
+import com.atlan.pkg.config.widgets.Widget
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonPropertyOrder
 
@@ -16,7 +18,7 @@ class WorkflowContainer(
 ) {
     val env: List<NamedPair>
     init {
-        val nestedConfig = mutableListOf<String>()
+        val nestedConfig = mutableMapOf<String, Widget>()
         val builder = mutableListOf<NamedPair>()
         builder.add(NameValuePair("ATLAN_BASE_URL", "INTERNAL"))
         builder.add(NameValuePair("ATLAN_USER_ID", "{{=sprig.dig('labels', 'workflows', 'argoproj', 'io/creator', '', workflow)}}"))
@@ -27,12 +29,12 @@ class WorkflowContainer(
         builder.add(NamedSecret("CLIENT_ID", "argo-client-creds", "login"))
         builder.add(NamedSecret("CLIENT_SECRET", "argo-client-creds", "password"))
         config.properties.forEach { (k, u) ->
-            if (u.ui.widget == "fileUpload") {
+            if (u.ui is FileUploader.FileUploaderWidget) {
                 builder.add(NameValuePair(k.uppercase(), NamePathS3Tuple(k).path))
             } else {
                 builder.add(NameValuePair(k.uppercase(), "{{inputs.parameters.$k}}"))
             }
-            nestedConfig.add(k)
+            nestedConfig[k] = u.ui
         }
         builder.add(NestedConfig("NESTED_CONFIG", nestedConfig))
         env = builder.toList()

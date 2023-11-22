@@ -12,6 +12,7 @@ plugins {
 dependencies {
     implementation(libs.jackson.kotlin)
     implementation(libs.jackson.yaml)
+    implementation(project(":package-toolkit:runtime"))
 }
 
 tasks {

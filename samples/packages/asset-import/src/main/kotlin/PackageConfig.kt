@@ -51,7 +51,7 @@ object PackageConfig : CustomPackage(
                     ),
                     "assets_upsert_semantic" to Radio(
                         label = "Input handling",
-                        required = true,
+                        required = false,
                         possibleValues = mapOf(
                             "upsert" to "Create and update",
                             "update" to "Update only",
@@ -92,7 +92,7 @@ object PackageConfig : CustomPackage(
                     ),
                     "glossaries_upsert_semantic" to Radio(
                         label = "Input handling",
-                        required = true,
+                        required = false,
                         possibleValues = mapOf(
                             "upsert" to "Create and update",
                             "update" to "Update only",

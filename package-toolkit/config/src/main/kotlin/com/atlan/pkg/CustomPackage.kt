@@ -13,6 +13,7 @@ import com.atlan.pkg.config.model.workflow.WorkflowTemplateDefinition
 import com.atlan.pkg.config.widgets.BooleanInput
 import com.atlan.pkg.config.widgets.ConnectionCreator
 import com.atlan.pkg.config.widgets.ConnectorTypeSelector
+import com.atlan.pkg.config.widgets.DateInput
 import com.atlan.pkg.config.widgets.DropDown
 import com.atlan.pkg.config.widgets.MultipleGroups
 import com.atlan.pkg.config.widgets.MultipleUsers
@@ -168,17 +169,10 @@ open class CustomPackage(
         uiConfig.properties.forEach { (k, u) ->
             var type = "String"
             when (u.ui) {
-                is DropDown.DropDownWidget -> {
-                    builder.append("    @JsonDeserialize(using = WidgetSerde.MultiSelectDeserializer::class)\n")
-                    builder.append("    @JsonSerialize(using = WidgetSerde.MultiSelectSerializer::class)\n")
-                    type = "List<String>"
-                }
-                is MultipleGroups.MultipleGroupsWidget -> {
-                    builder.append("    @JsonDeserialize(using = WidgetSerde.MultiSelectDeserializer::class)\n")
-                    builder.append("    @JsonSerialize(using = WidgetSerde.MultiSelectSerializer::class)\n")
-                    type = "List<String>"
-                }
-                is MultipleUsers.MultipleUsersWidget -> {
+                is DropDown.DropDownWidget,
+                is MultipleGroups.MultipleGroupsWidget,
+                is MultipleUsers.MultipleUsersWidget,
+                -> {
                     builder.append("    @JsonDeserialize(using = WidgetSerde.MultiSelectDeserializer::class)\n")
                     builder.append("    @JsonSerialize(using = WidgetSerde.MultiSelectSerializer::class)\n")
                     type = "List<String>"
@@ -198,6 +192,9 @@ open class CustomPackage(
                 }
                 is NumericInput.NumericInputWidget -> {
                     type = "Number"
+                }
+                is DateInput.DateInputWidget -> {
+                    type = "Long"
                 }
             }
             builder.append("    @JsonProperty(\"$k\") val ${StringUtils.getLowerCamelCase(k)}: $type?,\n")
