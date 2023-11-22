@@ -48,7 +48,7 @@ object GlossaryTermXformer {
             "synonyms", "antonyms", "translatedTerms", "translationTerms",
             "validValuesFor", "validValues", "classifies", "isA", "replacedBy",
             "replacementTerms",
-            -> TermCache.getByIdentity(assetRef)?.trimToReference()!!
+            -> TermCache.getByIdentity(assetRef)?.trimToReference() ?: throw IllegalStateException("Term $assetRef not found (via $fieldName).")
             else -> AssetRefXformer.decode(assetRef, fieldName)
         }
     }

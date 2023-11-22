@@ -45,8 +45,8 @@ object GlossaryCategoryXformer {
         fieldName: String,
     ): Asset {
         return when (fieldName) {
-            "parentCategory" -> CategoryCache.getByIdentity(assetRef)?.trimToReference()!!
-            "categories" -> CategoryCache.getByIdentity(assetRef)?.trimToReference()!!
+            "parentCategory" -> CategoryCache.getByIdentity(assetRef)?.trimToReference() ?: throw IllegalStateException("Parent category $assetRef not found.")
+            "categories" -> CategoryCache.getByIdentity(assetRef)?.trimToReference() ?: throw IllegalStateException("Category relationship $assetRef not found.")
             else -> AssetRefXformer.decode(assetRef, fieldName)
         }
     }
