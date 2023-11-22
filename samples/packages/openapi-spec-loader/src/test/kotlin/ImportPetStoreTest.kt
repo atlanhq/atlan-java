@@ -19,11 +19,6 @@ import kotlin.test.assertNotNull
  */
 class ImportPetStoreTest : PackageTest() {
 
-    // TODO: allow configuration to specify the output directory
-    //  (default to tmp/ if not specified), so that we can generate
-    //  output for different tests to different sub-directories, without
-    //  any overlaps / conflicts
-
     private val testId = makeUnique("swagger")
     private val files = listOf(
         "debug.log",
@@ -102,18 +97,17 @@ class ImportPetStoreTest : PackageTest() {
 
     @Test
     fun filesCreated() {
-        validateFilesExist(files, "tmp")
+        validateFilesExist(files)
     }
 
     @Test
     fun errorFreeLog() {
-        errorFreeLog("debug.log", "tmp")
+        validateErrorFreeLog()
     }
 
     @AfterClass(alwaysRun = true)
     fun afterClass() {
         removeConnection(testId, AtlanConnectorType.API)
-        removeFiles(files)
         teardown()
     }
 }

@@ -21,7 +21,6 @@ import org.testng.Assert.assertNull
 import org.testng.Assert.assertTrue
 import org.testng.annotations.AfterClass
 import org.testng.annotations.BeforeClass
-import java.io.File
 import java.nio.file.Paths
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -32,28 +31,22 @@ import kotlin.test.assertNotNull
  */
 class ImportGlossariesTest : PackageTest() {
 
-    // TODO: allow configuration to specify the output directory
-    //  (default to tmp/ if not specified), so that we can generate
-    //  output for different tests to different sub-directories, without
-    //  any overlaps / conflicts
-
     private val glossary1 = makeUnique("g1")
     private val glossary2 = makeUnique("g2")
     private val tag1 = makeUnique("t1")
     private val tag2 = makeUnique("t2")
 
-    private val testFile = "${makeUnique("input")}.csv"
+    private val testFile = "input.csv"
 
     private val files = listOf(
-        "debug.log",
         testFile,
+        "debug.log",
     )
 
     private fun prepFile() {
         // Prepare a copy of the file with unique names for glossaries and tags
-        File("tmp").mkdirs()
         val input = Paths.get("src", "test", "resources", "glossary.csv").toFile()
-        val output = Paths.get("tmp", testFile).toFile()
+        val output = Paths.get(testDirectory, testFile).toFile()
         input.useLines { lines ->
             lines.forEach { line ->
                 val revised = line
@@ -124,7 +117,7 @@ class ImportGlossariesTest : PackageTest() {
                 assetsFile = null,
                 assetsUpsertSemantic = null,
                 assetsAttrToOverwrite = null,
-                glossariesFile = Paths.get("tmp", testFile).toString(),
+                glossariesFile = Paths.get(testDirectory, testFile).toString(),
                 glossariesUpsertSemantic = "upsert",
                 glossariesAttrToOverwrite = listOf(),
             ),
@@ -442,12 +435,12 @@ class ImportGlossariesTest : PackageTest() {
 
     @Test
     fun filesCreated() {
-        validateFilesExist(files, "tmp")
+        validateFilesExist(files)
     }
 
     @Test
     fun errorFreeLog() {
-        errorFreeLog("debug.log", "tmp")
+        validateErrorFreeLog()
     }
 
     @AfterClass(alwaysRun = true)
@@ -456,7 +449,6 @@ class ImportGlossariesTest : PackageTest() {
         Glossary.purge(Glossary.findByName(glossary2).guid)
         AtlanTagDef.purge(tag1)
         AtlanTagDef.purge(tag2)
-        removeFiles(files, "tmp")
         teardown()
     }
 }

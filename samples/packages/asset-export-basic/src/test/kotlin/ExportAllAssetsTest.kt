@@ -12,11 +12,6 @@ import kotlin.test.Test
  */
 class ExportAllAssetsTest : PackageTest() {
 
-    // TODO: allow configuration to specify the output directory
-    //  (default to tmp/ if not specified), so that we can generate
-    //  output for different tests to different sub-directories, without
-    //  any overlaps / conflicts
-
     private val files = listOf(
         "asset-export.csv",
         "debug.log",
@@ -32,22 +27,21 @@ class ExportAllAssetsTest : PackageTest() {
                 includeGlossaries = true,
             ),
         )
-        Exporter.main(arrayOf())
+        Exporter.main(arrayOf(testDirectory))
     }
 
     @Test
     fun filesCreated() {
-        validateFilesExist(files, "tmp")
+        validateFilesExist(files)
     }
 
     @Test
     fun errorFreeLog() {
-        errorFreeLog("debug.log", "tmp")
+        validateErrorFreeLog()
     }
 
     @AfterClass(alwaysRun = true)
     fun afterClass() {
-        removeFiles(files, "tmp")
         teardown()
     }
 }
