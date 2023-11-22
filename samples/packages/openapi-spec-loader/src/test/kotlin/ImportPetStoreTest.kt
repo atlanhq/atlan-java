@@ -8,6 +8,7 @@ import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.pkg.PackageTest
 import org.testng.Assert.assertFalse
 import org.testng.Assert.assertTrue
+import org.testng.ITestContext
 import org.testng.annotations.AfterClass
 import org.testng.annotations.BeforeClass
 import kotlin.test.Test
@@ -106,8 +107,8 @@ class ImportPetStoreTest : PackageTest() {
     }
 
     @AfterClass(alwaysRun = true)
-    fun afterClass() {
+    fun afterClass(context: ITestContext) {
         removeConnection(testId, AtlanConnectorType.API)
-        teardown()
+        teardown(context.failedTests.size() > 0)
     }
 }

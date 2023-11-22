@@ -45,4 +45,15 @@ interface AssetGenerator {
     ) {
         AssetRefXformer.buildRelated(from, relatedAssets, batch, count, totalRelated, logger, batchSize)
     }
+
+    /**
+     * Check whether to include this row as part of the processing (true) or not (false).
+     *
+     * @param row of values
+     * @param header column names
+     * @param typeIdx index of the typeName
+     * @param qnIdx index of the qualifiedName
+     * @return true if the row should be included in the import, or false if not
+     */
+    fun includeRow(row: List<String>, header: List<String>, typeIdx: Int, qnIdx: Int): Boolean
 }

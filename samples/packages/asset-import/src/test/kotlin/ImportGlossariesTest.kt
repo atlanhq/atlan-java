@@ -19,6 +19,7 @@ import com.atlan.model.typedefs.AtlanTagDef
 import com.atlan.pkg.PackageTest
 import org.testng.Assert.assertNull
 import org.testng.Assert.assertTrue
+import org.testng.ITestContext
 import org.testng.annotations.AfterClass
 import org.testng.annotations.BeforeClass
 import java.nio.file.Paths
@@ -444,11 +445,11 @@ class ImportGlossariesTest : PackageTest() {
     }
 
     @AfterClass(alwaysRun = true)
-    fun afterClass() {
+    fun afterClass(context: ITestContext) {
         Glossary.purge(Glossary.findByName(glossary1).guid)
         Glossary.purge(Glossary.findByName(glossary2).guid)
         AtlanTagDef.purge(tag1)
         AtlanTagDef.purge(tag2)
-        teardown()
+        teardown(context.failedTests.size() > 0)
     }
 }

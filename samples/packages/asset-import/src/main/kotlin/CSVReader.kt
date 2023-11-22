@@ -21,13 +21,18 @@ import java.util.concurrent.atomic.AtomicLong
  * Utility class for reading from CSV files, using FastCSV.
  *
  * @param path location and filename of the CSV file to read
+ * @param updateOnly when true, the reader will first look up assets to ensure they exist (and only update them, never create)
  * @param fieldSeparator character to use to separate fields (for example ',' or ';')
  */
-class CSVReader @JvmOverloads constructor(path: String, private val updateOnly: Boolean, fieldSeparator: Char = ',') : Closeable {
+class CSVReader @JvmOverloads constructor(
+    path: String,
+    private val updateOnly: Boolean,
+    fieldSeparator: Char = ',',
+) : Closeable {
 
     private val reader: CsvReader
+    private val counter: CsvReader
     private val header: List<String>
-    private val totalRowCount: Long
     private val typeIdx: Int
     private val qualifiedNameIdx: Int
 
@@ -40,7 +45,6 @@ class CSVReader @JvmOverloads constructor(path: String, private val updateOnly: 
             .quoteCharacter('"')
             .skipEmptyRows(true)
             .errorOnDifferentFieldCount(true)
-        builder.build(inputFile).use { tmp -> totalRowCount = tmp.stream().parallel().count() - 1 }
         builder.build(inputFile).use { tmp ->
             val one = tmp.stream().findFirst()
             header =
@@ -56,6 +60,7 @@ class CSVReader @JvmOverloads constructor(path: String, private val updateOnly: 
         }
         created = ConcurrentHashMap()
         reader = builder.build(inputFile)
+        counter = builder.build(inputFile)
     }
 
     /**
@@ -78,6 +83,13 @@ class CSVReader @JvmOverloads constructor(path: String, private val updateOnly: 
         val deferDeletes: MutableMap<Long, MutableMap<String, Set<AtlanField>>> = ConcurrentHashMap()
         var someFailure = false
 
+        val filteredRowCount = AtomicLong(0)
+        counter.stream().skip(1).parallel().forEach { row ->
+            if (rowToAsset.includeRow(row.fields, header, typeIdx, qualifiedNameIdx)) {
+                filteredRowCount.incrementAndGet()
+            }
+        }
+        val totalRowCount = filteredRowCount.get()
         // Step 1: load the main assets
         logger.info("Loading a total of {} assets...", totalRowCount)
         val count = AtomicLong(0)
