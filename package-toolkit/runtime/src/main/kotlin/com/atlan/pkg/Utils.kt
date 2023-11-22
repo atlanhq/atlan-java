@@ -207,7 +207,7 @@ object Utils {
             else -> {
                 // Recognize the default file location, and if found treat it as
                 // a blank value
-                if (configValue == "/tmp/original_file/$DEFAULT_FILE") {
+                if (configValue.startsWith("/tmp") && configValue.endsWith(DEFAULT_FILE)) {
                     default
                 } else {
                     configValue as T

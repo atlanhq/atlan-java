@@ -6,7 +6,10 @@ import com.atlan.model.workflow.NameValuePair
 import com.atlan.pkg.CustomPipeline
 import com.atlan.pkg.Utils
 import com.atlan.pkg.config.model.ui.UIConfig
+import com.atlan.pkg.config.widgets.BooleanInput
+import com.atlan.pkg.config.widgets.DateInput
 import com.atlan.pkg.config.widgets.FileUploader
+import com.atlan.pkg.config.widgets.NumericInput
 import com.fasterxml.jackson.annotation.JsonIgnore
 
 class WorkflowInputs(
@@ -26,6 +29,14 @@ class WorkflowInputs(
                 is FileUploader.FileUploaderWidget -> {
                     arts.add(NamePathS3Tuple(k))
                     params.add(NameValuePair.of(k, Utils.DEFAULT_FILE))
+                }
+                is BooleanInput.BooleanInputWidget -> {
+                    params.add(NameValuePair.of(k, false))
+                }
+                is NumericInput.NumericInputWidget,
+                is DateInput.DateInputWidget,
+                -> {
+                    params.add(NameValuePair.of(k, "-1"))
                 }
                 else -> params.add(NameValuePair.of(k, ""))
             }

@@ -62,7 +62,7 @@ object PackageConfig : CustomPackage(
                     ),
                     "assets_fail_on_errors" to BooleanInput(
                         label = "Fail on errors",
-                        required = true,
+                        required = false,
                         help = "Whether an invalid value in a field should cause the import to fail (Yes) or log a warning, skip that value, and proceed (No).",
                     ),
                 ),
@@ -108,7 +108,7 @@ object PackageConfig : CustomPackage(
                     ),
                     "glossaries_fail_on_errors" to BooleanInput(
                         label = "Fail on errors",
-                        required = true,
+                        required = false,
                         help = "Whether an invalid value in a field should cause the import to fail (Yes) or log a warning, skip that value, and proceed (No).",
                     ),
                 ),
