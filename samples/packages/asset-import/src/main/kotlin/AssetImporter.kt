@@ -48,12 +48,13 @@ class AssetImporter(
      * @param header names of columns (and their position) in the header of the CSV
      * @param typeIdx numeric index of the column containing the typeName of the asset in the row
      * @param qnIdx numeric index of the column containing the qualifiedName of the asset in the row
+     * @param skipColumns columns to skip, i.e. that need to be processed in a later pass
      * @return the deserialized asset object(s)
      */
-    override fun buildFromRow(row: List<String>, header: List<String>, typeIdx: Int, qnIdx: Int): RowDeserialization? {
+    override fun buildFromRow(row: List<String>, header: List<String>, typeIdx: Int, qnIdx: Int, skipColumns: Set<String>): RowDeserialization? {
         // Deserialize the objects represented in that row (could be more than one due to flattening
         // of in particular things like READMEs and Links)
-        val assets = RowDeserializer(header, row, typeIdx, qnIdx).getAssets()
+        val assets = RowDeserializer(header, row, typeIdx, qnIdx, skipColumns).getAssets()
         if (assets != null) {
             val builder = assets.primary
             val candidate = builder.build()

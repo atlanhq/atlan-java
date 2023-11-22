@@ -65,15 +65,13 @@ object AssetRefXformer {
         fieldName: String,
     ): Asset {
         return when (fieldName) {
-            "readme" -> Readme._internal().description(assetRef).build()
-            "links" -> Atlan.getDefaultClient().readValue(assetRef, Link::class.java)
-            "parentCategory", "categories" -> GlossaryCategoryXformer.decode(assetRef, fieldName)
-            "anchor" -> GlossaryXformer.decode(assetRef, fieldName)
-            "assignedTerms", "seeAlso", "preferredTerms", "preferredToTerms",
-            "synonyms", "antonyms", "translatedTerms", "translationTerms",
-            "validValuesFor", "validValues", "classifies", "isA", "replacedBy",
-            "replacementTerms",
-            -> GlossaryTermXformer.decode(assetRef, fieldName)
+            Asset.README.atlanFieldName -> Readme._internal().description(assetRef).build()
+            Asset.LINKS.atlanFieldName -> Atlan.getDefaultClient().readValue(assetRef, Link::class.java)
+            GlossaryCategory.PARENT_CATEGORY.atlanFieldName,
+            GlossaryTerm.CATEGORIES.atlanFieldName,
+            -> GlossaryCategoryXformer.decode(assetRef, fieldName)
+            GlossaryCategory.ANCHOR.atlanFieldName -> GlossaryXformer.decode(assetRef, fieldName)
+            in GlossaryTermXformer.TERM_TO_TERM_FIELDS -> GlossaryTermXformer.decode(assetRef, fieldName)
             else -> {
                 val tokens = assetRef.split(TYPE_QN_DELIMITER)
                 val typeName = tokens[0]
@@ -105,8 +103,6 @@ object AssetRefXformer {
         logger: KLogger,
         batchSize: Int,
     ) {
-        val builder = from.trimToRequired()
-        var hasChanges = false
         relatedAssets.forEach { (fieldName, relatives) ->
             for (related in relatives) {
                 when (related) {
@@ -144,33 +140,8 @@ object AssetRefXformer {
                         }
                         count.getAndIncrement()
                     }
-
-                    is GlossaryTerm -> {
-                        builder as GlossaryTerm.GlossaryTermBuilder<*, *>
-                        when (fieldName) {
-                            "seeAlso" -> builder.seeAlsoOne(GlossaryTerm.refByGuid(related.guid))
-                            "preferredTerms" -> builder.preferredTerm(GlossaryTerm.refByGuid(related.guid))
-                            "preferredToTerms" -> builder.preferredToTerm(GlossaryTerm.refByGuid(related.guid))
-                            "synonyms" -> builder.synonym(GlossaryTerm.refByGuid(related.guid))
-                            "antonyms" -> builder.antonym(GlossaryTerm.refByGuid(related.guid))
-                            "translatedTerms" -> builder.translatedTerm(GlossaryTerm.refByGuid(related.guid))
-                            "translationTerms" -> builder.translationTerm(GlossaryTerm.refByGuid(related.guid))
-                            "validValuesFor" -> builder.validValueFor(GlossaryTerm.refByGuid(related.guid))
-                            "validValues" -> builder.validValue(GlossaryTerm.refByGuid(related.guid))
-                            "classifies" -> builder.classify(GlossaryTerm.refByGuid(related.guid))
-                            "isA" -> builder.isATerm(GlossaryTerm.refByGuid(related.guid))
-                            "replacedBy" -> builder.replacedByTerm(GlossaryTerm.refByGuid(related.guid))
-                            "replacementTerms" -> builder.replacementTerm(GlossaryTerm.refByGuid(related.guid))
-                            else -> TODO("Field $fieldName is not currently handled.")
-                        }
-                        hasChanges = true
-                        count.getAndIncrement()
-                    }
                 }
             }
-        }
-        if (hasChanges) {
-            batch.add(builder.build())
         }
         Utils.logProgress(count, totalRelated.get(), logger, batchSize)
     }
@@ -184,12 +155,8 @@ object AssetRefXformer {
      */
     fun requiresHandling(fieldName: String, candidate: Any): Boolean {
         return when (fieldName) {
-            "links" -> true
-            "readme" -> true
-            "seeAlso", "preferredTerms", "preferredToTerms", "synonyms",
-            "antonyms", "translatedTerms", "translationTerms", "validValuesFor",
-            "validValues", "classifies", "isA", "replacedBy", "replacementTerms",
-            -> true
+            Asset.LINKS.atlanFieldName -> true
+            Asset.README.atlanFieldName -> true
             else -> false
         }
     }

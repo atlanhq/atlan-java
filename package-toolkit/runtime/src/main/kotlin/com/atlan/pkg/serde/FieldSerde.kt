@@ -7,6 +7,7 @@ import com.atlan.model.assets.Asset
 import com.atlan.model.fields.AtlanField
 import com.atlan.model.fields.CustomMetadataField
 import com.atlan.pkg.serde.cell.CellXformer
+import com.atlan.serde.Serde
 import java.lang.reflect.Method
 
 /**
@@ -78,5 +79,17 @@ object FieldSerde {
         } else {
             value.split(CellXformer.LIST_DELIMITER)
         }
+    }
+
+    /**
+     * Get a builder for the provided asset type.
+     *
+     * @param typeName name of the asset type for which to get a builder
+     * @return a builder for that asset type
+     */
+    fun getBuilderForType(typeName: String): Asset.AssetBuilder<*, *> {
+        val assetClass = Serde.getAssetClassForType(typeName)
+        val method = assetClass.getMethod("_internal")
+        return method.invoke(null) as Asset.AssetBuilder<*, *>
     }
 }

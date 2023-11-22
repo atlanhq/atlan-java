@@ -51,13 +51,15 @@ object LinkCache {
      * @param link to add to the cache
      */
     fun add(link: Link) {
-        val ref = (link.asset as Asset).trimToReference()
-        val url = link.link
-        val assetGuid = link.asset.guid
-        val minimal = link.trimToRequired().asset(ref).link(url).name(link.name).build()
-        if (!byAssetGuid.containsKey(assetGuid)) {
-            byAssetGuid[assetGuid] = ConcurrentHashMap.newKeySet()
+        link.asset?.let {
+            val ref = (link.asset as Asset).trimToReference()
+            val url = link.link
+            val assetGuid = link.asset.guid
+            val minimal = link.trimToRequired().asset(ref).link(url).name(link.name).build()
+            if (!byAssetGuid.containsKey(assetGuid)) {
+                byAssetGuid[assetGuid] = ConcurrentHashMap.newKeySet()
+            }
+            byAssetGuid[assetGuid]?.add(minimal)
         }
-        byAssetGuid[assetGuid]?.add(minimal)
     }
 }

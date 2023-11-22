@@ -67,9 +67,10 @@ class CSVReader @JvmOverloads constructor(path: String, private val updateOnly: 
      * @param rowToAsset translator from a row of CSV values to an asset object
      * @param batchSize maximum number of Assets to bulk-save in Atlan per API request
      * @param logger through which to report the overall progress
+     * @param skipColumns columns to skip during the processing (i.e. where they need to be processed in a later pass)
      * @return true if all rows were processed successfully, or false if there were any failures
      */
-    fun streamRows(rowToAsset: AssetGenerator, batchSize: Int, logger: KLogger): Boolean {
+    fun streamRows(rowToAsset: AssetGenerator, batchSize: Int, logger: KLogger, skipColumns: Set<String> = setOf()): Boolean {
         // Note that for proper parallelism we need to manage a separate AssetBatch per thread
         val batchMap: MutableMap<Long, AssetBatch> = ConcurrentHashMap()
         val relatedMap: MutableMap<Long, AssetBatch> = ConcurrentHashMap()
@@ -103,7 +104,7 @@ class CSVReader @JvmOverloads constructor(path: String, private val updateOnly: 
                 )
             }
             val localBatch = batchMap[id]
-            val assets = rowToAsset.buildFromRow(r.fields, header, typeIdx, qualifiedNameIdx)
+            val assets = rowToAsset.buildFromRow(r.fields, header, typeIdx, qualifiedNameIdx, skipColumns)
             if (assets != null) {
                 try {
                     val asset = assets.primary.build()
