@@ -71,4 +71,9 @@ class AssetImporter(
         }
         return null
     }
+
+    /** {@inheritDoc} */
+    override fun includeRow(row: List<String>, header: List<String>, typeIdx: Int, qnIdx: Int): Boolean {
+        return true
+    }
 }

@@ -40,21 +40,21 @@ object Importer {
         LinkCache.preload()
 
         if (glossariesFilename.isNotBlank()) {
-            logger.info("Importing glossaries...")
+            logger.info("=== Importing glossaries... ===")
             val glossaryImporter =
                 GlossaryImporter(glossariesFilename, glossaryAttrsToOverwrite, glossariesUpdateOnly, batchSize)
             glossaryImporter.import()
-            logger.info("Importing categories...")
+            logger.info("=== Importing categories... ===")
             val categoryImporter =
                 CategoryImporter(glossariesFilename, glossaryAttrsToOverwrite, glossariesUpdateOnly, batchSize)
             categoryImporter.import()
-            logger.info("Importing terms...")
+            logger.info("=== Importing terms... ===")
             val termImporter =
                 TermImporter(glossariesFilename, glossaryAttrsToOverwrite, glossariesUpdateOnly, batchSize)
             termImporter.import()
         }
         if (assetsFilename.isNotBlank()) {
-            logger.info("Importing assets...")
+            logger.info("=== Importing assets... ===")
             val assetImporter = AssetImporter(assetsFilename, assetAttrsToOverwrite, assetsUpdateOnly, batchSize)
             assetImporter.import()
         }
