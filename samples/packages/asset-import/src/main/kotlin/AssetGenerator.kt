@@ -18,9 +18,10 @@ interface AssetGenerator {
      * @param header list of field names in the same order as columns in the tabular data
      * @param typeIdx numeric index within the columns of the typeName field
      * @param qnIdx numeric index within the columns of the qualifiedName field
+     * @param skipColumns columns to skip, i.e. that need to be handled in a later pass
      * @return the asset(s) built from the values on the row
      */
-    fun buildFromRow(row: List<String>, header: List<String>, typeIdx: Int, qnIdx: Int): RowDeserialization?
+    fun buildFromRow(row: List<String>, header: List<String>, typeIdx: Int, qnIdx: Int, skipColumns: Set<String>): RowDeserialization?
 
     /**
      * Batch up a complete related asset object from the provided asset and (partial) related asset details.

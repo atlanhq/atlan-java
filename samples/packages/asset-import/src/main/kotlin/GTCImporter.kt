@@ -2,9 +2,6 @@
    Copyright 2023 Atlan Pte. Ltd. */
 import Importer.clearField
 import com.atlan.model.assets.Asset
-import com.atlan.model.assets.Glossary
-import com.atlan.model.assets.GlossaryCategory
-import com.atlan.model.assets.GlossaryTerm
 import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.cache.AssetCache
 import com.atlan.pkg.serde.RowDeserialization
@@ -61,19 +58,13 @@ abstract class GTCImporter(
      */
     fun cacheCreated(map: Map<String, Asset>) {
         // Cache any assets that were created by processing
-        map.forEach { (k, v) ->
-            when (v) {
-                is Glossary -> cache.addByGuid(k, v)
-                is GlossaryTerm, is GlossaryCategory -> {
-                    // For terms and categories, we must look up the asset and then cache to ensure
-                    // we have the necessary identity characteristics (Since these are not inherent in
-                    // the normal attributes or qualifiedName)
-                    val result = cache.lookupAssetByGuid(k, maxRetries = 5)
-                    result?.let {
-                        cache.addByGuid(k, result)
-                    }
-                }
-            }
+        map.keys.forEach { k ->
+            // We must look up the asset and then cache to ensure we have the necessary identity
+            // characteristics and status
+            val result = cache.lookupAssetByGuid(k, maxRetries = 5)
+            result?.let {
+                cache.addByGuid(k, result)
+            } ?: throw IllegalStateException("Result of searching by GUID for $k was null.")
         }
     }
 
@@ -85,14 +76,15 @@ abstract class GTCImporter(
      * @param header names of columns (and their position) in the header of the CSV
      * @param typeIdx numeric index of the column containing the typeName of the asset in the row
      * @param qnIdx numeric index of the column containing the qualifiedName of the asset in the row
+     * @param skipColumns columns to skip, i.e. that need to be processed in a later pass
      * @return the deserialized asset object(s)
      */
-    override fun buildFromRow(row: List<String>, header: List<String>, typeIdx: Int, qnIdx: Int): RowDeserialization? {
+    override fun buildFromRow(row: List<String>, header: List<String>, typeIdx: Int, qnIdx: Int, skipColumns: Set<String>): RowDeserialization? {
         // Deserialize the objects represented in that row (could be more than one due to flattening
         // of in particular things like READMEs and Links)
         if (includeRow(row, header, typeIdx, qnIdx)) {
             val revisedRow = generateQualifiedName(row, header, typeIdx, qnIdx)
-            val assets = RowDeserializer(header, revisedRow, typeIdx, qnIdx).getAssets()
+            val assets = RowDeserializer(header, revisedRow, typeIdx, qnIdx, skipColumns).getAssets()
             if (assets != null) {
                 val builder = assets.primary
                 val candidate = builder.build()

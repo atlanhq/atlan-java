@@ -5,6 +5,7 @@ import com.atlan.pkg.serde.WidgetSerde
 import com.fasterxml.jackson.annotation.JsonAutoDetect
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
+import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import javax.annotation.processing.Generated
 
 /**
@@ -14,6 +15,7 @@ import javax.annotation.processing.Generated
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 data class AssetScorerCfg(
     @JsonDeserialize(using = WidgetSerde.MultiSelectDeserializer::class)
+    @JsonSerialize(using = WidgetSerde.MultiSelectSerializer::class)
     @JsonProperty("asset_types") val assetTypes: List<String>?,
     @JsonProperty("credential_usage") val credentialUsage: String?,
     @JsonProperty("api_token") val apiToken: String?,

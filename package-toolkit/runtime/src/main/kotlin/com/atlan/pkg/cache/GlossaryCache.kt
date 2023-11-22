@@ -3,7 +3,6 @@
 package com.atlan.pkg.cache
 
 import com.atlan.exception.AtlanException
-import com.atlan.exception.NotFoundException
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Glossary
 import com.atlan.model.fields.AtlanField
@@ -20,7 +19,7 @@ object GlossaryCache : AssetCache() {
         try {
             return Glossary.findByName(identity)
         } catch (e: AtlanException) {
-            logger.error("Unable to lookup or find glossary: {}", identity, e)
+            logger.warn("Unable to find glossary: {}", identity)
         }
         return null
     }
@@ -37,13 +36,13 @@ object GlossaryCache : AssetCache() {
                     .findFirst()
             if (glossary.isPresent) {
                 return glossary.get()
-            }
-        } catch (e: NotFoundException) {
-            if (currentAttempt >= maxRetries) {
-                logger.error("No glossary found with GUID: {}", guid, e)
             } else {
-                Thread.sleep(HttpClient.waitTime(currentAttempt).toMillis())
-                return lookupAssetByGuid(guid, currentAttempt + 1, maxRetries)
+                if (currentAttempt >= maxRetries) {
+                    logger.error("No glossary found with GUID: {}", guid)
+                } else {
+                    Thread.sleep(HttpClient.waitTime(currentAttempt).toMillis())
+                    return lookupAssetByGuid(guid, currentAttempt + 1, maxRetries)
+                }
             }
         } catch (e: AtlanException) {
             logger.error("Unable to lookup or find glossary: {}", guid, e)

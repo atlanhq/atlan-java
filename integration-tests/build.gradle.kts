@@ -8,6 +8,7 @@ plugins {
 dependencies {
     implementation(project(":sdk"))
     testImplementation(libs.bundles.java.test)
+    testImplementation(libs.bundles.log4j)
 }
 
 testing {

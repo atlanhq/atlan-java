@@ -27,6 +27,7 @@ object Utils {
      * @return the configuration used to set up the event-processing handler, or null if no configuration was found
      */
     inline fun <reified T : CustomConfig> setPackageOps(): T {
+        System.getProperty("logDirectory") ?: System.setProperty("logDirectory", "tmp")
         logger.info("Looking for configuration in environment variables...")
         val config = parseConfigFromEnv<T>()
         setClient(config.runtime.userId ?: "")

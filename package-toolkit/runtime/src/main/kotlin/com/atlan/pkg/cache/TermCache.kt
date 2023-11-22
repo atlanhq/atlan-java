@@ -3,7 +3,6 @@
 package com.atlan.pkg.cache
 
 import com.atlan.exception.AtlanException
-import com.atlan.exception.NotFoundException
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Glossary
 import com.atlan.model.assets.GlossaryTerm
@@ -65,13 +64,13 @@ object TermCache : AssetCache() {
                     .findFirst()
             if (term.isPresent) {
                 return term.get()
-            }
-        } catch (e: NotFoundException) {
-            if (currentAttempt >= maxRetries) {
-                logger.error("No term found with GUID: {}", guid, e)
             } else {
-                Thread.sleep(HttpClient.waitTime(currentAttempt).toMillis())
-                return lookupAssetByGuid(guid, currentAttempt + 1, maxRetries)
+                if (currentAttempt >= maxRetries) {
+                    logger.error("No term found with GUID: {}", guid)
+                } else {
+                    Thread.sleep(HttpClient.waitTime(currentAttempt).toMillis())
+                    return lookupAssetByGuid(guid, currentAttempt + 1, maxRetries)
+                }
             }
         } catch (e: AtlanException) {
             logger.error("Unable to lookup or find term: {}", guid, e)

@@ -3,7 +3,10 @@
 import com.atlan.model.assets.GlossaryTerm
 import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.cache.TermCache
+import com.atlan.pkg.serde.cell.GlossaryTermXformer
 import com.atlan.pkg.serde.cell.GlossaryXformer
+import mu.KotlinLogging
+import kotlin.system.exitProcess
 
 /**
  * Import glossaries (only) into Atlan from a provided CSV file.
@@ -31,6 +34,43 @@ class TermImporter(
     cache = TermCache,
     typeNameFilter = GlossaryTerm.TYPE_NAME,
 ) {
+    private val logger = KotlinLogging.logger {}
+
+    private val secondPassIgnore = setOf(
+        GlossaryTerm.LINKS.atlanFieldName,
+        GlossaryTerm.ATLAN_TAGS.atlanFieldName,
+        GlossaryTerm.README.atlanFieldName,
+    )
+
+    /** {@inheritDoc} */
+    override fun import() {
+        cache.preload()
+        // Import categories by level, top-to-bottom, and stop when we hit a level with no categories
+        logger.info("--- Loading terms in first pass, without term-to-term relationships... ---")
+        CSVReader(filename, updateOnly).use { csv ->
+            val start = System.currentTimeMillis()
+            val anyFailures = csv.streamRows(this, batchSize, logger, GlossaryTermXformer.TERM_TO_TERM_FIELDS)
+            logger.info("Total time taken: {} ms", System.currentTimeMillis() - start)
+            if (anyFailures) {
+                logger.error("Some errors detected, failing the workflow.")
+                exitProcess(1)
+            }
+            cacheCreated(csv.created)
+        }
+        // In this second pass we need to ignore fields that were loaded in the first pass,
+        // or we will end up with duplicates (links) or extra audit log messages (tags, README)
+        logger.info("--- Loading term-to-term relationships (second pass)... ---")
+        CSVReader(filename, updateOnly).use { csv ->
+            val start = System.currentTimeMillis()
+            val anyFailures = csv.streamRows(this, batchSize, logger, secondPassIgnore)
+            logger.info("Total time taken: {} ms", System.currentTimeMillis() - start)
+            if (anyFailures) {
+                logger.error("Some errors detected, failing the workflow.")
+                exitProcess(1)
+            }
+        }
+    }
+
     /** {@inheritDoc} */
     override fun includeRow(row: List<String>, header: List<String>, typeIdx: Int, qnIdx: Int): Boolean {
         return row[typeIdx] == typeNameFilter

@@ -10,6 +10,7 @@ import java.io.File
 object Exporter {
     @JvmStatic
     fun main(args: Array<String>) {
+        val outputDirectory = if (args.isEmpty()) "tmp" else args[0]
         val config = Utils.setPackageOps<AssetExportBasicCfg>()
 
         val batchSize = 20
@@ -18,13 +19,13 @@ object Exporter {
 
         if (Utils.getOrDefault(config.includeGlossaries, false)) {
             val glossaryExporter = GlossaryExporter(
-                "tmp" + File.separator + "glossary-export.csv",
+                "$outputDirectory${File.separator}glossary-export.csv",
                 batchSize,
             )
             glossaryExporter.export()
         }
         val assetExporter = AssetExporter(
-            "tmp" + File.separator + "asset-export.csv",
+            "$outputDirectory${File.separator}asset-export.csv",
             assetsExportScope,
             assetsQualifiedNamePrefix,
             batchSize,

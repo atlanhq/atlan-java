@@ -5,6 +5,7 @@ import com.atlan.pkg.serde.WidgetSerde
 import com.fasterxml.jackson.annotation.JsonAutoDetect
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
+import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import javax.annotation.processing.Generated
 
 /**
@@ -14,8 +15,10 @@ import javax.annotation.processing.Generated
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 data class VerificationEnforcerCfg(
     @JsonDeserialize(using = WidgetSerde.MultiSelectDeserializer::class)
+    @JsonSerialize(using = WidgetSerde.MultiSelectSerializer::class)
     @JsonProperty("asset_types") val assetTypes: List<String>?,
     @JsonDeserialize(using = WidgetSerde.MultiSelectDeserializer::class)
+    @JsonSerialize(using = WidgetSerde.MultiSelectSerializer::class)
     @JsonProperty("must_haves") val mustHaves: List<String>?,
     @JsonProperty("enforcement_message") val enforcementMessage: String?,
     @JsonProperty("credential_usage") val credentialUsage: String?,

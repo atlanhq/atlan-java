@@ -7,16 +7,22 @@
                 <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
             </PatternLayout>
         </Console>
-        <File name="FileAppender" fileName="tmp/debug.log">
-            <PatternLayout>
-                <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
-            </PatternLayout>
-        </File>
+        <Routing name="Routing">
+            <Routes pattern="$${sys:logDirectory}">
+                <Route>
+                    <File name="File" fileName="${sys:logDirectory}/debug.log" append="false">
+                        <PatternLayout>
+                            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+                        </PatternLayout>
+                    </File>
+                </Route>
+            </Routes>
+        </Routing>
     </Appenders>
     <Loggers>
         <Root level="DEBUG">
             <AppenderRef ref="ConsoleAppender" level="INFO"/>
-            <AppenderRef ref="FileAppender"/>
+            <AppenderRef ref="Routing"/>
         </Root>
         <Logger name="com.atlan" level="DEBUG"/>
     </Loggers>
