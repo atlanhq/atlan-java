@@ -40,8 +40,7 @@ object RoleXformer {
             in FIELDS -> {
                 try {
                     // Try to look up the user reference by username
-                    Atlan.getDefaultClient().roleCache.getIdForName(roleRef)
-                    return roleRef
+                    return Atlan.getDefaultClient().roleCache.getIdForName(roleRef)
                 } catch (e: NotFoundException) {
                     throw NoSuchElementException("Role name $roleRef is not known to Atlan.", e)
                 }
