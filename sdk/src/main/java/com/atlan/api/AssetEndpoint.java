@@ -9,6 +9,7 @@ import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.assets.Connection;
+import com.atlan.model.assets.GlossaryCategory;
 import com.atlan.model.assets.IReferenceable;
 import com.atlan.model.core.*;
 import com.atlan.model.enums.AtlanDeleteType;
@@ -373,10 +374,21 @@ public class AssetEndpoint extends AtlasEndpoint {
      * @param options to override default client settings
      * @return the results of the deletion
      * @throws AtlanException on any API interaction problems
+     * @throws InvalidRequestException if you attempt to archive a category, as categories can only be purged
      */
     public AssetDeletionResponse delete(List<String> guids, AtlanDeleteType deleteType, RequestOptions options)
             throws AtlanException {
         if (guids != null) {
+            if (deleteType == AtlanDeleteType.SOFT) {
+                List<String> categoryGuids = new ArrayList<>();
+                client.assets.select().where(Asset.GUID.in(guids)).stream()
+                        .filter(a -> a instanceof GlossaryCategory)
+                        .forEach(c -> categoryGuids.add(c.getGuid()));
+                if (!categoryGuids.isEmpty()) {
+                    throw new InvalidRequestException(
+                            ErrorCode.CATEGORIES_CANNOT_BE_ARCHIVED, String.join(",", categoryGuids));
+                }
+            }
             StringBuilder guidList = new StringBuilder();
             for (String guid : guids) {
                 if (guid != null) {

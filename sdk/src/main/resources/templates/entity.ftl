@@ -449,6 +449,7 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
         return get(client, qualifiedName);
     }
 
+<#if className != "GlossaryCategory">
     /**
      * Restore the archived (soft-deleted) ${className} to active.
      *
@@ -472,6 +473,7 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
 
+</#if>
 </#if>
 <#if classTemplateFile??>
 <#import classTemplateFile as methods>

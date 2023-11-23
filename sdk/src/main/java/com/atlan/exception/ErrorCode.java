@@ -232,6 +232,11 @@ public enum ErrorCode implements ExceptionMessageSet {
             "ATLAN-JAVA-400-041",
             "Objects of type {0} should only be updated in full.",
             "For objects of this type you should not use trimToRequired but instead update the object in full."),
+    CATEGORIES_CANNOT_BE_ARCHIVED(
+            400,
+            "ATLAN-JAVA-400-042",
+            "Categories cannot be archived (soft-deleted): {0}.",
+            "Please use the purge operation if you wish to remove a category."),
 
     AUTHENTICATION_PASSTHROUGH(
             401,
