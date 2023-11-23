@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 import com.atlan.model.assets.Glossary
 import com.atlan.pkg.PackageTest
+import com.atlan.pkg.aim.AssetImportCfg
 import org.testng.Assert.assertTrue
 import org.testng.ITestContext
 import org.testng.annotations.AfterClass
@@ -78,8 +79,8 @@ class InvalidUsersGroupsTest : PackageTest() {
 
     @Test
     fun warningsInLog() {
-        assertTrue(logHasMessage("WARN", "GlossaryImporter - Unable to decode value from field -- skipping ownerGroups: invalidGroup"))
-        assertTrue(logHasMessage("WARN", "GlossaryImporter - Unable to decode value from field -- skipping ownerUsers: invalidUser"))
+        assertTrue(logHasMessage("WARN", "com.atlan.pkg.aim.GlossaryImporter - Unable to decode value from field -- skipping ownerGroups: invalidGroup"))
+        assertTrue(logHasMessage("WARN", "com.atlan.pkg.aim.GlossaryImporter - Unable to decode value from field -- skipping ownerUsers: invalidUser"))
     }
 
     @Test

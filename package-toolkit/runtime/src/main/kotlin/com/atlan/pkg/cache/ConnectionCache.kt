@@ -6,7 +6,6 @@ import com.atlan.exception.AtlanException
 import com.atlan.exception.NotFoundException
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Connection
-import com.atlan.model.assets.Glossary
 import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.model.fields.AtlanField
 import com.atlan.net.HttpClient
@@ -44,7 +43,7 @@ object ConnectionCache : AssetCache() {
         try {
             val connection =
                 Connection.select(true)
-                    .where(Glossary.GUID.eq(guid))
+                    .where(Connection.GUID.eq(guid))
                     .includesOnResults(includesOnResults)
                     .pageSize(2)
                     .stream()
@@ -67,7 +66,12 @@ object ConnectionCache : AssetCache() {
 
     /** {@inheritDoc}  */
     override fun getIdentityForAsset(asset: Asset): String {
-        return ConnectionXformer.encode(asset)
+        return when (asset) {
+            is Connection -> {
+                getIdentityForAsset(asset.name, asset.connectorType.value)
+            }
+            else -> ""
+        }
     }
 
     /**

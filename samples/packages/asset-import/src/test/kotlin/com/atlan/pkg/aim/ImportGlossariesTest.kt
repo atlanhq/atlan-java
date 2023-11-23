@@ -17,6 +17,8 @@ import com.atlan.model.enums.CertificateStatus
 import com.atlan.model.fields.AtlanField
 import com.atlan.model.typedefs.AtlanTagDef
 import com.atlan.pkg.PackageTest
+import com.atlan.pkg.aim.AssetImportCfg
+import com.atlan.pkg.aim.Importer
 import org.testng.Assert.assertNull
 import org.testng.Assert.assertTrue
 import org.testng.ITestContext
