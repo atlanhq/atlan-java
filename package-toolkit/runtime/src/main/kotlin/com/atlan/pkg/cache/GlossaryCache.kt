@@ -19,7 +19,7 @@ object GlossaryCache : AssetCache() {
         try {
             return Glossary.findByName(identity)
         } catch (e: AtlanException) {
-            logger.warn("Unable to find glossary: {}", identity)
+            logger.warn { "Unable to find glossary: $identity" }
         }
         return null
     }
@@ -38,7 +38,7 @@ object GlossaryCache : AssetCache() {
                 return glossary.get()
             } else {
                 if (currentAttempt >= maxRetries) {
-                    logger.error("No glossary found with GUID: {}", guid)
+                    logger.error { "No glossary found with GUID: $guid" }
                 } else {
                     Thread.sleep(HttpClient.waitTime(currentAttempt).toMillis())
                     return lookupAssetByGuid(guid, currentAttempt + 1, maxRetries)
@@ -57,7 +57,7 @@ object GlossaryCache : AssetCache() {
 
     /** {@inheritDoc} */
     override fun preload() {
-        logger.info("Caching all glossaries, up-front...")
+        logger.info { "Caching all glossaries, up-front..." }
         Glossary.select()
             .includesOnResults(includesOnResults)
             .stream(true)

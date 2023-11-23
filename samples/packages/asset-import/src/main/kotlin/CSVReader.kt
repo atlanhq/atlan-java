@@ -91,7 +91,7 @@ class CSVReader @JvmOverloads constructor(
         }
         val totalRowCount = filteredRowCount.get()
         // Step 1: load the main assets
-        logger.info("Loading a total of {} assets...", totalRowCount)
+        logger.info { "Loading a total of $totalRowCount assets..." }
         val count = AtomicLong(0)
         reader.stream().skip(1).parallel().forEach { r: CsvRow ->
             val id = Thread.currentThread().id
@@ -142,7 +142,7 @@ class CSVReader @JvmOverloads constructor(
         val totalRelated = AtomicLong(0)
         val searchAndDelete = mutableMapOf<String, Set<AtlanField>>()
         relatedHolds.values.forEach { a -> a.values.forEach { b -> totalRelated.getAndAdd(b.relatedMap.size.toLong()) } }
-        logger.info("Processing {} total related assets in a second pass.", totalRelated)
+        logger.info { "Processing $totalRelated total related assets in a second pass." }
         batchMap.entries.parallelStream().forEach { entry: MutableMap.MutableEntry<Long, AssetBatch> ->
             val threadId = entry.key
             val batch = entry.value
@@ -169,10 +169,10 @@ class CSVReader @JvmOverloads constructor(
                 searchAndDelete[resolvedGuid] = delete.value
             }
         }
-        logger.info("Total assets created: {}", totalCreates)
-        logger.info("Total assets updated: {}", totalUpdates)
-        logger.info("Total assets skipped: {}", totalSkipped)
-        logger.info("Total assets failed : {}", totalFailures)
+        logger.info { "Total assets created: $totalCreates" }
+        logger.info { "Total assets updated: $totalUpdates" }
+        logger.info { "Total assets skipped: $totalSkipped" }
+        logger.info { "Total assets failed : $totalFailures" }
 
         // Step 3: final-flush the deferred related assets
         val totalCreatesR = AtomicLong(0)
@@ -185,15 +185,15 @@ class CSVReader @JvmOverloads constructor(
             someFailure = someFailure || b.failures.isNotEmpty()
             logFailures(b, logger, totalFailuresR)
         }
-        logger.info("Total related assets created: {}", totalCreatesR)
-        logger.info("Total related assets updated: {}", totalUpdatesR)
-        logger.info("Total related assets failed : {}", totalFailuresR)
+        logger.info { "Total related assets created: $totalCreatesR" }
+        logger.info { "Total related assets updated: $totalUpdatesR" }
+        logger.info { "Total related assets failed : $totalFailuresR" }
 
         // Step 4: bulk-delete any related assets marked for removal
         val totalToScan = searchAndDelete.size.toLong()
         val totalScanned = AtomicLong(0)
         val totalDeleted = AtomicLong(0)
-        logger.info("Scanning {} total assets in a final pass for possible README removal.", totalToScan)
+        logger.info { "Scanning $totalToScan total assets in a final pass for possible README removal." }
         searchAndDelete.entries.parallelStream().forEach { entry ->
             val guid = entry.key
             val fields = entry.value
@@ -223,21 +223,19 @@ class CSVReader @JvmOverloads constructor(
                 }
             Utils.logProgress(totalScanned, totalToScan, logger, batchSize)
         }
-        logger.info("Total READMEs deleted: {}", totalDeleted)
+        logger.info { "Total READMEs deleted: $totalDeleted" }
         return someFailure
     }
 
     private fun logFailures(b: AssetBatch, logger: KLogger, totalFailures: AtomicLong) {
         if (b.failures.isNotEmpty()) {
             for (f in b.failures) {
-                logger.info("Failed batch reason:", f.failureReason)
+                logger.info { "Failed batch reason: ${f.failureReason}" }
                 totalFailures.getAndAdd(f.failedAssets.size.toLong())
                 for (failed in f.failedAssets) {
-                    logger.info(
-                        " ... included asset: {}::{}",
-                        failed.typeName,
-                        failed.qualifiedName,
-                    )
+                    logger.info {
+                        " ... included asset: ${failed.typeName}::${failed.qualifiedName}"
+                    }
                 }
             }
         }

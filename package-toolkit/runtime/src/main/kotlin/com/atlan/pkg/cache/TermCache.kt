@@ -43,10 +43,10 @@ object TermCache : AssetCache() {
                     logger.error("Unable to lookup or find term: {}", identity, e)
                 }
             } else {
-                logger.error("Unable to find glossary {} for term reference: {}", glossaryName, identity)
+                logger.error { "Unable to find glossary $glossaryName for term reference: $identity" }
             }
         } else {
-            logger.error("Unable to lookup or find term, unexpected reference: {}", identity)
+            logger.error { "Unable to lookup or find term, unexpected reference: $identity" }
         }
         return null
     }
@@ -66,7 +66,7 @@ object TermCache : AssetCache() {
                 return term.get()
             } else {
                 if (currentAttempt >= maxRetries) {
-                    logger.error("No term found with GUID: {}", guid)
+                    logger.error { "No term found with GUID: $guid" }
                 } else {
                     Thread.sleep(HttpClient.waitTime(currentAttempt).toMillis())
                     return lookupAssetByGuid(guid, currentAttempt + 1, maxRetries)
@@ -90,7 +90,7 @@ object TermCache : AssetCache() {
 
     /** {@inheritDoc} */
     override fun preload() {
-        logger.info("Caching all terms, up-front...")
+        logger.info { "Caching all terms, up-front..." }
         GlossaryTerm.select()
             .includesOnResults(includesOnResults)
             .includesOnRelations(includesOnRelations)

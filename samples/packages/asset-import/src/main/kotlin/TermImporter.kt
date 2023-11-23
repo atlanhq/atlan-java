@@ -45,26 +45,26 @@ class TermImporter(
     override fun import() {
         cache.preload()
         // Import categories by level, top-to-bottom, and stop when we hit a level with no categories
-        logger.info("--- Loading terms in first pass, without term-to-term relationships... ---")
+        logger.info { "--- Loading terms in first pass, without term-to-term relationships... ---" }
         CSVReader(filename, updateOnly).use { csv ->
             val start = System.currentTimeMillis()
             val anyFailures = csv.streamRows(this, batchSize, logger, GlossaryTermXformer.TERM_TO_TERM_FIELDS)
-            logger.info("Total time taken: {} ms", System.currentTimeMillis() - start)
+            logger.info { "Total time taken: ${System.currentTimeMillis() - start} ms" }
             if (anyFailures) {
-                logger.error("Some errors detected, failing the workflow.")
+                logger.error { "Some errors detected, failing the workflow." }
                 exitProcess(1)
             }
             cacheCreated(csv.created)
         }
         // In this second pass we need to ignore fields that were loaded in the first pass,
         // or we will end up with duplicates (links) or extra audit log messages (tags, README)
-        logger.info("--- Loading term-to-term relationships (second pass)... ---")
+        logger.info { "--- Loading term-to-term relationships (second pass)... ---" }
         CSVReader(filename, updateOnly).use { csv ->
             val start = System.currentTimeMillis()
             val anyFailures = csv.streamRows(this, batchSize, logger, secondPassIgnore)
-            logger.info("Total time taken: {} ms", System.currentTimeMillis() - start)
+            logger.info { "Total time taken: ${System.currentTimeMillis() - start} ms" }
             if (anyFailures) {
-                logger.error("Some errors detected, failing the workflow.")
+                logger.error { "Some errors detected, failing the workflow." }
                 exitProcess(1)
             }
         }

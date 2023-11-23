@@ -32,9 +32,9 @@ class AssetImporter(
         CSVReader(filename, updateOnly).use { csv ->
             val start = System.currentTimeMillis()
             val anyFailures = csv.streamRows(this, batchSize, logger)
-            logger.info("Total time taken: {} ms", System.currentTimeMillis() - start)
+            logger.info { "Total time taken: ${System.currentTimeMillis() - start} ms" }
             if (anyFailures) {
-                logger.error("Some errors detected, failing the workflow.")
+                logger.error { "Some errors detected, failing the workflow." }
                 exitProcess(1)
             }
         }
