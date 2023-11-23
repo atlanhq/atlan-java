@@ -42,7 +42,7 @@ object CategoryCache : AssetCache() {
                 return category.get()
             } else {
                 if (currentAttempt >= maxRetries) {
-                    logger.error("No category found with GUID: {}", guid)
+                    logger.error { "No category found with GUID: $guid" }
                 } else {
                     Thread.sleep(HttpClient.waitTime(currentAttempt).toMillis())
                     return lookupAssetByGuid(guid, currentAttempt + 1, maxRetries)
@@ -64,7 +64,7 @@ object CategoryCache : AssetCache() {
      */
     fun traverseAndCacheHierarchy(glossaryName: String): List<GlossaryCategory> {
         val categories = mutableListOf<GlossaryCategory>()
-        logger.info("Caching entire hierarchy for {}, up-front...", glossaryName)
+        logger.info { "Caching entire hierarchy for $glossaryName, up-front..." }
         val glossary = GlossaryCache.getByIdentity(glossaryName)
         if (glossary is Glossary) {
             // Initial hit may be high, but for any sizeable import will be faster
@@ -85,13 +85,12 @@ object CategoryCache : AssetCache() {
                     categories.add(category)
                 }
             } catch (e: NotFoundException) {
-                logger.warn("There are no categories in glossary {} -- nothing to cache.", glossaryName)
+                logger.warn { "There are no categories in glossary $glossaryName -- nothing to cache." }
             }
         } else {
-            logger.error(
-                "Unable to find glossary {}, and therefore unable to find any categories within it.",
-                glossaryName,
-            )
+            logger.error {
+                "Unable to find glossary $glossaryName, and therefore unable to find any categories within it."
+            }
         }
         return categories
     }
@@ -120,7 +119,7 @@ object CategoryCache : AssetCache() {
 
     /** {@inheritDoc} */
     override fun preload() {
-        logger.info("Caching all categories, up-front...")
+        logger.info { "Caching all categories, up-front..." }
         Glossary.select()
             .includeOnResults(Glossary.NAME)
             .stream(true)

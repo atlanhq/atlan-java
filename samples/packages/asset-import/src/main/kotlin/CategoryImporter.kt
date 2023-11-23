@@ -47,16 +47,16 @@ class CategoryImporter(
     override fun import() {
         cache.preload()
         // Import categories by level, top-to-bottom, and stop when we hit a level with no categories
-        logger.info("Loading categories in multiple passes, by level...")
+        logger.info { "Loading categories in multiple passes, by level..." }
         while (levelToProcess < maxCategoryDepth.get()) {
             levelToProcess += 1
-            logger.info("--- Loading level {} categories... ---", levelToProcess)
+            logger.info { "--- Loading level $levelToProcess categories... ---" }
             CSVReader(filename, updateOnly).use { csv ->
                 val start = System.currentTimeMillis()
                 val anyFailures = csv.streamRows(this, batchSize, logger)
-                logger.info("Total time taken: {} ms", System.currentTimeMillis() - start)
+                logger.info { "Total time taken: ${System.currentTimeMillis() - start} ms" }
                 if (anyFailures) {
-                    logger.error("Some errors detected, failing the workflow.")
+                    logger.error { "Some errors detected, failing the workflow." }
                     exitProcess(1)
                 }
                 cacheCreated(csv.created)

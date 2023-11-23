@@ -11,30 +11,45 @@ import com.atlan.model.packages.ConnectionDelete
 import com.atlan.serde.Serde
 import com.aventrix.jnanoid.jnanoid.NanoIdUtils
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
-import mu.KotlinLogging
 import org.testng.Assert.assertEquals
 import org.testng.Assert.assertFalse
 import org.testng.Assert.assertNotNull
 import org.testng.Assert.assertTrue
+import org.testng.annotations.BeforeClass
 import uk.org.webcompere.systemstubs.environment.EnvironmentVariables
+import uk.org.webcompere.systemstubs.properties.SystemProperties
 import java.io.File
 import java.util.Random
 import kotlin.math.min
 
 /**
  * Base class that all package integration tests should extend.
- *
- * @param uniqueDirectory (optional) unique directory into which to read/write any files - if not specified, will be generated
  */
-abstract class PackageTest(private val uniqueDirectory: String = "") {
+abstract class PackageTest {
     private val nanoId = NanoIdUtils.randomNanoId(Random(), ALPHABET, 5)
     private val vars = EnvironmentVariables()
+    private val properties = SystemProperties()
     protected val testDirectory: String
 
+    /**
+     * Create the class-unique directory before doing anything else,
+     * since a given test class may want to create files here even just to
+     * configure how a custom package runs.
+     */
     init {
-        testDirectory = uniqueDirectory.ifBlank { makeUnique("dir") }
-        System.setProperty("logDirectory", testDirectory)
+        testDirectory = makeUnique("dir")
         File(testDirectory).mkdirs()
+    }
+
+    /**
+     * Then, ensure that the logging is configured.
+     * This MUST run before anything else, to ensure that logs are captured in the
+     * unique directory created above and not overlapping across test in the same module
+     */
+    @BeforeClass
+    fun logSetup() {
+        properties.set("logDirectory", testDirectory)
+        properties.setup()
     }
 
     /**
@@ -110,7 +125,6 @@ abstract class PackageTest(private val uniqueDirectory: String = "") {
         }
 
         protected val client: AtlanClient = Atlan.getDefaultClient()
-        private val logger = KotlinLogging.logger {}
         private val ALPHABET = charArrayOf(
             '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
             'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
@@ -163,7 +177,7 @@ abstract class PackageTest(private val uniqueDirectory: String = "") {
                     val response = deleteWorkflow.run(client)
                     assertNotNull(response)
                     val workflowName = response.metadata.name
-                    val state = response.monitorStatus(logger)
+                    val state = response.monitorStatus()
                     assertNotNull(state)
                     assertEquals(state, AtlanWorkflowPhase.SUCCESS)
                     client.workflows.archive(workflowName)
@@ -189,8 +203,6 @@ abstract class PackageTest(private val uniqueDirectory: String = "") {
             agentPackageName = null,
             agentWorkflowId = null,
         )
-        vars.set("ATLAN_BASE_URL", System.getenv("ATLAN_BASE_URL"))
-        vars.set("ATLAN_API_KEY", System.getenv("ATLAN_API_KEY"))
         vars.set("NESTED_CONFIG", mapper.writeValueAsString(cfg))
         vars.setup()
     }
@@ -204,6 +216,7 @@ abstract class PackageTest(private val uniqueDirectory: String = "") {
         if (!keepLogs) {
             removeDirectory(testDirectory)
         }
+        properties.teardown()
         vars.teardown()
     }
 }

@@ -48,7 +48,7 @@ class GlossaryExporter(
                 .includesOnRelations(getRelatedAttributesToExtract())
                 .stream(true)
                 .toList()
-            logger.info("Appending {} glossaries...", glossaries.size)
+            logger.info { "Appending ${glossaries.size} glossaries..." }
             csv.appendAssets(glossaries, this, glossaries.size.toLong(), batchSize, logger)
 
             // Then extract all categories, per glossary, up-front (caching them
@@ -56,7 +56,7 @@ class GlossaryExporter(
             glossaries.parallelStream().forEach {
                 val categories = CategoryCache.traverseAndCacheHierarchy(it.name)
                 if (categories.isNotEmpty()) {
-                    logger.info("Appending {} categories from {}...", categories.size, it.name)
+                    logger.info { "Appending ${categories.size} categories from ${it.name}..." }
                     csv.appendAssets(
                         categories,
                         this,
@@ -74,7 +74,7 @@ class GlossaryExporter(
                 .includesOnRelations(getRelatedAttributesToExtract())
 
             csv.streamAssets(assets.stream(true), this, assets.count(), batchSize, logger)
-            logger.info("Total time taken: {} ms", System.currentTimeMillis() - start)
+            logger.info { "Total time taken: ${System.currentTimeMillis() - start} ms" }
         }
     }
 

@@ -132,7 +132,7 @@ abstract class AssetCache {
      */
     private fun isArchived(id: String, asset: Asset): Boolean {
         return if (asset.status != AtlanStatus.ACTIVE) {
-            logger.warn("Unable to cache archived asset: {}", id)
+            logger.warn { "Unable to cache archived asset: $id" }
             ignore[id] = id
             true
         } else {

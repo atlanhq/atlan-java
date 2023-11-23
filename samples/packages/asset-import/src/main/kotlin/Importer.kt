@@ -36,7 +36,7 @@ object Importer {
         val glossariesFailOnErrors = Utils.getOrDefault(config.glossariesFailOnErrors, true)
 
         if (glossariesFilename.isBlank() && assetsFilename.isBlank()) {
-            logger.error("No input file was provided for either glossaries or assets.")
+            logger.error { "No input file was provided for either glossaries or assets." }
             exitProcess(1)
         }
 
@@ -44,22 +44,22 @@ object Importer {
 
         if (glossariesFilename.isNotBlank()) {
             FieldSerde.FAIL_ON_ERRORS.set(glossariesFailOnErrors)
-            logger.info("=== Importing glossaries... ===")
+            logger.info { "=== Importing glossaries... ===" }
             val glossaryImporter =
                 GlossaryImporter(glossariesFilename, glossaryAttrsToOverwrite, glossariesUpdateOnly, batchSize)
             glossaryImporter.import()
-            logger.info("=== Importing categories... ===")
+            logger.info { "=== Importing categories... ===" }
             val categoryImporter =
                 CategoryImporter(glossariesFilename, glossaryAttrsToOverwrite, glossariesUpdateOnly, batchSize)
             categoryImporter.import()
-            logger.info("=== Importing terms... ===")
+            logger.info { "=== Importing terms... ===" }
             val termImporter =
                 TermImporter(glossariesFilename, glossaryAttrsToOverwrite, glossariesUpdateOnly, batchSize)
             termImporter.import()
         }
         if (assetsFilename.isNotBlank()) {
             FieldSerde.FAIL_ON_ERRORS.set(assetsFailOnErrors)
-            logger.info("=== Importing assets... ===")
+            logger.info { "=== Importing assets... ===" }
             val assetImporter = AssetImporter(assetsFilename, assetAttrsToOverwrite, assetsUpdateOnly, batchSize)
             assetImporter.import()
         }
@@ -80,7 +80,7 @@ object Importer {
             attrNames.add(Asset.ANNOUNCEMENT_TITLE.atlanFieldName)
             attrNames.add(Asset.ANNOUNCEMENT_MESSAGE.atlanFieldName)
         }
-        logger.info("Adding attributes to be cleared, if blank (for {}): {}", fileInfo, attrNames)
+        logger.info { "Adding attributes to be cleared, if blank (for $fileInfo): $attrNames" }
         val attrFields = mutableListOf<AtlanField>()
         for (name in attrNames) {
             attrFields.add(SearchableField(name, name))
