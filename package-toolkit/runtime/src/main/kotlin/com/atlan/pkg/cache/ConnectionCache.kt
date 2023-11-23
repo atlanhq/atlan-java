@@ -2,13 +2,19 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.cache
 
+import com.atlan.Atlan
+import com.atlan.exception.ApiException
 import com.atlan.exception.AtlanException
+import com.atlan.exception.ErrorCode
 import com.atlan.exception.NotFoundException
+import com.atlan.exception.PermissionException
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Connection
+import com.atlan.model.core.AtlanAsyncMutator.MAX_ASYNC_RETRIES
 import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.model.fields.AtlanField
 import com.atlan.net.HttpClient
+import com.atlan.net.RequestOptions
 import com.atlan.pkg.serde.cell.ConnectionXformer
 import mu.KotlinLogging
 
@@ -49,7 +55,7 @@ object ConnectionCache : AssetCache() {
                     .stream()
                     .findFirst()
             if (connection.isPresent) {
-                return connection.get()
+                return isAccessible(connection.get())
             } else {
                 if (currentAttempt >= maxRetries) {
                     logger.error { "No connection found with GUID: $guid" }
@@ -68,7 +74,7 @@ object ConnectionCache : AssetCache() {
     override fun getIdentityForAsset(asset: Asset): String {
         return when (asset) {
             is Connection -> {
-                getIdentityForAsset(asset.name, asset.connectorType.value)
+                getIdentityForAsset(asset.name, asset.connectorType)
             }
             else -> ""
         }
@@ -81,8 +87,8 @@ object ConnectionCache : AssetCache() {
      * @param type of the connector for the connection (as a string)
      * @return identity for the connection
      */
-    fun getIdentityForAsset(name: String, type: String): String {
-        return ConnectionXformer.encode(name, type)
+    fun getIdentityForAsset(name: String, type: AtlanConnectorType): String {
+        return ConnectionXformer.encode(name, type.value)
     }
 
     /** {@inheritDoc} */
@@ -94,5 +100,37 @@ object ConnectionCache : AssetCache() {
             .forEach { connection ->
                 addByGuid(connection.guid, connection)
             }
+    }
+
+    /**
+     * Uniquely for connections, we need to ensure they are accessible before
+     * caching them, as any other operation that interacts with them will need more
+     * than the search to succeed to do anything with them.
+     *
+     * @param connection the result from a search
+     * @return the accessible connection, in full
+     */
+    private fun isAccessible(connection: Asset): Asset {
+        try {
+            val candidate = Atlan.getDefaultClient().assets.get(
+                connection.guid,
+                false,
+                false,
+                RequestOptions.from(Atlan.getDefaultClient())
+                    .maxNetworkRetries(MAX_ASYNC_RETRIES)
+                    .build(),
+            )
+            if (candidate?.asset == null) {
+                // Since the retry logic in this case is actually embedded in the retrieveMinimal
+                // call, if we get to this point without retrieving the connection we have by
+                // definition overrun the retry limit
+                throw ApiException(ErrorCode.RETRY_OVERRUN, null)
+            }
+            return candidate.asset
+        } catch (e: PermissionException) {
+            // If we get a permission exception after the built-in retries above, throw it
+            // onwards as a retry overrun
+            throw ApiException(ErrorCode.RETRY_OVERRUN, e)
+        }
     }
 }
