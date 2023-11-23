@@ -114,8 +114,8 @@ public class ReflectionCache {
             fieldMap.put(className, Collections.unmodifiableMap(map));
         }
         if (className.endsWith("BuilderImpl")) {
-            // TODO: Need to put builder methods into the setter map, not the root class
-            //  itself (as the root class itself will be immutable)
+            // Need to put builder methods into the setter map, not the root class
+            // itself (as the root class itself will be immutable)
             if (!setterMap.containsKey(className)) {
                 HashMap<String, Method> map = new HashMap<>();
                 getMethods(map, b, null);

@@ -1,5 +1,7 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2023 Atlan Pte. Ltd. */
+package com.atlan.pkg.aim
+
 import com.atlan.Atlan
 import com.atlan.pkg.CustomPackage
 import com.atlan.pkg.config.model.ui.UIConfig
@@ -117,7 +119,7 @@ object PackageConfig : CustomPackage(
     ),
     containerImage = "ghcr.io/atlanhq/csa-asset-import:${Atlan.VERSION}",
     containerImagePullPolicy = "Always",
-    containerCommand = listOf("/dumb-init", "--", "java", "Importer"),
+    containerCommand = listOf("/dumb-init", "--", "java", "com.atlan.pkg.aim.Importer"),
     outputs = WorkflowOutputs(mapOf("debug-logs" to "/tmp/debug.log")),
     keywords = listOf("kotlin", "utility"),
     preview = true,

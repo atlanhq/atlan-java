@@ -1,8 +1,9 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2023 Atlan Pte. Ltd. */
+package com.atlan.pkg.aim
+
 import com.atlan.model.assets.Glossary
 import com.atlan.pkg.PackageTest
-import com.atlan.pkg.aim.AssetImportCfg
 import org.testng.Assert.assertTrue
 import org.testng.ITestContext
 import org.testng.annotations.AfterClass

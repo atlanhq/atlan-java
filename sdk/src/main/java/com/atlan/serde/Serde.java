@@ -47,21 +47,25 @@ public class Serde {
     static {
         Map<String, Class<?>> assetMap = new HashMap<>();
         Map<String, Class<?>> builderMap = new HashMap<>();
-        try (ScanResult scanResult = new ClassGraph().enableExternalClasses().scan()) {
+        try (ScanResult scanResult =
+                new ClassGraph().enableExternalClasses().ignoreClassVisibility().scan()) {
             for (ClassInfo info : scanResult.getSubclasses(Asset.AssetBuilder.class)) {
                 String fullName = info.getName();
-                try {
-                    Class<?> builderClass = Class.forName(fullName);
-                    Class<?> typeClass = builderClass.getEnclosingClass();
-                    String typeName = (String) typeClass.getField("TYPE_NAME").get(null);
-                    assetMap.put(typeName, typeClass);
-                    builderMap.put(typeName, builderClass);
-                } catch (ClassNotFoundException e) {
-                    log.error("Unable to load class: {}", fullName, e);
-                } catch (NoSuchFieldException e) {
-                    log.error("Asset class is missing the static TYPE_NAME giving its type: {}", fullName, e);
-                } catch (IllegalAccessException e) {
-                    log.error("Unable to access the static TYPE_NAME for the asset class: {}", fullName, e);
+                if (fullName.endsWith("Impl")) {
+                    try {
+                        Class<?> builderClass = Class.forName(fullName);
+                        Class<?> typeClass = builderClass.getEnclosingClass();
+                        String typeName =
+                                (String) typeClass.getField("TYPE_NAME").get(null);
+                        assetMap.put(typeName, typeClass);
+                        builderMap.put(typeName, builderClass);
+                    } catch (ClassNotFoundException e) {
+                        log.error("Unable to load class: {}", fullName, e);
+                    } catch (NoSuchFieldException e) {
+                        log.error("Asset class is missing the static TYPE_NAME giving its type: {}", fullName, e);
+                    } catch (IllegalAccessException e) {
+                        log.error("Unable to access the static TYPE_NAME for the asset class: {}", fullName, e);
+                    }
                 }
             }
         }

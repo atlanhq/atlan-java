@@ -20,7 +20,7 @@ object PackageConfig : CustomPackage(
         "/dumb-init",
         "--",
         "java",
-        "OwnerPropagatorKt",
+        "OwnerPropagator",
     ),
     containerImagePullPolicy = "Always",
     uiConfig = UIConfig(

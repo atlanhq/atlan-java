@@ -1,8 +1,10 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2023 Atlan Pte. Ltd. */
-import Importer.clearField
+package com.atlan.pkg.aim
+
 import com.atlan.model.assets.Asset
 import com.atlan.model.fields.AtlanField
+import com.atlan.pkg.aim.Importer.clearField
 import com.atlan.pkg.cache.AssetCache
 import com.atlan.pkg.serde.RowDeserialization
 import com.atlan.pkg.serde.RowDeserializer

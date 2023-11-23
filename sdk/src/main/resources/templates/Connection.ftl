@@ -286,6 +286,16 @@
      * @param connectorType the name of the type of the connection's connector
      * @return a unique name for the connection
      */
+    public static String generateQualifiedName(AtlanConnectorType connectorType) {
+        return generateQualifiedName(connectorType.getValue());
+    }
+
+    /**
+     * Generate a unique connection name.
+     *
+     * @param connectorType the name of the type of the connection's connector
+     * @return a unique name for the connection
+     */
     private static String generateQualifiedName(String connectorType) {
         long now = System.currentTimeMillis() / 1000;
         return "default/" + connectorType + "/" + now;

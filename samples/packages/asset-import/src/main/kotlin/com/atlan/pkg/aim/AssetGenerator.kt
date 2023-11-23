@@ -1,5 +1,7 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2023 Atlan Pte. Ltd. */
+package com.atlan.pkg.aim
+
 import com.atlan.model.assets.Asset
 import com.atlan.pkg.serde.RowDeserialization
 import com.atlan.pkg.serde.cell.AssetRefXformer
