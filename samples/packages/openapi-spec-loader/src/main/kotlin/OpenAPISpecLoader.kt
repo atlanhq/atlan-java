@@ -34,11 +34,11 @@ object OpenAPISpecLoader {
             Utils.createOrReuseConnection(config.connectionUsage, config.connectionQualifiedName, config.connection)
 
         if (connectionQN == "" || specUrl == "") {
-            logger.error("Missing required parameter - you must provide BOTH a connection name and specification URL.")
+            logger.error { "Missing required parameter - you must provide BOTH a connection name and specification URL." }
             exitProcess(4)
         }
 
-        logger.info("Loading OpenAPI specification from {} into: {}", specUrl, connectionQN)
+        logger.info { "Loading OpenAPI specification from $specUrl into: $connectionQN" }
 
         val parser = OpenAPISpecReader(specUrl)
         loadOpenAPISpec(connectionQN, parser, batchSize)
@@ -67,7 +67,7 @@ object OpenAPISpecLoader {
             .apiExternalDoc("description", spec.externalDocsDescription)
             .build()
         val specQN = toCreate.qualifiedName
-        logger.info("Saving APISpec: {}", specQN)
+        logger.info { "Saving APISpec: $specQN" }
         try {
             val response = toCreate.save()
             val mutation = response.getMutation(toCreate)
@@ -76,9 +76,9 @@ object OpenAPISpecLoader {
                     AssetMutationResponse.MutationType.UNKNOWN,
                 )
             ) {
-                logger.info(" ... reusing existing APISpec: {}", toCreate.qualifiedName)
+                logger.info { " ... reusing existing APISpec: ${toCreate.qualifiedName}" }
             } else {
-                logger.info(" ... {} APISpec: {}", mutation.name, toCreate.qualifiedName)
+                logger.info { " ... ${mutation.name} APISpec: ${toCreate.qualifiedName}" }
             }
         } catch (e: AtlanException) {
             logger.error("Unable to save the APISpec.", e)
@@ -88,7 +88,7 @@ object OpenAPISpecLoader {
             AssetBatch(Atlan.getDefaultClient(), batchSize, false, AssetBatch.CustomMetadataHandling.MERGE, true)
         val totalCount = spec.paths?.size!!.toLong()
         if (totalCount > 0) {
-            logger.info("Creating an APIPath for each path defined within the spec (total: {})", totalCount)
+            logger.info { "Creating an APIPath for each path defined within the spec (total: $totalCount)" }
             try {
                 val assetCount = AtomicLong(0)
                 for (apiPath in spec.paths.entries) {

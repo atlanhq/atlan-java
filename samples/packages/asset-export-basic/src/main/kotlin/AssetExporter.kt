@@ -57,7 +57,7 @@ class AssetExporter(
             csv.writeHeader(headerNames)
             val start = System.currentTimeMillis()
             csv.streamAssets(assets.stream(true), this, assets.count(), batchSize, logger)
-            logger.info("Total time taken: {} ms", System.currentTimeMillis() - start)
+            logger.info { "Total time taken: ${System.currentTimeMillis() - start} ms" }
         }
     }
 

@@ -35,7 +35,7 @@ object LinkCache {
      * (This should generally be more efficient than looking up links asset-by-asset.)
      */
     fun preload() {
-        logger.info("Caching all {} links, up-front...", Link.select().count())
+        logger.info { "Caching all ${Link.select().count()} links, up-front..." }
         Link.select()
             .includesOnResults(includesOnResults)
             .includesOnRelations(includesOnRelations)

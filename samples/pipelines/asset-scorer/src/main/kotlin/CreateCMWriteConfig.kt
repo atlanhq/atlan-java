@@ -50,7 +50,7 @@ object CreateCMWriteConfig {
         try {
             Atlan.getDefaultClient().customMetadataCache.getIdForName(CM_SCORING)
         } catch (e: NotFoundException) {
-            logger.info("Creating scorecard custom metadata {}.{}", CM_SCORING, CM_ATTR_COMPOSITE_SCORE)
+            logger.info { "Creating scorecard custom metadata $CM_SCORING.$CM_ATTR_COMPOSITE_SCORE" }
             try {
                 val initialScore = AttributeDef.of(
                     CM_ATTR_COMPOSITE_SCORE,
@@ -77,7 +77,7 @@ object CreateCMWriteConfig {
                     .options(CustomMetadataOptions.withIcon(AtlanIcon.GAUGE, AtlanTagColor.GRAY, true))
                     .build()
                 customMetadataDef.create()
-                logger.info("Created {} custom metadata structure.", CM_SCORING)
+                logger.info { "Created $CM_SCORING custom metadata structure." }
                 val badge = Badge.creator(CM_ATTR_COMPOSITE_SCORE, CM_SCORING, CM_ATTR_COMPOSITE_SCORE)
                     .userDescription(
                         "Overall asset score. Indicates how enriched and ready for re-use this asset is, out of a total possible score of 10.",
@@ -88,7 +88,7 @@ object CreateCMWriteConfig {
                     .build()
                 try {
                     badge.save()
-                    logger.info("Created {} badge.", CM_SCORING)
+                    logger.info { "Created $CM_SCORING badge." }
                 } catch (eBadge: AtlanException) {
                     logger.error("Unable to create badge over {}.{}.", CM_SCORING, CM_ATTR_COMPOSITE_SCORE, eBadge)
                     exitProcess(1)

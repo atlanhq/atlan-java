@@ -135,7 +135,7 @@ abstract class AbstractNumaflowHandler(private val handler: AtlanEventHandler) :
             FAILURE -> map[RETRY_COUNT] = 1
             RETRY -> map[RETRY_COUNT] = (map[RETRY_COUNT] as Int) + 1
         }
-        logger.info("Routing to: {} (retry #{})", tag, map[RETRY_COUNT])
+        logger.info { "Routing to: $tag (retry #${map[RETRY_COUNT]})" }
         return MessageList.newBuilder()
             .addMessage(Message(mapper.writeValueAsBytes(map), keys, arrayOf(tag)))
             .build()
@@ -160,7 +160,7 @@ abstract class AbstractNumaflowHandler(private val handler: AtlanEventHandler) :
      * @return a message list indicating the message was successfully processed
      */
     protected fun succeeded(keys: Array<String>, data: ByteArray): MessageList {
-        logger.info("Routing to: {}", SUCCESS)
+        logger.info { "Routing to: $SUCCESS" }
         return MessageList.newBuilder()
             .addMessage(Message(data, keys, arrayOf(SUCCESS)))
             .build()
