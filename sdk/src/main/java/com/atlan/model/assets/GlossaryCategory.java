@@ -365,29 +365,6 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
     }
 
     /**
-     * Restore the archived (soft-deleted) GlossaryCategory to active.
-     *
-     * @param qualifiedName for the GlossaryCategory
-     * @return true if the GlossaryCategory is now active, and false otherwise
-     * @throws AtlanException on any API problems
-     */
-    public static boolean restore(String qualifiedName) throws AtlanException {
-        return restore(Atlan.getDefaultClient(), qualifiedName);
-    }
-
-    /**
-     * Restore the archived (soft-deleted) GlossaryCategory to active.
-     *
-     * @param client connectivity to the Atlan tenant on which to restore the asset
-     * @param qualifiedName for the GlossaryCategory
-     * @return true if the GlossaryCategory is now active, and false otherwise
-     * @throws AtlanException on any API problems
-     */
-    public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
-        return Asset.restore(client, TYPE_NAME, qualifiedName);
-    }
-
-    /**
      * Builds the minimal object necessary for creating a category.
      *
      * @param name of the category
