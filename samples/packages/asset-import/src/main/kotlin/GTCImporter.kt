@@ -84,7 +84,14 @@ abstract class GTCImporter(
         // of in particular things like READMEs and Links)
         if (includeRow(row, header, typeIdx, qnIdx)) {
             val revisedRow = generateQualifiedName(row, header, typeIdx, qnIdx)
-            val assets = RowDeserializer(header, revisedRow, typeIdx, qnIdx, logger, skipColumns).getAssets()
+            val assets = RowDeserializer(
+                heading = header,
+                row = revisedRow,
+                typeIdx = typeIdx,
+                qnIdx = qnIdx,
+                logger = logger,
+                skipColumns = skipColumns,
+            ).getAssets()
             if (assets != null) {
                 val builder = assets.primary
                 val candidate = builder.build()

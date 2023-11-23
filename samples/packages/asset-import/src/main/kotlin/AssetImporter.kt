@@ -54,7 +54,14 @@ class AssetImporter(
     override fun buildFromRow(row: List<String>, header: List<String>, typeIdx: Int, qnIdx: Int, skipColumns: Set<String>): RowDeserialization? {
         // Deserialize the objects represented in that row (could be more than one due to flattening
         // of in particular things like READMEs and Links)
-        val assets = RowDeserializer(header, row, typeIdx, qnIdx, logger, skipColumns).getAssets()
+        val assets = RowDeserializer(
+            heading = header,
+            row = row,
+            typeIdx = typeIdx,
+            qnIdx = qnIdx,
+            logger = logger,
+            skipColumns = skipColumns,
+        ).getAssets()
         if (assets != null) {
             val builder = assets.primary
             val candidate = builder.build()

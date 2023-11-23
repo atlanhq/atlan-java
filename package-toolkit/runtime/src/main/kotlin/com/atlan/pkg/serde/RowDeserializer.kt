@@ -18,14 +18,18 @@ import java.util.concurrent.ThreadLocalRandom
  * @param row values for each field in a single row, representing a single asset
  * @param typeIdx the numeric index for the type in the list of columns
  * @param qnIdx the numeric index for the qualifiedName in the list of columns
+ * @param typeName the name of the type of asset on the row (calculated from typeIdx and row, if not specified)
+ * @param qualifiedName the qualifiedName of the asset on the row (calculated from qnIdx and row, if not specified)
  * @param logger through which to record any problems
  * @param skipColumns columns to skip, i.e. that need to be processed in a later pass
  */
 class RowDeserializer(
     private val heading: List<String>,
     private val row: List<String>,
-    private val typeIdx: Int,
-    private val qnIdx: Int,
+    private val typeIdx: Int = -1,
+    private val qnIdx: Int = -1,
+    private val typeName: String = row.getOrElse(typeIdx) { "" },
+    private val qualifiedName: String = row.getOrElse(qnIdx) { "" },
     private val logger: KLogger,
     private val skipColumns: Set<String>,
 ) {
@@ -37,8 +41,6 @@ class RowDeserializer(
      */
     @Suppress("UNCHECKED_CAST")
     fun getAssets(): RowDeserialization? {
-        val typeName = row.getOrElse(typeIdx) { "" }
-        val qualifiedName = row.getOrElse(qnIdx) { "" }
         if (typeName.isBlank() || qualifiedName.isBlank()) {
             logger.warn("No qualifiedName or typeName found on row, cannot deserialize: {}", row)
         } else {

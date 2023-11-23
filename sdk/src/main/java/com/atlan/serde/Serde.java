@@ -41,17 +41,21 @@ public class Serde {
     static final JsonpMapper jsonpMapper = new JacksonJsonpMapper();
 
     private static final Map<String, JsonDeserializer<?>> deserializerCache = new ConcurrentHashMap<>();
-    private static final Map<String, Class<?>> assetClasses = scanAssets();
+    private static final Map<String, Class<?>> assetClasses;
+    private static final Map<String, Class<?>> builderClasses;
 
-    private static Map<String, Class<?>> scanAssets() {
+    static {
         Map<String, Class<?>> assetMap = new HashMap<>();
+        Map<String, Class<?>> builderMap = new HashMap<>();
         try (ScanResult scanResult = new ClassGraph().enableExternalClasses().scan()) {
-            for (ClassInfo info : scanResult.getSubclasses(Asset.class)) {
+            for (ClassInfo info : scanResult.getSubclasses(Asset.AssetBuilder.class)) {
                 String fullName = info.getName();
                 try {
-                    Class<?> typeClass = Class.forName(fullName);
+                    Class<?> builderClass = Class.forName(fullName);
+                    Class<?> typeClass = builderClass.getEnclosingClass();
                     String typeName = (String) typeClass.getField("TYPE_NAME").get(null);
                     assetMap.put(typeName, typeClass);
+                    builderMap.put(typeName, builderClass);
                 } catch (ClassNotFoundException e) {
                     log.error("Unable to load class: {}", fullName, e);
                 } catch (NoSuchFieldException e) {
@@ -61,7 +65,8 @@ public class Serde {
                 }
             }
         }
-        return Collections.unmodifiableMap(assetMap);
+        assetClasses = Collections.unmodifiableMap(assetMap);
+        builderClasses = Collections.unmodifiableMap(builderMap);
     }
 
     public static Class<?> getAssetClassForType(String typeName) throws ClassNotFoundException {
@@ -70,6 +75,15 @@ public class Serde {
             return result;
         } else {
             throw new ClassNotFoundException("Unable to find asset class for typeName: " + typeName);
+        }
+    }
+
+    public static Class<?> getBuilderClassForType(String typeName) throws ClassNotFoundException {
+        Class<?> result = builderClasses.getOrDefault(typeName, null);
+        if (result != null) {
+            return result;
+        } else {
+            throw new ClassNotFoundException("Unable to find builder class for typeName: " + typeName);
         }
     }
 
