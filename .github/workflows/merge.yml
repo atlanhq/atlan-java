@@ -71,6 +71,10 @@ jobs:
           path: jars/owner-propagator-*.jar
       - uses: actions/upload-artifact@v3
         with:
+          name: relational-assets-builder
+          path: jars/relational-assets-builder-*.jar
+      - uses: actions/upload-artifact@v3
+        with:
           name: asset-scorer
           path: jars/asset-scorer-*.jar
       - uses: actions/upload-artifact@v3
@@ -170,6 +174,7 @@ jobs:
           - duplicate-detector
           - openapi-spec-loader
           - owner-propagator
+          - relational-assets-builder
           - asset-scorer
           - verification-enforcer
     needs:
