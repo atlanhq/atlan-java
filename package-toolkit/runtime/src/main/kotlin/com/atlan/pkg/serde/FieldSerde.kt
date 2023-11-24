@@ -85,26 +85,6 @@ object FieldSerde {
     }
 
     /**
-     * Deserialize a single field's value from a row of tabular data.
-     *
-     * @param value the single field's value
-     * @param fieldName name of the column for the field
-     * @param typeName name of the asset type on the row for the field
-     * @param logger through which to record any errors
-     * @return the deserialized form of that field's value
-     */
-    fun getValueFromCell(
-        value: String,
-        fieldName: String,
-        typeName: String,
-        logger: KLogger,
-    ): Any? {
-        val builderClass = Serde.getBuilderClassForType(typeName)
-        val setter = ReflectionCache.getSetter(builderClass, fieldName)
-        return getValueFromCell(value, setter, logger)
-    }
-
-    /**
      * Deserialize a single field's value from a row of tabular data, when that field
      * is stored as custom metadata.
      *

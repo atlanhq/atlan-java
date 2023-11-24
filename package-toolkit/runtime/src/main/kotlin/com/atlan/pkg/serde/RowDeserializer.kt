@@ -4,9 +4,11 @@ package com.atlan.pkg.serde
 
 import com.atlan.cache.ReflectionCache
 import com.atlan.model.assets.Asset
+import com.atlan.model.assets.Asset.AssetBuilder
 import com.atlan.model.core.CustomMetadataAttributes
 import com.atlan.pkg.serde.RowSerde.CM_HEADING_DELIMITER
 import com.atlan.pkg.serde.cell.AssetRefXformer
+import com.atlan.serde.Serde
 import mu.KLogger
 import java.util.concurrent.ThreadLocalRandom
 
@@ -24,8 +26,8 @@ import java.util.concurrent.ThreadLocalRandom
  * @param skipColumns columns to skip, i.e. that need to be processed in a later pass
  */
 class RowDeserializer(
-    private val heading: List<String>,
-    private val row: List<String>,
+    val heading: List<String>,
+    val row: List<String>,
     private val typeIdx: Int = -1,
     private val qnIdx: Int = -1,
     private val typeName: String = row.getOrElse(typeIdx) { "" },
@@ -39,20 +41,38 @@ class RowDeserializer(
      * @return the builders, for the primary asset object (already-populated with the metadata from the row of tabular data)
      *         and any related asset builders (for example, for READMEs, Links, or other assets that were denormalized in the tabular form)
      */
-    @Suppress("UNCHECKED_CAST")
     fun getAssets(): RowDeserialization? {
         if (typeName.isBlank() || qualifiedName.isBlank()) {
             logger.warn("No qualifiedName or typeName found on row, cannot deserialize: {}", row)
         } else {
             val builder = FieldSerde.getBuilderForType(typeName)
-            builder.guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
-            val deserialization = RowDeserialization(RowDeserialization.AssetIdentity(typeName, qualifiedName), builder)
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+            return getAssets(builder)
+        }
+        return null
+    }
+
+    /**
+     * Actually deserialize the provided inputs into a builder for an asset object.
+     *
+     * @param builder for the primary asset represented by the row
+     * @return the builders, for the primary asset object (already-populated with the metadata from the row of tabular data)
+     *         and any related asset builders (for example, for READMEs, Links, or other assets that were denormalized in the tabular form)
+     */
+    @Suppress("UNCHECKED_CAST")
+    fun getAssets(builder: AssetBuilder<*, *>): RowDeserialization? {
+        val partial = builder.build()
+        if (partial.typeName.isNullOrBlank() || partial.qualifiedName.isNullOrBlank()) {
+            logger.warn("No qualifiedName or typeName found in builder, cannot deserialize: {}", row)
+        } else {
+            val deserialization = RowDeserialization(RowDeserialization.AssetIdentity(partial.typeName, partial.qualifiedName), builder)
             val customMetadataMap = mutableMapOf<String, CustomMetadataAttributes.CustomMetadataAttributesBuilder<*, *>>()
             for (i in heading.indices) {
                 val fieldName = heading[i]
                 if (!skipColumns.contains(fieldName)) {
                     if (fieldName.isNotEmpty()) {
-                        val rValue = row[i]
+                        val value = getValue(fieldName)
                         if (fieldName.contains(CM_HEADING_DELIMITER)) {
                             // Custom metadata field...
                             val tokens = fieldName.split(CM_HEADING_DELIMITER)
@@ -61,26 +81,22 @@ class RowDeserializer(
                             if (!customMetadataMap.containsKey(setName)) {
                                 customMetadataMap[setName] = CustomMetadataAttributes.builder()
                             }
-                            val value: Any? = FieldSerde.getCustomMetadataValueFromString(rValue)
                             customMetadataMap[setName]!!.attribute(attrName, value)
-                        } else {
+                        } else if (value != null) {
                             // "Normal" field...
                             val setter = ReflectionCache.getSetter(builder.javaClass, fieldName)
                             if (setter != null) {
-                                val value = FieldSerde.getValueFromCell(rValue, setter, logger)
-                                if (value != null) {
-                                    if (AssetRefXformer.requiresHandling(fieldName, value)) {
-                                        if (value is Collection<*>) {
-                                            deserialization.related[fieldName] = value as Collection<Asset>
-                                        } else {
-                                            deserialization.related[fieldName] = listOf(value as Asset)
-                                        }
+                                if (AssetRefXformer.requiresHandling(fieldName, value)) {
+                                    if (value is Collection<*>) {
+                                        deserialization.related[fieldName] = value as Collection<Asset>
                                     } else {
-                                        // Only set the value on the asset directly if it does not require
-                                        // special handling, otherwise leave it to the special handling
-                                        // to set the value (later)
-                                        ReflectionCache.setValue(builder, fieldName, value)
+                                        deserialization.related[fieldName] = listOf(value as Asset)
                                     }
+                                } else {
+                                    // Only set the value on the asset directly if it does not require
+                                    // special handling, otherwise leave it to the special handling
+                                    // to set the value (later)
+                                    ReflectionCache.setValue(builder, fieldName, value)
                                 }
                             }
                         }
@@ -93,6 +109,27 @@ class RowDeserializer(
                 }
             }
             return deserialization
+        }
+        return null
+    }
+
+    fun getValue(fieldName: String): Any? {
+        if (fieldName.isNotBlank()) {
+            val i = heading.indexOf(fieldName)
+            val rValue = row[i]
+            return if (fieldName.contains(CM_HEADING_DELIMITER)) {
+                // Custom metadata field...
+                FieldSerde.getCustomMetadataValueFromString(rValue)
+            } else {
+                // "Normal" field...
+                val setter = ReflectionCache.getSetter(Serde.getBuilderClassForType(typeName), fieldName)
+                if (setter != null) {
+                    FieldSerde.getValueFromCell(rValue, setter, logger)
+                } else {
+                    // If this isn't a "real" field, return it as a simple string
+                    rValue
+                }
+            }
         }
         return null
     }

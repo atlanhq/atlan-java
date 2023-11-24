@@ -1,7 +1,5 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2023 Atlan Pte. Ltd. */
-package com.atlan.pkg.aim
-
 import com.atlan.pkg.CustomConfig
 import com.atlan.pkg.serde.WidgetSerde
 import com.fasterxml.jackson.annotation.JsonAutoDetect

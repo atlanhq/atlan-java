@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.aim
 
+import AssetImportCfg
 import com.atlan.Atlan
 import com.atlan.model.assets.Glossary
 import com.atlan.model.assets.GlossaryCategory

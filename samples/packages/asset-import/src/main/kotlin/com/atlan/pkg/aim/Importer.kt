@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.aim
 
+import AssetImportCfg
 import com.atlan.cache.ReflectionCache
 import com.atlan.model.assets.Asset
 import com.atlan.model.fields.AtlanField
