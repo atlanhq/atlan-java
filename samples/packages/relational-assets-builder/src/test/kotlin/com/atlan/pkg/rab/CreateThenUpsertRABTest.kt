@@ -32,9 +32,9 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
 /**
- * Test creation of relational assets and their inter-relations.
+ * Test creation of relational assets followed by an upsert of the same relational assets.
  */
-class CreateRelationalAssetTest : PackageTest() {
+class CreateThenUpsertRABTest : PackageTest() {
 
     private val conn1 = makeUnique("c1")
     private val conn1Type = AtlanConnectorType.MPARTICLE
@@ -42,6 +42,7 @@ class CreateRelationalAssetTest : PackageTest() {
     private val tag2 = makeUnique("t2")
 
     private val testFile = "input.csv"
+    private val revisedFile = "revised.csv"
 
     private val files = listOf(
         testFile,
@@ -61,6 +62,20 @@ class CreateRelationalAssetTest : PackageTest() {
                 output.appendText("$revised\n")
             }
         }
+    }
+
+    private fun modifyFile() {
+        // Modify the loaded file to make some changes (testing upsert)
+        val input = Paths.get(testDirectory, testFile).toFile()
+        val output = Paths.get(testDirectory, revisedFile).toFile()
+        input.useLines { lines ->
+            lines.forEach { line ->
+                val revised = line
+                    .replace("Test ", "Revised ")
+                output.appendText("$revised\n")
+            }
+        }
+        output.copyTo(input, true)
     }
 
     private fun createTags() {
@@ -151,12 +166,14 @@ class CreateRelationalAssetTest : PackageTest() {
             ),
         )
         Importer.main(arrayOf())
-        // Allow Elastic index to become consistent
-        Thread.sleep(5000)
     }
 
-    @Test
+    @Test(groups = ["create"])
     fun connection1Created() {
+        validateConnection()
+    }
+
+    private fun validateConnection() {
         val found = Connection.findByName(conn1, conn1Type, connectionAttrs)
         assertNotNull(found)
         assertEquals(1, found.size)
@@ -170,8 +187,12 @@ class CreateRelationalAssetTest : PackageTest() {
         assertEquals(setOf("admins"), c1.adminGroups)
     }
 
-    @Test
+    @Test(groups = ["create"])
     fun database1Created() {
+        validateDatabase("Test DB")
+    }
+
+    private fun validateDatabase(displayName: String) {
         val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
         val found = Database.select()
             .where(Database.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
@@ -182,7 +203,7 @@ class CreateRelationalAssetTest : PackageTest() {
         assertEquals(1, found.size)
         val db = found[0] as Database
         assertEquals("TEST_DB", db.name)
-        assertEquals("Test DB", db.displayName)
+        assertEquals(displayName, db.displayName)
         assertEquals(c1.qualifiedName, db.connectionQualifiedName)
         assertEquals(conn1Type, db.connectorType)
         assertEquals(1, db.schemaCount)
@@ -190,8 +211,12 @@ class CreateRelationalAssetTest : PackageTest() {
         assertEquals("TEST_SCHEMA", db.schemas.first().name)
     }
 
-    @Test
+    @Test(groups = ["create"])
     fun schema1Created() {
+        validateSchema("Test schema")
+    }
+
+    private fun validateSchema(displayName: String) {
         val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
         val found = Schema.select()
             .where(Schema.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
@@ -202,7 +227,7 @@ class CreateRelationalAssetTest : PackageTest() {
         assertEquals(1, found.size)
         val sch = found[0] as Schema
         assertEquals("TEST_SCHEMA", sch.name)
-        assertEquals("Test schema", sch.displayName)
+        assertEquals(displayName, sch.displayName)
         assertEquals(c1.qualifiedName, sch.connectionQualifiedName)
         assertEquals(conn1Type, sch.connectorType)
         assertEquals("TEST_DB", sch.databaseName)
@@ -215,8 +240,12 @@ class CreateRelationalAssetTest : PackageTest() {
         assertEquals("TEST_VIEW", sch.views.first().name)
     }
 
-    @Test
+    @Test(groups = ["create"])
     fun table1Created() {
+        validateTable("Test table")
+    }
+
+    private fun validateTable(displayName: String) {
         val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
         val found = Table.select()
             .where(Table.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
@@ -228,7 +257,7 @@ class CreateRelationalAssetTest : PackageTest() {
         assertEquals(1, found.size)
         val tbl = found[0] as Table
         assertEquals("TEST_TBL", tbl.name)
-        assertEquals("Test table", tbl.displayName)
+        assertEquals(displayName, tbl.displayName)
         assertEquals(c1.qualifiedName, tbl.connectionQualifiedName)
         assertEquals(conn1Type, tbl.connectorType)
         assertEquals("TEST_DB", tbl.databaseName)
@@ -261,8 +290,12 @@ class CreateRelationalAssetTest : PackageTest() {
         assertTrue(colNames.contains("COL2"))
     }
 
-    @Test
+    @Test(groups = ["create"])
     fun columnsForTable1Created() {
+        validateColumnsForTable1("Test column 1", "Test column 2")
+    }
+
+    private fun validateColumnsForTable1(displayCol1: String, displayCol2: String) {
         val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
         val found = Column.select()
             .where(Column.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
@@ -290,17 +323,23 @@ class CreateRelationalAssetTest : PackageTest() {
                 "COL1" -> {
                     assertEquals("VARCHAR", col.dataType)
                     assertEquals(1, col.order)
+                    assertEquals(displayCol1, col.displayName)
                 }
                 "COL2" -> {
                     assertEquals("BIGINT", col.dataType)
                     assertEquals(2, col.order)
+                    assertEquals(displayCol2, col.displayName)
                 }
             }
         }
     }
 
-    @Test
+    @Test(groups = ["create"])
     fun view1Created() {
+        validateView("Test view")
+    }
+
+    private fun validateView(displayName: String) {
         val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
         val found = View.select()
             .where(View.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
@@ -312,7 +351,7 @@ class CreateRelationalAssetTest : PackageTest() {
         assertEquals(1, found.size)
         val view = found[0] as View
         assertEquals("TEST_VIEW", view.name)
-        assertEquals("Test view", view.displayName)
+        assertEquals(displayName, view.displayName)
         assertEquals(c1.qualifiedName, view.connectionQualifiedName)
         assertEquals(conn1Type, view.connectorType)
         assertEquals(2, view.columnCount)
@@ -330,8 +369,12 @@ class CreateRelationalAssetTest : PackageTest() {
         assertTrue(colNames.contains("COL4"))
     }
 
-    @Test
+    @Test(groups = ["create"])
     fun columnsForView1Created() {
+        validateColumnsForView("Test column 3", "Test column 4")
+    }
+
+    private fun validateColumnsForView(displayCol3: String, displayCol4: String) {
         val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
         val found = Column.select()
             .where(Column.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
@@ -359,21 +402,66 @@ class CreateRelationalAssetTest : PackageTest() {
                 "COL3" -> {
                     assertEquals("INT32", col.dataType)
                     assertEquals(1, col.order)
+                    assertEquals(displayCol3, col.displayName)
                 }
                 "COL4" -> {
                     assertEquals("DECIMAL", col.dataType)
                     assertEquals(2, col.order)
+                    assertEquals(displayCol4, col.displayName)
                 }
             }
         }
     }
 
-    @Test
+    @Test(groups = ["runUpdate"], dependsOnGroups = ["create"])
+    fun upsertRevisions() {
+        modifyFile()
+        Importer.main(arrayOf())
+        // Allow Elastic index to become consistent
+        Thread.sleep(5000)
+    }
+
+    @Test(groups = ["update"], dependsOnGroups = ["runUpdate"])
+    fun connectionUnchanged() {
+        validateConnection()
+    }
+
+    @Test(groups = ["update"], dependsOnGroups = ["runUpdate"])
+    fun databaseChanged() {
+        validateDatabase("Revised DB")
+    }
+
+    @Test(groups = ["update"], dependsOnGroups = ["runUpdate"])
+    fun schemaChanged() {
+        validateSchema("Revised schema")
+    }
+
+    @Test(groups = ["update"], dependsOnGroups = ["runUpdate"])
+    fun tableChanged() {
+        validateTable("Revised table")
+    }
+
+    @Test(groups = ["update"], dependsOnGroups = ["runUpdate"])
+    fun columnsForTable1Changed() {
+        validateColumnsForTable1("Revised column 1", "Revised column 2")
+    }
+
+    @Test(groups = ["update"], dependsOnGroups = ["runUpdate"])
+    fun viewChanged() {
+        validateView("Revised view")
+    }
+
+    @Test(groups = ["update"], dependsOnGroups = ["runUpdate"])
+    fun columnsForView1Changed() {
+        validateColumnsForView("Revised column 3", "Revised column 4")
+    }
+
+    @Test(dependsOnGroups = ["create", "runUpdate", "update"])
     fun filesCreated() {
         validateFilesExist(files)
     }
 
-    @Test
+    @Test(dependsOnGroups = ["create", "runUpdate", "update"])
     fun errorFreeLog() {
         validateErrorFreeLog()
     }
