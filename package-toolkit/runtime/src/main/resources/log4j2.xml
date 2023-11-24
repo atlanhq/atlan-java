@@ -4,7 +4,7 @@
     <Appenders>
         <Console name="ConsoleAppender" target="SYSTEM_OUT">
             <PatternLayout>
-                <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+                <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{2} - %msg%n</pattern>
             </PatternLayout>
         </Console>
         <Routing name="Routing">

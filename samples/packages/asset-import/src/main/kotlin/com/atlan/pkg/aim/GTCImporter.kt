@@ -1,8 +1,10 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2023 Atlan Pte. Ltd. */
-import Importer.clearField
+package com.atlan.pkg.aim
+
 import com.atlan.model.assets.Asset
 import com.atlan.model.fields.AtlanField
+import com.atlan.pkg.aim.Importer.clearField
 import com.atlan.pkg.cache.AssetCache
 import com.atlan.pkg.serde.RowDeserialization
 import com.atlan.pkg.serde.RowDeserializer
@@ -84,7 +86,14 @@ abstract class GTCImporter(
         // of in particular things like READMEs and Links)
         if (includeRow(row, header, typeIdx, qnIdx)) {
             val revisedRow = generateQualifiedName(row, header, typeIdx, qnIdx)
-            val assets = RowDeserializer(header, revisedRow, typeIdx, qnIdx, logger, skipColumns).getAssets()
+            val assets = RowDeserializer(
+                heading = header,
+                row = revisedRow,
+                typeIdx = typeIdx,
+                qnIdx = qnIdx,
+                logger = logger,
+                skipColumns = skipColumns,
+            ).getAssets()
             if (assets != null) {
                 val builder = assets.primary
                 val candidate = builder.build()

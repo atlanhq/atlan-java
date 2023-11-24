@@ -18,6 +18,7 @@ import org.testng.Assert.assertTrue
 import org.testng.annotations.BeforeClass
 import uk.org.webcompere.systemstubs.environment.EnvironmentVariables
 import uk.org.webcompere.systemstubs.properties.SystemProperties
+import uk.org.webcompere.systemstubs.security.SystemExit
 import java.io.File
 import java.util.Random
 import kotlin.math.min
@@ -29,6 +30,7 @@ abstract class PackageTest {
     private val nanoId = NanoIdUtils.randomNanoId(Random(), ALPHABET, 5)
     private val vars = EnvironmentVariables()
     private val properties = SystemProperties()
+    private val sysExit = SystemExit()
     protected val testDirectory: String
 
     /**
@@ -50,6 +52,7 @@ abstract class PackageTest {
     fun logSetup() {
         properties.set("logDirectory", testDirectory)
         properties.setup()
+        sysExit.setup()
     }
 
     /**
@@ -218,5 +221,6 @@ abstract class PackageTest {
         }
         properties.teardown()
         vars.teardown()
+        sysExit.teardown()
     }
 }

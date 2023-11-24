@@ -276,7 +276,11 @@ public class AssetBatch {
 
     private void track(List<Asset> tracker, Asset candidate) {
         try {
-            tracker.add(candidate.trimToRequired().name(candidate.getName()).build());
+            tracker.add(candidate
+                    .trimToRequired()
+                    .guid(candidate.getGuid())
+                    .name(candidate.getName())
+                    .build());
         } catch (InvalidRequestException e) {
             try {
                 Class<?> assetClass = Serde.getAssetClassForType(candidate.getTypeName());

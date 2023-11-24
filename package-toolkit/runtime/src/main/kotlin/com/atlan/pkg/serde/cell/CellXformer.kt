@@ -56,6 +56,8 @@ object CellXformer {
             when (fieldName) {
                 in UserXformer.FIELDS -> UserXformer.decode(value, fieldName)
                 in GroupXformer.FIELDS -> GroupXformer.decode(value, fieldName)
+                in RoleXformer.FIELDS -> RoleXformer.decode(value, fieldName)
+                in DataTypeXformer.FIELDS -> DataTypeXformer.decode(value, fieldName)
                 else -> value
             }
         } else if (Boolean::class.java.isAssignableFrom(type)) {
