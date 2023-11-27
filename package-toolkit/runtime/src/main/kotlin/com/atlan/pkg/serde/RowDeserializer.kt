@@ -116,18 +116,20 @@ class RowDeserializer(
     fun getValue(fieldName: String): Any? {
         if (fieldName.isNotBlank()) {
             val i = heading.indexOf(fieldName)
-            val rValue = row[i]
-            return if (fieldName.contains(CM_HEADING_DELIMITER)) {
-                // Custom metadata field...
-                FieldSerde.getCustomMetadataValueFromString(rValue)
-            } else {
-                // "Normal" field...
-                val setter = ReflectionCache.getSetter(Serde.getBuilderClassForType(typeName), fieldName)
-                if (setter != null) {
-                    FieldSerde.getValueFromCell(rValue, setter, logger)
+            if (i > 0) {
+                val rValue = row[i]
+                return if (fieldName.contains(CM_HEADING_DELIMITER)) {
+                    // Custom metadata field...
+                    FieldSerde.getCustomMetadataValueFromString(rValue)
                 } else {
-                    // If this isn't a "real" field, return it as a simple string
-                    rValue
+                    // "Normal" field...
+                    val setter = ReflectionCache.getSetter(Serde.getBuilderClassForType(typeName), fieldName)
+                    if (setter != null) {
+                        FieldSerde.getValueFromCell(rValue, setter, logger)
+                    } else {
+                        // If this isn't a "real" field, return it as a simple string
+                        rValue
+                    }
                 }
             }
         }
