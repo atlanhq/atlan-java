@@ -2,13 +2,14 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.aim
 
+import com.atlan.model.assets.GlossaryCategory
 import com.atlan.model.assets.GlossaryTerm
 import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.cache.TermCache
+import com.atlan.pkg.serde.RowDeserializer
 import com.atlan.pkg.serde.cell.GlossaryTermXformer
 import com.atlan.pkg.serde.cell.GlossaryXformer
 import mu.KotlinLogging
-import kotlin.system.exitProcess
 
 /**
  * Import glossaries (only) into Atlan from a provided CSV file.
@@ -44,47 +45,28 @@ class TermImporter(
     )
 
     /** {@inheritDoc} */
-    override fun import() {
+    override fun import(columnsToSkip: Set<String>) {
         cache.preload()
         // Import categories by level, top-to-bottom, and stop when we hit a level with no categories
         logger.info { "--- Loading terms in first pass, without term-to-term relationships... ---" }
-        CSVReader(filename, updateOnly).use { csv ->
-            val start = System.currentTimeMillis()
-            val anyFailures = csv.streamRows(this, batchSize, logger, GlossaryTermXformer.TERM_TO_TERM_FIELDS)
-            logger.info { "Total time taken: ${System.currentTimeMillis() - start} ms" }
-            if (anyFailures) {
-                logger.error { "Some errors detected, failing the workflow." }
-                exitProcess(1)
-            }
-            cacheCreated(csv.created)
-        }
+        super.import(GlossaryTermXformer.TERM_TO_TERM_FIELDS)
         // In this second pass we need to ignore fields that were loaded in the first pass,
         // or we will end up with duplicates (links) or extra audit log messages (tags, README)
         logger.info { "--- Loading term-to-term relationships (second pass)... ---" }
-        CSVReader(filename, updateOnly).use { csv ->
-            val start = System.currentTimeMillis()
-            val anyFailures = csv.streamRows(this, batchSize, logger, secondPassIgnore)
-            logger.info { "Total time taken: ${System.currentTimeMillis() - start} ms" }
-            if (anyFailures) {
-                logger.error { "Some errors detected, failing the workflow." }
-                exitProcess(1)
+        super.import(secondPassIgnore)
+    }
+
+    /** {@inheritDoc} */
+    override fun getCacheId(deserializer: RowDeserializer): String {
+        val glossaryIdx = deserializer.heading.indexOf(GlossaryCategory.ANCHOR.atlanFieldName)
+        val termName = deserializer.getValue(GlossaryTerm.NAME.atlanFieldName)?.let { it as String } ?: ""
+        return if (glossaryIdx >= 0) {
+            val glossaryName = deserializer.row[glossaryIdx].ifBlank { "" }
+            if (glossaryName.isNotBlank() && termName.isNotBlank()) {
+                "$termName${GlossaryXformer.GLOSSARY_DELIMITER}$glossaryName"
+            } else {
+                ""
             }
-        }
-    }
-
-    /** {@inheritDoc} */
-    override fun includeRow(row: List<String>, header: List<String>, typeIdx: Int, qnIdx: Int): Boolean {
-        return row[typeIdx] == typeNameFilter
-    }
-
-    /** {@inheritDoc} */
-    override fun getCacheId(row: List<String>, header: List<String>): String {
-        val nameIdx = header.indexOf(GlossaryTerm.NAME.atlanFieldName)
-        val anchorIdx = header.indexOf(GlossaryTerm.ANCHOR.atlanFieldName)
-        return if (nameIdx >= 0 && anchorIdx >= 0) {
-            val glossaryName = row[anchorIdx]
-            val termName = row[nameIdx]
-            "$termName${GlossaryXformer.GLOSSARY_DELIMITER}$glossaryName"
         } else {
             ""
         }

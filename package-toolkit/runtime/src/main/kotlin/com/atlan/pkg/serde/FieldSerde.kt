@@ -10,6 +10,7 @@ import com.atlan.pkg.serde.cell.CellXformer
 import com.atlan.serde.Serde
 import mu.KLogger
 import java.lang.reflect.Method
+import java.util.concurrent.ThreadLocalRandom
 import java.util.concurrent.atomic.AtomicBoolean
 
 /**
@@ -118,6 +119,7 @@ object FieldSerde {
     fun getBuilderForType(typeName: String): Asset.AssetBuilder<*, *> {
         val assetClass = Serde.getAssetClassForType(typeName)
         val method = assetClass.getMethod("_internal")
-        return method.invoke(null) as Asset.AssetBuilder<*, *>
+        return (method.invoke(null) as Asset.AssetBuilder<*, *>)
+            .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
     }
 }

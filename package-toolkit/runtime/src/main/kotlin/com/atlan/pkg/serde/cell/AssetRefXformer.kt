@@ -12,7 +12,7 @@ import com.atlan.model.assets.Readme
 import com.atlan.pkg.Utils
 import com.atlan.pkg.cache.LinkCache
 import com.atlan.serde.Serde
-import com.atlan.util.AssetBatch
+import com.atlan.util.ParallelBatch
 import mu.KLogger
 import java.util.concurrent.atomic.AtomicLong
 
@@ -97,7 +97,7 @@ object AssetRefXformer {
     fun buildRelated(
         from: Asset,
         relatedAssets: Map<String, Collection<Asset>>,
-        batch: AssetBatch,
+        batch: ParallelBatch,
         count: AtomicLong,
         totalRelated: AtomicLong,
         logger: KLogger,

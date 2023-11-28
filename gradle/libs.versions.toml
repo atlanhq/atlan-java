@@ -11,6 +11,7 @@ jnanoid = "2.0.0"
 numaflow = "0.4.8"
 awssdk = "2.20.68"
 system-stubs = "2.1.5"
+fastcsv = "2.2.2"
 
 [libraries]
 jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson" }
@@ -28,6 +29,7 @@ jnanoid = { module = "com.aventrix.jnanoid:jnanoid", version.ref = "jnanoid" }
 numaflow-java = { module = "io.numaproj.numaflow:numaflow-java", version.ref = "numaflow" }
 awssdk-s3 = { module = "software.amazon.awssdk:s3", version.ref = "awssdk" }
 system-stubs = { module = "uk.org.webcompere:system-stubs-testng", version.ref = "system-stubs" }
+fastcsv = { module = "de.siegmar:fastcsv", version.ref = "fastcsv" }
 
 [bundles]
 java-test = [ "jnanoid", "testng", "wiremock" ]

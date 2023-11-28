@@ -12,11 +12,8 @@ import com.atlan.model.assets.Schema
 import com.atlan.model.assets.Table
 import com.atlan.model.assets.View
 import com.atlan.model.fields.AtlanField
-import com.atlan.pkg.rab.Importer.clearField
-import com.atlan.pkg.serde.RowDeserialization
-import com.atlan.pkg.serde.RowDeserializer
+import com.atlan.pkg.serde.csv.CSVImporter
 import mu.KLogger
-import kotlin.system.exitProcess
 
 /**
  * Import assets into Atlan from a provided CSV file.
@@ -36,20 +33,32 @@ abstract class AssetImporter(
     private val attrsToOverwrite: List<AtlanField>,
     private val updateOnly: Boolean,
     private val batchSize: Int,
-    protected val typeNameFilter: String,
-    protected val logger: KLogger,
-) : AssetGenerator {
-    // Can skip all of these columns when deserializing a row as they will be set by
-    // the creator methods anyway
-    private val skipColumns = setOf(
-        Asset.CONNECTION_NAME.atlanFieldName,
-        ConnectionImporter.CONNECTOR_TYPE,
-        ISQL.DATABASE_NAME.atlanFieldName,
-        ISQL.SCHEMA_NAME.atlanFieldName,
-        ENTITY_NAME,
-        ColumnImporter.COLUMN_PARENT_QN,
-        Column.ORDER.atlanFieldName,
-    )
+    typeNameFilter: String,
+    logger: KLogger,
+) : CSVImporter(
+    filename,
+    logger,
+    typeNameFilter,
+    attrsToOverwrite,
+    batchSize = batchSize,
+) {
+
+    /** {@inheritDoc} */
+    override fun import(columnsToSkip: Set<String>) {
+        // Can skip all of these columns when deserializing a row as they will be set by
+        // the creator methods anyway
+        super.import(
+            setOf(
+                Asset.CONNECTION_NAME.atlanFieldName,
+                ConnectionImporter.CONNECTOR_TYPE,
+                ISQL.DATABASE_NAME.atlanFieldName,
+                ISQL.SCHEMA_NAME.atlanFieldName,
+                ENTITY_NAME,
+                ColumnImporter.COLUMN_PARENT_QN,
+                Column.ORDER.atlanFieldName,
+            ),
+        )
+    }
 
     companion object {
         const val ENTITY_NAME = "entityName"
@@ -103,67 +112,6 @@ abstract class AssetImporter(
                 parent?.partialQN ?: "",
             )
         }
-    }
-
-    /**
-     * Actually run the import.
-     */
-    fun import() {
-        CSVReader(filename, updateOnly).use { csv ->
-            val start = System.currentTimeMillis()
-            val anyFailures = csv.streamRows(this, batchSize, logger, skipColumns)
-            logger.info { "Total time taken: ${System.currentTimeMillis() - start} ms" }
-            if (anyFailures) {
-                logger.error { "Some errors detected, failing the workflow." }
-                exitProcess(1)
-            }
-            cacheCreated(csv.created)
-        }
-    }
-
-    /**
-     * Translate a row of CSV values into an asset object, overwriting any attributes that were empty
-     * in the CSV with blank values, per the job configuration.
-     *
-     * @param row of values in the CSV
-     * @param header names of columns (and their position) in the header of the CSV
-     * @param typeIdx index of the typeName column
-     * @param skipColumns columns to skip, i.e. that need to be processed in a later pass
-     * @return the deserialized asset object(s)
-     */
-    override fun buildFromRow(row: List<String>, header: List<String>, typeIdx: Int, skipColumns: Set<String>): RowDeserialization? {
-        // Deserialize the objects represented in that row (could be more than one due to flattening
-        // of in particular things like READMEs and Links)
-        if (includeRow(row, header, typeIdx)) {
-            val deserializer = RowDeserializer(
-                heading = header,
-                row = row,
-                typeName = typeNameFilter,
-                logger = logger,
-                skipColumns = skipColumns,
-            )
-            val assets = deserializer.getAssets(getBuilder(deserializer))
-            if (assets != null) {
-                val builder = assets.primary
-                val candidate = builder.build()
-                val identity = RowDeserialization.AssetIdentity(candidate.typeName, candidate.qualifiedName)
-                // Then apply any field clearances based on attributes configured in the job
-                for (field in attrsToOverwrite) {
-                    clearField(field, candidate, builder)
-                    // If there are no related assets
-                    if (!assets.related.containsKey(field.atlanFieldName)) {
-                        assets.delete.add(field)
-                    }
-                }
-                return RowDeserialization(identity, builder, assets.related, assets.delete)
-            }
-        }
-        return null
-    }
-
-    /** {@inheritDoc} */
-    override fun includeRow(row: List<String>, header: List<String>, typeIdx: Int): Boolean {
-        return row[typeIdx] == typeNameFilter
     }
 
     data class QualifiedNameDetails(
