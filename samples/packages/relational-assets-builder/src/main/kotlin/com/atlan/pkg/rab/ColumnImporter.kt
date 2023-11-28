@@ -4,7 +4,6 @@ package com.atlan.pkg.rab
 
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Column
-import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.serde.RowDeserializer
 import mu.KotlinLogging
@@ -51,6 +50,5 @@ class ColumnImporter(
         val parentQN = "$connectionQN/${qnDetails.parentPartialQN}"
         val parentType = preprocessed.entityQualifiedNameToType[qnDetails.parentUniqueQN]
         return Column.creator(name, parentType, parentQN, order)
-            .connectorType(AtlanConnectorType.AZURE_ANALYSIS_SERVICES)
     }
 }
