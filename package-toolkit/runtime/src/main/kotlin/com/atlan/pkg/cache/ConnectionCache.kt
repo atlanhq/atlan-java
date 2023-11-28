@@ -74,7 +74,11 @@ object ConnectionCache : AssetCache() {
     override fun getIdentityForAsset(asset: Asset): String {
         return when (asset) {
             is Connection -> {
-                getIdentityForAsset(asset.name, asset.connectorType)
+                if (asset.connectorType != null) {
+                    getIdentityForAsset(asset.name, asset.connectorType)
+                } else {
+                    ""
+                }
             }
             else -> ""
         }
