@@ -4,7 +4,6 @@ package com.atlan.pkg.rab
 
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Table
-import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.serde.RowDeserializer
 import mu.KotlinLogging
@@ -45,6 +44,5 @@ class TableImporter(
         val schemaQN = "$connectionQN/${qnDetails.parentPartialQN}"
         return Table.creator(name, schemaQN)
             .columnCount(preprocessed.qualifiedNameToChildCount[qnDetails.uniqueQN]?.toLong())
-            .connectorType(AtlanConnectorType.AZURE_ANALYSIS_SERVICES)
     }
 }
