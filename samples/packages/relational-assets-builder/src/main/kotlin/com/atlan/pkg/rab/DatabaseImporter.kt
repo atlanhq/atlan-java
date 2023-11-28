@@ -4,6 +4,7 @@ package com.atlan.pkg.rab
 
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Database
+import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.serde.RowDeserializer
 import mu.KotlinLogging
@@ -43,5 +44,6 @@ class DatabaseImporter(
         val qnDetails = getQualifiedNameDetails(deserializer.row, deserializer.heading, typeNameFilter)
         return Database.creator(name, connectionQN)
             .schemaCount(preprocessed.qualifiedNameToChildCount[qnDetails.uniqueQN]?.toInt())
+            .connectorType(AtlanConnectorType.AZURE_ANALYSIS_SERVICES)
     }
 }
