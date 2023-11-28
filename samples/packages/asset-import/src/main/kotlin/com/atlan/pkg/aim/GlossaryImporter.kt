@@ -5,6 +5,7 @@ package com.atlan.pkg.aim
 import com.atlan.model.assets.Glossary
 import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.cache.GlossaryCache
+import com.atlan.pkg.serde.RowDeserializer
 import mu.KotlinLogging
 
 /**
@@ -35,17 +36,7 @@ class GlossaryImporter(
     logger = KotlinLogging.logger {},
 ) {
     /** {@inheritDoc} */
-    override fun includeRow(row: List<String>, header: List<String>, typeIdx: Int, qnIdx: Int): Boolean {
-        return row[typeIdx] == typeNameFilter
-    }
-
-    /** {@inheritDoc} */
-    override fun getCacheId(row: List<String>, header: List<String>): String {
-        val nameIdx = header.indexOf(Glossary.NAME.atlanFieldName)
-        return if (nameIdx >= 0) {
-            row[nameIdx]
-        } else {
-            ""
-        }
+    override fun getCacheId(deserializer: RowDeserializer): String {
+        return deserializer.getValue(Glossary.NAME.atlanFieldName)?.let { it as String } ?: ""
     }
 }

@@ -5,12 +5,12 @@ package com.atlan.pkg.aim
 import com.atlan.model.assets.GlossaryCategory
 import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.cache.CategoryCache
+import com.atlan.pkg.serde.RowDeserializer
 import com.atlan.pkg.serde.cell.GlossaryCategoryXformer.CATEGORY_DELIMITER
 import com.atlan.pkg.serde.cell.GlossaryXformer.GLOSSARY_DELIMITER
 import mu.KotlinLogging
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.math.max
-import kotlin.system.exitProcess
 
 /**
  * Import categories (only) into Atlan from a provided CSV file.
@@ -46,23 +46,14 @@ class CategoryImporter(
     private val maxCategoryDepth = AtomicInteger(1)
 
     /** {@inheritDoc} */
-    override fun import() {
+    override fun import(columnsToSkip: Set<String>) {
         cache.preload()
         // Import categories by level, top-to-bottom, and stop when we hit a level with no categories
         logger.info { "Loading categories in multiple passes, by level..." }
         while (levelToProcess < maxCategoryDepth.get()) {
             levelToProcess += 1
             logger.info { "--- Loading level $levelToProcess categories... ---" }
-            CSVReader(filename, updateOnly).use { csv ->
-                val start = System.currentTimeMillis()
-                val anyFailures = csv.streamRows(this, batchSize, logger)
-                logger.info { "Total time taken: ${System.currentTimeMillis() - start} ms" }
-                if (anyFailures) {
-                    logger.error { "Some errors detected, failing the workflow." }
-                    exitProcess(1)
-                }
-                cacheCreated(csv.created)
-            }
+            super.import(columnsToSkip)
         }
     }
 
@@ -99,17 +90,18 @@ class CategoryImporter(
     }
 
     /** {@inheritDoc} */
-    override fun getCacheId(row: List<String>, header: List<String>): String {
-        val nameIdx = header.indexOf(GlossaryCategory.NAME.atlanFieldName)
-        val parentIdx = header.indexOf(GlossaryCategory.PARENT_CATEGORY.atlanFieldName)
-        val anchorIdx = header.indexOf(GlossaryCategory.ANCHOR.atlanFieldName)
-        return if (nameIdx >= 0 && parentIdx >= 0 && anchorIdx >= 0) {
-            val glossaryName = row[anchorIdx]
-            val categoryPath = if (row[parentIdx].isBlank()) {
-                row[nameIdx]
+    override fun getCacheId(deserializer: RowDeserializer): String {
+        val glossaryIdx = deserializer.heading.indexOf(GlossaryCategory.ANCHOR.atlanFieldName)
+        val parentCategory = deserializer.getValue(GlossaryCategory.PARENT_CATEGORY.atlanFieldName)?.let { it as GlossaryCategory }
+        val categoryName = deserializer.getValue(GlossaryCategory.NAME.atlanFieldName)?.let { it as String } ?: ""
+        return if (glossaryIdx >= 0 && categoryName.isNotBlank()) {
+            val glossaryName = deserializer.row[glossaryIdx].ifBlank { "" }
+            val categoryPath = if (parentCategory == null) {
+                categoryName
             } else {
-                val parentPath = row[parentIdx].split(CATEGORY_DELIMITER)[0]
-                "$parentPath$CATEGORY_DELIMITER${row[nameIdx]}"
+                val parentIdx = deserializer.heading.indexOf(GlossaryCategory.PARENT_CATEGORY.atlanFieldName)
+                val parentPath = deserializer.row[parentIdx].split(CATEGORY_DELIMITER)[0]
+                "$parentPath$CATEGORY_DELIMITER$categoryName"
             }
             "$categoryPath$GLOSSARY_DELIMITER$glossaryName"
         } else {

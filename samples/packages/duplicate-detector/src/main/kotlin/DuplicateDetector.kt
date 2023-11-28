@@ -14,6 +14,7 @@ import com.atlan.model.enums.CertificateStatus
 import com.atlan.model.search.CompoundQuery
 import com.atlan.pkg.Utils
 import com.atlan.util.AssetBatch
+import com.atlan.util.ParallelBatch
 import mu.KotlinLogging
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicLong
@@ -126,7 +127,7 @@ object DuplicateDetector {
             val keys = hashToAssetKeys[hash]
             if (keys?.size!! > 1) {
                 val columns = hashToColumns[hash]
-                val batch = AssetBatch(
+                val batch = ParallelBatch(
                     Atlan.getDefaultClient(),
                     batchSize,
                     false,
