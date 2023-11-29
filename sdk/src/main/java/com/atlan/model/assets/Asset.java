@@ -465,6 +465,11 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Attribute
     String name;
 
+    /** Data products for which this asset is an output port. */
+    @Attribute
+    @Singular
+    SortedSet<IDataProduct> outputPortDataProducts;
+
     /** List of groups who own this asset. */
     @Attribute
     @Singular

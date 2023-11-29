@@ -86,6 +86,15 @@ public interface ICatalog {
             case Column.TYPE_NAME:
                 ref = Column.refByQualifiedName(qualifiedName);
                 break;
+            case DataContract.TYPE_NAME:
+                ref = DataContract.refByQualifiedName(qualifiedName);
+                break;
+            case DataDomain.TYPE_NAME:
+                ref = DataDomain.refByQualifiedName(qualifiedName);
+                break;
+            case DataProduct.TYPE_NAME:
+                ref = DataProduct.refByQualifiedName(qualifiedName);
+                break;
             case DataStudioAsset.TYPE_NAME:
                 ref = DataStudioAsset.refByQualifiedName(qualifiedName);
                 break;
@@ -770,6 +779,9 @@ public interface ICatalog {
 
     /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
+
+    /** Data products for which this asset is an output port. */
+    SortedSet<IDataProduct> getOutputPortDataProducts();
 
     /** TBC */
     SortedSet<String> getOwnerGroups();

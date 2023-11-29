@@ -340,6 +340,9 @@ public interface IAuthService {
     /** TBC */
     String getName();
 
+    /** Data products for which this asset is an output port. */
+    SortedSet<IDataProduct> getOutputPortDataProducts();
+
     /** TBC */
     SortedSet<String> getOwnerGroups();
 

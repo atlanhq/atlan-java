@@ -330,6 +330,9 @@ public interface IAtlanCollection {
     String getName();
 
     /** TBC */
+    SortedSet<IDataProduct> getOutputPortDataProducts();
+
+    /** TBC */
     SortedSet<String> getOwnerGroups();
 
     /** TBC */

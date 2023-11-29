@@ -421,6 +421,9 @@ public interface IAtlanQuery {
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
+    SortedSet<IDataProduct> getOutputPortDataProducts();
+
+    /** TBC */
     SortedSet<String> getOwnerGroups();
 
     /** TBC */

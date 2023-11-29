@@ -354,6 +354,9 @@ public interface ILineageProcess {
     String getName();
 
     /** TBC */
+    SortedSet<IDataProduct> getOutputPortDataProducts();
+
+    /** TBC */
     SortedSet<ICatalog> getOutputs();
 
     /** TBC */

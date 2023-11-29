@@ -358,6 +358,18 @@ public enum KeywordFields implements AtlanSearchableField {
     DATASOURCE_QUALIFIED_NAME("datasourceQualifiedName"),
     /** Data category of this field. */
     DATA_CATEGORY("dataCategory"),
+    /** Search DSL used to define which assets are part of this data product. */
+    DATA_PRODUCT_ASSETS_DSL("dataProductAssetsDSL"),
+    /** Playbook filter to define which assets are part of this data product. */
+    DATA_PRODUCT_ASSETS_PLAYBOOK_FILTER("dataProductAssetsPlaybookFilter"),
+    /** Criticality of this data product. */
+    DATA_PRODUCT_CRITICALITY("dataProductCriticality"),
+    /** Information sensitivity of this data product. */
+    DATA_PRODUCT_SENSITIVITY("dataProductSensitivity"),
+    /** Status of this data product. */
+    DATA_PRODUCT_STATUS("dataProductStatus"),
+    /** Color (in hexadecimal RGB) to use to represent this data product. */
+    DATA_PRODUCT_THEME("dataProductTheme"),
     /** Owner of the asset, from Google Data Studio. */
     DATA_STUDIO_ASSET_OWNER("dataStudioAssetOwner"),
     /** Title of the Google Data Studio asset. */
@@ -472,6 +484,8 @@ public enum KeywordFields implements AtlanSearchableField {
     DETAIL_COLUMNS("detailColumns"),
     /** Human-readable name of this asset used for display purposes (in user interface). */
     DISPLAY_NAME("displayName.keyword"),
+    /** Color (in hexadecimal RGB) to use to represent this data domain. */
+    DOMAIN_THEME_HEX("domainThemeHex"),
     /** Unused. Exmaples of the term. */
     EXAMPLES("examples"),
     /** External location of this partition, for example: an S3 object location. */
@@ -672,6 +686,12 @@ public enum KeywordFields implements AtlanSearchableField {
     MC_MONITOR_WAREHOUSE("mcMonitorWarehouse"),
     /** Identifier for the merge result. */
     MERGE_RESULT_ID("mergeResultId"),
+    /** Abbreviation for this asset. */
+    MESH_ABBREVIATION("meshAbbreviation"),
+    /** URL for an image used as the cover for this asset. */
+    MESH_COVER_IMAGE_URL("meshCoverImageUrl"),
+    /** Unique business key for this asset. */
+    MESH_SLUG("meshSlug"),
     /** Simple name of the Metabase collection in which this asset exists. */
     METABASE_COLLECTION_NAME("metabaseCollectionName.keyword"),
     /** Unique name of the Metabase collection in which this asset exists. */
@@ -806,6 +826,8 @@ public enum KeywordFields implements AtlanSearchableField {
     PARENT_COLUMN_NAME("parentColumnName.keyword"),
     /** Unique name of the column this column is nested within, for STRUCT and NESTED columns. */
     PARENT_COLUMN_QUALIFIED_NAME("parentColumnQualifiedName"),
+    /** Unique name of the parent domain in which this asset exists. */
+    PARENT_DOMAIN_QUALIFIED_NAME("parentDomainQualifiedName"),
     /** Unique name of the parent collection or folder in which this query exists. */
     PARENT_QUALIFIED_NAME("parentQualifiedName"),
     /** List of sub-partitions in this partition. */
@@ -1184,6 +1206,8 @@ public enum KeywordFields implements AtlanSearchableField {
     SUB_DATA_TYPE("subDataType"),
     /** Subtype of this asset. */
     SUB_TYPE("subType"),
+    /** Unique name of the top-level domain in which this asset exists. */
+    SUPER_DOMAIN_QUALIFIED_NAME("superDomainQualifiedName"),
     /** All super types of an asset. */
     SUPER_TYPE_NAMES("__superTypeNames.keyword"),
     /** Bin size of this field. */

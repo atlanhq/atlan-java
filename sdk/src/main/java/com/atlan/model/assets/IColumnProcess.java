@@ -331,6 +331,9 @@ public interface IColumnProcess {
     /** TBC */
     String getName();
 
+    /** Data products for which this asset is an output port. */
+    SortedSet<IDataProduct> getOutputPortDataProducts();
+
     /** Assets that are outputs from this process. */
     SortedSet<ICatalog> getOutputs();
 
