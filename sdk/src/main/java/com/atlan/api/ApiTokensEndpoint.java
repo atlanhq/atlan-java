@@ -183,6 +183,11 @@ public class ApiTokensEndpoint extends HeraclesEndpoint {
             throws AtlanException {
         String url = String.format("%s%s", getBaseUrl(), endpoint);
         ApiTokenRequest atr = new ApiTokenRequest(displayName, description, personas, validitySeconds);
+        if (options == null) {
+            options = RequestOptions.from(client)
+                    .readTimeout(client.getReadTimeout() * 3)
+                    .build();
+        }
         WrappedApiToken response =
                 ApiResource.request(client, ApiResource.RequestMethod.POST, url, atr, WrappedApiToken.class, options);
         if (response != null) {
