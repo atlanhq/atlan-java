@@ -78,35 +78,35 @@ public enum KeywordFields implements AtlanSearchableField {
     ADMIN_ROLES("adminRoles"),
     /** List of users who administer this asset. (This is only used for certain asset types.) */
     ADMIN_USERS("adminUsers"),
-    /** TBC */
+    /** Simple name of the DAG this task is contained within. */
     AIRFLOW_DAG_NAME("airflowDagName.keyword"),
-    /** TBC */
+    /** Unique name of the DAG this task is contained within. */
     AIRFLOW_DAG_QUALIFIED_NAME("airflowDagQualifiedName"),
-    /** TBC */
+    /** Schedule for the DAG. */
     AIRFLOW_DAG_SCHEDULE("airflowDagSchedule"),
-    /** Name of the run */
+    /** Name of the run. */
     AIRFLOW_RUN_NAME("airflowRunName"),
-    /** OpenLineage state of the run */
+    /** State of the run in OpenLineage. */
     AIRFLOW_RUN_OPEN_LINEAGE_STATE("airflowRunOpenLineageState"),
-    /** OpenLineage Version of the run */
+    /** Version of the run in OpenLineage. */
     AIRFLOW_RUN_OPEN_LINEAGE_VERSION("airflowRunOpenLineageVersion"),
-    /** Type of the run */
+    /** Type of the run. */
     AIRFLOW_RUN_TYPE("airflowRunType"),
-    /** Airflow Version of the run */
+    /** Version of the run in Airflow. */
     AIRFLOW_RUN_VERSION("airflowRunVersion"),
-    /** TBC */
+    /** Tags assigned to the asset in Airflow. */
     AIRFLOW_TAGS("airflowTags"),
-    /** TBC */
+    /** Identifier for the connection this task accesses. */
     AIRFLOW_TASK_CONNECTION_ID("airflowTaskConnectionId.keyword"),
-    /** TBC */
+    /** Class name for the operator this task uses. */
     AIRFLOW_TASK_OPERATOR_CLASS("airflowTaskOperatorClass.keyword"),
-    /** Pool on which this run happened */
+    /** Pool on which this run happened. */
     AIRFLOW_TASK_POOL("airflowTaskPool"),
-    /** Queue on which this run happened */
+    /** Queue on which this run happened. */
     AIRFLOW_TASK_QUEUE("airflowTaskQueue"),
-    /** TBC */
+    /** SQL code that executes through this task. */
     AIRFLOW_TASK_SQL("airflowTaskSql"),
-    /** Trigger rule of the run */
+    /** Trigger for the run. */
     AIRFLOW_TASK_TRIGGER_RULE("airflowTaskTriggerRule"),
     /** Alias for this materialized view. */
     ALIAS("alias"),

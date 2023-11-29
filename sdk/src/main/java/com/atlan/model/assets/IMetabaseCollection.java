@@ -297,7 +297,7 @@ public interface IMetabaseCollection {
     /** TBC */
     Boolean getHasLineage();
 
-    /** TBC */
+    /** Tasks to which this asset provides input. */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
     /** Processes to which this asset provides input. */
@@ -363,7 +363,7 @@ public interface IMetabaseCollection {
     /** TBC */
     String getName();
 
-    /** TBC */
+    /** Tasks from which this asset is output. */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** Processes from which this asset is produced as output. */

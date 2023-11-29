@@ -60,7 +60,7 @@ public class File extends Asset implements IFile, IResource, ICatalog, IAsset, I
     @Attribute
     FileType fileType;
 
-    /** TBC */
+    /** Tasks to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
@@ -78,7 +78,7 @@ public class File extends Asset implements IFile, IResource, ICatalog, IAsset, I
     @Attribute
     String link;
 
-    /** TBC */
+    /** Tasks from which this asset is output. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;

@@ -46,7 +46,7 @@ public class DbtColumnProcess extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Tasks that exist within this process. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> airflowTasks;
@@ -141,7 +141,7 @@ public class DbtColumnProcess extends Asset
     @Attribute
     String dbtUniqueId;
 
-    /** TBC */
+    /** Tasks to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
@@ -160,7 +160,7 @@ public class DbtColumnProcess extends Asset
     @Attribute
     IMatillionComponent matillionComponent;
 
-    /** TBC */
+    /** Tasks from which this asset is output. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;

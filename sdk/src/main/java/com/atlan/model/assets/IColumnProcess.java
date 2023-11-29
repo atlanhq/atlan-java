@@ -43,7 +43,7 @@ public interface IColumnProcess {
     /** TBC */
     SortedSet<String> getAdminUsers();
 
-    /** TBC */
+    /** Tasks that exist within this process. */
     SortedSet<IAirflowTask> getAirflowTasks();
 
     /** TBC */

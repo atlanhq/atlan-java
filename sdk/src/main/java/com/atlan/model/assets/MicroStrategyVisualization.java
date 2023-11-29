@@ -48,7 +48,7 @@ public class MicroStrategyVisualization extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Tasks to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
@@ -123,7 +123,7 @@ public class MicroStrategyVisualization extends Asset
     @Attribute
     String microStrategyVisualizationType;
 
-    /** TBC */
+    /** Tasks from which this asset is output. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;

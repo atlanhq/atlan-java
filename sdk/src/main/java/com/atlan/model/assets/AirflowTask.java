@@ -28,7 +28,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Airflow Task Assets
+ * Instance of an Airflow task in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -46,15 +46,15 @@ public class AirflowTask extends Asset implements IAirflowTask, IAirflow, ICatal
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** DAG in which this task exists. */
     @Attribute
     IAirflowDag airflowDag;
 
-    /** TBC */
+    /** Simple name of the DAG this task is contained within. */
     @Attribute
     String airflowDagName;
 
-    /** TBC */
+    /** Unique name of the DAG this task is contained within. */
     @Attribute
     String airflowDagQualifiedName;
 
@@ -91,43 +91,43 @@ public class AirflowTask extends Asset implements IAirflowTask, IAirflow, ICatal
     @Singular
     SortedSet<String> airflowTags;
 
-    /** TBC */
+    /** Identifier for the connection this task accesses. */
     @Attribute
     String airflowTaskConnectionId;
 
-    /** TBC */
+    /** Class name for the operator this task uses. */
     @Attribute
     String airflowTaskOperatorClass;
 
-    /** Pool on which this run happened */
+    /** Pool on which this run happened. */
     @Attribute
     String airflowTaskPool;
 
-    /** Pool slots used for the run */
+    /** Pool slots used for the run. */
     @Attribute
     Long airflowTaskPoolSlots;
 
-    /** Priority weight of the run */
+    /** Priority of the run. */
     @Attribute
     Long airflowTaskPriorityWeight;
 
-    /** Queue on which this run happened */
+    /** Queue on which this run happened. */
     @Attribute
     String airflowTaskQueue;
 
-    /** Retry required for the run */
+    /** Retry count for this task running. */
     @Attribute
     Long airflowTaskRetryNumber;
 
-    /** TBC */
+    /** SQL code that executes through this task. */
     @Attribute
     String airflowTaskSql;
 
-    /** Trigger rule of the run */
+    /** Trigger for the run. */
     @Attribute
     String airflowTaskTriggerRule;
 
-    /** TBC */
+    /** Tasks to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
@@ -142,7 +142,7 @@ public class AirflowTask extends Asset implements IAirflowTask, IAirflow, ICatal
     @Singular
     SortedSet<ICatalog> inputs;
 
-    /** TBC */
+    /** Tasks from which this asset is output. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
@@ -152,12 +152,12 @@ public class AirflowTask extends Asset implements IAirflowTask, IAirflow, ICatal
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** TBC */
+    /** Assets that are outputs from this task. */
     @Attribute
     @Singular
     SortedSet<ICatalog> outputs;
 
-    /** TBC */
+    /** Process in which this task exists. */
     @Attribute
     ILineageProcess process;
 

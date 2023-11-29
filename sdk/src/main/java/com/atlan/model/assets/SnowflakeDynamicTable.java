@@ -111,7 +111,7 @@ public class SnowflakeDynamicTable extends Asset
     @Singular
     SortedSet<ITable> facts;
 
-    /** TBC */
+    /** Tasks to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
@@ -141,7 +141,7 @@ public class SnowflakeDynamicTable extends Asset
     @Attribute
     Long lastProfiledAt;
 
-    /** TBC */
+    /** Tasks from which this asset is output. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;

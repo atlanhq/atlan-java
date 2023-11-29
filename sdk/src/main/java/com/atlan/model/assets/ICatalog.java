@@ -31,13 +31,13 @@ public interface ICatalog {
 
     public static final String TYPE_NAME = "Catalog";
 
-    /** TBC */
+    /** Tasks to which this asset provides input. */
     RelationField INPUT_TO_AIRFLOW_TASKS = new RelationField("inputToAirflowTasks");
 
     /** Processes to which this asset provides input. */
     RelationField INPUT_TO_PROCESSES = new RelationField("inputToProcesses");
 
-    /** TBC */
+    /** Tasks from which this asset is output. */
     RelationField OUTPUT_FROM_AIRFLOW_TASKS = new RelationField("outputFromAirflowTasks");
 
     /** Processes from which this asset is produced as output. */
@@ -723,7 +723,7 @@ public interface ICatalog {
     /** TBC */
     Boolean getHasLineage();
 
-    /** TBC */
+    /** Tasks to which this asset provides input. */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
     /** Processes to which this asset provides input. */
@@ -765,7 +765,7 @@ public interface ICatalog {
     /** TBC */
     String getName();
 
-    /** TBC */
+    /** Tasks from which this asset is output. */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** Processes from which this asset is produced as output. */

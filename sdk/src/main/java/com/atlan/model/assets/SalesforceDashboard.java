@@ -54,7 +54,7 @@ public class SalesforceDashboard extends Asset
     @Attribute
     String dashboardType;
 
-    /** TBC */
+    /** Tasks to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
@@ -72,7 +72,7 @@ public class SalesforceDashboard extends Asset
     @Attribute
     String organizationQualifiedName;
 
-    /** TBC */
+    /** Tasks from which this asset is output. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;

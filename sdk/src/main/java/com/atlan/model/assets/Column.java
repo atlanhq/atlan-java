@@ -219,7 +219,7 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
     @Singular("addForeignKeyTo")
     SortedSet<IColumn> foreignKeyTo;
 
-    /** TBC */
+    /** Tasks to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
@@ -304,7 +304,7 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
     @Attribute
     Integer order;
 
-    /** TBC */
+    /** Tasks from which this asset is output. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;

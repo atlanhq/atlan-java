@@ -50,7 +50,7 @@ public class LookerExplore extends Asset implements ILookerExplore, ILooker, IBI
     @Singular
     SortedSet<ILookerField> fields;
 
-    /** TBC */
+    /** Tasks to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
@@ -68,7 +68,7 @@ public class LookerExplore extends Asset implements ILookerExplore, ILooker, IBI
     @Attribute
     String modelName;
 
-    /** TBC */
+    /** Tasks from which this asset is output. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;

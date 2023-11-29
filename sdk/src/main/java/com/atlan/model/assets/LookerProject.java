@@ -55,7 +55,7 @@ public class LookerProject extends Asset implements ILookerProject, ILooker, IBI
     @Singular
     SortedSet<ILookerField> fields;
 
-    /** TBC */
+    /** Tasks to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
@@ -70,7 +70,7 @@ public class LookerProject extends Asset implements ILookerProject, ILooker, IBI
     @Singular
     SortedSet<ILookerModel> models;
 
-    /** TBC */
+    /** Tasks from which this asset is output. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;

@@ -30,11 +30,11 @@ public enum TextFields implements AtlanSearchableField {
     ADLS_OBJECT_CONTENT_TYPE("adlsObjectContentType"),
     /** URL of this object. */
     ADLS_OBJECT_URL("adlsObjectUrl"),
-    /** TBC */
+    /** Simple name of the DAG this task is contained within. */
     AIRFLOW_DAG_NAME("airflowDagName"),
-    /** TBC */
+    /** Identifier for the connection this task accesses. */
     AIRFLOW_TASK_CONNECTION_ID("airflowTaskConnectionId"),
-    /** TBC */
+    /** Class name for the operator this task uses. */
     AIRFLOW_TASK_OPERATOR_CLASS("airflowTaskOperatorClass"),
     /** Name of this asset in the Salesforce API. */
     API_NAME("apiName"),

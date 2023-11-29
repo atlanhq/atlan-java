@@ -105,7 +105,7 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
     @Attribute
     String externalLocationRegion;
 
-    /** TBC */
+    /** Tasks to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
@@ -135,7 +135,7 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
     @Attribute
     Long lastProfiledAt;
 
-    /** TBC */
+    /** Tasks from which this asset is output. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;

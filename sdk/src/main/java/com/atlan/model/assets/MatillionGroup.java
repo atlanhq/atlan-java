@@ -45,7 +45,7 @@ public class MatillionGroup extends Asset implements IMatillionGroup, IMatillion
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Tasks to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
@@ -68,7 +68,7 @@ public class MatillionGroup extends Asset implements IMatillionGroup, IMatillion
     @Attribute
     String matillionVersion;
 
-    /** TBC */
+    /** Tasks from which this asset is output. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;

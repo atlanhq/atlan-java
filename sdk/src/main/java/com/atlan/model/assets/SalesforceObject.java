@@ -59,7 +59,7 @@ public class SalesforceObject extends Asset
     @Singular
     SortedSet<ISalesforceField> fields;
 
-    /** TBC */
+    /** Tasks to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
@@ -94,7 +94,7 @@ public class SalesforceObject extends Asset
     @Attribute
     String organizationQualifiedName;
 
-    /** TBC */
+    /** Tasks from which this asset is output. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
