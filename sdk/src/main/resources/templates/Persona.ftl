@@ -249,6 +249,31 @@
     }
 
     /**
+     * Builds the minimal object necessary to create a domain policy for a Persona.
+     *
+     * @param name of the policy
+     * @param personaId unique identifier (GUID) of the persona for which to create this metadata policy
+     * @param actions to include in the policy
+     * @param resources against which to apply the policy, given in the form {@code entity:qualifiedName} where the qualifiedName is for a domain or subdomain
+     * @return the minimal request necessary to create the metadata policy for the Persona, as a builder
+     */
+    public static AuthPolicy.AuthPolicyBuilder<?, ?> createDomainPolicy(
+        String name,
+        String personaId,
+        Collection<PersonaDomainAction> actions,
+        Collection<String> resources) {
+        return AuthPolicy.creator(name)
+            .policyActions(actions)
+            .policyCategory(AuthPolicyCategory.PERSONA)
+            .policyType(AuthPolicyType.ALLOW)
+            .policyResources(resources)
+            .policyResourceCategory(AuthPolicyResourceCategory.CUSTOM)
+            .policyServiceName("atlas")
+            .policySubCategory("domain")
+            .accessControl(Persona.refByGuid(personaId));
+    }
+
+    /**
      * Remove the system description from a ${className}.
      *
      * @param qualifiedName of the ${className}
