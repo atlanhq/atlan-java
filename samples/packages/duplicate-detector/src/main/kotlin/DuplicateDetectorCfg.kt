@@ -14,6 +14,7 @@ import javax.annotation.processing.Generated
 @Generated("com.atlan.pkg.CustomPackage")
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 data class DuplicateDetectorCfg(
+    @JsonProperty("glossary_name") val glossaryName: String?,
     @JsonProperty("qn_prefix") val qnPrefix: String?,
     @JsonProperty("control_config_strategy") val controlConfigStrategy: String?,
     @JsonDeserialize(using = WidgetSerde.MultiSelectDeserializer::class)

@@ -3,6 +3,7 @@
 import com.atlan.Atlan
 import com.atlan.pkg.CustomPackage
 import com.atlan.pkg.config.model.ui.UIConfig
+import com.atlan.pkg.config.model.ui.UIRule
 import com.atlan.pkg.config.model.ui.UIStep
 import com.atlan.pkg.config.model.workflow.WorkflowOutputs
 import com.atlan.pkg.config.widgets.DropDown
@@ -24,12 +25,19 @@ object PackageConfig : CustomPackage(
                 title = "Configuration",
                 description = "Duplicate detection configuration",
                 inputs = mapOf(
+                    "glossary_name" to TextInput(
+                        label = "Glossary name",
+                        required = true,
+                        help = "Name for the glossary where the duplicate sets of assets will be recorded and tracked.",
+                        placeholder = "Duplicate assets",
+                        grid = 4,
+                    ),
                     "qn_prefix" to TextInput(
                         label = "Qualified name prefix",
                         required = false,
                         help = "Starting value for a qualifiedName that will determine which assets to check for duplicates.",
                         placeholder = "default",
-                        grid = 6,
+                        grid = 4,
                     ),
                     "control_config_strategy" to Radio(
                         label = "Options",
@@ -43,7 +51,7 @@ object PackageConfig : CustomPackage(
                     ),
                     "asset_types" to DropDown(
                         label = "Asset types",
-                        required = true,
+                        required = false,
                         possibleValues = mapOf(
                             "Table" to "Table",
                             "View" to "View",
@@ -54,6 +62,12 @@ object PackageConfig : CustomPackage(
                         grid = 4,
                     ),
                 ),
+            ),
+        ),
+        rules = listOf(
+            UIRule(
+                whenInputs = mapOf("control_config_strategy" to "advanced"),
+                required = listOf("asset_types"),
             ),
         ),
     ),
