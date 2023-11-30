@@ -35,6 +35,7 @@ import com.atlan.model.enums.AuthPolicyType;
 import com.atlan.model.enums.PersonaMetadataAction;
 import com.atlan.model.enums.PersonaGlossaryAction;
 import com.atlan.model.enums.PurposeMetadataAction;
+import com.atlan.model.enums.PersonaDomainAction;
 import com.atlan.model.enums.DataAction;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.KeywordFields;
