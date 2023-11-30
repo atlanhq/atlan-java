@@ -86,8 +86,8 @@ class DuplicateDetectorTest : PackageTest() {
             .stream()
             .map { it.guid }
             .toList()
-        Atlan.getDefaultClient().assets.delete(terms, AtlanDeleteType.PURGE)
-        Glossary.purge(Glossary.findByName(glossaryName).guid)
+        Atlan.getDefaultClient().assets.delete(terms, AtlanDeleteType.HARD)
+        Glossary.purge(glossary.guid)
         teardown(context.failedTests.size() > 0)
     }
 }
