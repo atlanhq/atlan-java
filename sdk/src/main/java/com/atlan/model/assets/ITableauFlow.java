@@ -303,7 +303,7 @@ public interface ITableauFlow {
     /** List of fields that are inputs to this flow. */
     List<Map<String, String>> getInputFields();
 
-    /** TBC */
+    /** Tasks to which this asset provides input. */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
     /** Processes to which this asset provides input. */
@@ -348,11 +348,14 @@ public interface ITableauFlow {
     /** List of fields that are outputs from this flow. */
     List<Map<String, String>> getOutputFields();
 
-    /** TBC */
+    /** Tasks from which this asset is output. */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
+
+    /** Data products for which this asset is an output port. */
+    SortedSet<IDataProduct> getOutputPortDataProducts();
 
     /** List of steps that are outputs from this flow. */
     List<Map<String, String>> getOutputSteps();

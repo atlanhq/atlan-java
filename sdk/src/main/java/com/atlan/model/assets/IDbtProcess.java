@@ -43,7 +43,7 @@ public interface IDbtProcess {
     /** TBC */
     SortedSet<String> getAdminUsers();
 
-    /** TBC */
+    /** Tasks that exist within this process. */
     SortedSet<IAirflowTask> getAirflowTasks();
 
     /** TBC */
@@ -346,7 +346,7 @@ public interface IDbtProcess {
     /** TBC */
     Boolean getHasLineage();
 
-    /** TBC */
+    /** Tasks to which this asset provides input. */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
     /** Processes to which this asset provides input. */
@@ -394,11 +394,14 @@ public interface IDbtProcess {
     /** TBC */
     String getName();
 
-    /** TBC */
+    /** Tasks from which this asset is output. */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
+
+    /** Data products for which this asset is an output port. */
+    SortedSet<IDataProduct> getOutputPortDataProducts();
 
     /** Assets that are outputs from this process. */
     SortedSet<ICatalog> getOutputs();

@@ -26,7 +26,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Airflow Task Assets
+ * Instance of an Airflow task in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -35,53 +35,53 @@ public interface IAirflowTask {
 
     public static final String TYPE_NAME = "AirflowTask";
 
-    /** TBC */
+    /** DAG in which this task exists. */
     RelationField AIRFLOW_DAG = new RelationField("airflowDag");
 
-    /** TBC */
+    /** Simple name of the DAG this task is contained within. */
     KeywordTextField AIRFLOW_DAG_NAME =
             new KeywordTextField("airflowDagName", "airflowDagName.keyword", "airflowDagName");
 
-    /** TBC */
+    /** Unique name of the DAG this task is contained within. */
     KeywordField AIRFLOW_DAG_QUALIFIED_NAME = new KeywordField("airflowDagQualifiedName", "airflowDagQualifiedName");
 
-    /** TBC */
+    /** Identifier for the connection this task accesses. */
     KeywordTextField AIRFLOW_TASK_CONNECTION_ID = new KeywordTextField(
             "airflowTaskConnectionId", "airflowTaskConnectionId.keyword", "airflowTaskConnectionId");
 
-    /** TBC */
+    /** Class name for the operator this task uses. */
     KeywordTextField AIRFLOW_TASK_OPERATOR_CLASS = new KeywordTextField(
             "airflowTaskOperatorClass", "airflowTaskOperatorClass.keyword", "airflowTaskOperatorClass");
 
-    /** Pool on which this run happened */
+    /** Pool on which this run happened. */
     KeywordField AIRFLOW_TASK_POOL = new KeywordField("airflowTaskPool", "airflowTaskPool");
 
-    /** Pool slots used for the run */
+    /** Pool slots used for the run. */
     NumericField AIRFLOW_TASK_POOL_SLOTS = new NumericField("airflowTaskPoolSlots", "airflowTaskPoolSlots");
 
-    /** Priority weight of the run */
+    /** Priority of the run. */
     NumericField AIRFLOW_TASK_PRIORITY_WEIGHT =
             new NumericField("airflowTaskPriorityWeight", "airflowTaskPriorityWeight");
 
-    /** Queue on which this run happened */
+    /** Queue on which this run happened. */
     KeywordField AIRFLOW_TASK_QUEUE = new KeywordField("airflowTaskQueue", "airflowTaskQueue");
 
-    /** Retry required for the run */
+    /** Retry count for this task running. */
     NumericField AIRFLOW_TASK_RETRY_NUMBER = new NumericField("airflowTaskRetryNumber", "airflowTaskRetryNumber");
 
-    /** TBC */
+    /** SQL code that executes through this task. */
     KeywordField AIRFLOW_TASK_SQL = new KeywordField("airflowTaskSql", "airflowTaskSql");
 
-    /** Trigger rule of the run */
+    /** Trigger for the run. */
     KeywordField AIRFLOW_TASK_TRIGGER_RULE = new KeywordField("airflowTaskTriggerRule", "airflowTaskTriggerRule");
 
     /** Assets that are inputs to this process. */
     RelationField INPUTS = new RelationField("inputs");
 
-    /** TBC */
+    /** Assets that are outputs from this task. */
     RelationField OUTPUTS = new RelationField("outputs");
 
-    /** TBC */
+    /** Process in which this task exists. */
     RelationField PROCESS = new RelationField("process");
 
     /** TBC */
@@ -93,13 +93,13 @@ public interface IAirflowTask {
     /** TBC */
     SortedSet<String> getAdminUsers();
 
-    /** TBC */
+    /** DAG in which this task exists. */
     IAirflowDag getAirflowDag();
 
-    /** TBC */
+    /** Simple name of the DAG this task is contained within. */
     String getAirflowDagName();
 
-    /** TBC */
+    /** Unique name of the DAG this task is contained within. */
     String getAirflowDagQualifiedName();
 
     /** TBC */
@@ -126,31 +126,31 @@ public interface IAirflowTask {
     /** TBC */
     SortedSet<String> getAirflowTags();
 
-    /** TBC */
+    /** Identifier for the connection this task accesses. */
     String getAirflowTaskConnectionId();
 
-    /** TBC */
+    /** Class name for the operator this task uses. */
     String getAirflowTaskOperatorClass();
 
-    /** Pool on which this run happened */
+    /** Pool on which this run happened. */
     String getAirflowTaskPool();
 
-    /** Pool slots used for the run */
+    /** Pool slots used for the run. */
     Long getAirflowTaskPoolSlots();
 
-    /** Priority weight of the run */
+    /** Priority of the run. */
     Long getAirflowTaskPriorityWeight();
 
-    /** Queue on which this run happened */
+    /** Queue on which this run happened. */
     String getAirflowTaskQueue();
 
-    /** Retry required for the run */
+    /** Retry count for this task running. */
     Long getAirflowTaskRetryNumber();
 
-    /** TBC */
+    /** SQL code that executes through this task. */
     String getAirflowTaskSql();
 
-    /** Trigger rule of the run */
+    /** Trigger for the run. */
     String getAirflowTaskTriggerRule();
 
     /** TBC */
@@ -387,7 +387,7 @@ public interface IAirflowTask {
     /** TBC */
     Boolean getHasLineage();
 
-    /** TBC */
+    /** Tasks to which this asset provides input. */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
     /** Processes to which this asset provides input. */
@@ -432,13 +432,16 @@ public interface IAirflowTask {
     /** TBC */
     String getName();
 
-    /** TBC */
+    /** Tasks from which this asset is output. */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
-    /** TBC */
+    /** Data products for which this asset is an output port. */
+    SortedSet<IDataProduct> getOutputPortDataProducts();
+
+    /** Assets that are outputs from this task. */
     SortedSet<ICatalog> getOutputs();
 
     /** TBC */
@@ -450,7 +453,7 @@ public interface IAirflowTask {
     /** TBC */
     Double getPopularityScore();
 
-    /** TBC */
+    /** Process in which this task exists. */
     ILineageProcess getProcess();
 
     /** TBC */

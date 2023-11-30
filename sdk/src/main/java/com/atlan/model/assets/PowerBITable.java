@@ -59,7 +59,7 @@ public class PowerBITable extends Asset implements IPowerBITable, IPowerBI, IBI,
     @Attribute
     String datasetQualifiedName;
 
-    /** TBC */
+    /** Tasks to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
@@ -74,7 +74,7 @@ public class PowerBITable extends Asset implements IPowerBITable, IPowerBI, IBI,
     @Singular
     SortedSet<IPowerBIMeasure> measures;
 
-    /** TBC */
+    /** Tasks from which this asset is output. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;

@@ -45,7 +45,7 @@ public class ModeQuery extends Asset implements IModeQuery, IMode, IBI, ICatalog
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Tasks to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
@@ -108,7 +108,7 @@ public class ModeQuery extends Asset implements IModeQuery, IMode, IBI, ICatalog
     @Attribute
     String modeWorkspaceUsername;
 
-    /** TBC */
+    /** Tasks from which this asset is output. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;

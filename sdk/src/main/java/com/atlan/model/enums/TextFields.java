@@ -30,11 +30,11 @@ public enum TextFields implements AtlanSearchableField {
     ADLS_OBJECT_CONTENT_TYPE("adlsObjectContentType"),
     /** URL of this object. */
     ADLS_OBJECT_URL("adlsObjectUrl"),
-    /** TBC */
+    /** Simple name of the DAG this task is contained within. */
     AIRFLOW_DAG_NAME("airflowDagName"),
-    /** TBC */
+    /** Identifier for the connection this task accesses. */
     AIRFLOW_TASK_CONNECTION_ID("airflowTaskConnectionId"),
-    /** TBC */
+    /** Class name for the operator this task uses. */
     AIRFLOW_TASK_OPERATOR_CLASS("airflowTaskOperatorClass"),
     /** Name of this asset in the Salesforce API. */
     API_NAME("apiName"),
@@ -270,6 +270,8 @@ public enum TextFields implements AtlanSearchableField {
     PARENT_COLUMN_NAME("parentColumnName"),
     /** Unique name of the column this column is nested within, for STRUCT and NESTED columns. */
     PARENT_COLUMN_QUALIFIED_NAME("parentColumnQualifiedName.text"),
+    /** Unique name of the parent domain in which this asset exists. */
+    PARENT_DOMAIN_QUALIFIED_NAME("parentDomainQualifiedName.text"),
     /** Unique name of the parent collection or folder in which this query exists. */
     PARENT_QUALIFIED_NAME("parentQualifiedName.text"),
     /** DAX expression for this measure. */
@@ -362,6 +364,8 @@ public enum TextFields implements AtlanSearchableField {
     SISENSE_WIDGET_FOLDER_QUALIFIED_NAME("sisenseWidgetFolderQualifiedName.text"),
     /** Name of the notification channel for this pipe. */
     SNOWFLAKE_PIPE_NOTIFICATION_CHANNEL_NAME("snowflakePipeNotificationChannelName.text"),
+    /** Unique name of the top-level domain in which this asset exists. */
+    SUPER_DOMAIN_QUALIFIED_NAME("superDomainQualifiedName.text"),
     /** All super types of an asset. */
     SUPER_TYPE_NAMES("__superTypeNames"),
     /** Data type of this field. */

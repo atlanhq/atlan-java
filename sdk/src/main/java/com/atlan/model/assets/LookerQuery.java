@@ -50,7 +50,7 @@ public class LookerQuery extends Asset implements ILookerQuery, ILooker, IBI, IC
     @Singular
     SortedSet<String> fields;
 
-    /** TBC */
+    /** Tasks to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
@@ -69,7 +69,7 @@ public class LookerQuery extends Asset implements ILookerQuery, ILooker, IBI, IC
     @Attribute
     ILookerModel model;
 
-    /** TBC */
+    /** Tasks from which this asset is output. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;

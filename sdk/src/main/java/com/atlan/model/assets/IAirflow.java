@@ -24,7 +24,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Airflow Assets
+ * Base class for Airflow assets.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -33,30 +33,30 @@ public interface IAirflow {
 
     public static final String TYPE_NAME = "Airflow";
 
-    /** End time of the run */
+    /** End time of the run. */
     NumericField AIRFLOW_RUN_END_TIME = new NumericField("airflowRunEndTime", "airflowRunEndTime");
 
-    /** Name of the run */
+    /** Name of the run. */
     KeywordField AIRFLOW_RUN_NAME = new KeywordField("airflowRunName", "airflowRunName");
 
-    /** OpenLineage state of the run */
+    /** State of the run in OpenLineage. */
     KeywordField AIRFLOW_RUN_OPEN_LINEAGE_STATE =
             new KeywordField("airflowRunOpenLineageState", "airflowRunOpenLineageState");
 
-    /** OpenLineage Version of the run */
+    /** Version of the run in OpenLineage. */
     KeywordField AIRFLOW_RUN_OPEN_LINEAGE_VERSION =
             new KeywordField("airflowRunOpenLineageVersion", "airflowRunOpenLineageVersion");
 
-    /** Start time of the run */
+    /** Start time of the run. */
     NumericField AIRFLOW_RUN_START_TIME = new NumericField("airflowRunStartTime", "airflowRunStartTime");
 
-    /** Type of the run */
+    /** Type of the run. */
     KeywordField AIRFLOW_RUN_TYPE = new KeywordField("airflowRunType", "airflowRunType");
 
-    /** Airflow Version of the run */
+    /** Version of the run in Airflow. */
     KeywordField AIRFLOW_RUN_VERSION = new KeywordField("airflowRunVersion", "airflowRunVersion");
 
-    /** TBC */
+    /** Tags assigned to the asset in Airflow. */
     KeywordField AIRFLOW_TAGS = new KeywordField("airflowTags", "airflowTags");
 
     /** TBC */
@@ -68,28 +68,28 @@ public interface IAirflow {
     /** TBC */
     SortedSet<String> getAdminUsers();
 
-    /** End time of the run */
+    /** End time of the run. */
     Long getAirflowRunEndTime();
 
-    /** Name of the run */
+    /** Name of the run. */
     String getAirflowRunName();
 
-    /** OpenLineage state of the run */
+    /** State of the run in OpenLineage. */
     OpenLineageRunState getAirflowRunOpenLineageState();
 
-    /** OpenLineage Version of the run */
+    /** Version of the run in OpenLineage. */
     String getAirflowRunOpenLineageVersion();
 
-    /** Start time of the run */
+    /** Start time of the run. */
     Long getAirflowRunStartTime();
 
-    /** Type of the run */
+    /** Type of the run. */
     String getAirflowRunType();
 
-    /** Airflow Version of the run */
+    /** Version of the run in Airflow. */
     String getAirflowRunVersion();
 
-    /** TBC */
+    /** Tags assigned to the asset in Airflow. */
     SortedSet<String> getAirflowTags();
 
     /** TBC */
@@ -326,7 +326,7 @@ public interface IAirflow {
     /** TBC */
     Boolean getHasLineage();
 
-    /** TBC */
+    /** Tasks to which this asset provides input. */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
     /** Processes to which this asset provides input. */
@@ -368,11 +368,14 @@ public interface IAirflow {
     /** TBC */
     String getName();
 
-    /** TBC */
+    /** Tasks from which this asset is output. */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
     /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
+
+    /** Data products for which this asset is an output port. */
+    SortedSet<IDataProduct> getOutputPortDataProducts();
 
     /** TBC */
     SortedSet<String> getOwnerGroups();

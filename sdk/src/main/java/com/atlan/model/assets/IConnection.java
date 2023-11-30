@@ -441,6 +441,9 @@ public interface IConnection {
     /** Number of rows after which results should be uploaded to storage. */
     Long getObjectStorageUploadThreshold();
 
+    /** Data products for which this asset is an output port. */
+    SortedSet<IDataProduct> getOutputPortDataProducts();
+
     /** TBC */
     SortedSet<String> getOwnerGroups();
 

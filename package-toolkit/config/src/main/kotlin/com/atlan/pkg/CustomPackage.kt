@@ -228,10 +228,9 @@ open class CustomPackage(
         fun createPackageFiles(pkg: CustomPackage, args: List<String>): String {
             val path = args[0]
             val prefix = when {
-                path.isEmpty() -> path
                 path.endsWith(File.separator) -> path
-                else -> path
-            } + File.separator + pkg.name + File.separator
+                else -> "$path${File.separator}"
+            } + pkg.name + File.separator
             File(prefix).mkdirs()
             File(prefix + "index.js").writeText(pkg.indexJS())
             File(prefix + "package.json").writeText(pkg.packageJSON())

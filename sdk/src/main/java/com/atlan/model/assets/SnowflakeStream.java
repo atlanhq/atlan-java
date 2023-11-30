@@ -71,7 +71,7 @@ public class SnowflakeStream extends Asset implements ISnowflakeStream, ISQL, IC
     @Singular
     SortedSet<IDbtTest> dbtTests;
 
-    /** TBC */
+    /** Tasks to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
@@ -89,7 +89,7 @@ public class SnowflakeStream extends Asset implements ISnowflakeStream, ISQL, IC
     @Attribute
     Long lastProfiledAt;
 
-    /** TBC */
+    /** Tasks from which this asset is output. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;

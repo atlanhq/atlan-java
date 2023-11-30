@@ -107,7 +107,7 @@ public class Function extends Asset implements IFunction, ISQL, ICatalog, IAsset
     @Attribute
     String functionType;
 
-    /** TBC */
+    /** Tasks to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
@@ -125,7 +125,7 @@ public class Function extends Asset implements IFunction, ISQL, ICatalog, IAsset
     @Attribute
     Long lastProfiledAt;
 
-    /** TBC */
+    /** Tasks from which this asset is output. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;

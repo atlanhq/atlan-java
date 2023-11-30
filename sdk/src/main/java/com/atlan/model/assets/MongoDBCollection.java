@@ -107,7 +107,7 @@ public class MongoDBCollection extends Asset
     @Singular
     SortedSet<ITable> facts;
 
-    /** TBC */
+    /** Tasks to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
@@ -189,7 +189,7 @@ public class MongoDBCollection extends Asset
     @Attribute
     IMongoDBDatabase mongoDBDatabase;
 
-    /** TBC */
+    /** Tasks from which this asset is output. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;

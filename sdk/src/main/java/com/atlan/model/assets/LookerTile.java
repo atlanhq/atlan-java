@@ -49,7 +49,7 @@ public class LookerTile extends Asset implements ILookerTile, ILooker, IBI, ICat
     @Attribute
     ILookerDashboard dashboard;
 
-    /** TBC */
+    /** Tasks to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
@@ -79,7 +79,7 @@ public class LookerTile extends Asset implements ILookerTile, ILooker, IBI, ICat
     @Attribute
     String noteText;
 
-    /** TBC */
+    /** Tasks from which this asset is output. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;

@@ -46,7 +46,7 @@ public class MatillionJob extends Asset implements IMatillionJob, IMatillion, IC
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Tasks to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
@@ -93,7 +93,7 @@ public class MatillionJob extends Asset implements IMatillionJob, IMatillion, IC
     @Attribute
     String matillionVersion;
 
-    /** TBC */
+    /** Tasks from which this asset is output. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;

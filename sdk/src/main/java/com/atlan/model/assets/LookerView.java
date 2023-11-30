@@ -50,7 +50,7 @@ public class LookerView extends Asset implements ILookerView, ILooker, IBI, ICat
     @Singular
     SortedSet<ILookerField> fields;
 
-    /** TBC */
+    /** Tasks to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
@@ -68,7 +68,7 @@ public class LookerView extends Asset implements ILookerView, ILooker, IBI, ICat
     @Attribute
     String lookerViewFilePath;
 
-    /** TBC */
+    /** Tasks from which this asset is output. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;

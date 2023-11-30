@@ -50,7 +50,7 @@ public class PowerBIColumn extends Asset implements IPowerBIColumn, IPowerBI, IB
     @Attribute
     String datasetQualifiedName;
 
-    /** TBC */
+    /** Tasks to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
@@ -60,7 +60,7 @@ public class PowerBIColumn extends Asset implements IPowerBIColumn, IPowerBI, IB
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
-    /** TBC */
+    /** Tasks from which this asset is output. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;

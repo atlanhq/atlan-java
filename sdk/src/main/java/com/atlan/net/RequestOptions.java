@@ -19,7 +19,7 @@ import lombok.Singular;
  * For the moment, only {@link #getDefault()} is used (behind-the-scenes), but this would provide the foundation
  * to open up per-request variations of things like the maximum number of retries to allow.
  */
-@Builder
+@Builder(toBuilder = true)
 @Getter
 @EqualsAndHashCode(callSuper = false)
 @SuppressWarnings("cast")

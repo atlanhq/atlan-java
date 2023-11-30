@@ -54,7 +54,7 @@ public class PowerBIReport extends Asset implements IPowerBIReport, IPowerBI, IB
     @Attribute
     String datasetQualifiedName;
 
-    /** TBC */
+    /** Tasks to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
@@ -64,7 +64,7 @@ public class PowerBIReport extends Asset implements IPowerBIReport, IPowerBI, IB
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
-    /** TBC */
+    /** Tasks from which this asset is output. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;

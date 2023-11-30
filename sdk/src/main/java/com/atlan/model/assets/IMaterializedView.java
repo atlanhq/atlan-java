@@ -407,6 +407,9 @@ public interface IMaterializedView {
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
+    SortedSet<IDataProduct> getOutputPortDataProducts();
+
+    /** TBC */
     SortedSet<String> getOwnerGroups();
 
     /** TBC */

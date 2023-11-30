@@ -28,7 +28,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Airflow Dag Assets
+ * Instance of an Airflow DAG in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -46,11 +46,11 @@ public class AirflowDag extends Asset implements IAirflowDag, IAirflow, ICatalog
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Schedule for the DAG. */
     @Attribute
     String airflowDagSchedule;
 
-    /** Duration between scheduled runs in seconds */
+    /** Duration between scheduled runs, in seconds. */
     @Attribute
     Long airflowDagScheduleDelta;
 
@@ -87,12 +87,12 @@ public class AirflowDag extends Asset implements IAirflowDag, IAirflow, ICatalog
     @Singular
     SortedSet<String> airflowTags;
 
-    /** TBC */
+    /** Tasks that exist within this DAG. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> airflowTasks;
 
-    /** TBC */
+    /** Tasks to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
@@ -102,7 +102,7 @@ public class AirflowDag extends Asset implements IAirflowDag, IAirflow, ICatalog
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
-    /** TBC */
+    /** Tasks from which this asset is output. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;

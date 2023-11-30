@@ -45,7 +45,7 @@ public class BIProcess extends Asset implements IBIProcess, ILineageProcess, IAs
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Tasks that exist within this process. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> airflowTasks;

@@ -59,7 +59,7 @@ public class Link extends Asset implements ILink, IResource, ICatalog, IAsset, I
     @Attribute
     IconType iconType;
 
-    /** TBC */
+    /** Tasks to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
@@ -77,7 +77,7 @@ public class Link extends Asset implements ILink, IResource, ICatalog, IAsset, I
     @Attribute
     String link;
 
-    /** TBC */
+    /** Tasks from which this asset is output. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;

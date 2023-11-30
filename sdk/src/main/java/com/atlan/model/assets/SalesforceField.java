@@ -66,7 +66,7 @@ public class SalesforceField extends Asset
     @Attribute
     String inlineHelpText;
 
-    /** TBC */
+    /** Tasks to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
@@ -129,7 +129,7 @@ public class SalesforceField extends Asset
     @Attribute
     String organizationQualifiedName;
 
-    /** TBC */
+    /** Tasks from which this asset is output. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;

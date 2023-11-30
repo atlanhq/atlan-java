@@ -46,7 +46,7 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Tasks that exist within this process. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> airflowTasks;

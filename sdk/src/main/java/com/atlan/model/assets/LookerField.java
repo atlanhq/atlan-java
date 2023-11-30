@@ -49,7 +49,7 @@ public class LookerField extends Asset implements ILookerField, ILooker, IBI, IC
     @Attribute
     ILookerExplore explore;
 
-    /** TBC */
+    /** Tasks to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
@@ -83,7 +83,7 @@ public class LookerField extends Asset implements ILookerField, ILooker, IBI, IC
     @Attribute
     String modelName;
 
-    /** TBC */
+    /** Tasks from which this asset is output. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;

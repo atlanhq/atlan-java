@@ -81,7 +81,7 @@ public class Schema extends Asset implements ISchema, ISQL, ICatalog, IAsset, IR
     @Singular
     SortedSet<IFunction> functions;
 
-    /** TBC */
+    /** Tasks to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
@@ -105,7 +105,7 @@ public class Schema extends Asset implements ISchema, ISQL, ICatalog, IAsset, IR
     @JsonProperty("materialisedViews")
     SortedSet<IMaterializedView> materializedViews;
 
-    /** TBC */
+    /** Tasks from which this asset is output. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;

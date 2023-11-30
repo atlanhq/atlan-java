@@ -45,7 +45,7 @@ public class ModeReport extends Asset implements IModeReport, IMode, IBI, ICatal
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Tasks to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
@@ -129,7 +129,7 @@ public class ModeReport extends Asset implements IModeReport, IMode, IBI, ICatal
     @Attribute
     String modeWorkspaceUsername;
 
-    /** TBC */
+    /** Tasks from which this asset is output. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;

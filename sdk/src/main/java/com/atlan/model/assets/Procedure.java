@@ -75,7 +75,7 @@ public class Procedure extends Asset implements IProcedure, ISQL, ICatalog, IAss
     @Attribute
     String definition;
 
-    /** TBC */
+    /** Tasks to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
@@ -93,7 +93,7 @@ public class Procedure extends Asset implements IProcedure, ISQL, ICatalog, IAss
     @Attribute
     Long lastProfiledAt;
 
-    /** TBC */
+    /** Tasks from which this asset is output. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;

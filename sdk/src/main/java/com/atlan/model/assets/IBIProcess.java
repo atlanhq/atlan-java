@@ -39,7 +39,7 @@ public interface IBIProcess {
     /** TBC */
     SortedSet<String> getAdminUsers();
 
-    /** TBC */
+    /** Tasks that exist within this process. */
     SortedSet<IAirflowTask> getAirflowTasks();
 
     /** TBC */
@@ -326,6 +326,9 @@ public interface IBIProcess {
 
     /** TBC */
     String getName();
+
+    /** Data products for which this asset is an output port. */
+    SortedSet<IDataProduct> getOutputPortDataProducts();
 
     /** Assets that are outputs from this process. */
     SortedSet<ICatalog> getOutputs();

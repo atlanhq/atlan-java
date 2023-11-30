@@ -355,6 +355,9 @@ public interface IAsset {
     /** Name of this asset. Fallback for display purposes, if displayName is empty. */
     KeywordTextStemmedField NAME = new KeywordTextStemmedField("name", "name.keyword", "name", "name.stemmed");
 
+    /** Data products for which this asset is an output port. */
+    RelationField OUTPUT_PORT_DATA_PRODUCTS = new RelationField("outputPortDataProducts");
+
     /** List of groups who own this asset. */
     KeywordField OWNER_GROUPS = new KeywordField("ownerGroups", "ownerGroups");
 
@@ -759,6 +762,9 @@ public interface IAsset {
 
     /** Name of this asset. Fallback for display purposes, if displayName is empty. */
     String getName();
+
+    /** Data products for which this asset is an output port. */
+    SortedSet<IDataProduct> getOutputPortDataProducts();
 
     /** List of groups who own this asset. */
     SortedSet<String> getOwnerGroups();

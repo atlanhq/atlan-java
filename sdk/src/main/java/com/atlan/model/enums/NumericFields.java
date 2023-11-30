@@ -18,17 +18,17 @@ public enum NumericFields implements AtlanSearchableField {
     ADLS_OBJECT_COUNT("adlsObjectCount"),
     /** Size of this object. */
     ADLS_OBJECT_SIZE("adlsObjectSize"),
-    /** Duration between scheduled runs in seconds */
+    /** Duration between scheduled runs, in seconds. */
     AIRFLOW_DAG_SCHEDULE_DELTA("airflowDagScheduleDelta"),
-    /** End time of the run */
+    /** End time of the run. */
     AIRFLOW_RUN_END_TIME("airflowRunEndTime"),
-    /** Start time of the run */
+    /** Start time of the run. */
     AIRFLOW_RUN_START_TIME("airflowRunStartTime"),
-    /** Pool slots used for the run */
+    /** Pool slots used for the run. */
     AIRFLOW_TASK_POOL_SLOTS("airflowTaskPoolSlots"),
-    /** Priority weight of the run */
+    /** Priority of the run. */
     AIRFLOW_TASK_PRIORITY_WEIGHT("airflowTaskPriorityWeight"),
-    /** Retry required for the run */
+    /** Retry count for this task running. */
     AIRFLOW_TASK_RETRY_NUMBER("airflowTaskRetryNumber"),
     /** Time (epoch) at which the announcement was last updated, in milliseconds. */
     ANNOUNCEMENT_UPDATED_AT("announcementUpdatedAt"),

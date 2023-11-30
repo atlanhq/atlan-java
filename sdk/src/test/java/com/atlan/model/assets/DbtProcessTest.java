@@ -213,6 +213,8 @@ public class DbtProcessTest {
             .metric(DbtMetric.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .metric(DbtMetric.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .name("String0")
+            .outputPortDataProduct(DataProduct.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .outputPortDataProduct(DataProduct.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .ownerGroup("String0")
             .ownerGroup("String1")
             .ownerUser("String0")

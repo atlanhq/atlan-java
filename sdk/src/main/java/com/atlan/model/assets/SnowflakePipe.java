@@ -75,7 +75,7 @@ public class SnowflakePipe extends Asset implements ISnowflakePipe, ISQL, ICatal
     @Attribute
     String definition;
 
-    /** TBC */
+    /** Tasks to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
@@ -93,7 +93,7 @@ public class SnowflakePipe extends Asset implements ISnowflakePipe, ISQL, ICatal
     @Attribute
     Long lastProfiledAt;
 
-    /** TBC */
+    /** Tasks from which this asset is output. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
