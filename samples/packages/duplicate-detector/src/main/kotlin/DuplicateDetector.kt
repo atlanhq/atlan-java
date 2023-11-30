@@ -10,6 +10,7 @@ import com.atlan.model.assets.IColumn
 import com.atlan.model.assets.MaterializedView
 import com.atlan.model.assets.Table
 import com.atlan.model.assets.View
+import com.atlan.model.enums.AtlanIcon
 import com.atlan.model.enums.CertificateStatus
 import com.atlan.model.search.CompoundQuery
 import com.atlan.pkg.Utils
@@ -22,8 +23,6 @@ import java.util.concurrent.atomic.AtomicLong
 object DuplicateDetector {
     private val logger = KotlinLogging.logger {}
 
-    private const val GLOSSARY_NAME = "Duplicate assets"
-
     data class AssetKey(val typeName: String, val qualifiedName: String, val guid: String)
 
     private val hashToAssetKeys = ConcurrentHashMap<Int, MutableSet<AssetKey>>()
@@ -34,6 +33,7 @@ object DuplicateDetector {
     fun main(args: Array<String>) {
         val config = Utils.setPackageOps<DuplicateDetectorCfg>()
 
+        val glossaryName = Utils.getOrDefault(config.glossaryName, "Duplicate assets")
         val qnPrefix = Utils.getOrDefault(config.qnPrefix, "default")
         val types =
             Utils.getOrDefault(config.assetTypes, listOf(Table.TYPE_NAME, View.TYPE_NAME, MaterializedView.TYPE_NAME))
@@ -44,7 +44,7 @@ object DuplicateDetector {
         }
         findAssets(qnPrefix, types, batchSize)
 
-        val glossaryQN = glossaryForDuplicates()
+        val glossaryQN = glossaryForDuplicates(glossaryName)
         termsForDuplicates(glossaryQN, batchSize)
     }
 
@@ -94,14 +94,16 @@ object DuplicateDetector {
     /**
      * Idempotently create (or fetch) a glossary to capture the duplicate assets.
      *
+     * @param glossaryName name of the glossary
      * @return the qualifiedName of the glossary
      */
-    fun glossaryForDuplicates(): String {
+    fun glossaryForDuplicates(glossaryName: String): String {
         return try {
-            Glossary.findByName(GLOSSARY_NAME).qualifiedName
+            Glossary.findByName(glossaryName).qualifiedName
         } catch (e: NotFoundException) {
-            val glossary = Glossary.creator(GLOSSARY_NAME)
-                .description("Glossary whose terms represent potential duplicate assets.")
+            val glossary = Glossary.creator(glossaryName)
+                .assetIcon(AtlanIcon.COPY)
+                .userDescription("Each term represents a set of potential duplicate assets, based on assets that have the same set of columns (case-insensitive, in any order). The assets that are potential duplicates of each other are all linked to the same term.")
                 .build()
             logger.info { "Creating glossary to hold duplicates." }
             glossary.save().getResult(glossary).qualifiedName
@@ -140,7 +142,7 @@ object DuplicateDetector {
                 } catch (e: NotFoundException) {
                     val toCreate = GlossaryTerm.creator(termName, glossaryQN)
                         .description(
-                            "Assets with the same set of  ${columns?.size} columns:\n" + columns?.joinToString(
+                            "Assets with the same set of ${columns?.size} columns:\n" + columns?.joinToString(
                                 separator = "\n",
                             ) { "- $it" },
                         )
