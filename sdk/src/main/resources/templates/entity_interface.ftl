@@ -51,6 +51,7 @@ import ${packageRoot}.assets.I${attribute.type.name};
 </#list>
 import com.atlan.serde.AssetDeserializer;
 import com.atlan.serde.AssetSerializer;
+import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 

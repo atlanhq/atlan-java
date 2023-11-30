@@ -14,13 +14,17 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.DataProductCriticality;
 import com.atlan.model.enums.DataProductSensitivity;
 import com.atlan.model.enums.DataProductStatus;
+import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.CompoundQuery;
 import com.atlan.model.search.FluentSearch;
+import com.atlan.model.search.IndexSearchDSL;
 import com.atlan.util.QueryFactory;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.concurrent.ThreadLocalRandom;
@@ -434,6 +438,102 @@ public class DataProduct extends Asset implements IDataProduct, IDataMesh, ICata
     }
 
     /**
+     * Builds the minimal object necessary for creating a DataProduct.
+     *
+     * @param name of the DataProduct
+     * @param domain in which to create the DataProduct
+     * @param assetSelection a query that defines which assets to include in the data product
+     * @return the minimal request necessary to create the DataProduct, as a builder
+     * @throws InvalidRequestException if the domain provided is without a qualifiedName
+     */
+    public static DataProductBuilder<?, ?> creator(String name, DataDomain domain, FluentSearch assetSelection)
+            throws InvalidRequestException {
+        return creator(Atlan.getDefaultClient(), name, domain, assetSelection);
+    }
+
+    /**
+     * Builds the minimal object necessary for creating a DataProduct.
+     *
+     * @param client connectivity to the Atlan tenant where the DataProduct is intended to be created
+     * @param name of the DataProduct
+     * @param domain in which to create the DataProduct
+     * @param assetSelection a query that defines which assets to include in the data product
+     * @return the minimal request necessary to create the DataProduct, as a builder
+     * @throws InvalidRequestException if the domain provided is without a qualifiedName
+     */
+    public static DataProductBuilder<?, ?> creator(
+            AtlanClient client, String name, DataDomain domain, FluentSearch assetSelection)
+            throws InvalidRequestException {
+        return creator(client, name, domain, IndexSearchDSL.of(assetSelection.toQuery()));
+    }
+
+    /**
+     * Builds the minimal object necessary for creating a DataProduct.
+     *
+     * @param name of the DataProduct
+     * @param domain in which to create the DataProduct
+     * @param assetSelection a query that defines which assets to include in the data product
+     * @return the minimal request necessary to create the DataProduct, as a builder
+     * @throws InvalidRequestException if the domain provided is without a qualifiedName
+     */
+    public static DataProductBuilder<?, ?> creator(String name, DataDomain domain, IndexSearchDSL assetSelection)
+            throws InvalidRequestException {
+        return creator(Atlan.getDefaultClient(), name, domain, assetSelection);
+    }
+
+    /**
+     * Builds the minimal object necessary for creating a DataProduct.
+     *
+     * @param client connectivity to the Atlan tenant where the DataProduct is intended to be created
+     * @param name of the DataProduct
+     * @param domain in which to create the DataProduct
+     * @param assetSelection a query that defines which assets to include in the data product
+     * @return the minimal request necessary to create the DataProduct, as a builder
+     * @throws InvalidRequestException if the domain provided is without a qualifiedName
+     */
+    public static DataProductBuilder<?, ?> creator(
+            AtlanClient client, String name, DataDomain domain, IndexSearchDSL assetSelection)
+            throws InvalidRequestException {
+        if (domain.getQualifiedName() == null || domain.getQualifiedName().isEmpty()) {
+            throw new InvalidRequestException(
+                    ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, "DataDomain", "qualifiedName");
+        }
+        return creator(client, name, domain.getQualifiedName(), assetSelection).dataDomain(domain.trimToReference());
+    }
+
+    /**
+     * Builds the minimal object necessary for creating a DataProduct.
+     *
+     * @param client connectivity to the Atlan tenant where the DataProduct is intended to be created
+     * @param name of the DataProduct
+     * @param domainQualifiedName unique name of the DataDomain in which this product exists
+     * @param assetSelection a query that defines which assets to include in the data product
+     * @return the minimal request necessary to create the DataProduct, as a builder
+     */
+    public static DataProductBuilder<?, ?> creator(
+            AtlanClient client, String name, String domainQualifiedName, IndexSearchDSL assetSelection) {
+        String slug = IDataMesh.generateSlugForName(name);
+        return DataProduct._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .meshSlug(slug)
+                .meshAbbreviation(slug)
+                .qualifiedName(generateQualifiedName(slug))
+                .name(name)
+                .dataDomain(DataDomain.refByQualifiedName(domainQualifiedName))
+                .dataProductAssetsDSL(assetSelection.toJson(client));
+    }
+
+    /**
+     * Generate a unique DataProduct name.
+     *
+     * @param slug unique URL for the DataProduct
+     * @return a unique name for the DataProduct
+     */
+    public static String generateQualifiedName(String slug) {
+        return "default/product/" + slug;
+    }
+
+    /**
      * Builds the minimal object necessary to update a DataProduct.
      *
      * @param qualifiedName of the DataProduct
@@ -441,10 +541,23 @@ public class DataProduct extends Asset implements IDataProduct, IDataMesh, ICata
      * @return the minimal request necessary to update the DataProduct, as a builder
      */
     public static DataProductBuilder<?, ?> updater(String qualifiedName, String name) {
+        return updater(qualifiedName, name, IDataMesh.generateSlugForName(name));
+    }
+
+    /**
+     * Builds the minimal object necessary to update a DataProduct.
+     *
+     * @param qualifiedName of the DataProduct
+     * @param name of the DataProduct
+     * @param slug the unique slug to use for the DataProduct's URL
+     * @return the minimal request necessary to update the DataProduct, as a builder
+     */
+    public static DataProductBuilder<?, ?> updater(String qualifiedName, String name, String slug) {
         return DataProduct._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(qualifiedName)
-                .name(name);
+                .name(name)
+                .meshSlug(slug);
     }
 
     /**
@@ -463,11 +576,116 @@ public class DataProduct extends Asset implements IDataProduct, IDataMesh, ICata
         if (this.getName() == null || this.getName().length() == 0) {
             missing.add("name");
         }
+        if (this.getMeshSlug() == null || this.getMeshSlug().length() == 0) {
+            missing.add("meshSlug");
+        }
         if (!missing.isEmpty()) {
             throw new InvalidRequestException(
                     ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "DataProduct", String.join(",", missing));
         }
-        return updater(this.getQualifiedName(), this.getName());
+        return updater(this.getQualifiedName(), this.getName(), this.getMeshSlug());
+    }
+
+    /**
+     * Find a DataProduct by its human-readable name. Only the bare minimum set of attributes and no
+     * relationships will be retrieved for the domain, if found.
+     * Note that domains are not unique by name, so there may be multiple results.
+     *
+     * @param name of the DataProduct
+     * @return the DataProduct, if found
+     * @throws AtlanException on any API problems, or if the DataProduct does not exist
+     */
+    public static List<DataProduct> findByName(String name) throws AtlanException {
+        return findByName(name, (List<AtlanField>) null);
+    }
+
+    /**
+     * Find a DataProduct by its human-readable name.
+     * Note that domains are not unique by name, so there may be multiple results.
+     *
+     * @param name of the DataProduct
+     * @param attributes an optional collection of attributes (unchecked) to retrieve for the DataProduct
+     * @return the DataProduct, if found
+     * @throws AtlanException on any API problems, or if the DataProduct does not exist
+     */
+    public static List<DataProduct> findByName(String name, Collection<String> attributes) throws AtlanException {
+        return findByName(Atlan.getDefaultClient(), name, attributes);
+    }
+
+    /**
+     * Find a DataProduct by its human-readable name.
+     * Note that domains are not unique by name, so there may be multiple results.
+     *
+     * @param name of the DataProduct
+     * @param attributes an optional collection of attributes (checked) to retrieve for the DataProduct
+     * @return the DataProduct, if found
+     * @throws AtlanException on any API problems, or if the DataProduct does not exist
+     */
+    public static List<DataProduct> findByName(String name, List<AtlanField> attributes) throws AtlanException {
+        return findByName(Atlan.getDefaultClient(), name, attributes);
+    }
+
+    /**
+     * Find a DataProduct by its human-readable name. Only the bare minimum set of attributes and no
+     * relationships will be retrieved for the domain, if found.
+     *
+     * @param client connectivity to the Atlan tenant on which to search for the DataProduct
+     * @param name of the DataProduct
+     * @return the DataProduct, if found
+     * @throws AtlanException on any API problems, or if the DataProduct does not exist
+     */
+    public static List<DataProduct> findByName(AtlanClient client, String name) throws AtlanException {
+        return findByName(client, name, (List<AtlanField>) null);
+    }
+
+    /**
+     * Find a DataProduct by its human-readable name.
+     * Note that domains are not unique by name, so there may be multiple results.
+     *
+     * @param client connectivity to the Atlan tenant on which to search for the DataProduct
+     * @param name of the DataProduct
+     * @param attributes an optional collection of attributes (unchecked) to retrieve for the DataProduct
+     * @return the DataProduct, if found
+     * @throws AtlanException on any API problems, or if the DataProduct does not exist
+     */
+    public static List<DataProduct> findByName(AtlanClient client, String name, Collection<String> attributes)
+            throws AtlanException {
+        List<DataProduct> results = new ArrayList<>();
+        DataProduct.select(client)
+                .where(DataProduct.NAME.eq(name))
+                ._includesOnResults(attributes == null ? Collections.emptyList() : attributes)
+                .stream()
+                .filter(a -> a instanceof DataProduct)
+                .forEach(d -> results.add((DataProduct) d));
+        if (results.isEmpty()) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_NAME, TYPE_NAME, name);
+        }
+        return results;
+    }
+
+    /**
+     * Find a DataProduct by its human-readable name.
+     * Note that domains are not unique by name, so there may be multiple results.
+     *
+     * @param client connectivity to the Atlan tenant on which to search for the DataProduct
+     * @param name of the DataProduct
+     * @param attributes an optional collection of attributes (checked) to retrieve for the DataProduct
+     * @return the DataProduct, if found
+     * @throws AtlanException on any API problems, or if the DataProduct does not exist
+     */
+    public static List<DataProduct> findByName(AtlanClient client, String name, List<AtlanField> attributes)
+            throws AtlanException {
+        List<DataProduct> results = new ArrayList<>();
+        DataProduct.select(client)
+                .where(DataProduct.NAME.eq(name))
+                .includesOnResults(attributes == null ? Collections.emptyList() : attributes)
+                .stream()
+                .filter(a -> a instanceof DataProduct)
+                .forEach(d -> results.add((DataProduct) d));
+        if (results.isEmpty()) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_NAME, TYPE_NAME, name);
+        }
+        return results;
     }
 
     /**
