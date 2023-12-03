@@ -5,7 +5,10 @@ package com.atlan.pkg
 import com.atlan.Atlan
 import com.atlan.AtlanClient
 import com.atlan.model.assets.Connection
+import com.atlan.model.assets.Glossary
+import com.atlan.model.assets.GlossaryTerm
 import com.atlan.model.enums.AtlanConnectorType
+import com.atlan.model.enums.AtlanDeleteType
 import com.atlan.model.enums.AtlanWorkflowPhase
 import com.atlan.model.packages.ConnectionDelete
 import com.atlan.serde.Serde
@@ -186,6 +189,22 @@ abstract class PackageTest {
                     client.workflows.archive(workflowName)
                 }
             }
+        }
+
+        /**
+         * Remove the provided glossary, if it exists.
+         *
+         * @param name of the glossary
+         */
+        fun removeGlossary(name: String) {
+            val glossary = Glossary.findByName(name)
+            val terms = GlossaryTerm.select()
+                .where(GlossaryTerm.ANCHOR.eq(glossary.qualifiedName))
+                .stream()
+                .map { it.guid }
+                .toList()
+            if (terms.isNotEmpty()) client.assets.delete(terms, AtlanDeleteType.HARD)
+            Glossary.purge(glossary.guid)
         }
 
         private fun getFile(filename: String, relativeTo: String): File {

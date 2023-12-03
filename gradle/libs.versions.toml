@@ -12,6 +12,7 @@ numaflow = "0.4.8"
 awssdk = "2.20.68"
 system-stubs = "2.1.5"
 fastcsv = "2.2.2"
+poi = "5.2.5"
 
 [libraries]
 jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson" }
@@ -30,10 +31,13 @@ numaflow-java = { module = "io.numaproj.numaflow:numaflow-java", version.ref = "
 awssdk-s3 = { module = "software.amazon.awssdk:s3", version.ref = "awssdk" }
 system-stubs = { module = "uk.org.webcompere:system-stubs-testng", version.ref = "system-stubs" }
 fastcsv = { module = "de.siegmar:fastcsv", version.ref = "fastcsv" }
+apache-poi = { module = "org.apache.poi:poi", version.ref = "poi" }
+apache-poi-ooxml = { module = "org.apache.poi:poi-ooxml", version.ref = "poi" }
 
 [bundles]
 java-test = [ "jnanoid", "testng", "wiremock" ]
 log4j = [ "log4j-core", "log4j-slf4j2" ]
+poi = [ "apache-poi", "apache-poi-ooxml" ]
 
 [plugins]
 shadow = { id = "com.github.johnrengelman.shadow", version = "7.1.2" }
