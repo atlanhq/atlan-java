@@ -1,12 +1,10 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2023 Atlan Pte. Ltd. */
-import com.atlan.Atlan
 import com.atlan.model.assets.Glossary
 import com.atlan.model.assets.GlossaryTerm
 import com.atlan.model.assets.MaterializedView
 import com.atlan.model.assets.Table
 import com.atlan.model.assets.View
-import com.atlan.model.enums.AtlanDeleteType
 import com.atlan.model.enums.CertificateStatus
 import com.atlan.pkg.PackageTest
 import org.testng.Assert.assertTrue
@@ -80,14 +78,7 @@ class DuplicateDetectorTest : PackageTest() {
 
     @AfterClass(alwaysRun = true)
     fun afterClass(context: ITestContext) {
-        val glossary = Glossary.findByName(glossaryName)!!
-        val terms = GlossaryTerm.select()
-            .where(GlossaryTerm.ANCHOR.eq(glossary.qualifiedName))
-            .stream()
-            .map { it.guid }
-            .toList()
-        Atlan.getDefaultClient().assets.delete(terms, AtlanDeleteType.HARD)
-        Glossary.purge(glossary.guid)
+        removeGlossary(glossaryName)
         teardown(context.failedTests.size() > 0)
     }
 }

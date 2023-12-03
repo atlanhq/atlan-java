@@ -72,7 +72,8 @@ public class AssetEndpoint extends AtlasEndpoint {
      * @return a fluent search that includes all assets
      */
     public FluentSearch.FluentSearchBuilder<?, ?> select(boolean includeArchived) {
-        FluentSearch.FluentSearchBuilder<?, ?> builder = FluentSearch.builder(client);
+        FluentSearch.FluentSearchBuilder<?, ?> builder =
+                FluentSearch.builder(client).where(FluentSearch.superType("Referenceable"));
         if (!includeArchived) {
             builder.where(CompoundQuery.ACTIVE);
         }

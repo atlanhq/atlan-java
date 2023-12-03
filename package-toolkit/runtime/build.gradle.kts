@@ -12,6 +12,7 @@ plugins {
 dependencies {
     api(libs.jackson.kotlin)
     api(libs.fastcsv)
+    api(libs.bundles.poi)
     // You would not need the dependencies below in reality, they are to simulate a running tenant
     testImplementation(libs.bundles.java.test)
     testImplementation(project(":mocks"))
@@ -31,6 +32,16 @@ tasks {
             include(dependency("org.jetbrains.kotlin:kotlin-reflect:.*"))
             include(dependency("com.fasterxml.jackson.module:jackson-module-kotlin:.*"))
             include(dependency("de.siegmar:fastcsv:.*"))
+            include(dependency("org.apache.poi:poi:.*"))
+            include(dependency("commons-codec:commons-codec:.*"))
+            include(dependency("org.apache.commons:commons-collections4:.*"))
+            include(dependency("org.apache.commons:commons-math3:.*"))
+            include(dependency("commons-io:commons-io:.*"))
+            include(dependency("com.zaxxer:SparseBitSet:.*"))
+            include(dependency("org.apache.poi:poi-ooxml:.*"))
+            include(dependency("org.apache.xmlbeans:xmlbeans:.*"))
+            include(dependency("org.apache.commons:commons-compress:.*"))
+            include(dependency("com.github.virtuald:curvesapi:.*"))
         }
         mergeServiceFiles()
     }
