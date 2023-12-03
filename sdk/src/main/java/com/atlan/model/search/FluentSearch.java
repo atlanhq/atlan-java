@@ -69,6 +69,63 @@ public class FluentSearch extends CompoundQuery {
     List<String> _includesOnRelations;
 
     /**
+     * Translate the Atlan fluent search into an Atlan search request.
+     *
+     * @return an Atlan search request that encapsulates the fluent search
+     */
+    public IndexSearchRequest toRequest() {
+        return _requestBuilder().build();
+    }
+
+    /**
+     * Return the total number of assets that will match the supplied criteria,
+     * using the most minimal query possible (retrieves minimal data).
+     *
+     * @return the count of assets that will match the supplied criteria
+     * @throws AtlanException on any issues interacting with the Atlan APIs
+     */
+    public long count() throws AtlanException {
+        if (client == null) {
+            throw new InvalidRequestException(ErrorCode.NO_ATLAN_CLIENT);
+        }
+        // As long as there is a client, build the search request for just a single result (with count)
+        // and then just return the count
+        IndexSearchRequest request = IndexSearchRequest.builder(
+                        _dsl().size(1).clearAggregations().build())
+                .build();
+        return request.search(client).getApproximateCount();
+    }
+
+    /**
+     * Run the fluent search to retrieve assets that match the supplied criteria.
+     *
+     * @return a stream of assets that match the specified criteria, lazily-fetched
+     * @throws AtlanException on any issues interacting with the Atlan APIs
+     */
+    public Stream<Asset> stream() throws AtlanException {
+        return stream(false);
+    }
+
+    /**
+     * Run the fluent search to retrieve assets that match the supplied criteria.
+     *
+     * @param parallel if true, returns a parallel stream
+     * @return a stream of assets that match the specified criteria, lazily-fetched
+     * @throws AtlanException on any issues interacting with the Atlan APIs
+     */
+    public Stream<Asset> stream(boolean parallel) throws AtlanException {
+        if (client == null) {
+            throw new InvalidRequestException(ErrorCode.NO_ATLAN_CLIENT);
+        }
+        IndexSearchRequest request = toRequest();
+        if (parallel) {
+            return request.search(client).parallelStream();
+        } else {
+            return request.search(client).stream();
+        }
+    }
+
+    /**
      * Translate the Atlan fluent search into an Atlan search DSL builder.
      *
      * @return an Atlan search DSL builder that encapsulates the fluent search
@@ -131,7 +188,7 @@ public class FluentSearch extends CompoundQuery {
          * @return an Atlan search request that encapsulates the fluent search
          */
         public IndexSearchRequest toRequest() {
-            return toRequestBuilder().build();
+            return build().toRequest();
         }
 
         /**
@@ -142,15 +199,7 @@ public class FluentSearch extends CompoundQuery {
          * @throws AtlanException on any issues interacting with the Atlan APIs
          */
         public long count() throws AtlanException {
-            if (client == null) {
-                throw new InvalidRequestException(ErrorCode.NO_ATLAN_CLIENT);
-            }
-            // As long as there is a client, build the search request for just a single result (with count)
-            // and then just return the count
-            IndexSearchRequest request = IndexSearchRequest.builder(
-                            build()._dsl().size(1).clearAggregations().build())
-                    .build();
-            return request.search(client).getApproximateCount();
+            return build().count();
         }
 
         /**
@@ -160,7 +209,7 @@ public class FluentSearch extends CompoundQuery {
          * @throws AtlanException on any issues interacting with the Atlan APIs
          */
         public Stream<Asset> stream() throws AtlanException {
-            return stream(false);
+            return build().stream();
         }
 
         /**
@@ -171,15 +220,7 @@ public class FluentSearch extends CompoundQuery {
          * @throws AtlanException on any issues interacting with the Atlan APIs
          */
         public Stream<Asset> stream(boolean parallel) throws AtlanException {
-            if (client == null) {
-                throw new InvalidRequestException(ErrorCode.NO_ATLAN_CLIENT);
-            }
-            IndexSearchRequest request = toRequest();
-            if (parallel) {
-                return request.search(client).parallelStream();
-            } else {
-                return request.search(client).stream();
-            }
+            return build().stream(parallel);
         }
     }
 }
