@@ -8,10 +8,6 @@ import com.atlan.model.search.AggregationBucketResult
 import com.atlan.model.search.FluentSearch.FluentSearchBuilder
 import com.atlan.pkg.serde.xls.ExcelWriter
 import mu.KLogger
-import java.time.Instant
-import java.time.ZoneOffset
-import java.time.ZonedDateTime
-import java.time.format.DateTimeFormatter
 
 abstract class Metric(
     val name: String,
@@ -46,21 +42,6 @@ abstract class Metric(
                 batchSize,
                 logger,
             ) as Metric
-        }
-
-        /**
-         * Convert the provided epoch-based timestamp into a human-readable date and time.
-         *
-         * @param ts epoch-based numeric timestamp
-         * @return a human-readable date and time
-         */
-        fun formatTimestamp(ts: Long?): String {
-            return if (ts == null) {
-                ""
-            } else {
-                ZonedDateTime.ofInstant(Instant.ofEpochMilli(ts), ZoneOffset.UTC)
-                    .format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
-            }
         }
     }
 
