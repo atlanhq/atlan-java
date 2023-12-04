@@ -66,7 +66,7 @@ class ExcelWriter @JvmOverloads constructor(
      * @param worksheet the worksheet into which to add the row
      * @param data the row of data to add
      */
-    fun appendRow(worksheet: Sheet, data: List<Any>) {
+    fun appendRow(worksheet: Sheet, data: List<Any?>) {
         val row = worksheet.createRow(worksheet.lastRowNum + 1)
         for (i in data.indices) {
             when (val datum = data[i]) {
@@ -75,7 +75,7 @@ class ExcelWriter @JvmOverloads constructor(
                 is Boolean -> addDataCell(row, i, datum)
                 is String -> addDataCell(row, i, datum)
                 is AtlanEnum -> addDataCell(row, i, datum.value)
-                else -> addDataCell(row, i, datum.toString())
+                else -> addDataCell(row, i, datum?.toString() ?: "")
             }
         }
     }
