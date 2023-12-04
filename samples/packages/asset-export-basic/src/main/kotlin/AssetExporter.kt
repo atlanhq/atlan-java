@@ -13,6 +13,8 @@ import com.atlan.model.fields.AtlanField
 import com.atlan.model.search.FluentSearch
 import com.atlan.pkg.serde.RowSerde
 import com.atlan.pkg.serde.RowSerializer
+import com.atlan.pkg.serde.csv.CSVWriter
+import com.atlan.pkg.serde.csv.RowGenerator
 import mu.KotlinLogging
 import java.util.stream.Collectors
 import java.util.stream.Stream
