@@ -19,7 +19,6 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer
 import com.fasterxml.jackson.databind.type.TypeFactory
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
-import java.io.StringWriter
 
 object WidgetSerde {
 
@@ -159,13 +158,7 @@ object WidgetSerde {
             } else {
                 when (value) {
                     is AtlanObject -> gen?.writeString(value.toJson(getClient()))
-                    else -> {
-                        val writer = StringWriter()
-                        val stringGen = mapper.factory.createGenerator(writer)
-                        provider!!.findValueSerializer(value::class.java)
-                            .serialize(value, stringGen, provider)
-                        gen?.writeString(writer.toString())
-                    }
+                    else -> gen?.writeString(mapper.writeValueAsString(value))
                 }
             }
         }
