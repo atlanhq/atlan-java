@@ -9,6 +9,8 @@ import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.cache.CategoryCache
 import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.RowSerde
+import com.atlan.pkg.serde.csv.CSVWriter
+import com.atlan.pkg.serde.csv.RowGenerator
 import mu.KLogger
 import mu.KotlinLogging
 import java.util.stream.Collectors

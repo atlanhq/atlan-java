@@ -10,6 +10,7 @@ import com.atlan.model.assets.MaterializedView
 import com.atlan.model.assets.Table
 import com.atlan.model.search.FluentSearch.FluentSearchBuilder
 import com.atlan.pkg.mdir.Reporter
+import com.atlan.pkg.serde.cell.TimestampXformer
 import mu.KLogger
 import java.time.Instant
 import java.time.temporal.ChronoUnit
@@ -87,7 +88,7 @@ class TLAxU(
             }
         }
         val queryCount = sql.sourceReadCount ?: 0
-        val updated = formatTimestamp(sql.sourceUpdatedAt)
+        val updated = TimestampXformer.encode(sql.sourceUpdatedAt)
         val cost = sql.sourceTotalCost ?: 0.0
         return listOf(
             sql.connectorType?.value ?: "",
