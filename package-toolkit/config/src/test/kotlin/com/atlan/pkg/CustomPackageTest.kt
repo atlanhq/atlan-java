@@ -79,7 +79,7 @@ class CustomPackageTest {
             "https://developer.atlan.com/samples/loaders/openapi/",
             uiConfig,
             "ghcr.io/atlanhq/atlan-kotlin-samples:0.3.0",
-            listOf("/dumb-init", "--", "java", "OpenAPISpecLoaderKt"),
+            containerCommand = listOf("/dumb-init", "--", "java", "OpenAPISpecLoaderKt"),
             outputs = WorkflowOutputs(mapOf("debug-logs" to "/tmp/debug.log")),
             keywords = listOf("kotlin", "crawler", "openapi"),
             preview = true,

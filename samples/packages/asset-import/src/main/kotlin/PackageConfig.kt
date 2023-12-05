@@ -3,6 +3,7 @@
 
 import com.atlan.Atlan
 import com.atlan.pkg.CustomPackage
+import com.atlan.pkg.aim.Importer
 import com.atlan.pkg.config.model.ui.UIConfig
 import com.atlan.pkg.config.model.ui.UIStep
 import com.atlan.pkg.config.model.workflow.WorkflowOutputs
@@ -117,7 +118,7 @@ object PackageConfig : CustomPackage(
         ),
     ),
     containerImage = "ghcr.io/atlanhq/csa-asset-import:${Atlan.VERSION}",
-    containerCommand = listOf("/dumb-init", "--", "java", "com.atlan.pkg.aim.Importer"),
+    classToRun = Importer::class.java,
     outputs = WorkflowOutputs(mapOf("debug-logs" to "/tmp/debug.log")),
     keywords = listOf("kotlin", "utility"),
     preview = true,

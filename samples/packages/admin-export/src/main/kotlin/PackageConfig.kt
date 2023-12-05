@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 import com.atlan.Atlan
 import com.atlan.pkg.CustomPackage
+import com.atlan.pkg.ae.AdminExporter
 import com.atlan.pkg.config.model.ui.UIConfig
 import com.atlan.pkg.config.model.ui.UIStep
 import com.atlan.pkg.config.model.workflow.WorkflowOutputs
@@ -46,7 +47,7 @@ object PackageConfig : CustomPackage(
         ),
     ),
     containerImage = "ghcr.io/atlanhq/csa-admin-export:${Atlan.VERSION}",
-    containerCommand = listOf("/dumb-init", "--", "java", "com.atlan.pkg.ae.AdminExporter"),
+    classToRun = AdminExporter::class.java,
     outputs = WorkflowOutputs(
         mapOf(
             "debug-logs" to "/tmp/debug.log",

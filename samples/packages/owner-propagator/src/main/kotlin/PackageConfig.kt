@@ -16,12 +16,7 @@ object PackageConfig : CustomPackage(
     docsUrl = "https://solutions.atlan.com/",
     iconUrl = "https://assets.atlan.com/assets/ph-user-switch-light.svg",
     containerImage = "ghcr.io/atlanhq/csa-owner-propagator:${Atlan.VERSION}",
-    containerCommand = listOf(
-        "/dumb-init",
-        "--",
-        "java",
-        "OwnerPropagator",
-    ),
+    classToRun = OwnerPropagator::class.java,
     uiConfig = UIConfig(
         steps = listOf(
             UIStep(

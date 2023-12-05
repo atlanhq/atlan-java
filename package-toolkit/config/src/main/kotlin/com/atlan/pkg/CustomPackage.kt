@@ -39,7 +39,8 @@ import java.io.File
  * @param docsUrl link to an online document describing the package
  * @param uiConfig configuration for the UI of the custom package
  * @param containerImage container image to run the logic of the custom package
- * @param containerCommand the full command to run in the container image, as a list rather than spaced
+ * @param classToRun the class to run when the container executes (if this is supplied, containerCommand will be built for you)
+ * @param containerCommand the full command to run in the container image, as a list rather than spaced (must be provided if you have not specified the class above)
  * @param containerImagePullPolicy (optional) override the default IfNotPresent policy
  * @param outputs (optional) any outputs that the custom package logic is expected to produce
  * @param keywords (optional) list of any keyword labels to apply to the package
@@ -57,7 +58,8 @@ open class CustomPackage(
     private val docsUrl: String,
     private val uiConfig: UIConfig,
     private val containerImage: String,
-    private val containerCommand: List<String>,
+    private val classToRun: Class<*>? = null,
+    private val containerCommand: List<String> = listOf(),
     private val containerImagePullPolicy: String = if (Atlan.VERSION.endsWith("SNAPSHOT")) "Always" else "IfNotPresent",
     private val outputs: WorkflowOutputs? = null,
     private val keywords: List<String> = listOf(),
@@ -83,21 +85,34 @@ open class CustomPackage(
 
     @JsonIgnore val name = packageId.replace("@", "").replace("/", "-")
     private val configMap = ConfigMap(name, uiConfig)
-    private val workflowTemplate = WorkflowTemplate(
-        name,
-        WorkflowTemplateDefinition(
-            uiConfig,
-            WorkflowContainer(
-                uiConfig,
-                containerImage,
-                command = listOf(containerCommand[0]),
-                args = containerCommand.subList(1, containerCommand.size),
-                containerImagePullPolicy,
-            ),
-            outputs,
+    private val command: List<String>
+    private val args: List<String>
+    private val workflowTemplate: WorkflowTemplate
+
+    init {
+        val cmdList = if (classToRun != null) {
+            listOf("/dumb-init", "--", "java", classToRun.canonicalName)
+        } else {
+            containerCommand
+        }
+        command = listOf(cmdList[0])
+        args = cmdList.subList(1, cmdList.size)
+        workflowTemplate = WorkflowTemplate(
             name,
-        ),
-    )
+            WorkflowTemplateDefinition(
+                uiConfig,
+                WorkflowContainer(
+                    uiConfig,
+                    containerImage,
+                    command = command,
+                    args = args,
+                    containerImagePullPolicy,
+                ),
+                outputs,
+                name,
+            ),
+        )
+    }
 
     /**
      * Retrieve the JavaScript for the index.js of the custom package.

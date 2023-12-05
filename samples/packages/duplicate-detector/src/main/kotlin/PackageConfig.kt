@@ -72,7 +72,7 @@ object PackageConfig : CustomPackage(
         ),
     ),
     containerImage = "ghcr.io/atlanhq/csa-duplicate-detector:${Atlan.VERSION}",
-    containerCommand = listOf("/dumb-init", "--", "java", "DuplicateDetector"),
+    classToRun = DuplicateDetector::class.java,
     outputs = WorkflowOutputs(mapOf("debug-logs" to "/tmp/debug.log")),
     keywords = listOf("kotlin", "utility"),
     preview = true,

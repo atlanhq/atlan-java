@@ -7,6 +7,7 @@ import com.atlan.pkg.config.model.ui.UIStep
 import com.atlan.pkg.config.model.workflow.WorkflowOutputs
 import com.atlan.pkg.config.widgets.BooleanInput
 import com.atlan.pkg.config.widgets.TextInput
+import com.atlan.pkg.mdir.Reporter
 
 /**
  * Definition for the MetadataImpactReport custom package.
@@ -44,7 +45,7 @@ object PackageConfig : CustomPackage(
         ),
     ),
     containerImage = "ghcr.io/atlanhq/csa-metadata-impact-report:${Atlan.VERSION}",
-    containerCommand = listOf("/dumb-init", "--", "java", "com.atlan.pkg.mdir.MetadataImpactReport"),
+    classToRun = Reporter::class.java,
     outputs = WorkflowOutputs(
         mapOf(
             "debug-logs" to "/tmp/debug.log",
