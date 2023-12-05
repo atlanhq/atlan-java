@@ -58,12 +58,12 @@ public class MCMonitor extends Asset
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
-    /** TBC */
+    /** List of unique names of assets that are part of this Monte Carlo asset. */
     @Attribute
     @Singular
     SortedSet<String> mcAssetQualifiedNames;
 
-    /** TBC */
+    /** List of labels for this Monte Carlo asset. */
     @Attribute
     @Singular
     SortedSet<String> mcLabels;

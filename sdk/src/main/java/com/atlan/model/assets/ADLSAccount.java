@@ -71,7 +71,7 @@ public class ADLSAccount extends Asset
     @Attribute
     ADLSProvisionState adlsAccountProvisionState;
 
-    /** TBC */
+    /** Unique name of the account for this ADLS asset. */
     @Attribute
     String adlsAccountQualifiedName;
 
@@ -83,7 +83,7 @@ public class ADLSAccount extends Asset
     @Attribute
     String adlsAccountResourceGroup;
 
-    /** TBC */
+    /** Secondary location of the ADLS account. */
     @Attribute
     String adlsAccountSecondaryLocation;
 
@@ -108,15 +108,15 @@ public class ADLSAccount extends Asset
     @Attribute
     ADLSAccountStatus adlsPrimaryDiskState;
 
-    /** TBC */
+    /** Location of this asset in Azure. */
     @Attribute
     String azureLocation;
 
-    /** TBC */
+    /** Resource identifier of this asset in Azure. */
     @Attribute
     String azureResourceId;
 
-    /** TBC */
+    /** Tags that have been applied to this asset in Azure. */
     @Attribute
     @Singular
     List<AzureTag> azureTags;

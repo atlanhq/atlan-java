@@ -63,21 +63,21 @@ public class AzureEventHubConsumerGroup extends Asset
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
-    /** TBC */
+    /** Number of members in this consumer group. */
     @Attribute
     Long kafkaConsumerGroupMemberCount;
 
-    /** TBC */
+    /** List of consumption properties for Kafka topics, for this consumer group. */
     @Attribute
     @Singular
     List<KafkaTopicConsumption> kafkaConsumerGroupTopicConsumptionProperties;
 
-    /** TBC */
+    /** Simple names of the topics consumed by this consumer group. */
     @Attribute
     @Singular
     SortedSet<String> kafkaTopicNames;
 
-    /** TBC */
+    /** Unique names of the topics consumed by this consumer group. */
     @Attribute
     @Singular
     SortedSet<String> kafkaTopicQualifiedNames;

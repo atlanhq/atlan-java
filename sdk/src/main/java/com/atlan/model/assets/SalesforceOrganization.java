@@ -46,7 +46,7 @@ public class SalesforceOrganization extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Name of this asset in the Salesforce API. */
     @Attribute
     String apiName;
 
@@ -70,7 +70,7 @@ public class SalesforceOrganization extends Asset
     @Singular
     SortedSet<ISalesforceObject> objects;
 
-    /** TBC */
+    /** Fully-qualified name of the organization in Salesforce. */
     @Attribute
     String organizationQualifiedName;
 

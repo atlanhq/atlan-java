@@ -60,11 +60,11 @@ public class MetabaseQuestion extends Asset
     @Attribute
     IMetabaseCollection metabaseCollection;
 
-    /** TBC */
+    /** Simple name of the Metabase collection in which this asset exists. */
     @Attribute
     String metabaseCollectionName;
 
-    /** TBC */
+    /** Unique name of the Metabase collection in which this asset exists. */
     @Attribute
     String metabaseCollectionQualifiedName;
 

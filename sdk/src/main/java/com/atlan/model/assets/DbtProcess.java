@@ -50,11 +50,11 @@ public class DbtProcess extends Asset implements IDbtProcess, IDbt, ILineageProc
     @Singular
     SortedSet<IAirflowTask> airflowTasks;
 
-    /** TBC */
+    /** Parsed AST of the code or SQL statements that describe the logic of this process. */
     @Attribute
     String ast;
 
-    /** TBC */
+    /** Code that ran within the process. */
     @Attribute
     String code;
 
@@ -150,7 +150,7 @@ public class DbtProcess extends Asset implements IDbtProcess, IDbt, ILineageProc
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
-    /** Assets that are inputs to this process. */
+    /** Assets that are inputs to this task. */
     @Attribute
     @Singular
     SortedSet<ICatalog> inputs;
@@ -169,12 +169,12 @@ public class DbtProcess extends Asset implements IDbtProcess, IDbt, ILineageProc
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** Assets that are outputs from this process. */
+    /** Assets that are outputs from this task. */
     @Attribute
     @Singular
     SortedSet<ICatalog> outputs;
 
-    /** TBC */
+    /** SQL query that ran to produce the outputs. */
     @Attribute
     String sql;
 

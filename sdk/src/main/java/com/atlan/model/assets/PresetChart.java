@@ -81,19 +81,19 @@ public class PresetChart extends Asset implements IPresetChart, IPreset, IBI, IC
     @Attribute
     IPresetDashboard presetDashboard;
 
-    /** TBC */
+    /** Identifier of the dashboard in which this asset exists, in Preset. */
     @Attribute
     Long presetDashboardId;
 
-    /** TBC */
+    /** Unique name of the dashboard in which this asset exists. */
     @Attribute
     String presetDashboardQualifiedName;
 
-    /** TBC */
+    /** Identifier of the workspace in which this asset exists, in Preset. */
     @Attribute
     Long presetWorkspaceId;
 
-    /** TBC */
+    /** Unique name of the workspace in which this asset exists. */
     @Attribute
     String presetWorkspaceQualifiedName;
 

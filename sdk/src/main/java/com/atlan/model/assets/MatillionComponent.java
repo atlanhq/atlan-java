@@ -100,7 +100,7 @@ public class MatillionComponent extends Asset
     @Attribute
     ILineageProcess matillionProcess;
 
-    /** TBC */
+    /** Current point in time state of a project. */
     @Attribute
     String matillionVersion;
 

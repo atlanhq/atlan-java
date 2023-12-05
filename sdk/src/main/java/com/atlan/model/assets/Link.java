@@ -47,7 +47,7 @@ public class Link extends Asset implements ILink, IResource, ICatalog, IAsset, I
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Asset that this README describes. */
+    /** Asset to which the link is attached. */
     @Attribute
     IAsset asset;
 
@@ -69,11 +69,11 @@ public class Link extends Asset implements ILink, IResource, ICatalog, IAsset, I
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
-    /** TBC */
+    /** Whether the resource is global (true) or not (false). */
     @Attribute
     Boolean isGlobal;
 
-    /** TBC */
+    /** URL to the resource. */
     @Attribute
     String link;
 
@@ -87,11 +87,11 @@ public class Link extends Asset implements ILink, IResource, ICatalog, IAsset, I
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** TBC */
+    /** Reference to the resource. */
     @Attribute
     String reference;
 
-    /** TBC */
+    /** Metadata of the resource. */
     @Attribute
     @Singular("putResourceMetadata")
     Map<String, String> resourceMetadata;

@@ -49,7 +49,7 @@ public class GCSBucket extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Access control list for this asset. */
     @Attribute
     String gcsAccessControl;
 
@@ -77,15 +77,15 @@ public class GCSBucket extends Asset
     @Attribute
     Boolean gcsBucketVersioningEnabled;
 
-    /** TBC */
+    /** Entity tag for the asset. An entity tag is a hash of the object and represents changes to the contents of an object only, not its metadata. */
     @Attribute
     String gcsETag;
 
-    /** TBC */
+    /** Encryption algorithm used to encrypt this asset. */
     @Attribute
     String gcsEncryptionType;
 
-    /** TBC */
+    /** Version of metadata for this asset at this generation. Used for preconditions and detecting changes in metadata. A metageneration number is only meaningful in the context of a particular generation of a particular asset. */
     @Attribute
     Long gcsMetaGenerationId;
 
@@ -98,44 +98,44 @@ public class GCSBucket extends Asset
     @Singular
     SortedSet<IGCSObject> gcsObjects;
 
-    /** TBC */
+    /** Whether the requester pays header was sent when this asset was created (true) or not (false). */
     @Attribute
     Boolean gcsRequesterPays;
 
-    /** TBC */
+    /** Storage class of this asset. */
     @Attribute
     String gcsStorageClass;
 
-    /** TBC */
+    /** List of labels that have been applied to the asset in Google. */
     @Attribute
     @Singular
     List<GoogleLabel> googleLabels;
 
-    /** TBC */
+    /** Location of this asset in Google. */
     @Attribute
     String googleLocation;
 
-    /** TBC */
+    /** Type of location of this asset in Google. */
     @Attribute
     String googleLocationType;
 
-    /** TBC */
+    /** ID of the project in which the asset exists. */
     @Attribute
     String googleProjectId;
 
-    /** TBC */
+    /** Name of the project in which the asset exists. */
     @Attribute
     String googleProjectName;
 
-    /** TBC */
+    /** Number of the project in which the asset exists. */
     @Attribute
     Long googleProjectNumber;
 
-    /** TBC */
+    /** Service in Google in which the asset exists. */
     @Attribute
     String googleService;
 
-    /** TBC */
+    /** List of tags that have been applied to the asset in Google. */
     @Attribute
     @Singular
     List<GoogleTag> googleTags;

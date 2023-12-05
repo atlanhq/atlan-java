@@ -64,7 +64,7 @@ public class MatillionGroup extends Asset implements IMatillionGroup, IMatillion
     @Singular
     SortedSet<IMatillionProject> matillionProjects;
 
-    /** TBC */
+    /** Current point in time state of a project. */
     @Attribute
     String matillionVersion;
 

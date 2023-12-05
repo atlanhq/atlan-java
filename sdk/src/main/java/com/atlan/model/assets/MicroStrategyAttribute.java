@@ -62,20 +62,20 @@ public class MicroStrategyAttribute extends Asset
     @Attribute
     String microStrategyAttributeForms;
 
-    /** TBC */
+    /** Time (epoch) this asset was certified in MicroStrategy, in milliseconds. */
     @Attribute
     Long microStrategyCertifiedAt;
 
-    /** TBC */
+    /** User who certified this asset, in MicroStrategy. */
     @Attribute
     String microStrategyCertifiedBy;
 
-    /** TBC */
+    /** Simple names of the cubes related to this asset. */
     @Attribute
     @Singular
     SortedSet<String> microStrategyCubeNames;
 
-    /** TBC */
+    /** Unique names of the cubes related to this asset. */
     @Attribute
     @Singular
     SortedSet<String> microStrategyCubeQualifiedNames;
@@ -85,11 +85,11 @@ public class MicroStrategyAttribute extends Asset
     @Singular
     SortedSet<IMicroStrategyCube> microStrategyCubes;
 
-    /** TBC */
+    /** Whether the asset is certified in MicroStrategy (true) or not (false). */
     @Attribute
     Boolean microStrategyIsCertified;
 
-    /** TBC */
+    /** Location of this asset in MicroStrategy. */
     @Attribute
     @Singular("putMicroStrategyLocation")
     List<Map<String, String>> microStrategyLocation;
@@ -103,20 +103,20 @@ public class MicroStrategyAttribute extends Asset
     @Attribute
     IMicroStrategyProject microStrategyProject;
 
-    /** TBC */
+    /** Simple name of the project in which this asset exists. */
     @Attribute
     String microStrategyProjectName;
 
-    /** TBC */
+    /** Unique name of the project in which this asset exists. */
     @Attribute
     String microStrategyProjectQualifiedName;
 
-    /** TBC */
+    /** Simple names of the reports related to this asset. */
     @Attribute
     @Singular
     SortedSet<String> microStrategyReportNames;
 
-    /** TBC */
+    /** Unique names of the reports related to this asset. */
     @Attribute
     @Singular
     SortedSet<String> microStrategyReportQualifiedNames;

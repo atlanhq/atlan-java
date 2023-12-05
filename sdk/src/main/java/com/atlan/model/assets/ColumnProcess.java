@@ -51,11 +51,11 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
     @Singular
     SortedSet<IAirflowTask> airflowTasks;
 
-    /** TBC */
+    /** Parsed AST of the code or SQL statements that describe the logic of this process. */
     @Attribute
     String ast;
 
-    /** TBC */
+    /** Code that ran within the process. */
     @Attribute
     String code;
 
@@ -78,11 +78,11 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
     @Singular
     SortedSet<ICatalog> outputs;
 
-    /** Parent process that contains this column-level process. */
+    /** Process in which this task exists. */
     @Attribute
     ILineageProcess process;
 
-    /** TBC */
+    /** SQL query that ran to produce the outputs. */
     @Attribute
     String sql;
 

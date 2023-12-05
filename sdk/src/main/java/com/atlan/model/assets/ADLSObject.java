@@ -55,11 +55,11 @@ public class ADLSObject extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Unique name of the account for this ADLS asset. */
     @Attribute
     String adlsAccountQualifiedName;
 
-    /** TBC */
+    /** Secondary location of the ADLS account. */
     @Attribute
     String adlsAccountSecondaryLocation;
 
@@ -136,15 +136,15 @@ public class ADLSObject extends Asset
     @Attribute
     Boolean adlsObjectVersionLevelImmutabilitySupport;
 
-    /** TBC */
+    /** Location of this asset in Azure. */
     @Attribute
     String azureLocation;
 
-    /** TBC */
+    /** Resource identifier of this asset in Azure. */
     @Attribute
     String azureResourceId;
 
-    /** TBC */
+    /** Tags that have been applied to this asset in Azure. */
     @Attribute
     @Singular
     List<AzureTag> azureTags;

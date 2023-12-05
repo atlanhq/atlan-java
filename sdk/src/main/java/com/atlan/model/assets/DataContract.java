@@ -59,19 +59,19 @@ public class DataContract extends Asset implements IDataContract, IDataMesh, ICa
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
-    /** TBC */
+    /** Whether this asset is published (true) or still a work in progress (false). */
     @Attribute
     Boolean isPublished;
 
-    /** TBC */
+    /** Abbreviation for this asset. */
     @Attribute
     String meshAbbreviation;
 
-    /** TBC */
+    /** URL for an image used as the cover for this asset. */
     @Attribute
     String meshCoverImageUrl;
 
-    /** TBC */
+    /** Unique business key for this asset. */
     @Attribute
     String meshSlug;
 
@@ -85,11 +85,11 @@ public class DataContract extends Asset implements IDataContract, IDataMesh, ICa
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** TBC */
+    /** Unique name of the parent domain in which this asset exists. */
     @Attribute
     String parentDomainQualifiedName;
 
-    /** TBC */
+    /** Unique name of the top-level domain in which this asset exists. */
     @Attribute
     String superDomainQualifiedName;
 

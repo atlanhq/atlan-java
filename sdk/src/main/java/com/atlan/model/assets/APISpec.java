@@ -48,12 +48,12 @@ public class APISpec extends Asset implements IAPISpec, IAPI, ICatalog, IAsset, 
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** External documentation of the API. */
     @Attribute
     @Singular
     Map<String, String> apiExternalDocs;
 
-    /** TBC */
+    /** Whether authentication is optional (true) or required (false). */
     @Attribute
     Boolean apiIsAuthOptional;
 
@@ -86,11 +86,11 @@ public class APISpec extends Asset implements IAPISpec, IAPI, ICatalog, IAsset, 
     @Attribute
     String apiSpecLicenseURL;
 
-    /** TBC */
+    /** Simple name of the API spec, if this asset is contained in an API spec. */
     @Attribute
     String apiSpecName;
 
-    /** TBC */
+    /** Unique name of the API spec, if this asset is contained in an API spec. */
     @Attribute
     String apiSpecQualifiedName;
 
@@ -102,11 +102,11 @@ public class APISpec extends Asset implements IAPISpec, IAPI, ICatalog, IAsset, 
     @Attribute
     String apiSpecTermsOfServiceURL;
 
-    /** TBC */
+    /** Type of API, for example: OpenAPI, GraphQL, etc. */
     @Attribute
     String apiSpecType;
 
-    /** TBC */
+    /** Version of the API specification. */
     @Attribute
     String apiSpecVersion;
 

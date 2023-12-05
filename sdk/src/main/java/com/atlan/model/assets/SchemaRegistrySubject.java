@@ -73,11 +73,11 @@ public class SchemaRegistrySubject extends Asset
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** TBC */
+    /** Unique identifier for schema definition set by the schema registry. */
     @Attribute
     String schemaRegistrySchemaId;
 
-    /** TBC */
+    /** Type of language or specification used to define the schema, for example: JSON, Protobuf, etc. */
     @Attribute
     SchemaRegistrySchemaType schemaRegistrySchemaType;
 

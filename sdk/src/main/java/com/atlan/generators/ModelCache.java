@@ -173,18 +173,22 @@ public class ModelCache {
         if (def == null) {
             def = structDefCache.getOrDefault(objectName, null);
         }
-        if (def == null) {
+        SortedSet<AttributeDef> allAttrs = new TreeSet<>();
+        if (def == null && entityDefCache.containsKey(objectName)) {
             def = entityDefCache.getOrDefault(objectName, null);
+            allAttrs = getAllAttributesForType(objectName);
+        } else if (def != null) {
+            allAttrs = new TreeSet<>(def.getAttributeDefs());
         }
         if (def != null) {
-            for (AttributeDef attr : def.getAttributeDefs()) {
+            for (AttributeDef attr : allAttrs) {
                 if (attrName.equals(attr.getName())) {
                     fromTypeDef = attr.getDescription();
                     break;
                 }
             }
             if (fromTypeDef == null && def instanceof EntityDef) {
-                for (RelationshipAttributeDef attr : ((EntityDef) def).getRelationshipAttributeDefs()) {
+                for (RelationshipAttributeDef attr : getAllRelationshipsForType(def.getName())) {
                     String relnDefName = attr.getRelationshipTypeName();
                     RelationshipDef relnDef = relationshipDefCache.get(relnDefName);
                     if (relnDef != null) {

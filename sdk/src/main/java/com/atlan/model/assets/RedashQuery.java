@@ -67,7 +67,7 @@ public class RedashQuery extends Asset implements IRedashQuery, IRedash, IBI, IC
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** TBC */
+    /** Whether this asset is published in Redash (true) or not (false). */
     @Attribute
     Boolean redashIsPublished;
 

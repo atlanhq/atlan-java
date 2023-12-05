@@ -49,11 +49,11 @@ public class MongoDBCollection extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Alias for this table. */
     @Attribute
     String alias;
 
-    /** TBC */
+    /** Number of columns in this table. */
     @Attribute
     Long columnCount;
 
@@ -62,11 +62,11 @@ public class MongoDBCollection extends Asset
     @Singular
     SortedSet<IColumn> columns;
 
-    /** TBC */
+    /** Simple name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
     @Attribute
     String databaseName;
 
-    /** TBC */
+    /** Unique name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
     @Attribute
     String databaseQualifiedName;
 
@@ -90,15 +90,15 @@ public class MongoDBCollection extends Asset
     @Singular
     SortedSet<ITable> dimensions;
 
-    /** TBC */
+    /** External location of this table, for example: an S3 object location. */
     @Attribute
     String externalLocation;
 
-    /** TBC */
+    /** Format of the external location of this table, for example: JSON, CSV, PARQUET, etc. */
     @Attribute
     String externalLocationFormat;
 
-    /** TBC */
+    /** Region of the external location of this table, for example: S3 region. */
     @Attribute
     String externalLocationRegion;
 
@@ -117,23 +117,23 @@ public class MongoDBCollection extends Asset
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
-    /** TBC */
+    /** Whether this table is partitioned (true) or not (false). */
     @Attribute
     Boolean isPartitioned;
 
-    /** TBC */
+    /** Whether this asset has been profiled (true) or not (false). */
     @Attribute
     Boolean isProfiled;
 
-    /** TBC */
+    /** Whether preview queries are allowed for this table (true) or not (false). */
     @Attribute
     Boolean isQueryPreview;
 
-    /** TBC */
+    /** Whether this table is temporary (true) or not (false). */
     @Attribute
     Boolean isTemporary;
 
-    /** TBC */
+    /** Time (epoch) at which this asset was last profiled, in milliseconds. */
     @Attribute
     Long lastProfiledAt;
 
@@ -199,15 +199,15 @@ public class MongoDBCollection extends Asset
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** TBC */
+    /** Number of partitions in this table. */
     @Attribute
     Long partitionCount;
 
-    /** TBC */
+    /** List of partitions in this table. */
     @Attribute
     String partitionList;
 
-    /** TBC */
+    /** Partition strategy for this table. */
     @Attribute
     String partitionStrategy;
 
@@ -221,29 +221,29 @@ public class MongoDBCollection extends Asset
     @Singular
     SortedSet<IAtlanQuery> queries;
 
-    /** TBC */
+    /** Number of times this asset has been queried. */
     @Attribute
     Long queryCount;
 
-    /** TBC */
+    /** Time (epoch) at which the query count was last updated, in milliseconds. */
     @Attribute
     Long queryCountUpdatedAt;
 
-    /** TBC */
+    /** Configuration for preview queries. */
     @Attribute
     @Singular("putQueryPreviewConfig")
     Map<String, String> queryPreviewConfig;
 
-    /** TBC */
+    /** Number of unique users who have queried this asset. */
     @Attribute
     Long queryUserCount;
 
-    /** TBC */
+    /** Map of unique users who have queried this asset to the number of times they have queried it. */
     @Attribute
     @Singular("putQueryUserMap")
     Map<String, Long> queryUserMap;
 
-    /** TBC */
+    /** Number of rows in this table. */
     @Attribute
     Long rowCount;
 
@@ -252,15 +252,15 @@ public class MongoDBCollection extends Asset
     @JsonProperty("atlanSchema")
     ISchema schema;
 
-    /** TBC */
+    /** Simple name of the schema in which this SQL asset exists, or empty if it does not exist within a schema. */
     @Attribute
     String schemaName;
 
-    /** TBC */
+    /** Unique name of the schema in which this SQL asset exists, or empty if it does not exist within a schema. */
     @Attribute
     String schemaQualifiedName;
 
-    /** TBC */
+    /** Size of this table, in bytes. */
     @Attribute
     Long sizeBytes;
 
@@ -274,19 +274,19 @@ public class MongoDBCollection extends Asset
     @Singular
     SortedSet<IDbtModel> sqlDbtModels;
 
-    /** TBC */
+    /** Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
     @Attribute
     String tableName;
 
-    /** TBC */
+    /** Unique name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
     @Attribute
     String tableQualifiedName;
 
-    /** TBC */
+    /** Simple name of the view in which this SQL asset exists, or empty if it does not exist within a view. */
     @Attribute
     String viewName;
 
-    /** TBC */
+    /** Unique name of the view in which this SQL asset exists, or empty if it does not exist within a view. */
     @Attribute
     String viewQualifiedName;
 
