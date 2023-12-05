@@ -41,7 +41,6 @@ object PackageConfig : CustomPackage(
         ),
     ),
     containerImage = "ghcr.io/atlanhq/csa-api-token-connection-admin:${Atlan.VERSION}",
-    containerImagePullPolicy = "Always",
     containerCommand = listOf("/dumb-init", "--", "java", "ApiTokenConnectionAdmin"),
     outputs = WorkflowOutputs(mapOf("debug-logs" to "/tmp/debug.log")),
     keywords = listOf("kotlin", "utility"),

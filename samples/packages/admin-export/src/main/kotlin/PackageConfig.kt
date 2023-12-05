@@ -46,7 +46,6 @@ object PackageConfig : CustomPackage(
         ),
     ),
     containerImage = "ghcr.io/atlanhq/csa-admin-export:${Atlan.VERSION}",
-    containerImagePullPolicy = "Always",
     containerCommand = listOf("/dumb-init", "--", "java", "com.atlan.pkg.ae.AdminExporter"),
     outputs = WorkflowOutputs(
         mapOf(

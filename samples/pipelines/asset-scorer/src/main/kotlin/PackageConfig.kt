@@ -67,7 +67,6 @@ object PackageConfig : CustomPipeline(
         ),
     ),
     containerImage = "ghcr.io/atlanhq/csa-asset-scorer:${Atlan.VERSION}",
-    containerImagePullPolicy = "Always",
     logicCommand = listOf("/dumb-init", "--", "java", "AssetScorer"),
     configCommand = listOf("/dumb-init", "--", "java", "CreateCMWriteConfig"),
     filter = "json(payload).message.operationType in [\"ENTITY_CREATE\", \"ENTITY_UPDATE\", \"BUSINESS_ATTRIBUTE_UPDATE\", \"CLASSIFICATION_ADD\", \"CLASSIFICATION_DELETE\"]",

@@ -22,7 +22,6 @@ object PackageConfig : CustomPackage(
         "java",
         "OwnerPropagator",
     ),
-    containerImagePullPolicy = "Always",
     uiConfig = UIConfig(
         steps = listOf(
             UIStep(

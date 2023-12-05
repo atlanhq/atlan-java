@@ -71,7 +71,6 @@ object PackageConfig : CustomPackage(
         ),
     ),
     containerImage = "ghcr.io/atlanhq/csa-relational-assets-builder:${Atlan.VERSION}",
-    containerImagePullPolicy = "Always",
     containerCommand = listOf("/dumb-init", "--", "java", "com.atlan.pkg.rab.Importer"),
     outputs = WorkflowOutputs(mapOf("debug-logs" to "/tmp/debug.log")),
     keywords = listOf("kotlin", "utility"),
