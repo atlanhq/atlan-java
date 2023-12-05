@@ -64,7 +64,7 @@ class Policies(
     }
 
     private fun getResources(client: AtlanClient, policy: AuthPolicy): String {
-        if (policy.accessControl.typeName == "Purpose") {
+        if (policy.accessControl?.typeName == "Purpose") {
             // In this case the "resources" are tags, so we should translate the tag names
             return policy.policyResources?.joinToString("\n") {
                 client.atlanTagCache.getNameForId(it.substringAfter("tag:"))
