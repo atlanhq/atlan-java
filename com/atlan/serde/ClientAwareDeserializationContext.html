@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -268,6 +268,11 @@ extends com.fasterxml.jackson.databind.deser.DefaultDeserializationContext</pre>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#with(com.fasterxml.jackson.databind.deser.DeserializerFactory)">with</a></span>&#8203;(com.fasterxml.jackson.databind.deser.DeserializerFactory&nbsp;factory)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code>com.fasterxml.jackson.databind.deser.DefaultDeserializationContext</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#withCaches(com.fasterxml.jackson.databind.cfg.CacheProvider)">withCaches</a></span>&#8203;(com.fasterxml.jackson.databind.cfg.CacheProvider&nbsp;cacheProvider)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
 </table>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.com.fasterxml.jackson.databind.deser.DefaultDeserializationContext">
@@ -281,7 +286,7 @@ extends com.fasterxml.jackson.databind.deser.DefaultDeserializationContext</pre>
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;com.fasterxml.jackson.databind.DeserializationContext</h3>
-<code>_getDateFormat, _isCompatible, _shapeForToken, bufferAsCopyOfValue, bufferForInputBuffering, bufferForInputBuffering, canOverrideAccessModifiers, constructCalendar, constructSpecializedType, constructType, endOfInputException, extractScalarFromObject, findClass, findCoercionAction, findCoercionFromBlankString, findContextualValueDeserializer, findInjectableValue, findKeyDeserializer, findNonContextualValueDeserializer, findRootValueDeserializer, getActiveView, getAnnotationIntrospector, getArrayBuilders, getAttribute, getBase64Variant, getConfig, getContextualType, getDatatypeFeatures, getDateFormat, getDefaultPropertyFormat, getDeserializationFeatures, getFactory, getLocale, getNodeFactory, getParser, getTimeZone, getTypeFactory, handleBadMerge, handleInstantiationProblem, handleMissingInstantiator, handleMissingTypeId, handlePrimaryContextualization, handleSecondaryContextualization, handleUnexpectedToken, handleUnexpectedToken, handleUnexpectedToken, handleUnexpectedToken, handleUnknownProperty, handleUnknownTypeId, handleWeirdKey, handleWeirdNativeValue, handleWeirdNumberValue, handleWeirdStringValue, hasDeserializationFeatures, hasSomeOfFeatures, hasValueDeserializerFor, instantiationException, instantiationException, invalidTypeIdException, isEnabled, isEnabled, isEnabled, isEnabled, leaseObjectBuffer, mappingException, mappingException, mappingException, mappingException, missingTypeIdException, parseDate, readPropertyValue, readPropertyValue, readTree, readTreeAsValue, readTreeAsValue, readValue, readValue, reportBadCoercion, reportBadDefinition, reportBadMerge, reportBadPropertyDefinition, reportBadTypeDefinition, reportInputMismatch, reportInputMismatch, reportInputMismatch, reportInputMismatch, reportMappingException, reportMissingContent, reportPropertyInputMismatch, reportPropertyInputMismatch, reportTrailingTokens, reportUnknownProperty, reportUnresolvedObjectId, reportWrongTokenException, reportWrongTokenException, reportWrongTokenException, reportWrongTokenException, returnObjectBuffer, setAttribute, unknownTypeException, weirdKeyException, weirdNativeValueException, weirdNumberException, weirdStringException, wrongTokenException, wrongTokenException, wrongTokenException</code></li>
+<code>_getDateFormat, _isCompatible, _shapeForToken, bufferAsCopyOfValue, bufferForInputBuffering, bufferForInputBuffering, canOverrideAccessModifiers, constructCalendar, constructSpecializedType, constructType, extractScalarFromObject, findClass, findCoercionAction, findCoercionFromBlankString, findContextualValueDeserializer, findInjectableValue, findKeyDeserializer, findNonContextualValueDeserializer, findRootValueDeserializer, getActiveView, getAnnotationIntrospector, getArrayBuilders, getAttribute, getBase64Variant, getConfig, getContextualType, getDatatypeFeatures, getDefaultPropertyFormat, getDeserializationFeatures, getFactory, getLocale, getNodeFactory, getParser, getTimeZone, getTypeFactory, handleBadMerge, handleInstantiationProblem, handleMissingInstantiator, handleMissingTypeId, handlePrimaryContextualization, handleSecondaryContextualization, handleUnexpectedToken, handleUnexpectedToken, handleUnexpectedToken, handleUnexpectedToken, handleUnknownProperty, handleUnknownTypeId, handleWeirdKey, handleWeirdNativeValue, handleWeirdNumberValue, handleWeirdStringValue, hasDeserializationFeatures, hasSomeOfFeatures, hasValueDeserializerFor, instantiationException, instantiationException, invalidTypeIdException, isEnabled, isEnabled, isEnabled, isEnabled, leaseObjectBuffer, missingTypeIdException, parseDate, readPropertyValue, readPropertyValue, readTree, readTreeAsValue, readTreeAsValue, readValue, readValue, reportBadCoercion, reportBadDefinition, reportBadPropertyDefinition, reportBadTypeDefinition, reportInputMismatch, reportInputMismatch, reportInputMismatch, reportInputMismatch, reportPropertyInputMismatch, reportPropertyInputMismatch, reportTrailingTokens, reportUnresolvedObjectId, reportWrongTokenException, reportWrongTokenException, reportWrongTokenException, returnObjectBuffer, setAttribute, weirdKeyException, weirdNativeValueException, weirdNumberException, weirdStringException, wrongTokenException, wrongTokenException</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.com.fasterxml.jackson.databind.DatabindContext">
@@ -334,6 +339,19 @@ extends com.fasterxml.jackson.databind.deser.DefaultDeserializationContext</pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a id="withCaches(com.fasterxml.jackson.databind.cfg.CacheProvider)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>withCaches</h4>
+<pre class="methodSignature">public&nbsp;com.fasterxml.jackson.databind.deser.DefaultDeserializationContext&nbsp;withCaches&#8203;(com.fasterxml.jackson.databind.cfg.CacheProvider&nbsp;cacheProvider)</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code>withCaches</code>&nbsp;in class&nbsp;<code>com.fasterxml.jackson.databind.deser.DefaultDeserializationContext</code></dd>
+</dl>
+</li>
+</ul>
 <a id="with(com.fasterxml.jackson.databind.deser.DeserializerFactory)">
 <!--   -->
 </a>
