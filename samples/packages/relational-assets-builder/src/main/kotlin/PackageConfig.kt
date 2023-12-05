@@ -10,6 +10,7 @@ import com.atlan.pkg.config.widgets.BooleanInput
 import com.atlan.pkg.config.widgets.DropDown
 import com.atlan.pkg.config.widgets.FileUploader
 import com.atlan.pkg.config.widgets.Radio
+import com.atlan.pkg.rab.Importer
 
 /**
  * Definition for the Relational Assets Builder custom package.
@@ -71,7 +72,7 @@ object PackageConfig : CustomPackage(
         ),
     ),
     containerImage = "ghcr.io/atlanhq/csa-relational-assets-builder:${Atlan.VERSION}",
-    containerCommand = listOf("/dumb-init", "--", "java", "com.atlan.pkg.rab.Importer"),
+    classToRun = Importer::class.java,
     outputs = WorkflowOutputs(mapOf("debug-logs" to "/tmp/debug.log")),
     keywords = listOf("kotlin", "utility"),
     preview = true,

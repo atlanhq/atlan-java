@@ -52,7 +52,7 @@ object PackageConfig : CustomPackage(
         ),
     ),
     containerImage = "ghcr.io/atlanhq/csa-asset-export-basic:${Atlan.VERSION}",
-    containerCommand = listOf("/dumb-init", "--", "java", "Exporter", "/tmp"),
+    classToRun = Exporter::class.java,
     outputs = WorkflowOutputs(
         mapOf(
             "debug-logs" to "/tmp/debug.log",

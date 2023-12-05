@@ -75,7 +75,7 @@ object PackageConfig : CustomPackage(
         ),
     ),
     containerImage = "ghcr.io/atlanhq/csa-openapi-spec-loader:${Atlan.VERSION}",
-    containerCommand = listOf("/dumb-init", "--", "java", "OpenAPISpecLoader"),
+    classToRun = OpenAPISpecLoader::class.java,
     outputs = WorkflowOutputs(mapOf("debug-logs" to "/tmp/debug.log")),
     keywords = listOf("kotlin", "crawler", "openapi"),
     preview = true,
