@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg
 
+import com.atlan.Atlan
 import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.pkg.config.model.ConfigMap
 import com.atlan.pkg.config.model.PackageDefinition
@@ -57,7 +58,7 @@ open class CustomPackage(
     private val uiConfig: UIConfig,
     private val containerImage: String,
     private val containerCommand: List<String>,
-    private val containerImagePullPolicy: String = "IfNotPresent",
+    private val containerImagePullPolicy: String = if (Atlan.VERSION.endsWith("SNAPSHOT")) "Always" else "IfNotPresent",
     private val outputs: WorkflowOutputs? = null,
     private val keywords: List<String> = listOf(),
     private val allowSchedule: Boolean = true,

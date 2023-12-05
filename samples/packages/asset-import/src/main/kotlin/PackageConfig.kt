@@ -117,7 +117,6 @@ object PackageConfig : CustomPackage(
         ),
     ),
     containerImage = "ghcr.io/atlanhq/csa-asset-import:${Atlan.VERSION}",
-    containerImagePullPolicy = "Always",
     containerCommand = listOf("/dumb-init", "--", "java", "com.atlan.pkg.aim.Importer"),
     outputs = WorkflowOutputs(mapOf("debug-logs" to "/tmp/debug.log")),
     keywords = listOf("kotlin", "utility"),

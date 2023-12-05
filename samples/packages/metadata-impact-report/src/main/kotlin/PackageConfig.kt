@@ -44,7 +44,6 @@ object PackageConfig : CustomPackage(
         ),
     ),
     containerImage = "ghcr.io/atlanhq/csa-metadata-impact-report:${Atlan.VERSION}",
-    containerImagePullPolicy = "Always",
     containerCommand = listOf("/dumb-init", "--", "java", "com.atlan.pkg.mdir.MetadataImpactReport"),
     outputs = WorkflowOutputs(
         mapOf(

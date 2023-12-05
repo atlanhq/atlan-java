@@ -52,7 +52,6 @@ object PackageConfig : CustomPackage(
         ),
     ),
     containerImage = "ghcr.io/atlanhq/csa-asset-export-basic:${Atlan.VERSION}",
-    containerImagePullPolicy = "Always",
     containerCommand = listOf("/dumb-init", "--", "java", "Exporter", "/tmp"),
     outputs = WorkflowOutputs(
         mapOf(
