@@ -10,12 +10,11 @@ import org.testng.annotations.AfterClass
 import org.testng.annotations.BeforeClass
 import org.testng.annotations.Test
 import java.io.File
-import kotlin.test.assertNotNull
 
 /**
- * Test export of only users.
+ * Test export of all policies, including internal.
  */
-class ExportUsersTest : PackageTest() {
+class ExportAllPoliciesTest : PackageTest() {
     private val files = listOf(
         "debug.log",
         "admin-export.xlsx",
@@ -25,8 +24,10 @@ class ExportUsersTest : PackageTest() {
     fun beforeClass() {
         setup(
             AdminExportCfg(
-                objectsToInclude = listOf("users"),
-                includeNativePolicies = false,
+                objectsToInclude = listOf(
+                    "policies",
+                ),
+                includeNativePolicies = true,
             ),
         )
         AdminExporter.main(arrayOf(testDirectory))
@@ -41,33 +42,25 @@ class ExportUsersTest : PackageTest() {
     fun hasExpectedSheets() {
         val xlFile = "$testDirectory${File.separator}admin-export.xlsx"
         ExcelReader(xlFile).use { xlsx ->
-            assertTrue(xlsx.hasSheet("Users"))
+            assertFalse(xlsx.hasSheet("Users"))
             assertFalse(xlsx.hasSheet("Groups"))
             assertFalse(xlsx.hasSheet("Personas"))
             assertFalse(xlsx.hasSheet("Purposes"))
-            assertFalse(xlsx.hasSheet("Policies"))
+            assertTrue(xlsx.hasSheet("Policies"))
         }
     }
 
     @Test
-    fun testUsers() {
+    fun testPolicies() {
         val xlFile = "$testDirectory${File.separator}admin-export.xlsx"
         ExcelReader(xlFile).use { xlsx ->
-            val rows = xlsx.getRowsFromSheet("Users")
+            val rows = xlsx.getRowsFromSheet("Policies")
             assertTrue(rows.isNotEmpty())
             rows.forEach { row ->
-                assertFalse(row["Username"].isNullOrBlank())
-                assertFalse(row["First name"].isNullOrBlank())
-                assertFalse(row["Last name"].isNullOrBlank())
-                assertFalse(row["Email address"].isNullOrBlank())
-                assertTrue(row["Email address"]!!.contains('@'))
+                assertFalse(row["Policy name"].isNullOrBlank())
+                assertFalse(row["Kind"].isNullOrBlank())
+                assertFalse(row["Type"].isNullOrBlank())
             }
-            val first = rows[0]
-            assertNotNull(first["Username"])
-            assertNotNull(first["First name"])
-            assertNotNull(first["Last name"])
-            assertNotNull(first["Email address"])
-            assertTrue(first["Email address"]!!.contains('@'))
         }
     }
 
