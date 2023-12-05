@@ -51,6 +51,10 @@ jobs:
           path: jars/api-token-connection-admin-*.jar
       - uses: actions/upload-artifact@v3
         with:
+          name: admin-export
+          path: jars/admin-export-*.jar
+      - uses: actions/upload-artifact@v3
+        with:
           name: asset-export-basic
           path: jars/asset-export-basic-*.jar
       - uses: actions/upload-artifact@v3
@@ -61,6 +65,10 @@ jobs:
         with:
           name: duplicate-detector
           path: jars/duplicate-detector-*.jar
+      - uses: actions/upload-artifact@v3
+        with:
+          name: metadata-impact-report
+          path: jars/metadata-impact-report-*.jar
       - uses: actions/upload-artifact@v3
         with:
           name: openapi-spec-loader
@@ -169,9 +177,11 @@ jobs:
       matrix:
         package_name:
           - api-token-connection-admin
+          - admin-export
           - asset-export-basic
           - asset-import
           - duplicate-detector
+          - metadata-impact-report
           - openapi-spec-loader
           - owner-propagator
           - relational-assets-builder
