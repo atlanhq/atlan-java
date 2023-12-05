@@ -29,6 +29,8 @@ object PackageConfig : CustomPackage(
                             "users" to "Users",
                             "groups" to "Groups",
                             "personas" to "Personas",
+                            "purposes" to "Purposes",
+                            "policies" to "Policies",
                         ),
                         help = "Select the objects you want to include in the exported Excel file.",
                         multiSelect = true,
@@ -52,7 +54,6 @@ object PackageConfig : CustomPackage(
             "admin-export" to "/tmp/admin-export.xlsx",
         ),
     ),
-    category = "export",
     keywords = listOf("kotlin", "utility", "admin", "export"),
     preview = true,
 ) {
