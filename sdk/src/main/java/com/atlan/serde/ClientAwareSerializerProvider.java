@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializationConfig;
 import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.cfg.CacheProvider;
 import com.fasterxml.jackson.databind.cfg.HandlerInstantiator;
 import com.fasterxml.jackson.databind.introspect.Annotated;
 import com.fasterxml.jackson.databind.ser.DefaultSerializerProvider;
@@ -34,6 +35,11 @@ public class ClientAwareSerializerProvider extends DefaultSerializerProvider {
             SerializerProvider src, SerializationConfig config, SerializerFactory f, AtlanClient client) {
         super(src, config, f);
         this.client = client;
+    }
+
+    @Override
+    public DefaultSerializerProvider withCaches(CacheProvider cacheProvider) {
+        return this;
     }
 
     @Override

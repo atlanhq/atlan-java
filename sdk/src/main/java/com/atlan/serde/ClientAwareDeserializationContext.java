@@ -5,6 +5,7 @@ package com.atlan.serde;
 import com.atlan.AtlanClient;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.*;
+import com.fasterxml.jackson.databind.cfg.CacheProvider;
 import com.fasterxml.jackson.databind.cfg.HandlerInstantiator;
 import com.fasterxml.jackson.databind.deser.DefaultDeserializationContext;
 import com.fasterxml.jackson.databind.deser.DeserializerCache;
@@ -47,6 +48,11 @@ public class ClientAwareDeserializationContext extends DefaultDeserializationCon
     private ClientAwareDeserializationContext(ClientAwareDeserializationContext src, DeserializationConfig config) {
         super(src, config);
         this.client = src.client;
+    }
+
+    @Override
+    public DefaultDeserializationContext withCaches(CacheProvider cacheProvider) {
+        return this;
     }
 
     @Override

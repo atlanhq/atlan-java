@@ -1,15 +1,15 @@
 [versions]
-jackson = "2.15.3"
-slf4j = "2.0.7"
-elasticsearch = "8.8.2"
+jackson = "2.16.0"
+slf4j = "2.0.9"
+elasticsearch = "8.11.1"
 freemarker = "2.3.32"
-classgraph = "4.8.160"
+classgraph = "4.8.165"
 testng = "7.8.0"
-log4j = "2.20.0"
-wiremock = "2.27.2"
+log4j = "2.22.0"
+wiremock = "3.3.1"
 jnanoid = "2.0.0"
 numaflow = "0.4.8"
-awssdk = "2.20.68"
+awssdk = "2.21.37"
 system-stubs = "2.1.5"
 fastcsv = "2.2.2"
 poi = "5.2.5"
@@ -25,7 +25,7 @@ classgraph = { module = "io.github.classgraph:classgraph", version.ref = "classg
 testng = { module = "org.testng:testng", version.ref = "testng" }
 log4j-core = { module = "org.apache.logging.log4j:log4j-core", version.ref = "log4j" }
 log4j-slf4j2 = { module = "org.apache.logging.log4j:log4j-slf4j2-impl", version.ref = "log4j" }
-wiremock = { module = "com.github.tomakehurst:wiremock", version.ref = "wiremock" }
+wiremock = { module = "org.wiremock:wiremock", version.ref = "wiremock" }
 jnanoid = { module = "com.aventrix.jnanoid:jnanoid", version.ref = "jnanoid" }
 numaflow-java = { module = "io.numaproj.numaflow:numaflow-java", version.ref = "numaflow" }
 awssdk-s3 = { module = "software.amazon.awssdk:s3", version.ref = "awssdk" }
