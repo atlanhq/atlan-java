@@ -39,6 +39,7 @@ tasks {
             include(dependency("commons-io:commons-io:.*"))
             include(dependency("com.zaxxer:SparseBitSet:.*"))
             include(dependency("org.apache.poi:poi-ooxml:.*"))
+            include(dependency("org.apache.poi:poi-ooxml-lite:.*"))
             include(dependency("org.apache.xmlbeans:xmlbeans:.*"))
             include(dependency("org.apache.commons:commons-compress:.*"))
             include(dependency("com.github.virtuald:curvesapi:.*"))
