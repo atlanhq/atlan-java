@@ -83,7 +83,7 @@ public class PresetDashboard extends Asset implements IPresetDashboard, IPreset,
     @Attribute
     Long presetDashboardChartCount;
 
-    /** TBC */
+    /** Identifier of the dashboard in which this asset exists, in Preset. */
     @Attribute
     Long presetDashboardId;
 
@@ -95,7 +95,7 @@ public class PresetDashboard extends Asset implements IPresetDashboard, IPreset,
     @Attribute
     Boolean presetDashboardIsPublished;
 
-    /** TBC */
+    /** Unique name of the dashboard in which this asset exists. */
     @Attribute
     String presetDashboardQualifiedName;
 
@@ -112,11 +112,11 @@ public class PresetDashboard extends Asset implements IPresetDashboard, IPreset,
     @Attribute
     IPresetWorkspace presetWorkspace;
 
-    /** TBC */
+    /** Identifier of the workspace in which this asset exists, in Preset. */
     @Attribute
     Long presetWorkspaceId;
 
-    /** TBC */
+    /** Unique name of the workspace in which this asset exists. */
     @Attribute
     String presetWorkspaceQualifiedName;
 

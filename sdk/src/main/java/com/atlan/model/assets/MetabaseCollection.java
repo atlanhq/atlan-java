@@ -56,11 +56,11 @@ public class MetabaseCollection extends Asset
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
-    /** TBC */
+    /** Simple name of the Metabase collection in which this asset exists. */
     @Attribute
     String metabaseCollectionName;
 
-    /** TBC */
+    /** Unique name of the Metabase collection in which this asset exists. */
     @Attribute
     String metabaseCollectionQualifiedName;
 

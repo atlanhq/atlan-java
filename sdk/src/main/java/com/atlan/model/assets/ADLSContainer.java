@@ -54,11 +54,11 @@ public class ADLSContainer extends Asset
     @Attribute
     IADLSAccount adlsAccount;
 
-    /** TBC */
+    /** Unique name of the account for this ADLS asset. */
     @Attribute
     String adlsAccountQualifiedName;
 
-    /** TBC */
+    /** Secondary location of the ADLS account. */
     @Attribute
     String adlsAccountSecondaryLocation;
 
@@ -91,15 +91,15 @@ public class ADLSContainer extends Asset
     @Singular
     SortedSet<IADLSObject> adlsObjects;
 
-    /** TBC */
+    /** Location of this asset in Azure. */
     @Attribute
     String azureLocation;
 
-    /** TBC */
+    /** Resource identifier of this asset in Azure. */
     @Attribute
     String azureResourceId;
 
-    /** TBC */
+    /** Tags that have been applied to this asset in Azure. */
     @Attribute
     @Singular
     List<AzureTag> azureTags;

@@ -65,11 +65,11 @@ public class SigmaWorkbook extends Asset implements ISigmaWorkbook, ISigma, IBI,
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** TBC */
+    /** Simple name of the data element in which this asset exists. */
     @Attribute
     String sigmaDataElementName;
 
-    /** TBC */
+    /** Unique name of the data element in which this asset exists. */
     @Attribute
     String sigmaDataElementQualifiedName;
 
@@ -77,11 +77,11 @@ public class SigmaWorkbook extends Asset implements ISigmaWorkbook, ISigma, IBI,
     @Attribute
     Long sigmaPageCount;
 
-    /** TBC */
+    /** Simple name of the page on which this asset exists. */
     @Attribute
     String sigmaPageName;
 
-    /** TBC */
+    /** Unique name of the page on which this asset exists. */
     @Attribute
     String sigmaPageQualifiedName;
 
@@ -90,11 +90,11 @@ public class SigmaWorkbook extends Asset implements ISigmaWorkbook, ISigma, IBI,
     @Singular
     SortedSet<ISigmaPage> sigmaPages;
 
-    /** TBC */
+    /** Simple name of the workbook in which this asset exists. */
     @Attribute
     String sigmaWorkbookName;
 
-    /** TBC */
+    /** Unique name of the workbook in which this asset exists. */
     @Attribute
     String sigmaWorkbookQualifiedName;
 

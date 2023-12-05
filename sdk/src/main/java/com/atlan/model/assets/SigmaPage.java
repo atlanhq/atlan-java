@@ -69,11 +69,11 @@ public class SigmaPage extends Asset implements ISigmaPage, ISigma, IBI, ICatalo
     @Attribute
     Long sigmaDataElementCount;
 
-    /** TBC */
+    /** Simple name of the data element in which this asset exists. */
     @Attribute
     String sigmaDataElementName;
 
-    /** TBC */
+    /** Unique name of the data element in which this asset exists. */
     @Attribute
     String sigmaDataElementQualifiedName;
 
@@ -82,11 +82,11 @@ public class SigmaPage extends Asset implements ISigmaPage, ISigma, IBI, ICatalo
     @Singular
     SortedSet<ISigmaDataElement> sigmaDataElements;
 
-    /** TBC */
+    /** Simple name of the page on which this asset exists. */
     @Attribute
     String sigmaPageName;
 
-    /** TBC */
+    /** Unique name of the page on which this asset exists. */
     @Attribute
     String sigmaPageQualifiedName;
 
@@ -94,11 +94,11 @@ public class SigmaPage extends Asset implements ISigmaPage, ISigma, IBI, ICatalo
     @Attribute
     ISigmaWorkbook sigmaWorkbook;
 
-    /** TBC */
+    /** Simple name of the workbook in which this asset exists. */
     @Attribute
     String sigmaWorkbookName;
 
-    /** TBC */
+    /** Unique name of the workbook in which this asset exists. */
     @Attribute
     String sigmaWorkbookQualifiedName;
 

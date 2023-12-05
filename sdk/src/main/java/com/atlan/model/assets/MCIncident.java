@@ -56,7 +56,7 @@ public class MCIncident extends Asset
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
-    /** TBC */
+    /** List of unique names of assets that are part of this Monte Carlo asset. */
     @Attribute
     @Singular
     SortedSet<String> mcAssetQualifiedNames;
@@ -91,7 +91,7 @@ public class MCIncident extends Asset
     @Attribute
     String mcIncidentWarehouse;
 
-    /** TBC */
+    /** List of labels for this Monte Carlo asset. */
     @Attribute
     @Singular
     SortedSet<String> mcLabels;

@@ -70,11 +70,11 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
     @Attribute
     String constraint;
 
-    /** TBC */
+    /** Simple name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
     @Attribute
     String databaseName;
 
-    /** TBC */
+    /** Unique name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
     @Attribute
     String databaseQualifiedName;
 
@@ -119,7 +119,7 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
     @Attribute
     Boolean isPartitioned;
 
-    /** TBC */
+    /** Whether this asset has been profiled (true) or not (false). */
     @Attribute
     Boolean isProfiled;
 
@@ -131,7 +131,7 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
     @Attribute
     Boolean isTemporary;
 
-    /** TBC */
+    /** Time (epoch) at which this asset was last profiled, in milliseconds. */
     @Attribute
     Long lastProfiledAt;
 
@@ -165,11 +165,11 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
     @Attribute
     String partitionStrategy;
 
-    /** TBC */
+    /** Number of times this asset has been queried. */
     @Attribute
     Long queryCount;
 
-    /** TBC */
+    /** Time (epoch) at which the query count was last updated, in milliseconds. */
     @Attribute
     Long queryCountUpdatedAt;
 
@@ -178,11 +178,11 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
     @Singular("putQueryPreviewConfig")
     Map<String, String> queryPreviewConfig;
 
-    /** TBC */
+    /** Number of unique users who have queried this asset. */
     @Attribute
     Long queryUserCount;
 
-    /** TBC */
+    /** Map of unique users who have queried this asset to the number of times they have queried it. */
     @Attribute
     @Singular("putQueryUserMap")
     Map<String, Long> queryUserMap;
@@ -191,11 +191,11 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
     @Attribute
     Long rowCount;
 
-    /** TBC */
+    /** Simple name of the schema in which this SQL asset exists, or empty if it does not exist within a schema. */
     @Attribute
     String schemaName;
 
-    /** TBC */
+    /** Unique name of the schema in which this SQL asset exists, or empty if it does not exist within a schema. */
     @Attribute
     String schemaQualifiedName;
 
@@ -213,19 +213,19 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
     @Singular
     SortedSet<IDbtModel> sqlDbtModels;
 
-    /** TBC */
+    /** Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
     @Attribute
     String tableName;
 
-    /** TBC */
+    /** Unique name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
     @Attribute
     String tableQualifiedName;
 
-    /** TBC */
+    /** Simple name of the view in which this SQL asset exists, or empty if it does not exist within a view. */
     @Attribute
     String viewName;
 
-    /** TBC */
+    /** Unique name of the view in which this SQL asset exists, or empty if it does not exist within a view. */
     @Attribute
     String viewQualifiedName;
 

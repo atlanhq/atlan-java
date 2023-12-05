@@ -46,7 +46,7 @@ public class SalesforceField extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Name of this asset in the Salesforce API. */
     @Attribute
     String apiName;
 
@@ -125,7 +125,7 @@ public class SalesforceField extends Asset
     @Attribute
     Integer order;
 
-    /** TBC */
+    /** Fully-qualified name of the organization in Salesforce. */
     @Attribute
     String organizationQualifiedName;
 

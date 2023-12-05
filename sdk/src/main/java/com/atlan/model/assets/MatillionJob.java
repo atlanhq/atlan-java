@@ -89,7 +89,7 @@ public class MatillionJob extends Asset implements IMatillionJob, IMatillion, IC
     @Attribute
     String matillionProjectQualifiedName;
 
-    /** TBC */
+    /** Current point in time state of a project. */
     @Attribute
     String matillionVersion;
 

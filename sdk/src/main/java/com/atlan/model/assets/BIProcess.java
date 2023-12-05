@@ -50,11 +50,11 @@ public class BIProcess extends Asset implements IBIProcess, ILineageProcess, IAs
     @Singular
     SortedSet<IAirflowTask> airflowTasks;
 
-    /** TBC */
+    /** Parsed AST of the code or SQL statements that describe the logic of this process. */
     @Attribute
     String ast;
 
-    /** TBC */
+    /** Code that ran within the process. */
     @Attribute
     String code;
 
@@ -77,7 +77,7 @@ public class BIProcess extends Asset implements IBIProcess, ILineageProcess, IAs
     @Singular
     SortedSet<ICatalog> outputs;
 
-    /** TBC */
+    /** SQL query that ran to produce the outputs. */
     @Attribute
     String sql;
 

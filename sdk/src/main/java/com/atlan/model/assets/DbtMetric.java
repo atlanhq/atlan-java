@@ -154,15 +154,15 @@ public class DbtMetric extends Asset
     @Singular
     SortedSet<IColumn> metricDimensionColumns;
 
-    /** TBC */
+    /** Filters to be applied to the metric query. */
     @Attribute
     String metricFilters;
 
-    /** TBC */
+    /** SQL query used to compute the metric. */
     @Attribute
     String metricSQL;
 
-    /** TBC */
+    /** List of time grains to be applied to the metric query. */
     @Attribute
     @Singular
     SortedSet<String> metricTimeGrains;
@@ -171,7 +171,7 @@ public class DbtMetric extends Asset
     @Attribute
     IColumn metricTimestampColumn;
 
-    /** TBC */
+    /** Type of the metric. */
     @Attribute
     String metricType;
 

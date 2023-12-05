@@ -76,19 +76,19 @@ public class PowerBIDataset extends Asset implements IPowerBIDataset, IPowerBI, 
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** TBC */
+    /** Endorsement status of this asset, in Power BI. */
     @Attribute
     PowerBIEndorsementType powerBIEndorsement;
 
-    /** TBC */
+    /** Format of this asset, as specified in the FORMAT_STRING of the MDX cell property. */
     @Attribute
     String powerBIFormatString;
 
-    /** TBC */
+    /** Whether this asset is hidden in Power BI (true) or not (false). */
     @Attribute
     Boolean powerBIIsHidden;
 
-    /** TBC */
+    /** Unique name of the Power BI table in which this asset exists. */
     @Attribute
     String powerBITableQualifiedName;
 

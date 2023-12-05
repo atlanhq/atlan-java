@@ -54,35 +54,35 @@ public class AirflowDag extends Asset implements IAirflowDag, IAirflow, ICatalog
     @Attribute
     Long airflowDagScheduleDelta;
 
-    /** TBC */
+    /** End time of the run. */
     @Attribute
     Long airflowRunEndTime;
 
-    /** TBC */
+    /** Name of the run. */
     @Attribute
     String airflowRunName;
 
-    /** TBC */
+    /** State of the run in OpenLineage. */
     @Attribute
     OpenLineageRunState airflowRunOpenLineageState;
 
-    /** TBC */
+    /** Version of the run in OpenLineage. */
     @Attribute
     String airflowRunOpenLineageVersion;
 
-    /** TBC */
+    /** Start time of the run. */
     @Attribute
     Long airflowRunStartTime;
 
-    /** TBC */
+    /** Type of the run. */
     @Attribute
     String airflowRunType;
 
-    /** TBC */
+    /** Version of the run in Airflow. */
     @Attribute
     String airflowRunVersion;
 
-    /** TBC */
+    /** Tags assigned to the asset in Airflow. */
     @Attribute
     @Singular
     SortedSet<String> airflowTags;

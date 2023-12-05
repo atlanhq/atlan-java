@@ -67,39 +67,39 @@ public class AzureEventHub extends Asset
     @Singular
     SortedSet<IKafkaConsumerGroup> kafkaConsumerGroups;
 
-    /** TBC */
+    /** Cleanup policy for this topic. */
     @Attribute
     KafkaTopicCleanupPolicy kafkaTopicCleanupPolicy;
 
-    /** TBC */
+    /** Type of compression used for this topic. */
     @Attribute
     KafkaTopicCompressionType kafkaTopicCompressionType;
 
-    /** TBC */
+    /** Whether this topic is an internal topic (true) or not (false). */
     @Attribute
     Boolean kafkaTopicIsInternal;
 
-    /** TBC */
+    /** Number of partitions for this topic. */
     @Attribute
     Long kafkaTopicPartitionsCount;
 
-    /** TBC */
+    /** Number of (unexpired) messages in this topic. */
     @Attribute
     Long kafkaTopicRecordCount;
 
-    /** TBC */
+    /** Replication factor for this topic. */
     @Attribute
     Long kafkaTopicReplicationFactor;
 
-    /** TBC */
+    /** Amount of time messages will be retained in this topic, in milliseconds. */
     @Attribute
     Long kafkaTopicRetentionTimeInMs;
 
-    /** TBC */
+    /** Segment size for this topic. */
     @Attribute
     Long kafkaTopicSegmentBytes;
 
-    /** TBC */
+    /** Size of this topic, in bytes. */
     @Attribute
     Long kafkaTopicSizeInBytes;
 

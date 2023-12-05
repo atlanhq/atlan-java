@@ -81,7 +81,7 @@ public class MatillionProject extends Asset implements IMatillionProject, IMatil
     @Attribute
     Long matillionProjectJobCount;
 
-    /** TBC */
+    /** Current point in time state of a project. */
     @Attribute
     String matillionVersion;
 

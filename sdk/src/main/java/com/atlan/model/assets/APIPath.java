@@ -48,12 +48,12 @@ public class APIPath extends Asset implements IAPIPath, IAPI, ICatalog, IAsset, 
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** External documentation of the API. */
     @Attribute
     @Singular
     Map<String, String> apiExternalDocs;
 
-    /** TBC */
+    /** Whether authentication is optional (true) or required (false). */
     @Attribute
     Boolean apiIsAuthOptional;
 
@@ -87,19 +87,19 @@ public class APIPath extends Asset implements IAPIPath, IAPI, ICatalog, IAsset, 
     @Attribute
     IAPISpec apiSpec;
 
-    /** TBC */
+    /** Simple name of the API spec, if this asset is contained in an API spec. */
     @Attribute
     String apiSpecName;
 
-    /** TBC */
+    /** Unique name of the API spec, if this asset is contained in an API spec. */
     @Attribute
     String apiSpecQualifiedName;
 
-    /** TBC */
+    /** Type of API, for example: OpenAPI, GraphQL, etc. */
     @Attribute
     String apiSpecType;
 
-    /** TBC */
+    /** Version of the API specification. */
     @Attribute
     String apiSpecVersion;
 

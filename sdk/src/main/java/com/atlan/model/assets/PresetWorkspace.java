@@ -66,11 +66,11 @@ public class PresetWorkspace extends Asset implements IPresetWorkspace, IPreset,
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** TBC */
+    /** Identifier of the dashboard in which this asset exists, in Preset. */
     @Attribute
     Long presetDashboardId;
 
-    /** TBC */
+    /** Unique name of the dashboard in which this asset exists. */
     @Attribute
     String presetDashboardQualifiedName;
 
@@ -99,7 +99,7 @@ public class PresetWorkspace extends Asset implements IPresetWorkspace, IPreset,
     @Attribute
     String presetWorkspaceHostname;
 
-    /** TBC */
+    /** Identifier of the workspace in which this asset exists, in Preset. */
     @Attribute
     Long presetWorkspaceId;
 
@@ -111,7 +111,7 @@ public class PresetWorkspace extends Asset implements IPresetWorkspace, IPreset,
     @Attribute
     Boolean presetWorkspacePublicDashboardsAllowed;
 
-    /** TBC */
+    /** Unique name of the workspace in which this asset exists. */
     @Attribute
     String presetWorkspaceQualifiedName;
 

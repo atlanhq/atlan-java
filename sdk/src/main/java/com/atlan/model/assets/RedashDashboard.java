@@ -69,7 +69,7 @@ public class RedashDashboard extends Asset implements IRedashDashboard, IRedash,
     @Attribute
     Long redashDashboardWidgetCount;
 
-    /** TBC */
+    /** Whether this asset is published in Redash (true) or not (false). */
     @Attribute
     Boolean redashIsPublished;
 

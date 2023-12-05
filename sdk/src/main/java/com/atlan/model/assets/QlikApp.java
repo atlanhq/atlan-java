@@ -65,11 +65,11 @@ public class QlikApp extends Asset implements IQlikApp, IQlik, IBI, ICatalog, IA
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** TBC */
+    /** Identifier of the app in which this asset belongs, from Qlik. */
     @Attribute
     String qlikAppId;
 
-    /** TBC */
+    /** Unique name of the app where this asset belongs. */
     @Attribute
     String qlikAppQualifiedName;
 
@@ -81,7 +81,7 @@ public class QlikApp extends Asset implements IQlikApp, IQlik, IBI, ICatalog, IA
     @Attribute
     Boolean qlikHasSectionAccess;
 
-    /** TBC */
+    /** Identifier of this asset, from Qlik. */
     @Attribute
     String qlikId;
 
@@ -93,7 +93,7 @@ public class QlikApp extends Asset implements IQlikApp, IQlik, IBI, ICatalog, IA
     @Attribute
     Boolean qlikIsEncrypted;
 
-    /** TBC */
+    /** Whether this asset is published in Qlik (true) or not (false). */
     @Attribute
     Boolean qlikIsPublished;
 
@@ -101,11 +101,11 @@ public class QlikApp extends Asset implements IQlikApp, IQlik, IBI, ICatalog, IA
     @Attribute
     String qlikOriginAppId;
 
-    /** TBC */
+    /** Identifier of the owner of this asset, in Qlik. */
     @Attribute
     String qlikOwnerId;
 
-    /** TBC */
+    /** Unique QRI of this asset, from Qlik. */
     @Attribute
     String qlikQRI;
 
@@ -118,11 +118,11 @@ public class QlikApp extends Asset implements IQlikApp, IQlik, IBI, ICatalog, IA
     @Attribute
     IQlikSpace qlikSpace;
 
-    /** TBC */
+    /** Identifier of the space in which this asset exists, from Qlik. */
     @Attribute
     String qlikSpaceId;
 
-    /** TBC */
+    /** Unique name of the space in which this asset exists. */
     @Attribute
     String qlikSpaceQualifiedName;
 

@@ -48,39 +48,39 @@ public class S3Bucket extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** 12-digit number that uniquely identifies an AWS account. */
     @Attribute
     String awsAccountId;
 
-    /** TBC */
+    /** Amazon Resource Name (ARN) for this asset. This uniquely identifies the asset in AWS, and thus must be unique across all AWS asset instances. */
     @Attribute
     String awsArn;
 
-    /** TBC */
+    /** Root user's ID. */
     @Attribute
     String awsOwnerId;
 
-    /** TBC */
+    /** Root user's name. */
     @Attribute
     String awsOwnerName;
 
-    /** TBC */
+    /** Group of AWS region and service objects. */
     @Attribute
     String awsPartition;
 
-    /** TBC */
+    /** Physical region where the data center in which the asset exists is clustered. */
     @Attribute
     String awsRegion;
 
-    /** TBC */
+    /** Unique resource ID assigned when a new resource is created. */
     @Attribute
     String awsResourceId;
 
-    /** TBC */
+    /** Type of service in which the asset exists. */
     @Attribute
     String awsService;
 
-    /** TBC */
+    /** List of tags that have been applied to the asset in AWS. */
     @Attribute
     @Singular
     List<AwsTag> awsTags;
@@ -114,7 +114,7 @@ public class S3Bucket extends Asset
     @Attribute
     Boolean s3BucketVersioningEnabled;
 
-    /** TBC */
+    /** Entity tag for the asset. An entity tag is a hash of the object and represents changes to the contents of an object only, not its metadata. */
     @Attribute
     String s3ETag;
 

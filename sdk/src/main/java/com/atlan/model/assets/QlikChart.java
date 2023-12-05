@@ -65,11 +65,11 @@ public class QlikChart extends Asset implements IQlikChart, IQlik, IBI, ICatalog
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** TBC */
+    /** Identifier of the app in which this asset belongs, from Qlik. */
     @Attribute
     String qlikAppId;
 
-    /** TBC */
+    /** Unique name of the app where this asset belongs. */
     @Attribute
     String qlikAppQualifiedName;
 
@@ -89,19 +89,19 @@ public class QlikChart extends Asset implements IQlikChart, IQlik, IBI, ICatalog
     @Attribute
     String qlikChartType;
 
-    /** TBC */
+    /** Identifier of this asset, from Qlik. */
     @Attribute
     String qlikId;
 
-    /** TBC */
+    /** Whether this asset is published in Qlik (true) or not (false). */
     @Attribute
     Boolean qlikIsPublished;
 
-    /** TBC */
+    /** Identifier of the owner of this asset, in Qlik. */
     @Attribute
     String qlikOwnerId;
 
-    /** TBC */
+    /** Unique QRI of this asset, from Qlik. */
     @Attribute
     String qlikQRI;
 
@@ -109,11 +109,11 @@ public class QlikChart extends Asset implements IQlikChart, IQlik, IBI, ICatalog
     @Attribute
     IQlikSheet qlikSheet;
 
-    /** TBC */
+    /** Identifier of the space in which this asset exists, from Qlik. */
     @Attribute
     String qlikSpaceId;
 
-    /** TBC */
+    /** Unique name of the space in which this asset exists. */
     @Attribute
     String qlikSpaceQualifiedName;
 

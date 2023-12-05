@@ -63,36 +63,36 @@ public class DataStudioAsset extends Asset
     @Attribute
     GoogleDataStudioAssetType dataStudioAssetType;
 
-    /** TBC */
+    /** List of labels that have been applied to the asset in Google. */
     @Attribute
     @Singular
     List<GoogleLabel> googleLabels;
 
-    /** TBC */
+    /** Location of this asset in Google. */
     @Attribute
     String googleLocation;
 
-    /** TBC */
+    /** Type of location of this asset in Google. */
     @Attribute
     String googleLocationType;
 
-    /** TBC */
+    /** ID of the project in which the asset exists. */
     @Attribute
     String googleProjectId;
 
-    /** TBC */
+    /** Name of the project in which the asset exists. */
     @Attribute
     String googleProjectName;
 
-    /** TBC */
+    /** Number of the project in which the asset exists. */
     @Attribute
     Long googleProjectNumber;
 
-    /** TBC */
+    /** Service in Google in which the asset exists. */
     @Attribute
     String googleService;
 
-    /** TBC */
+    /** List of tags that have been applied to the asset in Google. */
     @Attribute
     @Singular
     List<GoogleTag> googleTags;

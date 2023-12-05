@@ -82,15 +82,15 @@ public class PowerBIColumn extends Asset implements IPowerBIColumn, IPowerBI, IB
     @Attribute
     String powerBIColumnSummarizeBy;
 
-    /** TBC */
+    /** Endorsement status of this asset, in Power BI. */
     @Attribute
     PowerBIEndorsementType powerBIEndorsement;
 
-    /** TBC */
+    /** Format of this asset, as specified in the FORMAT_STRING of the MDX cell property. */
     @Attribute
     String powerBIFormatString;
 
-    /** TBC */
+    /** Whether this asset is hidden in Power BI (true) or not (false). */
     @Attribute
     Boolean powerBIIsHidden;
 
@@ -98,7 +98,7 @@ public class PowerBIColumn extends Asset implements IPowerBIColumn, IPowerBI, IB
     @Attribute
     String powerBISortByColumn;
 
-    /** TBC */
+    /** Unique name of the Power BI table in which this asset exists. */
     @Attribute
     String powerBITableQualifiedName;
 

@@ -65,11 +65,11 @@ public class SigmaDataset extends Asset implements ISigmaDataset, ISigma, IBI, I
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** TBC */
+    /** Simple name of the data element in which this asset exists. */
     @Attribute
     String sigmaDataElementName;
 
-    /** TBC */
+    /** Unique name of the data element in which this asset exists. */
     @Attribute
     String sigmaDataElementQualifiedName;
 
@@ -82,19 +82,19 @@ public class SigmaDataset extends Asset implements ISigmaDataset, ISigma, IBI, I
     @Singular
     SortedSet<ISigmaDatasetColumn> sigmaDatasetColumns;
 
-    /** TBC */
+    /** Simple name of the page on which this asset exists. */
     @Attribute
     String sigmaPageName;
 
-    /** TBC */
+    /** Unique name of the page on which this asset exists. */
     @Attribute
     String sigmaPageQualifiedName;
 
-    /** TBC */
+    /** Simple name of the workbook in which this asset exists. */
     @Attribute
     String sigmaWorkbookName;
 
-    /** TBC */
+    /** Unique name of the workbook in which this asset exists. */
     @Attribute
     String sigmaWorkbookQualifiedName;
 

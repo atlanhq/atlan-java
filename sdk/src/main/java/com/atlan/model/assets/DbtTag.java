@@ -130,7 +130,7 @@ public class DbtTag extends Asset implements IDbtTag, IDbt, ITag, ICatalog, IAss
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
-    /** TBC */
+    /** Name of the classification in Atlan that is mapped to this tag. */
     @Attribute
     @JsonProperty("mappedClassificationName")
     String mappedAtlanTagName;
@@ -145,17 +145,17 @@ public class DbtTag extends Asset implements IDbtTag, IDbt, ITag, ICatalog, IAss
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** TBC */
+    /** Allowed values for the tag in the source system. These are denormalized from tagAttributes for ease of querying. */
     @Attribute
     @Singular
     SortedSet<String> tagAllowedValues;
 
-    /** TBC */
+    /** Attributes associated with the tag in the source system. */
     @Attribute
     @Singular
     List<SourceTagAttribute> tagAttributes;
 
-    /** TBC */
+    /** Unique identifier of the tag in the source system. */
     @Attribute
     String tagId;
 

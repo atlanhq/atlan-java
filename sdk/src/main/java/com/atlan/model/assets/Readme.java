@@ -59,11 +59,11 @@ public class Readme extends Asset implements IReadme, IResource, ICatalog, IAsse
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
-    /** TBC */
+    /** Whether the resource is global (true) or not (false). */
     @Attribute
     Boolean isGlobal;
 
-    /** TBC */
+    /** URL to the resource. */
     @Attribute
     String link;
 
@@ -77,11 +77,11 @@ public class Readme extends Asset implements IReadme, IResource, ICatalog, IAsse
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** TBC */
+    /** Reference to the resource. */
     @Attribute
     String reference;
 
-    /** TBC */
+    /** Metadata of the resource. */
     @Attribute
     @Singular("putResourceMetadata")
     Map<String, String> resourceMetadata;
