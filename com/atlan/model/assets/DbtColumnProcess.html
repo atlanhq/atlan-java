@@ -510,14 +510,14 @@ implements <a href="IDbtColumnProcess.html" title="interface in com.atlan.model.
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAst()">getAst</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Parsed AST of the code or SQL statements that describe the logic of this process.</div>
 </td>
 </tr>
 <tr id="i22" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCode()">getCode</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Code that ran within the process.</div>
 </td>
 </tr>
 <tr id="i23" class="rowColor">
@@ -664,7 +664,7 @@ implements <a href="IDbtColumnProcess.html" title="interface in com.atlan.model.
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInputs()">getInputs</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Assets that are inputs to this process.</div>
+<div class="block">Assets that are inputs to this task.</div>
 </td>
 </tr>
 <tr id="i44" class="altColor">
@@ -706,21 +706,21 @@ implements <a href="IDbtColumnProcess.html" title="interface in com.atlan.model.
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOutputs()">getOutputs</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Assets that are outputs from this process.</div>
+<div class="block">Assets that are outputs from this task.</div>
 </td>
 </tr>
 <tr id="i50" class="altColor">
 <td class="colFirst"><code><a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getProcess()">getProcess</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Parent process that contains this column-level process.</div>
+<div class="block">Process in which this task exists.</div>
 </td>
 </tr>
 <tr id="i51" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSql()">getSql</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">SQL query that ran to produce the outputs.</div>
 </td>
 </tr>
 <tr id="i52" class="altColor">
@@ -2402,7 +2402,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getAst</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getAst()</pre>
-<div class="block">TBC</div>
+<div class="block">Parsed AST of the code or SQL statements that describe the logic of this process.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IColumnProcess.html#getAst()">getAst</a></code>&nbsp;in interface&nbsp;<code><a href="IColumnProcess.html" title="interface in com.atlan.model.assets">IColumnProcess</a></code></dd>
@@ -2420,7 +2420,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getCode</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getCode()</pre>
-<div class="block">TBC</div>
+<div class="block">Code that ran within the process.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IColumnProcess.html#getCode()">getCode</a></code>&nbsp;in interface&nbsp;<code><a href="IColumnProcess.html" title="interface in com.atlan.model.assets">IColumnProcess</a></code></dd>
@@ -2794,7 +2794,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getInputs</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a>&gt;&nbsp;getInputs()</pre>
-<div class="block">Assets that are inputs to this process.</div>
+<div class="block">Assets that are inputs to this task.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IColumnProcess.html#getInputs()">getInputs</a></code>&nbsp;in interface&nbsp;<code><a href="IColumnProcess.html" title="interface in com.atlan.model.assets">IColumnProcess</a></code></dd>
@@ -2866,7 +2866,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getOutputs</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a>&gt;&nbsp;getOutputs()</pre>
-<div class="block">Assets that are outputs from this process.</div>
+<div class="block">Assets that are outputs from this task.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IColumnProcess.html#getOutputs()">getOutputs</a></code>&nbsp;in interface&nbsp;<code><a href="IColumnProcess.html" title="interface in com.atlan.model.assets">IColumnProcess</a></code></dd>
@@ -2884,7 +2884,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getProcess</h4>
 <pre class="methodSignature">public&nbsp;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&nbsp;getProcess()</pre>
-<div class="block">Parent process that contains this column-level process.</div>
+<div class="block">Process in which this task exists.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IColumnProcess.html#getProcess()">getProcess</a></code>&nbsp;in interface&nbsp;<code><a href="IColumnProcess.html" title="interface in com.atlan.model.assets">IColumnProcess</a></code></dd>
@@ -2900,7 +2900,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getSql</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getSql()</pre>
-<div class="block">TBC</div>
+<div class="block">SQL query that ran to produce the outputs.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IColumnProcess.html#getSql()">getSql</a></code>&nbsp;in interface&nbsp;<code><a href="IColumnProcess.html" title="interface in com.atlan.model.assets">IColumnProcess</a></code></dd>

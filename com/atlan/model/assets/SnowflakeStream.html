@@ -489,14 +489,14 @@ implements <a href="ISnowflakeStream.html" title="interface in com.atlan.model.a
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDatabaseName()">getDatabaseName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Simple name of the database in which this SQL asset exists, or empty if it does not exist within a database.</div>
 </td>
 </tr>
 <tr id="i21" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDatabaseQualifiedName()">getDatabaseQualifiedName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Unique name of the database in which this SQL asset exists, or empty if it does not exist within a database.</div>
 </td>
 </tr>
 <tr id="i22" class="altColor">
@@ -538,14 +538,14 @@ implements <a href="ISnowflakeStream.html" title="interface in com.atlan.model.a
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIsProfiled()">getIsProfiled</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Whether this asset has been profiled (true) or not (false).</div>
 </td>
 </tr>
 <tr id="i28" class="altColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLastProfiledAt()">getLastProfiledAt</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Time (epoch) at which this asset was last profiled, in milliseconds.</div>
 </td>
 </tr>
 <tr id="i29" class="rowColor">
@@ -566,28 +566,28 @@ implements <a href="ISnowflakeStream.html" title="interface in com.atlan.model.a
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getQueryCount()">getQueryCount</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Number of times this asset has been queried.</div>
 </td>
 </tr>
 <tr id="i32" class="altColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getQueryCountUpdatedAt()">getQueryCountUpdatedAt</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Time (epoch) at which the query count was last updated, in milliseconds.</div>
 </td>
 </tr>
 <tr id="i33" class="rowColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getQueryUserCount()">getQueryUserCount</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Number of unique users who have queried this asset.</div>
 </td>
 </tr>
 <tr id="i34" class="altColor">
 <td class="colFirst"><code>java.util.Map&lt;java.lang.String,&#8203;java.lang.Long&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getQueryUserMap()">getQueryUserMap</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Map of unique users who have queried this asset to the number of times they have queried it.</div>
 </td>
 </tr>
 <tr id="i35" class="rowColor">
@@ -601,14 +601,14 @@ implements <a href="ISnowflakeStream.html" title="interface in com.atlan.model.a
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSchemaName()">getSchemaName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Simple name of the schema in which this SQL asset exists, or empty if it does not exist within a schema.</div>
 </td>
 </tr>
 <tr id="i37" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSchemaQualifiedName()">getSchemaQualifiedName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Unique name of the schema in which this SQL asset exists, or empty if it does not exist within a schema.</div>
 </td>
 </tr>
 <tr id="i38" class="altColor">
@@ -664,14 +664,14 @@ implements <a href="ISnowflakeStream.html" title="interface in com.atlan.model.a
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTableName()">getTableName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table.</div>
 </td>
 </tr>
 <tr id="i46" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTableQualifiedName()">getTableQualifiedName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Unique name of the table in which this SQL asset exists, or empty if it does not exist within a table.</div>
 </td>
 </tr>
 <tr id="i47" class="rowColor">
@@ -685,14 +685,14 @@ implements <a href="ISnowflakeStream.html" title="interface in com.atlan.model.a
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getViewName()">getViewName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Simple name of the view in which this SQL asset exists, or empty if it does not exist within a view.</div>
 </td>
 </tr>
 <tr id="i49" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getViewQualifiedName()">getViewQualifiedName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Unique name of the view in which this SQL asset exists, or empty if it does not exist within a view.</div>
 </td>
 </tr>
 <tr id="i50" class="altColor">
@@ -2335,7 +2335,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getDatabaseName</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getDatabaseName()</pre>
-<div class="block">TBC</div>
+<div class="block">Simple name of the database in which this SQL asset exists, or empty if it does not exist within a database.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISnowflakeStream.html#getDatabaseName()">getDatabaseName</a></code>&nbsp;in interface&nbsp;<code><a href="ISnowflakeStream.html" title="interface in com.atlan.model.assets">ISnowflakeStream</a></code></dd>
@@ -2351,7 +2351,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getDatabaseQualifiedName</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getDatabaseQualifiedName()</pre>
-<div class="block">TBC</div>
+<div class="block">Unique name of the database in which this SQL asset exists, or empty if it does not exist within a database.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISnowflakeStream.html#getDatabaseQualifiedName()">getDatabaseQualifiedName</a></code>&nbsp;in interface&nbsp;<code><a href="ISnowflakeStream.html" title="interface in com.atlan.model.assets">ISnowflakeStream</a></code></dd>
@@ -2451,7 +2451,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getIsProfiled</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Boolean&nbsp;getIsProfiled()</pre>
-<div class="block">TBC</div>
+<div class="block">Whether this asset has been profiled (true) or not (false).</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISnowflakeStream.html#getIsProfiled()">getIsProfiled</a></code>&nbsp;in interface&nbsp;<code><a href="ISnowflakeStream.html" title="interface in com.atlan.model.assets">ISnowflakeStream</a></code></dd>
@@ -2467,7 +2467,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getLastProfiledAt</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Long&nbsp;getLastProfiledAt()</pre>
-<div class="block">TBC</div>
+<div class="block">Time (epoch) at which this asset was last profiled, in milliseconds.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISnowflakeStream.html#getLastProfiledAt()">getLastProfiledAt</a></code>&nbsp;in interface&nbsp;<code><a href="ISnowflakeStream.html" title="interface in com.atlan.model.assets">ISnowflakeStream</a></code></dd>
@@ -2519,7 +2519,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getQueryCount</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Long&nbsp;getQueryCount()</pre>
-<div class="block">TBC</div>
+<div class="block">Number of times this asset has been queried.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISnowflakeStream.html#getQueryCount()">getQueryCount</a></code>&nbsp;in interface&nbsp;<code><a href="ISnowflakeStream.html" title="interface in com.atlan.model.assets">ISnowflakeStream</a></code></dd>
@@ -2535,7 +2535,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getQueryCountUpdatedAt</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Long&nbsp;getQueryCountUpdatedAt()</pre>
-<div class="block">TBC</div>
+<div class="block">Time (epoch) at which the query count was last updated, in milliseconds.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISnowflakeStream.html#getQueryCountUpdatedAt()">getQueryCountUpdatedAt</a></code>&nbsp;in interface&nbsp;<code><a href="ISnowflakeStream.html" title="interface in com.atlan.model.assets">ISnowflakeStream</a></code></dd>
@@ -2551,7 +2551,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getQueryUserCount</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Long&nbsp;getQueryUserCount()</pre>
-<div class="block">TBC</div>
+<div class="block">Number of unique users who have queried this asset.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISnowflakeStream.html#getQueryUserCount()">getQueryUserCount</a></code>&nbsp;in interface&nbsp;<code><a href="ISnowflakeStream.html" title="interface in com.atlan.model.assets">ISnowflakeStream</a></code></dd>
@@ -2567,7 +2567,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getQueryUserMap</h4>
 <pre class="methodSignature">public&nbsp;java.util.Map&lt;java.lang.String,&#8203;java.lang.Long&gt;&nbsp;getQueryUserMap()</pre>
-<div class="block">TBC</div>
+<div class="block">Map of unique users who have queried this asset to the number of times they have queried it.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISnowflakeStream.html#getQueryUserMap()">getQueryUserMap</a></code>&nbsp;in interface&nbsp;<code><a href="ISnowflakeStream.html" title="interface in com.atlan.model.assets">ISnowflakeStream</a></code></dd>
@@ -2597,7 +2597,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getSchemaName</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getSchemaName()</pre>
-<div class="block">TBC</div>
+<div class="block">Simple name of the schema in which this SQL asset exists, or empty if it does not exist within a schema.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISnowflakeStream.html#getSchemaName()">getSchemaName</a></code>&nbsp;in interface&nbsp;<code><a href="ISnowflakeStream.html" title="interface in com.atlan.model.assets">ISnowflakeStream</a></code></dd>
@@ -2613,7 +2613,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getSchemaQualifiedName</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getSchemaQualifiedName()</pre>
-<div class="block">TBC</div>
+<div class="block">Unique name of the schema in which this SQL asset exists, or empty if it does not exist within a schema.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISnowflakeStream.html#getSchemaQualifiedName()">getSchemaQualifiedName</a></code>&nbsp;in interface&nbsp;<code><a href="ISnowflakeStream.html" title="interface in com.atlan.model.assets">ISnowflakeStream</a></code></dd>
@@ -2731,7 +2731,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getTableName</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getTableName()</pre>
-<div class="block">TBC</div>
+<div class="block">Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISnowflakeStream.html#getTableName()">getTableName</a></code>&nbsp;in interface&nbsp;<code><a href="ISnowflakeStream.html" title="interface in com.atlan.model.assets">ISnowflakeStream</a></code></dd>
@@ -2747,7 +2747,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getTableQualifiedName</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getTableQualifiedName()</pre>
-<div class="block">TBC</div>
+<div class="block">Unique name of the table in which this SQL asset exists, or empty if it does not exist within a table.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISnowflakeStream.html#getTableQualifiedName()">getTableQualifiedName</a></code>&nbsp;in interface&nbsp;<code><a href="ISnowflakeStream.html" title="interface in com.atlan.model.assets">ISnowflakeStream</a></code></dd>
@@ -2763,7 +2763,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getViewName</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getViewName()</pre>
-<div class="block">TBC</div>
+<div class="block">Simple name of the view in which this SQL asset exists, or empty if it does not exist within a view.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISnowflakeStream.html#getViewName()">getViewName</a></code>&nbsp;in interface&nbsp;<code><a href="ISnowflakeStream.html" title="interface in com.atlan.model.assets">ISnowflakeStream</a></code></dd>
@@ -2779,7 +2779,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getViewQualifiedName</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getViewQualifiedName()</pre>
-<div class="block">TBC</div>
+<div class="block">Unique name of the view in which this SQL asset exists, or empty if it does not exist within a view.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISnowflakeStream.html#getViewQualifiedName()">getViewQualifiedName</a></code>&nbsp;in interface&nbsp;<code><a href="ISnowflakeStream.html" title="interface in com.atlan.model.assets">ISnowflakeStream</a></code></dd>

@@ -503,14 +503,14 @@ implements <a href="IDbtProcess.html" title="interface in com.atlan.model.assets
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAst()">getAst</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Parsed AST of the code or SQL statements that describe the logic of this process.</div>
 </td>
 </tr>
 <tr id="i22" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCode()">getCode</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Code that ran within the process.</div>
 </td>
 </tr>
 <tr id="i23" class="rowColor">
@@ -657,7 +657,7 @@ implements <a href="IDbtProcess.html" title="interface in com.atlan.model.assets
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInputs()">getInputs</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Assets that are inputs to this process.</div>
+<div class="block">Assets that are inputs to this task.</div>
 </td>
 </tr>
 <tr id="i44" class="altColor">
@@ -699,14 +699,14 @@ implements <a href="IDbtProcess.html" title="interface in com.atlan.model.assets
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOutputs()">getOutputs</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Assets that are outputs from this process.</div>
+<div class="block">Assets that are outputs from this task.</div>
 </td>
 </tr>
 <tr id="i50" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSql()">getSql</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">SQL query that ran to produce the outputs.</div>
 </td>
 </tr>
 <tr id="i51" class="rowColor">
@@ -2379,7 +2379,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getAst</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getAst()</pre>
-<div class="block">TBC</div>
+<div class="block">Parsed AST of the code or SQL statements that describe the logic of this process.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IDbtProcess.html#getAst()">getAst</a></code>&nbsp;in interface&nbsp;<code><a href="IDbtProcess.html" title="interface in com.atlan.model.assets">IDbtProcess</a></code></dd>
@@ -2395,7 +2395,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getCode</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getCode()</pre>
-<div class="block">TBC</div>
+<div class="block">Code that ran within the process.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IDbtProcess.html#getCode()">getCode</a></code>&nbsp;in interface&nbsp;<code><a href="IDbtProcess.html" title="interface in com.atlan.model.assets">IDbtProcess</a></code></dd>
@@ -2765,7 +2765,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getInputs</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a>&gt;&nbsp;getInputs()</pre>
-<div class="block">Assets that are inputs to this process.</div>
+<div class="block">Assets that are inputs to this task.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IDbtProcess.html#getInputs()">getInputs</a></code>&nbsp;in interface&nbsp;<code><a href="IDbtProcess.html" title="interface in com.atlan.model.assets">IDbtProcess</a></code></dd>
@@ -2833,7 +2833,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getOutputs</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a>&gt;&nbsp;getOutputs()</pre>
-<div class="block">Assets that are outputs from this process.</div>
+<div class="block">Assets that are outputs from this task.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IDbtProcess.html#getOutputs()">getOutputs</a></code>&nbsp;in interface&nbsp;<code><a href="IDbtProcess.html" title="interface in com.atlan.model.assets">IDbtProcess</a></code></dd>
@@ -2849,7 +2849,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getSql</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getSql()</pre>
-<div class="block">TBC</div>
+<div class="block">SQL query that ran to produce the outputs.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IDbtProcess.html#getSql()">getSql</a></code>&nbsp;in interface&nbsp;<code><a href="IDbtProcess.html" title="interface in com.atlan.model.assets">IDbtProcess</a></code></dd>

@@ -496,35 +496,35 @@ implements <a href="ISnowflakeDynamicTable.html" title="interface in com.atlan.m
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAlias()">getAlias</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Alias for this table.</div>
 </td>
 </tr>
 <tr id="i21" class="rowColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getColumnCount()">getColumnCount</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Number of columns in this table.</div>
 </td>
 </tr>
 <tr id="i22" class="altColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IColumn.html" title="interface in com.atlan.model.assets">IColumn</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getColumns()">getColumns</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Columns that exist within this Snowflake dynamic table.</div>
+<div class="block">Columns that exist within this table.</div>
 </td>
 </tr>
 <tr id="i23" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDatabaseName()">getDatabaseName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Simple name of the database in which this SQL asset exists, or empty if it does not exist within a database.</div>
 </td>
 </tr>
 <tr id="i24" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDatabaseQualifiedName()">getDatabaseQualifiedName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Unique name of the database in which this SQL asset exists, or empty if it does not exist within a database.</div>
 </td>
 </tr>
 <tr id="i25" class="rowColor">
@@ -566,21 +566,21 @@ implements <a href="ISnowflakeDynamicTable.html" title="interface in com.atlan.m
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getExternalLocation()">getExternalLocation</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">External location of this table, for example: an S3 object location.</div>
 </td>
 </tr>
 <tr id="i31" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getExternalLocationFormat()">getExternalLocationFormat</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Format of the external location of this table, for example: JSON, CSV, PARQUET, etc.</div>
 </td>
 </tr>
 <tr id="i32" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getExternalLocationRegion()">getExternalLocationRegion</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Region of the external location of this table, for example: S3 region.</div>
 </td>
 </tr>
 <tr id="i33" class="rowColor">
@@ -608,35 +608,35 @@ implements <a href="ISnowflakeDynamicTable.html" title="interface in com.atlan.m
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIsPartitioned()">getIsPartitioned</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Whether this table is partitioned (true) or not (false).</div>
 </td>
 </tr>
 <tr id="i37" class="rowColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIsProfiled()">getIsProfiled</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Whether this asset has been profiled (true) or not (false).</div>
 </td>
 </tr>
 <tr id="i38" class="altColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIsQueryPreview()">getIsQueryPreview</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Whether preview queries are allowed for this table (true) or not (false).</div>
 </td>
 </tr>
 <tr id="i39" class="rowColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIsTemporary()">getIsTemporary</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Whether this table is temporary (true) or not (false).</div>
 </td>
 </tr>
 <tr id="i40" class="altColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLastProfiledAt()">getLastProfiledAt</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Time (epoch) at which this asset was last profiled, in milliseconds.</div>
 </td>
 </tr>
 <tr id="i41" class="rowColor">
@@ -657,14 +657,14 @@ implements <a href="ISnowflakeDynamicTable.html" title="interface in com.atlan.m
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPartitionCount()">getPartitionCount</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Number of partitions in this table.</div>
 </td>
 </tr>
 <tr id="i44" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPartitionList()">getPartitionList</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">List of partitions in this table.</div>
 </td>
 </tr>
 <tr id="i45" class="rowColor">
@@ -678,7 +678,7 @@ implements <a href="ISnowflakeDynamicTable.html" title="interface in com.atlan.m
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPartitionStrategy()">getPartitionStrategy</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Partition strategy for this table.</div>
 </td>
 </tr>
 <tr id="i47" class="rowColor">
@@ -692,70 +692,70 @@ implements <a href="ISnowflakeDynamicTable.html" title="interface in com.atlan.m
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getQueryCount()">getQueryCount</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Number of times this asset has been queried.</div>
 </td>
 </tr>
 <tr id="i49" class="rowColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getQueryCountUpdatedAt()">getQueryCountUpdatedAt</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Time (epoch) at which the query count was last updated, in milliseconds.</div>
 </td>
 </tr>
 <tr id="i50" class="altColor">
 <td class="colFirst"><code>java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getQueryPreviewConfig()">getQueryPreviewConfig</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Configuration for preview queries.</div>
 </td>
 </tr>
 <tr id="i51" class="rowColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getQueryUserCount()">getQueryUserCount</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Number of unique users who have queried this asset.</div>
 </td>
 </tr>
 <tr id="i52" class="altColor">
 <td class="colFirst"><code>java.util.Map&lt;java.lang.String,&#8203;java.lang.Long&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getQueryUserMap()">getQueryUserMap</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Map of unique users who have queried this asset to the number of times they have queried it.</div>
 </td>
 </tr>
 <tr id="i53" class="rowColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRowCount()">getRowCount</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Number of rows in this table.</div>
 </td>
 </tr>
 <tr id="i54" class="altColor">
 <td class="colFirst"><code><a href="ISchema.html" title="interface in com.atlan.model.assets">ISchema</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSchema()">getSchema</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Schema in which this Snowflake dynamic table exists.</div>
+<div class="block">Schema in which this table exists.</div>
 </td>
 </tr>
 <tr id="i55" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSchemaName()">getSchemaName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Simple name of the schema in which this SQL asset exists, or empty if it does not exist within a schema.</div>
 </td>
 </tr>
 <tr id="i56" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSchemaQualifiedName()">getSchemaQualifiedName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Unique name of the schema in which this SQL asset exists, or empty if it does not exist within a schema.</div>
 </td>
 </tr>
 <tr id="i57" class="rowColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSizeBytes()">getSizeBytes</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Size of this table, in bytes.</div>
 </td>
 </tr>
 <tr id="i58" class="altColor">
@@ -776,14 +776,14 @@ implements <a href="ISnowflakeDynamicTable.html" title="interface in com.atlan.m
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTableName()">getTableName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table.</div>
 </td>
 </tr>
 <tr id="i61" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTableQualifiedName()">getTableQualifiedName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Unique name of the table in which this SQL asset exists, or empty if it does not exist within a table.</div>
 </td>
 </tr>
 <tr id="i62" class="altColor">
@@ -797,14 +797,14 @@ implements <a href="ISnowflakeDynamicTable.html" title="interface in com.atlan.m
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getViewName()">getViewName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Simple name of the view in which this SQL asset exists, or empty if it does not exist within a view.</div>
 </td>
 </tr>
 <tr id="i64" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getViewQualifiedName()">getViewQualifiedName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Unique name of the view in which this SQL asset exists, or empty if it does not exist within a view.</div>
 </td>
 </tr>
 <tr id="i65" class="rowColor">
@@ -2454,7 +2454,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getAlias</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getAlias()</pre>
-<div class="block">TBC</div>
+<div class="block">Alias for this table.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISnowflakeDynamicTable.html#getAlias()">getAlias</a></code>&nbsp;in interface&nbsp;<code><a href="ISnowflakeDynamicTable.html" title="interface in com.atlan.model.assets">ISnowflakeDynamicTable</a></code></dd>
@@ -2470,7 +2470,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getColumnCount</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Long&nbsp;getColumnCount()</pre>
-<div class="block">TBC</div>
+<div class="block">Number of columns in this table.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISnowflakeDynamicTable.html#getColumnCount()">getColumnCount</a></code>&nbsp;in interface&nbsp;<code><a href="ISnowflakeDynamicTable.html" title="interface in com.atlan.model.assets">ISnowflakeDynamicTable</a></code></dd>
@@ -2486,7 +2486,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getColumns</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="IColumn.html" title="interface in com.atlan.model.assets">IColumn</a>&gt;&nbsp;getColumns()</pre>
-<div class="block">Columns that exist within this Snowflake dynamic table.</div>
+<div class="block">Columns that exist within this table.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISnowflakeDynamicTable.html#getColumns()">getColumns</a></code>&nbsp;in interface&nbsp;<code><a href="ISnowflakeDynamicTable.html" title="interface in com.atlan.model.assets">ISnowflakeDynamicTable</a></code></dd>
@@ -2502,7 +2502,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getDatabaseName</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getDatabaseName()</pre>
-<div class="block">TBC</div>
+<div class="block">Simple name of the database in which this SQL asset exists, or empty if it does not exist within a database.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISnowflakeDynamicTable.html#getDatabaseName()">getDatabaseName</a></code>&nbsp;in interface&nbsp;<code><a href="ISnowflakeDynamicTable.html" title="interface in com.atlan.model.assets">ISnowflakeDynamicTable</a></code></dd>
@@ -2520,7 +2520,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getDatabaseQualifiedName</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getDatabaseQualifiedName()</pre>
-<div class="block">TBC</div>
+<div class="block">Unique name of the database in which this SQL asset exists, or empty if it does not exist within a database.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISnowflakeDynamicTable.html#getDatabaseQualifiedName()">getDatabaseQualifiedName</a></code>&nbsp;in interface&nbsp;<code><a href="ISnowflakeDynamicTable.html" title="interface in com.atlan.model.assets">ISnowflakeDynamicTable</a></code></dd>
@@ -2622,7 +2622,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getExternalLocation</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getExternalLocation()</pre>
-<div class="block">TBC</div>
+<div class="block">External location of this table, for example: an S3 object location.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISnowflakeDynamicTable.html#getExternalLocation()">getExternalLocation</a></code>&nbsp;in interface&nbsp;<code><a href="ISnowflakeDynamicTable.html" title="interface in com.atlan.model.assets">ISnowflakeDynamicTable</a></code></dd>
@@ -2638,7 +2638,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getExternalLocationFormat</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getExternalLocationFormat()</pre>
-<div class="block">TBC</div>
+<div class="block">Format of the external location of this table, for example: JSON, CSV, PARQUET, etc.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISnowflakeDynamicTable.html#getExternalLocationFormat()">getExternalLocationFormat</a></code>&nbsp;in interface&nbsp;<code><a href="ISnowflakeDynamicTable.html" title="interface in com.atlan.model.assets">ISnowflakeDynamicTable</a></code></dd>
@@ -2654,7 +2654,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getExternalLocationRegion</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getExternalLocationRegion()</pre>
-<div class="block">TBC</div>
+<div class="block">Region of the external location of this table, for example: S3 region.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISnowflakeDynamicTable.html#getExternalLocationRegion()">getExternalLocationRegion</a></code>&nbsp;in interface&nbsp;<code><a href="ISnowflakeDynamicTable.html" title="interface in com.atlan.model.assets">ISnowflakeDynamicTable</a></code></dd>
@@ -2726,7 +2726,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getIsPartitioned</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Boolean&nbsp;getIsPartitioned()</pre>
-<div class="block">TBC</div>
+<div class="block">Whether this table is partitioned (true) or not (false).</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISnowflakeDynamicTable.html#getIsPartitioned()">getIsPartitioned</a></code>&nbsp;in interface&nbsp;<code><a href="ISnowflakeDynamicTable.html" title="interface in com.atlan.model.assets">ISnowflakeDynamicTable</a></code></dd>
@@ -2742,7 +2742,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getIsProfiled</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Boolean&nbsp;getIsProfiled()</pre>
-<div class="block">TBC</div>
+<div class="block">Whether this asset has been profiled (true) or not (false).</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISnowflakeDynamicTable.html#getIsProfiled()">getIsProfiled</a></code>&nbsp;in interface&nbsp;<code><a href="ISnowflakeDynamicTable.html" title="interface in com.atlan.model.assets">ISnowflakeDynamicTable</a></code></dd>
@@ -2760,7 +2760,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getIsQueryPreview</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Boolean&nbsp;getIsQueryPreview()</pre>
-<div class="block">TBC</div>
+<div class="block">Whether preview queries are allowed for this table (true) or not (false).</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISnowflakeDynamicTable.html#getIsQueryPreview()">getIsQueryPreview</a></code>&nbsp;in interface&nbsp;<code><a href="ISnowflakeDynamicTable.html" title="interface in com.atlan.model.assets">ISnowflakeDynamicTable</a></code></dd>
@@ -2776,7 +2776,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getIsTemporary</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Boolean&nbsp;getIsTemporary()</pre>
-<div class="block">TBC</div>
+<div class="block">Whether this table is temporary (true) or not (false).</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISnowflakeDynamicTable.html#getIsTemporary()">getIsTemporary</a></code>&nbsp;in interface&nbsp;<code><a href="ISnowflakeDynamicTable.html" title="interface in com.atlan.model.assets">ISnowflakeDynamicTable</a></code></dd>
@@ -2792,7 +2792,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getLastProfiledAt</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Long&nbsp;getLastProfiledAt()</pre>
-<div class="block">TBC</div>
+<div class="block">Time (epoch) at which this asset was last profiled, in milliseconds.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISnowflakeDynamicTable.html#getLastProfiledAt()">getLastProfiledAt</a></code>&nbsp;in interface&nbsp;<code><a href="ISnowflakeDynamicTable.html" title="interface in com.atlan.model.assets">ISnowflakeDynamicTable</a></code></dd>
@@ -2850,7 +2850,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getPartitionCount</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Long&nbsp;getPartitionCount()</pre>
-<div class="block">TBC</div>
+<div class="block">Number of partitions in this table.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISnowflakeDynamicTable.html#getPartitionCount()">getPartitionCount</a></code>&nbsp;in interface&nbsp;<code><a href="ISnowflakeDynamicTable.html" title="interface in com.atlan.model.assets">ISnowflakeDynamicTable</a></code></dd>
@@ -2866,7 +2866,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getPartitionList</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getPartitionList()</pre>
-<div class="block">TBC</div>
+<div class="block">List of partitions in this table.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISnowflakeDynamicTable.html#getPartitionList()">getPartitionList</a></code>&nbsp;in interface&nbsp;<code><a href="ISnowflakeDynamicTable.html" title="interface in com.atlan.model.assets">ISnowflakeDynamicTable</a></code></dd>
@@ -2882,7 +2882,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getPartitionStrategy</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getPartitionStrategy()</pre>
-<div class="block">TBC</div>
+<div class="block">Partition strategy for this table.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISnowflakeDynamicTable.html#getPartitionStrategy()">getPartitionStrategy</a></code>&nbsp;in interface&nbsp;<code><a href="ISnowflakeDynamicTable.html" title="interface in com.atlan.model.assets">ISnowflakeDynamicTable</a></code></dd>
@@ -2930,7 +2930,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getQueryCount</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Long&nbsp;getQueryCount()</pre>
-<div class="block">TBC</div>
+<div class="block">Number of times this asset has been queried.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISnowflakeDynamicTable.html#getQueryCount()">getQueryCount</a></code>&nbsp;in interface&nbsp;<code><a href="ISnowflakeDynamicTable.html" title="interface in com.atlan.model.assets">ISnowflakeDynamicTable</a></code></dd>
@@ -2948,7 +2948,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getQueryCountUpdatedAt</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Long&nbsp;getQueryCountUpdatedAt()</pre>
-<div class="block">TBC</div>
+<div class="block">Time (epoch) at which the query count was last updated, in milliseconds.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISnowflakeDynamicTable.html#getQueryCountUpdatedAt()">getQueryCountUpdatedAt</a></code>&nbsp;in interface&nbsp;<code><a href="ISnowflakeDynamicTable.html" title="interface in com.atlan.model.assets">ISnowflakeDynamicTable</a></code></dd>
@@ -2966,7 +2966,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getQueryPreviewConfig</h4>
 <pre class="methodSignature">public&nbsp;java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;getQueryPreviewConfig()</pre>
-<div class="block">TBC</div>
+<div class="block">Configuration for preview queries.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISnowflakeDynamicTable.html#getQueryPreviewConfig()">getQueryPreviewConfig</a></code>&nbsp;in interface&nbsp;<code><a href="ISnowflakeDynamicTable.html" title="interface in com.atlan.model.assets">ISnowflakeDynamicTable</a></code></dd>
@@ -2982,7 +2982,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getQueryUserCount</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Long&nbsp;getQueryUserCount()</pre>
-<div class="block">TBC</div>
+<div class="block">Number of unique users who have queried this asset.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISnowflakeDynamicTable.html#getQueryUserCount()">getQueryUserCount</a></code>&nbsp;in interface&nbsp;<code><a href="ISnowflakeDynamicTable.html" title="interface in com.atlan.model.assets">ISnowflakeDynamicTable</a></code></dd>
@@ -3000,7 +3000,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getQueryUserMap</h4>
 <pre class="methodSignature">public&nbsp;java.util.Map&lt;java.lang.String,&#8203;java.lang.Long&gt;&nbsp;getQueryUserMap()</pre>
-<div class="block">TBC</div>
+<div class="block">Map of unique users who have queried this asset to the number of times they have queried it.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISnowflakeDynamicTable.html#getQueryUserMap()">getQueryUserMap</a></code>&nbsp;in interface&nbsp;<code><a href="ISnowflakeDynamicTable.html" title="interface in com.atlan.model.assets">ISnowflakeDynamicTable</a></code></dd>
@@ -3018,7 +3018,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getRowCount</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Long&nbsp;getRowCount()</pre>
-<div class="block">TBC</div>
+<div class="block">Number of rows in this table.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISnowflakeDynamicTable.html#getRowCount()">getRowCount</a></code>&nbsp;in interface&nbsp;<code><a href="ISnowflakeDynamicTable.html" title="interface in com.atlan.model.assets">ISnowflakeDynamicTable</a></code></dd>
@@ -3034,7 +3034,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getSchema</h4>
 <pre class="methodSignature">public&nbsp;<a href="ISchema.html" title="interface in com.atlan.model.assets">ISchema</a>&nbsp;getSchema()</pre>
-<div class="block">Schema in which this Snowflake dynamic table exists.</div>
+<div class="block">Schema in which this table exists.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISnowflakeDynamicTable.html#getSchema()">getSchema</a></code>&nbsp;in interface&nbsp;<code><a href="ISnowflakeDynamicTable.html" title="interface in com.atlan.model.assets">ISnowflakeDynamicTable</a></code></dd>
@@ -3050,7 +3050,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getSchemaName</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getSchemaName()</pre>
-<div class="block">TBC</div>
+<div class="block">Simple name of the schema in which this SQL asset exists, or empty if it does not exist within a schema.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISnowflakeDynamicTable.html#getSchemaName()">getSchemaName</a></code>&nbsp;in interface&nbsp;<code><a href="ISnowflakeDynamicTable.html" title="interface in com.atlan.model.assets">ISnowflakeDynamicTable</a></code></dd>
@@ -3068,7 +3068,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getSchemaQualifiedName</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getSchemaQualifiedName()</pre>
-<div class="block">TBC</div>
+<div class="block">Unique name of the schema in which this SQL asset exists, or empty if it does not exist within a schema.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISnowflakeDynamicTable.html#getSchemaQualifiedName()">getSchemaQualifiedName</a></code>&nbsp;in interface&nbsp;<code><a href="ISnowflakeDynamicTable.html" title="interface in com.atlan.model.assets">ISnowflakeDynamicTable</a></code></dd>
@@ -3086,7 +3086,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getSizeBytes</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Long&nbsp;getSizeBytes()</pre>
-<div class="block">TBC</div>
+<div class="block">Size of this table, in bytes.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISnowflakeDynamicTable.html#getSizeBytes()">getSizeBytes</a></code>&nbsp;in interface&nbsp;<code><a href="ISnowflakeDynamicTable.html" title="interface in com.atlan.model.assets">ISnowflakeDynamicTable</a></code></dd>
@@ -3138,7 +3138,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getTableName</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getTableName()</pre>
-<div class="block">TBC</div>
+<div class="block">Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISnowflakeDynamicTable.html#getTableName()">getTableName</a></code>&nbsp;in interface&nbsp;<code><a href="ISnowflakeDynamicTable.html" title="interface in com.atlan.model.assets">ISnowflakeDynamicTable</a></code></dd>
@@ -3156,7 +3156,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getTableQualifiedName</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getTableQualifiedName()</pre>
-<div class="block">TBC</div>
+<div class="block">Unique name of the table in which this SQL asset exists, or empty if it does not exist within a table.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISnowflakeDynamicTable.html#getTableQualifiedName()">getTableQualifiedName</a></code>&nbsp;in interface&nbsp;<code><a href="ISnowflakeDynamicTable.html" title="interface in com.atlan.model.assets">ISnowflakeDynamicTable</a></code></dd>
@@ -3174,7 +3174,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getViewName</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getViewName()</pre>
-<div class="block">TBC</div>
+<div class="block">Simple name of the view in which this SQL asset exists, or empty if it does not exist within a view.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISnowflakeDynamicTable.html#getViewName()">getViewName</a></code>&nbsp;in interface&nbsp;<code><a href="ISnowflakeDynamicTable.html" title="interface in com.atlan.model.assets">ISnowflakeDynamicTable</a></code></dd>
@@ -3192,7 +3192,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getViewQualifiedName</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getViewQualifiedName()</pre>
-<div class="block">TBC</div>
+<div class="block">Unique name of the view in which this SQL asset exists, or empty if it does not exist within a view.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="ISnowflakeDynamicTable.html#getViewQualifiedName()">getViewQualifiedName</a></code>&nbsp;in interface&nbsp;<code><a href="ISnowflakeDynamicTable.html" title="interface in com.atlan.model.assets">ISnowflakeDynamicTable</a></code></dd>

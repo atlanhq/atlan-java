@@ -515,63 +515,63 @@ implements <a href="IS3Object.html" title="interface in com.atlan.model.assets">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAwsAccountId()">getAwsAccountId</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">12-digit number that uniquely identifies an AWS account.</div>
 </td>
 </tr>
 <tr id="i23" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAwsArn()">getAwsArn</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Amazon Resource Name (ARN) for this asset.</div>
 </td>
 </tr>
 <tr id="i24" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAwsOwnerId()">getAwsOwnerId</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Root user's ID.</div>
 </td>
 </tr>
 <tr id="i25" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAwsOwnerName()">getAwsOwnerName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Root user's name.</div>
 </td>
 </tr>
 <tr id="i26" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAwsPartition()">getAwsPartition</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Group of AWS region and service objects.</div>
 </td>
 </tr>
 <tr id="i27" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAwsRegion()">getAwsRegion</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Physical region where the data center in which the asset exists is clustered.</div>
 </td>
 </tr>
 <tr id="i28" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAwsResourceId()">getAwsResourceId</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Unique resource ID assigned when a new resource is created.</div>
 </td>
 </tr>
 <tr id="i29" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAwsService()">getAwsService</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Type of service in which the asset exists.</div>
 </td>
 </tr>
 <tr id="i30" class="altColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="../structs/AwsTag.html" title="class in com.atlan.model.structs">AwsTag</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAwsTags()">getAwsTags</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">List of tags that have been applied to the asset in AWS.</div>
 </td>
 </tr>
 <tr id="i31" class="rowColor">
@@ -634,7 +634,7 @@ implements <a href="IS3Object.html" title="interface in com.atlan.model.assets">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getS3ETag()">getS3ETag</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Entity tag for the asset.</div>
 </td>
 </tr>
 <tr id="i40" class="altColor">
@@ -2400,7 +2400,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getAwsAccountId</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getAwsAccountId()</pre>
-<div class="block">TBC</div>
+<div class="block">12-digit number that uniquely identifies an AWS account.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IAWS.html#getAwsAccountId()">getAwsAccountId</a></code>&nbsp;in interface&nbsp;<code><a href="IAWS.html" title="interface in com.atlan.model.assets">IAWS</a></code></dd>
@@ -2418,7 +2418,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getAwsArn</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getAwsArn()</pre>
-<div class="block">TBC</div>
+<div class="block">Amazon Resource Name (ARN) for this asset. This uniquely identifies the asset in AWS, and thus must be unique across all AWS asset instances.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IAWS.html#getAwsArn()">getAwsArn</a></code>&nbsp;in interface&nbsp;<code><a href="IAWS.html" title="interface in com.atlan.model.assets">IAWS</a></code></dd>
@@ -2436,7 +2436,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getAwsOwnerId</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getAwsOwnerId()</pre>
-<div class="block">TBC</div>
+<div class="block">Root user's ID.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IAWS.html#getAwsOwnerId()">getAwsOwnerId</a></code>&nbsp;in interface&nbsp;<code><a href="IAWS.html" title="interface in com.atlan.model.assets">IAWS</a></code></dd>
@@ -2454,7 +2454,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getAwsOwnerName</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getAwsOwnerName()</pre>
-<div class="block">TBC</div>
+<div class="block">Root user's name.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IAWS.html#getAwsOwnerName()">getAwsOwnerName</a></code>&nbsp;in interface&nbsp;<code><a href="IAWS.html" title="interface in com.atlan.model.assets">IAWS</a></code></dd>
@@ -2472,7 +2472,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getAwsPartition</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getAwsPartition()</pre>
-<div class="block">TBC</div>
+<div class="block">Group of AWS region and service objects.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IAWS.html#getAwsPartition()">getAwsPartition</a></code>&nbsp;in interface&nbsp;<code><a href="IAWS.html" title="interface in com.atlan.model.assets">IAWS</a></code></dd>
@@ -2490,7 +2490,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getAwsRegion</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getAwsRegion()</pre>
-<div class="block">TBC</div>
+<div class="block">Physical region where the data center in which the asset exists is clustered.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IAWS.html#getAwsRegion()">getAwsRegion</a></code>&nbsp;in interface&nbsp;<code><a href="IAWS.html" title="interface in com.atlan.model.assets">IAWS</a></code></dd>
@@ -2508,7 +2508,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getAwsResourceId</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getAwsResourceId()</pre>
-<div class="block">TBC</div>
+<div class="block">Unique resource ID assigned when a new resource is created.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IAWS.html#getAwsResourceId()">getAwsResourceId</a></code>&nbsp;in interface&nbsp;<code><a href="IAWS.html" title="interface in com.atlan.model.assets">IAWS</a></code></dd>
@@ -2526,7 +2526,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getAwsService</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getAwsService()</pre>
-<div class="block">TBC</div>
+<div class="block">Type of service in which the asset exists.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IAWS.html#getAwsService()">getAwsService</a></code>&nbsp;in interface&nbsp;<code><a href="IAWS.html" title="interface in com.atlan.model.assets">IAWS</a></code></dd>
@@ -2544,7 +2544,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getAwsTags</h4>
 <pre class="methodSignature">public&nbsp;java.util.List&lt;<a href="../structs/AwsTag.html" title="class in com.atlan.model.structs">AwsTag</a>&gt;&nbsp;getAwsTags()</pre>
-<div class="block">TBC</div>
+<div class="block">List of tags that have been applied to the asset in AWS.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IAWS.html#getAwsTags()">getAwsTags</a></code>&nbsp;in interface&nbsp;<code><a href="IAWS.html" title="interface in com.atlan.model.assets">IAWS</a></code></dd>
@@ -2684,7 +2684,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getS3ETag</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getS3ETag()</pre>
-<div class="block">TBC</div>
+<div class="block">Entity tag for the asset. An entity tag is a hash of the object and represents changes to the contents of an object only, not its metadata.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IS3.html#getS3ETag()">getS3ETag</a></code>&nbsp;in interface&nbsp;<code><a href="IS3.html" title="interface in com.atlan.model.assets">IS3</a></code></dd>

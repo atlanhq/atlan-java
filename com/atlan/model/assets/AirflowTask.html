@@ -510,56 +510,56 @@ implements <a href="IAirflowTask.html" title="interface in com.atlan.model.asset
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAirflowRunEndTime()">getAirflowRunEndTime</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">End time of the run.</div>
 </td>
 </tr>
 <tr id="i24" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAirflowRunName()">getAirflowRunName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Name of the run.</div>
 </td>
 </tr>
 <tr id="i25" class="rowColor">
 <td class="colFirst"><code><a href="../enums/OpenLineageRunState.html" title="enum in com.atlan.model.enums">OpenLineageRunState</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAirflowRunOpenLineageState()">getAirflowRunOpenLineageState</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">State of the run in OpenLineage.</div>
 </td>
 </tr>
 <tr id="i26" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAirflowRunOpenLineageVersion()">getAirflowRunOpenLineageVersion</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Version of the run in OpenLineage.</div>
 </td>
 </tr>
 <tr id="i27" class="rowColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAirflowRunStartTime()">getAirflowRunStartTime</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Start time of the run.</div>
 </td>
 </tr>
 <tr id="i28" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAirflowRunType()">getAirflowRunType</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Type of the run.</div>
 </td>
 </tr>
 <tr id="i29" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAirflowRunVersion()">getAirflowRunVersion</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Version of the run in Airflow.</div>
 </td>
 </tr>
 <tr id="i30" class="altColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAirflowTags()">getAirflowTags</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Tags assigned to the asset in Airflow.</div>
 </td>
 </tr>
 <tr id="i31" class="rowColor">
@@ -629,7 +629,7 @@ implements <a href="IAirflowTask.html" title="interface in com.atlan.model.asset
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInputs()">getInputs</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Assets that are inputs to this process.</div>
+<div class="block">Assets that are inputs to this task.</div>
 </td>
 </tr>
 <tr id="i41" class="rowColor">
@@ -2363,7 +2363,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getAirflowRunEndTime</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Long&nbsp;getAirflowRunEndTime()</pre>
-<div class="block">TBC</div>
+<div class="block">End time of the run.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IAirflow.html#getAirflowRunEndTime()">getAirflowRunEndTime</a></code>&nbsp;in interface&nbsp;<code><a href="IAirflow.html" title="interface in com.atlan.model.assets">IAirflow</a></code></dd>
@@ -2379,7 +2379,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getAirflowRunName</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getAirflowRunName()</pre>
-<div class="block">TBC</div>
+<div class="block">Name of the run.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IAirflow.html#getAirflowRunName()">getAirflowRunName</a></code>&nbsp;in interface&nbsp;<code><a href="IAirflow.html" title="interface in com.atlan.model.assets">IAirflow</a></code></dd>
@@ -2395,7 +2395,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getAirflowRunOpenLineageState</h4>
 <pre class="methodSignature">public&nbsp;<a href="../enums/OpenLineageRunState.html" title="enum in com.atlan.model.enums">OpenLineageRunState</a>&nbsp;getAirflowRunOpenLineageState()</pre>
-<div class="block">TBC</div>
+<div class="block">State of the run in OpenLineage.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IAirflow.html#getAirflowRunOpenLineageState()">getAirflowRunOpenLineageState</a></code>&nbsp;in interface&nbsp;<code><a href="IAirflow.html" title="interface in com.atlan.model.assets">IAirflow</a></code></dd>
@@ -2411,7 +2411,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getAirflowRunOpenLineageVersion</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getAirflowRunOpenLineageVersion()</pre>
-<div class="block">TBC</div>
+<div class="block">Version of the run in OpenLineage.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IAirflow.html#getAirflowRunOpenLineageVersion()">getAirflowRunOpenLineageVersion</a></code>&nbsp;in interface&nbsp;<code><a href="IAirflow.html" title="interface in com.atlan.model.assets">IAirflow</a></code></dd>
@@ -2427,7 +2427,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getAirflowRunStartTime</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Long&nbsp;getAirflowRunStartTime()</pre>
-<div class="block">TBC</div>
+<div class="block">Start time of the run.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IAirflow.html#getAirflowRunStartTime()">getAirflowRunStartTime</a></code>&nbsp;in interface&nbsp;<code><a href="IAirflow.html" title="interface in com.atlan.model.assets">IAirflow</a></code></dd>
@@ -2443,7 +2443,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getAirflowRunType</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getAirflowRunType()</pre>
-<div class="block">TBC</div>
+<div class="block">Type of the run.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IAirflow.html#getAirflowRunType()">getAirflowRunType</a></code>&nbsp;in interface&nbsp;<code><a href="IAirflow.html" title="interface in com.atlan.model.assets">IAirflow</a></code></dd>
@@ -2459,7 +2459,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getAirflowRunVersion</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getAirflowRunVersion()</pre>
-<div class="block">TBC</div>
+<div class="block">Version of the run in Airflow.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IAirflow.html#getAirflowRunVersion()">getAirflowRunVersion</a></code>&nbsp;in interface&nbsp;<code><a href="IAirflow.html" title="interface in com.atlan.model.assets">IAirflow</a></code></dd>
@@ -2475,7 +2475,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getAirflowTags</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;java.lang.String&gt;&nbsp;getAirflowTags()</pre>
-<div class="block">TBC</div>
+<div class="block">Tags assigned to the asset in Airflow.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IAirflow.html#getAirflowTags()">getAirflowTags</a></code>&nbsp;in interface&nbsp;<code><a href="IAirflow.html" title="interface in com.atlan.model.assets">IAirflow</a></code></dd>
@@ -2653,7 +2653,7 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <li class="blockList">
 <h4>getInputs</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a>&gt;&nbsp;getInputs()</pre>
-<div class="block">Assets that are inputs to this process.</div>
+<div class="block">Assets that are inputs to this task.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IAirflowTask.html#getInputs()">getInputs</a></code>&nbsp;in interface&nbsp;<code><a href="IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a></code></dd>
