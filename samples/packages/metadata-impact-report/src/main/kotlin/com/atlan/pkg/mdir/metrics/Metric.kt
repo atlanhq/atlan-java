@@ -56,6 +56,15 @@ abstract class Metric(
     }
 
     /**
+     * Return the abbreviated name for the metric, for example TLAxL.
+     *
+     * @return the abbreviated name for the metric
+     */
+    fun getShortName(): String {
+        return name.substringBefore(" - ")
+    }
+
+    /**
      * Output the detailed records for this report.
      *
      * @param xlsx the Excel writer in which to create a sheet and dump out the detailed result records
@@ -63,7 +72,7 @@ abstract class Metric(
     fun outputDetailedRecords(xlsx: ExcelWriter) {
         val header = getDetailedHeader()
         if (header.isNotEmpty()) {
-            val sheet = xlsx.createSheet(name)
+            val sheet = xlsx.createSheet(getShortName())
             xlsx.addHeader(sheet, header)
             query().stream().forEach { asset ->
                 val row = getDetailedRecord(asset)
