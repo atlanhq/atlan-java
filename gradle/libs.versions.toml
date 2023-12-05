@@ -13,6 +13,7 @@ awssdk = "2.21.37"
 system-stubs = "2.1.5"
 fastcsv = "2.2.2"
 poi = "5.2.5"
+parsson = "1.1.5"
 
 [libraries]
 jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson" }
@@ -33,6 +34,7 @@ system-stubs = { module = "uk.org.webcompere:system-stubs-testng", version.ref =
 fastcsv = { module = "de.siegmar:fastcsv", version.ref = "fastcsv" }
 apache-poi = { module = "org.apache.poi:poi", version.ref = "poi" }
 apache-poi-ooxml = { module = "org.apache.poi:poi-ooxml", version.ref = "poi" }
+parsson = { module = "org.eclipse.parsson:parsson", version.ref = "parsson" }
 
 [bundles]
 java-test = [ "jnanoid", "testng", "wiremock" ]
