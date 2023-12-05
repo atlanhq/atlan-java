@@ -17,12 +17,16 @@ object Exporter {
         val assetsExportScope = Utils.getOrDefault(config.exportScope, "ENRICHED_ONLY")
         val assetsQualifiedNamePrefix = Utils.getOrDefault(config.qnPrefix, "default")
 
+        val glossaryFile = "$outputDirectory${File.separator}glossary-export.csv"
         if (Utils.getOrDefault(config.includeGlossaries, false)) {
             val glossaryExporter = GlossaryExporter(
-                "$outputDirectory${File.separator}glossary-export.csv",
+                glossaryFile,
                 batchSize,
             )
             glossaryExporter.export()
+        } else {
+            // Still create an (empty) output file, to avoid errors in Argo
+            File(glossaryFile).createNewFile()
         }
         val assetExporter = AssetExporter(
             "$outputDirectory${File.separator}asset-export.csv",

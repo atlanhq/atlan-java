@@ -106,19 +106,37 @@ abstract class PackageTest {
     }
 
     /**
-     * Validate (through assertions) that these file exist and are non-empty files.
+     * Validate (through assertions) that these files exist and are non-empty files.
      *
      * @param files list of filenames
      * @param relativeTo (optional) path under which the files should be present
      */
     fun validateFilesExist(files: List<String>, relativeTo: String = testDirectory) {
         files.forEach {
-            val file = getFile(it, relativeTo)
-            assertNotNull(file, "File not found.")
-            assertTrue(file.exists(), "File does not exist.")
-            assertTrue(file.isFile, "Is not a file.")
+            val file = validateFile(it, relativeTo)
             assertTrue(file.length() > 0, "File is empty.")
         }
+    }
+
+    /**
+     * Validate (through assertions) that these files exist, but are empty.
+     *
+     * @param files list of filenames
+     * @param relativeTo (optional) path under whic hthe files should be present
+     */
+    fun validateFileExistsButEmpty(files: List<String>, relativeTo: String = testDirectory) {
+        files.forEach {
+            val file = validateFile(it, relativeTo)
+            assertEquals(0, file.length(), "File is empty.")
+        }
+    }
+
+    private fun validateFile(filename: String, relativeTo: String): File {
+        val file = getFile(filename, relativeTo)
+        assertNotNull(file, "File not found.")
+        assertTrue(file.exists(), "File does not exist.")
+        assertTrue(file.isFile, "Is not a file.")
+        return file
     }
 
     companion object {

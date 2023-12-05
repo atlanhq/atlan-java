@@ -31,7 +31,7 @@ object AssetRefXformer {
     fun encode(asset: Asset): String {
         // Handle some assets as direct embeds
         return when (asset) {
-            is Readme -> asset.description
+            is Readme -> asset.description ?: ""
             is Link -> {
                 // Transform to a set of useful, non-overlapping info
                 Link._internal()
@@ -108,7 +108,7 @@ object AssetRefXformer {
                 when (related) {
                     is Readme -> {
                         batch.add(
-                            Readme.creator(from, related.description).nullFields(related.nullFields).build(),
+                            Readme.creator(from, related.description ?: "").nullFields(related.nullFields).build(),
                         )
                         count.getAndIncrement()
                     }
