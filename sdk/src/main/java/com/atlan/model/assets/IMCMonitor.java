@@ -122,6 +122,9 @@ public interface IMCMonitor {
     String getAnnouncementUpdatedBy();
 
     /** TBC */
+    String getAssetCoverImage();
+
+    /** TBC */
     String getAssetDbtAccountName();
 
     /** TBC */
@@ -354,6 +357,9 @@ public interface IMCMonitor {
 
     /** TBC */
     Boolean getIsEditable();
+
+    /** TBC */
+    Boolean getIsPartial();
 
     /** TBC */
     Long getLastRowChangedAt();

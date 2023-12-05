@@ -122,6 +122,9 @@ public interface ITable {
     String getAnnouncementUpdatedBy();
 
     /** TBC */
+    String getAssetCoverImage();
+
+    /** TBC */
     String getAssetDbtAccountName();
 
     /** TBC */
@@ -390,6 +393,9 @@ public interface ITable {
 
     /** TBC */
     Boolean getIsEditable();
+
+    /** TBC */
+    Boolean getIsPartial();
 
     /** Whether this table is partitioned (true) or not (false). */
     Boolean getIsPartitioned();

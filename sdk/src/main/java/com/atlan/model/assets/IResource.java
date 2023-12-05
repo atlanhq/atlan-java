@@ -69,6 +69,9 @@ public interface IResource {
     String getAnnouncementUpdatedBy();
 
     /** TBC */
+    String getAssetCoverImage();
+
+    /** TBC */
     String getAssetDbtAccountName();
 
     /** TBC */
@@ -304,6 +307,9 @@ public interface IResource {
 
     /** Whether the resource is global (true) or not (false). */
     Boolean getIsGlobal();
+
+    /** TBC */
+    Boolean getIsPartial();
 
     /** TBC */
     Long getLastRowChangedAt();

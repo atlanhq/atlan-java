@@ -75,6 +75,9 @@ public interface ISnowflakePipe {
     String getAnnouncementUpdatedBy();
 
     /** TBC */
+    String getAssetCoverImage();
+
+    /** TBC */
     String getAssetDbtAccountName();
 
     /** TBC */
@@ -325,6 +328,9 @@ public interface ISnowflakePipe {
 
     /** TBC */
     Boolean getIsEditable();
+
+    /** TBC */
+    Boolean getIsPartial();
 
     /** TBC */
     Boolean getIsProfiled();

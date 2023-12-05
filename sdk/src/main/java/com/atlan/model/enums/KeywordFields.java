@@ -152,6 +152,8 @@ public enum KeywordFields implements AtlanSearchableField {
     API_SPEC_TYPE("apiSpecType"),
     /** Version of the API specification. */
     API_SPEC_VERSION("apiSpecVersion"),
+    /** TBC */
+    ASSET_COVER_IMAGE("assetCoverImage"),
     /** Name of the account in which this asset exists in dbt. */
     ASSET_DBT_ACCOUNT_NAME("assetDbtAccountName.keyword"),
     /** Alias of this asset in dbt. */
@@ -292,6 +294,8 @@ public enum KeywordFields implements AtlanSearchableField {
     CATEGORIES("__categories"),
     /** Type of connection, for example WAREHOUSE, RDBMS, etc. */
     CATEGORY("category"),
+    /** Type of category, determining the kind of knowledge it organizes. */
+    CATEGORY_TYPE("categoryType"),
     /** Status of this asset's certification. */
     CERTIFICATE_STATUS("certificateStatus"),
     /** Human-readable descriptive message used to provide further detail to certificateStatus. */
@@ -550,6 +554,8 @@ public enum KeywordFields implements AtlanSearchableField {
     GCS_STORAGE_CLASS("gcsStorageClass"),
     /** Glossary in which the asset is contained, searchable by the qualifiedName of the glossary. */
     GLOSSARY("__glossary"),
+    /** Type of glosssary, which determines the type of knowledge it captures. */
+    GLOSSARY_TYPE("glossaryType"),
     /** List of labels that have been applied to the asset in Google. */
     GOOGLE_LABELS("googleLabels"),
     /** Location of this asset in Google. */
@@ -1238,6 +1244,8 @@ public enum KeywordFields implements AtlanSearchableField {
     TARGET_SERVER_NAME("targetServerName"),
     /** Name of the Atlan workspace in which this asset exists. */
     TENANT_ID("tenantId"),
+    /** Type of term, determining how knowledge is captured. */
+    TERM_TYPE("termType"),
     /** TBC */
     THOUGHTSPOT_CHART_TYPE("thoughtspotChartType"),
     /** Simple name of the liveboard in which this dashlet exists. */

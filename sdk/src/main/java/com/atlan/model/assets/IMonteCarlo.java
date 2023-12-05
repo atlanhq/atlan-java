@@ -62,6 +62,9 @@ public interface IMonteCarlo {
     String getAnnouncementUpdatedBy();
 
     /** TBC */
+    String getAssetCoverImage();
+
+    /** TBC */
     String getAssetDbtAccountName();
 
     /** TBC */
@@ -294,6 +297,9 @@ public interface IMonteCarlo {
 
     /** TBC */
     Boolean getIsEditable();
+
+    /** TBC */
+    Boolean getIsPartial();
 
     /** TBC */
     Long getLastRowChangedAt();

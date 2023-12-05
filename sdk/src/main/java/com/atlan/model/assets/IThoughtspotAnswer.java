@@ -55,6 +55,9 @@ public interface IThoughtspotAnswer {
     String getAnnouncementUpdatedBy();
 
     /** TBC */
+    String getAssetCoverImage();
+
+    /** TBC */
     String getAssetDbtAccountName();
 
     /** TBC */
@@ -287,6 +290,9 @@ public interface IThoughtspotAnswer {
 
     /** TBC */
     Boolean getIsEditable();
+
+    /** TBC */
+    Boolean getIsPartial();
 
     /** TBC */
     Long getLastRowChangedAt();

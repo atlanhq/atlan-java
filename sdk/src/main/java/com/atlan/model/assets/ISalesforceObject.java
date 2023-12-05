@@ -82,6 +82,9 @@ public interface ISalesforceObject {
     String getApiName();
 
     /** TBC */
+    String getAssetCoverImage();
+
+    /** TBC */
     String getAssetDbtAccountName();
 
     /** TBC */
@@ -326,6 +329,9 @@ public interface ISalesforceObject {
 
     /** Whether this object is mergable (true) or not (false). */
     Boolean getIsMergable();
+
+    /** TBC */
+    Boolean getIsPartial();
 
     /** Whether this object is queryable (true) or not (false). */
     Boolean getIsQueryable();

@@ -10,6 +10,7 @@ import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.core.AssetFilter;
 import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.AtlasGlossaryCategoryType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.UniqueAttributes;
@@ -58,6 +59,10 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
     /** TBC */
     @Attribute
     IGlossary anchor;
+
+    /** TBC */
+    @Attribute
+    AtlasGlossaryCategoryType categoryType;
 
     /** TBC */
     @Attribute

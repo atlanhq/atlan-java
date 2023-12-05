@@ -76,6 +76,9 @@ public interface IKafkaConsumerGroup {
     String getAnnouncementUpdatedBy();
 
     /** TBC */
+    String getAssetCoverImage();
+
+    /** TBC */
     String getAssetDbtAccountName();
 
     /** TBC */
@@ -308,6 +311,9 @@ public interface IKafkaConsumerGroup {
 
     /** TBC */
     Boolean getIsEditable();
+
+    /** TBC */
+    Boolean getIsPartial();
 
     /** Number of members in this consumer group. */
     Long getKafkaConsumerGroupMemberCount();

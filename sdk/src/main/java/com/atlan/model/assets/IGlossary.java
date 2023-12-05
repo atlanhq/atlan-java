@@ -6,6 +6,7 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
+import com.atlan.model.enums.AtlasGlossaryType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
@@ -37,6 +38,9 @@ public interface IGlossary {
 
     /** TBC */
     RelationField CATEGORIES = new RelationField("categories");
+
+    /** TBC */
+    KeywordField GLOSSARY_TYPE = new KeywordField("glossaryType", "glossaryType");
 
     /** TBC */
     KeywordField LANGUAGE = new KeywordField("language", "language");
@@ -79,6 +83,9 @@ public interface IGlossary {
 
     /** TBC */
     String getAnnouncementUpdatedBy();
+
+    /** TBC */
+    String getAssetCoverImage();
 
     /** TBC */
     String getAssetDbtAccountName();
@@ -300,6 +307,9 @@ public interface IGlossary {
     SortedSet<IFile> getFiles();
 
     /** TBC */
+    AtlasGlossaryType getGlossaryType();
+
+    /** TBC */
     Boolean getHasLineage();
 
     /** TBC */
@@ -310,6 +320,9 @@ public interface IGlossary {
 
     /** TBC */
     Boolean getIsEditable();
+
+    /** TBC */
+    Boolean getIsPartial();
 
     /** TBC */
     String getLanguage();

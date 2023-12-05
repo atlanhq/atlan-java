@@ -10,7 +10,6 @@ import org.testng.annotations.AfterClass
 import org.testng.annotations.BeforeClass
 import org.testng.annotations.Test
 import java.io.File
-import kotlin.test.assertNotNull
 
 /**
  * Test export of all administrative information.
@@ -92,8 +91,6 @@ class ExportAllAdminInfoTest : PackageTest() {
             rows.forEach { row ->
                 assertFalse(row["Persona name"].isNullOrBlank())
             }
-            val first = rows[0]
-            assertNotNull(first["Persona name"])
         }
     }
 

@@ -88,6 +88,8 @@ public enum BooleanFields implements AtlanSearchableField {
     IS_MERGABLE("isMergable"),
     /** Whether this field allows null values (true) or not (false). */
     IS_NULLABLE("isNullable"),
+    /** TBC */
+    IS_PARTIAL("isPartial"),
     /** Whether this column is a partition column (true) or not (false). */
     IS_PARTITION("isPartition"),
     /** Whether this partition is further partitioned (true) or not (false). */

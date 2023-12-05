@@ -123,6 +123,9 @@ public interface IAuthPolicy {
     String getAnnouncementUpdatedBy();
 
     /** TBC */
+    String getAssetCoverImage();
+
+    /** TBC */
     String getAssetDbtAccountName();
 
     /** TBC */
@@ -349,6 +352,9 @@ public interface IAuthPolicy {
 
     /** TBC */
     Boolean getIsEditable();
+
+    /** TBC */
+    Boolean getIsPartial();
 
     /** TBC */
     Boolean getIsPolicyEnabled();

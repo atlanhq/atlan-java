@@ -11,6 +11,7 @@ import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.core.AssetFilter;
 import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.AtlasGlossaryType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.UniqueAttributes;
@@ -66,6 +67,10 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
     @Attribute
     @Singular
     SortedSet<IGlossaryCategory> categories;
+
+    /** TBC */
+    @Attribute
+    AtlasGlossaryType glossaryType;
 
     /** TBC */
     @Attribute
