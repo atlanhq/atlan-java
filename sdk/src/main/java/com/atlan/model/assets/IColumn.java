@@ -269,6 +269,9 @@ public interface IColumn {
     String getAnnouncementUpdatedBy();
 
     /** TBC */
+    String getAssetCoverImage();
+
+    /** TBC */
     String getAssetDbtAccountName();
 
     /** TBC */
@@ -633,6 +636,9 @@ public interface IColumn {
 
     /** When true, the values in this column can be null. */
     Boolean getIsNullable();
+
+    /** TBC */
+    Boolean getIsPartial();
 
     /** Whether this column is a partition column (true) or not (false). */
     Boolean getIsPartition();

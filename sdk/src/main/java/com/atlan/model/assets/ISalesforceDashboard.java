@@ -76,6 +76,9 @@ public interface ISalesforceDashboard {
     String getApiName();
 
     /** TBC */
+    String getAssetCoverImage();
+
+    /** TBC */
     String getAssetDbtAccountName();
 
     /** TBC */
@@ -311,6 +314,9 @@ public interface ISalesforceDashboard {
 
     /** TBC */
     Boolean getIsEditable();
+
+    /** TBC */
+    Boolean getIsPartial();
 
     /** TBC */
     Long getLastRowChangedAt();

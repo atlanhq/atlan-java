@@ -6,6 +6,7 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
+import com.atlan.model.enums.AtlasGlossaryTermType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
@@ -78,6 +79,9 @@ public interface IGlossaryTerm {
     RelationField SYNONYMS = new RelationField("synonyms");
 
     /** TBC */
+    KeywordField TERM_TYPE = new KeywordField("termType", "termType");
+
+    /** TBC */
     RelationField TRANSLATED_TERMS = new RelationField("translatedTerms");
 
     /** TBC */
@@ -133,6 +137,9 @@ public interface IGlossaryTerm {
 
     /** TBC */
     SortedSet<IGlossaryTerm> getAntonyms();
+
+    /** TBC */
+    String getAssetCoverImage();
 
     /** TBC */
     String getAssetDbtAccountName();
@@ -378,6 +385,9 @@ public interface IGlossaryTerm {
     Boolean getIsEditable();
 
     /** TBC */
+    Boolean getIsPartial();
+
+    /** TBC */
     Long getLastRowChangedAt();
 
     /** TBC */
@@ -535,6 +545,9 @@ public interface IGlossaryTerm {
 
     /** TBC */
     String getTenantId();
+
+    /** TBC */
+    AtlasGlossaryTermType getTermType();
 
     /** TBC */
     SortedSet<IGlossaryTerm> getTranslatedTerms();

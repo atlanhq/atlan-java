@@ -89,6 +89,9 @@ public interface ITableauProject {
     String getAnnouncementUpdatedBy();
 
     /** TBC */
+    String getAssetCoverImage();
+
+    /** TBC */
     String getAssetDbtAccountName();
 
     /** TBC */
@@ -330,6 +333,9 @@ public interface ITableauProject {
 
     /** TBC */
     Boolean getIsEditable();
+
+    /** TBC */
+    Boolean getIsPartial();
 
     /** Whether this project is a top-level project (true) or not (false). */
     Boolean getIsTopLevelProject();

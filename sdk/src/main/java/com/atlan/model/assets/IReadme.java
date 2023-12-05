@@ -65,6 +65,9 @@ public interface IReadme {
     IAsset getAsset();
 
     /** TBC */
+    String getAssetCoverImage();
+
+    /** TBC */
     String getAssetDbtAccountName();
 
     /** TBC */
@@ -300,6 +303,9 @@ public interface IReadme {
 
     /** TBC */
     Boolean getIsGlobal();
+
+    /** TBC */
+    Boolean getIsPartial();
 
     /** TBC */
     Long getLastRowChangedAt();

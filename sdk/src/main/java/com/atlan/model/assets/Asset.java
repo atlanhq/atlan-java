@@ -103,6 +103,10 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Attribute
     String announcementUpdatedBy;
 
+    /** TBC */
+    @Attribute
+    String assetCoverImage;
+
     /** Name of the account in which this asset exists in dbt. */
     @Attribute
     String assetDbtAccountName;
@@ -424,6 +428,10 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     /** Whether this asset can be edited in the UI (true) or not (false). */
     @Attribute
     Boolean isEditable;
+
+    /** TBC */
+    @Attribute
+    Boolean isPartial;
 
     /** Time (epoch) of the last operation that inserted, updated, or deleted rows, in milliseconds. */
     @Attribute

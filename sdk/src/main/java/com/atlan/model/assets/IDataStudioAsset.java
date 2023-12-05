@@ -78,6 +78,9 @@ public interface IDataStudioAsset {
     String getAnnouncementUpdatedBy();
 
     /** TBC */
+    String getAssetCoverImage();
+
+    /** TBC */
     String getAssetDbtAccountName();
 
     /** TBC */
@@ -343,6 +346,9 @@ public interface IDataStudioAsset {
 
     /** TBC */
     Boolean getIsEditable();
+
+    /** TBC */
+    Boolean getIsPartial();
 
     /** Whether the Google Data Studio asset has been trashed (true) or not (false). */
     Boolean getIsTrashedDataStudioAsset();

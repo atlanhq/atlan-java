@@ -117,6 +117,9 @@ public interface ISQL {
     String getAnnouncementUpdatedBy();
 
     /** TBC */
+    String getAssetCoverImage();
+
+    /** TBC */
     String getAssetDbtAccountName();
 
     /** TBC */
@@ -364,6 +367,9 @@ public interface ISQL {
 
     /** TBC */
     Boolean getIsEditable();
+
+    /** TBC */
+    Boolean getIsPartial();
 
     /** Whether this asset has been profiled (true) or not (false). */
     Boolean getIsProfiled();

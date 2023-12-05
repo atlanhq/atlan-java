@@ -67,6 +67,9 @@ public interface IFile {
     String getAnnouncementUpdatedBy();
 
     /** TBC */
+    String getAssetCoverImage();
+
+    /** TBC */
     String getAssetDbtAccountName();
 
     /** TBC */
@@ -311,6 +314,9 @@ public interface IFile {
 
     /** TBC */
     Boolean getIsGlobal();
+
+    /** TBC */
+    Boolean getIsPartial();
 
     /** TBC */
     Long getLastRowChangedAt();

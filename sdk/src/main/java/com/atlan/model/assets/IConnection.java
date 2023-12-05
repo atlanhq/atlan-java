@@ -154,6 +154,9 @@ public interface IConnection {
     String getAnnouncementUpdatedBy();
 
     /** TBC */
+    String getAssetCoverImage();
+
+    /** TBC */
     String getAssetDbtAccountName();
 
     /** TBC */
@@ -407,6 +410,9 @@ public interface IConnection {
 
     /** TBC */
     Boolean getIsEditable();
+
+    /** TBC */
+    Boolean getIsPartial();
 
     /** Whether sample data can be previewed for this connection (true) or not (false). */
     Boolean getIsSampleDataPreviewEnabled();

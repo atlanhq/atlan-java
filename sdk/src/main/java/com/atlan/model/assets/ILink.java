@@ -70,6 +70,9 @@ public interface ILink {
     IAsset getAsset();
 
     /** TBC */
+    String getAssetCoverImage();
+
+    /** TBC */
     String getAssetDbtAccountName();
 
     /** TBC */
@@ -311,6 +314,9 @@ public interface ILink {
 
     /** TBC */
     Boolean getIsGlobal();
+
+    /** TBC */
+    Boolean getIsPartial();
 
     /** TBC */
     Long getLastRowChangedAt();

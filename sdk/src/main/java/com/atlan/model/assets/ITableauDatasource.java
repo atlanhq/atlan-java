@@ -107,6 +107,9 @@ public interface ITableauDatasource {
     String getAnnouncementUpdatedBy();
 
     /** TBC */
+    String getAssetCoverImage();
+
+    /** TBC */
     String getAssetDbtAccountName();
 
     /** TBC */
@@ -357,6 +360,9 @@ public interface ITableauDatasource {
 
     /** TBC */
     Boolean getIsEditable();
+
+    /** TBC */
+    Boolean getIsPartial();
 
     /** Whether this datasource is published (true) or embedded (false). */
     Boolean getIsPublished();

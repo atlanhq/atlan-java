@@ -118,6 +118,9 @@ public interface ISalesforceField {
     String getApiName();
 
     /** TBC */
+    String getAssetCoverImage();
+
+    /** TBC */
     String getAssetDbtAccountName();
 
     /** TBC */
@@ -374,6 +377,9 @@ public interface ISalesforceField {
 
     /** Whether this field allows null values (true) or not (false). */
     Boolean getIsNullable();
+
+    /** TBC */
+    Boolean getIsPartial();
 
     /** Whether this field references a record of multiple objects (true) or not (false). */
     Boolean getIsPolymorphicForeignKey();

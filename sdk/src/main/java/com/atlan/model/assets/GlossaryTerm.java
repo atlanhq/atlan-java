@@ -10,6 +10,7 @@ import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.core.AssetFilter;
 import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.AtlasGlossaryTermType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.UniqueAttributes;
@@ -130,6 +131,10 @@ public class GlossaryTerm extends Asset implements IGlossaryTerm, IAsset, IRefer
     @Attribute
     @Singular
     SortedSet<IGlossaryTerm> synonyms;
+
+    /** TBC */
+    @Attribute
+    AtlasGlossaryTermType termType;
 
     /** TBC */
     @Attribute

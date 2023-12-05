@@ -89,6 +89,9 @@ public interface IDataMesh {
     String getAnnouncementUpdatedBy();
 
     /** TBC */
+    String getAssetCoverImage();
+
+    /** TBC */
     String getAssetDbtAccountName();
 
     /** TBC */
@@ -321,6 +324,9 @@ public interface IDataMesh {
 
     /** TBC */
     Boolean getIsEditable();
+
+    /** TBC */
+    Boolean getIsPartial();
 
     /** Whether this asset is published (true) or still a work in progress (false). */
     Boolean getIsPublished();

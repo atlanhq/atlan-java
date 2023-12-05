@@ -61,6 +61,9 @@ public interface IAsset {
     /** Name of the user who last updated the announcement. */
     KeywordField ANNOUNCEMENT_UPDATED_BY = new KeywordField("announcementUpdatedBy", "announcementUpdatedBy");
 
+    /** TBC */
+    KeywordField ASSET_COVER_IMAGE = new KeywordField("assetCoverImage", "assetCoverImage");
+
     /** Name of the account in which this asset exists in dbt. */
     KeywordTextField ASSET_DBT_ACCOUNT_NAME =
             new KeywordTextField("assetDbtAccountName", "assetDbtAccountName.keyword", "assetDbtAccountName");
@@ -328,6 +331,9 @@ public interface IAsset {
     /** Whether this asset can be edited in the UI (true) or not (false). */
     BooleanField IS_EDITABLE = new BooleanField("isEditable", "isEditable");
 
+    /** TBC */
+    BooleanField IS_PARTIAL = new BooleanField("isPartial", "isPartial");
+
     /** Time (epoch) of the last operation that inserted, updated, or deleted rows, in milliseconds. */
     NumericField LAST_ROW_CHANGED_AT = new NumericField("lastRowChangedAt", "lastRowChangedAt");
 
@@ -507,6 +513,9 @@ public interface IAsset {
 
     /** Name of the user who last updated the announcement. */
     String getAnnouncementUpdatedBy();
+
+    /** TBC */
+    String getAssetCoverImage();
 
     /** Name of the account in which this asset exists in dbt. */
     String getAssetDbtAccountName();
@@ -735,6 +744,9 @@ public interface IAsset {
 
     /** Whether this asset can be edited in the UI (true) or not (false). */
     Boolean getIsEditable();
+
+    /** TBC */
+    Boolean getIsPartial();
 
     /** Time (epoch) of the last operation that inserted, updated, or deleted rows, in milliseconds. */
     Long getLastRowChangedAt();
