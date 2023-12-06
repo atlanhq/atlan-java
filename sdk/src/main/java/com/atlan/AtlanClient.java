@@ -139,6 +139,9 @@ public class AtlanClient {
     /** Endpoint with operations to impersonate users. */
     public final ImpersonationEndpoint impersonate;
 
+    /** Endpoint with operations to search details of past searches. */
+    public final SearchLogEndpoint searchLog;
+
     /** Client-aware asset deserializer. */
     @Getter
     private final AssetDeserializer assetDeserializer;
@@ -184,6 +187,7 @@ public class AtlanClient {
         assets = new AssetEndpoint(this);
         requests = new RequestsEndpoint(this);
         impersonate = new ImpersonationEndpoint(this);
+        searchLog = new SearchLogEndpoint(this);
         atlanTagCache = new AtlanTagCache(typeDefs);
         customMetadataCache = new CustomMetadataCache(typeDefs);
         enumCache = new EnumCache(typeDefs);
