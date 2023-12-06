@@ -22,6 +22,8 @@ import com.atlan.pkg.config.widgets.NumericInput
 import com.atlan.util.StringUtils
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonInclude
+import com.fasterxml.jackson.core.util.DefaultPrettyPrinter
+import com.fasterxml.jackson.core.util.Separators
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper
@@ -119,7 +121,7 @@ open class CustomPackage(
      * @return package.json content
      */
     fun packageJSON(): String {
-        return json.writerWithDefaultPrettyPrinter().writeValueAsString(pkg)
+        return json.writer(pp).writeValueAsString(pkg)
     }
 
     /**
@@ -218,6 +220,7 @@ open class CustomPackage(
             .build()
             .registerKotlinModule()
         val json: ObjectMapper = jacksonObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL)
+        val pp: DefaultPrettyPrinter = DefaultPrettyPrinter().withSeparators(Separators.createDefaultInstance().withObjectFieldValueSpacing(Separators.Spacing.AFTER))
 
         fun generate(pkg: CustomPackage, args: Array<String>) {
             when (args[0]) {

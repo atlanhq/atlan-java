@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.config.model
 
+import com.atlan.pkg.CustomPackage.Companion.pp
 import com.atlan.pkg.config.model.ui.UIConfig
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonPropertyOrder
@@ -18,7 +19,7 @@ class ConfigMap(private val name: String, config: UIConfig) {
     val metadata = mapOf("name" to name)
     val data: Map<String, String>
     init {
-        data = mapOf("config" to mapper.writerWithDefaultPrettyPrinter().writeValueAsString(config))
+        data = mapOf("config" to mapper.writer(pp).writeValueAsString(config))
     }
     companion object {
         private val mapper = jacksonObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL)
