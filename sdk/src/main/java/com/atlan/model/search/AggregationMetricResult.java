@@ -6,12 +6,14 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
+import lombok.extern.jackson.Jacksonized;
 
 /**
  * Captures the results from a metric aggregation.
  */
 @Getter
 @Builder
+@Jacksonized
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
 public class AggregationMetricResult extends AggregationResult {

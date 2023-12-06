@@ -9,6 +9,7 @@ import co.elastic.clients.json.JsonpMapper;
 import co.elastic.clients.json.jackson.JacksonJsonpMapper;
 import com.atlan.AtlanClient;
 import com.atlan.model.assets.Asset;
+import com.atlan.model.search.AggregationResult;
 import com.atlan.model.structs.AtlanStruct;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.*;
@@ -119,6 +120,9 @@ public class Serde {
             }
         });
         set.add(structs);
+        SimpleModule aggResults =
+                new SimpleModule().addDeserializer(AggregationResult.class, new AggregationResultDeserializer(null));
+        set.add(aggResults);
         return set;
     }
 

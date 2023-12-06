@@ -6,6 +6,9 @@ import co.elastic.clients.elasticsearch._types.SortOptions;
 import co.elastic.clients.elasticsearch._types.SortOrder;
 import co.elastic.clients.elasticsearch._types.aggregations.Aggregation;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
+import co.elastic.clients.util.NamedValue;
+import java.util.List;
+import java.util.Map;
 import lombok.AccessLevel;
 import lombok.Getter;
 
@@ -42,6 +45,12 @@ public class SearchableField extends AtlanField implements ISearchable {
 
     /** {@inheritDoc} */
     @Override
+    public Aggregation distinct(int precision) {
+        return ISearchable.distinct(getElasticFieldName(), precision);
+    }
+
+    /** {@inheritDoc} */
+    @Override
     public Aggregation count() {
         return ISearchable.count(getElasticFieldName());
     }
@@ -54,6 +63,12 @@ public class SearchableField extends AtlanField implements ISearchable {
         } else {
             return ISearchable.bucketBy(getElasticFieldName(), size);
         }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public Aggregation bucketBy(int size, Map<String, Aggregation> nested, List<NamedValue<SortOrder>> order) {
+        return ISearchable.bucketBy(getElasticFieldName(), size, nested, order);
     }
 
     /** {@inheritDoc} */

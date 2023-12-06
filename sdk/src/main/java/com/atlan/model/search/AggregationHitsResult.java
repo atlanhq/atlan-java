@@ -9,12 +9,14 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
+import lombok.extern.jackson.Jacksonized;
 
 /**
  * Captures the results from a bucket aggregation.
  */
 @Getter
 @Builder
+@Jacksonized
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
 public class AggregationHitsResult extends AggregationResult {
