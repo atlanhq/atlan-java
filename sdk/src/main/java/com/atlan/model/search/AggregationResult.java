@@ -20,7 +20,7 @@ public abstract class AggregationResult extends AtlanObject {
      * @throws InvalidRequestException if the provided aggregation result is not a metric
      */
     @JsonIgnore
-    public double getMetric() throws InvalidRequestException {
+    public Double getMetric() throws InvalidRequestException {
         if (this instanceof AggregationMetricResult) {
             return ((AggregationMetricResult) this).getValue();
         } else {

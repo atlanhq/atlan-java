@@ -7,6 +7,7 @@ import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.core.AtlanObject;
+import com.atlan.model.enums.UTMTags;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import lombok.*;
@@ -89,7 +90,8 @@ public class IndexSearchRequest extends AtlanObject {
 
     /** Controls how the search is logged (if at all). */
     @Builder.Default
-    Metadata requestMetadata = Metadata.builder().utmTag("sdk_java").build();
+    Metadata requestMetadata =
+            Metadata.builder().utmTag(UTMTags.PROJECT_SDK_JAVA.getValue()).build();
 
     /**
      * Run the search.

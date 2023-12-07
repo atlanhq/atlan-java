@@ -13,6 +13,10 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.core.AtlanObject;
+import com.atlan.model.enums.UTMTags;
+import com.atlan.model.search.aggregates.AssetViews;
+import com.atlan.model.search.aggregates.UserViews;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -32,6 +36,13 @@ import lombok.extern.jackson.Jacksonized;
 @ToString(callSuper = true)
 public class SearchLogRequest extends AtlanObject {
     private static final long serialVersionUID = 2L;
+
+    public static final Query VIEWED = FluentSearch.builder()
+            .whereSome(SearchLogEntry.UTM_TAGS.eq(UTMTags.UI_PROFILE))
+            .whereSome(SearchLogEntry.UTM_TAGS.eq(UTMTags.UI_SIDEBAR))
+            .minSomes(1)
+            .build()
+            .toQuery();
 
     /**
      * Build a search using the provided query and default options.
@@ -57,54 +68,139 @@ public class SearchLogRequest extends AtlanObject {
     IndexSearchDSL dsl;
 
     /**
-     * Start building a search log request for the last views of an asset, by its GUID.
+     * Start building a search log request for the views of assets.
      *
-     * @param guid unique identifier of the asset for which to retrieve the view history
-     * @param maxUsers number of unique users to retrieve
      * @return a request builder pre-configured with these criteria
      */
-    public static SearchLogRequestBuilder<?, ?> viewersByGuid(String guid, int maxUsers) {
-        return viewersByGuid(Atlan.getDefaultClient(), guid, maxUsers);
+    public static SearchLogRequestBuilder<?, ?> views() {
+        Query viewedByGuid = FluentSearch.builder()
+                .where(SearchLogEntry.UTM_TAGS.eq(UTMTags.ACTION_ASSET_VIEWED))
+                .where(VIEWED)
+                .build()
+                .toQuery();
+        return SearchLogRequest.builder(viewedByGuid);
     }
 
     /**
      * Start building a search log request for the views of an asset, by its GUID.
      *
-     * @param client connectivity to the Atlan tenant on which to search the log
      * @param guid unique identifier of the asset for which to retrieve the view history
-     * @param maxUsers number of unique users to retrieve
      * @return a request builder pre-configured with these criteria
      */
-    public static SearchLogRequestBuilder<?, ?> viewersByGuid(AtlanClient client, String guid, int maxUsers) {
-        Query view = FluentSearch.builder(client)
-                .whereSome(SearchLogEntry.UTM_TAGS.eq("ui_profile")) // TODO: enum these
-                .whereSome(SearchLogEntry.UTM_TAGS.eq("ui_sidebar"))
-                .minSomes(1)
-                .build()
-                .toQuery();
-        Query viewersByGuid = FluentSearch.builder(client)
-                .where(SearchLogEntry.UTM_TAGS.eq("action_asset_viewed")) // TODO: enum this
+    public static SearchLogRequestBuilder<?, ?> viewsByGuid(String guid) {
+        Query viewedByGuid = FluentSearch.builder()
+                .where(SearchLogEntry.UTM_TAGS.eq(UTMTags.ACTION_ASSET_VIEWED))
                 .where(SearchLogEntry.ENTITY_ID.eq(guid))
-                .where(view)
+                .where(VIEWED)
                 .build()
                 .toQuery();
-        // TODO: Need a more general way to aggregate, so consumers know the keys for the
-        //  aggregation results
+        return SearchLogRequest.builder(viewedByGuid);
+    }
+
+    /**
+     * Find the most recent viewers of the asset in Atlan.
+     *
+     * @param guid of the asset
+     * @param maxUsers maximum number of recent users to consider
+     * @return the list of users that most-recently viewed the asset, in descending order (most-recently viewed first)
+     * @throws AtlanException on any issues interacting with the Atlan APIs
+     */
+    public static List<UserViews> mostRecentViewers(String guid, int maxUsers) throws AtlanException {
+        return mostRecentViewers(Atlan.getDefaultClient(), guid, maxUsers);
+    }
+
+    /**
+     * Find the most recent viewers of the asset in Atlan.
+     *
+     * @param client connectivity to the Atlan tenant on which to run the search
+     * @param guid of the asset
+     * @param maxUsers maximum number of recent users to consider
+     * @return the list of users that most-recently viewed the asset, in descending order (most-recently viewed first)
+     * @throws AtlanException on any issues interacting with the Atlan APIs
+     */
+    public static List<UserViews> mostRecentViewers(AtlanClient client, String guid, int maxUsers)
+            throws AtlanException {
+        List<UserViews> list = new ArrayList<>();
         Aggregation byUser = SearchLogEntry.USER.bucketBy(
                 maxUsers,
                 Map.of("latestTimestamp", SearchLogEntry.SEARCHED_AT.max()),
                 List.of(NamedValue.of("latestTimestamp", SortOrder.Desc)));
-        IndexSearchDSL dsl = IndexSearchDSL.builder(viewersByGuid)
+        SearchLogRequest request = viewsByGuid(guid)
                 .aggregation("uniqueUsers", byUser)
                 .aggregation("totalDistinctUsers", SearchLogEntry.USER.distinct(1000))
+                .pageSize(0) // Do not need the detailed results, only the aggregates
                 .build();
-        return SearchLogRequest.builder(dsl);
+        SearchLogResponse response = request.search(client);
+        AggregationBucketResult uniqueUsers =
+                (AggregationBucketResult) response.getAggregations().get("uniqueUsers");
+        for (AggregationBucketDetails details : uniqueUsers.getBuckets()) {
+            list.add(UserViews.builder()
+                    .username(details.key.toString())
+                    .viewCount(details.docCount)
+                    .mostRecentView(details.getNestedResults()
+                            .get("latestTimestamp")
+                            .getMetric()
+                            .longValue())
+                    .build());
+        }
+        return list;
+    }
+
+    /**
+     * Find the most-viewed assets in Atlan.
+     *
+     * @param maxAssets maximum number of assets to consider
+     * @param byDifferentUsers when true, will consider assets viewed by more users as more important than total view count, otherwise will consider total view count most important
+     * @return the list of assets that are most-viewed, in descending order (most-viewed first)
+     * @throws AtlanException on any issues interacting with the Atlan APIs
+     */
+    public static List<AssetViews> mostViewedAssets(int maxAssets, boolean byDifferentUsers) throws AtlanException {
+        return mostViewedAssets(Atlan.getDefaultClient(), maxAssets, byDifferentUsers);
+    }
+
+    /**
+     * Find the most-viewed assets in Atlan.
+     *
+     * @param client connectivity to the Atlan tenant on which to run the search
+     * @param maxAssets maximum number of assets to consider
+     * @param byDifferentUsers when true, will consider assets viewed by more users as more important than total view count, otherwise will consider total view count most important
+     * @return the list of assets that are most-viewed, in descending order (most-viewed first)
+     * @throws AtlanException on any issues interacting with the Atlan APIs
+     */
+    public static List<AssetViews> mostViewedAssets(AtlanClient client, int maxAssets, boolean byDifferentUsers)
+            throws AtlanException {
+        List<AssetViews> list = new ArrayList<>();
+        List<NamedValue<SortOrder>> sort = null;
+        if (byDifferentUsers) {
+            sort = List.of(NamedValue.of("uniqueUsers", SortOrder.Desc));
+        }
+        Aggregation byGuid = SearchLogEntry.ENTITY_ID.bucketBy(
+                maxAssets, Map.of("uniqueUsers", SearchLogEntry.USER.distinct(1000)), sort);
+        SearchLogRequest request = views().aggregation("uniqueAssets", byGuid)
+                .aggregation("totalDistinctUsers", SearchLogEntry.USER.distinct(1000))
+                .pageSize(1) // Do not need the detailed results, only the aggregates
+                .build();
+        SearchLogResponse response = request.search(client);
+        AggregationBucketResult uniqueAssets =
+                (AggregationBucketResult) response.getAggregations().get("uniqueAssets");
+        for (AggregationBucketDetails details : uniqueAssets.getBuckets()) {
+            list.add(AssetViews.builder()
+                    .guid(details.key.toString())
+                    .totalViews(details.docCount)
+                    .distinctUsers(details.getNestedResults()
+                            .get("uniqueUsers")
+                            .getMetric()
+                            .longValue())
+                    .build());
+        }
+        return list;
     }
 
     /**
      * Run the search.
      *
      * @return the matching assets
+     * @throws AtlanException on any issues interacting with the Atlan APIs
      */
     public SearchLogResponse search() throws AtlanException {
         return search(Atlan.getDefaultClient());
@@ -115,6 +211,7 @@ public class SearchLogRequest extends AtlanObject {
      *
      * @param client connectivity to the Atlan tenant on which to run the search
      * @return the matching assets
+     * @throws AtlanException on any issues interacting with the Atlan APIs
      */
     public SearchLogResponse search(AtlanClient client) throws AtlanException {
         return client.searchLog.search(this);
@@ -220,6 +317,17 @@ public class SearchLogRequest extends AtlanObject {
          */
         public B sortBy(SortOptions option) {
             return this.dsl(dsl.toBuilder().sortOption(option).build());
+        }
+
+        /**
+         * Add an aggregation on the search log entries.
+         *
+         * @param key arbitrary identifier for the aggregation results
+         * @param aggregation the aggregation to add on top of the results
+         * @return this search log request builder, with the additional aggregation(s)
+         */
+        public B aggregation(String key, Aggregation aggregation) {
+            return this.dsl(dsl.toBuilder().aggregation(key, aggregation).build());
         }
 
         /**
