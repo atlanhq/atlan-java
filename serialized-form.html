@@ -21270,11 +21270,6 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <h3>Serialized Fields</h3>
 <ul class="blockList">
 <li class="blockList">
-<h4>_sourceValue</h4>
-<pre><a href="com/atlan/model/search/AggregationHitsResult.html" title="class in com.atlan.model.search">AggregationHitsResult</a> _sourceValue</pre>
-<div class="block">Map of results for the requested aggregations.</div>
-</li>
-<li class="blockList">
 <h4>docCount</h4>
 <pre>java.lang.Long docCount</pre>
 <div class="block">Number of results that fit within this bucket of the aggregation.</div>
@@ -21306,6 +21301,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <h4>maxMatchingLength</h4>
 <pre>java.lang.Long maxMatchingLength</pre>
 <div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>nestedResults</h4>
+<pre>java.util.Map&lt;java.lang.String,&#8203;<a href="com/atlan/model/search/AggregationResult.html" title="class in com.atlan.model.search">AggregationResult</a>&gt; nestedResults</pre>
+<div class="block">Nested aggregation results.</div>
 </li>
 <li class="blockList">
 <h4>to</h4>
@@ -21688,6 +21688,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Attributes to include on each related entity of each result document.</div>
 </li>
 <li class="blockList">
+<h4>requestMetadata</h4>
+<pre><a href="com/atlan/model/search/IndexSearchRequest.Metadata.html" title="class in com.atlan.model.search">IndexSearchRequest.Metadata</a> requestMetadata</pre>
+<div class="block">Controls how the search is logged (if at all).</div>
+</li>
+<li class="blockList">
 <h4>showSearchScore</h4>
 <pre>java.lang.Boolean showSearchScore</pre>
 <div class="block">When true, include the score of each result. By default, this is false and scores are excluded.</div>
@@ -21696,6 +21701,32 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <h4>suppressLogs</h4>
 <pre>java.lang.Boolean suppressLogs</pre>
 <div class="block">TBC</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList"><a id="com.atlan.model.search.IndexSearchRequest.Metadata">
+<!--   -->
+</a>
+<h3>Class <a href="com/atlan/model/search/IndexSearchRequest.Metadata.html" title="class in com.atlan.model.search">com.atlan.model.search.IndexSearchRequest.Metadata</a> extends <a href="com/atlan/model/core/AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>saveSearchLog</h4>
+<pre>java.lang.Boolean saveSearchLog</pre>
+<div class="block">Whether to log this search (true) or not (false).</div>
+</li>
+<li class="blockListLast">
+<h4>utmTags</h4>
+<pre>java.util.List&lt;java.lang.String&gt; utmTags</pre>
+<div class="block">Tags to associate with the search request.</div>
 </li>
 </ul>
 </li>
@@ -21741,6 +21772,189 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockListLast">
 <h4>searchParameters</h4>
 <pre><a href="com/atlan/model/search/SearchParameters.html" title="class in com.atlan.model.search">SearchParameters</a> searchParameters</pre>
+<div class="block">Parameters for the search.</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList"><a id="com.atlan.model.search.SearchLogEntry">
+<!--   -->
+</a>
+<h3>Class <a href="com/atlan/model/search/SearchLogEntry.html" title="class in com.atlan.model.search">com.atlan.model.search.SearchLogEntry</a> extends <a href="com/atlan/model/core/AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>createdAt</h4>
+<pre>java.lang.Long createdAt</pre>
+<div class="block">Time (epoch-style) at which the search was logged, in milliseconds.</div>
+</li>
+<li class="blockList">
+<h4>failed</h4>
+<pre>java.lang.Boolean failed</pre>
+<div class="block">Whether the search was successful (false) or not (true).</div>
+</li>
+<li class="blockList">
+<h4>hasResult</h4>
+<pre>java.lang.Boolean hasResult</pre>
+<div class="block">Whether the search had any results (true) or not (false).</div>
+</li>
+<li class="blockList">
+<h4>host</h4>
+<pre>java.lang.String host</pre>
+<div class="block">Hostname of the tenant against which the search was run.</div>
+</li>
+<li class="blockList">
+<h4>ipAddress</h4>
+<pre>java.lang.String ipAddress</pre>
+<div class="block">IP address from which the search was run.</div>
+</li>
+<li class="blockList">
+<h4>requestAttributes</h4>
+<pre>java.util.List&lt;java.lang.String&gt; requestAttributes</pre>
+<div class="block">List of attribute (names) that were requested as part of the search.</div>
+</li>
+<li class="blockList">
+<h4>requestDsl</h4>
+<pre><a href="com/atlan/model/search/IndexSearchDSL.html" title="class in com.atlan.model.search">IndexSearchDSL</a> requestDsl</pre>
+<div class="block">DSL of the full search request that was made.</div>
+</li>
+<li class="blockList">
+<h4>requestDslText</h4>
+<pre>java.lang.String requestDslText</pre>
+<div class="block">DSL of the full search request that was made, as a string.</div>
+</li>
+<li class="blockList">
+<h4>requestRelationAttributes</h4>
+<pre>java.util.List&lt;java.lang.String&gt; requestRelationAttributes</pre>
+<div class="block">List of relationship attribute (names) that were requested as part of the search.</div>
+</li>
+<li class="blockList">
+<h4>responseTime</h4>
+<pre>java.lang.Long responseTime</pre>
+<div class="block">Elapsed time to produce the results for the search, in milliseconds.</div>
+</li>
+<li class="blockList">
+<h4>resultGuids</h4>
+<pre>java.util.List&lt;java.lang.String&gt; resultGuids</pre>
+<div class="block">List of all GUIDs for assets that were results of the search.</div>
+</li>
+<li class="blockList">
+<h4>resultGuidsAllowed</h4>
+<pre>java.util.List&lt;java.lang.String&gt; resultGuidsAllowed</pre>
+<div class="block">List of all GUIDs for assets that were results of the search, that the user is permitted to see.</div>
+</li>
+<li class="blockList">
+<h4>resultQualifiedNames</h4>
+<pre>java.util.List&lt;java.lang.String&gt; resultQualifiedNames</pre>
+<div class="block">List of all qualifiedNames for assets that were results of the search.</div>
+</li>
+<li class="blockList">
+<h4>resultQualifiedNamesAllowed</h4>
+<pre>java.util.List&lt;java.lang.String&gt; resultQualifiedNamesAllowed</pre>
+<div class="block">List of all qualifiedNames for assets that were results of the search, that the user is permitted to see.</div>
+</li>
+<li class="blockList">
+<h4>resultsCount</h4>
+<pre>java.lang.Long resultsCount</pre>
+<div class="block">Number of results for the search.</div>
+</li>
+<li class="blockList">
+<h4>resultTypeNames</h4>
+<pre>java.util.List&lt;java.lang.String&gt; resultTypeNames</pre>
+<div class="block">List of all typeNames for assets that were results of the search.</div>
+</li>
+<li class="blockList">
+<h4>resultTypeNamesAllowed</h4>
+<pre>java.util.List&lt;java.lang.String&gt; resultTypeNamesAllowed</pre>
+<div class="block">List of all typeNames for assets that were results of the search, that the user is permitted to see.</div>
+</li>
+<li class="blockList">
+<h4>timestamp</h4>
+<pre>java.lang.Long timestamp</pre>
+<div class="block">Time (epoch-style) at which the search was run, in milliseconds.</div>
+</li>
+<li class="blockList">
+<h4>userAgent</h4>
+<pre>java.lang.String userAgent</pre>
+<div class="block">Details of the browser or other client used to make the request.</div>
+</li>
+<li class="blockList">
+<h4>userName</h4>
+<pre>java.lang.String userName</pre>
+<div class="block">Username of the user who ran the search.</div>
+</li>
+<li class="blockListLast">
+<h4>utmTags</h4>
+<pre>java.util.List&lt;java.lang.String&gt; utmTags</pre>
+<div class="block">List of the UTM tags that were sent in the search request.</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList"><a id="com.atlan.model.search.SearchLogRequest">
+<!--   -->
+</a>
+<h3>Class <a href="com/atlan/model/search/SearchLogRequest.html" title="class in com.atlan.model.search">com.atlan.model.search.SearchLogRequest</a> extends <a href="com/atlan/model/core/AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockListLast">
+<h4>dsl</h4>
+<pre><a href="com/atlan/model/search/IndexSearchDSL.html" title="class in com.atlan.model.search">IndexSearchDSL</a> dsl</pre>
+<div class="block">Parameters for the search itself.</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList"><a id="com.atlan.model.search.SearchLogResponse">
+<!--   -->
+</a>
+<h3>Class <a href="com/atlan/model/search/SearchLogResponse.html" title="class in com.atlan.model.search">com.atlan.model.search.SearchLogResponse</a> extends <a href="com/atlan/net/ApiResource.html" title="class in com.atlan.net">ApiResource</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>aggregations</h4>
+<pre>java.util.Map&lt;java.lang.String,&#8203;<a href="com/atlan/model/search/AggregationResult.html" title="class in com.atlan.model.search">AggregationResult</a>&gt; aggregations</pre>
+<div class="block">Map of results for the requested aggregations.</div>
+</li>
+<li class="blockList">
+<h4>approximateCount</h4>
+<pre>java.lang.Long approximateCount</pre>
+<div class="block">Approximate number of total results.</div>
+</li>
+<li class="blockList">
+<h4>client</h4>
+<pre><a href="com/atlan/AtlanClient.html" title="class in com.atlan">AtlanClient</a> client</pre>
+<div class="block">Connectivity to the Atlan tenant where the search was run.</div>
+</li>
+<li class="blockList">
+<h4>logEntries</h4>
+<pre>java.util.List&lt;<a href="com/atlan/model/search/SearchLogEntry.html" title="class in com.atlan.model.search">SearchLogEntry</a>&gt; logEntries</pre>
+<div class="block">List of results from the search.</div>
+</li>
+<li class="blockListLast">
+<h4>searchParameters</h4>
+<pre><a href="com/atlan/model/search/SearchLogRequest.html" title="class in com.atlan.model.search">SearchLogRequest</a> searchParameters</pre>
 <div class="block">Parameters for the search.</div>
 </li>
 </ul>
@@ -24236,17 +24450,6 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt>serialVersionUID:</dt>
 <dd>2L</dd>
 </dl>
-<ul class="blockList">
-<li class="blockList">
-<h3>Serialized Fields</h3>
-<ul class="blockList">
-<li class="blockListLast">
-<h4>client</h4>
-<pre><a href="com/atlan/AtlanClient.html" title="class in com.atlan">AtlanClient</a> client</pre>
-</li>
-</ul>
-</li>
-</ul>
 </li>
 <li class="blockList"><a id="com.atlan.serde.AssetDeserializer">
 <!--   -->

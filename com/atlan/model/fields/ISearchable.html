@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":18,"i1":18,"i2":6,"i3":1,"i4":1,"i5":1,"i6":6,"i7":1,"i8":6,"i9":1,"i10":6,"i11":1,"i12":6,"i13":1};
+var data = {"i0":18,"i1":18,"i2":6,"i3":6,"i4":1,"i5":1,"i6":1,"i7":1,"i8":6,"i9":1,"i10":6,"i11":6,"i12":1,"i13":1,"i14":6,"i15":1,"i16":6,"i17":1};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],16:["t5","Default Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -194,13 +194,22 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr id="i3" class="rowColor">
+<td class="colFirst"><code>co.elastic.clients.elasticsearch._types.aggregations.Aggregation</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#bucketBy(int,java.util.Map,java.util.List)">bucketBy</a></span>&#8203;(int&nbsp;size,
+        java.util.Map&lt;java.lang.String,&#8203;co.elastic.clients.elasticsearch._types.aggregations.Aggregation&gt;&nbsp;nested,
+        java.util.List&lt;co.elastic.clients.util.NamedValue&lt;co.elastic.clients.elasticsearch._types.SortOrder&gt;&gt;&nbsp;order)</code></th>
+<td class="colLast">
+<div class="block">Return criteria to bucket results based on the provided field.</div>
+</td>
+</tr>
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>static co.elastic.clients.elasticsearch._types.aggregations.Aggregation</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#bucketBy(java.lang.String)">bucketBy</a></span>&#8203;(java.lang.String&nbsp;field)</code></th>
 <td class="colLast">
 <div class="block">Return criteria to bucket results based on the provided field.</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>static co.elastic.clients.elasticsearch._types.aggregations.Aggregation</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#bucketBy(java.lang.String,int)">bucketBy</a></span>&#8203;(java.lang.String&nbsp;field,
         int&nbsp;size)</code></th>
@@ -208,7 +217,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Return criteria to bucket results based on the provided field.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>static co.elastic.clients.elasticsearch._types.aggregations.Aggregation</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#bucketBy(java.lang.String,int,java.lang.String)">bucketBy</a></span>&#8203;(java.lang.String&nbsp;field,
         int&nbsp;size,
@@ -217,21 +226,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Return criteria to bucket results based on the provided field.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i7" class="rowColor">
+<td class="colFirst"><code>static co.elastic.clients.elasticsearch._types.aggregations.Aggregation</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#bucketBy(java.lang.String,int,java.util.Map,java.util.List)">bucketBy</a></span>&#8203;(java.lang.String&nbsp;field,
+        int&nbsp;size,
+        java.util.Map&lt;java.lang.String,&#8203;co.elastic.clients.elasticsearch._types.aggregations.Aggregation&gt;&nbsp;nested,
+        java.util.List&lt;co.elastic.clients.util.NamedValue&lt;co.elastic.clients.elasticsearch._types.SortOrder&gt;&gt;&nbsp;order)</code></th>
+<td class="colLast">
+<div class="block">Return criteria to bucket results based on the provided field, including nested
+ aggregations and (optionally) sorting the top-level buckets by one of the nested
+ aggregation's results.</div>
+</td>
+</tr>
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>co.elastic.clients.elasticsearch._types.aggregations.Aggregation</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#count()">count</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Return criteria to calculate the number of values in the field across all results.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>static co.elastic.clients.elasticsearch._types.aggregations.Aggregation</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#count(java.lang.String)">count</a></span>&#8203;(java.lang.String&nbsp;field)</code></th>
 <td class="colLast">
 <div class="block">Return criteria to calculate the number of values in a field across all results.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>co.elastic.clients.elasticsearch._types.aggregations.Aggregation</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#distinct()">distinct</a></span>()</code></th>
 <td class="colLast">
@@ -239,7 +260,15 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
  all results.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i11" class="rowColor">
+<td class="colFirst"><code>co.elastic.clients.elasticsearch._types.aggregations.Aggregation</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#distinct(int)">distinct</a></span>&#8203;(int&nbsp;precision)</code></th>
+<td class="colLast">
+<div class="block">Returns criteria to calculate the approximate number of distinct values in the field across
+ all results.</div>
+</td>
+</tr>
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>static co.elastic.clients.elasticsearch._types.aggregations.Aggregation</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#distinct(java.lang.String)">distinct</a></span>&#8203;(java.lang.String&nbsp;field)</code></th>
 <td class="colLast">
@@ -247,7 +276,16 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
  all results.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i13" class="rowColor">
+<td class="colFirst"><code>static co.elastic.clients.elasticsearch._types.aggregations.Aggregation</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#distinct(java.lang.String,int)">distinct</a></span>&#8203;(java.lang.String&nbsp;field,
+        int&nbsp;precision)</code></th>
+<td class="colLast">
+<div class="block">Returns criteria to calculate the approximate number of distinct values in a field across
+ all results.</div>
+</td>
+</tr>
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>co.elastic.clients.elasticsearch._types.query_dsl.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hasAnyValue()">hasAnyValue</a></span>()</code></th>
 <td class="colLast">
@@ -255,7 +293,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
  (no matter what actual value) for the field.</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>static co.elastic.clients.elasticsearch._types.query_dsl.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hasAnyValue(java.lang.String)">hasAnyValue</a></span>&#8203;(java.lang.String&nbsp;field)</code></th>
 <td class="colLast">
@@ -263,14 +301,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
  (no matter what actual value) for the field.</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>co.elastic.clients.elasticsearch._types.SortOptions</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#order(co.elastic.clients.elasticsearch._types.SortOrder)">order</a></span>&#8203;(co.elastic.clients.elasticsearch._types.SortOrder&nbsp;order)</code></th>
 <td class="colLast">
 <div class="block">Return a condition to sort results by the field, in the order specified.</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>static co.elastic.clients.elasticsearch._types.SortOptions</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#order(java.lang.String,co.elastic.clients.elasticsearch._types.SortOrder)">order</a></span>&#8203;(java.lang.String&nbsp;field,
      co.elastic.clients.elasticsearch._types.SortOrder&nbsp;order)</code></th>
@@ -379,6 +417,42 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>field</code> - for which to count distinct values</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>criteria to calculate the approximate number of distinct values in a field across the results</dd>
+</dl>
+</li>
+</ul>
+<a id="distinct(int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>distinct</h4>
+<pre class="methodSignature">co.elastic.clients.elasticsearch._types.aggregations.Aggregation&nbsp;distinct&#8203;(int&nbsp;precision)</pre>
+<div class="block">Returns criteria to calculate the approximate number of distinct values in the field across
+ all results. Note that this de-duplicates values, but is an <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-metrics-cardinality-aggregation.html">approximation</a>.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>precision</code> - threshold for precision of the count</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>criteria to calculate the approximate number of distinct values in a field across the results</dd>
+</dl>
+</li>
+</ul>
+<a id="distinct(java.lang.String,int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>distinct</h4>
+<pre class="methodSignature">static&nbsp;co.elastic.clients.elasticsearch._types.aggregations.Aggregation&nbsp;distinct&#8203;(java.lang.String&nbsp;field,
+                                                                                 int&nbsp;precision)</pre>
+<div class="block">Returns criteria to calculate the approximate number of distinct values in a field across
+ all results. Note that this de-duplicates values, but is an <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-metrics-cardinality-aggregation.html">approximation</a>.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>field</code> - for which to count distinct values</dd>
+<dd><code>precision</code> - threshold for precision of the count</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>criteria to calculate the approximate number of distinct values in a field across the results</dd>
 </dl>
@@ -513,10 +587,54 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>field</code> - by which to bucket the results</dd>
-<dd><code>size</code> - the number of buckets to include results across.</dd>
+<dd><code>size</code> - the number of buckets to include results across</dd>
 <dd><code>sourceAttribute</code> - if non-null, the actual source value of this attribute for the bucket will be included in the result</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>criteria to bucket results by the provided field, across a maximum number of buckets defined by the provided size</dd>
+</dl>
+</li>
+</ul>
+<a id="bucketBy(int,java.util.Map,java.util.List)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>bucketBy</h4>
+<pre class="methodSignature">co.elastic.clients.elasticsearch._types.aggregations.Aggregation&nbsp;bucketBy&#8203;(int&nbsp;size,
+                                                                          java.util.Map&lt;java.lang.String,&#8203;co.elastic.clients.elasticsearch._types.aggregations.Aggregation&gt;&nbsp;nested,
+                                                                          java.util.List&lt;co.elastic.clients.util.NamedValue&lt;co.elastic.clients.elasticsearch._types.SortOrder&gt;&gt;&nbsp;order)</pre>
+<div class="block">Return criteria to bucket results based on the provided field.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>size</code> - the number of buckets to include results across.</dd>
+<dd><code>nested</code> - a map of nested aggregations, from arbitrary string key to aggregation</dd>
+<dd><code>order</code> - (optional) named value from aggregation key (string) to sort order</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>criteria to bucket results by the provided field, across a maximum number of buckets, with nested (sub)aggregations</dd>
+</dl>
+</li>
+</ul>
+<a id="bucketBy(java.lang.String,int,java.util.Map,java.util.List)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>bucketBy</h4>
+<pre class="methodSignature">static&nbsp;co.elastic.clients.elasticsearch._types.aggregations.Aggregation&nbsp;bucketBy&#8203;(java.lang.String&nbsp;field,
+                                                                                 int&nbsp;size,
+                                                                                 java.util.Map&lt;java.lang.String,&#8203;co.elastic.clients.elasticsearch._types.aggregations.Aggregation&gt;&nbsp;nested,
+                                                                                 java.util.List&lt;co.elastic.clients.util.NamedValue&lt;co.elastic.clients.elasticsearch._types.SortOrder&gt;&gt;&nbsp;order)</pre>
+<div class="block">Return criteria to bucket results based on the provided field, including nested
+ aggregations and (optionally) sorting the top-level buckets by one of the nested
+ aggregation's results.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>field</code> - by which to bucket the results</dd>
+<dd><code>size</code> - the number of buckets to include results across</dd>
+<dd><code>nested</code> - a map of nested aggregations, from arbitrary string key to aggregation</dd>
+<dd><code>order</code> - (optional) named value from aggregation key (string) to sort order</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>criteria to bucket results by the provided field, across a maximum number of buckets, with nested (sub)aggregations</dd>
 </dl>
 </li>
 </ul>
