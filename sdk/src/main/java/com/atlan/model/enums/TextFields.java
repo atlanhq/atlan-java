@@ -266,6 +266,8 @@ public enum TextFields implements AtlanSearchableField {
     MONGO_DB_COLLECTION_SUBTYPE("mongoDBCollectionSubtype.text"),
     /** Name of this asset. Fallback for display purposes, if displayName is empty. */
     NAME("name"),
+    /** Represents attributes for describing the key schema for the table and indexes. */
+    NO_SQL_SCHEMA_DEFINITION("noSQLSchemaDefinition"),
     /** Simple name of the column this column is nested within, for STRUCT and NESTED columns. */
     PARENT_COLUMN_NAME("parentColumnName"),
     /** Unique name of the column this column is nested within, for STRUCT and NESTED columns. */

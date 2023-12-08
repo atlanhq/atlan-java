@@ -11,6 +11,7 @@ import com.atlan.exception.NotFoundException;
 import com.atlan.model.core.AssetFilter;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.enums.DynamoDBStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.CompoundQuery;
 import com.atlan.model.search.FluentSearch;
@@ -29,7 +30,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Instance of a MongoDB collection in Atlan.
+ * Atlan DynamoDB Table Asset
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -38,13 +39,13 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings("cast")
-public class MongoDBCollection extends Asset
-        implements IMongoDBCollection, ITable, IMongoDB, ISQL, ICatalog, IAsset, IReferenceable, INoSQL {
+public class DynamoDBTable extends Asset
+        implements IDynamoDBTable, ITable, IDynamoDB, ISQL, ICatalog, IAsset, IReferenceable, INoSQL {
     private static final long serialVersionUID = 2L;
 
-    public static final String TYPE_NAME = "MongoDBCollection";
+    public static final String TYPE_NAME = "DynamoDBTable";
 
-    /** Fixed typeName for MongoDBCollections. */
+    /** Fixed typeName for DynamoDBTables. */
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
@@ -89,6 +90,44 @@ public class MongoDBCollection extends Asset
     @Attribute
     @Singular
     SortedSet<ITable> dimensions;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDynamoDBGlobalSecondaryIndex> dynamoDBGlobalSecondaryIndexes;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDynamoDBLocalSecondaryIndex> dynamoDBLocalSecondaryIndexes;
+
+    /** Specifies the partition key of the DynamoDB Table/Index */
+    @Attribute
+    String dynamoDBPartitionKey;
+
+    /** The maximum number of strongly consistent reads consumed per second before DynamoDB returns a ThrottlingException */
+    @Attribute
+    Long dynamoDBReadCapacityUnits;
+
+    /** Specifies the sort key of the DynamoDB Table/Index */
+    @Attribute
+    String dynamoDBSortKey;
+
+    /** Status of the DynamoDB Asset */
+    @Attribute
+    DynamoDBStatus dynamoDBStatus;
+
+    /** Represents the number of global secondary indexes on the table. */
+    @Attribute
+    Integer dynamoDBTableGSICount;
+
+    /** Represents the number of local secondary indexes on the table. */
+    @Attribute
+    Integer dynamoDBTableLSICount;
+
+    /** The maximum number of writes consumed per second before DynamoDB returns a ThrottlingException */
+    @Attribute
+    Long dynamoDBWriteCapacityUnits;
 
     /** External location of this table, for example: an S3 object location. */
     @Attribute
@@ -136,58 +175,6 @@ public class MongoDBCollection extends Asset
     /** Time (epoch) at which this asset was last profiled, in milliseconds. */
     @Attribute
     Long lastProfiledAt;
-
-    /** Average size of an object in the collection. */
-    @Attribute
-    Long mongoDBCollectionAverageObjectSize;
-
-    /** Seconds after which documents in a time series collection or clustered collection expire. */
-    @Attribute
-    Long mongoDBCollectionExpireAfterSeconds;
-
-    /** Whether the collection is capped (true) or not (false). */
-    @Attribute
-    Boolean mongoDBCollectionIsCapped;
-
-    /** Maximum size allowed in a capped collection. */
-    @Attribute
-    Long mongoDBCollectionMaxSize;
-
-    /** Maximum number of documents allowed in a capped collection. */
-    @Attribute
-    Long mongoDBCollectionMaximumDocumentCount;
-
-    /** Number of indexes on the collection. */
-    @Attribute
-    Long mongoDBCollectionNumIndexes;
-
-    /** Number of orphaned documents in the collection. */
-    @Attribute
-    Long mongoDBCollectionNumOrphanDocs;
-
-    /** Definition of the schema applicable for the collection. */
-    @Attribute
-    String mongoDBCollectionSchemaDefinition;
-
-    /** Subtype of a MongoDB collection, for example: Capped, Time Series, etc. */
-    @Attribute
-    String mongoDBCollectionSubtype;
-
-    /** Name of the field containing the date in each time series document. */
-    @Attribute
-    String mongoDBCollectionTimeField;
-
-    /** Closest match to the time span between consecutive incoming measurements. */
-    @Attribute
-    String mongoDBCollectionTimeGranularity;
-
-    /** Total size of all indexes. */
-    @Attribute
-    Long mongoDBCollectionTotalIndexSize;
-
-    /** Database in which the collection exists. */
-    @Attribute
-    IMongoDBDatabase mongoDBDatabase;
 
     /** Represents attributes for describing the key schema for the table and indexes. */
     @Attribute
@@ -295,14 +282,14 @@ public class MongoDBCollection extends Asset
     String viewQualifiedName;
 
     /**
-     * Builds the minimal object necessary to create a relationship to a MongoDBCollection, from a potentially
-     * more-complete MongoDBCollection object.
+     * Builds the minimal object necessary to create a relationship to a DynamoDBTable, from a potentially
+     * more-complete DynamoDBTable object.
      *
-     * @return the minimal object necessary to relate to the MongoDBCollection
-     * @throws InvalidRequestException if any of the minimal set of required properties for a MongoDBCollection relationship are not found in the initial object
+     * @return the minimal object necessary to relate to the DynamoDBTable
+     * @throws InvalidRequestException if any of the minimal set of required properties for a DynamoDBTable relationship are not found in the initial object
      */
     @Override
-    public MongoDBCollection trimToReference() throws InvalidRequestException {
+    public DynamoDBTable trimToReference() throws InvalidRequestException {
         if (this.getGuid() != null && !this.getGuid().isEmpty()) {
             return refByGuid(this.getGuid());
         }
@@ -319,52 +306,52 @@ public class MongoDBCollection extends Asset
     }
 
     /**
-     * Start a fluent search that will return all MongoDBCollection assets.
+     * Start a fluent search that will return all DynamoDBTable assets.
      * Additional conditions can be chained onto the returned search before any
      * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval. Only active (non-archived) MongoDBCollection assets will be included.
+     * optimal retrieval. Only active (non-archived) DynamoDBTable assets will be included.
      *
-     * @return a fluent search that includes all MongoDBCollection assets
+     * @return a fluent search that includes all DynamoDBTable assets
      */
     public static FluentSearch.FluentSearchBuilder<?, ?> select() {
         return select(Atlan.getDefaultClient());
     }
 
     /**
-     * Start a fluent search that will return all MongoDBCollection assets.
+     * Start a fluent search that will return all DynamoDBTable assets.
      * Additional conditions can be chained onto the returned search before any
      * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval. Only active (non-archived) MongoDBCollection assets will be included.
+     * optimal retrieval. Only active (non-archived) DynamoDBTable assets will be included.
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the assets
-     * @return a fluent search that includes all MongoDBCollection assets
+     * @return a fluent search that includes all DynamoDBTable assets
      */
     public static FluentSearch.FluentSearchBuilder<?, ?> select(AtlanClient client) {
         return select(client, false);
     }
 
     /**
-     * Start a fluent search that will return all MongoDBCollection assets.
+     * Start a fluent search that will return all DynamoDBTable assets.
      * Additional conditions can be chained onto the returned search before any
      * asset retrieval is attempted, ensuring all conditions are pushed-down for
      * optimal retrieval.
      *
-     * @param includeArchived when true, archived (soft-deleted) MongoDBCollections will be included
-     * @return a fluent search that includes all MongoDBCollection assets
+     * @param includeArchived when true, archived (soft-deleted) DynamoDBTables will be included
+     * @return a fluent search that includes all DynamoDBTable assets
      */
     public static FluentSearch.FluentSearchBuilder<?, ?> select(boolean includeArchived) {
         return select(Atlan.getDefaultClient(), includeArchived);
     }
 
     /**
-     * Start a fluent search that will return all MongoDBCollection assets.
+     * Start a fluent search that will return all DynamoDBTable assets.
      * Additional conditions can be chained onto the returned search before any
      * asset retrieval is attempted, ensuring all conditions are pushed-down for
      * optimal retrieval.
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the assets
-     * @param includeArchived when true, archived (soft-deleted) MongoDBCollections will be included
-     * @return a fluent search that includes all MongoDBCollection assets
+     * @param includeArchived when true, archived (soft-deleted) DynamoDBTables will be included
+     * @return a fluent search that includes all DynamoDBTable assets
      */
     public static FluentSearch.FluentSearchBuilder<?, ?> select(AtlanClient client, boolean includeArchived) {
         FluentSearch.FluentSearchBuilder<?, ?> builder =
@@ -376,12 +363,12 @@ public class MongoDBCollection extends Asset
     }
 
     /**
-     * Start an asset filter that will return all MongoDBCollection assets.
+     * Start an asset filter that will return all DynamoDBTable assets.
      * Additional conditions can be chained onto the returned filter before any
      * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval. Only active (non-archived) MongoDBCollection assets will be included.
+     * optimal retrieval. Only active (non-archived) DynamoDBTable assets will be included.
      *
-     * @return an asset filter that includes all MongoDBCollection assets
+     * @return an asset filter that includes all DynamoDBTable assets
      * @deprecated replaced by {@link #select()}
      */
     @Deprecated
@@ -390,13 +377,13 @@ public class MongoDBCollection extends Asset
     }
 
     /**
-     * Start an asset filter that will return all MongoDBCollection assets.
+     * Start an asset filter that will return all DynamoDBTable assets.
      * Additional conditions can be chained onto the returned filter before any
      * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval. Only active (non-archived) MongoDBCollection assets will be included.
+     * optimal retrieval. Only active (non-archived) DynamoDBTable assets will be included.
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the assets
-     * @return an asset filter that includes all MongoDBCollection assets
+     * @return an asset filter that includes all DynamoDBTable assets
      * @deprecated replaced by {@link #select(AtlanClient)}
      */
     @Deprecated
@@ -405,13 +392,13 @@ public class MongoDBCollection extends Asset
     }
 
     /**
-     * Start an asset filter that will return all MongoDBCollection assets.
+     * Start an asset filter that will return all DynamoDBTable assets.
      * Additional conditions can be chained onto the returned filter before any
      * asset retrieval is attempted, ensuring all conditions are pushed-down for
      * optimal retrieval.
      *
-     * @param includeArchived when true, archived (soft-deleted) MongoDBCollections will be included
-     * @return an asset filter that includes all MongoDBCollection assets
+     * @param includeArchived when true, archived (soft-deleted) DynamoDBTables will be included
+     * @return an asset filter that includes all DynamoDBTable assets
      * @deprecated replaced by {@link #select(boolean)}
      */
     @Deprecated
@@ -420,14 +407,14 @@ public class MongoDBCollection extends Asset
     }
 
     /**
-     * Start an asset filter that will return all MongoDBCollection assets.
+     * Start an asset filter that will return all DynamoDBTable assets.
      * Additional conditions can be chained onto the returned filter before any
      * asset retrieval is attempted, ensuring all conditions are pushed-down for
      * optimal retrieval.
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the assets
-     * @param includeArchived when true, archived (soft-deleted) MongoDBCollections will be included
-     * @return an asset filter that includes all MongoDBCollection assets
+     * @param includeArchived when true, archived (soft-deleted) DynamoDBTables will be included
+     * @return an asset filter that includes all DynamoDBTable assets
      * @deprecated replaced by {@link #select(AtlanClient, boolean)}
      */
     @Deprecated
@@ -441,80 +428,79 @@ public class MongoDBCollection extends Asset
     }
 
     /**
-     * Reference to a MongoDBCollection by GUID.
+     * Reference to a DynamoDBTable by GUID.
      *
-     * @param guid the GUID of the MongoDBCollection to reference
-     * @return reference to a MongoDBCollection that can be used for defining a relationship to a MongoDBCollection
+     * @param guid the GUID of the DynamoDBTable to reference
+     * @return reference to a DynamoDBTable that can be used for defining a relationship to a DynamoDBTable
      */
-    public static MongoDBCollection refByGuid(String guid) {
-        return MongoDBCollection._internal().guid(guid).build();
+    public static DynamoDBTable refByGuid(String guid) {
+        return DynamoDBTable._internal().guid(guid).build();
     }
 
     /**
-     * Reference to a MongoDBCollection by qualifiedName.
+     * Reference to a DynamoDBTable by qualifiedName.
      *
-     * @param qualifiedName the qualifiedName of the MongoDBCollection to reference
-     * @return reference to a MongoDBCollection that can be used for defining a relationship to a MongoDBCollection
+     * @param qualifiedName the qualifiedName of the DynamoDBTable to reference
+     * @return reference to a DynamoDBTable that can be used for defining a relationship to a DynamoDBTable
      */
-    public static MongoDBCollection refByQualifiedName(String qualifiedName) {
-        return MongoDBCollection._internal()
+    public static DynamoDBTable refByQualifiedName(String qualifiedName) {
+        return DynamoDBTable._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
     }
 
     /**
-     * Retrieves a MongoDBCollection by one of its identifiers, complete with all of its relationships.
+     * Retrieves a DynamoDBTable by one of its identifiers, complete with all of its relationships.
      *
-     * @param id of the MongoDBCollection to retrieve, either its GUID or its full qualifiedName
-     * @return the requested full MongoDBCollection, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MongoDBCollection does not exist or the provided GUID is not a MongoDBCollection
+     * @param id of the DynamoDBTable to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full DynamoDBTable, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DynamoDBTable does not exist or the provided GUID is not a DynamoDBTable
      */
     @JsonIgnore
-    public static MongoDBCollection get(String id) throws AtlanException {
+    public static DynamoDBTable get(String id) throws AtlanException {
         return get(Atlan.getDefaultClient(), id);
     }
 
     /**
-     * Retrieves a MongoDBCollection by one of its identifiers, complete with all of its relationships.
+     * Retrieves a DynamoDBTable by one of its identifiers, complete with all of its relationships.
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
-     * @param id of the MongoDBCollection to retrieve, either its GUID or its full qualifiedName
-     * @return the requested full MongoDBCollection, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MongoDBCollection does not exist or the provided GUID is not a MongoDBCollection
+     * @param id of the DynamoDBTable to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full DynamoDBTable, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DynamoDBTable does not exist or the provided GUID is not a DynamoDBTable
      */
     @JsonIgnore
-    public static MongoDBCollection get(AtlanClient client, String id) throws AtlanException {
+    public static DynamoDBTable get(AtlanClient client, String id) throws AtlanException {
         return get(client, id, true);
     }
 
     /**
-     * Retrieves a MongoDBCollection by one of its identifiers, optionally complete with all of its relationships.
+     * Retrieves a DynamoDBTable by one of its identifiers, optionally complete with all of its relationships.
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
-     * @param id of the MongoDBCollection to retrieve, either its GUID or its full qualifiedName
+     * @param id of the DynamoDBTable to retrieve, either its GUID or its full qualifiedName
      * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
-     * @return the requested full MongoDBCollection, optionally complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MongoDBCollection does not exist or the provided GUID is not a MongoDBCollection
+     * @return the requested full DynamoDBTable, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DynamoDBTable does not exist or the provided GUID is not a DynamoDBTable
      */
     @JsonIgnore
-    public static MongoDBCollection get(AtlanClient client, String id, boolean includeRelationships)
-            throws AtlanException {
+    public static DynamoDBTable get(AtlanClient client, String id, boolean includeRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
             Asset asset = Asset.get(client, id, includeRelationships);
             if (asset == null) {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
-            } else if (asset instanceof MongoDBCollection) {
-                return (MongoDBCollection) asset;
+            } else if (asset instanceof DynamoDBTable) {
+                return (DynamoDBTable) asset;
             } else {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, TYPE_NAME);
             }
         } else {
             Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
-            if (asset instanceof MongoDBCollection) {
-                return (MongoDBCollection) asset;
+            if (asset instanceof DynamoDBTable) {
+                return (DynamoDBTable) asset;
             } else {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, TYPE_NAME);
             }
@@ -522,65 +508,65 @@ public class MongoDBCollection extends Asset
     }
 
     /**
-     * Retrieves a MongoDBCollection by its GUID, complete with all of its relationships.
+     * Retrieves a DynamoDBTable by its GUID, complete with all of its relationships.
      *
-     * @param guid of the MongoDBCollection to retrieve
-     * @return the requested full MongoDBCollection, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MongoDBCollection does not exist or the provided GUID is not a MongoDBCollection
+     * @param guid of the DynamoDBTable to retrieve
+     * @return the requested full DynamoDBTable, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DynamoDBTable does not exist or the provided GUID is not a DynamoDBTable
      * @deprecated see {@link #get(String)} instead
      */
     @Deprecated
-    public static MongoDBCollection retrieveByGuid(String guid) throws AtlanException {
+    public static DynamoDBTable retrieveByGuid(String guid) throws AtlanException {
         return get(Atlan.getDefaultClient(), guid);
     }
 
     /**
-     * Retrieves a MongoDBCollection by its GUID, complete with all of its relationships.
+     * Retrieves a DynamoDBTable by its GUID, complete with all of its relationships.
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
-     * @param guid of the MongoDBCollection to retrieve
-     * @return the requested full MongoDBCollection, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MongoDBCollection does not exist or the provided GUID is not a MongoDBCollection
+     * @param guid of the DynamoDBTable to retrieve
+     * @return the requested full DynamoDBTable, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DynamoDBTable does not exist or the provided GUID is not a DynamoDBTable
      * @deprecated see {@link #get(AtlanClient, String)} instead
      */
     @Deprecated
-    public static MongoDBCollection retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
+    public static DynamoDBTable retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
         return get(client, guid);
     }
 
     /**
-     * Retrieves a MongoDBCollection by its qualifiedName, complete with all of its relationships.
+     * Retrieves a DynamoDBTable by its qualifiedName, complete with all of its relationships.
      *
-     * @param qualifiedName of the MongoDBCollection to retrieve
-     * @return the requested full MongoDBCollection, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MongoDBCollection does not exist
+     * @param qualifiedName of the DynamoDBTable to retrieve
+     * @return the requested full DynamoDBTable, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DynamoDBTable does not exist
      * @deprecated see {@link #get(String)} instead
      */
     @Deprecated
-    public static MongoDBCollection retrieveByQualifiedName(String qualifiedName) throws AtlanException {
+    public static DynamoDBTable retrieveByQualifiedName(String qualifiedName) throws AtlanException {
         return get(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
-     * Retrieves a MongoDBCollection by its qualifiedName, complete with all of its relationships.
+     * Retrieves a DynamoDBTable by its qualifiedName, complete with all of its relationships.
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
-     * @param qualifiedName of the MongoDBCollection to retrieve
-     * @return the requested full MongoDBCollection, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MongoDBCollection does not exist
+     * @param qualifiedName of the DynamoDBTable to retrieve
+     * @return the requested full DynamoDBTable, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DynamoDBTable does not exist
      * @deprecated see {@link #get(AtlanClient, String)} instead
      */
     @Deprecated
-    public static MongoDBCollection retrieveByQualifiedName(AtlanClient client, String qualifiedName)
+    public static DynamoDBTable retrieveByQualifiedName(AtlanClient client, String qualifiedName)
             throws AtlanException {
         return get(client, qualifiedName);
     }
 
     /**
-     * Restore the archived (soft-deleted) MongoDBCollection to active.
+     * Restore the archived (soft-deleted) DynamoDBTable to active.
      *
-     * @param qualifiedName for the MongoDBCollection
-     * @return true if the MongoDBCollection is now active, and false otherwise
+     * @param qualifiedName for the DynamoDBTable
+     * @return true if the DynamoDBTable is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
     public static boolean restore(String qualifiedName) throws AtlanException {
@@ -588,11 +574,11 @@ public class MongoDBCollection extends Asset
     }
 
     /**
-     * Restore the archived (soft-deleted) MongoDBCollection to active.
+     * Restore the archived (soft-deleted) DynamoDBTable to active.
      *
      * @param client connectivity to the Atlan tenant on which to restore the asset
-     * @param qualifiedName for the MongoDBCollection
-     * @return true if the MongoDBCollection is now active, and false otherwise
+     * @param qualifiedName for the DynamoDBTable
+     * @return true if the DynamoDBTable is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
@@ -600,28 +586,28 @@ public class MongoDBCollection extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to update a MongoDBCollection.
+     * Builds the minimal object necessary to update a DynamoDBTable.
      *
-     * @param qualifiedName of the MongoDBCollection
-     * @param name of the MongoDBCollection
-     * @return the minimal request necessary to update the MongoDBCollection, as a builder
+     * @param qualifiedName of the DynamoDBTable
+     * @param name of the DynamoDBTable
+     * @return the minimal request necessary to update the DynamoDBTable, as a builder
      */
-    public static MongoDBCollectionBuilder<?, ?> updater(String qualifiedName, String name) {
-        return MongoDBCollection._internal()
+    public static DynamoDBTableBuilder<?, ?> updater(String qualifiedName, String name) {
+        return DynamoDBTable._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(qualifiedName)
                 .name(name);
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a MongoDBCollection, from a potentially
-     * more-complete MongoDBCollection object.
+     * Builds the minimal object necessary to apply an update to a DynamoDBTable, from a potentially
+     * more-complete DynamoDBTable object.
      *
-     * @return the minimal object necessary to update the MongoDBCollection, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for MongoDBCollection are not found in the initial object
+     * @return the minimal object necessary to update the DynamoDBTable, as a builder
+     * @throws InvalidRequestException if any of the minimal set of required properties for DynamoDBTable are not found in the initial object
      */
     @Override
-    public MongoDBCollectionBuilder<?, ?> trimToRequired() throws InvalidRequestException {
+    public DynamoDBTableBuilder<?, ?> trimToRequired() throws InvalidRequestException {
         List<String> missing = new ArrayList<>();
         if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
             missing.add("qualifiedName");
@@ -631,339 +617,339 @@ public class MongoDBCollection extends Asset
         }
         if (!missing.isEmpty()) {
             throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "MongoDBCollection", String.join(",", missing));
+                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "DynamoDBTable", String.join(",", missing));
         }
         return updater(this.getQualifiedName(), this.getName());
     }
 
     /**
-     * Remove the system description from a MongoDBCollection.
+     * Remove the system description from a DynamoDBTable.
      *
-     * @param qualifiedName of the MongoDBCollection
-     * @param name of the MongoDBCollection
-     * @return the updated MongoDBCollection, or null if the removal failed
+     * @param qualifiedName of the DynamoDBTable
+     * @param name of the DynamoDBTable
+     * @return the updated DynamoDBTable, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static MongoDBCollection removeDescription(String qualifiedName, String name) throws AtlanException {
+    public static DynamoDBTable removeDescription(String qualifiedName, String name) throws AtlanException {
         return removeDescription(Atlan.getDefaultClient(), qualifiedName, name);
     }
 
     /**
-     * Remove the system description from a MongoDBCollection.
+     * Remove the system description from a DynamoDBTable.
      *
      * @param client connectivity to the Atlan tenant on which to remove the asset's description
-     * @param qualifiedName of the MongoDBCollection
-     * @param name of the MongoDBCollection
-     * @return the updated MongoDBCollection, or null if the removal failed
+     * @param qualifiedName of the DynamoDBTable
+     * @param name of the DynamoDBTable
+     * @return the updated DynamoDBTable, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static MongoDBCollection removeDescription(AtlanClient client, String qualifiedName, String name)
+    public static DynamoDBTable removeDescription(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
-        return (MongoDBCollection) Asset.removeDescription(client, updater(qualifiedName, name));
+        return (DynamoDBTable) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
     /**
-     * Remove the user's description from a MongoDBCollection.
+     * Remove the user's description from a DynamoDBTable.
      *
-     * @param qualifiedName of the MongoDBCollection
-     * @param name of the MongoDBCollection
-     * @return the updated MongoDBCollection, or null if the removal failed
+     * @param qualifiedName of the DynamoDBTable
+     * @param name of the DynamoDBTable
+     * @return the updated DynamoDBTable, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static MongoDBCollection removeUserDescription(String qualifiedName, String name) throws AtlanException {
+    public static DynamoDBTable removeUserDescription(String qualifiedName, String name) throws AtlanException {
         return removeUserDescription(Atlan.getDefaultClient(), qualifiedName, name);
     }
 
     /**
-     * Remove the user's description from a MongoDBCollection.
+     * Remove the user's description from a DynamoDBTable.
      *
      * @param client connectivity to the Atlan tenant on which to remove the asset's description
-     * @param qualifiedName of the MongoDBCollection
-     * @param name of the MongoDBCollection
-     * @return the updated MongoDBCollection, or null if the removal failed
+     * @param qualifiedName of the DynamoDBTable
+     * @param name of the DynamoDBTable
+     * @return the updated DynamoDBTable, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static MongoDBCollection removeUserDescription(AtlanClient client, String qualifiedName, String name)
+    public static DynamoDBTable removeUserDescription(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
-        return (MongoDBCollection) Asset.removeUserDescription(client, updater(qualifiedName, name));
+        return (DynamoDBTable) Asset.removeUserDescription(client, updater(qualifiedName, name));
     }
 
     /**
-     * Remove the owners from a MongoDBCollection.
+     * Remove the owners from a DynamoDBTable.
      *
-     * @param qualifiedName of the MongoDBCollection
-     * @param name of the MongoDBCollection
-     * @return the updated MongoDBCollection, or null if the removal failed
+     * @param qualifiedName of the DynamoDBTable
+     * @param name of the DynamoDBTable
+     * @return the updated DynamoDBTable, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static MongoDBCollection removeOwners(String qualifiedName, String name) throws AtlanException {
+    public static DynamoDBTable removeOwners(String qualifiedName, String name) throws AtlanException {
         return removeOwners(Atlan.getDefaultClient(), qualifiedName, name);
     }
 
     /**
-     * Remove the owners from a MongoDBCollection.
+     * Remove the owners from a DynamoDBTable.
      *
-     * @param client connectivity to the Atlan tenant from which to remove the MongoDBCollection's owners
-     * @param qualifiedName of the MongoDBCollection
-     * @param name of the MongoDBCollection
-     * @return the updated MongoDBCollection, or null if the removal failed
+     * @param client connectivity to the Atlan tenant from which to remove the DynamoDBTable's owners
+     * @param qualifiedName of the DynamoDBTable
+     * @param name of the DynamoDBTable
+     * @return the updated DynamoDBTable, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static MongoDBCollection removeOwners(AtlanClient client, String qualifiedName, String name)
+    public static DynamoDBTable removeOwners(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
-        return (MongoDBCollection) Asset.removeOwners(client, updater(qualifiedName, name));
+        return (DynamoDBTable) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
     /**
-     * Update the certificate on a MongoDBCollection.
+     * Update the certificate on a DynamoDBTable.
      *
-     * @param qualifiedName of the MongoDBCollection
+     * @param qualifiedName of the DynamoDBTable
      * @param certificate to use
      * @param message (optional) message, or null if no message
-     * @return the updated MongoDBCollection, or null if the update failed
+     * @return the updated DynamoDBTable, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static MongoDBCollection updateCertificate(
-            String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
+    public static DynamoDBTable updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
+            throws AtlanException {
         return updateCertificate(Atlan.getDefaultClient(), qualifiedName, certificate, message);
     }
 
     /**
-     * Update the certificate on a MongoDBCollection.
+     * Update the certificate on a DynamoDBTable.
      *
-     * @param client connectivity to the Atlan tenant on which to update the MongoDBCollection's certificate
-     * @param qualifiedName of the MongoDBCollection
+     * @param client connectivity to the Atlan tenant on which to update the DynamoDBTable's certificate
+     * @param qualifiedName of the DynamoDBTable
      * @param certificate to use
      * @param message (optional) message, or null if no message
-     * @return the updated MongoDBCollection, or null if the update failed
+     * @return the updated DynamoDBTable, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static MongoDBCollection updateCertificate(
+    public static DynamoDBTable updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (MongoDBCollection)
+        return (DynamoDBTable)
                 Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
-     * Remove the certificate from a MongoDBCollection.
+     * Remove the certificate from a DynamoDBTable.
      *
-     * @param qualifiedName of the MongoDBCollection
-     * @param name of the MongoDBCollection
-     * @return the updated MongoDBCollection, or null if the removal failed
+     * @param qualifiedName of the DynamoDBTable
+     * @param name of the DynamoDBTable
+     * @return the updated DynamoDBTable, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static MongoDBCollection removeCertificate(String qualifiedName, String name) throws AtlanException {
+    public static DynamoDBTable removeCertificate(String qualifiedName, String name) throws AtlanException {
         return removeCertificate(Atlan.getDefaultClient(), qualifiedName, name);
     }
 
     /**
-     * Remove the certificate from a MongoDBCollection.
+     * Remove the certificate from a DynamoDBTable.
      *
-     * @param client connectivity to the Atlan tenant from which to remove the MongoDBCollection's certificate
-     * @param qualifiedName of the MongoDBCollection
-     * @param name of the MongoDBCollection
-     * @return the updated MongoDBCollection, or null if the removal failed
+     * @param client connectivity to the Atlan tenant from which to remove the DynamoDBTable's certificate
+     * @param qualifiedName of the DynamoDBTable
+     * @param name of the DynamoDBTable
+     * @return the updated DynamoDBTable, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static MongoDBCollection removeCertificate(AtlanClient client, String qualifiedName, String name)
+    public static DynamoDBTable removeCertificate(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
-        return (MongoDBCollection) Asset.removeCertificate(client, updater(qualifiedName, name));
+        return (DynamoDBTable) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
     /**
-     * Update the announcement on a MongoDBCollection.
+     * Update the announcement on a DynamoDBTable.
      *
-     * @param qualifiedName of the MongoDBCollection
+     * @param qualifiedName of the DynamoDBTable
      * @param type type of announcement to set
      * @param title (optional) title of the announcement to set (or null for no title)
      * @param message (optional) message of the announcement to set (or null for no message)
      * @return the result of the update, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static MongoDBCollection updateAnnouncement(
+    public static DynamoDBTable updateAnnouncement(
             String qualifiedName, AtlanAnnouncementType type, String title, String message) throws AtlanException {
         return updateAnnouncement(Atlan.getDefaultClient(), qualifiedName, type, title, message);
     }
 
     /**
-     * Update the announcement on a MongoDBCollection.
+     * Update the announcement on a DynamoDBTable.
      *
-     * @param client connectivity to the Atlan tenant on which to update the MongoDBCollection's announcement
-     * @param qualifiedName of the MongoDBCollection
+     * @param client connectivity to the Atlan tenant on which to update the DynamoDBTable's announcement
+     * @param qualifiedName of the DynamoDBTable
      * @param type type of announcement to set
      * @param title (optional) title of the announcement to set (or null for no title)
      * @param message (optional) message of the announcement to set (or null for no message)
      * @return the result of the update, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static MongoDBCollection updateAnnouncement(
+    public static DynamoDBTable updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (MongoDBCollection)
+        return (DynamoDBTable)
                 Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
-     * Remove the announcement from a MongoDBCollection.
+     * Remove the announcement from a DynamoDBTable.
      *
-     * @param qualifiedName of the MongoDBCollection
-     * @param name of the MongoDBCollection
-     * @return the updated MongoDBCollection, or null if the removal failed
+     * @param qualifiedName of the DynamoDBTable
+     * @param name of the DynamoDBTable
+     * @return the updated DynamoDBTable, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static MongoDBCollection removeAnnouncement(String qualifiedName, String name) throws AtlanException {
+    public static DynamoDBTable removeAnnouncement(String qualifiedName, String name) throws AtlanException {
         return removeAnnouncement(Atlan.getDefaultClient(), qualifiedName, name);
     }
 
     /**
-     * Remove the announcement from a MongoDBCollection.
+     * Remove the announcement from a DynamoDBTable.
      *
-     * @param client connectivity to the Atlan client from which to remove the MongoDBCollection's announcement
-     * @param qualifiedName of the MongoDBCollection
-     * @param name of the MongoDBCollection
-     * @return the updated MongoDBCollection, or null if the removal failed
+     * @param client connectivity to the Atlan client from which to remove the DynamoDBTable's announcement
+     * @param qualifiedName of the DynamoDBTable
+     * @param name of the DynamoDBTable
+     * @return the updated DynamoDBTable, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static MongoDBCollection removeAnnouncement(AtlanClient client, String qualifiedName, String name)
+    public static DynamoDBTable removeAnnouncement(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
-        return (MongoDBCollection) Asset.removeAnnouncement(client, updater(qualifiedName, name));
+        return (DynamoDBTable) Asset.removeAnnouncement(client, updater(qualifiedName, name));
     }
 
     /**
-     * Replace the terms linked to the MongoDBCollection.
+     * Replace the terms linked to the DynamoDBTable.
      *
-     * @param qualifiedName for the MongoDBCollection
-     * @param name human-readable name of the MongoDBCollection
-     * @param terms the list of terms to replace on the MongoDBCollection, or null to remove all terms from the MongoDBCollection
-     * @return the MongoDBCollection that was updated (note that it will NOT contain details of the replaced terms)
+     * @param qualifiedName for the DynamoDBTable
+     * @param name human-readable name of the DynamoDBTable
+     * @param terms the list of terms to replace on the DynamoDBTable, or null to remove all terms from the DynamoDBTable
+     * @return the DynamoDBTable that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static MongoDBCollection replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
+    public static DynamoDBTable replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return replaceTerms(Atlan.getDefaultClient(), qualifiedName, name, terms);
     }
 
     /**
-     * Replace the terms linked to the MongoDBCollection.
+     * Replace the terms linked to the DynamoDBTable.
      *
-     * @param client connectivity to the Atlan tenant on which to replace the MongoDBCollection's assigned terms
-     * @param qualifiedName for the MongoDBCollection
-     * @param name human-readable name of the MongoDBCollection
-     * @param terms the list of terms to replace on the MongoDBCollection, or null to remove all terms from the MongoDBCollection
-     * @return the MongoDBCollection that was updated (note that it will NOT contain details of the replaced terms)
+     * @param client connectivity to the Atlan tenant on which to replace the DynamoDBTable's assigned terms
+     * @param qualifiedName for the DynamoDBTable
+     * @param name human-readable name of the DynamoDBTable
+     * @param terms the list of terms to replace on the DynamoDBTable, or null to remove all terms from the DynamoDBTable
+     * @return the DynamoDBTable that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static MongoDBCollection replaceTerms(
+    public static DynamoDBTable replaceTerms(
             AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
-        return (MongoDBCollection) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
+        return (DynamoDBTable) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
     /**
-     * Link additional terms to the MongoDBCollection, without replacing existing terms linked to the MongoDBCollection.
-     * Note: this operation must make two API calls — one to retrieve the MongoDBCollection's existing terms,
+     * Link additional terms to the DynamoDBTable, without replacing existing terms linked to the DynamoDBTable.
+     * Note: this operation must make two API calls — one to retrieve the DynamoDBTable's existing terms,
      * and a second to append the new terms.
      *
-     * @param qualifiedName for the MongoDBCollection
-     * @param terms the list of terms to append to the MongoDBCollection
-     * @return the MongoDBCollection that was updated  (note that it will NOT contain details of the appended terms)
+     * @param qualifiedName for the DynamoDBTable
+     * @param terms the list of terms to append to the DynamoDBTable
+     * @return the DynamoDBTable that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static MongoDBCollection appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
+    public static DynamoDBTable appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return appendTerms(Atlan.getDefaultClient(), qualifiedName, terms);
     }
 
     /**
-     * Link additional terms to the MongoDBCollection, without replacing existing terms linked to the MongoDBCollection.
-     * Note: this operation must make two API calls — one to retrieve the MongoDBCollection's existing terms,
+     * Link additional terms to the DynamoDBTable, without replacing existing terms linked to the DynamoDBTable.
+     * Note: this operation must make two API calls — one to retrieve the DynamoDBTable's existing terms,
      * and a second to append the new terms.
      *
-     * @param client connectivity to the Atlan tenant on which to append terms to the MongoDBCollection
-     * @param qualifiedName for the MongoDBCollection
-     * @param terms the list of terms to append to the MongoDBCollection
-     * @return the MongoDBCollection that was updated  (note that it will NOT contain details of the appended terms)
+     * @param client connectivity to the Atlan tenant on which to append terms to the DynamoDBTable
+     * @param qualifiedName for the DynamoDBTable
+     * @param terms the list of terms to append to the DynamoDBTable
+     * @return the DynamoDBTable that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static MongoDBCollection appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+    public static DynamoDBTable appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
-        return (MongoDBCollection) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
+        return (DynamoDBTable) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
     /**
-     * Remove terms from a MongoDBCollection, without replacing all existing terms linked to the MongoDBCollection.
-     * Note: this operation must make two API calls — one to retrieve the MongoDBCollection's existing terms,
+     * Remove terms from a DynamoDBTable, without replacing all existing terms linked to the DynamoDBTable.
+     * Note: this operation must make two API calls — one to retrieve the DynamoDBTable's existing terms,
      * and a second to remove the provided terms.
      *
-     * @param qualifiedName for the MongoDBCollection
-     * @param terms the list of terms to remove from the MongoDBCollection, which must be referenced by GUID
-     * @return the MongoDBCollection that was updated (note that it will NOT contain details of the resulting terms)
+     * @param qualifiedName for the DynamoDBTable
+     * @param terms the list of terms to remove from the DynamoDBTable, which must be referenced by GUID
+     * @return the DynamoDBTable that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static MongoDBCollection removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
+    public static DynamoDBTable removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return removeTerms(Atlan.getDefaultClient(), qualifiedName, terms);
     }
 
     /**
-     * Remove terms from a MongoDBCollection, without replacing all existing terms linked to the MongoDBCollection.
-     * Note: this operation must make two API calls — one to retrieve the MongoDBCollection's existing terms,
+     * Remove terms from a DynamoDBTable, without replacing all existing terms linked to the DynamoDBTable.
+     * Note: this operation must make two API calls — one to retrieve the DynamoDBTable's existing terms,
      * and a second to remove the provided terms.
      *
-     * @param client connectivity to the Atlan tenant from which to remove terms from the MongoDBCollection
-     * @param qualifiedName for the MongoDBCollection
-     * @param terms the list of terms to remove from the MongoDBCollection, which must be referenced by GUID
-     * @return the MongoDBCollection that was updated (note that it will NOT contain details of the resulting terms)
+     * @param client connectivity to the Atlan tenant from which to remove terms from the DynamoDBTable
+     * @param qualifiedName for the DynamoDBTable
+     * @param terms the list of terms to remove from the DynamoDBTable, which must be referenced by GUID
+     * @return the DynamoDBTable that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static MongoDBCollection removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+    public static DynamoDBTable removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
-        return (MongoDBCollection) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
+        return (DynamoDBTable) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
     /**
-     * Add Atlan tags to a MongoDBCollection, without replacing existing Atlan tags linked to the MongoDBCollection.
-     * Note: this operation must make two API calls — one to retrieve the MongoDBCollection's existing Atlan tags,
+     * Add Atlan tags to a DynamoDBTable, without replacing existing Atlan tags linked to the DynamoDBTable.
+     * Note: this operation must make two API calls — one to retrieve the DynamoDBTable's existing Atlan tags,
      * and a second to append the new Atlan tags.
      *
-     * @param qualifiedName of the MongoDBCollection
+     * @param qualifiedName of the DynamoDBTable
      * @param atlanTagNames human-readable names of the Atlan tags to add
      * @throws AtlanException on any API problems
-     * @return the updated MongoDBCollection
+     * @return the updated DynamoDBTable
      */
-    public static MongoDBCollection appendAtlanTags(String qualifiedName, List<String> atlanTagNames)
+    public static DynamoDBTable appendAtlanTags(String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
         return appendAtlanTags(Atlan.getDefaultClient(), qualifiedName, atlanTagNames);
     }
 
     /**
-     * Add Atlan tags to a MongoDBCollection, without replacing existing Atlan tags linked to the MongoDBCollection.
-     * Note: this operation must make two API calls — one to retrieve the MongoDBCollection's existing Atlan tags,
+     * Add Atlan tags to a DynamoDBTable, without replacing existing Atlan tags linked to the DynamoDBTable.
+     * Note: this operation must make two API calls — one to retrieve the DynamoDBTable's existing Atlan tags,
      * and a second to append the new Atlan tags.
      *
-     * @param client connectivity to the Atlan tenant on which to append Atlan tags to the MongoDBCollection
-     * @param qualifiedName of the MongoDBCollection
+     * @param client connectivity to the Atlan tenant on which to append Atlan tags to the DynamoDBTable
+     * @param qualifiedName of the DynamoDBTable
      * @param atlanTagNames human-readable names of the Atlan tags to add
      * @throws AtlanException on any API problems
-     * @return the updated MongoDBCollection
+     * @return the updated DynamoDBTable
      */
-    public static MongoDBCollection appendAtlanTags(
-            AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
-        return (MongoDBCollection) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
+    public static DynamoDBTable appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
+            throws AtlanException {
+        return (DynamoDBTable) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 
     /**
-     * Add Atlan tags to a MongoDBCollection, without replacing existing Atlan tags linked to the MongoDBCollection.
-     * Note: this operation must make two API calls — one to retrieve the MongoDBCollection's existing Atlan tags,
+     * Add Atlan tags to a DynamoDBTable, without replacing existing Atlan tags linked to the DynamoDBTable.
+     * Note: this operation must make two API calls — one to retrieve the DynamoDBTable's existing Atlan tags,
      * and a second to append the new Atlan tags.
      *
-     * @param qualifiedName of the MongoDBCollection
+     * @param qualifiedName of the DynamoDBTable
      * @param atlanTagNames human-readable names of the Atlan tags to add
      * @param propagate whether to propagate the Atlan tag (true) or not (false)
      * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
      * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
      * @throws AtlanException on any API problems
-     * @return the updated MongoDBCollection
+     * @return the updated DynamoDBTable
      */
-    public static MongoDBCollection appendAtlanTags(
+    public static DynamoDBTable appendAtlanTags(
             String qualifiedName,
             List<String> atlanTagNames,
             boolean propagate,
@@ -980,20 +966,20 @@ public class MongoDBCollection extends Asset
     }
 
     /**
-     * Add Atlan tags to a MongoDBCollection, without replacing existing Atlan tags linked to the MongoDBCollection.
-     * Note: this operation must make two API calls — one to retrieve the MongoDBCollection's existing Atlan tags,
+     * Add Atlan tags to a DynamoDBTable, without replacing existing Atlan tags linked to the DynamoDBTable.
+     * Note: this operation must make two API calls — one to retrieve the DynamoDBTable's existing Atlan tags,
      * and a second to append the new Atlan tags.
      *
-     * @param client connectivity to the Atlan tenant on which to append Atlan tags to the MongoDBCollection
-     * @param qualifiedName of the MongoDBCollection
+     * @param client connectivity to the Atlan tenant on which to append Atlan tags to the DynamoDBTable
+     * @param qualifiedName of the DynamoDBTable
      * @param atlanTagNames human-readable names of the Atlan tags to add
      * @param propagate whether to propagate the Atlan tag (true) or not (false)
      * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
      * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
      * @throws AtlanException on any API problems
-     * @return the updated MongoDBCollection
+     * @return the updated DynamoDBTable
      */
-    public static MongoDBCollection appendAtlanTags(
+    public static DynamoDBTable appendAtlanTags(
             AtlanClient client,
             String qualifiedName,
             List<String> atlanTagNames,
@@ -1001,7 +987,7 @@ public class MongoDBCollection extends Asset
             boolean removePropagationsOnDelete,
             boolean restrictLineagePropagation)
             throws AtlanException {
-        return (MongoDBCollection) Asset.appendAtlanTags(
+        return (DynamoDBTable) Asset.appendAtlanTags(
                 client,
                 TYPE_NAME,
                 qualifiedName,
@@ -1012,11 +998,11 @@ public class MongoDBCollection extends Asset
     }
 
     /**
-     * Add Atlan tags to a MongoDBCollection.
+     * Add Atlan tags to a DynamoDBTable.
      *
-     * @param qualifiedName of the MongoDBCollection
+     * @param qualifiedName of the DynamoDBTable
      * @param atlanTagNames human-readable names of the Atlan tags to add
-     * @throws AtlanException on any API problems, or if any of the Atlan tags already exist on the MongoDBCollection
+     * @throws AtlanException on any API problems, or if any of the Atlan tags already exist on the DynamoDBTable
      * @deprecated see {@link #appendAtlanTags(String, List)} instead
      */
     @Deprecated
@@ -1025,12 +1011,12 @@ public class MongoDBCollection extends Asset
     }
 
     /**
-     * Add Atlan tags to a MongoDBCollection.
+     * Add Atlan tags to a DynamoDBTable.
      *
-     * @param client connectivity to the Atlan tenant on which to add Atlan tags to the MongoDBCollection
-     * @param qualifiedName of the MongoDBCollection
+     * @param client connectivity to the Atlan tenant on which to add Atlan tags to the DynamoDBTable
+     * @param qualifiedName of the DynamoDBTable
      * @param atlanTagNames human-readable names of the Atlan tags to add
-     * @throws AtlanException on any API problems, or if any of the Atlan tags already exist on the MongoDBCollection
+     * @throws AtlanException on any API problems, or if any of the Atlan tags already exist on the DynamoDBTable
      * @deprecated see {@link #appendAtlanTags(String, List)} instead
      */
     @Deprecated
@@ -1040,14 +1026,14 @@ public class MongoDBCollection extends Asset
     }
 
     /**
-     * Add Atlan tags to a MongoDBCollection.
+     * Add Atlan tags to a DynamoDBTable.
      *
-     * @param qualifiedName of the MongoDBCollection
+     * @param qualifiedName of the DynamoDBTable
      * @param atlanTagNames human-readable names of the Atlan tags to add
      * @param propagate whether to propagate the Atlan tag (true) or not (false)
      * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
      * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
-     * @throws AtlanException on any API problems, or if any of the Atlan tags already exist on the MongoDBCollection
+     * @throws AtlanException on any API problems, or if any of the Atlan tags already exist on the DynamoDBTable
      * @deprecated see {@link #appendAtlanTags(String, List, boolean, boolean, boolean)} instead
      */
     @Deprecated
@@ -1068,15 +1054,15 @@ public class MongoDBCollection extends Asset
     }
 
     /**
-     * Add Atlan tags to a MongoDBCollection.
+     * Add Atlan tags to a DynamoDBTable.
      *
-     * @param client connectivity to the Atlan tenant on which to add Atlan tags to the MongoDBCollection
-     * @param qualifiedName of the MongoDBCollection
+     * @param client connectivity to the Atlan tenant on which to add Atlan tags to the DynamoDBTable
+     * @param qualifiedName of the DynamoDBTable
      * @param atlanTagNames human-readable names of the Atlan tags to add
      * @param propagate whether to propagate the Atlan tag (true) or not (false)
      * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
      * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
-     * @throws AtlanException on any API problems, or if any of the Atlan tags already exist on the MongoDBCollection
+     * @throws AtlanException on any API problems, or if any of the Atlan tags already exist on the DynamoDBTable
      * @deprecated see {@link #appendAtlanTags(String, List, boolean, boolean, boolean)} instead
      */
     @Deprecated
@@ -1099,23 +1085,23 @@ public class MongoDBCollection extends Asset
     }
 
     /**
-     * Remove an Atlan tag from a MongoDBCollection.
+     * Remove an Atlan tag from a DynamoDBTable.
      *
-     * @param qualifiedName of the MongoDBCollection
+     * @param qualifiedName of the DynamoDBTable
      * @param atlanTagName human-readable name of the Atlan tag to remove
-     * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the MongoDBCollection
+     * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the DynamoDBTable
      */
     public static void removeAtlanTag(String qualifiedName, String atlanTagName) throws AtlanException {
         removeAtlanTag(Atlan.getDefaultClient(), qualifiedName, atlanTagName);
     }
 
     /**
-     * Remove an Atlan tag from a MongoDBCollection.
+     * Remove an Atlan tag from a DynamoDBTable.
      *
-     * @param client connectivity to the Atlan tenant from which to remove an Atlan tag from a MongoDBCollection
-     * @param qualifiedName of the MongoDBCollection
+     * @param client connectivity to the Atlan tenant from which to remove an Atlan tag from a DynamoDBTable
+     * @param qualifiedName of the DynamoDBTable
      * @param atlanTagName human-readable name of the Atlan tag to remove
-     * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the MongoDBCollection
+     * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the DynamoDBTable
      */
     public static void removeAtlanTag(AtlanClient client, String qualifiedName, String atlanTagName)
             throws AtlanException {

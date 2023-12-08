@@ -16,9 +16,9 @@ import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @SuppressWarnings("deprecation")
-public class MongoDBCollectionTest {
+public class DynamoDBGlobalSecondaryIndexTest {
 
-    private static final MongoDBCollection full = MongoDBCollection._internal()
+    private static final DynamoDBGlobalSecondaryIndex full = DynamoDBGlobalSecondaryIndex._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -59,6 +59,7 @@ public class MongoDBCollectionTest {
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
                             .build())
+            .dynamoDBSecondaryIndexProjectionType(DynamoDBSecondaryIndexProjectionType.KEYS_ONLY)
             .alias("String0")
             .columnCount(123456789L)
             .column(Column.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -85,6 +86,11 @@ public class MongoDBCollectionTest {
             .rowCount(123456789L)
             .schema(Schema.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .sizeBytes(123456789L)
+            .dynamoDBPartitionKey("String0")
+            .dynamoDBReadCapacityUnits(123456789L)
+            .dynamoDBSortKey("String0")
+            .dynamoDBStatus(DynamoDBStatus.CREATING)
+            .dynamoDBWriteCapacityUnits(123456789L)
             .databaseName("String0")
             .databaseQualifiedName("String0")
             .dbtModel(DbtModel.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -432,33 +438,21 @@ public class MongoDBCollectionTest {
             .viewerUser("String0")
             .viewerUser("String1")
             .noSQLSchemaDefinition("String0")
-            .mongoDBCollectionAverageObjectSize(123456789L)
-            .mongoDBCollectionExpireAfterSeconds(123456789L)
-            .mongoDBCollectionIsCapped(true)
-            .mongoDBCollectionMaxSize(123456789L)
-            .mongoDBCollectionMaximumDocumentCount(123456789L)
-            .mongoDBCollectionNumIndexes(123456789L)
-            .mongoDBCollectionNumOrphanDocs(123456789L)
-            .mongoDBCollectionSchemaDefinition("String0")
-            .mongoDBCollectionSubtype("String0")
-            .mongoDBCollectionTimeField("String0")
-            .mongoDBCollectionTimeGranularity("String0")
-            .mongoDBCollectionTotalIndexSize(123456789L)
-            .mongoDBDatabase(MongoDBDatabase.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .dynamoDBTable(DynamoDBTable.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .build();
 
     private static final int hash = full.hashCode();
-    private static MongoDBCollection frodo;
+    private static DynamoDBGlobalSecondaryIndex frodo;
     private static String serialized;
 
-    @Test(groups = {"MongoDBCollection.builderEquivalency"})
+    @Test(groups = {"DynamoDBGlobalSecondaryIndex.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"MongoDBCollection.serialize"},
-            dependsOnGroups = {"MongoDBCollection.builderEquivalency"})
+            groups = {"DynamoDBGlobalSecondaryIndex.serialize"},
+            dependsOnGroups = {"DynamoDBGlobalSecondaryIndex.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson(Atlan.getDefaultClient());
@@ -467,17 +461,17 @@ public class MongoDBCollectionTest {
     }
 
     @Test(
-            groups = {"MongoDBCollection.deserialize"},
-            dependsOnGroups = {"MongoDBCollection.serialize"})
+            groups = {"DynamoDBGlobalSecondaryIndex.deserialize"},
+            dependsOnGroups = {"DynamoDBGlobalSecondaryIndex.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = Atlan.getDefaultClient().readValue(serialized, MongoDBCollection.class);
+        frodo = Atlan.getDefaultClient().readValue(serialized, DynamoDBGlobalSecondaryIndex.class);
         assertNotNull(frodo);
     }
 
     @Test(
-            groups = {"MongoDBCollection.equivalency"},
-            dependsOnGroups = {"MongoDBCollection.serialize", "MongoDBCollection.deserialize"})
+            groups = {"DynamoDBGlobalSecondaryIndex.equivalency"},
+            dependsOnGroups = {"DynamoDBGlobalSecondaryIndex.serialize", "DynamoDBGlobalSecondaryIndex.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -486,8 +480,8 @@ public class MongoDBCollectionTest {
     }
 
     @Test(
-            groups = {"MongoDBCollection.equivalency"},
-            dependsOnGroups = {"MongoDBCollection.serialize", "MongoDBCollection.deserialize"})
+            groups = {"DynamoDBGlobalSecondaryIndex.equivalency"},
+            dependsOnGroups = {"DynamoDBGlobalSecondaryIndex.serialize", "DynamoDBGlobalSecondaryIndex.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

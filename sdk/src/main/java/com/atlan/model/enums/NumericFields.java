@@ -128,6 +128,14 @@ public enum NumericFields implements AtlanSearchableField {
     DBT_MODEL_RUN_ELAPSED_TIME("dbtModelRunElapsedTime"),
     /** TBC */
     DBT_MODEL_RUN_GENERATED_AT("dbtModelRunGeneratedAt"),
+    /** The maximum number of strongly consistent reads consumed per second before DynamoDB returns a ThrottlingException */
+    DYNAMO_DB_READ_CAPACITY_UNITS("dynamoDBReadCapacityUnits"),
+    /** Represents the number of global secondary indexes on the table. */
+    DYNAMO_DB_TABLE_GSI_COUNT("dynamoDBTableGSICount"),
+    /** Represents the number of local secondary indexes on the table. */
+    DYNAMO_DB_TABLE_LSI_COUNT("dynamoDBTableLSICount"),
+    /** The maximum number of writes consumed per second before DynamoDB returns a ThrottlingException */
+    DYNAMO_DB_WRITE_CAPACITY_UNITS("dynamoDBWriteCapacityUnits"),
     /** TBC */
     END_TIME("endTime"),
     /** Number of fields in this object. */
