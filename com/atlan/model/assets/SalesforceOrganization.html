@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":41,"i2":41,"i3":41,"i4":41,"i5":41,"i6":41,"i7":41,"i8":41,"i9":9,"i10":9,"i11":9,"i12":9,"i13":9,"i14":9,"i15":10,"i16":10,"i17":9,"i18":9,"i19":9,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":9,"i33":9,"i34":9,"i35":9,"i36":9,"i37":9,"i38":9,"i39":9,"i40":9,"i41":9,"i42":9,"i43":9,"i44":9,"i45":9,"i46":9,"i47":9,"i48":9,"i49":9,"i50":9,"i51":9,"i52":41,"i53":41,"i54":41,"i55":41,"i56":9,"i57":9,"i58":9,"i59":9,"i60":10,"i61":10,"i62":10,"i63":10,"i64":9,"i65":9,"i66":9,"i67":9,"i68":9};
+var data = {"i0":9,"i1":41,"i2":41,"i3":41,"i4":41,"i5":41,"i6":41,"i7":41,"i8":41,"i9":9,"i10":9,"i11":9,"i12":9,"i13":9,"i14":9,"i15":10,"i16":9,"i17":9,"i18":10,"i19":9,"i20":9,"i21":9,"i22":9,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":9,"i36":9,"i37":9,"i38":9,"i39":9,"i40":9,"i41":9,"i42":9,"i43":9,"i44":9,"i45":9,"i46":9,"i47":9,"i48":9,"i49":9,"i50":9,"i51":9,"i52":9,"i53":9,"i54":9,"i55":41,"i56":41,"i57":41,"i58":41,"i59":9,"i60":9,"i61":9,"i62":9,"i63":10,"i64":10,"i65":10,"i66":10,"i67":9,"i68":9,"i69":9,"i70":9,"i71":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -457,11 +457,36 @@ implements <a href="ISalesforceOrganization.html" title="interface in com.atlan.
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i16" class="altColor">
+<td class="colFirst"><code>static <a href="SalesforceOrganization.SalesforceOrganizationBuilder.html" title="class in com.atlan.model.assets">SalesforceOrganization.SalesforceOrganizationBuilder</a>&lt;?,&#8203;?&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#creator(java.lang.String,java.lang.String)">creator</a></span>&#8203;(java.lang.String&nbsp;name,
+       java.lang.String&nbsp;connectionQualifiedName)</code></th>
+<td class="colLast">
+<div class="block">Builds the minimal object necessary to create a SalesforceOrganization asset.</div>
+</td>
+</tr>
+<tr id="i17" class="rowColor">
+<td class="colFirst"><code>static <a href="SalesforceOrganization.SalesforceOrganizationBuilder.html" title="class in com.atlan.model.assets">SalesforceOrganization.SalesforceOrganizationBuilder</a>&lt;?,&#8203;?&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#creator(java.lang.String,java.lang.String,java.lang.String)">creator</a></span>&#8203;(java.lang.String&nbsp;name,
+       java.lang.String&nbsp;connectionQualifiedName,
+       java.lang.String&nbsp;salesforceId)</code></th>
+<td class="colLast">
+<div class="block">Builds the minimal object necessary to create a SalesforceOrganization asset.</div>
+</td>
+</tr>
+<tr id="i18" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#equals(java.lang.Object)">equals</a></span>&#8203;(java.lang.Object&nbsp;o)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i19" class="rowColor">
+<td class="colFirst"><code>static java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#generateQualifiedName(java.lang.String,java.lang.String)">generateQualifiedName</a></span>&#8203;(java.lang.String&nbsp;salesforceId,
+                     java.lang.String&nbsp;connectionQualifiedName)</code></th>
+<td class="colLast">
+<div class="block">Generate a unique SalesforceOrganization name.</div>
+</td>
+</tr>
+<tr id="i20" class="altColor">
 <td class="colFirst"><code>static <a href="SalesforceOrganization.html" title="class in com.atlan.model.assets">SalesforceOrganization</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#get(com.atlan.AtlanClient,java.lang.String)">get</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
    java.lang.String&nbsp;id)</code></th>
@@ -469,7 +494,7 @@ implements <a href="ISalesforceOrganization.html" title="interface in com.atlan.
 <div class="block">Retrieves a SalesforceOrganization by one of its identifiers, complete with all of its relationships.</div>
 </td>
 </tr>
-<tr id="i18" class="altColor">
+<tr id="i21" class="rowColor">
 <td class="colFirst"><code>static <a href="SalesforceOrganization.html" title="class in com.atlan.model.assets">SalesforceOrganization</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#get(com.atlan.AtlanClient,java.lang.String,boolean)">get</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
    java.lang.String&nbsp;id,
@@ -478,110 +503,110 @@ implements <a href="ISalesforceOrganization.html" title="interface in com.atlan.
 <div class="block">Retrieves a SalesforceOrganization by one of its identifiers, optionally complete with all of its relationships.</div>
 </td>
 </tr>
-<tr id="i19" class="rowColor">
+<tr id="i22" class="altColor">
 <td class="colFirst"><code>static <a href="SalesforceOrganization.html" title="class in com.atlan.model.assets">SalesforceOrganization</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#get(java.lang.String)">get</a></span>&#8203;(java.lang.String&nbsp;id)</code></th>
 <td class="colLast">
 <div class="block">Retrieves a SalesforceOrganization by one of its identifiers, complete with all of its relationships.</div>
 </td>
 </tr>
-<tr id="i20" class="altColor">
+<tr id="i23" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getApiName()">getApiName</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Name of this asset in the Salesforce API.</div>
 </td>
 </tr>
-<tr id="i21" class="rowColor">
+<tr id="i24" class="altColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ISalesforceDashboard.html" title="interface in com.atlan.model.assets">ISalesforceDashboard</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDashboards()">getDashboards</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Dashboards that exist within this organization.</div>
 </td>
 </tr>
-<tr id="i22" class="altColor">
+<tr id="i25" class="rowColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInputToAirflowTasks()">getInputToAirflowTasks</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Tasks to which this asset provides input.</div>
 </td>
 </tr>
-<tr id="i23" class="rowColor">
+<tr id="i26" class="altColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInputToProcesses()">getInputToProcesses</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Processes to which this asset provides input.</div>
 </td>
 </tr>
-<tr id="i24" class="altColor">
+<tr id="i27" class="rowColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ISalesforceObject.html" title="interface in com.atlan.model.assets">ISalesforceObject</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getObjects()">getObjects</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Objects that exist within this organization.</div>
 </td>
 </tr>
-<tr id="i25" class="rowColor">
+<tr id="i28" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOrganizationQualifiedName()">getOrganizationQualifiedName</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Fully-qualified name of the organization in Salesforce.</div>
 </td>
 </tr>
-<tr id="i26" class="altColor">
+<tr id="i29" class="rowColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOutputFromAirflowTasks()">getOutputFromAirflowTasks</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Tasks from which this asset is output.</div>
 </td>
 </tr>
-<tr id="i27" class="rowColor">
+<tr id="i30" class="altColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOutputFromProcesses()">getOutputFromProcesses</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Processes from which this asset is produced as output.</div>
 </td>
 </tr>
-<tr id="i28" class="altColor">
+<tr id="i31" class="rowColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ISalesforceReport.html" title="interface in com.atlan.model.assets">ISalesforceReport</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getReports()">getReports</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Reports that exist within this organization.</div>
 </td>
 </tr>
-<tr id="i29" class="rowColor">
+<tr id="i32" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSourceId()">getSourceId</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Identifier of the organization in Salesforce.</div>
 </td>
 </tr>
-<tr id="i30" class="altColor">
+<tr id="i33" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTypeName()">getTypeName</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Fixed typeName for SalesforceOrganizations.</div>
 </td>
 </tr>
-<tr id="i31" class="rowColor">
+<tr id="i34" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i32" class="altColor">
+<tr id="i35" class="rowColor">
 <td class="colFirst"><code>static <a href="SalesforceOrganization.html" title="class in com.atlan.model.assets">SalesforceOrganization</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#refByGuid(java.lang.String)">refByGuid</a></span>&#8203;(java.lang.String&nbsp;guid)</code></th>
 <td class="colLast">
 <div class="block">Reference to a SalesforceOrganization by GUID.</div>
 </td>
 </tr>
-<tr id="i33" class="rowColor">
+<tr id="i36" class="altColor">
 <td class="colFirst"><code>static <a href="SalesforceOrganization.html" title="class in com.atlan.model.assets">SalesforceOrganization</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#refByQualifiedName(java.lang.String)">refByQualifiedName</a></span>&#8203;(java.lang.String&nbsp;qualifiedName)</code></th>
 <td class="colLast">
 <div class="block">Reference to a SalesforceOrganization by qualifiedName.</div>
 </td>
 </tr>
-<tr id="i34" class="altColor">
+<tr id="i37" class="rowColor">
 <td class="colFirst"><code>static <a href="SalesforceOrganization.html" title="class in com.atlan.model.assets">SalesforceOrganization</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeAnnouncement(com.atlan.AtlanClient,java.lang.String,java.lang.String)">removeAnnouncement</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
                   java.lang.String&nbsp;qualifiedName,
@@ -590,7 +615,7 @@ implements <a href="ISalesforceOrganization.html" title="interface in com.atlan.
 <div class="block">Remove the announcement from a SalesforceOrganization.</div>
 </td>
 </tr>
-<tr id="i35" class="rowColor">
+<tr id="i38" class="altColor">
 <td class="colFirst"><code>static <a href="SalesforceOrganization.html" title="class in com.atlan.model.assets">SalesforceOrganization</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeAnnouncement(java.lang.String,java.lang.String)">removeAnnouncement</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                   java.lang.String&nbsp;name)</code></th>
@@ -598,7 +623,7 @@ implements <a href="ISalesforceOrganization.html" title="interface in com.atlan.
 <div class="block">Remove the announcement from a SalesforceOrganization.</div>
 </td>
 </tr>
-<tr id="i36" class="altColor">
+<tr id="i39" class="rowColor">
 <td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeAtlanTag(com.atlan.AtlanClient,java.lang.String,java.lang.String)">removeAtlanTag</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
               java.lang.String&nbsp;qualifiedName,
@@ -607,7 +632,7 @@ implements <a href="ISalesforceOrganization.html" title="interface in com.atlan.
 <div class="block">Remove an Atlan tag from a SalesforceOrganization.</div>
 </td>
 </tr>
-<tr id="i37" class="rowColor">
+<tr id="i40" class="altColor">
 <td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeAtlanTag(java.lang.String,java.lang.String)">removeAtlanTag</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
               java.lang.String&nbsp;atlanTagName)</code></th>
@@ -615,7 +640,7 @@ implements <a href="ISalesforceOrganization.html" title="interface in com.atlan.
 <div class="block">Remove an Atlan tag from a SalesforceOrganization.</div>
 </td>
 </tr>
-<tr id="i38" class="altColor">
+<tr id="i41" class="rowColor">
 <td class="colFirst"><code>static <a href="SalesforceOrganization.html" title="class in com.atlan.model.assets">SalesforceOrganization</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeCertificate(com.atlan.AtlanClient,java.lang.String,java.lang.String)">removeCertificate</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
                  java.lang.String&nbsp;qualifiedName,
@@ -624,7 +649,7 @@ implements <a href="ISalesforceOrganization.html" title="interface in com.atlan.
 <div class="block">Remove the certificate from a SalesforceOrganization.</div>
 </td>
 </tr>
-<tr id="i39" class="rowColor">
+<tr id="i42" class="altColor">
 <td class="colFirst"><code>static <a href="SalesforceOrganization.html" title="class in com.atlan.model.assets">SalesforceOrganization</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeCertificate(java.lang.String,java.lang.String)">removeCertificate</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                  java.lang.String&nbsp;name)</code></th>
@@ -632,7 +657,7 @@ implements <a href="ISalesforceOrganization.html" title="interface in com.atlan.
 <div class="block">Remove the certificate from a SalesforceOrganization.</div>
 </td>
 </tr>
-<tr id="i40" class="altColor">
+<tr id="i43" class="rowColor">
 <td class="colFirst"><code>static <a href="SalesforceOrganization.html" title="class in com.atlan.model.assets">SalesforceOrganization</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeDescription(com.atlan.AtlanClient,java.lang.String,java.lang.String)">removeDescription</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
                  java.lang.String&nbsp;qualifiedName,
@@ -641,7 +666,7 @@ implements <a href="ISalesforceOrganization.html" title="interface in com.atlan.
 <div class="block">Remove the system description from a SalesforceOrganization.</div>
 </td>
 </tr>
-<tr id="i41" class="rowColor">
+<tr id="i44" class="altColor">
 <td class="colFirst"><code>static <a href="SalesforceOrganization.html" title="class in com.atlan.model.assets">SalesforceOrganization</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeDescription(java.lang.String,java.lang.String)">removeDescription</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                  java.lang.String&nbsp;name)</code></th>
@@ -649,7 +674,7 @@ implements <a href="ISalesforceOrganization.html" title="interface in com.atlan.
 <div class="block">Remove the system description from a SalesforceOrganization.</div>
 </td>
 </tr>
-<tr id="i42" class="altColor">
+<tr id="i45" class="rowColor">
 <td class="colFirst"><code>static <a href="SalesforceOrganization.html" title="class in com.atlan.model.assets">SalesforceOrganization</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeOwners(com.atlan.AtlanClient,java.lang.String,java.lang.String)">removeOwners</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
             java.lang.String&nbsp;qualifiedName,
@@ -658,7 +683,7 @@ implements <a href="ISalesforceOrganization.html" title="interface in com.atlan.
 <div class="block">Remove the owners from a SalesforceOrganization.</div>
 </td>
 </tr>
-<tr id="i43" class="rowColor">
+<tr id="i46" class="altColor">
 <td class="colFirst"><code>static <a href="SalesforceOrganization.html" title="class in com.atlan.model.assets">SalesforceOrganization</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeOwners(java.lang.String,java.lang.String)">removeOwners</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
             java.lang.String&nbsp;name)</code></th>
@@ -666,7 +691,7 @@ implements <a href="ISalesforceOrganization.html" title="interface in com.atlan.
 <div class="block">Remove the owners from a SalesforceOrganization.</div>
 </td>
 </tr>
-<tr id="i44" class="altColor">
+<tr id="i47" class="rowColor">
 <td class="colFirst"><code>static <a href="SalesforceOrganization.html" title="class in com.atlan.model.assets">SalesforceOrganization</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeTerms(com.atlan.AtlanClient,java.lang.String,java.util.List)">removeTerms</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
            java.lang.String&nbsp;qualifiedName,
@@ -675,7 +700,7 @@ implements <a href="ISalesforceOrganization.html" title="interface in com.atlan.
 <div class="block">Remove terms from a SalesforceOrganization, without replacing all existing terms linked to the SalesforceOrganization.</div>
 </td>
 </tr>
-<tr id="i45" class="rowColor">
+<tr id="i48" class="altColor">
 <td class="colFirst"><code>static <a href="SalesforceOrganization.html" title="class in com.atlan.model.assets">SalesforceOrganization</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeTerms(java.lang.String,java.util.List)">removeTerms</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
            java.util.List&lt;<a href="IGlossaryTerm.html" title="interface in com.atlan.model.assets">IGlossaryTerm</a>&gt;&nbsp;terms)</code></th>
@@ -683,7 +708,7 @@ implements <a href="ISalesforceOrganization.html" title="interface in com.atlan.
 <div class="block">Remove terms from a SalesforceOrganization, without replacing all existing terms linked to the SalesforceOrganization.</div>
 </td>
 </tr>
-<tr id="i46" class="altColor">
+<tr id="i49" class="rowColor">
 <td class="colFirst"><code>static <a href="SalesforceOrganization.html" title="class in com.atlan.model.assets">SalesforceOrganization</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeUserDescription(com.atlan.AtlanClient,java.lang.String,java.lang.String)">removeUserDescription</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
                      java.lang.String&nbsp;qualifiedName,
@@ -692,7 +717,7 @@ implements <a href="ISalesforceOrganization.html" title="interface in com.atlan.
 <div class="block">Remove the user's description from a SalesforceOrganization.</div>
 </td>
 </tr>
-<tr id="i47" class="rowColor">
+<tr id="i50" class="altColor">
 <td class="colFirst"><code>static <a href="SalesforceOrganization.html" title="class in com.atlan.model.assets">SalesforceOrganization</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeUserDescription(java.lang.String,java.lang.String)">removeUserDescription</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                      java.lang.String&nbsp;name)</code></th>
@@ -700,7 +725,7 @@ implements <a href="ISalesforceOrganization.html" title="interface in com.atlan.
 <div class="block">Remove the user's description from a SalesforceOrganization.</div>
 </td>
 </tr>
-<tr id="i48" class="altColor">
+<tr id="i51" class="rowColor">
 <td class="colFirst"><code>static <a href="SalesforceOrganization.html" title="class in com.atlan.model.assets">SalesforceOrganization</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#replaceTerms(com.atlan.AtlanClient,java.lang.String,java.lang.String,java.util.List)">replaceTerms</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
             java.lang.String&nbsp;qualifiedName,
@@ -710,7 +735,7 @@ implements <a href="ISalesforceOrganization.html" title="interface in com.atlan.
 <div class="block">Replace the terms linked to the SalesforceOrganization.</div>
 </td>
 </tr>
-<tr id="i49" class="rowColor">
+<tr id="i52" class="altColor">
 <td class="colFirst"><code>static <a href="SalesforceOrganization.html" title="class in com.atlan.model.assets">SalesforceOrganization</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#replaceTerms(java.lang.String,java.lang.String,java.util.List)">replaceTerms</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
             java.lang.String&nbsp;name,
@@ -719,7 +744,7 @@ implements <a href="ISalesforceOrganization.html" title="interface in com.atlan.
 <div class="block">Replace the terms linked to the SalesforceOrganization.</div>
 </td>
 </tr>
-<tr id="i50" class="altColor">
+<tr id="i53" class="rowColor">
 <td class="colFirst"><code>static boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#restore(com.atlan.AtlanClient,java.lang.String)">restore</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
        java.lang.String&nbsp;qualifiedName)</code></th>
@@ -727,14 +752,14 @@ implements <a href="ISalesforceOrganization.html" title="interface in com.atlan.
 <div class="block">Restore the archived (soft-deleted) SalesforceOrganization to active.</div>
 </td>
 </tr>
-<tr id="i51" class="rowColor">
+<tr id="i54" class="altColor">
 <td class="colFirst"><code>static boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#restore(java.lang.String)">restore</a></span>&#8203;(java.lang.String&nbsp;qualifiedName)</code></th>
 <td class="colLast">
 <div class="block">Restore the archived (soft-deleted) SalesforceOrganization to active.</div>
 </td>
 </tr>
-<tr id="i52" class="altColor">
+<tr id="i55" class="rowColor">
 <td class="colFirst"><code>static <a href="SalesforceOrganization.html" title="class in com.atlan.model.assets">SalesforceOrganization</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#retrieveByGuid(com.atlan.AtlanClient,java.lang.String)">retrieveByGuid</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
               java.lang.String&nbsp;guid)</code></th>
@@ -744,7 +769,7 @@ implements <a href="ISalesforceOrganization.html" title="interface in com.atlan.
 </div>
 </td>
 </tr>
-<tr id="i53" class="rowColor">
+<tr id="i56" class="altColor">
 <td class="colFirst"><code>static <a href="SalesforceOrganization.html" title="class in com.atlan.model.assets">SalesforceOrganization</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#retrieveByGuid(java.lang.String)">retrieveByGuid</a></span>&#8203;(java.lang.String&nbsp;guid)</code></th>
 <td class="colLast">
@@ -753,7 +778,7 @@ implements <a href="ISalesforceOrganization.html" title="interface in com.atlan.
 </div>
 </td>
 </tr>
-<tr id="i54" class="altColor">
+<tr id="i57" class="rowColor">
 <td class="colFirst"><code>static <a href="SalesforceOrganization.html" title="class in com.atlan.model.assets">SalesforceOrganization</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#retrieveByQualifiedName(com.atlan.AtlanClient,java.lang.String)">retrieveByQualifiedName</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
                        java.lang.String&nbsp;qualifiedName)</code></th>
@@ -763,7 +788,7 @@ implements <a href="ISalesforceOrganization.html" title="interface in com.atlan.
 </div>
 </td>
 </tr>
-<tr id="i55" class="rowColor">
+<tr id="i58" class="altColor">
 <td class="colFirst"><code>static <a href="SalesforceOrganization.html" title="class in com.atlan.model.assets">SalesforceOrganization</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#retrieveByQualifiedName(java.lang.String)">retrieveByQualifiedName</a></span>&#8203;(java.lang.String&nbsp;qualifiedName)</code></th>
 <td class="colLast">
@@ -772,28 +797,28 @@ implements <a href="ISalesforceOrganization.html" title="interface in com.atlan.
 </div>
 </td>
 </tr>
-<tr id="i56" class="altColor">
+<tr id="i59" class="rowColor">
 <td class="colFirst"><code>static <a href="../search/FluentSearch.FluentSearchBuilder.html" title="class in com.atlan.model.search">FluentSearch.FluentSearchBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#select()">select</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Start a fluent search that will return all SalesforceOrganization assets.</div>
 </td>
 </tr>
-<tr id="i57" class="rowColor">
+<tr id="i60" class="altColor">
 <td class="colFirst"><code>static <a href="../search/FluentSearch.FluentSearchBuilder.html" title="class in com.atlan.model.search">FluentSearch.FluentSearchBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#select(boolean)">select</a></span>&#8203;(boolean&nbsp;includeArchived)</code></th>
 <td class="colLast">
 <div class="block">Start a fluent search that will return all SalesforceOrganization assets.</div>
 </td>
 </tr>
-<tr id="i58" class="altColor">
+<tr id="i61" class="rowColor">
 <td class="colFirst"><code>static <a href="../search/FluentSearch.FluentSearchBuilder.html" title="class in com.atlan.model.search">FluentSearch.FluentSearchBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#select(com.atlan.AtlanClient)">select</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)</code></th>
 <td class="colLast">
 <div class="block">Start a fluent search that will return all SalesforceOrganization assets.</div>
 </td>
 </tr>
-<tr id="i59" class="rowColor">
+<tr id="i62" class="altColor">
 <td class="colFirst"><code>static <a href="../search/FluentSearch.FluentSearchBuilder.html" title="class in com.atlan.model.search">FluentSearch.FluentSearchBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#select(com.atlan.AtlanClient,boolean)">select</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
       boolean&nbsp;includeArchived)</code></th>
@@ -801,16 +826,16 @@ implements <a href="ISalesforceOrganization.html" title="interface in com.atlan.
 <div class="block">Start a fluent search that will return all SalesforceOrganization assets.</div>
 </td>
 </tr>
-<tr id="i60" class="altColor">
+<tr id="i63" class="rowColor">
 <td class="colFirst"><code><a href="SalesforceOrganization.SalesforceOrganizationBuilder.html" title="class in com.atlan.model.assets">SalesforceOrganization.SalesforceOrganizationBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toBuilder()">toBuilder</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i61" class="rowColor">
+<tr id="i64" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 </tr>
-<tr id="i62" class="altColor">
+<tr id="i65" class="rowColor">
 <td class="colFirst"><code><a href="SalesforceOrganization.html" title="class in com.atlan.model.assets">SalesforceOrganization</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#trimToReference()">trimToReference</a></span>()</code></th>
 <td class="colLast">
@@ -818,7 +843,7 @@ implements <a href="ISalesforceOrganization.html" title="interface in com.atlan.
  more-complete SalesforceOrganization object.</div>
 </td>
 </tr>
-<tr id="i63" class="rowColor">
+<tr id="i66" class="altColor">
 <td class="colFirst"><code><a href="SalesforceOrganization.SalesforceOrganizationBuilder.html" title="class in com.atlan.model.assets">SalesforceOrganization.SalesforceOrganizationBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#trimToRequired()">trimToRequired</a></span>()</code></th>
 <td class="colLast">
@@ -826,7 +851,7 @@ implements <a href="ISalesforceOrganization.html" title="interface in com.atlan.
  more-complete SalesforceOrganization object.</div>
 </td>
 </tr>
-<tr id="i64" class="altColor">
+<tr id="i67" class="rowColor">
 <td class="colFirst"><code>static <a href="SalesforceOrganization.html" title="class in com.atlan.model.assets">SalesforceOrganization</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateAnnouncement(com.atlan.AtlanClient,java.lang.String,com.atlan.model.enums.AtlanAnnouncementType,java.lang.String,java.lang.String)">updateAnnouncement</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
                   java.lang.String&nbsp;qualifiedName,
@@ -837,7 +862,7 @@ implements <a href="ISalesforceOrganization.html" title="interface in com.atlan.
 <div class="block">Update the announcement on a SalesforceOrganization.</div>
 </td>
 </tr>
-<tr id="i65" class="rowColor">
+<tr id="i68" class="altColor">
 <td class="colFirst"><code>static <a href="SalesforceOrganization.html" title="class in com.atlan.model.assets">SalesforceOrganization</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateAnnouncement(java.lang.String,com.atlan.model.enums.AtlanAnnouncementType,java.lang.String,java.lang.String)">updateAnnouncement</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                   <a href="../enums/AtlanAnnouncementType.html" title="enum in com.atlan.model.enums">AtlanAnnouncementType</a>&nbsp;type,
@@ -847,7 +872,7 @@ implements <a href="ISalesforceOrganization.html" title="interface in com.atlan.
 <div class="block">Update the announcement on a SalesforceOrganization.</div>
 </td>
 </tr>
-<tr id="i66" class="altColor">
+<tr id="i69" class="rowColor">
 <td class="colFirst"><code>static <a href="SalesforceOrganization.html" title="class in com.atlan.model.assets">SalesforceOrganization</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateCertificate(com.atlan.AtlanClient,java.lang.String,com.atlan.model.enums.CertificateStatus,java.lang.String)">updateCertificate</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
                  java.lang.String&nbsp;qualifiedName,
@@ -857,7 +882,7 @@ implements <a href="ISalesforceOrganization.html" title="interface in com.atlan.
 <div class="block">Update the certificate on a SalesforceOrganization.</div>
 </td>
 </tr>
-<tr id="i67" class="rowColor">
+<tr id="i70" class="altColor">
 <td class="colFirst"><code>static <a href="SalesforceOrganization.html" title="class in com.atlan.model.assets">SalesforceOrganization</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateCertificate(java.lang.String,com.atlan.model.enums.CertificateStatus,java.lang.String)">updateCertificate</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                  <a href="../enums/CertificateStatus.html" title="enum in com.atlan.model.enums">CertificateStatus</a>&nbsp;certificate,
@@ -866,7 +891,7 @@ implements <a href="ISalesforceOrganization.html" title="interface in com.atlan.
 <div class="block">Update the certificate on a SalesforceOrganization.</div>
 </td>
 </tr>
-<tr id="i68" class="altColor">
+<tr id="i71" class="rowColor">
 <td class="colFirst"><code>static <a href="SalesforceOrganization.SalesforceOrganizationBuilder.html" title="class in com.atlan.model.assets">SalesforceOrganization.SalesforceOrganizationBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updater(java.lang.String,java.lang.String)">updater</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
        java.lang.String&nbsp;name)</code></th>
@@ -1419,6 +1444,62 @@ public static&nbsp;<a href="SalesforceOrganization.html" title="class in com.atl
 <dd>true if the SalesforceOrganization is now active, and false otherwise</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API problems</dd>
+</dl>
+</li>
+</ul>
+<a id="creator(java.lang.String,java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>creator</h4>
+<pre class="methodSignature">public static&nbsp;<a href="SalesforceOrganization.SalesforceOrganizationBuilder.html" title="class in com.atlan.model.assets">SalesforceOrganization.SalesforceOrganizationBuilder</a>&lt;?,&#8203;?&gt;&nbsp;creator&#8203;(java.lang.String&nbsp;name,
+                                                                                      java.lang.String&nbsp;connectionQualifiedName)</pre>
+<div class="block">Builds the minimal object necessary to create a SalesforceOrganization asset.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>name</code> - of the organization</dd>
+<dd><code>connectionQualifiedName</code> - unique name of the connection through which the asset is accessible</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the minimal object necessary to create the asset, as a builder</dd>
+</dl>
+</li>
+</ul>
+<a id="creator(java.lang.String,java.lang.String,java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>creator</h4>
+<pre class="methodSignature">public static&nbsp;<a href="SalesforceOrganization.SalesforceOrganizationBuilder.html" title="class in com.atlan.model.assets">SalesforceOrganization.SalesforceOrganizationBuilder</a>&lt;?,&#8203;?&gt;&nbsp;creator&#8203;(java.lang.String&nbsp;name,
+                                                                                      java.lang.String&nbsp;connectionQualifiedName,
+                                                                                      java.lang.String&nbsp;salesforceId)</pre>
+<div class="block">Builds the minimal object necessary to create a SalesforceOrganization asset.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>name</code> - of the organization</dd>
+<dd><code>connectionQualifiedName</code> - unique name of the connection through which the asset is accessible</dd>
+<dd><code>salesforceId</code> - unique identifier of this organization in Salesforce</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the minimal object necessary to create the asset, as a builder</dd>
+</dl>
+</li>
+</ul>
+<a id="generateQualifiedName(java.lang.String,java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>generateQualifiedName</h4>
+<pre class="methodSignature">public static&nbsp;java.lang.String&nbsp;generateQualifiedName&#8203;(java.lang.String&nbsp;salesforceId,
+                                                     java.lang.String&nbsp;connectionQualifiedName)</pre>
+<div class="block">Generate a unique SalesforceOrganization name.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>salesforceId</code> - unique identifier of the organization within Salesforce</dd>
+<dd><code>connectionQualifiedName</code> - unique name of the connection through which the SalesforceOrganization is accessible</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a unique name for the SalesforceOrganization</dd>
 </dl>
 </li>
 </ul>
