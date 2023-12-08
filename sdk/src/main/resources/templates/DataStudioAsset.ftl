@@ -79,6 +79,4 @@
         }
         return updater(this.getQualifiedName(), this.getName());
     }
-
-
 </#macro>

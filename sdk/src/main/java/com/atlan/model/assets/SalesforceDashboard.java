@@ -10,6 +10,7 @@ import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.core.AssetFilter;
 import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.CompoundQuery;
@@ -20,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
+import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
@@ -401,6 +403,84 @@ public class SalesforceDashboard extends Asset
     }
 
     /**
+     * Builds the minimal object necessary to create a SalesforceDashboard asset.
+     *
+     * @param name of the dashboard
+     * @param organizationQualifiedName unique name of the organization through which the asset is accessible
+     * @return the minimal object necessary to create the asset, as a builder
+     */
+    public static SalesforceDashboardBuilder<?, ?> creator(String name, String organizationQualifiedName) {
+        return SalesforceDashboard.creator(
+                name, organizationQualifiedName, UUID.randomUUID().toString());
+    }
+
+    /**
+     * Builds the minimal object necessary to create a SalesforceDashboard asset.
+     *
+     * @param name of the dashboard
+     * @param organization Salesforce organization through which the asset is accessible, which must have its qualifiedName populated
+     * @return the minimal object necessary to create the asset, as a builder
+     * @throws InvalidRequestException if the provided organization does not have a qualifiedName
+     */
+    public static SalesforceDashboardBuilder<?, ?> creator(String name, SalesforceOrganization organization)
+            throws InvalidRequestException {
+        return creator(name, organization, UUID.randomUUID().toString()).organization(organization.trimToReference());
+    }
+
+    /**
+     * Builds the minimal object necessary to create a SalesforceDashboard asset.
+     *
+     * @param name of the dashboard
+     * @param organization Salesforce organization through which the asset is accessible, which must have its qualifiedName populated
+     * @param salesforceId unique identifier of this report in Salesforce
+     * @return the minimal object necessary to create the asset, as a builder
+     * @throws InvalidRequestException if the provided organization does not have a qualifiedName
+     */
+    public static SalesforceDashboardBuilder<?, ?> creator(
+            String name, SalesforceOrganization organization, String salesforceId) throws InvalidRequestException {
+        if (organization.getQualifiedName() == null
+                || organization.getQualifiedName().isEmpty()) {
+            throw new InvalidRequestException(
+                    ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, "SalesforceOrganization", "qualifiedName");
+        }
+        return creator(name, organization.getQualifiedName(), salesforceId)
+                .organization(organization.trimToReference());
+    }
+
+    /**
+     * Builds the minimal object necessary to create a SalesforceDashboard asset.
+     *
+     * @param name of the dashboard
+     * @param organizationQualifiedName unique name of the organization through which the asset is accessible
+     * @param salesforceId unique identifier of this report in Salesforce
+     * @return the minimal object necessary to create the asset, as a builder
+     */
+    public static SalesforceDashboardBuilder<?, ?> creator(
+            String name, String organizationQualifiedName, String salesforceId) {
+        String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(organizationQualifiedName);
+        return SalesforceDashboard._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .sourceId(salesforceId)
+                .qualifiedName(generateQualifiedName(salesforceId, organizationQualifiedName))
+                .name(name)
+                .connectionQualifiedName(connectionQualifiedName)
+                .connectorType(AtlanConnectorType.SALESFORCE)
+                .organization(SalesforceOrganization.refByQualifiedName(organizationQualifiedName))
+                .organizationQualifiedName(organizationQualifiedName);
+    }
+
+    /**
+     * Generate a unique SalesforceDashboard name.
+     *
+     * @param salesforceId unique identifier of this dashboard in Salesforce
+     * @param organizationQualifiedName unique name of the organization through which the SalesforceDashboard is accessible
+     * @return a unique name for the SalesforceDashboard
+     */
+    public static String generateQualifiedName(String salesforceId, String organizationQualifiedName) {
+        return organizationQualifiedName + "/" + salesforceId;
+    }
+
+    /**
      * Builds the minimal object necessary to update a SalesforceDashboard.
      *
      * @param qualifiedName of the SalesforceDashboard
@@ -432,7 +512,7 @@ public class SalesforceDashboard extends Asset
         }
         if (!missing.isEmpty()) {
             throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "SalesforceDashboard", String.join(",", missing));
+                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, TYPE_NAME, String.join(",", missing));
         }
         return updater(this.getQualifiedName(), this.getName());
     }
