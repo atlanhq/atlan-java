@@ -98,6 +98,10 @@ public class MongoDBDatabase extends Asset
     @Attribute
     Integer mongoDBDatabaseCollectionCount;
 
+    /** Represents attributes for describing the key schema for the table and indexes. */
+    @Attribute
+    String noSQLSchemaDefinition;
+
     /** Tasks from which this asset is output. */
     @Attribute
     @Singular

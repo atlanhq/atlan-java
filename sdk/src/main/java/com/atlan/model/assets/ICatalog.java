@@ -125,6 +125,15 @@ public interface ICatalog {
             case DbtTest.TYPE_NAME:
                 ref = DbtTest.refByQualifiedName(qualifiedName);
                 break;
+            case DynamoDBGlobalSecondaryIndex.TYPE_NAME:
+                ref = DynamoDBGlobalSecondaryIndex.refByQualifiedName(qualifiedName);
+                break;
+            case DynamoDBLocalSecondaryIndex.TYPE_NAME:
+                ref = DynamoDBLocalSecondaryIndex.refByQualifiedName(qualifiedName);
+                break;
+            case DynamoDBTable.TYPE_NAME:
+                ref = DynamoDBTable.refByQualifiedName(qualifiedName);
+                break;
             case File.TYPE_NAME:
                 ref = File.refByQualifiedName(qualifiedName);
                 break;

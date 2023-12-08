@@ -490,6 +490,14 @@ public enum KeywordFields implements AtlanSearchableField {
     DISPLAY_NAME("displayName.keyword"),
     /** Color (in hexadecimal RGB) to use to represent this data domain. */
     DOMAIN_THEME_HEX("domainThemeHex"),
+    /** Specifies the partition key of the DynamoDB Table/Index */
+    DYNAMO_DB_PARTITION_KEY("dynamoDBPartitionKey"),
+    /** Specifies attributes that are projected from the DynamoDB table into the index */
+    DYNAMO_DB_SECONDARY_INDEX_PROJECTION_TYPE("dynamoDBSecondaryIndexProjectionType"),
+    /** Specifies the sort key of the DynamoDB Table/Index */
+    DYNAMO_DB_SORT_KEY("dynamoDBSortKey"),
+    /** Status of the DynamoDB Asset */
+    DYNAMO_DB_STATUS("dynamoDBStatus"),
     /** Unused. Exmaples of the term. */
     EXAMPLES("examples"),
     /** External location of this partition, for example: an S3 object location. */
@@ -1020,9 +1028,9 @@ public enum KeywordFields implements AtlanSearchableField {
     REFRESH_METHOD("refreshMethod"),
     /** Refresh mode for this materialized view. */
     REFRESH_MODE("refreshMode"),
-    /** Unused. List of servers where this entity is replicated from. */
+    /** TBC */
     REPLICATED_FROM("replicatedFrom"),
-    /** Unused. List of servers where this entity is replicated to. */
+    /** TBC */
     REPLICATED_TO("replicatedTo"),
     /** Unique name of the report in which this page exists. */
     REPORT_QUALIFIED_NAME("reportQualifiedName"),

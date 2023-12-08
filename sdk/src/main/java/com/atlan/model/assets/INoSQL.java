@@ -8,6 +8,7 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -29,6 +30,9 @@ import javax.annotation.processing.Generated;
 public interface INoSQL {
 
     public static final String TYPE_NAME = "NoSQL";
+
+    /** Represents attributes for describing the key schema for the table and indexes. */
+    TextField NO_SQL_SCHEMA_DEFINITION = new TextField("noSQLSchemaDefinition", "noSQLSchemaDefinition");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -320,6 +324,9 @@ public interface INoSQL {
 
     /** Name of this asset. Fallback for display purposes, if displayName is empty. */
     String getName();
+
+    /** Represents attributes for describing the key schema for the table and indexes. */
+    String getNoSQLSchemaDefinition();
 
     /** Tasks from which this asset is output. */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();

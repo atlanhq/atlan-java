@@ -7,13 +7,10 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.enums.DynamoDBStatus;
 import com.atlan.model.enums.SourceCostUnitType;
-import com.atlan.model.fields.BooleanField;
 import com.atlan.model.fields.KeywordField;
-import com.atlan.model.fields.KeywordTextField;
 import com.atlan.model.fields.NumericField;
-import com.atlan.model.fields.RelationField;
-import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -27,65 +24,31 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a MongoDB collection in Atlan.
+ * DynamoDB Assets
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IMongoDBCollection {
+public interface IDynamoDB {
 
-    public static final String TYPE_NAME = "MongoDBCollection";
+    public static final String TYPE_NAME = "DynamoDB";
 
-    /** Average size of an object in the collection. */
-    NumericField MONGO_DB_COLLECTION_AVERAGE_OBJECT_SIZE =
-            new NumericField("mongoDBCollectionAverageObjectSize", "mongoDBCollectionAverageObjectSize");
+    /** Specifies the partition key of the DynamoDB Table/Index */
+    KeywordField DYNAMO_DB_PARTITION_KEY = new KeywordField("dynamoDBPartitionKey", "dynamoDBPartitionKey");
 
-    /** Seconds after which documents in a time series collection or clustered collection expire. */
-    NumericField MONGO_DB_COLLECTION_EXPIRE_AFTER_SECONDS =
-            new NumericField("mongoDBCollectionExpireAfterSeconds", "mongoDBCollectionExpireAfterSeconds");
+    /** The maximum number of strongly consistent reads consumed per second before DynamoDB returns a ThrottlingException */
+    NumericField DYNAMO_DB_READ_CAPACITY_UNITS =
+            new NumericField("dynamoDBReadCapacityUnits", "dynamoDBReadCapacityUnits");
 
-    /** Whether the collection is capped (true) or not (false). */
-    BooleanField MONGO_DB_COLLECTION_IS_CAPPED =
-            new BooleanField("mongoDBCollectionIsCapped", "mongoDBCollectionIsCapped");
+    /** Specifies the sort key of the DynamoDB Table/Index */
+    KeywordField DYNAMO_DB_SORT_KEY = new KeywordField("dynamoDBSortKey", "dynamoDBSortKey");
 
-    /** Maximum size allowed in a capped collection. */
-    NumericField MONGO_DB_COLLECTION_MAX_SIZE =
-            new NumericField("mongoDBCollectionMaxSize", "mongoDBCollectionMaxSize");
+    /** Status of the DynamoDB Asset */
+    KeywordField DYNAMO_DB_STATUS = new KeywordField("dynamoDBStatus", "dynamoDBStatus");
 
-    /** Maximum number of documents allowed in a capped collection. */
-    NumericField MONGO_DB_COLLECTION_MAXIMUM_DOCUMENT_COUNT =
-            new NumericField("mongoDBCollectionMaximumDocumentCount", "mongoDBCollectionMaximumDocumentCount");
-
-    /** Number of indexes on the collection. */
-    NumericField MONGO_DB_COLLECTION_NUM_INDEXES =
-            new NumericField("mongoDBCollectionNumIndexes", "mongoDBCollectionNumIndexes");
-
-    /** Number of orphaned documents in the collection. */
-    NumericField MONGO_DB_COLLECTION_NUM_ORPHAN_DOCS =
-            new NumericField("mongoDBCollectionNumOrphanDocs", "mongoDBCollectionNumOrphanDocs");
-
-    /** Definition of the schema applicable for the collection. */
-    TextField MONGO_DB_COLLECTION_SCHEMA_DEFINITION =
-            new TextField("mongoDBCollectionSchemaDefinition", "mongoDBCollectionSchemaDefinition");
-
-    /** Subtype of a MongoDB collection, for example: Capped, Time Series, etc. */
-    KeywordTextField MONGO_DB_COLLECTION_SUBTYPE = new KeywordTextField(
-            "mongoDBCollectionSubtype", "mongoDBCollectionSubtype", "mongoDBCollectionSubtype.text");
-
-    /** Name of the field containing the date in each time series document. */
-    KeywordField MONGO_DB_COLLECTION_TIME_FIELD =
-            new KeywordField("mongoDBCollectionTimeField", "mongoDBCollectionTimeField");
-
-    /** Closest match to the time span between consecutive incoming measurements. */
-    KeywordField MONGO_DB_COLLECTION_TIME_GRANULARITY =
-            new KeywordField("mongoDBCollectionTimeGranularity", "mongoDBCollectionTimeGranularity");
-
-    /** Total size of all indexes. */
-    NumericField MONGO_DB_COLLECTION_TOTAL_INDEX_SIZE =
-            new NumericField("mongoDBCollectionTotalIndexSize", "mongoDBCollectionTotalIndexSize");
-
-    /** Database in which the collection exists. */
-    RelationField MONGO_DB_DATABASE = new RelationField("mongoDBDatabase");
+    /** The maximum number of writes consumed per second before DynamoDB returns a ThrottlingException */
+    NumericField DYNAMO_DB_WRITE_CAPACITY_UNITS =
+            new NumericField("dynamoDBWriteCapacityUnits", "dynamoDBWriteCapacityUnits");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -95,9 +58,6 @@ public interface IMongoDBCollection {
 
     /** List of users who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminUsers();
-
-    /** Alias for this table. */
-    String getAlias();
 
     /** Detailed message to include in the announcement on this asset. */
     String getAnnouncementMessage();
@@ -312,12 +272,6 @@ public interface IMongoDBCollection {
     /** Name of the user who last updated the certification of this asset. */
     String getCertificateUpdatedBy();
 
-    /** Number of columns in this table. */
-    Long getColumnCount();
-
-    /** Columns that exist within this table. */
-    SortedSet<IColumn> getColumns();
-
     /** Simple name of the connection through which this asset is accessible. */
     String getConnectionName();
 
@@ -327,44 +281,29 @@ public interface IMongoDBCollection {
     /** Type of the connector through which this asset is accessible. */
     AtlanConnectorType getConnectorType();
 
-    /** Simple name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
-    String getDatabaseName();
-
-    /** Unique name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
-    String getDatabaseQualifiedName();
-
-    /** TBC */
-    SortedSet<IDbtModel> getDbtModels();
-
     /** Unique name of this asset in dbt. */
     String getDbtQualifiedName();
-
-    /** TBC */
-    SortedSet<IDbtSource> getDbtSources();
-
-    /** TBC */
-    SortedSet<IDbtTest> getDbtTests();
 
     /** Description of this asset, for example as crawled from a source. Fallback for display purposes, if userDescription is empty. */
     String getDescription();
 
-    /** TBC */
-    SortedSet<ITable> getDimensions();
-
     /** Human-readable name of this asset used for display purposes (in user interface). */
     String getDisplayName();
 
-    /** External location of this table, for example: an S3 object location. */
-    String getExternalLocation();
+    /** Specifies the partition key of the DynamoDB Table/Index */
+    String getDynamoDBPartitionKey();
 
-    /** Format of the external location of this table, for example: JSON, CSV, PARQUET, etc. */
-    String getExternalLocationFormat();
+    /** The maximum number of strongly consistent reads consumed per second before DynamoDB returns a ThrottlingException */
+    Long getDynamoDBReadCapacityUnits();
 
-    /** Region of the external location of this table, for example: S3 region. */
-    String getExternalLocationRegion();
+    /** Specifies the sort key of the DynamoDB Table/Index */
+    String getDynamoDBSortKey();
 
-    /** TBC */
-    SortedSet<ITable> getFacts();
+    /** Status of the DynamoDB Asset */
+    DynamoDBStatus getDynamoDBStatus();
+
+    /** The maximum number of writes consumed per second before DynamoDB returns a ThrottlingException */
+    Long getDynamoDBWriteCapacityUnits();
 
     /** TBC */
     SortedSet<IFile> getFiles();
@@ -390,21 +329,6 @@ public interface IMongoDBCollection {
     /** TBC */
     Boolean getIsPartial();
 
-    /** Whether this table is partitioned (true) or not (false). */
-    Boolean getIsPartitioned();
-
-    /** Whether this asset has been profiled (true) or not (false). */
-    Boolean getIsProfiled();
-
-    /** Whether preview queries are allowed for this table (true) or not (false). */
-    Boolean getIsQueryPreview();
-
-    /** Whether this table is temporary (true) or not (false). */
-    Boolean getIsTemporary();
-
-    /** Time (epoch) at which this asset was last profiled, in milliseconds. */
-    Long getLastProfiledAt();
-
     /** Time (epoch) of the last operation that inserted, updated, or deleted rows, in milliseconds. */
     Long getLastRowChangedAt();
 
@@ -429,45 +353,6 @@ public interface IMongoDBCollection {
     /** TBC */
     SortedSet<IMetric> getMetrics();
 
-    /** Average size of an object in the collection. */
-    Long getMongoDBCollectionAverageObjectSize();
-
-    /** Seconds after which documents in a time series collection or clustered collection expire. */
-    Long getMongoDBCollectionExpireAfterSeconds();
-
-    /** Whether the collection is capped (true) or not (false). */
-    Boolean getMongoDBCollectionIsCapped();
-
-    /** Maximum size allowed in a capped collection. */
-    Long getMongoDBCollectionMaxSize();
-
-    /** Maximum number of documents allowed in a capped collection. */
-    Long getMongoDBCollectionMaximumDocumentCount();
-
-    /** Number of indexes on the collection. */
-    Long getMongoDBCollectionNumIndexes();
-
-    /** Number of orphaned documents in the collection. */
-    Long getMongoDBCollectionNumOrphanDocs();
-
-    /** Definition of the schema applicable for the collection. */
-    String getMongoDBCollectionSchemaDefinition();
-
-    /** Subtype of a MongoDB collection, for example: Capped, Time Series, etc. */
-    String getMongoDBCollectionSubtype();
-
-    /** Name of the field containing the date in each time series document. */
-    String getMongoDBCollectionTimeField();
-
-    /** Closest match to the time span between consecutive incoming measurements. */
-    String getMongoDBCollectionTimeGranularity();
-
-    /** Total size of all indexes. */
-    Long getMongoDBCollectionTotalIndexSize();
-
-    /** Database in which the collection exists. */
-    IMongoDBDatabase getMongoDBDatabase();
-
     /** Name of this asset. Fallback for display purposes, if displayName is empty. */
     String getName();
 
@@ -489,65 +374,20 @@ public interface IMongoDBCollection {
     /** List of users who own this asset. */
     SortedSet<String> getOwnerUsers();
 
-    /** Number of partitions in this table. */
-    Long getPartitionCount();
-
-    /** List of partitions in this table. */
-    String getPartitionList();
-
-    /** Partition strategy for this table. */
-    String getPartitionStrategy();
-
-    /** Partitions that exist within this table. */
-    SortedSet<ITablePartition> getPartitions();
-
     /** Popularity score for this asset. */
     Double getPopularityScore();
 
     /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
     String getQualifiedName();
 
-    /** Queries that access this table. */
-    SortedSet<IAtlanQuery> getQueries();
-
-    /** Number of times this asset has been queried. */
-    Long getQueryCount();
-
-    /** Time (epoch) at which the query count was last updated, in milliseconds. */
-    Long getQueryCountUpdatedAt();
-
-    /** Configuration for preview queries. */
-    Map<String, String> getQueryPreviewConfig();
-
-    /** Number of unique users who have queried this asset. */
-    Long getQueryUserCount();
-
-    /** Map of unique users who have queried this asset to the number of times they have queried it. */
-    Map<String, Long> getQueryUserMap();
-
     /** README that is linked to this asset. */
     IReadme getReadme();
-
-    /** Number of rows in this table. */
-    Long getRowCount();
 
     /** URL for sample data for this asset. */
     String getSampleDataUrl();
 
-    /** Schema in which this table exists. */
-    ISchema getSchema();
-
-    /** Simple name of the schema in which this SQL asset exists, or empty if it does not exist within a schema. */
-    String getSchemaName();
-
-    /** Unique name of the schema in which this SQL asset exists, or empty if it does not exist within a schema. */
-    String getSchemaQualifiedName();
-
     /** TBC */
     SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
-
-    /** Size of this table, in bytes. */
-    Long getSizeBytes();
 
     /** TBC */
     SortedSet<ISodaCheck> getSodaChecks();
@@ -618,12 +458,6 @@ public interface IMongoDBCollection {
     /** Name of the user who last updated this asset, in the source system. */
     String getSourceUpdatedBy();
 
-    /** TBC */
-    SortedSet<IDbtSource> getSqlDBTSources();
-
-    /** TBC */
-    SortedSet<IDbtModel> getSqlDbtModels();
-
     /** Users who have starred this asset. */
     SortedSet<String> getStarredBy();
 
@@ -636,23 +470,11 @@ public interface IMongoDBCollection {
     /** Subtype of this asset. */
     String getSubType();
 
-    /** Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
-    String getTableName();
-
-    /** Unique name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
-    String getTableQualifiedName();
-
     /** Name of the Atlan workspace in which this asset exists. */
     String getTenantId();
 
     /** Description of this asset, as provided by a user. If present, this will be used for the description in user interface. */
     String getUserDescription();
-
-    /** Simple name of the view in which this SQL asset exists, or empty if it does not exist within a view. */
-    String getViewName();
-
-    /** Unique name of the view in which this SQL asset exists, or empty if it does not exist within a view. */
-    String getViewQualifiedName();
 
     /** View score for this asset. */
     Double getViewScore();

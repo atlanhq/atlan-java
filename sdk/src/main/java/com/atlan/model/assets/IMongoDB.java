@@ -321,6 +321,9 @@ public interface IMongoDB {
     /** Name of this asset. Fallback for display purposes, if displayName is empty. */
     String getName();
 
+    /** Represents attributes for describing the key schema for the table and indexes. */
+    String getNoSQLSchemaDefinition();
+
     /** Tasks from which this asset is output. */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 

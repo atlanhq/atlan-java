@@ -7,13 +7,10 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.enums.DynamoDBSecondaryIndexProjectionType;
+import com.atlan.model.enums.DynamoDBStatus;
 import com.atlan.model.enums.SourceCostUnitType;
-import com.atlan.model.fields.BooleanField;
 import com.atlan.model.fields.KeywordField;
-import com.atlan.model.fields.KeywordTextField;
-import com.atlan.model.fields.NumericField;
-import com.atlan.model.fields.RelationField;
-import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -27,65 +24,18 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a MongoDB collection in Atlan.
+ * Atlan DynamoDB Secondary Index
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IMongoDBCollection {
+public interface IDynamoDBSecondaryIndex {
 
-    public static final String TYPE_NAME = "MongoDBCollection";
+    public static final String TYPE_NAME = "DynamoDBSecondaryIndex";
 
-    /** Average size of an object in the collection. */
-    NumericField MONGO_DB_COLLECTION_AVERAGE_OBJECT_SIZE =
-            new NumericField("mongoDBCollectionAverageObjectSize", "mongoDBCollectionAverageObjectSize");
-
-    /** Seconds after which documents in a time series collection or clustered collection expire. */
-    NumericField MONGO_DB_COLLECTION_EXPIRE_AFTER_SECONDS =
-            new NumericField("mongoDBCollectionExpireAfterSeconds", "mongoDBCollectionExpireAfterSeconds");
-
-    /** Whether the collection is capped (true) or not (false). */
-    BooleanField MONGO_DB_COLLECTION_IS_CAPPED =
-            new BooleanField("mongoDBCollectionIsCapped", "mongoDBCollectionIsCapped");
-
-    /** Maximum size allowed in a capped collection. */
-    NumericField MONGO_DB_COLLECTION_MAX_SIZE =
-            new NumericField("mongoDBCollectionMaxSize", "mongoDBCollectionMaxSize");
-
-    /** Maximum number of documents allowed in a capped collection. */
-    NumericField MONGO_DB_COLLECTION_MAXIMUM_DOCUMENT_COUNT =
-            new NumericField("mongoDBCollectionMaximumDocumentCount", "mongoDBCollectionMaximumDocumentCount");
-
-    /** Number of indexes on the collection. */
-    NumericField MONGO_DB_COLLECTION_NUM_INDEXES =
-            new NumericField("mongoDBCollectionNumIndexes", "mongoDBCollectionNumIndexes");
-
-    /** Number of orphaned documents in the collection. */
-    NumericField MONGO_DB_COLLECTION_NUM_ORPHAN_DOCS =
-            new NumericField("mongoDBCollectionNumOrphanDocs", "mongoDBCollectionNumOrphanDocs");
-
-    /** Definition of the schema applicable for the collection. */
-    TextField MONGO_DB_COLLECTION_SCHEMA_DEFINITION =
-            new TextField("mongoDBCollectionSchemaDefinition", "mongoDBCollectionSchemaDefinition");
-
-    /** Subtype of a MongoDB collection, for example: Capped, Time Series, etc. */
-    KeywordTextField MONGO_DB_COLLECTION_SUBTYPE = new KeywordTextField(
-            "mongoDBCollectionSubtype", "mongoDBCollectionSubtype", "mongoDBCollectionSubtype.text");
-
-    /** Name of the field containing the date in each time series document. */
-    KeywordField MONGO_DB_COLLECTION_TIME_FIELD =
-            new KeywordField("mongoDBCollectionTimeField", "mongoDBCollectionTimeField");
-
-    /** Closest match to the time span between consecutive incoming measurements. */
-    KeywordField MONGO_DB_COLLECTION_TIME_GRANULARITY =
-            new KeywordField("mongoDBCollectionTimeGranularity", "mongoDBCollectionTimeGranularity");
-
-    /** Total size of all indexes. */
-    NumericField MONGO_DB_COLLECTION_TOTAL_INDEX_SIZE =
-            new NumericField("mongoDBCollectionTotalIndexSize", "mongoDBCollectionTotalIndexSize");
-
-    /** Database in which the collection exists. */
-    RelationField MONGO_DB_DATABASE = new RelationField("mongoDBDatabase");
+    /** Specifies attributes that are projected from the DynamoDB table into the index */
+    KeywordField DYNAMO_DB_SECONDARY_INDEX_PROJECTION_TYPE =
+            new KeywordField("dynamoDBSecondaryIndexProjectionType", "dynamoDBSecondaryIndexProjectionType");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -354,6 +304,24 @@ public interface IMongoDBCollection {
     /** Human-readable name of this asset used for display purposes (in user interface). */
     String getDisplayName();
 
+    /** Specifies the partition key of the DynamoDB Table/Index */
+    String getDynamoDBPartitionKey();
+
+    /** The maximum number of strongly consistent reads consumed per second before DynamoDB returns a ThrottlingException */
+    Long getDynamoDBReadCapacityUnits();
+
+    /** Specifies attributes that are projected from the DynamoDB table into the index */
+    DynamoDBSecondaryIndexProjectionType getDynamoDBSecondaryIndexProjectionType();
+
+    /** Specifies the sort key of the DynamoDB Table/Index */
+    String getDynamoDBSortKey();
+
+    /** Status of the DynamoDB Asset */
+    DynamoDBStatus getDynamoDBStatus();
+
+    /** The maximum number of writes consumed per second before DynamoDB returns a ThrottlingException */
+    Long getDynamoDBWriteCapacityUnits();
+
     /** External location of this table, for example: an S3 object location. */
     String getExternalLocation();
 
@@ -428,45 +396,6 @@ public interface IMongoDBCollection {
 
     /** TBC */
     SortedSet<IMetric> getMetrics();
-
-    /** Average size of an object in the collection. */
-    Long getMongoDBCollectionAverageObjectSize();
-
-    /** Seconds after which documents in a time series collection or clustered collection expire. */
-    Long getMongoDBCollectionExpireAfterSeconds();
-
-    /** Whether the collection is capped (true) or not (false). */
-    Boolean getMongoDBCollectionIsCapped();
-
-    /** Maximum size allowed in a capped collection. */
-    Long getMongoDBCollectionMaxSize();
-
-    /** Maximum number of documents allowed in a capped collection. */
-    Long getMongoDBCollectionMaximumDocumentCount();
-
-    /** Number of indexes on the collection. */
-    Long getMongoDBCollectionNumIndexes();
-
-    /** Number of orphaned documents in the collection. */
-    Long getMongoDBCollectionNumOrphanDocs();
-
-    /** Definition of the schema applicable for the collection. */
-    String getMongoDBCollectionSchemaDefinition();
-
-    /** Subtype of a MongoDB collection, for example: Capped, Time Series, etc. */
-    String getMongoDBCollectionSubtype();
-
-    /** Name of the field containing the date in each time series document. */
-    String getMongoDBCollectionTimeField();
-
-    /** Closest match to the time span between consecutive incoming measurements. */
-    String getMongoDBCollectionTimeGranularity();
-
-    /** Total size of all indexes. */
-    Long getMongoDBCollectionTotalIndexSize();
-
-    /** Database in which the collection exists. */
-    IMongoDBDatabase getMongoDBDatabase();
 
     /** Name of this asset. Fallback for display purposes, if displayName is empty. */
     String getName();
