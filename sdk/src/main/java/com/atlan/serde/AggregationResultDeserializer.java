@@ -2,14 +2,11 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.serde;
 
-import com.atlan.AtlanClient;
 import com.atlan.model.search.AggregationBucketResult;
 import com.atlan.model.search.AggregationHitsResult;
 import com.atlan.model.search.AggregationMetricResult;
 import com.atlan.model.search.AggregationResult;
-import com.atlan.util.JacksonUtils;
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
@@ -23,15 +20,8 @@ public class AggregationResultDeserializer extends StdDeserializer<AggregationRe
 
     private static final long serialVersionUID = 2L;
 
-    private final AtlanClient client;
-
-    public AggregationResultDeserializer(AtlanClient client) {
-        this(AggregationResult.class, client);
-    }
-
-    public AggregationResultDeserializer(Class<?> t, AtlanClient client) {
+    public AggregationResultDeserializer(Class<?> t) {
         super(t);
-        this.client = client;
     }
 
     /**
@@ -57,22 +47,21 @@ public class AggregationResultDeserializer extends StdDeserializer<AggregationRe
                 || (root.has("hits") && (hits == null || hits.isNull()))) {
             // If the JSON has explicit null values, return those as explicit nulls rather than errors
             return null;
-        } else if (value != null && value.isNumber()) {
-            // Delegate to metrics deserialization
-            return AggregationMetricResult.builder().value(value.asDouble()).build();
-        } else if (buckets != null) {
-            // Delegate to bucket deserialization
-            return AggregationBucketResult.builder()
-                    .docCountErrorUpperBound(JacksonUtils.deserializeLong(root, "doc_count_error_upper_bound"))
-                    .sumOtherDocCount(JacksonUtils.deserializeLong(root, "sum_other_doc_count"))
-                    .buckets(JacksonUtils.deserializeObject(client, root, "buckets", new TypeReference<>() {}))
-                    .build();
-        } else if (hits != null) {
-            return AggregationHitsResult.builder()
-                    .hits(JacksonUtils.deserializeObject(client, root, "hits", new TypeReference<>() {}))
-                    .build();
-        } else {
-            throw new IOException("Aggregation currently not handled: " + root);
+        }
+        try (JsonParser next = root.traverse(parser.getCodec())) {
+            next.nextToken();
+            if (value != null && value.isNumber()) {
+                // Delegate to metrics deserialization
+                return context.readValue(next, AggregationMetricResult.class);
+            } else if (buckets != null) {
+                // Delegate to bucket deserialization
+                return context.readValue(next, AggregationBucketResult.class);
+            } else if (hits != null) {
+                // Delegate to hits deserialization
+                return context.readValue(next, AggregationHitsResult.class);
+            } else {
+                throw new IOException("Aggregation currently not handled: " + root);
+            }
         }
     }
 }

@@ -5,9 +5,11 @@ package com.atlan.model.search;
 import com.atlan.model.core.AtlanObject;
 import com.atlan.model.fields.AtlanField;
 import com.atlan.model.fields.ISearchable;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AccessLevel;
+import java.util.Map;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -57,10 +59,10 @@ public class AggregationBucketDetails extends AtlanObject {
     @JsonProperty("from_as_string")
     String fromAsString;
 
-    /** Map of results for the requested aggregations. */
-    @JsonProperty(ISearchable.EMBEDDED_SOURCE_VALUE)
-    @Getter(AccessLevel.PRIVATE)
-    AggregationHitsResult _sourceValue;
+    /** Nested aggregation results. */
+    @JsonAnyGetter
+    @JsonAnySetter
+    Map<String, AggregationResult> nestedResults;
 
     /**
      * Return the source value of the specified field for this bucket.
@@ -70,14 +72,19 @@ public class AggregationBucketDetails extends AtlanObject {
      */
     @JsonIgnore
     public Object getSourceValue(AtlanField field) {
-        if (_sourceValue != null
-                && _sourceValue.getHits() != null
-                && _sourceValue.getHits().getHits() != null
-                && !_sourceValue.getHits().getHits().isEmpty()) {
-            AggregationHitsResult.Details details =
-                    _sourceValue.getHits().getHits().get(0);
-            if (details != null && details.getSource() != null) {
-                return details.getSource().getOrDefault(field.getAtlanFieldName(), null);
+        if (nestedResults != null && nestedResults.containsKey(ISearchable.EMBEDDED_SOURCE_VALUE)) {
+            AggregationResult embedded = nestedResults.get(ISearchable.EMBEDDED_SOURCE_VALUE);
+            if (embedded instanceof AggregationHitsResult) {
+                AggregationHitsResult result = (AggregationHitsResult) embedded;
+                if (result.getHits() != null
+                        && result.getHits().getHits() != null
+                        && !result.getHits().getHits().isEmpty()) {
+                    AggregationHitsResult.Details details =
+                            result.getHits().getHits().get(0);
+                    if (details != null && details.getSource() != null) {
+                        return details.getSource().getOrDefault(field.getAtlanFieldName(), null);
+                    }
+                }
             }
         }
         return null;
