@@ -36,8 +36,8 @@ class AssetImporter(
 ) {
     /** {@inheritDoc} */
     override fun getBuilder(deserializer: RowDeserializer): Asset.AssetBuilder<*, *> {
-        val typeName = deserializer.getValue(Asset.TYPE_NAME.atlanFieldName)?.let { it as String } ?: ""
-        return FieldSerde.getBuilderForType(typeName)
+        val typeName = deserializer.typeName
+        return FieldSerde.getBuilderForType(typeName).qualifiedName(deserializer.qualifiedName)
     }
 
     /** {@inheritDoc} */

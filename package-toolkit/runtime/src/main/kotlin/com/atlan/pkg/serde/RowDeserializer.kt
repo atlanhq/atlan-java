@@ -30,8 +30,8 @@ class RowDeserializer(
     val row: List<String>,
     private val typeIdx: Int = -1,
     private val qnIdx: Int = -1,
-    private val typeName: String = row.getOrElse(typeIdx) { "" },
-    private val qualifiedName: String = row.getOrElse(qnIdx) { "" },
+    val typeName: String = row.getOrElse(typeIdx) { "" },
+    val qualifiedName: String = row.getOrElse(qnIdx) { "" },
     private val logger: KLogger,
     private val skipColumns: Set<String>,
 ) {
@@ -116,7 +116,7 @@ class RowDeserializer(
     fun getValue(fieldName: String): Any? {
         if (fieldName.isNotBlank()) {
             val i = heading.indexOf(fieldName)
-            if (i > 0) {
+            if (i >= 0) {
                 val rValue = row[i]
                 return if (fieldName.contains(CM_HEADING_DELIMITER)) {
                     // Custom metadata field...
