@@ -48,7 +48,7 @@ class ColumnImporter(
         val qnDetails = getQualifiedNameDetails(deserializer.row, deserializer.heading, typeNameFilter)
         val connectionQN = connectionImporter.getBuilder(deserializer).build().qualifiedName
         val parentQN = "$connectionQN/${qnDetails.parentPartialQN}"
-        val parentType = preprocessed.entityQualifiedNameToType[qnDetails.parentUniqueQN]
+        val parentType = preprocessed.entityQualifiedNameToType[qnDetails.parentUniqueQN] ?: throw IllegalStateException("Could not find any table/view at: ${qnDetails.parentUniqueQN}")
         return Column.creator(name, parentType, parentQN, order)
     }
 }
