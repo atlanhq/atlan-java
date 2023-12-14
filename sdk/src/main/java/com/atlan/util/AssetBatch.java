@@ -8,6 +8,7 @@ import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.assets.IndistinctAsset;
 import com.atlan.model.core.AssetMutationResponse;
+import com.atlan.model.core.ConnectionCreationResponse;
 import com.atlan.serde.Serde;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -249,6 +250,9 @@ public class AssetBatch {
                         case MERGE:
                             response = client.assets.saveMergingCM(revised, replaceAtlanTags);
                             break;
+                    }
+                    if (response instanceof ConnectionCreationResponse) {
+                        response = ((ConnectionCreationResponse) response).block();
                     }
                 } catch (AtlanException e) {
                     if (captureFailures) {
