@@ -636,8 +636,8 @@ public class Purpose extends Asset implements IPurpose, IAccessControl, IAsset, 
             builder.policyGroup("public");
         } else {
             if (policyGroups != null && !policyGroups.isEmpty()) {
-                for (String groupAlias : policyGroups) {
-                    client.getGroupCache().getIdForAlias(groupAlias);
+                for (String groupName : policyGroups) {
+                    client.getGroupCache().getIdForName(groupName);
                 }
                 targetFound = true;
                 builder.policyGroups(policyGroups);
@@ -721,8 +721,8 @@ public class Purpose extends Asset implements IPurpose, IAccessControl, IAsset, 
             builder.policyGroup("public");
         } else {
             if (policyGroups != null && !policyGroups.isEmpty()) {
-                for (String groupAlias : policyGroups) {
-                    client.getGroupCache().getIdForAlias(groupAlias);
+                for (String groupName : policyGroups) {
+                    client.getGroupCache().getIdForName(groupName);
                 }
                 targetFound = true;
                 builder.policyGroups(policyGroups);

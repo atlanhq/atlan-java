@@ -360,6 +360,10 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Singular
     SortedSet<String> assetTags;
 
+    /** Color (in hexadecimal RGB) to use to represent this asset. */
+    @Attribute
+    String assetThemeHex;
+
     /** Glossary terms that are linked to this asset. */
     @Attribute
     @Singular

@@ -25,6 +25,7 @@ public class PersonaTest extends AtlanLiveTest {
     public static final String CONNECTION_NAME = PREFIX;
     public static final AtlanConnectorType CONNECTOR_TYPE = AtlanConnectorType.GCS;
     private static final String GLOSSARY_NAME = PREFIX;
+    public static final String EXISTING_GROUP_NAME = "admins";
 
     private static Persona persona = null;
 
@@ -68,6 +69,7 @@ public class PersonaTest extends AtlanLiveTest {
                 .denyAssetTab(AssetSidebarTab.LINEAGE)
                 .denyAssetTab(AssetSidebarTab.RELATIONS)
                 .denyAssetTab(AssetSidebarTab.QUERIES)
+                .personaGroups(List.of(EXISTING_GROUP_NAME))
                 .build();
         AssetMutationResponse response = toUpdate.save();
         assertNotNull(response);

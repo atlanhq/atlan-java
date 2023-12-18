@@ -25,8 +25,8 @@ public class PurposeTest extends AtlanLiveTest {
     private static final String PREFIX = makeUnique("Purpose");
 
     public static final String PURPOSE_NAME = PREFIX;
-
     public static final String ATLAN_TAG_NAME = PREFIX;
+    public static final String EXISTING_GROUP_NAME = "admins";
 
     public static Purpose purpose = null;
 
@@ -113,9 +113,9 @@ public class PurposeTest extends AtlanLiveTest {
                         purpose.getGuid(),
                         AuthPolicyType.ALLOW,
                         Set.of(PurposeMetadataAction.READ),
+                        List.of(EXISTING_GROUP_NAME),
                         null,
-                        null,
-                        true)
+                        false)
                 .build();
         AuthPolicy data = Purpose.createDataPolicy(
                         "Mask the data", purpose.getGuid(), AuthPolicyType.DATA_MASK, null, null, true)
