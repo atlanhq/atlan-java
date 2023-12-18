@@ -38,9 +38,9 @@ public class GroupCache {
     }
 
     /**
-     * Translate the provided human-readable group name to its GUID.
+     * Translate the provided internal group name to its GUID.
      *
-     * @param name human-readable name of the group
+     * @param name internal name of the group
      * @return unique identifier (GUID) of the group
      * @throws AtlanException on any API communication problem if the cache needs to be refreshed
      * @throws NotFoundException if the group cannot be found (does not exist) in Atlan
@@ -64,7 +64,7 @@ public class GroupCache {
     }
 
     /**
-     * Translate the provided alias to its GUID.
+     * Translate the provided human-readable group name to its GUID.
      *
      * @param alias name of the group as it appears in the UI
      * @return unique identifier (GUID) of the group
@@ -90,10 +90,10 @@ public class GroupCache {
     }
 
     /**
-     * Translate the provided group GUID to the human-readable group name.
+     * Translate the provided group GUID to the internal group name.
      *
      * @param id unique identifier (GUID) of the group
-     * @return human-readable name of the group
+     * @return internal name of the group
      * @throws AtlanException on any API communication problem if the cache needs to be refreshed
      * @throws NotFoundException if the group cannot be found (does not exist) in Atlan
      * @throws InvalidRequestException if no name was provided for the group to retrieve
