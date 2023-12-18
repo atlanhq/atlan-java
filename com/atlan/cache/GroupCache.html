@@ -179,21 +179,21 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIdForAlias(java.lang.String)">getIdForAlias</a></span>&#8203;(java.lang.String&nbsp;alias)</code></th>
 <td class="colLast">
-<div class="block">Translate the provided alias to its GUID.</div>
+<div class="block">Translate the provided human-readable group name to its GUID.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIdForName(java.lang.String)">getIdForName</a></span>&#8203;(java.lang.String&nbsp;name)</code></th>
 <td class="colLast">
-<div class="block">Translate the provided human-readable group name to its GUID.</div>
+<div class="block">Translate the provided internal group name to its GUID.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getNameForId(java.lang.String)">getNameForId</a></span>&#8203;(java.lang.String&nbsp;id)</code></th>
 <td class="colLast">
-<div class="block">Translate the provided group GUID to the human-readable group name.</div>
+<div class="block">Translate the provided group GUID to the internal group name.</div>
 </td>
 </tr>
 </table>
@@ -247,10 +247,10 @@ extends java.lang.Object</pre>
 <h4>getIdForName</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getIdForName&#8203;(java.lang.String&nbsp;name)
                               throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Translate the provided human-readable group name to its GUID.</div>
+<div class="block">Translate the provided internal group name to its GUID.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>name</code> - human-readable name of the group</dd>
+<dd><code>name</code> - internal name of the group</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>unique identifier (GUID) of the group</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
@@ -268,7 +268,7 @@ extends java.lang.Object</pre>
 <h4>getIdForAlias</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getIdForAlias&#8203;(java.lang.String&nbsp;alias)
                                throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Translate the provided alias to its GUID.</div>
+<div class="block">Translate the provided human-readable group name to its GUID.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>alias</code> - name of the group as it appears in the UI</dd>
@@ -289,12 +289,12 @@ extends java.lang.Object</pre>
 <h4>getNameForId</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getNameForId&#8203;(java.lang.String&nbsp;id)
                               throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Translate the provided group GUID to the human-readable group name.</div>
+<div class="block">Translate the provided group GUID to the internal group name.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>id</code> - unique identifier (GUID) of the group</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>human-readable name of the group</dd>
+<dd>internal name of the group</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication problem if the cache needs to be refreshed</dd>
 <dd><code><a href="../exception/NotFoundException.html" title="class in com.atlan.exception">NotFoundException</a></code> - if the group cannot be found (does not exist) in Atlan</dd>
