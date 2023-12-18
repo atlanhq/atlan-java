@@ -52,11 +52,6 @@ public class DataProduct extends Asset implements IDataProduct, IDataMesh, ICata
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Data contracts that exist within this data product. */
-    @Attribute
-    @Singular
-    SortedSet<IDataContract> dataContracts;
-
     /** Data domain in which this data product exists. */
     @Attribute
     IDataDomain dataDomain;
@@ -81,42 +76,22 @@ public class DataProduct extends Asset implements IDataProduct, IDataMesh, ICata
     @Attribute
     DataProductStatus dataProductStatus;
 
-    /** Color (in hexadecimal RGB) to use to represent this data product. */
-    @Attribute
-    String dataProductTheme;
-
-    /** Tasks to which this asset provides input. */
+    /** TBC */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** Processes to which this asset provides input. */
+    /** TBC */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
-    /** Whether this asset is published (true) or still a work in progress (false). */
-    @Attribute
-    Boolean isPublished;
-
-    /** Abbreviation for this asset. */
-    @Attribute
-    String meshAbbreviation;
-
-    /** URL for an image used as the cover for this asset. */
-    @Attribute
-    String meshCoverImageUrl;
-
-    /** Unique business key for this asset. */
-    @Attribute
-    String meshSlug;
-
-    /** Tasks from which this asset is output. */
+    /** TBC */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** Processes from which this asset is produced as output. */
+    /** TBC */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
@@ -515,8 +490,6 @@ public class DataProduct extends Asset implements IDataProduct, IDataMesh, ICata
         String slug = IDataMesh.generateSlugForName(name);
         return DataProduct._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
-                .meshSlug(slug)
-                .meshAbbreviation(slug)
                 .qualifiedName(generateQualifiedName(slug))
                 .name(name)
                 .dataDomain(DataDomain.refByQualifiedName(domainQualifiedName))
@@ -541,23 +514,10 @@ public class DataProduct extends Asset implements IDataProduct, IDataMesh, ICata
      * @return the minimal request necessary to update the DataProduct, as a builder
      */
     public static DataProductBuilder<?, ?> updater(String qualifiedName, String name) {
-        return updater(qualifiedName, name, IDataMesh.generateSlugForName(name));
-    }
-
-    /**
-     * Builds the minimal object necessary to update a DataProduct.
-     *
-     * @param qualifiedName of the DataProduct
-     * @param name of the DataProduct
-     * @param slug the unique slug to use for the DataProduct's URL
-     * @return the minimal request necessary to update the DataProduct, as a builder
-     */
-    public static DataProductBuilder<?, ?> updater(String qualifiedName, String name, String slug) {
         return DataProduct._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(qualifiedName)
-                .name(name)
-                .meshSlug(slug);
+                .name(name);
     }
 
     /**
@@ -576,14 +536,11 @@ public class DataProduct extends Asset implements IDataProduct, IDataMesh, ICata
         if (this.getName() == null || this.getName().length() == 0) {
             missing.add("name");
         }
-        if (this.getMeshSlug() == null || this.getMeshSlug().length() == 0) {
-            missing.add("meshSlug");
-        }
         if (!missing.isEmpty()) {
             throw new InvalidRequestException(
                     ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "DataProduct", String.join(",", missing));
         }
-        return updater(this.getQualifiedName(), this.getName(), this.getMeshSlug());
+        return updater(this.getQualifiedName(), this.getName());
     }
 
     /**

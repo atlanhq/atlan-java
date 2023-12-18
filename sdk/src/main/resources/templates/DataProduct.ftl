@@ -69,8 +69,6 @@
         String slug = IDataMesh.generateSlugForName(name);
         return DataProduct._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
-                .meshSlug(slug)
-                .meshAbbreviation(slug)
                 .qualifiedName(generateQualifiedName(slug))
                 .name(name)
                 .dataDomain(DataDomain.refByQualifiedName(domainQualifiedName))
@@ -95,23 +93,10 @@
      * @return the minimal request necessary to update the DataProduct, as a builder
      */
     public static DataProductBuilder<?, ?> updater(String qualifiedName, String name) {
-        return updater(qualifiedName, name, IDataMesh.generateSlugForName(name));
-    }
-
-    /**
-     * Builds the minimal object necessary to update a DataProduct.
-     *
-     * @param qualifiedName of the DataProduct
-     * @param name of the DataProduct
-     * @param slug the unique slug to use for the DataProduct's URL
-     * @return the minimal request necessary to update the DataProduct, as a builder
-     */
-    public static DataProductBuilder<?, ?> updater(String qualifiedName, String name, String slug) {
         return DataProduct._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(qualifiedName)
-                .name(name)
-                .meshSlug(slug);
+                .name(name);
     }
 
     /**
@@ -130,14 +115,11 @@
         if (this.getName() == null || this.getName().length() == 0) {
             missing.add("name");
         }
-        if (this.getMeshSlug() == null || this.getMeshSlug().length() == 0) {
-            missing.add("meshSlug");
-        }
         if (!missing.isEmpty()) {
             throw new InvalidRequestException(
                     ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "DataProduct", String.join(",", missing));
         }
-        return updater(this.getQualifiedName(), this.getName(), this.getMeshSlug());
+        return updater(this.getQualifiedName(), this.getName());
     }
 
     /**

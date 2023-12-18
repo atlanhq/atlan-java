@@ -231,8 +231,8 @@
             builder.policyGroup("public");
         } else {
             if (policyGroups != null && !policyGroups.isEmpty()) {
-                for (String groupAlias : policyGroups) {
-                    client.getGroupCache().getIdForAlias(groupAlias);
+                for (String groupName : policyGroups) {
+                    client.getGroupCache().getIdForName(groupName);
                 }
                 targetFound = true;
                 builder.policyGroups(policyGroups);
@@ -315,8 +315,8 @@
             builder.policyGroup("public");
         } else {
             if (policyGroups != null && !policyGroups.isEmpty()) {
-                for (String groupAlias : policyGroups) {
-                    client.getGroupCache().getIdForAlias(groupAlias);
+                for (String groupName : policyGroups) {
+                    client.getGroupCache().getIdForName(groupName);
                 }
                 targetFound = true;
                 builder.policyGroups(policyGroups);
