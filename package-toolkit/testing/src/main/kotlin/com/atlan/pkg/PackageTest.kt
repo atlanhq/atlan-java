@@ -197,7 +197,7 @@ abstract class PackageTest {
             val results = Connection.findByName(name, type)
             if (!results.isNullOrEmpty()) {
                 results.forEach {
-                    val deleteWorkflow = ConnectionDelete.creator(it.qualifiedName, true)
+                    val deleteWorkflow = ConnectionDelete.creator(it.qualifiedName, true).build().toWorkflow()
                     val response = deleteWorkflow.run(client)
                     assertNotNull(response)
                     val workflowName = response.metadata.name

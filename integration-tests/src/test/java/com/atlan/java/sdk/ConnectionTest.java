@@ -100,7 +100,8 @@ public class ConnectionTest extends AtlanLiveTest {
     public static void deleteConnection(AtlanClient client, String qualifiedName, Logger log)
             throws AtlanException, InterruptedException {
         try {
-            Workflow deleteWorkflow = ConnectionDelete.creator(qualifiedName, true);
+            Workflow deleteWorkflow =
+                    ConnectionDelete.creator(qualifiedName, true).build().toWorkflow();
             WorkflowResponse response = deleteWorkflow.run(client);
             assertNotNull(response);
             // If we get here we've succeeded in running, so we'll reset our retry counter
