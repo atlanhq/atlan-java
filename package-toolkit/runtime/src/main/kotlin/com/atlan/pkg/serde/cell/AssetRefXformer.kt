@@ -71,7 +71,7 @@ object AssetRefXformer {
             GlossaryTerm.CATEGORIES.atlanFieldName,
             -> GlossaryCategoryXformer.decode(assetRef, fieldName)
             GlossaryCategory.ANCHOR.atlanFieldName -> GlossaryXformer.decode(assetRef, fieldName)
-            in GlossaryTermXformer.TERM_TO_TERM_FIELDS -> GlossaryTermXformer.decode(assetRef, fieldName)
+            "assignedTerms", in GlossaryTermXformer.TERM_TO_TERM_FIELDS -> GlossaryTermXformer.decode(assetRef, fieldName)
             else -> {
                 val tokens = assetRef.split(TYPE_QN_DELIMITER)
                 val typeName = tokens[0]
