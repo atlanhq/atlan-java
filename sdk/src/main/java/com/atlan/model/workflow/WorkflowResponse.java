@@ -14,6 +14,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.slf4j.Logger;
+import org.slf4j.event.Level;
 
 @Getter
 @EqualsAndHashCode(callSuper = false)
@@ -46,12 +47,25 @@ public class WorkflowResponse extends ApiResource {
     /**
      * Monitor the status of the workflow's run, blocking until it has completed.
      *
-     * @param log through which to log status information (INFO-level)
+     * @param log through which to log status information (INFO-level, by default)
      * @return the status at completion, or null if the workflow was not even run
      * @throws AtlanException on any errors running the workflow
      * @throws InterruptedException on any interruption of the busy wait loop
      */
     public AtlanWorkflowPhase monitorStatus(Logger log) throws AtlanException, InterruptedException {
+        return monitorStatus(log, Level.INFO);
+    }
+
+    /**
+     * Monitor the status of the workflow's run, blocking until it has completed.
+     *
+     * @param log through which to log status information (INFO-level)
+     * @param level through which to log the status information
+     * @return the status at completion, or null if the workflow was not even run
+     * @throws AtlanException on any errors running the workflow
+     * @throws InterruptedException on any interruption of the busy wait loop
+     */
+    public AtlanWorkflowPhase monitorStatus(Logger log, Level level) throws AtlanException, InterruptedException {
         if (getMetadata() != null && getMetadata().getName() != null) {
             String name = getMetadata().getName();
             AtlanWorkflowPhase status = null;
@@ -67,18 +81,18 @@ public class WorkflowResponse extends ApiResource {
                     status = runDetails.getStatus();
                 }
                 if (log != null) {
-                    log.debug("Workflow status: {}", status);
+                    log.atLevel(level).log("Workflow status: {}", status);
                 }
             } while (status != AtlanWorkflowPhase.SUCCESS
                     && status != AtlanWorkflowPhase.ERROR
                     && status != AtlanWorkflowPhase.FAILED);
             if (log != null) {
-                log.info("Workflow completion status: {}", status);
+                log.atLevel(level).log("Workflow completion status: {}", status);
             }
             return status;
         } else {
             if (log != null) {
-                log.info("Skipping workflow monitoring — nothing to monitor.");
+                log.atLevel(level).log("Skipping workflow monitoring — nothing to monitor.");
             }
             return null;
         }
