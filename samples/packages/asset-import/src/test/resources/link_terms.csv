@@ -1,0 +1,2 @@
+qualifiedName,name,typeName,description,userDescription,sourceReadCount,sourceReadUserCount,ownerUsers,ownerGroups,assignedTerms,atlanTags
+{CONNECTION}/topic/test_topic,test_topic,KafkaTopic,,,,,,,Test Term@@@{GLOSSARY},
