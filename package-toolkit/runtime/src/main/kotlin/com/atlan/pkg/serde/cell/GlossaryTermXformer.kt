@@ -61,7 +61,7 @@ object GlossaryTermXformer {
         fieldName: String,
     ): Asset {
         return when (fieldName) {
-            Asset.ASSIGNED_TERMS.atlanFieldName, in TERM_TO_TERM_FIELDS,
+            "assignedTerms", in TERM_TO_TERM_FIELDS,
             -> TermCache.getByIdentity(assetRef)?.trimToReference()
                 ?: throw NoSuchElementException("Term $assetRef not found (via $fieldName).")
             else -> AssetRefXformer.decode(assetRef, fieldName)
