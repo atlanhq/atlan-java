@@ -6,234 +6,284 @@ import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
-import com.atlan.model.admin.PackageParameter;
 import com.atlan.model.assets.Connection;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanPackageType;
-import com.atlan.model.workflow.*;
 import com.atlan.serde.Serde;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
+@Getter
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public class SnowflakeCrawler extends AbstractCrawler {
 
     public static final String PREFIX = AtlanPackageType.SNOWFLAKE.getValue();
 
-    /**
-     * Builds the minimal object necessary to create a new crawler for Snowflake,
-     * using basic authentication, with the default settings.
-     *
-     * @param client connectivity to Atlan
-     * @param connectionName name of the connection to create
-     * @param hostname of the Snowflake instance
-     * @param username through which to access Snowflake
-     * @param password through which to access Snowflake
-     * @param role name of the role within Snowflake to crawl through
-     * @param warehouse name of the warehouse within Snowflake to crawl through
-     * @return the minimal workflow necessary to crawl Snowflake
-     * @throws AtlanException if there is any issue obtaining the admin role GUID
-     */
-    public static Workflow infoSchemaBasicAuth(
-            AtlanClient client,
-            String connectionName,
-            String hostname,
-            String username,
-            String password,
-            String role,
-            String warehouse)
-            throws AtlanException {
-        return infoSchemaBasicAuth(
-                client,
-                connectionName,
-                hostname,
-                443,
-                username,
-                password,
-                role,
-                warehouse,
-                List.of(client.getRoleCache().getIdForName("$admin")),
-                null,
-                null,
-                true,
-                true,
-                10000L,
-                null,
-                null);
-    }
+    /** Connectivity to the Atlan tenant where the package will run. */
+    AtlanClient client;
+
+    /** Connection through which the package will manage its assets. */
+    Connection connection;
 
     /**
-     * Builds the minimal object necessary to create a new crawler for Snowflake.
+     * Create the base configuration for a new Snowflake crawler.
      *
-     * @param client connectivity to Atlan
-     * @param connectionName name of the connection to create
-     * @param hostname of the Snowflake instance
-     * @param port on which the Snowflake instance is running
-     * @param username through which to access Snowflake
-     * @param password through which to access Snowflake
-     * @param role name of the role within Snowflake to crawl through
-     * @param warehouse name of the warehouse within Snowflake to crawl through
-     * @param adminRoles the GUIDs of the roles that can administer this connection
-     * @param adminGroups the names of the groups that can administer this connection
-     * @param adminUsers the names of the users that can administer this connection
-     * @param allowQuery whether to allow SQL queries against the source (true) or not (false)
-     * @param allowQueryPreview whether to allow data previews for the source (true) or not (false)
-     * @param rowLimit the maximum number of rows that can be returned by a query
-     * @param includeAssets which assets to include when crawling (when null: all). The map should be keyed
-     *                      by database name, with the list of values giving the list of schemas within that
-     *                      database to include.
-     * @param excludeAssets which assets to exclude when crawling (when null: none). The map should be keyed
-     *                      by database name, with the list of values giving the list of schemas within that
-     *                      database to exclude.
-     * @return the minimal workflow necessary to crawl Snowflake
-     * @throws InvalidRequestException if there is no administrator specified for the connection, or the provided filters cannot be serialized to JSON
-     * @throws com.atlan.exception.NotFoundException if the specified administrator does not exist
-     * @throws AtlanException on any other error, such as an inability to retrieve the users, groups or roles in Atlan
+     * @param client connectivity to an Atlan tenant
+     * @param connectionName name of the connection to create when running the crawler for the first time
+     * @param adminRoles unique identifiers (GUIDs) of roles who will be connection admins on the connection
+     * @param adminGroups internal names of groups who will be connection admins on the connection
+     * @param adminUsers usernames of users who will be connection admins on the connection
+     * @param allowQuery if true, allow SQL queries against assets in the connection
+     * @param allowSamples if true, allow sample data previews for assets in the connection
+     * @param rowLimit maximum number of rows that can be returned by a SQL query for all assets in the connection
+     * @return the builder for the base configuration of a Snowflake crawler
+     * @throws AtlanException if there is not at least one connection admin specified, or any specified are invalid
      */
-    public static Workflow infoSchemaBasicAuth(
+    public static SnowflakeCrawlerBuilder<?, ?> creator(
             AtlanClient client,
             String connectionName,
-            String hostname,
-            int port,
-            String username,
-            String password,
-            String role,
-            String warehouse,
             List<String> adminRoles,
             List<String> adminGroups,
             List<String> adminUsers,
             boolean allowQuery,
-            boolean allowQueryPreview,
-            long rowLimit,
-            Map<String, List<String>> includeAssets,
-            Map<String, List<String>> excludeAssets)
+            boolean allowSamples,
+            long rowLimit)
             throws AtlanException {
+        Connection connection = getConnection(
+                client,
+                connectionName,
+                AtlanConnectorType.SNOWFLAKE,
+                adminRoles,
+                adminGroups,
+                adminUsers,
+                allowQuery,
+                allowSamples,
+                rowLimit,
+                "https://docs.snowflake.com/en/_images/logo-snowflake-sans-text.png");
+        return _internal()
+                .client(client)
+                .connection(connection)
+                .metadata()
+                .tags(false)
+                .include(null)
+                .exclude((Map<String, List<String>>) null);
+    }
 
-        Connection connection = Connection.creator(
-                        connectionName, AtlanConnectorType.SNOWFLAKE, adminRoles, adminGroups, adminUsers)
-                .allowQuery(allowQuery)
-                .allowQueryPreview(allowQueryPreview)
-                .rowLimit(rowLimit)
-                .defaultCredentialGuid("{{credentialGuid}}")
-                .sourceLogo("https://docs.snowflake.com/en/_images/logo-snowflake-sans-text.png")
-                .isDiscoverable(true)
-                .isEditable(false)
-                .build();
+    public abstract static class SnowflakeCrawlerBuilder<
+                    C extends SnowflakeCrawler, B extends SnowflakeCrawlerBuilder<C, B>>
+            extends AbstractCrawlerBuilder<C, B> {
 
-        String epoch = Connection.getEpochFromQualifiedName(connection.getQualifiedName());
-
-        Map<String, Object> credentialBody = new HashMap<>();
-        credentialBody.put("name", "default-snowflake-" + epoch + "-0");
-        credentialBody.put("host", hostname);
-        credentialBody.put("port", port);
-        credentialBody.put("authType", "basic");
-        credentialBody.put("username", username);
-        credentialBody.put("password", password);
-        credentialBody.put("extra", Map.of("role", role, "warehouse", warehouse));
-        credentialBody.put("connectorConfigName", "atlan-connectors-snowflake");
-
-        Map<String, List<String>> toInclude = buildHierarchicalFilter(includeAssets);
-        Map<String, List<String>> toExclude = buildHierarchicalFilter(excludeAssets);
-
-        WorkflowParameters.WorkflowParametersBuilder<?, ?> argsBuilder = WorkflowParameters.builder()
-                .parameter(NameValuePair.of("credential-guid", "{{credentialGuid}}"))
-                .parameter(NameValuePair.of("extract-strategy", "information-schema"))
-                .parameter(NameValuePair.of("account-usage-database-name", "SNOWFLAKE"))
-                .parameter(NameValuePair.of("account-usage-schema-name", "ACCOUNT_USAGE"))
-                .parameter(NameValuePair.of("control-config-strategy", "default"))
-                .parameter(NameValuePair.of("enable-lineage", true))
-                .parameter(NameValuePair.of("enable-snowflake-tags", false))
-                .parameter(NameValuePair.of("connection", connection.toJson(client)));
-        try {
-            if (!toInclude.isEmpty()) {
-                argsBuilder = argsBuilder.parameter(
-                        NameValuePair.of("include-filter", Serde.allInclusiveMapper.writeValueAsString(toInclude)));
-            }
-            if (!toExclude.isEmpty()) {
-                argsBuilder = argsBuilder.parameter(
-                        NameValuePair.of("exclude-filter", Serde.allInclusiveMapper.writeValueAsString(toExclude)));
-            }
-        } catch (JsonProcessingException e) {
-            throw new InvalidRequestException(ErrorCode.UNABLE_TO_TRANSLATE_FILTERS, e);
+        /**
+         * Set up the crawler to use basic authentication.
+         *
+         * @param hostname of the Snowflake instance
+         * @param username through which to access Snowflake
+         * @param password through which to access Snowflake
+         * @param role name of the role within Snowflake to crawl through
+         * @param warehouse name of the warehouse within Snowflake to crawl through
+         * @return the builder, set up to use basic authentication
+         */
+        public SnowflakeCrawlerBuilder<C, B> basicAuth(
+                String hostname, String username, String password, String role, String warehouse) {
+            String epoch = Connection.getEpochFromQualifiedName(connection.getQualifiedName());
+            return this.credential("name", "default-snowflake-" + epoch + "-0")
+                    .credential("host", hostname)
+                    .credential("port", 443)
+                    .credential("authType", "basic")
+                    .credential("username", username)
+                    .credential("password", password)
+                    .credential("extra", Map.of("role", role, "warehouse", warehouse))
+                    .credential("connectorConfigName", "atlan-connectors-snowflake");
         }
 
-        String atlanName = PREFIX + "-default-snowflake-" + epoch;
-        String runName = PREFIX + "-" + epoch;
-        return Workflow.builder()
-                .metadata(WorkflowMetadata.builder()
-                        .label("orchestration.atlan.com/certified", "true")
-                        .label("orchestration.atlan.com/source", "snowflake")
-                        .label("orchestration.atlan.com/sourceCategory", "warehouse")
-                        .label("orchestration.atlan.com/type", "connector")
-                        .label("orchestration.atlan.com/verified", "true")
-                        .label("package.argoproj.io/installer", "argopm")
-                        .label("package.argoproj.io/name", "a-t-ratlans-l-a-s-hsnowflake")
-                        .label("package.argoproj.io/registry", "httpsc-o-l-o-ns-l-a-s-hs-l-a-s-hpackages.atlan.com")
-                        .label("orchestration.atlan.com/default-snowflake-" + epoch, "true")
-                        .label("orchestration.atlan.com/atlan-ui", "true")
-                        .annotation("orchestration.atlan.com/allowSchedule", "true")
-                        .annotation("orchestration.atlan.com/categories", "warehouse,crawler")
-                        .annotation("orchestration.atlan.com/dependentPackage", "")
-                        .annotation(
-                                "orchestration.atlan.com/docsUrl",
-                                "https://ask.atlan.com/hc/en-us/articles/6037440864145")
-                        .annotation("orchestration.atlan.com/emoji", "\uD83D\uDE80")
-                        .annotation(
-                                "orchestration.atlan.com/icon",
-                                "https://docs.snowflake.com/en/_images/logo-snowflake-sans-text.png")
-                        .annotation(
-                                "orchestration.atlan.com/logo",
-                                "https://1amiydhcmj36tz3733v94f15-wpengine.netdna-ssl.com/wp-content/themes/snowflake/assets/img/logo-blue.svg")
-                        .annotation(
-                                "orchestration.atlan.com/marketplaceLink",
-                                "https://packages.atlan.com/-/web/detail/@atlan/snowflake")
-                        .annotation("orchestration.atlan.com/name", "Snowflake Assets")
-                        .annotation("package.argoproj.io/author", "Atlan")
-                        .annotation(
-                                "package.argoproj.io/description",
-                                "Package to crawl snowflake assets and publish to Atlan for discovery")
-                        .annotation(
-                                "package.argoproj.io/homepage",
-                                "https://packages.atlan.com/-/web/detail/@atlan/snowflake")
-                        .annotation(
-                                "package.argoproj.io/keywords",
-                                "[\"snowflake\",\"warehouse\",\"connector\",\"crawler\"]")
-                        .annotation("package.argoproj.io/name", "@atlan/snowflake")
-                        .annotation("package.argoproj.io/registry", "https://packages.atlan.com")
-                        .annotation(
-                                "package.argoproj.io/repository",
-                                "git+https://github.com/atlanhq/marketplace-packages.git")
-                        .annotation("package.argoproj.io/support", "support@atlan.com")
-                        .annotation("orchestration.atlan.com/atlanName", atlanName)
-                        .name(runName)
-                        .namespace("default")
-                        .build())
-                .spec(WorkflowSpec.builder()
-                        .templates(List.of(WorkflowTemplate.builder()
-                                .name("main")
-                                .dag(WorkflowDAG.builder()
-                                        .task(WorkflowTask.builder()
-                                                .name("run")
-                                                .arguments(argsBuilder.build())
-                                                .templateRef(WorkflowTemplateRef.builder()
-                                                        .name(PREFIX)
-                                                        .template("main")
-                                                        .clusterScope(true)
-                                                        .build())
-                                                .build())
-                                        .build())
-                                .build()))
-                        .entrypoint("main")
-                        .workflowMetadata(WorkflowMetadata.builder()
-                                .annotation("package.argoproj.io/name", "@atlan/snowflake")
-                                .build())
-                        .build())
-                .payload(List.of(PackageParameter.builder()
-                        .parameter("credentialGuid")
-                        .type("credential")
-                        .body(credentialBody)
-                        .build()))
-                .build();
+        /**
+         * Set up the crawler to use keypair-based authentication.
+         *
+         * @param hostname of the Snowflake instance
+         * @param username through which to access Snowflake
+         * @param privateKey encrypted private key to for authenticating with Snowflake
+         * @param privateKeyPassword password for the encrypted private key
+         * @param role name of the role within Snowflake to crawl through
+         * @param warehouse name of the warehouse within Snowflake to crawl through
+         * @return the builder, set up to use keypair-based authentication
+         */
+        public SnowflakeCrawlerBuilder<C, B> keypairAuth(
+                String hostname,
+                String username,
+                String privateKey,
+                String privateKeyPassword,
+                String role,
+                String warehouse) {
+            String epoch = Connection.getEpochFromQualifiedName(connection.getQualifiedName());
+            return this.credential("name", "default-snowflake-" + epoch + "-0")
+                    .credential("host", hostname)
+                    .credential("port", 443)
+                    .credential("authType", "basic")
+                    .credential("username", username)
+                    .credential("password", privateKey)
+                    .credential(
+                            "extra",
+                            Map.of("role", role, "warehouse", warehouse, "private_key_password", privateKeyPassword))
+                    .credential("connectorConfigName", "atlan-connectors-snowflake");
+        }
+
+        /**
+         * Set the crawler to extract using Snowflake's information schema.
+         *
+         * @return the builder, set to extract using information schema
+         */
+        public SnowflakeCrawlerBuilder<C, B> informationSchema() {
+            return this.parameters(params()).parameter("extract-strategy", "information-schema");
+        }
+
+        /**
+         * Set the crawler to extract using Snowflake's account usage database and schema.
+         *
+         * @param databaseName name of the database to use
+         * @param schemaName name of the schema to use
+         * @return the builder, set to extract using account usage
+         */
+        public SnowflakeCrawlerBuilder<C, B> accountUsage(String databaseName, String schemaName) {
+            return this.parameters(params())
+                    .parameter("extract-strategy", "account-usage")
+                    .parameter("account-usage-database-name", databaseName)
+                    .parameter("account-usage-schema-name", schemaName);
+        }
+
+        /**
+         * Whether to enable lineage as part of crawling Snowflake.
+         *
+         * @param include if true, lineage will be included while crawling Snowflake
+         * @return the builder, set to include or exclude lineage
+         */
+        public SnowflakeCrawlerBuilder<C, B> lineage(boolean include) {
+            return this.parameter("enable-lineage", "" + include);
+        }
+
+        /**
+         * Whether to enable Snowflake tag syncing as part of crawling Snowflake.
+         *
+         * @param include if true, tags in Snowflake will be included while crawling Snowflake
+         * @return the builder, set to include or exclude Snowflake tags
+         */
+        public SnowflakeCrawlerBuilder<C, B> tags(boolean include) {
+            return this.parameter("enable-snowflake-tags", "" + include);
+        }
+
+        /**
+         * Defines the filter for assets to include when crawling.
+         *
+         * @param assets map keyed by database name with each value being a list of schemas
+         * @return the builder, set to include only those assets specified
+         * @throws InvalidRequestException in the unlikely event the provided filter cannot be translated
+         */
+        public SnowflakeCrawlerBuilder<C, B> include(Map<String, List<String>> assets) throws InvalidRequestException {
+            Map<String, List<String>> toInclude = buildHierarchicalFilter(assets);
+            try {
+                if (!toInclude.isEmpty()) {
+                    this.parameter("include-filter", Serde.allInclusiveMapper.writeValueAsString(toInclude));
+                }
+            } catch (JsonProcessingException e) {
+                throw new InvalidRequestException(ErrorCode.UNABLE_TO_TRANSLATE_FILTERS, e);
+            }
+            return this;
+        }
+
+        /**
+         * Defines the filter for assets to exclude when crawling.
+         *
+         * @param assets map keyed by database name with each value being a list of schemas
+         * @return the builder, set to exclude only those assets specified
+         * @throws InvalidRequestException in the unlikely event the provided filter cannot be translated
+         */
+        public SnowflakeCrawlerBuilder<C, B> exclude(Map<String, List<String>> assets) throws InvalidRequestException {
+            Map<String, List<String>> toExclude = buildHierarchicalFilter(assets);
+            try {
+                if (!toExclude.isEmpty()) {
+                    this.parameter("exclude-filter", Serde.allInclusiveMapper.writeValueAsString(toExclude));
+                }
+            } catch (JsonProcessingException e) {
+                throw new InvalidRequestException(ErrorCode.UNABLE_TO_TRANSLATE_FILTERS, e);
+            }
+            return this;
+        }
+
+        /**
+         * Defines a regular expression to use for excluding assets when crawling.
+         *
+         * @param regex any asset names that match this regular expression will be excluded from crawling
+         * @return the builder, set to exclude any assets that match the provided regular expression
+         */
+        public SnowflakeCrawlerBuilder<C, B> exclude(String regex) {
+            return this.parameter("temp-table-regex", regex);
+        }
+
+        /**
+         * Set all the metadata for the package (labels, annotations, etc).
+         *
+         * @return the builder, with metadata set
+         */
+        protected SnowflakeCrawlerBuilder<C, B> metadata() {
+            String epoch = Connection.getEpochFromQualifiedName(connection.getQualifiedName());
+            return this.prefix(PREFIX)
+                    .name("@atlan/snowflake")
+                    .runName(PREFIX + "-" + epoch)
+                    .label("orchestration.atlan.com/certified", "true")
+                    .label("orchestration.atlan.com/source", "snowflake")
+                    .label("orchestration.atlan.com/sourceCategory", "warehouse")
+                    .label("orchestration.atlan.com/type", "connector")
+                    .label("orchestration.atlan.com/verified", "true")
+                    .label("package.argoproj.io/installer", "argopm")
+                    .label("package.argoproj.io/name", "a-t-ratlans-l-a-s-hsnowflake")
+                    .label("package.argoproj.io/parent", "")
+                    .label("package.argoproj.io/registry", "httpsc-o-l-o-ns-l-a-s-hs-l-a-s-hpackages.atlan.com")
+                    .label("orchestration.atlan.com/default-snowflake-" + epoch, "true")
+                    .label("orchestration.atlan.com/atlan-ui", "true")
+                    .annotation("orchestration.atlan.com/allowSchedule", "true")
+                    .annotation("orchestration.atlan.com/categories", "warehouse,crawler")
+                    .annotation("orchestration.atlan.com/dependentPackage", "")
+                    .annotation(
+                            "orchestration.atlan.com/docsUrl", "https://ask.atlan.com/hc/en-us/articles/6037440864145")
+                    .annotation("orchestration.atlan.com/emoji", "\uD83D\uDE80")
+                    .annotation(
+                            "orchestration.atlan.com/icon",
+                            "https://docs.snowflake.com/en/_images/logo-snowflake-sans-text.png")
+                    .annotation(
+                            "orchestration.atlan.com/logo",
+                            "https://1amiydhcmj36tz3733v94f15-wpengine.netdna-ssl.com/wp-content/themes/snowflake/assets/img/logo-blue.svg")
+                    .annotation(
+                            "orchestration.atlan.com/marketplaceLink",
+                            "https://packages.atlan.com/-/web/detail/@atlan/snowflake")
+                    .annotation("orchestration.atlan.com/name", "Snowflake Assets")
+                    .annotation("package.argoproj.io/author", "Atlan")
+                    .annotation(
+                            "package.argoproj.io/description",
+                            "Package to crawl snowflake assets and publish to Atlan for discovery")
+                    .annotation(
+                            "package.argoproj.io/homepage", "https://packages.atlan.com/-/web/detail/@atlan/snowflake")
+                    .annotation(
+                            "package.argoproj.io/keywords", "[\"snowflake\",\"warehouse\",\"connector\",\"crawler\"]")
+                    .annotation("package.argoproj.io/name", "@atlan/snowflake")
+                    .annotation("package.argoproj.io/parent", ".")
+                    .annotation("package.argoproj.io/registry", "https://packages.atlan.com")
+                    .annotation(
+                            "package.argoproj.io/repository", "git+https://github.com/atlanhq/marketplace-packages.git")
+                    .annotation("package.argoproj.io/support", "support@atlan.com")
+                    .annotation("orchestration.atlan.com/atlanName", PREFIX + "-default-snowflake-" + epoch);
+        }
+
+        private Map<String, String> params() {
+            return Map.ofEntries(
+                    Map.entry("credential-guid", "{{credentialGuid}}"),
+                    Map.entry("control-config-strategy", "default"),
+                    Map.entry("connection", connection.toJson(client)));
+        }
     }
 }

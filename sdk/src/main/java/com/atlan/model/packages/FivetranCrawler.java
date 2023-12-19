@@ -4,171 +4,153 @@ package com.atlan.model.packages;
 
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
-import com.atlan.exception.InvalidRequestException;
-import com.atlan.model.admin.PackageParameter;
 import com.atlan.model.assets.Connection;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanPackageType;
-import com.atlan.model.workflow.*;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
+@Getter
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public class FivetranCrawler extends AbstractCrawler {
 
     public static final String PREFIX = AtlanPackageType.FIVETRAN.getValue();
 
-    /**
-     * Builds the minimal object necessary to create a new crawler for Fivetran,
-     * using basic authentication, with the default settings.
-     *
-     * @param client connectivity to Atlan
-     * @param connectionName name of the connection to create
-     * @param apiKey through which to access Fivetran APIs
-     * @param apiSecret through which to access Fivetran APIs
-     * @return the minimal workflow necessary to crawl Fivetran
-     * @throws AtlanException if there is any issue obtaining the admin role GUID
-     */
-    public static Workflow directApiAuth(AtlanClient client, String connectionName, String apiKey, String apiSecret)
-            throws AtlanException {
-        return directApiAuth(
-                client,
-                connectionName,
-                apiKey,
-                apiSecret,
-                List.of(client.getRoleCache().getIdForName("$admin")),
-                null,
-                null);
-    }
+    /** Connectivity to the Atlan tenant where the package will run. */
+    AtlanClient client;
+
+    /** Connection through which the package will manage its assets. */
+    Connection connection;
 
     /**
-     * Builds the minimal object necessary to create a new crawler for Fivetran.
+     * Create the base configuration for a new Fivetran crawler.
      *
-     * @param client connectivity to Atlan
-     * @param connectionName name of the connection to create
-     * @param apiKey through which to access Fivetran APIs
-     * @param apiSecret through which to access Fivetran APIs
-     * @param adminRoles the GUIDs of the roles that can administer this connection
-     * @param adminGroups the names of the groups that can administer this connection
-     * @param adminUsers the names of the users that can administer this connection
-     * @return the minimal workflow necessary to crawl Fivetran
-     * @throws InvalidRequestException if there is no administrator specified for the connection, or the provided filters cannot be serialized to JSON
-     * @throws com.atlan.exception.NotFoundException if the specified administrator does not exist
-     * @throws AtlanException on any other error, such as an inability to retrieve the users, groups or roles in Atlan
+     * @param client connectivity to an Atlan tenant
+     * @param connectionName name of the connection to create when running the crawler for the first time
+     * @param adminRoles unique identifiers (GUIDs) of roles who will be connection admins on the connection
+     * @param adminGroups internal names of groups who will be connection admins on the connection
+     * @param adminUsers usernames of users who will be connection admins on the connection
+     * @return the builder for the base configuration of a Fivetran crawler
+     * @throws AtlanException if there is not at least one connection admin specified, or any specified are invalid
      */
-    public static Workflow directApiAuth(
+    public static FivetranCrawlerBuilder<?, ?> creator(
             AtlanClient client,
             String connectionName,
-            String apiKey,
-            String apiSecret,
             List<String> adminRoles,
             List<String> adminGroups,
             List<String> adminUsers)
             throws AtlanException {
+        Connection connection = getConnection(
+                client,
+                connectionName,
+                AtlanConnectorType.FIVETRAN,
+                adminRoles,
+                adminGroups,
+                adminUsers,
+                false,
+                false,
+                0L,
+                "https://res.cloudinary.com/crunchbase-production/image/upload/c_lpad,f_auto,q_auto:eco,dpr_1/mmhosuxvz2msbiieekl3");
+        return _internal().client(client).connection(connection).metadata().publishAnnouncements(false);
+    }
 
-        Connection connection = Connection.creator(
-                        connectionName, AtlanConnectorType.FIVETRAN, adminRoles, adminGroups, adminUsers)
-                .allowQuery(true)
-                .allowQueryPreview(true)
-                .rowLimit(10000L)
-                .defaultCredentialGuid("{{credentialGuid}}")
-                .sourceLogo(
-                        "https://res.cloudinary.com/crunchbase-production/image/upload/c_lpad,f_auto,q_auto:eco,dpr_1/mmhosuxvz2msbiieekl3")
-                .isDiscoverable(true)
-                .isEditable(false)
-                .build();
+    public abstract static class FivetranCrawlerBuilder<
+                    C extends FivetranCrawler, B extends FivetranCrawlerBuilder<C, B>>
+            extends AbstractCrawlerBuilder<C, B> {
 
-        String epoch = Connection.getEpochFromQualifiedName(connection.getQualifiedName());
+        /**
+         * Set up the crawler to use API token-based authentication.
+         *
+         * @param apiKey through which to access Fivetran APIs
+         * @param apiSecret through which to access Fivetran APIs
+         * @return the builder, set up to extract directly from Fivetran APIs using API token authentication
+         */
+        public FivetranCrawlerBuilder<C, B> apiToken(String apiKey, String apiSecret) {
+            String epoch = Connection.getEpochFromQualifiedName(connection.getQualifiedName());
+            return this.parameters(params())
+                    .credential("name", "default-fivetran-" + epoch + "-0")
+                    .credential("host", "https://api.fivetran.com")
+                    .credential("port", 443)
+                    .credential("authType", "api")
+                    .credential("username", apiKey)
+                    .credential("password", apiSecret)
+                    .credential("extra", Collections.emptyMap())
+                    .credential("connectorConfigName", "atlan-connectors-fivetran");
+        }
 
-        Map<String, Object> credentialBody = new HashMap<>();
-        credentialBody.put("name", "default-fivetran-" + epoch + "-0");
-        credentialBody.put("host", "https://api.fivetran.com");
-        credentialBody.put("port", 443);
-        credentialBody.put("authType", "api");
-        credentialBody.put("username", apiKey);
-        credentialBody.put("password", apiSecret);
-        credentialBody.put("extra", Collections.emptyMap());
-        credentialBody.put("connectorConfigName", "atlan-connectors-fivetran");
+        /**
+         * Whether to publish process announcements (true) or not.
+         *
+         * @param enabled if true, will publish process announcements
+         * @return the builder, set up to publish (or not) process announcements
+         */
+        public FivetranCrawlerBuilder<C, B> publishAnnouncements(boolean enabled) {
+            return this.parameter("advanced-config-strategy", "custom")
+                    .parameter("publish-announcements", "" + enabled);
+        }
 
-        WorkflowParameters.WorkflowParametersBuilder<?, ?> argsBuilder = WorkflowParameters.builder()
-                .parameter(NameValuePair.of("connection", connection.toJson(client)))
-                .parameter(NameValuePair.of("credential-guid", "{{credentialGuid}}"));
+        /**
+         * Set all the metadata for the package (labels, annotations, etc).
+         *
+         * @return the builder, with metadata set
+         */
+        protected FivetranCrawlerBuilder<C, B> metadata() {
+            String epoch = Connection.getEpochFromQualifiedName(connection.getQualifiedName());
+            return this.prefix(PREFIX)
+                    .name("@atlan/fivetran")
+                    .runName(PREFIX + "-" + epoch)
+                    .label("orchestration.atlan.com/certified", "true")
+                    .label("orchestration.atlan.com/source", "fivetran")
+                    .label("orchestration.atlan.com/sourceCategory", "elt")
+                    .label("orchestration.atlan.com/type", "connector")
+                    .label("orchestration.atlan.com/verified", "true")
+                    .label("package.argoproj.io/installer", "argopm")
+                    .label("package.argoproj.io/name", "a-t-ratlans-l-a-s-hfivetran")
+                    .label("package.argoproj.io/registry", "httpsc-o-l-o-ns-l-a-s-hs-l-a-s-hpackages.atlan.com")
+                    .label("orchestration.atlan.com/default-fivetran-" + epoch, "true")
+                    .label("orchestration.atlan.com/atlan-ui", "true")
+                    .annotation("orchestration.atlan.com/allowSchedule", "true")
+                    .annotation("orchestration.atlan.com/dependentPackage", "")
+                    .annotation(
+                            "orchestration.atlan.com/docsUrl", "https://ask.atlan.com/hc/en-us/articles/8427123935121")
+                    .annotation("orchestration.atlan.com/emoji", "\uD83D\uDE80")
+                    .annotation(
+                            "orchestration.atlan.com/icon",
+                            "https://res.cloudinary.com/crunchbase-production/image/upload/c_lpad,f_auto,q_auto:eco,dpr_1/mmhosuxvz2msbiieekl3")
+                    .annotation(
+                            "orchestration.atlan.com/logo",
+                            "https://alternative.me/media/256/fivetran-icon-qfxkppdpdx2oh4r9-c.png")
+                    .annotation(
+                            "orchestration.atlan.com/marketplaceLink",
+                            "https://packages.atlan.com/-/web/detail/@atlan/fivetran")
+                    .annotation("orchestration.atlan.com/name", "Fivetran Enrichment")
+                    .annotation("orchestration.atlan.com/usecase", "crawling,enrichment")
+                    .annotation("package.argoproj.io/author", "Atlan")
+                    .annotation(
+                            "package.argoproj.io/description",
+                            "Enrich known assets associated with Fivetran Connectors with column-level lineage.  Requires access to Fivetran's Metadata API.")
+                    .annotation(
+                            "package.argoproj.io/homepage", "https://packages.atlan.com/-/web/detail/@atlan/fivetran")
+                    .annotation("package.argoproj.io/keywords", "[\"connector\",\"elt\",\"fivetran\",\"lineage\"]")
+                    .annotation("package.argoproj.io/name", "@atlan/fivetran")
+                    .annotation("package.argoproj.io/registry", "https://packages.atlan.com")
+                    .annotation(
+                            "package.argoproj.io/repository", "git+https://github.com/atlanhq/marketplace-packages.git")
+                    .annotation("package.argoproj.io/support", "support@atlan.com")
+                    .annotation("orchestration.atlan.com/atlanName", PREFIX + "-default-fivetran-" + epoch);
+        }
 
-        String runName = PREFIX + "-" + epoch;
-        String atlanName = PREFIX + "-default-fivetran-" + epoch;
-        return Workflow.builder()
-                .metadata(WorkflowMetadata.builder()
-                        .label("orchestration.atlan.com/certified", "true")
-                        .label("orchestration.atlan.com/source", "fivetran")
-                        .label("orchestration.atlan.com/sourceCategory", "elt")
-                        .label("orchestration.atlan.com/type", "connector")
-                        .label("orchestration.atlan.com/verified", "true")
-                        .label("package.argoproj.io/installer", "argopm")
-                        .label("package.argoproj.io/name", "a-t-ratlans-l-a-s-hfivetran")
-                        .label("package.argoproj.io/registry", "httpsc-o-l-o-ns-l-a-s-hs-l-a-s-hpackages.atlan.com")
-                        .label("orchestration.atlan.com/default-fivetran-" + epoch, "true")
-                        .label("orchestration.atlan.com/atlan-ui", "true")
-                        .annotation("orchestration.atlan.com/allowSchedule", "true")
-                        .annotation("orchestration.atlan.com/dependentPackage", "")
-                        .annotation(
-                                "orchestration.atlan.com/docsUrl",
-                                "https://ask.atlan.com/hc/en-us/articles/8427123935121")
-                        .annotation("orchestration.atlan.com/emoji", "\uD83D\uDE80")
-                        .annotation(
-                                "orchestration.atlan.com/icon",
-                                "https://res.cloudinary.com/crunchbase-production/image/upload/c_lpad,f_auto,q_auto:eco,dpr_1/mmhosuxvz2msbiieekl3")
-                        .annotation(
-                                "orchestration.atlan.com/logo",
-                                "https://alternative.me/media/256/fivetran-icon-qfxkppdpdx2oh4r9-c.png")
-                        .annotation(
-                                "orchestration.atlan.com/marketplaceLink",
-                                "https://packages.atlan.com/-/web/detail/@atlan/fivetran")
-                        .annotation("orchestration.atlan.com/name", "Fivetran Enrichment")
-                        .annotation("orchestration.atlan.com/usecase", "crawling,enrichment")
-                        .annotation("package.argoproj.io/author", "Atlan")
-                        .annotation(
-                                "package.argoproj.io/description",
-                                "Enrich known assets associated with Fivetran Connectors with column-level lineage.  Requires access to Fivetran's Metadata API.")
-                        .annotation(
-                                "package.argoproj.io/homepage",
-                                "https://packages.atlan.com/-/web/detail/@atlan/fivetran")
-                        .annotation("package.argoproj.io/keywords", "[\"connector\",\"elt\",\"fivetran\",\"lineage\"]")
-                        .annotation("package.argoproj.io/name", "@atlan/fivetran")
-                        .annotation("package.argoproj.io/registry", "https://packages.atlan.com")
-                        .annotation(
-                                "package.argoproj.io/repository",
-                                "git+https://github.com/atlanhq/marketplace-packages.git")
-                        .annotation("package.argoproj.io/support", "support@atlan.com")
-                        .annotation("orchestration.atlan.com/atlanName", atlanName)
-                        .name(runName)
-                        .namespace("default")
-                        .build())
-                .spec(WorkflowSpec.builder()
-                        .templates(List.of(WorkflowTemplate.builder()
-                                .name("main")
-                                .dag(WorkflowDAG.builder()
-                                        .task(WorkflowTask.builder()
-                                                .name("run")
-                                                .arguments(argsBuilder.build())
-                                                .templateRef(WorkflowTemplateRef.builder()
-                                                        .name(PREFIX)
-                                                        .template("main")
-                                                        .clusterScope(true)
-                                                        .build())
-                                                .build())
-                                        .build())
-                                .build()))
-                        .entrypoint("main")
-                        .workflowMetadata(WorkflowMetadata.builder()
-                                .annotation("package.argoproj.io/name", "@atlan/fivetran")
-                                .build())
-                        .build())
-                .payload(List.of(PackageParameter.builder()
-                        .parameter("credentialGuid")
-                        .type("credential")
-                        .body(credentialBody)
-                        .build()))
-                .build();
+        private Map<String, String> params() {
+            return Map.ofEntries(
+                    Map.entry("credential-guid", "{{credentialGuid}}"),
+                    Map.entry("connection", connection.toJson(client)));
+        }
     }
 }

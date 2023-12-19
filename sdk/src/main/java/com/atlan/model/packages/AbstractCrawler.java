@@ -2,9 +2,70 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.packages;
 
+import com.atlan.AtlanClient;
+import com.atlan.exception.AtlanException;
+import com.atlan.model.admin.PackageParameter;
+import com.atlan.model.assets.Connection;
+import com.atlan.model.enums.AtlanConnectorType;
+import com.atlan.model.workflow.Workflow;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Singular;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
-public abstract class AbstractCrawler {
+@Getter
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+@SuppressWarnings("cast")
+public abstract class AbstractCrawler extends AbstractPackage {
+
+    /** Entries used to configure credentials for the package. */
+    @Singular
+    Map<String, Object> credentials;
+
+    /**
+     * Builds a connection using the provided parameters, which will be the target for the package
+     * to crawl assets.
+     *
+     * @param client connectivity to the Atlan tenant on which the package will run
+     * @param connectionName name for the connection
+     * @param connectionType type of connector for the connection
+     * @param roles admin roles for the connection
+     * @param groups admin groups for the connection
+     * @param users admin users for the connection
+     * @param allowQuery whether to allow data to be queried in the connection (true) or not (false)
+     * @param allowQueryPreview whether to allow sample data to be viewed for assets in the connection (true) or not (false)
+     * @param rowLimit maximum number of rows that can be returned by a query
+     * @param sourceLogo logo to use for the source
+     * @throws AtlanException if there is not at least one role, group or user defined as an admin (or any of them are invalid)
+     */
+    @JsonIgnore
+    public static Connection getConnection(
+            AtlanClient client,
+            String connectionName,
+            AtlanConnectorType connectionType,
+            List<String> roles,
+            List<String> groups,
+            List<String> users,
+            boolean allowQuery,
+            boolean allowQueryPreview,
+            long rowLimit,
+            String sourceLogo)
+            throws AtlanException {
+        return Connection.creator(client, connectionName, connectionType, roles, groups, users)
+                .allowQuery(allowQuery)
+                .allowQueryPreview(allowQueryPreview)
+                .rowLimit(rowLimit)
+                .defaultCredentialGuid("{{credentialGuid}}")
+                .sourceLogo(sourceLogo)
+                .isDiscoverable(true)
+                .isEditable(false)
+                .build();
+    }
 
     /**
      * Build an exact match filter from the provided map of databases and schemas.
@@ -65,5 +126,21 @@ public abstract class AbstractCrawler {
             }
         }
         return toInclude;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public Workflow toWorkflow() {
+        if (credentials != null && !credentials.isEmpty()) {
+            return super.toWorkflow().toBuilder()
+                    .payload(List.of(PackageParameter.builder()
+                            .parameter("credentialGuid")
+                            .type("credential")
+                            .body(credentials)
+                            .build()))
+                    .build();
+        } else {
+            return super.toWorkflow().toBuilder().payload(List.of()).build();
+        }
     }
 }

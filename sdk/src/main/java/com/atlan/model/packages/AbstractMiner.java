@@ -4,17 +4,16 @@ package com.atlan.model.packages;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
-public abstract class AbstractMiner {
-
-    /**
-     * Generate an epoch timestamp for now.
-     *
-     * @return the string value of the epoch timestamp
-     */
-    public static String getEpoch() {
-        return "" + System.currentTimeMillis() / 1000;
-    }
+@Getter
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+public abstract class AbstractMiner extends AbstractPackage {
 
     /**
      * Generate a starting point for the mining.
