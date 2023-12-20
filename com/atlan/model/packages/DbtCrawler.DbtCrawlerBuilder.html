@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":6,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":6,"i13":10,"i14":10};
+var data = {"i0":10,"i1":6,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":6,"i11":10,"i12":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -89,7 +89,7 @@ loadScripts(document, 'script');</script>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
@@ -153,6 +153,30 @@ extends <a href="AbstractCrawler.AbstractCrawlerBuilder.html" title="class in co
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
+<!-- =========== FIELD SUMMARY =========== -->
+<section>
+<ul class="blockList">
+<li class="blockList"><a id="field.summary">
+<!--   -->
+</a>
+<h3>Field Summary</h3>
+<ul class="blockList">
+<li class="blockList"><a id="fields.inherited.from.class.com.atlan.model.packages.AbstractCrawler.AbstractCrawlerBuilder">
+<!--   -->
+</a>
+<h3>Fields inherited from class&nbsp;com.atlan.model.packages.<a href="AbstractCrawler.AbstractCrawlerBuilder.html" title="class in com.atlan.model.packages">AbstractCrawler.AbstractCrawlerBuilder</a></h3>
+<code><a href="AbstractCrawler.AbstractCrawlerBuilder.html#client">client</a>, <a href="AbstractCrawler.AbstractCrawlerBuilder.html#connection">connection</a>, <a href="AbstractCrawler.AbstractCrawlerBuilder.html#localCreds">localCreds</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a id="fields.inherited.from.class.com.atlan.model.packages.AbstractPackage.AbstractPackageBuilder">
+<!--   -->
+</a>
+<h3>Fields inherited from class&nbsp;com.atlan.model.packages.<a href="AbstractPackage.AbstractPackageBuilder.html" title="class in com.atlan.model.packages">AbstractPackage.AbstractPackageBuilder</a></h3>
+<code><a href="AbstractPackage.AbstractPackageBuilder.html#epoch">epoch</a></code></li>
+</ul>
+</li>
+</ul>
+</section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
 <section>
 <ul class="blockList">
@@ -200,11 +224,14 @@ extends <a href="AbstractCrawler.AbstractCrawlerBuilder.html" title="class in co
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#client(com.atlan.AtlanClient)">client</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)</code></th>
-<td class="colLast">&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#cloud(java.lang.String,boolean)">cloud</a></span>&#8203;(java.lang.String&nbsp;serviceToken,
+     boolean&nbsp;multiTenant)</code></th>
+<td class="colLast">
+<div class="block">Set up the crawler to extract using dbt Cloud (and its default hostname).</div>
+</td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code><a href="DbtCrawler.DbtCrawlerBuilder.html" title="class in com.atlan.model.packages">DbtCrawler.DbtCrawlerBuilder</a>&lt;<a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">C</a>,&#8203;<a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">B</a>&gt;</code></td>
+<td class="colFirst"><code><a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#cloud(java.lang.String,java.lang.String,boolean)">cloud</a></span>&#8203;(java.lang.String&nbsp;hostname,
      java.lang.String&nbsp;serviceToken,
      boolean&nbsp;multiTenant)</code></th>
@@ -214,11 +241,6 @@ extends <a href="AbstractCrawler.AbstractCrawlerBuilder.html" title="class in co
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#connection(com.atlan.model.assets.Connection)">connection</a></span>&#8203;(<a href="../assets/Connection.html" title="class in com.atlan.model.assets">Connection</a>&nbsp;connection)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i5" class="rowColor">
-<td class="colFirst"><code><a href="DbtCrawler.DbtCrawlerBuilder.html" title="class in com.atlan.model.packages">DbtCrawler.DbtCrawlerBuilder</a>&lt;<a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">C</a>,&#8203;<a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">B</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#core(java.lang.String,java.lang.String,java.lang.String)">core</a></span>&#8203;(java.lang.String&nbsp;s3Bucket,
     java.lang.String&nbsp;s3Prefix,
     java.lang.String&nbsp;s3Region)</code></th>
@@ -226,77 +248,65 @@ extends <a href="AbstractCrawler.AbstractCrawlerBuilder.html" title="class in co
 <div class="block">Set up the crawler to extract using dbt Core files in S3.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
-<td class="colFirst"><code><a href="DbtCrawler.DbtCrawlerBuilder.html" title="class in com.atlan.model.packages">DbtCrawler.DbtCrawlerBuilder</a>&lt;<a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">C</a>,&#8203;<a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">B</a>&gt;</code></td>
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code><a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#enrichMaterializedAssets(boolean)">enrichMaterializedAssets</a></span>&#8203;(boolean&nbsp;enabled)</code></th>
 <td class="colLast">
 <div class="block">Whether to enable the enrichment of materialized SQL assets as part of crawling dbt.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
-<td class="colFirst"><code><a href="DbtCrawler.DbtCrawlerBuilder.html" title="class in com.atlan.model.packages">DbtCrawler.DbtCrawlerBuilder</a>&lt;<a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">C</a>,&#8203;<a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">B</a>&gt;</code></td>
+<tr id="i6" class="altColor">
+<td class="colFirst"><code><a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#exclude(java.lang.String)">exclude</a></span>&#8203;(java.lang.String&nbsp;filter)</code></th>
 <td class="colLast">
 <div class="block">Defines the filter for assets to exclude when crawling.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
-<td class="colFirst"><code><a href="DbtCrawler.DbtCrawlerBuilder.html" title="class in com.atlan.model.packages">DbtCrawler.DbtCrawlerBuilder</a>&lt;<a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">C</a>,&#8203;<a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">B</a>&gt;</code></td>
+<tr id="i7" class="rowColor">
+<td class="colFirst"><code><a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#include(java.lang.String)">include</a></span>&#8203;(java.lang.String&nbsp;filter)</code></th>
 <td class="colLast">
 <div class="block">Defines the filter for assets to include when crawling.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
-<td class="colFirst"><code><a href="DbtCrawler.DbtCrawlerBuilder.html" title="class in com.atlan.model.packages">DbtCrawler.DbtCrawlerBuilder</a>&lt;<a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">C</a>,&#8203;<a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">B</a>&gt;</code></td>
+<tr id="i8" class="altColor">
+<td class="colFirst"><code><a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#limitToConnection(java.lang.String)">limitToConnection</a></span>&#8203;(java.lang.String&nbsp;connectionQualifiedName)</code></th>
 <td class="colLast">
 <div class="block">Limit the crawling to a single connection's assets.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
-<td class="colFirst"><code><a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#localCreds(com.atlan.model.admin.Credential.CredentialBuilder)">localCreds</a></span>&#8203;(<a href="../admin/Credential.CredentialBuilder.html" title="class in com.atlan.model.admin">Credential.CredentialBuilder</a>&lt;?,&#8203;?&gt;&nbsp;localCreds)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i11" class="rowColor">
-<td class="colFirst"><code>protected <a href="DbtCrawler.DbtCrawlerBuilder.html" title="class in com.atlan.model.packages">DbtCrawler.DbtCrawlerBuilder</a>&lt;<a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">C</a>,&#8203;<a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">B</a>&gt;</code></td>
+<tr id="i9" class="rowColor">
+<td class="colFirst"><code>protected <a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#metadata()">metadata</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Set all the metadata for the package (labels, annotations, etc).</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>protected abstract <a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#self()">self</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i13" class="rowColor">
-<td class="colFirst"><code><a href="DbtCrawler.DbtCrawlerBuilder.html" title="class in com.atlan.model.packages">DbtCrawler.DbtCrawlerBuilder</a>&lt;<a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">C</a>,&#8203;<a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">B</a>&gt;</code></td>
+<tr id="i11" class="rowColor">
+<td class="colFirst"><code><a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#tags(boolean)">tags</a></span>&#8203;(boolean&nbsp;include)</code></th>
 <td class="colLast">
 <div class="block">Whether to enable dbt tag syncing as part of crawling dbt.</div>
 </td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a id="methods.inherited.from.class.com.atlan.model.packages.AbstractCrawler.AbstractCrawlerBuilder">
-<!--   -->
-</a>
-<h3>Methods inherited from class&nbsp;com.atlan.model.packages.<a href="AbstractCrawler.AbstractCrawlerBuilder.html" title="class in com.atlan.model.packages">AbstractCrawler.AbstractCrawlerBuilder</a></h3>
-<code><a href="AbstractCrawler.AbstractCrawlerBuilder.html#credential(com.atlan.model.admin.Credential.CredentialBuilder)">credential</a></code></li>
-</ul>
-<ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.com.atlan.model.packages.AbstractPackage.AbstractPackageBuilder">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;com.atlan.model.packages.<a href="AbstractPackage.AbstractPackageBuilder.html" title="class in com.atlan.model.packages">AbstractPackage.AbstractPackageBuilder</a></h3>
-<code><a href="AbstractPackage.AbstractPackageBuilder.html#annotation(java.lang.String,java.lang.String)">annotation</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#annotations(java.util.Map)">annotations</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#clearAnnotations()">clearAnnotations</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#clearLabels()">clearLabels</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#clearParameters()">clearParameters</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#label(java.lang.String,java.lang.String)">label</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#labels(java.util.Map)">labels</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#name(java.lang.String)">name</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#parameter(java.lang.String,java.lang.String)">parameter</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#parameters(java.util.Map)">parameters</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#prefix(java.lang.String)">prefix</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#runName(java.lang.String)">runName</a></code></li>
+<code><a href="AbstractPackage.AbstractPackageBuilder.html#_annotation(java.lang.String,java.lang.String)">_annotation</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#_annotations(java.util.Map)">_annotations</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#_credential(com.atlan.model.admin.Credential.CredentialBuilder)">_credential</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#_label(java.lang.String,java.lang.String)">_label</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#_labels(java.util.Map)">_labels</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#_name(java.lang.String)">_name</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#_parameter(java.lang.String,java.lang.String)">_parameter</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#_parameters(java.util.Map)">_parameters</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#_prefix(java.lang.String)">_prefix</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#_runName(java.lang.String)">_runName</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#clear_annotations()">clear_annotations</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#clear_labels()">clear_labels</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#clear_parameters()">clear_parameters</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
@@ -340,15 +350,33 @@ extends <a href="AbstractCrawler.AbstractCrawlerBuilder.html" title="class in co
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a id="cloud(java.lang.String,boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>cloud</h4>
+<pre class="methodSignature">public&nbsp;<a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">B</a>&nbsp;cloud&#8203;(java.lang.String&nbsp;serviceToken,
+               boolean&nbsp;multiTenant)</pre>
+<div class="block">Set up the crawler to extract using dbt Cloud (and its default hostname).</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>serviceToken</code> - token to use to authenticate against dbt</dd>
+<dd><code>multiTenant</code> - if true, use a multi-tenant cloud config, otherwise a single-tenant cloud config</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the builder, set up to extract using dbt Cloud</dd>
+</dl>
+</li>
+</ul>
 <a id="cloud(java.lang.String,java.lang.String,boolean)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>cloud</h4>
-<pre class="methodSignature">public&nbsp;<a href="DbtCrawler.DbtCrawlerBuilder.html" title="class in com.atlan.model.packages">DbtCrawler.DbtCrawlerBuilder</a>&lt;<a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">C</a>,&#8203;<a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">B</a>&gt;&nbsp;cloud&#8203;(java.lang.String&nbsp;hostname,
-                                                     java.lang.String&nbsp;serviceToken,
-                                                     boolean&nbsp;multiTenant)</pre>
+<pre class="methodSignature">public&nbsp;<a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">B</a>&nbsp;cloud&#8203;(java.lang.String&nbsp;hostname,
+               java.lang.String&nbsp;serviceToken,
+               boolean&nbsp;multiTenant)</pre>
 <div class="block">Set up the crawler to extract using dbt Cloud.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -366,9 +394,9 @@ extends <a href="AbstractCrawler.AbstractCrawlerBuilder.html" title="class in co
 <ul class="blockList">
 <li class="blockList">
 <h4>core</h4>
-<pre class="methodSignature">public&nbsp;<a href="DbtCrawler.DbtCrawlerBuilder.html" title="class in com.atlan.model.packages">DbtCrawler.DbtCrawlerBuilder</a>&lt;<a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">C</a>,&#8203;<a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">B</a>&gt;&nbsp;core&#8203;(java.lang.String&nbsp;s3Bucket,
-                                                    java.lang.String&nbsp;s3Prefix,
-                                                    java.lang.String&nbsp;s3Region)</pre>
+<pre class="methodSignature">public&nbsp;<a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">B</a>&nbsp;core&#8203;(java.lang.String&nbsp;s3Bucket,
+              java.lang.String&nbsp;s3Prefix,
+              java.lang.String&nbsp;s3Region)</pre>
 <div class="block">Set up the crawler to extract using dbt Core files in S3.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -386,7 +414,7 @@ extends <a href="AbstractCrawler.AbstractCrawlerBuilder.html" title="class in co
 <ul class="blockList">
 <li class="blockList">
 <h4>enrichMaterializedAssets</h4>
-<pre class="methodSignature">public&nbsp;<a href="DbtCrawler.DbtCrawlerBuilder.html" title="class in com.atlan.model.packages">DbtCrawler.DbtCrawlerBuilder</a>&lt;<a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">C</a>,&#8203;<a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">B</a>&gt;&nbsp;enrichMaterializedAssets&#8203;(boolean&nbsp;enabled)</pre>
+<pre class="methodSignature">public&nbsp;<a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">B</a>&nbsp;enrichMaterializedAssets&#8203;(boolean&nbsp;enabled)</pre>
 <div class="block">Whether to enable the enrichment of materialized SQL assets as part of crawling dbt.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -402,7 +430,7 @@ extends <a href="AbstractCrawler.AbstractCrawlerBuilder.html" title="class in co
 <ul class="blockList">
 <li class="blockList">
 <h4>tags</h4>
-<pre class="methodSignature">public&nbsp;<a href="DbtCrawler.DbtCrawlerBuilder.html" title="class in com.atlan.model.packages">DbtCrawler.DbtCrawlerBuilder</a>&lt;<a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">C</a>,&#8203;<a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">B</a>&gt;&nbsp;tags&#8203;(boolean&nbsp;include)</pre>
+<pre class="methodSignature">public&nbsp;<a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">B</a>&nbsp;tags&#8203;(boolean&nbsp;include)</pre>
 <div class="block">Whether to enable dbt tag syncing as part of crawling dbt.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -418,7 +446,7 @@ extends <a href="AbstractCrawler.AbstractCrawlerBuilder.html" title="class in co
 <ul class="blockList">
 <li class="blockList">
 <h4>limitToConnection</h4>
-<pre class="methodSignature">public&nbsp;<a href="DbtCrawler.DbtCrawlerBuilder.html" title="class in com.atlan.model.packages">DbtCrawler.DbtCrawlerBuilder</a>&lt;<a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">C</a>,&#8203;<a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">B</a>&gt;&nbsp;limitToConnection&#8203;(java.lang.String&nbsp;connectionQualifiedName)</pre>
+<pre class="methodSignature">public&nbsp;<a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">B</a>&nbsp;limitToConnection&#8203;(java.lang.String&nbsp;connectionQualifiedName)</pre>
 <div class="block">Limit the crawling to a single connection's assets. (If not specified, crawling will be attempted across
  all connection's assets.)</div>
 <dl>
@@ -435,7 +463,7 @@ extends <a href="AbstractCrawler.AbstractCrawlerBuilder.html" title="class in co
 <ul class="blockList">
 <li class="blockList">
 <h4>include</h4>
-<pre class="methodSignature">public&nbsp;<a href="DbtCrawler.DbtCrawlerBuilder.html" title="class in com.atlan.model.packages">DbtCrawler.DbtCrawlerBuilder</a>&lt;<a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">C</a>,&#8203;<a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">B</a>&gt;&nbsp;include&#8203;(java.lang.String&nbsp;filter)</pre>
+<pre class="methodSignature">public&nbsp;<a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">B</a>&nbsp;include&#8203;(java.lang.String&nbsp;filter)</pre>
 <div class="block">Defines the filter for assets to include when crawling.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -451,7 +479,7 @@ extends <a href="AbstractCrawler.AbstractCrawlerBuilder.html" title="class in co
 <ul class="blockList">
 <li class="blockList">
 <h4>exclude</h4>
-<pre class="methodSignature">public&nbsp;<a href="DbtCrawler.DbtCrawlerBuilder.html" title="class in com.atlan.model.packages">DbtCrawler.DbtCrawlerBuilder</a>&lt;<a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">C</a>,&#8203;<a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">B</a>&gt;&nbsp;exclude&#8203;(java.lang.String&nbsp;filter)</pre>
+<pre class="methodSignature">public&nbsp;<a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">B</a>&nbsp;exclude&#8203;(java.lang.String&nbsp;filter)</pre>
 <div class="block">Defines the filter for assets to exclude when crawling.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -467,9 +495,11 @@ extends <a href="AbstractCrawler.AbstractCrawlerBuilder.html" title="class in co
 <ul class="blockList">
 <li class="blockList">
 <h4>metadata</h4>
-<pre class="methodSignature">protected&nbsp;<a href="DbtCrawler.DbtCrawlerBuilder.html" title="class in com.atlan.model.packages">DbtCrawler.DbtCrawlerBuilder</a>&lt;<a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">C</a>,&#8203;<a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">B</a>&gt;&nbsp;metadata()</pre>
+<pre class="methodSignature">protected&nbsp;<a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">B</a>&nbsp;metadata()</pre>
 <div class="block">Set all the metadata for the package (labels, annotations, etc).</div>
 <dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="AbstractPackage.AbstractPackageBuilder.html#metadata()">metadata</a></code>&nbsp;in class&nbsp;<code><a href="AbstractPackage.AbstractPackageBuilder.html" title="class in com.atlan.model.packages">AbstractPackage.AbstractPackageBuilder</a>&lt;<a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">C</a> extends <a href="DbtCrawler.html" title="class in com.atlan.model.packages">DbtCrawler</a>,&#8203;<a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">B</a> extends <a href="DbtCrawler.DbtCrawlerBuilder.html" title="class in com.atlan.model.packages">DbtCrawler.DbtCrawlerBuilder</a>&lt;<a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">C</a>,&#8203;<a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">B</a>&gt;&gt;</code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the builder, with metadata set</dd>
 </dl>
@@ -513,45 +543,6 @@ extends <a href="AbstractCrawler.AbstractCrawlerBuilder.html" title="class in co
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="AbstractCrawler.AbstractCrawlerBuilder.html#build()">build</a></code>&nbsp;in class&nbsp;<code><a href="AbstractCrawler.AbstractCrawlerBuilder.html" title="class in com.atlan.model.packages">AbstractCrawler.AbstractCrawlerBuilder</a>&lt;<a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">C</a> extends <a href="DbtCrawler.html" title="class in com.atlan.model.packages">DbtCrawler</a>,&#8203;<a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">B</a> extends <a href="DbtCrawler.DbtCrawlerBuilder.html" title="class in com.atlan.model.packages">DbtCrawler.DbtCrawlerBuilder</a>&lt;<a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">C</a>,&#8203;<a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">B</a>&gt;&gt;</code></dd>
-</dl>
-</li>
-</ul>
-<a id="client(com.atlan.AtlanClient)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>client</h4>
-<pre class="methodSignature">public&nbsp;<a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">B</a>&nbsp;client&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="connection(com.atlan.model.assets.Connection)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>connection</h4>
-<pre class="methodSignature">public&nbsp;<a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">B</a>&nbsp;connection&#8203;(<a href="../assets/Connection.html" title="class in com.atlan.model.assets">Connection</a>&nbsp;connection)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="localCreds(com.atlan.model.admin.Credential.CredentialBuilder)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>localCreds</h4>
-<pre class="methodSignature">public&nbsp;<a href="DbtCrawler.DbtCrawlerBuilder.html" title="type parameter in DbtCrawler.DbtCrawlerBuilder">B</a>&nbsp;localCreds&#8203;(<a href="../admin/Credential.CredentialBuilder.html" title="class in com.atlan.model.admin">Credential.CredentialBuilder</a>&lt;?,&#8203;?&gt;&nbsp;localCreds)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
 </dl>
 </li>
 </ul>
@@ -620,7 +611,7 @@ extends <a href="AbstractCrawler.AbstractCrawlerBuilder.html" title="class in co
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>

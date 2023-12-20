@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":10,"i2":9,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10};
+var data = {"i0":9,"i1":10,"i2":9,"i3":9,"i4":10,"i5":10,"i6":10,"i7":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -211,7 +211,7 @@ extends <a href="AbstractCrawler.html" title="class in com.atlan.model.packages"
 <!--   -->
 </a>
 <h3>Fields inherited from class&nbsp;com.atlan.model.packages.<a href="AbstractPackage.html" title="class in com.atlan.model.packages">AbstractPackage</a></h3>
-<code><a href="AbstractPackage.html#name">name</a>, <a href="AbstractPackage.html#prefix">prefix</a>, <a href="AbstractPackage.html#runName">runName</a></code></li>
+<code><a href="AbstractPackage.html#_name">_name</a>, <a href="AbstractPackage.html#_prefix">_prefix</a>, <a href="AbstractPackage.html#_runName">_runName</a></code></li>
 </ul>
 </li>
 </ul>
@@ -265,6 +265,14 @@ extends <a href="AbstractCrawler.html" title="class in com.atlan.model.packages"
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>static <a href="ConfluentKafkaCrawler.ConfluentKafkaCrawlerBuilder.html" title="class in com.atlan.model.packages">ConfluentKafkaCrawler.ConfluentKafkaCrawlerBuilder</a>&lt;?,&#8203;?&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#creator(com.atlan.AtlanClient,java.lang.String)">creator</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+       java.lang.String&nbsp;connectionName)</code></th>
+<td class="colLast">
+<div class="block">Create the base configuration for a new Confluent Cloud Kafka crawler.</div>
+</td>
+</tr>
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code>static <a href="ConfluentKafkaCrawler.ConfluentKafkaCrawlerBuilder.html" title="class in com.atlan.model.packages">ConfluentKafkaCrawler.ConfluentKafkaCrawlerBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#creator(com.atlan.AtlanClient,java.lang.String,java.util.List,java.util.List,java.util.List)">creator</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
        java.lang.String&nbsp;connectionName,
        java.util.List&lt;java.lang.String&gt;&nbsp;adminRoles,
@@ -274,43 +282,22 @@ extends <a href="AbstractCrawler.html" title="class in com.atlan.model.packages"
 <div class="block">Create the base configuration for a new Confluent Cloud Kafka crawler.</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#equals(java.lang.Object)">equals</a></span>&#8203;(java.lang.Object&nbsp;o)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i4" class="altColor">
-<td class="colFirst"><code><a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getClient()">getClient</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Connectivity to the Atlan tenant where the package will run.</div>
-</td>
-</tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code><a href="../assets/Connection.html" title="class in com.atlan.model.assets">Connection</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getConnection()">getConnection</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Connection through which the package will manage its assets.</div>
-</td>
-</tr>
-<tr id="i6" class="altColor">
-<td class="colFirst"><code><a href="../admin/Credential.CredentialBuilder.html" title="class in com.atlan.model.admin">Credential.CredentialBuilder</a>&lt;?,&#8203;?&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLocalCreds()">getLocalCreds</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Credentials for this connection.</div>
-</td>
-</tr>
-<tr id="i7" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="ConfluentKafkaCrawler.ConfluentKafkaCrawlerBuilder.html" title="class in com.atlan.model.packages">ConfluentKafkaCrawler.ConfluentKafkaCrawlerBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toBuilder()">toBuilder</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
@@ -321,14 +308,14 @@ extends <a href="AbstractCrawler.html" title="class in com.atlan.model.packages"
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;com.atlan.model.packages.<a href="AbstractCrawler.html" title="class in com.atlan.model.packages">AbstractCrawler</a></h3>
-<code><a href="AbstractCrawler.html#getConnection(com.atlan.AtlanClient,java.lang.String,com.atlan.model.enums.AtlanConnectorType,java.util.List,java.util.List,java.util.List,boolean,boolean,long,java.lang.String)">getConnection</a>, <a href="AbstractCrawler.html#getCredential()">getCredential</a>, <a href="AbstractCrawler.html#toWorkflow()">toWorkflow</a></code></li>
+<code><a href="AbstractCrawler.html#getConnection(com.atlan.AtlanClient,java.lang.String,com.atlan.model.enums.AtlanConnectorType,java.util.List,java.util.List,java.util.List,boolean,boolean,long,java.lang.String)">getConnection</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.com.atlan.model.packages.AbstractPackage">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;com.atlan.model.packages.<a href="AbstractPackage.html" title="class in com.atlan.model.packages">AbstractPackage</a></h3>
-<code><a href="AbstractPackage.html#getAnnotations()">getAnnotations</a>, <a href="AbstractPackage.html#getEpoch()">getEpoch</a>, <a href="AbstractPackage.html#getLabels()">getLabels</a>, <a href="AbstractPackage.html#getName()">getName</a>, <a href="AbstractPackage.html#getParameters()">getParameters</a>, <a href="AbstractPackage.html#getPrefix()">getPrefix</a>, <a href="AbstractPackage.html#getRunName()">getRunName</a></code></li>
+<code><a href="AbstractPackage.html#get_annotations()">get_annotations</a>, <a href="AbstractPackage.html#get_credential()">get_credential</a>, <a href="AbstractPackage.html#get_labels()">get_labels</a>, <a href="AbstractPackage.html#get_name()">get_name</a>, <a href="AbstractPackage.html#get_parameters()">get_parameters</a>, <a href="AbstractPackage.html#get_prefix()">get_prefix</a>, <a href="AbstractPackage.html#get_runName()">get_runName</a>, <a href="AbstractPackage.html#getEpoch()">getEpoch</a>, <a href="AbstractPackage.html#toWorkflow()">toWorkflow</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
@@ -391,6 +378,27 @@ extends <a href="AbstractCrawler.html" title="class in com.atlan.model.packages"
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a id="creator(com.atlan.AtlanClient,java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>creator</h4>
+<pre class="methodSignature">public static&nbsp;<a href="ConfluentKafkaCrawler.ConfluentKafkaCrawlerBuilder.html" title="class in com.atlan.model.packages">ConfluentKafkaCrawler.ConfluentKafkaCrawlerBuilder</a>&lt;?,&#8203;?&gt;&nbsp;creator&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+                                                                                    java.lang.String&nbsp;connectionName)
+                                                                             throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Create the base configuration for a new Confluent Cloud Kafka crawler. Sets all admins as connection admins.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>client</code> - connectivity to an Atlan tenant</dd>
+<dd><code>connectionName</code> - name of the connection to create when running the crawler for the first time</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the builder for the base configuration of a Confluent Cloud Kafka crawler</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - if there is not at least one connection admin specified, or any specified are invalid</dd>
+</dl>
+</li>
+</ul>
 <a id="creator(com.atlan.AtlanClient,java.lang.String,java.util.List,java.util.List,java.util.List)">
 <!--   -->
 </a>
@@ -434,36 +442,6 @@ extends <a href="AbstractCrawler.html" title="class in com.atlan.model.packages"
 <li class="blockList">
 <h4>toBuilder</h4>
 <pre class="methodSignature">public&nbsp;<a href="ConfluentKafkaCrawler.ConfluentKafkaCrawlerBuilder.html" title="class in com.atlan.model.packages">ConfluentKafkaCrawler.ConfluentKafkaCrawlerBuilder</a>&lt;?,&#8203;?&gt;&nbsp;toBuilder()</pre>
-</li>
-</ul>
-<a id="getClient()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getClient</h4>
-<pre class="methodSignature">public&nbsp;<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;getClient()</pre>
-<div class="block">Connectivity to the Atlan tenant where the package will run.</div>
-</li>
-</ul>
-<a id="getConnection()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getConnection</h4>
-<pre class="methodSignature">public&nbsp;<a href="../assets/Connection.html" title="class in com.atlan.model.assets">Connection</a>&nbsp;getConnection()</pre>
-<div class="block">Connection through which the package will manage its assets.</div>
-</li>
-</ul>
-<a id="getLocalCreds()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getLocalCreds</h4>
-<pre class="methodSignature">public&nbsp;<a href="../admin/Credential.CredentialBuilder.html" title="class in com.atlan.model.admin">Credential.CredentialBuilder</a>&lt;?,&#8203;?&gt;&nbsp;getLocalCreds()</pre>
-<div class="block">Credentials for this connection.</div>
 </li>
 </ul>
 <a id="equals(java.lang.Object)">

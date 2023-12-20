@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":6,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":6,"i13":10};
+var data = {"i0":10,"i1":6,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":6,"i10":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -89,7 +89,7 @@ loadScripts(document, 'script');</script>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
@@ -153,6 +153,30 @@ extends <a href="AbstractCrawler.AbstractCrawlerBuilder.html" title="class in co
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
+<!-- =========== FIELD SUMMARY =========== -->
+<section>
+<ul class="blockList">
+<li class="blockList"><a id="field.summary">
+<!--   -->
+</a>
+<h3>Field Summary</h3>
+<ul class="blockList">
+<li class="blockList"><a id="fields.inherited.from.class.com.atlan.model.packages.AbstractCrawler.AbstractCrawlerBuilder">
+<!--   -->
+</a>
+<h3>Fields inherited from class&nbsp;com.atlan.model.packages.<a href="AbstractCrawler.AbstractCrawlerBuilder.html" title="class in com.atlan.model.packages">AbstractCrawler.AbstractCrawlerBuilder</a></h3>
+<code><a href="AbstractCrawler.AbstractCrawlerBuilder.html#client">client</a>, <a href="AbstractCrawler.AbstractCrawlerBuilder.html#connection">connection</a>, <a href="AbstractCrawler.AbstractCrawlerBuilder.html#localCreds">localCreds</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a id="fields.inherited.from.class.com.atlan.model.packages.AbstractPackage.AbstractPackageBuilder">
+<!--   -->
+</a>
+<h3>Fields inherited from class&nbsp;com.atlan.model.packages.<a href="AbstractPackage.AbstractPackageBuilder.html" title="class in com.atlan.model.packages">AbstractPackage.AbstractPackageBuilder</a></h3>
+<code><a href="AbstractPackage.AbstractPackageBuilder.html#epoch">epoch</a></code></li>
+</ul>
+</li>
+</ul>
+</section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
 <section>
 <ul class="blockList">
@@ -200,16 +224,6 @@ extends <a href="AbstractCrawler.AbstractCrawlerBuilder.html" title="class in co
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="LookerCrawler.LookerCrawlerBuilder.html" title="type parameter in LookerCrawler.LookerCrawlerBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#client(com.atlan.AtlanClient)">client</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i3" class="rowColor">
-<td class="colFirst"><code><a href="LookerCrawler.LookerCrawlerBuilder.html" title="type parameter in LookerCrawler.LookerCrawlerBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#connection(com.atlan.model.assets.Connection)">connection</a></span>&#8203;(<a href="../assets/Connection.html" title="class in com.atlan.model.assets">Connection</a>&nbsp;connection)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i4" class="altColor">
-<td class="colFirst"><code><a href="LookerCrawler.LookerCrawlerBuilder.html" title="class in com.atlan.model.packages">LookerCrawler.LookerCrawlerBuilder</a>&lt;<a href="LookerCrawler.LookerCrawlerBuilder.html" title="type parameter in LookerCrawler.LookerCrawlerBuilder">C</a>,&#8203;<a href="LookerCrawler.LookerCrawlerBuilder.html" title="type parameter in LookerCrawler.LookerCrawlerBuilder">B</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#direct(java.lang.String,int,java.lang.String,java.lang.String)">direct</a></span>&#8203;(java.lang.String&nbsp;hostname,
       int&nbsp;port,
       java.lang.String&nbsp;clientId,
@@ -218,78 +232,66 @@ extends <a href="AbstractCrawler.AbstractCrawlerBuilder.html" title="class in co
 <div class="block">Set up the crawler to extract directly from Looker.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
-<td class="colFirst"><code><a href="LookerCrawler.LookerCrawlerBuilder.html" title="class in com.atlan.model.packages">LookerCrawler.LookerCrawlerBuilder</a>&lt;<a href="LookerCrawler.LookerCrawlerBuilder.html" title="type parameter in LookerCrawler.LookerCrawlerBuilder">C</a>,&#8203;<a href="LookerCrawler.LookerCrawlerBuilder.html" title="type parameter in LookerCrawler.LookerCrawlerBuilder">B</a>&gt;</code></td>
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code><a href="LookerCrawler.LookerCrawlerBuilder.html" title="type parameter in LookerCrawler.LookerCrawlerBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#excludeFolders(java.util.List)">excludeFolders</a></span>&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;folders)</code></th>
 <td class="colLast">
 <div class="block">Defines the filter for folders to exclude when crawling.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
-<td class="colFirst"><code><a href="LookerCrawler.LookerCrawlerBuilder.html" title="class in com.atlan.model.packages">LookerCrawler.LookerCrawlerBuilder</a>&lt;<a href="LookerCrawler.LookerCrawlerBuilder.html" title="type parameter in LookerCrawler.LookerCrawlerBuilder">C</a>,&#8203;<a href="LookerCrawler.LookerCrawlerBuilder.html" title="type parameter in LookerCrawler.LookerCrawlerBuilder">B</a>&gt;</code></td>
+<tr id="i4" class="altColor">
+<td class="colFirst"><code><a href="LookerCrawler.LookerCrawlerBuilder.html" title="type parameter in LookerCrawler.LookerCrawlerBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#excludeProjects(java.util.List)">excludeProjects</a></span>&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;projects)</code></th>
 <td class="colLast">
 <div class="block">Defines the filter for projects to exclude when crawling.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
-<td class="colFirst"><code><a href="LookerCrawler.LookerCrawlerBuilder.html" title="class in com.atlan.model.packages">LookerCrawler.LookerCrawlerBuilder</a>&lt;<a href="LookerCrawler.LookerCrawlerBuilder.html" title="type parameter in LookerCrawler.LookerCrawlerBuilder">C</a>,&#8203;<a href="LookerCrawler.LookerCrawlerBuilder.html" title="type parameter in LookerCrawler.LookerCrawlerBuilder">B</a>&gt;</code></td>
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code><a href="LookerCrawler.LookerCrawlerBuilder.html" title="type parameter in LookerCrawler.LookerCrawlerBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#fieldLevelLineage(java.lang.String,java.lang.String)">fieldLevelLineage</a></span>&#8203;(java.lang.String&nbsp;privateKey,
                  java.lang.String&nbsp;privateKeyPassphrase)</code></th>
 <td class="colLast">
 <div class="block">Enable field-level lineage when crawling Looker.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
-<td class="colFirst"><code><a href="LookerCrawler.LookerCrawlerBuilder.html" title="class in com.atlan.model.packages">LookerCrawler.LookerCrawlerBuilder</a>&lt;<a href="LookerCrawler.LookerCrawlerBuilder.html" title="type parameter in LookerCrawler.LookerCrawlerBuilder">C</a>,&#8203;<a href="LookerCrawler.LookerCrawlerBuilder.html" title="type parameter in LookerCrawler.LookerCrawlerBuilder">B</a>&gt;</code></td>
+<tr id="i6" class="altColor">
+<td class="colFirst"><code><a href="LookerCrawler.LookerCrawlerBuilder.html" title="type parameter in LookerCrawler.LookerCrawlerBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#includeFolders(java.util.List)">includeFolders</a></span>&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;folders)</code></th>
 <td class="colLast">
 <div class="block">Defines the filter for folders to include when crawling.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
-<td class="colFirst"><code><a href="LookerCrawler.LookerCrawlerBuilder.html" title="class in com.atlan.model.packages">LookerCrawler.LookerCrawlerBuilder</a>&lt;<a href="LookerCrawler.LookerCrawlerBuilder.html" title="type parameter in LookerCrawler.LookerCrawlerBuilder">C</a>,&#8203;<a href="LookerCrawler.LookerCrawlerBuilder.html" title="type parameter in LookerCrawler.LookerCrawlerBuilder">B</a>&gt;</code></td>
+<tr id="i7" class="rowColor">
+<td class="colFirst"><code><a href="LookerCrawler.LookerCrawlerBuilder.html" title="type parameter in LookerCrawler.LookerCrawlerBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#includeProjects(java.util.List)">includeProjects</a></span>&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;projects)</code></th>
 <td class="colLast">
 <div class="block">Defines the filter for projects to include when crawling.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
-<td class="colFirst"><code><a href="LookerCrawler.LookerCrawlerBuilder.html" title="type parameter in LookerCrawler.LookerCrawlerBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#localCreds(com.atlan.model.admin.Credential.CredentialBuilder)">localCreds</a></span>&#8203;(<a href="../admin/Credential.CredentialBuilder.html" title="class in com.atlan.model.admin">Credential.CredentialBuilder</a>&lt;?,&#8203;?&gt;&nbsp;localCreds)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i11" class="rowColor">
-<td class="colFirst"><code>protected <a href="LookerCrawler.LookerCrawlerBuilder.html" title="class in com.atlan.model.packages">LookerCrawler.LookerCrawlerBuilder</a>&lt;<a href="LookerCrawler.LookerCrawlerBuilder.html" title="type parameter in LookerCrawler.LookerCrawlerBuilder">C</a>,&#8203;<a href="LookerCrawler.LookerCrawlerBuilder.html" title="type parameter in LookerCrawler.LookerCrawlerBuilder">B</a>&gt;</code></td>
+<tr id="i8" class="altColor">
+<td class="colFirst"><code>protected <a href="LookerCrawler.LookerCrawlerBuilder.html" title="type parameter in LookerCrawler.LookerCrawlerBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#metadata()">metadata</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Set all the metadata for the package (labels, annotations, etc).</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>protected abstract <a href="LookerCrawler.LookerCrawlerBuilder.html" title="type parameter in LookerCrawler.LookerCrawlerBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#self()">self</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a id="methods.inherited.from.class.com.atlan.model.packages.AbstractCrawler.AbstractCrawlerBuilder">
-<!--   -->
-</a>
-<h3>Methods inherited from class&nbsp;com.atlan.model.packages.<a href="AbstractCrawler.AbstractCrawlerBuilder.html" title="class in com.atlan.model.packages">AbstractCrawler.AbstractCrawlerBuilder</a></h3>
-<code><a href="AbstractCrawler.AbstractCrawlerBuilder.html#credential(com.atlan.model.admin.Credential.CredentialBuilder)">credential</a></code></li>
-</ul>
-<ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.com.atlan.model.packages.AbstractPackage.AbstractPackageBuilder">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;com.atlan.model.packages.<a href="AbstractPackage.AbstractPackageBuilder.html" title="class in com.atlan.model.packages">AbstractPackage.AbstractPackageBuilder</a></h3>
-<code><a href="AbstractPackage.AbstractPackageBuilder.html#annotation(java.lang.String,java.lang.String)">annotation</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#annotations(java.util.Map)">annotations</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#clearAnnotations()">clearAnnotations</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#clearLabels()">clearLabels</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#clearParameters()">clearParameters</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#label(java.lang.String,java.lang.String)">label</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#labels(java.util.Map)">labels</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#name(java.lang.String)">name</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#parameter(java.lang.String,java.lang.String)">parameter</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#parameters(java.util.Map)">parameters</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#prefix(java.lang.String)">prefix</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#runName(java.lang.String)">runName</a></code></li>
+<code><a href="AbstractPackage.AbstractPackageBuilder.html#_annotation(java.lang.String,java.lang.String)">_annotation</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#_annotations(java.util.Map)">_annotations</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#_credential(com.atlan.model.admin.Credential.CredentialBuilder)">_credential</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#_label(java.lang.String,java.lang.String)">_label</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#_labels(java.util.Map)">_labels</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#_name(java.lang.String)">_name</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#_parameter(java.lang.String,java.lang.String)">_parameter</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#_parameters(java.util.Map)">_parameters</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#_prefix(java.lang.String)">_prefix</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#_runName(java.lang.String)">_runName</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#clear_annotations()">clear_annotations</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#clear_labels()">clear_labels</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#clear_parameters()">clear_parameters</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
@@ -339,10 +341,10 @@ extends <a href="AbstractCrawler.AbstractCrawlerBuilder.html" title="class in co
 <ul class="blockList">
 <li class="blockList">
 <h4>direct</h4>
-<pre class="methodSignature">public&nbsp;<a href="LookerCrawler.LookerCrawlerBuilder.html" title="class in com.atlan.model.packages">LookerCrawler.LookerCrawlerBuilder</a>&lt;<a href="LookerCrawler.LookerCrawlerBuilder.html" title="type parameter in LookerCrawler.LookerCrawlerBuilder">C</a>,&#8203;<a href="LookerCrawler.LookerCrawlerBuilder.html" title="type parameter in LookerCrawler.LookerCrawlerBuilder">B</a>&gt;&nbsp;direct&#8203;(java.lang.String&nbsp;hostname,
-                                                            int&nbsp;port,
-                                                            java.lang.String&nbsp;clientId,
-                                                            java.lang.String&nbsp;clientSecret)</pre>
+<pre class="methodSignature">public&nbsp;<a href="LookerCrawler.LookerCrawlerBuilder.html" title="type parameter in LookerCrawler.LookerCrawlerBuilder">B</a>&nbsp;direct&#8203;(java.lang.String&nbsp;hostname,
+                int&nbsp;port,
+                java.lang.String&nbsp;clientId,
+                java.lang.String&nbsp;clientSecret)</pre>
 <div class="block">Set up the crawler to extract directly from Looker.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -361,8 +363,8 @@ extends <a href="AbstractCrawler.AbstractCrawlerBuilder.html" title="class in co
 <ul class="blockList">
 <li class="blockList">
 <h4>fieldLevelLineage</h4>
-<pre class="methodSignature">public&nbsp;<a href="LookerCrawler.LookerCrawlerBuilder.html" title="class in com.atlan.model.packages">LookerCrawler.LookerCrawlerBuilder</a>&lt;<a href="LookerCrawler.LookerCrawlerBuilder.html" title="type parameter in LookerCrawler.LookerCrawlerBuilder">C</a>,&#8203;<a href="LookerCrawler.LookerCrawlerBuilder.html" title="type parameter in LookerCrawler.LookerCrawlerBuilder">B</a>&gt;&nbsp;fieldLevelLineage&#8203;(java.lang.String&nbsp;privateKey,
-                                                                       java.lang.String&nbsp;privateKeyPassphrase)</pre>
+<pre class="methodSignature">public&nbsp;<a href="LookerCrawler.LookerCrawlerBuilder.html" title="type parameter in LookerCrawler.LookerCrawlerBuilder">B</a>&nbsp;fieldLevelLineage&#8203;(java.lang.String&nbsp;privateKey,
+                           java.lang.String&nbsp;privateKeyPassphrase)</pre>
 <div class="block">Enable field-level lineage when crawling Looker.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -379,8 +381,8 @@ extends <a href="AbstractCrawler.AbstractCrawlerBuilder.html" title="class in co
 <ul class="blockList">
 <li class="blockList">
 <h4>includeFolders</h4>
-<pre class="methodSignature">public&nbsp;<a href="LookerCrawler.LookerCrawlerBuilder.html" title="class in com.atlan.model.packages">LookerCrawler.LookerCrawlerBuilder</a>&lt;<a href="LookerCrawler.LookerCrawlerBuilder.html" title="type parameter in LookerCrawler.LookerCrawlerBuilder">C</a>,&#8203;<a href="LookerCrawler.LookerCrawlerBuilder.html" title="type parameter in LookerCrawler.LookerCrawlerBuilder">B</a>&gt;&nbsp;includeFolders&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;folders)
-                                                             throws <a href="../../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></pre>
+<pre class="methodSignature">public&nbsp;<a href="LookerCrawler.LookerCrawlerBuilder.html" title="type parameter in LookerCrawler.LookerCrawlerBuilder">B</a>&nbsp;includeFolders&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;folders)
+                 throws <a href="../../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></pre>
 <div class="block">Defines the filter for folders to include when crawling.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -398,8 +400,8 @@ extends <a href="AbstractCrawler.AbstractCrawlerBuilder.html" title="class in co
 <ul class="blockList">
 <li class="blockList">
 <h4>excludeFolders</h4>
-<pre class="methodSignature">public&nbsp;<a href="LookerCrawler.LookerCrawlerBuilder.html" title="class in com.atlan.model.packages">LookerCrawler.LookerCrawlerBuilder</a>&lt;<a href="LookerCrawler.LookerCrawlerBuilder.html" title="type parameter in LookerCrawler.LookerCrawlerBuilder">C</a>,&#8203;<a href="LookerCrawler.LookerCrawlerBuilder.html" title="type parameter in LookerCrawler.LookerCrawlerBuilder">B</a>&gt;&nbsp;excludeFolders&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;folders)
-                                                             throws <a href="../../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></pre>
+<pre class="methodSignature">public&nbsp;<a href="LookerCrawler.LookerCrawlerBuilder.html" title="type parameter in LookerCrawler.LookerCrawlerBuilder">B</a>&nbsp;excludeFolders&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;folders)
+                 throws <a href="../../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></pre>
 <div class="block">Defines the filter for folders to exclude when crawling.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -417,8 +419,8 @@ extends <a href="AbstractCrawler.AbstractCrawlerBuilder.html" title="class in co
 <ul class="blockList">
 <li class="blockList">
 <h4>includeProjects</h4>
-<pre class="methodSignature">public&nbsp;<a href="LookerCrawler.LookerCrawlerBuilder.html" title="class in com.atlan.model.packages">LookerCrawler.LookerCrawlerBuilder</a>&lt;<a href="LookerCrawler.LookerCrawlerBuilder.html" title="type parameter in LookerCrawler.LookerCrawlerBuilder">C</a>,&#8203;<a href="LookerCrawler.LookerCrawlerBuilder.html" title="type parameter in LookerCrawler.LookerCrawlerBuilder">B</a>&gt;&nbsp;includeProjects&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;projects)
-                                                              throws <a href="../../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></pre>
+<pre class="methodSignature">public&nbsp;<a href="LookerCrawler.LookerCrawlerBuilder.html" title="type parameter in LookerCrawler.LookerCrawlerBuilder">B</a>&nbsp;includeProjects&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;projects)
+                  throws <a href="../../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></pre>
 <div class="block">Defines the filter for projects to include when crawling.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -436,8 +438,8 @@ extends <a href="AbstractCrawler.AbstractCrawlerBuilder.html" title="class in co
 <ul class="blockList">
 <li class="blockList">
 <h4>excludeProjects</h4>
-<pre class="methodSignature">public&nbsp;<a href="LookerCrawler.LookerCrawlerBuilder.html" title="class in com.atlan.model.packages">LookerCrawler.LookerCrawlerBuilder</a>&lt;<a href="LookerCrawler.LookerCrawlerBuilder.html" title="type parameter in LookerCrawler.LookerCrawlerBuilder">C</a>,&#8203;<a href="LookerCrawler.LookerCrawlerBuilder.html" title="type parameter in LookerCrawler.LookerCrawlerBuilder">B</a>&gt;&nbsp;excludeProjects&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;projects)
-                                                              throws <a href="../../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></pre>
+<pre class="methodSignature">public&nbsp;<a href="LookerCrawler.LookerCrawlerBuilder.html" title="type parameter in LookerCrawler.LookerCrawlerBuilder">B</a>&nbsp;excludeProjects&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;projects)
+                  throws <a href="../../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></pre>
 <div class="block">Defines the filter for projects to exclude when crawling.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -455,9 +457,11 @@ extends <a href="AbstractCrawler.AbstractCrawlerBuilder.html" title="class in co
 <ul class="blockList">
 <li class="blockList">
 <h4>metadata</h4>
-<pre class="methodSignature">protected&nbsp;<a href="LookerCrawler.LookerCrawlerBuilder.html" title="class in com.atlan.model.packages">LookerCrawler.LookerCrawlerBuilder</a>&lt;<a href="LookerCrawler.LookerCrawlerBuilder.html" title="type parameter in LookerCrawler.LookerCrawlerBuilder">C</a>,&#8203;<a href="LookerCrawler.LookerCrawlerBuilder.html" title="type parameter in LookerCrawler.LookerCrawlerBuilder">B</a>&gt;&nbsp;metadata()</pre>
+<pre class="methodSignature">protected&nbsp;<a href="LookerCrawler.LookerCrawlerBuilder.html" title="type parameter in LookerCrawler.LookerCrawlerBuilder">B</a>&nbsp;metadata()</pre>
 <div class="block">Set all the metadata for the package (labels, annotations, etc).</div>
 <dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="AbstractPackage.AbstractPackageBuilder.html#metadata()">metadata</a></code>&nbsp;in class&nbsp;<code><a href="AbstractPackage.AbstractPackageBuilder.html" title="class in com.atlan.model.packages">AbstractPackage.AbstractPackageBuilder</a>&lt;<a href="LookerCrawler.LookerCrawlerBuilder.html" title="type parameter in LookerCrawler.LookerCrawlerBuilder">C</a> extends <a href="LookerCrawler.html" title="class in com.atlan.model.packages">LookerCrawler</a>,&#8203;<a href="LookerCrawler.LookerCrawlerBuilder.html" title="type parameter in LookerCrawler.LookerCrawlerBuilder">B</a> extends <a href="LookerCrawler.LookerCrawlerBuilder.html" title="class in com.atlan.model.packages">LookerCrawler.LookerCrawlerBuilder</a>&lt;<a href="LookerCrawler.LookerCrawlerBuilder.html" title="type parameter in LookerCrawler.LookerCrawlerBuilder">C</a>,&#8203;<a href="LookerCrawler.LookerCrawlerBuilder.html" title="type parameter in LookerCrawler.LookerCrawlerBuilder">B</a>&gt;&gt;</code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the builder, with metadata set</dd>
 </dl>
@@ -501,45 +505,6 @@ extends <a href="AbstractCrawler.AbstractCrawlerBuilder.html" title="class in co
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="AbstractCrawler.AbstractCrawlerBuilder.html#build()">build</a></code>&nbsp;in class&nbsp;<code><a href="AbstractCrawler.AbstractCrawlerBuilder.html" title="class in com.atlan.model.packages">AbstractCrawler.AbstractCrawlerBuilder</a>&lt;<a href="LookerCrawler.LookerCrawlerBuilder.html" title="type parameter in LookerCrawler.LookerCrawlerBuilder">C</a> extends <a href="LookerCrawler.html" title="class in com.atlan.model.packages">LookerCrawler</a>,&#8203;<a href="LookerCrawler.LookerCrawlerBuilder.html" title="type parameter in LookerCrawler.LookerCrawlerBuilder">B</a> extends <a href="LookerCrawler.LookerCrawlerBuilder.html" title="class in com.atlan.model.packages">LookerCrawler.LookerCrawlerBuilder</a>&lt;<a href="LookerCrawler.LookerCrawlerBuilder.html" title="type parameter in LookerCrawler.LookerCrawlerBuilder">C</a>,&#8203;<a href="LookerCrawler.LookerCrawlerBuilder.html" title="type parameter in LookerCrawler.LookerCrawlerBuilder">B</a>&gt;&gt;</code></dd>
-</dl>
-</li>
-</ul>
-<a id="client(com.atlan.AtlanClient)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>client</h4>
-<pre class="methodSignature">public&nbsp;<a href="LookerCrawler.LookerCrawlerBuilder.html" title="type parameter in LookerCrawler.LookerCrawlerBuilder">B</a>&nbsp;client&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="connection(com.atlan.model.assets.Connection)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>connection</h4>
-<pre class="methodSignature">public&nbsp;<a href="LookerCrawler.LookerCrawlerBuilder.html" title="type parameter in LookerCrawler.LookerCrawlerBuilder">B</a>&nbsp;connection&#8203;(<a href="../assets/Connection.html" title="class in com.atlan.model.assets">Connection</a>&nbsp;connection)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="localCreds(com.atlan.model.admin.Credential.CredentialBuilder)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>localCreds</h4>
-<pre class="methodSignature">public&nbsp;<a href="LookerCrawler.LookerCrawlerBuilder.html" title="type parameter in LookerCrawler.LookerCrawlerBuilder">B</a>&nbsp;localCreds&#8203;(<a href="../admin/Credential.CredentialBuilder.html" title="class in com.atlan.model.admin">Credential.CredentialBuilder</a>&lt;?,&#8203;?&gt;&nbsp;localCreds)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
 </dl>
 </li>
 </ul>
@@ -608,7 +573,7 @@ extends <a href="AbstractCrawler.AbstractCrawlerBuilder.html" title="class in co
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>

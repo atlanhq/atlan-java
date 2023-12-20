@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":6,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":6,"i13":10};
+var data = {"i0":10,"i1":10,"i2":6,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":6,"i10":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -89,7 +89,7 @@ loadScripts(document, 'script');</script>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
@@ -153,6 +153,30 @@ extends <a href="AbstractCrawler.AbstractCrawlerBuilder.html" title="class in co
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
+<!-- =========== FIELD SUMMARY =========== -->
+<section>
+<ul class="blockList">
+<li class="blockList"><a id="field.summary">
+<!--   -->
+</a>
+<h3>Field Summary</h3>
+<ul class="blockList">
+<li class="blockList"><a id="fields.inherited.from.class.com.atlan.model.packages.AbstractCrawler.AbstractCrawlerBuilder">
+<!--   -->
+</a>
+<h3>Fields inherited from class&nbsp;com.atlan.model.packages.<a href="AbstractCrawler.AbstractCrawlerBuilder.html" title="class in com.atlan.model.packages">AbstractCrawler.AbstractCrawlerBuilder</a></h3>
+<code><a href="AbstractCrawler.AbstractCrawlerBuilder.html#client">client</a>, <a href="AbstractCrawler.AbstractCrawlerBuilder.html#connection">connection</a>, <a href="AbstractCrawler.AbstractCrawlerBuilder.html#localCreds">localCreds</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a id="fields.inherited.from.class.com.atlan.model.packages.AbstractPackage.AbstractPackageBuilder">
+<!--   -->
+</a>
+<h3>Fields inherited from class&nbsp;com.atlan.model.packages.<a href="AbstractPackage.AbstractPackageBuilder.html" title="class in com.atlan.model.packages">AbstractPackage.AbstractPackageBuilder</a></h3>
+<code><a href="AbstractPackage.AbstractPackageBuilder.html#epoch">epoch</a></code></li>
+</ul>
+</li>
+</ul>
+</section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
 <section>
 <ul class="blockList">
@@ -194,7 +218,7 @@ extends <a href="AbstractCrawler.AbstractCrawlerBuilder.html" title="class in co
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code><a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="class in com.atlan.model.packages">PostgreSQLCrawler.PostgreSQLCrawlerBuilder</a>&lt;<a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="type parameter in PostgreSQLCrawler.PostgreSQLCrawlerBuilder">C</a>,&#8203;<a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="type parameter in PostgreSQLCrawler.PostgreSQLCrawlerBuilder">B</a>&gt;</code></td>
+<td class="colFirst"><code><a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="type parameter in PostgreSQLCrawler.PostgreSQLCrawlerBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#basicAuth(java.lang.String,java.lang.String)">basicAuth</a></span>&#8203;(java.lang.String&nbsp;username,
          java.lang.String&nbsp;password)</code></th>
 <td class="colLast">
@@ -208,39 +232,28 @@ extends <a href="AbstractCrawler.AbstractCrawlerBuilder.html" title="class in co
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="type parameter in PostgreSQLCrawler.PostgreSQLCrawlerBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#client(com.atlan.AtlanClient)">client</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i4" class="altColor">
-<td class="colFirst"><code><a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="type parameter in PostgreSQLCrawler.PostgreSQLCrawlerBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#connection(com.atlan.model.assets.Connection)">connection</a></span>&#8203;(<a href="../assets/Connection.html" title="class in com.atlan.model.assets">Connection</a>&nbsp;connection)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i5" class="rowColor">
-<td class="colFirst"><code><a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="class in com.atlan.model.packages">PostgreSQLCrawler.PostgreSQLCrawlerBuilder</a>&lt;<a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="type parameter in PostgreSQLCrawler.PostgreSQLCrawlerBuilder">C</a>,&#8203;<a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="type parameter in PostgreSQLCrawler.PostgreSQLCrawlerBuilder">B</a>&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#direct(java.lang.String,java.lang.String,boolean)">direct</a></span>&#8203;(java.lang.String&nbsp;hostname,
-      java.lang.String&nbsp;database,
-      boolean&nbsp;serverless)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#direct(java.lang.String,java.lang.String)">direct</a></span>&#8203;(java.lang.String&nbsp;hostname,
+      java.lang.String&nbsp;database)</code></th>
 <td class="colLast">
 <div class="block">Set up the crawler to extract directly from PostgreSQL.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
-<td class="colFirst"><code><a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="class in com.atlan.model.packages">PostgreSQLCrawler.PostgreSQLCrawlerBuilder</a>&lt;<a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="type parameter in PostgreSQLCrawler.PostgreSQLCrawlerBuilder">C</a>,&#8203;<a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="type parameter in PostgreSQLCrawler.PostgreSQLCrawlerBuilder">B</a>&gt;</code></td>
+<tr id="i4" class="altColor">
+<td class="colFirst"><code><a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="type parameter in PostgreSQLCrawler.PostgreSQLCrawlerBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#exclude(java.lang.String)">exclude</a></span>&#8203;(java.lang.String&nbsp;regex)</code></th>
 <td class="colLast">
 <div class="block">Defines a regular expression to use for excluding assets when crawling.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
-<td class="colFirst"><code><a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="class in com.atlan.model.packages">PostgreSQLCrawler.PostgreSQLCrawlerBuilder</a>&lt;<a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="type parameter in PostgreSQLCrawler.PostgreSQLCrawlerBuilder">C</a>,&#8203;<a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="type parameter in PostgreSQLCrawler.PostgreSQLCrawlerBuilder">B</a>&gt;</code></td>
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code><a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="type parameter in PostgreSQLCrawler.PostgreSQLCrawlerBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#exclude(java.util.Map)">exclude</a></span>&#8203;(java.util.Map&lt;java.lang.String,&#8203;java.util.List&lt;java.lang.String&gt;&gt;&nbsp;assets)</code></th>
 <td class="colLast">
 <div class="block">Defines the filter for assets to exclude when crawling.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
-<td class="colFirst"><code><a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="class in com.atlan.model.packages">PostgreSQLCrawler.PostgreSQLCrawlerBuilder</a>&lt;<a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="type parameter in PostgreSQLCrawler.PostgreSQLCrawlerBuilder">C</a>,&#8203;<a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="type parameter in PostgreSQLCrawler.PostgreSQLCrawlerBuilder">B</a>&gt;</code></td>
+<tr id="i6" class="altColor">
+<td class="colFirst"><code><a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="type parameter in PostgreSQLCrawler.PostgreSQLCrawlerBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#iamUserAuth(java.lang.String,java.lang.String,java.lang.String)">iamUserAuth</a></span>&#8203;(java.lang.String&nbsp;username,
            java.lang.String&nbsp;accessKey,
            java.lang.String&nbsp;secretKey)</code></th>
@@ -248,49 +261,37 @@ extends <a href="AbstractCrawler.AbstractCrawlerBuilder.html" title="class in co
 <div class="block">Set up the crawler to use IAM user-based authentication.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
-<td class="colFirst"><code><a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="class in com.atlan.model.packages">PostgreSQLCrawler.PostgreSQLCrawlerBuilder</a>&lt;<a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="type parameter in PostgreSQLCrawler.PostgreSQLCrawlerBuilder">C</a>,&#8203;<a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="type parameter in PostgreSQLCrawler.PostgreSQLCrawlerBuilder">B</a>&gt;</code></td>
+<tr id="i7" class="rowColor">
+<td class="colFirst"><code><a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="type parameter in PostgreSQLCrawler.PostgreSQLCrawlerBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#include(java.util.Map)">include</a></span>&#8203;(java.util.Map&lt;java.lang.String,&#8203;java.util.List&lt;java.lang.String&gt;&gt;&nbsp;assets)</code></th>
 <td class="colLast">
 <div class="block">Defines the filter for assets to include when crawling.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
-<td class="colFirst"><code><a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="type parameter in PostgreSQLCrawler.PostgreSQLCrawlerBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#localCreds(com.atlan.model.admin.Credential.CredentialBuilder)">localCreds</a></span>&#8203;(<a href="../admin/Credential.CredentialBuilder.html" title="class in com.atlan.model.admin">Credential.CredentialBuilder</a>&lt;?,&#8203;?&gt;&nbsp;localCreds)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i11" class="rowColor">
-<td class="colFirst"><code>protected <a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="class in com.atlan.model.packages">PostgreSQLCrawler.PostgreSQLCrawlerBuilder</a>&lt;<a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="type parameter in PostgreSQLCrawler.PostgreSQLCrawlerBuilder">C</a>,&#8203;<a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="type parameter in PostgreSQLCrawler.PostgreSQLCrawlerBuilder">B</a>&gt;</code></td>
+<tr id="i8" class="altColor">
+<td class="colFirst"><code>protected <a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="type parameter in PostgreSQLCrawler.PostgreSQLCrawlerBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#metadata()">metadata</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Set all the metadata for the package (labels, annotations, etc).</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>protected abstract <a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="type parameter in PostgreSQLCrawler.PostgreSQLCrawlerBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#self()">self</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a id="methods.inherited.from.class.com.atlan.model.packages.AbstractCrawler.AbstractCrawlerBuilder">
-<!--   -->
-</a>
-<h3>Methods inherited from class&nbsp;com.atlan.model.packages.<a href="AbstractCrawler.AbstractCrawlerBuilder.html" title="class in com.atlan.model.packages">AbstractCrawler.AbstractCrawlerBuilder</a></h3>
-<code><a href="AbstractCrawler.AbstractCrawlerBuilder.html#credential(com.atlan.model.admin.Credential.CredentialBuilder)">credential</a></code></li>
-</ul>
-<ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.com.atlan.model.packages.AbstractPackage.AbstractPackageBuilder">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;com.atlan.model.packages.<a href="AbstractPackage.AbstractPackageBuilder.html" title="class in com.atlan.model.packages">AbstractPackage.AbstractPackageBuilder</a></h3>
-<code><a href="AbstractPackage.AbstractPackageBuilder.html#annotation(java.lang.String,java.lang.String)">annotation</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#annotations(java.util.Map)">annotations</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#clearAnnotations()">clearAnnotations</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#clearLabels()">clearLabels</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#clearParameters()">clearParameters</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#label(java.lang.String,java.lang.String)">label</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#labels(java.util.Map)">labels</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#name(java.lang.String)">name</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#parameter(java.lang.String,java.lang.String)">parameter</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#parameters(java.util.Map)">parameters</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#prefix(java.lang.String)">prefix</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#runName(java.lang.String)">runName</a></code></li>
+<code><a href="AbstractPackage.AbstractPackageBuilder.html#_annotation(java.lang.String,java.lang.String)">_annotation</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#_annotations(java.util.Map)">_annotations</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#_credential(com.atlan.model.admin.Credential.CredentialBuilder)">_credential</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#_label(java.lang.String,java.lang.String)">_label</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#_labels(java.util.Map)">_labels</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#_name(java.lang.String)">_name</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#_parameter(java.lang.String,java.lang.String)">_parameter</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#_parameters(java.util.Map)">_parameters</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#_prefix(java.lang.String)">_prefix</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#_runName(java.lang.String)">_runName</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#clear_annotations()">clear_annotations</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#clear_labels()">clear_labels</a>, <a href="AbstractPackage.AbstractPackageBuilder.html#clear_parameters()">clear_parameters</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
@@ -334,15 +335,14 @@ extends <a href="AbstractCrawler.AbstractCrawlerBuilder.html" title="class in co
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="direct(java.lang.String,java.lang.String,boolean)">
+<a id="direct(java.lang.String,java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>direct</h4>
-<pre class="methodSignature">public&nbsp;<a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="class in com.atlan.model.packages">PostgreSQLCrawler.PostgreSQLCrawlerBuilder</a>&lt;<a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="type parameter in PostgreSQLCrawler.PostgreSQLCrawlerBuilder">C</a>,&#8203;<a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="type parameter in PostgreSQLCrawler.PostgreSQLCrawlerBuilder">B</a>&gt;&nbsp;direct&#8203;(java.lang.String&nbsp;hostname,
-                                                                    java.lang.String&nbsp;database,
-                                                                    boolean&nbsp;serverless)</pre>
+<pre class="methodSignature">public&nbsp;<a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="type parameter in PostgreSQLCrawler.PostgreSQLCrawlerBuilder">B</a>&nbsp;direct&#8203;(java.lang.String&nbsp;hostname,
+                java.lang.String&nbsp;database)</pre>
 <div class="block">Set up the crawler to extract directly from PostgreSQL.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -359,8 +359,8 @@ extends <a href="AbstractCrawler.AbstractCrawlerBuilder.html" title="class in co
 <ul class="blockList">
 <li class="blockList">
 <h4>basicAuth</h4>
-<pre class="methodSignature">public&nbsp;<a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="class in com.atlan.model.packages">PostgreSQLCrawler.PostgreSQLCrawlerBuilder</a>&lt;<a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="type parameter in PostgreSQLCrawler.PostgreSQLCrawlerBuilder">C</a>,&#8203;<a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="type parameter in PostgreSQLCrawler.PostgreSQLCrawlerBuilder">B</a>&gt;&nbsp;basicAuth&#8203;(java.lang.String&nbsp;username,
-                                                                       java.lang.String&nbsp;password)</pre>
+<pre class="methodSignature">public&nbsp;<a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="type parameter in PostgreSQLCrawler.PostgreSQLCrawlerBuilder">B</a>&nbsp;basicAuth&#8203;(java.lang.String&nbsp;username,
+                   java.lang.String&nbsp;password)</pre>
 <div class="block">Set up the crawler to use basic authentication.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -377,9 +377,9 @@ extends <a href="AbstractCrawler.AbstractCrawlerBuilder.html" title="class in co
 <ul class="blockList">
 <li class="blockList">
 <h4>iamUserAuth</h4>
-<pre class="methodSignature">public&nbsp;<a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="class in com.atlan.model.packages">PostgreSQLCrawler.PostgreSQLCrawlerBuilder</a>&lt;<a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="type parameter in PostgreSQLCrawler.PostgreSQLCrawlerBuilder">C</a>,&#8203;<a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="type parameter in PostgreSQLCrawler.PostgreSQLCrawlerBuilder">B</a>&gt;&nbsp;iamUserAuth&#8203;(java.lang.String&nbsp;username,
-                                                                         java.lang.String&nbsp;accessKey,
-                                                                         java.lang.String&nbsp;secretKey)</pre>
+<pre class="methodSignature">public&nbsp;<a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="type parameter in PostgreSQLCrawler.PostgreSQLCrawlerBuilder">B</a>&nbsp;iamUserAuth&#8203;(java.lang.String&nbsp;username,
+                     java.lang.String&nbsp;accessKey,
+                     java.lang.String&nbsp;secretKey)</pre>
 <div class="block">Set up the crawler to use IAM user-based authentication.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -397,8 +397,8 @@ extends <a href="AbstractCrawler.AbstractCrawlerBuilder.html" title="class in co
 <ul class="blockList">
 <li class="blockList">
 <h4>include</h4>
-<pre class="methodSignature">public&nbsp;<a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="class in com.atlan.model.packages">PostgreSQLCrawler.PostgreSQLCrawlerBuilder</a>&lt;<a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="type parameter in PostgreSQLCrawler.PostgreSQLCrawlerBuilder">C</a>,&#8203;<a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="type parameter in PostgreSQLCrawler.PostgreSQLCrawlerBuilder">B</a>&gt;&nbsp;include&#8203;(java.util.Map&lt;java.lang.String,&#8203;java.util.List&lt;java.lang.String&gt;&gt;&nbsp;assets)
-                                                              throws <a href="../../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></pre>
+<pre class="methodSignature">public&nbsp;<a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="type parameter in PostgreSQLCrawler.PostgreSQLCrawlerBuilder">B</a>&nbsp;include&#8203;(java.util.Map&lt;java.lang.String,&#8203;java.util.List&lt;java.lang.String&gt;&gt;&nbsp;assets)
+          throws <a href="../../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></pre>
 <div class="block">Defines the filter for assets to include when crawling.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -416,8 +416,8 @@ extends <a href="AbstractCrawler.AbstractCrawlerBuilder.html" title="class in co
 <ul class="blockList">
 <li class="blockList">
 <h4>exclude</h4>
-<pre class="methodSignature">public&nbsp;<a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="class in com.atlan.model.packages">PostgreSQLCrawler.PostgreSQLCrawlerBuilder</a>&lt;<a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="type parameter in PostgreSQLCrawler.PostgreSQLCrawlerBuilder">C</a>,&#8203;<a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="type parameter in PostgreSQLCrawler.PostgreSQLCrawlerBuilder">B</a>&gt;&nbsp;exclude&#8203;(java.util.Map&lt;java.lang.String,&#8203;java.util.List&lt;java.lang.String&gt;&gt;&nbsp;assets)
-                                                              throws <a href="../../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></pre>
+<pre class="methodSignature">public&nbsp;<a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="type parameter in PostgreSQLCrawler.PostgreSQLCrawlerBuilder">B</a>&nbsp;exclude&#8203;(java.util.Map&lt;java.lang.String,&#8203;java.util.List&lt;java.lang.String&gt;&gt;&nbsp;assets)
+          throws <a href="../../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></pre>
 <div class="block">Defines the filter for assets to exclude when crawling.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -435,7 +435,7 @@ extends <a href="AbstractCrawler.AbstractCrawlerBuilder.html" title="class in co
 <ul class="blockList">
 <li class="blockList">
 <h4>exclude</h4>
-<pre class="methodSignature">public&nbsp;<a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="class in com.atlan.model.packages">PostgreSQLCrawler.PostgreSQLCrawlerBuilder</a>&lt;<a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="type parameter in PostgreSQLCrawler.PostgreSQLCrawlerBuilder">C</a>,&#8203;<a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="type parameter in PostgreSQLCrawler.PostgreSQLCrawlerBuilder">B</a>&gt;&nbsp;exclude&#8203;(java.lang.String&nbsp;regex)</pre>
+<pre class="methodSignature">public&nbsp;<a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="type parameter in PostgreSQLCrawler.PostgreSQLCrawlerBuilder">B</a>&nbsp;exclude&#8203;(java.lang.String&nbsp;regex)</pre>
 <div class="block">Defines a regular expression to use for excluding assets when crawling.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -451,9 +451,11 @@ extends <a href="AbstractCrawler.AbstractCrawlerBuilder.html" title="class in co
 <ul class="blockList">
 <li class="blockList">
 <h4>metadata</h4>
-<pre class="methodSignature">protected&nbsp;<a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="class in com.atlan.model.packages">PostgreSQLCrawler.PostgreSQLCrawlerBuilder</a>&lt;<a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="type parameter in PostgreSQLCrawler.PostgreSQLCrawlerBuilder">C</a>,&#8203;<a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="type parameter in PostgreSQLCrawler.PostgreSQLCrawlerBuilder">B</a>&gt;&nbsp;metadata()</pre>
+<pre class="methodSignature">protected&nbsp;<a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="type parameter in PostgreSQLCrawler.PostgreSQLCrawlerBuilder">B</a>&nbsp;metadata()</pre>
 <div class="block">Set all the metadata for the package (labels, annotations, etc).</div>
 <dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="AbstractPackage.AbstractPackageBuilder.html#metadata()">metadata</a></code>&nbsp;in class&nbsp;<code><a href="AbstractPackage.AbstractPackageBuilder.html" title="class in com.atlan.model.packages">AbstractPackage.AbstractPackageBuilder</a>&lt;<a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="type parameter in PostgreSQLCrawler.PostgreSQLCrawlerBuilder">C</a> extends <a href="PostgreSQLCrawler.html" title="class in com.atlan.model.packages">PostgreSQLCrawler</a>,&#8203;<a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="type parameter in PostgreSQLCrawler.PostgreSQLCrawlerBuilder">B</a> extends <a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="class in com.atlan.model.packages">PostgreSQLCrawler.PostgreSQLCrawlerBuilder</a>&lt;<a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="type parameter in PostgreSQLCrawler.PostgreSQLCrawlerBuilder">C</a>,&#8203;<a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="type parameter in PostgreSQLCrawler.PostgreSQLCrawlerBuilder">B</a>&gt;&gt;</code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the builder, with metadata set</dd>
 </dl>
@@ -497,45 +499,6 @@ extends <a href="AbstractCrawler.AbstractCrawlerBuilder.html" title="class in co
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="AbstractCrawler.AbstractCrawlerBuilder.html#build()">build</a></code>&nbsp;in class&nbsp;<code><a href="AbstractCrawler.AbstractCrawlerBuilder.html" title="class in com.atlan.model.packages">AbstractCrawler.AbstractCrawlerBuilder</a>&lt;<a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="type parameter in PostgreSQLCrawler.PostgreSQLCrawlerBuilder">C</a> extends <a href="PostgreSQLCrawler.html" title="class in com.atlan.model.packages">PostgreSQLCrawler</a>,&#8203;<a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="type parameter in PostgreSQLCrawler.PostgreSQLCrawlerBuilder">B</a> extends <a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="class in com.atlan.model.packages">PostgreSQLCrawler.PostgreSQLCrawlerBuilder</a>&lt;<a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="type parameter in PostgreSQLCrawler.PostgreSQLCrawlerBuilder">C</a>,&#8203;<a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="type parameter in PostgreSQLCrawler.PostgreSQLCrawlerBuilder">B</a>&gt;&gt;</code></dd>
-</dl>
-</li>
-</ul>
-<a id="client(com.atlan.AtlanClient)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>client</h4>
-<pre class="methodSignature">public&nbsp;<a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="type parameter in PostgreSQLCrawler.PostgreSQLCrawlerBuilder">B</a>&nbsp;client&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="connection(com.atlan.model.assets.Connection)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>connection</h4>
-<pre class="methodSignature">public&nbsp;<a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="type parameter in PostgreSQLCrawler.PostgreSQLCrawlerBuilder">B</a>&nbsp;connection&#8203;(<a href="../assets/Connection.html" title="class in com.atlan.model.assets">Connection</a>&nbsp;connection)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="localCreds(com.atlan.model.admin.Credential.CredentialBuilder)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>localCreds</h4>
-<pre class="methodSignature">public&nbsp;<a href="PostgreSQLCrawler.PostgreSQLCrawlerBuilder.html" title="type parameter in PostgreSQLCrawler.PostgreSQLCrawlerBuilder">B</a>&nbsp;localCreds&#8203;(<a href="../admin/Credential.CredentialBuilder.html" title="class in com.atlan.model.admin">Credential.CredentialBuilder</a>&lt;?,&#8203;?&gt;&nbsp;localCreds)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
 </dl>
 </li>
 </ul>
@@ -604,7 +567,7 @@ extends <a href="AbstractCrawler.AbstractCrawlerBuilder.html" title="class in co
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>

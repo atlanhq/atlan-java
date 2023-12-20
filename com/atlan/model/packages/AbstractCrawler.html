@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":9,"i3":10,"i4":10,"i5":10,"i6":10};
+var data = {"i0":10,"i1":10,"i2":9,"i3":10,"i4":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -190,7 +190,7 @@ extends <a href="AbstractPackage.html" title="class in com.atlan.model.packages"
 <!--   -->
 </a>
 <h3>Fields inherited from class&nbsp;com.atlan.model.packages.<a href="AbstractPackage.html" title="class in com.atlan.model.packages">AbstractPackage</a></h3>
-<code><a href="AbstractPackage.html#name">name</a>, <a href="AbstractPackage.html#prefix">prefix</a>, <a href="AbstractPackage.html#runName">runName</a></code></li>
+<code><a href="AbstractPackage.html#_name">_name</a>, <a href="AbstractPackage.html#_prefix">_prefix</a>, <a href="AbstractPackage.html#_runName">_runName</a></code></li>
 </ul>
 </li>
 </ul>
@@ -260,28 +260,14 @@ extends <a href="AbstractPackage.html" title="class in com.atlan.model.packages"
 </td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code><a href="../admin/Credential.CredentialBuilder.html" title="class in com.atlan.model.admin">Credential.CredentialBuilder</a>&lt;?,&#8203;?&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCredential()">getCredential</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Entries used to configure credentials for the package.</div>
-</td>
-</tr>
-<tr id="i4" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i6" class="altColor">
-<td class="colFirst"><code><a href="../workflow/Workflow.html" title="class in com.atlan.model.workflow">Workflow</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toWorkflow()">toWorkflow</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Convert the package into a workflow that can be submitted (run).</div>
-</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -289,7 +275,7 @@ extends <a href="AbstractPackage.html" title="class in com.atlan.model.packages"
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;com.atlan.model.packages.<a href="AbstractPackage.html" title="class in com.atlan.model.packages">AbstractPackage</a></h3>
-<code><a href="AbstractPackage.html#getAnnotations()">getAnnotations</a>, <a href="AbstractPackage.html#getEpoch()">getEpoch</a>, <a href="AbstractPackage.html#getLabels()">getLabels</a>, <a href="AbstractPackage.html#getName()">getName</a>, <a href="AbstractPackage.html#getParameters()">getParameters</a>, <a href="AbstractPackage.html#getPrefix()">getPrefix</a>, <a href="AbstractPackage.html#getRunName()">getRunName</a></code></li>
+<code><a href="AbstractPackage.html#get_annotations()">get_annotations</a>, <a href="AbstractPackage.html#get_credential()">get_credential</a>, <a href="AbstractPackage.html#get_labels()">get_labels</a>, <a href="AbstractPackage.html#get_name()">get_name</a>, <a href="AbstractPackage.html#get_parameters()">get_parameters</a>, <a href="AbstractPackage.html#get_prefix()">get_prefix</a>, <a href="AbstractPackage.html#get_runName()">get_runName</a>, <a href="AbstractPackage.html#getEpoch()">getEpoch</a>, <a href="AbstractPackage.html#toWorkflow()">toWorkflow</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
@@ -367,32 +353,6 @@ extends <a href="AbstractPackage.html" title="class in com.atlan.model.packages"
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - if there is not at least one role, group or user defined as an admin (or any of them are invalid)</dd>
 </dl>
-</li>
-</ul>
-<a id="toWorkflow()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>toWorkflow</h4>
-<pre class="methodSignature">public&nbsp;<a href="../workflow/Workflow.html" title="class in com.atlan.model.workflow">Workflow</a>&nbsp;toWorkflow()</pre>
-<div class="block">Convert the package into a workflow that can be submitted (run).</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="AbstractPackage.html#toWorkflow()">toWorkflow</a></code>&nbsp;in class&nbsp;<code><a href="AbstractPackage.html" title="class in com.atlan.model.packages">AbstractPackage</a></code></dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>the workflow representing the package</dd>
-</dl>
-</li>
-</ul>
-<a id="getCredential()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getCredential</h4>
-<pre class="methodSignature">public&nbsp;<a href="../admin/Credential.CredentialBuilder.html" title="class in com.atlan.model.admin">Credential.CredentialBuilder</a>&lt;?,&#8203;?&gt;&nbsp;getCredential()</pre>
-<div class="block">Entries used to configure credentials for the package.</div>
 </li>
 </ul>
 <a id="equals(java.lang.Object)">

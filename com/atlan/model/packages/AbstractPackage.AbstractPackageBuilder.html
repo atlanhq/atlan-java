@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":6,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":6,"i15":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":6,"i12":10,"i13":10,"i14":10,"i15":6,"i16":6,"i17":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -89,13 +89,13 @@ loadScripts(document, 'script');</script>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>
@@ -147,6 +147,31 @@ extends java.lang.Object</pre>
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
+<!-- =========== FIELD SUMMARY =========== -->
+<section>
+<ul class="blockList">
+<li class="blockList"><a id="field.summary">
+<!--   -->
+</a>
+<h3>Field Summary</h3>
+<table class="memberSummary">
+<caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colSecond" scope="col">Field</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>protected java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#epoch">epoch</a></span></code></th>
+<td class="colLast">
+<div class="block">Unique timestamp for the crawler.</div>
+</td>
+</tr>
+</table>
+</li>
+</ul>
+</section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
 <section>
 <ul class="blockList">
@@ -183,84 +208,96 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>protected <a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#$fillValuesFrom(C)">$fillValuesFrom</a></span>&#8203;(<a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">C</a>&nbsp;instance)</code></th>
+<td class="colFirst"><code><a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#_annotation(java.lang.String,java.lang.String)">_annotation</a></span>&#8203;(java.lang.String&nbsp;_annotationKey,
+           java.lang.String&nbsp;_annotationValue)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#annotation(java.lang.String,java.lang.String)">annotation</a></span>&#8203;(java.lang.String&nbsp;annotationKey,
-          java.lang.String&nbsp;annotationValue)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#_annotations(java.util.Map)">_annotations</a></span>&#8203;(java.util.Map&lt;? extends java.lang.String,&#8203;? extends java.lang.String&gt;&nbsp;_annotations)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#annotations(java.util.Map)">annotations</a></span>&#8203;(java.util.Map&lt;? extends java.lang.String,&#8203;? extends java.lang.String&gt;&nbsp;annotations)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#_credential(com.atlan.model.admin.Credential.CredentialBuilder)">_credential</a></span>&#8203;(<a href="../admin/Credential.CredentialBuilder.html" title="class in com.atlan.model.admin">Credential.CredentialBuilder</a>&lt;?,&#8203;?&gt;&nbsp;_credential)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code>abstract <a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">C</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#build()">build</a></span>()</code></th>
+<td class="colFirst"><code><a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#_label(java.lang.String,java.lang.String)">_label</a></span>&#8203;(java.lang.String&nbsp;_labelKey,
+      java.lang.String&nbsp;_labelValue)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearAnnotations()">clearAnnotations</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#_labels(java.util.Map)">_labels</a></span>&#8203;(java.util.Map&lt;? extends java.lang.String,&#8203;? extends java.lang.String&gt;&nbsp;_labels)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearLabels()">clearLabels</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#_name(java.lang.String)">_name</a></span>&#8203;(java.lang.String&nbsp;_name)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearParameters()">clearParameters</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#_parameter(java.lang.String,java.lang.String)">_parameter</a></span>&#8203;(java.lang.String&nbsp;_parameterKey,
+          java.lang.String&nbsp;_parameterValue)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#label(java.lang.String,java.lang.String)">label</a></span>&#8203;(java.lang.String&nbsp;labelKey,
-     java.lang.String&nbsp;labelValue)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#_parameters(java.util.Map)">_parameters</a></span>&#8203;(java.util.Map&lt;? extends java.lang.String,&#8203;? extends java.lang.String&gt;&nbsp;_parameters)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code><a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#labels(java.util.Map)">labels</a></span>&#8203;(java.util.Map&lt;? extends java.lang.String,&#8203;? extends java.lang.String&gt;&nbsp;labels)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#_prefix(java.lang.String)">_prefix</a></span>&#8203;(java.lang.String&nbsp;_prefix)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code><a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#name(java.lang.String)">name</a></span>&#8203;(java.lang.String&nbsp;name)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#_runName(java.lang.String)">_runName</a></span>&#8203;(java.lang.String&nbsp;_runName)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i10" class="altColor">
-<td class="colFirst"><code><a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parameter(java.lang.String,java.lang.String)">parameter</a></span>&#8203;(java.lang.String&nbsp;parameterKey,
-         java.lang.String&nbsp;parameterValue)</code></th>
+<td class="colFirst"><code>protected <a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#$fillValuesFrom(C)">$fillValuesFrom</a></span>&#8203;(<a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">C</a>&nbsp;instance)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i11" class="rowColor">
-<td class="colFirst"><code><a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parameters(java.util.Map)">parameters</a></span>&#8203;(java.util.Map&lt;? extends java.lang.String,&#8203;? extends java.lang.String&gt;&nbsp;parameters)</code></th>
+<td class="colFirst"><code>abstract <a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">C</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#build()">build</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i12" class="altColor">
 <td class="colFirst"><code><a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#prefix(java.lang.String)">prefix</a></span>&#8203;(java.lang.String&nbsp;prefix)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clear_annotations()">clear_annotations</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i13" class="rowColor">
 <td class="colFirst"><code><a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#runName(java.lang.String)">runName</a></span>&#8203;(java.lang.String&nbsp;runName)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clear_labels()">clear_labels</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i14" class="altColor">
+<td class="colFirst"><code><a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clear_parameters()">clear_parameters</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i15" class="rowColor">
+<td class="colFirst"><code>protected abstract <a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#metadata()">metadata</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Set all the annotations, labels and common parameters specific to the crawler.</div>
+</td>
+</tr>
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>protected abstract <a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#self()">self</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
@@ -282,6 +319,26 @@ extends java.lang.Object</pre>
 <div class="details">
 <ul class="blockList">
 <li class="blockList">
+<!-- ============ FIELD DETAIL =========== -->
+<section>
+<ul class="blockList">
+<li class="blockList"><a id="field.detail">
+<!--   -->
+</a>
+<h3>Field Detail</h3>
+<a id="epoch">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>epoch</h4>
+<pre>protected&nbsp;java.lang.String epoch</pre>
+<div class="block">Unique timestamp for the crawler.</div>
+</li>
+</ul>
+</li>
+</ul>
+</section>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
 <section>
 <ul class="blockList">
@@ -308,6 +365,21 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a id="metadata()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>metadata</h4>
+<pre class="methodSignature">protected abstract&nbsp;<a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">B</a>&nbsp;metadata()</pre>
+<div class="block">Set all the annotations, labels and common parameters specific to the crawler.
+ (This will be called automatically by the 'setup' method.)</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the builder, with all the common metadata configured</dd>
+</dl>
+</li>
+</ul>
 <a id="$fillValuesFrom(com.atlan.model.packages.AbstractPackage)">
 <!--   -->
 </a><a id="$fillValuesFrom(C)">
@@ -337,127 +409,140 @@ extends java.lang.Object</pre>
 <pre class="methodSignature">public abstract&nbsp;<a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">C</a>&nbsp;build()</pre>
 </li>
 </ul>
-<a id="prefix(java.lang.String)">
+<a id="_prefix(java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>prefix</h4>
-<pre class="methodSignature">public&nbsp;<a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">B</a>&nbsp;prefix&#8203;(java.lang.String&nbsp;prefix)</pre>
+<h4>_prefix</h4>
+<pre class="methodSignature">public&nbsp;<a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">B</a>&nbsp;_prefix&#8203;(java.lang.String&nbsp;_prefix)</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
 </dl>
 </li>
 </ul>
-<a id="name(java.lang.String)">
+<a id="_name(java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>name</h4>
-<pre class="methodSignature">public&nbsp;<a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">B</a>&nbsp;name&#8203;(java.lang.String&nbsp;name)</pre>
+<h4>_name</h4>
+<pre class="methodSignature">public&nbsp;<a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">B</a>&nbsp;_name&#8203;(java.lang.String&nbsp;_name)</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
 </dl>
 </li>
 </ul>
-<a id="runName(java.lang.String)">
+<a id="_runName(java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>runName</h4>
-<pre class="methodSignature">public&nbsp;<a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">B</a>&nbsp;runName&#8203;(java.lang.String&nbsp;runName)</pre>
+<h4>_runName</h4>
+<pre class="methodSignature">public&nbsp;<a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">B</a>&nbsp;_runName&#8203;(java.lang.String&nbsp;_runName)</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
 </dl>
 </li>
 </ul>
-<a id="label(java.lang.String,java.lang.String)">
+<a id="_label(java.lang.String,java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>label</h4>
-<pre class="methodSignature">public&nbsp;<a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">B</a>&nbsp;label&#8203;(java.lang.String&nbsp;labelKey,
-               java.lang.String&nbsp;labelValue)</pre>
+<h4>_label</h4>
+<pre class="methodSignature">public&nbsp;<a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">B</a>&nbsp;_label&#8203;(java.lang.String&nbsp;_labelKey,
+                java.lang.String&nbsp;_labelValue)</pre>
 </li>
 </ul>
-<a id="labels(java.util.Map)">
+<a id="_labels(java.util.Map)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>labels</h4>
-<pre class="methodSignature">public&nbsp;<a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">B</a>&nbsp;labels&#8203;(java.util.Map&lt;? extends java.lang.String,&#8203;? extends java.lang.String&gt;&nbsp;labels)</pre>
+<h4>_labels</h4>
+<pre class="methodSignature">public&nbsp;<a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">B</a>&nbsp;_labels&#8203;(java.util.Map&lt;? extends java.lang.String,&#8203;? extends java.lang.String&gt;&nbsp;_labels)</pre>
 </li>
 </ul>
-<a id="clearLabels()">
+<a id="clear_labels()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>clearLabels</h4>
-<pre class="methodSignature">public&nbsp;<a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">B</a>&nbsp;clearLabels()</pre>
+<h4>clear_labels</h4>
+<pre class="methodSignature">public&nbsp;<a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">B</a>&nbsp;clear_labels()</pre>
 </li>
 </ul>
-<a id="annotation(java.lang.String,java.lang.String)">
+<a id="_annotation(java.lang.String,java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>annotation</h4>
-<pre class="methodSignature">public&nbsp;<a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">B</a>&nbsp;annotation&#8203;(java.lang.String&nbsp;annotationKey,
-                    java.lang.String&nbsp;annotationValue)</pre>
+<h4>_annotation</h4>
+<pre class="methodSignature">public&nbsp;<a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">B</a>&nbsp;_annotation&#8203;(java.lang.String&nbsp;_annotationKey,
+                     java.lang.String&nbsp;_annotationValue)</pre>
 </li>
 </ul>
-<a id="annotations(java.util.Map)">
+<a id="_annotations(java.util.Map)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>annotations</h4>
-<pre class="methodSignature">public&nbsp;<a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">B</a>&nbsp;annotations&#8203;(java.util.Map&lt;? extends java.lang.String,&#8203;? extends java.lang.String&gt;&nbsp;annotations)</pre>
+<h4>_annotations</h4>
+<pre class="methodSignature">public&nbsp;<a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">B</a>&nbsp;_annotations&#8203;(java.util.Map&lt;? extends java.lang.String,&#8203;? extends java.lang.String&gt;&nbsp;_annotations)</pre>
 </li>
 </ul>
-<a id="clearAnnotations()">
+<a id="clear_annotations()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>clearAnnotations</h4>
-<pre class="methodSignature">public&nbsp;<a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">B</a>&nbsp;clearAnnotations()</pre>
+<h4>clear_annotations</h4>
+<pre class="methodSignature">public&nbsp;<a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">B</a>&nbsp;clear_annotations()</pre>
 </li>
 </ul>
-<a id="parameter(java.lang.String,java.lang.String)">
+<a id="_parameter(java.lang.String,java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>parameter</h4>
-<pre class="methodSignature">public&nbsp;<a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">B</a>&nbsp;parameter&#8203;(java.lang.String&nbsp;parameterKey,
-                   java.lang.String&nbsp;parameterValue)</pre>
+<h4>_parameter</h4>
+<pre class="methodSignature">public&nbsp;<a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">B</a>&nbsp;_parameter&#8203;(java.lang.String&nbsp;_parameterKey,
+                    java.lang.String&nbsp;_parameterValue)</pre>
 </li>
 </ul>
-<a id="parameters(java.util.Map)">
+<a id="_parameters(java.util.Map)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>parameters</h4>
-<pre class="methodSignature">public&nbsp;<a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">B</a>&nbsp;parameters&#8203;(java.util.Map&lt;? extends java.lang.String,&#8203;? extends java.lang.String&gt;&nbsp;parameters)</pre>
+<h4>_parameters</h4>
+<pre class="methodSignature">public&nbsp;<a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">B</a>&nbsp;_parameters&#8203;(java.util.Map&lt;? extends java.lang.String,&#8203;? extends java.lang.String&gt;&nbsp;_parameters)</pre>
 </li>
 </ul>
-<a id="clearParameters()">
+<a id="clear_parameters()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>clearParameters</h4>
-<pre class="methodSignature">public&nbsp;<a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">B</a>&nbsp;clearParameters()</pre>
+<h4>clear_parameters</h4>
+<pre class="methodSignature">public&nbsp;<a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">B</a>&nbsp;clear_parameters()</pre>
+</li>
+</ul>
+<a id="_credential(com.atlan.model.admin.Credential.CredentialBuilder)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>_credential</h4>
+<pre class="methodSignature">public&nbsp;<a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">B</a>&nbsp;_credential&#8203;(<a href="../admin/Credential.CredentialBuilder.html" title="class in com.atlan.model.admin">Credential.CredentialBuilder</a>&lt;?,&#8203;?&gt;&nbsp;_credential)</pre>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
 </li>
 </ul>
 <a id="toString()">
@@ -525,13 +610,13 @@ extends java.lang.Object</pre>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>
