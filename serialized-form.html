@@ -1684,6 +1684,200 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </li>
 </ul>
 </li>
+<li class="blockList"><a id="com.atlan.model.admin.Credential">
+<!--   -->
+</a>
+<h3>Class <a href="com/atlan/model/admin/Credential.html" title="class in com.atlan.model.admin">com.atlan.model.admin.Credential</a> extends <a href="com/atlan/model/core/AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>authType</h4>
+<pre>java.lang.String authType</pre>
+<div class="block">Authentication mechanism represented by the credential.</div>
+</li>
+<li class="blockList">
+<h4>connectorConfigName</h4>
+<pre>java.lang.String connectorConfigName</pre>
+<div class="block">Name of the connector configuration responsible for managing the credential.</div>
+</li>
+<li class="blockList">
+<h4>connectorType</h4>
+<pre>java.lang.String connectorType</pre>
+<div class="block">Type of connector used by the credential.</div>
+</li>
+<li class="blockList">
+<h4>extras</h4>
+<pre>java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt; extras</pre>
+<div class="block">Additional details about the credential. This can capture, for example, a secondary
+ secret for particular forms of authentication and / or additional details about the
+ scope of the connectivity (a specific database, role, warehouse, etc).</div>
+</li>
+<li class="blockList">
+<h4>host</h4>
+<pre>java.lang.String host</pre>
+<div class="block">Hostname the for which connectivity is defined by the credential.</div>
+</li>
+<li class="blockList">
+<h4>id</h4>
+<pre>java.lang.String id</pre>
+<div class="block">Unique identifier (GUID) of the credential.</div>
+</li>
+<li class="blockList">
+<h4>name</h4>
+<pre>java.lang.String name</pre>
+<div class="block">Name of the credential.</div>
+</li>
+<li class="blockList">
+<h4>password</h4>
+<pre>java.lang.String password</pre>
+<div class="block">More sensitive portion of the credential, typically used for a password for basic
+ authentication or client secrets for other forms of authentication.</div>
+</li>
+<li class="blockList">
+<h4>port</h4>
+<pre>java.lang.Integer port</pre>
+<div class="block">Port number on which connectivity should be done.</div>
+</li>
+<li class="blockListLast">
+<h4>username</h4>
+<pre>java.lang.String username</pre>
+<div class="block">Less sensitive portion of the credential, typically used for a username for basic
+ authentication or client IDs for other forms of authentication.</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList"><a id="com.atlan.model.admin.CredentialResponse">
+<!--   -->
+</a>
+<h3>Class <a href="com/atlan/model/admin/CredentialResponse.html" title="class in com.atlan.model.admin">com.atlan.model.admin.CredentialResponse</a> extends <a href="com/atlan/net/ApiResource.html" title="class in com.atlan.net">ApiResource</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>authType</h4>
+<pre>java.lang.String authType</pre>
+</li>
+<li class="blockList">
+<h4>connection</h4>
+<pre>java.lang.Object connection</pre>
+</li>
+<li class="blockList">
+<h4>connector</h4>
+<pre>java.lang.String connector</pre>
+</li>
+<li class="blockList">
+<h4>connectorConfigName</h4>
+<pre>java.lang.String connectorConfigName</pre>
+</li>
+<li class="blockList">
+<h4>connectorType</h4>
+<pre>java.lang.String connectorType</pre>
+</li>
+<li class="blockList">
+<h4>createdAt</h4>
+<pre>java.lang.Long createdAt</pre>
+</li>
+<li class="blockList">
+<h4>createdBy</h4>
+<pre>java.lang.String createdBy</pre>
+</li>
+<li class="blockList">
+<h4>description</h4>
+<pre>java.lang.String description</pre>
+</li>
+<li class="blockList">
+<h4>host</h4>
+<pre>java.lang.String host</pre>
+</li>
+<li class="blockList">
+<h4>id</h4>
+<pre>java.lang.String id</pre>
+</li>
+<li class="blockList">
+<h4>isActive</h4>
+<pre>java.lang.Boolean isActive</pre>
+</li>
+<li class="blockList">
+<h4>level</h4>
+<pre>java.lang.Object level</pre>
+</li>
+<li class="blockList">
+<h4>metadata</h4>
+<pre>java.lang.Object metadata</pre>
+</li>
+<li class="blockList">
+<h4>name</h4>
+<pre>java.lang.String name</pre>
+</li>
+<li class="blockList">
+<h4>port</h4>
+<pre>java.lang.Integer port</pre>
+</li>
+<li class="blockList">
+<h4>tenantId</h4>
+<pre>java.lang.String tenantId</pre>
+</li>
+<li class="blockList">
+<h4>updatedAt</h4>
+<pre>java.lang.Long updatedAt</pre>
+</li>
+<li class="blockListLast">
+<h4>version</h4>
+<pre>java.lang.String version</pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList"><a id="com.atlan.model.admin.CredentialTestResponse">
+<!--   -->
+</a>
+<h3>Class <a href="com/atlan/model/admin/CredentialTestResponse.html" title="class in com.atlan.model.admin">com.atlan.model.admin.CredentialTestResponse</a> extends <a href="com/atlan/net/ApiResource.html" title="class in com.atlan.net">ApiResource</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>code</h4>
+<pre>java.lang.Integer code</pre>
+</li>
+<li class="blockList">
+<h4>error</h4>
+<pre>java.lang.String error</pre>
+</li>
+<li class="blockList">
+<h4>info</h4>
+<pre>java.lang.Object info</pre>
+</li>
+<li class="blockList">
+<h4>message</h4>
+<pre>java.lang.String message</pre>
+</li>
+<li class="blockListLast">
+<h4>requestId</h4>
+<pre>java.lang.String requestId</pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="blockList"><a id="com.atlan.model.admin.CustomMetadataPayload">
 <!--   -->
 </a>
