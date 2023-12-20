@@ -87,7 +87,6 @@ public class SnowflakeCrawler extends AbstractCrawler {
         /**
          * Set up the crawler to use basic authentication.
          *
-         * @param hostname of the Snowflake instance
          * @param username through which to access Snowflake
          * @param password through which to access Snowflake
          * @param role name of the role within Snowflake to crawl through
@@ -95,9 +94,8 @@ public class SnowflakeCrawler extends AbstractCrawler {
          * @return the builder, set up to use basic authentication
          */
         public SnowflakeCrawlerBuilder<C, B> basicAuth(
-                String hostname, String username, String password, String role, String warehouse) {
+                String username, String password, String role, String warehouse) {
             localCreds
-                    .host(hostname)
                     .port(443)
                     .authType("basic")
                     .username(username)
@@ -110,7 +108,6 @@ public class SnowflakeCrawler extends AbstractCrawler {
         /**
          * Set up the crawler to use keypair-based authentication.
          *
-         * @param hostname of the Snowflake instance
          * @param username through which to access Snowflake
          * @param privateKey encrypted private key to for authenticating with Snowflake
          * @param privateKeyPassword password for the encrypted private key
@@ -119,14 +116,8 @@ public class SnowflakeCrawler extends AbstractCrawler {
          * @return the builder, set up to use keypair-based authentication
          */
         public SnowflakeCrawlerBuilder<C, B> keypairAuth(
-                String hostname,
-                String username,
-                String privateKey,
-                String privateKeyPassword,
-                String role,
-                String warehouse) {
+                String username, String privateKey, String privateKeyPassword, String role, String warehouse) {
             localCreds
-                    .host(hostname)
                     .port(443)
                     .authType("basic")
                     .username(username)
@@ -140,11 +131,15 @@ public class SnowflakeCrawler extends AbstractCrawler {
         /**
          * Set the crawler to extract using Snowflake's information schema.
          *
+         * @param hostname of the Snowflake instance
          * @return the builder, set to extract using information schema
          */
-        public SnowflakeCrawlerBuilder<C, B> informationSchema() {
+        public SnowflakeCrawlerBuilder<C, B> informationSchema(String hostname) {
             String epoch = Connection.getEpochFromQualifiedName(connection.getQualifiedName());
-            localCreds.name("default-snowflake-" + epoch + "-0").connectorConfigName("atlan-connectors-snowflake");
+            localCreds
+                    .host(hostname)
+                    .name("default-snowflake-" + epoch + "-0")
+                    .connectorConfigName("atlan-connectors-snowflake");
             return this.parameters(params())
                     .parameter("extract-strategy", "information-schema")
                     .credential(localCreds);
@@ -153,13 +148,17 @@ public class SnowflakeCrawler extends AbstractCrawler {
         /**
          * Set the crawler to extract using Snowflake's account usage database and schema.
          *
+         * @param hostname of the Snowflake instance
          * @param databaseName name of the database to use
          * @param schemaName name of the schema to use
          * @return the builder, set to extract using account usage
          */
-        public SnowflakeCrawlerBuilder<C, B> accountUsage(String databaseName, String schemaName) {
+        public SnowflakeCrawlerBuilder<C, B> accountUsage(String hostname, String databaseName, String schemaName) {
             String epoch = Connection.getEpochFromQualifiedName(connection.getQualifiedName());
-            localCreds.name("default-snowflake-" + epoch + "-0").connectorConfigName("atlan-connectors-snowflake");
+            localCreds
+                    .host(hostname)
+                    .name("default-snowflake-" + epoch + "-0")
+                    .connectorConfigName("atlan-connectors-snowflake");
             return this.parameters(params())
                     .parameter("extract-strategy", "account-usage")
                     .parameter("account-usage-database-name", databaseName)
