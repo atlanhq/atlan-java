@@ -4,13 +4,16 @@ package com.atlan.model.core;
 
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.search.AuditDetail;
+import com.atlan.model.structs.SourceTagAttachment;
 import com.atlan.serde.AtlanTagDeserializer;
 import com.atlan.serde.AtlanTagSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.Comparator;
+import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Singular;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
@@ -95,7 +98,11 @@ public class AtlanTag extends AtlanObject implements AuditDetail, Comparable<Atl
      */
     Boolean restrictPropagationThroughLineage;
 
-    /** Unused. List<Object> attributes; List<Object> validityPeriods; */
+    /** List of attachments of this tag to source-specific tags. */
+    @Singular
+    List<SourceTagAttachment> sourceTagAttachments;
+
+    /* Unused. List<Object> attributes; List<Object> validityPeriods; */
 
     /**
      * {@inheritDoc}

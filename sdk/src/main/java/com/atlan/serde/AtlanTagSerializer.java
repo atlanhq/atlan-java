@@ -57,11 +57,14 @@ public class AtlanTagSerializer extends StdSerializer<AtlanTag> {
             log.debug("Attempt to serialize a null Atlan tag — skipping.");
         } else {
             String clsId;
+            String sourceAttachmentsAttrId;
             if (clsName.equals(Serde.DELETED_AUDIT_OBJECT)) {
                 clsId = Serde.DELETED_AUDIT_OBJECT;
+                sourceAttachmentsAttrId = "";
             } else {
                 try {
                     clsId = client.getAtlanTagCache().getIdForName(clsName);
+                    sourceAttachmentsAttrId = client.getAtlanTagCache().getSourceTagsAttrId(clsId);
                 } catch (AtlanException e) {
                     throw new IOException("Unable to find Atlan tag with name: " + clsName, e);
                 }
@@ -81,6 +84,11 @@ public class AtlanTagSerializer extends StdSerializer<AtlanTag> {
                     gen, "removePropagationsOnEntityDelete", cls.getRemovePropagationsOnEntityDelete());
             JacksonUtils.serializeBoolean(
                     gen, "restrictPropagationThroughLineage", cls.getRestrictPropagationThroughLineage());
+            if (!sourceAttachmentsAttrId.isEmpty()) {
+                gen.writeObjectFieldStart("attributes");
+                JacksonUtils.serializeObject(gen, sourceAttachmentsAttrId, cls.getSourceTagAttachments());
+                gen.writeEndObject();
+            }
             gen.writeEndObject();
         }
     }
