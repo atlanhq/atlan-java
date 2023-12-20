@@ -6,8 +6,6 @@ import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
-import com.atlan.model.admin.Credential;
-import com.atlan.model.assets.Connection;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanPackageType;
 import com.atlan.serde.Serde;
@@ -27,14 +25,27 @@ public class AthenaCrawler extends AbstractCrawler {
 
     public static final String PREFIX = AtlanPackageType.ATHENA.getValue();
 
-    /** Connectivity to the Atlan tenant where the package will run. */
-    AtlanClient client;
-
-    /** Connection through which the package will manage its assets. */
-    Connection connection;
-
-    /** Credentials for this connection. */
-    Credential.CredentialBuilder<?, ?> localCreds;
+    /**
+     * Create the base configuration for a new Athena crawler.
+     * Sets all admins as connection admins, allows querying and sample data previews, and a maximum
+     * limit of 10,000 rows from queries.
+     *
+     * @param client connectivity to an Atlan tenant
+     * @param connectionName name of the connection to create when running the crawler for the first time
+     * @return the builder for the base configuration of an Athena crawler
+     * @throws AtlanException if there is not at least one connection admin specified, or any specified are invalid
+     */
+    public static AthenaCrawlerBuilder<?, ?> creator(AtlanClient client, String connectionName) throws AtlanException {
+        return creator(
+                client,
+                connectionName,
+                List.of(client.getRoleCache().getIdForName("$admin")),
+                null,
+                null,
+                true,
+                true,
+                10000L);
+    }
 
     /**
      * Create the base configuration for a new Athena crawler.
@@ -47,7 +58,7 @@ public class AthenaCrawler extends AbstractCrawler {
      * @param allowQuery if true, allow SQL queries against assets in the connection
      * @param allowSamples if true, allow sample data previews for assets in the connection
      * @param rowLimit maximum number of rows that can be returned by a SQL query for all assets in the connection
-     * @return the builder for the base configuration of a Athena crawler
+     * @return the builder for the base configuration of an Athena crawler
      * @throws AtlanException if there is not at least one connection admin specified, or any specified are invalid
      */
     public static AthenaCrawlerBuilder<?, ?> creator(
@@ -60,21 +71,22 @@ public class AthenaCrawler extends AbstractCrawler {
             boolean allowSamples,
             long rowLimit)
             throws AtlanException {
-        Connection connection = getConnection(
-                client,
-                connectionName,
-                AtlanConnectorType.ATHENA,
-                adminRoles,
-                adminGroups,
-                adminUsers,
-                allowQuery,
-                allowSamples,
-                rowLimit,
-                "https://atlan-public.s3.eu-west-1.amazonaws.com/atlan/logos/aws-athena.png");
         return _internal()
-                .client(client)
-                .connection(connection)
-                .metadata()
+                .setup(
+                        PREFIX,
+                        "@atlan/athena",
+                        client,
+                        getConnection(
+                                client,
+                                connectionName,
+                                AtlanConnectorType.ATHENA,
+                                adminRoles,
+                                adminGroups,
+                                adminUsers,
+                                allowQuery,
+                                allowSamples,
+                                rowLimit,
+                                "https://atlan-public.s3.eu-west-1.amazonaws.com/atlan/logos/aws-athena.png"))
                 .include(null)
                 .exclude((Map<String, List<String>>) null);
     }
@@ -90,8 +102,7 @@ public class AthenaCrawler extends AbstractCrawler {
          * @param s3Output location in S3 where Athena can store query results (s3://bucket/prefix)
          * @return the builder, set up to extract directly from Athena
          */
-        public AthenaCrawlerBuilder<C, B> direct(String hostname, String workgroup, String s3Output) {
-            String epoch = Connection.getEpochFromQualifiedName(connection.getQualifiedName());
+        public B direct(String hostname, String workgroup, String s3Output) {
             localCreds
                     .name("default-athena-" + epoch + "-0")
                     .host(hostname)
@@ -99,7 +110,7 @@ public class AthenaCrawler extends AbstractCrawler {
                     .extra("workgroup", workgroup)
                     .extra("s3_output_location", s3Output)
                     .connectorConfigName("atlan-connectors-athena");
-            return this.parameters(params()).credential(localCreds);
+            return this._credential(localCreds);
         }
 
         /**
@@ -109,9 +120,9 @@ public class AthenaCrawler extends AbstractCrawler {
          * @param secretKey through which to access Athena
          * @return the builder, set up to use IAM user-based authentication
          */
-        public AthenaCrawlerBuilder<C, B> iamUserAuth(String accessKey, String secretKey) {
+        public B iamUserAuth(String accessKey, String secretKey) {
             localCreds.authType("basic").username(accessKey).password(secretKey);
-            return this.credential(localCreds);
+            return this._credential(localCreds);
         }
 
         /**
@@ -121,16 +132,13 @@ public class AthenaCrawler extends AbstractCrawler {
          * @return the builder, set to include only those assets specified
          * @throws InvalidRequestException in the unlikely event the provided filter cannot be translated
          */
-        public AthenaCrawlerBuilder<C, B> include(Map<String, List<String>> assets) throws InvalidRequestException {
+        public B include(Map<String, List<String>> assets) throws InvalidRequestException {
             Map<String, List<String>> toInclude = buildHierarchicalFilter(assets);
             try {
-                if (!toInclude.isEmpty()) {
-                    this.parameter("include-filter", Serde.allInclusiveMapper.writeValueAsString(toInclude));
-                }
+                return this._parameter("include-filter", Serde.allInclusiveMapper.writeValueAsString(toInclude));
             } catch (JsonProcessingException e) {
                 throw new InvalidRequestException(ErrorCode.UNABLE_TO_TRANSLATE_FILTERS, e);
             }
-            return this;
         }
 
         /**
@@ -140,16 +148,13 @@ public class AthenaCrawler extends AbstractCrawler {
          * @return the builder, set to exclude only those assets specified
          * @throws InvalidRequestException in the unlikely event the provided filter cannot be translated
          */
-        public AthenaCrawlerBuilder<C, B> exclude(Map<String, List<String>> assets) throws InvalidRequestException {
+        public B exclude(Map<String, List<String>> assets) throws InvalidRequestException {
             Map<String, List<String>> toExclude = buildHierarchicalFilter(assets);
             try {
-                if (!toExclude.isEmpty()) {
-                    this.parameter("exclude-filter", Serde.allInclusiveMapper.writeValueAsString(toExclude));
-                }
+                return this._parameter("exclude-filter", Serde.allInclusiveMapper.writeValueAsString(toExclude));
             } catch (JsonProcessingException e) {
                 throw new InvalidRequestException(ErrorCode.UNABLE_TO_TRANSLATE_FILTERS, e);
             }
-            return this;
         }
 
         /**
@@ -158,8 +163,8 @@ public class AthenaCrawler extends AbstractCrawler {
          * @param regex any asset names that match this regular expression will be excluded from crawling
          * @return the builder, set to exclude any assets that match the provided regular expression
          */
-        public AthenaCrawlerBuilder<C, B> exclude(String regex) {
-            return this.parameter("temp-table-regex", regex);
+        public B exclude(String regex) {
+            return this._parameter("temp-table-regex", regex);
         }
 
         /**
@@ -167,59 +172,54 @@ public class AthenaCrawler extends AbstractCrawler {
          *
          * @return the builder, with metadata set
          */
-        protected AthenaCrawlerBuilder<C, B> metadata() {
-            String epoch = Connection.getEpochFromQualifiedName(connection.getQualifiedName());
-            return this.prefix(PREFIX)
-                    .name("@atlan/athena")
-                    .runName(PREFIX + "-" + epoch)
-                    .label("orchestration.atlan.com/certified", "true")
-                    .label("orchestration.atlan.com/source", "athena")
-                    .label("orchestration.atlan.com/sourceCategory", "queryengine")
-                    .label("orchestration.atlan.com/type", "connector")
-                    .label("orchestration.atlan.com/verified", "true")
-                    .label("package.argoproj.io/installer", "argopm")
-                    .label("package.argoproj.io/name", "a-t-ratlans-l-a-s-hathena")
-                    .label("package.argoproj.io/registry", "httpsc-o-l-o-ns-l-a-s-hs-l-a-s-hpackages.atlan.com")
-                    .label("orchestration.atlan.com/default-athena-" + epoch, "true")
-                    .label("orchestration.atlan.com/atlan-ui", "true")
-                    .annotation("orchestration.atlan.com/allowSchedule", "true")
+        @Override
+        protected B metadata() {
+            return this._label("orchestration.atlan.com/certified", "true")
+                    ._label("orchestration.atlan.com/source", "athena")
+                    ._label("orchestration.atlan.com/sourceCategory", "queryengine")
+                    ._label("orchestration.atlan.com/type", "connector")
+                    ._label("orchestration.atlan.com/verified", "true")
+                    ._label("package.argoproj.io/installer", "argopm")
+                    ._label("package.argoproj.io/name", "a-t-ratlans-l-a-s-hathena")
+                    ._label("package.argoproj.io/registry", "httpsc-o-l-o-ns-l-a-s-hs-l-a-s-hpackages.atlan.com")
+                    ._label("orchestration.atlan.com/default-athena-" + epoch, "true")
+                    ._label("orchestration.atlan.com/atlan-ui", "true")
+                    ._annotation("orchestration.atlan.com/allowSchedule", "true")
                     // .annotation("orchestration.atlan.com/categories", "warehouse,crawler")
-                    .annotation("orchestration.atlan.com/dependentPackage", "")
-                    .annotation(
+                    ._annotation("orchestration.atlan.com/dependentPackage", "")
+                    ._annotation(
                             "orchestration.atlan.com/docsUrl", "https://ask.atlan.com/hc/en-us/articles/6325285989009")
-                    .annotation("orchestration.atlan.com/emoji", "\uD83D\uDE80")
-                    .annotation(
+                    ._annotation("orchestration.atlan.com/emoji", "\uD83D\uDE80")
+                    ._annotation(
                             "orchestration.atlan.com/icon",
                             "https://atlan-public.s3.eu-west-1.amazonaws.com/atlan/logos/aws-athena.png")
-                    .annotation(
+                    ._annotation(
                             "orchestration.atlan.com/logo",
                             "https://atlan-public.s3.eu-west-1.amazonaws.com/atlan/logos/aws-athena.png")
-                    .annotation(
+                    ._annotation(
                             "orchestration.atlan.com/marketplaceLink",
                             "https://packages.atlan.com/-/web/detail/@atlan/athena")
-                    .annotation("orchestration.atlan.com/name", "Athena Assets")
-                    .annotation("orchestration.atlan.com/usecase", "crawling,auto-classifications")
-                    .annotation("package.argoproj.io/author", "Atlan")
-                    .annotation("package.argoproj.io/description", "Scan all your Athena assets and publish to Atlan.")
-                    .annotation("package.argoproj.io/homepage", "https://packages.atlan.com/-/web/detail/@atlan/athena")
-                    .annotation(
+                    ._annotation("orchestration.atlan.com/name", "Athena Assets")
+                    ._annotation("orchestration.atlan.com/usecase", "crawling,auto-classifications")
+                    ._annotation("package.argoproj.io/author", "Atlan")
+                    ._annotation("package.argoproj.io/description", "Scan all your Athena assets and publish to Atlan.")
+                    ._annotation(
+                            "package.argoproj.io/homepage", "https://packages.atlan.com/-/web/detail/@atlan/athena")
+                    ._annotation(
                             "package.argoproj.io/keywords",
                             "[\"athena\",\"lake\",\"connector\",\"crawler\",\"glue\",\"aws\",\"s3\"]")
-                    .annotation("package.argoproj.io/name", "@atlan/athena")
-                    .annotation("package.argoproj.io/registry", "https://packages.atlan.com")
-                    .annotation(
+                    ._annotation("package.argoproj.io/name", "@atlan/athena")
+                    ._annotation("package.argoproj.io/registry", "https://packages.atlan.com")
+                    ._annotation(
                             "package.argoproj.io/repository", "git+https://github.com/atlanhq/marketplace-packages.git")
-                    .annotation("package.argoproj.io/support", "support@atlan.com")
-                    .annotation("orchestration.atlan.com/atlanName", PREFIX + "-default-athena-" + epoch);
-        }
-
-        private Map<String, String> params() {
-            return Map.ofEntries(
-                    Map.entry("credentials-fetch-strategy", "credential_guid"),
-                    Map.entry("credential-guid", "{{credentialGuid}}"),
-                    Map.entry("connection", connection.toJson(client)),
-                    Map.entry("publish-mode", "production"),
-                    Map.entry("atlas-auth-type", "internal"));
+                    ._annotation("package.argoproj.io/support", "support@atlan.com")
+                    ._annotation("orchestration.atlan.com/atlanName", PREFIX + "-default-athena-" + epoch)
+                    ._parameters(Map.ofEntries(
+                            Map.entry("credentials-fetch-strategy", "credential_guid"),
+                            Map.entry("credential-guid", "{{credentialGuid}}"),
+                            Map.entry("connection", connection.toJson(client)),
+                            Map.entry("publish-mode", "production"),
+                            Map.entry("atlas-auth-type", "internal")));
         }
     }
 }

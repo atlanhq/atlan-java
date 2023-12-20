@@ -5,10 +5,8 @@ package com.atlan.model.packages;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.admin.Credential;
-import com.atlan.model.admin.PackageParameter;
 import com.atlan.model.assets.Connection;
 import com.atlan.model.enums.AtlanConnectorType;
-import com.atlan.model.workflow.Workflow;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.*;
 import lombok.EqualsAndHashCode;
@@ -22,9 +20,6 @@ import lombok.experimental.SuperBuilder;
 @ToString(callSuper = true)
 @SuppressWarnings("cast")
 public abstract class AbstractCrawler extends AbstractPackage {
-
-    /** Entries used to configure credentials for the package. */
-    Credential.CredentialBuilder<?, ?> credential;
 
     /**
      * Builds a connection using the provided parameters, which will be the target for the package
@@ -127,19 +122,36 @@ public abstract class AbstractCrawler extends AbstractPackage {
         return toInclude;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public Workflow toWorkflow() {
-        if (credential != null) {
-            return super.toWorkflow().toBuilder()
-                    .payload(List.of(PackageParameter.builder()
-                            .parameter("credentialGuid")
-                            .type("credential")
-                            .body(credential.build().toMap())
-                            .build()))
-                    .build();
-        } else {
-            return super.toWorkflow().toBuilder().payload(List.of()).build();
+    public abstract static class AbstractCrawlerBuilder<
+                    C extends AbstractCrawler, B extends AbstractCrawlerBuilder<C, B>>
+            extends AbstractPackageBuilder<C, B> {
+
+        /** Connectivity to an Atlan tenant on which the crawler is intended to run. */
+        protected AtlanClient client;
+
+        /** Connection through which the crawler will manage its assets. */
+        protected Connection connection;
+
+        /** Local credential builder, to gradually build up a complete set of credentials across operations. */
+        protected final Credential.CredentialBuilder<?, ?> localCreds = Credential.builder();
+
+        /**
+         * Set up the crawler with its foundational information.
+         *
+         * @param prefix the unique prefix that identifies the type of the crawler
+         * @param name the unique name of the crawler package
+         * @param client connectivity to an Atlan tenant through which to run the crawler
+         * @param connection through which the crawler will manage its assets
+         * @return the builder, with all the common elements of the crawler configured
+         */
+        B setup(String prefix, String name, AtlanClient client, Connection connection) {
+            this.client = client;
+            this.connection = connection;
+            this.epoch = Connection.getEpochFromQualifiedName(connection.getQualifiedName());
+            return this._prefix(prefix)
+                    ._name(name)
+                    ._runName(prefix + "-" + epoch)
+                    .metadata();
         }
     }
 }
