@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":9,"i12":9,"i13":10,"i14":10};
+var data = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":9,"i13":9,"i14":10,"i15":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -283,25 +283,32 @@ implements <a href="../search/AuditDetail.html" title="interface in com.atlan.mo
 </td>
 </tr>
 <tr id="i9" class="rowColor">
+<td class="colFirst"><code>java.util.List&lt;<a href="../structs/SourceTagAttachment.html" title="class in com.atlan.model.structs">SourceTagAttachment</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSourceTagAttachments()">getSourceTagAttachments</a></span>()</code></th>
+<td class="colLast">
+<div class="block">List of attachments of this tag to source-specific tags.</div>
+</td>
+</tr>
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTypeName()">getTypeName</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Name of the Atlan tag.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>static <a href="AtlanTag.html" title="class in com.atlan.model.core">AtlanTag</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#of(java.lang.String)">of</a></span>&#8203;(java.lang.String&nbsp;atlanTagName)</code></th>
 <td class="colLast">
 <div class="block">Construct an Atlan tag assignment for an entity that is being created or updated.</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>static <a href="AtlanTag.html" title="class in com.atlan.model.core">AtlanTag</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#of(java.lang.String,java.lang.String)">of</a></span>&#8203;(java.lang.String&nbsp;atlanTagName,
   java.lang.String&nbsp;entityGuid)</code></th>
@@ -309,12 +316,12 @@ implements <a href="../search/AuditDetail.html" title="interface in com.atlan.mo
 <div class="block">Construct an Atlan tag assignment for a specific entity.</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code><a href="AtlanTag.AtlanTagBuilder.html" title="class in com.atlan.model.core">AtlanTag.AtlanTagBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toBuilder()">toBuilder</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 </tr>
@@ -508,6 +515,16 @@ implements <a href="../search/AuditDetail.html" title="interface in com.atlan.mo
 <pre class="methodSignature">public&nbsp;java.lang.Boolean&nbsp;getRestrictPropagationThroughLineage()</pre>
 <div class="block">Whether to prevent this Atlan tag from propagating through lineage (true) or allow it to
  propagate through lineage (false).</div>
+</li>
+</ul>
+<a id="getSourceTagAttachments()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getSourceTagAttachments</h4>
+<pre class="methodSignature">public&nbsp;java.util.List&lt;<a href="../structs/SourceTagAttachment.html" title="class in com.atlan.model.structs">SourceTagAttachment</a>&gt;&nbsp;getSourceTagAttachments()</pre>
+<div class="block">List of attachments of this tag to source-specific tags.</div>
 </li>
 </ul>
 <a id="equals(java.lang.Object)">
