@@ -6,6 +6,7 @@ import com.atlan.api.TypeDefsEndpoint;
 import com.atlan.exception.*;
 import com.atlan.model.enums.AtlanTypeCategory;
 import com.atlan.model.typedefs.AtlanTagDef;
+import com.atlan.model.typedefs.AttributeDef;
 import com.atlan.model.typedefs.TypeDefResponse;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -20,6 +21,7 @@ public class AtlanTagCache {
 
     private Map<String, String> mapIdToName = new ConcurrentHashMap<>();
     private Map<String, String> mapNameToId = new ConcurrentHashMap<>();
+    private Map<String, String> mapIdToSourceTagsAttrId = new ConcurrentHashMap<>();
     private final Set<String> deletedIds = ConcurrentHashMap.newKeySet();
     private final Set<String> deletedNames = ConcurrentHashMap.newKeySet();
 
@@ -46,10 +48,21 @@ public class AtlanTagCache {
         List<AtlanTagDef> tags = response.getAtlanTagDefs();
         mapIdToName = new ConcurrentHashMap<>();
         mapNameToId = new ConcurrentHashMap<>();
+        mapIdToSourceTagsAttrId = new ConcurrentHashMap<>();
         for (AtlanTagDef clsDef : tags) {
             String typeId = clsDef.getName();
             mapIdToName.put(typeId, clsDef.getDisplayName());
             mapNameToId.put(clsDef.getDisplayName(), typeId);
+            List<AttributeDef> attrs = clsDef.getAttributeDefs();
+            String sourceTagsId = "";
+            if (attrs != null && !attrs.isEmpty()) {
+                for (AttributeDef attr : attrs) {
+                    if ("sourceTagAttachment".equals(attr.getDisplayName())) {
+                        sourceTagsId = attr.getName();
+                    }
+                }
+            }
+            mapIdToSourceTagsAttrId.put(typeId, sourceTagsId);
         }
     }
 
@@ -104,6 +117,35 @@ public class AtlanTagCache {
                 }
             }
             return cmName;
+        } else {
+            throw new InvalidRequestException(ErrorCode.MISSING_ATLAN_TAG_ID);
+        }
+    }
+
+    /**
+     * Translate the provided Atlan-internal Atlan tag ID string to the Atlan-internal name of the
+     * attribute that captures tag attachment details (for source-synced tags).
+     *
+     * @param id Atlan-internal ID string of the Atlan tag
+     * @return Atlan-internal ID string of the attribute containing source-synced tag attachment details
+     * @throws AtlanException on any API communication problem if the cache needs to be refreshed
+     * @throws NotFoundException if the Atlan tag cannot be found (does not exist) in Atlan
+     * @throws InvalidRequestException if no ID was provided for the Atlan tag
+     */
+    public String getSourceTagsAttrId(String id) throws AtlanException {
+        if (id != null && !id.isEmpty()) {
+            String attrId = mapIdToSourceTagsAttrId.get(id);
+            if (attrId == null && !deletedIds.contains(id)) {
+                // If not found, refresh the cache and look again (could be stale)
+                refreshCache();
+                attrId = mapIdToSourceTagsAttrId.get(id);
+                if (attrId == null) {
+                    // If it's still not found after the refresh, mark it as deleted
+                    deletedIds.add(id);
+                    throw new NotFoundException(ErrorCode.ATLAN_TAG_NOT_FOUND_BY_ID, id);
+                }
+            }
+            return attrId;
         } else {
             throw new InvalidRequestException(ErrorCode.MISSING_ATLAN_TAG_ID);
         }

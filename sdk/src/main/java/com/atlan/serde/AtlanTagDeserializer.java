@@ -6,6 +6,7 @@ import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.core.AtlanTag;
+import com.atlan.model.structs.SourceTagAttachment;
 import com.atlan.util.JacksonUtils;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -14,6 +15,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.jsontype.TypeDeserializer;
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Custom deserialization of {@link AtlanTag} objects.
@@ -59,43 +62,47 @@ public class AtlanTagDeserializer extends StdDeserializer<AtlanTag> {
         if (clsId == null) {
             throw new IOException("Unable to deserialize Atlan tag from: " + root);
         }
-        String clsName = null;
+        String clsName;
+        String sourceAttachmentsAttrId;
         try {
             // Translate the ID-string to a human-readable name
             clsName = client.getAtlanTagCache().getNameForId(clsId);
+            sourceAttachmentsAttrId = client.getAtlanTagCache().getSourceTagsAttrId(clsId);
         } catch (NotFoundException e) {
             // Do nothing: if not found, the Atlan tag was deleted since but the
             // audit record remains
+            clsName = Serde.DELETED_AUDIT_OBJECT;
+            sourceAttachmentsAttrId = "";
         } catch (AtlanException e) {
             throw new IOException("Unable to find Atlan tag with ID-string: " + clsId, e);
         }
 
-        if (clsName == null) {
-            return AtlanTag.builder()
-                    .typeName(Serde.DELETED_AUDIT_OBJECT)
-                    .entityGuid(JacksonUtils.deserializeString(root, "entityGuid"))
-                    .entityStatus(
-                            JacksonUtils.deserializeObject(client, root, "entityStatus", new TypeReference<>() {}))
-                    .propagate(JacksonUtils.deserializeBoolean(root, "propagate"))
-                    .removePropagationsOnEntityDelete(
-                            JacksonUtils.deserializeBoolean(root, "removePropagationsOnEntityDelete"))
-                    .restrictPropagationThroughLineage(
-                            JacksonUtils.deserializeBoolean(root, "restrictPropagationThroughLineage"))
-                    .build();
-        } else {
-            // TODO: Unfortunately, attempts to use a AtlanTagBeanDeserializerModifier to avoid the direct
-            //  deserialization below were not successful — something to investigate another time
-            return AtlanTag.builder()
-                    .typeName(clsName)
-                    .entityGuid(JacksonUtils.deserializeString(root, "entityGuid"))
-                    .entityStatus(
-                            JacksonUtils.deserializeObject(client, root, "entityStatus", new TypeReference<>() {}))
-                    .propagate(JacksonUtils.deserializeBoolean(root, "propagate"))
-                    .removePropagationsOnEntityDelete(
-                            JacksonUtils.deserializeBoolean(root, "removePropagationsOnEntityDelete"))
-                    .restrictPropagationThroughLineage(
-                            JacksonUtils.deserializeBoolean(root, "restrictPropagationThroughLineage"))
-                    .build();
+        // Tags that are source-synced can have an embedded attributes containing details of the
+        // source tag attachment(s)
+        List<SourceTagAttachment> attachments = List.of();
+        JsonNode attributes = root.get("attributes");
+        if (attributes != null && !attributes.isNull()) {
+            Iterator<String> itr = attributes.fieldNames();
+            while (itr.hasNext()) {
+                String attrKey = itr.next();
+                if (attrKey.equals(sourceAttachmentsAttrId)) {
+                    attachments = JacksonUtils.deserializeObject(client, attributes, attrKey, new TypeReference<>() {});
+                }
+            }
         }
+
+        // TODO: Unfortunately, attempts to use a AtlanTagBeanDeserializerModifier to avoid the direct
+        //  deserialization below were not successful — something to investigate another time
+        return AtlanTag.builder()
+                .typeName(clsName)
+                .entityGuid(JacksonUtils.deserializeString(root, "entityGuid"))
+                .entityStatus(JacksonUtils.deserializeObject(client, root, "entityStatus", new TypeReference<>() {}))
+                .propagate(JacksonUtils.deserializeBoolean(root, "propagate"))
+                .removePropagationsOnEntityDelete(
+                        JacksonUtils.deserializeBoolean(root, "removePropagationsOnEntityDelete"))
+                .restrictPropagationThroughLineage(
+                        JacksonUtils.deserializeBoolean(root, "restrictPropagationThroughLineage"))
+                .sourceTagAttachments(attachments)
+                .build();
     }
 }
