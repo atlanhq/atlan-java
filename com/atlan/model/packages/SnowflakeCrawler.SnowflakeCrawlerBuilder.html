@@ -195,7 +195,8 @@ extends <a href="AbstractCrawler.AbstractCrawlerBuilder.html" title="class in co
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="SnowflakeCrawler.SnowflakeCrawlerBuilder.html" title="class in com.atlan.model.packages">SnowflakeCrawler.SnowflakeCrawlerBuilder</a>&lt;<a href="SnowflakeCrawler.SnowflakeCrawlerBuilder.html" title="type parameter in SnowflakeCrawler.SnowflakeCrawlerBuilder">C</a>,&#8203;<a href="SnowflakeCrawler.SnowflakeCrawlerBuilder.html" title="type parameter in SnowflakeCrawler.SnowflakeCrawlerBuilder">B</a>&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#accountUsage(java.lang.String,java.lang.String)">accountUsage</a></span>&#8203;(java.lang.String&nbsp;databaseName,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#accountUsage(java.lang.String,java.lang.String,java.lang.String)">accountUsage</a></span>&#8203;(java.lang.String&nbsp;hostname,
+            java.lang.String&nbsp;databaseName,
             java.lang.String&nbsp;schemaName)</code></th>
 <td class="colLast">
 <div class="block">Set the crawler to extract using Snowflake's account usage database and schema.</div>
@@ -203,8 +204,7 @@ extends <a href="AbstractCrawler.AbstractCrawlerBuilder.html" title="class in co
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="SnowflakeCrawler.SnowflakeCrawlerBuilder.html" title="class in com.atlan.model.packages">SnowflakeCrawler.SnowflakeCrawlerBuilder</a>&lt;<a href="SnowflakeCrawler.SnowflakeCrawlerBuilder.html" title="type parameter in SnowflakeCrawler.SnowflakeCrawlerBuilder">C</a>,&#8203;<a href="SnowflakeCrawler.SnowflakeCrawlerBuilder.html" title="type parameter in SnowflakeCrawler.SnowflakeCrawlerBuilder">B</a>&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#basicAuth(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)">basicAuth</a></span>&#8203;(java.lang.String&nbsp;hostname,
-         java.lang.String&nbsp;username,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#basicAuth(java.lang.String,java.lang.String,java.lang.String,java.lang.String)">basicAuth</a></span>&#8203;(java.lang.String&nbsp;username,
          java.lang.String&nbsp;password,
          java.lang.String&nbsp;role,
          java.lang.String&nbsp;warehouse)</code></th>
@@ -250,15 +250,14 @@ extends <a href="AbstractCrawler.AbstractCrawlerBuilder.html" title="class in co
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code><a href="SnowflakeCrawler.SnowflakeCrawlerBuilder.html" title="class in com.atlan.model.packages">SnowflakeCrawler.SnowflakeCrawlerBuilder</a>&lt;<a href="SnowflakeCrawler.SnowflakeCrawlerBuilder.html" title="type parameter in SnowflakeCrawler.SnowflakeCrawlerBuilder">C</a>,&#8203;<a href="SnowflakeCrawler.SnowflakeCrawlerBuilder.html" title="type parameter in SnowflakeCrawler.SnowflakeCrawlerBuilder">B</a>&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#informationSchema()">informationSchema</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#informationSchema(java.lang.String)">informationSchema</a></span>&#8203;(java.lang.String&nbsp;hostname)</code></th>
 <td class="colLast">
 <div class="block">Set the crawler to extract using Snowflake's information schema.</div>
 </td>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code><a href="SnowflakeCrawler.SnowflakeCrawlerBuilder.html" title="class in com.atlan.model.packages">SnowflakeCrawler.SnowflakeCrawlerBuilder</a>&lt;<a href="SnowflakeCrawler.SnowflakeCrawlerBuilder.html" title="type parameter in SnowflakeCrawler.SnowflakeCrawlerBuilder">C</a>,&#8203;<a href="SnowflakeCrawler.SnowflakeCrawlerBuilder.html" title="type parameter in SnowflakeCrawler.SnowflakeCrawlerBuilder">B</a>&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#keypairAuth(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)">keypairAuth</a></span>&#8203;(java.lang.String&nbsp;hostname,
-           java.lang.String&nbsp;username,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#keypairAuth(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)">keypairAuth</a></span>&#8203;(java.lang.String&nbsp;username,
            java.lang.String&nbsp;privateKey,
            java.lang.String&nbsp;privateKeyPassword,
            java.lang.String&nbsp;role,
@@ -360,21 +359,19 @@ extends <a href="AbstractCrawler.AbstractCrawlerBuilder.html" title="class in co
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="basicAuth(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)">
+<a id="basicAuth(java.lang.String,java.lang.String,java.lang.String,java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>basicAuth</h4>
-<pre class="methodSignature">public&nbsp;<a href="SnowflakeCrawler.SnowflakeCrawlerBuilder.html" title="class in com.atlan.model.packages">SnowflakeCrawler.SnowflakeCrawlerBuilder</a>&lt;<a href="SnowflakeCrawler.SnowflakeCrawlerBuilder.html" title="type parameter in SnowflakeCrawler.SnowflakeCrawlerBuilder">C</a>,&#8203;<a href="SnowflakeCrawler.SnowflakeCrawlerBuilder.html" title="type parameter in SnowflakeCrawler.SnowflakeCrawlerBuilder">B</a>&gt;&nbsp;basicAuth&#8203;(java.lang.String&nbsp;hostname,
-                                                                     java.lang.String&nbsp;username,
+<pre class="methodSignature">public&nbsp;<a href="SnowflakeCrawler.SnowflakeCrawlerBuilder.html" title="class in com.atlan.model.packages">SnowflakeCrawler.SnowflakeCrawlerBuilder</a>&lt;<a href="SnowflakeCrawler.SnowflakeCrawlerBuilder.html" title="type parameter in SnowflakeCrawler.SnowflakeCrawlerBuilder">C</a>,&#8203;<a href="SnowflakeCrawler.SnowflakeCrawlerBuilder.html" title="type parameter in SnowflakeCrawler.SnowflakeCrawlerBuilder">B</a>&gt;&nbsp;basicAuth&#8203;(java.lang.String&nbsp;username,
                                                                      java.lang.String&nbsp;password,
                                                                      java.lang.String&nbsp;role,
                                                                      java.lang.String&nbsp;warehouse)</pre>
 <div class="block">Set up the crawler to use basic authentication.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>hostname</code> - of the Snowflake instance</dd>
 <dd><code>username</code> - through which to access Snowflake</dd>
 <dd><code>password</code> - through which to access Snowflake</dd>
 <dd><code>role</code> - name of the role within Snowflake to crawl through</dd>
@@ -384,14 +381,13 @@ extends <a href="AbstractCrawler.AbstractCrawlerBuilder.html" title="class in co
 </dl>
 </li>
 </ul>
-<a id="keypairAuth(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)">
+<a id="keypairAuth(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>keypairAuth</h4>
-<pre class="methodSignature">public&nbsp;<a href="SnowflakeCrawler.SnowflakeCrawlerBuilder.html" title="class in com.atlan.model.packages">SnowflakeCrawler.SnowflakeCrawlerBuilder</a>&lt;<a href="SnowflakeCrawler.SnowflakeCrawlerBuilder.html" title="type parameter in SnowflakeCrawler.SnowflakeCrawlerBuilder">C</a>,&#8203;<a href="SnowflakeCrawler.SnowflakeCrawlerBuilder.html" title="type parameter in SnowflakeCrawler.SnowflakeCrawlerBuilder">B</a>&gt;&nbsp;keypairAuth&#8203;(java.lang.String&nbsp;hostname,
-                                                                       java.lang.String&nbsp;username,
+<pre class="methodSignature">public&nbsp;<a href="SnowflakeCrawler.SnowflakeCrawlerBuilder.html" title="class in com.atlan.model.packages">SnowflakeCrawler.SnowflakeCrawlerBuilder</a>&lt;<a href="SnowflakeCrawler.SnowflakeCrawlerBuilder.html" title="type parameter in SnowflakeCrawler.SnowflakeCrawlerBuilder">C</a>,&#8203;<a href="SnowflakeCrawler.SnowflakeCrawlerBuilder.html" title="type parameter in SnowflakeCrawler.SnowflakeCrawlerBuilder">B</a>&gt;&nbsp;keypairAuth&#8203;(java.lang.String&nbsp;username,
                                                                        java.lang.String&nbsp;privateKey,
                                                                        java.lang.String&nbsp;privateKeyPassword,
                                                                        java.lang.String&nbsp;role,
@@ -399,7 +395,6 @@ extends <a href="AbstractCrawler.AbstractCrawlerBuilder.html" title="class in co
 <div class="block">Set up the crawler to use keypair-based authentication.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>hostname</code> - of the Snowflake instance</dd>
 <dd><code>username</code> - through which to access Snowflake</dd>
 <dd><code>privateKey</code> - encrypted private key to for authenticating with Snowflake</dd>
 <dd><code>privateKeyPassword</code> - password for the encrypted private key</dd>
@@ -410,31 +405,35 @@ extends <a href="AbstractCrawler.AbstractCrawlerBuilder.html" title="class in co
 </dl>
 </li>
 </ul>
-<a id="informationSchema()">
+<a id="informationSchema(java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>informationSchema</h4>
-<pre class="methodSignature">public&nbsp;<a href="SnowflakeCrawler.SnowflakeCrawlerBuilder.html" title="class in com.atlan.model.packages">SnowflakeCrawler.SnowflakeCrawlerBuilder</a>&lt;<a href="SnowflakeCrawler.SnowflakeCrawlerBuilder.html" title="type parameter in SnowflakeCrawler.SnowflakeCrawlerBuilder">C</a>,&#8203;<a href="SnowflakeCrawler.SnowflakeCrawlerBuilder.html" title="type parameter in SnowflakeCrawler.SnowflakeCrawlerBuilder">B</a>&gt;&nbsp;informationSchema()</pre>
+<pre class="methodSignature">public&nbsp;<a href="SnowflakeCrawler.SnowflakeCrawlerBuilder.html" title="class in com.atlan.model.packages">SnowflakeCrawler.SnowflakeCrawlerBuilder</a>&lt;<a href="SnowflakeCrawler.SnowflakeCrawlerBuilder.html" title="type parameter in SnowflakeCrawler.SnowflakeCrawlerBuilder">C</a>,&#8203;<a href="SnowflakeCrawler.SnowflakeCrawlerBuilder.html" title="type parameter in SnowflakeCrawler.SnowflakeCrawlerBuilder">B</a>&gt;&nbsp;informationSchema&#8203;(java.lang.String&nbsp;hostname)</pre>
 <div class="block">Set the crawler to extract using Snowflake's information schema.</div>
 <dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>hostname</code> - of the Snowflake instance</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the builder, set to extract using information schema</dd>
 </dl>
 </li>
 </ul>
-<a id="accountUsage(java.lang.String,java.lang.String)">
+<a id="accountUsage(java.lang.String,java.lang.String,java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>accountUsage</h4>
-<pre class="methodSignature">public&nbsp;<a href="SnowflakeCrawler.SnowflakeCrawlerBuilder.html" title="class in com.atlan.model.packages">SnowflakeCrawler.SnowflakeCrawlerBuilder</a>&lt;<a href="SnowflakeCrawler.SnowflakeCrawlerBuilder.html" title="type parameter in SnowflakeCrawler.SnowflakeCrawlerBuilder">C</a>,&#8203;<a href="SnowflakeCrawler.SnowflakeCrawlerBuilder.html" title="type parameter in SnowflakeCrawler.SnowflakeCrawlerBuilder">B</a>&gt;&nbsp;accountUsage&#8203;(java.lang.String&nbsp;databaseName,
+<pre class="methodSignature">public&nbsp;<a href="SnowflakeCrawler.SnowflakeCrawlerBuilder.html" title="class in com.atlan.model.packages">SnowflakeCrawler.SnowflakeCrawlerBuilder</a>&lt;<a href="SnowflakeCrawler.SnowflakeCrawlerBuilder.html" title="type parameter in SnowflakeCrawler.SnowflakeCrawlerBuilder">C</a>,&#8203;<a href="SnowflakeCrawler.SnowflakeCrawlerBuilder.html" title="type parameter in SnowflakeCrawler.SnowflakeCrawlerBuilder">B</a>&gt;&nbsp;accountUsage&#8203;(java.lang.String&nbsp;hostname,
+                                                                        java.lang.String&nbsp;databaseName,
                                                                         java.lang.String&nbsp;schemaName)</pre>
 <div class="block">Set the crawler to extract using Snowflake's account usage database and schema.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>hostname</code> - of the Snowflake instance</dd>
 <dd><code>databaseName</code> - name of the database to use</dd>
 <dd><code>schemaName</code> - name of the schema to use</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
