@@ -6,6 +6,7 @@ import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
+import com.atlan.model.admin.Credential;
 import com.atlan.model.assets.Connection;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanPackageType;
@@ -31,6 +32,9 @@ public class SQLServerCrawler extends AbstractCrawler {
 
     /** Connection through which the package will manage its assets. */
     Connection connection;
+
+    /** Credentials for this connection. */
+    Credential.CredentialBuilder<?, ?> localCreds;
 
     /**
      * Create the base configuration for a new SQL Server crawler.
@@ -88,13 +92,15 @@ public class SQLServerCrawler extends AbstractCrawler {
          */
         public SQLServerCrawlerBuilder<C, B> direct(String hostname, String database) {
             String epoch = Connection.getEpochFromQualifiedName(connection.getQualifiedName());
+            localCreds
+                    .name("default-mssql-" + epoch + "-0")
+                    .host(hostname)
+                    .port(1433)
+                    .extra("database", database)
+                    .connectorConfigName("atlan-connectors-mssql");
             return this.parameters(params())
                     .parameter("extraction-method", "direct")
-                    .credential("name", "default-mssql-" + epoch + "-0")
-                    .credential("host", hostname)
-                    .credential("port", 1433)
-                    .credential("extra", Map.of("database", database))
-                    .credential("connectorConfigName", "atlan-connectors-mssql");
+                    .credential(localCreds);
         }
 
         /**
@@ -105,9 +111,8 @@ public class SQLServerCrawler extends AbstractCrawler {
          * @return the builder, set up to use basic authentication
          */
         public SQLServerCrawlerBuilder<C, B> basicAuth(String username, String password) {
-            return this.credential("authType", "basic")
-                    .credential("username", username)
-                    .credential("password", password);
+            localCreds.authType("basic").username(username).password(password);
+            return this.credential(localCreds);
         }
 
         /**

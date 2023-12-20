@@ -4,10 +4,10 @@ package com.atlan.model.packages;
 
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
+import com.atlan.model.admin.Credential;
 import com.atlan.model.assets.Connection;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanPackageType;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import lombok.EqualsAndHashCode;
@@ -28,6 +28,9 @@ public class FivetranCrawler extends AbstractCrawler {
 
     /** Connection through which the package will manage its assets. */
     Connection connection;
+
+    /** Credentials for this connection. */
+    Credential.CredentialBuilder<?, ?> localCreds;
 
     /**
      * Create the base configuration for a new Fivetran crawler.
@@ -74,15 +77,15 @@ public class FivetranCrawler extends AbstractCrawler {
          */
         public FivetranCrawlerBuilder<C, B> apiToken(String apiKey, String apiSecret) {
             String epoch = Connection.getEpochFromQualifiedName(connection.getQualifiedName());
-            return this.parameters(params())
-                    .credential("name", "default-fivetran-" + epoch + "-0")
-                    .credential("host", "https://api.fivetran.com")
-                    .credential("port", 443)
-                    .credential("authType", "api")
-                    .credential("username", apiKey)
-                    .credential("password", apiSecret)
-                    .credential("extra", Collections.emptyMap())
-                    .credential("connectorConfigName", "atlan-connectors-fivetran");
+            localCreds
+                    .name("default-fivetran-" + epoch + "-0")
+                    .host("https://api.fivetran.com")
+                    .port(443)
+                    .authType("api")
+                    .username(apiKey)
+                    .password(apiSecret)
+                    .connectorConfigName("atlan-connectors-fivetran");
+            return this.parameters(params()).credential(localCreds);
         }
 
         /**

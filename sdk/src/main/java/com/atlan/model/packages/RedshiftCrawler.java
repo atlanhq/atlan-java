@@ -6,12 +6,12 @@ import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
+import com.atlan.model.admin.Credential;
 import com.atlan.model.assets.Connection;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanPackageType;
 import com.atlan.serde.Serde;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import lombok.EqualsAndHashCode;
@@ -32,6 +32,9 @@ public class RedshiftCrawler extends AbstractCrawler {
 
     /** Connection through which the package will manage its assets. */
     Connection connection;
+
+    /** Credentials for this connection. */
+    Credential.CredentialBuilder<?, ?> localCreds;
 
     /**
      * Create the base configuration for a new Redshift crawler.
@@ -80,8 +83,6 @@ public class RedshiftCrawler extends AbstractCrawler {
                     C extends RedshiftCrawler, B extends RedshiftCrawlerBuilder<C, B>>
             extends AbstractCrawlerBuilder<C, B> {
 
-        private final Map<String, String> extras = new HashMap<>();
-
         /**
          * Set up the crawler to extract directly from Redshift.
          *
@@ -91,15 +92,15 @@ public class RedshiftCrawler extends AbstractCrawler {
          * @return the builder, set up to extract directly from Redshift
          */
         public RedshiftCrawlerBuilder<C, B> direct(String hostname, String database, boolean serverless) {
-            extras.put("database", database);
-            extras.put("deployment_type", serverless ? "serverless" : "provisioned");
             String epoch = Connection.getEpochFromQualifiedName(connection.getQualifiedName());
-            return this.parameters(params())
-                    .credential("name", "default-redshift-" + epoch + "-0")
-                    .credential("host", hostname)
-                    .credential("port", 5439)
-                    .credential("extra", extras)
-                    .credential("connectorConfigName", "atlan-connectors-redshift");
+            localCreds
+                    .name("default-redshift-" + epoch + "-0")
+                    .host(hostname)
+                    .port(5439)
+                    .extra("database", database)
+                    .extra("deployment_type", serverless ? "serverless" : "provisioned")
+                    .connectorConfigName("atlan-connectors-redshift");
+            return this.parameters(params()).credential(localCreds);
         }
 
         /**
@@ -110,9 +111,8 @@ public class RedshiftCrawler extends AbstractCrawler {
          * @return the builder, set up to use basic authentication
          */
         public RedshiftCrawlerBuilder<C, B> basicAuth(String username, String password) {
-            return this.credential("authType", "basic")
-                    .credential("username", username)
-                    .credential("password", password);
+            localCreds.authType("basic").username(username).password(password);
+            return this.credential(localCreds);
         }
 
         /**
@@ -124,11 +124,8 @@ public class RedshiftCrawler extends AbstractCrawler {
          * @return the builder, set up to use IAM user-based authentication
          */
         public RedshiftCrawlerBuilder<C, B> iamUserAuth(String username, String accessKey, String secretKey) {
-            extras.put("dbuser", username);
-            return this.credential("authType", "iam")
-                    .credential("username", accessKey)
-                    .credential("password", secretKey)
-                    .credential("extra", extras);
+            localCreds.authType("iam").username(accessKey).password(secretKey).extra("dbuser", username);
+            return this.credential(localCreds);
         }
 
         /**

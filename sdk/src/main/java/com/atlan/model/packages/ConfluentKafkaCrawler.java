@@ -5,6 +5,7 @@ package com.atlan.model.packages;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
+import com.atlan.model.admin.Credential;
 import com.atlan.model.assets.Connection;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanPackageType;
@@ -28,6 +29,9 @@ public class ConfluentKafkaCrawler extends AbstractCrawler {
 
     /** Connection through which the package will manage its assets. */
     Connection connection;
+
+    /** Credentials for this connection. */
+    Credential.CredentialBuilder<?, ?> localCreds;
 
     /**
      * Create the base configuration for a new Confluent Cloud Kafka crawler.
@@ -80,13 +84,15 @@ public class ConfluentKafkaCrawler extends AbstractCrawler {
          */
         public ConfluentKafkaCrawlerBuilder<C, B> direct(String bootstrap, boolean encrypted) {
             String epoch = Connection.getEpochFromQualifiedName(connection.getQualifiedName());
+            localCreds
+                    .name("default-confluent-kafka-" + epoch + "-0")
+                    .host(bootstrap)
+                    .port(9092)
+                    .extra("security_protocol", encrypted ? "SASL_SSL" : "SASL_PLAINTEXT")
+                    .connectorConfigName("atlan-connectors-kafka-confluent-cloud");
             return this.parameters(params())
                     .parameter("extraction-method", "direct")
-                    .credential("name", "default-confluent-kafka-" + epoch + "-0")
-                    .credential("host", bootstrap)
-                    .credential("port", 9092)
-                    .credential("extra", Map.of("security_protocol", encrypted ? "SASL_SSL" : "SASL_PLAINTEXT"))
-                    .credential("connectorConfigName", "atlan-connectors-kafka-confluent-cloud");
+                    .credential(localCreds);
         }
 
         /**
@@ -97,9 +103,8 @@ public class ConfluentKafkaCrawler extends AbstractCrawler {
          * @return the builder, set up to use API token-based authentication
          */
         public ConfluentKafkaCrawlerBuilder<C, B> apiToken(String apiKey, String apiSecret) {
-            return this.credential("authType", "basic")
-                    .credential("username", apiKey)
-                    .credential("password", apiSecret);
+            localCreds.authType("basic").username(apiKey).password(apiSecret);
+            return this.credential(localCreds);
         }
 
         /**

@@ -4,6 +4,7 @@ package com.atlan.model.packages;
 
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
+import com.atlan.model.admin.Credential;
 import com.atlan.model.admin.PackageParameter;
 import com.atlan.model.assets.Connection;
 import com.atlan.model.enums.AtlanConnectorType;
@@ -12,7 +13,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.Singular;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
@@ -24,8 +24,7 @@ import lombok.experimental.SuperBuilder;
 public abstract class AbstractCrawler extends AbstractPackage {
 
     /** Entries used to configure credentials for the package. */
-    @Singular
-    Map<String, Object> credentials;
+    Credential.CredentialBuilder<?, ?> credential;
 
     /**
      * Builds a connection using the provided parameters, which will be the target for the package
@@ -131,12 +130,12 @@ public abstract class AbstractCrawler extends AbstractPackage {
     /** {@inheritDoc} */
     @Override
     public Workflow toWorkflow() {
-        if (credentials != null && !credentials.isEmpty()) {
+        if (credential != null) {
             return super.toWorkflow().toBuilder()
                     .payload(List.of(PackageParameter.builder()
                             .parameter("credentialGuid")
                             .type("credential")
-                            .body(credentials)
+                            .body(credential.build().toMap())
                             .build()))
                     .build();
         } else {

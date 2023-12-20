@@ -237,6 +237,11 @@ public enum ErrorCode implements ExceptionMessageSet {
             "ATLAN-JAVA-400-042",
             "Categories cannot be archived (soft-deleted): {0}.",
             "Please use the purge operation if you wish to remove a category."),
+    INVALID_CREDENTIALS(
+            400,
+            "ATLAN-JAVA-400-043",
+            "Credentials provided did not work: {0}.",
+            "Please double-check your credentials and test them again."),
 
     AUTHENTICATION_PASSTHROUGH(
             401,

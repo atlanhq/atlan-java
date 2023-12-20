@@ -6,6 +6,7 @@ import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
+import com.atlan.model.admin.Credential;
 import com.atlan.model.assets.Connection;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanPackageType;
@@ -31,6 +32,9 @@ public class PowerBICrawler extends AbstractCrawler {
 
     /** Connection through which the package will manage its assets. */
     Connection connection;
+
+    /** Credentials for this connection. */
+    Credential.CredentialBuilder<?, ?> localCreds;
 
     /**
      * Create the base configuration for a new Power BI crawler.
@@ -80,11 +84,12 @@ public class PowerBICrawler extends AbstractCrawler {
          */
         public PowerBICrawlerBuilder<C, B> direct() {
             String epoch = Connection.getEpochFromQualifiedName(connection.getQualifiedName());
-            return this.parameters(params())
-                    .credential("name", "default-powerbi-" + epoch + "-0")
-                    .credential("host", "api.powerbi.com")
-                    .credential("port", 443)
-                    .credential("connectorConfigName", "atlan-connectors-powerbi");
+            localCreds
+                    .name("default-powerbi-" + epoch + "-0")
+                    .host("api.powerbi.com")
+                    .port(443)
+                    .connectorConfigName("atlan-connectors-powerbi");
+            return this.parameters(params()).credential(localCreds);
         }
 
         /**
@@ -99,11 +104,14 @@ public class PowerBICrawler extends AbstractCrawler {
          */
         public PowerBICrawlerBuilder<C, B> delegatedUser(
                 String username, String password, String tenantId, String clientId, String clientSecret) {
-            return this.credential("authType", "basic")
-                    .credential("username", username)
-                    .credential("password", password)
-                    .credential(
-                            "extra", Map.of("tenantId", tenantId, "clientId", clientId, "clientSecret", clientSecret));
+            localCreds
+                    .authType("basic")
+                    .username(username)
+                    .password(password)
+                    .extra("tenantId", tenantId)
+                    .extra("clientId", clientId)
+                    .extra("clientSecret", clientSecret);
+            return this.credential(localCreds);
         }
 
         /**
@@ -115,10 +123,13 @@ public class PowerBICrawler extends AbstractCrawler {
          * @return the builder, set up to use basic authentication
          */
         public PowerBICrawlerBuilder<C, B> servicePrincipal(String tenantId, String clientId, String clientSecret) {
-            return this.credential("authType", "service_principal")
-                    .credential("connectorType", "rest")
-                    .credential(
-                            "extra", Map.of("tenantId", tenantId, "clientId", clientId, "clientSecret", clientSecret));
+            localCreds
+                    .authType("service_principal")
+                    .connectorType("rest")
+                    .extra("tenantId", tenantId)
+                    .extra("clientId", clientId)
+                    .extra("clientSecret", clientSecret);
+            return this.credential(localCreds);
         }
 
         /**

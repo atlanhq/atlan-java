@@ -6,6 +6,7 @@ import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
+import com.atlan.model.admin.Credential;
 import com.atlan.model.assets.Connection;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanPackageType;
@@ -31,6 +32,9 @@ public class LookerCrawler extends AbstractCrawler {
 
     /** Connection through which the package will manage its assets. */
     Connection connection;
+
+    /** Credentials for this connection. */
+    Credential.CredentialBuilder<?, ?> localCreds;
 
     /**
      * Create the base configuration for a new Looker crawler.
@@ -83,17 +87,19 @@ public class LookerCrawler extends AbstractCrawler {
          * @param clientSecret through which to access Looker
          * @return the builder, set up to extract directly from Looker
          */
-        public LookerCrawlerBuilder<C, B> direct(String hostname, String port, String clientId, String clientSecret) {
+        public LookerCrawlerBuilder<C, B> direct(String hostname, int port, String clientId, String clientSecret) {
             String epoch = Connection.getEpochFromQualifiedName(connection.getQualifiedName());
+            localCreds
+                    .name("default-looker-" + epoch + "-0")
+                    .host(hostname)
+                    .port(port)
+                    .authType("resource_owner")
+                    .username(clientId)
+                    .password(clientSecret)
+                    .connectorConfigName("atlan-connectors-looker");
             return this.parameters(params())
                     .parameter("extraction-method", "direct")
-                    .credential("name", "default-looker-" + epoch + "-0")
-                    .credential("host", hostname)
-                    .credential("port", port)
-                    .credential("authType", "resource_owner")
-                    .credential("username", clientId)
-                    .credential("password", clientSecret)
-                    .credential("connectorConfigName", "atlan-connectors-looker");
+                    .credential(localCreds);
         }
 
         /**
@@ -104,8 +110,8 @@ public class LookerCrawler extends AbstractCrawler {
          * @return the builder, set up to crawl field-level lineage for Looker
          */
         public LookerCrawlerBuilder<C, B> fieldLevelLineage(String privateKey, String privateKeyPassphrase) {
-            return this.parameter("use-field-level-lineage", "true")
-                    .credential("extra", Map.of("ssh_private_key", privateKey, "passphrase", privateKeyPassphrase));
+            localCreds.extra("ssh_private_key", privateKey).extra("passphrase", privateKeyPassphrase);
+            return this.parameter("use-field-level-lineage", "true").credential(localCreds);
         }
 
         /**
