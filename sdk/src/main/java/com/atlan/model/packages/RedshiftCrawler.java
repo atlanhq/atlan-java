@@ -6,8 +6,6 @@ import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
-import com.atlan.model.admin.Credential;
-import com.atlan.model.assets.Connection;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanPackageType;
 import com.atlan.serde.Serde;
@@ -27,14 +25,28 @@ public class RedshiftCrawler extends AbstractCrawler {
 
     public static final String PREFIX = AtlanPackageType.REDSHIFT.getValue();
 
-    /** Connectivity to the Atlan tenant where the package will run. */
-    AtlanClient client;
-
-    /** Connection through which the package will manage its assets. */
-    Connection connection;
-
-    /** Credentials for this connection. */
-    Credential.CredentialBuilder<?, ?> localCreds;
+    /**
+     * Create the base configuration for a new Redshift crawler.
+     * Sets all admins as connection admins, allows querying and sample data previews, and a maximum
+     * limit of 10,000 rows from queries.
+     *
+     * @param client connectivity to an Atlan tenant
+     * @param connectionName name of the connection to create when running the crawler for the first time
+     * @return the builder for the base configuration of a Redshift crawler
+     * @throws AtlanException if there is not at least one connection admin specified, or any specified are invalid
+     */
+    public static RedshiftCrawlerBuilder<?, ?> creator(AtlanClient client, String connectionName)
+            throws AtlanException {
+        return creator(
+                client,
+                connectionName,
+                List.of(client.getRoleCache().getIdForName("$admins")),
+                null,
+                null,
+                true,
+                true,
+                10000L);
+    }
 
     /**
      * Create the base configuration for a new Redshift crawler.
@@ -60,21 +72,22 @@ public class RedshiftCrawler extends AbstractCrawler {
             boolean allowSamples,
             long rowLimit)
             throws AtlanException {
-        Connection connection = getConnection(
-                client,
-                connectionName,
-                AtlanConnectorType.REDSHIFT,
-                adminRoles,
-                adminGroups,
-                adminUsers,
-                allowQuery,
-                allowSamples,
-                rowLimit,
-                "https://cdn.worldvectorlogo.com/logos/aws-redshift-logo.svg");
         return _internal()
-                .client(client)
-                .connection(connection)
-                .metadata()
+                .setup(
+                        PREFIX,
+                        "@atlan/redshift",
+                        client,
+                        getConnection(
+                                client,
+                                connectionName,
+                                AtlanConnectorType.REDSHIFT,
+                                adminRoles,
+                                adminGroups,
+                                adminUsers,
+                                allowQuery,
+                                allowSamples,
+                                rowLimit,
+                                "https://cdn.worldvectorlogo.com/logos/aws-redshift-logo.svg"))
                 .include(null)
                 .exclude((Map<String, List<String>>) null);
     }
@@ -91,8 +104,7 @@ public class RedshiftCrawler extends AbstractCrawler {
          * @param serverless if true, use a serverless configuration otherwise use a provisioned configuration
          * @return the builder, set up to extract directly from Redshift
          */
-        public RedshiftCrawlerBuilder<C, B> direct(String hostname, String database, boolean serverless) {
-            String epoch = Connection.getEpochFromQualifiedName(connection.getQualifiedName());
+        public B direct(String hostname, String database, boolean serverless) {
             localCreds
                     .name("default-redshift-" + epoch + "-0")
                     .host(hostname)
@@ -100,7 +112,7 @@ public class RedshiftCrawler extends AbstractCrawler {
                     .extra("database", database)
                     .extra("deployment_type", serverless ? "serverless" : "provisioned")
                     .connectorConfigName("atlan-connectors-redshift");
-            return this.parameters(params()).credential(localCreds);
+            return this._credential(localCreds);
         }
 
         /**
@@ -110,9 +122,9 @@ public class RedshiftCrawler extends AbstractCrawler {
          * @param password through which to access Redshift
          * @return the builder, set up to use basic authentication
          */
-        public RedshiftCrawlerBuilder<C, B> basicAuth(String username, String password) {
+        public B basicAuth(String username, String password) {
             localCreds.authType("basic").username(username).password(password);
-            return this.credential(localCreds);
+            return this._credential(localCreds);
         }
 
         /**
@@ -123,9 +135,9 @@ public class RedshiftCrawler extends AbstractCrawler {
          * @param secretKey through which to access Redshift
          * @return the builder, set up to use IAM user-based authentication
          */
-        public RedshiftCrawlerBuilder<C, B> iamUserAuth(String username, String accessKey, String secretKey) {
+        public B iamUserAuth(String username, String accessKey, String secretKey) {
             localCreds.authType("iam").username(accessKey).password(secretKey).extra("dbuser", username);
-            return this.credential(localCreds);
+            return this._credential(localCreds);
         }
 
         /**
@@ -134,8 +146,8 @@ public class RedshiftCrawler extends AbstractCrawler {
          * @param enabled if true, searches for lineage across all available connections in Atlan
          * @return the builder, set up to consider cross-connection lineage (or not)
          */
-        public RedshiftCrawlerBuilder<C, B> crossConnection(boolean enabled) {
-            return this.parameter("advanced-config", "custom").parameter("cross-connection", "" + enabled);
+        public B crossConnection(boolean enabled) {
+            return this._parameter("advanced-config", "custom")._parameter("cross-connection", "" + enabled);
         }
 
         /**
@@ -145,16 +157,13 @@ public class RedshiftCrawler extends AbstractCrawler {
          * @return the builder, set to include only those assets specified
          * @throws InvalidRequestException in the unlikely event the provided filter cannot be translated
          */
-        public RedshiftCrawlerBuilder<C, B> include(Map<String, List<String>> assets) throws InvalidRequestException {
+        public B include(Map<String, List<String>> assets) throws InvalidRequestException {
             Map<String, List<String>> toInclude = buildHierarchicalFilter(assets);
             try {
-                if (!toInclude.isEmpty()) {
-                    this.parameter("include-filter", Serde.allInclusiveMapper.writeValueAsString(toInclude));
-                }
+                return this._parameter("include-filter", Serde.allInclusiveMapper.writeValueAsString(toInclude));
             } catch (JsonProcessingException e) {
                 throw new InvalidRequestException(ErrorCode.UNABLE_TO_TRANSLATE_FILTERS, e);
             }
-            return this;
         }
 
         /**
@@ -164,16 +173,13 @@ public class RedshiftCrawler extends AbstractCrawler {
          * @return the builder, set to exclude only those assets specified
          * @throws InvalidRequestException in the unlikely event the provided filter cannot be translated
          */
-        public RedshiftCrawlerBuilder<C, B> exclude(Map<String, List<String>> assets) throws InvalidRequestException {
+        public B exclude(Map<String, List<String>> assets) throws InvalidRequestException {
             Map<String, List<String>> toExclude = buildHierarchicalFilter(assets);
             try {
-                if (!toExclude.isEmpty()) {
-                    this.parameter("exclude-filter", Serde.allInclusiveMapper.writeValueAsString(toExclude));
-                }
+                return this._parameter("exclude-filter", Serde.allInclusiveMapper.writeValueAsString(toExclude));
             } catch (JsonProcessingException e) {
                 throw new InvalidRequestException(ErrorCode.UNABLE_TO_TRANSLATE_FILTERS, e);
             }
-            return this;
         }
 
         /**
@@ -182,8 +188,8 @@ public class RedshiftCrawler extends AbstractCrawler {
          * @param regex any asset names that match this regular expression will be excluded from crawling
          * @return the builder, set to exclude any assets that match the provided regular expression
          */
-        public RedshiftCrawlerBuilder<C, B> exclude(String regex) {
-            return this.parameter("temp-table-regex", regex);
+        public B exclude(String regex) {
+            return this._parameter("temp-table-regex", regex);
         }
 
         /**
@@ -191,61 +197,55 @@ public class RedshiftCrawler extends AbstractCrawler {
          *
          * @return the builder, with metadata set
          */
-        protected RedshiftCrawlerBuilder<C, B> metadata() {
-            String epoch = Connection.getEpochFromQualifiedName(connection.getQualifiedName());
-            return this.prefix(PREFIX)
-                    .name("@atlan/redshift")
-                    .runName(PREFIX + "-" + epoch)
-                    .label("orchestration.atlan.com/certified", "true")
-                    .label("orchestration.atlan.com/source", "redshift")
-                    .label("orchestration.atlan.com/sourceCategory", "warehouse")
-                    .label("orchestration.atlan.com/type", "connector")
-                    .label("orchestration.atlan.com/verified", "true")
-                    .label("package.argoproj.io/installer", "argopm")
-                    .label("package.argoproj.io/name", "a-t-ratlans-l-a-s-hredshift")
-                    .label("package.argoproj.io/registry", "httpsc-o-l-o-ns-l-a-s-hs-l-a-s-hpackages.atlan.com")
-                    .label("orchestration.atlan.com/default-redshift-" + epoch, "true")
-                    .label("orchestration.atlan.com/atlan-ui", "true")
-                    .annotation("orchestration.atlan.com/allowSchedule", "true")
-                    .annotation("orchestration.atlan.com/categories", "warehouse,crawler")
-                    .annotation("orchestration.atlan.com/dependentPackage", "")
-                    .annotation(
+        @Override
+        protected B metadata() {
+            return this._label("orchestration.atlan.com/certified", "true")
+                    ._label("orchestration.atlan.com/source", "redshift")
+                    ._label("orchestration.atlan.com/sourceCategory", "warehouse")
+                    ._label("orchestration.atlan.com/type", "connector")
+                    ._label("orchestration.atlan.com/verified", "true")
+                    ._label("package.argoproj.io/installer", "argopm")
+                    ._label("package.argoproj.io/name", "a-t-ratlans-l-a-s-hredshift")
+                    ._label("package.argoproj.io/registry", "httpsc-o-l-o-ns-l-a-s-hs-l-a-s-hpackages.atlan.com")
+                    ._label("orchestration.atlan.com/default-redshift-" + epoch, "true")
+                    ._label("orchestration.atlan.com/atlan-ui", "true")
+                    ._annotation("orchestration.atlan.com/allowSchedule", "true")
+                    ._annotation("orchestration.atlan.com/categories", "warehouse,crawler")
+                    ._annotation("orchestration.atlan.com/dependentPackage", "")
+                    ._annotation(
                             "orchestration.atlan.com/docsUrl", "https://ask.atlan.com/hc/en-us/articles/6326396122641")
-                    .annotation("orchestration.atlan.com/emoji", "\uD83D\uDE80")
-                    .annotation(
+                    ._annotation("orchestration.atlan.com/emoji", "\uD83D\uDE80")
+                    ._annotation(
                             "orchestration.atlan.com/icon",
                             "https://cdn.worldvectorlogo.com/logos/aws-redshift-logo.svg")
-                    .annotation(
+                    ._annotation(
                             "orchestration.atlan.com/logo",
                             "https://cdn.worldvectorlogo.com/logos/aws-redshift-logo.svg")
-                    .annotation(
+                    ._annotation(
                             "orchestration.atlan.com/marketplaceLink",
                             "https://packages.atlan.com/-/web/detail/@atlan/redshift")
-                    .annotation("orchestration.atlan.com/name", "Redshift Assets")
-                    .annotation("package.argoproj.io/author", "Atlan")
-                    .annotation(
+                    ._annotation("orchestration.atlan.com/name", "Redshift Assets")
+                    ._annotation("package.argoproj.io/author", "Atlan")
+                    ._annotation(
                             "package.argoproj.io/description",
                             "Package to crawl AWS Redshift assets and publish to Atlan for discovery")
-                    .annotation(
+                    ._annotation(
                             "package.argoproj.io/homepage", "https://packages.atlan.com/-/web/detail/@atlan/redshift")
-                    .annotation(
+                    ._annotation(
                             "package.argoproj.io/keywords", "[\"redshift\",\"warehouse\",\"connector\",\"crawler\"]")
-                    .annotation("package.argoproj.io/name", "@atlan/redshift")
-                    .annotation("package.argoproj.io/registry", "https://packages.atlan.com")
-                    .annotation(
+                    ._annotation("package.argoproj.io/name", "@atlan/redshift")
+                    ._annotation("package.argoproj.io/registry", "https://packages.atlan.com")
+                    ._annotation(
                             "package.argoproj.io/repository", "git+https://github.com/atlanhq/marketplace-packages.git")
-                    .annotation("package.argoproj.io/support", "support@atlan.com")
-                    .annotation("orchestration.atlan.com/atlanName", PREFIX + "-default-redshift-" + epoch);
-        }
-
-        private Map<String, String> params() {
-            return Map.ofEntries(
-                    Map.entry("credentials-fetch-strategy", "credential_guid"),
-                    Map.entry("credential-guid", "{{credentialGuid}}"),
-                    Map.entry("control-config-strategy", "default"),
-                    Map.entry("connection", connection.toJson(client)),
-                    Map.entry("publish-mode", "production"),
-                    Map.entry("atlas-auth-type", "internal"));
+                    ._annotation("package.argoproj.io/support", "support@atlan.com")
+                    ._annotation("orchestration.atlan.com/atlanName", PREFIX + "-default-redshift-" + epoch)
+                    ._parameters(Map.ofEntries(
+                            Map.entry("credentials-fetch-strategy", "credential_guid"),
+                            Map.entry("credential-guid", "{{credentialGuid}}"),
+                            Map.entry("control-config-strategy", "default"),
+                            Map.entry("connection", connection.toJson(client)),
+                            Map.entry("publish-mode", "production"),
+                            Map.entry("atlas-auth-type", "internal")));
         }
     }
 }

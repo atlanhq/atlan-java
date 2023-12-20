@@ -6,8 +6,6 @@ import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
-import com.atlan.model.admin.Credential;
-import com.atlan.model.assets.Connection;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanPackageType;
 import com.atlan.serde.Serde;
@@ -27,14 +25,17 @@ public class TableauCrawler extends AbstractCrawler {
 
     public static final String PREFIX = AtlanPackageType.TABLEAU.getValue();
 
-    /** Connectivity to the Atlan tenant where the package will run. */
-    AtlanClient client;
-
-    /** Connection through which the package will manage its assets. */
-    Connection connection;
-
-    /** Credentials for this connection. */
-    Credential.CredentialBuilder<?, ?> localCreds;
+    /**
+     * Create the base configuration for a new Tableau crawler. Sets all admins as connection admins.
+     *
+     * @param client connectivity to an Atlan tenant
+     * @param connectionName name of the connection to create when running the crawler for the first time
+     * @return the builder for the base configuration of a Tableau crawler
+     * @throws AtlanException if there is not at least one connection admin specified, or any specified are invalid
+     */
+    public static TableauCrawlerBuilder<?, ?> creator(AtlanClient client, String connectionName) throws AtlanException {
+        return creator(client, connectionName, List.of(client.getRoleCache().getIdForName("$admin")), null, null);
+    }
 
     /**
      * Create the base configuration for a new Tableau crawler.
@@ -54,21 +55,22 @@ public class TableauCrawler extends AbstractCrawler {
             List<String> adminGroups,
             List<String> adminUsers)
             throws AtlanException {
-        Connection connection = getConnection(
-                client,
-                connectionName,
-                AtlanConnectorType.TABLEAU,
-                adminRoles,
-                adminGroups,
-                adminUsers,
-                false,
-                false,
-                0L,
-                "https://img.icons8.com/color/480/000000/tableau-software.png");
         return _internal()
-                .client(client)
-                .connection(connection)
-                .metadata()
+                .setup(
+                        PREFIX,
+                        "@atlan/tableau",
+                        client,
+                        getConnection(
+                                client,
+                                connectionName,
+                                AtlanConnectorType.TABLEAU,
+                                adminRoles,
+                                adminGroups,
+                                adminUsers,
+                                false,
+                                false,
+                                0L,
+                                "https://img.icons8.com/color/480/000000/tableau-software.png"))
                 .include(null)
                 .exclude((List<String>) null)
                 .crawlHiddenFields(true)
@@ -86,8 +88,7 @@ public class TableauCrawler extends AbstractCrawler {
          * @param sslEnabled if true, use SSL for the connection, otherwise do not use SSL
          * @return the builder, set up to extract directly from Tableau
          */
-        public TableauCrawlerBuilder<C, B> direct(String hostname, String site, boolean sslEnabled) {
-            String epoch = Connection.getEpochFromQualifiedName(connection.getQualifiedName());
+        public B direct(String hostname, String site, boolean sslEnabled) {
             localCreds
                     .name("default-tableau-" + epoch + "-0")
                     .host(hostname)
@@ -95,9 +96,7 @@ public class TableauCrawler extends AbstractCrawler {
                     .extra("protocol", sslEnabled ? "https" : "http")
                     .extra("defaultSite", site)
                     .connectorConfigName("atlan-connectors-tableau");
-            return this.parameters(params())
-                    .parameter("extraction-method", "direct")
-                    .credential(localCreds);
+            return this._parameter("extraction-method", "direct")._credential(localCreds);
         }
 
         /**
@@ -107,9 +106,9 @@ public class TableauCrawler extends AbstractCrawler {
          * @param password through which to access Tableau
          * @return the builder, set up to use basic authentication
          */
-        public TableauCrawlerBuilder<C, B> basicAuth(String username, String password) {
+        public B basicAuth(String username, String password) {
             localCreds.authType("basic").username(username).password(password);
-            return this.credential(localCreds);
+            return this._credential(localCreds);
         }
 
         /**
@@ -119,9 +118,9 @@ public class TableauCrawler extends AbstractCrawler {
          * @param accessToken personal access token for the user, through which to access Tableau
          * @return the builder, set up to use PAT-based authentication
          */
-        public TableauCrawlerBuilder<C, B> personalAccessToken(String username, String accessToken) {
+        public B personalAccessToken(String username, String accessToken) {
             localCreds.authType("personal_access_token").username(username).password(accessToken);
-            return this.credential(localCreds);
+            return this._credential(localCreds);
         }
 
         /**
@@ -131,10 +130,11 @@ public class TableauCrawler extends AbstractCrawler {
          * @return the builder, set to include only those projects specified
          * @throws InvalidRequestException in the unlikely event the provided filter cannot be translated
          */
-        public TableauCrawlerBuilder<C, B> include(List<String> projects) throws InvalidRequestException {
+        public B include(List<String> projects) throws InvalidRequestException {
             Map<String, Map<String, String>> toIncludeProjects = buildFlatFilter(projects);
             try {
-                return this.parameter("include-filter", Serde.allInclusiveMapper.writeValueAsString(toIncludeProjects));
+                return this._parameter(
+                        "include-filter", Serde.allInclusiveMapper.writeValueAsString(toIncludeProjects));
             } catch (JsonProcessingException e) {
                 throw new InvalidRequestException(ErrorCode.UNABLE_TO_TRANSLATE_FILTERS, e);
             }
@@ -147,10 +147,11 @@ public class TableauCrawler extends AbstractCrawler {
          * @return the builder, set to exclude only those projects specified
          * @throws InvalidRequestException in the unlikely event the provided filter cannot be translated
          */
-        public TableauCrawlerBuilder<C, B> exclude(List<String> projects) throws InvalidRequestException {
+        public B exclude(List<String> projects) throws InvalidRequestException {
             Map<String, Map<String, String>> toExcludeProjects = buildFlatFilter(projects);
             try {
-                return this.parameter("exclude-filter", Serde.allInclusiveMapper.writeValueAsString(toExcludeProjects));
+                return this._parameter(
+                        "exclude-filter", Serde.allInclusiveMapper.writeValueAsString(toExcludeProjects));
             } catch (JsonProcessingException e) {
                 throw new InvalidRequestException(ErrorCode.UNABLE_TO_TRANSLATE_FILTERS, e);
             }
@@ -162,8 +163,8 @@ public class TableauCrawler extends AbstractCrawler {
          * @param regex any project names that match this regular expression will be excluded from crawling
          * @return the builder, set to exclude any assets that match the provided regular expression
          */
-        public TableauCrawlerBuilder<C, B> exclude(String regex) {
-            return this.parameter("exclude-projects-regex", regex);
+        public B exclude(String regex) {
+            return this._parameter("exclude-projects-regex", regex);
         }
 
         /**
@@ -172,8 +173,8 @@ public class TableauCrawler extends AbstractCrawler {
          * @param enabled if true, hidden datasource fields will be crawled otherwise they will not
          * @return the builder, set to include or exclude hidden datasource fields
          */
-        public TableauCrawlerBuilder<C, B> crawlHiddenFields(boolean enabled) {
-            return this.parameter("crawl-hidden-datasource-fields", "" + enabled);
+        public B crawlHiddenFields(boolean enabled) {
+            return this._parameter("crawl-hidden-datasource-fields", "" + enabled);
         }
 
         /**
@@ -182,8 +183,8 @@ public class TableauCrawler extends AbstractCrawler {
          * @param enabled if true, unpublished worksheets and dashboards will be crawled otherwise they will not
          * @return the builder, set to include or exclude unpublished worksheets and dashboards
          */
-        public TableauCrawlerBuilder<C, B> crawlUnpublished(boolean enabled) {
-            return this.parameter("crawl-unpublished-worksheets-dashboards", "" + enabled);
+        public B crawlUnpublished(boolean enabled) {
+            return this._parameter("crawl-unpublished-worksheets-dashboards", "" + enabled);
         }
 
         /**
@@ -192,8 +193,8 @@ public class TableauCrawler extends AbstractCrawler {
          * @param hostname alternate hostname (and protocol) to use
          * @return the builder, set to use an alternate host for viewing assets in Tableau
          */
-        public TableauCrawlerBuilder<C, B> alternateHost(String hostname) {
-            return this.parameter("tableau-alternate-host", hostname);
+        public B alternateHost(String hostname) {
+            return this._parameter("tableau-alternate-host", hostname);
         }
 
         /**
@@ -201,59 +202,53 @@ public class TableauCrawler extends AbstractCrawler {
          *
          * @return the builder, with metadata set
          */
-        protected TableauCrawlerBuilder<C, B> metadata() {
-            String epoch = Connection.getEpochFromQualifiedName(connection.getQualifiedName());
-            return this.prefix(PREFIX)
-                    .name("@atlan/tableau")
-                    .runName(PREFIX + "-" + epoch)
-                    .label("orchestration.atlan.com/certified", "true")
-                    .label("orchestration.atlan.com/source", "tableau")
-                    .label("orchestration.atlan.com/sourceCategory", "bi")
-                    .label("orchestration.atlan.com/type", "connector")
-                    .label("orchestration.atlan.com/verified", "true")
-                    .label("package.argoproj.io/installer", "argopm")
-                    .label("package.argoproj.io/name", "a-t-ratlans-l-a-s-htableau")
-                    .label("package.argoproj.io/registry", "httpsc-o-l-o-ns-l-a-s-hs-l-a-s-hpackages.atlan.com")
-                    .label("orchestration.atlan.com/default-tableau-" + epoch, "true")
-                    .label("orchestration.atlan.com/atlan-ui", "true")
-                    .annotation("orchestration.atlan.com/allowSchedule", "true")
-                    .annotation("orchestration.atlan.com/categories", "tableau,crawler")
-                    .annotation("orchestration.atlan.com/dependentPackage", "")
-                    .annotation(
+        @Override
+        protected B metadata() {
+            return this._label("orchestration.atlan.com/certified", "true")
+                    ._label("orchestration.atlan.com/source", "tableau")
+                    ._label("orchestration.atlan.com/sourceCategory", "bi")
+                    ._label("orchestration.atlan.com/type", "connector")
+                    ._label("orchestration.atlan.com/verified", "true")
+                    ._label("package.argoproj.io/installer", "argopm")
+                    ._label("package.argoproj.io/name", "a-t-ratlans-l-a-s-htableau")
+                    ._label("package.argoproj.io/registry", "httpsc-o-l-o-ns-l-a-s-hs-l-a-s-hpackages.atlan.com")
+                    ._label("orchestration.atlan.com/default-tableau-" + epoch, "true")
+                    ._label("orchestration.atlan.com/atlan-ui", "true")
+                    ._annotation("orchestration.atlan.com/allowSchedule", "true")
+                    ._annotation("orchestration.atlan.com/categories", "tableau,crawler")
+                    ._annotation("orchestration.atlan.com/dependentPackage", "")
+                    ._annotation(
                             "orchestration.atlan.com/docsUrl", "https://ask.atlan.com/hc/en-us/articles/6332449996689")
-                    .annotation("orchestration.atlan.com/emoji", "\uD83D\uDE80")
-                    .annotation(
+                    ._annotation("orchestration.atlan.com/emoji", "\uD83D\uDE80")
+                    ._annotation(
                             "orchestration.atlan.com/icon",
                             "https://img.icons8.com/color/480/000000/tableau-software.png")
-                    .annotation(
+                    ._annotation(
                             "orchestration.atlan.com/logo",
                             "https://img.icons8.com/color/480/000000/tableau-software.png")
-                    .annotation(
+                    ._annotation(
                             "orchestration.atlan.com/marketplaceLink",
                             "https://packages.atlan.com/-/web/detail/@atlan/tableau")
-                    .annotation("orchestration.atlan.com/name", "Tableau Assets")
-                    .annotation("package.argoproj.io/author", "Atlan")
-                    .annotation(
+                    ._annotation("orchestration.atlan.com/name", "Tableau Assets")
+                    ._annotation("package.argoproj.io/author", "Atlan")
+                    ._annotation(
                             "package.argoproj.io/description",
                             "Package to crawl Tableau assets and publish to Atlan for discovery")
-                    .annotation(
+                    ._annotation(
                             "package.argoproj.io/homepage", "https://packages.atlan.com/-/web/detail/@atlan/tableau")
-                    .annotation("package.argoproj.io/keywords", "[\"tableau\",\"bi\",\"connector\",\"crawler\"]")
-                    .annotation("package.argoproj.io/name", "@atlan/tableau")
-                    .annotation("package.argoproj.io/parent", ".")
-                    .annotation("package.argoproj.io/registry", "https://packages.atlan.com")
-                    .annotation(
+                    ._annotation("package.argoproj.io/keywords", "[\"tableau\",\"bi\",\"connector\",\"crawler\"]")
+                    ._annotation("package.argoproj.io/name", "@atlan/tableau")
+                    ._annotation("package.argoproj.io/parent", ".")
+                    ._annotation("package.argoproj.io/registry", "https://packages.atlan.com")
+                    ._annotation(
                             "package.argoproj.io/repository", "git+https://github.com/atlanhq/marketplace-packages.git")
-                    .annotation("package.argoproj.io/support", "support@atlan.com")
-                    .annotation("orchestration.atlan.com/atlanName", PREFIX + "-default-tableau-" + epoch);
-        }
-
-        private Map<String, String> params() {
-            return Map.ofEntries(
-                    Map.entry("credential-guid", "{{credentialGuid}}"),
-                    Map.entry("connection", connection.toJson(client)),
-                    Map.entry("atlas-auth-type", "internal"),
-                    Map.entry("publish-mode", "production"));
+                    ._annotation("package.argoproj.io/support", "support@atlan.com")
+                    ._annotation("orchestration.atlan.com/atlanName", PREFIX + "-default-tableau-" + epoch)
+                    ._parameters(Map.ofEntries(
+                            Map.entry("credential-guid", "{{credentialGuid}}"),
+                            Map.entry("connection", connection.toJson(client)),
+                            Map.entry("atlas-auth-type", "internal"),
+                            Map.entry("publish-mode", "production")));
         }
     }
 }

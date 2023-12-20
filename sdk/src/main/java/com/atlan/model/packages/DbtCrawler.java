@@ -4,7 +4,6 @@ package com.atlan.model.packages;
 
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
-import com.atlan.model.admin.Credential;
 import com.atlan.model.assets.Connection;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanPackageType;
@@ -23,14 +22,17 @@ public class DbtCrawler extends AbstractCrawler {
 
     public static final String PREFIX = AtlanPackageType.DBT.getValue();
 
-    /** Connectivity to the Atlan tenant where the package will run. */
-    AtlanClient client;
-
-    /** Connection through which the package will manage its assets. */
-    Connection connection;
-
-    /** Credentials for this connection. */
-    Credential.CredentialBuilder<?, ?> localCreds;
+    /**
+     * Create the base configuration for a new dbt crawler. Sets all admins as connection admins.
+     *
+     * @param client connectivity to an Atlan tenant
+     * @param connectionName name of the connection to create when running the crawler for the first time
+     * @return the builder for the base configuration of a dbt crawler
+     * @throws AtlanException if there is not at least one connection admin specified, or any specified are invalid
+     */
+    public static DbtCrawlerBuilder<?, ?> creator(AtlanClient client, String connectionName) throws AtlanException {
+        return creator(client, connectionName, List.of(client.getRoleCache().getIdForName("$admin")), null, null);
+    }
 
     /**
      * Create the base configuration for a new dbt crawler.
@@ -50,21 +52,22 @@ public class DbtCrawler extends AbstractCrawler {
             List<String> adminGroups,
             List<String> adminUsers)
             throws AtlanException {
-        Connection connection = getConnection(
-                client,
-                connectionName,
-                AtlanConnectorType.DBT,
-                adminRoles,
-                adminGroups,
-                adminUsers,
-                false,
-                false,
-                0L,
-                "https://assets.atlan.com/assets/dbt-new.svg");
         return _internal()
-                .client(client)
-                .connection(connection)
-                .metadata()
+                .setup(
+                        PREFIX,
+                        "@atlan/dbt",
+                        client,
+                        getConnection(
+                                client,
+                                connectionName,
+                                AtlanConnectorType.DBT,
+                                adminRoles,
+                                adminGroups,
+                                adminUsers,
+                                false,
+                                false,
+                                0L,
+                                "https://assets.atlan.com/assets/dbt-new.svg"))
                 .enrichMaterializedAssets(false)
                 .tags(false)
                 .include(null)
@@ -75,6 +78,17 @@ public class DbtCrawler extends AbstractCrawler {
             extends AbstractCrawlerBuilder<C, B> {
 
         /**
+         * Set up the crawler to extract using dbt Cloud (and its default hostname).
+         *
+         * @param serviceToken token to use to authenticate against dbt
+         * @param multiTenant if true, use a multi-tenant cloud config, otherwise a single-tenant cloud config
+         * @return the builder, set up to extract using dbt Cloud
+         */
+        public B cloud(String serviceToken, boolean multiTenant) {
+            return cloud("https://cloud.getdbt.com", serviceToken, multiTenant);
+        }
+
+        /**
          * Set up the crawler to extract using dbt Cloud.
          *
          * @param hostname of dbt (usually https://cloud.getdbt.com)
@@ -82,7 +96,7 @@ public class DbtCrawler extends AbstractCrawler {
          * @param multiTenant if true, use a multi-tenant cloud config, otherwise a single-tenant cloud config
          * @return the builder, set up to extract using dbt Cloud
          */
-        public DbtCrawlerBuilder<C, B> cloud(String hostname, String serviceToken, boolean multiTenant) {
+        public B cloud(String hostname, String serviceToken, boolean multiTenant) {
             String epoch = Connection.getEpochFromQualifiedName(connection.getQualifiedName());
             localCreds
                     .name("default-dbt-" + epoch + "-1")
@@ -92,10 +106,10 @@ public class DbtCrawler extends AbstractCrawler {
                     .username("")
                     .password(serviceToken)
                     .connectorConfigName("atlan-connectors-dbt");
-            this.parameters(params()).parameter("extraction-method", "api").credential(localCreds);
+            this._parameter("extraction-method", "api")._credential(localCreds);
             return multiTenant
-                    ? this.parameter("deployment-type", "multi")
-                    : this.parameter("deployment-type", "single");
+                    ? this._parameter("deployment-type", "multi")
+                    : this._parameter("deployment-type", "single");
         }
 
         /**
@@ -106,13 +120,12 @@ public class DbtCrawler extends AbstractCrawler {
          * @param s3Region S3 region where the bucket is located
          * @return the builder, set up to extract using dbt Core files in S3
          */
-        public DbtCrawlerBuilder<C, B> core(String s3Bucket, String s3Prefix, String s3Region) {
-            return this.parameters(params())
-                    .parameter("extraction-method", "core")
-                    .parameter("deployment-type", "single")
-                    .parameter("core-extraction-s3-bucket", s3Bucket)
-                    .parameter("core-extraction-s3-prefix", s3Prefix)
-                    .parameter("core-extraction-s3-region", s3Region);
+        public B core(String s3Bucket, String s3Prefix, String s3Region) {
+            return this._parameter("extraction-method", "core")
+                    ._parameter("deployment-type", "single")
+                    ._parameter("core-extraction-s3-bucket", s3Bucket)
+                    ._parameter("core-extraction-s3-prefix", s3Prefix)
+                    ._parameter("core-extraction-s3-region", s3Region);
         }
 
         /**
@@ -121,8 +134,8 @@ public class DbtCrawler extends AbstractCrawler {
          * @param enabled if true, any assets that dbt materializes will also be enriched with details from dbt
          * @return the builder, set up to include or exclude enrichment of materialized assets
          */
-        public DbtCrawlerBuilder<C, B> enrichMaterializedAssets(boolean enabled) {
-            return this.parameter("enrich-materialised-sql-assets", "" + enabled);
+        public B enrichMaterializedAssets(boolean enabled) {
+            return this._parameter("enrich-materialised-sql-assets", "" + enabled);
         }
 
         /**
@@ -131,8 +144,8 @@ public class DbtCrawler extends AbstractCrawler {
          * @param include if true, tags in dbt will be included while crawling dbt
          * @return the builder, set to include or exclude dbt tags
          */
-        public DbtCrawlerBuilder<C, B> tags(boolean include) {
-            return this.parameter("enable-dbt-tagsync", "" + include);
+        public B tags(boolean include) {
+            return this._parameter("enable-dbt-tagsync", "" + include);
         }
 
         /**
@@ -142,8 +155,8 @@ public class DbtCrawler extends AbstractCrawler {
          * @param connectionQualifiedName unique name of the connection for whose assets to limit crawling
          * @return the builder, set to limit crawling to only those assets in the specified connection
          */
-        public DbtCrawlerBuilder<C, B> limitToConnection(String connectionQualifiedName) {
-            return this.parameter("connection-qualified-name", connectionQualifiedName);
+        public B limitToConnection(String connectionQualifiedName) {
+            return this._parameter("connection-qualified-name", connectionQualifiedName);
         }
 
         /**
@@ -152,15 +165,12 @@ public class DbtCrawler extends AbstractCrawler {
          * @param filter for dbt Core provide a wildcard expression and for dbt Cloud provide a string-encoded map
          * @return the builder, set to include only those assets specified
          */
-        public DbtCrawlerBuilder<C, B> include(String filter) {
+        public B include(String filter) {
             if (filter == null || filter.isEmpty()) {
-                this.parameter("include-filter", "{}");
-                this.parameter("include-filter-core", "*");
+                return this._parameter("include-filter", "{}")._parameter("include-filter-core", "*");
             } else {
-                this.parameter("include-filter", filter);
-                this.parameter("include-filter-core", filter);
+                return this._parameter("include-filter", filter)._parameter("include-filter-core", filter);
             }
-            return this;
         }
 
         /**
@@ -169,15 +179,12 @@ public class DbtCrawler extends AbstractCrawler {
          * @param filter for dbt Core provide a wildcard expression and for dbt Cloud provide a string-encoded map
          * @return the builder, set to exclude only those assets specified
          */
-        public DbtCrawlerBuilder<C, B> exclude(String filter) {
+        public B exclude(String filter) {
             if (filter == null || filter.isEmpty()) {
-                this.parameter("exclude-filter", "{}");
-                this.parameter("exclude-filter-core", "*");
+                return this._parameter("exclude-filter", "{}")._parameter("exclude-filter-core", "*");
             } else {
-                this.parameter("exclude-filter", filter);
-                this.parameter("exclude-filter-core", filter);
+                return this._parameter("exclude-filter", filter)._parameter("exclude-filter-core", filter);
             }
-            return this;
         }
 
         /**
@@ -185,52 +192,46 @@ public class DbtCrawler extends AbstractCrawler {
          *
          * @return the builder, with metadata set
          */
-        protected DbtCrawlerBuilder<C, B> metadata() {
-            String epoch = Connection.getEpochFromQualifiedName(connection.getQualifiedName());
-            return this.prefix(PREFIX)
-                    .name("@atlan/dbt")
-                    .runName(PREFIX + "-" + epoch)
-                    .label("orchestration.atlan.com/certified", "true")
-                    .label("orchestration.atlan.com/source", "dbt")
-                    .label("orchestration.atlan.com/sourceCategory", "elt")
-                    .label("orchestration.atlan.com/type", "connector")
-                    .label("orchestration.atlan.com/verified", "true")
-                    .label("package.argoproj.io/installer", "argopm")
-                    .label("package.argoproj.io/name", "a-t-ratlans-l-a-s-hdbt")
-                    .label("package.argoproj.io/registry", "httpsc-o-l-o-ns-l-a-s-hs-l-a-s-hpackages.atlan.com")
-                    .label("orchestration.atlan.com/default-dbt-" + epoch, "true")
-                    .label("orchestration.atlan.com/atlan-ui", "true")
-                    .annotation("orchestration.atlan.com/allowSchedule", "true")
-                    .annotation("orchestration.atlan.com/dependentPackage", "")
-                    .annotation(
+        @Override
+        protected B metadata() {
+            return this._label("orchestration.atlan.com/certified", "true")
+                    ._label("orchestration.atlan.com/source", "dbt")
+                    ._label("orchestration.atlan.com/sourceCategory", "elt")
+                    ._label("orchestration.atlan.com/type", "connector")
+                    ._label("orchestration.atlan.com/verified", "true")
+                    ._label("package.argoproj.io/installer", "argopm")
+                    ._label("package.argoproj.io/name", "a-t-ratlans-l-a-s-hdbt")
+                    ._label("package.argoproj.io/registry", "httpsc-o-l-o-ns-l-a-s-hs-l-a-s-hpackages.atlan.com")
+                    ._label("orchestration.atlan.com/default-dbt-" + epoch, "true")
+                    ._label("orchestration.atlan.com/atlan-ui", "true")
+                    ._annotation("orchestration.atlan.com/allowSchedule", "true")
+                    ._annotation("orchestration.atlan.com/dependentPackage", "")
+                    ._annotation(
                             "orchestration.atlan.com/docsUrl", "https://ask.atlan.com/hc/en-us/articles/6335824578705")
-                    .annotation("orchestration.atlan.com/emoji", "\uD83D\uDE80")
-                    .annotation("orchestration.atlan.com/icon", "https://assets.atlan.com/assets/dbt-new.svg")
-                    .annotation("orchestration.atlan.com/logo", "https://assets.atlan.com/assets/dbt-new.svg")
-                    .annotation(
+                    ._annotation("orchestration.atlan.com/emoji", "\uD83D\uDE80")
+                    ._annotation("orchestration.atlan.com/icon", "https://assets.atlan.com/assets/dbt-new.svg")
+                    ._annotation("orchestration.atlan.com/logo", "https://assets.atlan.com/assets/dbt-new.svg")
+                    ._annotation(
                             "orchestration.atlan.com/marketplaceLink",
                             "https://packages.atlan.com/-/web/detail/@atlan/dbt")
-                    .annotation("orchestration.atlan.com/name", "dbt Assets")
-                    .annotation("orchestration.atlan.com/usecase", "crawling")
-                    .annotation("package.argoproj.io/author", "Atlan")
-                    .annotation(
+                    ._annotation("orchestration.atlan.com/name", "dbt Assets")
+                    ._annotation("orchestration.atlan.com/usecase", "crawling")
+                    ._annotation("package.argoproj.io/author", "Atlan")
+                    ._annotation(
                             "package.argoproj.io/description",
                             "Package to crawl dbt Assets and publish to Atlan for discovery.")
-                    .annotation("package.argoproj.io/homepage", "https://packages.atlan.com/-/web/detail/@atlan/dbt")
-                    .annotation("package.argoproj.io/keywords", "[\"connector\",\"crawler\",\"dbt\"]")
-                    .annotation("package.argoproj.io/name", "@atlan/dbt")
-                    .annotation("package.argoproj.io/registry", "https://packages.atlan.com")
-                    .annotation(
+                    ._annotation("package.argoproj.io/homepage", "https://packages.atlan.com/-/web/detail/@atlan/dbt")
+                    ._annotation("package.argoproj.io/keywords", "[\"connector\",\"crawler\",\"dbt\"]")
+                    ._annotation("package.argoproj.io/name", "@atlan/dbt")
+                    ._annotation("package.argoproj.io/registry", "https://packages.atlan.com")
+                    ._annotation(
                             "package.argoproj.io/repository", "git+https://github.com/atlanhq/marketplace-packages.git")
-                    .annotation("package.argoproj.io/support", "support@atlan.com")
-                    .annotation("orchestration.atlan.com/atlanName", PREFIX + "-default-dbt-" + epoch);
-        }
-
-        private Map<String, String> params() {
-            return Map.ofEntries(
-                    Map.entry("api-credential-guid", "{{credentialGuid}}"),
-                    Map.entry("control-config-strategy", "default"),
-                    Map.entry("connection", connection.toJson(client)));
+                    ._annotation("package.argoproj.io/support", "support@atlan.com")
+                    ._annotation("orchestration.atlan.com/atlanName", PREFIX + "-default-dbt-" + epoch)
+                    ._parameters(Map.ofEntries(
+                            Map.entry("api-credential-guid", "{{credentialGuid}}"),
+                            Map.entry("control-config-strategy", "default"),
+                            Map.entry("connection", connection.toJson(client))));
         }
     }
 }
