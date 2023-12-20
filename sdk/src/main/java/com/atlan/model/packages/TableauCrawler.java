@@ -6,6 +6,7 @@ import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
+import com.atlan.model.admin.Credential;
 import com.atlan.model.assets.Connection;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanPackageType;
@@ -31,6 +32,9 @@ public class TableauCrawler extends AbstractCrawler {
 
     /** Connection through which the package will manage its assets. */
     Connection connection;
+
+    /** Credentials for this connection. */
+    Credential.CredentialBuilder<?, ?> localCreds;
 
     /**
      * Create the base configuration for a new Tableau crawler.
@@ -84,13 +88,16 @@ public class TableauCrawler extends AbstractCrawler {
          */
         public TableauCrawlerBuilder<C, B> direct(String hostname, String site, boolean sslEnabled) {
             String epoch = Connection.getEpochFromQualifiedName(connection.getQualifiedName());
+            localCreds
+                    .name("default-tableau-" + epoch + "-0")
+                    .host(hostname)
+                    .port(443)
+                    .extra("protocol", sslEnabled ? "https" : "http")
+                    .extra("defaultSite", site)
+                    .connectorConfigName("atlan-connectors-tableau");
             return this.parameters(params())
                     .parameter("extraction-method", "direct")
-                    .credential("name", "default-tableau-" + epoch + "-0")
-                    .credential("host", hostname)
-                    .credential("port", 443)
-                    .credential("extra", Map.of("protocol", sslEnabled ? "https" : "http", "defaultSite", site))
-                    .credential("connectorConfigName", "atlan-connectors-tableau");
+                    .credential(localCreds);
         }
 
         /**
@@ -101,9 +108,8 @@ public class TableauCrawler extends AbstractCrawler {
          * @return the builder, set up to use basic authentication
          */
         public TableauCrawlerBuilder<C, B> basicAuth(String username, String password) {
-            return this.credential("authType", "basic")
-                    .credential("username", username)
-                    .credential("password", password);
+            localCreds.authType("basic").username(username).password(password);
+            return this.credential(localCreds);
         }
 
         /**
@@ -114,9 +120,8 @@ public class TableauCrawler extends AbstractCrawler {
          * @return the builder, set up to use PAT-based authentication
          */
         public TableauCrawlerBuilder<C, B> personalAccessToken(String username, String accessToken) {
-            return this.credential("authType", "personal_access_token")
-                    .credential("username", username)
-                    .credential("password", accessToken);
+            localCreds.authType("personal_access_token").username(username).password(accessToken);
+            return this.credential(localCreds);
         }
 
         /**

@@ -6,12 +6,12 @@ import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
+import com.atlan.model.admin.Credential;
 import com.atlan.model.assets.Connection;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanPackageType;
 import com.atlan.serde.Serde;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import lombok.EqualsAndHashCode;
@@ -32,6 +32,9 @@ public class AthenaCrawler extends AbstractCrawler {
 
     /** Connection through which the package will manage its assets. */
     Connection connection;
+
+    /** Credentials for this connection. */
+    Credential.CredentialBuilder<?, ?> localCreds;
 
     /**
      * Create the base configuration for a new Athena crawler.
@@ -79,8 +82,6 @@ public class AthenaCrawler extends AbstractCrawler {
     public abstract static class AthenaCrawlerBuilder<C extends AthenaCrawler, B extends AthenaCrawlerBuilder<C, B>>
             extends AbstractCrawlerBuilder<C, B> {
 
-        private final Map<String, String> extras = new HashMap<>();
-
         /**
          * Set up the crawler to extract directly from Athena.
          *
@@ -90,15 +91,15 @@ public class AthenaCrawler extends AbstractCrawler {
          * @return the builder, set up to extract directly from Athena
          */
         public AthenaCrawlerBuilder<C, B> direct(String hostname, String workgroup, String s3Output) {
-            extras.put("workgroup", workgroup);
-            extras.put("s3_output_location", s3Output);
             String epoch = Connection.getEpochFromQualifiedName(connection.getQualifiedName());
-            return this.parameters(params())
-                    .credential("name", "default-athena-" + epoch + "-0")
-                    .credential("host", hostname)
-                    .credential("port", 443)
-                    .credential("extra", extras)
-                    .credential("connectorConfigName", "atlan-connectors-athena");
+            localCreds
+                    .name("default-athena-" + epoch + "-0")
+                    .host(hostname)
+                    .port(443)
+                    .extra("workgroup", workgroup)
+                    .extra("s3_output_location", s3Output)
+                    .connectorConfigName("atlan-connectors-athena");
+            return this.parameters(params()).credential(localCreds);
         }
 
         /**
@@ -109,9 +110,8 @@ public class AthenaCrawler extends AbstractCrawler {
          * @return the builder, set up to use IAM user-based authentication
          */
         public AthenaCrawlerBuilder<C, B> iamUserAuth(String accessKey, String secretKey) {
-            return this.credential("authType", "basic")
-                    .credential("username", accessKey)
-                    .credential("password", secretKey);
+            localCreds.authType("basic").username(accessKey).password(secretKey);
+            return this.credential(localCreds);
         }
 
         /**

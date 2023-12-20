@@ -6,6 +6,7 @@ import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
+import com.atlan.model.admin.Credential;
 import com.atlan.model.assets.Connection;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanPackageType;
@@ -31,6 +32,9 @@ public class SnowflakeCrawler extends AbstractCrawler {
 
     /** Connection through which the package will manage its assets. */
     Connection connection;
+
+    /** Credentials for this connection. */
+    Credential.CredentialBuilder<?, ?> localCreds;
 
     /**
      * Create the base configuration for a new Snowflake crawler.
@@ -92,15 +96,15 @@ public class SnowflakeCrawler extends AbstractCrawler {
          */
         public SnowflakeCrawlerBuilder<C, B> basicAuth(
                 String hostname, String username, String password, String role, String warehouse) {
-            String epoch = Connection.getEpochFromQualifiedName(connection.getQualifiedName());
-            return this.credential("name", "default-snowflake-" + epoch + "-0")
-                    .credential("host", hostname)
-                    .credential("port", 443)
-                    .credential("authType", "basic")
-                    .credential("username", username)
-                    .credential("password", password)
-                    .credential("extra", Map.of("role", role, "warehouse", warehouse))
-                    .credential("connectorConfigName", "atlan-connectors-snowflake");
+            localCreds
+                    .host(hostname)
+                    .port(443)
+                    .authType("basic")
+                    .username(username)
+                    .password(password)
+                    .extra("role", role)
+                    .extra("warehouse", warehouse);
+            return this.credential(localCreds);
         }
 
         /**
@@ -121,17 +125,16 @@ public class SnowflakeCrawler extends AbstractCrawler {
                 String privateKeyPassword,
                 String role,
                 String warehouse) {
-            String epoch = Connection.getEpochFromQualifiedName(connection.getQualifiedName());
-            return this.credential("name", "default-snowflake-" + epoch + "-0")
-                    .credential("host", hostname)
-                    .credential("port", 443)
-                    .credential("authType", "basic")
-                    .credential("username", username)
-                    .credential("password", privateKey)
-                    .credential(
-                            "extra",
-                            Map.of("role", role, "warehouse", warehouse, "private_key_password", privateKeyPassword))
-                    .credential("connectorConfigName", "atlan-connectors-snowflake");
+            localCreds
+                    .host(hostname)
+                    .port(443)
+                    .authType("basic")
+                    .username(username)
+                    .password(privateKey)
+                    .extra("role", role)
+                    .extra("warehouse", warehouse)
+                    .extra("private_key_password", privateKeyPassword);
+            return this.credential(localCreds);
         }
 
         /**
@@ -140,7 +143,11 @@ public class SnowflakeCrawler extends AbstractCrawler {
          * @return the builder, set to extract using information schema
          */
         public SnowflakeCrawlerBuilder<C, B> informationSchema() {
-            return this.parameters(params()).parameter("extract-strategy", "information-schema");
+            String epoch = Connection.getEpochFromQualifiedName(connection.getQualifiedName());
+            localCreds.name("default-snowflake-" + epoch + "-0").connectorConfigName("atlan-connectors-snowflake");
+            return this.parameters(params())
+                    .parameter("extract-strategy", "information-schema")
+                    .credential(localCreds);
         }
 
         /**
@@ -151,10 +158,13 @@ public class SnowflakeCrawler extends AbstractCrawler {
          * @return the builder, set to extract using account usage
          */
         public SnowflakeCrawlerBuilder<C, B> accountUsage(String databaseName, String schemaName) {
+            String epoch = Connection.getEpochFromQualifiedName(connection.getQualifiedName());
+            localCreds.name("default-snowflake-" + epoch + "-0").connectorConfigName("atlan-connectors-snowflake");
             return this.parameters(params())
                     .parameter("extract-strategy", "account-usage")
                     .parameter("account-usage-database-name", databaseName)
-                    .parameter("account-usage-schema-name", schemaName);
+                    .parameter("account-usage-schema-name", schemaName)
+                    .credential(localCreds);
         }
 
         /**

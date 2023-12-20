@@ -6,6 +6,7 @@ import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
+import com.atlan.model.admin.Credential;
 import com.atlan.model.assets.Connection;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanPackageType;
@@ -33,6 +34,9 @@ public class GlueCrawler extends AbstractCrawler {
 
     /** Connection through which the package will manage its assets. */
     Connection connection;
+
+    /** Credentials for this connection. */
+    Credential.CredentialBuilder<?, ?> localCreds;
 
     /**
      * Create the base configuration for a new Glue crawler.
@@ -88,10 +92,11 @@ public class GlueCrawler extends AbstractCrawler {
          */
         public GlueCrawlerBuilder<C, B> direct(String region) {
             String epoch = Connection.getEpochFromQualifiedName(connection.getQualifiedName());
-            return this.parameters(params())
-                    .credential("name", "default-glue-" + epoch + "-0")
-                    .credential("extra", Map.of("region", region))
-                    .credential("connectorConfigName", "atlan-connectors-glue");
+            localCreds
+                    .name("default-glue-" + epoch + "-0")
+                    .extra("region", region)
+                    .connectorConfigName("atlan-connectors-glue");
+            return this.parameters(params()).credential(localCreds);
         }
 
         /**
@@ -102,9 +107,8 @@ public class GlueCrawler extends AbstractCrawler {
          * @return the builder, set up to use IAM user-based authentication
          */
         public GlueCrawlerBuilder<C, B> iamUserAuth(String accessKey, String secretKey) {
-            return this.credential("authType", "iam")
-                    .credential("username", accessKey)
-                    .credential("password", secretKey);
+            localCreds.authType("iam").username(accessKey).password(secretKey);
+            return this.credential(localCreds);
         }
 
         /**

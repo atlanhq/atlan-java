@@ -6,12 +6,12 @@ import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
+import com.atlan.model.admin.Credential;
 import com.atlan.model.assets.Connection;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanPackageType;
 import com.atlan.serde.Serde;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import lombok.EqualsAndHashCode;
@@ -32,6 +32,9 @@ public class SigmaCrawler extends AbstractCrawler {
 
     /** Connection through which the package will manage its assets. */
     Connection connection;
+
+    /** Credentials for this connection. */
+    Credential.CredentialBuilder<?, ?> localCreds;
 
     /**
      * Create the base configuration for a new Sigma crawler.
@@ -81,12 +84,12 @@ public class SigmaCrawler extends AbstractCrawler {
          */
         public SigmaCrawlerBuilder<C, B> direct(String hostname) {
             String epoch = Connection.getEpochFromQualifiedName(connection.getQualifiedName());
-            return this.parameters(params())
-                    .credential("name", "default-sigma-" + epoch + "-0")
-                    .credential("host", hostname)
-                    .credential("port", 443)
-                    .credential("extra", Collections.emptyMap())
-                    .credential("connectorConfigName", "atlan-connectors-sigma");
+            localCreds
+                    .name("default-sigma-" + epoch + "-0")
+                    .host(hostname)
+                    .port(443)
+                    .connectorConfigName("atlan-connectors-sigma");
+            return this.parameters(params()).credential(localCreds);
         }
 
         /**
@@ -97,9 +100,8 @@ public class SigmaCrawler extends AbstractCrawler {
          * @return the builder, set up to use API token-based authentication
          */
         public SigmaCrawlerBuilder<C, B> apiToken(String clientId, String apiToken) {
-            return this.credential("authType", "api_token")
-                    .credential("username", clientId)
-                    .credential("password", apiToken);
+            localCreds.authType("api_token").username(clientId).password(apiToken);
+            return this.credential(localCreds);
         }
 
         /**

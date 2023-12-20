@@ -4,6 +4,7 @@ package com.atlan.model.packages;
 
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
+import com.atlan.model.admin.Credential;
 import com.atlan.model.assets.Connection;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanPackageType;
@@ -27,6 +28,9 @@ public class DbtCrawler extends AbstractCrawler {
 
     /** Connection through which the package will manage its assets. */
     Connection connection;
+
+    /** Credentials for this connection. */
+    Credential.CredentialBuilder<?, ?> localCreds;
 
     /**
      * Create the base configuration for a new dbt crawler.
@@ -80,16 +84,15 @@ public class DbtCrawler extends AbstractCrawler {
          */
         public DbtCrawlerBuilder<C, B> cloud(String hostname, String serviceToken, boolean multiTenant) {
             String epoch = Connection.getEpochFromQualifiedName(connection.getQualifiedName());
-            this.parameters(params())
-                    .parameter("extraction-method", "api")
-                    .credential("name", "default-dbt-" + epoch + "-1")
-                    .credential("host", hostname)
-                    .credential("port", 443)
-                    .credential("authType", "token")
-                    .credential("username", "")
-                    .credential("password", serviceToken)
-                    .credential("extra", Map.of())
-                    .credential("connectorConfigName", "atlan-connectors-dbt");
+            localCreds
+                    .name("default-dbt-" + epoch + "-1")
+                    .host(hostname)
+                    .port(443)
+                    .authType("token")
+                    .username("")
+                    .password(serviceToken)
+                    .connectorConfigName("atlan-connectors-dbt");
+            this.parameters(params()).parameter("extraction-method", "api").credential(localCreds);
             return multiTenant
                     ? this.parameter("deployment-type", "multi")
                     : this.parameter("deployment-type", "single");
