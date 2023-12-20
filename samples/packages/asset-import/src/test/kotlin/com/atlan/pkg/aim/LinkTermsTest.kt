@@ -95,10 +95,14 @@ class LinkTermsTest : PackageTest() {
         val topics = KafkaTopic.select()
             .where(KafkaTopic.QUALIFIED_NAME.startsWith(c.qualifiedName))
             .includeOnResults(KafkaTopic.NAME)
+            .includeOnResults(KafkaTopic.SOURCE_READ_COUNT)
+            .includeOnResults(KafkaTopic.SOURCE_READ_USER_COUNT)
             .stream()
             .toList()
         assertEquals(1, topics.size)
         assertEquals("test_topic", topics[0].name)
+        assertEquals(10, topics[0].sourceReadCount)
+        assertEquals(5, topics[0].sourceReadUserCount)
     }
 
     @Test

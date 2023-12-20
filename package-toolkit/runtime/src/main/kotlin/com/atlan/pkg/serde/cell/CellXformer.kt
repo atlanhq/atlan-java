@@ -60,13 +60,13 @@ object CellXformer {
                 in DataTypeXformer.FIELDS -> DataTypeXformer.decode(value, fieldName)
                 else -> value
             }
-        } else if (Boolean::class.java.isAssignableFrom(type)) {
+        } else if (Boolean::class.java.isAssignableFrom(type) || java.lang.Boolean::class.java.isAssignableFrom(type)) {
             value.toBoolean()
-        } else if (Integer::class.java.isAssignableFrom(type)) {
+        } else if (Integer::class.java.isAssignableFrom(type) || java.lang.Integer::class.java.isAssignableFrom(type)) {
             value.toInt()
-        } else if (Long::class.java.isAssignableFrom(type)) {
+        } else if (Long::class.java.isAssignableFrom(type) || java.lang.Long::class.java.isAssignableFrom(type)) {
             value.toLong()
-        } else if (Double::class.java.isAssignableFrom(type)) {
+        } else if (Double::class.java.isAssignableFrom(type) || java.lang.Double::class.java.isAssignableFrom(type)) {
             value.toDouble()
         } else if (Collection::class.java.isAssignableFrom(type)) {
             // Start by checking whether the list is simple or complex
