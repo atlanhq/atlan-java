@@ -131,7 +131,7 @@ public class SnowflakeCrawler extends AbstractCrawler {
                 String username, String privateKey, String privateKeyPassword, String role, String warehouse) {
             localCreds
                     .port(443)
-                    .authType("basic")
+                    .authType("keypair")
                     .username(username)
                     .password(privateKey)
                     .extra("role", role)
