@@ -18,7 +18,7 @@ object Exporter {
         val assetsQualifiedNamePrefix = Utils.getOrDefault(config.qnPrefix, "default")
 
         val glossaryFile = "$outputDirectory${File.separator}glossary-export.csv"
-        if (Utils.getOrDefault(config.includeGlossaries, false)) {
+        if ("GLOSSARIES_ONLY" == assetsExportScope || Utils.getOrDefault(config.includeGlossaries, false)) {
             val glossaryExporter = GlossaryExporter(
                 glossaryFile,
                 batchSize,
@@ -28,12 +28,18 @@ object Exporter {
             // Still create an (empty) output file, to avoid errors in Argo
             File(glossaryFile).createNewFile()
         }
-        val assetExporter = AssetExporter(
-            "$outputDirectory${File.separator}asset-export.csv",
-            assetsExportScope,
-            assetsQualifiedNamePrefix,
-            batchSize,
-        )
-        assetExporter.export()
+        val assetsFile = "$outputDirectory${File.separator}asset-export.csv"
+        if ("GLOSSARIES_ONLY" != assetsExportScope) {
+            val assetExporter = AssetExporter(
+                assetsFile,
+                assetsExportScope,
+                assetsQualifiedNamePrefix,
+                batchSize,
+            )
+            assetExporter.export()
+        } else {
+            // Still create an (empty) output file, to avoid errors in Argo
+            File(assetsFile).createNewFile()
+        }
     }
 }

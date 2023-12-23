@@ -3,6 +3,7 @@
 import com.atlan.Atlan
 import com.atlan.pkg.CustomPackage
 import com.atlan.pkg.config.model.ui.UIConfig
+import com.atlan.pkg.config.model.ui.UIRule
 import com.atlan.pkg.config.model.ui.UIStep
 import com.atlan.pkg.config.model.workflow.WorkflowOutputs
 import com.atlan.pkg.config.widgets.BooleanInput
@@ -28,6 +29,7 @@ object PackageConfig : CustomPackage(
                         label = "Export scope",
                         required = true,
                         possibleValues = mapOf(
+                            "GLOSSARIES_ONLY" to "Glossaries only",
                             "ENRICHED_ONLY" to "Enriched only",
                             "ALL" to "All",
                         ),
@@ -43,11 +45,21 @@ object PackageConfig : CustomPackage(
                     ),
                     "include_glossaries" to BooleanInput(
                         label = "Include glossaries?",
-                        required = true,
+                        required = false,
                         help = "Whether glossaries (and their terms and categories) should be exported, too.",
                         grid = 4,
                     ),
                 ),
+            ),
+        ),
+        rules = listOf(
+            UIRule(
+                whenInputs = mapOf("export_scope" to "ENRICHED_ONLY"),
+                required = listOf("qn_prefix", "include_glossaries"),
+            ),
+            UIRule(
+                whenInputs = mapOf("export_scope" to "ALL"),
+                required = listOf("qn_prefix", "include_glossaries"),
             ),
         ),
     ),
