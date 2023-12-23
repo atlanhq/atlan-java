@@ -81,13 +81,13 @@ public class WorkflowResponse extends ApiResource {
                     status = runDetails.getStatus();
                 }
                 if (log != null) {
-                    log.atLevel(level).log("Workflow status: {}", status);
+                    log.atLevel(level).log("Workflow {}: {}", name, status);
                 }
             } while (status != AtlanWorkflowPhase.SUCCESS
                     && status != AtlanWorkflowPhase.ERROR
                     && status != AtlanWorkflowPhase.FAILED);
             if (log != null) {
-                log.atLevel(level).log("Workflow completion status: {}", status);
+                log.atLevel(level).log("Workflow {}: {}", name, status);
             }
             return status;
         } else {
