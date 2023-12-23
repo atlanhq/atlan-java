@@ -49,7 +49,7 @@ public class AtlanTagOptions extends AtlanObject {
      */
     public static AtlanTagOptions withIcon(AtlanIcon icon, AtlanTagColor color) {
         return AtlanTagOptions.builder()
-                .color(color)
+                .color(color.getValue())
                 .iconName(icon)
                 .iconType(TagIconType.ICON)
                 .imageID("")
@@ -110,7 +110,7 @@ public class AtlanTagOptions extends AtlanObject {
             return AtlanTagOptions.builder()
                     .iconType(TagIconType.IMAGE)
                     .imageID(result.getId())
-                    .color(AtlanTagColor.GRAY)
+                    .color(AtlanTagColor.GRAY.getValue())
                     .iconName(AtlanIcon.ATLAN_TAG)
                     .build();
         } catch (MalformedURLException e) {
@@ -130,13 +130,13 @@ public class AtlanTagOptions extends AtlanObject {
         return AtlanTagOptions.builder()
                 .iconType(TagIconType.EMOJI)
                 .emoji(emoji)
-                .color(AtlanTagColor.GRAY)
+                .color(AtlanTagColor.GRAY.getValue())
                 .iconName(AtlanIcon.ATLAN_TAG)
                 .build();
     }
 
     /** Color to use for the Atlan tag. */
-    AtlanTagColor color;
+    String color;
 
     /** Name of icon to use to represent the tag visually. */
     AtlanIcon iconName;
