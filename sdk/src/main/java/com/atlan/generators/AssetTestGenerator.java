@@ -46,6 +46,7 @@ public class AssetTestGenerator extends AssetGenerator {
         private Set<SearchFieldGenerator.Field> searchFields;
         private boolean inherited;
         private boolean relationship;
+        private String relatedTypeOriginal;
     }
 
     private void addTestAttributes(AssetGenerator assetGenerator) {
@@ -94,6 +95,7 @@ public class AssetTestGenerator extends AssetGenerator {
                             addEnum(builder, multiValued, type.getName());
                             break;
                         case ASSET:
+                            builder.relatedTypeOriginal(type.getOriginalBase());
                             if (!attribute.getRetyped()) {
                                 addAssetRef(builder, multiValued, type.getName());
                             } else {

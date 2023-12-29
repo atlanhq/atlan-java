@@ -4,6 +4,7 @@ package com.atlan.generators;
 
 import com.atlan.model.typedefs.AttributeDef;
 import com.atlan.model.typedefs.EntityDef;
+import com.atlan.util.StringUtils;
 import java.util.*;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -238,7 +239,7 @@ public class SearchFieldGenerator extends TypeGenerator {
         private void resolveSearchDetails(AttributeDef attributeDef) {
             searchFieldName = getSearchFieldForAttribute(attributeDef);
             if (searchFieldName != null) {
-                enumName = getEnumFromAttrName(getRenamed());
+                enumName = StringUtils.getUpperSnakeCase(getRenamed());
             }
         }
 
@@ -375,13 +376,6 @@ public class SearchFieldGenerator extends TypeGenerator {
                     break;
             }
             return toUse;
-        }
-
-        static String getEnumFromAttrName(String attrName) {
-            return attrName.replaceAll("_", "")
-                    .replaceAll("([A-Z]+)([A-Z][a-z])", "$1_$2")
-                    .replaceAll("([a-z])([A-Z])", "$1_$2")
-                    .toUpperCase(Locale.ROOT);
         }
     }
 }

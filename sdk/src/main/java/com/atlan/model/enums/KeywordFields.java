@@ -244,6 +244,8 @@ public enum KeywordFields implements AtlanSearchableField {
     ASSET_SODA_SOURCE_URL("assetSodaSourceURL"),
     /** List of tags attached to this asset. */
     ASSET_TAGS("assetTags"),
+    /** Color (in hexadecimal RGB) to use to represent this asset. */
+    ASSET_THEME_HEX("assetThemeHex"),
     /** All terms attached to an asset, searchable by the term's qualifiedName. */
     ASSIGNED_TERMS("__meanings"),
     /** Parsed AST of the code or SQL statements that describe the logic of this process. */
@@ -294,7 +296,7 @@ public enum KeywordFields implements AtlanSearchableField {
     CATEGORIES("__categories"),
     /** Type of connection, for example WAREHOUSE, RDBMS, etc. */
     CATEGORY("category"),
-    /** Type of category, determining the kind of knowledge it organizes. */
+    /** TBC */
     CATEGORY_TYPE("categoryType"),
     /** Status of this asset's certification. */
     CERTIFICATE_STATUS("certificateStatus"),
@@ -372,8 +374,6 @@ public enum KeywordFields implements AtlanSearchableField {
     DATA_PRODUCT_SENSITIVITY("dataProductSensitivity"),
     /** Status of this data product. */
     DATA_PRODUCT_STATUS("dataProductStatus"),
-    /** Color (in hexadecimal RGB) to use to represent this data product. */
-    DATA_PRODUCT_THEME("dataProductTheme"),
     /** Owner of the asset, from Google Data Studio. */
     DATA_STUDIO_ASSET_OWNER("dataStudioAssetOwner"),
     /** Title of the Google Data Studio asset. */
@@ -488,8 +488,6 @@ public enum KeywordFields implements AtlanSearchableField {
     DETAIL_COLUMNS("detailColumns"),
     /** Human-readable name of this asset used for display purposes (in user interface). */
     DISPLAY_NAME("displayName.keyword"),
-    /** Color (in hexadecimal RGB) to use to represent this data domain. */
-    DOMAIN_THEME_HEX("domainThemeHex"),
     /** Specifies the partition key of the DynamoDB Table/Index */
     DYNAMO_DB_PARTITION_KEY("dynamoDBPartitionKey"),
     /** Specifies attributes that are projected from the DynamoDB table into the index */
@@ -562,7 +560,7 @@ public enum KeywordFields implements AtlanSearchableField {
     GCS_STORAGE_CLASS("gcsStorageClass"),
     /** Glossary in which the asset is contained, searchable by the qualifiedName of the glossary. */
     GLOSSARY("__glossary"),
-    /** Type of glosssary, which determines the type of knowledge it captures. */
+    /** TBC */
     GLOSSARY_TYPE("glossaryType"),
     /** List of labels that have been applied to the asset in Google. */
     GOOGLE_LABELS("googleLabels"),
@@ -700,12 +698,6 @@ public enum KeywordFields implements AtlanSearchableField {
     MC_MONITOR_WAREHOUSE("mcMonitorWarehouse"),
     /** Identifier for the merge result. */
     MERGE_RESULT_ID("mergeResultId"),
-    /** Abbreviation for this asset. */
-    MESH_ABBREVIATION("meshAbbreviation"),
-    /** URL for an image used as the cover for this asset. */
-    MESH_COVER_IMAGE_URL("meshCoverImageUrl"),
-    /** Unique business key for this asset. */
-    MESH_SLUG("meshSlug"),
     /** Simple name of the Metabase collection in which this asset exists. */
     METABASE_COLLECTION_NAME("metabaseCollectionName.keyword"),
     /** Unique name of the Metabase collection in which this asset exists. */
@@ -1242,17 +1234,21 @@ public enum KeywordFields implements AtlanSearchableField {
     TABLE_QUALIFIED_NAME("tableQualifiedName"),
     /** Allowed values for the tag in the source system. These are denormalized from tagAttributes for ease of querying. */
     TAG_ALLOWED_VALUES("tagAllowedValues"),
+    /** Represents associated tag value */
+    TAG_ATTACHMENT_STRING_VALUE("tagAttachmentStringValue"),
     /** Attributes associated with the tag in the source system. */
     TAG_ATTRIBUTES("tagAttributes"),
     /** Unique identifier of the tag in the source system. */
     TAG_ID("tagId"),
+    /** Represents associated source tag's qualified name */
+    TAG_QUALIFIED_NAME("tagQualifiedName"),
     /** TBC */
     TAG_SERVICE("tagService"),
     /** TBC */
     TARGET_SERVER_NAME("targetServerName"),
     /** Name of the Atlan workspace in which this asset exists. */
     TENANT_ID("tenantId"),
-    /** Type of term, determining how knowledge is captured. */
+    /** TBC */
     TERM_TYPE("termType"),
     /** TBC */
     THOUGHTSPOT_CHART_TYPE("thoughtspotChartType"),

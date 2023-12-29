@@ -432,6 +432,7 @@ public class MongoDBCollectionTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
+            .noSQLSchemaDefinition("String0")
             .mongoDBCollectionAverageObjectSize(123456789L)
             .mongoDBCollectionExpireAfterSeconds(123456789L)
             .mongoDBCollectionIsCapped(true)
