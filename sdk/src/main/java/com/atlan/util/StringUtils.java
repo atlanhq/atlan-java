@@ -199,4 +199,30 @@ public final class StringUtils {
         }
         return builder.toString();
     }
+
+    /**
+     * Convert the provided string to UPPER_SNAKE_CASE.
+     *
+     * @param text to convert
+     * @return the original text, in UPPER_SNAKE_CASE
+     */
+    public static String getUpperSnakeCase(String text) {
+        return getSnakeCase(text).toUpperCase(Locale.ROOT);
+    }
+
+    /**
+     * Convert the provided string to lower_snake_case.
+     *
+     * @param text to convert
+     * @return the original text, in lower_snake_case
+     */
+    public static String getLowerSnakeCase(String text) {
+        return getSnakeCase(text).toLowerCase(Locale.ROOT);
+    }
+
+    private static String getSnakeCase(String text) {
+        return text.replaceAll("_", "")
+                .replaceAll("([A-Z]+)([A-Z][a-z])", "$1_$2")
+                .replaceAll("([a-z])([A-Z])", "$1_$2");
+    }
 }

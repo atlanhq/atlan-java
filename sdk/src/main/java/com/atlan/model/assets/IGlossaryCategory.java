@@ -271,6 +271,9 @@ public interface IGlossaryCategory {
     SortedSet<String> getAssetTags();
 
     /** TBC */
+    String getAssetThemeHex();
+
+    /** TBC */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */

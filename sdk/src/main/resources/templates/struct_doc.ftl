@@ -13,14 +13,8 @@ ${description}
 
 These are the attributes embedded within each instance of the `${originalName}` struct in an asset:
 
-=== ":fontawesome-brands-java: Java"
+<div class="grid" markdown>
 
-    --8<-- "snippets/model/java/${originalName?lower_case}-properties.md"
+--8<-- "snippets/model/${originalName?lower_case}-properties.md"
 
-=== ":material-language-python: Python"
-
-    --8<-- "snippets/model/python/${originalName?lower_case}-properties.md"
-
-=== ":material-code-json: Raw REST API"
-
-    --8<-- "snippets/model/raw/${originalName?lower_case}-properties.md"
+</div>

@@ -14,6 +14,7 @@ public class AttributeGenerator extends TypeGenerator {
 
     private MappedType type;
     private String renamed;
+    private String snakeCaseRenamed;
     private boolean retyped = false;
 
     protected AttributeGenerator(GeneratorConfig cfg) {
@@ -37,6 +38,7 @@ public class AttributeGenerator extends TypeGenerator {
 
     protected void resolveName() {
         this.renamed = StringUtils.getLowerCamelCase(getOriginalName());
+        this.snakeCaseRenamed = StringUtils.getLowerSnakeCase(getOriginalName());
     }
 
     protected void resolveType(AttributeDef attributeDef) {

@@ -53,22 +53,22 @@ public class DataDomain extends Asset implements IDataDomain, IDataMesh, ICatalo
     @Singular
     SortedSet<IDataProduct> dataProducts;
 
-    /** TBC */
+    /** Tasks to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
-    /** TBC */
+    /** Tasks from which this asset is output. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;

@@ -4,6 +4,7 @@ package com.atlan.generators;
 
 import com.atlan.api.TypeDefsEndpoint;
 import com.atlan.model.typedefs.*;
+import com.atlan.util.StringUtils;
 import freemarker.template.TemplateNotFoundException;
 import java.io.IOException;
 import java.util.*;
@@ -295,6 +296,7 @@ public class AssetGenerator extends TypeGenerator implements Comparable<AssetGen
         protected void resolveName() {
             super.resolveName();
             setRenamed(cfg.resolveAttributeName(getOriginalName()));
+            setSnakeCaseRenamed(StringUtils.getLowerSnakeCase(getRenamed()));
         }
 
         @Override

@@ -86,9 +86,6 @@ public interface ICatalog {
             case Column.TYPE_NAME:
                 ref = Column.refByQualifiedName(qualifiedName);
                 break;
-            case DataContract.TYPE_NAME:
-                ref = DataContract.refByQualifiedName(qualifiedName);
-                break;
             case DataDomain.TYPE_NAME:
                 ref = DataDomain.refByQualifiedName(qualifiedName);
                 break;
@@ -704,6 +701,9 @@ public interface ICatalog {
 
     /** List of tags attached to this asset. */
     SortedSet<String> getAssetTags();
+
+    /** Color (in hexadecimal RGB) to use to represent this asset. */
+    String getAssetThemeHex();
 
     /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();

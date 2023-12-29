@@ -106,7 +106,7 @@ public enum BooleanFields implements AtlanSearchableField {
     IS_PRIVATE("isPrivate"),
     /** Whether this asset has been profiled (true) or not (false). */
     IS_PROFILED("isProfiled"),
-    /** Whether this asset is published (true) or still a work in progress (false). */
+    /** Whether this datasource is published (true) or embedded (false). */
     IS_PUBLISHED("isPublished"),
     /** Whether this object is queryable (true) or not (false). */
     IS_QUERYABLE("isQueryable"),

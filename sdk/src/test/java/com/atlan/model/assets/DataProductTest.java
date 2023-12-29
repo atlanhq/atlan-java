@@ -389,8 +389,8 @@ public class DataProductTest {
             .dataProductCriticality(DataProductCriticality.LOW)
             .dataProductSensitivity(DataProductSensitivity.PUBLIC)
             .dataProductStatus(DataProductStatus.ACTIVE)
-            .outputPort(Connection.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .outputPort(Connection.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .outputPort(TagAttachment.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .outputPort(TagAttachment.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .build();
 
     private static final int hash = full.hashCode();
