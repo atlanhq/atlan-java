@@ -4,6 +4,7 @@ package com.atlan.pkg.config.model.workflow
 
 import com.atlan.pkg.config.widgets.BooleanInput
 import com.atlan.pkg.config.widgets.DateInput
+import com.atlan.pkg.config.widgets.FileCopier
 import com.atlan.pkg.config.widgets.FileUploader
 import com.atlan.pkg.config.widgets.NumericInput
 import com.atlan.pkg.config.widgets.Widget
@@ -27,6 +28,7 @@ class NestedConfig(
                     builder.append("\"").append(k).append("\": ")
                     when (ui) {
                         is FileUploader.FileUploaderWidget,
+                        is FileCopier.FileCopierWidget,
                         -> builder.append("\"/tmp/$k/{{inputs.parameters.").append(k).append("}}\",\n")
                         is NumericInput.NumericInputWidget,
                         is DateInput.DateInputWidget,

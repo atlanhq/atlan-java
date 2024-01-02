@@ -36,7 +36,10 @@ object Importer {
     @JvmStatic
     fun main(args: Array<String>) {
         val config = Utils.setPackageOps<RelationalAssetsBuilderCfg>()
+        import(config)
+    }
 
+    fun import(config: RelationalAssetsBuilderCfg) {
         val batchSize = 20
         val assetsFilename = Utils.getOrDefault(config.assetsFile, "")
         val assetAttrsToOverwrite =

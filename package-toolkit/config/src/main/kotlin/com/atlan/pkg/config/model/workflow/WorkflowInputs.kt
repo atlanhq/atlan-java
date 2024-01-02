@@ -8,6 +8,7 @@ import com.atlan.pkg.Utils
 import com.atlan.pkg.config.model.ui.UIConfig
 import com.atlan.pkg.config.widgets.BooleanInput
 import com.atlan.pkg.config.widgets.DateInput
+import com.atlan.pkg.config.widgets.FileCopier
 import com.atlan.pkg.config.widgets.FileUploader
 import com.atlan.pkg.config.widgets.NumericInput
 import com.fasterxml.jackson.annotation.JsonIgnore
@@ -26,7 +27,7 @@ class WorkflowInputs(
         }
         config.properties.forEach { (k, u) ->
             when (u.ui) {
-                is FileUploader.FileUploaderWidget -> {
+                is FileUploader.FileUploaderWidget, is FileCopier.FileCopierWidget -> {
                     arts.add(NamePathS3Tuple(k))
                     params.add(NameValuePair.of(k, Utils.DEFAULT_FILE))
                 }
