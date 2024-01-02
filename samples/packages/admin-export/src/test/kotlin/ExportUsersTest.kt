@@ -1,6 +1,7 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2023 Atlan Pte. Ltd. */
 import com.atlan.pkg.PackageTest
+import com.atlan.pkg.Utils
 import com.atlan.pkg.ae.AdminExporter
 import com.atlan.pkg.serde.xls.ExcelReader
 import org.testng.Assert.assertFalse
@@ -27,6 +28,7 @@ class ExportUsersTest : PackageTest() {
             AdminExportCfg(
                 objectsToInclude = listOf("users"),
                 includeNativePolicies = false,
+                emailAddresses = null,
             ),
         )
         AdminExporter.main(arrayOf(testDirectory))
