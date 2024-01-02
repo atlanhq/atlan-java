@@ -31,8 +31,11 @@ tasks {
             include(dependency("org.apache.logging.log4j:log4j-core:.*"))
             include(dependency("org.apache.logging.log4j:log4j-slf4j2-impl:.*"))
             include(dependency("org.jetbrains.kotlin:kotlin-reflect:.*"))
+            // JSON
             include(dependency("com.fasterxml.jackson.module:jackson-module-kotlin:.*"))
+            // CSV
             include(dependency("de.siegmar:fastcsv:.*"))
+            // XLS(X)
             include(dependency("org.apache.poi:poi:.*"))
             include(dependency("commons-codec:commons-codec:.*"))
             include(dependency("org.apache.commons:commons-collections4:.*"))
@@ -44,11 +47,14 @@ tasks {
             include(dependency("org.apache.xmlbeans:xmlbeans:.*"))
             include(dependency("org.apache.commons:commons-compress:.*"))
             include(dependency("com.github.virtuald:curvesapi:.*"))
+            // Email
             include(dependency("org.simplejavamail:simple-java-mail:.*"))
             include(dependency("org.simplejavamail:core-module:.*"))
             include(dependency("com.sun.mail:jakarta.mail:.*"))
             include(dependency("com.sun.activation:jakarta.activation:.*"))
             include(dependency("com.sanctionco.jmail:jmail:.*"))
+            include(dependency("com.github.bbottema:jetbrains-runtime-annotations:.*"))
+            include(dependency("com.pivovarit:throwing-function:.*"))
         }
         mergeServiceFiles()
     }
