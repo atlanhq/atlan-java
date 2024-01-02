@@ -3,6 +3,7 @@
 package com.atlan.pkg.config.model.workflow
 
 import com.atlan.pkg.config.model.ui.UIConfig
+import com.atlan.pkg.config.widgets.FileCopier
 import com.atlan.pkg.config.widgets.FileUploader
 import com.atlan.pkg.config.widgets.Widget
 import com.fasterxml.jackson.annotation.JsonIgnore
@@ -29,10 +30,13 @@ class WorkflowContainer(
         builder.add(NamedSecret("CLIENT_ID", "argo-client-creds", "login"))
         builder.add(NamedSecret("CLIENT_SECRET", "argo-client-creds", "password"))
         config.properties.forEach { (k, u) ->
-            if (u.ui is FileUploader.FileUploaderWidget) {
-                builder.add(NameValuePair(k.uppercase(), NamePathS3Tuple(k).path))
-            } else {
-                builder.add(NameValuePair(k.uppercase(), "{{inputs.parameters.$k}}"))
+            when (u.ui) {
+                is FileUploader.FileUploaderWidget, is FileCopier.FileCopierWidget -> {
+                    builder.add(NameValuePair(k.uppercase(), NamePathS3Tuple(k).path))
+                }
+                else -> {
+                    builder.add(NameValuePair(k.uppercase(), "{{inputs.parameters.$k}}"))
+                }
             }
             nestedConfig[k] = u.ui
         }
