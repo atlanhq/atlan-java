@@ -28,6 +28,7 @@ class ExportAllPoliciesTest : PackageTest() {
                     "policies",
                 ),
                 includeNativePolicies = true,
+                emailAddresses = null,
             ),
         )
         AdminExporter.main(arrayOf(testDirectory))

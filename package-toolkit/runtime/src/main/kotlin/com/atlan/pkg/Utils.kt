@@ -7,8 +7,13 @@ import com.atlan.exception.AtlanException
 import com.atlan.exception.NotFoundException
 import com.atlan.model.assets.Connection
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import jakarta.mail.Message
 import mu.KLogger
 import mu.KotlinLogging
+import org.simplejavamail.api.email.ContentTransferEncoding
+import org.simplejavamail.email.EmailBuilder
+import org.simplejavamail.mailer.MailerBuilder
+import java.io.File
 import java.util.concurrent.ThreadLocalRandom
 import java.util.concurrent.atomic.AtomicLong
 import kotlin.math.round
@@ -32,7 +37,7 @@ object Utils {
      */
     inline fun <reified T : CustomConfig> setPackageOps(): T {
         System.getProperty("logDirectory") ?: System.setProperty("logDirectory", "tmp")
-        logger.info("Looking for configuration in environment variables...")
+        logger.info { "Looking for configuration in environment variables..." }
         val config = parseConfigFromEnv<T>()
         setClient(config.runtime.userId ?: "")
         setWorkflowOpts(config.runtime)
@@ -54,15 +59,15 @@ object Utils {
         val tokenToUse =
             when {
                 apiToken.isNotEmpty() -> {
-                    logger.info("Using provided API token for authentication.")
+                    logger.info { "Using provided API token for authentication." }
                     apiToken
                 }
                 userId.isNotEmpty() -> {
-                    logger.info("No API token found, attempting to impersonate user: {}", userId)
+                    logger.info { "No API token found, attempting to impersonate user: $userId" }
                     Atlan.getDefaultClient().impersonate.user(userId)
                 }
                 else -> {
-                    logger.info("No API token or impersonation user, attempting short-lived escalation.")
+                    logger.info { "No API token or impersonation user, attempting short-lived escalation." }
                     Atlan.getDefaultClient().impersonate.escalate()
                 }
             }
@@ -103,20 +108,14 @@ object Utils {
         val localCount = counter.incrementAndGet()
         if (batchSize > 0) {
             if (localCount.mod(batchSize) == 0 || localCount == total) {
-                logger.info(
-                    " ... processed {}/{} ({}%)",
-                    localCount,
-                    total,
-                    round((localCount.toDouble() / total) * 100),
-                )
+                logger.info {
+                    " ... processed $localCount/$total (${round((localCount.toDouble() / total) * 100)}%)"
+                }
             }
         } else {
-            logger.info(
-                " ... processed {}/{} ({}%)",
-                localCount,
-                total,
-                round((localCount.toDouble() / total) * 100),
-            )
+            logger.info {
+                " ... processed $localCount/$total (${round((localCount.toDouble() / total) * 100)}%)"
+            }
         }
     }
 
@@ -168,7 +167,7 @@ object Utils {
      * @return the complete configuration for the custom package
      */
     inline fun <reified T : CustomConfig> parseConfigFromEnv(): T {
-        logger.info("Constructing configuration from environment variables...")
+        logger.info { "Constructing configuration from environment variables..." }
         val runtime = buildRuntimeConfig()
         return parseConfig(getEnvVar("NESTED_CONFIG"), runtime)
     }
@@ -181,7 +180,7 @@ object Utils {
      * @return the complete configuration for the event-handling pipeline
      */
     inline fun <reified T : CustomConfig> parseConfig(config: String, runtime: String): T {
-        logger.info("Parsing configuration...")
+        logger.info { "Parsing configuration..." }
         val type = MAPPER.typeFactory.constructType(T::class.java)
         val cfg = MAPPER.readValue<T>(config, type)
         cfg.runtime = MAPPER.readValue(runtime, RuntimeConfig::class.java)
@@ -305,7 +304,7 @@ object Utils {
      */
     fun createConnection(connection: Connection?): String {
         return if (connection != null) {
-            logger.info("Attempting to create new connection...")
+            logger.info { "Attempting to create new connection..." }
             try {
                 val toCreate = connection
                     .toBuilder()
@@ -331,7 +330,7 @@ object Utils {
     fun reuseConnection(providedConnectionQN: String?): String {
         return providedConnectionQN?.let {
             try {
-                logger.info("Attempting to reuse connection: {}", providedConnectionQN)
+                logger.info { "Attempting to reuse connection: $providedConnectionQN" }
                 Connection.get(Atlan.getDefaultClient(), providedConnectionQN, false)
                 providedConnectionQN
             } catch (e: NotFoundException) {
@@ -339,5 +338,40 @@ object Utils {
                 ""
             }
         } ?: ""
+    }
+
+    /**
+     * Send an email using the tenant's internal SMTP server.
+     *
+     * @param subject subject line for the email
+     * @param recipients collection of email addresses to send the email to
+     * @param body content of the email (plain text)
+     * @param attachments (optional) attachments to include in the email, a map of files to their mime type
+     */
+    fun sendEmail(
+        subject: String,
+        recipients: Collection<String>,
+        body: String,
+        attachments: Map<File, String>? = null,
+    ) {
+        if (Atlan.getDefaultClient().isInternal) {
+            val builder = EmailBuilder.startingBlank()
+                .from("Atlan", getEnvVar("SMTP_FROM", "support@atlan.com"))
+                .withRecipients(null, false, recipients, Message.RecipientType.TO)
+                .withSubject(subject)
+                .withPlainText(body)
+            attachments?.forEach { (file, mimetype) ->
+                builder.withAttachment(file.name, file.readBytes(), mimetype, null, ContentTransferEncoding.BINARY)
+            }
+            val email = builder.buildEmail()
+            MailerBuilder.withSMTPServer(
+                getEnvVar("SMTP_HOST", "smtp.sendgrid.net"),
+                getEnvVar("SMTP_PORT", "587").toInt(),
+                getEnvVar("SMTP_USER"),
+                getEnvVar("SMTP_PASS"),
+            ).buildMailer().sendMail(email)
+        } else {
+            logger.warn { "Can ONLY send email from within the cluster -- skipping email." }
+        }
     }
 }

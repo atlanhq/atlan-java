@@ -13,6 +13,7 @@ dependencies {
     api(libs.jackson.kotlin)
     api(libs.fastcsv)
     api(libs.bundles.poi)
+    implementation(libs.simple.java.mail)
     // You would not need the dependencies below in reality, they are to simulate a running tenant
     testImplementation(libs.bundles.java.test)
     testImplementation(project(":mocks"))
@@ -43,6 +44,10 @@ tasks {
             include(dependency("org.apache.xmlbeans:xmlbeans:.*"))
             include(dependency("org.apache.commons:commons-compress:.*"))
             include(dependency("com.github.virtuald:curvesapi:.*"))
+            include(dependency("org.simplejavamail:simple-java-mail:.*"))
+            include(dependency("org.simplejavamail:core-module:.*"))
+            include(dependency("com.sun.mail:jakarta.mail:.*"))
+            include(dependency("com.sun.activation:jakarta.activation:.*"))
         }
         mergeServiceFiles()
     }

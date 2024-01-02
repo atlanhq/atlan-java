@@ -29,6 +29,11 @@ class WorkflowContainer(
         builder.add(NameValuePair("X_ATLAN_AGENT_WORKFLOW_ID", "{{=sprig.dig('labels', 'workflows', 'argoproj', 'io/workflow-template', '', workflow)}}"))
         builder.add(NamedSecret("CLIENT_ID", "argo-client-creds", "login"))
         builder.add(NamedSecret("CLIENT_SECRET", "argo-client-creds", "password"))
+        builder.add(NamedSecret("SMTP_HOST", "support-smtp-creds", "host"))
+        builder.add(NamedSecret("SMTP_PORT", "support-smtp-creds", "port"))
+        builder.add(NamedSecret("SMTP_FROM", "support-smtp-creds", "from"))
+        builder.add(NamedSecret("SMTP_USER", "support-smtp-creds", "login"))
+        builder.add(NamedSecret("SMTP_PASS", "workflow-parameter-store", "smtp_password"))
         config.properties.forEach { (k, u) ->
             when (u.ui) {
                 is FileUploader.FileUploaderWidget, is FileCopier.FileCopierWidget -> {

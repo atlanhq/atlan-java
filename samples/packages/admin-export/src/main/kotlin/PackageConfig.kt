@@ -8,6 +8,7 @@ import com.atlan.pkg.config.model.ui.UIStep
 import com.atlan.pkg.config.model.workflow.WorkflowOutputs
 import com.atlan.pkg.config.widgets.BooleanInput
 import com.atlan.pkg.config.widgets.DropDown
+import com.atlan.pkg.config.widgets.TextInput
 
 /**
  * Definition for the Admin Export custom package.
@@ -41,6 +42,18 @@ object PackageConfig : CustomPackage(
                         label = "Include out-of-the-box policies?",
                         help = "Whether to include the out-of-the-box policies (Yes) or only those policies you can manage directly (No).",
                         required = false,
+                    ),
+                ),
+            ),
+            UIStep(
+                title = "Delivery",
+                description = "Where to send",
+                inputs = mapOf(
+                    "email_addresses" to TextInput(
+                        label = "Email address(es)",
+                        help = "Provide any email addresses you want the extract sent to, separated by commas.",
+                        required = false,
+                        placeholder = "one@example.com,two@example.com",
                     ),
                 ),
             ),

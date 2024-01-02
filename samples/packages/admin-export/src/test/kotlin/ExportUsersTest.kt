@@ -27,6 +27,7 @@ class ExportUsersTest : PackageTest() {
             AdminExportCfg(
                 objectsToInclude = listOf("users"),
                 includeNativePolicies = false,
+                emailAddresses = null,
             ),
         )
         AdminExporter.main(arrayOf(testDirectory))
