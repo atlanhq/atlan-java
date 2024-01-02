@@ -48,6 +48,7 @@ tasks {
             include(dependency("org.simplejavamail:core-module:.*"))
             include(dependency("com.sun.mail:jakarta.mail:.*"))
             include(dependency("com.sun.activation:jakarta.activation:.*"))
+            include(dependency("com.sanctionco.jmail:jmail:.*"))
         }
         mergeServiceFiles()
     }
