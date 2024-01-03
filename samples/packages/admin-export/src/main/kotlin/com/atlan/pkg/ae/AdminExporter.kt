@@ -58,7 +58,7 @@ object AdminExporter {
                 "[Atlan] Admin Export results",
                 emails,
                 "Hi there! As requested, please find attached the results of the Admin Export package.\n\nAll the best!\nAtlan",
-                mapOf(File(exportFile) to "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"),
+                listOf(File(exportFile)),
             )
         }
     }
