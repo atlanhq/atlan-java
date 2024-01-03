@@ -32,6 +32,7 @@ object AdminExporter {
         val emails = Utils.getOrDefault(config.emailAddresses, "")
             .split(',')
             .map { it.trim() }
+            .filter { it.isNotBlank() }
             .toList()
 
         // Before we start processing, will pre-cache all glossaries,
@@ -57,7 +58,7 @@ object AdminExporter {
                 "[Atlan] Admin Export results",
                 emails,
                 "Hi there! As requested, please find attached the results of the Admin Export package.\n\nAll the best!\nAtlan",
-                mapOf(File(exportFile) to "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"),
+                listOf(File(exportFile)),
             )
         }
     }

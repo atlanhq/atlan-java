@@ -7,10 +7,10 @@ import com.atlan.exception.AtlanException
 import com.atlan.exception.NotFoundException
 import com.atlan.model.assets.Connection
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import jakarta.activation.FileDataSource
 import jakarta.mail.Message
 import mu.KLogger
 import mu.KotlinLogging
-import org.simplejavamail.api.email.ContentTransferEncoding
 import org.simplejavamail.email.EmailBuilder
 import org.simplejavamail.mailer.MailerBuilder
 import java.io.File
@@ -346,32 +346,28 @@ object Utils {
      * @param subject subject line for the email
      * @param recipients collection of email addresses to send the email to
      * @param body content of the email (plain text)
-     * @param attachments (optional) attachments to include in the email, a map of files to their mime type
+     * @param attachments (optional) attachments to include in the email
      */
     fun sendEmail(
         subject: String,
         recipients: Collection<String>,
         body: String,
-        attachments: Map<File, String>? = null,
+        attachments: Collection<File>? = null,
     ) {
-        if (Atlan.getDefaultClient().isInternal) {
-            val builder = EmailBuilder.startingBlank()
-                .from("Atlan", getEnvVar("SMTP_FROM", "support@atlan.com"))
-                .withRecipients(null, false, recipients, Message.RecipientType.TO)
-                .withSubject(subject)
-                .withPlainText(body)
-            attachments?.forEach { (file, mimetype) ->
-                builder.withAttachment(file.name, file.readBytes(), mimetype, null, ContentTransferEncoding.BINARY)
-            }
-            val email = builder.buildEmail()
-            MailerBuilder.withSMTPServer(
-                getEnvVar("SMTP_HOST", "smtp.sendgrid.net"),
-                getEnvVar("SMTP_PORT", "587").toInt(),
-                getEnvVar("SMTP_USER"),
-                getEnvVar("SMTP_PASS"),
-            ).buildMailer().sendMail(email)
-        } else {
-            logger.warn { "Can ONLY send email from within the cluster -- skipping email." }
+        val builder = EmailBuilder.startingBlank()
+            .from("support@atlan.app")
+            .withRecipients(null, false, recipients, Message.RecipientType.TO)
+            .withSubject(subject)
+            .withPlainText("$body\n\n")
+        attachments?.forEach {
+            builder.withAttachment(it.name, FileDataSource(it))
         }
+        val email = builder.buildEmail()
+        MailerBuilder.withSMTPServer(
+            getEnvVar("SMTP_HOST", "smtp.sendgrid.net"),
+            getEnvVar("SMTP_PORT", "587").toInt(),
+            getEnvVar("SMTP_USER"),
+            getEnvVar("SMTP_PASS"),
+        ).buildMailer().sendMail(email)
     }
 }
