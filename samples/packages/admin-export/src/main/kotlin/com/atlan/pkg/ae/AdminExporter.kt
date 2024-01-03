@@ -32,6 +32,7 @@ object AdminExporter {
         val emails = Utils.getOrDefault(config.emailAddresses, "")
             .split(',')
             .map { it.trim() }
+            .filter { it.isNotBlank() }
             .toList()
 
         // Before we start processing, will pre-cache all glossaries,
