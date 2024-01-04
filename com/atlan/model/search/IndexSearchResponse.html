@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -282,20 +282,27 @@ implements java.lang.Iterable&lt;<a href="../assets/Asset.html" title="class in 
 </td>
 </tr>
 <tr id="i7" class="rowColor">
+<td class="colFirst"><code><a href="IndexSearchDSL.html" title="class in com.atlan.model.search">IndexSearchDSL</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getQuery()">getQuery</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Parse the original query from the search parameters.</div>
+</td>
+</tr>
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getQueryType()">getQueryType</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Type of query.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code><a href="SearchParameters.html" title="class in com.atlan.model.search">SearchParameters</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSearchParameters()">getSearchParameters</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Parameters for the search.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSpecificPage(int,int)">getSpecificPage</a></span>&#8203;(int&nbsp;offset,
                int&nbsp;pageSize)</code></th>
@@ -303,41 +310,41 @@ implements java.lang.Iterable&lt;<a href="../assets/Asset.html" title="class in 
 <div class="block">Retrieve a specific page of results using the same query used to produce this response.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>java.util.Iterator&lt;<a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#iterator()">iterator</a></span>()</code></th>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>java.util.stream.Stream&lt;<a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parallelStream()">parallelStream</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Stream the results in parallel across all pages (may do more than limited to in a request).</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setClient(com.atlan.AtlanClient)">setClient</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)</code></th>
 <td class="colLast">
 <div class="block">Connectivity to the Atlan tenant where the search was run.</div>
 </td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>java.util.Spliterator&lt;<a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#spliterator()">spliterator</a></span>()</code></th>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>java.util.stream.Stream&lt;<a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#stream()">stream</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Stream the results (lazily) for processing without needing to manually manage paging.</div>
 </td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 </tr>
@@ -494,6 +501,23 @@ implements java.lang.Iterable&lt;<a href="../assets/Asset.html" title="class in 
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>a lazily-loaded stream of results from the search</dd>
+</dl>
+</li>
+</ul>
+<a id="getQuery()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getQuery</h4>
+<pre class="methodSignature">public&nbsp;<a href="IndexSearchDSL.html" title="class in com.atlan.model.search">IndexSearchDSL</a>&nbsp;getQuery()
+                        throws <a href="../../exception/LogicException.html" title="class in com.atlan.exception">LogicException</a></pre>
+<div class="block">Parse the original query from the search parameters.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>original query as DSL</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/LogicException.html" title="class in com.atlan.exception">LogicException</a></code> - if the query could not be parsed</dd>
 </dl>
 </li>
 </ul>
