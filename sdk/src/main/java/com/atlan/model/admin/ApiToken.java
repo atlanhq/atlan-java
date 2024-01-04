@@ -38,6 +38,7 @@ import lombok.extern.jackson.Jacksonized;
 public class ApiToken extends AtlanObject {
 
     private static final long serialVersionUID = 2L;
+    public static final String API_USERNAME_PREFIX = "service-account-";
 
     /** Unique identifier (GUID) of the API token. */
     @Getter
@@ -69,6 +70,18 @@ public class ApiToken extends AtlanObject {
             return attributes.getDisplayName();
         }
         return null;
+    }
+
+    /**
+     * Retrieve the username that represents this API token.
+     * This name can be used to assign the token as a user to objects that require a user,
+     * such as policies.
+     *
+     * @return a username for this API token
+     */
+    @JsonIgnore
+    public String getApiTokenUsername() {
+        return API_USERNAME_PREFIX + getClientId();
     }
 
     /**

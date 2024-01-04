@@ -195,9 +195,9 @@ public class AtlanClient {
         atlanTagCache = new AtlanTagCache(typeDefs);
         customMetadataCache = new CustomMetadataCache(typeDefs);
         enumCache = new EnumCache(typeDefs);
-        groupCache = new GroupCache();
+        groupCache = new GroupCache(groups);
         roleCache = new RoleCache(roles);
-        userCache = new UserCache();
+        userCache = new UserCache(users, apiTokens);
         assetDeserializer = new AssetDeserializer(this);
         customMetadataAuditDeserializer = new CustomMetadataAuditDeserializer(this);
         atlanTagDeserializer = new AtlanTagDeserializer(this);

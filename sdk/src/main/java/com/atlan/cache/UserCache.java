@@ -2,6 +2,8 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.cache;
 
+import com.atlan.api.ApiTokensEndpoint;
+import com.atlan.api.UsersEndpoint;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
@@ -21,9 +23,17 @@ public class UserCache {
     private Map<String, String> mapNameToId = new ConcurrentHashMap<>();
     private Map<String, String> mapEmailToId = new ConcurrentHashMap<>();
 
+    private final UsersEndpoint usersEndpoint;
+    private final ApiTokensEndpoint apiTokensEndpoint;
+
+    public UserCache(UsersEndpoint usersEndpoint, ApiTokensEndpoint apiTokensEndpoint) {
+        this.usersEndpoint = usersEndpoint;
+        this.apiTokensEndpoint = apiTokensEndpoint;
+    }
+
     private synchronized void refreshCache() throws AtlanException {
         log.debug("Refreshing cache of users...");
-        List<AtlanUser> users = AtlanUser.list();
+        List<AtlanUser> users = usersEndpoint.list();
         mapIdToName = new ConcurrentHashMap<>();
         mapNameToId = new ConcurrentHashMap<>();
         mapEmailToId = new ConcurrentHashMap<>();
@@ -48,8 +58,19 @@ public class UserCache {
      */
     public String getIdForName(String username) throws AtlanException {
         if (username != null && !username.isEmpty()) {
+            // Look for the username in the cache first
             String userId = mapNameToId.get(username);
             if (userId == null) {
+                // If we are translating an API token, short-circuit any further cache refresh
+                if (username.startsWith(ApiToken.API_USERNAME_PREFIX)) {
+                    ApiToken token = apiTokensEndpoint.getById(username);
+                    if (token == null) {
+                        throw new NotFoundException(ErrorCode.API_TOKEN_NOT_FOUND_BY_NAME, username);
+                    } else {
+                        mapNameToId.put(username, token.getId());
+                        return token.getId();
+                    }
+                }
                 // If not found, refresh the cache and look again (could be stale)
                 refreshCache();
                 userId = mapNameToId.get(username);
@@ -102,11 +123,18 @@ public class UserCache {
         if (id != null && !id.isEmpty()) {
             String userName = mapIdToName.get(id);
             if (userName == null) {
-                // If not found, refresh the cache and look again (could be stale)
-                refreshCache();
-                userName = mapIdToName.get(id);
-                if (userName == null) {
-                    throw new NotFoundException(ErrorCode.USER_NOT_FOUND_BY_ID, id);
+                // If the username isn't found, check if it is an API token
+                ApiToken token = apiTokensEndpoint.getByGuid(id);
+                if (token != null) {
+                    userName = token.getApiTokenUsername();
+                } else {
+                    // If still not found, refresh the cache and look again (could be stale)
+                    refreshCache();
+                    userName = mapIdToName.get(id);
+                    if (userName == null) {
+                        // If that still isn't found, then throw an error
+                        throw new NotFoundException(ErrorCode.USER_NOT_FOUND_BY_ID, id);
+                    }
                 }
             }
             return userName;

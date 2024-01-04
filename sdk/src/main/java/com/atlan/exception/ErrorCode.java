@@ -429,6 +429,11 @@ public enum ErrorCode implements ExceptionMessageSet {
             "ATLAN-JAVA-404-026",
             "Unable to find a query with the name: {0}.",
             "Verify the requested query exists in your Atlan environment."),
+    API_TOKEN_NOT_FOUND_BY_NAME(
+            404,
+            "ATLAN-JAVA-404-027",
+            "API token with name {0} does not exist.",
+            "Verify the API token provided is a valid username for that token."),
 
     CONFLICT_PASSTHROUGH(
             409,

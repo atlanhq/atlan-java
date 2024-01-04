@@ -2,6 +2,7 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.cache;
 
+import com.atlan.api.GroupsEndpoint;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
@@ -21,9 +22,15 @@ public class GroupCache {
     private Map<String, String> mapNameToId = new ConcurrentHashMap<>();
     private Map<String, String> mapAliasToId = new ConcurrentHashMap<>();
 
+    private final GroupsEndpoint groupsEndpoint;
+
+    public GroupCache(GroupsEndpoint groupsEndpoint) {
+        this.groupsEndpoint = groupsEndpoint;
+    }
+
     private synchronized void refreshCache() throws AtlanException {
         log.debug("Refreshing cache of groups...");
-        List<AtlanGroup> groups = AtlanGroup.list();
+        List<AtlanGroup> groups = groupsEndpoint.list();
         mapIdToName = new ConcurrentHashMap<>();
         mapNameToId = new ConcurrentHashMap<>();
         mapAliasToId = new ConcurrentHashMap<>();
