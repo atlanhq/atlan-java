@@ -4,16 +4,20 @@ package com.atlan.java.sdk;
 
 import static org.testng.Assert.*;
 
+import co.elastic.clients.elasticsearch._types.SortOrder;
 import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.assets.Glossary;
 import com.atlan.model.assets.GlossaryCategory;
 import com.atlan.model.assets.GlossaryTerm;
+import com.atlan.model.assets.IReferenceable;
 import com.atlan.model.core.AssetMutationResponse;
+import com.atlan.model.search.IndexSearchDSL;
 import com.atlan.model.search.IndexSearchRequest;
 import com.atlan.model.search.IndexSearchResponse;
 import com.atlan.net.HttpClient;
+import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -50,6 +54,86 @@ public class SearchTest extends AtlanLiveTest {
         term3 = GlossaryTest.createTerm(PREFIX + "3", glossary);
         term4 = GlossaryTest.createTerm(PREFIX + "4", glossary);
         term5 = GlossaryTest.createTerm(PREFIX + "5", glossary);
+    }
+
+    @Test(
+            groups = {"search.defaults"},
+            dependsOnGroups = {"search.create.terms"})
+    void testDefaultSorting() throws AtlanException, IOException {
+        // Empty sorting
+        IndexSearchRequest request = GlossaryTerm.select()
+                .where(Asset.QUALIFIED_NAME.eq(term1.getQualifiedName()))
+                .toRequest();
+        IndexSearchResponse response = request.search();
+        assertNotNull(response);
+        IndexSearchDSL dsl = response.getQuery();
+        assertNotNull(dsl);
+        assertNotNull(dsl.getSort());
+        assertEquals(1, dsl.getSort().size());
+        assertTrue(dsl.getSort().get(0).isField());
+        assertEquals(
+                IReferenceable.GUID.getKeywordFieldName(),
+                dsl.getSort().get(0).field().field());
+        // Sort without GUID
+        request = Atlan.getDefaultClient()
+                .assets
+                .select()
+                .where(Asset.QUALIFIED_NAME.eq("abc123"))
+                .sort(Asset.QUALIFIED_NAME.order(SortOrder.Asc))
+                .toRequest();
+        response = request.search();
+        assertNotNull(response);
+        dsl = response.getQuery();
+        assertNotNull(dsl);
+        assertNotNull(dsl.getSort());
+        assertEquals(2, dsl.getSort().size());
+        assertTrue(dsl.getSort().get(0).isField());
+        assertTrue(dsl.getSort().get(1).isField());
+        assertEquals(
+                Asset.QUALIFIED_NAME.getKeywordFieldName(),
+                dsl.getSort().get(0).field().field());
+        assertEquals(
+                IReferenceable.GUID.getKeywordFieldName(),
+                dsl.getSort().get(1).field().field());
+        // Sort with only GUID
+        request = Atlan.getDefaultClient()
+                .assets
+                .select()
+                .where(Asset.QUALIFIED_NAME.eq("abc123"))
+                .sort(IReferenceable.GUID.order(SortOrder.Asc))
+                .toRequest();
+        response = request.search();
+        assertNotNull(response);
+        dsl = response.getQuery();
+        assertNotNull(dsl);
+        assertNotNull(dsl.getSort());
+        assertEquals(1, dsl.getSort().size());
+        assertTrue(dsl.getSort().get(0).isField());
+        assertEquals(
+                IReferenceable.GUID.getKeywordFieldName(),
+                dsl.getSort().get(0).field().field());
+        // Sort with GUID and others
+        request = Atlan.getDefaultClient()
+                .assets
+                .select()
+                .where(Asset.QUALIFIED_NAME.eq("abc123"))
+                .sort(Asset.QUALIFIED_NAME.order(SortOrder.Asc))
+                .sort(IReferenceable.GUID.order(SortOrder.Desc))
+                .toRequest();
+        response = request.search();
+        assertNotNull(response);
+        dsl = response.getQuery();
+        assertNotNull(dsl);
+        assertNotNull(dsl.getSort());
+        assertEquals(2, dsl.getSort().size());
+        assertTrue(dsl.getSort().get(0).isField());
+        assertTrue(dsl.getSort().get(1).isField());
+        assertEquals(
+                Asset.QUALIFIED_NAME.getKeywordFieldName(),
+                dsl.getSort().get(0).field().field());
+        assertEquals(
+                IReferenceable.GUID.getKeywordFieldName(),
+                dsl.getSort().get(1).field().field());
     }
 
     @Test(

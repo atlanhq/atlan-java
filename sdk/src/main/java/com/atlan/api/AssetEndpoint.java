@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.api;
 
+import co.elastic.clients.elasticsearch._types.SortOptions;
 import co.elastic.clients.elasticsearch._types.SortOrder;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
@@ -987,9 +988,25 @@ public class AssetEndpoint extends AtlasEndpoint {
      */
     public IndexSearchResponse search(IndexSearchRequest request, RequestOptions options) throws AtlanException {
         String url = String.format("%s%s", getBaseUrl(), search_endpoint);
-        if (request.getDsl().getSort() == null || request.getDsl().getSort().isEmpty()) {
-            // If no sort has been provided, explicitly sort by GUID for consistency of paging
-            // operations (unfortunately sorting by _doc still has duplicates across large number of pages)
+        boolean missingSort =
+                request.getDsl().getSort() == null || request.getDsl().getSort().isEmpty();
+        boolean missingGuidSort = true;
+        if (!missingSort) {
+            // If there is some sort, see whether GUID is already included
+            for (SortOptions option : request.getDsl().getSort()) {
+                if (option.isField()) {
+                    String fieldName = option.field().field();
+                    if (IReferenceable.GUID.getKeywordFieldName().equals(fieldName)) {
+                        missingGuidSort = false;
+                        break;
+                    }
+                }
+            }
+        }
+        if (missingGuidSort) {
+            // If there is no sort by GUID, always add it as a final (tie-breaker) criteria
+            // to ensure there is consistent paging (unfortunately sorting by _doc still has duplicates
+            // across large number of pages)
             request = request.toBuilder()
                     .dsl(request.getDsl().toBuilder()
                             .sortOption(IReferenceable.GUID.order(SortOrder.Asc))
