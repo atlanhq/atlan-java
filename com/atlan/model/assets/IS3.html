@@ -190,7 +190,7 @@ public interface <span class="typeNameLabel">IS3</span></pre>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#generateQualifiedName(java.lang.String,java.lang.String)">generateQualifiedName</a></span>&#8203;(java.lang.String&nbsp;connectionQualifiedName,
-                     java.lang.String&nbsp;awsArn)</code></th>
+                     java.lang.String&nbsp;name)</code></th>
 <td class="colLast">
 <div class="block">Generate a unique S3 name.</div>
 </td>
@@ -1403,12 +1403,12 @@ public interface <span class="typeNameLabel">IS3</span></pre>
 <li class="blockList">
 <h4>generateQualifiedName</h4>
 <pre class="methodSignature">static&nbsp;java.lang.String&nbsp;generateQualifiedName&#8203;(java.lang.String&nbsp;connectionQualifiedName,
-                                              java.lang.String&nbsp;awsArn)</pre>
+                                              java.lang.String&nbsp;name)</pre>
 <div class="block">Generate a unique S3 name.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>connectionQualifiedName</code> - unique name of the connection</dd>
-<dd><code>awsArn</code> - unique ARN for the S3 artifact</dd>
+<dd><code>name</code> - unique name for the S3 artifact (i.e. the ARN for the asset)</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>a unique name for the S3 artifact</dd>
 </dl>
