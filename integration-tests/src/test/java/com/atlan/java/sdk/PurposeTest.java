@@ -5,13 +5,23 @@ package com.atlan.java.sdk;
 import static org.testng.Assert.*;
 
 import com.atlan.Atlan;
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
+import com.atlan.model.admin.ApiToken;
+import com.atlan.model.admin.QueryRequest;
+import com.atlan.model.admin.QueryResponse;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.assets.AuthPolicy;
+import com.atlan.model.assets.Column;
+import com.atlan.model.assets.Connection;
+import com.atlan.model.assets.Database;
 import com.atlan.model.assets.IAuthPolicy;
+import com.atlan.model.assets.Persona;
 import com.atlan.model.assets.Purpose;
+import com.atlan.model.assets.Schema;
+import com.atlan.model.assets.Table;
 import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.enums.*;
 import com.atlan.model.typedefs.AtlanTagDef;
@@ -27,13 +37,42 @@ public class PurposeTest extends AtlanLiveTest {
     public static final String PURPOSE_NAME = PREFIX;
     public static final String ATLAN_TAG_NAME = PREFIX;
     public static final String EXISTING_GROUP_NAME = "admins";
+    private static final String API_TOKEN_NAME = PREFIX;
 
+    private static final String PERSONA_NAME = "Data Assets";
+    private static final String DB_NAME = "RAW";
+    private static final String SCHEMA_NAME = "WIDEWORLDIMPORTERS_WAREHOUSE";
+    private static final String TABLE_NAME = "PACKAGETYPES";
+    private static final String COLUMN_NAME = "PACKAGETYPENAME";
+
+    public static Persona persona = null;
     public static Purpose purpose = null;
+    private static ApiToken token = null;
+    private static QueryRequest query = null;
+    private static Connection snowflake = null;
+    private static String columnQualifiedName = null;
 
     @Test(groups = {"purpose.invalid.purpose"})
     void createInvalidPurpose() {
         assertThrows(InvalidRequestException.class, () -> Purpose.creator(PURPOSE_NAME, null)
                 .build());
+    }
+
+    @Test(groups = {"purpose.create.query"})
+    void createQuery() throws AtlanException {
+        // NOTE: This requires pre-existing assets:
+        //  - Snowflake connection called "development" with a specific pre-existing table
+        //  - Persona called "Data Assets" with a data policy granting query access to the Snowflake table
+        snowflake = Connection.findByName("development", AtlanConnectorType.SNOWFLAKE)
+                .get(0);
+        query = QueryRequest.creator("SELECT * FROM \"" + TABLE_NAME + "\" LIMIT 50;", snowflake.getQualifiedName())
+                .defaultSchema(DB_NAME + "." + SCHEMA_NAME)
+                .build();
+        String databaseQN = Database.generateQualifiedName(DB_NAME, snowflake.getQualifiedName());
+        String schemaQN = Schema.generateQualifiedName(SCHEMA_NAME, databaseQN);
+        String tableQN = Table.generateQualifiedName(TABLE_NAME, schemaQN);
+        columnQualifiedName = Column.generateQualifiedName(COLUMN_NAME, tableQN);
+        persona = Persona.findByName(PERSONA_NAME).get(0);
     }
 
     @Test(groups = {"purpose.create.atlantag"})
@@ -42,6 +81,23 @@ public class PurposeTest extends AtlanLiveTest {
                 AtlanTagDef.creator(ATLAN_TAG_NAME, AtlanTagColor.GREEN).build();
         AtlanTagDef response = cls.create(Atlan.getDefaultClient());
         assertNotNull(response);
+    }
+
+    @Test(groups = {"purpose.create.token"})
+    void createToken() throws AtlanException {
+        token = RequestsTest.createToken(API_TOKEN_NAME);
+        assertNotNull(token);
+        assertNotNull(token.getAttributes());
+        assertNotNull(token.getAttributes().getAccessToken());
+        // After creating the token, assign it to the "Data Assets" persona to grant it query access
+        ApiToken result = Atlan.getDefaultClient()
+                .apiTokens
+                .update(token.getId(), token.getDisplayName(), null, Set.of(persona.getQualifiedName()));
+        assertNotNull(result);
+        // Note: need to read the token back again to see its associated personas -- will leave that to later...
+        assertNotNull(result.getAttributes());
+        assertNotNull(result.getAttributes().getPersonas());
+        assertEquals(result.getAttributes().getPersonas().size(), 1);
     }
 
     @Test(
@@ -90,7 +146,7 @@ public class PurposeTest extends AtlanLiveTest {
     void findPurposeByName() throws AtlanException, InterruptedException {
         List<Purpose> purposes = null;
         int count = 0;
-        while (purposes == null && count < Atlan.getMaxNetworkRetries()) {
+        while (count < Atlan.getMaxNetworkRetries()) {
             try {
                 purposes = Purpose.findByName(PURPOSE_NAME);
                 break;
@@ -106,7 +162,7 @@ public class PurposeTest extends AtlanLiveTest {
 
     @Test(
             groups = {"purpose.update.purposes.policy"},
-            dependsOnGroups = {"purpose.update.purposes"})
+            dependsOnGroups = {"purpose.update.purposes", "purpose.create.token"})
     void addPoliciesToPurpose() throws AtlanException {
         AuthPolicy metadata = Purpose.createMetadataPolicy(
                         "Simple read access",
@@ -118,8 +174,13 @@ public class PurposeTest extends AtlanLiveTest {
                         false)
                 .build();
         AuthPolicy data = Purpose.createDataPolicy(
-                        "Mask the data", purpose.getGuid(), AuthPolicyType.DATA_MASK, null, null, true)
-                .policyMaskType(DataMaskingType.HASH)
+                        "Mask the data",
+                        purpose.getGuid(),
+                        AuthPolicyType.DATA_MASK,
+                        null,
+                        List.of(token.getApiTokenUsername()),
+                        false)
+                .policyMaskType(DataMaskingType.REDACT)
                 .build();
         AssetMutationResponse response = Atlan.getDefaultClient().assets.save(List.of(metadata, data), false);
         assertNotNull(response);
@@ -170,10 +231,85 @@ public class PurposeTest extends AtlanLiveTest {
                     assertTrue(full.getPolicyActions().contains(DataAction.SELECT));
                     assertEquals(full.getPolicyType(), AuthPolicyType.DATA_MASK);
                     assertNotNull(full.getPolicyMaskType());
-                    assertEquals(full.getPolicyMaskType(), DataMaskingType.HASH);
+                    assertEquals(full.getPolicyMaskType(), DataMaskingType.REDACT);
                     break;
             }
         }
+    }
+
+    @Test(
+            groups = {"purpose.update.asset"},
+            dependsOnGroups = {"purpose.create.atlantag", "purpose.create.query"})
+    void assignTagToAsset() throws AtlanException {
+        Column result = Column.appendAtlanTags(columnQualifiedName, List.of(ATLAN_TAG_NAME), false, false, false);
+        assertNotNull(result);
+    }
+
+    @Test(
+            groups = {"purpose.read.query"},
+            dependsOnGroups = {"purpose.create.query", "purpose.read.purposes.2", "purpose.update.asset"})
+    void runQueryWithoutPolicy() throws AtlanException {
+        QueryResponse response = Atlan.getDefaultClient().queries.stream(query);
+        assertNotNull(response);
+        assertNotNull(response.getRows());
+        assertTrue(response.getRows().size() > 1);
+        List<String> row = response.getRows().get(0);
+        assertFalse(row.isEmpty());
+        assertEquals(row.size(), 7);
+        assertFalse(row.get(2).isEmpty());
+        assertFalse(row.get(2).startsWith("Xx")); // Ensure it is NOT redacted
+    }
+
+    @Test(
+            groups = {"purpose.read.token"},
+            dependsOnGroups = {"purpose.read.purposes.2", "purpose.create.token"})
+    void confirmTokenPermissions() throws AtlanException {
+        ApiToken result = ApiToken.retrieveByName(API_TOKEN_NAME);
+        assertNotNull(result.getAttributes());
+        assertNotNull(result.getAttributes().getPersonas());
+        assertEquals(result.getAttributes().getPersonas().size(), 1);
+        assertEquals(
+                result.getAttributes().getPersonas().first().getPersonaQualifiedName(), persona.getQualifiedName());
+    }
+
+    @Test(
+            groups = {"purpose.read.query"},
+            dependsOnGroups = {
+                "purpose.create.query",
+                "purpose.read.purposes.2",
+                "purpose.update.asset",
+                "purpose.read.token"
+            })
+    void runQueryWithPolicy() throws AtlanException, InterruptedException {
+        AtlanClient redacted = Atlan.getClient(Atlan.getBaseUrl(), PREFIX);
+        redacted.setApiToken(token.getAttributes().getAccessToken());
+        // The policy will take some time to go into effect -- start by waiting a
+        // reasonable set amount of time (limit the same query re-running multiple times on data store)
+        Thread.sleep(30000);
+        // Then use a retry loop, just in case
+        QueryResponse response = null;
+        HekaFlow found = HekaFlow.BYPASS; // As long as Heka was bypassed, policy was not applied
+        int count = 0;
+        while (found == HekaFlow.BYPASS && count < 30) {
+            Thread.sleep(HttpClient.waitTime(count).toMillis());
+            response = redacted.queries.stream(query);
+            assertNotNull(response);
+            assertNotNull(response.getDetails());
+            QueryStatus status = response.getDetails().getStatus();
+            if (status != QueryStatus.ERROR) {
+                // Only update the flow if there was no error, otherwise wait and retry
+                found = response.getDetails().getHekaFlow();
+            }
+            count++;
+        }
+        assertNotNull(response);
+        assertNotNull(response.getRows());
+        assertTrue(response.getRows().size() > 1);
+        List<String> row = response.getRows().get(0);
+        assertFalse(row.isEmpty());
+        assertEquals(row.size(), 7);
+        assertFalse(row.get(2).isEmpty());
+        assertTrue(row.get(2).startsWith("Xx")); // Ensure it IS redacted
     }
 
     @Test(
@@ -189,6 +325,15 @@ public class PurposeTest extends AtlanLiveTest {
             dependsOnGroups = {"purpose.create.*", "purpose.update.*", "purpose.read.*", "purpose.purge.purposes"},
             alwaysRun = true)
     void purgeAtlanTags() throws AtlanException {
+        Column.removeAtlanTag(columnQualifiedName, ATLAN_TAG_NAME);
         AtlanTagDef.purge(ATLAN_TAG_NAME);
+    }
+
+    @Test(
+            groups = {"purpose.purge.token"},
+            dependsOnGroups = {"purpose.create.*", "purpose.read.*", "purpose.update.*", "purpose.purge.purposes"},
+            alwaysRun = true)
+    void purgeToken() throws AtlanException {
+        RequestsTest.deleteToken(token.getId());
     }
 }

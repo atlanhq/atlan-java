@@ -121,8 +121,8 @@ public class ApiTokensEndpoint extends HeraclesEndpoint {
      * @throws AtlanException on any error during API invocation
      */
     public ApiToken getById(String clientId) throws AtlanException {
-        if (clientId != null && clientId.startsWith("service-account-")) {
-            clientId = clientId.substring("service-account-".length());
+        if (clientId != null && clientId.startsWith(ApiToken.API_USERNAME_PREFIX)) {
+            clientId = clientId.substring(ApiToken.API_USERNAME_PREFIX.length());
         }
         ApiTokenResponse response = list("{\"clientId\":\"" + clientId + "\"}", "-createdAt", 0, 2);
         if (response != null

@@ -35,7 +35,7 @@ public abstract class ApiResource extends AtlanObject implements AtlanResponseIn
 
     public static final Charset CHARSET = StandardCharsets.UTF_8;
 
-    private static final AtlanResponseGetter atlanResponseGetter = new LiveAtlanResponseGetter();
+    static final AtlanResponseGetter atlanResponseGetter = new LiveAtlanResponseGetter();
 
     @JsonIgnore
     private transient AtlanResponse lastResponse;
