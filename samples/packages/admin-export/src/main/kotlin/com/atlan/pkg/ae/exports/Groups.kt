@@ -11,7 +11,6 @@ class Groups(
     private val xlsx: ExcelWriter,
     private val logger: KLogger,
 ) {
-
     fun export() {
         logger.info { "Exporting all groups..." }
         val sheet = xlsx.createSheet("Groups")
