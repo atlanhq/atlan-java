@@ -53,18 +53,24 @@ public class HttpURLConnectionClient extends HttpClient {
         }
     }
 
-    /**
-     * Sends the given request to Atlan's API, and returns a buffered response.
-     *
-     * @param request the request
-     * @return the response
-     * @throws ApiConnectionException if an error occurs when sending or receiving
-     */
+    /** {@inheritDoc} */
     @Override
     public AtlanResponse request(AtlanRequest request) throws ApiConnectionException {
         final AtlanResponseStream responseStream = requestStream(request);
         try {
             return responseStream.unstream();
+        } catch (IOException e) {
+            throw new ApiConnectionException(
+                    ErrorCode.CONNECTION_ERROR, e, request.client().getBaseUrl());
+        }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public AtlanEventStreamResponse requestES(AtlanRequest request) throws ApiConnectionException {
+        final AtlanResponseStream responseStream = requestStream(request);
+        try {
+            return responseStream.toEvents();
         } catch (IOException e) {
             throw new ApiConnectionException(
                     ErrorCode.CONNECTION_ERROR, e, request.client().getBaseUrl());

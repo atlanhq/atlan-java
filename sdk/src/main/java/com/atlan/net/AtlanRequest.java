@@ -75,6 +75,30 @@ public class AtlanRequest {
             RequestOptions options,
             String requestId)
             throws AtlanException {
+        this(client, method, url, body, options, requestId, "application/json");
+    }
+
+    /**
+     * Initializes a new instance of the {@link AtlanRequest} class, used for the majority of requests.
+     *
+     * @param client connectivity to an Atlan tenant
+     * @param method the HTTP method
+     * @param url the URL of the request
+     * @param body the body of the request
+     * @param options the special modifiers of the request
+     * @param requestId unique identifier (GUID) of a single request to Atlan
+     * @param acceptType mime-type for the content accepted in the response to this query
+     * @throws AtlanException if the request cannot be initialized for any reason
+     */
+    public AtlanRequest(
+            AtlanClient client,
+            ApiResource.RequestMethod method,
+            String url,
+            String body,
+            RequestOptions options,
+            String requestId,
+            String acceptType)
+            throws AtlanException {
         try {
             this.client = client;
             this.body = body;
@@ -83,7 +107,7 @@ public class AtlanRequest {
             this.method = method;
             this.url = new URL(url);
             this.content = (body == null || body.isEmpty()) ? null : HttpContent.buildJSONEncodedContent(body);
-            this.headers = buildHeaders(true, options);
+            this.headers = buildHeaders(true, options, acceptType);
         } catch (IOException e) {
             throw new ApiConnectionException(ErrorCode.CONNECTION_ERROR, e, client.getBaseUrl());
         }
@@ -127,7 +151,7 @@ public class AtlanRequest {
                 }
             }
             this.content = HttpContent.buildMultipartFormDataContent(parameters, filename);
-            this.headers = buildHeaders(true, options);
+            this.headers = buildHeaders(true, options, "application/json");
         } catch (IOException e) {
             throw new ApiConnectionException(ErrorCode.CONNECTION_ERROR, e, client.getBaseUrl());
         }
@@ -161,13 +185,14 @@ public class AtlanRequest {
             this.method = method;
             this.url = new URL(url);
             this.content = FormEncoder.createHttpContent(map);
-            this.headers = buildHeaders(false, options);
+            this.headers = buildHeaders(false, options, "application/json");
         } catch (IOException e) {
             throw new ApiConnectionException(ErrorCode.CONNECTION_ERROR, e, client.getBaseUrl());
         }
     }
 
-    private HttpHeaders buildHeaders(boolean checkApiToken, RequestOptions provided) throws AuthenticationException {
+    private HttpHeaders buildHeaders(boolean checkApiToken, RequestOptions provided, String acceptType)
+            throws AuthenticationException {
         Map<String, List<String>> headerMap = new HashMap<>();
 
         // Request-Id + any custom headers (do these first, so they cannot clobber auth, etc)
@@ -183,7 +208,7 @@ public class AtlanRequest {
         }
 
         // Accept
-        headerMap.put("Accept", List.of("application/json"));
+        headerMap.put("Accept", List.of(acceptType));
 
         // Accept-Charset
         headerMap.put("Accept-Charset", List.of(ApiResource.CHARSET.name()));

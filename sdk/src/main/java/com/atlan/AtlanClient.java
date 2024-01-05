@@ -118,6 +118,9 @@ public class AtlanClient {
     /** Endpoint with operations to manage query parsing. */
     public final QueryParserEndpoint queryParser;
 
+    /** Endpoint with operations to run SQL queries. */
+    public final QueriesEndpoint queries;
+
     /** Endpoint with operations to manage playbooks. */
     public final PlaybooksEndpoint playbooks;
 
@@ -183,6 +186,7 @@ public class AtlanClient {
         users = new UsersEndpoint(this);
         workflows = new WorkflowsEndpoint(this);
         queryParser = new QueryParserEndpoint(this);
+        queries = new QueriesEndpoint(this);
         playbooks = new PlaybooksEndpoint(this);
         logs = new LogsEndpoint(this);
         images = new ImagesEndpoint(this);

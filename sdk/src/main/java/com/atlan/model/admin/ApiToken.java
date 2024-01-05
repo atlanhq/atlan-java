@@ -253,6 +253,7 @@ public class ApiToken extends AtlanObject {
         String displayName;
 
         /** Personas associated with the API token. */
+        @JsonProperty("personaQualifiedName")
         @Singular
         SortedSet<ApiTokenPersona> personas;
 
@@ -340,8 +341,7 @@ public class ApiToken extends AtlanObject {
             JacksonUtils.serializeString(gen, "createdBy", ata.getCreatedBy());
             JacksonUtils.serializeString(gen, "description", ata.getDescription());
             JacksonUtils.serializeString(gen, "displayName", ata.getDisplayName());
-            JacksonUtils.serializeObject(gen, "personas", ata.getPersonas());
-            JacksonUtils.serializeString(gen, "purposes", ata.getPurposes());
+            JacksonUtils.serializeObject(gen, "personaQualifiedName", ata.getPersonas());
             JacksonUtils.serializeObject(gen, "workspacePermissions", ata.getWorkspacePermissions());
             gen.writeEndObject();
         }
@@ -380,12 +380,15 @@ public class ApiToken extends AtlanObject {
             JsonNode root = parser.getCodec().readTree(parser);
 
             Set<ApiTokenPersona> personas = new TreeSet<>();
-            JsonNode personasJson = root.get("personas");
+            JsonNode personasJson = root.get("personaQualifiedName");
             if (personasJson.isTextual()) {
-                // TODO: Convert the string into an actual array, then proceed with an attempt to deserialize
-                personas = Collections.emptySet();
+                Set<String> personaNames = StringToSetDeserializer.deserialize(client, personasJson.asText());
+                for (String name : personaNames) {
+                    personas.add(ApiTokenPersona.of(null, name, null));
+                }
             } else if (personasJson.isArray()) {
-                personas = JacksonUtils.deserializeObject(client, root, "personas", new TypeReference<>() {});
+                personas =
+                        JacksonUtils.deserializeObject(client, root, "personaQualifiedName", new TypeReference<>() {});
             }
 
             Set<String> workspacePermissions = new TreeSet<>();
@@ -406,7 +409,6 @@ public class ApiToken extends AtlanObject {
                     .description(JacksonUtils.deserializeString(root, "description"))
                     .displayName(JacksonUtils.deserializeString(root, "displayName"))
                     .personas(personas)
-                    .purposes(JacksonUtils.deserializeString(root, "purposes"))
                     .workspacePermissions(workspacePermissions)
                     .build();
         }

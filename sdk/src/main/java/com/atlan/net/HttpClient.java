@@ -6,6 +6,7 @@ package com.atlan.net;
 import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.ApiConnectionException;
+import com.atlan.exception.ApiException;
 import com.atlan.exception.AtlanException;
 import com.atlan.serde.Serde;
 import com.atlan.util.Stopwatch;
@@ -41,6 +42,15 @@ public abstract class HttpClient {
      * @throws AtlanException If the request fails for any reason
      */
     public abstract AtlanResponse request(AtlanRequest request) throws AtlanException;
+
+    /**
+     * Sends the given request to Atlan's API, and returns a buffered response.
+     *
+     * @param request the request
+     * @return the response
+     * @throws ApiConnectionException if an error occurs when sending or receiving
+     */
+    public abstract AtlanEventStreamResponse requestES(AtlanRequest request) throws AtlanException;
 
     /**
      * Sends the given request to Atlan's API, streaming the response body.
@@ -139,6 +149,27 @@ public abstract class HttpClient {
      */
     public AtlanResponse requestWithRetries(AtlanRequest request) throws AtlanException {
         return sendWithRetries(request, (r) -> this.requestWithTelemetry(r));
+    }
+
+    /**
+     * Sends the given request to Atlan's API, retrying the request in cases of intermittent problems.
+     *
+     * @param request the request
+     * @return the response
+     * @throws AtlanException If the request fails for any reason
+     */
+    public AtlanEventStreamResponse requestEventStream(AtlanRequest request) throws AtlanException {
+        AtlanException requestException = null;
+        AtlanEventStreamResponse response = null;
+        try {
+            response = requestES(request);
+        } catch (ApiException e) {
+            requestException = e;
+        }
+        if (requestException != null) {
+            throw requestException;
+        }
+        return response;
     }
 
     /**

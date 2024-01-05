@@ -463,7 +463,7 @@ public enum ErrorCode implements ExceptionMessageSet {
             "ATLAN-JAVA-500-001",
             "Multiple custom attributes with exactly the same name ({0}) were found for: {1}.",
             ErrorCode.RAISE_GITHUB_ISSUE),
-    UNABLE_TO_DESERIALIZE(500, "ATLAN-JAVA-500-002", "Unable to deserialize value: [0]", ErrorCode.RAISE_GITHUB_ISSUE),
+    UNABLE_TO_DESERIALIZE(500, "ATLAN-JAVA-500-002", "Unable to deserialize value: {0}", ErrorCode.RAISE_GITHUB_ISSUE),
     UNABLE_TO_PARSE_ORIGINAL_QUERY(
             500,
             "ATLAN-JAVA-500-003",
