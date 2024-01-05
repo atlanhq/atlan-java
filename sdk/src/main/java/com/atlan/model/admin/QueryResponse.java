@@ -3,6 +3,9 @@
 package com.atlan.model.admin;
 
 import com.atlan.model.core.AtlanObject;
+import com.atlan.model.enums.HekaFlow;
+import com.atlan.model.enums.ParsingFlow;
+import com.atlan.model.enums.QueryStatus;
 import com.atlan.net.ApiEventStreamResource;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -130,13 +133,25 @@ public class QueryResponse extends ApiEventStreamResource {
         /** Position of the column (1-based). */
         Integer ordinal;
 
+        /** TBC */
         Boolean autoIncrement;
 
+        /** TBC */
         Boolean caseSensitive;
+
+        /** TBC */
         Boolean searchable;
+
+        /** TBC */
         Boolean currency;
+
+        /** TBC */
         Integer nullable;
+
+        /** TBC */
         Boolean signed;
+
+        /** TBC */
         Integer displaySize;
 
         /** Display value for the column's name. */
@@ -148,8 +163,10 @@ public class QueryResponse extends ApiEventStreamResource {
         /** Name of the schema in which this column's table is contained. */
         String schemaName;
 
+        /** TBC */
         Integer precision;
 
+        /** TBC */
         Integer scale;
 
         /** Name of the table in which the column is contained. */
@@ -158,8 +175,13 @@ public class QueryResponse extends ApiEventStreamResource {
         /** Name of the database in which the table's schema is contained. */
         String catalogName;
 
+        /** TBC */
         Boolean readOnly;
+
+        /** TBC */
         Boolean writable;
+
+        /** TBC */
         Boolean definitelyWritable;
 
         /** Canonical name of the Java class representing this column's values. */
@@ -201,8 +223,7 @@ public class QueryResponse extends ApiEventStreamResource {
         Long totalRowsStreamed;
 
         /** Status of the query. */
-        String status; // TODO: enum -- started, in-progress, completed, error <-- different structure to the rest in
-        // this case
+        QueryStatus status;
 
         /** TBC */
         String parsedQuery;
@@ -213,55 +234,142 @@ public class QueryResponse extends ApiEventStreamResource {
         /** How long the query took to run, in milliseconds. */
         Long executionTime;
 
+        /** TBC */
         String sourceQueryId;
 
+        /** TBC */
         String resultOutputLocation;
 
-        List<Object> warnings;
+        /** List of any warnings produced when running the query. */
+        List<String> warnings;
 
-        String parsingFlow;
+        /** How the query was parsed prior to running. */
+        ParsingFlow parsingFlow;
 
-        String hekaFlow;
+        /** How the query was run. */
+        HekaFlow hekaFlow;
 
+        /** TBC */
         String s3UploadPath;
 
-        @JsonProperty("source_first_connection_time_perc")
-        Double sourceFirstConnectionTimePercentage;
+        /** TBC */
+        @JsonProperty("source_first_connection_time")
+        Integer sourceFirstConnectionTime;
 
+        /** TBC */
+        @JsonProperty("source_first_connection_time_perc")
+        Double sourceFirstConnectionPercentage;
+
+        /** TBC */
         @JsonProperty("explain_call_time_perc")
         Double explainCallTimePercentage;
 
-        // TODO: include remaining properties
-        /*
-            More...
-            "init_data_source_time_perc": 0.0,
-        "authorization_time_perc": 0.0,
-        "rewrite_validation_time_perc": 0.001,
-        "extract_table_metadata_time": 32,
-        "execution_time": 370,
-        "bypass_parsing_time": 3,
-        "check_insights_enabled_time": 0,
-        "initialization_time_perc": 0.0,
-        "rewrite_validation_time": 2,
-        "init_data_source_time": 0,
-        "extract_credentials_time_perc": 0.0,
-        "overall_time_perc": 1.0,
-        "heka_atlan_time": 1847,
-        "bypass_parsing_time_perc": 0.001,
-        "extract_credentials_time": 0,
-        "extract_table_metadata_time_perc": 0.014,
-        "initialization_time": 1,
-        "calcite_parsing_time_perc": 0,
-        "overall_time": 2217,
-        "calcite_validation_time_perc": 0,
-        "execution_time_perc": 0.167,
-        "source_first_connection_time": 1633,
-        "authorization_time": 0,
-        "check_insights_enabled_time_perc": 0.0
-             */
+        /** TBC */
+        @JsonProperty("init_data_source_time")
+        Integer initDataSourceTime;
+
+        /** TBC */
+        @JsonProperty("init_data_source_time_perc")
+        Double initDataSourcePercentage;
+
+        /** TBC */
+        @JsonProperty("authorization_time")
+        Integer authorizationTime;
+
+        /** TBC */
+        @JsonProperty("authorization_time_perc")
+        Double authorizationPercentage;
+
+        /** TBC */
+        @JsonProperty("rewrite_validation_time")
+        Integer rewriteValidationTime;
+
+        /** TBC */
+        @JsonProperty("rewrite_validation_time_perc")
+        Double rewriteValidationPercentage;
+
+        /** Elapsed time to extract table metadata, in milliseconds. */
+        @JsonProperty("extract_table_metadata_time")
+        Integer extractTableMetadataTime;
+
+        /** TBC */
+        @JsonProperty("extract_table_metadata_time_perc")
+        Double extractTableMetadataPercentage;
+
+        /** Elapsed time to run the query (from internal engine), in milliseconds. */
+        @JsonProperty("execution_time")
+        Integer executionTimeInternal;
+
+        /** TBC */
+        @JsonProperty("execution_time_perc")
+        Double executionPercentage;
+
+        /** TBC */
+        @JsonProperty("bypass_parsing_time")
+        Integer bypassQueryTime;
+
+        /** TBC */
+        @JsonProperty("bypass_parsing_time_perc")
+        Double bypassParsingPercentage;
+
+        /** TBC */
+        @JsonProperty("check_insights_enabled_time")
+        Integer checkInsightsEnabledTime;
+
+        /** TBC */
+        @JsonProperty("check_insights_enabled_time_perc")
+        Double checkInsightsEnabledPercentage;
+
+        /** TBC */
+        @JsonProperty("initialization_time")
+        Integer initializationTime;
+
+        /** TBC */
+        @JsonProperty("initialization_time_perc")
+        Double initializationPercentage;
+
+        /** TBC */
+        @JsonProperty("extract_credentials_time")
+        Integer extractCredentialsTime;
+
+        /** TBC */
+        @JsonProperty("extract_credentials_time_perc")
+        Double extractCredentialsPercentage;
+
+        /** TBC */
+        @JsonProperty("overall_time")
+        Integer overallTime;
+
+        /** TBC */
+        @JsonProperty("overall_time_perc")
+        Double overallTimePercentage;
+
+        /** TBC */
+        @JsonProperty("heka_atlan_time")
+        Integer hekaAtlanTime;
+
+        /** TBC */
+        @JsonProperty("calcite_parsing_time_perc")
+        Double calciteParsingPercentage;
+
+        /** TBC */
+        @JsonProperty("calcite_validation_time_perc")
+        Double calciteValidationPercentage;
+
+        /** Metadata about the asset used in the query, in case of any errors. */
+        AssetDetails asset;
 
         /** Detailed back-end error message that could be helpful for developers. */
         String developerMessage;
+
+        /** Line number of the query that had a validation error, if any. */
+        Long line;
+
+        /** Column position of the validation error, if any. */
+        Long column;
+
+        /** Name of the object that caused the validation error, if any. */
+        String object;
     }
 
     /** Details about an asset that was queried, in case of errors. */
@@ -286,6 +394,6 @@ public class QueryResponse extends ApiEventStreamResource {
         String schema;
 
         /** Simple name of the table. */
-        String table; // TODO: what about views?
+        String table;
     }
 }
