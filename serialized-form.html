@@ -627,7 +627,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <h4>purposes</h4>
 <pre>java.lang.String purposes</pre>
-<div class="block">Possible future placeholder for purposes association with the token.</div>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
+<div class="block">This was a possible future placeholder for purposes associated with the token,
+ but no longer exists on payloads. It is left here purely for any existing code
+ that may have referenced it, but should be removed from that code as it will be
+ removed in the next major release from this object.</div>
 </li>
 <li class="blockListLast">
 <h4>workspacePermissions</h4>
@@ -2411,6 +2415,509 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <h4>sql</h4>
 <pre>java.lang.String sql</pre>
 <div class="block">SQL query to be parsed.</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList"><a id="com.atlan.model.admin.QueryRequest">
+<!--   -->
+</a>
+<h3>Class <a href="com/atlan/model/admin/QueryRequest.html" title="class in com.atlan.model.admin">com.atlan.model.admin.QueryRequest</a> extends <a href="com/atlan/model/core/AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>dataSourceName</h4>
+<pre>java.lang.String dataSourceName</pre>
+<div class="block">Unique name of the connection to use for the query.</div>
+</li>
+<li class="blockList">
+<h4>defaultSchema</h4>
+<pre>java.lang.String defaultSchema</pre>
+<div class="block">Default schema name to use for unqualified objects in the SQL, in the form <code>DB.SCHEMA</code>.</div>
+</li>
+<li class="blockListLast">
+<h4>sql</h4>
+<pre>java.lang.String sql</pre>
+<div class="block">SQL query to run.</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList"><a id="com.atlan.model.admin.QueryResponse">
+<!--   -->
+</a>
+<h3>Class <a href="com/atlan/model/admin/QueryResponse.html" title="class in com.atlan.model.admin">com.atlan.model.admin.QueryResponse</a> extends <a href="com/atlan/net/ApiEventStreamResource.html" title="class in com.atlan.net">ApiEventStreamResource</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>columns</h4>
+<pre>java.util.List&lt;<a href="com/atlan/model/admin/QueryResponse.ColumnDetails.html" title="class in com.atlan.model.admin">QueryResponse.ColumnDetails</a>&gt; columns</pre>
+<div class="block">Columns that are present in each row of the results. The order of the elements
+ of this list will match the order of the inner list of values for the <a href="com/atlan/model/admin/QueryResponse.html#rows"><code>QueryResponse.rows</code></a>.</div>
+</li>
+<li class="blockList">
+<h4>details</h4>
+<pre><a href="com/atlan/model/admin/QueryResponse.QueryDetails.html" title="class in com.atlan.model.admin">QueryResponse.QueryDetails</a> details</pre>
+<div class="block">Details about the query.</div>
+</li>
+<li class="blockList">
+<h4>errorCode</h4>
+<pre>java.lang.String errorCode</pre>
+<div class="block">Unique code for the error, if there was any error.</div>
+</li>
+<li class="blockList">
+<h4>errorMessage</h4>
+<pre>java.lang.String errorMessage</pre>
+<div class="block">Explanation of the error, if there was any error.</div>
+</li>
+<li class="blockList">
+<h4>errorName</h4>
+<pre>java.lang.String errorName</pre>
+<div class="block">Unique name for the error, if there was any error.</div>
+</li>
+<li class="blockList">
+<h4>queryId</h4>
+<pre>java.lang.String queryId</pre>
+<div class="block">Unique identifier (GUID) for the specific run of the query.</div>
+</li>
+<li class="blockList">
+<h4>requestId</h4>
+<pre>java.lang.String requestId</pre>
+<div class="block">Unique identifier for the request, if there was any error.</div>
+</li>
+<li class="blockListLast">
+<h4>rows</h4>
+<pre>java.util.List&lt;java.util.List&lt;java.lang.String&gt;&gt; rows</pre>
+<div class="block">Results of the query. Each element is of the outer list is a single row,
+ while each inner list gives the column values for that row (in order).</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList"><a id="com.atlan.model.admin.QueryResponse.AssetDetails">
+<!--   -->
+</a>
+<h3>Class <a href="com/atlan/model/admin/QueryResponse.AssetDetails.html" title="class in com.atlan.model.admin">com.atlan.model.admin.QueryResponse.AssetDetails</a> extends <a href="com/atlan/model/core/AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>connectionName</h4>
+<pre>java.lang.String connectionName</pre>
+<div class="block">Simple name of the connection.</div>
+</li>
+<li class="blockList">
+<h4>connectionQN</h4>
+<pre>java.lang.String connectionQN</pre>
+<div class="block">Unique name of the connection.</div>
+</li>
+<li class="blockList">
+<h4>database</h4>
+<pre>java.lang.String database</pre>
+<div class="block">Simple name of the database.</div>
+</li>
+<li class="blockList">
+<h4>schema</h4>
+<pre>java.lang.String schema</pre>
+<div class="block">Simple name of the schema.</div>
+</li>
+<li class="blockListLast">
+<h4>table</h4>
+<pre>java.lang.String table</pre>
+<div class="block">Simple name of the table.</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList"><a id="com.atlan.model.admin.QueryResponse.ColumnDetails">
+<!--   -->
+</a>
+<h3>Class <a href="com/atlan/model/admin/QueryResponse.ColumnDetails.html" title="class in com.atlan.model.admin">com.atlan.model.admin.QueryResponse.ColumnDetails</a> extends <a href="com/atlan/model/core/AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>autoIncrement</h4>
+<pre>java.lang.Boolean autoIncrement</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>caseSensitive</h4>
+<pre>java.lang.Boolean caseSensitive</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>catalogName</h4>
+<pre>java.lang.String catalogName</pre>
+<div class="block">Name of the database in which the table's schema is contained.</div>
+</li>
+<li class="blockList">
+<h4>columnClassName</h4>
+<pre>java.lang.String columnClassName</pre>
+<div class="block">Canonical name of the Java class representing this column's values.</div>
+</li>
+<li class="blockList">
+<h4>columnName</h4>
+<pre>java.lang.String columnName</pre>
+<div class="block">Name of the column (technical).</div>
+</li>
+<li class="blockList">
+<h4>currency</h4>
+<pre>java.lang.Boolean currency</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>definitelyWritable</h4>
+<pre>java.lang.Boolean definitelyWritable</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>displaySize</h4>
+<pre>java.lang.Integer displaySize</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>label</h4>
+<pre>java.lang.String label</pre>
+<div class="block">Display value for the column's name.</div>
+</li>
+<li class="blockList">
+<h4>nullable</h4>
+<pre>java.lang.Integer nullable</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>ordinal</h4>
+<pre>java.lang.Integer ordinal</pre>
+<div class="block">Position of the column (1-based).</div>
+</li>
+<li class="blockList">
+<h4>precision</h4>
+<pre>java.lang.Integer precision</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>readOnly</h4>
+<pre>java.lang.Boolean readOnly</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>scale</h4>
+<pre>java.lang.Integer scale</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>schemaName</h4>
+<pre>java.lang.String schemaName</pre>
+<div class="block">Name of the schema in which this column's table is contained.</div>
+</li>
+<li class="blockList">
+<h4>searchable</h4>
+<pre>java.lang.Boolean searchable</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>signed</h4>
+<pre>java.lang.Boolean signed</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>tableName</h4>
+<pre>java.lang.String tableName</pre>
+<div class="block">Name of the table in which the column is contained.</div>
+</li>
+<li class="blockList">
+<h4>type</h4>
+<pre><a href="com/atlan/model/admin/QueryResponse.ColumnType.html" title="class in com.atlan.model.admin">QueryResponse.ColumnType</a> type</pre>
+<div class="block">Details about the (SQL) data type of the column.</div>
+</li>
+<li class="blockListLast">
+<h4>writable</h4>
+<pre>java.lang.Boolean writable</pre>
+<div class="block">TBC</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList"><a id="com.atlan.model.admin.QueryResponse.ColumnType">
+<!--   -->
+</a>
+<h3>Class <a href="com/atlan/model/admin/QueryResponse.ColumnType.html" title="class in com.atlan.model.admin">com.atlan.model.admin.QueryResponse.ColumnType</a> extends <a href="com/atlan/model/core/AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>id</h4>
+<pre>java.lang.Integer id</pre>
+<div class="block">Numeric identifier for this column, generally matches the ordinal of the column.</div>
+</li>
+<li class="blockList">
+<h4>name</h4>
+<pre>java.lang.String name</pre>
+<div class="block">SQL name of the data type for this column.</div>
+</li>
+<li class="blockListLast">
+<h4>rep</h4>
+<pre>java.lang.String rep</pre>
+<div class="block">TBC</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList"><a id="com.atlan.model.admin.QueryResponse.QueryDetails">
+<!--   -->
+</a>
+<h3>Class <a href="com/atlan/model/admin/QueryResponse.QueryDetails.html" title="class in com.atlan.model.admin">com.atlan.model.admin.QueryResponse.QueryDetails</a> extends <a href="com/atlan/model/core/AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>asset</h4>
+<pre><a href="com/atlan/model/admin/QueryResponse.AssetDetails.html" title="class in com.atlan.model.admin">QueryResponse.AssetDetails</a> asset</pre>
+<div class="block">Metadata about the asset used in the query, in case of any errors.</div>
+</li>
+<li class="blockList">
+<h4>authorizationPercentage</h4>
+<pre>java.lang.Double authorizationPercentage</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>authorizationTime</h4>
+<pre>java.lang.Integer authorizationTime</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>bypassParsingPercentage</h4>
+<pre>java.lang.Double bypassParsingPercentage</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>bypassQueryTime</h4>
+<pre>java.lang.Integer bypassQueryTime</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>calciteParsingPercentage</h4>
+<pre>java.lang.Double calciteParsingPercentage</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>calciteValidationPercentage</h4>
+<pre>java.lang.Double calciteValidationPercentage</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>checkInsightsEnabledPercentage</h4>
+<pre>java.lang.Double checkInsightsEnabledPercentage</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>checkInsightsEnabledTime</h4>
+<pre>java.lang.Integer checkInsightsEnabledTime</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>column</h4>
+<pre>java.lang.Long column</pre>
+<div class="block">Column position of the validation error, if any.</div>
+</li>
+<li class="blockList">
+<h4>developerMessage</h4>
+<pre>java.lang.String developerMessage</pre>
+<div class="block">Detailed back-end error message that could be helpful for developers.</div>
+</li>
+<li class="blockList">
+<h4>executionPercentage</h4>
+<pre>java.lang.Double executionPercentage</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>executionTime</h4>
+<pre>java.lang.Long executionTime</pre>
+<div class="block">How long the query took to run, in milliseconds.</div>
+</li>
+<li class="blockList">
+<h4>executionTimeInternal</h4>
+<pre>java.lang.Integer executionTimeInternal</pre>
+<div class="block">Elapsed time to run the query (from internal engine), in milliseconds.</div>
+</li>
+<li class="blockList">
+<h4>explainCallTimePercentage</h4>
+<pre>java.lang.Double explainCallTimePercentage</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>extractCredentialsPercentage</h4>
+<pre>java.lang.Double extractCredentialsPercentage</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>extractCredentialsTime</h4>
+<pre>java.lang.Integer extractCredentialsTime</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>extractTableMetadataPercentage</h4>
+<pre>java.lang.Double extractTableMetadataPercentage</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>extractTableMetadataTime</h4>
+<pre>java.lang.Integer extractTableMetadataTime</pre>
+<div class="block">Elapsed time to extract table metadata, in milliseconds.</div>
+</li>
+<li class="blockList">
+<h4>hekaAtlanTime</h4>
+<pre>java.lang.Integer hekaAtlanTime</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>hekaFlow</h4>
+<pre><a href="com/atlan/model/enums/HekaFlow.html" title="enum in com.atlan.model.enums">HekaFlow</a> hekaFlow</pre>
+<div class="block">How the query was run.</div>
+</li>
+<li class="blockList">
+<h4>initDataSourcePercentage</h4>
+<pre>java.lang.Double initDataSourcePercentage</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>initDataSourceTime</h4>
+<pre>java.lang.Integer initDataSourceTime</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>initializationPercentage</h4>
+<pre>java.lang.Double initializationPercentage</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>initializationTime</h4>
+<pre>java.lang.Integer initializationTime</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>line</h4>
+<pre>java.lang.Long line</pre>
+<div class="block">Line number of the query that had a validation error, if any.</div>
+</li>
+<li class="blockList">
+<h4>object</h4>
+<pre>java.lang.String object</pre>
+<div class="block">Name of the object that caused the validation error, if any.</div>
+</li>
+<li class="blockList">
+<h4>overallTime</h4>
+<pre>java.lang.Integer overallTime</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>overallTimePercentage</h4>
+<pre>java.lang.Double overallTimePercentage</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>parsedQuery</h4>
+<pre>java.lang.String parsedQuery</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>parsingFlow</h4>
+<pre><a href="com/atlan/model/enums/ParsingFlow.html" title="enum in com.atlan.model.enums">ParsingFlow</a> parsingFlow</pre>
+<div class="block">How the query was parsed prior to running.</div>
+</li>
+<li class="blockList">
+<h4>pushdownQuery</h4>
+<pre>java.lang.String pushdownQuery</pre>
+<div class="block">Query that was sent to the data store.</div>
+</li>
+<li class="blockList">
+<h4>resultOutputLocation</h4>
+<pre>java.lang.String resultOutputLocation</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>rewriteValidationPercentage</h4>
+<pre>java.lang.Double rewriteValidationPercentage</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>rewriteValidationTime</h4>
+<pre>java.lang.Integer rewriteValidationTime</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>s3UploadPath</h4>
+<pre>java.lang.String s3UploadPath</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>sourceFirstConnectionPercentage</h4>
+<pre>java.lang.Double sourceFirstConnectionPercentage</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>sourceFirstConnectionTime</h4>
+<pre>java.lang.Integer sourceFirstConnectionTime</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>sourceQueryId</h4>
+<pre>java.lang.String sourceQueryId</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>status</h4>
+<pre><a href="com/atlan/model/enums/QueryStatus.html" title="enum in com.atlan.model.enums">QueryStatus</a> status</pre>
+<div class="block">Status of the query.</div>
+</li>
+<li class="blockList">
+<h4>totalRowsStreamed</h4>
+<pre>java.lang.Long totalRowsStreamed</pre>
+<div class="block">Total number of results returned by the query.</div>
+</li>
+<li class="blockListLast">
+<h4>warnings</h4>
+<pre>java.util.List&lt;java.lang.String&gt; warnings</pre>
+<div class="block">List of any warnings produced when running the query.</div>
 </li>
 </ul>
 </li>
@@ -25445,6 +25952,15 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <section>
 <h2 title="Package">Package&nbsp;com.atlan.net</h2>
 <ul class="blockList">
+<li class="blockList"><a id="com.atlan.net.ApiEventStreamResource">
+<!--   -->
+</a>
+<h3>Class <a href="com/atlan/net/ApiEventStreamResource.html" title="class in com.atlan.net">com.atlan.net.ApiEventStreamResource</a> extends <a href="com/atlan/model/core/AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+</li>
 <li class="blockList"><a id="com.atlan.net.ApiResource">
 <!--   -->
 </a>

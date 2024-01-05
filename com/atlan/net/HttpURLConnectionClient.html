@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10};
+var data = {"i0":10,"i1":10,"i2":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -203,10 +203,17 @@ extends <a href="HttpClient.html" title="class in com.atlan.net">HttpClient</a><
 <td class="colFirst"><code><a href="AtlanResponse.html" title="class in com.atlan.net">AtlanResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#request(com.atlan.net.AtlanRequest)">request</a></span>&#8203;(<a href="AtlanRequest.html" title="class in com.atlan.net">AtlanRequest</a>&nbsp;request)</code></th>
 <td class="colLast">
-<div class="block">Sends the given request to Atlan's API, and returns a buffered response.</div>
+<div class="block">Sends the given request to Atlan's API, buffering the response body into memory.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
+<td class="colFirst"><code><a href="AtlanEventStreamResponse.html" title="class in com.atlan.net">AtlanEventStreamResponse</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#requestES(com.atlan.net.AtlanRequest)">requestES</a></span>&#8203;(<a href="AtlanRequest.html" title="class in com.atlan.net">AtlanRequest</a>&nbsp;request)</code></th>
+<td class="colLast">
+<div class="block">Sends the given request to Atlan's API, and returns a buffered response.</div>
+</td>
+</tr>
+<tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="AtlanResponseStream.html" title="class in com.atlan.net">AtlanResponseStream</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#requestStream(com.atlan.net.AtlanRequest)">requestStream</a></span>&#8203;(<a href="AtlanRequest.html" title="class in com.atlan.net">AtlanRequest</a>&nbsp;request)</code></th>
 <td class="colLast">
@@ -219,7 +226,7 @@ extends <a href="HttpClient.html" title="class in com.atlan.net">HttpClient</a><
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;com.atlan.net.<a href="HttpClient.html" title="class in com.atlan.net">HttpClient</a></h3>
-<code><a href="HttpClient.html#buildUserAgentString(com.atlan.AtlanClient)">buildUserAgentString</a>, <a href="HttpClient.html#buildXAtlanClientUserAgentString(com.atlan.AtlanClient)">buildXAtlanClientUserAgentString</a>, <a href="HttpClient.html#requestWithRetries(com.atlan.net.AtlanRequest)">requestWithRetries</a>, <a href="HttpClient.html#requestWithTelemetry(com.atlan.net.AtlanRequest)">requestWithTelemetry</a>, <a href="HttpClient.html#sendWithRetries(com.atlan.net.AtlanRequest,com.atlan.net.HttpClient.RequestSendFunction)">sendWithRetries</a>, <a href="HttpClient.html#waitTime(int)">waitTime</a></code></li>
+<code><a href="HttpClient.html#buildUserAgentString(com.atlan.AtlanClient)">buildUserAgentString</a>, <a href="HttpClient.html#buildXAtlanClientUserAgentString(com.atlan.AtlanClient)">buildXAtlanClientUserAgentString</a>, <a href="HttpClient.html#requestEventStream(com.atlan.net.AtlanRequest)">requestEventStream</a>, <a href="HttpClient.html#requestWithRetries(com.atlan.net.AtlanRequest)">requestWithRetries</a>, <a href="HttpClient.html#requestWithTelemetry(com.atlan.net.AtlanRequest)">requestWithTelemetry</a>, <a href="HttpClient.html#sendWithRetries(com.atlan.net.AtlanRequest,com.atlan.net.HttpClient.RequestSendFunction)">sendWithRetries</a>, <a href="HttpClient.html#waitTime(int)">waitTime</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
@@ -288,15 +295,36 @@ extends <a href="HttpClient.html" title="class in com.atlan.net">HttpClient</a><
 <a id="request(com.atlan.net.AtlanRequest)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>request</h4>
 <pre class="methodSignature">public&nbsp;<a href="AtlanResponse.html" title="class in com.atlan.net">AtlanResponse</a>&nbsp;request&#8203;(<a href="AtlanRequest.html" title="class in com.atlan.net">AtlanRequest</a>&nbsp;request)
                       throws <a href="../exception/ApiConnectionException.html" title="class in com.atlan.exception">ApiConnectionException</a></pre>
-<div class="block">Sends the given request to Atlan's API, and returns a buffered response.</div>
+<div class="block">Sends the given request to Atlan's API, buffering the response body into memory.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="HttpClient.html#request(com.atlan.net.AtlanRequest)">request</a></code>&nbsp;in class&nbsp;<code><a href="HttpClient.html" title="class in com.atlan.net">HttpClient</a></code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>request</code> - the request</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the response</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../exception/ApiConnectionException.html" title="class in com.atlan.exception">ApiConnectionException</a></code></dd>
+</dl>
+</li>
+</ul>
+<a id="requestES(com.atlan.net.AtlanRequest)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>requestES</h4>
+<pre class="methodSignature">public&nbsp;<a href="AtlanEventStreamResponse.html" title="class in com.atlan.net">AtlanEventStreamResponse</a>&nbsp;requestES&#8203;(<a href="AtlanRequest.html" title="class in com.atlan.net">AtlanRequest</a>&nbsp;request)
+                                   throws <a href="../exception/ApiConnectionException.html" title="class in com.atlan.exception">ApiConnectionException</a></pre>
+<div class="block">Sends the given request to Atlan's API, and returns a buffered response.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="HttpClient.html#requestES(com.atlan.net.AtlanRequest)">requestES</a></code>&nbsp;in class&nbsp;<code><a href="HttpClient.html" title="class in com.atlan.net">HttpClient</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>request</code> - the request</dd>
 <dt><span class="returnLabel">Returns:</span></dt>

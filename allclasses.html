@@ -79,6 +79,7 @@
 <li><a href="com/atlan/model/assets/AirflowTask.html" title="class in com.atlan.model.assets">AirflowTask</a></li>
 <li><a href="com/atlan/model/assets/AirflowTask.AirflowTaskBuilder.html" title="class in com.atlan.model.assets">AirflowTask.AirflowTaskBuilder</a></li>
 <li><a href="com/atlan/exception/ApiConnectionException.html" title="class in com.atlan.exception">ApiConnectionException</a></li>
+<li><a href="com/atlan/net/ApiEventStreamResource.html" title="class in com.atlan.net">ApiEventStreamResource</a></li>
 <li><a href="com/atlan/exception/ApiException.html" title="class in com.atlan.exception">ApiException</a></li>
 <li><a href="com/atlan/model/assets/APIPath.html" title="class in com.atlan.model.assets">APIPath</a></li>
 <li><a href="com/atlan/model/assets/APIPath.APIPathBuilder.html" title="class in com.atlan.model.assets">APIPath.APIPathBuilder</a></li>
@@ -146,6 +147,8 @@
 <li><a href="com/atlan/events/AtlanEventHandler.html" title="interface in com.atlan.events"><span class="interfaceName">AtlanEventHandler</span></a></li>
 <li><a href="com/atlan/model/events/AtlanEventPayload.html" title="class in com.atlan.model.events">AtlanEventPayload</a></li>
 <li><a href="com/atlan/model/events/AtlanEventPayload.AtlanEventPayloadBuilder.html" title="class in com.atlan.model.events">AtlanEventPayload.AtlanEventPayloadBuilder</a></li>
+<li><a href="com/atlan/net/AtlanEventStreamResponse.html" title="class in com.atlan.net">AtlanEventStreamResponse</a></li>
+<li><a href="com/atlan/model/core/AtlanEventStreamResponseInterface.html" title="interface in com.atlan.model.core"><span class="interfaceName">AtlanEventStreamResponseInterface</span></a></li>
 <li><a href="com/atlan/model/enums/AtlanEventType.html" title="enum in com.atlan.model.enums">AtlanEventType</a></li>
 <li><a href="com/atlan/exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></li>
 <li><a href="com/atlan/model/fields/AtlanField.html" title="class in com.atlan.model.fields">AtlanField</a></li>
@@ -428,6 +431,7 @@
 <li><a href="com/atlan/model/admin/GroupResponse.html" title="class in com.atlan.model.admin">GroupResponse</a></li>
 <li><a href="com/atlan/api/GroupsEndpoint.html" title="class in com.atlan.api">GroupsEndpoint</a></li>
 <li><a href="com/atlan/api/HekaEndpoint.html" title="class in com.atlan.api">HekaEndpoint</a></li>
+<li><a href="com/atlan/model/enums/HekaFlow.html" title="enum in com.atlan.model.enums">HekaFlow</a></li>
 <li><a href="com/atlan/api/HeraclesEndpoint.html" title="class in com.atlan.api">HeraclesEndpoint</a></li>
 <li><a href="com/atlan/model/structs/Histogram.html" title="class in com.atlan.model.structs">Histogram</a></li>
 <li><a href="com/atlan/model/structs/Histogram.HistogramBuilder.html" title="class in com.atlan.model.structs">Histogram.HistogramBuilder</a></li>
@@ -831,6 +835,7 @@
 <li><a href="com/atlan/model/admin/ParsedQuery.Relationship.RelationshipBuilder.html" title="class in com.atlan.model.admin">ParsedQuery.Relationship.RelationshipBuilder</a></li>
 <li><a href="com/atlan/model/admin/ParsedQuery.RelationshipEndpoint.html" title="class in com.atlan.model.admin">ParsedQuery.RelationshipEndpoint</a></li>
 <li><a href="com/atlan/model/admin/ParsedQuery.RelationshipEndpoint.RelationshipEndpointBuilder.html" title="class in com.atlan.model.admin">ParsedQuery.RelationshipEndpoint.RelationshipEndpointBuilder</a></li>
+<li><a href="com/atlan/model/enums/ParsingFlow.html" title="enum in com.atlan.model.enums">ParsingFlow</a></li>
 <li><a href="com/atlan/exception/PermissionException.html" title="class in com.atlan.exception">PermissionException</a></li>
 <li><a href="com/atlan/model/assets/Persona.html" title="class in com.atlan.model.assets">Persona</a></li>
 <li><a href="com/atlan/model/assets/Persona.PersonaBuilder.html" title="class in com.atlan.model.assets">Persona.PersonaBuilder</a></li>
@@ -905,6 +910,7 @@
 <li><a href="com/atlan/model/assets/QlikSpace.QlikSpaceBuilder.html" title="class in com.atlan.model.assets">QlikSpace.QlikSpaceBuilder</a></li>
 <li><a href="com/atlan/model/assets/QlikStream.html" title="class in com.atlan.model.assets">QlikStream</a></li>
 <li><a href="com/atlan/model/assets/QlikStream.QlikStreamBuilder.html" title="class in com.atlan.model.assets">QlikStream.QlikStreamBuilder</a></li>
+<li><a href="com/atlan/api/QueriesEndpoint.html" title="class in com.atlan.api">QueriesEndpoint</a></li>
 <li><a href="com/atlan/util/QueryFactory.html" title="class in com.atlan.util">QueryFactory</a></li>
 <li><a href="com/atlan/util/QueryFactory.Aggregate.html" title="class in com.atlan.util">QueryFactory.Aggregate</a></li>
 <li><a href="com/atlan/util/QueryFactory.CompoundQuery.html" title="class in com.atlan.util">QueryFactory.CompoundQuery</a></li>
@@ -916,6 +922,18 @@
 <li><a href="com/atlan/model/admin/QueryParserRequest.html" title="class in com.atlan.model.admin">QueryParserRequest</a></li>
 <li><a href="com/atlan/model/admin/QueryParserRequest.QueryParserRequestBuilder.html" title="class in com.atlan.model.admin">QueryParserRequest.QueryParserRequestBuilder</a></li>
 <li><a href="com/atlan/model/enums/QueryParserSourceType.html" title="enum in com.atlan.model.enums">QueryParserSourceType</a></li>
+<li><a href="com/atlan/model/admin/QueryRequest.html" title="class in com.atlan.model.admin">QueryRequest</a></li>
+<li><a href="com/atlan/model/admin/QueryRequest.QueryRequestBuilder.html" title="class in com.atlan.model.admin">QueryRequest.QueryRequestBuilder</a></li>
+<li><a href="com/atlan/model/admin/QueryResponse.html" title="class in com.atlan.model.admin">QueryResponse</a></li>
+<li><a href="com/atlan/model/admin/QueryResponse.AssetDetails.html" title="class in com.atlan.model.admin">QueryResponse.AssetDetails</a></li>
+<li><a href="com/atlan/model/admin/QueryResponse.AssetDetails.AssetDetailsBuilder.html" title="class in com.atlan.model.admin">QueryResponse.AssetDetails.AssetDetailsBuilder</a></li>
+<li><a href="com/atlan/model/admin/QueryResponse.ColumnDetails.html" title="class in com.atlan.model.admin">QueryResponse.ColumnDetails</a></li>
+<li><a href="com/atlan/model/admin/QueryResponse.ColumnDetails.ColumnDetailsBuilder.html" title="class in com.atlan.model.admin">QueryResponse.ColumnDetails.ColumnDetailsBuilder</a></li>
+<li><a href="com/atlan/model/admin/QueryResponse.ColumnType.html" title="class in com.atlan.model.admin">QueryResponse.ColumnType</a></li>
+<li><a href="com/atlan/model/admin/QueryResponse.ColumnType.ColumnTypeBuilder.html" title="class in com.atlan.model.admin">QueryResponse.ColumnType.ColumnTypeBuilder</a></li>
+<li><a href="com/atlan/model/admin/QueryResponse.QueryDetails.html" title="class in com.atlan.model.admin">QueryResponse.QueryDetails</a></li>
+<li><a href="com/atlan/model/admin/QueryResponse.QueryDetails.QueryDetailsBuilder.html" title="class in com.atlan.model.admin">QueryResponse.QueryDetails.QueryDetailsBuilder</a></li>
+<li><a href="com/atlan/model/enums/QueryStatus.html" title="enum in com.atlan.model.enums">QueryStatus</a></li>
 <li><a href="com/atlan/model/enums/QueryUsernameStrategy.html" title="enum in com.atlan.model.enums">QueryUsernameStrategy</a></li>
 <li><a href="com/atlan/model/assets/QuickSightAnalysis.html" title="class in com.atlan.model.assets">QuickSightAnalysis</a></li>
 <li><a href="com/atlan/model/assets/QuickSightAnalysis.QuickSightAnalysisBuilder.html" title="class in com.atlan.model.assets">QuickSightAnalysis.QuickSightAnalysisBuilder</a></li>

@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":9,"i2":6,"i3":10,"i4":10,"i5":10,"i6":10,"i7":9};
+var data = {"i0":9,"i1":9,"i2":6,"i3":6,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -237,27 +237,41 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
+<td class="colFirst"><code>abstract <a href="AtlanEventStreamResponse.html" title="class in com.atlan.net">AtlanEventStreamResponse</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#requestES(com.atlan.net.AtlanRequest)">requestES</a></span>&#8203;(<a href="AtlanRequest.html" title="class in com.atlan.net">AtlanRequest</a>&nbsp;request)</code></th>
+<td class="colLast">
+<div class="block">Sends the given request to Atlan's API, and returns a buffered response.</div>
+</td>
+</tr>
+<tr id="i4" class="altColor">
+<td class="colFirst"><code><a href="AtlanEventStreamResponse.html" title="class in com.atlan.net">AtlanEventStreamResponse</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#requestEventStream(com.atlan.net.AtlanRequest)">requestEventStream</a></span>&#8203;(<a href="AtlanRequest.html" title="class in com.atlan.net">AtlanRequest</a>&nbsp;request)</code></th>
+<td class="colLast">
+<div class="block">Sends the given request to Atlan's API, retrying the request in cases of intermittent problems.</div>
+</td>
+</tr>
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="AtlanResponseStream.html" title="class in com.atlan.net">AtlanResponseStream</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#requestStream(com.atlan.net.AtlanRequest)">requestStream</a></span>&#8203;(<a href="AtlanRequest.html" title="class in com.atlan.net">AtlanRequest</a>&nbsp;request)</code></th>
 <td class="colLast">
 <div class="block">Sends the given request to Atlan's API, streaming the response body.</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="AtlanResponse.html" title="class in com.atlan.net">AtlanResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#requestWithRetries(com.atlan.net.AtlanRequest)">requestWithRetries</a></span>&#8203;(<a href="AtlanRequest.html" title="class in com.atlan.net">AtlanRequest</a>&nbsp;request)</code></th>
 <td class="colLast">
 <div class="block">Sends the given request to Atlan's API, retrying the request in cases of intermittent problems.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="AtlanResponse.html" title="class in com.atlan.net">AtlanResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#requestWithTelemetry(com.atlan.net.AtlanRequest)">requestWithTelemetry</a></span>&#8203;(<a href="AtlanRequest.html" title="class in com.atlan.net">AtlanRequest</a>&nbsp;request)</code></th>
 <td class="colLast">
 <div class="block">Sends the given request to Atlan's API, handling telemetry if not disabled.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>&lt;T extends com.atlan.net.AbstractAtlanResponse&lt;?&gt;&gt;<br>T</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sendWithRetries(com.atlan.net.AtlanRequest,com.atlan.net.HttpClient.RequestSendFunction)">sendWithRetries</a></span>&#8203;(<a href="AtlanRequest.html" title="class in com.atlan.net">AtlanRequest</a>&nbsp;request,
                com.atlan.net.HttpClient.RequestSendFunction&lt;T&gt;&nbsp;send)</code></th>
@@ -265,7 +279,7 @@ extends java.lang.Object</pre>
 <div class="block">Sends the given request to Atlan's API, retrying if it encounters certain problems.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>static java.time.Duration</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#waitTime(int)">waitTime</a></span>&#8203;(int&nbsp;attempt)</code></th>
 <td class="colLast">
@@ -365,6 +379,26 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
+<a id="requestES(com.atlan.net.AtlanRequest)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>requestES</h4>
+<pre class="methodSignature">public abstract&nbsp;<a href="AtlanEventStreamResponse.html" title="class in com.atlan.net">AtlanEventStreamResponse</a>&nbsp;requestES&#8203;(<a href="AtlanRequest.html" title="class in com.atlan.net">AtlanRequest</a>&nbsp;request)
+                                            throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Sends the given request to Atlan's API, and returns a buffered response.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>request</code> - the request</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the response</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../exception/ApiConnectionException.html" title="class in com.atlan.exception">ApiConnectionException</a></code> - if an error occurs when sending or receiving</dd>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code></dd>
+</dl>
+</li>
+</ul>
 <a id="requestStream(com.atlan.net.AtlanRequest)">
 <!--   -->
 </a>
@@ -434,6 +468,25 @@ extends java.lang.Object</pre>
 <h4>requestWithRetries</h4>
 <pre class="methodSignature">public&nbsp;<a href="AtlanResponse.html" title="class in com.atlan.net">AtlanResponse</a>&nbsp;requestWithRetries&#8203;(<a href="AtlanRequest.html" title="class in com.atlan.net">AtlanRequest</a>&nbsp;request)
                                  throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Sends the given request to Atlan's API, retrying the request in cases of intermittent problems.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>request</code> - the request</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the response</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - If the request fails for any reason</dd>
+</dl>
+</li>
+</ul>
+<a id="requestEventStream(com.atlan.net.AtlanRequest)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>requestEventStream</h4>
+<pre class="methodSignature">public&nbsp;<a href="AtlanEventStreamResponse.html" title="class in com.atlan.net">AtlanEventStreamResponse</a>&nbsp;requestEventStream&#8203;(<a href="AtlanRequest.html" title="class in com.atlan.net">AtlanRequest</a>&nbsp;request)
+                                            throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
 <div class="block">Sends the given request to Atlan's API, retrying the request in cases of intermittent problems.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
