@@ -257,8 +257,14 @@ public class ApiToken extends AtlanObject {
         @Singular
         SortedSet<ApiTokenPersona> personas;
 
-        /** Possible future placeholder for purposes association with the token. */
+        /**
+         * This was a possible future placeholder for purposes associated with the token,
+         * but no longer exists on payloads. It is left here purely for any existing code
+         * that may have referenced it, but should be removed from that code as it will be
+         * removed in the next major release from this object.
+         */
         @JsonIgnore
+        @Deprecated
         String purposes;
 
         /** Detailed permissions given to the API token. */
