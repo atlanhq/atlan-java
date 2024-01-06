@@ -7,13 +7,6 @@ package com.atlan.pkg.serde.csv
  */
 interface RowTransformer {
     /**
-     * Transform the entire input CSV file into an output CSV file.
-     *
-     * @return the full path (and name) for the output CSV file produced
-     */
-    fun transform(): String
-
-    /**
      * Whether to include the provided row in the output (true), or skip it (false).
      *
      * @param inputRow map from column name to value of that column for the row being considered
