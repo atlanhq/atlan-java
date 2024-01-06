@@ -50,7 +50,7 @@ abstract class AssetImporter(
         super.import(
             setOf(
                 Asset.CONNECTION_NAME.atlanFieldName,
-                ConnectionImporter.CONNECTOR_TYPE,
+                // ConnectionImporter.CONNECTOR_TYPE, // Let this be loaded, for mis-named connections
                 ISQL.DATABASE_NAME.atlanFieldName,
                 ISQL.SCHEMA_NAME.atlanFieldName,
                 ENTITY_NAME,
