@@ -20,7 +20,10 @@ object Importer {
     @JvmStatic
     fun main(args: Array<String>) {
         val config = Utils.setPackageOps<AssetImportCfg>()
+        import(config)
+    }
 
+    fun import(config: AssetImportCfg) {
         val batchSize = 20
         val assetsFilename = Utils.getOrDefault(config.assetsFile, "")
         val glossariesFilename = Utils.getOrDefault(config.glossariesFile, "")
