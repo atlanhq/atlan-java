@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -185,17 +185,46 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIdForEmail(java.lang.String,boolean)">getIdForEmail</a></span>&#8203;(java.lang.String&nbsp;email,
+             boolean&nbsp;allowRefresh)</code></th>
+<td class="colLast">
+<div class="block">Translate the provided email address to its GUID.</div>
+</td>
+</tr>
+<tr id="i2" class="altColor">
+<td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIdForName(java.lang.String)">getIdForName</a></span>&#8203;(java.lang.String&nbsp;username)</code></th>
 <td class="colLast">
 <div class="block">Translate the provided human-readable username to its GUID.</div>
 </td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIdForName(java.lang.String,boolean)">getIdForName</a></span>&#8203;(java.lang.String&nbsp;username,
+            boolean&nbsp;allowRefresh)</code></th>
+<td class="colLast">
+<div class="block">Translate the provided human-readable username to its GUID.</div>
+</td>
+</tr>
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getNameForId(java.lang.String)">getNameForId</a></span>&#8203;(java.lang.String&nbsp;id)</code></th>
 <td class="colLast">
 <div class="block">Translate the provided user GUID to the user's username.</div>
 </td>
+</tr>
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getNameForId(java.lang.String,boolean)">getNameForId</a></span>&#8203;(java.lang.String&nbsp;id,
+            boolean&nbsp;allowRefresh)</code></th>
+<td class="colLast">
+<div class="block">Translate the provided user GUID to the user's username.</div>
+</td>
+</tr>
+<tr id="i6" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#refreshCache()">refreshCache</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -241,6 +270,20 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a id="refreshCache()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>refreshCache</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;refreshCache()
+                  throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<dl>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code></dd>
+</dl>
+</li>
+</ul>
 <a id="getIdForName(java.lang.String)">
 <!--   -->
 </a>
@@ -253,6 +296,29 @@ extends java.lang.Object</pre>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>username</code> - human-readable name of the user</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>unique identifier (GUID) of the user</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication problem if the cache needs to be refreshed</dd>
+<dd><code><a href="../exception/NotFoundException.html" title="class in com.atlan.exception">NotFoundException</a></code> - if the user cannot be found (does not exist) in Atlan</dd>
+<dd><code><a href="../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></code> - if no name was provided for the user to retrieve</dd>
+</dl>
+</li>
+</ul>
+<a id="getIdForName(java.lang.String,boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getIdForName</h4>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getIdForName&#8203;(java.lang.String&nbsp;username,
+                                     boolean&nbsp;allowRefresh)
+                              throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Translate the provided human-readable username to its GUID.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>username</code> - human-readable name of the user</dd>
+<dd><code>allowRefresh</code> - whether to allow a refresh of the cache (true) or not (false)</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>unique identifier (GUID) of the user</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
@@ -283,10 +349,33 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
+<a id="getIdForEmail(java.lang.String,boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getIdForEmail</h4>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getIdForEmail&#8203;(java.lang.String&nbsp;email,
+                                      boolean&nbsp;allowRefresh)
+                               throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Translate the provided email address to its GUID.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>email</code> - email address of the user</dd>
+<dd><code>allowRefresh</code> - whether to allow a refresh of the cache (true) or not (false)</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>unique identifier (GUID) of the user</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication problem if the cache needs to be refreshed</dd>
+<dd><code><a href="../exception/NotFoundException.html" title="class in com.atlan.exception">NotFoundException</a></code> - if the user cannot be found (does not exist) in Atlan</dd>
+<dd><code><a href="../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></code> - if no name was provided for the user to retrieve</dd>
+</dl>
+</li>
+</ul>
 <a id="getNameForId(java.lang.String)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>getNameForId</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getNameForId&#8203;(java.lang.String&nbsp;id)
@@ -295,6 +384,29 @@ extends java.lang.Object</pre>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>id</code> - unique identifier (GUID) of the user</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>username of the user</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication problem if the cache needs to be refreshed</dd>
+<dd><code><a href="../exception/NotFoundException.html" title="class in com.atlan.exception">NotFoundException</a></code> - if the user cannot be found (does not exist) in Atlan</dd>
+<dd><code><a href="../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></code> - if no name was provided for the user to retrieve</dd>
+</dl>
+</li>
+</ul>
+<a id="getNameForId(java.lang.String,boolean)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getNameForId</h4>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getNameForId&#8203;(java.lang.String&nbsp;id,
+                                     boolean&nbsp;allowRefresh)
+                              throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Translate the provided user GUID to the user's username.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>id</code> - unique identifier (GUID) of the user</dd>
+<dd><code>allowRefresh</code> - whether to allow a refresh of the cache (true) or not (false)</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>username of the user</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
