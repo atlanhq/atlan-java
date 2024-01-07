@@ -10,6 +10,7 @@ import de.siegmar.fastcsv.writer.QuoteStrategy
 import mu.KLogger
 import java.io.Closeable
 import java.io.IOException
+import java.nio.file.Paths
 import java.util.concurrent.atomic.AtomicLong
 
 /**
@@ -34,19 +35,20 @@ abstract class CSVXformer(
     private val header: List<String>
 
     init {
+        val input = Paths.get(inputFile)
         val builder = CsvReader.builder()
             .fieldSeparator(fieldSeparator)
             .quoteCharacter('"')
             .skipEmptyRows(true)
             .errorOnDifferentFieldCount(true)
-        builder.build(inputFile).use { tmp ->
+        builder.build(input).use { tmp ->
             val one = tmp.stream().findFirst()
             header =
                 one.map { obj: CsvRow -> obj.fields }
                     .orElse(emptyList())
         }
-        reader = builder.build(inputFile)
-        counter = builder.build(inputFile)
+        reader = builder.build(input)
+        counter = builder.build(input)
     }
 
     /**
@@ -114,6 +116,8 @@ abstract class CSVXformer(
     /** {@inheritDoc}  */
     @Throws(IOException::class)
     override fun close() {
-        reader.close()
+        reader.use {
+            counter.close()
+        }
     }
 }
