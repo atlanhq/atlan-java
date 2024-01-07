@@ -81,7 +81,7 @@ abstract class CSVXformer(
         writer.writeRow(targetHeader)
         // Calculate total number of rows that need to be transformed...
         val filteredRowCount = AtomicLong(0)
-        counter.stream().skip(1).parallel().forEach { row ->
+        counter.stream().skip(1).forEach { row -> // TODO: parallelize?
             val rowByHeader = getRowByHeader(row.fields)
             if (includeRow(rowByHeader)) {
                 filteredRowCount.incrementAndGet()
@@ -90,7 +90,7 @@ abstract class CSVXformer(
         val totalRowCount = filteredRowCount.get()
         logger.info { "Transforming a total of $totalRowCount rows..." }
         // Actually do the mapping, of only those rows we need to transform...
-        reader.stream().skip(1).parallel().forEach { row ->
+        reader.stream().skip(1).forEach { row -> // TODO: parallelize?
             val rowByHeader = getRowByHeader(row.fields)
             if (includeRow(rowByHeader)) {
                 val mappedValues = mapRow(rowByHeader)
