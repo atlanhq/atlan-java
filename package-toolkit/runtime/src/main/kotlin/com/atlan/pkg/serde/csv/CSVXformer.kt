@@ -11,6 +11,7 @@ import mu.KLogger
 import java.io.Closeable
 import java.io.IOException
 import java.nio.file.Paths
+import java.nio.file.StandardOpenOption
 import java.util.concurrent.atomic.AtomicLong
 
 /**
@@ -62,7 +63,13 @@ abstract class CSVXformer(
             .quoteCharacter('"')
             .quoteStrategy(QuoteStrategy.REQUIRED)
             .lineDelimiter(LineDelimiter.PLATFORM)
-            .build(ThreadSafeWriter(outputFile))
+            .build(
+                Paths.get(outputFile),
+                StandardOpenOption.CREATE,
+                StandardOpenOption.TRUNCATE_EXISTING,
+                StandardOpenOption.WRITE,
+            )
+            // TODO: parallelize? .build(ThreadSafeWriter(outputFile))
             .use { writer ->
                 val start = System.currentTimeMillis()
                 logger.info { "Transforming $inputFile..." }
