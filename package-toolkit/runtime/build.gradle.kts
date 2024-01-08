@@ -13,6 +13,7 @@ dependencies {
     api(libs.jackson.kotlin)
     api(libs.fastcsv)
     api(libs.bundles.poi)
+    api(libs.awssdk.s3)
     implementation(libs.simple.java.mail)
     // You would not need the dependencies below in reality, they are to simulate a running tenant
     testImplementation(libs.bundles.java.test)
@@ -55,6 +56,13 @@ tasks {
             include(dependency("com.sanctionco.jmail:jmail:.*"))
             include(dependency("com.github.bbottema:jetbrains-runtime-annotations:.*"))
             include(dependency("com.pivovarit:throwing-function:.*"))
+            // S3
+            include(dependency("software.amazon.awssdk:.*:.*"))
+            include(dependency("org.reactivestreams:reactive-streams:.*"))
+            include(dependency("org.apache.httpcomponents:httpclient:.*"))
+            include(dependency("org.apache.httpcomponents:httpcore:.*"))
+            include(dependency("commons-logging:commons-logging:.*"))
+            include(dependency("commons-codec:commons-codec:.*"))
         }
         mergeServiceFiles()
     }
