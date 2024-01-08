@@ -27,6 +27,8 @@ class WorkflowContainer(
         builder.add(NameValuePair("X_ATLAN_AGENT_ID", "{{workflow.name}}"))
         builder.add(NameValuePair("X_ATLAN_AGENT_PACKAGE_NAME", "{{=sprig.dig('annotations', 'package', 'argoproj', 'io/name', '', workflow)}}"))
         builder.add(NameValuePair("X_ATLAN_AGENT_WORKFLOW_ID", "{{=sprig.dig('labels', 'workflows', 'argoproj', 'io/workflow-template', '', workflow)}}"))
+        builder.add(ConfigMapEntry("AWS_S3_BUCKET_NAME", "atlan-defaults", "bucket"))
+        builder.add(ConfigMapEntry("AWS_S3_REGION", "atlan-defaults", "region"))
         builder.add(NamedSecret("CLIENT_ID", "argo-client-creds", "login"))
         builder.add(NamedSecret("CLIENT_SECRET", "argo-client-creds", "password"))
         builder.add(NamedSecret("SMTP_HOST", "support-smtp-creds", "host"))
