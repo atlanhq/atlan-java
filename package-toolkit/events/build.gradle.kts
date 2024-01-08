@@ -12,7 +12,6 @@ plugins {
 dependencies {
     implementation(project(":package-toolkit:runtime"))
     api(libs.numaflow.java)
-    api(libs.awssdk.s3)
     api("io.netty:netty-transport-native-epoll:4.1.86.Final:linux-x86_64")
 }
 
@@ -24,12 +23,6 @@ tasks {
         dependencies {
             include(dependency("io.numaproj.numaflow:numaflow-java:.*"))
             include(dependency("io.netty:netty-transport-native-epoll:4.1.86.Final:linux-x86_64"))
-            include(dependency("software.amazon.awssdk:.*:.*"))
-            include(dependency("org.reactivestreams:reactive-streams:.*"))
-            include(dependency("org.apache.httpcomponents:httpclient:.*"))
-            include(dependency("org.apache.httpcomponents:httpcore:.*"))
-            include(dependency("commons-logging:commons-logging:.*"))
-            include(dependency("commons-codec:commons-codec:.*"))
         }
         mergeServiceFiles()
     }

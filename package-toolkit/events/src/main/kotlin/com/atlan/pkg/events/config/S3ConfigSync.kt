@@ -4,11 +4,8 @@ package com.atlan.pkg.events.config
 
 import com.atlan.pkg.CustomConfig
 import com.atlan.pkg.Utils
+import com.atlan.pkg.s3.S3Sync
 import mu.KotlinLogging
-import software.amazon.awssdk.regions.Region
-import software.amazon.awssdk.services.s3.S3Client
-import software.amazon.awssdk.services.s3.model.GetObjectRequest
-import software.amazon.awssdk.services.s3.model.ListObjectsV2Request
 import java.io.File
 
 /**
@@ -38,49 +35,8 @@ class S3ConfigSync {
      * @return the synced configuration, if any, otherwise null
      */
     inline fun <reified T : CustomConfig> sync(): T? {
-        logger.info("Syncing configuration from s3://$bucketName/$configPrefix to $localPath")
-
-        val s3Client = S3Client.builder().region(Region.of(region)).build()
-        val request = ListObjectsV2Request.builder()
-            .bucket(bucketName)
-            .prefix(configPrefix)
-            .build()
-
-        val localFilesLastModified = File(localPath).walkTopDown().filter { it.isFile }.map {
-            it.relativeTo(File(localPath)).path to it.lastModified()
-        }.toMap()
-
-        val s3FilesToDownload = mutableListOf<String>()
-        s3Client.listObjectsV2(request).contents().forEach { file ->
-            val key = File(file.key()).relativeTo(File(configPrefix)).path
-            if (key.isNotBlank()) {
-                if (key !in localFilesLastModified ||
-                    file.lastModified().toEpochMilli() > localFilesLastModified[key]!!
-                ) {
-                    s3FilesToDownload.add(key)
-                }
-            }
-        }
-
-        var anySynced = false
-
-        s3FilesToDownload.forEach {
-            val localFile = File(localPath, it)
-            if (localFile.exists()) {
-                localFile.delete()
-            }
-            if (!localFile.parentFile.exists()) {
-                localFile.parentFile.mkdirs()
-            }
-            val s3Prefix = File(configPrefix, it).path
-            logger.info("Downloading s3://$bucketName/$s3Prefix to ${localFile.path}")
-            s3Client.getObject(
-                GetObjectRequest.builder().bucket(bucketName).key(s3Prefix).build(),
-                localFile.toPath(),
-            )
-            anySynced = true
-        }
-
+        val s3Sync = S3Sync(bucketName, region, logger)
+        val anySynced = s3Sync.copyFromS3(configPrefix, localPath)
         return if (anySynced) {
             Utils.parseConfig(File(CONFIG_FILE).readText(), File(RUNTIME_FILE).readText())
         } else {
