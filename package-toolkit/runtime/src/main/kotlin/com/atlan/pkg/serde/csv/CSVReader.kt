@@ -138,6 +138,7 @@ class CSVReader @JvmOverloads constructor(
         val totalFailures = AtomicLong(0)
         someFailure = someFailure || primaryBatch.failures.isNotEmpty()
         logFailures(primaryBatch, logger, totalFailures)
+        logSkipped(primaryBatch, logger)
         logger.info { "Total assets created: $totalCreates" }
         logger.info { "Total assets updated: $totalUpdates" }
         logger.info { "Total assets skipped: $totalSkipped" }
@@ -220,6 +221,15 @@ class CSVReader @JvmOverloads constructor(
                         " ... included asset: ${failed.typeName}::${failed.qualifiedName}"
                     }
                 }
+            }
+        }
+    }
+
+    private fun logSkipped(b: ParallelBatch, logger: KLogger) {
+        if (b.skipped.isNotEmpty()) {
+            logger.info { "Skipped the following assets as they do not exist in Atlan (running in update-only mode):" }
+            b.skipped?.forEach {
+                logger.info { " ... skipped asset: ${it.typeName}::${it.qualifiedName}" }
             }
         }
     }
