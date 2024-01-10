@@ -59,15 +59,15 @@ class ConnectionImporter(
     }
 
     /** {@inheritDoc} */
-    override fun cacheCreated(map: Map<String, Asset>) {
+    override fun cacheCreated(list: List<Asset>) {
         // Cache any assets that were created by processing
-        map.keys.forEach { k ->
+        list.forEach { asset ->
             // We must look up the asset and then cache to ensure we have the necessary identity
             // characteristics and status
-            val result = ConnectionCache.lookupAssetByGuid(k, maxRetries = 5)
+            val result = ConnectionCache.lookupAssetByGuid(asset.guid, maxRetries = 5)
             result?.let {
-                ConnectionCache.addByGuid(k, result)
-            } ?: throw IllegalStateException("Result of searching by GUID for $k was null.")
+                ConnectionCache.addByGuid(asset.guid, result)
+            } ?: throw IllegalStateException("Result of searching by GUID for ${asset.guid} was null.")
         }
     }
 }

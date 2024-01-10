@@ -9,6 +9,7 @@ import com.atlan.pkg.cache.TermCache
 import com.atlan.pkg.serde.RowDeserializer
 import com.atlan.pkg.serde.cell.GlossaryTermXformer
 import com.atlan.pkg.serde.cell.GlossaryXformer
+import com.atlan.pkg.serde.csv.ImportResults
 import mu.KotlinLogging
 
 /**
@@ -45,15 +46,24 @@ class TermImporter(
     )
 
     /** {@inheritDoc} */
-    override fun import(columnsToSkip: Set<String>) {
+    override fun import(columnsToSkip: Set<String>): ImportResults? {
         cache.preload()
         // Import categories by level, top-to-bottom, and stop when we hit a level with no categories
         logger.info { "--- Loading terms in first pass, without term-to-term relationships... ---" }
-        super.import(GlossaryTermXformer.TERM_TO_TERM_FIELDS)
-        // In this second pass we need to ignore fields that were loaded in the first pass,
-        // or we will end up with duplicates (links) or extra audit log messages (tags, README)
-        logger.info { "--- Loading term-to-term relationships (second pass)... ---" }
-        super.import(secondPassIgnore)
+        val firstPassResults = super.import(GlossaryTermXformer.TERM_TO_TERM_FIELDS)
+        return if (firstPassResults != null) {
+            // In this second pass we need to ignore fields that were loaded in the first pass,
+            // or we will end up with duplicates (links) or extra audit log messages (tags, README)
+            logger.info { "--- Loading term-to-term relationships (second pass)... ---" }
+            val secondPassResults = super.import(secondPassIgnore)
+            return if (secondPassResults != null) {
+                firstPassResults.combinedWith(secondPassResults)
+            } else {
+                firstPassResults
+            }
+        } else {
+            null
+        }
     }
 
     /** {@inheritDoc} */

@@ -8,6 +8,7 @@ import com.atlan.pkg.cache.CategoryCache
 import com.atlan.pkg.serde.RowDeserializer
 import com.atlan.pkg.serde.cell.GlossaryCategoryXformer.CATEGORY_DELIMITER
 import com.atlan.pkg.serde.cell.GlossaryXformer.GLOSSARY_DELIMITER
+import com.atlan.pkg.serde.csv.ImportResults
 import mu.KotlinLogging
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.math.max
@@ -46,15 +47,22 @@ class CategoryImporter(
     private val maxCategoryDepth = AtomicInteger(1)
 
     /** {@inheritDoc} */
-    override fun import(columnsToSkip: Set<String>) {
+    override fun import(columnsToSkip: Set<String>): ImportResults? {
         cache.preload()
         // Import categories by level, top-to-bottom, and stop when we hit a level with no categories
         logger.info { "Loading categories in multiple passes, by level..." }
+        var combinedResults: ImportResults? = null
         while (levelToProcess < maxCategoryDepth.get()) {
             levelToProcess += 1
             logger.info { "--- Loading level $levelToProcess categories... ---" }
-            super.import(columnsToSkip)
+            val results = super.import(columnsToSkip)
+            if (combinedResults == null) {
+                combinedResults = results
+            } else if (results != null) {
+                combinedResults = combinedResults.combinedWith(results)
+            }
         }
+        return combinedResults
     }
 
     /** {@inheritDoc} */

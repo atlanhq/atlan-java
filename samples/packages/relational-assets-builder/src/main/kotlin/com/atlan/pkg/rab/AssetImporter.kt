@@ -13,6 +13,7 @@ import com.atlan.model.assets.Table
 import com.atlan.model.assets.View
 import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.serde.csv.CSVImporter
+import com.atlan.pkg.serde.csv.ImportResults
 import mu.KLogger
 
 /**
@@ -44,10 +45,10 @@ abstract class AssetImporter(
 ) {
 
     /** {@inheritDoc} */
-    override fun import(columnsToSkip: Set<String>) {
+    override fun import(columnsToSkip: Set<String>): ImportResults? {
         // Can skip all of these columns when deserializing a row as they will be set by
         // the creator methods anyway
-        super.import(
+        return super.import(
             setOf(
                 Asset.CONNECTION_NAME.atlanFieldName,
                 // ConnectionImporter.CONNECTOR_TYPE, // Let this be loaded, for mis-named connections

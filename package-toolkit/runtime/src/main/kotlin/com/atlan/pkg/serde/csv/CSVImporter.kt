@@ -41,17 +41,19 @@ abstract class CSVImporter(
      * Actually run the import.
      *
      * @param columnsToSkip (optional) columns in the CSV file to skip when loading (primarily useful for multi-pass loads)
+     * @return details about the results of the import
      */
-    open fun import(columnsToSkip: Set<String> = setOf()) {
+    open fun import(columnsToSkip: Set<String> = setOf()): ImportResults? {
         CSVReader(filename, updateOnly).use { csv ->
             val start = System.currentTimeMillis()
-            val anyFailures = csv.streamRows(this, batchSize, logger, columnsToSkip)
+            val results = csv.streamRows(this, batchSize, logger, columnsToSkip)
             logger.info { "Total time taken: ${System.currentTimeMillis() - start} ms" }
-            if (anyFailures) {
+            if (results.anyFailures) {
                 logger.error { "Some errors detected, failing the workflow." }
                 exitProcess(1)
             }
-            cacheCreated(csv.created)
+            cacheCreated(results.primary.created)
+            return results
         }
     }
 

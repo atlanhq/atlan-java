@@ -40,8 +40,6 @@ class CSVReader @JvmOverloads constructor(
     private val typeIdx: Int
     private val qualifiedNameIdx: Int
 
-    val created: ConcurrentHashMap<String, Asset>
-
     init {
         val inputFile = Paths.get(path)
         val builder = CsvReader.builder()
@@ -62,7 +60,6 @@ class CSVReader @JvmOverloads constructor(
                 "Unable to find the column 'typeName'. This is a mandatory column in the input CSV.",
             )
         }
-        created = ConcurrentHashMap()
         reader = builder.build(inputFile)
         counter = builder.build(inputFile)
     }
@@ -77,9 +74,9 @@ class CSVReader @JvmOverloads constructor(
      * @param batchSize maximum number of Assets to bulk-save in Atlan per API request
      * @param logger through which to report the overall progress
      * @param skipColumns columns to skip during the processing (i.e. where they need to be processed in a later pass)
-     * @return true if all rows were processed successfully, or false if there were any failures
+     * @return details of the results of the import
      */
-    fun streamRows(rowToAsset: AssetGenerator, batchSize: Int, logger: KLogger, skipColumns: Set<String> = setOf()): Boolean {
+    fun streamRows(rowToAsset: AssetGenerator, batchSize: Int, logger: KLogger, skipColumns: Set<String> = setOf()): ImportResults {
         val client = Atlan.getDefaultClient()
         val primaryBatch = ParallelBatch(
             client,
@@ -129,9 +126,6 @@ class CSVReader @JvmOverloads constructor(
             }
         }
         primaryBatch.flush()
-        primaryBatch.created.forEach { asset ->
-            created[asset.guid] = asset
-        }
         val totalCreates = primaryBatch.created.size
         val totalUpdates = primaryBatch.updated.size
         val totalSkipped = primaryBatch.skipped.size
@@ -146,6 +140,7 @@ class CSVReader @JvmOverloads constructor(
 
         // Step 2: load the deferred related assets (and final-flush the main asset batches, too)
         val totalRelated = AtomicLong(0)
+        val relatedCount = AtomicLong(0)
         val searchAndDelete = mutableMapOf<String, Set<AtlanField>>()
         relatedHolds.values.forEach { b -> totalRelated.getAndAdd(b.relatedMap.size.toLong()) }
         logger.info { "Processing $totalRelated total related assets in a second pass." }
@@ -153,13 +148,28 @@ class CSVReader @JvmOverloads constructor(
             val placeholderGuid = hold.key
             val relatedAssetHold = hold.value
             val resolvedGuid = primaryBatch.resolvedGuids[placeholderGuid]
-            val resolvedAsset = relatedAssetHold.fromAsset.toBuilder().guid(resolvedGuid).build() as Asset
-            AssetRefXformer.buildRelated(resolvedAsset, relatedAssetHold.relatedMap, relatedBatch, count, totalRelated, logger, batchSize)
+            if (!resolvedGuid.isNullOrBlank()) {
+                val resolvedAsset = relatedAssetHold.fromAsset.toBuilder().guid(resolvedGuid).build() as Asset
+                AssetRefXformer.buildRelated(
+                    resolvedAsset,
+                    relatedAssetHold.relatedMap,
+                    relatedBatch,
+                    relatedCount,
+                    totalRelated,
+                    logger,
+                    batchSize,
+                )
+            } else {
+                logger.info { " ... skipped related asset as primary asset was skipped (above)." }
+                relatedCount.getAndIncrement()
+            }
         }
         deferDeletes.entries.parallelStream().forEach { delete: MutableMap.MutableEntry<String, Set<AtlanField>> ->
             val placeholderGuid = delete.key
-            val resolvedGuid = primaryBatch.resolvedGuids[placeholderGuid]!!
-            searchAndDelete[resolvedGuid] = delete.value
+            val resolvedGuid = primaryBatch.resolvedGuids[placeholderGuid]
+            if (!resolvedGuid.isNullOrBlank()) {
+                searchAndDelete[resolvedGuid] = delete.value
+            }
         }
 
         // Step 3: final-flush the deferred related assets
@@ -208,7 +218,21 @@ class CSVReader @JvmOverloads constructor(
             Utils.logProgress(totalScanned, totalToScan, logger, batchSize)
         }
         logger.info { "Total READMEs deleted: $totalDeleted" }
-        return someFailure
+        return ImportResults(
+            someFailure,
+            ImportResults.Details(
+                primaryBatch.resolvedGuids,
+                primaryBatch.created,
+                primaryBatch.updated,
+                primaryBatch.skipped,
+            ),
+            ImportResults.Details(
+                relatedBatch.resolvedGuids,
+                relatedBatch.created,
+                relatedBatch.updated,
+                relatedBatch.skipped,
+            ),
+        )
     }
 
     private fun logFailures(b: ParallelBatch, logger: KLogger, totalFailures: AtomicLong) {
