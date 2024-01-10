@@ -20,4 +20,9 @@ data class RelationalAssetsBuilderCfg(
     @JsonProperty("assets_attr_to_overwrite") val assetsAttrToOverwrite: List<String>?,
     @JsonProperty("assets_upsert_semantic") val assetsUpsertSemantic: String?,
     @JsonProperty("assets_fail_on_errors") val assetsFailOnErrors: Boolean?,
+    @JsonProperty("delete_assets") val deleteAssets: String?,
+    @JsonProperty("deletion_prefix") val deletionPrefix: String?,
+    @JsonDeserialize(using = WidgetSerde.MultiSelectDeserializer::class)
+    @JsonSerialize(using = WidgetSerde.MultiSelectSerializer::class)
+    @JsonProperty("asset_types") val assetTypes: List<String>?,
 ) : CustomConfig()

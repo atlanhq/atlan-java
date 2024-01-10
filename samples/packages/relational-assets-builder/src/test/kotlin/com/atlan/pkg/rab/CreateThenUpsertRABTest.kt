@@ -16,6 +16,7 @@ import com.atlan.model.assets.View
 import com.atlan.model.core.AtlanTag
 import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.model.enums.AtlanIcon
+import com.atlan.model.enums.AtlanStatus
 import com.atlan.model.enums.AtlanTagColor
 import com.atlan.model.enums.CertificateStatus
 import com.atlan.model.fields.AtlanField
@@ -70,9 +71,11 @@ class CreateThenUpsertRABTest : PackageTest() {
         val output = Paths.get(testDirectory, revisedFile).toFile()
         input.useLines { lines ->
             lines.forEach { line ->
-                val revised = line
-                    .replace("Test ", "Revised ")
-                output.appendText("$revised\n")
+                if (!line.contains("TEST_VIEW")) {
+                    val revised = line
+                        .replace("Test ", "Revised ")
+                    output.appendText("$revised\n")
+                }
             }
         }
         output.copyTo(input, true)
@@ -119,6 +122,7 @@ class CreateThenUpsertRABTest : PackageTest() {
 
     private val tableAttrs: List<AtlanField> = listOf(
         Table.NAME,
+        Table.STATUS,
         Table.CONNECTION_QUALIFIED_NAME,
         Table.CONNECTOR_TYPE,
         Table.DATABASE_NAME,
@@ -137,6 +141,7 @@ class CreateThenUpsertRABTest : PackageTest() {
 
     private val columnAttrs: List<AtlanField> = listOf(
         Column.NAME,
+        Column.STATUS,
         Column.CONNECTION_QUALIFIED_NAME,
         Column.CONNECTOR_TYPE,
         Column.DATABASE_NAME,
@@ -163,6 +168,9 @@ class CreateThenUpsertRABTest : PackageTest() {
                 assetsUpsertSemantic = "upsert",
                 assetsAttrToOverwrite = listOf(),
                 assetsFailOnErrors = true,
+                deleteAssets = "NONE",
+                deletionPrefix = null,
+                assetTypes = null,
             ),
         )
         Importer.main(arrayOf())
@@ -216,7 +224,7 @@ class CreateThenUpsertRABTest : PackageTest() {
         validateSchema("Test schema")
     }
 
-    private fun validateSchema(displayName: String) {
+    private fun validateSchema(displayName: String, viewDeleted: Boolean = false) {
         val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
         val found = Schema.select()
             .where(Schema.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
@@ -236,8 +244,12 @@ class CreateThenUpsertRABTest : PackageTest() {
         assertEquals(1, sch.viewCount)
         assertEquals(1, sch.tables.size)
         assertEquals("TEST_TBL", sch.tables.first().name)
-        assertEquals(1, sch.views.size)
-        assertEquals("TEST_VIEW", sch.views.first().name)
+        if (viewDeleted) {
+            assertEquals(0, sch.views.size)
+        } else {
+            assertEquals(1, sch.views.size)
+            assertEquals("TEST_VIEW", sch.views.first().name)
+        }
     }
 
     @Test(groups = ["create"])
@@ -336,12 +348,12 @@ class CreateThenUpsertRABTest : PackageTest() {
 
     @Test(groups = ["create"])
     fun view1Created() {
-        validateView("Test view")
+        validateView()
     }
 
-    private fun validateView(displayName: String) {
+    private fun validateView(deleted: Boolean = false) {
         val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
-        val found = View.select()
+        val found = View.select(deleted)
             .where(View.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
             .includesOnResults(tableAttrs)
             .includeOnRelations(Asset.NAME)
@@ -351,32 +363,36 @@ class CreateThenUpsertRABTest : PackageTest() {
         assertEquals(1, found.size)
         val view = found[0] as View
         assertEquals("TEST_VIEW", view.name)
-        assertEquals(displayName, view.displayName)
+        assertEquals("Test view", view.displayName)
         assertEquals(c1.qualifiedName, view.connectionQualifiedName)
         assertEquals(conn1Type, view.connectorType)
-        assertEquals(2, view.columnCount)
         assertEquals(CertificateStatus.DRAFT, view.certificateStatus)
         assertTrue(view.certificateStatusMessage.isNullOrBlank())
-        assertEquals("<h2>View readme</h2>", view.readme.description)
-        assertEquals(1, view.atlanTags.size)
-        assertEquals(tag1, view.atlanTags.first().typeName)
-        assertTrue(view.atlanTags.first().propagate)
-        assertTrue(view.atlanTags.first().removePropagationsOnEntityDelete)
-        assertTrue(view.atlanTags.first().restrictPropagationThroughLineage)
-        assertEquals(2, view.columns.size)
-        val colNames = view.columns.stream().map(IColumn::getName).toList()
-        assertTrue(colNames.contains("COL3"))
-        assertTrue(colNames.contains("COL4"))
+        if (deleted) {
+            assertEquals(AtlanStatus.DELETED, view.status)
+        } else {
+            assertEquals(2, view.columnCount)
+            assertEquals("<h2>View readme</h2>", view.readme.description)
+            assertEquals(1, view.atlanTags.size)
+            assertEquals(tag1, view.atlanTags.first().typeName)
+            assertTrue(view.atlanTags.first().propagate)
+            assertTrue(view.atlanTags.first().removePropagationsOnEntityDelete)
+            assertTrue(view.atlanTags.first().restrictPropagationThroughLineage)
+            assertEquals(2, view.columns.size)
+            val colNames = view.columns.stream().map(IColumn::getName).toList()
+            assertTrue(colNames.contains("COL3"))
+            assertTrue(colNames.contains("COL4"))
+        }
     }
 
     @Test(groups = ["create"])
     fun columnsForView1Created() {
-        validateColumnsForView("Test column 3", "Test column 4")
+        validateColumnsForView()
     }
 
-    private fun validateColumnsForView(displayCol3: String, displayCol4: String) {
+    private fun validateColumnsForView(deleted: Boolean = false) {
         val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
-        val found = Column.select()
+        val found = Column.select(deleted)
             .where(Column.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
             .where(Column.VIEW_NAME.eq("TEST_VIEW"))
             .includesOnResults(columnAttrs)
@@ -398,16 +414,19 @@ class CreateThenUpsertRABTest : PackageTest() {
             assertTrue(col.viewQualifiedName.endsWith("/TEST_DB/TEST_SCHEMA/TEST_VIEW"))
             assertTrue(col.tableName.isNullOrEmpty())
             assertTrue(col.tableQualifiedName.isNullOrEmpty())
+            if (deleted) {
+                assertEquals(AtlanStatus.DELETED, col.status)
+            }
             when (col.name) {
                 "COL3" -> {
                     assertEquals("INT32", col.dataType)
                     assertEquals(1, col.order)
-                    assertEquals(displayCol3, col.displayName)
+                    assertEquals("Test column 3", col.displayName)
                 }
                 "COL4" -> {
                     assertEquals("DECIMAL", col.dataType)
                     assertEquals(2, col.order)
-                    assertEquals(displayCol4, col.displayName)
+                    assertEquals("Test column 4", col.displayName)
                 }
             }
         }
@@ -416,9 +435,21 @@ class CreateThenUpsertRABTest : PackageTest() {
     @Test(groups = ["runUpdate"], dependsOnGroups = ["create"])
     fun upsertRevisions() {
         modifyFile()
+        val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
+        setup(
+            RelationalAssetsBuilderCfg(
+                assetsFile = Paths.get(testDirectory, testFile).toString(),
+                assetsUpsertSemantic = "upsert",
+                assetsAttrToOverwrite = listOf(),
+                assetsFailOnErrors = true,
+                deleteAssets = "SOFT",
+                deletionPrefix = c1.qualifiedName,
+                assetTypes = listOf(Table.TYPE_NAME, View.TYPE_NAME, Column.TYPE_NAME),
+            ),
+        )
         Importer.main(arrayOf())
-        // Allow Elastic index to become consistent
-        Thread.sleep(5000)
+        // Allow Elastic index and deletion to become consistent
+        Thread.sleep(10000)
     }
 
     @Test(groups = ["update"], dependsOnGroups = ["runUpdate"])
@@ -433,7 +464,7 @@ class CreateThenUpsertRABTest : PackageTest() {
 
     @Test(groups = ["update"], dependsOnGroups = ["runUpdate"])
     fun schemaChanged() {
-        validateSchema("Revised schema")
+        validateSchema("Revised schema", true)
     }
 
     @Test(groups = ["update"], dependsOnGroups = ["runUpdate"])
@@ -447,13 +478,13 @@ class CreateThenUpsertRABTest : PackageTest() {
     }
 
     @Test(groups = ["update"], dependsOnGroups = ["runUpdate"])
-    fun viewChanged() {
-        validateView("Revised view")
+    fun viewDeleted() {
+        validateView(true)
     }
 
     @Test(groups = ["update"], dependsOnGroups = ["runUpdate"])
-    fun columnsForView1Changed() {
-        validateColumnsForView("Revised column 3", "Revised column 4")
+    fun columnsForView1Deleted() {
+        validateColumnsForView(true)
     }
 
     @Test(dependsOnGroups = ["create", "runUpdate", "update"])

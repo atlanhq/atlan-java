@@ -42,20 +42,16 @@ abstract class GTCImporter(
     updateOnly = updateOnly,
     batchSize = batchSize,
 ) {
-    /**
-     * Cache any created assets.
-     *
-     * @param map from GUID to asset that was created
-     */
-    override fun cacheCreated(map: Map<String, Asset>) {
+    /** {@inheritDoc} */
+    override fun cacheCreated(list: List<Asset>) {
         // Cache any assets that were created by processing
-        map.keys.forEach { k ->
+        list.forEach { asset ->
             // We must look up the asset and then cache to ensure we have the necessary identity
             // characteristics and status
-            val result = cache.lookupAssetByGuid(k, maxRetries = 5)
+            val result = cache.lookupAssetByGuid(asset.guid, maxRetries = 5)
             result?.let {
-                cache.addByGuid(k, result)
-            } ?: throw IllegalStateException("Result of searching by GUID for $k was null.")
+                cache.addByGuid(asset.guid, result)
+            } ?: throw IllegalStateException("Result of searching by GUID for ${asset.guid} was null.")
         }
     }
 
