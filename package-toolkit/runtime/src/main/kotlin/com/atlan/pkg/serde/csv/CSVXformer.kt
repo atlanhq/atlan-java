@@ -98,10 +98,11 @@ abstract class CSVXformer(
         logger.info { "Transforming a total of $totalRowCount rows..." }
         // Actually do the mapping, of only those rows we need to transform...
         reader.stream().skip(1).forEach { row -> // TODO: parallelize?
-            val rowByHeader = getRowByHeader(row.fields)
-            if (includeRow(rowByHeader)) {
-                val mappedValues = mapRow(rowByHeader)
-                writer.writeRow(mappedValues)
+            val inputRow = getRowByHeader(row.fields)
+            if (includeRow(inputRow)) {
+                mapRow(inputRow).forEach { outputRow ->
+                    writer.writeRow(outputRow)
+                }
             }
         }
     }
