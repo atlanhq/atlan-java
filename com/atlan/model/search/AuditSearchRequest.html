@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10};
+var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -198,29 +198,74 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>static <a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#CREATED">CREATED</a></span></code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ACTION">ACTION</a></span></code></th>
+<td class="colLast">
+<div class="block">Type of action made against the asset.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ENTITY_ID">ENTITY_ID</a></span></code></th>
-<td class="colLast">&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#AGENT">AGENT</a></span></code></th>
+<td class="colLast">
+<div class="block">Type of actor (e.g.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#AGENT_ID">AGENT_ID</a></span></code></th>
+<td class="colLast">
+<div class="block">Name of the agent (specific run of a workflow) that created or changed the asset.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static <a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#CREATED">CREATED</a></span></code></th>
+<td class="colLast">
+<div class="block">When the asset was created.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ENTITY_ID">ENTITY_ID</a></span></code></th>
+<td class="colLast">
+<div class="block">Unique identifier (GUID) of the asset that was created or changed.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ENTITY_TYPE">ENTITY_TYPE</a></span></code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Type of the asset that was created or changed.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#PACKAGE_NAME">PACKAGE_NAME</a></span></code></th>
+<td class="colLast">
+<div class="block">Name of the package that created or changed the asset.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#QUALIFIED_NAME">QUALIFIED_NAME</a></span></code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Unique name of the asset that was created or changed.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#USER">USER</a></span></code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">User who made the update to the asset.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#WORKFLOW_ID">WORKFLOW_ID</a></span></code></th>
+<td class="colLast">
+<div class="block">Name of the workflow (specific configuration of a package) that created or changed the asset.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -270,6 +315,23 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>static <a href="AuditSearchRequest.AuditSearchRequestBuilder.html" title="class in com.atlan.model.search">AuditSearchRequest.AuditSearchRequestBuilder</a>&lt;?,&#8203;?&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#byAction(com.atlan.AtlanClient,java.lang.String,int)">byAction</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+        java.lang.String&nbsp;action,
+        int&nbsp;size)</code></th>
+<td class="colLast">
+<div class="block">Start building an audit search request for the last common action made to any assets.</div>
+</td>
+</tr>
+<tr id="i2" class="altColor">
+<td class="colFirst"><code>static <a href="AuditSearchRequest.AuditSearchRequestBuilder.html" title="class in com.atlan.model.search">AuditSearchRequest.AuditSearchRequestBuilder</a>&lt;?,&#8203;?&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#byAction(java.lang.String,int)">byAction</a></span>&#8203;(java.lang.String&nbsp;action,
+        int&nbsp;size)</code></th>
+<td class="colLast">
+<div class="block">Start building an audit search request for the last common action made to any assets.</div>
+</td>
+</tr>
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code>static <a href="AuditSearchRequest.AuditSearchRequestBuilder.html" title="class in com.atlan.model.search">AuditSearchRequest.AuditSearchRequestBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#byGuid(com.atlan.AtlanClient,java.lang.String,int)">byGuid</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
       java.lang.String&nbsp;guid,
       int&nbsp;size)</code></th>
@@ -277,7 +339,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <div class="block">Start building an audit search request for the last changes to an asset, by its GUID.</div>
 </td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>static <a href="AuditSearchRequest.AuditSearchRequestBuilder.html" title="class in com.atlan.model.search">AuditSearchRequest.AuditSearchRequestBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#byGuid(java.lang.String,int)">byGuid</a></span>&#8203;(java.lang.String&nbsp;guid,
       int&nbsp;size)</code></th>
@@ -285,7 +347,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <div class="block">Start building an audit search request for the last changes to an asset, by its GUID.</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>static <a href="AuditSearchRequest.AuditSearchRequestBuilder.html" title="class in com.atlan.model.search">AuditSearchRequest.AuditSearchRequestBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#byQualifiedName(com.atlan.AtlanClient,java.lang.String,java.lang.String,int)">byQualifiedName</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
                java.lang.String&nbsp;typeName,
@@ -295,7 +357,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <div class="block">Start building an audit search request for the last changes to an asset, by its qualifiedName.</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>static <a href="AuditSearchRequest.AuditSearchRequestBuilder.html" title="class in com.atlan.model.search">AuditSearchRequest.AuditSearchRequestBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#byQualifiedName(java.lang.String,java.lang.String,int)">byQualifiedName</a></span>&#8203;(java.lang.String&nbsp;typeName,
                java.lang.String&nbsp;qualifiedName,
@@ -304,7 +366,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <div class="block">Start building an audit search request for the last changes to an asset, by its qualifiedName.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>static <a href="AuditSearchRequest.AuditSearchRequestBuilder.html" title="class in com.atlan.model.search">AuditSearchRequest.AuditSearchRequestBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#byUser(com.atlan.AtlanClient,java.lang.String,int)">byUser</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
       java.lang.String&nbsp;userName,
@@ -313,7 +375,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <div class="block">Start building an audit search request for the last changes made to any assets, by a given user.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>static <a href="AuditSearchRequest.AuditSearchRequestBuilder.html" title="class in com.atlan.model.search">AuditSearchRequest.AuditSearchRequestBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#byUser(java.lang.String,int)">byUser</a></span>&#8203;(java.lang.String&nbsp;userName,
       int&nbsp;size)</code></th>
@@ -321,55 +383,55 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <div class="block">Start building an audit search request for the last changes made to any assets, by a given user.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>protected boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#canEqual(java.lang.Object)">canEqual</a></span>&#8203;(java.lang.Object&nbsp;other)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#equals(java.lang.Object)">equals</a></span>&#8203;(java.lang.Object&nbsp;o)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>java.util.List&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAttributes()">getAttributes</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Attributes to include in the entityDetail of each resulting audit entry.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code><a href="IndexSearchDSL.html" title="class in com.atlan.model.search">IndexSearchDSL</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDsl()">getDsl</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Parameters for the search itself.</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code><a href="AuditSearchResponse.html" title="class in com.atlan.model.search">AuditSearchResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#search()">search</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Run the search.</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code><a href="AuditSearchResponse.html" title="class in com.atlan.model.search">AuditSearchResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#search(com.atlan.AtlanClient)">search</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)</code></th>
 <td class="colLast">
 <div class="block">Run the search.</div>
 </td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code><a href="AuditSearchRequest.AuditSearchRequestBuilder.html" title="class in com.atlan.model.search">AuditSearchRequest.AuditSearchRequestBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toBuilder()">toBuilder</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 </tr>
@@ -411,6 +473,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <li class="blockList">
 <h4>CREATED</h4>
 <pre>public static final&nbsp;<a href="../fields/NumericField.html" title="class in com.atlan.model.fields">NumericField</a> CREATED</pre>
+<div class="block">When the asset was created.</div>
 </li>
 </ul>
 <a id="ENTITY_ID">
@@ -420,6 +483,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <li class="blockList">
 <h4>ENTITY_ID</h4>
 <pre>public static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> ENTITY_ID</pre>
+<div class="block">Unique identifier (GUID) of the asset that was created or changed.</div>
 </li>
 </ul>
 <a id="ENTITY_TYPE">
@@ -429,6 +493,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <li class="blockList">
 <h4>ENTITY_TYPE</h4>
 <pre>public static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> ENTITY_TYPE</pre>
+<div class="block">Type of the asset that was created or changed.</div>
 </li>
 </ul>
 <a id="QUALIFIED_NAME">
@@ -438,15 +503,67 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <li class="blockList">
 <h4>QUALIFIED_NAME</h4>
 <pre>public static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> QUALIFIED_NAME</pre>
+<div class="block">Unique name of the asset that was created or changed.</div>
 </li>
 </ul>
 <a id="USER">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>USER</h4>
 <pre>public static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> USER</pre>
+<div class="block">User who made the update to the asset.</div>
+</li>
+</ul>
+<a id="ACTION">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>ACTION</h4>
+<pre>public static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> ACTION</pre>
+<div class="block">Type of action made against the asset.</div>
+</li>
+</ul>
+<a id="AGENT">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>AGENT</h4>
+<pre>public static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> AGENT</pre>
+<div class="block">Type of actor (e.g. <code>workflow</code>) that created or changed the asset, if it was done programmatically.</div>
+</li>
+</ul>
+<a id="PACKAGE_NAME">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>PACKAGE_NAME</h4>
+<pre>public static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> PACKAGE_NAME</pre>
+<div class="block">Name of the package that created or changed the asset.</div>
+</li>
+</ul>
+<a id="WORKFLOW_ID">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>WORKFLOW_ID</h4>
+<pre>public static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> WORKFLOW_ID</pre>
+<div class="block">Name of the workflow (specific configuration of a package) that created or changed the asset.</div>
+</li>
+</ul>
+<a id="AGENT_ID">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>AGENT_ID</h4>
+<pre>public static final&nbsp;<a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a> AGENT_ID</pre>
+<div class="block">Name of the agent (specific run of a workflow) that created or changed the asset.</div>
 </li>
 </ul>
 </li>
@@ -626,6 +743,44 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>client</code> - connectivity to the Atlan tenant on which to search the audit logs</dd>
 <dd><code>userName</code> - the name of the user for which to look for any changes</dd>
+<dd><code>size</code> - number of changes to retrieve</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a request builder pre-configured with these criteria</dd>
+</dl>
+</li>
+</ul>
+<a id="byAction(java.lang.String,int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>byAction</h4>
+<pre class="methodSignature">public static&nbsp;<a href="AuditSearchRequest.AuditSearchRequestBuilder.html" title="class in com.atlan.model.search">AuditSearchRequest.AuditSearchRequestBuilder</a>&lt;?,&#8203;?&gt;&nbsp;byAction&#8203;(java.lang.String&nbsp;action,
+                                                                               int&nbsp;size)</pre>
+<div class="block">Start building an audit search request for the last common action made to any assets.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>action</code> - type of action (e.g. <code>ENTITY_CREATE</code>)</dd>
+<dd><code>size</code> - number of changes to retrieve</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a request builder pre-configured with these criteria</dd>
+</dl>
+</li>
+</ul>
+<a id="byAction(com.atlan.AtlanClient,java.lang.String,int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>byAction</h4>
+<pre class="methodSignature">public static&nbsp;<a href="AuditSearchRequest.AuditSearchRequestBuilder.html" title="class in com.atlan.model.search">AuditSearchRequest.AuditSearchRequestBuilder</a>&lt;?,&#8203;?&gt;&nbsp;byAction&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+                                                                               java.lang.String&nbsp;action,
+                                                                               int&nbsp;size)</pre>
+<div class="block">Start building an audit search request for the last common action made to any assets.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>client</code> - connectivity to the Atlan tenant on which to search the audit logs</dd>
+<dd><code>action</code> - type of action (e.g. <code>ENTITY_CREATE</code>)</dd>
 <dd><code>size</code> - number of changes to retrieve</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>a request builder pre-configured with these criteria</dd>
