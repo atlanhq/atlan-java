@@ -45,7 +45,7 @@ public class SearchLogEndpoint extends AtlasEndpoint {
     public SearchLogResponse search(SearchLogRequest request, RequestOptions options) throws AtlanException {
         String url = String.format("%s%s", getBaseUrl(), search_endpoint);
         boolean missingSort =
-            request.getDsl().getSort() == null || request.getDsl().getSort().isEmpty();
+                request.getDsl().getSort() == null || request.getDsl().getSort().isEmpty();
         boolean missingTimeSort = true;
         if (!missingSort) {
             // If there is some sort, see whether time is already included
@@ -65,10 +65,10 @@ public class SearchLogEndpoint extends AtlasEndpoint {
             // ascending order then earlier pages should never have additional entries - at least not until
             // there is full bi-temporal support in the search index, or time machines are invented...)
             request = request.toBuilder()
-                .dsl(request.getDsl().toBuilder()
-                    .sortOption(SearchLogEntry.SEARCHED_AT.order(SortOrder.Asc))
-                    .build())
-                .build();
+                    .dsl(request.getDsl().toBuilder()
+                            .sortOption(SearchLogEntry.SEARCHED_AT.order(SortOrder.Asc))
+                            .build())
+                    .build();
         }
         SearchLogResponse response = ApiResource.request(
                 client, ApiResource.RequestMethod.POST, url, request, SearchLogResponse.class, options);
