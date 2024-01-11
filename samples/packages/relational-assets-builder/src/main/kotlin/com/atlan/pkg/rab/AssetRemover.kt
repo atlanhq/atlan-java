@@ -8,7 +8,7 @@ import com.atlan.model.enums.AtlanDeleteType
 import com.atlan.model.search.FluentSearch
 import mu.KLogger
 import java.util.concurrent.ConcurrentHashMap
-import kotlin.math.max
+import kotlin.math.min
 import kotlin.math.round
 
 /**
@@ -71,7 +71,7 @@ class AssetRemover(
             } else {
                 for (i in 0..totalToDelete step batchSize) {
                     logger.info { " ... next batch of $batchSize (${round((i.toDouble() / totalToDelete) * 100)}%)" }
-                    val sublist = guidList.subList(i, max(i + batchSize, totalToDelete))
+                    val sublist = guidList.subList(i, min(i + batchSize, totalToDelete))
                     client.assets.delete(sublist, deletionType)
                 }
             }

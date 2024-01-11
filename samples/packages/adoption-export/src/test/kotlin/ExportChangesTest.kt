@@ -13,9 +13,9 @@ import java.io.File
 import java.math.BigDecimal
 
 /**
- * Test export of asset views adoption information, sorted by number of unique users.
+ * Test export of asset changes information.
  */
-class ExportUniqueUserViewsTest : PackageTest() {
+class ExportChangesTest : PackageTest() {
     private val files = listOf(
         "debug.log",
         "adoption-export.xlsx",
@@ -25,8 +25,8 @@ class ExportUniqueUserViewsTest : PackageTest() {
     fun beforeClass() {
         setup(
             AdoptionExportCfg(
-                includeViews = "BY_USERS",
-                viewsMax = 100,
+                includeChanges = "YES",
+                changesMax = 100,
             ),
         )
         AdoptionExporter.main(arrayOf(testDirectory))
@@ -41,15 +41,16 @@ class ExportUniqueUserViewsTest : PackageTest() {
     fun hasExpectedSheets() {
         val xlFile = "$testDirectory${File.separator}adoption-export.xlsx"
         ExcelReader(xlFile).use { xlsx ->
-            assertTrue(xlsx.hasSheet("Views"))
+            assertTrue(xlsx.hasSheet("Views")) // there by default
+            assertTrue(xlsx.hasSheet("Changes"))
         }
     }
 
     @Test
-    fun testViews() {
+    fun testChanges() {
         val xlFile = "$testDirectory${File.separator}adoption-export.xlsx"
         ExcelReader(xlFile).use { xlsx ->
-            val rows = xlsx.getRowsFromSheet("Views")
+            val rows = xlsx.getRowsFromSheet("Changes")
             assertTrue(rows.isNotEmpty())
             var lastCount = Int.MAX_VALUE
             rows.forEach { row ->
@@ -57,12 +58,11 @@ class ExportUniqueUserViewsTest : PackageTest() {
                 assertFalse(row["Qualified name"].isNullOrBlank())
                 assertFalse(row["Name"].isNullOrBlank())
                 assertFalse(row["Link"].isNullOrBlank())
-                val users = row["Distinct users"]
-                assertFalse(users.isNullOrBlank())
-                val userCount = BigDecimal(users)
-                assertTrue(userCount.toInt() <= lastCount)
-                lastCount = userCount.toInt()
-                assertFalse(row["Total views"].isNullOrBlank())
+                val changes = row["Total changes"]
+                assertFalse(changes.isNullOrBlank())
+                val changeCount = BigDecimal(changes)
+                assertTrue(changeCount.toInt() <= lastCount)
+                lastCount = changeCount.toInt()
             }
         }
     }

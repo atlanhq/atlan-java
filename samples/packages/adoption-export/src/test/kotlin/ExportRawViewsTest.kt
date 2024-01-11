@@ -25,12 +25,8 @@ class ExportRawViewsTest : PackageTest() {
     fun beforeClass() {
         setup(
             AdoptionExportCfg(
-                includeSearches = false,
-                maximumSearches = 50,
-                includeChanges = false,
                 includeViews = "BY_VIEWS",
-                maximumAssets = 100,
-                emailAddresses = null,
+                viewsMax = 100,
             ),
         )
         AdoptionExporter.main(arrayOf(testDirectory))
@@ -57,7 +53,10 @@ class ExportRawViewsTest : PackageTest() {
             assertTrue(rows.isNotEmpty())
             var lastCount = Int.MAX_VALUE
             rows.forEach { row ->
-                assertFalse(row["GUID"].isNullOrBlank())
+                assertFalse(row["Type"].isNullOrBlank())
+                assertFalse(row["Qualified name"].isNullOrBlank())
+                assertFalse(row["Name"].isNullOrBlank())
+                assertFalse(row["Link"].isNullOrBlank())
                 val views = row["Total views"]
                 assertFalse(views.isNullOrBlank())
                 val viewCount = BigDecimal(views)

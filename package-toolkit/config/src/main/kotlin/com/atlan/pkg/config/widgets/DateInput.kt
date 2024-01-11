@@ -33,10 +33,10 @@ class DateInput(
         label,
         hidden,
         help,
-        start,
         min,
         max,
         default,
+        start,
         grid,
     ),
 ) {
