@@ -135,6 +135,31 @@ public class AssetEndpoint extends AtlasEndpoint {
      */
     public AuditSearchResponse auditLogs(AuditSearchRequest request, RequestOptions options) throws AtlanException {
         String url = String.format("%s%s", getBaseUrl(), audit_endpoint);
+        boolean missingSort =
+                request.getDsl().getSort() == null || request.getDsl().getSort().isEmpty();
+        boolean missingGuidSort = true;
+        if (!missingSort) {
+            // If there is some sort, see whether GUID is already included
+            for (SortOptions option : request.getDsl().getSort()) {
+                if (option.isField()) {
+                    String fieldName = option.field().field();
+                    if (AuditSearchRequest.ENTITY_ID.getKeywordFieldName().equals(fieldName)) {
+                        missingGuidSort = false;
+                        break;
+                    }
+                }
+            }
+        }
+        if (missingGuidSort) {
+            // If there is no sort by GUID, always add it as a final (tie-breaker) criteria
+            // to ensure there is consistent paging (unfortunately sorting by _doc still has duplicates
+            // across large number of pages)
+            request = request.toBuilder()
+                    .dsl(request.getDsl().toBuilder()
+                            .sortOption(AuditSearchRequest.ENTITY_ID.order(SortOrder.Asc))
+                            .build())
+                    .build();
+        }
         AuditSearchResponse response = ApiResource.request(
                 client, ApiResource.RequestMethod.POST, url, request, AuditSearchResponse.class, options);
         response.setClient(client);

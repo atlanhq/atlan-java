@@ -45,9 +45,8 @@ public class AuditSearchResponse extends ApiResource implements Iterable<EntityA
     /** List of results from the search. */
     List<EntityAudit> entityAudits;
 
-    /** Unused. */
-    @JsonIgnore
-    final Object aggregations = null;
+    /** Map of results for the requested aggregations. */
+    Map<String, AggregationResult> aggregations;
 
     /** Number of results returned in this response. */
     Long count;

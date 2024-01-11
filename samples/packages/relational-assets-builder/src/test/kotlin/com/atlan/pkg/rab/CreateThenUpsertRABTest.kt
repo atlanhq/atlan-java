@@ -15,11 +15,13 @@ import com.atlan.model.assets.Table
 import com.atlan.model.assets.View
 import com.atlan.model.core.AtlanTag
 import com.atlan.model.enums.AtlanConnectorType
+import com.atlan.model.enums.AtlanDeleteType
 import com.atlan.model.enums.AtlanIcon
 import com.atlan.model.enums.AtlanStatus
 import com.atlan.model.enums.AtlanTagColor
 import com.atlan.model.enums.CertificateStatus
 import com.atlan.model.fields.AtlanField
+import com.atlan.model.search.FluentSearch
 import com.atlan.model.typedefs.AtlanTagDef
 import com.atlan.pkg.PackageTest
 import org.testng.Assert.assertFalse
@@ -499,9 +501,30 @@ class CreateThenUpsertRABTest : PackageTest() {
 
     @AfterClass(alwaysRun = true)
     fun afterClass(context: ITestContext) {
+        // Purge view and its columns first, otherwise we end up with stale
+        // references between tag and columns in the view
+        purgeView()
         removeConnection(conn1, conn1Type)
         AtlanTagDef.purge(tag1)
         AtlanTagDef.purge(tag2)
         teardown(context.failedTests.size() > 0)
+    }
+
+    private fun purgeView() {
+        val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
+        val toPurge = mutableListOf<String>()
+        val found = View.select(true)
+            .where(FluentSearch.ARCHIVED)
+            .where(View.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
+            .includesOnResults(tableAttrs)
+            .includeOnRelations(Asset.NAME)
+            .stream()
+            .forEach { view ->
+                toPurge.add(view.guid)
+                (view as View).columns.forEach { column ->
+                    toPurge.add(column.guid)
+                }
+            }
+        Atlan.getDefaultClient().assets.delete(toPurge, AtlanDeleteType.PURGE)
     }
 }

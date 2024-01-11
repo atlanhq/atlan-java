@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.api;
 
+import co.elastic.clients.elasticsearch._types.SortOptions;
 import co.elastic.clients.elasticsearch._types.SortOrder;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
@@ -43,11 +44,26 @@ public class SearchLogEndpoint extends AtlasEndpoint {
      */
     public SearchLogResponse search(SearchLogRequest request, RequestOptions options) throws AtlanException {
         String url = String.format("%s%s", getBaseUrl(), search_endpoint);
-        if (request.getDsl().getSort() == null || request.getDsl().getSort().isEmpty()) {
-            // If no sort has been provided, explicitly sort by time of the search for consistency of paging
+        boolean missingSort =
+                request.getDsl().getSort() == null || request.getDsl().getSort().isEmpty();
+        boolean missingTimeSort = true;
+        if (!missingSort) {
+            // If there is some sort, see whether time is already included
+            for (SortOptions option : request.getDsl().getSort()) {
+                if (option.isField()) {
+                    String fieldName = option.field().field();
+                    if (SearchLogEntry.SEARCHED_AT.getNumericFieldName().equals(fieldName)) {
+                        missingTimeSort = false;
+                        break;
+                    }
+                }
+            }
+        }
+        if (missingTimeSort) {
+            // If there is no sort by time, always add it as a final (tie-breaker) criteria
             // (there is not a guaranteed-unique key in a search log entry, but if we sort by timestamp in
             // ascending order then earlier pages should never have additional entries - at least not until
-            // there is full bi-temporal support in the search index, or time machines are invented...
+            // there is full bi-temporal support in the search index, or time machines are invented...)
             request = request.toBuilder()
                     .dsl(request.getDsl().toBuilder()
                             .sortOption(SearchLogEntry.SEARCHED_AT.order(SortOrder.Asc))
