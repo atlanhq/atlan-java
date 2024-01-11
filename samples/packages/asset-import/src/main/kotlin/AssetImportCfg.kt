@@ -14,16 +14,16 @@ import javax.annotation.processing.Generated
 @Generated("com.atlan.pkg.CustomPackage")
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 data class AssetImportCfg(
-    @JsonProperty("assets_file") val assetsFile: String?,
+    @JsonProperty("assets_file") val assetsFile: String? = null,
     @JsonDeserialize(using = WidgetSerde.MultiSelectDeserializer::class)
     @JsonSerialize(using = WidgetSerde.MultiSelectSerializer::class)
-    @JsonProperty("assets_attr_to_overwrite") val assetsAttrToOverwrite: List<String>?,
-    @JsonProperty("assets_upsert_semantic") val assetsUpsertSemantic: String?,
-    @JsonProperty("assets_fail_on_errors") val assetsFailOnErrors: Boolean?,
-    @JsonProperty("glossaries_file") val glossariesFile: String?,
+    @JsonProperty("assets_attr_to_overwrite") val assetsAttrToOverwrite: List<String>? = null,
+    @JsonProperty("assets_upsert_semantic") val assetsUpsertSemantic: String? = null,
+    @JsonProperty("assets_fail_on_errors") val assetsFailOnErrors: Boolean? = null,
+    @JsonProperty("glossaries_file") val glossariesFile: String? = null,
     @JsonDeserialize(using = WidgetSerde.MultiSelectDeserializer::class)
     @JsonSerialize(using = WidgetSerde.MultiSelectSerializer::class)
-    @JsonProperty("glossaries_attr_to_overwrite") val glossariesAttrToOverwrite: List<String>?,
-    @JsonProperty("glossaries_upsert_semantic") val glossariesUpsertSemantic: String?,
-    @JsonProperty("glossaries_fail_on_errors") val glossariesFailOnErrors: Boolean?,
+    @JsonProperty("glossaries_attr_to_overwrite") val glossariesAttrToOverwrite: List<String>? = null,
+    @JsonProperty("glossaries_upsert_semantic") val glossariesUpsertSemantic: String? = null,
+    @JsonProperty("glossaries_fail_on_errors") val glossariesFailOnErrors: Boolean? = null,
 ) : CustomConfig()

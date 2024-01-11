@@ -370,4 +370,13 @@ object Utils {
             getEnvVar("SMTP_PASS"),
         ).buildMailer().sendMail(email)
     }
+
+    /**
+     * Return a URL that will link directly to an asset in Atlan.
+     *
+     * @param guid of the asset for which to produce a link
+     */
+    fun getAssetLink(guid: String): String {
+        return "${Atlan.getBaseUrl()}/assets/$guid/overview"
+    }
 }

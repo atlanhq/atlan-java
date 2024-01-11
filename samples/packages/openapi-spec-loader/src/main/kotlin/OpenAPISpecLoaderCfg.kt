@@ -15,10 +15,10 @@ import javax.annotation.processing.Generated
 @Generated("com.atlan.pkg.CustomPackage")
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 data class OpenAPISpecLoaderCfg(
-    @JsonProperty("spec_url") val specUrl: String?,
-    @JsonProperty("connection_usage") val connectionUsage: String?,
+    @JsonProperty("spec_url") val specUrl: String? = null,
+    @JsonProperty("connection_usage") val connectionUsage: String? = null,
     @JsonDeserialize(using = WidgetSerde.ConnectionDeserializer::class)
     @JsonSerialize(using = WidgetSerde.ConnectionSerializer::class)
-    @JsonProperty("connection") val connection: Connection?,
-    @JsonProperty("connection_qualified_name") val connectionQualifiedName: String?,
+    @JsonProperty("connection") val connection: Connection? = null,
+    @JsonProperty("connection_qualified_name") val connectionQualifiedName: String? = null,
 ) : CustomConfig()

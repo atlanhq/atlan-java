@@ -11,6 +11,6 @@ import javax.annotation.processing.Generated
 @Generated("com.atlan.pkg.CustomPackage")
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 data class APITokenConnectionAdminCfg(
-    @JsonProperty("connection_qualified_name") val connectionQualifiedName: String?,
-    @JsonProperty("api_token_guid") val apiTokenGuid: String?,
+    @JsonProperty("connection_qualified_name") val connectionQualifiedName: String? = null,
+    @JsonProperty("api_token_guid") val apiTokenGuid: String? = null,
 ) : CustomConfig()
