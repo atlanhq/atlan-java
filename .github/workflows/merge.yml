@@ -55,6 +55,10 @@ jobs:
           path: jars/admin-export-*.jar
       - uses: actions/upload-artifact@v3
         with:
+          name: adoption-export
+          path: jars/adoption-export-*.jar
+      - uses: actions/upload-artifact@v3
+        with:
           name: asset-export-basic
           path: jars/asset-export-basic-*.jar
       - uses: actions/upload-artifact@v3
@@ -178,6 +182,7 @@ jobs:
         package_name:
           - api-token-connection-admin
           - admin-export
+          - adoption-export
           - asset-export-basic
           - asset-import
           - duplicate-detector
