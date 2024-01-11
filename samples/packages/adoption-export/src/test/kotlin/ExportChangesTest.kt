@@ -3,12 +3,14 @@
 import com.atlan.pkg.PackageTest
 import com.atlan.pkg.adoption.AdoptionExporter
 import com.atlan.pkg.serde.xls.ExcelReader
+import org.testng.Assert.assertFalse
 import org.testng.Assert.assertTrue
 import org.testng.ITestContext
 import org.testng.annotations.AfterClass
 import org.testng.annotations.BeforeClass
 import org.testng.annotations.Test
 import java.io.File
+import java.math.BigDecimal
 
 /**
  * Test export of asset changes information.
@@ -50,16 +52,18 @@ class ExportChangesTest : PackageTest() {
         ExcelReader(xlFile).use { xlsx ->
             val rows = xlsx.getRowsFromSheet("Changes")
             assertTrue(rows.isNotEmpty())
-            /*var lastCount = Int.MAX_VALUE
+            var lastCount = Int.MAX_VALUE
             rows.forEach { row ->
-                assertFalse(row["GUID"].isNullOrBlank())
-                val views = row["Total views"]
-                assertFalse(views.isNullOrBlank())
-                val viewCount = BigDecimal(views)
-                assertTrue(viewCount.toInt() <= lastCount)
-                lastCount = viewCount.toInt()
-                assertFalse(row["Distinct users"].isNullOrBlank())
-            }*/
+                assertFalse(row["Type"].isNullOrBlank())
+                assertFalse(row["Qualified name"].isNullOrBlank())
+                assertFalse(row["Name"].isNullOrBlank())
+                assertFalse(row["Link"].isNullOrBlank())
+                val changes = row["Total changes"]
+                assertFalse(changes.isNullOrBlank())
+                val changeCount = BigDecimal(changes)
+                assertTrue(changeCount.toInt() <= lastCount)
+                lastCount = changeCount.toInt()
+            }
         }
     }
 
@@ -70,6 +74,6 @@ class ExportChangesTest : PackageTest() {
 
     @AfterClass(alwaysRun = true)
     fun afterClass(context: ITestContext) {
-        teardown(true) // context.failedTests.size() > 0)
+        teardown(context.failedTests.size() > 0)
     }
 }

@@ -2,12 +2,14 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.adoption.exports
 
-import com.atlan.Atlan
 import com.atlan.model.assets.Asset
 import com.atlan.model.search.SearchLogRequest
+import com.atlan.model.search.aggregates.AssetViews
 import com.atlan.pkg.Utils
+import com.atlan.pkg.adoption.AdoptionExporter.getAssetDetails
 import com.atlan.pkg.serde.xls.ExcelWriter
 import mu.KLogger
+import org.apache.poi.ss.usermodel.Sheet
 
 class AssetViews(
     private val xlsx: ExcelWriter,
@@ -18,7 +20,7 @@ class AssetViews(
     fun export() {
         logger.info { "Exporting top $maxAssets most-viewed assets..." }
         val sheet = xlsx.createSheet("Views")
-        when (by) {
+        val viewCountMap = when (by) {
             "BY_VIEWS" -> {
                 xlsx.addHeader(
                     sheet,
@@ -31,20 +33,7 @@ class AssetViews(
                         "Link" to "Link to the asset's profile page in Atlan",
                     ),
                 )
-                SearchLogRequest.mostViewedAssets(maxAssets, false).forEach {
-                    val asset = Asset.get(Atlan.getDefaultClient(), it.guid, false)
-                    xlsx.appendRow(
-                        sheet,
-                        listOf(
-                            asset.typeName,
-                            asset.qualifiedName,
-                            asset.name,
-                            it.totalViews,
-                            it.distinctUsers,
-                            Utils.getAssetLink(it.guid),
-                        ),
-                    )
-                }
+                SearchLogRequest.mostViewedAssets(maxAssets, false).associateBy { it.guid }
             }
             "BY_USERS" -> {
                 xlsx.addHeader(
@@ -58,20 +47,49 @@ class AssetViews(
                         "Link" to "Link to the asset's profile page in Atlan",
                     ),
                 )
-                SearchLogRequest.mostViewedAssets(maxAssets, true).forEach {
-                    val asset = Asset.get(Atlan.getDefaultClient(), it.guid, false)
-                    xlsx.appendRow(
-                        sheet,
-                        listOf(
-                            asset.typeName,
-                            asset.qualifiedName,
-                            asset.name,
-                            it.distinctUsers,
-                            it.totalViews,
-                            Utils.getAssetLink(it.guid),
-                        ),
-                    )
-                }
+                SearchLogRequest.mostViewedAssets(maxAssets, true).associateBy { it.guid }
+            }
+            else -> mapOf()
+        }
+
+        // Then iterate through the unique assets
+        val assetMap = getAssetDetails(viewCountMap)
+        viewCountMap.forEach { (k, v) ->
+            val asset = assetMap[k]
+            if (asset != null) {
+                outputAsset(sheet, asset, v)
+            }
+        }
+    }
+
+    private fun outputAsset(sheet: Sheet, asset: Asset, views: AssetViews) {
+        when (by) {
+            "BY_VIEWS" -> {
+                xlsx.appendRow(
+                    sheet,
+                    listOf(
+                        asset.typeName ?: "",
+                        asset.qualifiedName ?: "",
+                        asset.name ?: "",
+                        views.totalViews ?: "",
+                        views.distinctUsers ?: "",
+                        Utils.getAssetLink(asset.guid),
+                    ),
+                )
+            }
+
+            "BY_USERS" -> {
+                xlsx.appendRow(
+                    sheet,
+                    listOf(
+                        asset.typeName ?: "",
+                        asset.qualifiedName ?: "",
+                        asset.name ?: "",
+                        views.distinctUsers ?: "",
+                        views.totalViews ?: "",
+                        Utils.getAssetLink(asset.guid),
+                    ),
+                )
             }
         }
     }
