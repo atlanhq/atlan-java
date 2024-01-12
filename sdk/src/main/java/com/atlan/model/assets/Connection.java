@@ -109,9 +109,13 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
     @Attribute
     Long objectStorageUploadThreshold;
 
-    /** Policy strategy to use for this connection. */
+    /** Policy strategy is a configuration that determines whether the Atlan policy will be applied to the results of insight queries and whether the query will be rewritten, applicable for stream api call made from insight screen */
     @Attribute
     String policyStrategy;
+
+    /** Policy strategy is a configuration that determines whether the Atlan policy will be applied to the results of insight queries and whether the query will be rewritten. policyStrategyForSamplePreview config is applicable for sample preview call from assets screen */
+    @Attribute
+    String policyStrategyForSamplePreview;
 
     /** Number of days over which popularity is calculated, for example 30 days. */
     @Attribute
