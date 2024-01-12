@@ -15,13 +15,10 @@ import com.atlan.model.assets.Table
 import com.atlan.model.assets.View
 import com.atlan.model.core.AtlanTag
 import com.atlan.model.enums.AtlanConnectorType
-import com.atlan.model.enums.AtlanDeleteType
 import com.atlan.model.enums.AtlanIcon
-import com.atlan.model.enums.AtlanStatus
 import com.atlan.model.enums.AtlanTagColor
 import com.atlan.model.enums.CertificateStatus
 import com.atlan.model.fields.AtlanField
-import com.atlan.model.search.FluentSearch
 import com.atlan.model.typedefs.AtlanTagDef
 import com.atlan.pkg.PackageTest
 import org.testng.Assert.assertFalse
@@ -168,11 +165,7 @@ class CreateThenUpsertRABTest : PackageTest() {
             RelationalAssetsBuilderCfg(
                 assetsFile = Paths.get(testDirectory, testFile).toString(),
                 assetsUpsertSemantic = "upsert",
-                assetsAttrToOverwrite = listOf(),
                 assetsFailOnErrors = true,
-                deleteAssets = "NONE",
-                deletionPrefix = null,
-                assetTypes = null,
             ),
         )
         Importer.main(arrayOf())
@@ -226,7 +219,7 @@ class CreateThenUpsertRABTest : PackageTest() {
         validateSchema("Test schema")
     }
 
-    private fun validateSchema(displayName: String, viewDeleted: Boolean = false) {
+    private fun validateSchema(displayName: String) {
         val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
         val found = Schema.select()
             .where(Schema.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
@@ -246,12 +239,8 @@ class CreateThenUpsertRABTest : PackageTest() {
         assertEquals(1, sch.viewCount)
         assertEquals(1, sch.tables.size)
         assertEquals("TEST_TBL", sch.tables.first().name)
-        if (viewDeleted) {
-            assertEquals(0, sch.views.size)
-        } else {
-            assertEquals(1, sch.views.size)
-            assertEquals("TEST_VIEW", sch.views.first().name)
-        }
+        assertEquals(1, sch.views.size)
+        assertEquals("TEST_VIEW", sch.views.first().name)
     }
 
     @Test(groups = ["create"])
@@ -353,9 +342,9 @@ class CreateThenUpsertRABTest : PackageTest() {
         validateView()
     }
 
-    private fun validateView(deleted: Boolean = false) {
+    private fun validateView() {
         val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
-        val found = View.select(deleted)
+        val found = View.select()
             .where(View.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
             .includesOnResults(tableAttrs)
             .includeOnRelations(Asset.NAME)
@@ -370,21 +359,17 @@ class CreateThenUpsertRABTest : PackageTest() {
         assertEquals(conn1Type, view.connectorType)
         assertEquals(CertificateStatus.DRAFT, view.certificateStatus)
         assertTrue(view.certificateStatusMessage.isNullOrBlank())
-        if (deleted) {
-            assertEquals(AtlanStatus.DELETED, view.status)
-        } else {
-            assertEquals(2, view.columnCount)
-            assertEquals("<h2>View readme</h2>", view.readme.description)
-            assertEquals(1, view.atlanTags.size)
-            assertEquals(tag1, view.atlanTags.first().typeName)
-            assertTrue(view.atlanTags.first().propagate)
-            assertTrue(view.atlanTags.first().removePropagationsOnEntityDelete)
-            assertTrue(view.atlanTags.first().restrictPropagationThroughLineage)
-            assertEquals(2, view.columns.size)
-            val colNames = view.columns.stream().map(IColumn::getName).toList()
-            assertTrue(colNames.contains("COL3"))
-            assertTrue(colNames.contains("COL4"))
-        }
+        assertEquals(2, view.columnCount)
+        assertEquals("<h2>View readme</h2>", view.readme.description)
+        assertEquals(1, view.atlanTags.size)
+        assertEquals(tag1, view.atlanTags.first().typeName)
+        assertTrue(view.atlanTags.first().propagate)
+        assertTrue(view.atlanTags.first().removePropagationsOnEntityDelete)
+        assertTrue(view.atlanTags.first().restrictPropagationThroughLineage)
+        assertEquals(2, view.columns.size)
+        val colNames = view.columns.stream().map(IColumn::getName).toList()
+        assertTrue(colNames.contains("COL3"))
+        assertTrue(colNames.contains("COL4"))
     }
 
     @Test(groups = ["create"])
@@ -392,9 +377,9 @@ class CreateThenUpsertRABTest : PackageTest() {
         validateColumnsForView()
     }
 
-    private fun validateColumnsForView(deleted: Boolean = false) {
+    private fun validateColumnsForView() {
         val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
-        val found = Column.select(deleted)
+        val found = Column.select()
             .where(Column.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
             .where(Column.VIEW_NAME.eq("TEST_VIEW"))
             .includesOnResults(columnAttrs)
@@ -416,9 +401,6 @@ class CreateThenUpsertRABTest : PackageTest() {
             assertTrue(col.viewQualifiedName.endsWith("/TEST_DB/TEST_SCHEMA/TEST_VIEW"))
             assertTrue(col.tableName.isNullOrEmpty())
             assertTrue(col.tableQualifiedName.isNullOrEmpty())
-            if (deleted) {
-                assertEquals(AtlanStatus.DELETED, col.status)
-            }
             when (col.name) {
                 "COL3" -> {
                     assertEquals("INT32", col.dataType)
@@ -437,16 +419,11 @@ class CreateThenUpsertRABTest : PackageTest() {
     @Test(groups = ["runUpdate"], dependsOnGroups = ["create"])
     fun upsertRevisions() {
         modifyFile()
-        val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
         setup(
             RelationalAssetsBuilderCfg(
                 assetsFile = Paths.get(testDirectory, testFile).toString(),
                 assetsUpsertSemantic = "upsert",
-                assetsAttrToOverwrite = listOf(),
                 assetsFailOnErrors = true,
-                deleteAssets = "SOFT",
-                deletionPrefix = c1.qualifiedName,
-                assetTypes = listOf(Table.TYPE_NAME, View.TYPE_NAME, Column.TYPE_NAME),
             ),
         )
         Importer.main(arrayOf())
@@ -466,7 +443,7 @@ class CreateThenUpsertRABTest : PackageTest() {
 
     @Test(groups = ["update"], dependsOnGroups = ["runUpdate"])
     fun schemaChanged() {
-        validateSchema("Revised schema", true)
+        validateSchema("Revised schema")
     }
 
     @Test(groups = ["update"], dependsOnGroups = ["runUpdate"])
@@ -480,13 +457,13 @@ class CreateThenUpsertRABTest : PackageTest() {
     }
 
     @Test(groups = ["update"], dependsOnGroups = ["runUpdate"])
-    fun viewDeleted() {
-        validateView(true)
+    fun viewUnchanged() {
+        validateView()
     }
 
     @Test(groups = ["update"], dependsOnGroups = ["runUpdate"])
-    fun columnsForView1Deleted() {
-        validateColumnsForView(true)
+    fun columnsForView1Unchanged() {
+        validateColumnsForView()
     }
 
     @Test(dependsOnGroups = ["create", "runUpdate", "update"])
@@ -501,30 +478,9 @@ class CreateThenUpsertRABTest : PackageTest() {
 
     @AfterClass(alwaysRun = true)
     fun afterClass(context: ITestContext) {
-        // Purge view and its columns first, otherwise we end up with stale
-        // references between tag and columns in the view
-        purgeView()
         removeConnection(conn1, conn1Type)
         AtlanTagDef.purge(tag1)
         AtlanTagDef.purge(tag2)
         teardown(context.failedTests.size() > 0)
-    }
-
-    private fun purgeView() {
-        val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
-        val toPurge = mutableListOf<String>()
-        val found = View.select(true)
-            .where(FluentSearch.ARCHIVED)
-            .where(View.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
-            .includesOnResults(tableAttrs)
-            .includeOnRelations(Asset.NAME)
-            .stream()
-            .forEach { view ->
-                toPurge.add(view.guid)
-                (view as View).columns.forEach { column ->
-                    toPurge.add(column.guid)
-                }
-            }
-        Atlan.getDefaultClient().assets.delete(toPurge, AtlanDeleteType.PURGE)
     }
 }

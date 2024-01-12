@@ -65,6 +65,21 @@ abstract class AssetImporter(
         const val ENTITY_NAME = "entityName"
 
         /**
+         * Build a connection identity from an asset's tenant-agnostic qualifiedName.
+         *
+         * @param agnosticQualifiedName the tenant-agnostic qualifiedName of an asset
+         * @return connection identity used for that asset
+         */
+        fun getConnectionIdentityFromQN(agnosticQualifiedName: String): ConnectionIdentity? {
+            val tokens = agnosticQualifiedName.split("/")
+            return if (tokens.size > 1) {
+                ConnectionIdentity(tokens[0], tokens[1])
+            } else {
+                null
+            }
+        }
+
+        /**
          * Calculate the qualifiedName components from a row of data, completely in-memory (no calls to Atlan).
          *
          * @param row of data
@@ -79,7 +94,7 @@ abstract class AssetImporter(
                 Connection.TYPE_NAME -> {
                     val connection = row[header.indexOf(Asset.CONNECTION_NAME.atlanFieldName)]
                     val connector = row[header.indexOf(ConnectionImporter.CONNECTOR_TYPE)]
-                    current = "$connection/$connector"
+                    current = ConnectionIdentity(connection, connector).toString()
                     parent = null
                 }
                 Database.TYPE_NAME -> {
@@ -121,4 +136,10 @@ abstract class AssetImporter(
         val parentUniqueQN: String,
         val parentPartialQN: String,
     )
+
+    data class ConnectionIdentity(val name: String, val type: String) {
+        override fun toString(): String {
+            return "$name/$type"
+        }
+    }
 }
