@@ -378,25 +378,25 @@ public class AttributeDefOptions extends AtlanObject {
         if (options.description != null) {
             this.description = options.description;
         }
-        if (options.applicableEntityTypes != null) {
+        if (options.applicableEntityTypes != null && !options.applicableEntityTypes.isEmpty()) {
             this.applicableEntityTypes = options.applicableEntityTypes;
         }
-        if (options.customApplicableEntityTypes != null) {
+        if (options.customApplicableEntityTypes != null && !options.customApplicableEntityTypes.isEmpty()) {
             this.customApplicableEntityTypes = options.customApplicableEntityTypes;
         }
-        if (options.applicableConnections != null) {
+        if (options.applicableConnections != null && !options.applicableConnections.isEmpty()) {
             this.applicableConnections = options.applicableConnections;
         }
-        if (options.applicableGlossaries != null) {
+        if (options.applicableGlossaries != null && !options.applicableGlossaries.isEmpty()) {
             this.applicableGlossaries = options.applicableGlossaries;
         }
-        if (options.applicableAssetTypes != null) {
+        if (options.applicableAssetTypes != null && !options.applicableAssetTypes.isEmpty()) {
             this.applicableAssetTypes = options.applicableAssetTypes;
         }
-        if (options.applicableGlossaryTypes != null) {
+        if (options.applicableGlossaryTypes != null && !options.applicableGlossaryTypes.isEmpty()) {
             this.applicableGlossaryTypes = options.applicableGlossaryTypes;
         }
-        if (options.applicableOtherAssetTypes != null) {
+        if (options.applicableOtherAssetTypes != null && !options.applicableOtherAssetTypes.isEmpty()) {
             this.applicableOtherAssetTypes = options.applicableOtherAssetTypes;
         }
         if (options.allowSearch != null) {
