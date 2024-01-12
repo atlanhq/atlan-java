@@ -103,6 +103,7 @@ object AssetRefXformer {
         logger: KLogger,
         batchSize: Int,
     ) {
+        val totalCount = totalRelated.get()
         relatedAssets.forEach { (fieldName, relatives) ->
             for (related in relatives) {
                 when (related) {
@@ -110,7 +111,7 @@ object AssetRefXformer {
                         batch.add(
                             Readme.creator(from, related.description ?: "").nullFields(related.nullFields).build(),
                         )
-                        count.getAndIncrement()
+                        Utils.logProgress(count, totalCount, logger, batchSize)
                     }
 
                     is Link -> {
@@ -138,12 +139,11 @@ object AssetRefXformer {
                             // Only batch it if it won't be a noop
                             batch.add(update)
                         }
-                        count.getAndIncrement()
+                        Utils.logProgress(count, totalCount, logger, batchSize)
                     }
                 }
             }
         }
-        Utils.logProgress(count, totalRelated.get(), logger, batchSize)
     }
 
     /**
