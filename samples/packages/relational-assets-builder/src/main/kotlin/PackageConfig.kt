@@ -4,14 +4,12 @@
 import com.atlan.Atlan
 import com.atlan.pkg.CustomPackage
 import com.atlan.pkg.config.model.ui.UIConfig
-import com.atlan.pkg.config.model.ui.UIRule
 import com.atlan.pkg.config.model.ui.UIStep
 import com.atlan.pkg.config.model.workflow.WorkflowOutputs
 import com.atlan.pkg.config.widgets.BooleanInput
 import com.atlan.pkg.config.widgets.DropDown
 import com.atlan.pkg.config.widgets.FileUploader
 import com.atlan.pkg.config.widgets.Radio
-import com.atlan.pkg.config.widgets.TextInput
 import com.atlan.pkg.rab.Importer
 
 /**
@@ -70,54 +68,6 @@ object PackageConfig : CustomPackage(
                         help = "Whether an invalid value in a field should cause the import to fail (Yes) or log a warning, skip that value, and proceed (No).",
                     ),
                 ),
-            ),
-            UIStep(
-                title = "Delta",
-                description = "Removal details",
-                inputs = mapOf(
-                    "delete_assets" to Radio(
-                        label = "Delete untouched assets?",
-                        required = true,
-                        possibleValues = mapOf(
-                            "NONE" to "No",
-                            "SOFT" to "Archive (recoverable)",
-                            "PURGE" to "Purge (permanent)",
-                        ),
-                        default = "NONE",
-                        help = "If this is a complete upload, use this to delete any assets not touched by the upload.",
-                    ),
-                    "deletion_prefix" to TextInput(
-                        label = "Prefix",
-                        required = true,
-                        help = "Prefix for qualifiedNames to consider for deletion, if deleting untouched assets.",
-                        grid = 3,
-                    ),
-                    "asset_types" to DropDown(
-                        label = "Delete assets of type",
-                        required = true,
-                        possibleValues = mapOf(
-                            "Database" to "Database",
-                            "Schema" to "Schema",
-                            "Table" to "Table",
-                            "View" to "View",
-                            "MaterialisedView" to "Materialized View",
-                            "Column" to "Column",
-                        ),
-                        multiSelect = true,
-                        help = "Only remove assets of these types, if deleting untouched assets.",
-                        grid = 5,
-                    ),
-                ),
-            ),
-        ),
-        rules = listOf(
-            UIRule(
-                whenInputs = mapOf("delete_assets" to "SOFT"),
-                required = listOf("deletion_prefix", "asset_types"),
-            ),
-            UIRule(
-                whenInputs = mapOf("delete_assets" to "PURGE"),
-                required = listOf("deletion_prefix", "asset_types"),
             ),
         ),
     ),

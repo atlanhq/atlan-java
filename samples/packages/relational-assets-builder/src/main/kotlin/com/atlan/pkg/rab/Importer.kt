@@ -46,11 +46,6 @@ object Importer {
             CSVImporter.attributesToClear(Utils.getOrDefault(config.assetsAttrToOverwrite, listOf()).toMutableList(), "assets", logger)
         val assetsFailOnErrors = Utils.getOrDefault(config.assetsFailOnErrors, true)
         val assetsUpdateOnly = Utils.getOrDefault(config.assetsUpsertSemantic, "update") == "update"
-        val deleteUntouched = Utils.getOrDefault(config.deleteAssets, "NONE")
-        val deletionEnabled = deleteUntouched != "NONE"
-        val removalPrefix = Utils.getOrDefault(config.deletionPrefix, "")
-        val removalTypes = Utils.getOrDefault(config.assetTypes, listOf(Column.TYPE_NAME))
-        val touchedGuids = mutableSetOf<String>()
 
         if (assetsFilename.isBlank()) {
             logger.error { "No input file was provided for assets." }
@@ -81,55 +76,27 @@ object Importer {
 
         logger.info { " --- Importing databases... ---" }
         val databaseImporter = DatabaseImporter(preprocessedDetails, assetAttrsToOverwrite, assetsUpdateOnly, batchSize, connectionImporter)
-        val dbResults = databaseImporter.import()
-        if (deletionEnabled && removalTypes.contains(Database.TYPE_NAME)) {
-            touchedGuids.addAll(dbResults?.primary?.guidAssignments?.values ?: setOf())
-        }
+        databaseImporter.import()
 
         logger.info { " --- Importing schemas... ---" }
         val schemaImporter = SchemaImporter(preprocessedDetails, assetAttrsToOverwrite, assetsUpdateOnly, batchSize, connectionImporter)
-        val schemaResults = schemaImporter.import()
-        if (deletionEnabled && removalTypes.contains(Schema.TYPE_NAME)) {
-            touchedGuids.addAll(schemaResults?.primary?.guidAssignments?.values ?: setOf())
-        }
+        schemaImporter.import()
 
         logger.info { " --- Importing tables... ---" }
         val tableImporter = TableImporter(preprocessedDetails, assetAttrsToOverwrite, assetsUpdateOnly, batchSize, connectionImporter)
-        val tableResults = tableImporter.import()
-        if (deletionEnabled && removalTypes.contains(Table.TYPE_NAME)) {
-            touchedGuids.addAll(tableResults?.primary?.guidAssignments?.values ?: setOf())
-        }
+        tableImporter.import()
 
         logger.info { " --- Importing views... ---" }
         val viewImporter = ViewImporter(preprocessedDetails, assetAttrsToOverwrite, assetsUpdateOnly, batchSize, connectionImporter)
-        val viewResults = viewImporter.import()
-        if (deletionEnabled && removalTypes.contains(View.TYPE_NAME)) {
-            touchedGuids.addAll(viewResults?.primary?.guidAssignments?.values ?: setOf())
-        }
+        viewImporter.import()
 
         logger.info { " --- Importing materialized views... ---" }
         val materializedViewImporter = MaterializedViewImporter(preprocessedDetails, assetAttrsToOverwrite, assetsUpdateOnly, batchSize, connectionImporter)
-        val materializedViewResults = materializedViewImporter.import()
-        if (deletionEnabled && removalTypes.contains(MaterializedView.TYPE_NAME)) {
-            touchedGuids.addAll(materializedViewResults?.primary?.guidAssignments?.values ?: setOf())
-        }
+        materializedViewImporter.import()
 
         logger.info { " --- Importing columns... ---" }
         val columnImporter = ColumnImporter(preprocessedDetails, assetAttrsToOverwrite, assetsUpdateOnly, batchSize, connectionImporter)
-        val columnResults = columnImporter.import()
-        if (deletionEnabled && removalTypes.contains(Column.TYPE_NAME)) {
-            touchedGuids.addAll(columnResults?.primary?.guidAssignments?.values ?: setOf())
-        }
-
-        if (deleteUntouched != "NONE" && removalPrefix.isNotBlank()) {
-            AssetRemover(
-                touchedGuids,
-                removalTypes,
-                removalPrefix,
-                deleteUntouched == "PURGE",
-                logger,
-            ).run()
-        }
+        columnImporter.import()
     }
 
     private fun preprocessCSV(originalFile: String): PreprocessedCsv {
