@@ -90,12 +90,13 @@ object FieldSerde {
      * is stored as custom metadata.
      *
      * @param value the single field's value
+     * @param multiValued true if the custom attribute allows multiple values, otherwise false
      * @return the deserialized form of that field's value
      */
-    fun getCustomMetadataValueFromString(value: String?): Any? {
+    fun getCustomMetadataValueFromString(value: String?, multiValued: Boolean): Any? {
         return if (value.isNullOrEmpty()) {
             null
-        } else if (value.contains(CellXformer.LIST_DELIMITER)) {
+        } else if (multiValued) {
             getMultiValuedCustomMetadata(value)
         } else {
             value

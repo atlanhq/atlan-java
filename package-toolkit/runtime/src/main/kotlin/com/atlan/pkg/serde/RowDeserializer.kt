@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.serde
 
+import com.atlan.Atlan
 import com.atlan.cache.ReflectionCache
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Asset.AssetBuilder
@@ -120,7 +121,18 @@ class RowDeserializer(
                 val rValue = row[i]
                 return if (fieldName.contains(CM_HEADING_DELIMITER)) {
                     // Custom metadata field...
-                    FieldSerde.getCustomMetadataValueFromString(rValue)
+                    val cache = Atlan.getDefaultClient().customMetadataCache
+                    val tokens = fieldName.split(CM_HEADING_DELIMITER)
+                    val setName = tokens[0]
+                    val attrName = tokens[1]
+                    val attrId = cache.getAttrIdForName(setName, attrName)
+                    if (attrId != null) {
+                        val attrDef = cache.getAttributeDef(attrId)
+                        return FieldSerde.getCustomMetadataValueFromString(rValue, attrDef.options?.multiValueSelect ?: false)
+                    } else {
+                        // If we cannot translate via the attribute def, return it as-is
+                        rValue
+                    }
                 } else {
                     // "Normal" field...
                     val setter = ReflectionCache.getSetter(Serde.getBuilderClassForType(typeName), fieldName)
