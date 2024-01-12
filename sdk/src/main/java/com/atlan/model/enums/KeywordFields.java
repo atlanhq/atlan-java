@@ -868,8 +868,10 @@ public enum KeywordFields implements AtlanSearchableField {
     POLICY_ROLES("policyRoles"),
     /** TBC */
     POLICY_SERVICE_NAME("policyServiceName"),
-    /** Policy strategy to use for this connection. */
+    /** Policy strategy is a configuration that determines whether the Atlan policy will be applied to the results of insight queries and whether the query will be rewritten, applicable for stream api call made from insight screen */
     POLICY_STRATEGY("policyStrategy"),
+    /** Policy strategy is a configuration that determines whether the Atlan policy will be applied to the results of insight queries and whether the query will be rewritten. policyStrategyForSamplePreview config is applicable for sample preview call from assets screen */
+    POLICY_STRATEGY_FOR_SAMPLE_PREVIEW("policyStrategyForSamplePreview"),
     /** TBC */
     POLICY_SUB_CATEGORY("policySubCategory"),
     /** TBC */
