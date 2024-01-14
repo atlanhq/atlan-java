@@ -38,7 +38,12 @@ public class AssetBatch {
     private final boolean updateOnly;
     private final boolean track;
 
+    /** Number of assets that were created (no details, just a count). */
+    @Getter
     private final AtomicLong numCreated;
+
+    /** Number of assets that were updated (no details, just a count). */
+    @Getter
     private final AtomicLong numUpdated;
 
     /** Assets that were created (minimal info only). */

@@ -163,6 +163,32 @@ public class ParallelBatch {
     }
 
     /**
+     * Number of assets that were created (no details, only a count).
+     *
+     * @return a count of the number of created assets, across all parallel batches
+     */
+    public long getNumCreated() {
+        long count = 0;
+        for (AssetBatch batch : batchMap.values()) {
+            count += batch.getNumCreated().get();
+        }
+        return count;
+    }
+
+    /**
+     * Number of assets that were updated (no details, only a count).
+     *
+     * @return a count of the number of updated assets, across all parallel batches
+     */
+    public long getNumUpdated() {
+        long count = 0;
+        for (AssetBatch batch : batchMap.values()) {
+            count += batch.getNumUpdated().get();
+        }
+        return count;
+    }
+
+    /**
      * Assets that were created (minimal info only).
      *
      * @return all created assets, across all parallel batches
