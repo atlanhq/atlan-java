@@ -194,6 +194,9 @@ public class ParallelBatch {
      * @return all created assets, across all parallel batches
      */
     public List<Asset> getCreated() {
+        if (!track) {
+            return null;
+        }
         if (created == null) {
             List<Asset> list = new ArrayList<>();
             for (AssetBatch batch : batchMap.values()) {
@@ -210,6 +213,9 @@ public class ParallelBatch {
      * @return all updated assets, across all parallel batches
      */
     public List<Asset> getUpdated() {
+        if (!track) {
+            return null;
+        }
         if (updated == null) {
             List<Asset> list = new ArrayList<>();
             for (AssetBatch batch : batchMap.values()) {
