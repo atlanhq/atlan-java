@@ -67,6 +67,12 @@ object PackageConfig : CustomPackage(
                         required = false,
                         help = "Whether an invalid value in a field should cause the import to fail (Yes) or log a warning, skip that value, and proceed (No).",
                     ),
+                    "track_batches" to BooleanInput(
+                        label = "Track asset details",
+                        required = false,
+                        hidden = true,
+                        help = "Whether to track details about every asset across batches (Yes) or only counts (No).",
+                    ),
                 ),
             ),
         ),

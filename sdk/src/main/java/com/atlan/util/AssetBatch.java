@@ -207,15 +207,14 @@ public class AssetBatch {
         this.replaceAtlanTags = replaceAtlanTags;
         this.customMetadataHandling = customMetadataHandling;
         this.skipped = Collections.synchronizedList(new ArrayList<>());
+        this.resolvedGuids = new ConcurrentHashMap<>();
         this.numCreated = new AtomicLong(0);
         this.numUpdated = new AtomicLong(0);
         this.track = track;
         if (track) {
-            this.resolvedGuids = new ConcurrentHashMap<>();
             this.created = Collections.synchronizedList(new ArrayList<>());
             this.updated = Collections.synchronizedList(new ArrayList<>());
         } else {
-            this.resolvedGuids = null;
             this.created = null;
             this.updated = null;
         }
@@ -318,12 +317,13 @@ public class AssetBatch {
             if (track) {
                 response.getCreatedAssets().forEach(a -> track(created, a));
                 response.getUpdatedAssets().forEach(a -> track(updated, a));
-                if (response.getGuidAssignments() != null) {
-                    resolvedGuids.putAll(response.getGuidAssignments());
-                }
             } else {
                 numCreated.getAndAdd(response.getCreatedAssets().size());
                 numUpdated.getAndAdd(response.getUpdatedAssets().size());
+            }
+            // Always track the resolved GUIDs...
+            if (response.getGuidAssignments() != null) {
+                resolvedGuids.putAll(response.getGuidAssignments());
             }
         }
     }

@@ -37,12 +37,16 @@ data class ImportResults(
      * @param created list of (minimal) assets that were created
      * @param updated list of (minimal) assets that were updated
      * @param skipped list of (minimal) assets that were skipped
+     * @param numCreated number of assets that were created (count only)
+     * @param numUpdated number of assets that were updated (count only)
      */
     data class Details(
         val guidAssignments: Map<String, String>,
         val created: List<Asset>,
         val updated: List<Asset>,
         val skipped: List<Asset>,
+        val numCreated: Long,
+        val numUpdated: Long,
     ) {
         /**
          * Combine this set of details with another.
@@ -56,6 +60,8 @@ data class ImportResults(
                 this.created.plus(other.created),
                 this.updated.plus(other.updated),
                 this.skipped.plus(other.skipped),
+                this.numCreated.plus(other.numCreated),
+                this.numUpdated.plus(other.numUpdated),
             )
         }
     }
