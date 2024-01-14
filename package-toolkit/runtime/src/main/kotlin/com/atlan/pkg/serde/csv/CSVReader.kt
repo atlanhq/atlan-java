@@ -179,8 +179,8 @@ class CSVReader @JvmOverloads constructor(
 
         // Step 3: final-flush the deferred related assets
         relatedBatch.flush()
-        val totalCreatesR = relatedBatch.created.size
-        val totalUpdatesR = relatedBatch.updated.size
+        val totalCreatesR = relatedBatch.numCreated
+        val totalUpdatesR = relatedBatch.numUpdated
         val totalFailuresR = AtomicLong(0)
         someFailure = someFailure || relatedBatch.failures.isNotEmpty()
         logFailures(relatedBatch, logger, totalFailuresR)
