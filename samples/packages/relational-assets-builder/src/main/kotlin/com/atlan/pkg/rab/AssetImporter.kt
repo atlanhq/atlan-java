@@ -28,6 +28,7 @@ import mu.KLogger
  * @param attrsToOverwrite list of fields that should be overwritten in Atlan, if their value is empty in the CSV
  * @param updateOnly if true, only update an asset (first check it exists), if false allow upserts (create if it does not exist)
  * @param batchSize maximum number of records to save per API request
+ * @param trackBatches if true, minimal details about every asset created or updated is tracked (if false, only counts of each are tracked)
  */
 abstract class AssetImporter(
     private val filename: String,
@@ -36,12 +37,14 @@ abstract class AssetImporter(
     private val batchSize: Int,
     typeNameFilter: String,
     logger: KLogger,
+    trackBatches: Boolean,
 ) : CSVImporter(
     filename,
     logger,
     typeNameFilter,
     attrsToOverwrite,
     batchSize = batchSize,
+    trackBatches = trackBatches,
 ) {
 
     /** {@inheritDoc} */

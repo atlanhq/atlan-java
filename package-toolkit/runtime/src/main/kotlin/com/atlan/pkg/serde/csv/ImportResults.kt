@@ -34,15 +34,19 @@ data class ImportResults(
      * Details about the import results.
      *
      * @param guidAssignments mapping from placeholder to actual (resolved) GUIDs, even if no change was made to an asset
-     * @param created list of (minimal) assets that were created
-     * @param updated list of (minimal) assets that were updated
+     * @param created list of (minimal) assets that were created (note: when tracking is turned off in batch-processing, this will be null)
+     * @param updated list of (minimal) assets that were updated (note: when tracking is turned off in batch-processing, this will be null)
      * @param skipped list of (minimal) assets that were skipped
+     * @param numCreated number of assets that were created (count only)
+     * @param numUpdated number of assets that were updated (count only)
      */
     data class Details(
         val guidAssignments: Map<String, String>,
-        val created: List<Asset>,
-        val updated: List<Asset>,
+        val created: List<Asset>?,
+        val updated: List<Asset>?,
         val skipped: List<Asset>,
+        val numCreated: Long,
+        val numUpdated: Long,
     ) {
         /**
          * Combine this set of details with another.
@@ -53,9 +57,11 @@ data class ImportResults(
         fun combinedWith(other: Details): Details {
             return Details(
                 this.guidAssignments.plus(other.guidAssignments),
-                this.created.plus(other.created),
-                this.updated.plus(other.updated),
+                this.created?.plus(other.created ?: listOf()),
+                this.updated?.plus(other.updated ?: listOf()),
                 this.skipped.plus(other.skipped),
+                this.numCreated.plus(other.numCreated),
+                this.numUpdated.plus(other.numUpdated),
             )
         }
     }

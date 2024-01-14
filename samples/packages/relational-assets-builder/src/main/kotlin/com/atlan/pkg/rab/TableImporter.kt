@@ -21,6 +21,7 @@ import mu.KotlinLogging
  * @param updateOnly if true, only update an asset (first check it exists), if false allow upserts (create if it does not exist)
  * @param batchSize maximum number of records to save per API request
  * @param connectionImporter that was used to import connections
+ * @param trackBatches if true, minimal details about every asset created or updated is tracked (if false, only counts of each are tracked)
  */
 class TableImporter(
     private val preprocessed: Importer.PreprocessedCsv,
@@ -28,6 +29,7 @@ class TableImporter(
     private val updateOnly: Boolean,
     private val batchSize: Int,
     private val connectionImporter: ConnectionImporter,
+    trackBatches: Boolean,
 ) : AssetImporter(
     preprocessed.preprocessedFile,
     attrsToOverwrite,
@@ -35,6 +37,7 @@ class TableImporter(
     batchSize,
     Table.TYPE_NAME,
     KotlinLogging.logger {},
+    trackBatches,
 ) {
     /** {@inheritDoc} */
     override fun getBuilder(deserializer: RowDeserializer): Asset.AssetBuilder<*, *> {

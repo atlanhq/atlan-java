@@ -27,10 +27,12 @@ import java.util.concurrent.atomic.AtomicLong
  * @param path location and filename of the CSV file to read
  * @param updateOnly when true, the reader will first look up assets to ensure they exist (and only update them, never create)
  * @param fieldSeparator character to use to separate fields (for example ',' or ';')
+ * @param trackBatches if true, minimal details about every asset created or updated is tracked (if false, only counts of each are tracked)
  */
 class CSVReader @JvmOverloads constructor(
     path: String,
     private val updateOnly: Boolean,
+    private val trackBatches: Boolean = true,
     fieldSeparator: Char = ',',
 ) : Closeable {
 
@@ -85,6 +87,7 @@ class CSVReader @JvmOverloads constructor(
             AssetBatch.CustomMetadataHandling.MERGE,
             true,
             updateOnly,
+            trackBatches,
         )
         val relatedBatch = ParallelBatch(
             client,
@@ -92,6 +95,8 @@ class CSVReader @JvmOverloads constructor(
             true,
             AssetBatch.CustomMetadataHandling.MERGE,
             true,
+            false,
+            trackBatches,
         )
         val relatedHolds: MutableMap<String, RelatedAssetHold> = ConcurrentHashMap()
         val deferDeletes: MutableMap<String, Set<AtlanField>> = ConcurrentHashMap()
@@ -126,8 +131,8 @@ class CSVReader @JvmOverloads constructor(
             }
         }
         primaryBatch.flush()
-        val totalCreates = primaryBatch.created.size
-        val totalUpdates = primaryBatch.updated.size
+        val totalCreates = primaryBatch.numCreated
+        val totalUpdates = primaryBatch.numUpdated
         val totalSkipped = primaryBatch.skipped.size
         val totalFailures = AtomicLong(0)
         someFailure = someFailure || primaryBatch.failures.isNotEmpty()
@@ -174,8 +179,8 @@ class CSVReader @JvmOverloads constructor(
 
         // Step 3: final-flush the deferred related assets
         relatedBatch.flush()
-        val totalCreatesR = relatedBatch.created.size
-        val totalUpdatesR = relatedBatch.updated.size
+        val totalCreatesR = relatedBatch.numCreated
+        val totalUpdatesR = relatedBatch.numUpdated
         val totalFailuresR = AtomicLong(0)
         someFailure = someFailure || relatedBatch.failures.isNotEmpty()
         logFailures(relatedBatch, logger, totalFailuresR)
@@ -225,12 +230,16 @@ class CSVReader @JvmOverloads constructor(
                 primaryBatch.created,
                 primaryBatch.updated,
                 primaryBatch.skipped,
+                primaryBatch.numCreated,
+                primaryBatch.numUpdated,
             ),
             ImportResults.Details(
                 relatedBatch.resolvedGuids,
                 relatedBatch.created,
                 relatedBatch.updated,
                 relatedBatch.skipped,
+                relatedBatch.numCreated,
+                relatedBatch.numUpdated,
             ),
         )
     }
