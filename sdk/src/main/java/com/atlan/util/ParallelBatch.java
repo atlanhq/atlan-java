@@ -20,6 +20,7 @@ public class ParallelBatch {
     private final boolean replaceAtlanTags;
     private final AssetBatch.CustomMetadataHandling customMetadataHandling;
     private final boolean captureFailures;
+    private final boolean track;
     private final boolean updateOnly;
     private final Map<Long, AssetBatch> batchMap;
 
@@ -90,11 +91,34 @@ public class ParallelBatch {
             AssetBatch.CustomMetadataHandling customMetadataHandling,
             boolean captureFailures,
             boolean updateOnly) {
+        this(client, maxSize, replaceAtlanTags, customMetadataHandling, captureFailures, updateOnly, true);
+    }
+
+    /**
+     * Create a new batch of assets to be bulk-saved, in parallel (across threads).
+     *
+     * @param client connectivity to Atlan
+     * @param maxSize maximum size of each batch that should be processed (per API call)
+     * @param replaceAtlanTags if true, all Atlan tags on an existing asset will be overwritten; if false, all Atlan tags will be ignored
+     * @param customMetadataHandling how to handle custom metadata (ignore it, replace it (wiping out anything pre-existing), or merge it)
+     * @param captureFailures when true, any failed batches will be captured and retained rather than exceptions being raised (for large amounts of processing this could cause memory issues!)
+     * @param updateOnly when true, only attempt to update existing assets and do not create any assets (note: this will incur a performance penalty)
+     * @param track when false, details about each created and updated asset will no longer be tracked (only an overall count of each) -- useful if you intend to send close to (or more than) 1 million assets through a batch
+     */
+    public ParallelBatch(
+            AtlanClient client,
+            int maxSize,
+            boolean replaceAtlanTags,
+            AssetBatch.CustomMetadataHandling customMetadataHandling,
+            boolean captureFailures,
+            boolean updateOnly,
+            boolean track) {
         this.client = client;
         this.maxSize = maxSize;
         this.replaceAtlanTags = replaceAtlanTags;
         this.customMetadataHandling = customMetadataHandling;
         this.captureFailures = captureFailures;
+        this.track = track;
         this.updateOnly = updateOnly;
         this.batchMap = new ConcurrentHashMap<>();
     }
@@ -112,7 +136,13 @@ public class ParallelBatch {
             batchMap.put(
                     id,
                     new AssetBatch(
-                            client, maxSize, replaceAtlanTags, customMetadataHandling, captureFailures, updateOnly));
+                            client,
+                            maxSize,
+                            replaceAtlanTags,
+                            customMetadataHandling,
+                            captureFailures,
+                            updateOnly,
+                            track));
         }
         return batchMap.get(id).add(single);
     }
