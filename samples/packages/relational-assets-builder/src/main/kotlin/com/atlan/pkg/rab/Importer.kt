@@ -72,7 +72,10 @@ object Importer {
         logger.info { "=== Importing assets... ===" }
 
         logger.info { " --- Importing connections... ---" }
-        val connectionImporter = ConnectionImporter(preprocessedDetails, assetAttrsToOverwrite, assetsUpdateOnly, 1, trackBatches)
+        // Note: we force-track the batches here to ensure any created connections are cached
+        // (without tracking, any connections created will NOT be cached, either, which will then cause issues
+        // with the subsequent processing steps.)
+        val connectionImporter = ConnectionImporter(preprocessedDetails, assetAttrsToOverwrite, assetsUpdateOnly, 1, true)
         connectionImporter.import()
 
         logger.info { " --- Importing databases... ---" }

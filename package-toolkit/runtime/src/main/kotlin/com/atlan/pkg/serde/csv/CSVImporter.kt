@@ -54,7 +54,7 @@ abstract class CSVImporter(
                 logger.error { "Some errors detected, failing the workflow." }
                 exitProcess(1)
             }
-            cacheCreated(results.primary.created)
+            cacheCreated(results.primary.created ?: listOf())
             return results
         }
     }
