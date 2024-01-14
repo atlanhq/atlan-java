@@ -14,6 +14,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 import lombok.Getter;
 
@@ -35,6 +36,10 @@ public class AssetBatch {
     private final CustomMetadataHandling customMetadataHandling;
     private final boolean captureFailures;
     private final boolean updateOnly;
+    private final boolean track;
+
+    private final AtomicLong numCreated;
+    private final AtomicLong numUpdated;
 
     /** Assets that were created (minimal info only). */
     @Getter
@@ -169,17 +174,52 @@ public class AssetBatch {
             CustomMetadataHandling customMetadataHandling,
             boolean captureFailures,
             boolean updateOnly) {
+        this(client, maxSize, replaceAtlanTags, customMetadataHandling, captureFailures, updateOnly, true);
+    }
+
+    /**
+     * Create a new batch of assets to be bulk-saved.
+     *
+     * @param client connectivity to Atlan
+     * @param maxSize maximum size of each batch that should be processed (per API call)
+     * @param replaceAtlanTags if true, all Atlan tags on an existing asset will be overwritten; if false, all Atlan tags will be ignored
+     * @param customMetadataHandling how to handle custom metadata (ignore it, replace it (wiping out anything pre-existing), or merge it)
+     * @param captureFailures when true, any failed batches will be captured and retained rather than exceptions being raised (for large amounts of processing this could cause memory issues!)
+     * @param updateOnly when true, only attempt to update existing assets and do not create any assets (note: this will incur a performance penalty)
+     * @param track when false, details about each created and updated asset will no longer be tracked (only an overall count of each) -- useful if you intend to send close to (or more than) 1 million assets through a batch
+     */
+    public AssetBatch(
+            AtlanClient client,
+            int maxSize,
+            boolean replaceAtlanTags,
+            CustomMetadataHandling customMetadataHandling,
+            boolean captureFailures,
+            boolean updateOnly,
+            boolean track) {
         this.client = client;
         _batch = Collections.synchronizedList(new ArrayList<>());
-        failures = Collections.synchronizedList(new ArrayList<>());
-        resolvedGuids = new ConcurrentHashMap<>();
         this.maxSize = maxSize;
         this.replaceAtlanTags = replaceAtlanTags;
         this.customMetadataHandling = customMetadataHandling;
-        this.created = Collections.synchronizedList(new ArrayList<>());
-        this.updated = Collections.synchronizedList(new ArrayList<>());
         this.skipped = Collections.synchronizedList(new ArrayList<>());
+        this.numCreated = new AtomicLong(0);
+        this.numUpdated = new AtomicLong(0);
+        this.track = track;
+        if (track) {
+            this.resolvedGuids = new ConcurrentHashMap<>();
+            this.created = Collections.synchronizedList(new ArrayList<>());
+            this.updated = Collections.synchronizedList(new ArrayList<>());
+        } else {
+            this.resolvedGuids = null;
+            this.created = null;
+            this.updated = null;
+        }
         this.captureFailures = captureFailures;
+        if (captureFailures) {
+            this.failures = Collections.synchronizedList(new ArrayList<>());
+        } else {
+            this.failures = null;
+        }
         this.updateOnly = updateOnly;
     }
 
@@ -270,10 +310,15 @@ public class AssetBatch {
 
     private void trackResponse(AssetMutationResponse response) {
         if (response != null) {
-            response.getCreatedAssets().forEach(a -> track(created, a));
-            response.getUpdatedAssets().forEach(a -> track(updated, a));
-            if (response.getGuidAssignments() != null) {
-                resolvedGuids.putAll(response.getGuidAssignments());
+            if (track) {
+                response.getCreatedAssets().forEach(a -> track(created, a));
+                response.getUpdatedAssets().forEach(a -> track(updated, a));
+                if (response.getGuidAssignments() != null) {
+                    resolvedGuids.putAll(response.getGuidAssignments());
+                }
+            } else {
+                numCreated.getAndAdd(response.getCreatedAssets().size());
+                numUpdated.getAndAdd(response.getUpdatedAssets().size());
             }
         }
     }
