@@ -317,11 +317,10 @@ public class AssetBatch {
             if (track) {
                 response.getCreatedAssets().forEach(a -> track(created, a));
                 response.getUpdatedAssets().forEach(a -> track(updated, a));
-            } else {
-                numCreated.getAndAdd(response.getCreatedAssets().size());
-                numUpdated.getAndAdd(response.getUpdatedAssets().size());
             }
-            // Always track the resolved GUIDs...
+            // Always track the counts and resolved GUIDs...
+            numCreated.getAndAdd(response.getCreatedAssets().size());
+            numUpdated.getAndAdd(response.getUpdatedAssets().size());
             if (response.getGuidAssignments() != null) {
                 resolvedGuids.putAll(response.getGuidAssignments());
             }
