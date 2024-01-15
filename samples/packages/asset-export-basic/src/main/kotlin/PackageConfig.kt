@@ -43,6 +43,12 @@ object PackageConfig : CustomPackage(
                         placeholder = "default",
                         grid = 6,
                     ),
+                    "include_description" to BooleanInput(
+                        label = "Include description?",
+                        required = false,
+                        help = "Whether to extract only user-entered description (No), or to also include system-level description (Yes).",
+                        grid = 4,
+                    ),
                     "include_glossaries" to BooleanInput(
                         label = "Include glossaries?",
                         required = false,
@@ -55,11 +61,11 @@ object PackageConfig : CustomPackage(
         rules = listOf(
             UIRule(
                 whenInputs = mapOf("export_scope" to "ENRICHED_ONLY"),
-                required = listOf("qn_prefix", "include_glossaries"),
+                required = listOf("qn_prefix", "include_description", "include_glossaries"),
             ),
             UIRule(
                 whenInputs = mapOf("export_scope" to "ALL"),
-                required = listOf("qn_prefix", "include_glossaries"),
+                required = listOf("qn_prefix", "include_description", "include_glossaries"),
             ),
         ),
     ),

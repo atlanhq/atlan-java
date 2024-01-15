@@ -31,12 +31,14 @@ import java.util.stream.Stream
  * @param exportScope which assets to include in the export
  * @param qnPrefix qualifiedName prefix to determine which assets to include in the export
  * @param batchSize maximum number of assets to request per API call
+ * @param includeDescription if true, consider the system-level description an enrichment and include it, otherwise only include user-provided descriptions
  */
 class AssetExporter(
     private val filename: String,
     private val exportScope: String,
     private val qnPrefix: String,
     private val batchSize: Int,
+    private val includeDescription: Boolean,
 ) : RowGenerator {
 
     private val logger = KotlinLogging.logger {}
@@ -72,7 +74,6 @@ class AssetExporter(
         if (exportScope == "ENRICHED_ONLY") {
             builder
                 .whereSome(Asset.CERTIFICATE_STATUS.hasAnyValue())
-                .whereSome(Asset.DESCRIPTION.hasAnyValue())
                 .whereSome(Asset.USER_DESCRIPTION.hasAnyValue())
                 .whereSome(Asset.ANNOUNCEMENT_TYPE.hasAnyValue())
                 .whereSome(Asset.ASSIGNED_TERMS.hasAnyValue())
@@ -81,6 +82,9 @@ class AssetExporter(
                 .whereSome(Asset.LINKS.hasAny())
                 .whereSome(Asset.STARRED_BY.hasAnyValue())
                 .minSomes(1)
+            if (includeDescription) {
+                builder.whereSome(Asset.DESCRIPTION.hasAnyValue())
+            }
             for (cmField in CustomMetadataFields.all) {
                 builder.whereSome(cmField.hasAnyValue())
             }
@@ -89,24 +93,44 @@ class AssetExporter(
     }
 
     private fun getAttributesToExtract(): MutableList<AtlanField> {
-        val attributeList: MutableList<AtlanField> = mutableListOf(
-            Asset.NAME,
-            Asset.DISPLAY_NAME,
-            Asset.DESCRIPTION,
-            Asset.USER_DESCRIPTION,
-            Asset.OWNER_USERS,
-            Asset.OWNER_GROUPS,
-            Asset.CERTIFICATE_STATUS,
-            Asset.CERTIFICATE_STATUS_MESSAGE,
-            Asset.ANNOUNCEMENT_TYPE,
-            Asset.ANNOUNCEMENT_TITLE,
-            Asset.ANNOUNCEMENT_MESSAGE,
-            Asset.ASSIGNED_TERMS,
-            Asset.ATLAN_TAGS,
-            Asset.LINKS,
-            Asset.README,
-            Asset.STARRED_DETAILS,
-        )
+        val attributeList: MutableList<AtlanField> = if (includeDescription) {
+            mutableListOf(
+                Asset.NAME,
+                Asset.DISPLAY_NAME,
+                Asset.DESCRIPTION,
+                Asset.USER_DESCRIPTION,
+                Asset.OWNER_USERS,
+                Asset.OWNER_GROUPS,
+                Asset.CERTIFICATE_STATUS,
+                Asset.CERTIFICATE_STATUS_MESSAGE,
+                Asset.ANNOUNCEMENT_TYPE,
+                Asset.ANNOUNCEMENT_TITLE,
+                Asset.ANNOUNCEMENT_MESSAGE,
+                Asset.ASSIGNED_TERMS,
+                Asset.ATLAN_TAGS,
+                Asset.LINKS,
+                Asset.README,
+                Asset.STARRED_DETAILS,
+            )
+        } else {
+            mutableListOf(
+                Asset.NAME,
+                Asset.DISPLAY_NAME,
+                Asset.USER_DESCRIPTION,
+                Asset.OWNER_USERS,
+                Asset.OWNER_GROUPS,
+                Asset.CERTIFICATE_STATUS,
+                Asset.CERTIFICATE_STATUS_MESSAGE,
+                Asset.ANNOUNCEMENT_TYPE,
+                Asset.ANNOUNCEMENT_TITLE,
+                Asset.ANNOUNCEMENT_MESSAGE,
+                Asset.ASSIGNED_TERMS,
+                Asset.ATLAN_TAGS,
+                Asset.LINKS,
+                Asset.README,
+                Asset.STARRED_DETAILS,
+            )
+        }
         for (cmField in CustomMetadataFields.all) {
             attributeList.add(cmField)
         }

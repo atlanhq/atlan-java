@@ -16,6 +16,7 @@ object Exporter {
         val batchSize = 20
         val assetsExportScope = Utils.getOrDefault(config.exportScope, "ENRICHED_ONLY")
         val assetsQualifiedNamePrefix = Utils.getOrDefault(config.qnPrefix, "default")
+        val includeDescription = Utils.getOrDefault(config.includeDescription, true)
 
         val glossaryFile = "$outputDirectory${File.separator}glossary-export.csv"
         if ("GLOSSARIES_ONLY" == assetsExportScope || Utils.getOrDefault(config.includeGlossaries, false)) {
@@ -35,6 +36,7 @@ object Exporter {
                 assetsExportScope,
                 assetsQualifiedNamePrefix,
                 batchSize,
+                includeDescription,
             )
             assetExporter.export()
         } else {
