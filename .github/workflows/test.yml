@@ -25,7 +25,7 @@ jobs:
       - if: success() || failure()
         uses: actions/upload-artifact@v3
         with:
-          name: log
+          name: it-logs
           path: integration-tests/test.log
   package-test:
     runs-on: ubuntu-latest
@@ -44,5 +44,5 @@ jobs:
       - if: success() || failure()
         uses: actions/upload-artifact@v3
         with:
-          name: logs
+          name: package-logs
           path: samples/packages/**/debug.log
