@@ -111,11 +111,12 @@ object PackageConfig : CustomPackage(
         ),
     ),
     containerImage = "ghcr.io/atlanhq/csa-enrichment-migrator:${Atlan.VERSION}",
-    classToRun = Exporter::class.java,
+    classToRun = EnrichmentMigrator::class.java,
     outputs = WorkflowOutputs(
         mapOf(
             "debug-logs" to "/tmp/debug.log",
             "assets-csv" to "/tmp/asset-export.csv",
+            "transformed-csv" to "/tmp/transformed.csv",
         ),
     ),
     keywords = listOf("kotlin", "utility"),
