@@ -47,7 +47,8 @@ object EnrichmentMigrator {
         } else {
             defaultAttrsToExtract.forEach {
                 if (!it.atlanFieldName.contains(RowSerde.CM_HEADING_DELIMITER)) {
-                    start.add(it.atlanFieldName)
+                    val fieldName = RowSerde.getHeaderForField(it)
+                    start.add(fieldName)
                 }
             }
             attributeLimits.forEach {
@@ -62,7 +63,8 @@ object EnrichmentMigrator {
         } else {
             defaultAttrsToExtract.forEach {
                 if (it.atlanFieldName.contains(RowSerde.CM_HEADING_DELIMITER)) {
-                    start.add(it.atlanFieldName)
+                    val fieldName = RowSerde.getHeaderForField(it)
+                    start.add(fieldName)
                 }
             }
             cmLimits.forEach {
