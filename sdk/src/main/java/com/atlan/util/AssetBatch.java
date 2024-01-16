@@ -9,6 +9,7 @@ import com.atlan.model.assets.Asset;
 import com.atlan.model.assets.IndistinctAsset;
 import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.core.ConnectionCreationResponse;
+import com.atlan.model.search.FluentSearch;
 import com.atlan.serde.Serde;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -37,6 +38,7 @@ public class AssetBatch {
     private final boolean captureFailures;
     private final boolean updateOnly;
     private final boolean track;
+    private final boolean caseInsensitive;
 
     /** Number of assets that were created (no details, just a count). */
     @Getter
@@ -201,6 +203,30 @@ public class AssetBatch {
             boolean captureFailures,
             boolean updateOnly,
             boolean track) {
+        this(client, maxSize, replaceAtlanTags, customMetadataHandling, captureFailures, updateOnly, track, false);
+    }
+
+    /**
+     * Create a new batch of assets to be bulk-saved.
+     *
+     * @param client connectivity to Atlan
+     * @param maxSize maximum size of each batch that should be processed (per API call)
+     * @param replaceAtlanTags if true, all Atlan tags on an existing asset will be overwritten; if false, all Atlan tags will be ignored
+     * @param customMetadataHandling how to handle custom metadata (ignore it, replace it (wiping out anything pre-existing), or merge it)
+     * @param captureFailures when true, any failed batches will be captured and retained rather than exceptions being raised (for large amounts of processing this could cause memory issues!)
+     * @param updateOnly when true, only attempt to update existing assets and do not create any assets (note: this will incur a performance penalty)
+     * @param track when false, details about each created and updated asset will no longer be tracked (only an overall count of each) -- useful if you intend to send close to (or more than) 1 million assets through a batch
+     * @param caseInsensitive (only applies when updateOnly is true) when matching assets, search for their qualifiedName in a case-insensitive way
+     */
+    public AssetBatch(
+            AtlanClient client,
+            int maxSize,
+            boolean replaceAtlanTags,
+            CustomMetadataHandling customMetadataHandling,
+            boolean captureFailures,
+            boolean updateOnly,
+            boolean track,
+            boolean caseInsensitive) {
         this.client = client;
         _batch = Collections.synchronizedList(new ArrayList<>());
         this.maxSize = maxSize;
@@ -225,6 +251,7 @@ public class AssetBatch {
             this.failures = null;
         }
         this.updateOnly = updateOnly;
+        this.caseInsensitive = caseInsensitive;
     }
 
     /**
@@ -269,11 +296,23 @@ public class AssetBatch {
                 Set<String> found = new HashSet<>();
                 List<String> qualifiedNames =
                         _batch.stream().map(Asset::getQualifiedName).collect(Collectors.toList());
-                client.assets.select().where(Asset.QUALIFIED_NAME.in(qualifiedNames)).pageSize(maxSize).stream()
-                        .forEach(asset -> found.add(asset.getTypeName() + "::" + asset.getQualifiedName()));
+                FluentSearch.FluentSearchBuilder<?, ?> builder;
+                if (caseInsensitive) {
+                    builder = client.assets.select().minSomes(1);
+                    for (String qn : qualifiedNames) {
+                        builder.whereSome(Asset.QUALIFIED_NAME.eq(qn, true));
+                    }
+                } else {
+                    builder = client.assets.select().where(Asset.QUALIFIED_NAME.in(qualifiedNames));
+                }
+                builder.pageSize(maxSize).stream().forEach(asset -> {
+                    String assetId = asset.getTypeName() + "::" + asset.getQualifiedName();
+                    found.add(assetId.toLowerCase(Locale.ROOT));
+                });
                 revised = new ArrayList<>();
                 _batch.forEach(asset -> {
-                    if (found.contains(asset.getTypeName() + "::" + asset.getQualifiedName())) {
+                    String assetId = asset.getTypeName() + "::" + asset.getQualifiedName();
+                    if (found.contains(assetId.toLowerCase(Locale.ROOT))) {
                         revised.add(asset);
                     } else {
                         track(skipped, asset);

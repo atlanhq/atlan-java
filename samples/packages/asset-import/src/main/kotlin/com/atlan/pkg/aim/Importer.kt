@@ -33,6 +33,7 @@ object Importer {
         val glossaryAttrsToOverwrite =
             attributesToClear(Utils.getOrDefault(config.glossariesAttrToOverwrite, listOf()).toMutableList(), "glossaries", logger)
         val assetsUpdateOnly = Utils.getOrDefault(config.assetsUpsertSemantic, "update") == "update"
+        val assetsCaseSensitive = Utils.getOrDefault(config.assetsCaseSensitive, true)
         val glossariesUpdateOnly = Utils.getOrDefault(config.glossariesUpsertSemantic, "update") == "update"
         val glossariesFailOnErrors = Utils.getOrDefault(config.glossariesFailOnErrors, true)
 
@@ -61,7 +62,7 @@ object Importer {
         if (assetsFilename.isNotBlank()) {
             FieldSerde.FAIL_ON_ERRORS.set(assetsFailOnErrors)
             logger.info { "=== Importing assets... ===" }
-            val assetImporter = AssetImporter(assetsFilename, assetAttrsToOverwrite, assetsUpdateOnly, batchSize)
+            val assetImporter = AssetImporter(assetsFilename, assetAttrsToOverwrite, assetsUpdateOnly, batchSize, assetsCaseSensitive)
             assetImporter.import()
         }
     }

@@ -28,6 +28,7 @@ import kotlin.system.exitProcess
  * @param updateOnly if true, only update an asset (first check it exists), if false allow upserts (create if it does not exist)
  * @param batchSize maximum number of records to save per API request
  * @param trackBatches if true, minimal details about every asset created or updated is tracked (if false, only counts of each are tracked)
+ * @param caseSensitive (only applies when updateOnly is true) attempt to match assets case-sensitively (true) or case-insensitively (false)
  */
 abstract class CSVImporter(
     private val filename: String,
@@ -37,6 +38,7 @@ abstract class CSVImporter(
     private val updateOnly: Boolean = false,
     private val batchSize: Int = 20,
     private val trackBatches: Boolean = true,
+    private val caseSensitive: Boolean = true,
 ) : AssetGenerator {
 
     /**
