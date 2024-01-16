@@ -201,6 +201,19 @@ extends java.lang.Object</pre>
 <div class="block">Create a new batch of assets to be bulk-saved, in parallel (across threads).</div>
 </td>
 </tr>
+<tr class="rowColor">
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.atlan.AtlanClient,int,boolean,com.atlan.util.AssetBatch.CustomMetadataHandling,boolean,boolean,boolean,boolean)">ParallelBatch</a></span>&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+             int&nbsp;maxSize,
+             boolean&nbsp;replaceAtlanTags,
+             <a href="AssetBatch.CustomMetadataHandling.html" title="enum in com.atlan.util">AssetBatch.CustomMetadataHandling</a>&nbsp;customMetadataHandling,
+             boolean&nbsp;captureFailures,
+             boolean&nbsp;updateOnly,
+             boolean&nbsp;track,
+             boolean&nbsp;caseSensitive)</code></th>
+<td class="colLast">
+<div class="block">Create a new batch of assets to be bulk-saved, in parallel (across threads).</div>
+</td>
+</tr>
 </table>
 </li>
 </ul>
@@ -391,7 +404,7 @@ extends java.lang.Object</pre>
 <a id="&lt;init&gt;(com.atlan.AtlanClient,int,boolean,com.atlan.util.AssetBatch.CustomMetadataHandling,boolean,boolean,boolean)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>ParallelBatch</h4>
 <pre>public&nbsp;ParallelBatch&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
@@ -411,6 +424,34 @@ extends java.lang.Object</pre>
 <dd><code>captureFailures</code> - when true, any failed batches will be captured and retained rather than exceptions being raised (for large amounts of processing this could cause memory issues!)</dd>
 <dd><code>updateOnly</code> - when true, only attempt to update existing assets and do not create any assets (note: this will incur a performance penalty)</dd>
 <dd><code>track</code> - when false, details about each created and updated asset will no longer be tracked (only an overall count of each) -- useful if you intend to send close to (or more than) 1 million assets through a batch</dd>
+</dl>
+</li>
+</ul>
+<a id="&lt;init&gt;(com.atlan.AtlanClient,int,boolean,com.atlan.util.AssetBatch.CustomMetadataHandling,boolean,boolean,boolean,boolean)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>ParallelBatch</h4>
+<pre>public&nbsp;ParallelBatch&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+                     int&nbsp;maxSize,
+                     boolean&nbsp;replaceAtlanTags,
+                     <a href="AssetBatch.CustomMetadataHandling.html" title="enum in com.atlan.util">AssetBatch.CustomMetadataHandling</a>&nbsp;customMetadataHandling,
+                     boolean&nbsp;captureFailures,
+                     boolean&nbsp;updateOnly,
+                     boolean&nbsp;track,
+                     boolean&nbsp;caseSensitive)</pre>
+<div class="block">Create a new batch of assets to be bulk-saved, in parallel (across threads).</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>client</code> - connectivity to Atlan</dd>
+<dd><code>maxSize</code> - maximum size of each batch that should be processed (per API call)</dd>
+<dd><code>replaceAtlanTags</code> - if true, all Atlan tags on an existing asset will be overwritten; if false, all Atlan tags will be ignored</dd>
+<dd><code>customMetadataHandling</code> - how to handle custom metadata (ignore it, replace it (wiping out anything pre-existing), or merge it)</dd>
+<dd><code>captureFailures</code> - when true, any failed batches will be captured and retained rather than exceptions being raised (for large amounts of processing this could cause memory issues!)</dd>
+<dd><code>updateOnly</code> - when true, only attempt to update existing assets and do not create any assets (note: this will incur a performance penalty)</dd>
+<dd><code>track</code> - when false, details about each created and updated asset will no longer be tracked (only an overall count of each) -- useful if you intend to send close to (or more than) 1 million assets through a batch</dd>
+<dd><code>caseSensitive</code> - (only applies when updateOnly is true) attempt to match assets case-sensitively (true) or case-insensitively (false)</dd>
 </dl>
 </li>
 </ul>
