@@ -46,7 +46,7 @@ class AssetExporter(
     fun export() {
         val assets = getAssetsToExtract()
             .pageSize(batchSize)
-            .includesOnResults(getAttributesToExtract())
+            .includesOnResults(getAttributesToExtract(includeDescription))
             .includesOnRelations(getRelatedAttributesToExtract())
 
         CSVWriter(filename).use { csv ->
@@ -54,7 +54,7 @@ class AssetExporter(
                 .map(AtlanField::getAtlanFieldName)
                 .collect(Collectors.toList())
             headerNames.addAll(
-                getAttributesToExtract().stream()
+                getAttributesToExtract(includeDescription).stream()
                     .map { f -> RowSerde.getHeaderForField(f) }
                     .collect(Collectors.toList()),
             )
@@ -92,59 +92,61 @@ class AssetExporter(
         return builder
     }
 
-    private fun getAttributesToExtract(): MutableList<AtlanField> {
-        val attributeList: MutableList<AtlanField> = if (includeDescription) {
-            mutableListOf(
-                Asset.NAME,
-                Asset.DISPLAY_NAME,
-                Asset.DESCRIPTION,
-                Asset.USER_DESCRIPTION,
-                Asset.OWNER_USERS,
-                Asset.OWNER_GROUPS,
-                Asset.CERTIFICATE_STATUS,
-                Asset.CERTIFICATE_STATUS_MESSAGE,
-                Asset.ANNOUNCEMENT_TYPE,
-                Asset.ANNOUNCEMENT_TITLE,
-                Asset.ANNOUNCEMENT_MESSAGE,
-                Asset.ASSIGNED_TERMS,
-                Asset.ATLAN_TAGS,
-                Asset.LINKS,
-                Asset.README,
-                Asset.STARRED_DETAILS,
-            )
-        } else {
-            mutableListOf(
-                Asset.NAME,
-                Asset.DISPLAY_NAME,
-                Asset.USER_DESCRIPTION,
-                Asset.OWNER_USERS,
-                Asset.OWNER_GROUPS,
-                Asset.CERTIFICATE_STATUS,
-                Asset.CERTIFICATE_STATUS_MESSAGE,
-                Asset.ANNOUNCEMENT_TYPE,
-                Asset.ANNOUNCEMENT_TITLE,
-                Asset.ANNOUNCEMENT_MESSAGE,
-                Asset.ASSIGNED_TERMS,
-                Asset.ATLAN_TAGS,
-                Asset.LINKS,
-                Asset.README,
-                Asset.STARRED_DETAILS,
-            )
+    companion object {
+        fun getAttributesToExtract(includeDesc: Boolean): MutableList<AtlanField> {
+            val attributeList: MutableList<AtlanField> = if (includeDesc) {
+                mutableListOf(
+                    Asset.NAME,
+                    Asset.DISPLAY_NAME,
+                    Asset.DESCRIPTION,
+                    Asset.USER_DESCRIPTION,
+                    Asset.OWNER_USERS,
+                    Asset.OWNER_GROUPS,
+                    Asset.CERTIFICATE_STATUS,
+                    Asset.CERTIFICATE_STATUS_MESSAGE,
+                    Asset.ANNOUNCEMENT_TYPE,
+                    Asset.ANNOUNCEMENT_TITLE,
+                    Asset.ANNOUNCEMENT_MESSAGE,
+                    Asset.ASSIGNED_TERMS,
+                    Asset.ATLAN_TAGS,
+                    Asset.LINKS,
+                    Asset.README,
+                    Asset.STARRED_DETAILS,
+                )
+            } else {
+                mutableListOf(
+                    Asset.NAME,
+                    Asset.DISPLAY_NAME,
+                    Asset.USER_DESCRIPTION,
+                    Asset.OWNER_USERS,
+                    Asset.OWNER_GROUPS,
+                    Asset.CERTIFICATE_STATUS,
+                    Asset.CERTIFICATE_STATUS_MESSAGE,
+                    Asset.ANNOUNCEMENT_TYPE,
+                    Asset.ANNOUNCEMENT_TITLE,
+                    Asset.ANNOUNCEMENT_MESSAGE,
+                    Asset.ASSIGNED_TERMS,
+                    Asset.ATLAN_TAGS,
+                    Asset.LINKS,
+                    Asset.README,
+                    Asset.STARRED_DETAILS,
+                )
+            }
+            for (cmField in CustomMetadataFields.all) {
+                attributeList.add(cmField)
+            }
+            return attributeList
         }
-        for (cmField in CustomMetadataFields.all) {
-            attributeList.add(cmField)
-        }
-        return attributeList
-    }
 
-    private fun getRelatedAttributesToExtract(): MutableList<AtlanField> {
-        return mutableListOf(
-            Asset.QUALIFIED_NAME, // for asset referencing
-            Asset.NAME, // for Link embedding
-            Asset.DESCRIPTION, // for README embedding
-            Link.LINK, // for Link embedding
-            GlossaryTerm.ANCHOR, // for assigned term containment
-        )
+        fun getRelatedAttributesToExtract(): MutableList<AtlanField> {
+            return mutableListOf(
+                Asset.QUALIFIED_NAME, // for asset referencing
+                Asset.NAME, // for Link embedding
+                Asset.DESCRIPTION, // for README embedding
+                Link.LINK, // for Link embedding
+                GlossaryTerm.ANCHOR, // for assigned term containment
+            )
+        }
     }
 
     /**
@@ -154,6 +156,6 @@ class AssetExporter(
      * @return the values, as an iterable set of strings
      */
     override fun buildFromAsset(asset: Asset): Iterable<String> {
-        return RowSerializer(asset, getAttributesToExtract(), logger).getRow()
+        return RowSerializer(asset, getAttributesToExtract(includeDescription), logger).getRow()
     }
 }
