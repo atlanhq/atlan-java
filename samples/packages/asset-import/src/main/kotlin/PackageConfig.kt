@@ -67,6 +67,11 @@ object PackageConfig : CustomPackage(
                         required = false,
                         help = "Whether an invalid value in a field should cause the import to fail (Yes) or log a warning, skip that value, and proceed (No).",
                     ),
+                    "assets_case_sensitive" to BooleanInput(
+                        label = "Case-sensitive match for updates",
+                        required = false,
+                        help = "Whether to use case-sensitive matching when running in update-only mode (Yes) or try case-insensitive matching (No).",
+                    ),
                 ),
             ),
             UIStep(

@@ -28,11 +28,13 @@ import java.util.concurrent.atomic.AtomicLong
  * @param updateOnly when true, the reader will first look up assets to ensure they exist (and only update them, never create)
  * @param fieldSeparator character to use to separate fields (for example ',' or ';')
  * @param trackBatches if true, minimal details about every asset created or updated is tracked (if false, only counts of each are tracked)
+ * @param caseSensitive (only applies when updateOnly is true) attempt to match assets case-sensitively (true) or case-insensitively (false)
  */
 class CSVReader @JvmOverloads constructor(
     path: String,
     private val updateOnly: Boolean,
     private val trackBatches: Boolean = true,
+    private val caseSensitive: Boolean = true,
     fieldSeparator: Char = ',',
 ) : Closeable {
 
@@ -88,6 +90,7 @@ class CSVReader @JvmOverloads constructor(
             true,
             updateOnly,
             trackBatches,
+            caseSensitive,
         )
         val relatedBatch = ParallelBatch(
             client,
@@ -97,6 +100,7 @@ class CSVReader @JvmOverloads constructor(
             true,
             false,
             trackBatches,
+            caseSensitive,
         )
         val relatedHolds: MutableMap<String, RelatedAssetHold> = ConcurrentHashMap()
         val deferDeletes: MutableMap<String, Set<AtlanField>> = ConcurrentHashMap()

@@ -21,18 +21,21 @@ import mu.KotlinLogging
  * @param attrsToOverwrite list of fields that should be overwritten in Atlan, if their value is empty in the CSV
  * @param updateOnly if true, only update an asset (first check it exists), if false allow upserts (create if it does not exist)
  * @param batchSize maximum number of records to save per API request
+ * @param caseSensitive (only applies when updateOnly is true) attempt to match assets case-sensitively (true) or case-insensitively (false)
  */
 class AssetImporter(
     private val filename: String,
     private val attrsToOverwrite: List<AtlanField>,
     private val updateOnly: Boolean,
     private val batchSize: Int,
+    private val caseSensitive: Boolean = true,
 ) : CSVImporter(
     filename,
     logger = KotlinLogging.logger {},
     attrsToOverwrite = attrsToOverwrite,
     updateOnly = updateOnly,
     batchSize = batchSize,
+    caseSensitive = caseSensitive,
 ) {
     /** {@inheritDoc} */
     override fun getBuilder(deserializer: RowDeserializer): Asset.AssetBuilder<*, *> {
