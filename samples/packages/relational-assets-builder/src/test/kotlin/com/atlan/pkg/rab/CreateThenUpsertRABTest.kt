@@ -198,12 +198,13 @@ class CreateThenUpsertRABTest : PackageTest() {
 
     private fun validateDatabase(displayName: String) {
         val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
-        val found = Database.select()
+        val request = Database.select()
             .where(Database.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
             .includesOnResults(databaseAttrs)
             .includeOnRelations(Schema.NAME)
-            .stream()
-            .toList()
+            .toRequest()
+        val response = retrySearchUntil(request, 1)
+        val found = response.assets
         assertEquals(1, found.size)
         val db = found[0] as Database
         assertEquals("TEST_DB", db.name)
@@ -222,12 +223,13 @@ class CreateThenUpsertRABTest : PackageTest() {
 
     private fun validateSchema(displayName: String) {
         val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
-        val found = Schema.select()
+        val request = Schema.select()
             .where(Schema.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
             .includesOnResults(schemaAttrs)
             .includeOnRelations(Asset.NAME)
-            .stream()
-            .toList()
+            .toRequest()
+        val response = retrySearchUntil(request, 1)
+        val found = response.assets
         assertEquals(1, found.size)
         val sch = found[0] as Schema
         assertEquals("TEST_SCHEMA", sch.name)
@@ -251,13 +253,14 @@ class CreateThenUpsertRABTest : PackageTest() {
 
     private fun validateTable(displayName: String) {
         val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
-        val found = Table.select()
+        val request = Table.select()
             .where(Table.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
             .includesOnResults(tableAttrs)
             .includeOnRelations(Asset.NAME)
             .includeOnRelations(Readme.DESCRIPTION)
-            .stream()
-            .toList()
+            .toRequest()
+        val response = retrySearchUntil(request, 1)
+        val found = response.assets
         assertEquals(1, found.size)
         val tbl = found[0] as Table
         assertEquals("TEST_TBL", tbl.name)
@@ -301,12 +304,13 @@ class CreateThenUpsertRABTest : PackageTest() {
 
     private fun validateColumnsForTable1(displayCol1: String, displayCol2: String) {
         val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
-        val found = Column.select()
+        val request = Column.select()
             .where(Column.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
             .where(Column.TABLE_NAME.eq("TEST_TBL"))
             .includesOnResults(columnAttrs)
-            .stream()
-            .toList()
+            .toRequest()
+        val response = retrySearchUntil(request, 2)
+        val found = response.assets
         assertEquals(2, found.size)
         val colNames = found.stream().map(Asset::getName).toList()
         assertTrue(colNames.contains("COL1"))
@@ -345,13 +349,14 @@ class CreateThenUpsertRABTest : PackageTest() {
 
     private fun validateView() {
         val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
-        val found = View.select()
+        val request = View.select()
             .where(View.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
             .includesOnResults(tableAttrs)
             .includeOnRelations(Asset.NAME)
             .includeOnRelations(Readme.DESCRIPTION)
-            .stream()
-            .toList()
+            .toRequest()
+        val response = retrySearchUntil(request, 1)
+        val found = response.assets
         assertEquals(1, found.size)
         val view = found[0] as View
         assertEquals("TEST_VIEW", view.name)
@@ -380,12 +385,13 @@ class CreateThenUpsertRABTest : PackageTest() {
 
     private fun validateColumnsForView() {
         val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
-        val found = Column.select()
+        val request = Column.select()
             .where(Column.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
             .where(Column.VIEW_NAME.eq("TEST_VIEW"))
             .includesOnResults(columnAttrs)
-            .stream()
-            .toList()
+            .toRequest()
+        val response = retrySearchUntil(request, 2)
+        val found = response.assets
         assertEquals(2, found.size)
         val colNames = found.stream().map(Asset::getName).toList()
         assertTrue(colNames.contains("COL3"))

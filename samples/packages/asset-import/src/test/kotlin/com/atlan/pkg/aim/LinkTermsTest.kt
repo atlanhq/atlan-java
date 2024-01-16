@@ -92,13 +92,14 @@ class LinkTermsTest : PackageTest() {
     @Test
     fun assetCreated() {
         val c = Connection.findByName(connectionName, AtlanConnectorType.KAFKA)[0]!!
-        val topics = KafkaTopic.select()
+        val request = KafkaTopic.select()
             .where(KafkaTopic.QUALIFIED_NAME.startsWith(c.qualifiedName))
             .includeOnResults(KafkaTopic.NAME)
             .includeOnResults(KafkaTopic.SOURCE_READ_COUNT)
             .includeOnResults(KafkaTopic.SOURCE_READ_USER_COUNT)
-            .stream()
-            .toList()
+            .toRequest()
+        val response = retrySearchUntil(request, 1)
+        val topics = response.assets
         assertEquals(1, topics.size)
         assertEquals("test_topic", topics[0].name)
         assertEquals(10, topics[0].sourceReadCount)
@@ -108,13 +109,14 @@ class LinkTermsTest : PackageTest() {
     @Test
     fun termAssigned() {
         val c = Connection.findByName(connectionName, AtlanConnectorType.KAFKA)[0]!!
-        val topics = KafkaTopic.select()
+        val request = KafkaTopic.select()
             .where(KafkaTopic.QUALIFIED_NAME.startsWith(c.qualifiedName))
             .includeOnResults(KafkaTopic.NAME)
             .includeOnResults(KafkaTopic.ASSIGNED_TERMS)
             .includeOnRelations(GlossaryTerm.NAME)
-            .stream()
-            .toList()
+            .toRequest()
+        val response = retrySearchUntil(request, 1)
+        val topics = response.assets
         assertEquals(1, topics.size)
         assertEquals("test_topic", topics[0].name)
         assertEquals(1, topics[0].assignedTerms.size)
