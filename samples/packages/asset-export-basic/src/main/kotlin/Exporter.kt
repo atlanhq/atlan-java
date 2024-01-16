@@ -12,7 +12,10 @@ object Exporter {
     fun main(args: Array<String>) {
         val outputDirectory = if (args.isEmpty()) "tmp" else args[0]
         val config = Utils.setPackageOps<AssetExportBasicCfg>()
+        export(config, outputDirectory)
+    }
 
+    fun export(config: AssetExportBasicCfg, outputDirectory: String) {
         val batchSize = 20
         val assetsExportScope = Utils.getOrDefault(config.exportScope, "ENRICHED_ONLY")
         val assetsQualifiedNamePrefix = Utils.getOrDefault(config.qnPrefix, "default")

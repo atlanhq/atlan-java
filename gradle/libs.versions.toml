@@ -15,6 +15,7 @@ fastcsv = "2.2.2"
 poi = "5.2.5"
 parsson = "1.1.5"
 simplejavamail = "8.5.1"
+swagger = "2.1.19"
 
 [libraries]
 jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson" }
@@ -37,6 +38,7 @@ apache-poi = { module = "org.apache.poi:poi", version.ref = "poi" }
 apache-poi-ooxml = { module = "org.apache.poi:poi-ooxml", version.ref = "poi" }
 parsson = { module = "org.eclipse.parsson:parsson", version.ref = "parsson" }
 simple-java-mail = { module = "org.simplejavamail:simple-java-mail", version.ref = "simplejavamail" }
+swagger-parser = { module = "io.swagger.parser.v3:swagger-parser", version.ref = "swagger" }
 
 [bundles]
 java-test = [ "jnanoid", "testng", "wiremock" ]

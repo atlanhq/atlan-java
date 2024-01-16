@@ -71,6 +71,10 @@ jobs:
           path: jars/duplicate-detector-*.jar
       - uses: actions/upload-artifact@v3
         with:
+          name: enrichment-migrator
+          path: jars/enrichment-migrator-*.jar
+      - uses: actions/upload-artifact@v3
+        with:
           name: metadata-impact-report
           path: jars/metadata-impact-report-*.jar
       - uses: actions/upload-artifact@v3
@@ -186,6 +190,7 @@ jobs:
           - asset-export-basic
           - asset-import
           - duplicate-detector
+          - enrichment-migrator
           - metadata-impact-report
           - openapi-spec-loader
           - owner-propagator
