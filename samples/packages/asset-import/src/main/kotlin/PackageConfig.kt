@@ -5,12 +5,14 @@ import com.atlan.Atlan
 import com.atlan.pkg.CustomPackage
 import com.atlan.pkg.aim.Importer
 import com.atlan.pkg.config.model.ui.UIConfig
+import com.atlan.pkg.config.model.ui.UIRule
 import com.atlan.pkg.config.model.ui.UIStep
 import com.atlan.pkg.config.model.workflow.WorkflowOutputs
 import com.atlan.pkg.config.widgets.BooleanInput
 import com.atlan.pkg.config.widgets.DropDown
 import com.atlan.pkg.config.widgets.FileUploader
 import com.atlan.pkg.config.widgets.Radio
+import com.atlan.pkg.config.widgets.TextInput
 
 /**
  * Definition for the Asset Import custom package.
@@ -27,12 +29,43 @@ object PackageConfig : CustomPackage(
                 title = "Assets",
                 description = "Assets to import",
                 inputs = mapOf(
+                    "assets_import_type" to Radio(
+                        label = "Import assets from",
+                        required = true,
+                        help = "Select how you want to provide the file containing asset details to be imported.",
+                        possibleValues = mapOf(
+                            "UPLOAD" to "Direct upload",
+                            "S3" to "S3 object",
+                        ),
+                        default = "UPLOAD",
+                    ),
                     "assets_file" to FileUploader(
                         label = "Assets file",
                         fileTypes = listOf("text/csv"),
                         required = false,
                         help = "Select the file containing assets to import, produced by one of the Asset Export packages.",
                         placeholder = "Select assets CSV file",
+                    ),
+                    "assets_s3_region" to TextInput(
+                        label = "S3 region",
+                        required = false,
+                        help = "Enter the S3 region from which to retrieve the S3 object. If empty, will use the region of Atlan's own back-end storage.",
+                        placeholder = "ap-south-1",
+                        grid = 4,
+                    ),
+                    "assets_s3_bucket" to TextInput(
+                        label = "S3 bucket",
+                        required = false,
+                        help = "Enter the S3 bucket from which to retrieve the S3 object. IF empty, will use the bucket of Atlan's own back-end storage.",
+                        placeholder = "bucket-name",
+                        grid = 4,
+                    ),
+                    "assets_s3_object_key" to TextInput(
+                        label = "S3 object key",
+                        required = false,
+                        help = "Enter the S3 object key, including the name of the object and its prefix (path) in the S3 bucket.",
+                        placeholder = "some/where/file.csv",
+                        grid = 8,
                     ),
                     "assets_attr_to_overwrite" to DropDown(
                         label = "Remove attributes, if empty",
@@ -78,12 +111,43 @@ object PackageConfig : CustomPackage(
                 title = "Glossaries",
                 description = "Glossaries to import",
                 inputs = mapOf(
+                    "glossaries_import_type" to Radio(
+                        label = "Import glossaries, categories and terms from",
+                        required = true,
+                        help = "Select how you want to provide the file containing glossaries, categories and terms to be imported.",
+                        possibleValues = mapOf(
+                            "UPLOAD" to "Direct upload",
+                            "S3" to "S3 object",
+                        ),
+                        default = "UPLOAD",
+                    ),
                     "glossaries_file" to FileUploader(
                         label = "Glossaries file",
                         fileTypes = listOf("text/csv"),
                         required = false,
                         help = "Select the file containing glossaries, categories and terms to import, produced by one of the Asset Export packages.",
                         placeholder = "Select glossaries CSV file",
+                    ),
+                    "glossaries_s3_region" to TextInput(
+                        label = "S3 region",
+                        required = false,
+                        help = "Enter the S3 region from which to retrieve the S3 object. If empty, will use the region of Atlan's own back-end storage.",
+                        placeholder = "ap-south-1",
+                        grid = 4,
+                    ),
+                    "glossaries_s3_bucket" to TextInput(
+                        label = "S3 bucket",
+                        required = false,
+                        help = "Enter the S3 bucket from which to retrieve the S3 object. IF empty, will use the bucket of Atlan's own back-end storage.",
+                        placeholder = "bucket-name",
+                        grid = 4,
+                    ),
+                    "glossaries_s3_object_key" to TextInput(
+                        label = "S3 object key",
+                        required = false,
+                        help = "Enter the S3 object key, including the name of the object and its prefix (path) in the S3 bucket.",
+                        placeholder = "some/where/file.csv",
+                        grid = 8,
                     ),
                     "glossaries_attr_to_overwrite" to DropDown(
                         label = "Remove attributes, if empty",
@@ -119,6 +183,24 @@ object PackageConfig : CustomPackage(
                         help = "Whether an invalid value in a field should cause the import to fail (Yes) or log a warning, skip that value, and proceed (No).",
                     ),
                 ),
+            ),
+        ),
+        rules = listOf(
+            UIRule(
+                whenInputs = mapOf("assets_import_type" to "UPLOAD"),
+                required = listOf("assets_file"),
+            ),
+            UIRule(
+                whenInputs = mapOf("assets_import_type" to "S3"),
+                required = listOf("assets_s3_region", "assets_s3_bucket", "assets_s3_object_key"),
+            ),
+            UIRule(
+                whenInputs = mapOf("glossaries_import_type" to "UPLOAD"),
+                required = listOf("glossaries_file"),
+            ),
+            UIRule(
+                whenInputs = mapOf("glossaries_import_type" to "S3"),
+                required = listOf("glossaries_s3_region", "glossaries_s3_bucket", "glossaries_s3_object_key"),
             ),
         ),
     ),

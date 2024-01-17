@@ -19,14 +19,25 @@ object Importer {
 
     @JvmStatic
     fun main(args: Array<String>) {
+        val outputDirectory = if (args.isEmpty()) "tmp" else args[0]
         val config = Utils.setPackageOps<AssetImportCfg>()
-        import(config)
+        import(config, outputDirectory)
     }
 
-    fun import(config: AssetImportCfg) {
+    fun import(config: AssetImportCfg, outputDirectory: String = "tmp") {
         val batchSize = 20
+        val defaultRegion = Utils.getEnvVar("AWS_S3_REGION")
+        val defaultBucket = Utils.getEnvVar("AWS_S3_BUCKET_NAME")
+        val assetsUpload = Utils.getOrDefault(config.assetsImportType, "UPLOAD") == "UPLOAD"
+        val glossariesUpload = Utils.getOrDefault(config.glossariesImportType, "UPLOAD") == "UPLOAD"
         val assetsFilename = Utils.getOrDefault(config.assetsFile, "")
         val glossariesFilename = Utils.getOrDefault(config.glossariesFile, "")
+        val assetsS3Region = Utils.getOrDefault(config.assetsS3Region, defaultRegion)
+        val assetsS3Bucket = Utils.getOrDefault(config.assetsS3Bucket, defaultBucket)
+        val assetsS3ObjectKey = Utils.getOrDefault(config.assetsS3ObjectKey, "")
+        val glossariesS3Region = Utils.getOrDefault(config.glossariesS3Region, defaultRegion)
+        val glossariesS3Bucket = Utils.getOrDefault(config.glossariesS3Bucket, defaultBucket)
+        val glossariesS3ObjectKey = Utils.getOrDefault(config.glossariesS3ObjectKey, "")
         val assetAttrsToOverwrite =
             attributesToClear(Utils.getOrDefault(config.assetsAttrToOverwrite, listOf()).toMutableList(), "assets", logger)
         val assetsFailOnErrors = Utils.getOrDefault(config.assetsFailOnErrors, true)
@@ -37,32 +48,52 @@ object Importer {
         val glossariesUpdateOnly = Utils.getOrDefault(config.glossariesUpsertSemantic, "update") == "update"
         val glossariesFailOnErrors = Utils.getOrDefault(config.glossariesFailOnErrors, true)
 
-        if (glossariesFilename.isBlank() && assetsFilename.isBlank()) {
+        if ((assetsUpload && assetsFilename.isBlank()) || (!assetsUpload && assetsS3ObjectKey.isBlank()) &&
+            (glossariesUpload && glossariesFilename.isBlank()) || (!glossariesUpload && glossariesS3ObjectKey.isBlank())
+        ) {
             logger.error { "No input file was provided for either glossaries or assets." }
             exitProcess(1)
         }
 
         LinkCache.preload()
 
-        if (glossariesFilename.isNotBlank()) {
+        // Glossaries...
+        val glossariesInput = Utils.getInputFile(
+            glossariesFilename,
+            glossariesS3Region,
+            glossariesS3Bucket,
+            glossariesS3ObjectKey,
+            outputDirectory,
+            glossariesUpload,
+        )
+        if (glossariesInput.isNotBlank()) {
             FieldSerde.FAIL_ON_ERRORS.set(glossariesFailOnErrors)
             logger.info { "=== Importing glossaries... ===" }
             val glossaryImporter =
-                GlossaryImporter(glossariesFilename, glossaryAttrsToOverwrite, glossariesUpdateOnly, batchSize)
+                GlossaryImporter(glossariesInput, glossaryAttrsToOverwrite, glossariesUpdateOnly, batchSize)
             glossaryImporter.import()
             logger.info { "=== Importing categories... ===" }
             val categoryImporter =
-                CategoryImporter(glossariesFilename, glossaryAttrsToOverwrite, glossariesUpdateOnly, batchSize)
+                CategoryImporter(glossariesInput, glossaryAttrsToOverwrite, glossariesUpdateOnly, batchSize)
             categoryImporter.import()
             logger.info { "=== Importing terms... ===" }
             val termImporter =
-                TermImporter(glossariesFilename, glossaryAttrsToOverwrite, glossariesUpdateOnly, batchSize)
+                TermImporter(glossariesInput, glossaryAttrsToOverwrite, glossariesUpdateOnly, batchSize)
             termImporter.import()
         }
-        if (assetsFilename.isNotBlank()) {
+
+        val assetsInput = Utils.getInputFile(
+            assetsFilename,
+            assetsS3Region,
+            assetsS3Bucket,
+            assetsS3ObjectKey,
+            outputDirectory,
+            assetsUpload,
+        )
+        if (assetsInput.isNotBlank()) {
             FieldSerde.FAIL_ON_ERRORS.set(assetsFailOnErrors)
             logger.info { "=== Importing assets... ===" }
-            val assetImporter = AssetImporter(assetsFilename, assetAttrsToOverwrite, assetsUpdateOnly, batchSize, assetsCaseSensitive)
+            val assetImporter = AssetImporter(assetsInput, assetAttrsToOverwrite, assetsUpdateOnly, batchSize, assetsCaseSensitive)
             assetImporter.import()
         }
     }
