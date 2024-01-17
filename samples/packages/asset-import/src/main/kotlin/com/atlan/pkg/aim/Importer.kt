@@ -48,11 +48,9 @@ object Importer {
         val glossariesUpdateOnly = Utils.getOrDefault(config.glossariesUpsertSemantic, "update") == "update"
         val glossariesFailOnErrors = Utils.getOrDefault(config.glossariesFailOnErrors, true)
 
-        if ((assetsUpload && assetsFilename.isBlank()) ||
-            (!assetsUpload && assetsS3ObjectKey.isBlank()) ||
-            (glossariesUpload && glossariesFilename.isBlank()) ||
-            (!glossariesUpload && glossariesS3ObjectKey.isBlank())
-        ) {
+        val assetsFileProvided = (assetsUpload && assetsFilename.isBlank()) || (!assetsUpload && assetsS3ObjectKey.isBlank())
+        val glossariesFileProvided = (glossariesUpload && glossariesFilename.isBlank()) || (!glossariesUpload && glossariesS3ObjectKey.isBlank())
+        if (!assetsFileProvided && !glossariesFileProvided) {
             logger.error { "No input file was provided for either glossaries or assets." }
             exitProcess(1)
         }
