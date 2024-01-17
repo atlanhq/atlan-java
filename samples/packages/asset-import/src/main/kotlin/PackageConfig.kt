@@ -56,7 +56,7 @@ object PackageConfig : CustomPackage(
                     "assets_s3_bucket" to TextInput(
                         label = "S3 bucket",
                         required = false,
-                        help = "Enter the S3 bucket from which to retrieve the S3 object. IF empty, will use the bucket of Atlan's own back-end storage.",
+                        help = "Enter the S3 bucket from which to retrieve the S3 object. If empty, will use the bucket of Atlan's own back-end storage.",
                         placeholder = "bucket-name",
                         grid = 4,
                     ),
