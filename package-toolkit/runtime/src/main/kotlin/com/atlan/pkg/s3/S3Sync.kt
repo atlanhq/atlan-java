@@ -32,7 +32,7 @@ class S3Sync(
      * @return true if any files were copied, otherwise false
      */
     fun copyFromS3(s3Prefix: String, localDirectory: String): Boolean {
-        logger.info("Syncing files from s3://$bucketName/$s3Prefix to $localDirectory")
+        logger.info { "Syncing files from s3://$bucketName/$s3Prefix to $localDirectory" }
 
         val s3Client = S3Client.builder().region(Region.of(region)).build()
         val request = ListObjectsV2Request.builder()
@@ -59,22 +59,51 @@ class S3Sync(
         var anySynced = false
 
         s3FilesToDownload.forEach {
-            val localFile = File(localDirectory, it)
-            if (localFile.exists()) {
-                localFile.delete()
-            }
-            if (!localFile.parentFile.exists()) {
-                localFile.parentFile.mkdirs()
-            }
-            val prefix = File(s3Prefix, it).path
-            logger.info("Downloading s3://$bucketName/$prefix to ${localFile.path}")
-            s3Client.getObject(
-                GetObjectRequest.builder().bucket(bucketName).key(prefix).build(),
-                localFile.toPath(),
+            downloadFromS3(
+                s3Client,
+                File(s3Prefix, it).path,
+                File(localDirectory, it).path,
             )
             anySynced = true
         }
         return anySynced
+    }
+
+    /**
+     * Download a single file from the provided S3 object key to the specified local file.
+     *
+     * @param s3ObjectKey from which to download the file
+     * @param localFile into which to download the file
+     */
+    fun downloadFromS3(s3ObjectKey: String, localFile: String) {
+        downloadFromS3(
+            S3Client.builder().region(Region.of(region)).build(),
+            s3ObjectKey,
+            localFile,
+        )
+    }
+
+    /**
+     * Download a single file from the provided S3 object key to the specified local file.
+     *
+     * @param s3Client connectivity to S3
+     * @param s3ObjectKey from which to download the file
+     * @param localFile into which to download the file
+     */
+    private fun downloadFromS3(s3Client: S3Client, s3ObjectKey: String, localFile: String) {
+        logger.info { " ... downloading s3://$bucketName/$s3ObjectKey to $localFile" }
+        val local = File(localFile)
+        if (local.exists()) {
+            local.delete()
+        }
+        if (!local.parentFile.exists()) {
+            local.parentFile.mkdirs()
+        }
+        val objectKey = File(s3ObjectKey).path
+        s3Client.getObject(
+            GetObjectRequest.builder().bucket(bucketName).key(objectKey).build(),
+            local.toPath(),
+        )
     }
 
     /**
@@ -87,7 +116,7 @@ class S3Sync(
      * @return true if any files were copied, otherwise false
      */
     fun copyToS3(localDirectory: String, s3Prefix: String): Boolean {
-        logger.info("Syncing files from $localDirectory to s3://$bucketName/$s3Prefix")
+        logger.info { "Syncing files from $localDirectory to s3://$bucketName/$s3Prefix" }
 
         val s3Client = S3Client.builder().region(Region.of(region)).build()
         val request = ListObjectsV2Request.builder()
@@ -113,17 +142,42 @@ class S3Sync(
         var anySynced = false
 
         localFilesToUpload.forEach {
-            // Note: no need to delete files first (putObject overwrites, including auto-versioning
-            // if enabled on the bucket), and no need to create parent prefixes in S3
-            val localFile = File(localDirectory, it)
-            val prefix = File(s3Prefix, it).path
-            logger.info("Uploading ${localFile.path} to s3://$bucketName/$prefix")
-            s3Client.putObject(
-                PutObjectRequest.builder().bucket(bucketName).key(prefix).build(),
-                localFile.toPath(),
-            )
+            uploadToS3(s3Client, File(localDirectory, it).path, File(s3Prefix, it).path)
             anySynced = true
         }
         return anySynced
+    }
+
+    /**
+     * Upload a single file from the specified local file to the provided S3 object key.
+     *
+     * @param localFile from which to upload the file
+     * @param s3ObjectKey into which to upload the file
+     */
+    fun uploadToS3(localFile: String, s3ObjectKey: String) {
+        uploadToS3(
+            S3Client.builder().region(Region.of(region)).build(),
+            localFile,
+            s3ObjectKey,
+        )
+    }
+
+    /**
+     * Upload a single file from the specified local file to the provided S3 object key.
+     *
+     * @param s3Client connectivity to S3
+     * @param localFile from which to upload the file
+     * @param s3ObjectKey into which to upload the file
+     */
+    private fun uploadToS3(s3Client: S3Client, localFile: String, s3ObjectKey: String) {
+        logger.info { " ... uploading $localFile to s3://$bucketName/$s3ObjectKey" }
+        // Note: no need to delete files first (putObject overwrites, including auto-versioning
+        // if enabled on the bucket), and no need to create parent prefixes in S3
+        val local = File(localFile)
+        val objectKey = File(s3ObjectKey).path
+        s3Client.putObject(
+            PutObjectRequest.builder().bucket(bucketName).key(objectKey).build(),
+            local.toPath(),
+        )
     }
 }

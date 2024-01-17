@@ -6,6 +6,7 @@ import com.atlan.Atlan
 import com.atlan.exception.AtlanException
 import com.atlan.exception.NotFoundException
 import com.atlan.model.assets.Connection
+import com.atlan.pkg.s3.S3Sync
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import jakarta.activation.FileDataSource
 import jakarta.mail.Message
@@ -378,5 +379,35 @@ object Utils {
      */
     fun getAssetLink(guid: String): String {
         return "${Atlan.getBaseUrl()}/assets/$guid/overview"
+    }
+
+    /**
+     * Return the (container-)local input file name whenever a user is given the
+     * choice of how to provide an input file (either by uploading directly or through S3).
+     * If using the S3 details, the object will be downloaded from S3 and placed into local
+     * storage as part of this method.
+     *
+     * @param uploadResult filename from a direct upload
+     * @param s3Region name of the S3 region for an S3 download
+     * @param s3Bucket name of the S3 bucket for an S3 download
+     * @param s3ObjectKey full path to the S3 object within the bucket
+     * @param outputDirectory local directory where any S3-downloaded file should be placed
+     * @param preferUpload if true, take the directly-uploaded file; otherwise use the S3 details to download the file
+     * @return the name of the file that is on local container storage from which we can read information
+     */
+    fun getInputFile(uploadResult: String, s3Region: String, s3Bucket: String, s3ObjectKey: String, outputDirectory: String, preferUpload: Boolean = true): String {
+        return if (preferUpload) {
+            uploadResult
+        } else {
+            if (s3ObjectKey.isNotBlank()) {
+                val sync = S3Sync(s3Bucket, s3Region, logger)
+                val filename = File(s3ObjectKey).name
+                val path = "$outputDirectory${File.separator}$filename"
+                sync.downloadFromS3(s3ObjectKey, path)
+                path
+            } else {
+                ""
+            }
+        }
     }
 }

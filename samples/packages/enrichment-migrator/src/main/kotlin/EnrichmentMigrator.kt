@@ -86,7 +86,7 @@ object EnrichmentMigrator {
             assetsUpsertSemantic = "update",
             assetsFailOnErrors = Utils.getOrDefault(config.failOnErrors, true),
         )
-        Importer.import(importConfig)
+        Importer.import(importConfig, outputDirectory)
     }
 
     data class MigratorContext(

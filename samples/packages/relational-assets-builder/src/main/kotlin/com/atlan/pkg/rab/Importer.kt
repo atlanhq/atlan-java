@@ -35,27 +35,42 @@ object Importer {
 
     @JvmStatic
     fun main(args: Array<String>) {
+        val outputDirectory = if (args.isEmpty()) "tmp" else args[0]
         val config = Utils.setPackageOps<RelationalAssetsBuilderCfg>()
-        import(config)
+        import(config, outputDirectory)
     }
 
-    fun import(config: RelationalAssetsBuilderCfg) {
+    fun import(config: RelationalAssetsBuilderCfg, outputDirectory: String = "tmp") {
         val batchSize = 20
+        val defaultRegion = Utils.getEnvVar("AWS_S3_REGION")
+        val defaultBucket = Utils.getEnvVar("AWS_S3_BUCKET_NAME")
+        val assetsUpload = Utils.getOrDefault(config.assetsImportType, "UPLOAD") == "UPLOAD"
         val assetsFilename = Utils.getOrDefault(config.assetsFile, "")
+        val assetsS3Region = Utils.getOrDefault(config.assetsS3Region, defaultRegion)
+        val assetsS3Bucket = Utils.getOrDefault(config.assetsS3Bucket, defaultBucket)
+        val assetsS3ObjectKey = Utils.getOrDefault(config.assetsS3ObjectKey, "")
         val assetAttrsToOverwrite =
             CSVImporter.attributesToClear(Utils.getOrDefault(config.assetsAttrToOverwrite, listOf()).toMutableList(), "assets", logger)
         val assetsFailOnErrors = Utils.getOrDefault(config.assetsFailOnErrors, true)
         val assetsUpdateOnly = Utils.getOrDefault(config.assetsUpsertSemantic, "update") == "update"
         val trackBatches = Utils.getOrDefault(config.trackBatches, true)
 
-        if (assetsFilename.isBlank()) {
+        if ((assetsUpload && assetsFilename.isBlank()) || (!assetsUpload && assetsS3ObjectKey.isBlank())) {
             logger.error { "No input file was provided for assets." }
             exitProcess(1)
         }
 
         // Preprocess the CSV file in an initial pass to inject key details,
         // to allow subsequent out-of-order parallel processing
-        val preprocessedDetails = preprocessCSV(assetsFilename)
+        val assetsInput = Utils.getInputFile(
+            assetsFilename,
+            assetsS3Region,
+            assetsS3Bucket,
+            assetsS3ObjectKey,
+            outputDirectory,
+            assetsUpload,
+        )
+        val preprocessedDetails = preprocessCSV(assetsInput)
 
         // Only cache links and terms if there are any in the CSV, otherwise this
         // will be unnecessary work
