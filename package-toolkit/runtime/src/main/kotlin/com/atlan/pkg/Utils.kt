@@ -29,7 +29,7 @@ object Utils {
 
     // Note: this default value is necessary to avoid internal Argo errors if the
     // file is actually optional (only value that seems likely to be in all tenants' S3 buckets)
-    const val DEFAULT_FILE = "argo-artifacts/atlan-update/last-run-timestamp.txt"
+    const val DEFAULT_FILE = "argo-artifacts/atlan-update/@atlan-packages-last-safe-run.txt"
 
     /**
      * Set up the event-processing options, and start up the event processor.
