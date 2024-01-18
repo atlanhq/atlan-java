@@ -98,6 +98,33 @@ public class WorkflowsEndpoint extends HeraclesEndpoint {
     }
 
     /**
+     * Stop the provided, running workflow.
+     *
+     * @param runName name of the workflow run to stop
+     * @return details of the stopped workflow
+     * @throws AtlanException on any API communication issue
+     */
+    public WorkflowRunResponse stop(String runName) throws AtlanException {
+        return stop(runName, null);
+    }
+
+    /**
+     * Stop the provided, running workflow.
+     *
+     * @param runName name of the workflow run to stop
+     * @param options to override default client settings
+     * @return details of the stopped workflow
+     * @throws AtlanException on any API communication issue
+     */
+    public WorkflowRunResponse stop(String runName, RequestOptions options) throws AtlanException {
+        String url = String.format("%s%s/%s/stop", getBaseUrl(), runs_endpoint, runName);
+        WorkflowRunResponse response = ApiResource.request(
+                client, ApiResource.RequestMethod.POST, url, "", WorkflowRunResponse.class, options);
+        response.setClient(client);
+        return response;
+    }
+
+    /**
      * Archive (delete) the provided workflow.
      *
      * @param workflowName the workflow to delete

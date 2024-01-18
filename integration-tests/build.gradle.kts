@@ -13,12 +13,16 @@ dependencies {
 
 testing {
     suites {
-       val test by getting(JvmTestSuite::class) {
+        val test by getting(JvmTestSuite::class) {
             useTestNG()
             targets {
                 all {
                     testTask.configure {
                         testLogging.showStandardStreams = true
+                        options {
+                            val options = this as TestNGOptions
+                            options.suites("src/test/resources/testng.xml")
+                        }
                     }
                 }
             }
