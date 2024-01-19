@@ -51,6 +51,7 @@ public class ParallelBatch {
     private final List<AssetBatch.FailedBatch> failures = new ArrayList<>();
     private final List<Asset> skipped = new ArrayList<>();
     private final Map<String, String> resolvedGuids = new HashMap<>();
+    private final Map<AssetBatch.AssetIdentity, String> resolvedQualifiedNames = new HashMap<>();
 
     /**
      * Create a new batch of assets to be bulk-saved, in parallel (across threads).
@@ -346,5 +347,21 @@ public class ParallelBatch {
             }
         }
         return resolvedGuids;
+    }
+
+    /**
+     * Map from case-insensitive qualifiedName to resolved (actual) qualifiedName,
+     * for all assets that were processed through the batch.
+     * Note: this is only populated when caseSensitive is false, and will otherwise be empty
+     *
+     * @return all resolved qualifiedNames, across all parallel batches
+     */
+    public Map<AssetBatch.AssetIdentity, String> getResolvedQualifiedNames() {
+        if (resolvedQualifiedNames.isEmpty()) {
+            for (AssetBatch batch : batchMap.values()) {
+                resolvedQualifiedNames.putAll(batch.getResolvedQualifiedNames());
+            }
+        }
+        return resolvedQualifiedNames;
     }
 }

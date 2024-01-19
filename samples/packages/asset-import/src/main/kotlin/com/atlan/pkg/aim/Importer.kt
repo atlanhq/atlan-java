@@ -7,6 +7,8 @@ import com.atlan.pkg.Utils
 import com.atlan.pkg.cache.LinkCache
 import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.csv.CSVImporter.Companion.attributesToClear
+import com.atlan.pkg.serde.csv.ImportResults
+import com.atlan.util.AssetBatch.AssetCreationHandling
 import mu.KotlinLogging
 import kotlin.system.exitProcess
 
@@ -24,7 +26,7 @@ object Importer {
         import(config, outputDirectory)
     }
 
-    fun import(config: AssetImportCfg, outputDirectory: String = "tmp") {
+    fun import(config: AssetImportCfg, outputDirectory: String = "tmp"): ImportResults? {
         val batchSize = 20
         val defaultRegion = Utils.getEnvVar("AWS_S3_REGION")
         val defaultBucket = Utils.getEnvVar("AWS_S3_BUCKET_NAME")
@@ -43,13 +45,13 @@ object Importer {
         val assetsFailOnErrors = Utils.getOrDefault(config.assetsFailOnErrors, true)
         val glossaryAttrsToOverwrite =
             attributesToClear(Utils.getOrDefault(config.glossariesAttrToOverwrite, listOf()).toMutableList(), "glossaries", logger)
-        val assetsUpdateOnly = Utils.getOrDefault(config.assetsUpsertSemantic, "update") == "update"
+        val assetsUpdateSemantic = Utils.getOrDefault(config.assetsUpsertSemantic, "update")
         val assetsCaseSensitive = Utils.getOrDefault(config.assetsCaseSensitive, true)
         val glossariesUpdateOnly = Utils.getOrDefault(config.glossariesUpsertSemantic, "update") == "update"
         val glossariesFailOnErrors = Utils.getOrDefault(config.glossariesFailOnErrors, true)
 
-        val assetsFileProvided = (assetsUpload && assetsFilename.isBlank()) || (!assetsUpload && assetsS3ObjectKey.isBlank())
-        val glossariesFileProvided = (glossariesUpload && glossariesFilename.isBlank()) || (!glossariesUpload && glossariesS3ObjectKey.isBlank())
+        val assetsFileProvided = (assetsUpload && assetsFilename.isNotBlank()) || (!assetsUpload && assetsS3ObjectKey.isNotBlank())
+        val glossariesFileProvided = (glossariesUpload && glossariesFilename.isNotBlank()) || (!glossariesUpload && glossariesS3ObjectKey.isNotBlank())
         if (!assetsFileProvided && !glossariesFileProvided) {
             logger.error { "No input file was provided for either glossaries or assets." }
             exitProcess(1)
@@ -66,20 +68,23 @@ object Importer {
             outputDirectory,
             glossariesUpload,
         )
-        if (glossariesInput.isNotBlank()) {
+        val resultsGTC = if (glossariesInput.isNotBlank()) {
             FieldSerde.FAIL_ON_ERRORS.set(glossariesFailOnErrors)
             logger.info { "=== Importing glossaries... ===" }
             val glossaryImporter =
                 GlossaryImporter(glossariesInput, glossaryAttrsToOverwrite, glossariesUpdateOnly, batchSize)
-            glossaryImporter.import()
+            val resultsGlossary = glossaryImporter.import()
             logger.info { "=== Importing categories... ===" }
             val categoryImporter =
                 CategoryImporter(glossariesInput, glossaryAttrsToOverwrite, glossariesUpdateOnly, batchSize)
-            categoryImporter.import()
+            val resultsCategory = categoryImporter.import()
             logger.info { "=== Importing terms... ===" }
             val termImporter =
                 TermImporter(glossariesInput, glossaryAttrsToOverwrite, glossariesUpdateOnly, batchSize)
-            termImporter.import()
+            val resultsTerm = termImporter.import()
+            resultsGlossary?.combinedWith(resultsCategory)?.combinedWith(resultsTerm)
+        } else {
+            null
         }
 
         val assetsInput = Utils.getInputFile(
@@ -90,11 +95,27 @@ object Importer {
             outputDirectory,
             assetsUpload,
         )
-        if (assetsInput.isNotBlank()) {
+        val resultsAssets = if (assetsInput.isNotBlank()) {
             FieldSerde.FAIL_ON_ERRORS.set(assetsFailOnErrors)
             logger.info { "=== Importing assets... ===" }
-            val assetImporter = AssetImporter(assetsInput, assetAttrsToOverwrite, assetsUpdateOnly, batchSize, assetsCaseSensitive)
+            val creationHandling = when (assetsUpdateSemantic) {
+                "upsert" -> AssetCreationHandling.FULL
+                "partial" -> AssetCreationHandling.PARTIAL
+                else -> AssetCreationHandling.NONE
+            }
+            val assetImporter = AssetImporter(
+                assetsInput,
+                assetAttrsToOverwrite,
+                creationHandling == AssetCreationHandling.NONE,
+                batchSize,
+                assetsCaseSensitive,
+                creationHandling,
+            )
             assetImporter.import()
+        } else {
+            null
         }
+
+        return resultsGTC?.combinedWith(resultsAssets) ?: resultsAssets
     }
 }

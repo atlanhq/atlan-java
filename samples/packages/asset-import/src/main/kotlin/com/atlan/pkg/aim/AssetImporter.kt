@@ -7,6 +7,7 @@ import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.RowDeserializer
 import com.atlan.pkg.serde.csv.CSVImporter
+import com.atlan.util.AssetBatch.AssetCreationHandling
 import mu.KotlinLogging
 
 /**
@@ -22,6 +23,7 @@ import mu.KotlinLogging
  * @param updateOnly if true, only update an asset (first check it exists), if false allow upserts (create if it does not exist)
  * @param batchSize maximum number of records to save per API request
  * @param caseSensitive (only applies when updateOnly is true) attempt to match assets case-sensitively (true) or case-insensitively (false)
+ * @param creationHandling if assets are to be created, how they should be created (as full assets or only partial assets)
  */
 class AssetImporter(
     private val filename: String,
@@ -29,6 +31,7 @@ class AssetImporter(
     private val updateOnly: Boolean,
     private val batchSize: Int,
     private val caseSensitive: Boolean = true,
+    private val creationHandling: AssetCreationHandling = AssetCreationHandling.NONE,
 ) : CSVImporter(
     filename,
     logger = KotlinLogging.logger {},
@@ -36,6 +39,7 @@ class AssetImporter(
     updateOnly = updateOnly,
     batchSize = batchSize,
     caseSensitive = caseSensitive,
+    creationHandling = creationHandling,
 ) {
     /** {@inheritDoc} */
     override fun getBuilder(deserializer: RowDeserializer): Asset.AssetBuilder<*, *> {

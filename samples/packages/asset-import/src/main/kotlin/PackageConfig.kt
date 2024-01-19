@@ -89,11 +89,12 @@ object PackageConfig : CustomPackage(
                         label = "Input handling",
                         required = false,
                         possibleValues = mapOf(
-                            "upsert" to "Create and update",
+                            "upsert" to "Create full",
+                            "partial" to "Create partial",
                             "update" to "Update only",
                         ),
                         default = "update",
-                        help = "Whether to allow the creation of new assets from the input CSV, or ensure assets are only updated if they already exist in Atlan.",
+                        help = "Whether to allow the creation of new assets from the input CSV (full or partial assets), or ensure assets are only updated if they already exist in Atlan.",
                     ),
                     "assets_fail_on_errors" to BooleanInput(
                         label = "Fail on errors",

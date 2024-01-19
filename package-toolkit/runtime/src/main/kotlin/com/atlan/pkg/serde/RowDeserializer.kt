@@ -10,6 +10,7 @@ import com.atlan.model.core.CustomMetadataAttributes
 import com.atlan.pkg.serde.RowSerde.CM_HEADING_DELIMITER
 import com.atlan.pkg.serde.cell.AssetRefXformer
 import com.atlan.serde.Serde
+import com.atlan.util.AssetBatch
 import mu.KLogger
 import java.util.concurrent.ThreadLocalRandom
 
@@ -67,7 +68,7 @@ class RowDeserializer(
         if (partial.typeName.isNullOrBlank() || partial.qualifiedName.isNullOrBlank()) {
             logger.warn("No qualifiedName or typeName found in builder, cannot deserialize: {}", row)
         } else {
-            val deserialization = RowDeserialization(RowDeserialization.AssetIdentity(partial.typeName, partial.qualifiedName), builder)
+            val deserialization = RowDeserialization(AssetBatch.AssetIdentity(partial.typeName, partial.qualifiedName), builder)
             val customMetadataMap = mutableMapOf<String, CustomMetadataAttributes.CustomMetadataAttributesBuilder<*, *>>()
             for (i in heading.indices) {
                 val fieldName = heading[i]

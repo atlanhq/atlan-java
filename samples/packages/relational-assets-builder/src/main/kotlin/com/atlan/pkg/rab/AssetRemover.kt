@@ -6,7 +6,7 @@ import com.atlan.Atlan
 import com.atlan.model.assets.Asset
 import com.atlan.model.enums.AtlanDeleteType
 import com.atlan.model.search.FluentSearch
-import com.atlan.pkg.serde.RowDeserialization.AssetIdentity
+import com.atlan.util.AssetBatch
 import de.siegmar.fastcsv.reader.CsvReader
 import de.siegmar.fastcsv.reader.CsvRow
 import mu.KLogger
@@ -40,7 +40,7 @@ class AssetRemover(
     private val purge: Boolean = false,
 ) {
     private val client = Atlan.getDefaultClient()
-    val assetsToDelete: KeySetView<AssetIdentity, Boolean> = ConcurrentHashMap.newKeySet()
+    val assetsToDelete: KeySetView<AssetBatch.AssetIdentity, Boolean> = ConcurrentHashMap.newKeySet()
     private val guidsToDelete = ConcurrentHashMap.newKeySet<String>()
 
     companion object {
@@ -95,7 +95,7 @@ class AssetRemover(
      * @throws IOException if there is no typeName column in the CSV file
      */
     @Throws(IOException::class)
-    private fun getAssetIdentities(filename: String): Set<AssetIdentity> {
+    private fun getAssetIdentities(filename: String): Set<AssetBatch.AssetIdentity> {
         val inputFile = Paths.get(filename)
         val builder = CsvReader.builder()
             .fieldSeparator(',')
@@ -113,7 +113,7 @@ class AssetRemover(
             )
         }
         val reader = builder.build(inputFile)
-        val set = mutableSetOf<AssetIdentity>()
+        val set = mutableSetOf<AssetBatch.AssetIdentity>()
         reader.stream().skip(1).parallel().forEach { r: CsvRow ->
             val values = r.fields
             val typeName = values[typeIdx]!!
@@ -123,7 +123,7 @@ class AssetRemover(
             if (connectionIdentity != null && connectionsMap.containsKey(connectionIdentity)) {
                 val qualifiedName =
                     agnosticQN.replaceFirst(connectionIdentity.toString(), connectionsMap[connectionIdentity]!!)
-                set.add(AssetIdentity(typeName, qualifiedName))
+                set.add(AssetBatch.AssetIdentity(typeName, qualifiedName))
             } else {
                 logger.warn { "Unknown connection used in asset -- skipping: $agnosticQN" }
             }
@@ -183,7 +183,7 @@ class AssetRemover(
      * @param asset to validate can be deleted, and if so, to track its GUID for deletion
      */
     private fun validateResult(asset: Asset) {
-        val candidate = AssetIdentity(asset.typeName, asset.qualifiedName)
+        val candidate = AssetBatch.AssetIdentity(asset.typeName, asset.qualifiedName)
         if (assetsToDelete.contains(candidate)) {
             guidsToDelete.add(asset.guid)
         }

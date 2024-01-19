@@ -100,6 +100,14 @@ public class AssetBatch {
     private final Map<String, String> resolvedGuids = new ConcurrentHashMap<>();
 
     /**
+     * Map from all-lowercase qualifiedName (case-insensitive) to case-sensitive qualifiedName,
+     * for all assets that were processed through the batch.
+     * Note: This is only produced when caseInsensitive is true, otherwise it will be empty.
+     */
+    @Getter
+    private final Map<AssetIdentity, String> resolvedQualifiedNames = new ConcurrentHashMap<>();
+
+    /**
      * Create a new batch of assets to be bulk-saved.
      *
      * @param client connectivity to Atlan
@@ -340,8 +348,8 @@ public class AssetBatch {
      */
     public AssetMutationResponse flush() throws AtlanException {
         AssetMutationResponse response = null;
+        List<Asset> revised = null;
         if (!_batch.isEmpty()) {
-            List<Asset> revised;
             if (updateOnly || creationHandling != AssetCreationHandling.FULL) {
                 Map<String, String> found = new HashMap<>();
                 List<String> qualifiedNames =
@@ -424,11 +432,11 @@ public class AssetBatch {
             }
             _batch.clear();
         }
-        trackResponse(response);
+        trackResponse(response, revised);
         return response;
     }
 
-    private void trackResponse(AssetMutationResponse response) {
+    private void trackResponse(AssetMutationResponse response, List<Asset> sent) {
         if (response != null) {
             if (track) {
                 response.getCreatedAssets().forEach(a -> track(created, a));
@@ -439,6 +447,14 @@ public class AssetBatch {
             numUpdated.getAndAdd(response.getUpdatedAssets().size());
             if (response.getGuidAssignments() != null) {
                 resolvedGuids.putAll(response.getGuidAssignments());
+            }
+            if (sent != null && caseInsensitive) {
+                for (Asset one : sent) {
+                    String typeName = one.getTypeName();
+                    String qualifiedName = one.getQualifiedName();
+                    AssetIdentity id = new AssetIdentity(typeName, qualifiedName.toLowerCase(Locale.ROOT));
+                    resolvedQualifiedNames.put(id, qualifiedName);
+                }
             }
         }
     }
@@ -486,37 +502,17 @@ public class AssetBatch {
         }
     }
 
-    /*public static class AssetBatchBuilder {
-        private AssetBatchBuilder _batch(List<Asset> _batch) {
-            return this;
-        }
+    /**
+     * Class to uniquely identify an asset by its type and qualifiedName.
+     */
+    @Getter
+    public static final class AssetIdentity {
+        private final String typeName;
+        private final String qualifiedName;
 
-        private AssetBatchBuilder numCreated(AtomicLong numCreated) {
-            return this;
+        public AssetIdentity(String typeName, String qualifiedName) {
+            this.typeName = typeName;
+            this.qualifiedName = qualifiedName;
         }
-
-        private AssetBatchBuilder numUpdated(AtomicLong numUpdated) {
-            return this;
-        }
-
-        private AssetBatchBuilder created(List<Asset> created) {
-            return this;
-        }
-
-        private AssetBatchBuilder updated(List<Asset> updated) {
-            return this;
-        }
-
-        private AssetBatchBuilder failures(List<FailedBatch> failures) {
-            return this;
-        }
-
-        private AssetBatchBuilder skipped(List<Asset> skipped) {
-            return this;
-        }
-
-        private AssetBatchBuilder resolvedGuids(Map<String, String> resolvedGuids) {
-            return this;
-        }
-    }*/
+    }
 }
