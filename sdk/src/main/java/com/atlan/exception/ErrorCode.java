@@ -483,7 +483,12 @@ public enum ErrorCode implements ExceptionMessageSet {
             500,
             "ATLAN-JAVA-500-006",
             "Loop for retrying a failed action hit the maximum number of retries.",
-            "Increase the maximum number of retries through Atlan.setMaxNetworkRetries(), or ignore this error if it was your intention to fail after a maximum number of retries was reached.");
+            "Increase the maximum number of retries through Atlan.setMaxNetworkRetries(), or ignore this error if it was your intention to fail after a maximum number of retries was reached."),
+    ASSET_MODIFICATION_ERROR(
+            500,
+            "ATLAN-JAVA-500-007",
+            "Unable to modify asset to change {0}.",
+            "Unable to modify this base property of an asset, which should not happen. Please raise an issue on the public atlan-java GitHub repository.");
 
     private static final String RAISE_GITHUB_ISSUE =
             "Please raise an issue on the Java SDK GitHub repository providing context in which this error occurred.";

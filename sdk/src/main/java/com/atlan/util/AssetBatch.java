@@ -3,12 +3,16 @@
 package com.atlan.util;
 
 import com.atlan.AtlanClient;
+import com.atlan.cache.ReflectionCache;
 import com.atlan.exception.AtlanException;
+import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
+import com.atlan.exception.LogicException;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.assets.IndistinctAsset;
 import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.core.ConnectionCreationResponse;
+import com.atlan.model.relations.Reference;
 import com.atlan.model.search.FluentSearch;
 import com.atlan.serde.Serde;
 import java.lang.reflect.InvocationTargetException;
@@ -17,56 +21,83 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
+import lombok.Builder;
 import lombok.Getter;
 
 /**
  * Utility class for managing bulk updates in batches.
  */
+@Builder
 public class AssetBatch {
 
     public enum CustomMetadataHandling {
         IGNORE,
         OVERWRITE,
-        MERGE
+        MERGE,
     }
 
-    private final AtlanClient client;
-    private List<Asset> _batch;
-    private final int maxSize;
-    private final boolean replaceAtlanTags;
-    private final CustomMetadataHandling customMetadataHandling;
-    private final boolean captureFailures;
-    private final boolean updateOnly;
-    private final boolean track;
-    private final boolean caseInsensitive;
+    public enum AssetCreationHandling {
+        FULL,
+        PARTIAL,
+        NONE,
+    }
+
+    private AtlanClient client;
+
+    @Builder.Default
+    private int maxSize = 20;
+
+    @Builder.Default
+    private boolean replaceAtlanTags = false;
+
+    @Builder.Default
+    private CustomMetadataHandling customMetadataHandling = CustomMetadataHandling.IGNORE;
+
+    @Builder.Default
+    private boolean captureFailures = false;
+
+    @Builder.Default
+    private boolean updateOnly = false;
+
+    @Builder.Default
+    private boolean track = true;
+
+    @Builder.Default
+    private boolean caseInsensitive = false;
+
+    @Builder.Default
+    private AssetCreationHandling creationHandling = AssetCreationHandling.FULL;
+
+    /** Internal queue for building up assets to be saved. */
+    private final List<Asset> _batch = Collections.synchronizedList(new ArrayList<>());
 
     /** Number of assets that were created (no details, just a count). */
     @Getter
-    private final AtomicLong numCreated;
+    private final AtomicLong numCreated = new AtomicLong(0);
 
     /** Number of assets that were updated (no details, just a count). */
     @Getter
-    private final AtomicLong numUpdated;
+    private final AtomicLong numUpdated = new AtomicLong(0);
 
     /** Assets that were created (minimal info only). */
     @Getter
-    private final List<Asset> created;
+    private final List<Asset> created = Collections.synchronizedList(new ArrayList<>());
 
     /** Assets that were updated (minimal info only). */
     @Getter
-    private final List<Asset> updated;
+    private final List<Asset> updated = Collections.synchronizedList(new ArrayList<>());
 
     /** Batches that failed to be committed (only populated when captureFailures is set to true). */
     @Getter
-    private final List<FailedBatch> failures;
+    private final List<FailedBatch> failures = Collections.synchronizedList(new ArrayList<>());
 
     /** Assets that were skipped, when updateOnly is requested and the asset does not exist in Atlan. */
     @Getter
-    private final List<Asset> skipped;
+    private final List<Asset> skipped = Collections.synchronizedList(new ArrayList<>());
 
     /** Map from placeholder GUID to resolved (actual) GUID, for all assets that were processed through the batch. */
     @Getter
-    private final Map<String, String> resolvedGuids;
+    private final Map<String, String> resolvedGuids = new ConcurrentHashMap<>();
 
     /**
      * Create a new batch of assets to be bulk-saved.
@@ -227,29 +258,48 @@ public class AssetBatch {
             boolean updateOnly,
             boolean track,
             boolean caseInsensitive) {
+        this(
+                client,
+                maxSize,
+                replaceAtlanTags,
+                customMetadataHandling,
+                captureFailures,
+                updateOnly,
+                track,
+                caseInsensitive,
+                AssetCreationHandling.FULL);
+    }
+
+    /**
+     * Create a new batch of assets to be bulk-saved.
+     *
+     * @param client connectivity to Atlan
+     * @param maxSize maximum size of each batch that should be processed (per API call)
+     * @param replaceAtlanTags if true, all Atlan tags on an existing asset will be overwritten; if false, all Atlan tags will be ignored
+     * @param customMetadataHandling how to handle custom metadata (ignore it, replace it (wiping out anything pre-existing), or merge it)
+     * @param captureFailures when true, any failed batches will be captured and retained rather than exceptions being raised (for large amounts of processing this could cause memory issues!)
+     * @param updateOnly when true, only attempt to update existing assets and do not create any assets (note: this will incur a performance penalty)
+     * @param track when false, details about each created and updated asset will no longer be tracked (only an overall count of each) -- useful if you intend to send close to (or more than) 1 million assets through a batch
+     * @param caseInsensitive (only applies when updateOnly is true) when matching assets, search for their qualifiedName in a case-insensitive way
+     * @param creationHandling if assets are to be created, how they should be created (as full assets or only partial assets)
+     */
+    public AssetBatch(
+            AtlanClient client,
+            int maxSize,
+            boolean replaceAtlanTags,
+            CustomMetadataHandling customMetadataHandling,
+            boolean captureFailures,
+            boolean updateOnly,
+            boolean track,
+            boolean caseInsensitive,
+            AssetCreationHandling creationHandling) {
         this.client = client;
-        _batch = Collections.synchronizedList(new ArrayList<>());
         this.maxSize = maxSize;
         this.replaceAtlanTags = replaceAtlanTags;
         this.customMetadataHandling = customMetadataHandling;
-        this.skipped = Collections.synchronizedList(new ArrayList<>());
-        this.resolvedGuids = new ConcurrentHashMap<>();
-        this.numCreated = new AtomicLong(0);
-        this.numUpdated = new AtomicLong(0);
+        this.creationHandling = creationHandling;
         this.track = track;
-        if (track) {
-            this.created = Collections.synchronizedList(new ArrayList<>());
-            this.updated = Collections.synchronizedList(new ArrayList<>());
-        } else {
-            this.created = null;
-            this.updated = null;
-        }
         this.captureFailures = captureFailures;
-        if (captureFailures) {
-            this.failures = Collections.synchronizedList(new ArrayList<>());
-        } else {
-            this.failures = null;
-        }
         this.updateOnly = updateOnly;
         this.caseInsensitive = caseInsensitive;
     }
@@ -292,8 +342,8 @@ public class AssetBatch {
         AssetMutationResponse response = null;
         if (!_batch.isEmpty()) {
             List<Asset> revised;
-            if (updateOnly) {
-                Set<String> found = new HashSet<>();
+            if (updateOnly || creationHandling != AssetCreationHandling.FULL) {
+                Map<String, String> found = new HashMap<>();
                 List<String> qualifiedNames =
                         _batch.stream().map(Asset::getQualifiedName).collect(Collectors.toList());
                 FluentSearch.FluentSearchBuilder<?, ?> builder;
@@ -307,17 +357,44 @@ public class AssetBatch {
                 }
                 builder.pageSize(maxSize).stream().forEach(asset -> {
                     String assetId = asset.getTypeName() + "::" + asset.getQualifiedName();
-                    found.add(assetId.toLowerCase(Locale.ROOT));
+                    found.put(assetId.toLowerCase(Locale.ROOT), asset.getQualifiedName());
                 });
                 revised = new ArrayList<>();
-                _batch.forEach(asset -> {
+                for (Asset asset : _batch) {
                     String assetId = asset.getTypeName() + "::" + asset.getQualifiedName();
-                    if (found.contains(assetId.toLowerCase(Locale.ROOT))) {
-                        revised.add(asset);
+                    String caseInsensitiveQN = assetId.toLowerCase(Locale.ROOT);
+                    if (found.containsKey(caseInsensitiveQN)) {
+                        // Replace the actual qualifiedName on the asset before adding it to the batch
+                        // (in case it matched case-insensitively, we need the proper case-sensitive name we
+                        // found to ensure it's an update, not a create)
+                        String actualQN = found.get(caseInsensitiveQN);
+                        Reference.ReferenceBuilder<?, ?> assetBuilder = asset.toBuilder();
+                        Method setQualifiedName = ReflectionCache.getSetter(
+                                assetBuilder.getClass(), Asset.QUALIFIED_NAME.getAtlanFieldName());
+                        try {
+                            setQualifiedName.invoke(assetBuilder, actualQN);
+                            revised.add((Asset) assetBuilder.build());
+                        } catch (IllegalAccessException | InvocationTargetException e) {
+                            throw new LogicException(
+                                    ErrorCode.ASSET_MODIFICATION_ERROR, e, Asset.QUALIFIED_NAME.getAtlanFieldName());
+                        }
+                    } else if (creationHandling == AssetCreationHandling.PARTIAL) {
+                        // Append isPartial(true) onto the asset before adding it to the batch, to ensure only
+                        // a partial (and not a full) asset is created
+                        Reference.ReferenceBuilder<?, ?> assetBuilder = asset.toBuilder();
+                        Method setIsPartial = ReflectionCache.getSetter(
+                                assetBuilder.getClass(), Asset.IS_PARTIAL.getAtlanFieldName());
+                        try {
+                            setIsPartial.invoke(assetBuilder, true);
+                            revised.add((Asset) assetBuilder.build());
+                        } catch (IllegalAccessException | InvocationTargetException e) {
+                            throw new LogicException(
+                                    ErrorCode.ASSET_MODIFICATION_ERROR, e, Asset.QUALIFIED_NAME.getAtlanFieldName());
+                        }
                     } else {
                         track(skipped, asset);
                     }
-                });
+                }
             } else {
                 revised = _batch;
             }
@@ -345,7 +422,7 @@ public class AssetBatch {
                     }
                 }
             }
-            _batch = Collections.synchronizedList(new ArrayList<>());
+            _batch.clear();
         }
         trackResponse(response);
         return response;
@@ -408,4 +485,38 @@ public class AssetBatch {
             this.failureReason = failureReason;
         }
     }
+
+    /*public static class AssetBatchBuilder {
+        private AssetBatchBuilder _batch(List<Asset> _batch) {
+            return this;
+        }
+
+        private AssetBatchBuilder numCreated(AtomicLong numCreated) {
+            return this;
+        }
+
+        private AssetBatchBuilder numUpdated(AtomicLong numUpdated) {
+            return this;
+        }
+
+        private AssetBatchBuilder created(List<Asset> created) {
+            return this;
+        }
+
+        private AssetBatchBuilder updated(List<Asset> updated) {
+            return this;
+        }
+
+        private AssetBatchBuilder failures(List<FailedBatch> failures) {
+            return this;
+        }
+
+        private AssetBatchBuilder skipped(List<Asset> skipped) {
+            return this;
+        }
+
+        private AssetBatchBuilder resolvedGuids(Map<String, String> resolvedGuids) {
+            return this;
+        }
+    }*/
 }

@@ -48,7 +48,7 @@ abstract class CSVImporter(
      * @return details about the results of the import
      */
     open fun import(columnsToSkip: Set<String> = setOf()): ImportResults? {
-        CSVReader(filename, updateOnly, trackBatches).use { csv ->
+        CSVReader(filename, updateOnly, trackBatches, caseSensitive).use { csv ->
             val start = System.currentTimeMillis()
             val results = csv.streamRows(this, batchSize, logger, columnsToSkip)
             logger.info { "Total time taken: ${System.currentTimeMillis() - start} ms" }

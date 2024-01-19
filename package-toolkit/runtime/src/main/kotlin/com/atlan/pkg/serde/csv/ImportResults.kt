@@ -22,7 +22,10 @@ data class ImportResults(
      * @param other the other import results to combine with this one
      * @return the combined set of results, as a single set of results
      */
-    fun combinedWith(other: ImportResults): ImportResults {
+    fun combinedWith(other: ImportResults?): ImportResults {
+        if (other == null) {
+            return this
+        }
         return ImportResults(
             this.anyFailures || other.anyFailures,
             this.primary.combinedWith(other.primary),
@@ -54,7 +57,10 @@ data class ImportResults(
          * @param other the other details to combine with this one
          * @return the combined set of details, as a single set of details
          */
-        fun combinedWith(other: Details): Details {
+        fun combinedWith(other: Details?): Details {
+            if (other == null) {
+                return this
+            }
             return Details(
                 this.guidAssignments.plus(other.guidAssignments),
                 this.created?.plus(other.created ?: listOf()),
