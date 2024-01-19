@@ -30,16 +30,8 @@ class AssetTransformer(
         const val IDENTITY = "Identity"
         const val SOURCE_PREFIX = "Source"
         const val SOURCE_TYPE = "$SOURCE_PREFIX $TYPE"
-        const val SOURCE_NAME = "$SOURCE_PREFIX $NAME"
-        const val SOURCE_CONNECTOR = "$SOURCE_PREFIX $CONNECTOR"
-        const val SOURCE_CONNECTION = "$SOURCE_PREFIX $CONNECTION"
-        const val SOURCE_IDENTITY = "$SOURCE_PREFIX $IDENTITY"
         const val TARGET_PREFIX = "Target"
         const val TARGET_TYPE = "$TARGET_PREFIX $TYPE"
-        const val TARGET_NAME = "$TARGET_PREFIX $NAME"
-        const val TARGET_CONNECTOR = "$TARGET_PREFIX $CONNECTOR"
-        const val TARGET_CONNECTION = "$TARGET_PREFIX $CONNECTION"
-        const val TARGET_IDENTITY = "$TARGET_PREFIX $IDENTITY"
 
         fun getConnectionQN(ctx: Loader.Context, inputRow: Map<String, String>, prefix: String): String {
             val connectorType = inputRow["$prefix $CONNECTOR"] ?: ""
