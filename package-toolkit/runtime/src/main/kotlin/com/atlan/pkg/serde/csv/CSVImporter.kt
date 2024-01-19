@@ -9,6 +9,8 @@ import com.atlan.model.fields.SearchableField
 import com.atlan.pkg.serde.RowDeserialization
 import com.atlan.pkg.serde.RowDeserializer
 import com.atlan.serde.Serde
+import com.atlan.util.AssetBatch
+import com.atlan.util.AssetBatch.AssetCreationHandling
 import mu.KLogger
 import java.lang.reflect.InvocationTargetException
 import kotlin.system.exitProcess
@@ -29,6 +31,7 @@ import kotlin.system.exitProcess
  * @param batchSize maximum number of records to save per API request
  * @param trackBatches if true, minimal details about every asset created or updated is tracked (if false, only counts of each are tracked)
  * @param caseSensitive (only applies when updateOnly is true) attempt to match assets case-sensitively (true) or case-insensitively (false)
+ * @param creationHandling if assets are to be created, how they should be created (as full assets or only partial assets)
  */
 abstract class CSVImporter(
     private val filename: String,
@@ -39,6 +42,7 @@ abstract class CSVImporter(
     private val batchSize: Int = 20,
     private val trackBatches: Boolean = true,
     private val caseSensitive: Boolean = true,
+    private val creationHandling: AssetCreationHandling = AssetCreationHandling.FULL,
 ) : AssetGenerator {
 
     /**
@@ -48,7 +52,14 @@ abstract class CSVImporter(
      * @return details about the results of the import
      */
     open fun import(columnsToSkip: Set<String> = setOf()): ImportResults? {
-        CSVReader(filename, updateOnly, trackBatches).use { csv ->
+        CSVReader(
+            filename,
+            updateOnly,
+            trackBatches,
+            caseSensitive,
+            AssetBatch.CustomMetadataHandling.MERGE,
+            creationHandling,
+        ).use { csv ->
             val start = System.currentTimeMillis()
             val results = csv.streamRows(this, batchSize, logger, columnsToSkip)
             logger.info { "Total time taken: ${System.currentTimeMillis() - start} ms" }
@@ -84,7 +95,7 @@ abstract class CSVImporter(
             if (assets != null) {
                 val builder = assets.primary
                 val candidate = builder.build()
-                val identity = RowDeserialization.AssetIdentity(candidate.typeName, candidate.qualifiedName)
+                val identity = AssetBatch.AssetIdentity(candidate.typeName, candidate.qualifiedName)
                 // Then apply any field clearances based on attributes configured in the job
                 for (field in attrsToOverwrite) {
                     clearField(field, candidate, builder)

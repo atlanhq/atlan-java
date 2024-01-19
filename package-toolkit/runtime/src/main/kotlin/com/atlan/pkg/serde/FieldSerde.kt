@@ -123,4 +123,17 @@ object FieldSerde {
         return (method.invoke(null) as Asset.AssetBuilder<*, *>)
             .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
     }
+
+    /**
+     * Get a relationship by qualifiedName for the provided asset type.
+     *
+     * @param typeName name of the asset type for which to get a relationship
+     * @param qualifiedName of the asset for which to get a relationship
+     * @return a relationship reference for that asset
+     */
+    fun getRefByQualifiedName(typeName: String, qualifiedName: String): Asset {
+        val assetClass = Serde.getAssetClassForType(typeName)
+        val method = assetClass.getMethod("refByQualifiedName", String::class.java)
+        return (method.invoke(null, qualifiedName) as Asset)
+    }
 }

@@ -66,6 +66,23 @@ public class WorkflowResponse extends ApiResource {
      * @throws InterruptedException on any interruption of the busy wait loop
      */
     public AtlanWorkflowPhase monitorStatus(Logger log, Level level) throws AtlanException, InterruptedException {
+        return monitorStatus(log, level, Long.MAX_VALUE);
+    }
+
+    /**
+     * Monitor the status of the workflow's run, blocking until it has completed.
+     *
+     * @param log through which to log status information (INFO-level)
+     * @param level through which to log the status information
+     * @param maxWaitTime maximum time to block (in seconds), after which to stop monitoring and return
+     * @return the status at completion, or null if the workflow was not even run (or has not yet completed when returning)
+     * @throws AtlanException on any errors running the workflow
+     * @throws InterruptedException on any interruption of the busy wait loop
+     */
+    public AtlanWorkflowPhase monitorStatus(Logger log, Level level, long maxWaitTime)
+            throws AtlanException, InterruptedException {
+        long start = System.currentTimeMillis();
+        long elapsed;
         if (getMetadata() != null && getMetadata().getName() != null) {
             String name = getMetadata().getName();
             AtlanWorkflowPhase status = null;
@@ -83,9 +100,11 @@ public class WorkflowResponse extends ApiResource {
                 if (log != null) {
                     log.atLevel(level).log("Workflow {}: {}", name, status);
                 }
+                elapsed = (start - System.currentTimeMillis()) / 1000;
             } while (status != AtlanWorkflowPhase.SUCCESS
                     && status != AtlanWorkflowPhase.ERROR
-                    && status != AtlanWorkflowPhase.FAILED);
+                    && status != AtlanWorkflowPhase.FAILED
+                    && elapsed <= maxWaitTime);
             if (log != null) {
                 log.atLevel(level).log("Workflow {}: {}", name, status);
             }

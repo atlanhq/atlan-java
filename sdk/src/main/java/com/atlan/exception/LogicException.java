@@ -13,6 +13,10 @@ public class LogicException extends AtlanException {
         super(error, e);
     }
 
+    public LogicException(ErrorCode error, Throwable e, String... params) {
+        super(error, e, params);
+    }
+
     public LogicException(ErrorCode error, String... params) {
         super(error, null, params);
     }

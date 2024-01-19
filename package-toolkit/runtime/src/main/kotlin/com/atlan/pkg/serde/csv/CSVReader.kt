@@ -10,7 +10,8 @@ import com.atlan.model.enums.AtlanDeleteType
 import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.Utils
 import com.atlan.pkg.serde.cell.AssetRefXformer
-import com.atlan.util.AssetBatch
+import com.atlan.util.AssetBatch.AssetCreationHandling
+import com.atlan.util.AssetBatch.CustomMetadataHandling
 import com.atlan.util.ParallelBatch
 import de.siegmar.fastcsv.reader.CsvReader
 import de.siegmar.fastcsv.reader.CsvRow
@@ -29,12 +30,16 @@ import java.util.concurrent.atomic.AtomicLong
  * @param fieldSeparator character to use to separate fields (for example ',' or ';')
  * @param trackBatches if true, minimal details about every asset created or updated is tracked (if false, only counts of each are tracked)
  * @param caseSensitive (only applies when updateOnly is true) attempt to match assets case-sensitively (true) or case-insensitively (false)
+ * @param customMetadataHandling how to handle any custom metadata in the input file
+ * @param creationHandling when allowing assets to be created, how they should be created (full or partial)
  */
 class CSVReader @JvmOverloads constructor(
     path: String,
     private val updateOnly: Boolean,
     private val trackBatches: Boolean = true,
     private val caseSensitive: Boolean = true,
+    private val customMetadataHandling: CustomMetadataHandling = CustomMetadataHandling.MERGE,
+    private val creationHandling: AssetCreationHandling = AssetCreationHandling.FULL,
     fieldSeparator: Char = ',',
 ) : Closeable {
 
@@ -86,21 +91,23 @@ class CSVReader @JvmOverloads constructor(
             client,
             batchSize,
             true,
-            AssetBatch.CustomMetadataHandling.MERGE,
+            customMetadataHandling,
             true,
             updateOnly,
             trackBatches,
             caseSensitive,
+            creationHandling,
         )
         val relatedBatch = ParallelBatch(
             client,
             batchSize,
-            true,
-            AssetBatch.CustomMetadataHandling.MERGE,
+            false,
+            CustomMetadataHandling.IGNORE,
             true,
             false,
             trackBatches,
             caseSensitive,
+            AssetCreationHandling.FULL,
         )
         val relatedHolds: MutableMap<String, RelatedAssetHold> = ConcurrentHashMap()
         val deferDeletes: MutableMap<String, Set<AtlanField>> = ConcurrentHashMap()
@@ -231,6 +238,7 @@ class CSVReader @JvmOverloads constructor(
             someFailure,
             ImportResults.Details(
                 primaryBatch.resolvedGuids,
+                primaryBatch.resolvedQualifiedNames,
                 primaryBatch.created,
                 primaryBatch.updated,
                 primaryBatch.skipped,
@@ -239,6 +247,7 @@ class CSVReader @JvmOverloads constructor(
             ),
             ImportResults.Details(
                 relatedBatch.resolvedGuids,
+                primaryBatch.resolvedQualifiedNames,
                 relatedBatch.created,
                 relatedBatch.updated,
                 relatedBatch.skipped,

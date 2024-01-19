@@ -36,10 +36,10 @@ import kotlin.test.assertNotNull
  */
 class CreateThenUpsertRABTest : PackageTest() {
 
-    private val conn1 = makeUnique("c1")
+    private val conn1 = makeUnique("ctu1")
     private val conn1Type = AtlanConnectorType.MPARTICLE
-    private val tag1 = makeUnique("t1")
-    private val tag2 = makeUnique("t2")
+    private val tag1 = makeUnique("ctut1")
+    private val tag2 = makeUnique("ctut2")
 
     private val testFile = "input.csv"
     private val revisedFile = "revised.csv"
