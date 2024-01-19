@@ -6,7 +6,6 @@ import com.atlan.model.assets.Asset
 import com.atlan.pkg.serde.csv.CSVXformer
 import com.atlan.util.AssetBatch.AssetIdentity
 import mu.KLogger
-import java.util.Locale
 
 class AssetTransformer(
     private val ctx: Loader.Context,
@@ -57,7 +56,7 @@ class AssetTransformer(
             return if (qnMap.isNotEmpty()) {
                 // If there is data in the qnMap, translate case-insensitive qualifiedName to
                 // actual qualifiedName
-                val assetId = AssetIdentity(assetType, candidateQN.lowercase(Locale.ROOT))
+                val assetId = AssetIdentity(assetType, candidateQN, true)
                 qnMap.getOrDefault(assetId, "")
             } else if (connectionQN.isNotBlank() && partialQN.isNotBlank()) {
                 // Otherwise, fallback to the qualifiedName as we calculated it (as long as it

@@ -37,7 +37,7 @@ class PartialAssetsTest : PackageTest() {
         "debug.log",
     )
 
-    private fun prepFile(connectionQN: String) {
+    private fun prepFile() {
         // Prepare a copy of the file with unique names for connection
         val input = Paths.get("src", "test", "resources", "test_lineage.csv").toFile()
         val output = Paths.get(testDirectory, testFile).toFile()
@@ -76,8 +76,8 @@ class PartialAssetsTest : PackageTest() {
 
     @BeforeClass
     fun beforeClass() {
-        val connection = createConnection()
-        prepFile(connection.qualifiedName)
+        createConnection()
+        prepFile()
         setup(
             LineageBuilderCfg(
                 lineageFile = Paths.get(testDirectory, testFile).toString(),

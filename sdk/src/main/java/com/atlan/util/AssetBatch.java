@@ -22,6 +22,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 /**
@@ -351,7 +352,7 @@ public class AssetBatch {
         List<Asset> revised = null;
         if (!_batch.isEmpty()) {
             if (updateOnly || creationHandling != AssetCreationHandling.FULL) {
-                Map<String, String> found = new HashMap<>();
+                Map<AssetIdentity, String> found = new HashMap<>();
                 List<String> qualifiedNames =
                         _batch.stream().map(Asset::getQualifiedName).collect(Collectors.toList());
                 FluentSearch.FluentSearchBuilder<?, ?> builder;
@@ -364,18 +365,17 @@ public class AssetBatch {
                     builder = client.assets.select().where(Asset.QUALIFIED_NAME.in(qualifiedNames));
                 }
                 builder.pageSize(maxSize).stream().forEach(asset -> {
-                    String assetId = asset.getTypeName() + "::" + asset.getQualifiedName();
-                    found.put(assetId.toLowerCase(Locale.ROOT), asset.getQualifiedName());
+                    AssetIdentity assetId = new AssetIdentity(asset.getTypeName(), asset.getQualifiedName(), true);
+                    found.put(assetId, asset.getQualifiedName());
                 });
                 revised = new ArrayList<>();
                 for (Asset asset : _batch) {
-                    String assetId = asset.getTypeName() + "::" + asset.getQualifiedName();
-                    String caseInsensitiveQN = assetId.toLowerCase(Locale.ROOT);
-                    if (found.containsKey(caseInsensitiveQN)) {
+                    AssetIdentity assetId = new AssetIdentity(asset.getTypeName(), asset.getQualifiedName(), true);
+                    if (found.containsKey(assetId)) {
                         // Replace the actual qualifiedName on the asset before adding it to the batch
                         // (in case it matched case-insensitively, we need the proper case-sensitive name we
                         // found to ensure it's an update, not a create)
-                        String actualQN = found.get(caseInsensitiveQN);
+                        String actualQN = found.get(assetId);
                         Reference.ReferenceBuilder<?, ?> assetBuilder = asset.toBuilder();
                         Method setQualifiedName = ReflectionCache.getSetter(
                                 assetBuilder.getClass(), Asset.QUALIFIED_NAME.getAtlanFieldName());
@@ -506,13 +506,22 @@ public class AssetBatch {
      * Class to uniquely identify an asset by its type and qualifiedName.
      */
     @Getter
+    @EqualsAndHashCode
     public static final class AssetIdentity {
         private final String typeName;
         private final String qualifiedName;
 
         public AssetIdentity(String typeName, String qualifiedName) {
+            this(typeName, qualifiedName, false);
+        }
+
+        public AssetIdentity(String typeName, String qualifiedName, boolean caseInsensitive) {
             this.typeName = typeName;
-            this.qualifiedName = qualifiedName;
+            if (caseInsensitive) {
+                this.qualifiedName = qualifiedName.toLowerCase(Locale.ROOT);
+            } else {
+                this.qualifiedName = qualifiedName;
+            }
         }
     }
 }
