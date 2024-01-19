@@ -27,8 +27,8 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10};
-var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
+var data = {"i0":10,"i1":9,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10};
+var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -156,10 +156,27 @@ extends java.lang.Object</pre>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static class&nbsp;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="AssetBatch.CustomMetadataHandling.html" title="enum in com.atlan.util">AssetBatch.CustomMetadataHandling</a></span></code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="AssetBatch.AssetBatchBuilder.html" title="class in com.atlan.util">AssetBatch.AssetBatchBuilder</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code>static class&nbsp;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="AssetBatch.AssetCreationHandling.html" title="enum in com.atlan.util">AssetBatch.AssetCreationHandling</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static class&nbsp;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="AssetBatch.AssetIdentity.html" title="class in com.atlan.util">AssetBatch.AssetIdentity</a></span></code></th>
+<td class="colLast">
+<div class="block">Class to uniquely identify an asset by its type and qualifiedName.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static class&nbsp;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="AssetBatch.CustomMetadataHandling.html" title="enum in com.atlan.util">AssetBatch.CustomMetadataHandling</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code>static class&nbsp;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="AssetBatch.FailedBatch.html" title="class in com.atlan.util">AssetBatch.FailedBatch</a></span></code></th>
 <td class="colLast">
@@ -246,6 +263,20 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr class="altColor">
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.atlan.AtlanClient,int,boolean,com.atlan.util.AssetBatch.CustomMetadataHandling,boolean,boolean,boolean,boolean,com.atlan.util.AssetBatch.AssetCreationHandling)">AssetBatch</a></span>&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+          int&nbsp;maxSize,
+          boolean&nbsp;replaceAtlanTags,
+          <a href="AssetBatch.CustomMetadataHandling.html" title="enum in com.atlan.util">AssetBatch.CustomMetadataHandling</a>&nbsp;customMetadataHandling,
+          boolean&nbsp;captureFailures,
+          boolean&nbsp;updateOnly,
+          boolean&nbsp;track,
+          boolean&nbsp;caseInsensitive,
+          <a href="AssetBatch.AssetCreationHandling.html" title="enum in com.atlan.util">AssetBatch.AssetCreationHandling</a>&nbsp;creationHandling)</code></th>
+<td class="colLast">
+<div class="block">Create a new batch of assets to be bulk-saved.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.atlan.AtlanClient,java.lang.String,int)">AssetBatch</a></span>&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
           java.lang.String&nbsp;typeName,
           int&nbsp;maxSize)</code></th>
@@ -255,7 +286,7 @@ extends java.lang.Object</pre>
 </div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.atlan.AtlanClient,java.lang.String,int,boolean,com.atlan.util.AssetBatch.CustomMetadataHandling)">AssetBatch</a></span>&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
           java.lang.String&nbsp;typeName,
           int&nbsp;maxSize,
@@ -267,7 +298,7 @@ extends java.lang.Object</pre>
 </div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.atlan.AtlanClient,java.lang.String,int,boolean,com.atlan.util.AssetBatch.CustomMetadataHandling,boolean)">AssetBatch</a></span>&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
           java.lang.String&nbsp;typeName,
           int&nbsp;maxSize,
@@ -292,7 +323,7 @@ extends java.lang.Object</pre>
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colSecond" scope="col">Method</th>
@@ -306,55 +337,68 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
+<td class="colFirst"><code>static <a href="AssetBatch.AssetBatchBuilder.html" title="class in com.atlan.util">AssetBatch.AssetBatchBuilder</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#builder()">builder</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="../model/core/AssetMutationResponse.html" title="class in com.atlan.model.core">AssetMutationResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#flush()">flush</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Flush any remaining assets in the batch.</div>
 </td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCreated()">getCreated</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Assets that were created (minimal info only).</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="AssetBatch.FailedBatch.html" title="class in com.atlan.util">AssetBatch.FailedBatch</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getFailures()">getFailures</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Batches that failed to be committed (only populated when captureFailures is set to true).</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>java.util.concurrent.atomic.AtomicLong</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getNumCreated()">getNumCreated</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Number of assets that were created (no details, just a count).</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>java.util.concurrent.atomic.AtomicLong</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getNumUpdated()">getNumUpdated</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Number of assets that were updated (no details, just a count).</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getResolvedGuids()">getResolvedGuids</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Map from placeholder GUID to resolved (actual) GUID, for all assets that were processed through the batch.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i8" class="altColor">
+<td class="colFirst"><code>java.util.Map&lt;<a href="AssetBatch.AssetIdentity.html" title="class in com.atlan.util">AssetBatch.AssetIdentity</a>,&#8203;java.lang.String&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getResolvedQualifiedNames()">getResolvedQualifiedNames</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Map from all-lowercase qualifiedName (case-insensitive) to case-sensitive qualifiedName,
+ for all assets that were processed through the batch.</div>
+</td>
+</tr>
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSkipped()">getSkipped</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Assets that were skipped, when updateOnly is requested and the asset does not exist in Atlan.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getUpdated()">getUpdated</a></span>()</code></th>
 <td class="colLast">
@@ -572,7 +616,7 @@ public&nbsp;AssetBatch&#8203;(<a href="../AtlanClient.html" title="class in com.
 <a id="&lt;init&gt;(com.atlan.AtlanClient,int,boolean,com.atlan.util.AssetBatch.CustomMetadataHandling,boolean,boolean,boolean,boolean)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>AssetBatch</h4>
 <pre>public&nbsp;AssetBatch&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
@@ -594,6 +638,36 @@ public&nbsp;AssetBatch&#8203;(<a href="../AtlanClient.html" title="class in com.
 <dd><code>updateOnly</code> - when true, only attempt to update existing assets and do not create any assets (note: this will incur a performance penalty)</dd>
 <dd><code>track</code> - when false, details about each created and updated asset will no longer be tracked (only an overall count of each) -- useful if you intend to send close to (or more than) 1 million assets through a batch</dd>
 <dd><code>caseInsensitive</code> - (only applies when updateOnly is true) when matching assets, search for their qualifiedName in a case-insensitive way</dd>
+</dl>
+</li>
+</ul>
+<a id="&lt;init&gt;(com.atlan.AtlanClient,int,boolean,com.atlan.util.AssetBatch.CustomMetadataHandling,boolean,boolean,boolean,boolean,com.atlan.util.AssetBatch.AssetCreationHandling)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>AssetBatch</h4>
+<pre>public&nbsp;AssetBatch&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+                  int&nbsp;maxSize,
+                  boolean&nbsp;replaceAtlanTags,
+                  <a href="AssetBatch.CustomMetadataHandling.html" title="enum in com.atlan.util">AssetBatch.CustomMetadataHandling</a>&nbsp;customMetadataHandling,
+                  boolean&nbsp;captureFailures,
+                  boolean&nbsp;updateOnly,
+                  boolean&nbsp;track,
+                  boolean&nbsp;caseInsensitive,
+                  <a href="AssetBatch.AssetCreationHandling.html" title="enum in com.atlan.util">AssetBatch.AssetCreationHandling</a>&nbsp;creationHandling)</pre>
+<div class="block">Create a new batch of assets to be bulk-saved.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>client</code> - connectivity to Atlan</dd>
+<dd><code>maxSize</code> - maximum size of each batch that should be processed (per API call)</dd>
+<dd><code>replaceAtlanTags</code> - if true, all Atlan tags on an existing asset will be overwritten; if false, all Atlan tags will be ignored</dd>
+<dd><code>customMetadataHandling</code> - how to handle custom metadata (ignore it, replace it (wiping out anything pre-existing), or merge it)</dd>
+<dd><code>captureFailures</code> - when true, any failed batches will be captured and retained rather than exceptions being raised (for large amounts of processing this could cause memory issues!)</dd>
+<dd><code>updateOnly</code> - when true, only attempt to update existing assets and do not create any assets (note: this will incur a performance penalty)</dd>
+<dd><code>track</code> - when false, details about each created and updated asset will no longer be tracked (only an overall count of each) -- useful if you intend to send close to (or more than) 1 million assets through a batch</dd>
+<dd><code>caseInsensitive</code> - (only applies when updateOnly is true) when matching assets, search for their qualifiedName in a case-insensitive way</dd>
+<dd><code>creationHandling</code> - if assets are to be created, how they should be created (as full assets or only partial assets)</dd>
 </dl>
 </li>
 </ul>
@@ -641,6 +715,15 @@ public&nbsp;AssetBatch&#8203;(<a href="../AtlanClient.html" title="class in com.
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any problems flushing (submitting) the batch</dd>
 </dl>
+</li>
+</ul>
+<a id="builder()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>builder</h4>
+<pre class="methodSignature">public static&nbsp;<a href="AssetBatch.AssetBatchBuilder.html" title="class in com.atlan.util">AssetBatch.AssetBatchBuilder</a>&nbsp;builder()</pre>
 </li>
 </ul>
 <a id="getNumCreated()">
@@ -706,11 +789,23 @@ public&nbsp;AssetBatch&#8203;(<a href="../AtlanClient.html" title="class in com.
 <a id="getResolvedGuids()">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>getResolvedGuids</h4>
 <pre class="methodSignature">public&nbsp;java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;getResolvedGuids()</pre>
 <div class="block">Map from placeholder GUID to resolved (actual) GUID, for all assets that were processed through the batch.</div>
+</li>
+</ul>
+<a id="getResolvedQualifiedNames()">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getResolvedQualifiedNames</h4>
+<pre class="methodSignature">public&nbsp;java.util.Map&lt;<a href="AssetBatch.AssetIdentity.html" title="class in com.atlan.util">AssetBatch.AssetIdentity</a>,&#8203;java.lang.String&gt;&nbsp;getResolvedQualifiedNames()</pre>
+<div class="block">Map from all-lowercase qualifiedName (case-insensitive) to case-sensitive qualifiedName,
+ for all assets that were processed through the batch.
+ Note: This is only produced when caseInsensitive is true, otherwise it will be empty.</div>
 </li>
 </ul>
 </li>
