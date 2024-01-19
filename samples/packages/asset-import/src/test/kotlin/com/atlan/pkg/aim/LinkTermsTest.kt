@@ -23,8 +23,8 @@ import kotlin.test.assertNull
  */
 class LinkTermsTest : PackageTest() {
 
-    private val glossaryName = makeUnique("g1")
-    private val connectionName = makeUnique("c1")
+    private val glossaryName = makeUnique("ltg1")
+    private val connectionName = makeUnique("ltc1")
 
     private val testFile = "input.csv"
     private val revisedFile = "revised.csv"

@@ -20,7 +20,7 @@ import kotlin.test.assertNotNull
  */
 class ImportPetStoreTest : PackageTest() {
 
-    private val testId = makeUnique("swagger")
+    private val testId = makeUnique("oapi")
     private val files = listOf(
         "debug.log",
     )

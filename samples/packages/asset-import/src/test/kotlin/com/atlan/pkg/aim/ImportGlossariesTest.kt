@@ -35,10 +35,10 @@ import kotlin.test.assertNotNull
  */
 class ImportGlossariesTest : PackageTest() {
 
-    private val glossary1 = makeUnique("g1")
-    private val glossary2 = makeUnique("g2")
-    private val tag1 = makeUnique("t1")
-    private val tag2 = makeUnique("t2")
+    private val glossary1 = makeUnique("igg1")
+    private val glossary2 = makeUnique("igg2")
+    private val tag1 = makeUnique("igt1")
+    private val tag2 = makeUnique("igt2")
 
     private val testFile = "input.csv"
 

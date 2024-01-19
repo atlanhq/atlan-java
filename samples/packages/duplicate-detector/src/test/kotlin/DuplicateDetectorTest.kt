@@ -20,7 +20,7 @@ import kotlin.test.assertNotNull
  */
 class DuplicateDetectorTest : PackageTest() {
 
-    private val testId = makeUnique("dupdetect")
+    private val testId = makeUnique("dd")
     private val files = listOf(
         "debug.log",
     )

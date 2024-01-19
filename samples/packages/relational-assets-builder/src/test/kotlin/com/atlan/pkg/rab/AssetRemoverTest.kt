@@ -20,7 +20,7 @@ import kotlin.test.assertEquals
  * Test pre-processing of full-load CSV files to detect which assets should be removed.
  */
 class AssetRemoverTest : PackageTest() {
-    private val conn1 = makeUnique("c1")
+    private val conn1 = makeUnique("ar")
     private val conn1Type = AtlanConnectorType.MPARTICLE
     private val conn1QN = "default/${conn1Type.value}/1234567890"
 
