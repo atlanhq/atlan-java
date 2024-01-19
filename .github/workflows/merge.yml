@@ -75,6 +75,10 @@ jobs:
           path: jars/enrichment-migrator-*.jar
       - uses: actions/upload-artifact@v3
         with:
+          name: lineage-builder
+          path: jars/lineage-builder-*.jar
+      - uses: actions/upload-artifact@v3
+        with:
           name: metadata-impact-report
           path: jars/metadata-impact-report-*.jar
       - uses: actions/upload-artifact@v3
@@ -191,6 +195,7 @@ jobs:
           - asset-import
           - duplicate-detector
           - enrichment-migrator
+          - lineage-builder
           - metadata-impact-report
           - openapi-spec-loader
           - owner-propagator
