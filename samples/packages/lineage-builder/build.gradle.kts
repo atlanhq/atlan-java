@@ -1,6 +1,5 @@
 /* SPDX-License-Identifier: Apache-2.0 */
 version = providers.gradleProperty("VERSION_NAME").get()
-val jarName = "lineage-builder"
 val jarPath = "$rootDir/jars"
 
 plugins {
@@ -17,6 +16,7 @@ dependencies {
 tasks {
     shadowJar {
         isZip64 = true
+        archiveClassifier.set("")
         destinationDirectory.set(file(jarPath))
         dependencies {
             include(project(":samples:packages:asset-export-basic"))
@@ -28,7 +28,6 @@ tasks {
     jar {
         // Override the default jar task so we get the shadowed jar
         // as the only jar output
-        archiveBaseName.set(jarName)
         actions = listOf()
         doLast { shadowJar }
     }
