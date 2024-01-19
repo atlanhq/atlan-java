@@ -55,7 +55,8 @@ object Importer {
         val assetsUpdateOnly = Utils.getOrDefault(config.assetsUpsertSemantic, "update") == "update"
         val trackBatches = Utils.getOrDefault(config.trackBatches, true)
 
-        if ((assetsUpload && assetsFilename.isBlank()) || (!assetsUpload && assetsS3ObjectKey.isBlank())) {
+        val assetsFileProvided = (assetsUpload && assetsFilename.isNotBlank()) || (!assetsUpload && assetsS3ObjectKey.isNotBlank())
+        if (!assetsFileProvided) {
             logger.error { "No input file was provided for assets." }
             exitProcess(1)
         }
