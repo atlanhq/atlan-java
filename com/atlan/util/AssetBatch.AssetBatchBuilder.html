@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -165,52 +165,77 @@ extends java.lang.Object</pre>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="AssetBatch.AssetBatchBuilder.html" title="class in com.atlan.util">AssetBatch.AssetBatchBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#captureFailures(boolean)">captureFailures</a></span>&#8203;(boolean&nbsp;captureFailures)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Whether to capture details about any failures (true) or throw exceptions for any failures (false).</div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="AssetBatch.AssetBatchBuilder.html" title="class in com.atlan.util">AssetBatch.AssetBatchBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#caseInsensitive(boolean)">caseInsensitive</a></span>&#8203;(boolean&nbsp;caseInsensitive)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">When running with <a href="#updateOnly(boolean)"><code>updateOnly(boolean)</code></a> as true, whether to consider only exact matches (false) or ignore case (true).</div>
+</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="AssetBatch.AssetBatchBuilder.html" title="class in com.atlan.util">AssetBatch.AssetBatchBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#client(com.atlan.AtlanClient)">client</a></span>&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Connectivity to an Atlan tenant.</div>
+</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="AssetBatch.AssetBatchBuilder.html" title="class in com.atlan.util">AssetBatch.AssetBatchBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#creationHandling(com.atlan.util.AssetBatch.AssetCreationHandling)">creationHandling</a></span>&#8203;(<a href="AssetBatch.AssetCreationHandling.html" title="enum in com.atlan.util">AssetBatch.AssetCreationHandling</a>&nbsp;creationHandling)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">When allowing assets to be created, how to handle those creations (full assets or partial assets).</div>
+</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="AssetBatch.AssetBatchBuilder.html" title="class in com.atlan.util">AssetBatch.AssetBatchBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#customMetadataHandling(com.atlan.util.AssetBatch.CustomMetadataHandling)">customMetadataHandling</a></span>&#8203;(<a href="AssetBatch.CustomMetadataHandling.html" title="enum in com.atlan.util">AssetBatch.CustomMetadataHandling</a>&nbsp;customMetadataHandling)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">How to handle any custom metadata on assets (ignore, replace, or merge).</div>
+</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="AssetBatch.AssetBatchBuilder.html" title="class in com.atlan.util">AssetBatch.AssetBatchBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#maxSize(int)">maxSize</a></span>&#8203;(int&nbsp;maxSize)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Maximum number of assets to submit in each batch.</div>
+</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="AssetBatch.AssetBatchBuilder.html" title="class in com.atlan.util">AssetBatch.AssetBatchBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#replaceAtlanTags(boolean)">replaceAtlanTags</a></span>&#8203;(boolean&nbsp;replaceAtlanTags)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Whether to replace Atlan tags (true), or ignore them (false).</div>
+</td>
 </tr>
 <tr id="i8" class="altColor">
+<td class="colFirst"><code><a href="AssetBatch.AssetBatchBuilder.html" title="class in com.atlan.util">AssetBatch.AssetBatchBuilder</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#tableViewAgnostic(boolean)">tableViewAgnostic</a></span>&#8203;(boolean&nbsp;tableViewAgnostic)</code></th>
+<td class="colLast">
+<div class="block">Whether tables and views should be treated interchangeably (an asset in the batch marked as a table will attempt to match a view if not found as a table, and vice versa).</div>
+</td>
+</tr>
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i9" class="rowColor">
-<td class="colFirst"><code><a href="AssetBatch.AssetBatchBuilder.html" title="class in com.atlan.util">AssetBatch.AssetBatchBuilder</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#track(boolean)">track</a></span>&#8203;(boolean&nbsp;track)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code><a href="AssetBatch.AssetBatchBuilder.html" title="class in com.atlan.util">AssetBatch.AssetBatchBuilder</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#track(boolean)">track</a></span>&#8203;(boolean&nbsp;track)</code></th>
+<td class="colLast">
+<div class="block">Whether to track the basic information about every asset that is created or updated (true) or only track counts (false).</div>
+</td>
+</tr>
+<tr id="i11" class="rowColor">
+<td class="colFirst"><code><a href="AssetBatch.AssetBatchBuilder.html" title="class in com.atlan.util">AssetBatch.AssetBatchBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateOnly(boolean)">updateOnly</a></span>&#8203;(boolean&nbsp;updateOnly)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Whether to allow assets to be created (false) or only allow existing assets to be updated (true).</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -243,6 +268,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>client</h4>
 <pre class="methodSignature">public&nbsp;<a href="AssetBatch.AssetBatchBuilder.html" title="class in com.atlan.util">AssetBatch.AssetBatchBuilder</a>&nbsp;client&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)</pre>
+<div class="block">Connectivity to an Atlan tenant.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -256,6 +282,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>maxSize</h4>
 <pre class="methodSignature">public&nbsp;<a href="AssetBatch.AssetBatchBuilder.html" title="class in com.atlan.util">AssetBatch.AssetBatchBuilder</a>&nbsp;maxSize&#8203;(int&nbsp;maxSize)</pre>
+<div class="block">Maximum number of assets to submit in each batch.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -269,6 +296,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>replaceAtlanTags</h4>
 <pre class="methodSignature">public&nbsp;<a href="AssetBatch.AssetBatchBuilder.html" title="class in com.atlan.util">AssetBatch.AssetBatchBuilder</a>&nbsp;replaceAtlanTags&#8203;(boolean&nbsp;replaceAtlanTags)</pre>
+<div class="block">Whether to replace Atlan tags (true), or ignore them (false).</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -282,6 +310,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>customMetadataHandling</h4>
 <pre class="methodSignature">public&nbsp;<a href="AssetBatch.AssetBatchBuilder.html" title="class in com.atlan.util">AssetBatch.AssetBatchBuilder</a>&nbsp;customMetadataHandling&#8203;(<a href="AssetBatch.CustomMetadataHandling.html" title="enum in com.atlan.util">AssetBatch.CustomMetadataHandling</a>&nbsp;customMetadataHandling)</pre>
+<div class="block">How to handle any custom metadata on assets (ignore, replace, or merge).</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -295,6 +324,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>captureFailures</h4>
 <pre class="methodSignature">public&nbsp;<a href="AssetBatch.AssetBatchBuilder.html" title="class in com.atlan.util">AssetBatch.AssetBatchBuilder</a>&nbsp;captureFailures&#8203;(boolean&nbsp;captureFailures)</pre>
+<div class="block">Whether to capture details about any failures (true) or throw exceptions for any failures (false).</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -308,6 +338,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>updateOnly</h4>
 <pre class="methodSignature">public&nbsp;<a href="AssetBatch.AssetBatchBuilder.html" title="class in com.atlan.util">AssetBatch.AssetBatchBuilder</a>&nbsp;updateOnly&#8203;(boolean&nbsp;updateOnly)</pre>
+<div class="block">Whether to allow assets to be created (false) or only allow existing assets to be updated (true).</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -321,6 +352,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>track</h4>
 <pre class="methodSignature">public&nbsp;<a href="AssetBatch.AssetBatchBuilder.html" title="class in com.atlan.util">AssetBatch.AssetBatchBuilder</a>&nbsp;track&#8203;(boolean&nbsp;track)</pre>
+<div class="block">Whether to track the basic information about every asset that is created or updated (true) or only track counts (false).</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -334,6 +366,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>caseInsensitive</h4>
 <pre class="methodSignature">public&nbsp;<a href="AssetBatch.AssetBatchBuilder.html" title="class in com.atlan.util">AssetBatch.AssetBatchBuilder</a>&nbsp;caseInsensitive&#8203;(boolean&nbsp;caseInsensitive)</pre>
+<div class="block">When running with <a href="#updateOnly(boolean)"><code>updateOnly(boolean)</code></a> as true, whether to consider only exact matches (false) or ignore case (true).</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -347,6 +380,21 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>creationHandling</h4>
 <pre class="methodSignature">public&nbsp;<a href="AssetBatch.AssetBatchBuilder.html" title="class in com.atlan.util">AssetBatch.AssetBatchBuilder</a>&nbsp;creationHandling&#8203;(<a href="AssetBatch.AssetCreationHandling.html" title="enum in com.atlan.util">AssetBatch.AssetCreationHandling</a>&nbsp;creationHandling)</pre>
+<div class="block">When allowing assets to be created, how to handle those creations (full assets or partial assets).</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="tableViewAgnostic(boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>tableViewAgnostic</h4>
+<pre class="methodSignature">public&nbsp;<a href="AssetBatch.AssetBatchBuilder.html" title="class in com.atlan.util">AssetBatch.AssetBatchBuilder</a>&nbsp;tableViewAgnostic&#8203;(boolean&nbsp;tableViewAgnostic)</pre>
+<div class="block">Whether tables and views should be treated interchangeably (an asset in the batch marked as a table will attempt to match a view if not found as a table, and vice versa).</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
