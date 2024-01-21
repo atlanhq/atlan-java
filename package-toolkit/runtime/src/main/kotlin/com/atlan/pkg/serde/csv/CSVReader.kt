@@ -32,6 +32,7 @@ import java.util.concurrent.atomic.AtomicLong
  * @param caseSensitive (only applies when updateOnly is true) attempt to match assets case-sensitively (true) or case-insensitively (false)
  * @param customMetadataHandling how to handle any custom metadata in the input file
  * @param creationHandling when allowing assets to be created, how they should be created (full or partial)
+ * @param tableViewAgnostic if true, tables and views will be treated interchangeably (an asset in the batch marked as a table will attempt to match a view if not found as a table, and vice versa)
  */
 class CSVReader @JvmOverloads constructor(
     path: String,
@@ -40,6 +41,7 @@ class CSVReader @JvmOverloads constructor(
     private val caseSensitive: Boolean = true,
     private val customMetadataHandling: CustomMetadataHandling = CustomMetadataHandling.MERGE,
     private val creationHandling: AssetCreationHandling = AssetCreationHandling.FULL,
+    private val tableViewAgnostic: Boolean = false,
     fieldSeparator: Char = ',',
 ) : Closeable {
 
@@ -97,6 +99,7 @@ class CSVReader @JvmOverloads constructor(
             trackBatches,
             caseSensitive,
             creationHandling,
+            tableViewAgnostic,
         )
         val relatedBatch = ParallelBatch(
             client,
@@ -108,6 +111,7 @@ class CSVReader @JvmOverloads constructor(
             trackBatches,
             caseSensitive,
             AssetCreationHandling.FULL,
+            false,
         )
         val relatedHolds: MutableMap<String, RelatedAssetHold> = ConcurrentHashMap()
         val deferDeletes: MutableMap<String, Set<AtlanField>> = ConcurrentHashMap()

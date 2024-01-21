@@ -32,6 +32,7 @@ import kotlin.system.exitProcess
  * @param trackBatches if true, minimal details about every asset created or updated is tracked (if false, only counts of each are tracked)
  * @param caseSensitive (only applies when updateOnly is true) attempt to match assets case-sensitively (true) or case-insensitively (false)
  * @param creationHandling if assets are to be created, how they should be created (as full assets or only partial assets)
+ * @param tableViewAgnostic if true, tables and views will be treated interchangeably (an asset in the batch marked as a table will attempt to match a view if not found as a table, and vice versa)
  */
 abstract class CSVImporter(
     private val filename: String,
@@ -43,6 +44,7 @@ abstract class CSVImporter(
     private val trackBatches: Boolean = true,
     private val caseSensitive: Boolean = true,
     private val creationHandling: AssetCreationHandling = AssetCreationHandling.FULL,
+    private val tableViewAgnostic: Boolean = false,
 ) : AssetGenerator {
 
     /**
@@ -59,6 +61,7 @@ abstract class CSVImporter(
             caseSensitive,
             AssetBatch.CustomMetadataHandling.MERGE,
             creationHandling,
+            tableViewAgnostic,
         ).use { csv ->
             val start = System.currentTimeMillis()
             val results = csv.streamRows(this, batchSize, logger, columnsToSkip)

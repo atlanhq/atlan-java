@@ -47,6 +47,7 @@ object Importer {
             attributesToClear(Utils.getOrDefault(config.glossariesAttrToOverwrite, listOf()).toMutableList(), "glossaries", logger)
         val assetsUpdateSemantic = Utils.getOrDefault(config.assetsUpsertSemantic, "update")
         val assetsCaseSensitive = Utils.getOrDefault(config.assetsCaseSensitive, true)
+        val assetsTableViewAgnostic = Utils.getOrDefault(config.assetsTableViewAgnostic, false)
         val glossariesUpdateOnly = Utils.getOrDefault(config.glossariesUpsertSemantic, "update") == "update"
         val glossariesFailOnErrors = Utils.getOrDefault(config.glossariesFailOnErrors, true)
 
@@ -110,6 +111,7 @@ object Importer {
                 batchSize,
                 assetsCaseSensitive,
                 creationHandling,
+                assetsTableViewAgnostic,
             )
             assetImporter.import()
         } else {

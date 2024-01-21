@@ -19,31 +19,44 @@ import lombok.Builder;
 @Builder
 public class ParallelBatch {
 
+    /** Connectivity to an Atlan tenant. */
     private AtlanClient client;
 
+    /** Maximum number of assets to submit in each batch. */
     @Builder.Default
     private int maxSize = 20;
 
+    /** Whether to replace Atlan tags (true), or ignore them (false). */
     @Builder.Default
     private boolean replaceAtlanTags = false;
 
+    /** How to handle any custom metadata on assets (ignore, replace, or merge). */
     @Builder.Default
     private AssetBatch.CustomMetadataHandling customMetadataHandling = AssetBatch.CustomMetadataHandling.IGNORE;
 
+    /** Whether to capture details about any failures (true) or throw exceptions for any failures (false). */
     @Builder.Default
     private boolean captureFailures = false;
 
+    /** Whether to track the basic information about every asset that is created or updated (true) or only track counts (false). */
     @Builder.Default
     private boolean track = true;
 
+    /** Whether to allow assets to be created (false) or only allow existing assets to be updated (true). */
     @Builder.Default
     private boolean updateOnly = false;
 
+    /** When running with {@link #updateOnly} as true, whether to consider only exact matches (false) or ignore case (true). */
     @Builder.Default
     private boolean caseSensitive = true;
 
+    /** When allowing assets to be created, how to handle those creations (full assets or partial assets). */
     @Builder.Default
     private AssetBatch.AssetCreationHandling creationHandling = AssetBatch.AssetCreationHandling.FULL;
+
+    /** Whether tables and views should be treated interchangeably (an asset in the batch marked as a table will attempt to match a view if not found as a table, and vice versa). */
+    @Builder.Default
+    private boolean tableViewAgnostic = false;
 
     private final Map<Long, AssetBatch> batchMap = new ConcurrentHashMap<>();
     private final List<Asset> created = new ArrayList<>();
@@ -195,6 +208,44 @@ public class ParallelBatch {
             boolean track,
             boolean caseSensitive,
             AssetBatch.AssetCreationHandling creationHandling) {
+        this(
+                client,
+                maxSize,
+                replaceAtlanTags,
+                customMetadataHandling,
+                captureFailures,
+                updateOnly,
+                track,
+                caseSensitive,
+                creationHandling,
+                false);
+    }
+
+    /**
+     * Create a new batch of assets to be bulk-saved, in parallel (across threads).
+     *
+     * @param client connectivity to Atlan
+     * @param maxSize maximum size of each batch that should be processed (per API call)
+     * @param replaceAtlanTags if true, all Atlan tags on an existing asset will be overwritten; if false, all Atlan tags will be ignored
+     * @param customMetadataHandling how to handle custom metadata (ignore it, replace it (wiping out anything pre-existing), or merge it)
+     * @param captureFailures when true, any failed batches will be captured and retained rather than exceptions being raised (for large amounts of processing this could cause memory issues!)
+     * @param updateOnly when true, only attempt to update existing assets and do not create any assets (note: this will incur a performance penalty)
+     * @param track when false, details about each created and updated asset will no longer be tracked (only an overall count of each) -- useful if you intend to send close to (or more than) 1 million assets through a batch
+     * @param caseSensitive (only applies when updateOnly is true) attempt to match assets case-sensitively (true) or case-insensitively (false)
+     * @param creationHandling if assets are to be created, how they should be created (as full assets or only partial assets)
+     * @param tableViewAgnostic if true, tables and views will be treated interchangeably (an asset in the batch marked as a table will attempt to match a view if not found as a table, and vice versa)
+     */
+    public ParallelBatch(
+            AtlanClient client,
+            int maxSize,
+            boolean replaceAtlanTags,
+            AssetBatch.CustomMetadataHandling customMetadataHandling,
+            boolean captureFailures,
+            boolean updateOnly,
+            boolean track,
+            boolean caseSensitive,
+            AssetBatch.AssetCreationHandling creationHandling,
+            boolean tableViewAgnostic) {
         this.client = client;
         this.maxSize = maxSize;
         this.replaceAtlanTags = replaceAtlanTags;
@@ -204,6 +255,7 @@ public class ParallelBatch {
         this.updateOnly = updateOnly;
         this.caseSensitive = caseSensitive;
         this.creationHandling = creationHandling;
+        this.tableViewAgnostic = tableViewAgnostic;
     }
 
     /**
@@ -227,7 +279,8 @@ public class ParallelBatch {
                             updateOnly,
                             track,
                             !caseSensitive,
-                            creationHandling));
+                            creationHandling,
+                            tableViewAgnostic));
         }
         return batchMap.get(id).add(single);
     }
