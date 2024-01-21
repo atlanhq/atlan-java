@@ -26,16 +26,4 @@ public class WorkflowRunResponse extends WorkflowResponse {
     protected WorkflowSearchResult getRunDetails(String name) throws AtlanException {
         return WorkflowSearchRequest.findRunByName(client, name);
     }
-
-    /**
-     * Stop this workflow run.
-     * Note: the result will be returned immediately (async), so you may need to further poll
-     * until the workflow is actually stopped.
-     *
-     * @throws AtlanException on any API errors stopping the workflow run
-     * @return the result of the stop command
-     */
-    public WorkflowRunResponse stop() throws AtlanException {
-        return client.workflows.stop(getMetadata().getName(), null);
-    }
 }

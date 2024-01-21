@@ -17,7 +17,6 @@ import com.atlan.model.enums.AtlanWorkflowPhase;
 import com.atlan.model.packages.ConnectionDelete;
 import com.atlan.model.workflow.Workflow;
 import com.atlan.model.workflow.WorkflowResponse;
-import com.atlan.model.workflow.WorkflowRunResponse;
 import com.atlan.net.HttpClient;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -111,11 +110,10 @@ public class ConnectionTest extends AtlanLiveTest {
             String workflowName = response.getMetadata().getName();
             AtlanWorkflowPhase state = response.monitorStatus(log, Level.INFO, 420L);
             assertNotNull(state);
-            if (state == AtlanWorkflowPhase.RUNNING && response instanceof WorkflowRunResponse) {
+            if (state == AtlanWorkflowPhase.RUNNING) {
                 // If still running after 7 minutes, stop it (so it can then be archived)
                 log.warn("Stopping hung workflow...");
-                WorkflowRunResponse run = (WorkflowRunResponse) response;
-                response = run.stop();
+                response = response.stop();
                 state = response.monitorStatus(log, Level.INFO, 60L);
                 assertEquals(state, AtlanWorkflowPhase.FAILED);
             } else {
