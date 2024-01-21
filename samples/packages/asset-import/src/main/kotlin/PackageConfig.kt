@@ -106,6 +106,11 @@ object PackageConfig : CustomPackage(
                         required = false,
                         help = "Whether to use case-sensitive matching when running in update-only mode (Yes) or try case-insensitive matching (No).",
                     ),
+                    "assets_table_view_agnostic" to BooleanInput(
+                        label = "Table/view agnostic?",
+                        required = false,
+                        help = "Whether to treat tables, views and materialized views as interchangeable (Yes) or strictly adhere to specified types in the input (No).",
+                    ),
                 ),
             ),
             UIStep(

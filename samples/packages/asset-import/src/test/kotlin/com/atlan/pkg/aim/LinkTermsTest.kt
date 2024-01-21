@@ -4,11 +4,14 @@ package com.atlan.pkg.aim
 
 import AssetImportCfg
 import com.atlan.Atlan
+import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Connection
 import com.atlan.model.assets.Glossary
 import com.atlan.model.assets.GlossaryTerm
-import com.atlan.model.assets.KafkaTopic
+import com.atlan.model.assets.Table
+import com.atlan.model.assets.View
 import com.atlan.model.enums.AtlanConnectorType
+import com.atlan.model.search.FluentSearch
 import com.atlan.pkg.PackageTest
 import org.testng.ITestContext
 import org.testng.annotations.AfterClass
@@ -17,6 +20,7 @@ import java.nio.file.Paths
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
+import kotlin.test.assertTrue
 
 /**
  * Test import of a very simple file containing assigned terms.
@@ -25,6 +29,7 @@ class LinkTermsTest : PackageTest() {
 
     private val glossaryName = makeUnique("ltg1")
     private val connectionName = makeUnique("ltc1")
+    private val connectorType = AtlanConnectorType.GENERIC
 
     private val testFile = "input.csv"
     private val revisedFile = "revised.csv"
@@ -54,10 +59,10 @@ class LinkTermsTest : PackageTest() {
         val output = Paths.get(testDirectory, revisedFile).toFile()
         input.useLines { lines ->
             lines.forEach { line ->
-                if (line.contains("/topic/")) {
+                if (line.contains("/schema/test_table2")) {
                     val revised = line
-                        .replace("/topic/", "/TOPIC/")
-                        .replace("KafkaTopic,", "KafkaTopic,Now with description")
+                        .replace("/schema/test_table2", "/SCHEMA/Test_Table2")
+                        .replace("View,", "Table,Now with description")
                     output.appendText("$revised\n")
                 } else {
                     output.appendText("$line\n")
@@ -77,7 +82,7 @@ class LinkTermsTest : PackageTest() {
 
     private fun createConnection(): Connection {
         val client = Atlan.getDefaultClient()
-        val c1 = Connection.creator(connectionName, AtlanConnectorType.KAFKA, listOf(client.roleCache.getIdForName("\$admin")), null, null).build()
+        val c1 = Connection.creator(connectionName, connectorType, listOf(client.roleCache.getIdForName("\$admin")), null, null).build()
         val response = c1.save(client).block()
         return response.getResult(c1)
     }
@@ -93,10 +98,6 @@ class LinkTermsTest : PackageTest() {
                 assetsUpsertSemantic = "upsert",
                 assetsAttrToOverwrite = listOf(),
                 assetsFailOnErrors = false,
-                glossariesFile = null,
-                glossariesUpsertSemantic = null,
-                glossariesAttrToOverwrite = null,
-                glossariesFailOnErrors = false,
             ),
         )
         Importer.main(arrayOf())
@@ -104,44 +105,64 @@ class LinkTermsTest : PackageTest() {
 
     @Test(groups = ["create"])
     fun connectionCreated() {
-        val c1 = Connection.findByName(connectionName, AtlanConnectorType.KAFKA)
+        val c1 = Connection.findByName(connectionName, connectorType)
         assertEquals(1, c1.size)
         assertEquals(connectionName, c1[0].name)
     }
 
     @Test(groups = ["create"])
-    fun assetCreated() {
-        val c = Connection.findByName(connectionName, AtlanConnectorType.KAFKA)[0]!!
-        val request = KafkaTopic.select()
-            .where(KafkaTopic.QUALIFIED_NAME.startsWith(c.qualifiedName))
-            .includeOnResults(KafkaTopic.NAME)
-            .includeOnResults(KafkaTopic.SOURCE_READ_COUNT)
-            .includeOnResults(KafkaTopic.SOURCE_READ_USER_COUNT)
+    fun tableCreated() {
+        val c = Connection.findByName(connectionName, connectorType)[0]!!
+        val request = Table.select()
+            .where(Table.QUALIFIED_NAME.startsWith(c.qualifiedName))
+            .includeOnResults(Table.NAME)
+            .includeOnResults(Table.SOURCE_READ_COUNT)
+            .includeOnResults(Table.SOURCE_READ_USER_COUNT)
             .toRequest()
         val response = retrySearchUntil(request, 1)
-        val topics = response.assets
-        assertEquals(1, topics.size)
-        assertEquals("test_topic", topics[0].name)
-        assertEquals(10, topics[0].sourceReadCount)
-        assertEquals(5, topics[0].sourceReadUserCount)
+        val tables = response.assets
+        assertEquals(1, tables.size)
+        assertEquals("test_table1", tables[0].name)
+        assertEquals(10, tables[0].sourceReadCount)
+        assertEquals(5, tables[0].sourceReadUserCount)
+    }
+
+    @Test(groups = ["create"])
+    fun viewCreated() {
+        val c = Connection.findByName(connectionName, connectorType)[0]!!
+        val request = View.select()
+            .where(View.QUALIFIED_NAME.startsWith(c.qualifiedName))
+            .includeOnResults(View.NAME)
+            .includeOnResults(View.SOURCE_READ_COUNT)
+            .includeOnResults(View.SOURCE_READ_USER_COUNT)
+            .toRequest()
+        val response = retrySearchUntil(request, 1)
+        val views = response.assets
+        assertEquals(1, views.size)
+        assertEquals("test_table2", views[0].name)
+        assertEquals(3, views[0].sourceReadCount)
+        assertEquals(2, views[0].sourceReadUserCount)
     }
 
     @Test(groups = ["create"])
     fun termAssigned() {
-        val c = Connection.findByName(connectionName, AtlanConnectorType.KAFKA)[0]!!
-        val request = KafkaTopic.select()
-            .where(KafkaTopic.QUALIFIED_NAME.startsWith(c.qualifiedName))
-            .includeOnResults(KafkaTopic.NAME)
-            .includeOnResults(KafkaTopic.ASSIGNED_TERMS)
+        val c = Connection.findByName(connectionName, connectorType)[0]!!
+        val request = Atlan.getDefaultClient().assets.select()
+            .where(FluentSearch.assetTypes(setOf(Table.TYPE_NAME, View.TYPE_NAME)))
+            .where(Asset.QUALIFIED_NAME.startsWith(c.qualifiedName))
+            .includeOnResults(Asset.NAME)
+            .includeOnResults(Asset.ASSIGNED_TERMS)
             .includeOnRelations(GlossaryTerm.NAME)
             .toRequest()
-        val response = retrySearchUntil(request, 1)
-        val topics = response.assets
-        assertEquals(1, topics.size)
-        assertEquals("test_topic", topics[0].name)
-        assertEquals(1, topics[0].assignedTerms.size)
-        assertEquals("Test Term", topics[0].assignedTerms.first().name)
-        assertNull(topics[0].description)
+        val response = retrySearchUntil(request, 2)
+        val tables = response.assets
+        assertEquals(2, tables.size)
+        tables.forEach {
+            assertTrue(it.name.startsWith("test_table"))
+            assertEquals(1, it.assignedTerms.size)
+            assertEquals("Test Term", it.assignedTerms.first().name)
+            assertNull(it.description)
+        }
     }
 
     @Test(groups = ["runUpdate"], dependsOnGroups = ["create"])
@@ -153,6 +174,7 @@ class LinkTermsTest : PackageTest() {
                 assetsUpsertSemantic = "update",
                 assetsCaseSensitive = false,
                 assetsFailOnErrors = true,
+                assetsTableViewAgnostic = true,
             ),
         )
         Importer.main(arrayOf())
@@ -161,22 +183,41 @@ class LinkTermsTest : PackageTest() {
     }
 
     @Test(groups = ["update"], dependsOnGroups = ["runUpdate"])
-    fun testRevisions() {
-        val c = Connection.findByName(connectionName, AtlanConnectorType.KAFKA)[0]!!
-        val request = KafkaTopic.select()
-            .where(KafkaTopic.QUALIFIED_NAME.startsWith(c.qualifiedName))
-            .includeOnResults(KafkaTopic.NAME)
-            .includeOnResults(KafkaTopic.ASSIGNED_TERMS)
-            .includeOnResults(KafkaTopic.DESCRIPTION)
+    fun testRevisedTable() {
+        val c = Connection.findByName(connectionName, connectorType)[0]!!
+        val request = Table.select()
+            .where(Table.QUALIFIED_NAME.startsWith(c.qualifiedName))
+            .includeOnResults(Table.NAME)
+            .includeOnResults(Table.ASSIGNED_TERMS)
+            .includeOnResults(Table.DESCRIPTION)
             .includeOnRelations(GlossaryTerm.NAME)
             .toRequest()
         val response = retrySearchUntil(request, 1)
-        val topics = response.assets
-        assertEquals(1, topics.size)
-        assertEquals("test_topic", topics[0].name)
-        assertEquals(1, topics[0].assignedTerms.size)
-        assertEquals("Test Term", topics[0].assignedTerms.first().name)
-        assertEquals("Now with description", topics[0].description)
+        val tables = response.assets
+        assertEquals(1, tables.size)
+        assertEquals("test_table1", tables[0].name)
+        assertEquals(1, tables[0].assignedTerms.size)
+        assertEquals("Test Term", tables[0].assignedTerms.first().name)
+        assertNull(tables[0].description)
+    }
+
+    @Test(groups = ["update"], dependsOnGroups = ["runUpdate"])
+    fun testRevisedView() {
+        val c = Connection.findByName(connectionName, connectorType)[0]!!
+        val request = View.select()
+            .where(View.QUALIFIED_NAME.startsWith(c.qualifiedName))
+            .includeOnResults(View.NAME)
+            .includeOnResults(View.ASSIGNED_TERMS)
+            .includeOnResults(View.DESCRIPTION)
+            .includeOnRelations(GlossaryTerm.NAME)
+            .toRequest()
+        val response = retrySearchUntil(request, 1)
+        val views = response.assets
+        assertEquals(1, views.size)
+        assertEquals("test_table2", views[0].name)
+        assertEquals(1, views[0].assignedTerms.size)
+        assertEquals("Test Term", views[0].assignedTerms.first().name)
+        assertEquals("Now with description", views[0].description)
     }
 
     @Test(dependsOnGroups = ["create", "runUpdate", "update"])
@@ -186,7 +227,7 @@ class LinkTermsTest : PackageTest() {
 
     @AfterClass(alwaysRun = true)
     fun afterClass(context: ITestContext) {
-        removeConnection(connectionName, AtlanConnectorType.KAFKA)
+        removeConnection(connectionName, connectorType)
         removeGlossary(glossaryName)
         teardown(context.failedTests.size() > 0)
     }

@@ -10,6 +10,9 @@ import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.LogicException;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.assets.IndistinctAsset;
+import com.atlan.model.assets.MaterializedView;
+import com.atlan.model.assets.Table;
+import com.atlan.model.assets.View;
 import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.core.ConnectionCreationResponse;
 import com.atlan.model.relations.Reference;
@@ -31,6 +34,9 @@ import lombok.Getter;
 @Builder
 public class AssetBatch {
 
+    private static final Set<String> TABLE_LEVEL_ASSETS =
+            Set.of(Table.TYPE_NAME, View.TYPE_NAME, MaterializedView.TYPE_NAME);
+
     public enum CustomMetadataHandling {
         IGNORE,
         OVERWRITE,
@@ -43,31 +49,44 @@ public class AssetBatch {
         NONE,
     }
 
+    /** Connectivity to an Atlan tenant. */
     private AtlanClient client;
 
+    /** Maximum number of assets to submit in each batch. */
     @Builder.Default
     private int maxSize = 20;
 
+    /** Whether to replace Atlan tags (true), or ignore them (false). */
     @Builder.Default
     private boolean replaceAtlanTags = false;
 
+    /** How to handle any custom metadata on assets (ignore, replace, or merge). */
     @Builder.Default
     private CustomMetadataHandling customMetadataHandling = CustomMetadataHandling.IGNORE;
 
+    /** Whether to capture details about any failures (true) or throw exceptions for any failures (false). */
     @Builder.Default
     private boolean captureFailures = false;
 
+    /** Whether to allow assets to be created (false) or only allow existing assets to be updated (true). */
     @Builder.Default
     private boolean updateOnly = false;
 
+    /** Whether to track the basic information about every asset that is created or updated (true) or only track counts (false). */
     @Builder.Default
     private boolean track = true;
 
+    /** When running with {@link #updateOnly} as true, whether to consider only exact matches (false) or ignore case (true). */
     @Builder.Default
     private boolean caseInsensitive = false;
 
+    /** When allowing assets to be created, how to handle those creations (full assets or partial assets). */
     @Builder.Default
     private AssetCreationHandling creationHandling = AssetCreationHandling.FULL;
+
+    /** Whether tables and views should be treated interchangeably (an asset in the batch marked as a table will attempt to match a view if not found as a table, and vice versa). */
+    @Builder.Default
+    private boolean tableViewAgnostic = false;
 
     /** Internal queue for building up assets to be saved. */
     private final List<Asset> _batch = Collections.synchronizedList(new ArrayList<>());
@@ -302,6 +321,44 @@ public class AssetBatch {
             boolean track,
             boolean caseInsensitive,
             AssetCreationHandling creationHandling) {
+        this(
+                client,
+                maxSize,
+                replaceAtlanTags,
+                customMetadataHandling,
+                captureFailures,
+                updateOnly,
+                track,
+                caseInsensitive,
+                creationHandling,
+                false);
+    }
+
+    /**
+     * Create a new batch of assets to be bulk-saved.
+     *
+     * @param client connectivity to Atlan
+     * @param maxSize maximum size of each batch that should be processed (per API call)
+     * @param replaceAtlanTags if true, all Atlan tags on an existing asset will be overwritten; if false, all Atlan tags will be ignored
+     * @param customMetadataHandling how to handle custom metadata (ignore it, replace it (wiping out anything pre-existing), or merge it)
+     * @param captureFailures when true, any failed batches will be captured and retained rather than exceptions being raised (for large amounts of processing this could cause memory issues!)
+     * @param updateOnly when true, only attempt to update existing assets and do not create any assets (note: this will incur a performance penalty)
+     * @param track when false, details about each created and updated asset will no longer be tracked (only an overall count of each) -- useful if you intend to send close to (or more than) 1 million assets through a batch
+     * @param caseInsensitive (only applies when updateOnly is true) when matching assets, search for their qualifiedName in a case-insensitive way
+     * @param creationHandling if assets are to be created, how they should be created (as full assets or only partial assets)
+     * @param tableViewAgnostic if true, tables and views will be treated interchangeably (an asset in the batch marked as a table will attempt to match a view if not found as a table, and vice versa)
+     */
+    public AssetBatch(
+            AtlanClient client,
+            int maxSize,
+            boolean replaceAtlanTags,
+            CustomMetadataHandling customMetadataHandling,
+            boolean captureFailures,
+            boolean updateOnly,
+            boolean track,
+            boolean caseInsensitive,
+            AssetCreationHandling creationHandling,
+            boolean tableViewAgnostic) {
         this.client = client;
         this.maxSize = maxSize;
         this.replaceAtlanTags = replaceAtlanTags;
@@ -311,6 +368,7 @@ public class AssetBatch {
         this.captureFailures = captureFailures;
         this.updateOnly = updateOnly;
         this.caseInsensitive = caseInsensitive;
+        this.tableViewAgnostic = tableViewAgnostic;
     }
 
     /**
@@ -351,7 +409,15 @@ public class AssetBatch {
         AssetMutationResponse response = null;
         List<Asset> revised = null;
         if (!_batch.isEmpty()) {
-            if (updateOnly || creationHandling != AssetCreationHandling.FULL) {
+            boolean fuzzyMatch = false;
+            if (tableViewAgnostic) {
+                Set<String> typesInBatch =
+                        _batch.stream().map(Asset::getTypeName).collect(Collectors.toSet());
+                fuzzyMatch = typesInBatch.contains(Table.TYPE_NAME)
+                        || typesInBatch.contains(View.TYPE_NAME)
+                        || typesInBatch.contains(MaterializedView.TYPE_NAME);
+            }
+            if (updateOnly || creationHandling != AssetCreationHandling.FULL || fuzzyMatch) {
                 Map<AssetIdentity, String> found = new HashMap<>();
                 List<String> qualifiedNames =
                         _batch.stream().map(Asset::getQualifiedName).collect(Collectors.toList());
@@ -371,39 +437,44 @@ public class AssetBatch {
                 revised = new ArrayList<>();
                 for (Asset asset : _batch) {
                     AssetIdentity assetId = new AssetIdentity(asset.getTypeName(), asset.getQualifiedName(), true);
+                    // If found, with a type match, go ahead and update it
                     if (found.containsKey(assetId)) {
                         // Replace the actual qualifiedName on the asset before adding it to the batch
                         // (in case it matched case-insensitively, we need the proper case-sensitive name we
                         // found to ensure it's an update, not a create)
-                        String actualQN = found.get(assetId);
-                        Reference.ReferenceBuilder<?, ?> assetBuilder = asset.toBuilder();
-                        Method setQualifiedName = ReflectionCache.getSetter(
-                                assetBuilder.getClass(), Asset.QUALIFIED_NAME.getAtlanFieldName());
-                        try {
-                            setQualifiedName.invoke(assetBuilder, actualQN);
-                            revised.add((Asset) assetBuilder.build());
-                        } catch (IllegalAccessException | InvocationTargetException e) {
-                            throw new LogicException(
-                                    ErrorCode.ASSET_MODIFICATION_ERROR, e, Asset.QUALIFIED_NAME.getAtlanFieldName());
+                        addFuzzyMatched(asset, asset.getTypeName(), found.get(assetId), revised);
+                    } else if (tableViewAgnostic && TABLE_LEVEL_ASSETS.contains(asset.getTypeName())) {
+                        // If found as a different (but acceptable) type, update that instead
+                        AssetIdentity asTable = new AssetIdentity(Table.TYPE_NAME, asset.getQualifiedName(), true);
+                        AssetIdentity asView = new AssetIdentity(View.TYPE_NAME, asset.getQualifiedName(), true);
+                        AssetIdentity asMaterializedView =
+                                new AssetIdentity(MaterializedView.TYPE_NAME, asset.getQualifiedName(), true);
+                        if (found.containsKey(asTable)) {
+                            addFuzzyMatched(asset, Table.TYPE_NAME, found.get(asTable), revised);
+                        } else if (found.containsKey(asView)) {
+                            addFuzzyMatched(asset, View.TYPE_NAME, found.get(asView), revised);
+                        } else if (found.containsKey(asMaterializedView)) {
+                            addFuzzyMatched(asset, MaterializedView.TYPE_NAME, found.get(asMaterializedView), revised);
+                        } else if (creationHandling == AssetCreationHandling.PARTIAL) {
+                            // Still create it (partial), if not found and partial asset creation is allowed
+                            addPartialAsset(asset, revised);
+                        } else if (creationHandling == AssetCreationHandling.FULL) {
+                            // Still create it (full), if not found and full asset creation is allowed
+                            revised = _batch;
+                        } else {
+                            // Otherwise, if it still does not match any fallback and cannot be created, skip it
+                            track(skipped, asset);
                         }
                     } else if (creationHandling == AssetCreationHandling.PARTIAL) {
                         // Append isPartial(true) onto the asset before adding it to the batch, to ensure only
                         // a partial (and not a full) asset is created
-                        Reference.ReferenceBuilder<?, ?> assetBuilder = asset.toBuilder();
-                        Method setIsPartial = ReflectionCache.getSetter(
-                                assetBuilder.getClass(), Asset.IS_PARTIAL.getAtlanFieldName());
-                        try {
-                            setIsPartial.invoke(assetBuilder, true);
-                            revised.add((Asset) assetBuilder.build());
-                        } catch (IllegalAccessException | InvocationTargetException e) {
-                            throw new LogicException(
-                                    ErrorCode.ASSET_MODIFICATION_ERROR, e, Asset.QUALIFIED_NAME.getAtlanFieldName());
-                        }
+                        addPartialAsset(asset, revised);
                     } else {
                         track(skipped, asset);
                     }
                 }
             } else {
+                // Otherwise create it (full)
                 revised = _batch;
             }
             if (!revised.isEmpty()) {
@@ -434,6 +505,35 @@ public class AssetBatch {
         }
         trackResponse(response, revised);
         return response;
+    }
+
+    private void addFuzzyMatched(Asset asset, String typeName, String actualQN, List<Asset> revised)
+            throws LogicException {
+        Reference.ReferenceBuilder<?, ?> assetBuilder = asset.toBuilder();
+        Method setQualifiedName =
+                ReflectionCache.getSetter(assetBuilder.getClass(), Asset.QUALIFIED_NAME.getAtlanFieldName());
+        Method setTypeName = ReflectionCache.getSetter(assetBuilder.getClass(), Asset.TYPE_NAME.getAtlanFieldName());
+        try {
+            setTypeName.invoke(assetBuilder, typeName);
+            setQualifiedName.invoke(assetBuilder, actualQN);
+            revised.add((Asset) assetBuilder.build());
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            throw new LogicException(
+                    ErrorCode.ASSET_MODIFICATION_ERROR,
+                    e,
+                    Asset.QUALIFIED_NAME.getAtlanFieldName() + " or " + Asset.TYPE_NAME.getAtlanFieldName());
+        }
+    }
+
+    private void addPartialAsset(Asset asset, List<Asset> revised) throws LogicException {
+        Reference.ReferenceBuilder<?, ?> assetBuilder = asset.toBuilder();
+        Method setIsPartial = ReflectionCache.getSetter(assetBuilder.getClass(), Asset.IS_PARTIAL.getAtlanFieldName());
+        try {
+            setIsPartial.invoke(assetBuilder, true);
+            revised.add((Asset) assetBuilder.build());
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            throw new LogicException(ErrorCode.ASSET_MODIFICATION_ERROR, e, Asset.QUALIFIED_NAME.getAtlanFieldName());
+        }
     }
 
     private void trackResponse(AssetMutationResponse response, List<Asset> sent) {

@@ -24,6 +24,7 @@ import mu.KotlinLogging
  * @param batchSize maximum number of records to save per API request
  * @param caseSensitive (only applies when updateOnly is true) attempt to match assets case-sensitively (true) or case-insensitively (false)
  * @param creationHandling if assets are to be created, how they should be created (as full assets or only partial assets)
+ * @param tableViewAgnostic if true, tables and views will be treated interchangeably (an asset in the batch marked as a table will attempt to match a view if not found as a table, and vice versa)
  */
 class AssetImporter(
     private val filename: String,
@@ -32,6 +33,7 @@ class AssetImporter(
     private val batchSize: Int,
     private val caseSensitive: Boolean = true,
     private val creationHandling: AssetCreationHandling = AssetCreationHandling.NONE,
+    private val tableViewAgnostic: Boolean = false,
 ) : CSVImporter(
     filename,
     logger = KotlinLogging.logger {},
@@ -40,6 +42,7 @@ class AssetImporter(
     batchSize = batchSize,
     caseSensitive = caseSensitive,
     creationHandling = creationHandling,
+    tableViewAgnostic = tableViewAgnostic,
 ) {
     /** {@inheritDoc} */
     override fun getBuilder(deserializer: RowDeserializer): Asset.AssetBuilder<*, *> {
