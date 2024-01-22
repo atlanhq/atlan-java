@@ -114,7 +114,7 @@ class AssetRemover(
         }
         val reader = builder.build(inputFile)
         val set = mutableSetOf<AssetBatch.AssetIdentity>()
-        reader.stream().skip(1).parallel().forEach { r: CsvRow ->
+        reader.stream().skip(1).forEach { r: CsvRow ->
             val values = r.fields
             val typeName = values[typeIdx]!!
             val qnDetails = AssetImporter.getQualifiedNameDetails(values, header, typeName)
