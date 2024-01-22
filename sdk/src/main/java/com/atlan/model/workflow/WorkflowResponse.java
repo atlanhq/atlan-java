@@ -100,7 +100,7 @@ public class WorkflowResponse extends ApiResource {
                 if (log != null) {
                     log.atLevel(level).log("Workflow {}: {}", name, status);
                 }
-                elapsed = (start - System.currentTimeMillis()) / 1000;
+                elapsed = (System.currentTimeMillis() - start) / 1000;
             } while (status != AtlanWorkflowPhase.SUCCESS
                     && status != AtlanWorkflowPhase.ERROR
                     && status != AtlanWorkflowPhase.FAILED
