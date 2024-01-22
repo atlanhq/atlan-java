@@ -70,6 +70,50 @@ class S3Sync(
     }
 
     /**
+     * Copy the latest file we can find in the specified prefix, with the specified extension, to
+     * the provided local directory location.
+     * Note: this relies on the keys of the objects in the prefix being sortable. (They will be
+     * sorted in descending order, and the first one chosen as the latest.)
+     *
+     * @param s3Prefix from which to copy the file
+     * @param extension unique extension the file must have to be copied
+     * @param localDirectory into which to copy the file
+     * @return true if any files were copied, otherwise false
+     */
+    fun copyLatestFromS3(s3Prefix: String, extension: String, localDirectory: String): String {
+        logger.info { "Copying latest $extension file from s3://$bucketName/$s3Prefix to $localDirectory" }
+
+        val s3Client = S3Client.builder().region(Region.of(region)).build()
+        val request = ListObjectsV2Request.builder()
+            .bucket(bucketName)
+            .prefix(s3Prefix)
+            .build()
+
+        val s3FilesToDownload = mutableListOf<String>()
+        s3Client.listObjectsV2(request).contents().forEach { file ->
+            val key = File(file.key()).relativeTo(File(s3Prefix)).path
+            if (key.isNotBlank() && key.endsWith(extension)) {
+                s3FilesToDownload.add(key)
+            }
+        }
+        s3FilesToDownload.sortDescending()
+        val latestFile = if (s3FilesToDownload.isNotEmpty()) {
+            s3FilesToDownload[0]
+        } else {
+            ""
+        }
+
+        if (latestFile.isNotBlank()) {
+            downloadFromS3(
+                s3Client,
+                File(s3Prefix, latestFile).path,
+                File(localDirectory, latestFile).path,
+            )
+        }
+        return latestFile
+    }
+
+    /**
      * Download a single file from the provided S3 object key to the specified local file.
      *
      * @param s3ObjectKey from which to download the file
