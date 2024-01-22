@@ -52,6 +52,6 @@ class AssetImporter(
 
     /** {@inheritDoc} */
     override fun includeRow(row: List<String>, header: List<String>, typeIdx: Int, qnIdx: Int): Boolean {
-        return true
+        return row.size >= typeIdx && row[typeIdx].isNotBlank()
     }
 }
