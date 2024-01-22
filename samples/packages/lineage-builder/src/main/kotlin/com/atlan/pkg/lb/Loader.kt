@@ -70,7 +70,7 @@ object Loader {
 
             // 1. Transform the assets, so we can load the prior to creating any lineage relationships
             logger.info { "=== Processing assets... ===" }
-            val assetsFile = "$outputDirectory${File.separator}/assets.csv"
+            val assetsFile = "$outputDirectory${File.separator}CSA_LB_assets.csv"
             val assetXform = AssetTransformer(ctx, lineageInput, logger)
             assetXform.transform(assetsFile)
 
@@ -87,7 +87,7 @@ object Loader {
 
             // 3. Transform the lineage, only keeping any rows that have both input and output assets in Atlan
             logger.info { "=== Processing lineage... ===" }
-            val lineageFile = "$outputDirectory${File.separator}/lineage.csv"
+            val lineageFile = "$outputDirectory${File.separator}CSA_LB_lineage.csv"
             val lineageXform = LineageTransformer(ctx, lineageInput, qualifiedNameMap, logger)
             lineageXform.transform(lineageFile)
 
