@@ -30,7 +30,7 @@ object EnrichmentMigrator {
             includeGlossaries = false,
         )
         Exporter.export(extractConfig, outputDirectory)
-        val extractFile = "$outputDirectory${File.separator}/asset-export.csv"
+        val extractFile = "$outputDirectory${File.separator}CSA_EM_asset-export.csv"
 
         // 2. Transform to the target metadata assets (limiting attributes as requested)
         val attributeLimits = Utils.getOrDefault(config.attributesList, listOf())
@@ -76,7 +76,7 @@ object EnrichmentMigrator {
             sourceConnectionQN = sourceConnectionQN,
             targetConnectionQN = targetConnectionQN,
         )
-        val transformedFile = "$outputDirectory${File.separator}/transformed.csv"
+        val transformedFile = "$outputDirectory${File.separator}CSA_EM_transformed.csv"
         val transformer = Transformer(ctx, extractFile, header.toList(), logger)
         transformer.transform(transformedFile)
 
