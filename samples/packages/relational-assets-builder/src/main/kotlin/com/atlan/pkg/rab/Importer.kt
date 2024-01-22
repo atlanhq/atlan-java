@@ -124,7 +124,7 @@ object Importer {
         val fieldSeparator = ','
         val quoteCharacter = '"'
         val inputFile = Paths.get(originalFile)
-        val revisedFile = Paths.get("CSA_RAB_$originalFile.pp.csv")
+        val revisedFile = Paths.get("$originalFile.CSA_RAB.csv")
 
         // Open the CSV reader and writer
         val reader = CsvReader.builder()
