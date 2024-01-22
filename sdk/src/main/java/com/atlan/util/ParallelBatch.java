@@ -7,27 +7,64 @@ import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.core.AssetMutationResponse;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import lombok.Builder;
 
+/**
+ * Utility class for managing bulk updates across multiple parallel-running batches.
+ */
+@Builder
 public class ParallelBatch {
 
-    private final AtlanClient client;
-    private final int maxSize;
-    private final boolean replaceAtlanTags;
-    private final AssetBatch.CustomMetadataHandling customMetadataHandling;
-    private final boolean captureFailures;
-    private final boolean updateOnly;
-    private final Map<Long, AssetBatch> batchMap;
+    /** Connectivity to an Atlan tenant. */
+    private AtlanClient client;
 
-    private List<Asset> created = null;
-    private List<Asset> updated = null;
-    private List<AssetBatch.FailedBatch> failures = null;
-    private List<Asset> skipped = null;
-    private Map<String, String> resolvedGuids = null;
+    /** Maximum number of assets to submit in each batch. */
+    @Builder.Default
+    private int maxSize = 20;
+
+    /** Whether to replace Atlan tags (true), or ignore them (false). */
+    @Builder.Default
+    private boolean replaceAtlanTags = false;
+
+    /** How to handle any custom metadata on assets (ignore, replace, or merge). */
+    @Builder.Default
+    private AssetBatch.CustomMetadataHandling customMetadataHandling = AssetBatch.CustomMetadataHandling.IGNORE;
+
+    /** Whether to capture details about any failures (true) or throw exceptions for any failures (false). */
+    @Builder.Default
+    private boolean captureFailures = false;
+
+    /** Whether to track the basic information about every asset that is created or updated (true) or only track counts (false). */
+    @Builder.Default
+    private boolean track = true;
+
+    /** Whether to allow assets to be created (false) or only allow existing assets to be updated (true). */
+    @Builder.Default
+    private boolean updateOnly = false;
+
+    /** When running with {@link #updateOnly} as true, whether to consider only exact matches (false) or ignore case (true). */
+    @Builder.Default
+    private boolean caseSensitive = true;
+
+    /** When allowing assets to be created, how to handle those creations (full assets or partial assets). */
+    @Builder.Default
+    private AssetBatch.AssetCreationHandling creationHandling = AssetBatch.AssetCreationHandling.FULL;
+
+    /** Whether tables and views should be treated interchangeably (an asset in the batch marked as a table will attempt to match a view if not found as a table, and vice versa). */
+    @Builder.Default
+    private boolean tableViewAgnostic = false;
+
+    private final Map<Long, AssetBatch> batchMap = new ConcurrentHashMap<>();
+    private final List<Asset> created = new ArrayList<>();
+    private final List<Asset> updated = new ArrayList<>();
+    private final List<AssetBatch.FailedBatch> failures = new ArrayList<>();
+    private final List<Asset> skipped = new ArrayList<>();
+    private final Map<String, String> resolvedGuids = new HashMap<>();
+    private final Map<AssetBatch.AssetIdentity, String> resolvedQualifiedNames = new HashMap<>();
 
     /**
      * Create a new batch of assets to be bulk-saved, in parallel (across threads).
@@ -90,13 +127,135 @@ public class ParallelBatch {
             AssetBatch.CustomMetadataHandling customMetadataHandling,
             boolean captureFailures,
             boolean updateOnly) {
+        this(client, maxSize, replaceAtlanTags, customMetadataHandling, captureFailures, updateOnly, true);
+    }
+
+    /**
+     * Create a new batch of assets to be bulk-saved, in parallel (across threads).
+     *
+     * @param client connectivity to Atlan
+     * @param maxSize maximum size of each batch that should be processed (per API call)
+     * @param replaceAtlanTags if true, all Atlan tags on an existing asset will be overwritten; if false, all Atlan tags will be ignored
+     * @param customMetadataHandling how to handle custom metadata (ignore it, replace it (wiping out anything pre-existing), or merge it)
+     * @param captureFailures when true, any failed batches will be captured and retained rather than exceptions being raised (for large amounts of processing this could cause memory issues!)
+     * @param updateOnly when true, only attempt to update existing assets and do not create any assets (note: this will incur a performance penalty)
+     * @param track when false, details about each created and updated asset will no longer be tracked (only an overall count of each) -- useful if you intend to send close to (or more than) 1 million assets through a batch
+     */
+    public ParallelBatch(
+            AtlanClient client,
+            int maxSize,
+            boolean replaceAtlanTags,
+            AssetBatch.CustomMetadataHandling customMetadataHandling,
+            boolean captureFailures,
+            boolean updateOnly,
+            boolean track) {
+        this(client, maxSize, replaceAtlanTags, customMetadataHandling, captureFailures, updateOnly, track, true);
+    }
+
+    /**
+     * Create a new batch of assets to be bulk-saved, in parallel (across threads).
+     *
+     * @param client connectivity to Atlan
+     * @param maxSize maximum size of each batch that should be processed (per API call)
+     * @param replaceAtlanTags if true, all Atlan tags on an existing asset will be overwritten; if false, all Atlan tags will be ignored
+     * @param customMetadataHandling how to handle custom metadata (ignore it, replace it (wiping out anything pre-existing), or merge it)
+     * @param captureFailures when true, any failed batches will be captured and retained rather than exceptions being raised (for large amounts of processing this could cause memory issues!)
+     * @param updateOnly when true, only attempt to update existing assets and do not create any assets (note: this will incur a performance penalty)
+     * @param track when false, details about each created and updated asset will no longer be tracked (only an overall count of each) -- useful if you intend to send close to (or more than) 1 million assets through a batch
+     * @param caseSensitive (only applies when updateOnly is true) attempt to match assets case-sensitively (true) or case-insensitively (false)
+     */
+    public ParallelBatch(
+            AtlanClient client,
+            int maxSize,
+            boolean replaceAtlanTags,
+            AssetBatch.CustomMetadataHandling customMetadataHandling,
+            boolean captureFailures,
+            boolean updateOnly,
+            boolean track,
+            boolean caseSensitive) {
+        this(
+                client,
+                maxSize,
+                replaceAtlanTags,
+                customMetadataHandling,
+                captureFailures,
+                updateOnly,
+                track,
+                caseSensitive,
+                AssetBatch.AssetCreationHandling.FULL);
+    }
+
+    /**
+     * Create a new batch of assets to be bulk-saved, in parallel (across threads).
+     *
+     * @param client connectivity to Atlan
+     * @param maxSize maximum size of each batch that should be processed (per API call)
+     * @param replaceAtlanTags if true, all Atlan tags on an existing asset will be overwritten; if false, all Atlan tags will be ignored
+     * @param customMetadataHandling how to handle custom metadata (ignore it, replace it (wiping out anything pre-existing), or merge it)
+     * @param captureFailures when true, any failed batches will be captured and retained rather than exceptions being raised (for large amounts of processing this could cause memory issues!)
+     * @param updateOnly when true, only attempt to update existing assets and do not create any assets (note: this will incur a performance penalty)
+     * @param track when false, details about each created and updated asset will no longer be tracked (only an overall count of each) -- useful if you intend to send close to (or more than) 1 million assets through a batch
+     * @param caseSensitive (only applies when updateOnly is true) attempt to match assets case-sensitively (true) or case-insensitively (false)
+     * @param creationHandling if assets are to be created, how they should be created (as full assets or only partial assets)
+     */
+    public ParallelBatch(
+            AtlanClient client,
+            int maxSize,
+            boolean replaceAtlanTags,
+            AssetBatch.CustomMetadataHandling customMetadataHandling,
+            boolean captureFailures,
+            boolean updateOnly,
+            boolean track,
+            boolean caseSensitive,
+            AssetBatch.AssetCreationHandling creationHandling) {
+        this(
+                client,
+                maxSize,
+                replaceAtlanTags,
+                customMetadataHandling,
+                captureFailures,
+                updateOnly,
+                track,
+                caseSensitive,
+                creationHandling,
+                false);
+    }
+
+    /**
+     * Create a new batch of assets to be bulk-saved, in parallel (across threads).
+     *
+     * @param client connectivity to Atlan
+     * @param maxSize maximum size of each batch that should be processed (per API call)
+     * @param replaceAtlanTags if true, all Atlan tags on an existing asset will be overwritten; if false, all Atlan tags will be ignored
+     * @param customMetadataHandling how to handle custom metadata (ignore it, replace it (wiping out anything pre-existing), or merge it)
+     * @param captureFailures when true, any failed batches will be captured and retained rather than exceptions being raised (for large amounts of processing this could cause memory issues!)
+     * @param updateOnly when true, only attempt to update existing assets and do not create any assets (note: this will incur a performance penalty)
+     * @param track when false, details about each created and updated asset will no longer be tracked (only an overall count of each) -- useful if you intend to send close to (or more than) 1 million assets through a batch
+     * @param caseSensitive (only applies when updateOnly is true) attempt to match assets case-sensitively (true) or case-insensitively (false)
+     * @param creationHandling if assets are to be created, how they should be created (as full assets or only partial assets)
+     * @param tableViewAgnostic if true, tables and views will be treated interchangeably (an asset in the batch marked as a table will attempt to match a view if not found as a table, and vice versa)
+     */
+    public ParallelBatch(
+            AtlanClient client,
+            int maxSize,
+            boolean replaceAtlanTags,
+            AssetBatch.CustomMetadataHandling customMetadataHandling,
+            boolean captureFailures,
+            boolean updateOnly,
+            boolean track,
+            boolean caseSensitive,
+            AssetBatch.AssetCreationHandling creationHandling,
+            boolean tableViewAgnostic) {
         this.client = client;
         this.maxSize = maxSize;
         this.replaceAtlanTags = replaceAtlanTags;
         this.customMetadataHandling = customMetadataHandling;
         this.captureFailures = captureFailures;
+        this.track = track;
         this.updateOnly = updateOnly;
-        this.batchMap = new ConcurrentHashMap<>();
+        this.caseSensitive = caseSensitive;
+        this.creationHandling = creationHandling;
+        this.tableViewAgnostic = tableViewAgnostic;
     }
 
     /**
@@ -112,7 +271,16 @@ public class ParallelBatch {
             batchMap.put(
                     id,
                     new AssetBatch(
-                            client, maxSize, replaceAtlanTags, customMetadataHandling, captureFailures, updateOnly));
+                            client,
+                            maxSize,
+                            replaceAtlanTags,
+                            customMetadataHandling,
+                            captureFailures,
+                            updateOnly,
+                            track,
+                            !caseSensitive,
+                            creationHandling,
+                            tableViewAgnostic));
         }
         return batchMap.get(id).add(single);
     }
@@ -133,17 +301,44 @@ public class ParallelBatch {
     }
 
     /**
+     * Number of assets that were created (no details, only a count).
+     *
+     * @return a count of the number of created assets, across all parallel batches
+     */
+    public long getNumCreated() {
+        long count = 0;
+        for (AssetBatch batch : batchMap.values()) {
+            count += batch.getNumCreated().get();
+        }
+        return count;
+    }
+
+    /**
+     * Number of assets that were updated (no details, only a count).
+     *
+     * @return a count of the number of updated assets, across all parallel batches
+     */
+    public long getNumUpdated() {
+        long count = 0;
+        for (AssetBatch batch : batchMap.values()) {
+            count += batch.getNumUpdated().get();
+        }
+        return count;
+    }
+
+    /**
      * Assets that were created (minimal info only).
      *
      * @return all created assets, across all parallel batches
      */
     public List<Asset> getCreated() {
-        if (created == null) {
-            List<Asset> list = new ArrayList<>();
+        if (!track) {
+            return null;
+        }
+        if (created.isEmpty()) {
             for (AssetBatch batch : batchMap.values()) {
-                list.addAll(batch.getCreated());
+                created.addAll(batch.getCreated());
             }
-            created = Collections.unmodifiableList(list);
         }
         return created;
     }
@@ -154,12 +349,13 @@ public class ParallelBatch {
      * @return all updated assets, across all parallel batches
      */
     public List<Asset> getUpdated() {
-        if (updated == null) {
-            List<Asset> list = new ArrayList<>();
+        if (!track) {
+            return null;
+        }
+        if (updated.isEmpty()) {
             for (AssetBatch batch : batchMap.values()) {
-                list.addAll(batch.getUpdated());
+                updated.addAll(batch.getUpdated());
             }
-            updated = Collections.unmodifiableList(list);
         }
         return updated;
     }
@@ -170,12 +366,10 @@ public class ParallelBatch {
      * @return all batches that failed, across all parallel batches
      */
     public List<AssetBatch.FailedBatch> getFailures() {
-        if (failures == null) {
-            List<AssetBatch.FailedBatch> list = new ArrayList<>();
+        if (failures.isEmpty()) {
             for (AssetBatch batch : batchMap.values()) {
-                list.addAll(batch.getFailures());
+                failures.addAll(batch.getFailures());
             }
-            failures = Collections.unmodifiableList(list);
         }
         return failures;
     }
@@ -186,12 +380,10 @@ public class ParallelBatch {
      * @return all assets that were skipped, across all parallel batches
      */
     public List<Asset> getSkipped() {
-        if (skipped == null) {
-            List<Asset> list = new ArrayList<>();
+        if (skipped.isEmpty()) {
             for (AssetBatch batch : batchMap.values()) {
-                list.addAll(batch.getSkipped());
+                skipped.addAll(batch.getSkipped());
             }
-            skipped = Collections.unmodifiableList(list);
         }
         return skipped;
     }
@@ -202,13 +394,27 @@ public class ParallelBatch {
      * @return all resolved GUIDs, across all parallel batches
      */
     public Map<String, String> getResolvedGuids() {
-        if (resolvedGuids == null) {
-            Map<String, String> map = new HashMap<>();
+        if (resolvedGuids.isEmpty()) {
             for (AssetBatch batch : batchMap.values()) {
-                map.putAll(batch.getResolvedGuids());
+                resolvedGuids.putAll(batch.getResolvedGuids());
             }
-            resolvedGuids = Collections.unmodifiableMap(map);
         }
         return resolvedGuids;
+    }
+
+    /**
+     * Map from case-insensitive qualifiedName to resolved (actual) qualifiedName,
+     * for all assets that were processed through the batch.
+     * Note: this is only populated when caseSensitive is false, and will otherwise be empty
+     *
+     * @return all resolved qualifiedNames, across all parallel batches
+     */
+    public Map<AssetBatch.AssetIdentity, String> getResolvedQualifiedNames() {
+        if (resolvedQualifiedNames.isEmpty()) {
+            for (AssetBatch batch : batchMap.values()) {
+                resolvedQualifiedNames.putAll(batch.getResolvedQualifiedNames());
+            }
+        }
+        return resolvedQualifiedNames;
     }
 }

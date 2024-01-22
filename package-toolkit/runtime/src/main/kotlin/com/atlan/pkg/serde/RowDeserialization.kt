@@ -4,6 +4,7 @@ package com.atlan.pkg.serde
 
 import com.atlan.model.assets.Asset
 import com.atlan.model.fields.AtlanField
+import com.atlan.util.AssetBatch
 
 /**
  * Data class to encapsulate a deserialized row of data from a tabular format.
@@ -14,17 +15,8 @@ import com.atlan.model.fields.AtlanField
  * @param delete a set of fields representing values that should be cleared (deleted) from an asset
  */
 data class RowDeserialization(
-    val identity: AssetIdentity,
+    val identity: AssetBatch.AssetIdentity,
     val primary: Asset.AssetBuilder<*, *>,
     val related: MutableMap<String, Collection<Asset>> = mutableMapOf(),
     val delete: MutableSet<AtlanField> = mutableSetOf(),
-) {
-    /**
-     * Unique way that assets will be identified. The combination of these two parameters
-     * guarantees a unique asset in Atlan.
-     *
-     * @param typeName type of the asset
-     * @param qualifiedName unique name of the asset
-     */
-    data class AssetIdentity(val typeName: String, val qualifiedName: String)
-}
+)

@@ -19,8 +19,8 @@ import kotlin.test.assertNotNull
  */
 class InvalidUsersGroupsTest : PackageTest() {
 
-    private val glossary1 = makeUnique("g1")
-    private val glossary2 = makeUnique("g2")
+    private val glossary1 = makeUnique("iugg1")
+    private val glossary2 = makeUnique("iugg2")
 
     private val testFile = "input.csv"
 

@@ -270,6 +270,9 @@ public interface ISchemaRegistrySubject {
     /** List of tags attached to this asset. */
     SortedSet<String> getAssetTags();
 
+    /** Color (in hexadecimal RGB) to use to represent this asset. */
+    String getAssetThemeHex();
+
     /** TBC */
     SortedSet<IAsset> getAssets();
 

@@ -20,7 +20,7 @@ import kotlin.test.assertNotNull
  */
 class ImportPetStoreTest : PackageTest() {
 
-    private val testId = makeUnique("swagger")
+    private val testId = makeUnique("oapi")
     private val files = listOf(
         "debug.log",
     )
@@ -49,15 +49,16 @@ class ImportPetStoreTest : PackageTest() {
     @Test
     fun specCreated() {
         val connectionQN = Connection.findByName(testId, AtlanConnectorType.API)?.get(0)?.qualifiedName!!
-        val results = APISpec.select()
+        val request = APISpec.select()
             .where(APISpec.QUALIFIED_NAME.startsWith(connectionQN))
             .includeOnResults(APISpec.NAME)
             .includeOnResults(APISpec.API_SPEC_TYPE)
             .includeOnResults(APISpec.API_SPEC_LICENSE_URL)
             .includeOnResults(APISpec.API_SPEC_TERMS_OF_SERVICE_URL)
             .includeOnResults(APISpec.API_IS_AUTH_OPTIONAL)
-            .stream()
-            .toList()
+            .toRequest()
+        val response = retrySearchUntil(request, 1)
+        val results = response.stream().toList()
         assertEquals(1, results.size)
         val one = results[0] as APISpec
         assertEquals("Swagger Petstore - OpenAPI 3.0", one.name)
@@ -71,7 +72,7 @@ class ImportPetStoreTest : PackageTest() {
     @Test
     fun pathsCreated() {
         val connectionQN = Connection.findByName(testId, AtlanConnectorType.API)?.get(0)?.qualifiedName!!
-        val results = APIPath.select()
+        val request = APIPath.select()
             .where(APIPath.QUALIFIED_NAME.startsWith(connectionQN))
             .includeOnResults(APIPath.NAME)
             .includeOnResults(APIPath.DESCRIPTION)
@@ -79,8 +80,9 @@ class ImportPetStoreTest : PackageTest() {
             .includeOnResults(APIPath.API_PATH_AVAILABLE_OPERATIONS)
             .includeOnResults(APIPath.API_SPEC)
             .includeOnRelations(APISpec.QUALIFIED_NAME)
-            .stream()
-            .toList()
+            .toRequest()
+        val response = retrySearchUntil(request, 13)
+        val results = response.stream().toList()
         assertEquals(13, results.size)
         results.forEach {
             val one = it as APIPath

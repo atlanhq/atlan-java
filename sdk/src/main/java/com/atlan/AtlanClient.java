@@ -118,6 +118,9 @@ public class AtlanClient {
     /** Endpoint with operations to manage query parsing. */
     public final QueryParserEndpoint queryParser;
 
+    /** Endpoint with operations to run SQL queries. */
+    public final QueriesEndpoint queries;
+
     /** Endpoint with operations to manage playbooks. */
     public final PlaybooksEndpoint playbooks;
 
@@ -183,6 +186,7 @@ public class AtlanClient {
         users = new UsersEndpoint(this);
         workflows = new WorkflowsEndpoint(this);
         queryParser = new QueryParserEndpoint(this);
+        queries = new QueriesEndpoint(this);
         playbooks = new PlaybooksEndpoint(this);
         logs = new LogsEndpoint(this);
         images = new ImagesEndpoint(this);
@@ -195,9 +199,9 @@ public class AtlanClient {
         atlanTagCache = new AtlanTagCache(typeDefs);
         customMetadataCache = new CustomMetadataCache(typeDefs);
         enumCache = new EnumCache(typeDefs);
-        groupCache = new GroupCache();
+        groupCache = new GroupCache(groups);
         roleCache = new RoleCache(roles);
-        userCache = new UserCache();
+        userCache = new UserCache(users, apiTokens);
         assetDeserializer = new AssetDeserializer(this);
         customMetadataAuditDeserializer = new CustomMetadataAuditDeserializer(this);
         atlanTagDeserializer = new AtlanTagDeserializer(this);

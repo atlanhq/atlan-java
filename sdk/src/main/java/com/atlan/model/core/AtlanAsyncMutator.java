@@ -10,7 +10,7 @@ import com.atlan.exception.ApiException;
 public interface AtlanAsyncMutator {
 
     /** Maximum number of times to retry for async operations. */
-    int MAX_ASYNC_RETRIES = 30;
+    int MAX_ASYNC_RETRIES = 60;
 
     /**
      * Block until the mutating operation is confirmed to be completed.

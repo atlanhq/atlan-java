@@ -90,12 +90,13 @@ object FieldSerde {
      * is stored as custom metadata.
      *
      * @param value the single field's value
+     * @param multiValued true if the custom attribute allows multiple values, otherwise false
      * @return the deserialized form of that field's value
      */
-    fun getCustomMetadataValueFromString(value: String?): Any? {
+    fun getCustomMetadataValueFromString(value: String?, multiValued: Boolean): Any? {
         return if (value.isNullOrEmpty()) {
             null
-        } else if (value.contains(CellXformer.LIST_DELIMITER)) {
+        } else if (multiValued) {
             getMultiValuedCustomMetadata(value)
         } else {
             value
@@ -121,5 +122,18 @@ object FieldSerde {
         val method = assetClass.getMethod("_internal")
         return (method.invoke(null) as Asset.AssetBuilder<*, *>)
             .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+    }
+
+    /**
+     * Get a relationship by qualifiedName for the provided asset type.
+     *
+     * @param typeName name of the asset type for which to get a relationship
+     * @param qualifiedName of the asset for which to get a relationship
+     * @return a relationship reference for that asset
+     */
+    fun getRefByQualifiedName(typeName: String, qualifiedName: String): Asset {
+        val assetClass = Serde.getAssetClassForType(typeName)
+        val method = assetClass.getMethod("refByQualifiedName", String::class.java)
+        return (method.invoke(null, qualifiedName) as Asset)
     }
 }

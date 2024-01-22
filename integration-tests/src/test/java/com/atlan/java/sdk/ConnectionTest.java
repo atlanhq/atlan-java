@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
+import org.slf4j.event.Level;
 import org.testng.annotations.Test;
 
 /**
@@ -107,9 +108,17 @@ public class ConnectionTest extends AtlanLiveTest {
             // If we get here we've succeeded in running, so we'll reset our retry counter
             retryCount.set(0);
             String workflowName = response.getMetadata().getName();
-            AtlanWorkflowPhase state = response.monitorStatus(log);
+            AtlanWorkflowPhase state = response.monitorStatus(log, Level.INFO, 420L);
             assertNotNull(state);
-            assertEquals(state, AtlanWorkflowPhase.SUCCESS);
+            if (state == AtlanWorkflowPhase.RUNNING) {
+                // If still running after 7 minutes, stop it (so it can then be archived)
+                log.warn("Stopping hung workflow...");
+                response = response.stop();
+                state = response.monitorStatus(log, Level.INFO, 60L);
+                assertEquals(state, AtlanWorkflowPhase.FAILED);
+            } else {
+                assertEquals(state, AtlanWorkflowPhase.SUCCESS);
+            }
             client.workflows.archive(workflowName);
         } catch (InvalidRequestException e) {
             // Can happen if two deletion workflows are run at the same time,

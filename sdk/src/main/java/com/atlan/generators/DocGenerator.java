@@ -26,10 +26,12 @@ public class DocGenerator extends AbstractGenerator {
 
     private void generateAssetDocs() throws Exception {
         Template docTemplate = ftl.getTemplate("asset_doc.ftl");
-        Template javaPropertySnippetTemplate = ftl.getTemplate("snippet_java_properties.ftl");
-        Template javaRelationshipSnippetTemplate = ftl.getTemplate("snippet_java_relationships.ftl");
-        Template rawPropertySnippetTemplate = ftl.getTemplate("snippet_raw_properties.ftl");
-        Template rawRelationshipSnippetTemplate = ftl.getTemplate("snippet_raw_relationships.ftl");
+        Template propertySnippetTemplate = ftl.getTemplate("snippet_properties.ftl");
+        Template relationshipSnippetTemplate = ftl.getTemplate("snippet_relationships.ftl");
+        // Template javaPropertySnippetTemplate = ftl.getTemplate("snippet_java_properties.ftl");
+        // Template javaRelationshipSnippetTemplate = ftl.getTemplate("snippet_java_relationships.ftl");
+        // Template rawPropertySnippetTemplate = ftl.getTemplate("snippet_raw_properties.ftl");
+        // Template rawRelationshipSnippetTemplate = ftl.getTemplate("snippet_raw_relationships.ftl");
         for (EntityDef entityDef : cache.getEntityDefCache().values()) {
             if (cfg.includeTypedef(entityDef)) {
                 AssetGenerator assetGen = cache.getAssetGenerator(entityDef.getName());
@@ -49,7 +51,23 @@ public class DocGenerator extends AbstractGenerator {
                     log.error("Unable to open file output: {}", filename, e);
                 }
                 // Then the snippets
-                String javaSnippets = AssetDocGenerator.DIRECTORY + File.separator + "snippets" + File.separator
+                String snippets = AssetDocGenerator.DIRECTORY + File.separator + "snippets" + File.separator + "model";
+                createDirectoryIdempotent(snippets);
+                filename = snippets + File.separator + originalName + "-properties.md";
+                try (BufferedWriter fs = new BufferedWriter(
+                        new OutputStreamWriter(new FileOutputStream(filename), StandardCharsets.UTF_8))) {
+                    propertySnippetTemplate.process(generator, fs);
+                } catch (IOException e) {
+                    log.error("Unable to open file output: {}", filename, e);
+                }
+                filename = snippets + File.separator + originalName + "-relationships.md";
+                try (BufferedWriter fs = new BufferedWriter(
+                        new OutputStreamWriter(new FileOutputStream(filename), StandardCharsets.UTF_8))) {
+                    relationshipSnippetTemplate.process(generator, fs);
+                } catch (IOException e) {
+                    log.error("Unable to open file output: {}", filename, e);
+                }
+                /*String javaSnippets = AssetDocGenerator.DIRECTORY + File.separator + "snippets" + File.separator
                         + "model" + File.separator + "java";
                 createDirectoryIdempotent(javaSnippets);
                 filename = javaSnippets + File.separator + originalName + "-properties.md";
@@ -82,7 +100,7 @@ public class DocGenerator extends AbstractGenerator {
                     rawRelationshipSnippetTemplate.process(generator, fs);
                 } catch (IOException e) {
                     log.error("Unable to open file output: {}", filename, e);
-                }
+                }*/
             }
         }
     }
@@ -107,8 +125,9 @@ public class DocGenerator extends AbstractGenerator {
 
     private void generateStructDocs() throws Exception {
         Template docTemplate = ftl.getTemplate("struct_doc.ftl");
-        Template javaPropertySnippetTemplate = ftl.getTemplate("snippet_java_properties_struct.ftl");
-        Template rawPropertySnippetTemplate = ftl.getTemplate("snippet_raw_properties_struct.ftl");
+        Template propertySnippetTemplate = ftl.getTemplate("snippet_properties_struct.ftl");
+        // Template javaPropertySnippetTemplate = ftl.getTemplate("snippet_java_properties_struct.ftl");
+        // Template rawPropertySnippetTemplate = ftl.getTemplate("snippet_raw_properties_struct.ftl");
         for (StructDef structDef : cache.getStructDefCache().values()) {
             StructGenerator structGen = new StructGenerator(structDef, cfg);
             String originalName = structGen.getOriginalName().toLowerCase(Locale.ROOT);
@@ -123,7 +142,16 @@ public class DocGenerator extends AbstractGenerator {
                 log.error("Unable to open file output: {}", filename, e);
             }
             // Then the snippets
-            String javaSnippets = AssetDocGenerator.DIRECTORY + File.separator + "snippets" + File.separator + "model"
+            String snippets = AssetDocGenerator.DIRECTORY + File.separator + "snippets" + File.separator + "model";
+            createDirectoryIdempotent(snippets);
+            filename = snippets + File.separator + originalName + "-properties.md";
+            try (BufferedWriter fs = new BufferedWriter(
+                    new OutputStreamWriter(new FileOutputStream(filename), StandardCharsets.UTF_8))) {
+                propertySnippetTemplate.process(structGen, fs);
+            } catch (IOException e) {
+                log.error("Unable to open file output: {}", filename, e);
+            }
+            /*String javaSnippets = AssetDocGenerator.DIRECTORY + File.separator + "snippets" + File.separator + "model"
                     + File.separator + "java";
             createDirectoryIdempotent(javaSnippets);
             filename = javaSnippets + File.separator + originalName + "-properties.md";
@@ -142,7 +170,7 @@ public class DocGenerator extends AbstractGenerator {
                 rawPropertySnippetTemplate.process(structGen, fs);
             } catch (IOException e) {
                 log.error("Unable to open file output: {}", filename, e);
-            }
+            }*/
         }
     }
 

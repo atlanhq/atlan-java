@@ -25,7 +25,6 @@ public class ApiTokenTest {
                     .displayName("displayName")
                     .persona(ApiToken.ApiTokenPersona.of("id1", "default_persona1", "default/persona1"))
                     .persona(ApiToken.ApiTokenPersona.of("id2", "default_persona2", "default/persona2"))
-                    .purposes("purposes")
                     .workspacePermission("abc")
                     .workspacePermission("def")
                     .build())

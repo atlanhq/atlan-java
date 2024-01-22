@@ -322,6 +322,9 @@ public interface IGlossaryTerm {
     SortedSet<String> getAssetTags();
 
     /** TBC */
+    String getAssetThemeHex();
+
+    /** TBC */
     SortedSet<IAsset> getAssignedEntities();
 
     /** TBC */

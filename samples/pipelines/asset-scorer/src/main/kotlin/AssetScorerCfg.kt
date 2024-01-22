@@ -16,7 +16,7 @@ import javax.annotation.processing.Generated
 data class AssetScorerCfg(
     @JsonDeserialize(using = WidgetSerde.MultiSelectDeserializer::class)
     @JsonSerialize(using = WidgetSerde.MultiSelectSerializer::class)
-    @JsonProperty("asset_types") val assetTypes: List<String>?,
-    @JsonProperty("credential_usage") val credentialUsage: String?,
-    @JsonProperty("api_token") val apiToken: String?,
+    @JsonProperty("asset_types") val assetTypes: List<String>? = null,
+    @JsonProperty("credential_usage") val credentialUsage: String? = null,
+    @JsonProperty("api_token") val apiToken: String? = null,
 ) : CustomConfig()

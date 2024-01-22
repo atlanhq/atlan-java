@@ -6,10 +6,14 @@ package com.atlan.net;
 import com.atlan.AtlanClient;
 import com.atlan.exception.*;
 import com.atlan.model.core.AtlanError;
+import com.atlan.model.core.AtlanEventStreamResponseInterface;
 import com.atlan.model.core.AtlanResponseInterface;
 import com.atlan.serde.Serde;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -80,6 +84,21 @@ public class LiveAtlanResponseGetter implements AtlanResponseGetter {
 
     /** {@inheritDoc} */
     @Override
+    public <T extends AtlanEventStreamResponseInterface> T requestStream(
+            AtlanClient client,
+            ApiResource.RequestMethod method,
+            String url,
+            String body,
+            Class<T> clazz,
+            RequestOptions options,
+            String requestId)
+            throws AtlanException {
+        AtlanRequest request = new AtlanRequest(client, method, url, body, options, requestId, "text/event-stream");
+        return requestStream(request, clazz);
+    }
+
+    /** {@inheritDoc} */
+    @Override
     public <T extends AtlanResponseInterface> T request(
             AtlanClient client,
             ApiResource.RequestMethod method,
@@ -146,6 +165,55 @@ public class LiveAtlanResponseGetter implements AtlanResponseGetter {
         return resource;
     }
 
+    /**
+     * Makes a request to Atlan's API.
+     *
+     * @param request bundled details of the request to make
+     * @param clazz the expected response object type from the request
+     * @return the response of the request
+     * @param <T> the type of the response of the request
+     * @throws AtlanException on any API interaction problem, indicating the type of problem encountered
+     */
+    private <T extends AtlanEventStreamResponseInterface> T requestStream(AtlanRequest request, Class<T> clazz)
+            throws AtlanException {
+        AtlanEventStreamResponse response = httpClient.requestEventStream(request);
+
+        int responseCode = response.code();
+        List<String> responseBody = response.body();
+
+        if (responseCode < 200 || responseCode >= 300) {
+            handleApiError(response);
+        }
+
+        T resource = null;
+        if (clazz != null) {
+            try {
+                List<T> events = new ArrayList<>();
+                for (String eventBody : responseBody) {
+                    if (eventBody.startsWith("data: ")) {
+                        // Trim off the "data: " prefix from the event before attempting to deserialize
+                        events.add(request.client().readValue(eventBody.substring(6), clazz));
+                    }
+                }
+                resource = clazz.getConstructor(List.class).newInstance(events);
+            } catch (IOException e) {
+                raiseMalformedJsonError(responseBody.toString(), responseCode, e);
+            } catch (NoSuchMethodException
+                    | IllegalAccessException
+                    | InstantiationException
+                    | InvocationTargetException e) {
+                throw new LogicException(ErrorCode.UNABLE_TO_DESERIALIZE, responseBody.toString());
+            }
+        }
+
+        // Null check necessary for empty responses
+        if (resource != null) {
+            resource.setLastResponse(response);
+        }
+
+        return resource;
+    }
+
     private static HttpClient buildDefaultHttpClient() {
         return new HttpURLConnectionClient();
     }
@@ -173,7 +241,6 @@ public class LiveAtlanResponseGetter implements AtlanResponseGetter {
      */
     private static void handleApiError(AtlanResponse response) throws AtlanException {
         AtlanError error = null;
-        AtlanException exception = null;
 
         // Check for a 500 response first -- if found, we won't have a JSON body to parse,
         // so preemptively exit with a generic ApiException pass-through.
@@ -192,6 +259,51 @@ public class LiveAtlanResponseGetter implements AtlanResponseGetter {
             raiseMalformedJsonError(response.body(), response.code(), null);
         }
 
+        raiseError(response, error);
+    }
+
+    /**
+     * Detect specific exceptions based primarily on the response code received from Atlan.
+     *
+     * @param response received from an API call
+     * @throws AtlanException a more specific exception, based on the details of that response
+     */
+    private static void handleApiError(AtlanEventStreamResponse response) throws AtlanException {
+        AtlanError error = null;
+
+        // Check for a 500 response first -- if found, we won't have a JSON body to parse,
+        // so preemptively exit with a generic ApiException pass-through.
+        int rc = response.code();
+        if (rc == 500) {
+            throw new ApiException(
+                    ErrorCode.ERROR_PASSTHROUGH,
+                    null,
+                    "" + rc,
+                    response.body() == null ? "" : response.body().toString());
+        }
+
+        try {
+            error = Serde.allInclusiveMapper.readValue(response.body().get(0), AtlanError.class);
+        } catch (IOException e) {
+            raiseMalformedJsonError(response.body().get(0), response.code(), e);
+        }
+        if (error == null) {
+            raiseMalformedJsonError(response.body().toString(), response.code(), null);
+        }
+
+        raiseError(response, error);
+    }
+
+    /**
+     * Raise an Atlan-specific exception based on the response code.
+     *
+     * @param response received from an API call
+     * @param error error details parsed from the response
+     * @param <T> type of the response (unused here)
+     * @throws AtlanException a more specific exception, based on the details of the response
+     */
+    private static <T> void raiseError(AbstractAtlanResponse<T> response, AtlanError error) throws AtlanException {
+        AtlanException exception;
         switch (response.code()) {
             case 400:
                 exception = new InvalidRequestException(

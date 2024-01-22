@@ -43,11 +43,11 @@ public interface IS3 {
      * Generate a unique S3 name.
      *
      * @param connectionQualifiedName unique name of the connection
-     * @param awsArn unique ARN for the S3 artifact
+     * @param name unique name for the S3 artifact (i.e. the ARN for the asset)
      * @return a unique name for the S3 artifact
      */
-    public static String generateQualifiedName(String connectionQualifiedName, String awsArn) {
-        return connectionQualifiedName + "/" + awsArn;
+    public static String generateQualifiedName(String connectionQualifiedName, String name) {
+        return connectionQualifiedName + "/" + name;
     }
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
@@ -256,6 +256,9 @@ public interface IS3 {
 
     /** List of tags attached to this asset. */
     SortedSet<String> getAssetTags();
+
+    /** Color (in hexadecimal RGB) to use to represent this asset. */
+    String getAssetThemeHex();
 
     /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();

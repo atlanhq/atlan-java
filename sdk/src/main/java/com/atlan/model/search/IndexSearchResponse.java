@@ -154,7 +154,7 @@ public class IndexSearchResponse extends ApiResource implements Iterable<Asset> 
      * @throws LogicException if the query could not be parsed
      */
     @JsonIgnore
-    private IndexSearchDSL getQuery() throws LogicException {
+    public IndexSearchDSL getQuery() throws LogicException {
         try {
             return client.readValue(searchParameters.getQuery(), IndexSearchDSL.class);
         } catch (IOException e) {

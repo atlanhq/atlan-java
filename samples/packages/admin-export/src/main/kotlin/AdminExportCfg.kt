@@ -16,6 +16,7 @@ import javax.annotation.processing.Generated
 data class AdminExportCfg(
     @JsonDeserialize(using = WidgetSerde.MultiSelectDeserializer::class)
     @JsonSerialize(using = WidgetSerde.MultiSelectSerializer::class)
-    @JsonProperty("objects_to_include") val objectsToInclude: List<String>?,
-    @JsonProperty("include_native_policies") val includeNativePolicies: Boolean?,
+    @JsonProperty("objects_to_include") val objectsToInclude: List<String>? = null,
+    @JsonProperty("include_native_policies") val includeNativePolicies: Boolean? = null,
+    @JsonProperty("email_addresses") val emailAddresses: String? = null,
 ) : CustomConfig()

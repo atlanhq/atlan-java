@@ -11,7 +11,8 @@ import javax.annotation.processing.Generated
 @Generated("com.atlan.pkg.CustomPackage")
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 data class AssetExportBasicCfg(
-    @JsonProperty("export_scope") val exportScope: String?,
-    @JsonProperty("qn_prefix") val qnPrefix: String?,
-    @JsonProperty("include_glossaries") val includeGlossaries: Boolean?,
+    @JsonProperty("export_scope") val exportScope: String? = null,
+    @JsonProperty("qn_prefix") val qnPrefix: String? = null,
+    @JsonProperty("include_description") val includeDescription: Boolean? = null,
+    @JsonProperty("include_glossaries") val includeGlossaries: Boolean? = null,
 ) : CustomConfig()

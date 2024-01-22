@@ -9,6 +9,8 @@ import com.atlan.model.fields.SearchableField
 import com.atlan.pkg.serde.RowDeserialization
 import com.atlan.pkg.serde.RowDeserializer
 import com.atlan.serde.Serde
+import com.atlan.util.AssetBatch
+import com.atlan.util.AssetBatch.AssetCreationHandling
 import mu.KLogger
 import java.lang.reflect.InvocationTargetException
 import kotlin.system.exitProcess
@@ -27,6 +29,10 @@ import kotlin.system.exitProcess
  * @param attrsToOverwrite list of fields that should be overwritten in Atlan, if their value is empty in the CSV
  * @param updateOnly if true, only update an asset (first check it exists), if false allow upserts (create if it does not exist)
  * @param batchSize maximum number of records to save per API request
+ * @param trackBatches if true, minimal details about every asset created or updated is tracked (if false, only counts of each are tracked)
+ * @param caseSensitive (only applies when updateOnly is true) attempt to match assets case-sensitively (true) or case-insensitively (false)
+ * @param creationHandling if assets are to be created, how they should be created (as full assets or only partial assets)
+ * @param tableViewAgnostic if true, tables and views will be treated interchangeably (an asset in the batch marked as a table will attempt to match a view if not found as a table, and vice versa)
  */
 abstract class CSVImporter(
     private val filename: String,
@@ -35,23 +41,37 @@ abstract class CSVImporter(
     private val attrsToOverwrite: List<AtlanField> = listOf(),
     private val updateOnly: Boolean = false,
     private val batchSize: Int = 20,
+    private val trackBatches: Boolean = true,
+    private val caseSensitive: Boolean = true,
+    private val creationHandling: AssetCreationHandling = AssetCreationHandling.FULL,
+    private val tableViewAgnostic: Boolean = false,
 ) : AssetGenerator {
 
     /**
      * Actually run the import.
      *
      * @param columnsToSkip (optional) columns in the CSV file to skip when loading (primarily useful for multi-pass loads)
+     * @return details about the results of the import
      */
-    open fun import(columnsToSkip: Set<String> = setOf()) {
-        CSVReader(filename, updateOnly).use { csv ->
+    open fun import(columnsToSkip: Set<String> = setOf()): ImportResults? {
+        CSVReader(
+            filename,
+            updateOnly,
+            trackBatches,
+            caseSensitive,
+            AssetBatch.CustomMetadataHandling.MERGE,
+            creationHandling,
+            tableViewAgnostic,
+        ).use { csv ->
             val start = System.currentTimeMillis()
-            val anyFailures = csv.streamRows(this, batchSize, logger, columnsToSkip)
+            val results = csv.streamRows(this, batchSize, logger, columnsToSkip)
             logger.info { "Total time taken: ${System.currentTimeMillis() - start} ms" }
-            if (anyFailures) {
+            if (results.anyFailures) {
                 logger.error { "Some errors detected, failing the workflow." }
                 exitProcess(1)
             }
-            cacheCreated(csv.created)
+            cacheCreated(results.primary.created ?: listOf())
+            return results
         }
     }
 
@@ -78,7 +98,7 @@ abstract class CSVImporter(
             if (assets != null) {
                 val builder = assets.primary
                 val candidate = builder.build()
-                val identity = RowDeserialization.AssetIdentity(candidate.typeName, candidate.qualifiedName)
+                val identity = AssetBatch.AssetIdentity(candidate.typeName, candidate.qualifiedName)
                 // Then apply any field clearances based on attributes configured in the job
                 for (field in attrsToOverwrite) {
                     clearField(field, candidate, builder)

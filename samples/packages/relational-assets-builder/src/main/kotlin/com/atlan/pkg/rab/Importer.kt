@@ -35,23 +35,43 @@ object Importer {
 
     @JvmStatic
     fun main(args: Array<String>) {
+        val outputDirectory = if (args.isEmpty()) "tmp" else args[0]
         val config = Utils.setPackageOps<RelationalAssetsBuilderCfg>()
+        import(config, outputDirectory)
+    }
 
+    fun import(config: RelationalAssetsBuilderCfg, outputDirectory: String = "tmp") {
         val batchSize = 20
+        val defaultRegion = Utils.getEnvVar("AWS_S3_REGION")
+        val defaultBucket = Utils.getEnvVar("AWS_S3_BUCKET_NAME")
+        val assetsUpload = Utils.getOrDefault(config.assetsImportType, "UPLOAD") == "UPLOAD"
         val assetsFilename = Utils.getOrDefault(config.assetsFile, "")
+        val assetsS3Region = Utils.getOrDefault(config.assetsS3Region, defaultRegion)
+        val assetsS3Bucket = Utils.getOrDefault(config.assetsS3Bucket, defaultBucket)
+        val assetsS3ObjectKey = Utils.getOrDefault(config.assetsS3ObjectKey, "")
         val assetAttrsToOverwrite =
             CSVImporter.attributesToClear(Utils.getOrDefault(config.assetsAttrToOverwrite, listOf()).toMutableList(), "assets", logger)
         val assetsFailOnErrors = Utils.getOrDefault(config.assetsFailOnErrors, true)
         val assetsUpdateOnly = Utils.getOrDefault(config.assetsUpsertSemantic, "update") == "update"
+        val trackBatches = Utils.getOrDefault(config.trackBatches, true)
 
-        if (assetsFilename.isBlank()) {
+        val assetsFileProvided = (assetsUpload && assetsFilename.isNotBlank()) || (!assetsUpload && assetsS3ObjectKey.isNotBlank())
+        if (!assetsFileProvided) {
             logger.error { "No input file was provided for assets." }
             exitProcess(1)
         }
 
         // Preprocess the CSV file in an initial pass to inject key details,
         // to allow subsequent out-of-order parallel processing
-        val preprocessedDetails = preprocessCSV(assetsFilename)
+        val assetsInput = Utils.getInputFile(
+            assetsFilename,
+            assetsS3Region,
+            assetsS3Bucket,
+            assetsS3ObjectKey,
+            outputDirectory,
+            assetsUpload,
+        )
+        val preprocessedDetails = preprocessCSV(assetsInput)
 
         // Only cache links and terms if there are any in the CSV, otherwise this
         // will be unnecessary work
@@ -68,31 +88,34 @@ object Importer {
         logger.info { "=== Importing assets... ===" }
 
         logger.info { " --- Importing connections... ---" }
-        val connectionImporter = ConnectionImporter(preprocessedDetails, assetAttrsToOverwrite, assetsUpdateOnly, 1)
+        // Note: we force-track the batches here to ensure any created connections are cached
+        // (without tracking, any connections created will NOT be cached, either, which will then cause issues
+        // with the subsequent processing steps.)
+        val connectionImporter = ConnectionImporter(preprocessedDetails, assetAttrsToOverwrite, assetsUpdateOnly, 1, true)
         connectionImporter.import()
 
         logger.info { " --- Importing databases... ---" }
-        val databaseImporter = DatabaseImporter(preprocessedDetails, assetAttrsToOverwrite, assetsUpdateOnly, batchSize, connectionImporter)
+        val databaseImporter = DatabaseImporter(preprocessedDetails, assetAttrsToOverwrite, assetsUpdateOnly, batchSize, connectionImporter, trackBatches)
         databaseImporter.import()
 
         logger.info { " --- Importing schemas... ---" }
-        val schemaImporter = SchemaImporter(preprocessedDetails, assetAttrsToOverwrite, assetsUpdateOnly, batchSize, connectionImporter)
+        val schemaImporter = SchemaImporter(preprocessedDetails, assetAttrsToOverwrite, assetsUpdateOnly, batchSize, connectionImporter, trackBatches)
         schemaImporter.import()
 
         logger.info { " --- Importing tables... ---" }
-        val tableImporter = TableImporter(preprocessedDetails, assetAttrsToOverwrite, assetsUpdateOnly, batchSize, connectionImporter)
+        val tableImporter = TableImporter(preprocessedDetails, assetAttrsToOverwrite, assetsUpdateOnly, batchSize, connectionImporter, trackBatches)
         tableImporter.import()
 
         logger.info { " --- Importing views... ---" }
-        val viewImporter = ViewImporter(preprocessedDetails, assetAttrsToOverwrite, assetsUpdateOnly, batchSize, connectionImporter)
+        val viewImporter = ViewImporter(preprocessedDetails, assetAttrsToOverwrite, assetsUpdateOnly, batchSize, connectionImporter, trackBatches)
         viewImporter.import()
 
         logger.info { " --- Importing materialized views... ---" }
-        val materializedViewImporter = MaterializedViewImporter(preprocessedDetails, assetAttrsToOverwrite, assetsUpdateOnly, batchSize, connectionImporter)
+        val materializedViewImporter = MaterializedViewImporter(preprocessedDetails, assetAttrsToOverwrite, assetsUpdateOnly, batchSize, connectionImporter, trackBatches)
         materializedViewImporter.import()
 
         logger.info { " --- Importing columns... ---" }
-        val columnImporter = ColumnImporter(preprocessedDetails, assetAttrsToOverwrite, assetsUpdateOnly, batchSize, connectionImporter)
+        val columnImporter = ColumnImporter(preprocessedDetails, assetAttrsToOverwrite, assetsUpdateOnly, batchSize, connectionImporter, trackBatches)
         columnImporter.import()
     }
 

@@ -78,8 +78,12 @@ public interface IConnection {
     NumericField OBJECT_STORAGE_UPLOAD_THRESHOLD =
             new NumericField("objectStorageUploadThreshold", "objectStorageUploadThreshold");
 
-    /** Policy strategy to use for this connection. */
+    /** Policy strategy is a configuration that determines whether the Atlan policy will be applied to the results of insight queries and whether the query will be rewritten, applicable for stream api call made from insight screen */
     KeywordField POLICY_STRATEGY = new KeywordField("policyStrategy", "policyStrategy");
+
+    /** Policy strategy is a configuration that determines whether the Atlan policy will be applied to the results of insight queries and whether the query will be rewritten. policyStrategyForSamplePreview config is applicable for sample preview call from assets screen */
+    KeywordField POLICY_STRATEGY_FOR_SAMPLE_PREVIEW =
+            new KeywordField("policyStrategyForSamplePreview", "policyStrategyForSamplePreview");
 
     /** Number of days over which popularity is calculated, for example 30 days. */
     NumericField POPULARITY_INSIGHTS_TIMEFRAME =
@@ -336,6 +340,9 @@ public interface IConnection {
     /** List of tags attached to this asset. */
     SortedSet<String> getAssetTags();
 
+    /** Color (in hexadecimal RGB) to use to represent this asset. */
+    String getAssetThemeHex();
+
     /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
@@ -456,8 +463,11 @@ public interface IConnection {
     /** List of users who own this asset. */
     SortedSet<String> getOwnerUsers();
 
-    /** Policy strategy to use for this connection. */
+    /** Policy strategy is a configuration that determines whether the Atlan policy will be applied to the results of insight queries and whether the query will be rewritten, applicable for stream api call made from insight screen */
     String getPolicyStrategy();
+
+    /** Policy strategy is a configuration that determines whether the Atlan policy will be applied to the results of insight queries and whether the query will be rewritten. policyStrategyForSamplePreview config is applicable for sample preview call from assets screen */
+    String getPolicyStrategyForSamplePreview();
 
     /** Number of days over which popularity is calculated, for example 30 days. */
     Long getPopularityInsightsTimeframe();

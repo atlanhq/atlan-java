@@ -38,6 +38,7 @@ import lombok.extern.jackson.Jacksonized;
 public class ApiToken extends AtlanObject {
 
     private static final long serialVersionUID = 2L;
+    public static final String API_USERNAME_PREFIX = "service-account-";
 
     /** Unique identifier (GUID) of the API token. */
     @Getter
@@ -69,6 +70,18 @@ public class ApiToken extends AtlanObject {
             return attributes.getDisplayName();
         }
         return null;
+    }
+
+    /**
+     * Retrieve the username that represents this API token.
+     * This name can be used to assign the token as a user to objects that require a user,
+     * such as policies.
+     *
+     * @return a username for this API token
+     */
+    @JsonIgnore
+    public String getApiTokenUsername() {
+        return API_USERNAME_PREFIX + getClientId();
     }
 
     /**
@@ -240,11 +253,18 @@ public class ApiToken extends AtlanObject {
         String displayName;
 
         /** Personas associated with the API token. */
+        @JsonProperty("personaQualifiedName")
         @Singular
         SortedSet<ApiTokenPersona> personas;
 
-        /** Possible future placeholder for purposes association with the token. */
+        /**
+         * This was a possible future placeholder for purposes associated with the token,
+         * but no longer exists on payloads. It is left here purely for any existing code
+         * that may have referenced it, but should be removed from that code as it will be
+         * removed in the next major release from this object.
+         */
         @JsonIgnore
+        @Deprecated
         String purposes;
 
         /** Detailed permissions given to the API token. */
@@ -327,8 +347,7 @@ public class ApiToken extends AtlanObject {
             JacksonUtils.serializeString(gen, "createdBy", ata.getCreatedBy());
             JacksonUtils.serializeString(gen, "description", ata.getDescription());
             JacksonUtils.serializeString(gen, "displayName", ata.getDisplayName());
-            JacksonUtils.serializeObject(gen, "personas", ata.getPersonas());
-            JacksonUtils.serializeString(gen, "purposes", ata.getPurposes());
+            JacksonUtils.serializeObject(gen, "personaQualifiedName", ata.getPersonas());
             JacksonUtils.serializeObject(gen, "workspacePermissions", ata.getWorkspacePermissions());
             gen.writeEndObject();
         }
@@ -367,12 +386,15 @@ public class ApiToken extends AtlanObject {
             JsonNode root = parser.getCodec().readTree(parser);
 
             Set<ApiTokenPersona> personas = new TreeSet<>();
-            JsonNode personasJson = root.get("personas");
+            JsonNode personasJson = root.get("personaQualifiedName");
             if (personasJson.isTextual()) {
-                // TODO: Convert the string into an actual array, then proceed with an attempt to deserialize
-                personas = Collections.emptySet();
+                Set<String> personaNames = StringToSetDeserializer.deserialize(client, personasJson.asText());
+                for (String name : personaNames) {
+                    personas.add(ApiTokenPersona.of(null, name, null));
+                }
             } else if (personasJson.isArray()) {
-                personas = JacksonUtils.deserializeObject(client, root, "personas", new TypeReference<>() {});
+                personas =
+                        JacksonUtils.deserializeObject(client, root, "personaQualifiedName", new TypeReference<>() {});
             }
 
             Set<String> workspacePermissions = new TreeSet<>();
@@ -393,7 +415,6 @@ public class ApiToken extends AtlanObject {
                     .description(JacksonUtils.deserializeString(root, "description"))
                     .displayName(JacksonUtils.deserializeString(root, "displayName"))
                     .personas(personas)
-                    .purposes(JacksonUtils.deserializeString(root, "purposes"))
                     .workspacePermissions(workspacePermissions)
                     .build();
         }

@@ -283,6 +283,9 @@ public interface IAsset {
     /** List of tags attached to this asset. */
     KeywordTextField ASSET_TAGS = new KeywordTextField("assetTags", "assetTags", "assetTags.text");
 
+    /** Color (in hexadecimal RGB) to use to represent this asset. */
+    KeywordField ASSET_THEME_HEX = new KeywordField("assetThemeHex", "assetThemeHex");
+
     /** Status of this asset's certification. */
     KeywordTextField CERTIFICATE_STATUS =
             new KeywordTextField("certificateStatus", "certificateStatus", "certificateStatus.text");
@@ -696,6 +699,9 @@ public interface IAsset {
 
     /** List of tags attached to this asset. */
     SortedSet<String> getAssetTags();
+
+    /** Color (in hexadecimal RGB) to use to represent this asset. */
+    String getAssetThemeHex();
 
     /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();

@@ -386,7 +386,7 @@ public class LinkTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
-            .asset(Connection.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .asset(TagAttachment.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .icon("String0")
             .iconType(IconType.IMAGE)
             .build();

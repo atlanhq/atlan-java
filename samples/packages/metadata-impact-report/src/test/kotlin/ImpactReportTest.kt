@@ -50,12 +50,13 @@ class ImpactReportTest : PackageTest() {
     @Test
     fun categoriesCreated() {
         val glossaryQN = Glossary.findByName(glossaryName).qualifiedName!!
-        val categories = GlossaryCategory.select()
+        val request = GlossaryCategory.select()
             .where(GlossaryCategory.ANCHOR.eq(glossaryQN))
             .includeOnResults(GlossaryCategory.NAME)
             .includeOnResults(GlossaryCategory.DESCRIPTION)
-            .stream()
-            .toList()
+            .toRequest()
+        val response = retrySearchUntil(request, 3)
+        val categories = response.assets
         assertEquals(3, categories.size)
         categories.forEach { category ->
             when (category.name) {
@@ -69,7 +70,7 @@ class ImpactReportTest : PackageTest() {
     @Test
     fun termsCreated() {
         val glossaryQN = Glossary.findByName(glossaryName).qualifiedName!!
-        val terms = GlossaryTerm.select()
+        val request = GlossaryTerm.select()
             .where(GlossaryTerm.ANCHOR.eq(glossaryQN))
             .includeOnResults(GlossaryTerm.DISPLAY_NAME)
             .includeOnResults(GlossaryTerm.DESCRIPTION)
@@ -79,8 +80,9 @@ class ImpactReportTest : PackageTest() {
             .includeOnResults(GlossaryTerm.ANNOUNCEMENT_TITLE)
             .includeOnResults(GlossaryTerm.CATEGORIES)
             .includeOnRelations(GlossaryCategory.NAME)
-            .stream()
-            .toList()
+            .toRequest()
+        val response = retrySearchUntil(request, 21)
+        val terms = response.stream().toList()
         assertEquals(21, terms.size)
         terms.forEach { term ->
             term as GlossaryTerm

@@ -1,3 +1,4 @@
+/* SPDX-License-Identifier: Apache-2.0 */
 val jarPath = "$rootDir/jars"
 
 plugins {
@@ -6,7 +7,7 @@ plugins {
 }
 
 dependencies {
-    implementation("io.swagger.parser.v3:swagger-parser:2.1.16")
+    implementation(libs.swagger.parser)
 }
 
 tasks {

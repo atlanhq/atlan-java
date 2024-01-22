@@ -300,6 +300,9 @@ public interface ISalesforceField {
     /** List of tags attached to this asset. */
     SortedSet<String> getAssetTags();
 
+    /** Color (in hexadecimal RGB) to use to represent this asset. */
+    String getAssetThemeHex();
+
     /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 

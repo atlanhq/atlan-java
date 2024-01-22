@@ -35,10 +35,10 @@ import kotlin.test.assertNotNull
  */
 class ImportGlossariesTest : PackageTest() {
 
-    private val glossary1 = makeUnique("g1")
-    private val glossary2 = makeUnique("g2")
-    private val tag1 = makeUnique("t1")
-    private val tag2 = makeUnique("t2")
+    private val glossary1 = makeUnique("igg1")
+    private val glossary2 = makeUnique("igg2")
+    private val tag1 = makeUnique("igt1")
+    private val tag2 = makeUnique("igt2")
 
     private val testFile = "input.csv"
 
@@ -157,12 +157,13 @@ class ImportGlossariesTest : PackageTest() {
     @Test
     fun categoriesCreatedG1() {
         val g1 = Glossary.findByName(glossary1)!!
-        val g1categories = GlossaryCategory.select()
+        val request = GlossaryCategory.select()
             .where(GlossaryCategory.ANCHOR.eq(g1.qualifiedName))
             .includesOnResults(categoryAttrs)
             .includeOnRelations(Glossary.NAME)
-            .stream()
-            .toList()
+            .toRequest()
+        val response = retrySearchUntil(request, 4)
+        val g1categories = response.assets
         assertEquals(4, g1categories.size)
         g1categories.forEach { category ->
             category as GlossaryCategory
@@ -195,12 +196,13 @@ class ImportGlossariesTest : PackageTest() {
     @Test
     fun categoriesCreatedG2() {
         val g2 = Glossary.findByName(glossary2)!!
-        val g2categories = GlossaryCategory.select()
+        val request = GlossaryCategory.select()
             .where(GlossaryCategory.ANCHOR.eq(g2.qualifiedName))
             .includesOnResults(categoryAttrs)
             .includeOnRelations(Glossary.NAME)
-            .stream()
-            .toList()
+            .toRequest()
+        val response = retrySearchUntil(request, 3)
+        val g2categories = response.assets
         assertEquals(3, g2categories.size)
         g2categories.forEach { category ->
             category as GlossaryCategory
@@ -228,14 +230,15 @@ class ImportGlossariesTest : PackageTest() {
     @Test
     fun termsCreatedG1() {
         val g1 = Glossary.findByName(glossary1)!!
-        val g1terms = GlossaryTerm.select()
+        val request = GlossaryTerm.select()
             .where(GlossaryTerm.ANCHOR.eq(g1.qualifiedName))
             .includesOnResults(termAttrs)
             .includeOnRelations(Glossary.NAME)
             .includeOnRelations(Readme.DESCRIPTION)
             .includeOnRelations(Link.LINK)
-            .stream()
-            .toList()
+            .toRequest()
+        val response = retrySearchUntil(request, 4)
+        val g1terms = response.assets
         assertEquals(4, g1terms.size)
         g1terms.forEach { term ->
             term as GlossaryTerm
@@ -348,14 +351,15 @@ class ImportGlossariesTest : PackageTest() {
     @Test
     fun termsCreatedG2() {
         val g2 = Glossary.findByName(glossary2)!!
-        val g2terms = GlossaryTerm.select()
+        val request = GlossaryTerm.select()
             .where(GlossaryTerm.ANCHOR.eq(g2.qualifiedName))
             .includesOnResults(termAttrs)
             .includeOnRelations(Glossary.NAME)
             .includeOnRelations(Readme.DESCRIPTION)
             .includeOnRelations(Link.LINK)
-            .stream()
-            .toList()
+            .toRequest()
+        val response = retrySearchUntil(request, 3)
+        val g2terms = response.assets
         assertEquals(3, g2terms.size)
         g2terms.forEach { term ->
             term as GlossaryTerm

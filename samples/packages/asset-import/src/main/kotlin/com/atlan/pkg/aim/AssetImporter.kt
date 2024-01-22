@@ -7,6 +7,7 @@ import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.RowDeserializer
 import com.atlan.pkg.serde.csv.CSVImporter
+import com.atlan.util.AssetBatch.AssetCreationHandling
 import mu.KotlinLogging
 
 /**
@@ -21,18 +22,27 @@ import mu.KotlinLogging
  * @param attrsToOverwrite list of fields that should be overwritten in Atlan, if their value is empty in the CSV
  * @param updateOnly if true, only update an asset (first check it exists), if false allow upserts (create if it does not exist)
  * @param batchSize maximum number of records to save per API request
+ * @param caseSensitive (only applies when updateOnly is true) attempt to match assets case-sensitively (true) or case-insensitively (false)
+ * @param creationHandling if assets are to be created, how they should be created (as full assets or only partial assets)
+ * @param tableViewAgnostic if true, tables and views will be treated interchangeably (an asset in the batch marked as a table will attempt to match a view if not found as a table, and vice versa)
  */
 class AssetImporter(
     private val filename: String,
     private val attrsToOverwrite: List<AtlanField>,
     private val updateOnly: Boolean,
     private val batchSize: Int,
+    private val caseSensitive: Boolean = true,
+    private val creationHandling: AssetCreationHandling = AssetCreationHandling.NONE,
+    private val tableViewAgnostic: Boolean = false,
 ) : CSVImporter(
     filename,
     logger = KotlinLogging.logger {},
     attrsToOverwrite = attrsToOverwrite,
     updateOnly = updateOnly,
     batchSize = batchSize,
+    caseSensitive = caseSensitive,
+    creationHandling = creationHandling,
+    tableViewAgnostic = tableViewAgnostic,
 ) {
     /** {@inheritDoc} */
     override fun getBuilder(deserializer: RowDeserializer): Asset.AssetBuilder<*, *> {
@@ -42,6 +52,6 @@ class AssetImporter(
 
     /** {@inheritDoc} */
     override fun includeRow(row: List<String>, header: List<String>, typeIdx: Int, qnIdx: Int): Boolean {
-        return true
+        return row.size >= typeIdx && row[typeIdx].isNotBlank()
     }
 }

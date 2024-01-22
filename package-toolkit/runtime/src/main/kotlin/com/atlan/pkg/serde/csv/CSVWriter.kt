@@ -8,13 +8,8 @@ import de.siegmar.fastcsv.writer.CsvWriter
 import de.siegmar.fastcsv.writer.LineDelimiter
 import de.siegmar.fastcsv.writer.QuoteStrategy
 import mu.KLogger
-import java.io.BufferedWriter
 import java.io.Closeable
 import java.io.IOException
-import java.io.Writer
-import java.nio.charset.StandardCharsets
-import java.nio.file.Files
-import java.nio.file.Paths
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicLong
 import java.util.stream.Stream
@@ -99,37 +94,5 @@ class CSVWriter @JvmOverloads constructor(path: String, fieldSeparator: Char = '
     @Throws(IOException::class)
     override fun close() {
         writer.close()
-    }
-
-    /**
-     * To allow us to safely parallel-write files across threads.
-     */
-    private class ThreadSafeWriter(filePath: String) : Writer(), Closeable {
-        private val writer: BufferedWriter
-
-        init {
-            writer = Files.newBufferedWriter(Paths.get(filePath), StandardCharsets.UTF_8)
-        }
-
-        /** {@inheritDoc}  */
-        @Synchronized
-        @Throws(IOException::class)
-        override fun write(cbuf: CharArray, off: Int, len: Int) {
-            writer.write(cbuf, off, len)
-        }
-
-        /** {@inheritDoc}  */
-        @Synchronized
-        @Throws(IOException::class)
-        override fun flush() {
-            writer.flush()
-        }
-
-        /** {@inheritDoc}  */
-        @Synchronized
-        @Throws(IOException::class)
-        override fun close() {
-            writer.close()
-        }
     }
 }

@@ -29,6 +29,11 @@ object AdminExporter {
 
         val objectsToInclude = Utils.getOrDefault(config.objectsToInclude, listOf("users", "groups"))
         val includeNativePolicies = Utils.getOrDefault(config.includeNativePolicies, false)
+        val emails = Utils.getOrDefault(config.emailAddresses, "")
+            .split(',')
+            .map { it.trim() }
+            .filter { it.isNotBlank() }
+            .toList()
 
         // Before we start processing, will pre-cache all glossaries,
         // so we can resolve them to meaningful names
@@ -46,6 +51,15 @@ object AdminExporter {
                     "policies" -> Policies(xlsx, includeNativePolicies, glossaryMap, connectionMap, logger).export()
                 }
             }
+        }
+
+        if (emails.isNotEmpty()) {
+            Utils.sendEmail(
+                "[Atlan] Admin Export results",
+                emails,
+                "Hi there! As requested, please find attached the results of the Admin Export package.\n\nAll the best!\nAtlan",
+                listOf(File(exportFile)),
+            )
         }
     }
 

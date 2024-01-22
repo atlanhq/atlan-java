@@ -47,9 +47,9 @@ interface AssetGenerator {
      * This will be called with the results of any created assets after processing
      * a pass.
      *
-     * @param map from GUID to asset that was created
+     * @param list of assets that were created (minimal info for each)
      */
-    fun cacheCreated(map: Map<String, Asset>) {
+    fun cacheCreated(list: List<Asset>) {
         // Do nothing, by default
     }
 }

@@ -36,10 +36,10 @@ import kotlin.test.assertNotNull
  */
 class CreateThenUpsertRABTest : PackageTest() {
 
-    private val conn1 = makeUnique("c1")
+    private val conn1 = makeUnique("ctu1")
     private val conn1Type = AtlanConnectorType.MPARTICLE
-    private val tag1 = makeUnique("t1")
-    private val tag2 = makeUnique("t2")
+    private val tag1 = makeUnique("ctut1")
+    private val tag2 = makeUnique("ctut2")
 
     private val testFile = "input.csv"
     private val revisedFile = "revised.csv"
@@ -70,9 +70,11 @@ class CreateThenUpsertRABTest : PackageTest() {
         val output = Paths.get(testDirectory, revisedFile).toFile()
         input.useLines { lines ->
             lines.forEach { line ->
-                val revised = line
-                    .replace("Test ", "Revised ")
-                output.appendText("$revised\n")
+                if (!line.contains("TEST_VIEW")) {
+                    val revised = line
+                        .replace("Test ", "Revised ")
+                    output.appendText("$revised\n")
+                }
             }
         }
         output.copyTo(input, true)
@@ -119,6 +121,7 @@ class CreateThenUpsertRABTest : PackageTest() {
 
     private val tableAttrs: List<AtlanField> = listOf(
         Table.NAME,
+        Table.STATUS,
         Table.CONNECTION_QUALIFIED_NAME,
         Table.CONNECTOR_TYPE,
         Table.DATABASE_NAME,
@@ -137,6 +140,7 @@ class CreateThenUpsertRABTest : PackageTest() {
 
     private val columnAttrs: List<AtlanField> = listOf(
         Column.NAME,
+        Column.STATUS,
         Column.CONNECTION_QUALIFIED_NAME,
         Column.CONNECTOR_TYPE,
         Column.DATABASE_NAME,
@@ -161,8 +165,8 @@ class CreateThenUpsertRABTest : PackageTest() {
             RelationalAssetsBuilderCfg(
                 assetsFile = Paths.get(testDirectory, testFile).toString(),
                 assetsUpsertSemantic = "upsert",
-                assetsAttrToOverwrite = listOf(),
                 assetsFailOnErrors = true,
+                trackBatches = false,
             ),
         )
         Importer.main(arrayOf())
@@ -194,12 +198,13 @@ class CreateThenUpsertRABTest : PackageTest() {
 
     private fun validateDatabase(displayName: String) {
         val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
-        val found = Database.select()
+        val request = Database.select()
             .where(Database.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
             .includesOnResults(databaseAttrs)
             .includeOnRelations(Schema.NAME)
-            .stream()
-            .toList()
+            .toRequest()
+        val response = retrySearchUntil(request, 1)
+        val found = response.assets
         assertEquals(1, found.size)
         val db = found[0] as Database
         assertEquals("TEST_DB", db.name)
@@ -218,12 +223,13 @@ class CreateThenUpsertRABTest : PackageTest() {
 
     private fun validateSchema(displayName: String) {
         val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
-        val found = Schema.select()
+        val request = Schema.select()
             .where(Schema.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
             .includesOnResults(schemaAttrs)
             .includeOnRelations(Asset.NAME)
-            .stream()
-            .toList()
+            .toRequest()
+        val response = retrySearchUntil(request, 1)
+        val found = response.assets
         assertEquals(1, found.size)
         val sch = found[0] as Schema
         assertEquals("TEST_SCHEMA", sch.name)
@@ -247,13 +253,14 @@ class CreateThenUpsertRABTest : PackageTest() {
 
     private fun validateTable(displayName: String) {
         val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
-        val found = Table.select()
+        val request = Table.select()
             .where(Table.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
             .includesOnResults(tableAttrs)
             .includeOnRelations(Asset.NAME)
             .includeOnRelations(Readme.DESCRIPTION)
-            .stream()
-            .toList()
+            .toRequest()
+        val response = retrySearchUntil(request, 1)
+        val found = response.assets
         assertEquals(1, found.size)
         val tbl = found[0] as Table
         assertEquals("TEST_TBL", tbl.name)
@@ -297,12 +304,13 @@ class CreateThenUpsertRABTest : PackageTest() {
 
     private fun validateColumnsForTable1(displayCol1: String, displayCol2: String) {
         val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
-        val found = Column.select()
+        val request = Column.select()
             .where(Column.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
             .where(Column.TABLE_NAME.eq("TEST_TBL"))
             .includesOnResults(columnAttrs)
-            .stream()
-            .toList()
+            .toRequest()
+        val response = retrySearchUntil(request, 2)
+        val found = response.assets
         assertEquals(2, found.size)
         val colNames = found.stream().map(Asset::getName).toList()
         assertTrue(colNames.contains("COL1"))
@@ -336,27 +344,28 @@ class CreateThenUpsertRABTest : PackageTest() {
 
     @Test(groups = ["create"])
     fun view1Created() {
-        validateView("Test view")
+        validateView()
     }
 
-    private fun validateView(displayName: String) {
+    private fun validateView() {
         val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
-        val found = View.select()
+        val request = View.select()
             .where(View.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
             .includesOnResults(tableAttrs)
             .includeOnRelations(Asset.NAME)
             .includeOnRelations(Readme.DESCRIPTION)
-            .stream()
-            .toList()
+            .toRequest()
+        val response = retrySearchUntil(request, 1)
+        val found = response.assets
         assertEquals(1, found.size)
         val view = found[0] as View
         assertEquals("TEST_VIEW", view.name)
-        assertEquals(displayName, view.displayName)
+        assertEquals("Test view", view.displayName)
         assertEquals(c1.qualifiedName, view.connectionQualifiedName)
         assertEquals(conn1Type, view.connectorType)
-        assertEquals(2, view.columnCount)
         assertEquals(CertificateStatus.DRAFT, view.certificateStatus)
         assertTrue(view.certificateStatusMessage.isNullOrBlank())
+        assertEquals(2, view.columnCount)
         assertEquals("<h2>View readme</h2>", view.readme.description)
         assertEquals(1, view.atlanTags.size)
         assertEquals(tag1, view.atlanTags.first().typeName)
@@ -371,17 +380,18 @@ class CreateThenUpsertRABTest : PackageTest() {
 
     @Test(groups = ["create"])
     fun columnsForView1Created() {
-        validateColumnsForView("Test column 3", "Test column 4")
+        validateColumnsForView()
     }
 
-    private fun validateColumnsForView(displayCol3: String, displayCol4: String) {
+    private fun validateColumnsForView() {
         val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
-        val found = Column.select()
+        val request = Column.select()
             .where(Column.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
             .where(Column.VIEW_NAME.eq("TEST_VIEW"))
             .includesOnResults(columnAttrs)
-            .stream()
-            .toList()
+            .toRequest()
+        val response = retrySearchUntil(request, 2)
+        val found = response.assets
         assertEquals(2, found.size)
         val colNames = found.stream().map(Asset::getName).toList()
         assertTrue(colNames.contains("COL3"))
@@ -402,12 +412,12 @@ class CreateThenUpsertRABTest : PackageTest() {
                 "COL3" -> {
                     assertEquals("INT32", col.dataType)
                     assertEquals(1, col.order)
-                    assertEquals(displayCol3, col.displayName)
+                    assertEquals("Test column 3", col.displayName)
                 }
                 "COL4" -> {
                     assertEquals("DECIMAL", col.dataType)
                     assertEquals(2, col.order)
-                    assertEquals(displayCol4, col.displayName)
+                    assertEquals("Test column 4", col.displayName)
                 }
             }
         }
@@ -416,9 +426,16 @@ class CreateThenUpsertRABTest : PackageTest() {
     @Test(groups = ["runUpdate"], dependsOnGroups = ["create"])
     fun upsertRevisions() {
         modifyFile()
+        setup(
+            RelationalAssetsBuilderCfg(
+                assetsFile = Paths.get(testDirectory, testFile).toString(),
+                assetsUpsertSemantic = "upsert",
+                assetsFailOnErrors = true,
+            ),
+        )
         Importer.main(arrayOf())
-        // Allow Elastic index to become consistent
-        Thread.sleep(5000)
+        // Allow Elastic index and deletion to become consistent
+        Thread.sleep(10000)
     }
 
     @Test(groups = ["update"], dependsOnGroups = ["runUpdate"])
@@ -447,13 +464,13 @@ class CreateThenUpsertRABTest : PackageTest() {
     }
 
     @Test(groups = ["update"], dependsOnGroups = ["runUpdate"])
-    fun viewChanged() {
-        validateView("Revised view")
+    fun viewUnchanged() {
+        validateView()
     }
 
     @Test(groups = ["update"], dependsOnGroups = ["runUpdate"])
-    fun columnsForView1Changed() {
-        validateColumnsForView("Revised column 3", "Revised column 4")
+    fun columnsForView1Unchanged() {
+        validateColumnsForView()
     }
 
     @Test(dependsOnGroups = ["create", "runUpdate", "update"])

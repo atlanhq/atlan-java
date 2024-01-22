@@ -27,11 +27,35 @@ import lombok.experimental.SuperBuilder;
 public class AuditSearchRequest extends AtlanObject {
     private static final long serialVersionUID = 2L;
 
+    /** When the asset was created. */
     public static final NumericField CREATED = new NumericField("createTime", "created");
+
+    /** Unique identifier (GUID) of the asset that was created or changed. */
     public static final KeywordField ENTITY_ID = new KeywordField("guid", "entityId");
+
+    /** Type of the asset that was created or changed. */
     public static final KeywordField ENTITY_TYPE = new KeywordField("typeName", "typeName");
+
+    /** Unique name of the asset that was created or changed. */
     public static final KeywordField QUALIFIED_NAME = new KeywordField("qualifiedName", "entityQualifiedName");
+
+    /** User who made the update to the asset. */
     public static final KeywordField USER = new KeywordField("updatedBy", "user");
+
+    /** Type of action made against the asset. */
+    public static final KeywordField ACTION = new KeywordField("action", "action");
+
+    /** Type of actor (e.g. {@code workflow}) that created or changed the asset, if it was done programmatically. */
+    public static final KeywordField AGENT = new KeywordField("headers", "headers.x-atlan-agent");
+
+    /** Name of the package that created or changed the asset. */
+    public static final KeywordField PACKAGE_NAME = new KeywordField("headers", "headers.x-atlan-agent-package-name");
+
+    /** Name of the workflow (specific configuration of a package) that created or changed the asset. */
+    public static final KeywordField WORKFLOW_ID = new KeywordField("headers", "headers.x-atlan-agent-workflow-id");
+
+    /** Name of the agent (specific run of a workflow) that created or changed the asset. */
+    public static final KeywordField AGENT_ID = new KeywordField("headers", "headers.x-atlan-agent-id");
 
     private static final SortOptions LATEST_FIRST = CREATED.order(SortOrder.Desc);
 
@@ -141,6 +165,33 @@ public class AuditSearchRequest extends AtlanObject {
     public static AuditSearchRequestBuilder<?, ?> byUser(AtlanClient client, String userName, int size) {
         return AuditSearch.builder(client)
                 .where(USER.eq(userName))
+                .pageSize(size)
+                .sort(LATEST_FIRST)
+                .toRequestBuilder();
+    }
+
+    /**
+     * Start building an audit search request for the last common action made to any assets.
+     *
+     * @param action type of action (e.g. {@code ENTITY_CREATE})
+     * @param size number of changes to retrieve
+     * @return a request builder pre-configured with these criteria
+     */
+    public static AuditSearchRequestBuilder<?, ?> byAction(String action, int size) {
+        return byAction(Atlan.getDefaultClient(), action, size);
+    }
+
+    /**
+     * Start building an audit search request for the last common action made to any assets.
+     *
+     * @param client connectivity to the Atlan tenant on which to search the audit logs
+     * @param action type of action (e.g. {@code ENTITY_CREATE})
+     * @param size number of changes to retrieve
+     * @return a request builder pre-configured with these criteria
+     */
+    public static AuditSearchRequestBuilder<?, ?> byAction(AtlanClient client, String action, int size) {
+        return AuditSearch.builder(client)
+                .where(ACTION.eq(action))
                 .pageSize(size)
                 .sort(LATEST_FIRST)
                 .toRequestBuilder();

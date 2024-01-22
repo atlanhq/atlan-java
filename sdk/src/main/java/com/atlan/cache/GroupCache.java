@@ -2,6 +2,7 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.cache;
 
+import com.atlan.api.GroupsEndpoint;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
@@ -21,9 +22,15 @@ public class GroupCache {
     private Map<String, String> mapNameToId = new ConcurrentHashMap<>();
     private Map<String, String> mapAliasToId = new ConcurrentHashMap<>();
 
-    private synchronized void refreshCache() throws AtlanException {
+    private final GroupsEndpoint groupsEndpoint;
+
+    public GroupCache(GroupsEndpoint groupsEndpoint) {
+        this.groupsEndpoint = groupsEndpoint;
+    }
+
+    public synchronized void refreshCache() throws AtlanException {
         log.debug("Refreshing cache of groups...");
-        List<AtlanGroup> groups = AtlanGroup.list();
+        List<AtlanGroup> groups = groupsEndpoint.list();
         mapIdToName = new ConcurrentHashMap<>();
         mapNameToId = new ConcurrentHashMap<>();
         mapAliasToId = new ConcurrentHashMap<>();
@@ -47,15 +54,29 @@ public class GroupCache {
      * @throws InvalidRequestException if no name was provided for the group to retrieve
      */
     public String getIdForName(String name) throws AtlanException {
+        return getIdForName(name, true);
+    }
+
+    /**
+     * Translate the provided internal group name to its GUID.
+     *
+     * @param name internal name of the group
+     * @param allowRefresh whether to allow a refresh of the cache (true) or not (false)
+     * @return unique identifier (GUID) of the group
+     * @throws AtlanException on any API communication problem if the cache needs to be refreshed
+     * @throws NotFoundException if the group cannot be found (does not exist) in Atlan
+     * @throws InvalidRequestException if no name was provided for the group to retrieve
+     */
+    public String getIdForName(String name, boolean allowRefresh) throws AtlanException {
         if (name != null && !name.isEmpty()) {
             String groupId = mapNameToId.get(name);
-            if (groupId == null) {
+            if (groupId == null && allowRefresh) {
                 // If not found, refresh the cache and look again (could be stale)
                 refreshCache();
                 groupId = mapNameToId.get(name);
-                if (groupId == null) {
-                    throw new NotFoundException(ErrorCode.GROUP_NOT_FOUND_BY_NAME, name);
-                }
+            }
+            if (groupId == null) {
+                throw new NotFoundException(ErrorCode.GROUP_NOT_FOUND_BY_NAME, name);
             }
             return groupId;
         } else {
@@ -73,15 +94,29 @@ public class GroupCache {
      * @throws InvalidRequestException if no name was provided for the group to retrieve
      */
     public String getIdForAlias(String alias) throws AtlanException {
+        return getIdForAlias(alias, true);
+    }
+
+    /**
+     * Translate the provided human-readable group name to its GUID.
+     *
+     * @param alias name of the group as it appears in the UI
+     * @param allowRefresh whether to allow a refresh of the cache (true) or not (false)
+     * @return unique identifier (GUID) of the group
+     * @throws AtlanException on any API communication problem if the cache needs to be refreshed
+     * @throws NotFoundException if the group cannot be found (does not exist) in Atlan
+     * @throws InvalidRequestException if no name was provided for the group to retrieve
+     */
+    public String getIdForAlias(String alias, boolean allowRefresh) throws AtlanException {
         if (alias != null && !alias.isEmpty()) {
             String groupId = mapAliasToId.get(alias);
-            if (groupId == null) {
+            if (groupId == null && allowRefresh) {
                 // If not found, refresh the cache and look again (could be stale)
                 refreshCache();
                 groupId = mapAliasToId.get(alias);
-                if (groupId == null) {
-                    throw new NotFoundException(ErrorCode.GROUP_NOT_FOUND_BY_ALIAS, alias);
-                }
+            }
+            if (groupId == null) {
+                throw new NotFoundException(ErrorCode.GROUP_NOT_FOUND_BY_ALIAS, alias);
             }
             return groupId;
         } else {
@@ -99,19 +134,61 @@ public class GroupCache {
      * @throws InvalidRequestException if no name was provided for the group to retrieve
      */
     public String getNameForId(String id) throws AtlanException {
+        return getNameForId(id, true);
+    }
+
+    /**
+     * Translate the provided group GUID to the internal group name.
+     *
+     * @param id unique identifier (GUID) of the group
+     * @param allowRefresh whether to allow a refresh of the cache (true) or not (false)
+     * @return internal name of the group
+     * @throws AtlanException on any API communication problem if the cache needs to be refreshed
+     * @throws NotFoundException if the group cannot be found (does not exist) in Atlan
+     * @throws InvalidRequestException if no name was provided for the group to retrieve
+     */
+    public String getNameForId(String id, boolean allowRefresh) throws AtlanException {
         if (id != null && !id.isEmpty()) {
             String groupName = mapIdToName.get(id);
-            if (groupName == null) {
+            if (groupName == null && allowRefresh) {
                 // If not found, refresh the cache and look again (could be stale)
                 refreshCache();
                 groupName = mapIdToName.get(id);
-                if (groupName == null) {
-                    throw new NotFoundException(ErrorCode.GROUP_NOT_FOUND_BY_ID, id);
-                }
+            }
+            if (groupName == null) {
+                throw new NotFoundException(ErrorCode.GROUP_NOT_FOUND_BY_ID, id);
             }
             return groupName;
         } else {
             throw new InvalidRequestException(ErrorCode.MISSING_GROUP_ID);
         }
+    }
+
+    /**
+     * Translate the provided human-readable group name to the internal group name.
+     *
+     * @param alias name of the group as it appears in the UI
+     * @return internal name of the group
+     * @throws AtlanException on any API communication problem if the cache needs to be refreshed
+     * @throws NotFoundException if the group cannot be found (does not exist) in Atlan
+     * @throws InvalidRequestException if no name was provided for the group to retrieve
+     */
+    public String getNameForAlias(String alias) throws AtlanException {
+        return getNameForAlias(alias, true);
+    }
+
+    /**
+     * Translate the provided human-readable group name to the internal group name.
+     *
+     * @param alias name of the group as it appears in the UI
+     * @param allowRefresh whether to allow a refresh of the cache (true) or not (false)
+     * @return internal name of the group
+     * @throws AtlanException on any API communication problem if the cache needs to be refreshed
+     * @throws NotFoundException if the group cannot be found (does not exist) in Atlan
+     * @throws InvalidRequestException if no name was provided for the group to retrieve
+     */
+    public String getNameForAlias(String alias, boolean allowRefresh) throws AtlanException {
+        String guid = getIdForAlias(alias, allowRefresh);
+        return getNameForId(guid, false);
     }
 }

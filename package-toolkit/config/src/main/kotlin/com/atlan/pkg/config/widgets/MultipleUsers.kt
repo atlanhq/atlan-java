@@ -34,7 +34,7 @@ class MultipleUsers(
         help: String = "",
         grid: Int = 8,
     ) : Widget(
-        "groupMultiple",
+        "userMultiple",
         label = label,
         hidden = hidden,
         help = help,

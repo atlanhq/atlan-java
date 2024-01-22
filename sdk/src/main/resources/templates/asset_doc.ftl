@@ -10,166 +10,61 @@ ${description}
     - [Snippets](../../snippets/index.md) — small, atomic examples of single-step use cases.
     - [Patterns](../../patterns/index.md) — walkthroughs of common multi-step implementation patterns.
 
-## Inheritance
-
-Following is the inheritance structure for `${originalName}`. The type structure may be simplified in some of the SDKs, but for search purposes you could still use any of the super types shown below.
+`${originalName}` inherits its attributes and relationships from these other types:
 
 <#if originalSuperTypes?has_content>
 <@raw.diagramInheritance originalName=originalName superTypes=originalSuperTypes />
 </#if>
 
-## Attributes
+## Properties
 
-Following are all the properties available on `${originalName}` assets in Atlan.
+??? details "Inherited properties"
 
-### Core properties
+    These attributes are inherited from `${originalName}`'s supertypes (shown above):
 
-For detailed examples of searching these fields, see [common search fields](../../search/attributes/common.md).
+    <div class="grid" markdown>
 
-??? details "Expand for details on each core property"
-
-    === ":fontawesome-brands-java: Java"
-
-        ??? type-string "typeName"
-
-            ```java linenums="1" title="Type of this asset."
-            ${className?uncap_first}.getTypeName(); // (1)
-            client.assets.select().where(CompoundQuery.superType(ISQL.TYPE_NAME)); // (2)
-            client.assets.select().where(CompoundQuery.assetType(Table.TYPE_NAME)); // (3)
-            client.assets.select().where(CompoundQuery.assetTypes(List.of(Table.TYPE_NAME, View.TYPE_NAME, MaterializedView.TYPE_NAME))); // (4)
-            ```
-
-            1. Retrieve the `typeName` from an asset.
-
-                !!! recommendation "Use instanceof for type checking"
-                    If you are operating on an `Asset` type, chances are it is actually a more concrete type. Rather than using String-based comparisons, you can type-check using Java types: `if (asset instanceof Column)`, for example. This has the added benefit of not needing separate null handling (if null, then `asset` cannot be an `instanceof` any type).
-
-            2. Query for all assets that are sub-types of a particular super-type, in this example all assets that are sub-types of `SQL`.
-            3. Query for all assets with a particular type, in this example a `Table`.
-            4. Query for all assets with any one of a number of different types, in this example either a `Table`, `View`, or `MaterializedView`.
-
-        --8<-- "snippets/model/core-java.md"
-
-    === ":material-language-python: Python"
-
-        ??? type-string "type_name"
-
-            ```python title="Type of this asset."
-            asset.type_name;  # (1)
-            FluentSearch().where(CompoundQuery.super_types([SQL]))  # (2)
-            FluentSearch().where(CompoundQuery.asset_type(Table))  # (3)
-            FluentSearch().where(CompoundQuery.asset_types([Table, View, MaterializedView]))  # (4)
-            ```
-
-            1. Retrieve the `type_name` from an asset.
-
-                !!! recommendation "Use isinstance for type checking"
-                    If you are operating on an `Asset` type, chances are it is actually a more concrete type. Rather than using String-based comparisons, you can type-check using Python types: `if isinstance(asset, Column)`, for example.
-
-            2. Query for all assets that are sub-types of a particular super-type, in this example all assets that are sub-types of `SQL`.
-            3. Query for all assets with a particular type, in this example a `Table`.
-            4. Query for all assets with any one of a number of different types, in this example either a `Table`, `View`, or `MaterializedView`.
-
-        --8<-- "snippets/model/core-python.md"
-
-    === ":material-code-json: Raw REST API"
-
-        ??? type-string "typeName"
-
-            ```json title="Type of this asset."
-            {
-              "typeName": "${className}" // (1)
-            }
-            ```
-
-            1. The `typeName` of an asset is at the top-level of the payload, and in this example indicates a `${className}`.
-
-        --8<-- "snippets/model/core-json.md"
-
-<#if inheritedProperties?has_content>
-### Inherited properties
-
-??? details "Expand for details on each inherited property"
-
-    === ":fontawesome-brands-java: Java"
-
+    --8<-- "snippets/model/core-properties.md"
+    <#if inheritedProperties?has_content>
     <#list superTypes?reverse as superType>
-        --8<-- "snippets/model/java/${superType?lower_case}-properties.md"
+    --8<-- "snippets/model/${superType?lower_case}-properties.md"
     </#list>
+    </#if>
 
-    === ":material-language-python: Python"
-
-    <#list superTypes?reverse as superType>
-        --8<-- "snippets/model/python/${superType?lower_case}-properties.md"
-    </#list>
-
-    === ":material-code-json: Raw REST API"
-
-    <#list superTypes?reverse as superType>
-        --8<-- "snippets/model/raw/${superType?lower_case}-properties.md"
-    </#list>
-
-</#if>
+    </div>
 <#if typeSpecificProperties?has_content>
-### Type-specific properties
 
-=== ":fontawesome-brands-java: Java"
+These attributes are specific to instances of `${originalName}` (and all of its subtypes).
 
-    --8<-- "snippets/model/java/${originalName?lower_case}-properties.md"
+<div class="grid" markdown>
 
-=== ":material-language-python: Python"
+--8<-- "snippets/model/${originalName?lower_case}-properties.md"
 
-    --8<-- "snippets/model/python/${originalName?lower_case}-properties.md"
-
-=== ":material-code-json: Raw REST API"
-
-    --8<-- "snippets/model/raw/${originalName?lower_case}-properties.md"
-
+</div>
 </#if>
+
 ## Relationships
 
-Following are all the relationships available between `${originalName}` assets and other objects in Atlan.
-
 <#if inheritedRelationships?has_content>
-### Inherited relationships
+??? details "Inherited relationships"
 
-<@raw.diagram originalName=originalName attributes=inheritedRelationships />
+    These relationships are inherited from `${originalName}`'s supertypes:
 
-??? details "Expand for details on each inherited relationship"
-
-    === ":fontawesome-brands-java: Java"
+    <div class="grid" markdown>
 
     <#list superTypes?reverse as superType>
-        --8<-- "snippets/model/java/${superType?lower_case}-relationships.md"
+    --8<-- "snippets/model/${superType?lower_case}-relationships.md"
     </#list>
 
-    === ":material-language-python: Python"
-
-    <#list superTypes?reverse as superType>
-        --8<-- "snippets/model/python/${superType?lower_case}-relationships.md"
-    </#list>
-
-    === ":material-code-json: Raw REST API"
-
-    <#list superTypes?reverse as superType>
-        --8<-- "snippets/model/raw/${superType?lower_case}-relationships.md"
-    </#list>
-
+    </div>
 </#if>
 <#if typeSpecificRelationships?has_content>
-### Type-specific relationships
 
-<@raw.diagram originalName=originalName attributes=typeSpecificRelationships />
+These relationships are specific to instances of `${originalName}` (and all of its subtypes).
 
-=== ":fontawesome-brands-java: Java"
+<div class="grid" markdown>
 
-    --8<-- "snippets/model/java/${originalName?lower_case}-relationships.md"
+--8<-- "snippets/model/${originalName?lower_case}-relationships.md"
 
-=== ":material-language-python: Python"
-
-    --8<-- "snippets/model/python/${originalName?lower_case}-relationships.md"
-
-=== ":material-code-json: Raw REST API"
-
-    --8<-- "snippets/model/raw/${originalName?lower_case}-relationships.md"
+</div>
 </#if>

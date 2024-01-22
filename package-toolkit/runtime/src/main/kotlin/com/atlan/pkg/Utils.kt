@@ -6,9 +6,15 @@ import com.atlan.Atlan
 import com.atlan.exception.AtlanException
 import com.atlan.exception.NotFoundException
 import com.atlan.model.assets.Connection
+import com.atlan.pkg.s3.S3Sync
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import jakarta.activation.FileDataSource
+import jakarta.mail.Message
 import mu.KLogger
 import mu.KotlinLogging
+import org.simplejavamail.email.EmailBuilder
+import org.simplejavamail.mailer.MailerBuilder
+import java.io.File
 import java.util.concurrent.ThreadLocalRandom
 import java.util.concurrent.atomic.AtomicLong
 import kotlin.math.round
@@ -23,7 +29,7 @@ object Utils {
 
     // Note: this default value is necessary to avoid internal Argo errors if the
     // file is actually optional (only value that seems likely to be in all tenants' S3 buckets)
-    const val DEFAULT_FILE = "argo-artifacts/atlan-update/last-run-timestamp.txt"
+    const val DEFAULT_FILE = "argo-artifacts/atlan-update/@atlan-packages-last-safe-run.txt"
 
     /**
      * Set up the event-processing options, and start up the event processor.
@@ -32,7 +38,7 @@ object Utils {
      */
     inline fun <reified T : CustomConfig> setPackageOps(): T {
         System.getProperty("logDirectory") ?: System.setProperty("logDirectory", "tmp")
-        logger.info("Looking for configuration in environment variables...")
+        logger.info { "Looking for configuration in environment variables..." }
         val config = parseConfigFromEnv<T>()
         setClient(config.runtime.userId ?: "")
         setWorkflowOpts(config.runtime)
@@ -54,15 +60,15 @@ object Utils {
         val tokenToUse =
             when {
                 apiToken.isNotEmpty() -> {
-                    logger.info("Using provided API token for authentication.")
+                    logger.info { "Using provided API token for authentication." }
                     apiToken
                 }
                 userId.isNotEmpty() -> {
-                    logger.info("No API token found, attempting to impersonate user: {}", userId)
+                    logger.info { "No API token found, attempting to impersonate user: $userId" }
                     Atlan.getDefaultClient().impersonate.user(userId)
                 }
                 else -> {
-                    logger.info("No API token or impersonation user, attempting short-lived escalation.")
+                    logger.info { "No API token or impersonation user, attempting short-lived escalation." }
                     Atlan.getDefaultClient().impersonate.escalate()
                 }
             }
@@ -103,20 +109,14 @@ object Utils {
         val localCount = counter.incrementAndGet()
         if (batchSize > 0) {
             if (localCount.mod(batchSize) == 0 || localCount == total) {
-                logger.info(
-                    " ... processed {}/{} ({}%)",
-                    localCount,
-                    total,
-                    round((localCount.toDouble() / total) * 100),
-                )
+                logger.info {
+                    " ... processed $localCount/$total (${round((localCount.toDouble() / total) * 100)}%)"
+                }
             }
         } else {
-            logger.info(
-                " ... processed {}/{} ({}%)",
-                localCount,
-                total,
-                round((localCount.toDouble() / total) * 100),
-            )
+            logger.info {
+                " ... processed $localCount/$total (${round((localCount.toDouble() / total) * 100)}%)"
+            }
         }
     }
 
@@ -168,7 +168,7 @@ object Utils {
      * @return the complete configuration for the custom package
      */
     inline fun <reified T : CustomConfig> parseConfigFromEnv(): T {
-        logger.info("Constructing configuration from environment variables...")
+        logger.info { "Constructing configuration from environment variables..." }
         val runtime = buildRuntimeConfig()
         return parseConfig(getEnvVar("NESTED_CONFIG"), runtime)
     }
@@ -181,7 +181,7 @@ object Utils {
      * @return the complete configuration for the event-handling pipeline
      */
     inline fun <reified T : CustomConfig> parseConfig(config: String, runtime: String): T {
-        logger.info("Parsing configuration...")
+        logger.info { "Parsing configuration..." }
         val type = MAPPER.typeFactory.constructType(T::class.java)
         val cfg = MAPPER.readValue<T>(config, type)
         cfg.runtime = MAPPER.readValue(runtime, RuntimeConfig::class.java)
@@ -305,7 +305,7 @@ object Utils {
      */
     fun createConnection(connection: Connection?): String {
         return if (connection != null) {
-            logger.info("Attempting to create new connection...")
+            logger.info { "Attempting to create new connection..." }
             try {
                 val toCreate = connection
                     .toBuilder()
@@ -331,7 +331,7 @@ object Utils {
     fun reuseConnection(providedConnectionQN: String?): String {
         return providedConnectionQN?.let {
             try {
-                logger.info("Attempting to reuse connection: {}", providedConnectionQN)
+                logger.info { "Attempting to reuse connection: $providedConnectionQN" }
                 Connection.get(Atlan.getDefaultClient(), providedConnectionQN, false)
                 providedConnectionQN
             } catch (e: NotFoundException) {
@@ -339,5 +339,75 @@ object Utils {
                 ""
             }
         } ?: ""
+    }
+
+    /**
+     * Send an email using the tenant's internal SMTP server.
+     *
+     * @param subject subject line for the email
+     * @param recipients collection of email addresses to send the email to
+     * @param body content of the email (plain text)
+     * @param attachments (optional) attachments to include in the email
+     */
+    fun sendEmail(
+        subject: String,
+        recipients: Collection<String>,
+        body: String,
+        attachments: Collection<File>? = null,
+    ) {
+        val builder = EmailBuilder.startingBlank()
+            .from("support@atlan.app")
+            .withRecipients(null, false, recipients, Message.RecipientType.TO)
+            .withSubject(subject)
+            .withPlainText("$body\n\n")
+        attachments?.forEach {
+            builder.withAttachment(it.name, FileDataSource(it))
+        }
+        val email = builder.buildEmail()
+        MailerBuilder.withSMTPServer(
+            getEnvVar("SMTP_HOST", "smtp.sendgrid.net"),
+            getEnvVar("SMTP_PORT", "587").toInt(),
+            getEnvVar("SMTP_USER"),
+            getEnvVar("SMTP_PASS"),
+        ).buildMailer().sendMail(email)
+    }
+
+    /**
+     * Return a URL that will link directly to an asset in Atlan.
+     *
+     * @param guid of the asset for which to produce a link
+     */
+    fun getAssetLink(guid: String): String {
+        return "${Atlan.getBaseUrl()}/assets/$guid/overview"
+    }
+
+    /**
+     * Return the (container-)local input file name whenever a user is given the
+     * choice of how to provide an input file (either by uploading directly or through S3).
+     * If using the S3 details, the object will be downloaded from S3 and placed into local
+     * storage as part of this method.
+     *
+     * @param uploadResult filename from a direct upload
+     * @param s3Region name of the S3 region for an S3 download
+     * @param s3Bucket name of the S3 bucket for an S3 download
+     * @param s3ObjectKey full path to the S3 object within the bucket
+     * @param outputDirectory local directory where any S3-downloaded file should be placed
+     * @param preferUpload if true, take the directly-uploaded file; otherwise use the S3 details to download the file
+     * @return the name of the file that is on local container storage from which we can read information
+     */
+    fun getInputFile(uploadResult: String, s3Region: String, s3Bucket: String, s3ObjectKey: String, outputDirectory: String, preferUpload: Boolean = true): String {
+        return if (preferUpload) {
+            uploadResult
+        } else {
+            if (s3ObjectKey.isNotBlank()) {
+                val sync = S3Sync(s3Bucket, s3Region, logger)
+                val filename = File(s3ObjectKey).name
+                val path = "$outputDirectory${File.separator}$filename"
+                sync.downloadFromS3(s3ObjectKey, path)
+                path
+            } else {
+                ""
+            }
+        }
     }
 }

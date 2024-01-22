@@ -22,12 +22,14 @@ import mu.KotlinLogging
  * @param attrsToOverwrite list of fields that should be overwritten in Atlan, if their value is empty in the CSV
  * @param updateOnly if true, only update an asset (first check it exists), if false allow upserts (create if it does not exist)
  * @param batchSize maximum number of records to save per API request
+ * @param trackBatches if true, minimal details about every asset created or updated is tracked (if false, only counts of each are tracked)
  */
 class ConnectionImporter(
     private val preprocessed: Importer.PreprocessedCsv,
     private val attrsToOverwrite: List<AtlanField>,
     private val updateOnly: Boolean,
     private val batchSize: Int,
+    trackBatches: Boolean,
 ) : AssetImporter(
     preprocessed.preprocessedFile,
     attrsToOverwrite,
@@ -35,6 +37,7 @@ class ConnectionImporter(
     batchSize,
     Connection.TYPE_NAME,
     KotlinLogging.logger {},
+    trackBatches,
 ) {
     companion object {
         const val CONNECTOR_TYPE = "connectorType"
@@ -59,15 +62,15 @@ class ConnectionImporter(
     }
 
     /** {@inheritDoc} */
-    override fun cacheCreated(map: Map<String, Asset>) {
+    override fun cacheCreated(list: List<Asset>) {
         // Cache any assets that were created by processing
-        map.keys.forEach { k ->
+        list.forEach { asset ->
             // We must look up the asset and then cache to ensure we have the necessary identity
             // characteristics and status
-            val result = ConnectionCache.lookupAssetByGuid(k, maxRetries = 5)
+            val result = ConnectionCache.lookupAssetByGuid(asset.guid, maxRetries = 5)
             result?.let {
-                ConnectionCache.addByGuid(k, result)
-            } ?: throw IllegalStateException("Result of searching by GUID for $k was null.")
+                ConnectionCache.addByGuid(asset.guid, result)
+            } ?: throw IllegalStateException("Result of searching by GUID for ${asset.guid} was null.")
         }
     }
 }

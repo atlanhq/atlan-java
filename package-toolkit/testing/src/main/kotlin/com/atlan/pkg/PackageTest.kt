@@ -11,6 +11,9 @@ import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.model.enums.AtlanDeleteType
 import com.atlan.model.enums.AtlanWorkflowPhase
 import com.atlan.model.packages.ConnectionDelete
+import com.atlan.model.search.IndexSearchRequest
+import com.atlan.model.search.IndexSearchResponse
+import com.atlan.net.HttpClient
 import com.atlan.serde.Serde
 import com.aventrix.jnanoid.jnanoid.NanoIdUtils
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
@@ -129,6 +132,25 @@ abstract class PackageTest {
             val file = validateFile(it, relativeTo)
             assertEquals(0, file.length(), "File is empty.")
         }
+    }
+
+    /**
+     * Since search is eventually consistent, retry it until we arrive at the number of results
+     * we expect (or hit the retry limit).
+     *
+     * @param request search request to run
+     * @param expectedSize expected number of results from the search
+     * @return the response, either with the expected number of results or after exceeding the retry limit
+     */
+    fun retrySearchUntil(request: IndexSearchRequest, expectedSize: Long): IndexSearchResponse {
+        var count = 1
+        var response = request.search()
+        while (response.approximateCount < expectedSize && count < Atlan.getMaxNetworkRetries()) {
+            Thread.sleep(HttpClient.waitTime(count).toMillis())
+            response = request.search()
+            count++
+        }
+        return response
     }
 
     private fun validateFile(filename: String, relativeTo: String): File {

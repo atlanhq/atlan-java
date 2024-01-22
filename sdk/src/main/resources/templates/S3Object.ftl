@@ -1,6 +1,33 @@
 <#macro all>
     /**
      * Builds the minimal object necessary to create an S3 object.
+     * Note: this will use the provided prefix and name of the object to construct the qualifiedName for the object.
+     *
+     * @param name of the S3 object
+     * @param bucket in which the S3 object should be created, which must have at least
+     *               a qualifiedName and name
+     * @param prefix the "folder(s)" in which the object exists, within the bucket
+     * @return the minimal request necessary to create the S3 object, as a builder
+     * @throws InvalidRequestException if the bucket provided is without any required attributes
+     */
+    public static S3ObjectBuilder<?, ?> creatorWithPrefix(String name, S3Bucket bucket, String prefix) throws InvalidRequestException {
+        List<String> missing = new ArrayList<>();
+        if (bucket.getQualifiedName() == null || bucket.getQualifiedName().isEmpty()) {
+            missing.add("qualifiedName");
+        }
+        if (bucket.getName() == null || bucket.getName().isEmpty()) {
+            missing.add("name");
+        }
+        if (!missing.isEmpty()) {
+            throw new InvalidRequestException(
+                                ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, "S3Bucket", String.join(",", missing));
+        }
+        return creatorWithPrefix(name, bucket.getQualifiedName(), bucket.getName(), prefix).bucket(bucket.trimToReference());
+    }
+
+    /**
+     * Builds the minimal object necessary to create an S3 object.
+     * Note: this will use the provided ARN to construct the qualifiedName for the object.
      *
      * @param name of the S3 object
      * @param bucket in which the S3 object should be created, which must have at least
@@ -26,6 +53,33 @@
 
     /**
      * Builds the minimal object necessary to create an S3 object.
+     * Note: this will use the prefix and name of the object to construct the qualifiedName for the object.
+     *
+     * @param name of the S3 object (must be unique within the bucket)
+     * @param bucketQualifiedName unique name of the S3 bucket in which the object exists
+     * @param bucketName simple human-readable name of the S3 bucket in which the object exists
+     * @param prefix the "folder(s)" in which the object exists, within the bucket
+     * @return the minimal object necessary to create the S3 object, as a builder
+     */
+    public static S3ObjectBuilder<?, ?> creatorWithPrefix(
+            String name, String bucketQualifiedName, String bucketName, String prefix) {
+        String connectionQualifiedName = StringUtils.getConnectionQualifiedName(bucketQualifiedName);
+        String objectKey = prefix + "/" + name;
+        return S3Object._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(IS3.generateQualifiedName(connectionQualifiedName, objectKey))
+                .name(name)
+                .s3ObjectKey(objectKey)
+                .connectionQualifiedName(connectionQualifiedName)
+                .connectorType(AtlanConnectorType.S3)
+                .s3BucketQualifiedName(bucketQualifiedName)
+                .s3BucketName(bucketName)
+                .bucket(S3Bucket.refByQualifiedName(bucketQualifiedName));
+    }
+
+    /**
+     * Builds the minimal object necessary to create an S3 object.
+     * Note: this will use the provided ARN to construct the qualifiedName for the object.
      *
      * @param name of the S3 object
      * @param bucketQualifiedName unique name of the S3 bucket in which the object exists

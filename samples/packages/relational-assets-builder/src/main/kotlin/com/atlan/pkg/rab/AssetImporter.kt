@@ -13,6 +13,7 @@ import com.atlan.model.assets.Table
 import com.atlan.model.assets.View
 import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.serde.csv.CSVImporter
+import com.atlan.pkg.serde.csv.ImportResults
 import mu.KLogger
 
 /**
@@ -27,6 +28,7 @@ import mu.KLogger
  * @param attrsToOverwrite list of fields that should be overwritten in Atlan, if their value is empty in the CSV
  * @param updateOnly if true, only update an asset (first check it exists), if false allow upserts (create if it does not exist)
  * @param batchSize maximum number of records to save per API request
+ * @param trackBatches if true, minimal details about every asset created or updated is tracked (if false, only counts of each are tracked)
  */
 abstract class AssetImporter(
     private val filename: String,
@@ -35,22 +37,24 @@ abstract class AssetImporter(
     private val batchSize: Int,
     typeNameFilter: String,
     logger: KLogger,
+    trackBatches: Boolean,
 ) : CSVImporter(
     filename,
     logger,
     typeNameFilter,
     attrsToOverwrite,
     batchSize = batchSize,
+    trackBatches = trackBatches,
 ) {
 
     /** {@inheritDoc} */
-    override fun import(columnsToSkip: Set<String>) {
+    override fun import(columnsToSkip: Set<String>): ImportResults? {
         // Can skip all of these columns when deserializing a row as they will be set by
         // the creator methods anyway
-        super.import(
+        return super.import(
             setOf(
                 Asset.CONNECTION_NAME.atlanFieldName,
-                ConnectionImporter.CONNECTOR_TYPE,
+                // ConnectionImporter.CONNECTOR_TYPE, // Let this be loaded, for mis-named connections
                 ISQL.DATABASE_NAME.atlanFieldName,
                 ISQL.SCHEMA_NAME.atlanFieldName,
                 ENTITY_NAME,
@@ -62,6 +66,21 @@ abstract class AssetImporter(
 
     companion object {
         const val ENTITY_NAME = "entityName"
+
+        /**
+         * Build a connection identity from an asset's tenant-agnostic qualifiedName.
+         *
+         * @param agnosticQualifiedName the tenant-agnostic qualifiedName of an asset
+         * @return connection identity used for that asset
+         */
+        fun getConnectionIdentityFromQN(agnosticQualifiedName: String): ConnectionIdentity? {
+            val tokens = agnosticQualifiedName.split("/")
+            return if (tokens.size > 1) {
+                ConnectionIdentity(tokens[0], tokens[1])
+            } else {
+                null
+            }
+        }
 
         /**
          * Calculate the qualifiedName components from a row of data, completely in-memory (no calls to Atlan).
@@ -78,7 +97,7 @@ abstract class AssetImporter(
                 Connection.TYPE_NAME -> {
                     val connection = row[header.indexOf(Asset.CONNECTION_NAME.atlanFieldName)]
                     val connector = row[header.indexOf(ConnectionImporter.CONNECTOR_TYPE)]
-                    current = "$connection/$connector"
+                    current = ConnectionIdentity(connection, connector).toString()
                     parent = null
                 }
                 Database.TYPE_NAME -> {
@@ -120,4 +139,10 @@ abstract class AssetImporter(
         val parentUniqueQN: String,
         val parentPartialQN: String,
     )
+
+    data class ConnectionIdentity(val name: String, val type: String) {
+        override fun toString(): String {
+            return "$name/$type"
+        }
+    }
 }

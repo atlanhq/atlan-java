@@ -388,6 +388,7 @@ public class ConnectionTest {
             .isSampleDataPreviewEnabled(true)
             .objectStorageUploadThreshold(123456789L)
             .policyStrategy("String0")
+            .policyStrategyForSamplePreview("String0")
             .popularityInsightsTimeframe(123456789L)
             .port(123)
             .previewCredentialStrategy("String0")

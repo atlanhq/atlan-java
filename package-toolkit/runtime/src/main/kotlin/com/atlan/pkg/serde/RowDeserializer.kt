@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.serde
 
+import com.atlan.Atlan
 import com.atlan.cache.ReflectionCache
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Asset.AssetBuilder
@@ -9,6 +10,7 @@ import com.atlan.model.core.CustomMetadataAttributes
 import com.atlan.pkg.serde.RowSerde.CM_HEADING_DELIMITER
 import com.atlan.pkg.serde.cell.AssetRefXformer
 import com.atlan.serde.Serde
+import com.atlan.util.AssetBatch
 import mu.KLogger
 import java.util.concurrent.ThreadLocalRandom
 
@@ -66,7 +68,7 @@ class RowDeserializer(
         if (partial.typeName.isNullOrBlank() || partial.qualifiedName.isNullOrBlank()) {
             logger.warn("No qualifiedName or typeName found in builder, cannot deserialize: {}", row)
         } else {
-            val deserialization = RowDeserialization(RowDeserialization.AssetIdentity(partial.typeName, partial.qualifiedName), builder)
+            val deserialization = RowDeserialization(AssetBatch.AssetIdentity(partial.typeName, partial.qualifiedName), builder)
             val customMetadataMap = mutableMapOf<String, CustomMetadataAttributes.CustomMetadataAttributesBuilder<*, *>>()
             for (i in heading.indices) {
                 val fieldName = heading[i]
@@ -120,7 +122,18 @@ class RowDeserializer(
                 val rValue = row[i]
                 return if (fieldName.contains(CM_HEADING_DELIMITER)) {
                     // Custom metadata field...
-                    FieldSerde.getCustomMetadataValueFromString(rValue)
+                    val cache = Atlan.getDefaultClient().customMetadataCache
+                    val tokens = fieldName.split(CM_HEADING_DELIMITER)
+                    val setName = tokens[0]
+                    val attrName = tokens[1]
+                    val attrId = cache.getAttrIdForName(setName, attrName)
+                    if (attrId != null) {
+                        val attrDef = cache.getAttributeDef(attrId)
+                        return FieldSerde.getCustomMetadataValueFromString(rValue, attrDef.options?.multiValueSelect ?: false)
+                    } else {
+                        // If we cannot translate via the attribute def, return it as-is
+                        rValue
+                    }
                 } else {
                     // "Normal" field...
                     val setter = ReflectionCache.getSetter(Serde.getBuilderClassForType(typeName), fieldName)

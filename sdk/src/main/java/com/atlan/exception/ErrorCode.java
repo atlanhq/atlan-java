@@ -429,6 +429,11 @@ public enum ErrorCode implements ExceptionMessageSet {
             "ATLAN-JAVA-404-026",
             "Unable to find a query with the name: {0}.",
             "Verify the requested query exists in your Atlan environment."),
+    API_TOKEN_NOT_FOUND_BY_NAME(
+            404,
+            "ATLAN-JAVA-404-027",
+            "API token with name {0} does not exist.",
+            "Verify the API token provided is a valid username for that token."),
 
     CONFLICT_PASSTHROUGH(
             409,
@@ -458,7 +463,7 @@ public enum ErrorCode implements ExceptionMessageSet {
             "ATLAN-JAVA-500-001",
             "Multiple custom attributes with exactly the same name ({0}) were found for: {1}.",
             ErrorCode.RAISE_GITHUB_ISSUE),
-    UNABLE_TO_DESERIALIZE(500, "ATLAN-JAVA-500-002", "Unable to deserialize value: [0]", ErrorCode.RAISE_GITHUB_ISSUE),
+    UNABLE_TO_DESERIALIZE(500, "ATLAN-JAVA-500-002", "Unable to deserialize value: {0}", ErrorCode.RAISE_GITHUB_ISSUE),
     UNABLE_TO_PARSE_ORIGINAL_QUERY(
             500,
             "ATLAN-JAVA-500-003",
@@ -478,7 +483,12 @@ public enum ErrorCode implements ExceptionMessageSet {
             500,
             "ATLAN-JAVA-500-006",
             "Loop for retrying a failed action hit the maximum number of retries.",
-            "Increase the maximum number of retries through Atlan.setMaxNetworkRetries(), or ignore this error if it was your intention to fail after a maximum number of retries was reached.");
+            "Increase the maximum number of retries through Atlan.setMaxNetworkRetries(), or ignore this error if it was your intention to fail after a maximum number of retries was reached."),
+    ASSET_MODIFICATION_ERROR(
+            500,
+            "ATLAN-JAVA-500-007",
+            "Unable to modify asset to change {0}.",
+            "Unable to modify this base property of an asset, which should not happen. Please raise an issue on the public atlan-java GitHub repository.");
 
     private static final String RAISE_GITHUB_ISSUE =
             "Please raise an issue on the Java SDK GitHub repository providing context in which this error occurred.";

@@ -398,7 +398,7 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
      * @param id (optional) unique ID of this process within the software / system that ran it (if not provided, it will be generated)
      * @param inputs columns of data the process reads from
      * @param outputs columns of data the process writes to
-     * @param parent (optional) parent process in which this column-level process ran
+     * @param parent parent process in which this column-level process ran
      * @return the minimal object necessary to create the column-level process, as a builder
      */
     public static ColumnProcessBuilder<?, ?> creator(
@@ -410,7 +410,7 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
             LineageProcess parent) {
         AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         String connectionName = StringUtils.getNameFromQualifiedName(connectionQualifiedName);
-        return ColumnProcess._internal()
+        ColumnProcessBuilder<?, ?> builder = ColumnProcess._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(LineageProcess.generateQualifiedName(
                         name, connectionQualifiedName, id, inputs, outputs, parent))
@@ -420,6 +420,10 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
                 .connectionQualifiedName(connectionQualifiedName)
                 .inputs(inputs)
                 .outputs(outputs);
+        if (parent != null) {
+            builder.process(parent);
+        }
+        return builder;
     }
 
     /**

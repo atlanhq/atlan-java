@@ -215,7 +215,7 @@ open class CustomPackage(
                     type = "Long"
                 }
             }
-            builder.append("    @JsonProperty(\"$k\") val ${StringUtils.getLowerCamelCase(k)}: $type?,\n")
+            builder.append("    @JsonProperty(\"$k\") val ${StringUtils.getLowerCamelCase(k)}: $type? = null,\n")
         }
         builder.append(
             """

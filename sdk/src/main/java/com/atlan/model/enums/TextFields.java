@@ -378,6 +378,10 @@ public enum TextFields implements AtlanSearchableField {
     TABLE_NAME("tableName"),
     /** Allowed values for the tag in the source system. These are denormalized from tagAttributes for ease of querying. */
     TAG_ALLOWED_VALUES("tagAllowedValues.text"),
+    /** Represents associated tag value */
+    TAG_ATTACHMENT_STRING_VALUE("tagAttachmentStringValue.text"),
+    /** Represents associated source tag's qualified name */
+    TAG_QUALIFIED_NAME("tagQualifiedName.text"),
     /** Simple name of the liveboard in which this dashlet exists. */
     THOUGHTSPOT_LIVEBOARD_NAME("thoughtspotLiveboardName"),
     /** Unique name of the liveboard in which this dashlet exists. */
