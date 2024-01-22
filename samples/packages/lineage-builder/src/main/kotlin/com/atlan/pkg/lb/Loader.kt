@@ -118,7 +118,9 @@ object Loader {
             .includeOnResults(Connection.CONNECTOR_TYPE)
             .stream()
             .forEach {
-                map[ConnectionId(it.connectorType.value, it.name)] = it.qualifiedName
+                if (it.connectorType != null) {
+                    map[ConnectionId(it.connectorType.value, it.name)] = it.qualifiedName
+                }
             }
         return map.toMap()
     }
