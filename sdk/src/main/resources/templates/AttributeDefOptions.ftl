@@ -112,7 +112,7 @@ public class AttributeDefOptions extends AtlanObject {
     /**
      * Qualified names of connections to which to restrict the attribute.
      * Only assets within one of these connections will have this attribute available.
-     * To further restrict the types of assets within the glossaries, see {@link #applicableAssetTypes}.
+     * To further restrict the types of assets within the connections, see {@link #applicableAssetTypes}.
      */
     @Singular
     @JsonSerialize(using = SetToStringSerializer.class)
