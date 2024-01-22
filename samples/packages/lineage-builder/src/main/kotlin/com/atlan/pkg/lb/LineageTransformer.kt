@@ -42,10 +42,10 @@ class LineageTransformer(
         val name = inputRow[XFORM_NAME] ?: ""
         val sourceQN = AssetTransformer.getAssetQN(ctx, inputRow, AssetTransformer.SOURCE_PREFIX, qnMap)
         val sourceType = inputRow[AssetTransformer.SOURCE_TYPE] ?: ""
-        val source = FieldSerde.getRefByQualifiedName(sourceType, sourceQN)
+        val source = if (sourceQN.isNotBlank()) FieldSerde.getRefByQualifiedName(sourceType, sourceQN) else null
         val targetQN = AssetTransformer.getAssetQN(ctx, inputRow, AssetTransformer.TARGET_PREFIX, qnMap)
         val targetType = inputRow[AssetTransformer.TARGET_TYPE] ?: ""
-        val target = FieldSerde.getRefByQualifiedName(targetType, targetQN)
+        val target = if (targetQN.isNotBlank()) FieldSerde.getRefByQualifiedName(targetType, targetQN) else null
         if (source !is ICatalog || target !is ICatalog) {
             logger.warn { "Source and/or target asset are not subtypes of Catalog, and therefore cannot exist in lineage: $inputRow" }
             return listOf(listOf("", "", "", "", "", ""))

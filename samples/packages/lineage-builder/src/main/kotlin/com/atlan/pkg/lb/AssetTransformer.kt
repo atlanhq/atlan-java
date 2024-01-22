@@ -44,6 +44,10 @@ class AssetTransformer(
             val assetType = inputRow["$prefix $TYPE"] ?: ""
             val partialQN = inputRow["$prefix $IDENTITY"] ?: ""
             val connectionQN = getConnectionQN(ctx, inputRow, prefix)
+            if (connectionQN.isBlank()) {
+                // Short-circuit if there is no connection qualifiedName
+                return ""
+            }
             val candidateQN = "$connectionQN/$partialQN"
             return if (qnMap.isNotEmpty()) {
                 // If there is data in the qnMap, translate case-insensitive qualifiedName to
