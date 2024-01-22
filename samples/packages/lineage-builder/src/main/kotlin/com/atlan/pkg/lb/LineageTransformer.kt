@@ -42,38 +42,51 @@ class LineageTransformer(
         val name = inputRow[XFORM_NAME] ?: ""
         val sourceQN = AssetTransformer.getAssetQN(ctx, inputRow, AssetTransformer.SOURCE_PREFIX, qnMap)
         val sourceType = inputRow[AssetTransformer.SOURCE_TYPE] ?: ""
-        val source = if (sourceQN.isNotBlank()) FieldSerde.getRefByQualifiedName(sourceType, sourceQN) else null
+        val source = if (sourceQN.isNotBlank() && sourceType.isNotBlank()) {
+            FieldSerde.getRefByQualifiedName(sourceType, sourceQN)
+        } else {
+            logger.warn { "Unable to translate source into a valid asset reference: $sourceType::$sourceQN" }
+            null
+        }
         val targetQN = AssetTransformer.getAssetQN(ctx, inputRow, AssetTransformer.TARGET_PREFIX, qnMap)
         val targetType = inputRow[AssetTransformer.TARGET_TYPE] ?: ""
-        val target = if (targetQN.isNotBlank()) FieldSerde.getRefByQualifiedName(targetType, targetQN) else null
-        if (source !is ICatalog || target !is ICatalog) {
-            logger.warn { "Source and/or target asset are not subtypes of Catalog, and therefore cannot exist in lineage: $inputRow" }
-            return listOf(listOf("", "", "", "", "", ""))
+        val target = if (targetQN.isNotBlank() && targetType.isNotBlank()) {
+            FieldSerde.getRefByQualifiedName(targetType, targetQN)
         } else {
-            val xformConnector = inputRow[XFORM_CONNECTOR] ?: ""
-            val xformConnection = inputRow[XFORM_CONNECTION] ?: ""
-            val connectionId = Loader.ConnectionId(xformConnector, xformConnection)
-            val connectionQN = ctx.connectionMap.getOrDefault(connectionId, "")
-            val qualifiedName = LineageProcess.generateQualifiedName(
-                name,
-                connectionQN,
-                inputRow[XFORM_IDENTITY],
-                listOf(source as ICatalog),
-                listOf(target as ICatalog),
-                null,
-            )
-            return listOf(
-                listOf(
-                    LineageProcess.TYPE_NAME,
-                    qualifiedName,
+            logger.warn { "Unable to translate target into a valid asset reference: $targetType::$targetQN" }
+            null
+        }
+        if (source != null && target != null) {
+            if (source !is ICatalog || target !is ICatalog) {
+                logger.warn { "Source and/or target asset are not subtypes of Catalog, and therefore cannot exist in lineage: $inputRow" }
+            } else {
+                val xformConnector = inputRow[XFORM_CONNECTOR] ?: ""
+                val xformConnection = inputRow[XFORM_CONNECTION] ?: ""
+                val connectionId = Loader.ConnectionId(xformConnector, xformConnection)
+                val connectionQN = ctx.connectionMap.getOrDefault(connectionId, "")
+                val qualifiedName = LineageProcess.generateQualifiedName(
                     name,
                     connectionQN,
-                    xformConnector,
-                    AssetRefXformer.encode(source),
-                    AssetRefXformer.encode(target),
-                ),
-            )
+                    inputRow[XFORM_IDENTITY],
+                    listOf(source as ICatalog),
+                    listOf(target as ICatalog),
+                    null,
+                )
+                return listOf(
+                    listOf(
+                        LineageProcess.TYPE_NAME,
+                        qualifiedName,
+                        name,
+                        connectionQN,
+                        xformConnector,
+                        AssetRefXformer.encode(source),
+                        AssetRefXformer.encode(target),
+                    ),
+                )
+            }
         }
+        // If we fall through, we were unable to define the lineage, so write a blank row
+        return listOf(listOf("", "", "", "", "", ""))
     }
 
     /** {@inheritDoc} */
