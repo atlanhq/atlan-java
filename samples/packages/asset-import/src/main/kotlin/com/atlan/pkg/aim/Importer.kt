@@ -112,6 +112,7 @@ object Importer {
                 assetsCaseSensitive,
                 creationHandling,
                 assetsTableViewAgnostic,
+                assetsFailOnErrors,
             )
             assetImporter.import()
         } else {
