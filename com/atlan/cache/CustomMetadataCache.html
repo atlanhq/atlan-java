@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -206,6 +206,14 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr id="i4" class="altColor">
+<td class="colFirst"><code><a href="../model/typedefs/AttributeDef.html" title="class in com.atlan.model.typedefs">AttributeDef</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAttributeDef(java.lang.String,boolean)">getAttributeDef</a></span>&#8203;(java.lang.String&nbsp;attributeId,
+               boolean&nbsp;allowRefresh)</code></th>
+<td class="colLast">
+<div class="block">Retrieve a specific custom metadata attribute definition by its unique Atlan-internal ID string.</div>
+</td>
+</tr>
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAttributeForSearchResults(java.lang.String,java.lang.String)">getAttributeForSearchResults</a></span>&#8203;(java.lang.String&nbsp;setName,
                             java.lang.String&nbsp;attributeName)</code></th>
@@ -213,14 +221,31 @@ extends java.lang.Object</pre>
 <div class="block">Retrieve a single custom attribute name to include on search results.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i6" class="altColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAttributeForSearchResults(java.lang.String,java.lang.String,boolean)">getAttributeForSearchResults</a></span>&#8203;(java.lang.String&nbsp;setName,
+                            java.lang.String&nbsp;attributeName,
+                            boolean&nbsp;allowRefresh)</code></th>
+<td class="colLast">
+<div class="block">Retrieve a single custom attribute name to include on search results.</div>
+</td>
+</tr>
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>java.util.Set&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAttributesForSearchResults(java.lang.String)">getAttributesForSearchResults</a></span>&#8203;(java.lang.String&nbsp;setName)</code></th>
 <td class="colLast">
 <div class="block">Retrieve the full set of custom attributes to include on search results.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i8" class="altColor">
+<td class="colFirst"><code>java.util.Set&lt;java.lang.String&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAttributesForSearchResults(java.lang.String,boolean)">getAttributesForSearchResults</a></span>&#8203;(java.lang.String&nbsp;setName,
+                             boolean&nbsp;allowRefresh)</code></th>
+<td class="colLast">
+<div class="block">Retrieve the full set of custom attributes to include on search results.</div>
+</td>
+</tr>
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAttributesFromCustomMetadata(java.lang.String,java.lang.String,com.atlan.model.core.CustomMetadataAttributes,java.util.Map)">getAttributesFromCustomMetadata</a></span>&#8203;(java.lang.String&nbsp;cmId,
                                java.lang.String&nbsp;cmName,
@@ -230,7 +255,18 @@ extends java.lang.Object</pre>
 <div class="block">Translate the provided custom metadata attributes object into a hashed-string ID map of attributes and values.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i10" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAttributesFromCustomMetadata(java.lang.String,java.lang.String,com.atlan.model.core.CustomMetadataAttributes,java.util.Map,boolean)">getAttributesFromCustomMetadata</a></span>&#8203;(java.lang.String&nbsp;cmId,
+                               java.lang.String&nbsp;cmName,
+                               <a href="../model/core/CustomMetadataAttributes.html" title="class in com.atlan.model.core">CustomMetadataAttributes</a>&nbsp;cma,
+                               java.util.Map&lt;java.lang.String,&#8203;java.lang.Object&gt;&nbsp;attributes,
+                               boolean&nbsp;allowRefresh)</code></th>
+<td class="colLast">
+<div class="block">Translate the provided custom metadata attributes object into a hashed-string ID map of attributes and values.</div>
+</td>
+</tr>
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAttrIdForName(java.lang.String,java.lang.String)">getAttrIdForName</a></span>&#8203;(java.lang.String&nbsp;setName,
                 java.lang.String&nbsp;attributeName)</code></th>
@@ -239,7 +275,17 @@ extends java.lang.Object</pre>
  for the attribute.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i12" class="altColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAttrIdForName(java.lang.String,java.lang.String,boolean)">getAttrIdForName</a></span>&#8203;(java.lang.String&nbsp;setName,
+                java.lang.String&nbsp;attributeName,
+                boolean&nbsp;allowRefresh)</code></th>
+<td class="colLast">
+<div class="block">Translate the provided human-readable custom metadata set and attribute names to the Atlan-internal ID string
+ for the attribute.</div>
+</td>
+</tr>
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getBusinessAttributesFromCustomMetadata(java.util.Map,java.util.Map)">getBusinessAttributesFromCustomMetadata</a></span>&#8203;(java.util.Map&lt;java.lang.String,&#8203;<a href="../model/core/CustomMetadataAttributes.html" title="class in com.atlan.model.core">CustomMetadataAttributes</a>&gt;&nbsp;customMetadata,
                                        java.util.Map&lt;java.lang.String,&#8203;java.util.Map&lt;java.lang.String,&#8203;java.lang.Object&gt;&gt;&nbsp;businessAttributes)</code></th>
@@ -247,7 +293,16 @@ extends java.lang.Object</pre>
 <div class="block">Translate the provided custom metadata object into a business attributes object.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i14" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getBusinessAttributesFromCustomMetadata(java.util.Map,java.util.Map,boolean)">getBusinessAttributesFromCustomMetadata</a></span>&#8203;(java.util.Map&lt;java.lang.String,&#8203;<a href="../model/core/CustomMetadataAttributes.html" title="class in com.atlan.model.core">CustomMetadataAttributes</a>&gt;&nbsp;customMetadata,
+                                       java.util.Map&lt;java.lang.String,&#8203;java.util.Map&lt;java.lang.String,&#8203;java.lang.Object&gt;&gt;&nbsp;businessAttributes,
+                                       boolean&nbsp;allowRefresh)</code></th>
+<td class="colLast">
+<div class="block">Translate the provided custom metadata object into a business attributes object.</div>
+</td>
+</tr>
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code><a href="../model/core/CustomMetadataAttributes.html" title="class in com.atlan.model.core">CustomMetadataAttributes</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCustomMetadataAttributes(java.lang.String,com.fasterxml.jackson.databind.JsonNode)">getCustomMetadataAttributes</a></span>&#8203;(java.lang.String&nbsp;cmId,
                            com.fasterxml.jackson.databind.JsonNode&nbsp;attributes)</code></th>
@@ -255,42 +310,91 @@ extends java.lang.Object</pre>
 <div class="block">Translate the provided attributes structure into a human-readable map of attribute names to values.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i16" class="altColor">
+<td class="colFirst"><code><a href="../model/core/CustomMetadataAttributes.html" title="class in com.atlan.model.core">CustomMetadataAttributes</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCustomMetadataAttributes(java.lang.String,com.fasterxml.jackson.databind.JsonNode,boolean)">getCustomMetadataAttributes</a></span>&#8203;(java.lang.String&nbsp;cmId,
+                           com.fasterxml.jackson.databind.JsonNode&nbsp;attributes,
+                           boolean&nbsp;allowRefresh)</code></th>
+<td class="colLast">
+<div class="block">Translate the provided attributes structure into a human-readable map of attribute names to values.</div>
+</td>
+</tr>
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code><a href="../model/typedefs/CustomMetadataDef.html" title="class in com.atlan.model.typedefs">CustomMetadataDef</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCustomMetadataDef(java.lang.String)">getCustomMetadataDef</a></span>&#8203;(java.lang.String&nbsp;setName)</code></th>
 <td class="colLast">
 <div class="block">Retrieve the full custom metadata structure definition.</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i18" class="altColor">
+<td class="colFirst"><code><a href="../model/typedefs/CustomMetadataDef.html" title="class in com.atlan.model.typedefs">CustomMetadataDef</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCustomMetadataDef(java.lang.String,boolean)">getCustomMetadataDef</a></span>&#8203;(java.lang.String&nbsp;setName,
+                    boolean&nbsp;allowRefresh)</code></th>
+<td class="colLast">
+<div class="block">Retrieve the full custom metadata structure definition.</div>
+</td>
+</tr>
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code>java.util.Map&lt;java.lang.String,&#8203;<a href="../model/core/CustomMetadataAttributes.html" title="class in com.atlan.model.core">CustomMetadataAttributes</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCustomMetadataFromBusinessAttributes(com.fasterxml.jackson.databind.JsonNode)">getCustomMetadataFromBusinessAttributes</a></span>&#8203;(com.fasterxml.jackson.databind.JsonNode&nbsp;businessAttributes)</code></th>
 <td class="colLast">
 <div class="block">Translate the provided business attributes object into a custom metadata object.</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i20" class="altColor">
+<td class="colFirst"><code>java.util.Map&lt;java.lang.String,&#8203;<a href="../model/core/CustomMetadataAttributes.html" title="class in com.atlan.model.core">CustomMetadataAttributes</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCustomMetadataFromBusinessAttributes(com.fasterxml.jackson.databind.JsonNode,boolean)">getCustomMetadataFromBusinessAttributes</a></span>&#8203;(com.fasterxml.jackson.databind.JsonNode&nbsp;businessAttributes,
+                                       boolean&nbsp;allowRefresh)</code></th>
+<td class="colLast">
+<div class="block">Translate the provided business attributes object into a custom metadata object.</div>
+</td>
+</tr>
+<tr id="i21" class="rowColor">
 <td class="colFirst"><code>java.util.Map&lt;java.lang.String,&#8203;<a href="../model/core/CustomMetadataAttributes.html" title="class in com.atlan.model.core">CustomMetadataAttributes</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCustomMetadataFromSearchResult(java.util.Map)">getCustomMetadataFromSearchResult</a></span>&#8203;(java.util.Map&lt;java.lang.String,&#8203;com.fasterxml.jackson.databind.JsonNode&gt;&nbsp;embeddedAttributes)</code></th>
 <td class="colLast">
 <div class="block">Translate the provided search result-embedded custom metadata into a custom metadata object.</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i22" class="altColor">
+<td class="colFirst"><code>java.util.Map&lt;java.lang.String,&#8203;<a href="../model/core/CustomMetadataAttributes.html" title="class in com.atlan.model.core">CustomMetadataAttributes</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCustomMetadataFromSearchResult(java.util.Map,boolean)">getCustomMetadataFromSearchResult</a></span>&#8203;(java.util.Map&lt;java.lang.String,&#8203;com.fasterxml.jackson.databind.JsonNode&gt;&nbsp;embeddedAttributes,
+                                 boolean&nbsp;allowRefresh)</code></th>
+<td class="colLast">
+<div class="block">Translate the provided search result-embedded custom metadata into a custom metadata object.</div>
+</td>
+</tr>
+<tr id="i23" class="rowColor">
 <td class="colFirst"><code>java.util.Map&lt;java.lang.String,&#8203;java.lang.Object&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getEmptyAttributes(java.lang.String)">getEmptyAttributes</a></span>&#8203;(java.lang.String&nbsp;customMetadataName)</code></th>
 <td class="colLast">
 <div class="block">Construct a full set of attributes for the given custom metadata, but where all the values are null.</div>
 </td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i24" class="altColor">
+<td class="colFirst"><code>java.util.Map&lt;java.lang.String,&#8203;java.lang.Object&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getEmptyAttributes(java.lang.String,boolean)">getEmptyAttributes</a></span>&#8203;(java.lang.String&nbsp;customMetadataName,
+                  boolean&nbsp;allowRefresh)</code></th>
+<td class="colLast">
+<div class="block">Construct a full set of attributes for the given custom metadata, but where all the values are null.</div>
+</td>
+</tr>
+<tr id="i25" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIdForName(java.lang.String)">getIdForName</a></span>&#8203;(java.lang.String&nbsp;name)</code></th>
 <td class="colLast">
 <div class="block">Translate the provided human-readable custom metadata set name to the Atlan-internal ID string.</div>
 </td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i26" class="altColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIdForName(java.lang.String,boolean)">getIdForName</a></span>&#8203;(java.lang.String&nbsp;name,
+            boolean&nbsp;allowRefresh)</code></th>
+<td class="colLast">
+<div class="block">Translate the provided human-readable custom metadata set name to the Atlan-internal ID string.</div>
+</td>
+</tr>
+<tr id="i27" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIdMapFromNameMap(java.lang.String,java.util.Map,java.util.Map)">getIdMapFromNameMap</a></span>&#8203;(java.lang.String&nbsp;customMetadataName,
                    java.util.Map&lt;java.lang.String,&#8203;java.lang.Object&gt;&nbsp;nameToValue,
@@ -299,14 +403,32 @@ extends java.lang.Object</pre>
 <div class="block">Translate the provided map keyed by human-readable attribute name into a map of keyed by attribute id.</div>
 </td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i28" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIdMapFromNameMap(java.lang.String,java.util.Map,java.util.Map,boolean)">getIdMapFromNameMap</a></span>&#8203;(java.lang.String&nbsp;customMetadataName,
+                   java.util.Map&lt;java.lang.String,&#8203;java.lang.Object&gt;&nbsp;nameToValue,
+                   java.util.Map&lt;java.lang.String,&#8203;java.lang.Object&gt;&nbsp;idToValue,
+                   boolean&nbsp;allowRefresh)</code></th>
+<td class="colLast">
+<div class="block">Translate the provided map keyed by human-readable attribute name into a map of keyed by attribute id.</div>
+</td>
+</tr>
+<tr id="i29" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getNameForId(java.lang.String)">getNameForId</a></span>&#8203;(java.lang.String&nbsp;id)</code></th>
 <td class="colLast">
 <div class="block">Translate the provided Atlan-internal custom metadata ID string to the human-readable custom metadata set name.</div>
 </td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i30" class="altColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getNameForId(java.lang.String,boolean)">getNameForId</a></span>&#8203;(java.lang.String&nbsp;id,
+            boolean&nbsp;allowRefresh)</code></th>
+<td class="colLast">
+<div class="block">Translate the provided Atlan-internal custom metadata ID string to the human-readable custom metadata set name.</div>
+</td>
+</tr>
+<tr id="i31" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#refreshCache()">refreshCache</a></span>()</code></th>
 <td class="colLast">
@@ -394,6 +516,29 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
+<a id="getIdForName(java.lang.String,boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getIdForName</h4>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getIdForName&#8203;(java.lang.String&nbsp;name,
+                                     boolean&nbsp;allowRefresh)
+                              throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Translate the provided human-readable custom metadata set name to the Atlan-internal ID string.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>name</code> - human-readable name of the custom metadata set</dd>
+<dd><code>allowRefresh</code> - whether to allow a refresh of the cache (true) or not (false)</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>Atlan-internal ID string of the custom metadata set</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication problem if the cache needs to be refreshed</dd>
+<dd><code><a href="../exception/NotFoundException.html" title="class in com.atlan.exception">NotFoundException</a></code> - if the custom metadata cannot be found (does not exist) in Atlan</dd>
+<dd><code><a href="../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></code> - if no name was provided for the custom metadata to retrieve</dd>
+</dl>
+</li>
+</ul>
 <a id="getNameForId(java.lang.String)">
 <!--   -->
 </a>
@@ -406,6 +551,29 @@ extends java.lang.Object</pre>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>id</code> - Atlan-internal ID string of the custom metadata set</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>human-readable name of the custom metadata set</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication problem if the cache needs to be refreshed</dd>
+<dd><code><a href="../exception/NotFoundException.html" title="class in com.atlan.exception">NotFoundException</a></code> - if the custom metadata cannot be found (does not exist) in Atlan</dd>
+<dd><code><a href="../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></code> - if no name was provided for the custom metadata to retrieve</dd>
+</dl>
+</li>
+</ul>
+<a id="getNameForId(java.lang.String,boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getNameForId</h4>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getNameForId&#8203;(java.lang.String&nbsp;id,
+                                     boolean&nbsp;allowRefresh)
+                              throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Translate the provided Atlan-internal custom metadata ID string to the human-readable custom metadata set name.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>id</code> - Atlan-internal ID string of the custom metadata set</dd>
+<dd><code>allowRefresh</code> - whether to allow a refresh of the cache (true) or not (false)</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>human-readable name of the custom metadata set</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
@@ -503,6 +671,32 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
+<a id="getAttrIdForName(java.lang.String,java.lang.String,boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getAttrIdForName</h4>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getAttrIdForName&#8203;(java.lang.String&nbsp;setName,
+                                         java.lang.String&nbsp;attributeName,
+                                         boolean&nbsp;allowRefresh)
+                                  throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Translate the provided human-readable custom metadata set and attribute names to the Atlan-internal ID string
+ for the attribute.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>setName</code> - human-readable name of the custom metadata set</dd>
+<dd><code>attributeName</code> - human-readable name of the attribute</dd>
+<dd><code>allowRefresh</code> - whether to allow a refresh of the cache (true) or not (false)</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>Atlan-internal ID string for the attribute</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication problem if the cache needs to be refreshed</dd>
+<dd><code><a href="../exception/NotFoundException.html" title="class in com.atlan.exception">NotFoundException</a></code> - if the custom metadata cannot be found (does not exist) in Atlan</dd>
+<dd><code><a href="../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></code> - if no name was provided for the custom metadata to retrieve</dd>
+</dl>
+</li>
+</ul>
 <a id="getAttributeForSearchResults(java.lang.String,java.lang.String)">
 <!--   -->
 </a>
@@ -517,6 +711,33 @@ extends java.lang.Object</pre>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>setName</code> - human-readable name of the custom metadata set for which to retrieve the custom metadata attribute name</dd>
 <dd><code>attributeName</code> - human-readable name of the attribute</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the attribute name, strictly useful for inclusion in search results</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication problem if the cache needs to be refreshed</dd>
+<dd><code><a href="../exception/NotFoundException.html" title="class in com.atlan.exception">NotFoundException</a></code> - if the custom metadata cannot be found (does not exist) in Atlan</dd>
+<dd><code><a href="../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></code> - if no name was provided for the custom metadata to retrieve</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../model/search/IndexSearchRequest.IndexSearchRequestBuilder.html#attributes(java.util.Collection)"><code>IndexSearchRequest.IndexSearchRequestBuilder.attributes(Collection)</code></a></dd>
+</dl>
+</li>
+</ul>
+<a id="getAttributeForSearchResults(java.lang.String,java.lang.String,boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getAttributeForSearchResults</h4>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getAttributeForSearchResults&#8203;(java.lang.String&nbsp;setName,
+                                                     java.lang.String&nbsp;attributeName,
+                                                     boolean&nbsp;allowRefresh)
+                                              throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Retrieve a single custom attribute name to include on search results.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>setName</code> - human-readable name of the custom metadata set for which to retrieve the custom metadata attribute name</dd>
+<dd><code>attributeName</code> - human-readable name of the attribute</dd>
+<dd><code>allowRefresh</code> - whether to allow a refresh of the cache (true) or not (false)</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the attribute name, strictly useful for inclusion in search results</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
@@ -551,6 +772,31 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
+<a id="getAttributesForSearchResults(java.lang.String,boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getAttributesForSearchResults</h4>
+<pre class="methodSignature">public&nbsp;java.util.Set&lt;java.lang.String&gt;&nbsp;getAttributesForSearchResults&#8203;(java.lang.String&nbsp;setName,
+                                                                     boolean&nbsp;allowRefresh)
+                                                              throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Retrieve the full set of custom attributes to include on search results.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>setName</code> - human-readable name of the custom metadata set for which to retrieve a set of attribute names</dd>
+<dd><code>allowRefresh</code> - whether to allow a refresh of the cache (true) or not (false)</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a set of the attribute names, strictly useful for inclusion in search results</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication problem if the cache needs to be refreshed</dd>
+<dd><code><a href="../exception/NotFoundException.html" title="class in com.atlan.exception">NotFoundException</a></code> - if the custom metadata cannot be found (does not exist) in Atlan</dd>
+<dd><code><a href="../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></code> - if no name was provided for the custom metadata to retrieve</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../model/search/IndexSearchRequest.IndexSearchRequestBuilder.html#attributes(java.util.Collection)"><code>IndexSearchRequest.IndexSearchRequestBuilder.attributes(Collection)</code></a></dd>
+</dl>
+</li>
+</ul>
 <a id="getCustomMetadataDef(java.lang.String)">
 <!--   -->
 </a>
@@ -563,6 +809,29 @@ extends java.lang.Object</pre>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>setName</code> - human-readable name of the custom metadata set</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the full custom metadata structure definition for that set</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication problem if the cache needs to be refreshed</dd>
+<dd><code><a href="../exception/NotFoundException.html" title="class in com.atlan.exception">NotFoundException</a></code> - if the custom metadata cannot be found (does not exist) in Atlan</dd>
+<dd><code><a href="../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></code> - if no name was provided for the custom metadata to retrieve</dd>
+</dl>
+</li>
+</ul>
+<a id="getCustomMetadataDef(java.lang.String,boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getCustomMetadataDef</h4>
+<pre class="methodSignature">public&nbsp;<a href="../model/typedefs/CustomMetadataDef.html" title="class in com.atlan.model.typedefs">CustomMetadataDef</a>&nbsp;getCustomMetadataDef&#8203;(java.lang.String&nbsp;setName,
+                                              boolean&nbsp;allowRefresh)
+                                       throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Retrieve the full custom metadata structure definition.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>setName</code> - human-readable name of the custom metadata set</dd>
+<dd><code>allowRefresh</code> - whether to allow a refresh of the cache (true) or not (false)</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the full custom metadata structure definition for that set</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
@@ -591,6 +860,27 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
+<a id="getAttributeDef(java.lang.String,boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getAttributeDef</h4>
+<pre class="methodSignature">public&nbsp;<a href="../model/typedefs/AttributeDef.html" title="class in com.atlan.model.typedefs">AttributeDef</a>&nbsp;getAttributeDef&#8203;(java.lang.String&nbsp;attributeId,
+                                    boolean&nbsp;allowRefresh)
+                             throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Retrieve a specific custom metadata attribute definition by its unique Atlan-internal ID string.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>attributeId</code> - Atlan-internal ID string for the custom metadata attribute</dd>
+<dd><code>allowRefresh</code> - whether to allow a refresh of the cache (true) or not (false)</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>attribute definition for the custom metadata attribute</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication problem if the cache needs to be refreshed</dd>
+</dl>
+</li>
+</ul>
 <a id="getEmptyAttributes(java.lang.String)">
 <!--   -->
 </a>
@@ -603,6 +893,27 @@ extends java.lang.Object</pre>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>customMetadataName</code> - for which to construct the empty map</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a map from custom metadata attribute name (human-readable) to null values</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API issues</dd>
+</dl>
+</li>
+</ul>
+<a id="getEmptyAttributes(java.lang.String,boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getEmptyAttributes</h4>
+<pre class="methodSignature">public&nbsp;java.util.Map&lt;java.lang.String,&#8203;java.lang.Object&gt;&nbsp;getEmptyAttributes&#8203;(java.lang.String&nbsp;customMetadataName,
+                                                                                 boolean&nbsp;allowRefresh)
+                                                                          throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Construct a full set of attributes for the given custom metadata, but where all the values are null.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>customMetadataName</code> - for which to construct the empty map</dd>
+<dd><code>allowRefresh</code> - whether to allow a refresh of the cache (true) or not (false)</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>a map from custom metadata attribute name (human-readable) to null values</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
@@ -626,6 +937,29 @@ extends java.lang.Object</pre>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>customMetadata</code> - custom metadata object</dd>
 <dd><code>businessAttributes</code> - business attributes object, which will be changed</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication problem if the cache needs to be refreshed</dd>
+</dl>
+</li>
+</ul>
+<a id="getBusinessAttributesFromCustomMetadata(java.util.Map,java.util.Map,boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getBusinessAttributesFromCustomMetadata</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;getBusinessAttributesFromCustomMetadata&#8203;(java.util.Map&lt;java.lang.String,&#8203;<a href="../model/core/CustomMetadataAttributes.html" title="class in com.atlan.model.core">CustomMetadataAttributes</a>&gt;&nbsp;customMetadata,
+                                                    java.util.Map&lt;java.lang.String,&#8203;java.util.Map&lt;java.lang.String,&#8203;java.lang.Object&gt;&gt;&nbsp;businessAttributes,
+                                                    boolean&nbsp;allowRefresh)
+                                             throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Translate the provided custom metadata object into a business attributes object.
+ We receive the businessAttributes object (rather than creating a new one) to initialize it with
+ any existing business attributes.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>customMetadata</code> - custom metadata object</dd>
+<dd><code>businessAttributes</code> - business attributes object, which will be changed</dd>
+<dd><code>allowRefresh</code> - whether to allow a refresh of the cache (true) or not (false)</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication problem if the cache needs to be refreshed</dd>
 </dl>
@@ -655,6 +989,32 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
+<a id="getAttributesFromCustomMetadata(java.lang.String,java.lang.String,com.atlan.model.core.CustomMetadataAttributes,java.util.Map,boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getAttributesFromCustomMetadata</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;getAttributesFromCustomMetadata&#8203;(java.lang.String&nbsp;cmId,
+                                            java.lang.String&nbsp;cmName,
+                                            <a href="../model/core/CustomMetadataAttributes.html" title="class in com.atlan.model.core">CustomMetadataAttributes</a>&nbsp;cma,
+                                            java.util.Map&lt;java.lang.String,&#8203;java.lang.Object&gt;&nbsp;attributes,
+                                            boolean&nbsp;allowRefresh)
+                                     throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Translate the provided custom metadata attributes object into a hashed-string ID map of attributes and values.
+ We receive the attributes object (rather than creating a new one) to initialize it with any existing attributes.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>cmId</code> - hashed-string ID of the custom metadata set (structure)</dd>
+<dd><code>cmName</code> - human-readable name of the custom metadata set (structure)</dd>
+<dd><code>cma</code> - custom metadata attributes in human-readable form</dd>
+<dd><code>attributes</code> - map of custom metadata attributes keyed by hashed-string ID of the attribute</dd>
+<dd><code>allowRefresh</code> - whether to allow a refresh of the cache (true) or not (false)</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication problem if the cache needs to be refreshed</dd>
+</dl>
+</li>
+</ul>
 <a id="getIdMapFromNameMap(java.lang.String,java.util.Map,java.util.Map)">
 <!--   -->
 </a>
@@ -678,6 +1038,31 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
+<a id="getIdMapFromNameMap(java.lang.String,java.util.Map,java.util.Map,boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getIdMapFromNameMap</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;getIdMapFromNameMap&#8203;(java.lang.String&nbsp;customMetadataName,
+                                java.util.Map&lt;java.lang.String,&#8203;java.lang.Object&gt;&nbsp;nameToValue,
+                                java.util.Map&lt;java.lang.String,&#8203;java.lang.Object&gt;&nbsp;idToValue,
+                                boolean&nbsp;allowRefresh)
+                         throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Translate the provided map keyed by human-readable attribute name into a map of keyed by attribute id.
+ We receive the idToValue map (rather than creating a new one) to initialize it with
+ any existing business attributes.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>customMetadataName</code> - human-readable name of the custom metadata</dd>
+<dd><code>nameToValue</code> - the attributes and their values for the custom metadata</dd>
+<dd><code>idToValue</code> - the business metadata to map into</dd>
+<dd><code>allowRefresh</code> - whether to allow a refresh of the cache (true) or not (false)</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication problem if the cache needs to be refreshed</dd>
+</dl>
+</li>
+</ul>
 <a id="getCustomMetadataFromBusinessAttributes(com.fasterxml.jackson.databind.JsonNode)">
 <!--   -->
 </a>
@@ -690,6 +1075,27 @@ extends java.lang.Object</pre>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>businessAttributes</code> - business attributes object</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>custom metadata object</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication problem if the cache needs to be refreshed</dd>
+</dl>
+</li>
+</ul>
+<a id="getCustomMetadataFromBusinessAttributes(com.fasterxml.jackson.databind.JsonNode,boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getCustomMetadataFromBusinessAttributes</h4>
+<pre class="methodSignature">public&nbsp;java.util.Map&lt;java.lang.String,&#8203;<a href="../model/core/CustomMetadataAttributes.html" title="class in com.atlan.model.core">CustomMetadataAttributes</a>&gt;&nbsp;getCustomMetadataFromBusinessAttributes&#8203;(com.fasterxml.jackson.databind.JsonNode&nbsp;businessAttributes,
+                                                                                                              boolean&nbsp;allowRefresh)
+                                                                                                       throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Translate the provided business attributes object into a custom metadata object.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>businessAttributes</code> - business attributes object</dd>
+<dd><code>allowRefresh</code> - whether to allow a refresh of the cache (true) or not (false)</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>custom metadata object</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
@@ -718,10 +1124,33 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
+<a id="getCustomMetadataAttributes(java.lang.String,com.fasterxml.jackson.databind.JsonNode,boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getCustomMetadataAttributes</h4>
+<pre class="methodSignature">public&nbsp;<a href="../model/core/CustomMetadataAttributes.html" title="class in com.atlan.model.core">CustomMetadataAttributes</a>&nbsp;getCustomMetadataAttributes&#8203;(java.lang.String&nbsp;cmId,
+                                                            com.fasterxml.jackson.databind.JsonNode&nbsp;attributes,
+                                                            boolean&nbsp;allowRefresh)
+                                                     throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Translate the provided attributes structure into a human-readable map of attribute names to values.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>cmId</code> - custom metadata hashed-string ID</dd>
+<dd><code>attributes</code> - embedded attributes structure with hashed-string IDs</dd>
+<dd><code>allowRefresh</code> - whether to allow a refresh of the cache (true) or not (false)</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>deserialized CustomMetadataAttributes object</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication problem if the cache needs to be refreshed</dd>
+</dl>
+</li>
+</ul>
 <a id="getCustomMetadataFromSearchResult(java.util.Map)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>getCustomMetadataFromSearchResult</h4>
 <pre class="methodSignature">public&nbsp;java.util.Map&lt;java.lang.String,&#8203;<a href="../model/core/CustomMetadataAttributes.html" title="class in com.atlan.model.core">CustomMetadataAttributes</a>&gt;&nbsp;getCustomMetadataFromSearchResult&#8203;(java.util.Map&lt;java.lang.String,&#8203;com.fasterxml.jackson.databind.JsonNode&gt;&nbsp;embeddedAttributes)
@@ -731,6 +1160,28 @@ extends java.lang.Object</pre>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>embeddedAttributes</code> - map of custom metadata that was embedded in search result attributes, keyed
                            by <code>&lt;cmId&gt;.&lt;attrId&gt;</code> with the value of that custom attribute</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>custom metadata object</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication problem if the cache needs to be refreshed</dd>
+</dl>
+</li>
+</ul>
+<a id="getCustomMetadataFromSearchResult(java.util.Map,boolean)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getCustomMetadataFromSearchResult</h4>
+<pre class="methodSignature">public&nbsp;java.util.Map&lt;java.lang.String,&#8203;<a href="../model/core/CustomMetadataAttributes.html" title="class in com.atlan.model.core">CustomMetadataAttributes</a>&gt;&nbsp;getCustomMetadataFromSearchResult&#8203;(java.util.Map&lt;java.lang.String,&#8203;com.fasterxml.jackson.databind.JsonNode&gt;&nbsp;embeddedAttributes,
+                                                                                                        boolean&nbsp;allowRefresh)
+                                                                                                 throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Translate the provided search result-embedded custom metadata into a custom metadata object.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>embeddedAttributes</code> - map of custom metadata that was embedded in search result attributes, keyed
+                           by <code>&lt;cmId&gt;.&lt;attrId&gt;</code> with the value of that custom attribute</dd>
+<dd><code>allowRefresh</code> - whether to allow a refresh of the cache (true) or not (false)</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>custom metadata object</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>

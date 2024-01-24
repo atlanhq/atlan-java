@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -185,12 +185,28 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIdForName(java.lang.String,boolean)">getIdForName</a></span>&#8203;(java.lang.String&nbsp;name,
+            boolean&nbsp;allowRefresh)</code></th>
+<td class="colLast">
+<div class="block">Translate the provided human-readable Atlan tag name to the Atlan-internal ID string.</div>
+</td>
+</tr>
+<tr id="i2" class="altColor">
+<td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getNameForId(java.lang.String)">getNameForId</a></span>&#8203;(java.lang.String&nbsp;id)</code></th>
 <td class="colLast">
 <div class="block">Translate the provided Atlan-internal Atlan tag ID string to the human-readable Atlan tag name.</div>
 </td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getNameForId(java.lang.String,boolean)">getNameForId</a></span>&#8203;(java.lang.String&nbsp;id,
+            boolean&nbsp;allowRefresh)</code></th>
+<td class="colLast">
+<div class="block">Translate the provided Atlan-internal Atlan tag ID string to the human-readable Atlan tag name.</div>
+</td>
+</tr>
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSourceTagsAttrId(java.lang.String)">getSourceTagsAttrId</a></span>&#8203;(java.lang.String&nbsp;id)</code></th>
 <td class="colLast">
@@ -198,7 +214,16 @@ extends java.lang.Object</pre>
  attribute that captures tag attachment details (for source-synced tags).</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSourceTagsAttrId(java.lang.String,boolean)">getSourceTagsAttrId</a></span>&#8203;(java.lang.String&nbsp;id,
+                   boolean&nbsp;allowRefresh)</code></th>
+<td class="colLast">
+<div class="block">Translate the provided Atlan-internal Atlan tag ID string to the Atlan-internal name of the
+ attribute that captures tag attachment details (for source-synced tags).</div>
+</td>
+</tr>
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#refreshCache()">refreshCache</a></span>()</code></th>
 <td class="colLast">
@@ -284,6 +309,29 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
+<a id="getIdForName(java.lang.String,boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getIdForName</h4>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getIdForName&#8203;(java.lang.String&nbsp;name,
+                                     boolean&nbsp;allowRefresh)
+                              throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Translate the provided human-readable Atlan tag name to the Atlan-internal ID string.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>name</code> - human-readable name of the Atlan tag</dd>
+<dd><code>allowRefresh</code> - whether to allow a refresh of the cache (true) or not (false)</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>Atlan-internal ID string of the Atlan tag</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication problem if the cache needs to be refreshed</dd>
+<dd><code><a href="../exception/NotFoundException.html" title="class in com.atlan.exception">NotFoundException</a></code> - if the Atlan tag cannot be found (does not exist) in Atlan</dd>
+<dd><code><a href="../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></code> - if no name was provided for the Atlan tag to retrieve</dd>
+</dl>
+</li>
+</ul>
 <a id="getNameForId(java.lang.String)">
 <!--   -->
 </a>
@@ -305,10 +353,33 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
+<a id="getNameForId(java.lang.String,boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getNameForId</h4>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getNameForId&#8203;(java.lang.String&nbsp;id,
+                                     boolean&nbsp;allowRefresh)
+                              throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Translate the provided Atlan-internal Atlan tag ID string to the human-readable Atlan tag name.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>id</code> - Atlan-internal ID string of the Atlan tag</dd>
+<dd><code>allowRefresh</code> - whether to allow a refresh of the cache (true) or not (false)</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>human-readable name of the Atlan tag</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication problem if the cache needs to be refreshed</dd>
+<dd><code><a href="../exception/NotFoundException.html" title="class in com.atlan.exception">NotFoundException</a></code> - if the Atlan tag cannot be found (does not exist) in Atlan</dd>
+<dd><code><a href="../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></code> - if no ID was provided for the Atlan tag to retrieve</dd>
+</dl>
+</li>
+</ul>
 <a id="getSourceTagsAttrId(java.lang.String)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>getSourceTagsAttrId</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getSourceTagsAttrId&#8203;(java.lang.String&nbsp;id)
@@ -318,6 +389,30 @@ extends java.lang.Object</pre>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>id</code> - Atlan-internal ID string of the Atlan tag</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>Atlan-internal ID string of the attribute containing source-synced tag attachment details</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication problem if the cache needs to be refreshed</dd>
+<dd><code><a href="../exception/NotFoundException.html" title="class in com.atlan.exception">NotFoundException</a></code> - if the Atlan tag cannot be found (does not exist) in Atlan</dd>
+<dd><code><a href="../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></code> - if no ID was provided for the Atlan tag</dd>
+</dl>
+</li>
+</ul>
+<a id="getSourceTagsAttrId(java.lang.String,boolean)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getSourceTagsAttrId</h4>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getSourceTagsAttrId&#8203;(java.lang.String&nbsp;id,
+                                            boolean&nbsp;allowRefresh)
+                                     throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Translate the provided Atlan-internal Atlan tag ID string to the Atlan-internal name of the
+ attribute that captures tag attachment details (for source-synced tags).</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>id</code> - Atlan-internal ID string of the Atlan tag</dd>
+<dd><code>allowRefresh</code> - whether to allow a refresh of the cache (true) or not (false)</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>Atlan-internal ID string of the attribute containing source-synced tag attachment details</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>

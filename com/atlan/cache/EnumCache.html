@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10};
+var data = {"i0":10,"i1":10,"i2":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -183,6 +183,14 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
+<td class="colFirst"><code><a href="../model/typedefs/EnumDef.html" title="class in com.atlan.model.typedefs">EnumDef</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getByName(java.lang.String,boolean)">getByName</a></span>&#8203;(java.lang.String&nbsp;name,
+         boolean&nbsp;allowRefresh)</code></th>
+<td class="colLast">
+<div class="block">Retrieve the enumeration definition by its name.</div>
+</td>
+</tr>
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#refreshCache()">refreshCache</a></span>()</code></th>
 <td class="colLast">
@@ -250,7 +258,7 @@ extends java.lang.Object</pre>
 <a id="getByName(java.lang.String)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>getByName</h4>
 <pre class="methodSignature">public&nbsp;<a href="../model/typedefs/EnumDef.html" title="class in com.atlan.model.typedefs">EnumDef</a>&nbsp;getByName&#8203;(java.lang.String&nbsp;name)
@@ -259,6 +267,29 @@ extends java.lang.Object</pre>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>name</code> - human-readable name of the enumeration</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the enumeration definition</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication problem if the cache needs to be refreshed</dd>
+<dd><code><a href="../exception/NotFoundException.html" title="class in com.atlan.exception">NotFoundException</a></code> - if the enumeration cannot be found (does not exist) in Atlan</dd>
+<dd><code><a href="../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></code> - if no name was provided for the enumeration to retrieve</dd>
+</dl>
+</li>
+</ul>
+<a id="getByName(java.lang.String,boolean)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getByName</h4>
+<pre class="methodSignature">public&nbsp;<a href="../model/typedefs/EnumDef.html" title="class in com.atlan.model.typedefs">EnumDef</a>&nbsp;getByName&#8203;(java.lang.String&nbsp;name,
+                         boolean&nbsp;allowRefresh)
+                  throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Retrieve the enumeration definition by its name.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>name</code> - human-readable name of the enumeration</dd>
+<dd><code>allowRefresh</code> - whether to allow a refresh of the cache (true) or not (false)</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the enumeration definition</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
