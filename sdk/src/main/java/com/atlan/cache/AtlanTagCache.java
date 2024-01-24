@@ -76,12 +76,28 @@ public class AtlanTagCache {
      * @throws InvalidRequestException if no name was provided for the Atlan tag to retrieve
      */
     public String getIdForName(String name) throws AtlanException {
+        return getIdForName(name, true);
+    }
+
+    /**
+     * Translate the provided human-readable Atlan tag name to the Atlan-internal ID string.
+     *
+     * @param name human-readable name of the Atlan tag
+     * @param allowRefresh whether to allow a refresh of the cache (true) or not (false)
+     * @return Atlan-internal ID string of the Atlan tag
+     * @throws AtlanException on any API communication problem if the cache needs to be refreshed
+     * @throws NotFoundException if the Atlan tag cannot be found (does not exist) in Atlan
+     * @throws InvalidRequestException if no name was provided for the Atlan tag to retrieve
+     */
+    public String getIdForName(String name, boolean allowRefresh) throws AtlanException {
         if (name != null && !name.isEmpty()) {
             String cmId = mapNameToId.get(name);
             if (cmId == null && !deletedNames.contains(name)) {
                 // If not found, refresh the cache and look again (could be stale)
-                refreshCache();
-                cmId = mapNameToId.get(name);
+                if (allowRefresh) {
+                    refreshCache();
+                    cmId = mapNameToId.get(name);
+                }
                 if (cmId == null) {
                     // If it's still not found after the refresh, mark it as deleted
                     deletedNames.add(name);
@@ -104,12 +120,28 @@ public class AtlanTagCache {
      * @throws InvalidRequestException if no ID was provided for the Atlan tag to retrieve
      */
     public String getNameForId(String id) throws AtlanException {
+        return getNameForId(id, true);
+    }
+
+    /**
+     * Translate the provided Atlan-internal Atlan tag ID string to the human-readable Atlan tag name.
+     *
+     * @param id Atlan-internal ID string of the Atlan tag
+     * @param allowRefresh whether to allow a refresh of the cache (true) or not (false)
+     * @return human-readable name of the Atlan tag
+     * @throws AtlanException on any API communication problem if the cache needs to be refreshed
+     * @throws NotFoundException if the Atlan tag cannot be found (does not exist) in Atlan
+     * @throws InvalidRequestException if no ID was provided for the Atlan tag to retrieve
+     */
+    public String getNameForId(String id, boolean allowRefresh) throws AtlanException {
         if (id != null && !id.isEmpty()) {
             String cmName = mapIdToName.get(id);
             if (cmName == null && !deletedIds.contains(id)) {
                 // If not found, refresh the cache and look again (could be stale)
-                refreshCache();
-                cmName = mapIdToName.get(id);
+                if (allowRefresh) {
+                    refreshCache();
+                    cmName = mapIdToName.get(id);
+                }
                 if (cmName == null) {
                     // If it's still not found after the refresh, mark it as deleted
                     deletedIds.add(id);
@@ -133,12 +165,29 @@ public class AtlanTagCache {
      * @throws InvalidRequestException if no ID was provided for the Atlan tag
      */
     public String getSourceTagsAttrId(String id) throws AtlanException {
+        return getSourceTagsAttrId(id, true);
+    }
+
+    /**
+     * Translate the provided Atlan-internal Atlan tag ID string to the Atlan-internal name of the
+     * attribute that captures tag attachment details (for source-synced tags).
+     *
+     * @param id Atlan-internal ID string of the Atlan tag
+     * @param allowRefresh whether to allow a refresh of the cache (true) or not (false)
+     * @return Atlan-internal ID string of the attribute containing source-synced tag attachment details
+     * @throws AtlanException on any API communication problem if the cache needs to be refreshed
+     * @throws NotFoundException if the Atlan tag cannot be found (does not exist) in Atlan
+     * @throws InvalidRequestException if no ID was provided for the Atlan tag
+     */
+    public String getSourceTagsAttrId(String id, boolean allowRefresh) throws AtlanException {
         if (id != null && !id.isEmpty()) {
             String attrId = mapIdToSourceTagsAttrId.get(id);
             if (attrId == null && !deletedIds.contains(id)) {
                 // If not found, refresh the cache and look again (could be stale)
-                refreshCache();
-                attrId = mapIdToSourceTagsAttrId.get(id);
+                if (allowRefresh) {
+                    refreshCache();
+                    attrId = mapIdToSourceTagsAttrId.get(id);
+                }
                 if (attrId == null) {
                     // If it's still not found after the refresh, mark it as deleted
                     deletedIds.add(id);
