@@ -56,12 +56,28 @@ public class EnumCache {
      * @throws InvalidRequestException if no name was provided for the enumeration to retrieve
      */
     public EnumDef getByName(String name) throws AtlanException {
+        return getByName(name, true);
+    }
+
+    /**
+     * Retrieve the enumeration definition by its name.
+     *
+     * @param name human-readable name of the enumeration
+     * @param allowRefresh whether to allow a refresh of the cache (true) or not (false)
+     * @return the enumeration definition
+     * @throws AtlanException on any API communication problem if the cache needs to be refreshed
+     * @throws NotFoundException if the enumeration cannot be found (does not exist) in Atlan
+     * @throws InvalidRequestException if no name was provided for the enumeration to retrieve
+     */
+    public EnumDef getByName(String name, boolean allowRefresh) throws AtlanException {
         if (name != null && !name.isEmpty()) {
             EnumDef enumDef = cacheById.get(name);
             if (enumDef == null) {
                 // If not found, refresh the cache and look again (could be stale)
-                refreshCache();
-                enumDef = cacheById.get(name);
+                if (allowRefresh) {
+                    refreshCache();
+                    enumDef = cacheById.get(name);
+                }
                 if (enumDef == null) {
                     // If still not found, throw an exception indicating that outcome
                     throw new NotFoundException(ErrorCode.ENUM_NOT_FOUND, name);
