@@ -11,6 +11,7 @@ import com.atlan.exception.NotFoundException;
 import com.atlan.model.core.AssetFilter;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.CompoundQuery;
 import com.atlan.model.search.FluentSearch;
@@ -273,25 +274,54 @@ public class QlikApp extends Asset implements IQlikApp, IQlik, IBI, ICatalog, IA
     }
 
     /**
-     * Reference to a QlikApp by GUID.
+     * Reference to a QlikApp by GUID. Use this to create a relationship to this QlikApp,
+     * where the relationship should be replaced.
      *
      * @param guid the GUID of the QlikApp to reference
      * @return reference to a QlikApp that can be used for defining a relationship to a QlikApp
      */
     public static QlikApp refByGuid(String guid) {
-        return QlikApp._internal().guid(guid).build();
+        return refByGuid(guid, Reference.SaveSemantic.REPLACE);
     }
 
     /**
-     * Reference to a QlikApp by qualifiedName.
+     * Reference to a QlikApp by GUID. Use this to create a relationship to this QlikApp,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param guid the GUID of the QlikApp to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a QlikApp that can be used for defining a relationship to a QlikApp
+     */
+    public static QlikApp refByGuid(String guid, Reference.SaveSemantic semantic) {
+        return QlikApp._internal().guid(guid).semantic(semantic).build();
+    }
+
+    /**
+     * Reference to a QlikApp by qualifiedName. Use this to create a relationship to this QlikApp,
+     * where the relationship should be replaced.
      *
      * @param qualifiedName the qualifiedName of the QlikApp to reference
      * @return reference to a QlikApp that can be used for defining a relationship to a QlikApp
      */
     public static QlikApp refByQualifiedName(String qualifiedName) {
+        return refByQualifiedName(qualifiedName, Reference.SaveSemantic.REPLACE);
+    }
+
+    /**
+     * Reference to a QlikApp by qualifiedName. Use this to create a relationship to this QlikApp,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param qualifiedName the qualifiedName of the QlikApp to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a QlikApp that can be used for defining a relationship to a QlikApp
+     */
+    public static QlikApp refByQualifiedName(String qualifiedName, Reference.SaveSemantic semantic) {
         return QlikApp._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .semantic(semantic)
                 .build();
     }
 

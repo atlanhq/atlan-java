@@ -12,6 +12,7 @@ import com.atlan.model.core.AssetFilter;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.CompoundQuery;
 import com.atlan.model.search.FluentSearch;
@@ -385,25 +386,54 @@ public class Table extends Asset implements ITable, ISQL, ICatalog, IAsset, IRef
     }
 
     /**
-     * Reference to a Table by GUID.
+     * Reference to a Table by GUID. Use this to create a relationship to this Table,
+     * where the relationship should be replaced.
      *
      * @param guid the GUID of the Table to reference
      * @return reference to a Table that can be used for defining a relationship to a Table
      */
     public static Table refByGuid(String guid) {
-        return Table._internal().guid(guid).build();
+        return refByGuid(guid, Reference.SaveSemantic.REPLACE);
     }
 
     /**
-     * Reference to a Table by qualifiedName.
+     * Reference to a Table by GUID. Use this to create a relationship to this Table,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param guid the GUID of the Table to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a Table that can be used for defining a relationship to a Table
+     */
+    public static Table refByGuid(String guid, Reference.SaveSemantic semantic) {
+        return Table._internal().guid(guid).semantic(semantic).build();
+    }
+
+    /**
+     * Reference to a Table by qualifiedName. Use this to create a relationship to this Table,
+     * where the relationship should be replaced.
      *
      * @param qualifiedName the qualifiedName of the Table to reference
      * @return reference to a Table that can be used for defining a relationship to a Table
      */
     public static Table refByQualifiedName(String qualifiedName) {
+        return refByQualifiedName(qualifiedName, Reference.SaveSemantic.REPLACE);
+    }
+
+    /**
+     * Reference to a Table by qualifiedName. Use this to create a relationship to this Table,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param qualifiedName the qualifiedName of the Table to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a Table that can be used for defining a relationship to a Table
+     */
+    public static Table refByQualifiedName(String qualifiedName, Reference.SaveSemantic semantic) {
         return Table._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .semantic(semantic)
                 .build();
     }
 

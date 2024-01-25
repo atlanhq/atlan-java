@@ -42,6 +42,7 @@ import com.atlan.model.enums.KeywordFields;
 import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.lineage.FluentLineage;
+import com.atlan.model.relations.Reference;
 import com.atlan.model.search.FluentSearch;
 import com.atlan.model.search.CompoundQuery;
 <#list classAttributes as attribute>
@@ -317,25 +318,54 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
     }
 
     /**
-     * Reference to a ${className} by GUID.
+     * Reference to a ${className} by GUID. Use this to create a relationship to this ${className},
+     * where the relationship should be replaced.
      *
      * @param guid the GUID of the ${className} to reference
      * @return reference to a ${className} that can be used for defining a relationship to a ${className}
      */
     public static ${className} refByGuid(String guid) {
-        return ${className}._internal().guid(guid).build();
+        return refByGuid(guid, Reference.SaveSemantic.REPLACE);
     }
 
     /**
-     * Reference to a ${className} by qualifiedName.
+     * Reference to a ${className} by GUID. Use this to create a relationship to this ${className},
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param guid the GUID of the ${className} to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a ${className} that can be used for defining a relationship to a ${className}
+     */
+    public static ${className} refByGuid(String guid, Reference.SaveSemantic semantic) {
+        return ${className}._internal().guid(guid).semantic(semantic).build();
+    }
+
+    /**
+     * Reference to a ${className} by qualifiedName. Use this to create a relationship to this ${className},
+     * where the relationship should be replaced.
      *
      * @param qualifiedName the qualifiedName of the ${className} to reference
      * @return reference to a ${className} that can be used for defining a relationship to a ${className}
      */
     public static ${className} refByQualifiedName(String qualifiedName) {
+        return refByQualifiedName(qualifiedName, Reference.SaveSemantic.REPLACE);
+    }
+
+    /**
+     * Reference to a ${className} by qualifiedName. Use this to create a relationship to this ${className},
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param qualifiedName the qualifiedName of the ${className} to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a ${className} that can be used for defining a relationship to a ${className}
+     */
+    public static ${className} refByQualifiedName(String qualifiedName, Reference.SaveSemantic semantic) {
         return ${className}._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .semantic(semantic)
                 .build();
     }
 

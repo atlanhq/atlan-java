@@ -9,6 +9,7 @@ import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.core.AssetFilter;
+import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.CompoundQuery;
 import com.atlan.model.search.FluentSearch;
@@ -199,25 +200,54 @@ public class Badge extends Asset implements IBadge, IAsset, IReferenceable {
     }
 
     /**
-     * Reference to a Badge by GUID.
+     * Reference to a Badge by GUID. Use this to create a relationship to this Badge,
+     * where the relationship should be replaced.
      *
      * @param guid the GUID of the Badge to reference
      * @return reference to a Badge that can be used for defining a relationship to a Badge
      */
     public static Badge refByGuid(String guid) {
-        return Badge._internal().guid(guid).build();
+        return refByGuid(guid, Reference.SaveSemantic.REPLACE);
     }
 
     /**
-     * Reference to a Badge by qualifiedName.
+     * Reference to a Badge by GUID. Use this to create a relationship to this Badge,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param guid the GUID of the Badge to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a Badge that can be used for defining a relationship to a Badge
+     */
+    public static Badge refByGuid(String guid, Reference.SaveSemantic semantic) {
+        return Badge._internal().guid(guid).semantic(semantic).build();
+    }
+
+    /**
+     * Reference to a Badge by qualifiedName. Use this to create a relationship to this Badge,
+     * where the relationship should be replaced.
      *
      * @param qualifiedName the qualifiedName of the Badge to reference
      * @return reference to a Badge that can be used for defining a relationship to a Badge
      */
     public static Badge refByQualifiedName(String qualifiedName) {
+        return refByQualifiedName(qualifiedName, Reference.SaveSemantic.REPLACE);
+    }
+
+    /**
+     * Reference to a Badge by qualifiedName. Use this to create a relationship to this Badge,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param qualifiedName the qualifiedName of the Badge to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a Badge that can be used for defining a relationship to a Badge
+     */
+    public static Badge refByQualifiedName(String qualifiedName, Reference.SaveSemantic semantic) {
         return Badge._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .semantic(semantic)
                 .build();
     }
 

@@ -12,6 +12,7 @@ import com.atlan.model.core.AssetFilter;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.QuickSightAnalysisStatus;
+import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.CompoundQuery;
 import com.atlan.model.search.FluentSearch;
@@ -255,25 +256,54 @@ public class QuickSightAnalysis extends Asset
     }
 
     /**
-     * Reference to a QuickSightAnalysis by GUID.
+     * Reference to a QuickSightAnalysis by GUID. Use this to create a relationship to this QuickSightAnalysis,
+     * where the relationship should be replaced.
      *
      * @param guid the GUID of the QuickSightAnalysis to reference
      * @return reference to a QuickSightAnalysis that can be used for defining a relationship to a QuickSightAnalysis
      */
     public static QuickSightAnalysis refByGuid(String guid) {
-        return QuickSightAnalysis._internal().guid(guid).build();
+        return refByGuid(guid, Reference.SaveSemantic.REPLACE);
     }
 
     /**
-     * Reference to a QuickSightAnalysis by qualifiedName.
+     * Reference to a QuickSightAnalysis by GUID. Use this to create a relationship to this QuickSightAnalysis,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param guid the GUID of the QuickSightAnalysis to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a QuickSightAnalysis that can be used for defining a relationship to a QuickSightAnalysis
+     */
+    public static QuickSightAnalysis refByGuid(String guid, Reference.SaveSemantic semantic) {
+        return QuickSightAnalysis._internal().guid(guid).semantic(semantic).build();
+    }
+
+    /**
+     * Reference to a QuickSightAnalysis by qualifiedName. Use this to create a relationship to this QuickSightAnalysis,
+     * where the relationship should be replaced.
      *
      * @param qualifiedName the qualifiedName of the QuickSightAnalysis to reference
      * @return reference to a QuickSightAnalysis that can be used for defining a relationship to a QuickSightAnalysis
      */
     public static QuickSightAnalysis refByQualifiedName(String qualifiedName) {
+        return refByQualifiedName(qualifiedName, Reference.SaveSemantic.REPLACE);
+    }
+
+    /**
+     * Reference to a QuickSightAnalysis by qualifiedName. Use this to create a relationship to this QuickSightAnalysis,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param qualifiedName the qualifiedName of the QuickSightAnalysis to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a QuickSightAnalysis that can be used for defining a relationship to a QuickSightAnalysis
+     */
+    public static QuickSightAnalysis refByQualifiedName(String qualifiedName, Reference.SaveSemantic semantic) {
         return QuickSightAnalysis._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .semantic(semantic)
                 .build();
     }
 

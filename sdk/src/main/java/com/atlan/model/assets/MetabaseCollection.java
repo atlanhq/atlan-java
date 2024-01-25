@@ -11,6 +11,7 @@ import com.atlan.exception.NotFoundException;
 import com.atlan.model.core.AssetFilter;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.CompoundQuery;
 import com.atlan.model.search.FluentSearch;
@@ -247,25 +248,54 @@ public class MetabaseCollection extends Asset
     }
 
     /**
-     * Reference to a MetabaseCollection by GUID.
+     * Reference to a MetabaseCollection by GUID. Use this to create a relationship to this MetabaseCollection,
+     * where the relationship should be replaced.
      *
      * @param guid the GUID of the MetabaseCollection to reference
      * @return reference to a MetabaseCollection that can be used for defining a relationship to a MetabaseCollection
      */
     public static MetabaseCollection refByGuid(String guid) {
-        return MetabaseCollection._internal().guid(guid).build();
+        return refByGuid(guid, Reference.SaveSemantic.REPLACE);
     }
 
     /**
-     * Reference to a MetabaseCollection by qualifiedName.
+     * Reference to a MetabaseCollection by GUID. Use this to create a relationship to this MetabaseCollection,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param guid the GUID of the MetabaseCollection to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a MetabaseCollection that can be used for defining a relationship to a MetabaseCollection
+     */
+    public static MetabaseCollection refByGuid(String guid, Reference.SaveSemantic semantic) {
+        return MetabaseCollection._internal().guid(guid).semantic(semantic).build();
+    }
+
+    /**
+     * Reference to a MetabaseCollection by qualifiedName. Use this to create a relationship to this MetabaseCollection,
+     * where the relationship should be replaced.
      *
      * @param qualifiedName the qualifiedName of the MetabaseCollection to reference
      * @return reference to a MetabaseCollection that can be used for defining a relationship to a MetabaseCollection
      */
     public static MetabaseCollection refByQualifiedName(String qualifiedName) {
+        return refByQualifiedName(qualifiedName, Reference.SaveSemantic.REPLACE);
+    }
+
+    /**
+     * Reference to a MetabaseCollection by qualifiedName. Use this to create a relationship to this MetabaseCollection,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param qualifiedName the qualifiedName of the MetabaseCollection to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a MetabaseCollection that can be used for defining a relationship to a MetabaseCollection
+     */
+    public static MetabaseCollection refByQualifiedName(String qualifiedName, Reference.SaveSemantic semantic) {
         return MetabaseCollection._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .semantic(semantic)
                 .build();
     }
 

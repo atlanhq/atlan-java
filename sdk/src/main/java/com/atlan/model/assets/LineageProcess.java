@@ -12,6 +12,7 @@ import com.atlan.model.core.AssetFilter;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.CompoundQuery;
 import com.atlan.model.search.FluentSearch;
@@ -233,25 +234,54 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
     }
 
     /**
-     * Reference to a LineageProcess by GUID.
+     * Reference to a LineageProcess by GUID. Use this to create a relationship to this LineageProcess,
+     * where the relationship should be replaced.
      *
      * @param guid the GUID of the LineageProcess to reference
      * @return reference to a LineageProcess that can be used for defining a relationship to a LineageProcess
      */
     public static LineageProcess refByGuid(String guid) {
-        return LineageProcess._internal().guid(guid).build();
+        return refByGuid(guid, Reference.SaveSemantic.REPLACE);
     }
 
     /**
-     * Reference to a LineageProcess by qualifiedName.
+     * Reference to a LineageProcess by GUID. Use this to create a relationship to this LineageProcess,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param guid the GUID of the LineageProcess to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a LineageProcess that can be used for defining a relationship to a LineageProcess
+     */
+    public static LineageProcess refByGuid(String guid, Reference.SaveSemantic semantic) {
+        return LineageProcess._internal().guid(guid).semantic(semantic).build();
+    }
+
+    /**
+     * Reference to a LineageProcess by qualifiedName. Use this to create a relationship to this LineageProcess,
+     * where the relationship should be replaced.
      *
      * @param qualifiedName the qualifiedName of the LineageProcess to reference
      * @return reference to a LineageProcess that can be used for defining a relationship to a LineageProcess
      */
     public static LineageProcess refByQualifiedName(String qualifiedName) {
+        return refByQualifiedName(qualifiedName, Reference.SaveSemantic.REPLACE);
+    }
+
+    /**
+     * Reference to a LineageProcess by qualifiedName. Use this to create a relationship to this LineageProcess,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param qualifiedName the qualifiedName of the LineageProcess to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a LineageProcess that can be used for defining a relationship to a LineageProcess
+     */
+    public static LineageProcess refByQualifiedName(String qualifiedName, Reference.SaveSemantic semantic) {
         return LineageProcess._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .semantic(semantic)
                 .build();
     }
 

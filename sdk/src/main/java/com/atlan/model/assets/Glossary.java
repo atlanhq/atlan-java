@@ -14,6 +14,7 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlasGlossaryType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.fields.AtlanField;
+import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.CompoundQuery;
 import com.atlan.model.search.FluentSearch;
@@ -240,25 +241,54 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
     }
 
     /**
-     * Reference to a Glossary by GUID.
+     * Reference to a Glossary by GUID. Use this to create a relationship to this Glossary,
+     * where the relationship should be replaced.
      *
      * @param guid the GUID of the Glossary to reference
      * @return reference to a Glossary that can be used for defining a relationship to a Glossary
      */
     public static Glossary refByGuid(String guid) {
-        return Glossary._internal().guid(guid).build();
+        return refByGuid(guid, Reference.SaveSemantic.REPLACE);
     }
 
     /**
-     * Reference to a Glossary by qualifiedName.
+     * Reference to a Glossary by GUID. Use this to create a relationship to this Glossary,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param guid the GUID of the Glossary to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a Glossary that can be used for defining a relationship to a Glossary
+     */
+    public static Glossary refByGuid(String guid, Reference.SaveSemantic semantic) {
+        return Glossary._internal().guid(guid).semantic(semantic).build();
+    }
+
+    /**
+     * Reference to a Glossary by qualifiedName. Use this to create a relationship to this Glossary,
+     * where the relationship should be replaced.
      *
      * @param qualifiedName the qualifiedName of the Glossary to reference
      * @return reference to a Glossary that can be used for defining a relationship to a Glossary
      */
     public static Glossary refByQualifiedName(String qualifiedName) {
+        return refByQualifiedName(qualifiedName, Reference.SaveSemantic.REPLACE);
+    }
+
+    /**
+     * Reference to a Glossary by qualifiedName. Use this to create a relationship to this Glossary,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param qualifiedName the qualifiedName of the Glossary to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a Glossary that can be used for defining a relationship to a Glossary
+     */
+    public static Glossary refByQualifiedName(String qualifiedName, Reference.SaveSemantic semantic) {
         return Glossary._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .semantic(semantic)
                 .build();
     }
 

@@ -9,6 +9,7 @@ import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.core.AssetFilter;
+import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.CompoundQuery;
 import com.atlan.model.search.FluentSearch;
@@ -238,25 +239,54 @@ public class Readme extends Asset implements IReadme, IResource, ICatalog, IAsse
     }
 
     /**
-     * Reference to a Readme by GUID.
+     * Reference to a Readme by GUID. Use this to create a relationship to this Readme,
+     * where the relationship should be replaced.
      *
      * @param guid the GUID of the Readme to reference
      * @return reference to a Readme that can be used for defining a relationship to a Readme
      */
     public static Readme refByGuid(String guid) {
-        return Readme._internal().guid(guid).build();
+        return refByGuid(guid, Reference.SaveSemantic.REPLACE);
     }
 
     /**
-     * Reference to a Readme by qualifiedName.
+     * Reference to a Readme by GUID. Use this to create a relationship to this Readme,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param guid the GUID of the Readme to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a Readme that can be used for defining a relationship to a Readme
+     */
+    public static Readme refByGuid(String guid, Reference.SaveSemantic semantic) {
+        return Readme._internal().guid(guid).semantic(semantic).build();
+    }
+
+    /**
+     * Reference to a Readme by qualifiedName. Use this to create a relationship to this Readme,
+     * where the relationship should be replaced.
      *
      * @param qualifiedName the qualifiedName of the Readme to reference
      * @return reference to a Readme that can be used for defining a relationship to a Readme
      */
     public static Readme refByQualifiedName(String qualifiedName) {
+        return refByQualifiedName(qualifiedName, Reference.SaveSemantic.REPLACE);
+    }
+
+    /**
+     * Reference to a Readme by qualifiedName. Use this to create a relationship to this Readme,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param qualifiedName the qualifiedName of the Readme to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a Readme that can be used for defining a relationship to a Readme
+     */
+    public static Readme refByQualifiedName(String qualifiedName, Reference.SaveSemantic semantic) {
         return Readme._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .semantic(semantic)
                 .build();
     }
 

@@ -11,6 +11,7 @@ import com.atlan.exception.NotFoundException;
 import com.atlan.model.core.AssetFilter;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.CompoundQuery;
 import com.atlan.model.search.FluentSearch;
@@ -256,25 +257,54 @@ public class LookerField extends Asset implements ILookerField, ILooker, IBI, IC
     }
 
     /**
-     * Reference to a LookerField by GUID.
+     * Reference to a LookerField by GUID. Use this to create a relationship to this LookerField,
+     * where the relationship should be replaced.
      *
      * @param guid the GUID of the LookerField to reference
      * @return reference to a LookerField that can be used for defining a relationship to a LookerField
      */
     public static LookerField refByGuid(String guid) {
-        return LookerField._internal().guid(guid).build();
+        return refByGuid(guid, Reference.SaveSemantic.REPLACE);
     }
 
     /**
-     * Reference to a LookerField by qualifiedName.
+     * Reference to a LookerField by GUID. Use this to create a relationship to this LookerField,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param guid the GUID of the LookerField to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a LookerField that can be used for defining a relationship to a LookerField
+     */
+    public static LookerField refByGuid(String guid, Reference.SaveSemantic semantic) {
+        return LookerField._internal().guid(guid).semantic(semantic).build();
+    }
+
+    /**
+     * Reference to a LookerField by qualifiedName. Use this to create a relationship to this LookerField,
+     * where the relationship should be replaced.
      *
      * @param qualifiedName the qualifiedName of the LookerField to reference
      * @return reference to a LookerField that can be used for defining a relationship to a LookerField
      */
     public static LookerField refByQualifiedName(String qualifiedName) {
+        return refByQualifiedName(qualifiedName, Reference.SaveSemantic.REPLACE);
+    }
+
+    /**
+     * Reference to a LookerField by qualifiedName. Use this to create a relationship to this LookerField,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param qualifiedName the qualifiedName of the LookerField to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a LookerField that can be used for defining a relationship to a LookerField
+     */
+    public static LookerField refByQualifiedName(String qualifiedName, Reference.SaveSemantic semantic) {
         return LookerField._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .semantic(semantic)
                 .build();
     }
 

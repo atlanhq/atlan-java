@@ -12,6 +12,7 @@ import com.atlan.model.core.AssetFilter;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.CompoundQuery;
 import com.atlan.model.search.FluentSearch;
@@ -233,25 +234,54 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
     }
 
     /**
-     * Reference to a ColumnProcess by GUID.
+     * Reference to a ColumnProcess by GUID. Use this to create a relationship to this ColumnProcess,
+     * where the relationship should be replaced.
      *
      * @param guid the GUID of the ColumnProcess to reference
      * @return reference to a ColumnProcess that can be used for defining a relationship to a ColumnProcess
      */
     public static ColumnProcess refByGuid(String guid) {
-        return ColumnProcess._internal().guid(guid).build();
+        return refByGuid(guid, Reference.SaveSemantic.REPLACE);
     }
 
     /**
-     * Reference to a ColumnProcess by qualifiedName.
+     * Reference to a ColumnProcess by GUID. Use this to create a relationship to this ColumnProcess,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param guid the GUID of the ColumnProcess to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a ColumnProcess that can be used for defining a relationship to a ColumnProcess
+     */
+    public static ColumnProcess refByGuid(String guid, Reference.SaveSemantic semantic) {
+        return ColumnProcess._internal().guid(guid).semantic(semantic).build();
+    }
+
+    /**
+     * Reference to a ColumnProcess by qualifiedName. Use this to create a relationship to this ColumnProcess,
+     * where the relationship should be replaced.
      *
      * @param qualifiedName the qualifiedName of the ColumnProcess to reference
      * @return reference to a ColumnProcess that can be used for defining a relationship to a ColumnProcess
      */
     public static ColumnProcess refByQualifiedName(String qualifiedName) {
+        return refByQualifiedName(qualifiedName, Reference.SaveSemantic.REPLACE);
+    }
+
+    /**
+     * Reference to a ColumnProcess by qualifiedName. Use this to create a relationship to this ColumnProcess,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param qualifiedName the qualifiedName of the ColumnProcess to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a ColumnProcess that can be used for defining a relationship to a ColumnProcess
+     */
+    public static ColumnProcess refByQualifiedName(String qualifiedName, Reference.SaveSemantic semantic) {
         return ColumnProcess._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .semantic(semantic)
                 .build();
     }
 

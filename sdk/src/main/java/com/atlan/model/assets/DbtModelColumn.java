@@ -11,6 +11,7 @@ import com.atlan.exception.NotFoundException;
 import com.atlan.model.core.AssetFilter;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.CompoundQuery;
 import com.atlan.model.search.FluentSearch;
@@ -315,25 +316,54 @@ public class DbtModelColumn extends Asset implements IDbtModelColumn, IDbt, ICat
     }
 
     /**
-     * Reference to a DbtModelColumn by GUID.
+     * Reference to a DbtModelColumn by GUID. Use this to create a relationship to this DbtModelColumn,
+     * where the relationship should be replaced.
      *
      * @param guid the GUID of the DbtModelColumn to reference
      * @return reference to a DbtModelColumn that can be used for defining a relationship to a DbtModelColumn
      */
     public static DbtModelColumn refByGuid(String guid) {
-        return DbtModelColumn._internal().guid(guid).build();
+        return refByGuid(guid, Reference.SaveSemantic.REPLACE);
     }
 
     /**
-     * Reference to a DbtModelColumn by qualifiedName.
+     * Reference to a DbtModelColumn by GUID. Use this to create a relationship to this DbtModelColumn,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param guid the GUID of the DbtModelColumn to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a DbtModelColumn that can be used for defining a relationship to a DbtModelColumn
+     */
+    public static DbtModelColumn refByGuid(String guid, Reference.SaveSemantic semantic) {
+        return DbtModelColumn._internal().guid(guid).semantic(semantic).build();
+    }
+
+    /**
+     * Reference to a DbtModelColumn by qualifiedName. Use this to create a relationship to this DbtModelColumn,
+     * where the relationship should be replaced.
      *
      * @param qualifiedName the qualifiedName of the DbtModelColumn to reference
      * @return reference to a DbtModelColumn that can be used for defining a relationship to a DbtModelColumn
      */
     public static DbtModelColumn refByQualifiedName(String qualifiedName) {
+        return refByQualifiedName(qualifiedName, Reference.SaveSemantic.REPLACE);
+    }
+
+    /**
+     * Reference to a DbtModelColumn by qualifiedName. Use this to create a relationship to this DbtModelColumn,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param qualifiedName the qualifiedName of the DbtModelColumn to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a DbtModelColumn that can be used for defining a relationship to a DbtModelColumn
+     */
+    public static DbtModelColumn refByQualifiedName(String qualifiedName, Reference.SaveSemantic semantic) {
         return DbtModelColumn._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .semantic(semantic)
                 .build();
     }
 

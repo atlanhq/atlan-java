@@ -11,6 +11,7 @@ import com.atlan.exception.NotFoundException;
 import com.atlan.model.core.AssetFilter;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.CompoundQuery;
 import com.atlan.model.search.FluentSearch;
@@ -389,25 +390,54 @@ public class SnowflakeDynamicTable extends Asset
     }
 
     /**
-     * Reference to a SnowflakeDynamicTable by GUID.
+     * Reference to a SnowflakeDynamicTable by GUID. Use this to create a relationship to this SnowflakeDynamicTable,
+     * where the relationship should be replaced.
      *
      * @param guid the GUID of the SnowflakeDynamicTable to reference
      * @return reference to a SnowflakeDynamicTable that can be used for defining a relationship to a SnowflakeDynamicTable
      */
     public static SnowflakeDynamicTable refByGuid(String guid) {
-        return SnowflakeDynamicTable._internal().guid(guid).build();
+        return refByGuid(guid, Reference.SaveSemantic.REPLACE);
     }
 
     /**
-     * Reference to a SnowflakeDynamicTable by qualifiedName.
+     * Reference to a SnowflakeDynamicTable by GUID. Use this to create a relationship to this SnowflakeDynamicTable,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param guid the GUID of the SnowflakeDynamicTable to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a SnowflakeDynamicTable that can be used for defining a relationship to a SnowflakeDynamicTable
+     */
+    public static SnowflakeDynamicTable refByGuid(String guid, Reference.SaveSemantic semantic) {
+        return SnowflakeDynamicTable._internal().guid(guid).semantic(semantic).build();
+    }
+
+    /**
+     * Reference to a SnowflakeDynamicTable by qualifiedName. Use this to create a relationship to this SnowflakeDynamicTable,
+     * where the relationship should be replaced.
      *
      * @param qualifiedName the qualifiedName of the SnowflakeDynamicTable to reference
      * @return reference to a SnowflakeDynamicTable that can be used for defining a relationship to a SnowflakeDynamicTable
      */
     public static SnowflakeDynamicTable refByQualifiedName(String qualifiedName) {
+        return refByQualifiedName(qualifiedName, Reference.SaveSemantic.REPLACE);
+    }
+
+    /**
+     * Reference to a SnowflakeDynamicTable by qualifiedName. Use this to create a relationship to this SnowflakeDynamicTable,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param qualifiedName the qualifiedName of the SnowflakeDynamicTable to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a SnowflakeDynamicTable that can be used for defining a relationship to a SnowflakeDynamicTable
+     */
+    public static SnowflakeDynamicTable refByQualifiedName(String qualifiedName, Reference.SaveSemantic semantic) {
         return SnowflakeDynamicTable._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .semantic(semantic)
                 .build();
     }
 

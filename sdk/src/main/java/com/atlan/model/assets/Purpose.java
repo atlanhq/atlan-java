@@ -16,6 +16,7 @@ import com.atlan.model.enums.AuthPolicyType;
 import com.atlan.model.enums.DataAction;
 import com.atlan.model.enums.PurposeMetadataAction;
 import com.atlan.model.fields.AtlanField;
+import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.CompoundQuery;
 import com.atlan.model.search.FluentSearch;
@@ -248,25 +249,54 @@ public class Purpose extends Asset implements IPurpose, IAccessControl, IAsset, 
     }
 
     /**
-     * Reference to a Purpose by GUID.
+     * Reference to a Purpose by GUID. Use this to create a relationship to this Purpose,
+     * where the relationship should be replaced.
      *
      * @param guid the GUID of the Purpose to reference
      * @return reference to a Purpose that can be used for defining a relationship to a Purpose
      */
     public static Purpose refByGuid(String guid) {
-        return Purpose._internal().guid(guid).build();
+        return refByGuid(guid, Reference.SaveSemantic.REPLACE);
     }
 
     /**
-     * Reference to a Purpose by qualifiedName.
+     * Reference to a Purpose by GUID. Use this to create a relationship to this Purpose,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param guid the GUID of the Purpose to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a Purpose that can be used for defining a relationship to a Purpose
+     */
+    public static Purpose refByGuid(String guid, Reference.SaveSemantic semantic) {
+        return Purpose._internal().guid(guid).semantic(semantic).build();
+    }
+
+    /**
+     * Reference to a Purpose by qualifiedName. Use this to create a relationship to this Purpose,
+     * where the relationship should be replaced.
      *
      * @param qualifiedName the qualifiedName of the Purpose to reference
      * @return reference to a Purpose that can be used for defining a relationship to a Purpose
      */
     public static Purpose refByQualifiedName(String qualifiedName) {
+        return refByQualifiedName(qualifiedName, Reference.SaveSemantic.REPLACE);
+    }
+
+    /**
+     * Reference to a Purpose by qualifiedName. Use this to create a relationship to this Purpose,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param qualifiedName the qualifiedName of the Purpose to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a Purpose that can be used for defining a relationship to a Purpose
+     */
+    public static Purpose refByQualifiedName(String qualifiedName, Reference.SaveSemantic semantic) {
         return Purpose._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .semantic(semantic)
                 .build();
     }
 

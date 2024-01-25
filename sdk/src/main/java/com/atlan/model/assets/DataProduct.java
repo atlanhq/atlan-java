@@ -15,6 +15,7 @@ import com.atlan.model.enums.DataProductCriticality;
 import com.atlan.model.enums.DataProductSensitivity;
 import com.atlan.model.enums.DataProductStatus;
 import com.atlan.model.fields.AtlanField;
+import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.CompoundQuery;
 import com.atlan.model.search.FluentSearch;
@@ -256,25 +257,54 @@ public class DataProduct extends Asset implements IDataProduct, IDataMesh, ICata
     }
 
     /**
-     * Reference to a DataProduct by GUID.
+     * Reference to a DataProduct by GUID. Use this to create a relationship to this DataProduct,
+     * where the relationship should be replaced.
      *
      * @param guid the GUID of the DataProduct to reference
      * @return reference to a DataProduct that can be used for defining a relationship to a DataProduct
      */
     public static DataProduct refByGuid(String guid) {
-        return DataProduct._internal().guid(guid).build();
+        return refByGuid(guid, Reference.SaveSemantic.REPLACE);
     }
 
     /**
-     * Reference to a DataProduct by qualifiedName.
+     * Reference to a DataProduct by GUID. Use this to create a relationship to this DataProduct,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param guid the GUID of the DataProduct to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a DataProduct that can be used for defining a relationship to a DataProduct
+     */
+    public static DataProduct refByGuid(String guid, Reference.SaveSemantic semantic) {
+        return DataProduct._internal().guid(guid).semantic(semantic).build();
+    }
+
+    /**
+     * Reference to a DataProduct by qualifiedName. Use this to create a relationship to this DataProduct,
+     * where the relationship should be replaced.
      *
      * @param qualifiedName the qualifiedName of the DataProduct to reference
      * @return reference to a DataProduct that can be used for defining a relationship to a DataProduct
      */
     public static DataProduct refByQualifiedName(String qualifiedName) {
+        return refByQualifiedName(qualifiedName, Reference.SaveSemantic.REPLACE);
+    }
+
+    /**
+     * Reference to a DataProduct by qualifiedName. Use this to create a relationship to this DataProduct,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param qualifiedName the qualifiedName of the DataProduct to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a DataProduct that can be used for defining a relationship to a DataProduct
+     */
+    public static DataProduct refByQualifiedName(String qualifiedName, Reference.SaveSemantic semantic) {
         return DataProduct._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .semantic(semantic)
                 .build();
     }
 

@@ -12,6 +12,7 @@ import com.atlan.model.core.AssetFilter;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.CompoundQuery;
 import com.atlan.model.search.FluentSearch;
@@ -244,25 +245,54 @@ public class PresetChart extends Asset implements IPresetChart, IPreset, IBI, IC
     }
 
     /**
-     * Reference to a PresetChart by GUID.
+     * Reference to a PresetChart by GUID. Use this to create a relationship to this PresetChart,
+     * where the relationship should be replaced.
      *
      * @param guid the GUID of the PresetChart to reference
      * @return reference to a PresetChart that can be used for defining a relationship to a PresetChart
      */
     public static PresetChart refByGuid(String guid) {
-        return PresetChart._internal().guid(guid).build();
+        return refByGuid(guid, Reference.SaveSemantic.REPLACE);
     }
 
     /**
-     * Reference to a PresetChart by qualifiedName.
+     * Reference to a PresetChart by GUID. Use this to create a relationship to this PresetChart,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param guid the GUID of the PresetChart to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a PresetChart that can be used for defining a relationship to a PresetChart
+     */
+    public static PresetChart refByGuid(String guid, Reference.SaveSemantic semantic) {
+        return PresetChart._internal().guid(guid).semantic(semantic).build();
+    }
+
+    /**
+     * Reference to a PresetChart by qualifiedName. Use this to create a relationship to this PresetChart,
+     * where the relationship should be replaced.
      *
      * @param qualifiedName the qualifiedName of the PresetChart to reference
      * @return reference to a PresetChart that can be used for defining a relationship to a PresetChart
      */
     public static PresetChart refByQualifiedName(String qualifiedName) {
+        return refByQualifiedName(qualifiedName, Reference.SaveSemantic.REPLACE);
+    }
+
+    /**
+     * Reference to a PresetChart by qualifiedName. Use this to create a relationship to this PresetChart,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param qualifiedName the qualifiedName of the PresetChart to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a PresetChart that can be used for defining a relationship to a PresetChart
+     */
+    public static PresetChart refByQualifiedName(String qualifiedName, Reference.SaveSemantic semantic) {
         return PresetChart._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .semantic(semantic)
                 .build();
     }
 

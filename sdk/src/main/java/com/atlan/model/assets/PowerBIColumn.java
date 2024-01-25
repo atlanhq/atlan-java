@@ -12,6 +12,7 @@ import com.atlan.model.core.AssetFilter;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.PowerBIEndorsementType;
+import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.CompoundQuery;
 import com.atlan.model.search.FluentSearch;
@@ -257,25 +258,54 @@ public class PowerBIColumn extends Asset implements IPowerBIColumn, IPowerBI, IB
     }
 
     /**
-     * Reference to a PowerBIColumn by GUID.
+     * Reference to a PowerBIColumn by GUID. Use this to create a relationship to this PowerBIColumn,
+     * where the relationship should be replaced.
      *
      * @param guid the GUID of the PowerBIColumn to reference
      * @return reference to a PowerBIColumn that can be used for defining a relationship to a PowerBIColumn
      */
     public static PowerBIColumn refByGuid(String guid) {
-        return PowerBIColumn._internal().guid(guid).build();
+        return refByGuid(guid, Reference.SaveSemantic.REPLACE);
     }
 
     /**
-     * Reference to a PowerBIColumn by qualifiedName.
+     * Reference to a PowerBIColumn by GUID. Use this to create a relationship to this PowerBIColumn,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param guid the GUID of the PowerBIColumn to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a PowerBIColumn that can be used for defining a relationship to a PowerBIColumn
+     */
+    public static PowerBIColumn refByGuid(String guid, Reference.SaveSemantic semantic) {
+        return PowerBIColumn._internal().guid(guid).semantic(semantic).build();
+    }
+
+    /**
+     * Reference to a PowerBIColumn by qualifiedName. Use this to create a relationship to this PowerBIColumn,
+     * where the relationship should be replaced.
      *
      * @param qualifiedName the qualifiedName of the PowerBIColumn to reference
      * @return reference to a PowerBIColumn that can be used for defining a relationship to a PowerBIColumn
      */
     public static PowerBIColumn refByQualifiedName(String qualifiedName) {
+        return refByQualifiedName(qualifiedName, Reference.SaveSemantic.REPLACE);
+    }
+
+    /**
+     * Reference to a PowerBIColumn by qualifiedName. Use this to create a relationship to this PowerBIColumn,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param qualifiedName the qualifiedName of the PowerBIColumn to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a PowerBIColumn that can be used for defining a relationship to a PowerBIColumn
+     */
+    public static PowerBIColumn refByQualifiedName(String qualifiedName, Reference.SaveSemantic semantic) {
         return PowerBIColumn._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .semantic(semantic)
                 .build();
     }
 

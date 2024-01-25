@@ -11,6 +11,7 @@ import com.atlan.exception.NotFoundException;
 import com.atlan.model.core.AssetFilter;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.CompoundQuery;
 import com.atlan.model.search.FluentSearch;
@@ -248,25 +249,54 @@ public class RedashQuery extends Asset implements IRedashQuery, IRedash, IBI, IC
     }
 
     /**
-     * Reference to a RedashQuery by GUID.
+     * Reference to a RedashQuery by GUID. Use this to create a relationship to this RedashQuery,
+     * where the relationship should be replaced.
      *
      * @param guid the GUID of the RedashQuery to reference
      * @return reference to a RedashQuery that can be used for defining a relationship to a RedashQuery
      */
     public static RedashQuery refByGuid(String guid) {
-        return RedashQuery._internal().guid(guid).build();
+        return refByGuid(guid, Reference.SaveSemantic.REPLACE);
     }
 
     /**
-     * Reference to a RedashQuery by qualifiedName.
+     * Reference to a RedashQuery by GUID. Use this to create a relationship to this RedashQuery,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param guid the GUID of the RedashQuery to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a RedashQuery that can be used for defining a relationship to a RedashQuery
+     */
+    public static RedashQuery refByGuid(String guid, Reference.SaveSemantic semantic) {
+        return RedashQuery._internal().guid(guid).semantic(semantic).build();
+    }
+
+    /**
+     * Reference to a RedashQuery by qualifiedName. Use this to create a relationship to this RedashQuery,
+     * where the relationship should be replaced.
      *
      * @param qualifiedName the qualifiedName of the RedashQuery to reference
      * @return reference to a RedashQuery that can be used for defining a relationship to a RedashQuery
      */
     public static RedashQuery refByQualifiedName(String qualifiedName) {
+        return refByQualifiedName(qualifiedName, Reference.SaveSemantic.REPLACE);
+    }
+
+    /**
+     * Reference to a RedashQuery by qualifiedName. Use this to create a relationship to this RedashQuery,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param qualifiedName the qualifiedName of the RedashQuery to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a RedashQuery that can be used for defining a relationship to a RedashQuery
+     */
+    public static RedashQuery refByQualifiedName(String qualifiedName, Reference.SaveSemantic semantic) {
         return RedashQuery._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .semantic(semantic)
                 .build();
     }
 

@@ -12,6 +12,7 @@ import com.atlan.model.core.AssetFilter;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.CompoundQuery;
 import com.atlan.model.search.FluentSearch;
@@ -252,25 +253,54 @@ public class SalesforceObject extends Asset
     }
 
     /**
-     * Reference to a SalesforceObject by GUID.
+     * Reference to a SalesforceObject by GUID. Use this to create a relationship to this SalesforceObject,
+     * where the relationship should be replaced.
      *
      * @param guid the GUID of the SalesforceObject to reference
      * @return reference to a SalesforceObject that can be used for defining a relationship to a SalesforceObject
      */
     public static SalesforceObject refByGuid(String guid) {
-        return SalesforceObject._internal().guid(guid).build();
+        return refByGuid(guid, Reference.SaveSemantic.REPLACE);
     }
 
     /**
-     * Reference to a SalesforceObject by qualifiedName.
+     * Reference to a SalesforceObject by GUID. Use this to create a relationship to this SalesforceObject,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param guid the GUID of the SalesforceObject to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a SalesforceObject that can be used for defining a relationship to a SalesforceObject
+     */
+    public static SalesforceObject refByGuid(String guid, Reference.SaveSemantic semantic) {
+        return SalesforceObject._internal().guid(guid).semantic(semantic).build();
+    }
+
+    /**
+     * Reference to a SalesforceObject by qualifiedName. Use this to create a relationship to this SalesforceObject,
+     * where the relationship should be replaced.
      *
      * @param qualifiedName the qualifiedName of the SalesforceObject to reference
      * @return reference to a SalesforceObject that can be used for defining a relationship to a SalesforceObject
      */
     public static SalesforceObject refByQualifiedName(String qualifiedName) {
+        return refByQualifiedName(qualifiedName, Reference.SaveSemantic.REPLACE);
+    }
+
+    /**
+     * Reference to a SalesforceObject by qualifiedName. Use this to create a relationship to this SalesforceObject,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param qualifiedName the qualifiedName of the SalesforceObject to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a SalesforceObject that can be used for defining a relationship to a SalesforceObject
+     */
+    public static SalesforceObject refByQualifiedName(String qualifiedName, Reference.SaveSemantic semantic) {
         return SalesforceObject._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .semantic(semantic)
                 .build();
     }
 

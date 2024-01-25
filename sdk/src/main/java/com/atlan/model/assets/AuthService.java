@@ -11,6 +11,7 @@ import com.atlan.exception.NotFoundException;
 import com.atlan.model.core.AssetFilter;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.CompoundQuery;
 import com.atlan.model.search.FluentSearch;
@@ -214,25 +215,54 @@ public class AuthService extends Asset implements IAuthService, IAsset, IReferen
     }
 
     /**
-     * Reference to a AuthService by GUID.
+     * Reference to a AuthService by GUID. Use this to create a relationship to this AuthService,
+     * where the relationship should be replaced.
      *
      * @param guid the GUID of the AuthService to reference
      * @return reference to a AuthService that can be used for defining a relationship to a AuthService
      */
     public static AuthService refByGuid(String guid) {
-        return AuthService._internal().guid(guid).build();
+        return refByGuid(guid, Reference.SaveSemantic.REPLACE);
     }
 
     /**
-     * Reference to a AuthService by qualifiedName.
+     * Reference to a AuthService by GUID. Use this to create a relationship to this AuthService,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param guid the GUID of the AuthService to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a AuthService that can be used for defining a relationship to a AuthService
+     */
+    public static AuthService refByGuid(String guid, Reference.SaveSemantic semantic) {
+        return AuthService._internal().guid(guid).semantic(semantic).build();
+    }
+
+    /**
+     * Reference to a AuthService by qualifiedName. Use this to create a relationship to this AuthService,
+     * where the relationship should be replaced.
      *
      * @param qualifiedName the qualifiedName of the AuthService to reference
      * @return reference to a AuthService that can be used for defining a relationship to a AuthService
      */
     public static AuthService refByQualifiedName(String qualifiedName) {
+        return refByQualifiedName(qualifiedName, Reference.SaveSemantic.REPLACE);
+    }
+
+    /**
+     * Reference to a AuthService by qualifiedName. Use this to create a relationship to this AuthService,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param qualifiedName the qualifiedName of the AuthService to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a AuthService that can be used for defining a relationship to a AuthService
+     */
+    public static AuthService refByQualifiedName(String qualifiedName, Reference.SaveSemantic semantic) {
         return AuthService._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .semantic(semantic)
                 .build();
     }
 

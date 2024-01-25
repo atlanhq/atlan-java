@@ -12,6 +12,7 @@ import com.atlan.model.core.AssetFilter;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.CompoundQuery;
 import com.atlan.model.search.FluentSearch;
@@ -357,25 +358,54 @@ public class Schema extends Asset implements ISchema, ISQL, ICatalog, IAsset, IR
     }
 
     /**
-     * Reference to a Schema by GUID.
+     * Reference to a Schema by GUID. Use this to create a relationship to this Schema,
+     * where the relationship should be replaced.
      *
      * @param guid the GUID of the Schema to reference
      * @return reference to a Schema that can be used for defining a relationship to a Schema
      */
     public static Schema refByGuid(String guid) {
-        return Schema._internal().guid(guid).build();
+        return refByGuid(guid, Reference.SaveSemantic.REPLACE);
     }
 
     /**
-     * Reference to a Schema by qualifiedName.
+     * Reference to a Schema by GUID. Use this to create a relationship to this Schema,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param guid the GUID of the Schema to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a Schema that can be used for defining a relationship to a Schema
+     */
+    public static Schema refByGuid(String guid, Reference.SaveSemantic semantic) {
+        return Schema._internal().guid(guid).semantic(semantic).build();
+    }
+
+    /**
+     * Reference to a Schema by qualifiedName. Use this to create a relationship to this Schema,
+     * where the relationship should be replaced.
      *
      * @param qualifiedName the qualifiedName of the Schema to reference
      * @return reference to a Schema that can be used for defining a relationship to a Schema
      */
     public static Schema refByQualifiedName(String qualifiedName) {
+        return refByQualifiedName(qualifiedName, Reference.SaveSemantic.REPLACE);
+    }
+
+    /**
+     * Reference to a Schema by qualifiedName. Use this to create a relationship to this Schema,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param qualifiedName the qualifiedName of the Schema to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a Schema that can be used for defining a relationship to a Schema
+     */
+    public static Schema refByQualifiedName(String qualifiedName, Reference.SaveSemantic semantic) {
         return Schema._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .semantic(semantic)
                 .build();
     }
 
