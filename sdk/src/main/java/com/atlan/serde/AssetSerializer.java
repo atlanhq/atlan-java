@@ -72,10 +72,10 @@ public class AssetSerializer extends StdSerializer<Asset> {
                 if (ReflectionCache.isAttribute(clazz, fieldName)) {
                     // If the field should be attribute-nested...
                     Object attrValue;
+                    Class<?> type = ReflectionCache.getFieldType(clazz, fieldName);
                     if (nullFields.contains(fieldName)) {
                         // If the value should be serialized as null, then
                         // set the value to the serializable null
-                        Class<?> type = ReflectionCache.getFieldType(clazz, fieldName);
                         if (type == List.class || type == Set.class || type == SortedSet.class) {
                             attrValue = Removable.EMPTY_LIST;
                         } else {
@@ -117,7 +117,32 @@ public class AssetSerializer extends StdSerializer<Asset> {
                             }
                             // Add the value we've derived above to the attribute map for nesting
                             String serializeName = ReflectionCache.getSerializedName(clazz, fieldName);
-                            if (attrValue instanceof Reference) {
+                            // Note: the value could be a singular reference, or a collection of references...
+                            if (attrValue instanceof Collection) {
+                                // If it is in a collection, check whether the first value is a reference
+                                // (there should always be one, as earlier condition would exclude empty
+                                // collections)
+                                Collection<?> values = (Collection<?>) attrValue;
+                                Optional<?> first = values.stream().findFirst();
+                                if (first.isPresent() && first.get() instanceof Reference) {
+                                    for (Object value : values) {
+                                        Reference relationship = (Reference) value;
+                                        switch (relationship.getSemantic()) {
+                                            case APPEND:
+                                                appendRelationships.put(serializeName, attrValue);
+                                                break;
+                                            case REMOVE:
+                                                removeRelationships.put(serializeName, attrValue);
+                                                break;
+                                            default:
+                                                attributes.put(serializeName, attrValue);
+                                                break;
+                                        }
+                                    }
+                                } else {
+                                    attributes.put(serializeName, attrValue);
+                                }
+                            } else if (attrValue instanceof Reference) {
                                 // If the value is a relationship, put it into the appropriate portion of
                                 // the request based on its semantic
                                 Reference relationship = (Reference) attrValue;
