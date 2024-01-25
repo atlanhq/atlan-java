@@ -17,6 +17,8 @@ import com.atlan.net.HttpClient
 import com.atlan.serde.Serde
 import com.aventrix.jnanoid.jnanoid.NanoIdUtils
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
+import mu.KLogger
+import org.slf4j.event.Level
 import org.testng.Assert.assertEquals
 import org.testng.Assert.assertFalse
 import org.testng.Assert.assertNotNull
@@ -215,17 +217,25 @@ abstract class PackageTest {
          * @param name of the connection
          * @param type of the connector
          */
-        fun removeConnection(name: String, type: AtlanConnectorType) {
+        fun removeConnection(name: String, type: AtlanConnectorType, logger: KLogger? = null) {
             val results = Connection.findByName(name, type)
             if (!results.isNullOrEmpty()) {
                 results.forEach {
                     val deleteWorkflow = ConnectionDelete.creator(it.qualifiedName, true).build().toWorkflow()
-                    val response = deleteWorkflow.run(client)
+                    var response = deleteWorkflow.run(client)
                     assertNotNull(response)
                     val workflowName = response.metadata.name
-                    val state = response.monitorStatus()
+                    var state = response.monitorStatus(logger, Level.INFO, 420L)
                     assertNotNull(state)
-                    assertEquals(state, AtlanWorkflowPhase.SUCCESS)
+                    if (state == AtlanWorkflowPhase.RUNNING) {
+                        // If still running after 7 minutes, stop it (so it can then be archived)
+                        logger?.warn { "Stopping hung workflow..." }
+                        response = response.stop()
+                        state = response.monitorStatus(logger, Level.INFO, 60L)
+                        assertEquals(state, AtlanWorkflowPhase.FAILED)
+                    } else {
+                        assertEquals(state, AtlanWorkflowPhase.SUCCESS)
+                    }
                     client.workflows.archive(workflowName)
                 }
             }
