@@ -21,12 +21,10 @@ import lombok.extern.slf4j.Slf4j;
  * custom metadata (including attributes).
  */
 @Slf4j
-public class CustomMetadataCache {
+public class CustomMetadataCache extends AbstractCache {
 
     private Map<String, CustomMetadataDef> cacheById = new ConcurrentHashMap<>();
     private Map<String, AttributeDef> attrCacheById = new ConcurrentHashMap<>();
-    private Map<String, String> mapIdToName = new ConcurrentHashMap<>();
-    private Map<String, String> mapNameToId = new ConcurrentHashMap<>();
 
     private Map<String, Map<String, String>> mapAttrIdToName = new ConcurrentHashMap<>();
     private Map<String, Map<String, String>> mapAttrNameToId = new ConcurrentHashMap<>();
@@ -38,12 +36,8 @@ public class CustomMetadataCache {
         this.typeDefsEndpoint = typeDefsEndpoint;
     }
 
-    /**
-     * Refreshes the cache of custom metadata structures by requesting the full set of custom metadata
-     * structures from Atlan.
-     *
-     * @throws AtlanException on any API communication problem
-     */
+    /** {@inheritDoc} */
+    @Override
     public synchronized void refreshCache() throws AtlanException {
         log.debug("Refreshing cache of custom metadata...");
         TypeDefResponse response =
@@ -56,16 +50,13 @@ public class CustomMetadataCache {
         List<CustomMetadataDef> customMetadata = response.getCustomMetadataDefs();
         cacheById = new ConcurrentHashMap<>();
         attrCacheById = new ConcurrentHashMap<>();
-        mapIdToName = new ConcurrentHashMap<>();
-        mapNameToId = new ConcurrentHashMap<>();
         mapAttrIdToName = new ConcurrentHashMap<>();
         mapAttrNameToId = new ConcurrentHashMap<>();
         archivedAttrIds = new ConcurrentHashMap<>();
         for (CustomMetadataDef bmDef : customMetadata) {
             String typeId = bmDef.getName();
             cacheById.put(typeId, bmDef);
-            mapIdToName.put(typeId, bmDef.getDisplayName());
-            mapNameToId.put(bmDef.getDisplayName(), typeId);
+            cache(typeId, bmDef.getDisplayName());
             mapAttrIdToName.put(typeId, new ConcurrentHashMap<>());
             mapAttrNameToId.put(typeId, new ConcurrentHashMap<>());
             for (AttributeDef attributeDef : bmDef.getAttributeDefs()) {
@@ -86,90 +77,6 @@ public class CustomMetadataCache {
                     }
                 }
             }
-        }
-    }
-
-    /**
-     * Translate the provided human-readable custom metadata set name to the Atlan-internal ID string.
-     *
-     * @param name human-readable name of the custom metadata set
-     * @return Atlan-internal ID string of the custom metadata set
-     * @throws AtlanException on any API communication problem if the cache needs to be refreshed
-     * @throws NotFoundException if the custom metadata cannot be found (does not exist) in Atlan
-     * @throws InvalidRequestException if no name was provided for the custom metadata to retrieve
-     */
-    public String getIdForName(String name) throws AtlanException {
-        return getIdForName(name, true);
-    }
-
-    /**
-     * Translate the provided human-readable custom metadata set name to the Atlan-internal ID string.
-     *
-     * @param name human-readable name of the custom metadata set
-     * @param allowRefresh whether to allow a refresh of the cache (true) or not (false)
-     * @return Atlan-internal ID string of the custom metadata set
-     * @throws AtlanException on any API communication problem if the cache needs to be refreshed
-     * @throws NotFoundException if the custom metadata cannot be found (does not exist) in Atlan
-     * @throws InvalidRequestException if no name was provided for the custom metadata to retrieve
-     */
-    public String getIdForName(String name, boolean allowRefresh) throws AtlanException {
-        if (name != null && !name.isEmpty()) {
-            String cmId = mapNameToId.get(name);
-            if (cmId == null) {
-                // If not found, refresh the cache and look again (could be stale)
-                if (allowRefresh) {
-                    refreshCache();
-                    cmId = mapNameToId.get(name);
-                }
-                if (cmId == null) {
-                    throw new NotFoundException(ErrorCode.CM_NOT_FOUND_BY_NAME, name);
-                }
-            }
-            return cmId;
-        } else {
-            throw new InvalidRequestException(ErrorCode.MISSING_CM_NAME);
-        }
-    }
-
-    /**
-     * Translate the provided Atlan-internal custom metadata ID string to the human-readable custom metadata set name.
-     *
-     * @param id Atlan-internal ID string of the custom metadata set
-     * @return human-readable name of the custom metadata set
-     * @throws AtlanException on any API communication problem if the cache needs to be refreshed
-     * @throws NotFoundException if the custom metadata cannot be found (does not exist) in Atlan
-     * @throws InvalidRequestException if no name was provided for the custom metadata to retrieve
-     */
-    public String getNameForId(String id) throws AtlanException {
-        return getNameForId(id, true);
-    }
-
-    /**
-     * Translate the provided Atlan-internal custom metadata ID string to the human-readable custom metadata set name.
-     *
-     * @param id Atlan-internal ID string of the custom metadata set
-     * @param allowRefresh whether to allow a refresh of the cache (true) or not (false)
-     * @return human-readable name of the custom metadata set
-     * @throws AtlanException on any API communication problem if the cache needs to be refreshed
-     * @throws NotFoundException if the custom metadata cannot be found (does not exist) in Atlan
-     * @throws InvalidRequestException if no name was provided for the custom metadata to retrieve
-     */
-    public String getNameForId(String id, boolean allowRefresh) throws AtlanException {
-        if (id != null && !id.isEmpty()) {
-            String cmName = mapIdToName.get(id);
-            if (cmName == null) {
-                // If not found, refresh the cache and look again (could be stale)
-                if (allowRefresh) {
-                    refreshCache();
-                    cmName = mapIdToName.get(id);
-                }
-                if (cmName == null) {
-                    throw new NotFoundException(ErrorCode.CM_NOT_FOUND_BY_ID, id);
-                }
-            }
-            return cmName;
-        } else {
-            throw new InvalidRequestException(ErrorCode.MISSING_CM_ID);
         }
     }
 

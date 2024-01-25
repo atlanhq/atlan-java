@@ -242,6 +242,16 @@ public enum ErrorCode implements ExceptionMessageSet {
             "ATLAN-JAVA-400-043",
             "Credentials provided did not work: {0}.",
             "Please double-check your credentials and test them again."),
+    MISSING_NAME(
+            400,
+            "ATLAN-JAVA-400-044",
+            "No name was provided when attempting to retrieve an object.",
+            "You must provide the name of the object when attempting to retrieve one."),
+    MISSING_ID(
+            400,
+            "ATLAN-JAVA-400-045",
+            "No ID was provided when attempting to retrieve or update the object.",
+            "You must provide an ID when attempting to retrieve or update an object."),
 
     AUTHENTICATION_PASSTHROUGH(
             401,
@@ -434,6 +444,16 @@ public enum ErrorCode implements ExceptionMessageSet {
             "ATLAN-JAVA-404-027",
             "API token with name {0} does not exist.",
             "Verify the API token provided is a valid username for that token."),
+    ID_NOT_FOUND_BY_NAME(
+            404,
+            "ATLAN-JAVA-404-028",
+            "Object with name {0} does not exist.",
+            "Verify the object name provided is a valid object name."),
+    NAME_NOT_FOUND_BY_ID(
+            404,
+            "ATLAN-JAVA-404-029",
+            "Object with internal ID {0} does not exist.",
+            "Verify the internal ID provided is a valid internal ID."),
 
     CONFLICT_PASSTHROUGH(
             409,
