@@ -13,6 +13,7 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlasGlossaryCategoryType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.fields.AtlanField;
+import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.CompoundQuery;
 import com.atlan.model.search.FluentSearch;
@@ -234,25 +235,54 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
     }
 
     /**
-     * Reference to a GlossaryCategory by GUID.
+     * Reference to a GlossaryCategory by GUID. Use this to create a relationship to this GlossaryCategory,
+     * where the relationship should be replaced.
      *
      * @param guid the GUID of the GlossaryCategory to reference
      * @return reference to a GlossaryCategory that can be used for defining a relationship to a GlossaryCategory
      */
     public static GlossaryCategory refByGuid(String guid) {
-        return GlossaryCategory._internal().guid(guid).build();
+        return refByGuid(guid, Reference.SaveSemantic.REPLACE);
     }
 
     /**
-     * Reference to a GlossaryCategory by qualifiedName.
+     * Reference to a GlossaryCategory by GUID. Use this to create a relationship to this GlossaryCategory,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param guid the GUID of the GlossaryCategory to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a GlossaryCategory that can be used for defining a relationship to a GlossaryCategory
+     */
+    public static GlossaryCategory refByGuid(String guid, Reference.SaveSemantic semantic) {
+        return GlossaryCategory._internal().guid(guid).semantic(semantic).build();
+    }
+
+    /**
+     * Reference to a GlossaryCategory by qualifiedName. Use this to create a relationship to this GlossaryCategory,
+     * where the relationship should be replaced.
      *
      * @param qualifiedName the qualifiedName of the GlossaryCategory to reference
      * @return reference to a GlossaryCategory that can be used for defining a relationship to a GlossaryCategory
      */
     public static GlossaryCategory refByQualifiedName(String qualifiedName) {
+        return refByQualifiedName(qualifiedName, Reference.SaveSemantic.REPLACE);
+    }
+
+    /**
+     * Reference to a GlossaryCategory by qualifiedName. Use this to create a relationship to this GlossaryCategory,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param qualifiedName the qualifiedName of the GlossaryCategory to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a GlossaryCategory that can be used for defining a relationship to a GlossaryCategory
+     */
+    public static GlossaryCategory refByQualifiedName(String qualifiedName, Reference.SaveSemantic semantic) {
         return GlossaryCategory._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .semantic(semantic)
                 .build();
     }
 

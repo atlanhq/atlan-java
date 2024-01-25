@@ -10,6 +10,7 @@ import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.core.AssetFilter;
 import com.atlan.model.enums.IconType;
+import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.CompoundQuery;
 import com.atlan.model.search.FluentSearch;
@@ -238,25 +239,54 @@ public class ReadmeTemplate extends Asset implements IReadmeTemplate, IResource,
     }
 
     /**
-     * Reference to a ReadmeTemplate by GUID.
+     * Reference to a ReadmeTemplate by GUID. Use this to create a relationship to this ReadmeTemplate,
+     * where the relationship should be replaced.
      *
      * @param guid the GUID of the ReadmeTemplate to reference
      * @return reference to a ReadmeTemplate that can be used for defining a relationship to a ReadmeTemplate
      */
     public static ReadmeTemplate refByGuid(String guid) {
-        return ReadmeTemplate._internal().guid(guid).build();
+        return refByGuid(guid, Reference.SaveSemantic.REPLACE);
     }
 
     /**
-     * Reference to a ReadmeTemplate by qualifiedName.
+     * Reference to a ReadmeTemplate by GUID. Use this to create a relationship to this ReadmeTemplate,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param guid the GUID of the ReadmeTemplate to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a ReadmeTemplate that can be used for defining a relationship to a ReadmeTemplate
+     */
+    public static ReadmeTemplate refByGuid(String guid, Reference.SaveSemantic semantic) {
+        return ReadmeTemplate._internal().guid(guid).semantic(semantic).build();
+    }
+
+    /**
+     * Reference to a ReadmeTemplate by qualifiedName. Use this to create a relationship to this ReadmeTemplate,
+     * where the relationship should be replaced.
      *
      * @param qualifiedName the qualifiedName of the ReadmeTemplate to reference
      * @return reference to a ReadmeTemplate that can be used for defining a relationship to a ReadmeTemplate
      */
     public static ReadmeTemplate refByQualifiedName(String qualifiedName) {
+        return refByQualifiedName(qualifiedName, Reference.SaveSemantic.REPLACE);
+    }
+
+    /**
+     * Reference to a ReadmeTemplate by qualifiedName. Use this to create a relationship to this ReadmeTemplate,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param qualifiedName the qualifiedName of the ReadmeTemplate to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a ReadmeTemplate that can be used for defining a relationship to a ReadmeTemplate
+     */
+    public static ReadmeTemplate refByQualifiedName(String qualifiedName, Reference.SaveSemantic semantic) {
         return ReadmeTemplate._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .semantic(semantic)
                 .build();
     }
 

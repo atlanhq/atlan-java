@@ -12,6 +12,7 @@ import com.atlan.model.core.AssetFilter;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.CompoundQuery;
 import com.atlan.model.search.FluentSearch;
@@ -376,25 +377,54 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
     }
 
     /**
-     * Reference to a TablePartition by GUID.
+     * Reference to a TablePartition by GUID. Use this to create a relationship to this TablePartition,
+     * where the relationship should be replaced.
      *
      * @param guid the GUID of the TablePartition to reference
      * @return reference to a TablePartition that can be used for defining a relationship to a TablePartition
      */
     public static TablePartition refByGuid(String guid) {
-        return TablePartition._internal().guid(guid).build();
+        return refByGuid(guid, Reference.SaveSemantic.REPLACE);
     }
 
     /**
-     * Reference to a TablePartition by qualifiedName.
+     * Reference to a TablePartition by GUID. Use this to create a relationship to this TablePartition,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param guid the GUID of the TablePartition to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a TablePartition that can be used for defining a relationship to a TablePartition
+     */
+    public static TablePartition refByGuid(String guid, Reference.SaveSemantic semantic) {
+        return TablePartition._internal().guid(guid).semantic(semantic).build();
+    }
+
+    /**
+     * Reference to a TablePartition by qualifiedName. Use this to create a relationship to this TablePartition,
+     * where the relationship should be replaced.
      *
      * @param qualifiedName the qualifiedName of the TablePartition to reference
      * @return reference to a TablePartition that can be used for defining a relationship to a TablePartition
      */
     public static TablePartition refByQualifiedName(String qualifiedName) {
+        return refByQualifiedName(qualifiedName, Reference.SaveSemantic.REPLACE);
+    }
+
+    /**
+     * Reference to a TablePartition by qualifiedName. Use this to create a relationship to this TablePartition,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param qualifiedName the qualifiedName of the TablePartition to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a TablePartition that can be used for defining a relationship to a TablePartition
+     */
+    public static TablePartition refByQualifiedName(String qualifiedName, Reference.SaveSemantic semantic) {
         return TablePartition._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .semantic(semantic)
                 .build();
     }
 

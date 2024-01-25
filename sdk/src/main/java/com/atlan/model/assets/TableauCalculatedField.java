@@ -11,6 +11,7 @@ import com.atlan.exception.NotFoundException;
 import com.atlan.model.core.AssetFilter;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.CompoundQuery;
 import com.atlan.model.search.FluentSearch;
@@ -270,25 +271,54 @@ public class TableauCalculatedField extends Asset
     }
 
     /**
-     * Reference to a TableauCalculatedField by GUID.
+     * Reference to a TableauCalculatedField by GUID. Use this to create a relationship to this TableauCalculatedField,
+     * where the relationship should be replaced.
      *
      * @param guid the GUID of the TableauCalculatedField to reference
      * @return reference to a TableauCalculatedField that can be used for defining a relationship to a TableauCalculatedField
      */
     public static TableauCalculatedField refByGuid(String guid) {
-        return TableauCalculatedField._internal().guid(guid).build();
+        return refByGuid(guid, Reference.SaveSemantic.REPLACE);
     }
 
     /**
-     * Reference to a TableauCalculatedField by qualifiedName.
+     * Reference to a TableauCalculatedField by GUID. Use this to create a relationship to this TableauCalculatedField,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param guid the GUID of the TableauCalculatedField to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a TableauCalculatedField that can be used for defining a relationship to a TableauCalculatedField
+     */
+    public static TableauCalculatedField refByGuid(String guid, Reference.SaveSemantic semantic) {
+        return TableauCalculatedField._internal().guid(guid).semantic(semantic).build();
+    }
+
+    /**
+     * Reference to a TableauCalculatedField by qualifiedName. Use this to create a relationship to this TableauCalculatedField,
+     * where the relationship should be replaced.
      *
      * @param qualifiedName the qualifiedName of the TableauCalculatedField to reference
      * @return reference to a TableauCalculatedField that can be used for defining a relationship to a TableauCalculatedField
      */
     public static TableauCalculatedField refByQualifiedName(String qualifiedName) {
+        return refByQualifiedName(qualifiedName, Reference.SaveSemantic.REPLACE);
+    }
+
+    /**
+     * Reference to a TableauCalculatedField by qualifiedName. Use this to create a relationship to this TableauCalculatedField,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param qualifiedName the qualifiedName of the TableauCalculatedField to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a TableauCalculatedField that can be used for defining a relationship to a TableauCalculatedField
+     */
+    public static TableauCalculatedField refByQualifiedName(String qualifiedName, Reference.SaveSemantic semantic) {
         return TableauCalculatedField._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .semantic(semantic)
                 .build();
     }
 

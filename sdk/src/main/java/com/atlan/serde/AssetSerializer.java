@@ -8,6 +8,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.core.CustomMetadataAttributes;
+import com.atlan.model.relations.Reference;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -60,6 +61,8 @@ public class AssetSerializer extends StdSerializer<Asset> {
         Set<String> nullFields = asset.getNullFields();
 
         Map<String, Object> attributes = new LinkedHashMap<>();
+        Map<String, Object> appendRelationships = new LinkedHashMap<>();
+        Map<String, Object> removeRelationships = new LinkedHashMap<>();
         Map<String, Map<String, Object>> businessAttributes = new LinkedHashMap<>();
 
         gen.writeStartObject();
@@ -69,10 +72,10 @@ public class AssetSerializer extends StdSerializer<Asset> {
                 if (ReflectionCache.isAttribute(clazz, fieldName)) {
                     // If the field should be attribute-nested...
                     Object attrValue;
+                    Class<?> type = ReflectionCache.getFieldType(clazz, fieldName);
                     if (nullFields.contains(fieldName)) {
                         // If the value should be serialized as null, then
                         // set the value to the serializable null
-                        Class<?> type = ReflectionCache.getFieldType(clazz, fieldName);
                         if (type == List.class || type == Set.class || type == SortedSet.class) {
                             attrValue = Removable.EMPTY_LIST;
                         } else {
@@ -114,7 +117,49 @@ public class AssetSerializer extends StdSerializer<Asset> {
                             }
                             // Add the value we've derived above to the attribute map for nesting
                             String serializeName = ReflectionCache.getSerializedName(clazz, fieldName);
-                            attributes.put(serializeName, attrValue);
+                            // Note: the value could be a singular reference, or a collection of references...
+                            if (attrValue instanceof Collection) {
+                                // If it is in a collection, check whether the first value is a reference
+                                // (there should always be one, as earlier condition would exclude empty
+                                // collections)
+                                Collection<?> values = (Collection<?>) attrValue;
+                                Optional<?> first = values.stream().findFirst();
+                                if (first.isPresent() && first.get() instanceof Reference) {
+                                    for (Object value : values) {
+                                        Reference relationship = (Reference) value;
+                                        switch (relationship.getSemantic()) {
+                                            case APPEND:
+                                                appendRelationships.put(serializeName, attrValue);
+                                                break;
+                                            case REMOVE:
+                                                removeRelationships.put(serializeName, attrValue);
+                                                break;
+                                            default:
+                                                attributes.put(serializeName, attrValue);
+                                                break;
+                                        }
+                                    }
+                                } else {
+                                    attributes.put(serializeName, attrValue);
+                                }
+                            } else if (attrValue instanceof Reference) {
+                                // If the value is a relationship, put it into the appropriate portion of
+                                // the request based on its semantic
+                                Reference relationship = (Reference) attrValue;
+                                switch (relationship.getSemantic()) {
+                                    case APPEND:
+                                        appendRelationships.put(serializeName, attrValue);
+                                        break;
+                                    case REMOVE:
+                                        removeRelationships.put(serializeName, attrValue);
+                                        break;
+                                    default:
+                                        attributes.put(serializeName, attrValue);
+                                        break;
+                                }
+                            } else {
+                                attributes.put(serializeName, attrValue);
+                            }
                         }
                     }
                 } else if (fieldName.equals("customMetadataSets")) {
@@ -152,6 +197,12 @@ public class AssetSerializer extends StdSerializer<Asset> {
                 }
             }
             sp.defaultSerializeField("attributes", attributes, gen);
+        }
+        if (!appendRelationships.isEmpty()) {
+            sp.defaultSerializeField("appendRelationshipAttributes", appendRelationships, gen);
+        }
+        if (!removeRelationships.isEmpty()) {
+            sp.defaultSerializeField("removeRelationshipAttributes", removeRelationships, gen);
         }
         if (!businessAttributes.isEmpty()) {
             sp.defaultSerializeField("businessAttributes", businessAttributes, gen);

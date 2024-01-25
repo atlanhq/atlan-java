@@ -11,6 +11,7 @@ import com.atlan.exception.NotFoundException;
 import com.atlan.model.core.AssetFilter;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.CompoundQuery;
 import com.atlan.model.search.FluentSearch;
@@ -255,25 +256,54 @@ public class SisenseDatamodel extends Asset
     }
 
     /**
-     * Reference to a SisenseDatamodel by GUID.
+     * Reference to a SisenseDatamodel by GUID. Use this to create a relationship to this SisenseDatamodel,
+     * where the relationship should be replaced.
      *
      * @param guid the GUID of the SisenseDatamodel to reference
      * @return reference to a SisenseDatamodel that can be used for defining a relationship to a SisenseDatamodel
      */
     public static SisenseDatamodel refByGuid(String guid) {
-        return SisenseDatamodel._internal().guid(guid).build();
+        return refByGuid(guid, Reference.SaveSemantic.REPLACE);
     }
 
     /**
-     * Reference to a SisenseDatamodel by qualifiedName.
+     * Reference to a SisenseDatamodel by GUID. Use this to create a relationship to this SisenseDatamodel,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param guid the GUID of the SisenseDatamodel to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a SisenseDatamodel that can be used for defining a relationship to a SisenseDatamodel
+     */
+    public static SisenseDatamodel refByGuid(String guid, Reference.SaveSemantic semantic) {
+        return SisenseDatamodel._internal().guid(guid).semantic(semantic).build();
+    }
+
+    /**
+     * Reference to a SisenseDatamodel by qualifiedName. Use this to create a relationship to this SisenseDatamodel,
+     * where the relationship should be replaced.
      *
      * @param qualifiedName the qualifiedName of the SisenseDatamodel to reference
      * @return reference to a SisenseDatamodel that can be used for defining a relationship to a SisenseDatamodel
      */
     public static SisenseDatamodel refByQualifiedName(String qualifiedName) {
+        return refByQualifiedName(qualifiedName, Reference.SaveSemantic.REPLACE);
+    }
+
+    /**
+     * Reference to a SisenseDatamodel by qualifiedName. Use this to create a relationship to this SisenseDatamodel,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param qualifiedName the qualifiedName of the SisenseDatamodel to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a SisenseDatamodel that can be used for defining a relationship to a SisenseDatamodel
+     */
+    public static SisenseDatamodel refByQualifiedName(String qualifiedName, Reference.SaveSemantic semantic) {
         return SisenseDatamodel._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .semantic(semantic)
                 .build();
     }
 

@@ -18,6 +18,7 @@ import com.atlan.model.enums.PersonaDomainAction;
 import com.atlan.model.enums.PersonaGlossaryAction;
 import com.atlan.model.enums.PersonaMetadataAction;
 import com.atlan.model.fields.AtlanField;
+import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.CompoundQuery;
 import com.atlan.model.search.FluentSearch;
@@ -257,25 +258,54 @@ public class Persona extends Asset implements IPersona, IAccessControl, IAsset, 
     }
 
     /**
-     * Reference to a Persona by GUID.
+     * Reference to a Persona by GUID. Use this to create a relationship to this Persona,
+     * where the relationship should be replaced.
      *
      * @param guid the GUID of the Persona to reference
      * @return reference to a Persona that can be used for defining a relationship to a Persona
      */
     public static Persona refByGuid(String guid) {
-        return Persona._internal().guid(guid).build();
+        return refByGuid(guid, Reference.SaveSemantic.REPLACE);
     }
 
     /**
-     * Reference to a Persona by qualifiedName.
+     * Reference to a Persona by GUID. Use this to create a relationship to this Persona,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param guid the GUID of the Persona to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a Persona that can be used for defining a relationship to a Persona
+     */
+    public static Persona refByGuid(String guid, Reference.SaveSemantic semantic) {
+        return Persona._internal().guid(guid).semantic(semantic).build();
+    }
+
+    /**
+     * Reference to a Persona by qualifiedName. Use this to create a relationship to this Persona,
+     * where the relationship should be replaced.
      *
      * @param qualifiedName the qualifiedName of the Persona to reference
      * @return reference to a Persona that can be used for defining a relationship to a Persona
      */
     public static Persona refByQualifiedName(String qualifiedName) {
+        return refByQualifiedName(qualifiedName, Reference.SaveSemantic.REPLACE);
+    }
+
+    /**
+     * Reference to a Persona by qualifiedName. Use this to create a relationship to this Persona,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param qualifiedName the qualifiedName of the Persona to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a Persona that can be used for defining a relationship to a Persona
+     */
+    public static Persona refByQualifiedName(String qualifiedName, Reference.SaveSemantic semantic) {
         return Persona._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .semantic(semantic)
                 .build();
     }
 

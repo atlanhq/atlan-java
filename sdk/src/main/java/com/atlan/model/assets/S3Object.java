@@ -12,6 +12,7 @@ import com.atlan.model.core.AssetFilter;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.CompoundQuery;
 import com.atlan.model.search.FluentSearch;
@@ -300,25 +301,54 @@ public class S3Object extends Asset
     }
 
     /**
-     * Reference to a S3Object by GUID.
+     * Reference to a S3Object by GUID. Use this to create a relationship to this S3Object,
+     * where the relationship should be replaced.
      *
      * @param guid the GUID of the S3Object to reference
      * @return reference to a S3Object that can be used for defining a relationship to a S3Object
      */
     public static S3Object refByGuid(String guid) {
-        return S3Object._internal().guid(guid).build();
+        return refByGuid(guid, Reference.SaveSemantic.REPLACE);
     }
 
     /**
-     * Reference to a S3Object by qualifiedName.
+     * Reference to a S3Object by GUID. Use this to create a relationship to this S3Object,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param guid the GUID of the S3Object to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a S3Object that can be used for defining a relationship to a S3Object
+     */
+    public static S3Object refByGuid(String guid, Reference.SaveSemantic semantic) {
+        return S3Object._internal().guid(guid).semantic(semantic).build();
+    }
+
+    /**
+     * Reference to a S3Object by qualifiedName. Use this to create a relationship to this S3Object,
+     * where the relationship should be replaced.
      *
      * @param qualifiedName the qualifiedName of the S3Object to reference
      * @return reference to a S3Object that can be used for defining a relationship to a S3Object
      */
     public static S3Object refByQualifiedName(String qualifiedName) {
+        return refByQualifiedName(qualifiedName, Reference.SaveSemantic.REPLACE);
+    }
+
+    /**
+     * Reference to a S3Object by qualifiedName. Use this to create a relationship to this S3Object,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param qualifiedName the qualifiedName of the S3Object to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a S3Object that can be used for defining a relationship to a S3Object
+     */
+    public static S3Object refByQualifiedName(String qualifiedName, Reference.SaveSemantic semantic) {
         return S3Object._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .semantic(semantic)
                 .build();
     }
 

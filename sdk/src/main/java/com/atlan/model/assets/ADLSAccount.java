@@ -19,6 +19,7 @@ import com.atlan.model.enums.ADLSStorageKind;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.CompoundQuery;
 import com.atlan.model.search.FluentSearch;
@@ -288,25 +289,54 @@ public class ADLSAccount extends Asset
     }
 
     /**
-     * Reference to a ADLSAccount by GUID.
+     * Reference to a ADLSAccount by GUID. Use this to create a relationship to this ADLSAccount,
+     * where the relationship should be replaced.
      *
      * @param guid the GUID of the ADLSAccount to reference
      * @return reference to a ADLSAccount that can be used for defining a relationship to a ADLSAccount
      */
     public static ADLSAccount refByGuid(String guid) {
-        return ADLSAccount._internal().guid(guid).build();
+        return refByGuid(guid, Reference.SaveSemantic.REPLACE);
     }
 
     /**
-     * Reference to a ADLSAccount by qualifiedName.
+     * Reference to a ADLSAccount by GUID. Use this to create a relationship to this ADLSAccount,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param guid the GUID of the ADLSAccount to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a ADLSAccount that can be used for defining a relationship to a ADLSAccount
+     */
+    public static ADLSAccount refByGuid(String guid, Reference.SaveSemantic semantic) {
+        return ADLSAccount._internal().guid(guid).semantic(semantic).build();
+    }
+
+    /**
+     * Reference to a ADLSAccount by qualifiedName. Use this to create a relationship to this ADLSAccount,
+     * where the relationship should be replaced.
      *
      * @param qualifiedName the qualifiedName of the ADLSAccount to reference
      * @return reference to a ADLSAccount that can be used for defining a relationship to a ADLSAccount
      */
     public static ADLSAccount refByQualifiedName(String qualifiedName) {
+        return refByQualifiedName(qualifiedName, Reference.SaveSemantic.REPLACE);
+    }
+
+    /**
+     * Reference to a ADLSAccount by qualifiedName. Use this to create a relationship to this ADLSAccount,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param qualifiedName the qualifiedName of the ADLSAccount to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a ADLSAccount that can be used for defining a relationship to a ADLSAccount
+     */
+    public static ADLSAccount refByQualifiedName(String qualifiedName, Reference.SaveSemantic semantic) {
         return ADLSAccount._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .semantic(semantic)
                 .build();
     }
 

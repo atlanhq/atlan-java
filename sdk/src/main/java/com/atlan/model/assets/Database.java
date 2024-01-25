@@ -12,6 +12,7 @@ import com.atlan.model.core.AssetFilter;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.CompoundQuery;
 import com.atlan.model.search.FluentSearch;
@@ -306,25 +307,54 @@ public class Database extends Asset implements IDatabase, ISQL, ICatalog, IAsset
     }
 
     /**
-     * Reference to a Database by GUID.
+     * Reference to a Database by GUID. Use this to create a relationship to this Database,
+     * where the relationship should be replaced.
      *
      * @param guid the GUID of the Database to reference
      * @return reference to a Database that can be used for defining a relationship to a Database
      */
     public static Database refByGuid(String guid) {
-        return Database._internal().guid(guid).build();
+        return refByGuid(guid, Reference.SaveSemantic.REPLACE);
     }
 
     /**
-     * Reference to a Database by qualifiedName.
+     * Reference to a Database by GUID. Use this to create a relationship to this Database,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param guid the GUID of the Database to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a Database that can be used for defining a relationship to a Database
+     */
+    public static Database refByGuid(String guid, Reference.SaveSemantic semantic) {
+        return Database._internal().guid(guid).semantic(semantic).build();
+    }
+
+    /**
+     * Reference to a Database by qualifiedName. Use this to create a relationship to this Database,
+     * where the relationship should be replaced.
      *
      * @param qualifiedName the qualifiedName of the Database to reference
      * @return reference to a Database that can be used for defining a relationship to a Database
      */
     public static Database refByQualifiedName(String qualifiedName) {
+        return refByQualifiedName(qualifiedName, Reference.SaveSemantic.REPLACE);
+    }
+
+    /**
+     * Reference to a Database by qualifiedName. Use this to create a relationship to this Database,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param qualifiedName the qualifiedName of the Database to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a Database that can be used for defining a relationship to a Database
+     */
+    public static Database refByQualifiedName(String qualifiedName, Reference.SaveSemantic semantic) {
         return Database._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .semantic(semantic)
                 .build();
     }
 

@@ -11,6 +11,7 @@ import com.atlan.exception.NotFoundException;
 import com.atlan.model.core.AssetFilter;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.CompoundQuery;
 import com.atlan.model.search.FluentSearch;
@@ -247,25 +248,54 @@ public class LookerFolder extends Asset implements ILookerFolder, ILooker, IBI, 
     }
 
     /**
-     * Reference to a LookerFolder by GUID.
+     * Reference to a LookerFolder by GUID. Use this to create a relationship to this LookerFolder,
+     * where the relationship should be replaced.
      *
      * @param guid the GUID of the LookerFolder to reference
      * @return reference to a LookerFolder that can be used for defining a relationship to a LookerFolder
      */
     public static LookerFolder refByGuid(String guid) {
-        return LookerFolder._internal().guid(guid).build();
+        return refByGuid(guid, Reference.SaveSemantic.REPLACE);
     }
 
     /**
-     * Reference to a LookerFolder by qualifiedName.
+     * Reference to a LookerFolder by GUID. Use this to create a relationship to this LookerFolder,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param guid the GUID of the LookerFolder to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a LookerFolder that can be used for defining a relationship to a LookerFolder
+     */
+    public static LookerFolder refByGuid(String guid, Reference.SaveSemantic semantic) {
+        return LookerFolder._internal().guid(guid).semantic(semantic).build();
+    }
+
+    /**
+     * Reference to a LookerFolder by qualifiedName. Use this to create a relationship to this LookerFolder,
+     * where the relationship should be replaced.
      *
      * @param qualifiedName the qualifiedName of the LookerFolder to reference
      * @return reference to a LookerFolder that can be used for defining a relationship to a LookerFolder
      */
     public static LookerFolder refByQualifiedName(String qualifiedName) {
+        return refByQualifiedName(qualifiedName, Reference.SaveSemantic.REPLACE);
+    }
+
+    /**
+     * Reference to a LookerFolder by qualifiedName. Use this to create a relationship to this LookerFolder,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param qualifiedName the qualifiedName of the LookerFolder to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a LookerFolder that can be used for defining a relationship to a LookerFolder
+     */
+    public static LookerFolder refByQualifiedName(String qualifiedName, Reference.SaveSemantic semantic) {
         return LookerFolder._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .semantic(semantic)
                 .build();
     }
 

@@ -11,6 +11,7 @@ import com.atlan.exception.NotFoundException;
 import com.atlan.model.core.AssetFilter;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.CompoundQuery;
 import com.atlan.model.search.FluentSearch;
@@ -265,25 +266,54 @@ public class ModeQuery extends Asset implements IModeQuery, IMode, IBI, ICatalog
     }
 
     /**
-     * Reference to a ModeQuery by GUID.
+     * Reference to a ModeQuery by GUID. Use this to create a relationship to this ModeQuery,
+     * where the relationship should be replaced.
      *
      * @param guid the GUID of the ModeQuery to reference
      * @return reference to a ModeQuery that can be used for defining a relationship to a ModeQuery
      */
     public static ModeQuery refByGuid(String guid) {
-        return ModeQuery._internal().guid(guid).build();
+        return refByGuid(guid, Reference.SaveSemantic.REPLACE);
     }
 
     /**
-     * Reference to a ModeQuery by qualifiedName.
+     * Reference to a ModeQuery by GUID. Use this to create a relationship to this ModeQuery,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param guid the GUID of the ModeQuery to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a ModeQuery that can be used for defining a relationship to a ModeQuery
+     */
+    public static ModeQuery refByGuid(String guid, Reference.SaveSemantic semantic) {
+        return ModeQuery._internal().guid(guid).semantic(semantic).build();
+    }
+
+    /**
+     * Reference to a ModeQuery by qualifiedName. Use this to create a relationship to this ModeQuery,
+     * where the relationship should be replaced.
      *
      * @param qualifiedName the qualifiedName of the ModeQuery to reference
      * @return reference to a ModeQuery that can be used for defining a relationship to a ModeQuery
      */
     public static ModeQuery refByQualifiedName(String qualifiedName) {
+        return refByQualifiedName(qualifiedName, Reference.SaveSemantic.REPLACE);
+    }
+
+    /**
+     * Reference to a ModeQuery by qualifiedName. Use this to create a relationship to this ModeQuery,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param qualifiedName the qualifiedName of the ModeQuery to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a ModeQuery that can be used for defining a relationship to a ModeQuery
+     */
+    public static ModeQuery refByQualifiedName(String qualifiedName, Reference.SaveSemantic semantic) {
         return ModeQuery._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .semantic(semantic)
                 .build();
     }
 

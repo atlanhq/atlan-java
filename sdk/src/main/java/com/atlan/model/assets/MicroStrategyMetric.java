@@ -11,6 +11,7 @@ import com.atlan.exception.NotFoundException;
 import com.atlan.model.core.AssetFilter;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.CompoundQuery;
 import com.atlan.model.search.FluentSearch;
@@ -328,25 +329,54 @@ public class MicroStrategyMetric extends Asset
     }
 
     /**
-     * Reference to a MicroStrategyMetric by GUID.
+     * Reference to a MicroStrategyMetric by GUID. Use this to create a relationship to this MicroStrategyMetric,
+     * where the relationship should be replaced.
      *
      * @param guid the GUID of the MicroStrategyMetric to reference
      * @return reference to a MicroStrategyMetric that can be used for defining a relationship to a MicroStrategyMetric
      */
     public static MicroStrategyMetric refByGuid(String guid) {
-        return MicroStrategyMetric._internal().guid(guid).build();
+        return refByGuid(guid, Reference.SaveSemantic.REPLACE);
     }
 
     /**
-     * Reference to a MicroStrategyMetric by qualifiedName.
+     * Reference to a MicroStrategyMetric by GUID. Use this to create a relationship to this MicroStrategyMetric,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param guid the GUID of the MicroStrategyMetric to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a MicroStrategyMetric that can be used for defining a relationship to a MicroStrategyMetric
+     */
+    public static MicroStrategyMetric refByGuid(String guid, Reference.SaveSemantic semantic) {
+        return MicroStrategyMetric._internal().guid(guid).semantic(semantic).build();
+    }
+
+    /**
+     * Reference to a MicroStrategyMetric by qualifiedName. Use this to create a relationship to this MicroStrategyMetric,
+     * where the relationship should be replaced.
      *
      * @param qualifiedName the qualifiedName of the MicroStrategyMetric to reference
      * @return reference to a MicroStrategyMetric that can be used for defining a relationship to a MicroStrategyMetric
      */
     public static MicroStrategyMetric refByQualifiedName(String qualifiedName) {
+        return refByQualifiedName(qualifiedName, Reference.SaveSemantic.REPLACE);
+    }
+
+    /**
+     * Reference to a MicroStrategyMetric by qualifiedName. Use this to create a relationship to this MicroStrategyMetric,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param qualifiedName the qualifiedName of the MicroStrategyMetric to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a MicroStrategyMetric that can be used for defining a relationship to a MicroStrategyMetric
+     */
+    public static MicroStrategyMetric refByQualifiedName(String qualifiedName, Reference.SaveSemantic semantic) {
         return MicroStrategyMetric._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .semantic(semantic)
                 .build();
     }
 

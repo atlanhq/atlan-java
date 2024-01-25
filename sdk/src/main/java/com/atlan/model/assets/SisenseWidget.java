@@ -11,6 +11,7 @@ import com.atlan.exception.NotFoundException;
 import com.atlan.model.core.AssetFilter;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.CompoundQuery;
 import com.atlan.model.search.FluentSearch;
@@ -245,25 +246,54 @@ public class SisenseWidget extends Asset implements ISisenseWidget, ISisense, IB
     }
 
     /**
-     * Reference to a SisenseWidget by GUID.
+     * Reference to a SisenseWidget by GUID. Use this to create a relationship to this SisenseWidget,
+     * where the relationship should be replaced.
      *
      * @param guid the GUID of the SisenseWidget to reference
      * @return reference to a SisenseWidget that can be used for defining a relationship to a SisenseWidget
      */
     public static SisenseWidget refByGuid(String guid) {
-        return SisenseWidget._internal().guid(guid).build();
+        return refByGuid(guid, Reference.SaveSemantic.REPLACE);
     }
 
     /**
-     * Reference to a SisenseWidget by qualifiedName.
+     * Reference to a SisenseWidget by GUID. Use this to create a relationship to this SisenseWidget,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param guid the GUID of the SisenseWidget to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a SisenseWidget that can be used for defining a relationship to a SisenseWidget
+     */
+    public static SisenseWidget refByGuid(String guid, Reference.SaveSemantic semantic) {
+        return SisenseWidget._internal().guid(guid).semantic(semantic).build();
+    }
+
+    /**
+     * Reference to a SisenseWidget by qualifiedName. Use this to create a relationship to this SisenseWidget,
+     * where the relationship should be replaced.
      *
      * @param qualifiedName the qualifiedName of the SisenseWidget to reference
      * @return reference to a SisenseWidget that can be used for defining a relationship to a SisenseWidget
      */
     public static SisenseWidget refByQualifiedName(String qualifiedName) {
+        return refByQualifiedName(qualifiedName, Reference.SaveSemantic.REPLACE);
+    }
+
+    /**
+     * Reference to a SisenseWidget by qualifiedName. Use this to create a relationship to this SisenseWidget,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param qualifiedName the qualifiedName of the SisenseWidget to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a SisenseWidget that can be used for defining a relationship to a SisenseWidget
+     */
+    public static SisenseWidget refByQualifiedName(String qualifiedName, Reference.SaveSemantic semantic) {
         return SisenseWidget._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .semantic(semantic)
                 .build();
     }
 

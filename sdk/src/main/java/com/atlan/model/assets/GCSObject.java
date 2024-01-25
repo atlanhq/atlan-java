@@ -12,6 +12,7 @@ import com.atlan.model.core.AssetFilter;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.CompoundQuery;
 import com.atlan.model.search.FluentSearch;
@@ -338,25 +339,54 @@ public class GCSObject extends Asset
     }
 
     /**
-     * Reference to a GCSObject by GUID.
+     * Reference to a GCSObject by GUID. Use this to create a relationship to this GCSObject,
+     * where the relationship should be replaced.
      *
      * @param guid the GUID of the GCSObject to reference
      * @return reference to a GCSObject that can be used for defining a relationship to a GCSObject
      */
     public static GCSObject refByGuid(String guid) {
-        return GCSObject._internal().guid(guid).build();
+        return refByGuid(guid, Reference.SaveSemantic.REPLACE);
     }
 
     /**
-     * Reference to a GCSObject by qualifiedName.
+     * Reference to a GCSObject by GUID. Use this to create a relationship to this GCSObject,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param guid the GUID of the GCSObject to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a GCSObject that can be used for defining a relationship to a GCSObject
+     */
+    public static GCSObject refByGuid(String guid, Reference.SaveSemantic semantic) {
+        return GCSObject._internal().guid(guid).semantic(semantic).build();
+    }
+
+    /**
+     * Reference to a GCSObject by qualifiedName. Use this to create a relationship to this GCSObject,
+     * where the relationship should be replaced.
      *
      * @param qualifiedName the qualifiedName of the GCSObject to reference
      * @return reference to a GCSObject that can be used for defining a relationship to a GCSObject
      */
     public static GCSObject refByQualifiedName(String qualifiedName) {
+        return refByQualifiedName(qualifiedName, Reference.SaveSemantic.REPLACE);
+    }
+
+    /**
+     * Reference to a GCSObject by qualifiedName. Use this to create a relationship to this GCSObject,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param qualifiedName the qualifiedName of the GCSObject to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a GCSObject that can be used for defining a relationship to a GCSObject
+     */
+    public static GCSObject refByQualifiedName(String qualifiedName, Reference.SaveSemantic semantic) {
         return GCSObject._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .semantic(semantic)
                 .build();
     }
 

@@ -12,6 +12,7 @@ import com.atlan.model.core.AssetFilter;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.PowerBIEndorsementType;
+import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.CompoundQuery;
 import com.atlan.model.search.FluentSearch;
@@ -242,25 +243,54 @@ public class PowerBIDatasource extends Asset
     }
 
     /**
-     * Reference to a PowerBIDatasource by GUID.
+     * Reference to a PowerBIDatasource by GUID. Use this to create a relationship to this PowerBIDatasource,
+     * where the relationship should be replaced.
      *
      * @param guid the GUID of the PowerBIDatasource to reference
      * @return reference to a PowerBIDatasource that can be used for defining a relationship to a PowerBIDatasource
      */
     public static PowerBIDatasource refByGuid(String guid) {
-        return PowerBIDatasource._internal().guid(guid).build();
+        return refByGuid(guid, Reference.SaveSemantic.REPLACE);
     }
 
     /**
-     * Reference to a PowerBIDatasource by qualifiedName.
+     * Reference to a PowerBIDatasource by GUID. Use this to create a relationship to this PowerBIDatasource,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param guid the GUID of the PowerBIDatasource to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a PowerBIDatasource that can be used for defining a relationship to a PowerBIDatasource
+     */
+    public static PowerBIDatasource refByGuid(String guid, Reference.SaveSemantic semantic) {
+        return PowerBIDatasource._internal().guid(guid).semantic(semantic).build();
+    }
+
+    /**
+     * Reference to a PowerBIDatasource by qualifiedName. Use this to create a relationship to this PowerBIDatasource,
+     * where the relationship should be replaced.
      *
      * @param qualifiedName the qualifiedName of the PowerBIDatasource to reference
      * @return reference to a PowerBIDatasource that can be used for defining a relationship to a PowerBIDatasource
      */
     public static PowerBIDatasource refByQualifiedName(String qualifiedName) {
+        return refByQualifiedName(qualifiedName, Reference.SaveSemantic.REPLACE);
+    }
+
+    /**
+     * Reference to a PowerBIDatasource by qualifiedName. Use this to create a relationship to this PowerBIDatasource,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param qualifiedName the qualifiedName of the PowerBIDatasource to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a PowerBIDatasource that can be used for defining a relationship to a PowerBIDatasource
+     */
+    public static PowerBIDatasource refByQualifiedName(String qualifiedName, Reference.SaveSemantic semantic) {
         return PowerBIDatasource._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .semantic(semantic)
                 .build();
     }
 

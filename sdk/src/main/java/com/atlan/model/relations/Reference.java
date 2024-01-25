@@ -35,6 +35,12 @@ public class Reference extends AtlanObject implements Comparable<Reference>, Aud
             .thenComparing(Reference::getGuid, stringComparator)
             .thenComparing(Reference::getUniqueAttributes, Comparator.nullsFirst(uniqueAttrsComparator));
 
+    public enum SaveSemantic {
+        REPLACE,
+        APPEND,
+        REMOVE,
+    }
+
     /**
      * Quickly create a new reference to another asset, by its GUID.
      *
@@ -60,6 +66,11 @@ public class Reference extends AtlanObject implements Comparable<Reference>, Aud
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
     }
+
+    /** Semantic for how this relationship should be saved, if used in an asset request on which .save() is called. */
+    @JsonIgnore
+    @Builder.Default
+    transient SaveSemantic semantic = SaveSemantic.REPLACE;
 
     /** Internal tracking of whether this represents a complete view of an object, or not. */
     @JsonIgnore

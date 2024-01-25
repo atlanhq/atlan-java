@@ -11,6 +11,7 @@ import com.atlan.exception.NotFoundException;
 import com.atlan.model.core.AssetFilter;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.CompoundQuery;
 import com.atlan.model.search.FluentSearch;
@@ -259,25 +260,54 @@ public class TableauProject extends Asset implements ITableauProject, ITableau, 
     }
 
     /**
-     * Reference to a TableauProject by GUID.
+     * Reference to a TableauProject by GUID. Use this to create a relationship to this TableauProject,
+     * where the relationship should be replaced.
      *
      * @param guid the GUID of the TableauProject to reference
      * @return reference to a TableauProject that can be used for defining a relationship to a TableauProject
      */
     public static TableauProject refByGuid(String guid) {
-        return TableauProject._internal().guid(guid).build();
+        return refByGuid(guid, Reference.SaveSemantic.REPLACE);
     }
 
     /**
-     * Reference to a TableauProject by qualifiedName.
+     * Reference to a TableauProject by GUID. Use this to create a relationship to this TableauProject,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param guid the GUID of the TableauProject to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a TableauProject that can be used for defining a relationship to a TableauProject
+     */
+    public static TableauProject refByGuid(String guid, Reference.SaveSemantic semantic) {
+        return TableauProject._internal().guid(guid).semantic(semantic).build();
+    }
+
+    /**
+     * Reference to a TableauProject by qualifiedName. Use this to create a relationship to this TableauProject,
+     * where the relationship should be replaced.
      *
      * @param qualifiedName the qualifiedName of the TableauProject to reference
      * @return reference to a TableauProject that can be used for defining a relationship to a TableauProject
      */
     public static TableauProject refByQualifiedName(String qualifiedName) {
+        return refByQualifiedName(qualifiedName, Reference.SaveSemantic.REPLACE);
+    }
+
+    /**
+     * Reference to a TableauProject by qualifiedName. Use this to create a relationship to this TableauProject,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param qualifiedName the qualifiedName of the TableauProject to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a TableauProject that can be used for defining a relationship to a TableauProject
+     */
+    public static TableauProject refByQualifiedName(String qualifiedName, Reference.SaveSemantic semantic) {
         return TableauProject._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .semantic(semantic)
                 .build();
     }
 

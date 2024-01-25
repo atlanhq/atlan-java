@@ -14,6 +14,7 @@ import com.atlan.model.enums.AuthPolicyCategory;
 import com.atlan.model.enums.AuthPolicyResourceCategory;
 import com.atlan.model.enums.AuthPolicyType;
 import com.atlan.model.enums.DataMaskingType;
+import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.CompoundQuery;
 import com.atlan.model.search.FluentSearch;
@@ -276,25 +277,54 @@ public class AuthPolicy extends Asset implements IAuthPolicy, IAsset, IReference
     }
 
     /**
-     * Reference to a AuthPolicy by GUID.
+     * Reference to a AuthPolicy by GUID. Use this to create a relationship to this AuthPolicy,
+     * where the relationship should be replaced.
      *
      * @param guid the GUID of the AuthPolicy to reference
      * @return reference to a AuthPolicy that can be used for defining a relationship to a AuthPolicy
      */
     public static AuthPolicy refByGuid(String guid) {
-        return AuthPolicy._internal().guid(guid).build();
+        return refByGuid(guid, Reference.SaveSemantic.REPLACE);
     }
 
     /**
-     * Reference to a AuthPolicy by qualifiedName.
+     * Reference to a AuthPolicy by GUID. Use this to create a relationship to this AuthPolicy,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param guid the GUID of the AuthPolicy to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a AuthPolicy that can be used for defining a relationship to a AuthPolicy
+     */
+    public static AuthPolicy refByGuid(String guid, Reference.SaveSemantic semantic) {
+        return AuthPolicy._internal().guid(guid).semantic(semantic).build();
+    }
+
+    /**
+     * Reference to a AuthPolicy by qualifiedName. Use this to create a relationship to this AuthPolicy,
+     * where the relationship should be replaced.
      *
      * @param qualifiedName the qualifiedName of the AuthPolicy to reference
      * @return reference to a AuthPolicy that can be used for defining a relationship to a AuthPolicy
      */
     public static AuthPolicy refByQualifiedName(String qualifiedName) {
+        return refByQualifiedName(qualifiedName, Reference.SaveSemantic.REPLACE);
+    }
+
+    /**
+     * Reference to a AuthPolicy by qualifiedName. Use this to create a relationship to this AuthPolicy,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param qualifiedName the qualifiedName of the AuthPolicy to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a AuthPolicy that can be used for defining a relationship to a AuthPolicy
+     */
+    public static AuthPolicy refByQualifiedName(String qualifiedName, Reference.SaveSemantic semantic) {
         return AuthPolicy._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .semantic(semantic)
                 .build();
     }
 
