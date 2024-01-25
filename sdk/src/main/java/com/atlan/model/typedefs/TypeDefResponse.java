@@ -8,6 +8,7 @@ import java.util.List;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Singular;
 import lombok.ToString;
 import lombok.extern.jackson.Jacksonized;
 
@@ -23,22 +24,28 @@ public class TypeDefResponse extends ApiResource {
     private static final long serialVersionUID = 2L;
 
     /** List of enumeration type definitions. */
+    @Singular
     List<EnumDef> enumDefs;
 
     /** List of struct type definitions. */
+    @Singular
     List<StructDef> structDefs;
 
     /** List of Atlan tag type definitions. */
+    @Singular
     @JsonProperty("classificationDefs")
     List<AtlanTagDef> atlanTagDefs;
 
     /** List of entity type definitions. */
+    @Singular
     List<EntityDef> entityDefs;
 
     /** List of relationship type definitions. */
+    @Singular
     List<RelationshipDef> relationshipDefs;
 
     /** List of custom metadata type definitions. */
+    @Singular
     @JsonProperty("businessMetadataDefs")
     List<CustomMetadataDef> customMetadataDefs;
 }

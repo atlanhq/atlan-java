@@ -152,19 +152,49 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public TypeDefResponse create(TypeDef typeDef, RequestOptions options) throws AtlanException {
+        return create(List.of(typeDef), options);
+    }
+
+    /**
+     * Create new type definitions in Atlan.
+     * Note: only custom metadata, enumerations, and Atlan tag type definitions are currently supported.
+     * Furthermore, if any of these are created their respective cache will be force-refreshed.
+     *
+     * @param typeDefs to create
+     * @return the resulting type definition that was created
+     * @throws AtlanException on any API communication issue
+     */
+    public TypeDefResponse create(List<TypeDef> typeDefs) throws AtlanException {
+        return create(typeDefs, null);
+    }
+
+    /**
+     * Create new type definitions in Atlan.
+     * Note: only custom metadata, enumerations, and Atlan tag type definitions are currently supported.
+     * Furthermore, if any of these are created their respective cache will be force-refreshed.
+     *
+     * @param typeDefs to create
+     * @param options to override default client settings
+     * @return the resulting type definition that was created
+     * @throws AtlanException on any API communication issue
+     */
+    public TypeDefResponse create(List<TypeDef> typeDefs, RequestOptions options) throws AtlanException {
         TypeDefResponse response = null;
-        if (typeDef != null) {
-            switch (typeDef.getCategory()) {
-                case ATLAN_TAG:
-                case CUSTOM_METADATA:
-                case ENUM:
-                    response = _create(typeDef, options);
-                    break;
-                default:
-                    throw new InvalidRequestException(
-                            ErrorCode.UNABLE_TO_CREATE_TYPEDEF_CATEGORY,
-                            typeDef.getCategory().getValue());
+        if (typeDefs != null) {
+            for (TypeDef typeDef : typeDefs) {
+                switch (typeDef.getCategory()) {
+                    case ATLAN_TAG:
+                    case CUSTOM_METADATA:
+                    case ENUM:
+                        // All good, skip to the next one
+                        break;
+                    default:
+                        throw new InvalidRequestException(
+                                ErrorCode.UNABLE_TO_CREATE_TYPEDEF_CATEGORY,
+                                typeDef.getCategory().getValue());
+                }
             }
+            response = _create(typeDefs, options);
         }
         return response;
     }
@@ -195,31 +225,62 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
      * @see #create(TypeDef)
      */
     public TypeDefResponse _create(TypeDef typeDef, RequestOptions options) throws AtlanException {
+        return _create(List.of(typeDef), options);
+    }
+
+    /**
+     * Create new type definitions in Atlan.
+     * NOTE: INTERNAL USE ONLY. This will NOT work without specially-configured policies - use createTypeDef instead.
+     * Furthermore, if any of Atlan tag, enum or custom metadata is created their respective cache will be force-refreshed.
+     *
+     * @param typeDefs to create
+     * @return the resulting type definition that was created
+     * @throws AtlanException on any API communication issue
+     * @see #create(TypeDef)
+     */
+    public TypeDefResponse _create(List<TypeDef> typeDefs) throws AtlanException {
+        return _create(typeDefs, null);
+    }
+
+    /**
+     * Create new type definitions in Atlan.
+     * NOTE: INTERNAL USE ONLY. This will NOT work without specially-configured policies - use createTypeDef instead.
+     * Furthermore, if any of Atlan tag, enum or custom metadata is created their respective cache will be force-refreshed.
+     *
+     * @param typeDefs to create
+     * @param options to override default client settings
+     * @return the resulting type definition that was created
+     * @throws AtlanException on any API communication issue
+     * @see #create(TypeDef)
+     */
+    public TypeDefResponse _create(List<TypeDef> typeDefs, RequestOptions options) throws AtlanException {
         TypeDefResponse.TypeDefResponseBuilder builder = TypeDefResponse.builder();
-        if (typeDef != null) {
-            String serviceType = typeDef.getServiceType();
-            if (serviceType != null && RESERVED_SERVICE_TYPES.contains(serviceType)) {
-                throw new ConflictException(ErrorCode.RESERVED_SERVICE_TYPE, serviceType);
-            }
-            switch (typeDef.getCategory()) {
-                case ATLAN_TAG:
-                    builder.atlanTagDefs(List.of((AtlanTagDef) typeDef));
-                    break;
-                case CUSTOM_METADATA:
-                    builder.customMetadataDefs(List.of((CustomMetadataDef) typeDef));
-                    break;
-                case ENUM:
-                    builder.enumDefs(List.of((EnumDef) typeDef));
-                    break;
-                case STRUCT:
-                    builder.structDefs(List.of((StructDef) typeDef));
-                    break;
-                case ENTITY:
-                    builder.entityDefs(List.of((EntityDef) typeDef));
-                    break;
-                case RELATIONSHIP:
-                    builder.relationshipDefs(List.of((RelationshipDef) typeDef));
-                    break;
+        if (typeDefs != null) {
+            for (TypeDef typeDef : typeDefs) {
+                String serviceType = typeDef.getServiceType();
+                if (serviceType != null && RESERVED_SERVICE_TYPES.contains(serviceType)) {
+                    throw new ConflictException(ErrorCode.RESERVED_SERVICE_TYPE, serviceType);
+                }
+                switch (typeDef.getCategory()) {
+                    case ATLAN_TAG:
+                        builder.atlanTagDef((AtlanTagDef) typeDef);
+                        break;
+                    case CUSTOM_METADATA:
+                        builder.customMetadataDef((CustomMetadataDef) typeDef);
+                        break;
+                    case ENUM:
+                        builder.enumDef((EnumDef) typeDef);
+                        break;
+                    case STRUCT:
+                        builder.structDef((StructDef) typeDef);
+                        break;
+                    case ENTITY:
+                        builder.entityDef((EntityDef) typeDef);
+                        break;
+                    case RELATIONSHIP:
+                        builder.relationshipDef((RelationshipDef) typeDef);
+                        break;
+                }
             }
             TypeDefResponse response = _create(builder, options);
             if (response != null) {
