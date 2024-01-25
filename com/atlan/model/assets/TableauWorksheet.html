@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":41,"i2":41,"i3":41,"i4":41,"i5":41,"i6":41,"i7":41,"i8":41,"i9":9,"i10":9,"i11":9,"i12":9,"i13":9,"i14":9,"i15":10,"i16":10,"i17":9,"i18":9,"i19":9,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":9,"i36":9,"i37":9,"i38":9,"i39":9,"i40":9,"i41":9,"i42":9,"i43":9,"i44":9,"i45":9,"i46":9,"i47":9,"i48":9,"i49":9,"i50":9,"i51":9,"i52":9,"i53":9,"i54":9,"i55":41,"i56":41,"i57":41,"i58":41,"i59":9,"i60":9,"i61":9,"i62":9,"i63":10,"i64":10,"i65":10,"i66":10,"i67":9,"i68":9,"i69":9,"i70":9,"i71":9};
+var data = {"i0":9,"i1":41,"i2":41,"i3":41,"i4":41,"i5":41,"i6":41,"i7":41,"i8":41,"i9":9,"i10":9,"i11":9,"i12":9,"i13":9,"i14":9,"i15":10,"i16":10,"i17":9,"i18":9,"i19":9,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":9,"i36":9,"i37":9,"i38":9,"i39":9,"i40":9,"i41":9,"i42":9,"i43":9,"i44":9,"i45":9,"i46":9,"i47":9,"i48":9,"i49":9,"i50":9,"i51":9,"i52":9,"i53":9,"i54":9,"i55":9,"i56":9,"i57":41,"i58":41,"i59":41,"i60":41,"i61":9,"i62":9,"i63":9,"i64":9,"i65":10,"i66":10,"i67":10,"i68":10,"i69":9,"i70":9,"i71":9,"i72":9,"i73":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -197,7 +197,7 @@ implements <a href="ITableauWorksheet.html" title="interface in com.atlan.model.
 <!--   -->
 </a>
 <h3>Nested classes/interfaces inherited from class&nbsp;com.atlan.model.relations.<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a></h3>
-<code><a href="../relations/Reference.ReferenceBuilder.html" title="class in com.atlan.model.relations">Reference.ReferenceBuilder</a>&lt;<a href="../relations/Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">C</a> extends <a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>,&#8203;<a href="../relations/Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a> extends <a href="../relations/Reference.ReferenceBuilder.html" title="class in com.atlan.model.relations">Reference.ReferenceBuilder</a>&lt;<a href="../relations/Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">C</a>,&#8203;<a href="../relations/Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a>&gt;&gt;</code></li>
+<code><a href="../relations/Reference.ReferenceBuilder.html" title="class in com.atlan.model.relations">Reference.ReferenceBuilder</a>&lt;<a href="../relations/Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">C</a> extends <a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>,&#8203;<a href="../relations/Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a> extends <a href="../relations/Reference.ReferenceBuilder.html" title="class in com.atlan.model.relations">Reference.ReferenceBuilder</a>&lt;<a href="../relations/Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">C</a>,&#8203;<a href="../relations/Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a>&gt;&gt;, <a href="../relations/Reference.SaveSemantic.html" title="enum in com.atlan.model.relations">Reference.SaveSemantic</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="nested.classes.inherited.from.class.com.atlan.model.core.AtlanObject">
@@ -590,12 +590,28 @@ implements <a href="ITableauWorksheet.html" title="interface in com.atlan.model.
 </tr>
 <tr id="i36" class="altColor">
 <td class="colFirst"><code>static <a href="TableauWorksheet.html" title="class in com.atlan.model.assets">TableauWorksheet</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#refByGuid(java.lang.String,com.atlan.model.relations.Reference.SaveSemantic)">refByGuid</a></span>&#8203;(java.lang.String&nbsp;guid,
+         <a href="../relations/Reference.SaveSemantic.html" title="enum in com.atlan.model.relations">Reference.SaveSemantic</a>&nbsp;semantic)</code></th>
+<td class="colLast">
+<div class="block">Reference to a TableauWorksheet by GUID.</div>
+</td>
+</tr>
+<tr id="i37" class="rowColor">
+<td class="colFirst"><code>static <a href="TableauWorksheet.html" title="class in com.atlan.model.assets">TableauWorksheet</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#refByQualifiedName(java.lang.String)">refByQualifiedName</a></span>&#8203;(java.lang.String&nbsp;qualifiedName)</code></th>
 <td class="colLast">
 <div class="block">Reference to a TableauWorksheet by qualifiedName.</div>
 </td>
 </tr>
-<tr id="i37" class="rowColor">
+<tr id="i38" class="altColor">
+<td class="colFirst"><code>static <a href="TableauWorksheet.html" title="class in com.atlan.model.assets">TableauWorksheet</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#refByQualifiedName(java.lang.String,com.atlan.model.relations.Reference.SaveSemantic)">refByQualifiedName</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
+                  <a href="../relations/Reference.SaveSemantic.html" title="enum in com.atlan.model.relations">Reference.SaveSemantic</a>&nbsp;semantic)</code></th>
+<td class="colLast">
+<div class="block">Reference to a TableauWorksheet by qualifiedName.</div>
+</td>
+</tr>
+<tr id="i39" class="rowColor">
 <td class="colFirst"><code>static <a href="TableauWorksheet.html" title="class in com.atlan.model.assets">TableauWorksheet</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeAnnouncement(com.atlan.AtlanClient,java.lang.String,java.lang.String)">removeAnnouncement</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
                   java.lang.String&nbsp;qualifiedName,
@@ -604,7 +620,7 @@ implements <a href="ITableauWorksheet.html" title="interface in com.atlan.model.
 <div class="block">Remove the announcement from a TableauWorksheet.</div>
 </td>
 </tr>
-<tr id="i38" class="altColor">
+<tr id="i40" class="altColor">
 <td class="colFirst"><code>static <a href="TableauWorksheet.html" title="class in com.atlan.model.assets">TableauWorksheet</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeAnnouncement(java.lang.String,java.lang.String)">removeAnnouncement</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                   java.lang.String&nbsp;name)</code></th>
@@ -612,7 +628,7 @@ implements <a href="ITableauWorksheet.html" title="interface in com.atlan.model.
 <div class="block">Remove the announcement from a TableauWorksheet.</div>
 </td>
 </tr>
-<tr id="i39" class="rowColor">
+<tr id="i41" class="rowColor">
 <td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeAtlanTag(com.atlan.AtlanClient,java.lang.String,java.lang.String)">removeAtlanTag</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
               java.lang.String&nbsp;qualifiedName,
@@ -621,7 +637,7 @@ implements <a href="ITableauWorksheet.html" title="interface in com.atlan.model.
 <div class="block">Remove an Atlan tag from a TableauWorksheet.</div>
 </td>
 </tr>
-<tr id="i40" class="altColor">
+<tr id="i42" class="altColor">
 <td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeAtlanTag(java.lang.String,java.lang.String)">removeAtlanTag</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
               java.lang.String&nbsp;atlanTagName)</code></th>
@@ -629,7 +645,7 @@ implements <a href="ITableauWorksheet.html" title="interface in com.atlan.model.
 <div class="block">Remove an Atlan tag from a TableauWorksheet.</div>
 </td>
 </tr>
-<tr id="i41" class="rowColor">
+<tr id="i43" class="rowColor">
 <td class="colFirst"><code>static <a href="TableauWorksheet.html" title="class in com.atlan.model.assets">TableauWorksheet</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeCertificate(com.atlan.AtlanClient,java.lang.String,java.lang.String)">removeCertificate</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
                  java.lang.String&nbsp;qualifiedName,
@@ -638,7 +654,7 @@ implements <a href="ITableauWorksheet.html" title="interface in com.atlan.model.
 <div class="block">Remove the certificate from a TableauWorksheet.</div>
 </td>
 </tr>
-<tr id="i42" class="altColor">
+<tr id="i44" class="altColor">
 <td class="colFirst"><code>static <a href="TableauWorksheet.html" title="class in com.atlan.model.assets">TableauWorksheet</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeCertificate(java.lang.String,java.lang.String)">removeCertificate</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                  java.lang.String&nbsp;name)</code></th>
@@ -646,7 +662,7 @@ implements <a href="ITableauWorksheet.html" title="interface in com.atlan.model.
 <div class="block">Remove the certificate from a TableauWorksheet.</div>
 </td>
 </tr>
-<tr id="i43" class="rowColor">
+<tr id="i45" class="rowColor">
 <td class="colFirst"><code>static <a href="TableauWorksheet.html" title="class in com.atlan.model.assets">TableauWorksheet</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeDescription(com.atlan.AtlanClient,java.lang.String,java.lang.String)">removeDescription</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
                  java.lang.String&nbsp;qualifiedName,
@@ -655,7 +671,7 @@ implements <a href="ITableauWorksheet.html" title="interface in com.atlan.model.
 <div class="block">Remove the system description from a TableauWorksheet.</div>
 </td>
 </tr>
-<tr id="i44" class="altColor">
+<tr id="i46" class="altColor">
 <td class="colFirst"><code>static <a href="TableauWorksheet.html" title="class in com.atlan.model.assets">TableauWorksheet</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeDescription(java.lang.String,java.lang.String)">removeDescription</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                  java.lang.String&nbsp;name)</code></th>
@@ -663,7 +679,7 @@ implements <a href="ITableauWorksheet.html" title="interface in com.atlan.model.
 <div class="block">Remove the system description from a TableauWorksheet.</div>
 </td>
 </tr>
-<tr id="i45" class="rowColor">
+<tr id="i47" class="rowColor">
 <td class="colFirst"><code>static <a href="TableauWorksheet.html" title="class in com.atlan.model.assets">TableauWorksheet</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeOwners(com.atlan.AtlanClient,java.lang.String,java.lang.String)">removeOwners</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
             java.lang.String&nbsp;qualifiedName,
@@ -672,7 +688,7 @@ implements <a href="ITableauWorksheet.html" title="interface in com.atlan.model.
 <div class="block">Remove the owners from a TableauWorksheet.</div>
 </td>
 </tr>
-<tr id="i46" class="altColor">
+<tr id="i48" class="altColor">
 <td class="colFirst"><code>static <a href="TableauWorksheet.html" title="class in com.atlan.model.assets">TableauWorksheet</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeOwners(java.lang.String,java.lang.String)">removeOwners</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
             java.lang.String&nbsp;name)</code></th>
@@ -680,7 +696,7 @@ implements <a href="ITableauWorksheet.html" title="interface in com.atlan.model.
 <div class="block">Remove the owners from a TableauWorksheet.</div>
 </td>
 </tr>
-<tr id="i47" class="rowColor">
+<tr id="i49" class="rowColor">
 <td class="colFirst"><code>static <a href="TableauWorksheet.html" title="class in com.atlan.model.assets">TableauWorksheet</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeTerms(com.atlan.AtlanClient,java.lang.String,java.util.List)">removeTerms</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
            java.lang.String&nbsp;qualifiedName,
@@ -689,7 +705,7 @@ implements <a href="ITableauWorksheet.html" title="interface in com.atlan.model.
 <div class="block">Remove terms from a TableauWorksheet, without replacing all existing terms linked to the TableauWorksheet.</div>
 </td>
 </tr>
-<tr id="i48" class="altColor">
+<tr id="i50" class="altColor">
 <td class="colFirst"><code>static <a href="TableauWorksheet.html" title="class in com.atlan.model.assets">TableauWorksheet</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeTerms(java.lang.String,java.util.List)">removeTerms</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
            java.util.List&lt;<a href="IGlossaryTerm.html" title="interface in com.atlan.model.assets">IGlossaryTerm</a>&gt;&nbsp;terms)</code></th>
@@ -697,7 +713,7 @@ implements <a href="ITableauWorksheet.html" title="interface in com.atlan.model.
 <div class="block">Remove terms from a TableauWorksheet, without replacing all existing terms linked to the TableauWorksheet.</div>
 </td>
 </tr>
-<tr id="i49" class="rowColor">
+<tr id="i51" class="rowColor">
 <td class="colFirst"><code>static <a href="TableauWorksheet.html" title="class in com.atlan.model.assets">TableauWorksheet</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeUserDescription(com.atlan.AtlanClient,java.lang.String,java.lang.String)">removeUserDescription</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
                      java.lang.String&nbsp;qualifiedName,
@@ -706,7 +722,7 @@ implements <a href="ITableauWorksheet.html" title="interface in com.atlan.model.
 <div class="block">Remove the user's description from a TableauWorksheet.</div>
 </td>
 </tr>
-<tr id="i50" class="altColor">
+<tr id="i52" class="altColor">
 <td class="colFirst"><code>static <a href="TableauWorksheet.html" title="class in com.atlan.model.assets">TableauWorksheet</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeUserDescription(java.lang.String,java.lang.String)">removeUserDescription</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                      java.lang.String&nbsp;name)</code></th>
@@ -714,7 +730,7 @@ implements <a href="ITableauWorksheet.html" title="interface in com.atlan.model.
 <div class="block">Remove the user's description from a TableauWorksheet.</div>
 </td>
 </tr>
-<tr id="i51" class="rowColor">
+<tr id="i53" class="rowColor">
 <td class="colFirst"><code>static <a href="TableauWorksheet.html" title="class in com.atlan.model.assets">TableauWorksheet</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#replaceTerms(com.atlan.AtlanClient,java.lang.String,java.lang.String,java.util.List)">replaceTerms</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
             java.lang.String&nbsp;qualifiedName,
@@ -724,7 +740,7 @@ implements <a href="ITableauWorksheet.html" title="interface in com.atlan.model.
 <div class="block">Replace the terms linked to the TableauWorksheet.</div>
 </td>
 </tr>
-<tr id="i52" class="altColor">
+<tr id="i54" class="altColor">
 <td class="colFirst"><code>static <a href="TableauWorksheet.html" title="class in com.atlan.model.assets">TableauWorksheet</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#replaceTerms(java.lang.String,java.lang.String,java.util.List)">replaceTerms</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
             java.lang.String&nbsp;name,
@@ -733,7 +749,7 @@ implements <a href="ITableauWorksheet.html" title="interface in com.atlan.model.
 <div class="block">Replace the terms linked to the TableauWorksheet.</div>
 </td>
 </tr>
-<tr id="i53" class="rowColor">
+<tr id="i55" class="rowColor">
 <td class="colFirst"><code>static boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#restore(com.atlan.AtlanClient,java.lang.String)">restore</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
        java.lang.String&nbsp;qualifiedName)</code></th>
@@ -741,14 +757,14 @@ implements <a href="ITableauWorksheet.html" title="interface in com.atlan.model.
 <div class="block">Restore the archived (soft-deleted) TableauWorksheet to active.</div>
 </td>
 </tr>
-<tr id="i54" class="altColor">
+<tr id="i56" class="altColor">
 <td class="colFirst"><code>static boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#restore(java.lang.String)">restore</a></span>&#8203;(java.lang.String&nbsp;qualifiedName)</code></th>
 <td class="colLast">
 <div class="block">Restore the archived (soft-deleted) TableauWorksheet to active.</div>
 </td>
 </tr>
-<tr id="i55" class="rowColor">
+<tr id="i57" class="rowColor">
 <td class="colFirst"><code>static <a href="TableauWorksheet.html" title="class in com.atlan.model.assets">TableauWorksheet</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#retrieveByGuid(com.atlan.AtlanClient,java.lang.String)">retrieveByGuid</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
               java.lang.String&nbsp;guid)</code></th>
@@ -758,7 +774,7 @@ implements <a href="ITableauWorksheet.html" title="interface in com.atlan.model.
 </div>
 </td>
 </tr>
-<tr id="i56" class="altColor">
+<tr id="i58" class="altColor">
 <td class="colFirst"><code>static <a href="TableauWorksheet.html" title="class in com.atlan.model.assets">TableauWorksheet</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#retrieveByGuid(java.lang.String)">retrieveByGuid</a></span>&#8203;(java.lang.String&nbsp;guid)</code></th>
 <td class="colLast">
@@ -767,7 +783,7 @@ implements <a href="ITableauWorksheet.html" title="interface in com.atlan.model.
 </div>
 </td>
 </tr>
-<tr id="i57" class="rowColor">
+<tr id="i59" class="rowColor">
 <td class="colFirst"><code>static <a href="TableauWorksheet.html" title="class in com.atlan.model.assets">TableauWorksheet</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#retrieveByQualifiedName(com.atlan.AtlanClient,java.lang.String)">retrieveByQualifiedName</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
                        java.lang.String&nbsp;qualifiedName)</code></th>
@@ -777,7 +793,7 @@ implements <a href="ITableauWorksheet.html" title="interface in com.atlan.model.
 </div>
 </td>
 </tr>
-<tr id="i58" class="altColor">
+<tr id="i60" class="altColor">
 <td class="colFirst"><code>static <a href="TableauWorksheet.html" title="class in com.atlan.model.assets">TableauWorksheet</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#retrieveByQualifiedName(java.lang.String)">retrieveByQualifiedName</a></span>&#8203;(java.lang.String&nbsp;qualifiedName)</code></th>
 <td class="colLast">
@@ -786,28 +802,28 @@ implements <a href="ITableauWorksheet.html" title="interface in com.atlan.model.
 </div>
 </td>
 </tr>
-<tr id="i59" class="rowColor">
+<tr id="i61" class="rowColor">
 <td class="colFirst"><code>static <a href="../search/FluentSearch.FluentSearchBuilder.html" title="class in com.atlan.model.search">FluentSearch.FluentSearchBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#select()">select</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Start a fluent search that will return all TableauWorksheet assets.</div>
 </td>
 </tr>
-<tr id="i60" class="altColor">
+<tr id="i62" class="altColor">
 <td class="colFirst"><code>static <a href="../search/FluentSearch.FluentSearchBuilder.html" title="class in com.atlan.model.search">FluentSearch.FluentSearchBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#select(boolean)">select</a></span>&#8203;(boolean&nbsp;includeArchived)</code></th>
 <td class="colLast">
 <div class="block">Start a fluent search that will return all TableauWorksheet assets.</div>
 </td>
 </tr>
-<tr id="i61" class="rowColor">
+<tr id="i63" class="rowColor">
 <td class="colFirst"><code>static <a href="../search/FluentSearch.FluentSearchBuilder.html" title="class in com.atlan.model.search">FluentSearch.FluentSearchBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#select(com.atlan.AtlanClient)">select</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)</code></th>
 <td class="colLast">
 <div class="block">Start a fluent search that will return all TableauWorksheet assets.</div>
 </td>
 </tr>
-<tr id="i62" class="altColor">
+<tr id="i64" class="altColor">
 <td class="colFirst"><code>static <a href="../search/FluentSearch.FluentSearchBuilder.html" title="class in com.atlan.model.search">FluentSearch.FluentSearchBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#select(com.atlan.AtlanClient,boolean)">select</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
       boolean&nbsp;includeArchived)</code></th>
@@ -815,16 +831,16 @@ implements <a href="ITableauWorksheet.html" title="interface in com.atlan.model.
 <div class="block">Start a fluent search that will return all TableauWorksheet assets.</div>
 </td>
 </tr>
-<tr id="i63" class="rowColor">
+<tr id="i65" class="rowColor">
 <td class="colFirst"><code><a href="TableauWorksheet.TableauWorksheetBuilder.html" title="class in com.atlan.model.assets">TableauWorksheet.TableauWorksheetBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toBuilder()">toBuilder</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i64" class="altColor">
+<tr id="i66" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 </tr>
-<tr id="i65" class="rowColor">
+<tr id="i67" class="rowColor">
 <td class="colFirst"><code><a href="TableauWorksheet.html" title="class in com.atlan.model.assets">TableauWorksheet</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#trimToReference()">trimToReference</a></span>()</code></th>
 <td class="colLast">
@@ -832,7 +848,7 @@ implements <a href="ITableauWorksheet.html" title="interface in com.atlan.model.
  more-complete TableauWorksheet object.</div>
 </td>
 </tr>
-<tr id="i66" class="altColor">
+<tr id="i68" class="altColor">
 <td class="colFirst"><code><a href="TableauWorksheet.TableauWorksheetBuilder.html" title="class in com.atlan.model.assets">TableauWorksheet.TableauWorksheetBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#trimToRequired()">trimToRequired</a></span>()</code></th>
 <td class="colLast">
@@ -840,7 +856,7 @@ implements <a href="ITableauWorksheet.html" title="interface in com.atlan.model.
  more-complete TableauWorksheet object.</div>
 </td>
 </tr>
-<tr id="i67" class="rowColor">
+<tr id="i69" class="rowColor">
 <td class="colFirst"><code>static <a href="TableauWorksheet.html" title="class in com.atlan.model.assets">TableauWorksheet</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateAnnouncement(com.atlan.AtlanClient,java.lang.String,com.atlan.model.enums.AtlanAnnouncementType,java.lang.String,java.lang.String)">updateAnnouncement</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
                   java.lang.String&nbsp;qualifiedName,
@@ -851,7 +867,7 @@ implements <a href="ITableauWorksheet.html" title="interface in com.atlan.model.
 <div class="block">Update the announcement on a TableauWorksheet.</div>
 </td>
 </tr>
-<tr id="i68" class="altColor">
+<tr id="i70" class="altColor">
 <td class="colFirst"><code>static <a href="TableauWorksheet.html" title="class in com.atlan.model.assets">TableauWorksheet</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateAnnouncement(java.lang.String,com.atlan.model.enums.AtlanAnnouncementType,java.lang.String,java.lang.String)">updateAnnouncement</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                   <a href="../enums/AtlanAnnouncementType.html" title="enum in com.atlan.model.enums">AtlanAnnouncementType</a>&nbsp;type,
@@ -861,7 +877,7 @@ implements <a href="ITableauWorksheet.html" title="interface in com.atlan.model.
 <div class="block">Update the announcement on a TableauWorksheet.</div>
 </td>
 </tr>
-<tr id="i69" class="rowColor">
+<tr id="i71" class="rowColor">
 <td class="colFirst"><code>static <a href="TableauWorksheet.html" title="class in com.atlan.model.assets">TableauWorksheet</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateCertificate(com.atlan.AtlanClient,java.lang.String,com.atlan.model.enums.CertificateStatus,java.lang.String)">updateCertificate</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
                  java.lang.String&nbsp;qualifiedName,
@@ -871,7 +887,7 @@ implements <a href="ITableauWorksheet.html" title="interface in com.atlan.model.
 <div class="block">Update the certificate on a TableauWorksheet.</div>
 </td>
 </tr>
-<tr id="i70" class="altColor">
+<tr id="i72" class="altColor">
 <td class="colFirst"><code>static <a href="TableauWorksheet.html" title="class in com.atlan.model.assets">TableauWorksheet</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateCertificate(java.lang.String,com.atlan.model.enums.CertificateStatus,java.lang.String)">updateCertificate</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                  <a href="../enums/CertificateStatus.html" title="enum in com.atlan.model.enums">CertificateStatus</a>&nbsp;certificate,
@@ -880,7 +896,7 @@ implements <a href="ITableauWorksheet.html" title="interface in com.atlan.model.
 <div class="block">Update the certificate on a TableauWorksheet.</div>
 </td>
 </tr>
-<tr id="i71" class="rowColor">
+<tr id="i73" class="rowColor">
 <td class="colFirst"><code>static <a href="TableauWorksheet.TableauWorksheetBuilder.html" title="class in com.atlan.model.assets">TableauWorksheet.TableauWorksheetBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updater(java.lang.String,java.lang.String)">updater</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
        java.lang.String&nbsp;name)</code></th>
@@ -901,7 +917,7 @@ implements <a href="ITableauWorksheet.html" title="interface in com.atlan.model.
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;com.atlan.model.relations.<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a></h3>
-<code><a href="../relations/Reference.html#builder()">builder</a>, <a href="../relations/Reference.html#by(java.lang.String,java.lang.String)">by</a>, <a href="../relations/Reference.html#compareTo(com.atlan.model.relations.Reference)">compareTo</a>, <a href="../relations/Reference.html#getCompleteObject()">getCompleteObject</a>, <a href="../relations/Reference.html#getDisplayText()">getDisplayText</a>, <a href="../relations/Reference.html#getEntityStatus()">getEntityStatus</a>, <a href="../relations/Reference.html#getGuid()">getGuid</a>, <a href="../relations/Reference.html#getRelationshipAttributes()">getRelationshipAttributes</a>, <a href="../relations/Reference.html#getRelationshipGuid()">getRelationshipGuid</a>, <a href="../relations/Reference.html#getRelationshipStatus()">getRelationshipStatus</a>, <a href="../relations/Reference.html#getRelationshipType()">getRelationshipType</a>, <a href="../relations/Reference.html#getUniqueAttributes()">getUniqueAttributes</a>, <a href="../relations/Reference.html#isComplete()">isComplete</a>, <a href="../relations/Reference.html#isValidReference()">isValidReference</a>, <a href="../relations/Reference.html#isValidReferenceByGuid()">isValidReferenceByGuid</a>, <a href="../relations/Reference.html#isValidReferenceByQualifiedName()">isValidReferenceByQualifiedName</a>, <a href="../relations/Reference.html#setCompleteObject()">setCompleteObject</a>, <a href="../relations/Reference.html#to(java.lang.String,java.lang.String)">to</a></code></li>
+<code><a href="../relations/Reference.html#builder()">builder</a>, <a href="../relations/Reference.html#by(java.lang.String,java.lang.String)">by</a>, <a href="../relations/Reference.html#compareTo(com.atlan.model.relations.Reference)">compareTo</a>, <a href="../relations/Reference.html#getCompleteObject()">getCompleteObject</a>, <a href="../relations/Reference.html#getDisplayText()">getDisplayText</a>, <a href="../relations/Reference.html#getEntityStatus()">getEntityStatus</a>, <a href="../relations/Reference.html#getGuid()">getGuid</a>, <a href="../relations/Reference.html#getRelationshipAttributes()">getRelationshipAttributes</a>, <a href="../relations/Reference.html#getRelationshipGuid()">getRelationshipGuid</a>, <a href="../relations/Reference.html#getRelationshipStatus()">getRelationshipStatus</a>, <a href="../relations/Reference.html#getRelationshipType()">getRelationshipType</a>, <a href="../relations/Reference.html#getSemantic()">getSemantic</a>, <a href="../relations/Reference.html#getUniqueAttributes()">getUniqueAttributes</a>, <a href="../relations/Reference.html#isComplete()">isComplete</a>, <a href="../relations/Reference.html#isValidReference()">isValidReference</a>, <a href="../relations/Reference.html#isValidReferenceByGuid()">isValidReferenceByGuid</a>, <a href="../relations/Reference.html#isValidReferenceByQualifiedName()">isValidReferenceByQualifiedName</a>, <a href="../relations/Reference.html#setCompleteObject()">setCompleteObject</a>, <a href="../relations/Reference.html#to(java.lang.String,java.lang.String)">to</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.com.atlan.model.core.AtlanObject">
@@ -1212,10 +1228,31 @@ public static&nbsp;<a href="../core/AssetFilter.AssetFilterBuilder.html" title="
 <li class="blockList">
 <h4>refByGuid</h4>
 <pre class="methodSignature">public static&nbsp;<a href="TableauWorksheet.html" title="class in com.atlan.model.assets">TableauWorksheet</a>&nbsp;refByGuid&#8203;(java.lang.String&nbsp;guid)</pre>
-<div class="block">Reference to a TableauWorksheet by GUID.</div>
+<div class="block">Reference to a TableauWorksheet by GUID. Use this to create a relationship to this TableauWorksheet,
+ where the relationship should be replaced.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>guid</code> - the GUID of the TableauWorksheet to reference</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>reference to a TableauWorksheet that can be used for defining a relationship to a TableauWorksheet</dd>
+</dl>
+</li>
+</ul>
+<a id="refByGuid(java.lang.String,com.atlan.model.relations.Reference.SaveSemantic)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>refByGuid</h4>
+<pre class="methodSignature">public static&nbsp;<a href="TableauWorksheet.html" title="class in com.atlan.model.assets">TableauWorksheet</a>&nbsp;refByGuid&#8203;(java.lang.String&nbsp;guid,
+                                         <a href="../relations/Reference.SaveSemantic.html" title="enum in com.atlan.model.relations">Reference.SaveSemantic</a>&nbsp;semantic)</pre>
+<div class="block">Reference to a TableauWorksheet by GUID. Use this to create a relationship to this TableauWorksheet,
+ where you want to further control how that relationship should be updated (i.e. replaced,
+ appended, or removed).</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>guid</code> - the GUID of the TableauWorksheet to reference</dd>
+<dd><code>semantic</code> - how to save this relationship (replace all with this, append it, or remove it)</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>reference to a TableauWorksheet that can be used for defining a relationship to a TableauWorksheet</dd>
 </dl>
@@ -1228,10 +1265,31 @@ public static&nbsp;<a href="../core/AssetFilter.AssetFilterBuilder.html" title="
 <li class="blockList">
 <h4>refByQualifiedName</h4>
 <pre class="methodSignature">public static&nbsp;<a href="TableauWorksheet.html" title="class in com.atlan.model.assets">TableauWorksheet</a>&nbsp;refByQualifiedName&#8203;(java.lang.String&nbsp;qualifiedName)</pre>
-<div class="block">Reference to a TableauWorksheet by qualifiedName.</div>
+<div class="block">Reference to a TableauWorksheet by qualifiedName. Use this to create a relationship to this TableauWorksheet,
+ where the relationship should be replaced.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>qualifiedName</code> - the qualifiedName of the TableauWorksheet to reference</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>reference to a TableauWorksheet that can be used for defining a relationship to a TableauWorksheet</dd>
+</dl>
+</li>
+</ul>
+<a id="refByQualifiedName(java.lang.String,com.atlan.model.relations.Reference.SaveSemantic)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>refByQualifiedName</h4>
+<pre class="methodSignature">public static&nbsp;<a href="TableauWorksheet.html" title="class in com.atlan.model.assets">TableauWorksheet</a>&nbsp;refByQualifiedName&#8203;(java.lang.String&nbsp;qualifiedName,
+                                                  <a href="../relations/Reference.SaveSemantic.html" title="enum in com.atlan.model.relations">Reference.SaveSemantic</a>&nbsp;semantic)</pre>
+<div class="block">Reference to a TableauWorksheet by qualifiedName. Use this to create a relationship to this TableauWorksheet,
+ where you want to further control how that relationship should be updated (i.e. replaced,
+ appended, or removed).</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>qualifiedName</code> - the qualifiedName of the TableauWorksheet to reference</dd>
+<dd><code>semantic</code> - how to save this relationship (replace all with this, append it, or remove it)</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>reference to a TableauWorksheet that can be used for defining a relationship to a TableauWorksheet</dd>
 </dl>
