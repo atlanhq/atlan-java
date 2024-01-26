@@ -660,7 +660,14 @@ public class CustomMetadataTest extends AtlanLiveTest {
                 .clearAttributeDefs()
                 .attributeDefs(updatedAttrs)
                 .build();
-        CustomMetadataDef updated = existing.update();
+        AtlanClient client = Atlan.getDefaultClient();
+        TypeDefResponse typeDefResponse = client.typeDefs.update(
+                existing,
+                RequestOptions.from(client).maxNetworkRetries(MAX_CM_RETRIES).build());
+        assertNotNull(typeDefResponse);
+        assertNotNull(typeDefResponse.getCustomMetadataDefs());
+        assertEquals(typeDefResponse.getCustomMetadataDefs().size(), 1);
+        CustomMetadataDef updated = typeDefResponse.getCustomMetadataDefs().get(0);
         assertNotNull(updated);
         assertEquals(updated.getCategory(), AtlanTypeCategory.CUSTOM_METADATA);
         assertNotNull(updated.getName());
@@ -724,7 +731,14 @@ public class CustomMetadataTest extends AtlanLiveTest {
                 .clearAttributeDefs()
                 .attributeDefs(updatedAttrs)
                 .build();
-        CustomMetadataDef updated = existing.update();
+        AtlanClient client = Atlan.getDefaultClient();
+        TypeDefResponse typeDefResponse = client.typeDefs.create(
+                existing,
+                RequestOptions.from(client).maxNetworkRetries(MAX_CM_RETRIES).build());
+        assertNotNull(typeDefResponse);
+        assertNotNull(typeDefResponse.getCustomMetadataDefs());
+        assertEquals(typeDefResponse.getCustomMetadataDefs().size(), 1);
+        CustomMetadataDef updated = typeDefResponse.getCustomMetadataDefs().get(0);
         assertNotNull(updated);
         assertEquals(updated.getCategory(), AtlanTypeCategory.CUSTOM_METADATA);
         assertNotNull(updated.getName());
