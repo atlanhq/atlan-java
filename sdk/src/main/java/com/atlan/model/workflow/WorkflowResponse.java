@@ -123,10 +123,14 @@ public class WorkflowResponse extends ApiResource {
      * until the workflow is actually stopped.
      *
      * @throws AtlanException on any API errors stopping the workflow run
-     * @return the result of the stop command
+     * @return the result of the stop command, or null if there was no running workflow to stop
      */
     public WorkflowRunResponse stop() throws AtlanException {
-        return client.workflows.stop(getMetadata().getName(), null);
+        WorkflowSearchResult latest = getRunDetails(getMetadata().getName());
+        if (latest != null && latest.get_id() != null) {
+            return client.workflows.stop(latest.get_id(), null);
+        }
+        return null;
     }
 
     /**

@@ -105,8 +105,6 @@ public class ConnectionTest extends AtlanLiveTest {
                     ConnectionDelete.creator(qualifiedName, true).build().toWorkflow();
             WorkflowResponse response = deleteWorkflow.run(client);
             assertNotNull(response);
-            String workflowTemplateName =
-                    response.getSpec().getWorkflowTemplateRef().get("name");
             // If we get here we've succeeded in running, so we'll reset our retry counter
             retryCount.set(0);
             AtlanWorkflowPhase state = response.monitorStatus(log, Level.INFO, 420L);
@@ -115,12 +113,15 @@ public class ConnectionTest extends AtlanLiveTest {
                 // If still running after 7 minutes, stop it (so it can then be archived)
                 log.warn("Stopping hung workflow...");
                 response = response.stop();
+                String workflowTemplateName =
+                        response.getSpec().getWorkflowTemplateRef().get("name");
                 state = response.monitorStatus(log, Level.INFO, 90L);
                 assertEquals(state, AtlanWorkflowPhase.FAILED); // Status for stop is FAILED
+                client.workflows.archive(workflowTemplateName);
             } else {
                 assertEquals(state, AtlanWorkflowPhase.SUCCESS);
+                client.workflows.archive(response.getMetadata().getName());
             }
-            client.workflows.archive(workflowTemplateName);
         } catch (InvalidRequestException e) {
             // Can happen if two deletion workflows are run at the same time,
             // in which case we should wait a few seconds and try again
