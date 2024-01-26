@@ -224,17 +224,18 @@ abstract class PackageTest {
                     val deleteWorkflow = ConnectionDelete.creator(it.qualifiedName, true).build().toWorkflow()
                     var response = deleteWorkflow.run(client)
                     assertNotNull(response)
-                    val workflowName = response.metadata.name
                     var state = response.monitorStatus(logger, Level.INFO, 420L)
                     assertNotNull(state)
-                    if (state == AtlanWorkflowPhase.RUNNING) {
+                    val workflowName = if (state == AtlanWorkflowPhase.RUNNING) {
                         // If still running after 7 minutes, stop it (so it can then be archived)
                         logger?.warn { "Stopping hung workflow..." }
                         response = response.stop()
                         state = response.monitorStatus(logger, Level.INFO, 60L)
                         assertEquals(state, AtlanWorkflowPhase.FAILED)
+                        response.spec.workflowTemplateRef["name"]
                     } else {
                         assertEquals(state, AtlanWorkflowPhase.SUCCESS)
+                        response.metadata.name
                     }
                     client.workflows.archive(workflowName)
                 }
