@@ -20,7 +20,13 @@ object Exporter {
         val assetsExportScope = Utils.getOrDefault(config.exportScope, "ENRICHED_ONLY")
         val assetsQualifiedNamePrefix = Utils.getOrDefault(config.qnPrefix, "default")
         val includeDescription = Utils.getOrDefault(config.includeDescription, true)
+        val emails = Utils.getOrDefault(config.emailAddresses, "")
+            .split(',')
+            .map { it.trim() }
+            .filter { it.isNotBlank() }
+            .toList()
 
+        val exportedFiles = mutableListOf<File>()
         val glossaryFile = "$outputDirectory${File.separator}glossary-export.csv"
         if ("GLOSSARIES_ONLY" == assetsExportScope || Utils.getOrDefault(config.includeGlossaries, false)) {
             val glossaryExporter = GlossaryExporter(
@@ -28,6 +34,7 @@ object Exporter {
                 batchSize,
             )
             glossaryExporter.export()
+            exportedFiles.add(File(glossaryFile))
         } else {
             // Still create an (empty) output file, to avoid errors in Argo
             File(glossaryFile).createNewFile()
@@ -42,9 +49,19 @@ object Exporter {
                 includeDescription,
             )
             assetExporter.export()
+            exportedFiles.add(File(assetsFile))
         } else {
             // Still create an (empty) output file, to avoid errors in Argo
             File(assetsFile).createNewFile()
+        }
+
+        if (emails.isNotEmpty()) {
+            Utils.sendEmail(
+                "[Atlan] Asset Export (basic) results",
+                emails,
+                "Hi there! As requested, please find attached the results of the Asset Export (basic) package.\n\nAll the best!\nAtlan",
+                exportedFiles,
+            )
         }
     }
 }

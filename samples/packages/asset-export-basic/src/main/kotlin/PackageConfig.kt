@@ -57,6 +57,18 @@ object PackageConfig : CustomPackage(
                     ),
                 ),
             ),
+            UIStep(
+                title = "Delivery",
+                description = "Where to send",
+                inputs = mapOf(
+                    "email_addresses" to TextInput(
+                        label = "Email address(es)",
+                        help = "Provide any email addresses you want the extract sent to, separated by commas.",
+                        required = false,
+                        placeholder = "one@example.com,two@example.com",
+                    ),
+                ),
+            ),
         ),
         rules = listOf(
             UIRule(
