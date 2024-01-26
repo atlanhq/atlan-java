@@ -68,7 +68,7 @@ public class EnumDef extends TypeDef {
      * @return the result of the creation, or null if the creation failed
      * @throws AtlanException on any API communication issues
      */
-    public EnumDef create() throws AtlanException {
+    public synchronized EnumDef create() throws AtlanException {
         return create(Atlan.getDefaultClient());
     }
 
@@ -79,7 +79,7 @@ public class EnumDef extends TypeDef {
      * @return the result of the creation, or null if the creation failed
      * @throws AtlanException on any API communication issues
      */
-    public EnumDef create(AtlanClient client) throws AtlanException {
+    public synchronized EnumDef create(AtlanClient client) throws AtlanException {
         TypeDefResponse response = client.typeDefs.create(this);
         if (response != null && !response.getEnumDefs().isEmpty()) {
             return response.getEnumDefs().get(0);
@@ -94,7 +94,7 @@ public class EnumDef extends TypeDef {
      * @param displayName human-readable name of the enumeration
      * @throws AtlanException on any error during the API invocation
      */
-    public static void purge(String displayName) throws AtlanException {
+    public static synchronized void purge(String displayName) throws AtlanException {
         purge(Atlan.getDefaultClient(), displayName);
     }
 
@@ -106,7 +106,7 @@ public class EnumDef extends TypeDef {
      * @param displayName human-readable name of the enumeration
      * @throws AtlanException on any error during the API invocation
      */
-    public static void purge(AtlanClient client, String displayName) throws AtlanException {
+    public static synchronized void purge(AtlanClient client, String displayName) throws AtlanException {
         client.typeDefs.purge(displayName);
     }
 

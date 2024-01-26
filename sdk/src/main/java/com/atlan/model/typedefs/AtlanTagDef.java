@@ -124,7 +124,7 @@ public class AtlanTagDef extends TypeDef {
      * @return the result of the creation, or null if the creation failed
      * @throws AtlanException on any API communication issues
      */
-    public AtlanTagDef create(AtlanClient client) throws AtlanException {
+    public synchronized AtlanTagDef create(AtlanClient client) throws AtlanException {
         TypeDefResponse response = client.typeDefs.create(this);
         if (response != null && !response.getAtlanTagDefs().isEmpty()) {
             return response.getAtlanTagDefs().get(0);
@@ -139,7 +139,7 @@ public class AtlanTagDef extends TypeDef {
      * @param displayName human-readable name of the Atlan tag
      * @throws AtlanException on any error during the API invocation
      */
-    public static void purge(String displayName) throws AtlanException {
+    public static synchronized void purge(String displayName) throws AtlanException {
         purge(Atlan.getDefaultClient(), displayName);
     }
 
@@ -152,7 +152,7 @@ public class AtlanTagDef extends TypeDef {
      * @param client connectivity to an Atlan tenant
      * @throws AtlanException on any error during the API invocation
      */
-    public static void purge(AtlanClient client, String displayName) throws AtlanException {
+    public static synchronized void purge(AtlanClient client, String displayName) throws AtlanException {
         String internalName = client.getAtlanTagCache().getIdForName(displayName);
         client.typeDefs.purge(internalName);
     }
