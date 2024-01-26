@@ -237,7 +237,11 @@ object Utils {
      * @return the actual value or a default, if the actual is null or empty
      */
     fun getOrDefault(configValue: Number?, default: Number): Number {
-        return configValue ?: default
+        return if (configValue == null || configValue == -1) {
+            default
+        } else {
+            configValue
+        }
     }
 
     /**
