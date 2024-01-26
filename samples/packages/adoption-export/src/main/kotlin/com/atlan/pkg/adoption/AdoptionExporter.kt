@@ -44,7 +44,8 @@ object AdoptionExporter {
             }
             if (includeSearches) {
                 val maxSearches = Utils.getOrDefault(config.maximumSearches, 50)
-                TODO("Export searches")
+                logger.error { "Search export is not yet implemented -- coming soon." }
+                // TODO: implement exports of searches
             }
         }
 
