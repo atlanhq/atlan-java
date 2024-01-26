@@ -68,8 +68,9 @@ public class AtlanTagTest extends AtlanLiveTest {
      */
     static void deleteAtlanTag(String name) throws AtlanException {
         AtlanClient client = Atlan.getDefaultClient();
+        String internalName = client.getAtlanTagCache().getIdForName(name);
         client.typeDefs.purge(
-                name,
+                internalName,
                 RequestOptions.from(client).maxNetworkRetries(MAX_TAG_RETRIES).build());
     }
 
