@@ -5,6 +5,7 @@ package com.atlan.java.sdk;
 import static org.testng.Assert.*;
 
 import com.atlan.Atlan;
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.admin.AtlanGroup;
@@ -17,6 +18,7 @@ import com.atlan.model.search.*;
 import com.atlan.model.structs.BadgeCondition;
 import com.atlan.model.typedefs.*;
 import com.atlan.net.HttpClient;
+import com.atlan.net.RequestOptions;
 import java.util.*;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.Test;
@@ -27,6 +29,7 @@ import org.testng.annotations.Test;
 @Slf4j
 public class CustomMetadataTest extends AtlanLiveTest {
 
+    private static final int MAX_CM_RETRIES = 30;
     private static final String PREFIX = makeUnique("CM");
 
     private static final String CM_RACI = makeUnique("RACI");
@@ -78,7 +81,14 @@ public class CustomMetadataTest extends AtlanLiveTest {
                 .attributeDef(AttributeDef.of(CM_ATTR_IPR_URL, AtlanCustomAttributePrimitiveType.URL, null, false))
                 .options(CustomMetadataOptions.withEmoji("⚖️", true))
                 .build();
-        CustomMetadataDef response = customMetadataDef.create();
+        AtlanClient client = Atlan.getDefaultClient();
+        TypeDefResponse typeDefResponse = client.typeDefs.create(
+                customMetadataDef,
+                RequestOptions.from(client).maxNetworkRetries(MAX_CM_RETRIES).build());
+        assertNotNull(typeDefResponse);
+        assertNotNull(typeDefResponse.getCustomMetadataDefs());
+        assertEquals(typeDefResponse.getCustomMetadataDefs().size(), 1);
+        CustomMetadataDef response = typeDefResponse.getCustomMetadataDefs().get(0);
         assertNotNull(response);
         assertEquals(response.getCategory(), AtlanTypeCategory.CUSTOM_METADATA);
         assertNotNull(response.getName());
@@ -141,7 +151,14 @@ public class CustomMetadataTest extends AtlanLiveTest {
                         AttributeDef.of(CM_ATTR_RACI_EXTRA, AtlanCustomAttributePrimitiveType.STRING, null, false))
                 .options(CustomMetadataOptions.withIcon(AtlanIcon.USERS_THREE, AtlanTagColor.GRAY))
                 .build();
-        CustomMetadataDef response = customMetadataDef.create();
+        AtlanClient client = Atlan.getDefaultClient();
+        TypeDefResponse typeDefResponse = client.typeDefs.create(
+                customMetadataDef,
+                RequestOptions.from(client).maxNetworkRetries(MAX_CM_RETRIES).build());
+        assertNotNull(typeDefResponse);
+        assertNotNull(typeDefResponse.getCustomMetadataDefs());
+        assertEquals(typeDefResponse.getCustomMetadataDefs().size(), 1);
+        CustomMetadataDef response = typeDefResponse.getCustomMetadataDefs().get(0);
         assertNotNull(response);
         assertEquals(response.getCategory(), AtlanTypeCategory.CUSTOM_METADATA);
         assertNotNull(response.getName());
@@ -196,7 +213,14 @@ public class CustomMetadataTest extends AtlanLiveTest {
     @Test(groups = {"cm.create.cm.dq"})
     void createCustomMetadataDQ() throws AtlanException {
         EnumDef enumDef = EnumDef.creator(CM_ENUM_DQ_TYPE, DQ_TYPE_LIST).build();
-        EnumDef resp = enumDef.create();
+        AtlanClient client = Atlan.getDefaultClient();
+        TypeDefResponse typeDefResponse = client.typeDefs.create(
+                enumDef,
+                RequestOptions.from(client).maxNetworkRetries(MAX_CM_RETRIES).build());
+        assertNotNull(typeDefResponse);
+        assertNotNull(typeDefResponse.getEnumDefs());
+        assertEquals(typeDefResponse.getEnumDefs().size(), 1);
+        EnumDef resp = typeDefResponse.getEnumDefs().get(0);
         assertNotNull(resp);
         assertEquals(resp.getCategory(), AtlanTypeCategory.ENUM);
         assertNotNull(resp.getName());
@@ -215,7 +239,13 @@ public class CustomMetadataTest extends AtlanLiveTest {
                         "https://github.com/great-expectations/great_expectations/raw/develop/docs/docusaurus/static/img/gx-mark-160.png",
                         true))
                 .build();
-        CustomMetadataDef response = customMetadataDef.create();
+        typeDefResponse = client.typeDefs.create(
+                customMetadataDef,
+                RequestOptions.from(client).maxNetworkRetries(MAX_CM_RETRIES).build());
+        assertNotNull(typeDefResponse);
+        assertNotNull(typeDefResponse.getCustomMetadataDefs());
+        assertEquals(typeDefResponse.getCustomMetadataDefs().size(), 1);
+        CustomMetadataDef response = typeDefResponse.getCustomMetadataDefs().get(0);
         assertNotNull(response);
         assertEquals(response.getCategory(), AtlanTypeCategory.CUSTOM_METADATA);
         assertNotNull(response.getName());
@@ -630,7 +660,14 @@ public class CustomMetadataTest extends AtlanLiveTest {
                 .clearAttributeDefs()
                 .attributeDefs(updatedAttrs)
                 .build();
-        CustomMetadataDef updated = existing.update();
+        AtlanClient client = Atlan.getDefaultClient();
+        TypeDefResponse typeDefResponse = client.typeDefs.update(
+                existing,
+                RequestOptions.from(client).maxNetworkRetries(MAX_CM_RETRIES).build());
+        assertNotNull(typeDefResponse);
+        assertNotNull(typeDefResponse.getCustomMetadataDefs());
+        assertEquals(typeDefResponse.getCustomMetadataDefs().size(), 1);
+        CustomMetadataDef updated = typeDefResponse.getCustomMetadataDefs().get(0);
         assertNotNull(updated);
         assertEquals(updated.getCategory(), AtlanTypeCategory.CUSTOM_METADATA);
         assertNotNull(updated.getName());
@@ -694,7 +731,14 @@ public class CustomMetadataTest extends AtlanLiveTest {
                 .clearAttributeDefs()
                 .attributeDefs(updatedAttrs)
                 .build();
-        CustomMetadataDef updated = existing.update();
+        AtlanClient client = Atlan.getDefaultClient();
+        TypeDefResponse typeDefResponse = client.typeDefs.create(
+                existing,
+                RequestOptions.from(client).maxNetworkRetries(MAX_CM_RETRIES).build());
+        assertNotNull(typeDefResponse);
+        assertNotNull(typeDefResponse.getCustomMetadataDefs());
+        assertEquals(typeDefResponse.getCustomMetadataDefs().size(), 1);
+        CustomMetadataDef updated = typeDefResponse.getCustomMetadataDefs().get(0);
         assertNotNull(updated);
         assertEquals(updated.getCategory(), AtlanTypeCategory.CUSTOM_METADATA);
         assertNotNull(updated.getName());

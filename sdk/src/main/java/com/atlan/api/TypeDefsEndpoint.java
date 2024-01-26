@@ -137,7 +137,7 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
      * @return the resulting type definition that was created
      * @throws AtlanException on any API communication issue
      */
-    public TypeDefResponse create(TypeDef typeDef) throws AtlanException {
+    public synchronized TypeDefResponse create(TypeDef typeDef) throws AtlanException {
         return create(typeDef, null);
     }
 
@@ -151,7 +151,7 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
      * @return the resulting type definition that was created
      * @throws AtlanException on any API communication issue
      */
-    public TypeDefResponse create(TypeDef typeDef, RequestOptions options) throws AtlanException {
+    public synchronized TypeDefResponse create(TypeDef typeDef, RequestOptions options) throws AtlanException {
         return create(List.of(typeDef), options);
     }
 
@@ -164,7 +164,7 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
      * @return the resulting type definition that was created
      * @throws AtlanException on any API communication issue
      */
-    public TypeDefResponse create(List<TypeDef> typeDefs) throws AtlanException {
+    public synchronized TypeDefResponse create(List<TypeDef> typeDefs) throws AtlanException {
         return create(typeDefs, null);
     }
 
@@ -178,7 +178,7 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
      * @return the resulting type definition that was created
      * @throws AtlanException on any API communication issue
      */
-    public TypeDefResponse create(List<TypeDef> typeDefs, RequestOptions options) throws AtlanException {
+    public synchronized TypeDefResponse create(List<TypeDef> typeDefs, RequestOptions options) throws AtlanException {
         TypeDefResponse response = null;
         if (typeDefs != null) {
             for (TypeDef typeDef : typeDefs) {
@@ -209,7 +209,7 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
      * @throws AtlanException on any API communication issue
      * @see #create(TypeDef)
      */
-    public TypeDefResponse _create(TypeDef typeDef) throws AtlanException {
+    public synchronized TypeDefResponse _create(TypeDef typeDef) throws AtlanException {
         return _create(typeDef, null);
     }
 
@@ -224,7 +224,7 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
      * @throws AtlanException on any API communication issue
      * @see #create(TypeDef)
      */
-    public TypeDefResponse _create(TypeDef typeDef, RequestOptions options) throws AtlanException {
+    public synchronized TypeDefResponse _create(TypeDef typeDef, RequestOptions options) throws AtlanException {
         return _create(List.of(typeDef), options);
     }
 
@@ -238,7 +238,7 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
      * @throws AtlanException on any API communication issue
      * @see #create(TypeDef)
      */
-    public TypeDefResponse _create(List<TypeDef> typeDefs) throws AtlanException {
+    public synchronized TypeDefResponse _create(List<TypeDef> typeDefs) throws AtlanException {
         return _create(typeDefs, null);
     }
 
@@ -253,7 +253,7 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
      * @throws AtlanException on any API communication issue
      * @see #create(TypeDef)
      */
-    public TypeDefResponse _create(List<TypeDef> typeDefs, RequestOptions options) throws AtlanException {
+    public synchronized TypeDefResponse _create(List<TypeDef> typeDefs, RequestOptions options) throws AtlanException {
         TypeDefResponse.TypeDefResponseBuilder builder = TypeDefResponse.builder();
         if (typeDefs != null) {
             for (TypeDef typeDef : typeDefs) {
@@ -300,7 +300,7 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
         return builder.build();
     }
 
-    private TypeDefResponse _create(TypeDefResponse.TypeDefResponseBuilder builder, RequestOptions options)
+    private synchronized TypeDefResponse _create(TypeDefResponse.TypeDefResponseBuilder builder, RequestOptions options)
             throws AtlanException {
         String url = String.format("%s%s", getBaseUrl(), endpoint);
         return ApiResource.request(
@@ -316,7 +316,7 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
      * @return the resulting type definition that was updated
      * @throws AtlanException on any API communication issue
      */
-    public TypeDefResponse update(TypeDef typeDef) throws AtlanException {
+    public synchronized TypeDefResponse update(TypeDef typeDef) throws AtlanException {
         return update(typeDef, null);
     }
 
@@ -330,7 +330,7 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
      * @return the resulting type definition that was updated
      * @throws AtlanException on any API communication issue
      */
-    public TypeDefResponse update(TypeDef typeDef, RequestOptions options) throws AtlanException {
+    public synchronized TypeDefResponse update(TypeDef typeDef, RequestOptions options) throws AtlanException {
         TypeDefResponse response = null;
         if (typeDef != null) {
             switch (typeDef.getCategory()) {
@@ -357,7 +357,7 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
      * @return the resulting type definition that was updated
      * @throws AtlanException on any API communication issue
      */
-    public TypeDefResponse _update(TypeDef typeDef) throws AtlanException {
+    public synchronized TypeDefResponse _update(TypeDef typeDef) throws AtlanException {
         return _update(typeDef, null);
     }
 
@@ -371,7 +371,7 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
      * @return the resulting type definition that was updated
      * @throws AtlanException on any API communication issue
      */
-    public TypeDefResponse _update(TypeDef typeDef, RequestOptions options) throws AtlanException {
+    public synchronized TypeDefResponse _update(TypeDef typeDef, RequestOptions options) throws AtlanException {
         TypeDefResponse.TypeDefResponseBuilder builder = TypeDefResponse.builder();
         if (typeDef != null) {
             String serviceType = typeDef.getServiceType();
@@ -415,7 +415,7 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
         return builder.build();
     }
 
-    private TypeDefResponse _update(TypeDefResponse.TypeDefResponseBuilder builder, RequestOptions options)
+    private synchronized TypeDefResponse _update(TypeDefResponse.TypeDefResponseBuilder builder, RequestOptions options)
             throws AtlanException {
         String url = String.format("%s%s", getBaseUrl(), endpoint);
         return ApiResource.request(
@@ -429,7 +429,7 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
      * @param internalName the internal hashed-string name of the type definition
      * @throws AtlanException on any API communication issue
      */
-    public void purge(String internalName) throws AtlanException {
+    public synchronized void purge(String internalName) throws AtlanException {
         purge(internalName, null);
     }
 
@@ -441,7 +441,7 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
      * @param options to override default client settings
      * @throws AtlanException on any API communication issue
      */
-    public void purge(String internalName, RequestOptions options) throws AtlanException {
+    public synchronized void purge(String internalName, RequestOptions options) throws AtlanException {
         TypeDef typeDef = get(internalName);
         String serviceType = typeDef.getServiceType();
         if (serviceType != null && RESERVED_SERVICE_TYPES.contains(serviceType)) {

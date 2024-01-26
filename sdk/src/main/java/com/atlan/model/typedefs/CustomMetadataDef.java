@@ -49,7 +49,7 @@ public class CustomMetadataDef extends TypeDef {
      * @return the result of the creation, or null if the creation failed
      * @throws AtlanException on any API communication issues
      */
-    public CustomMetadataDef create() throws AtlanException {
+    public synchronized CustomMetadataDef create() throws AtlanException {
         return create(Atlan.getDefaultClient());
     }
 
@@ -60,7 +60,7 @@ public class CustomMetadataDef extends TypeDef {
      * @return the result of the creation, or null if the creation failed
      * @throws AtlanException on any API communication issues
      */
-    public CustomMetadataDef create(AtlanClient client) throws AtlanException {
+    public synchronized CustomMetadataDef create(AtlanClient client) throws AtlanException {
         TypeDefResponse response = client.typeDefs.create(this);
         if (response != null && !response.getCustomMetadataDefs().isEmpty()) {
             return response.getCustomMetadataDefs().get(0);
@@ -76,7 +76,7 @@ public class CustomMetadataDef extends TypeDef {
      * @return the result of the update, or null if the update failed
      * @throws AtlanException on any API communication issues
      */
-    public CustomMetadataDef update() throws AtlanException {
+    public synchronized CustomMetadataDef update() throws AtlanException {
         return update(Atlan.getDefaultClient());
     }
 
@@ -104,7 +104,7 @@ public class CustomMetadataDef extends TypeDef {
      * @param displayName human-readable name of the custom metadata definition
      * @throws AtlanException on any error during the API invocation
      */
-    public static void purge(String displayName) throws AtlanException {
+    public static synchronized void purge(String displayName) throws AtlanException {
         purge(Atlan.getDefaultClient(), displayName);
     }
 
@@ -116,7 +116,7 @@ public class CustomMetadataDef extends TypeDef {
      * @param displayName human-readable name of the custom metadata definition
      * @throws AtlanException on any error during the API invocation
      */
-    public static void purge(AtlanClient client, String displayName) throws AtlanException {
+    public static synchronized void purge(AtlanClient client, String displayName) throws AtlanException {
         String internalName = client.getCustomMetadataCache().getIdForName(displayName);
         client.typeDefs.purge(internalName);
     }

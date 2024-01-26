@@ -24,7 +24,6 @@ import com.atlan.model.assets.Schema;
 import com.atlan.model.assets.Table;
 import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.enums.*;
-import com.atlan.model.typedefs.AtlanTagDef;
 import com.atlan.net.HttpClient;
 import java.util.List;
 import java.util.Set;
@@ -77,10 +76,7 @@ public class PurposeTest extends AtlanLiveTest {
 
     @Test(groups = {"purpose.create.atlantag"})
     void createAtlanTag() throws AtlanException {
-        AtlanTagDef cls =
-                AtlanTagDef.creator(ATLAN_TAG_NAME, AtlanTagColor.GREEN).build();
-        AtlanTagDef response = cls.create(Atlan.getDefaultClient());
-        assertNotNull(response);
+        AtlanTagTest.createAtlanTag(ATLAN_TAG_NAME);
     }
 
     @Test(groups = {"purpose.create.token"})
@@ -326,7 +322,7 @@ public class PurposeTest extends AtlanLiveTest {
             alwaysRun = true)
     void purgeAtlanTags() throws AtlanException {
         Column.removeAtlanTag(columnQualifiedName, ATLAN_TAG_NAME);
-        AtlanTagDef.purge(ATLAN_TAG_NAME);
+        AtlanTagTest.deleteAtlanTag(ATLAN_TAG_NAME);
     }
 
     @Test(

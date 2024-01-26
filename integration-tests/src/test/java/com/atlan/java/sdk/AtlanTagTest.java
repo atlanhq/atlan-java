@@ -10,6 +10,8 @@ import com.atlan.exception.AtlanException;
 import com.atlan.model.enums.*;
 import com.atlan.model.typedefs.AtlanTagDef;
 import com.atlan.model.typedefs.AtlanTagOptions;
+import com.atlan.model.typedefs.TypeDefResponse;
+import com.atlan.net.RequestOptions;
 import org.testng.annotations.Test;
 
 /**
@@ -17,6 +19,7 @@ import org.testng.annotations.Test;
  */
 public class AtlanTagTest extends AtlanLiveTest {
 
+    private static final int MAX_TAG_RETRIES = 30;
     private static final String PREFIX = makeUnique("tag");
     private static final String TAG_WITH_IMAGE = PREFIX + "_image";
     private static final String TAG_WITH_ICON = PREFIX + "_icon";
@@ -41,7 +44,13 @@ public class AtlanTagTest extends AtlanLiveTest {
      */
     static void createAtlanTag(AtlanClient client, String name) throws AtlanException {
         AtlanTagDef atlanTagDef = AtlanTagDef.creator(name, AtlanTagColor.GREEN).build();
-        AtlanTagDef response = atlanTagDef.create(client);
+        TypeDefResponse created = client.typeDefs.create(
+                atlanTagDef,
+                RequestOptions.from(client).maxNetworkRetries(MAX_TAG_RETRIES).build());
+        assertNotNull(created);
+        assertNotNull(created.getAtlanTagDefs());
+        assertEquals(created.getAtlanTagDefs().size(), 1);
+        AtlanTagDef response = created.getAtlanTagDefs().get(0);
         assertNotNull(response);
         assertEquals(response.getCategory(), AtlanTypeCategory.ATLAN_TAG);
         String uniqueName = response.getName();
@@ -58,7 +67,10 @@ public class AtlanTagTest extends AtlanLiveTest {
      * @throws AtlanException on any error deleting the Atlan tag
      */
     static void deleteAtlanTag(String name) throws AtlanException {
-        AtlanTagDef.purge(name);
+        AtlanClient client = Atlan.getDefaultClient();
+        client.typeDefs.purge(
+                name,
+                RequestOptions.from(client).maxNetworkRetries(MAX_TAG_RETRIES).build());
     }
 
     @Test(groups = {"tag.create.image"})
