@@ -732,7 +732,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
                 .attributeDefs(updatedAttrs)
                 .build();
         AtlanClient client = Atlan.getDefaultClient();
-        TypeDefResponse typeDefResponse = client.typeDefs.create(
+        TypeDefResponse typeDefResponse = client.typeDefs.update(
                 existing,
                 RequestOptions.from(client).maxNetworkRetries(MAX_CM_RETRIES).build());
         assertNotNull(typeDefResponse);
