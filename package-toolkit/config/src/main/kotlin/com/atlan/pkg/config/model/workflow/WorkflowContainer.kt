@@ -36,6 +36,7 @@ class WorkflowContainer(
         builder.add(NamedSecret("SMTP_FROM", "support-smtp-creds", "from"))
         builder.add(NamedSecret("SMTP_USER", "support-smtp-creds", "login"))
         builder.add(NamedSecret("SMTP_PASS", "workflow-parameter-store", "smtp_password"))
+        builder.add(NamedSecret("DOMAIN", "atlan-defaults", "domain"))
         config.properties.forEach { (k, u) ->
             when (u.ui) {
                 is FileUploader.FileUploaderWidget, is FileCopier.FileCopierWidget -> {

@@ -382,7 +382,7 @@ object Utils {
      * @param guid of the asset for which to produce a link
      */
     fun getAssetLink(guid: String): String {
-        return "${Atlan.getBaseUrl()}/assets/$guid/overview"
+        return "${Atlan.getBaseUrl() ?: getEnvVar("DOMAIN", "")}/assets/$guid/overview"
     }
 
     /**
