@@ -128,8 +128,8 @@ abstract class AbstractNumaflowHandler(private val handler: AtlanEventHandler) :
         if (!map.containsKey(RETRY_COUNT)) {
             map[RETRY_COUNT] = 0
         }
-        val nextRetry = (map[RETRY_COUNT] as Int) + 1
-        val tag = if (nextRetry > MAX_RETRIES) {
+        map[RETRY_COUNT] = (map[RETRY_COUNT] as Int) + 1
+        val tag = if (map[RETRY_COUNT] as Int > MAX_RETRIES) {
             logger.info { "Routing to: $DLQ (exceeded $MAX_RETRIES retries)" }
             DLQ
         } else {
