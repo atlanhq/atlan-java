@@ -134,7 +134,7 @@ class PipelineSpec(
                     NamedSecret("SMTP_FROM", "support-smtp-creds", "from"),
                     NamedSecret("SMTP_USER", "support-smtp-creds", "login"),
                     NamedSecret("SMTP_PASS", "workflow-parameter-store", "smtp_password"),
-                    NamedSecret("DOMAIN", "atlan-defaults", "domain"),
+                    ConfigMapEntry("DOMAIN", "atlan-defaults", "domain"),
                     /*mapOf(
                         "name" to "ATLAN_BASE_URL",
                         "value" to "INTERNAL",
