@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg
 
+import com.atlan.Atlan
 import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.pkg.config.model.Pipeline
 import com.atlan.pkg.config.model.ui.UIConfig
@@ -44,7 +45,7 @@ open class CustomPipeline(
     private val logicCommand: List<String> = listOf(),
     private val configClass: Class<*>? = null,
     private val configCommand: List<String> = listOf("/dumb-init", "--", "java", "com.atlan.pkg.events.WriteConfig"),
-    containerImagePullPolicy: String = "IfNotPresent",
+    containerImagePullPolicy: String = if (Atlan.VERSION.endsWith("SNAPSHOT")) "Always" else "IfNotPresent",
     private val filter: String = "",
     private val minMemory: Int = 128,
     private val maxMemory: Int = 256,
