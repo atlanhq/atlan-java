@@ -15,6 +15,7 @@ import com.atlan.model.typedefs.AttributeDef
 import com.atlan.model.typedefs.CustomMetadataDef
 import com.atlan.model.typedefs.CustomMetadataOptions
 import com.atlan.pkg.Utils
+import com.atlan.pkg.events.EventUtils
 import com.atlan.pkg.events.WriteConfig
 import mu.KotlinLogging
 import kotlin.system.exitProcess
@@ -32,6 +33,7 @@ object CreateCMWriteConfig {
 
     @JvmStatic
     fun main(args: Array<String>) {
+        EventUtils.setLogging()
         val config = Utils.parseConfig<AssetScorerCfg>(
             Utils.getEnvVar("NESTED_CONFIG", ""),
             Utils.buildRuntimeConfig(),
