@@ -16,6 +16,7 @@ object WriteConfig {
 
     @JvmStatic
     fun main(args: Array<String>) {
+        EventUtils.setLogging()
         val logger = KotlinLogging.logger {}
 
         val nestedConfig = Utils.getEnvVar("NESTED_CONFIG", "")

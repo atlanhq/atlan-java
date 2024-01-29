@@ -58,4 +58,13 @@ object EventUtils {
     fun startHandler(handler: AbstractNumaflowHandler) {
         Server(handler).start()
     }
+
+    /**
+     * Set up logging for the event-processing handler.
+     * Note: this MUST be called before doing any other logging, or the pipeline configuration
+     * will fail due to creating the debug.log in an unknown location.
+     */
+    fun setLogging() {
+        System.getProperty("logDirectory") ?: System.setProperty("logDirectory", "tmp")
+    }
 }
