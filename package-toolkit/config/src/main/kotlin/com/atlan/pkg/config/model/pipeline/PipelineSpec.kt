@@ -12,16 +12,22 @@ import com.fasterxml.jackson.annotation.JsonInclude
  *
  * @param name dash-delimited name of the pipeline
  * @param containerImage container image to run the logic of the custom pipeline
+ * @param logicClass the class to run when the pipeline executes (if this is supplied, logicCommand will be built for you)
  * @param logicCommand command to run the pipeline's custom processing logic, as a list rather than string
  * @param containerImagePullPolicy (optional) override the default IfNotPresent policy
  * @param filter sprig expression used to filter the messages that will be processed by the pipeline
+ * @param minMemory minimum amount of memory to allocate to the custom logic
+ * @param maxMemory maximum amount of memory to allocate to the custom logic
  */
 class PipelineSpec(
     private val name: String,
     private val containerImage: String,
-    private val logicCommand: List<String>,
+    private val logicClass: Class<*>? = null,
+    private val logicCommand: List<String> = listOf(),
     private val containerImagePullPolicy: String = "IfNotPresent",
     private val filter: String = "",
+    private val minMemory: Int = 128,
+    private val maxMemory: Int = 256,
 ) {
     companion object {
         val SETTINGS = mapOf(
@@ -42,6 +48,18 @@ class PipelineSpec(
                 ),
             ),
         )
+    }
+
+    private val command: List<String>
+    private val args: List<String>
+    init {
+        val cmdList = if (logicClass != null) {
+            listOf("/dumb-init", "--", "java", "-Xms${minMemory}m", "-Xmx${maxMemory}m", logicClass.canonicalName)
+        } else {
+            logicCommand
+        }
+        command = listOf(cmdList[0])
+        args = cmdList.subList(1, cmdList.size)
     }
 
     val templates = mapOf(
@@ -116,8 +134,8 @@ class PipelineSpec(
         map["udf"] = mapOf(
             "container" to mapOf(
                 "image" to containerImage,
-                "command" to listOf(logicCommand[0]),
-                "args" to logicCommand.subList(1, logicCommand.size),
+                "command" to command,
+                "args" to args,
                 "env" to listOf(
                     NameValuePair("ATLAN_BASE_URL", "INTERNAL"),
                     NameValuePair("CONFIG_PREFIX", name),

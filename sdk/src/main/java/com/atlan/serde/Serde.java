@@ -48,20 +48,21 @@ public class Serde {
     static {
         Map<String, Class<?>> assetMap = new HashMap<>();
         Map<String, Class<?>> builderMap = new HashMap<>();
-        try (ScanResult scanResult =
-                new ClassGraph().enableExternalClasses().ignoreClassVisibility().scan()) {
+        try (ScanResult scanResult = new ClassGraph()
+                .enableExternalClasses()
+                .ignoreClassVisibility()
+                .setMaxBufferedJarRAMSize(16 * 1024 * 1024)
+                .scan()) {
             for (ClassInfo info : scanResult.getSubclasses(Asset.AssetBuilder.class)) {
                 String fullName = info.getName();
                 if (fullName.endsWith("Impl")) {
                     try {
-                        Class<?> builderClass = Class.forName(fullName);
+                        Class<?> builderClass = info.loadClass();
                         Class<?> typeClass = builderClass.getEnclosingClass();
                         String typeName =
                                 (String) typeClass.getField("TYPE_NAME").get(null);
                         assetMap.put(typeName, typeClass);
                         builderMap.put(typeName, builderClass);
-                    } catch (ClassNotFoundException e) {
-                        log.error("Unable to load class: {}", fullName, e);
                     } catch (NoSuchFieldException e) {
                         log.error("Asset class is missing the static TYPE_NAME giving its type: {}", fullName, e);
                     } catch (IllegalAccessException e) {

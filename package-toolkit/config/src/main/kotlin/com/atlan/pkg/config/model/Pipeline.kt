@@ -13,20 +13,26 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder
  * @param packageId unique identifier for the pipeline, including its namespace
  * @param name dash-separated name of the pipeline
  * @param containerImage container image to run the logic of the custom pipeline
+ * @param logicClass the class to run when the pipeline executes (if this is supplied, logicCommand will be built for you)
  * @param containerCommand command to run the pipeline's custom processing logic, as a list rather than string
  * @param containerImagePullPolicy (optional) override the default IfNotPresent policy
  * @param description of the pipeline
  * @param filter sprig expression used to filter the messages that will be processed by the pipeline
+ * @param minMemory minimum amount of memory to allocate to the custom logic
+ * @param maxMemory maximum amount of memory to allocate to the custom logic
  */
 @JsonPropertyOrder("apiVersion", "kind", "metadata", "spec")
 class Pipeline(
     private val packageId: String,
     private val name: String,
     private val containerImage: String,
-    private val containerCommand: List<String>,
+    private val logicClass: Class<*>? = null,
+    private val containerCommand: List<String> = listOf(),
     private val containerImagePullPolicy: String = "IfNotPresent",
     private val description: String = "",
     private val filter: String = "",
+    private val minMemory: Int = 128,
+    private val maxMemory: Int = 256,
 ) {
     val apiVersion = "numaflow.numaproj.io/v1alpha1"
     val kind = "Pipeline"
@@ -58,5 +64,14 @@ class Pipeline(
             "package.argoproj.io/version" to Atlan.VERSION,
         ),
     )
-    val spec = PipelineSpec(name, containerImage, containerCommand, containerImagePullPolicy, filter)
+    val spec = PipelineSpec(
+        name,
+        containerImage,
+        logicClass,
+        containerCommand,
+        containerImagePullPolicy,
+        filter,
+        minMemory,
+        maxMemory,
+    )
 }
