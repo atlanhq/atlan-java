@@ -19,16 +19,15 @@ object WriteConfig {
         val logger = KotlinLogging.logger {}
 
         val nestedConfig = Utils.getEnvVar("NESTED_CONFIG", "")
-        logger.info("Saving main configuration to /tmp/config.json: {}", nestedConfig)
+        logger.info { "Saving main configuration to /tmp/config.json: $nestedConfig" }
         File("/tmp", "config.json").writeText(nestedConfig)
 
         val runtimeConfig = Utils.buildRuntimeConfig()
-        logger.info("Saving runtime configuration to /tmp/runtime.json: {}", runtimeConfig)
+        logger.info { "Saving runtime configuration to /tmp/runtime.json: $runtimeConfig" }
         File("/tmp", "runtime.json").writeText(runtimeConfig)
 
-        logger.info(
-            "The {} pipeline will now begin running in the background at all times, using this configuration.",
-            Utils.getEnvVar("X_ATLAN_AGENT_PACKAGE_NAME", ""),
-        )
+        logger.info {
+            "The ${Utils.getEnvVar("X_ATLAN_AGENT_PACKAGE_NAME", "")} pipeline will now begin running in the background at all times, using this configuration."
+        }
     }
 }
