@@ -12,7 +12,7 @@ plugins {
 dependencies {
     implementation(project(":package-toolkit:runtime"))
     api(libs.numaflow.java)
-    api("io.netty:netty-transport-native-epoll:4.1.86.Final:linux-x86_64")
+    api("io.netty:netty-transport-native-epoll:4.1.100.Final:linux-x86_64")
 }
 
 tasks {
@@ -22,7 +22,7 @@ tasks {
         archiveClassifier.set("jar-with-dependencies")
         dependencies {
             include(dependency("io.numaproj.numaflow:numaflow-java:.*"))
-            include(dependency("io.netty:netty-transport-native-epoll:4.1.86.Final:linux-x86_64"))
+            include(dependency("io.netty:netty-transport-native-epoll:4.1.100.Final:linux-x86_64"))
         }
         mergeServiceFiles()
     }

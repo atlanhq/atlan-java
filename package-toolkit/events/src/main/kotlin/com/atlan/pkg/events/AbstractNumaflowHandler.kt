@@ -8,10 +8,10 @@ import com.atlan.exception.AtlanException
 import com.atlan.model.events.AtlanEvent
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
-import io.numaproj.numaflow.function.handlers.MapHandler
-import io.numaproj.numaflow.function.interfaces.Datum
-import io.numaproj.numaflow.function.types.Message
-import io.numaproj.numaflow.function.types.MessageList
+import io.numaproj.numaflow.mapper.Datum
+import io.numaproj.numaflow.mapper.Mapper
+import io.numaproj.numaflow.mapper.Message
+import io.numaproj.numaflow.mapper.MessageList
 import mu.KotlinLogging
 import java.io.IOException
 import java.nio.charset.StandardCharsets
@@ -21,7 +21,7 @@ import java.nio.charset.StandardCharsets
  *
  * @param handler the handler that defines actual processing logic
  */
-abstract class AbstractNumaflowHandler(private val handler: AtlanEventHandler) : MapHandler() {
+abstract class AbstractNumaflowHandler(private val handler: AtlanEventHandler) : Mapper() {
 
     private val logger = KotlinLogging.logger {}
 
