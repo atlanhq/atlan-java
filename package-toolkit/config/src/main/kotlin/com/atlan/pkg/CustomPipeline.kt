@@ -73,6 +73,7 @@ open class CustomPipeline(
     category = category,
 ) {
     private val pipeline = Pipeline(
+        packageId,
         name,
         containerImage,
         logicCommand,

@@ -26,7 +26,6 @@ abstract class AbstractNumaflowHandler(private val handler: AtlanEventHandler) :
     private val logger = KotlinLogging.logger {}
 
     companion object {
-        const val FAILURE = "failure"
         const val SUCCESS = "success"
         const val RETRY = "retry"
         const val DLQ = "dlq"
@@ -126,16 +125,17 @@ abstract class AbstractNumaflowHandler(private val handler: AtlanEventHandler) :
      */
     protected fun failed(keys: Array<String>, data: ByteArray): MessageList {
         val map = mapper.readValue<MutableMap<String, Any>>(data.decodeToString())
-        val tag = when {
-            !map.containsKey(RETRY_COUNT) -> FAILURE
-            MAX_RETRIES > (map[RETRY_COUNT] as Int) -> RETRY
-            else -> DLQ
+        if (!map.containsKey(RETRY_COUNT)) {
+            map[RETRY_COUNT] = 0
         }
-        when (tag) {
-            FAILURE -> map[RETRY_COUNT] = 1
-            RETRY -> map[RETRY_COUNT] = (map[RETRY_COUNT] as Int) + 1
+        val nextRetry = (map[RETRY_COUNT] as Int) + 1
+        val tag = if (nextRetry > MAX_RETRIES) {
+            logger.info { "Routing to: $DLQ (exceeded $MAX_RETRIES retries)" }
+            DLQ
+        } else {
+            logger.info { "Routing to: $RETRY (retry #${map[RETRY_COUNT]})" }
+            RETRY
         }
-        logger.info { "Routing to: $tag (retry #${map[RETRY_COUNT]})" }
         return MessageList.newBuilder()
             .addMessage(Message(mapper.writeValueAsBytes(map), keys, arrayOf(tag)))
             .build()
