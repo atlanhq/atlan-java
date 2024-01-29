@@ -92,7 +92,7 @@ object PackageConfig : CustomPipeline(
         ),
     ),
     containerImage = "ghcr.io/atlanhq/csa-verification-enforcer:${Atlan.VERSION}",
-    logicCommand = listOf("/dumb-init", "--", "java", "-Xms128m", "-Xmx128m", "VerificationEnforcer"),
+    logicClass = VerificationEnforcer::class.java,
     filter = "json(payload).message.operationType in [\"ENTITY_CREATE\", \"ENTITY_UPDATE\"] && json(payload).message.entity.attributes.certificateStatus in [\"VERIFIED\"]",
     keywords = listOf("kotlin", "governance", "pipeline"),
     preview = true,
