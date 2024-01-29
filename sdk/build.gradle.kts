@@ -13,14 +13,17 @@ plugins {
 }
 
 dependencies {
+    constraints {
+        api(libs.parsson) {
+            because("version 1.0.0 pulled from elasticsearch-java has CWE-20 (CVE-2023-4043)")
+        }
+        testImplementation(libs.json.path) {
+            because("version 2.8.0 pulled from wiremock has CWE (CVE-2023-51074)")
+        }
+    }
     api(libs.jackson.databind)
     api(libs.slf4j)
     api(libs.elasticsearch.java)
-    constraints {
-        implementation(libs.parsson) {
-            because("version 1.0.0 pulled from elasticsearch-java has CWE-20 (CVE-2023-4043)")
-        }
-    }
     api(libs.freemarker)
     implementation(libs.classgraph)
     testImplementation(libs.bundles.java.test)
