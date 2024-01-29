@@ -143,20 +143,12 @@ class PipelineSpec(
                     NamedSecret("CLIENT_SECRET", "argo-client-creds", "password"),
                     ConfigMapEntry("AWS_S3_BUCKET_NAME", "atlan-defaults", "bucket"),
                     ConfigMapEntry("AWS_S3_REGION", "atlan-defaults", "region"),
-                    /*NameValuePair("X_ATLAN_AGENT", "workflow"),
-                    NameValuePair("X_ATLAN_AGENT_ID", "{{workflow.name}}"),
-                    NameValuePair("X_ATLAN_AGENT_PACKAGE_NAME", "{{=sprig.dig('annotations', 'package', 'argoproj', 'io/name', '', workflow)}}"),
-                    NameValuePair("X_ATLAN_AGENT_WORKFLOW_ID", "{{=sprig.dig('labels', 'workflows', 'argoproj', 'io/workflow-template', '', workflow)}}"),*/
                     NamedSecret("SMTP_HOST", "support-smtp-creds", "host"),
                     NamedSecret("SMTP_PORT", "support-smtp-creds", "port"),
                     NamedSecret("SMTP_FROM", "support-smtp-creds", "from"),
                     NamedSecret("SMTP_USER", "support-smtp-creds", "login"),
                     NamedSecret("SMTP_PASS", "workflow-parameter-store", "smtp_password"),
                     ConfigMapEntry("DOMAIN", "atlan-defaults", "domain"),
-                    /*mapOf(
-                        "name" to "ATLAN_BASE_URL",
-                        "value" to "INTERNAL",
-                    ),*/
                 ),
             ),
         )
@@ -170,7 +162,9 @@ class PipelineSpec(
         map["udf"] = mapOf(
             "builtin" to mapOf("name" to "cat"),
         )
-        map["scale"] = Scale(max = 1)
+        // TODO: replace this entire UDF with a reusable retry container
+        //  that embeds exponential back-off + jitter based on a retry counter
+        map["scale"] = Scale(min = 0, max = 1, zeroReplicaSleepSeconds = 5)
         return map
     }
 
@@ -193,6 +187,13 @@ class PipelineSpec(
         val disabled: Boolean = false,
         val min: Int = 1,
         val max: Int = 1,
+        val lookbackSeconds: Int = 120,
+        val scaleUpCooldownSeconds: Int = 90,
+        val scaleDownCooldownSeconds: Int = 90,
+        val zeroReplicaSleepSeconds: Int = 120,
+        val targetProcessingSeconds: Int = 20,
+        val targetBufferAvailability: Int = 50,
+        val replicasPerScale: Int = 2,
     )
 
     data class Edge(
