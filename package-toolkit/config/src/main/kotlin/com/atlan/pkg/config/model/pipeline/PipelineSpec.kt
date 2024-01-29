@@ -42,11 +42,6 @@ class PipelineSpec(
                 ),
             ),
         )
-        val DEBUG_TEMPLATE = mapOf(
-            "env" to listOf(
-                NameValuePair("NUMAFLOW_DEBUG", "false"),
-            ),
-        )
     }
 
     val templates = mapOf(
@@ -56,27 +51,37 @@ class PipelineSpec(
     val vertices = listOf(
         // Initial source
         source("atlas-source", "ATLAS_ENTITIES", "nf-$name", 2),
-        // Retry source
-        source("failed-source", "nf-$name-retry", "nf-$name-retry", 1),
-        // Initial user-defined processing
+        // User-defined processing
         udf("process", 5),
         // Retry of user-defined processing
-        udf("retry", 1),
-        // Sink messages on initial failure
-        sink("failed-sink", "nf-$name-retry"),
-        // Sink messages for retry
-        sink("retry-sink", "nf-$name-retry"),
+        retry(),
         // Sink messages for DLQ
-        sink("failed-sink-dlq", "nf-$name-dlq"),
+        sink("dlq", "nf-$name-dlq"),
     )
 
     // Define the routing of events across the vertices
     val edges = listOf(
         Edge("atlas-source", "process"),
-        Edge("process", "failed-sink", RoutingCondition("failure")),
-        Edge("failed-source", "retry"),
-        Edge("retry", "retry-sink", RoutingCondition("retry")),
-        Edge("retry", "failed-sink-dlq", RoutingCondition("dlq")),
+        Edge("process", "retry", RoutingCondition("retry")),
+        Edge("retry", "process"),
+        Edge("process", "dlq", RoutingCondition("dlq")),
+    )
+
+    val lifecycle = mapOf(
+        "deleteGracePeriodSeconds" to 30,
+        "desiredPhase" to "Running",
+        "pauseGracePeriodSeconds" to 30,
+    )
+
+    val limits = mapOf(
+        "readBatchSize" to 500,
+        "bufferMaxLength" to 30000,
+        "bufferUSageLimit" to 80,
+        "readTimeout" to "1s",
+    )
+
+    val watermark = mapOf(
+        "maxDelay" to "0s",
     )
 
     private fun source(sourceName: String, topicName: String, consumerGroupName: String, maxScale: Int): Map<String, Any> {
@@ -101,7 +106,6 @@ class PipelineSpec(
             )
         }
         map["source"] = source
-        map["containerTemplate"] = DEBUG_TEMPLATE
         map["scale"] = Scale(max = maxScale)
         return map
     }
@@ -121,15 +125,34 @@ class PipelineSpec(
                     NamedSecret("CLIENT_SECRET", "argo-client-creds", "password"),
                     ConfigMapEntry("AWS_S3_BUCKET_NAME", "atlan-defaults", "bucket"),
                     ConfigMapEntry("AWS_S3_REGION", "atlan-defaults", "region"),
-                    mapOf(
+                    /*NameValuePair("X_ATLAN_AGENT", "workflow"),
+                    NameValuePair("X_ATLAN_AGENT_ID", "{{workflow.name}}"),
+                    NameValuePair("X_ATLAN_AGENT_PACKAGE_NAME", "{{=sprig.dig('annotations', 'package', 'argoproj', 'io/name', '', workflow)}}"),
+                    NameValuePair("X_ATLAN_AGENT_WORKFLOW_ID", "{{=sprig.dig('labels', 'workflows', 'argoproj', 'io/workflow-template', '', workflow)}}"),*/
+                    NamedSecret("SMTP_HOST", "support-smtp-creds", "host"),
+                    NamedSecret("SMTP_PORT", "support-smtp-creds", "port"),
+                    NamedSecret("SMTP_FROM", "support-smtp-creds", "from"),
+                    NamedSecret("SMTP_USER", "support-smtp-creds", "login"),
+                    NamedSecret("SMTP_PASS", "workflow-parameter-store", "smtp_password"),
+                    NamedSecret("DOMAIN", "atlan-defaults", "domain"),
+                    /*mapOf(
                         "name" to "ATLAN_BASE_URL",
                         "value" to "INTERNAL",
-                    ),
+                    ),*/
                 ),
             ),
         )
-        map["containerTemplate"] = DEBUG_TEMPLATE
         map["scale"] = Scale(max = maxScale)
+        return map
+    }
+
+    private fun retry(): Map<String, Any> {
+        val map = SETTINGS.toMutableMap()
+        map["name"] = "retry"
+        map["udf"] = mapOf(
+            "builtin" to mapOf("name" to "cat"),
+        )
+        map["scale"] = Scale(max = 1)
         return map
     }
 
