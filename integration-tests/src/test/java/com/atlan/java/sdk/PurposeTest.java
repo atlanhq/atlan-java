@@ -281,7 +281,7 @@ public class PurposeTest extends AtlanLiveTest {
         redacted.setApiToken(token.getAttributes().getAccessToken());
         // The policy will take some time to go into effect -- start by waiting a
         // reasonable set amount of time (limit the same query re-running multiple times on data store)
-        Thread.sleep(30000);
+        Thread.sleep(60000);
         // Then use a retry loop, just in case
         QueryResponse response = null;
         HekaFlow found = HekaFlow.BYPASS; // As long as Heka was bypassed, policy was not applied
