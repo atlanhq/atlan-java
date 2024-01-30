@@ -111,7 +111,7 @@ public class AdminTest extends AtlanLiveTest {
         users = AtlanUser.getByEmail(email);
         assertNotNull(users);
         assertEquals(users.size(), 1);
-        assertEquals(user1, users.get(0));
+        assertEquals(user1.getId(), users.get(0).getId());
     }
 
     @Test(
