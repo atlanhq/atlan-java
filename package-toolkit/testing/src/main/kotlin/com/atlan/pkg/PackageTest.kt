@@ -4,6 +4,7 @@ package com.atlan.pkg
 
 import com.atlan.Atlan
 import com.atlan.AtlanClient
+import com.atlan.exception.InvalidRequestException
 import com.atlan.model.assets.Connection
 import com.atlan.model.assets.Glossary
 import com.atlan.model.assets.GlossaryTerm
@@ -29,6 +30,7 @@ import uk.org.webcompere.systemstubs.properties.SystemProperties
 import uk.org.webcompere.systemstubs.security.SystemExit
 import java.io.File
 import java.util.Random
+import java.util.concurrent.atomic.AtomicInteger
 import kotlin.math.min
 
 /**
@@ -183,6 +185,7 @@ abstract class PackageTest {
         // Necessary combination to both (de)serialize Atlan objects (like connections)
         // and use the JsonProperty annotations inherent in the configuration data classes
         private val mapper = Serde.createMapper(client).registerKotlinModule()
+        private val retryCount = AtomicInteger(0)
 
         /**
          * Remove these files.
@@ -222,22 +225,35 @@ abstract class PackageTest {
             if (!results.isNullOrEmpty()) {
                 results.forEach {
                     val deleteWorkflow = ConnectionDelete.creator(it.qualifiedName, true).build().toWorkflow()
-                    var response = deleteWorkflow.run(client)
-                    assertNotNull(response)
-                    var state = response.monitorStatus(logger, Level.INFO, 420L)
-                    assertNotNull(state)
-                    val workflowName = if (state == AtlanWorkflowPhase.RUNNING) {
-                        // If still running after 7 minutes, stop it (so it can then be archived)
-                        logger?.warn { "Stopping hung workflow..." }
-                        response = response.stop()
-                        state = response.monitorStatus(logger, Level.INFO, 60L)
-                        assertEquals(state, AtlanWorkflowPhase.FAILED)
-                        response.spec.workflowTemplateRef["name"]
-                    } else {
-                        assertEquals(state, AtlanWorkflowPhase.SUCCESS)
-                        response.metadata.name
+                    try {
+                        var response = deleteWorkflow.run(client)
+                        assertNotNull(response)
+                        // If we get here we've succeeded in running, so we'll reset our retry counter
+                        retryCount.set(0)
+                        var state = response.monitorStatus(logger, Level.INFO, 420L)
+                        assertNotNull(state)
+                        val workflowName = if (state == AtlanWorkflowPhase.RUNNING) {
+                            // If still running after 7 minutes, stop it (so it can then be archived)
+                            logger?.warn { "Stopping hung workflow..." }
+                            response = response.stop()
+                            state = response.monitorStatus(logger, Level.INFO, 60L)
+                            assertEquals(state, AtlanWorkflowPhase.FAILED)
+                            response.spec.workflowTemplateRef["name"]
+                        } else {
+                            assertEquals(state, AtlanWorkflowPhase.SUCCESS)
+                            response.metadata.name
+                        }
+                        client.workflows.archive(workflowName)
+                    } catch (e: InvalidRequestException) {
+                        // Can happen if two deletion workflows are run at the same time,
+                        // in which case we should wait a few seconds and try again
+                        val attempt = retryCount.incrementAndGet()
+                        logger?.warn { "Race condition on parallel deletion, waiting to retry ($attempt)..." }
+                        Thread.sleep(HttpClient.waitTime(attempt).toMillis())
+                        if (attempt < Atlan.getMaxNetworkRetries()) {
+                            removeConnection(name, type, logger)
+                        }
                     }
-                    client.workflows.archive(workflowName)
                 }
             }
         }
