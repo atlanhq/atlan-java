@@ -302,9 +302,25 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertNotNull(badge1.getGuid());
         List<BadgeCondition> badgeConditions = badge1.getBadgeConditions();
         assertEquals(badgeConditions.size(), 3);
-        assertEquals(badgeConditions.get(1).getBadgeConditionOperator(), BadgeComparisonOperator.LT);
-        assertEquals(badgeConditions.get(1).getBadgeConditionValue(), "5");
-        assertEquals(badgeConditions.get(1).getBadgeConditionColorhex(), BadgeConditionColor.YELLOW.getValue());
+        // Badges may come back in a different order in the response...
+        badgeConditions.forEach(b -> {
+            switch (b.getBadgeConditionOperator()) {
+                case GTE:
+                    assertEquals(b.getBadgeConditionValue(), "5");
+                    assertEquals(b.getBadgeConditionColorhex(), BadgeConditionColor.GREEN.getValue());
+                    break;
+                case LT:
+                    assertEquals(b.getBadgeConditionValue(), "5");
+                    assertEquals(b.getBadgeConditionColorhex(), BadgeConditionColor.YELLOW.getValue());
+                    break;
+                case LTE:
+                    assertEquals(b.getBadgeConditionValue(), "2");
+                    assertEquals(b.getBadgeConditionColorhex(), BadgeConditionColor.RED.getValue());
+                    break;
+                default:
+                    fail("Unexpected badge condition operator: " + b.getBadgeConditionOperator());
+            }
+        });
 
         toCreate = Badge.creator(CM_ATTR_QUALITY_TYPE, CM_QUALITY, CM_ATTR_QUALITY_TYPE)
                 .userDescription("The type of quality checks used on this asset.")
