@@ -20,6 +20,7 @@ import com.atlan.model.enums.AtlanTagColor
 import com.atlan.model.enums.CertificateStatus
 import com.atlan.model.fields.AtlanField
 import com.atlan.model.typedefs.AtlanTagDef
+import com.atlan.net.RequestOptions
 import com.atlan.pkg.PackageTest
 import org.testng.Assert.assertFalse
 import org.testng.Assert.assertTrue
@@ -81,10 +82,14 @@ class CreateThenUpsertRABTest : PackageTest() {
     }
 
     private fun createTags() {
+        val maxNetworkRetries = 30
+        val client = Atlan.getDefaultClient()
         val t1 = AtlanTagDef.creator(tag1, AtlanIcon.DATABASE, AtlanTagColor.GREEN).build()
-        t1.create(Atlan.getDefaultClient())
         val t2 = AtlanTagDef.creator(tag2, AtlanIcon.COLUMNS, AtlanTagColor.RED).build()
-        t2.create(Atlan.getDefaultClient())
+        client.typeDefs.create(
+            listOf(t1, t2),
+            RequestOptions.from(client).maxNetworkRetries(maxNetworkRetries).build(),
+        )
     }
 
     private val connectionAttrs: List<AtlanField> = listOf(
