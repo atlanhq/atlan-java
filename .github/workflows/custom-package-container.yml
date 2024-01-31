@@ -28,7 +28,7 @@ jobs:
       - name: Create assembly area
         run: |
           mkdir -p ./containers/custom-package/assembly
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: "${{inputs.package_name}}"
           path: ./containers/custom-package/assembly
