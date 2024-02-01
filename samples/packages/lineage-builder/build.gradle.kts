@@ -19,7 +19,6 @@ tasks {
         archiveClassifier.set("")
         destinationDirectory.set(file(jarPath))
         dependencies {
-            include(project(":samples:packages:asset-export-basic"))
             include(project(":samples:packages:asset-import"))
         }
         mergeServiceFiles()
