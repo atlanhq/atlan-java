@@ -86,7 +86,7 @@ class LineageTransformer(
             }
         }
         // If we fall through, we were unable to define the lineage, so write a blank row
-        return listOf(listOf("", "", "", "", "", ""))
+        return listOf(listOf("", "", "", "", "", "", ""))
     }
 
     /** {@inheritDoc} */
