@@ -945,7 +945,9 @@ public class SQLAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"asset.create.atlantags", "asset.update.column.userDescription.x"})
     void updateAtlanTag() throws AtlanException {
         Column toUpdate = Column.updater(column5.getQualifiedName(), COLUMN_NAME5)
-                .atlanTag(AtlanTag.of(ATLAN_TAG_NAME1))
+                .atlanTag(AtlanTag.of(ATLAN_TAG_NAME1).toBuilder()
+                        .propagate(false)
+                        .build())
                 .build();
         AssetMutationResponse response = toUpdate.save(true);
         Asset one = validateSingleUpdate(response);
