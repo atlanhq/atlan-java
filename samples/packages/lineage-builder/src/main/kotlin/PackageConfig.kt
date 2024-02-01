@@ -101,7 +101,7 @@ object PackageConfig : CustomPackage(
             ),
         ),
     ),
-    containerImage = "ghcr.io/atlanhq/csa-asset-import:${Atlan.VERSION}",
+    containerImage = "ghcr.io/atlanhq/csa-lineage-builder:${Atlan.VERSION}",
     classToRun = Loader::class.java,
     outputs = WorkflowOutputs(mapOf("debug-logs" to "/tmp/debug.log")),
     keywords = listOf("kotlin", "utility"),
