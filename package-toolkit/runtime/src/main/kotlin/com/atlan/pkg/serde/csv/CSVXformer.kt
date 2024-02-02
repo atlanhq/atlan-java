@@ -42,14 +42,25 @@ abstract class CSVXformer(
             .quoteCharacter('"')
             .skipEmptyRows(true)
             .errorOnDifferentFieldCount(true)
-        builder.build(input).use { tmp ->
-            val one = tmp.stream().findFirst()
-            header =
-                one.map { obj: CsvRow -> obj.fields }
-                    .orElse(emptyList())
-        }
+        header = getHeader(inputFile, fieldSeparator)
         reader = builder.build(input)
         counter = builder.build(input)
+    }
+
+    companion object {
+        fun getHeader(file: String, fieldSeparator: Char = ','): List<String> {
+            val input = Paths.get(file)
+            val builder = CsvReader.builder()
+                .fieldSeparator(fieldSeparator)
+                .quoteCharacter('"')
+                .skipEmptyRows(true)
+                .errorOnDifferentFieldCount(true)
+            builder.build(input).use { tmp ->
+                val one = tmp.stream().findFirst()
+                return one.map { obj: CsvRow -> obj.fields }
+                    .orElse(emptyList())
+            }
+        }
     }
 
     /**
