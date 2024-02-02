@@ -7,8 +7,10 @@ import com.atlan.model.assets.Connection
 import com.atlan.model.assets.LineageProcess
 import com.atlan.model.assets.Table
 import com.atlan.model.assets.View
+import com.atlan.model.enums.AtlanAnnouncementType
 import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.model.enums.AtlanLineageDirection
+import com.atlan.model.enums.CertificateStatus
 import com.atlan.model.lineage.FluentLineage
 import com.atlan.pkg.PackageTest
 import com.atlan.pkg.lb.Loader
@@ -132,12 +134,23 @@ class PartialAssetsTest : PackageTest() {
             .where(LineageProcess.QUALIFIED_NAME.startsWith(c.qualifiedName))
             .includeOnResults(LineageProcess.NAME)
             .includeOnResults(LineageProcess.IS_PARTIAL)
+            .includeOnResults(LineageProcess.SQL)
+            .includeOnResults(LineageProcess.CERTIFICATE_STATUS)
+            .includeOnResults(LineageProcess.ANNOUNCEMENT_TYPE)
+            .includeOnResults(LineageProcess.ANNOUNCEMENT_TITLE)
+            .includeOnResults(LineageProcess.ANNOUNCEMENT_MESSAGE)
             .toRequest()
         val response = retrySearchUntil(request, 1)
         val lineage = response.assets
         assertEquals(1, lineage.size)
-        assertFalse(lineage[0].isPartial)
-        assertEquals("source_table > target_view", lineage[0].name)
+        val process = lineage[0] as LineageProcess
+        assertFalse(process.isPartial)
+        assertEquals("source_table > target_view", process.name)
+        assertEquals("select * from db1.schema1.source_table", process.sql)
+        assertEquals(CertificateStatus.DRAFT, process.certificateStatus)
+        assertEquals(AtlanAnnouncementType.INFORMATION, process.announcementType)
+        assertEquals("Testing lineage builder", process.announcementTitle)
+        assertEquals("Only a test...", process.announcementMessage)
     }
 
     @Test(groups = ["create"])

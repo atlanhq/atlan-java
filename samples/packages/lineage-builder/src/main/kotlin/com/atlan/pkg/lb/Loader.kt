@@ -4,10 +4,13 @@ package com.atlan.pkg.lb
 
 import AssetImportCfg
 import LineageBuilderCfg
+import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Connection
+import com.atlan.model.assets.LineageProcess
 import com.atlan.pkg.Utils
 import com.atlan.pkg.aim.Importer
 import com.atlan.pkg.serde.FieldSerde
+import com.atlan.pkg.serde.csv.CSVXformer.Companion.getHeader
 import com.atlan.util.AssetBatch.AssetCreationHandling
 import mu.KotlinLogging
 import java.io.File
@@ -87,8 +90,24 @@ object Loader {
 
             // 3. Transform the lineage, only keeping any rows that have both input and output assets in Atlan
             logger.info { "=== Processing lineage... ===" }
+            val lineageHeaders = mutableListOf(
+                Asset.TYPE_NAME.atlanFieldName,
+                Asset.QUALIFIED_NAME.atlanFieldName,
+                Asset.NAME.atlanFieldName,
+                Asset.CONNECTION_QUALIFIED_NAME.atlanFieldName,
+                "connectorType",
+                LineageProcess.INPUTS.atlanFieldName,
+                LineageProcess.OUTPUTS.atlanFieldName,
+            )
             val lineageFile = "$outputDirectory${File.separator}CSA_LB_lineage.csv"
-            val lineageXform = LineageTransformer(ctx, lineageInput, qualifiedNameMap, logger)
+            // Determine any non-standard lineage fields in the header and append them to the end of
+            // the list of standard header fields, so they're passed-through to be used as part of
+            // defining the lineage process itself
+            val inputHeaders = getHeader(lineageInput).toMutableList()
+            inputHeaders.removeAll(AssetTransformer.INPUT_HEADERS)
+            inputHeaders.removeAll(LineageTransformer.INPUT_HEADERS)
+            inputHeaders.forEach { lineageHeaders.add(it) }
+            val lineageXform = LineageTransformer(ctx, lineageInput, lineageHeaders, qualifiedNameMap, logger)
             lineageXform.transform(lineageFile)
 
             // 4. Load the lineage processes
