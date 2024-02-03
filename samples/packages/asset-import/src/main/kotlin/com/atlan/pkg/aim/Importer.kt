@@ -50,6 +50,7 @@ object Importer {
         val assetsTableViewAgnostic = Utils.getOrDefault(config.assetsTableViewAgnostic, false)
         val glossariesUpdateOnly = Utils.getOrDefault(config.glossariesUpsertSemantic, "update") == "update"
         val glossariesFailOnErrors = Utils.getOrDefault(config.glossariesFailOnErrors, true)
+        val trackBatches = Utils.getOrDefault(config.trackBatches, true)
 
         val assetsFileProvided = (assetsUpload && assetsFilename.isNotBlank()) || (!assetsUpload && assetsS3ObjectKey.isNotBlank())
         val glossariesFileProvided = (glossariesUpload && glossariesFilename.isNotBlank()) || (!glossariesUpload && glossariesS3ObjectKey.isNotBlank())
@@ -73,15 +74,15 @@ object Importer {
             FieldSerde.FAIL_ON_ERRORS.set(glossariesFailOnErrors)
             logger.info { "=== Importing glossaries... ===" }
             val glossaryImporter =
-                GlossaryImporter(glossariesInput, glossaryAttrsToOverwrite, glossariesUpdateOnly, batchSize)
+                GlossaryImporter(glossariesInput, glossaryAttrsToOverwrite, glossariesUpdateOnly, batchSize, trackBatches)
             val resultsGlossary = glossaryImporter.import()
             logger.info { "=== Importing categories... ===" }
             val categoryImporter =
-                CategoryImporter(glossariesInput, glossaryAttrsToOverwrite, glossariesUpdateOnly, batchSize)
+                CategoryImporter(glossariesInput, glossaryAttrsToOverwrite, glossariesUpdateOnly, batchSize, trackBatches)
             val resultsCategory = categoryImporter.import()
             logger.info { "=== Importing terms... ===" }
             val termImporter =
-                TermImporter(glossariesInput, glossaryAttrsToOverwrite, glossariesUpdateOnly, batchSize)
+                TermImporter(glossariesInput, glossaryAttrsToOverwrite, glossariesUpdateOnly, batchSize, trackBatches)
             val resultsTerm = termImporter.import()
             resultsGlossary?.combinedWith(resultsCategory)?.combinedWith(resultsTerm)
         } else {
@@ -113,6 +114,7 @@ object Importer {
                 creationHandling,
                 assetsTableViewAgnostic,
                 assetsFailOnErrors,
+                trackBatches,
             )
             assetImporter.import()
         } else {

@@ -20,12 +20,14 @@ import mu.KotlinLogging
  * @param attrsToOverwrite list of fields that should be overwritten in Atlan, if their value is empty in the CSV
  * @param updateOnly if true, only update an asset (first check it exists), if false allow upserts (create if it does not exist)
  * @param batchSize maximum number of records to save per API request
+ * @param trackBatches if true, minimal details about every asset created or updated is tracked (if false, only counts of each are tracked)
  */
 class GlossaryImporter(
     private val filename: String,
     private val attrsToOverwrite: List<AtlanField>,
     private val updateOnly: Boolean,
     private val batchSize: Int,
+    private val trackBatches: Boolean = true,
 ) : GTCImporter(
     filename = filename,
     attrsToOverwrite = attrsToOverwrite,
@@ -34,6 +36,7 @@ class GlossaryImporter(
     cache = GlossaryCache,
     typeNameFilter = Glossary.TYPE_NAME,
     logger = KotlinLogging.logger {},
+    trackBatches = trackBatches,
 ) {
     /** {@inheritDoc} */
     override fun getCacheId(deserializer: RowDeserializer): String {

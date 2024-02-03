@@ -111,6 +111,12 @@ object PackageConfig : CustomPackage(
                         required = false,
                         help = "Whether to treat tables, views and materialized views as interchangeable (Yes) or strictly adhere to specified types in the input (No).",
                     ),
+                    "track_batches" to BooleanInput(
+                        label = "Track asset details",
+                        required = false,
+                        hidden = true,
+                        help = "Whether to track details about every asset across batches (Yes) or only counts (No).",
+                    ),
                 ),
             ),
             UIStep(

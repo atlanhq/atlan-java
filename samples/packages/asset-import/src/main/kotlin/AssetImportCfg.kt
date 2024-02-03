@@ -26,6 +26,7 @@ data class AssetImportCfg(
     @JsonProperty("assets_fail_on_errors") val assetsFailOnErrors: Boolean? = null,
     @JsonProperty("assets_case_sensitive") val assetsCaseSensitive: Boolean? = null,
     @JsonProperty("assets_table_view_agnostic") val assetsTableViewAgnostic: Boolean? = null,
+    @JsonProperty("track_batches") val trackBatches: Boolean? = null,
     @JsonProperty("glossaries_import_type") val glossariesImportType: String? = null,
     @JsonProperty("glossaries_file") val glossariesFile: String? = null,
     @JsonProperty("glossaries_s3_region") val glossariesS3Region: String? = null,
