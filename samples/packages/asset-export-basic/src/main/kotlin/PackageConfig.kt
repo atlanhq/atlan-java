@@ -55,6 +55,18 @@ object PackageConfig : CustomPackage(
                         help = "Whether glossaries (and their terms and categories) should be exported, too.",
                         grid = 4,
                     ),
+                    "asset_types_to_include" to TextInput(
+                        label = "Asset types to include",
+                        required = false,
+                        hidden = true,
+                        help = "Comma-separated list of asset types to include in the export.",
+                    ),
+                    "attributes_to_include" to TextInput(
+                        label = "Attributes to include",
+                        required = false,
+                        hidden = true,
+                        help = "Comma-separated list of attributes to include in the export.",
+                    ),
                 ),
             ),
             UIStep(
