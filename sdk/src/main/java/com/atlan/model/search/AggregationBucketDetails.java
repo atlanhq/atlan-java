@@ -4,6 +4,7 @@ package com.atlan.model.search;
 
 import com.atlan.model.core.AtlanObject;
 import com.atlan.model.fields.AtlanField;
+import com.atlan.model.fields.CustomMetadataField;
 import com.atlan.model.fields.ISearchable;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
@@ -82,7 +83,13 @@ public class AggregationBucketDetails extends AtlanObject {
                     AggregationHitsResult.Details details =
                             result.getHits().getHits().get(0);
                     if (details != null && details.getSource() != null) {
-                        return details.getSource().getOrDefault(field.getAtlanFieldName(), null);
+                        if (field instanceof CustomMetadataField) {
+                            // Need to handle the hashed-string ID stuff for custom metadata fields
+                            return details.getSource()
+                                    .getOrDefault(((CustomMetadataField) field).getSearchableFieldName(), null);
+                        } else {
+                            return details.getSource().getOrDefault(field.getAtlanFieldName(), null);
+                        }
                     }
                 }
             }

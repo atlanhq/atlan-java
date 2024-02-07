@@ -257,6 +257,22 @@ object Utils {
     }
 
     /**
+     * Returns the provided comma-separated configuration value as a list of strings.
+     *
+     * @param configValue value pulled from the configuration (could be null)
+     * @return list of strings, split from the configuration value (or an empty list if there were no values)
+     */
+    fun getAsList(configValue: String?): List<String> {
+        if (configValue == null) {
+            return listOf()
+        }
+        return configValue.split(",")
+            .map { it.trim() }
+            .filter { it.isNotBlank() }
+            .toList()
+    }
+
+    /**
      * Construct a JSON representation of the runtime configuration of the workflow, drawn from
      * a standard set of environment variables about the workflow.
      */

@@ -18,21 +18,24 @@ object Exporter {
     fun export(config: AssetExportBasicCfg, outputDirectory: String) {
         val batchSize = 20
         val assetsExportScope = Utils.getOrDefault(config.exportScope, "ENRICHED_ONLY")
+        val limitToAssets = Utils.getAsList(config.assetTypesToInclude)
+        val limitToAttributes = Utils.getAsList(config.attributesToInclude)
         val assetsQualifiedNamePrefix = Utils.getOrDefault(config.qnPrefix, "default")
         val includeDescription = Utils.getOrDefault(config.includeDescription, true)
-        val emails = Utils.getOrDefault(config.emailAddresses, "")
-            .split(',')
-            .map { it.trim() }
-            .filter { it.isNotBlank() }
-            .toList()
+        val emails = Utils.getAsList(config.emailAddresses)
+
+        val ctx = Context(
+            assetsExportScope,
+            limitToAssets,
+            limitToAttributes,
+            assetsQualifiedNamePrefix,
+            includeDescription,
+        )
 
         val exportedFiles = mutableListOf<File>()
         val glossaryFile = "$outputDirectory${File.separator}glossary-export.csv"
         if ("GLOSSARIES_ONLY" == assetsExportScope || Utils.getOrDefault(config.includeGlossaries, false)) {
-            val glossaryExporter = GlossaryExporter(
-                glossaryFile,
-                batchSize,
-            )
+            val glossaryExporter = GlossaryExporter(ctx, glossaryFile, batchSize)
             glossaryExporter.export()
             exportedFiles.add(File(glossaryFile))
         } else {
@@ -41,13 +44,7 @@ object Exporter {
         }
         val assetsFile = "$outputDirectory${File.separator}asset-export.csv"
         if ("GLOSSARIES_ONLY" != assetsExportScope) {
-            val assetExporter = AssetExporter(
-                assetsFile,
-                assetsExportScope,
-                assetsQualifiedNamePrefix,
-                batchSize,
-                includeDescription,
-            )
+            val assetExporter = AssetExporter(ctx, assetsFile, batchSize)
             assetExporter.export()
             exportedFiles.add(File(assetsFile))
         } else {
@@ -64,4 +61,12 @@ object Exporter {
             )
         }
     }
+
+    data class Context(
+        val assetsExportScope: String,
+        val limitToAssets: List<String>,
+        val limitToAttributes: List<String>,
+        val assetsQualifiedNamePrefix: String,
+        val includeDescription: Boolean,
+    )
 }

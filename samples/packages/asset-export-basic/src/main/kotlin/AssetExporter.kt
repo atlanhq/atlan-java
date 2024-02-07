@@ -10,6 +10,7 @@ import com.atlan.model.assets.INamespace
 import com.atlan.model.assets.Link
 import com.atlan.model.assets.Procedure
 import com.atlan.model.fields.AtlanField
+import com.atlan.model.fields.SearchableField
 import com.atlan.model.search.FluentSearch
 import com.atlan.pkg.serde.RowSerde
 import com.atlan.pkg.serde.RowSerializer
@@ -27,18 +28,14 @@ import java.util.stream.Stream
  * In both cases the overall scope of assets to include is restricted by the qualifiedName prefix
  * specified by the QN_PREFIX environment variable.
  *
+ * @param ctx context containing the resolved configuration
  * @param filename name of the file into which to export assets
- * @param exportScope which assets to include in the export
- * @param qnPrefix qualifiedName prefix to determine which assets to include in the export
  * @param batchSize maximum number of assets to request per API call
- * @param includeDescription if true, consider the system-level description an enrichment and include it, otherwise only include user-provided descriptions
  */
 class AssetExporter(
+    private val ctx: Exporter.Context,
     private val filename: String,
-    private val exportScope: String,
-    private val qnPrefix: String,
     private val batchSize: Int,
-    private val includeDescription: Boolean,
 ) : RowGenerator {
 
     private val logger = KotlinLogging.logger {}
@@ -46,15 +43,15 @@ class AssetExporter(
     fun export() {
         val assets = getAssetsToExtract()
             .pageSize(batchSize)
-            .includesOnResults(getAttributesToExtract(includeDescription))
             .includesOnRelations(getRelatedAttributesToExtract())
+            .includesOnResults(_getAttributesToExtract())
 
         CSVWriter(filename).use { csv ->
             val headerNames = Stream.of(Asset.QUALIFIED_NAME, Asset.TYPE_NAME)
                 .map(AtlanField::getAtlanFieldName)
                 .collect(Collectors.toList())
             headerNames.addAll(
-                getAttributesToExtract(includeDescription).stream()
+                _getAttributesToExtract().stream()
                     .map { f -> RowSerde.getHeaderForField(f) }
                     .collect(Collectors.toList()),
             )
@@ -68,10 +65,10 @@ class AssetExporter(
     private fun getAssetsToExtract(): FluentSearch.FluentSearchBuilder<*, *> {
         val builder = Atlan.getDefaultClient().assets
             .select()
-            .where(Asset.QUALIFIED_NAME.startsWith(qnPrefix))
+            .where(Asset.QUALIFIED_NAME.startsWith(ctx.assetsQualifiedNamePrefix))
             .whereNot(FluentSearch.superTypes(listOf(IAccessControl.TYPE_NAME, INamespace.TYPE_NAME)))
             .whereNot(FluentSearch.assetTypes(listOf(AuthPolicy.TYPE_NAME, Procedure.TYPE_NAME, AtlanQuery.TYPE_NAME)))
-        if (exportScope == "ENRICHED_ONLY") {
+        if (ctx.assetsExportScope == "ENRICHED_ONLY") {
             builder
                 .whereSome(Asset.CERTIFICATE_STATUS.hasAnyValue())
                 .whereSome(Asset.USER_DESCRIPTION.hasAnyValue())
@@ -82,14 +79,25 @@ class AssetExporter(
                 .whereSome(Asset.LINKS.hasAny())
                 .whereSome(Asset.STARRED_BY.hasAnyValue())
                 .minSomes(1)
-            if (includeDescription) {
+            if (ctx.includeDescription) {
                 builder.whereSome(Asset.DESCRIPTION.hasAnyValue())
             }
             for (cmField in CustomMetadataFields.all) {
                 builder.whereSome(cmField.hasAnyValue())
             }
         }
+        if (ctx.limitToAssets.isNotEmpty()) {
+            builder.where(FluentSearch.assetTypes(ctx.limitToAssets))
+        }
         return builder
+    }
+
+    private fun _getAttributesToExtract(): MutableList<AtlanField> {
+        return if (ctx.limitToAttributes.isNotEmpty()) {
+            ctx.limitToAttributes.map { SearchableField(it, it) }.toMutableList()
+        } else {
+            getAttributesToExtract(ctx.includeDescription)
+        }
     }
 
     companion object {
@@ -156,6 +164,6 @@ class AssetExporter(
      * @return the values, as an iterable set of strings
      */
     override fun buildFromAsset(asset: Asset): Iterable<String> {
-        return RowSerializer(asset, getAttributesToExtract(includeDescription), logger).getRow()
+        return RowSerializer(asset, _getAttributesToExtract(), logger).getRow()
     }
 }

@@ -19,10 +19,12 @@ import java.util.stream.Stream
 /**
  * Export glossary assets from Atlan (including terms and categories).
  *
+ * @param ctx context containing the resolved configuration
  * @param filename name of the file into which to export assets
  * @param batchSize maximum number of assets to request per API call
  */
 class GlossaryExporter(
+    private val ctx: Exporter.Context,
     private val filename: String,
     private val batchSize: Int,
 ) : RowGenerator {
