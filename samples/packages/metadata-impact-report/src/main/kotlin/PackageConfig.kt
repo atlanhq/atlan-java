@@ -23,8 +23,8 @@ object PackageConfig : CustomPackage(
     uiConfig = UIConfig(
         steps = listOf(
             UIStep(
-                title = "Configuration",
-                description = "Report configuration",
+                title = "Outputs",
+                description = "Report outputs",
                 inputs = mapOf(
                     "include_glossary" to Radio(
                         label = "Generate glossary?",
@@ -51,6 +51,18 @@ object PackageConfig : CustomPackage(
                         label = "Include details",
                         required = true,
                         help = "Whether to include detailed results (Yes), or only the headline metrics (No) in the Excel file produced.",
+                    ),
+                ),
+            ),
+            UIStep(
+                title = "Delivery",
+                description = "Where to send",
+                inputs = mapOf(
+                    "email_addresses" to TextInput(
+                        label = "Email address(es)",
+                        help = "Provide any email addresses you want the report sent to, separated by commas.",
+                        required = false,
+                        placeholder = "one@example.com,two@example.com",
                     ),
                 ),
             ),
