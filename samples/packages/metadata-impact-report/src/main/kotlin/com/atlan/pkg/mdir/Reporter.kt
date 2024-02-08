@@ -90,6 +90,7 @@ object Reporter {
         val includeGlossary = Utils.getOrDefault(config.includeGlossary, "TRUE") == "TRUE"
         val glossaryName = Utils.getOrDefault(config.glossaryName, "Metadata metrics")
         val includeDetails = Utils.getOrDefault(config.includeDetails, false)
+        val emails = Utils.getAsList(config.emailAddresses)
 
         val ctx = if (includeGlossary) {
             val glossary = createGlossaryIdempotent(glossaryName)
@@ -108,6 +109,15 @@ object Reporter {
             )
         }
         runReports(ctx, outputDirectory, batchSize)
+
+        if (emails.isNotEmpty()) {
+            Utils.sendEmail(
+                "[Atlan] Metadata Impact Report",
+                emails,
+                "Hi there! As requested, please find attached the Metadata Impact Report.\n\nAll the best!\nAtlan",
+                listOf(File("$outputDirectory${File.separator}mdir.xlsx")),
+            )
+        }
     }
 
     private fun createGlossaryIdempotent(glossaryName: String): Glossary {

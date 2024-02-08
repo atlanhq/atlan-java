@@ -14,4 +14,5 @@ data class MetadataImpactReportCfg(
     @JsonProperty("include_glossary") val includeGlossary: String? = null,
     @JsonProperty("glossary_name") val glossaryName: String? = null,
     @JsonProperty("include_details") val includeDetails: Boolean? = null,
+    @JsonProperty("email_addresses") val emailAddresses: String? = null,
 ) : CustomConfig()
