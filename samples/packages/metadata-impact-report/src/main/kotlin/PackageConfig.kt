@@ -3,9 +3,11 @@
 import com.atlan.Atlan
 import com.atlan.pkg.CustomPackage
 import com.atlan.pkg.config.model.ui.UIConfig
+import com.atlan.pkg.config.model.ui.UIRule
 import com.atlan.pkg.config.model.ui.UIStep
 import com.atlan.pkg.config.model.workflow.WorkflowOutputs
 import com.atlan.pkg.config.widgets.BooleanInput
+import com.atlan.pkg.config.widgets.Radio
 import com.atlan.pkg.config.widgets.TextInput
 import com.atlan.pkg.mdir.Reporter
 
@@ -24,6 +26,16 @@ object PackageConfig : CustomPackage(
                 title = "Configuration",
                 description = "Report configuration",
                 inputs = mapOf(
+                    "include_glossary" to Radio(
+                        label = "Generate glossary?",
+                        required = true,
+                        possibleValues = mapOf(
+                            "TRUE" to "Yes",
+                            "FALSE" to "No (Excel only)",
+                        ),
+                        default = "TRUE",
+                        help = "Whether to generate a glossary of metadata metrics used in the report. (An Excel will always be generated.)",
+                    ),
                     "glossary_name" to TextInput(
                         label = "Glossary name",
                         required = true,
@@ -41,6 +53,12 @@ object PackageConfig : CustomPackage(
                         help = "Whether to include detailed results (Yes), or only the headline metrics (No) in the Excel file produced.",
                     ),
                 ),
+            ),
+        ),
+        rules = listOf(
+            UIRule(
+                whenInputs = mapOf("include_glossary" to "TRUE"),
+                required = listOf("glossary_name"),
             ),
         ),
     ),

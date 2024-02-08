@@ -40,14 +40,14 @@ class ImpactReportTest : PackageTest() {
         Reporter.main(arrayOf(testDirectory))
     }
 
-    @Test
+    @Test(groups = ["create"])
     fun glossaryCreated() {
         val glossary = Glossary.findByName(glossaryName)
         assertNotNull(glossary)
         assertEquals(glossaryName, glossary.name)
     }
 
-    @Test
+    @Test(groups = ["create"])
     fun categoriesCreated() {
         val glossaryQN = Glossary.findByName(glossaryName).qualifiedName!!
         val request = GlossaryCategory.select()
@@ -67,7 +67,7 @@ class ImpactReportTest : PackageTest() {
         }
     }
 
-    @Test
+    @Test(groups = ["create"])
     fun termsCreated() {
         val glossaryQN = Glossary.findByName(glossaryName).qualifiedName!!
         val request = GlossaryTerm.select()
@@ -194,12 +194,23 @@ class ImpactReportTest : PackageTest() {
         }
     }
 
-    @Test
+    @Test(groups = ["runUpdate"], dependsOnGroups = ["create"])
+    fun rerunReport() {
+        setup(
+            MetadataImpactReportCfg(
+                glossaryName = glossaryName,
+                includeDetails = true,
+            ),
+        )
+        Reporter.main(arrayOf(testDirectory))
+    }
+
+    @Test(dependsOnGroups = ["create", "runUpdate"])
     fun filesCreated() {
         validateFilesExist(files)
     }
 
-    @org.testng.annotations.Test
+    @Test(dependsOnGroups = ["create", "runUpdate"])
     fun hasExpectedSheets() {
         val xlFile = "$testDirectory${File.separator}mdir.xlsx"
         ExcelReader(xlFile).use { xlsx ->
@@ -213,7 +224,7 @@ class ImpactReportTest : PackageTest() {
         }
     }
 
-    @Test
+    @Test(dependsOnGroups = ["create", "runUpdate"])
     fun errorFreeLog() {
         validateErrorFreeLog()
     }

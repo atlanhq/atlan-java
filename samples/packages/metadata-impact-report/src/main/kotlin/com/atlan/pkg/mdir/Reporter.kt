@@ -87,12 +87,27 @@ object Reporter {
         val outputDirectory = if (args.isEmpty()) "tmp" else args[0]
         val config = Utils.setPackageOps<MetadataImpactReportCfg>()
         val batchSize = 50
+        val includeGlossary = Utils.getOrDefault(config.includeGlossary, "TRUE") == "TRUE"
         val glossaryName = Utils.getOrDefault(config.glossaryName, "Metadata metrics")
         val includeDetails = Utils.getOrDefault(config.includeDetails, false)
 
-        val glossary = createGlossaryIdempotent(glossaryName)
-        val categoryNameToGuid = createCategoriesIdempotent(glossary)
-        runReports(outputDirectory, batchSize, includeDetails, glossary, categoryNameToGuid)
+        val ctx = if (includeGlossary) {
+            val glossary = createGlossaryIdempotent(glossaryName)
+            Context(
+                includeGlossary = true,
+                glossaryName = glossaryName,
+                includeDetails = includeDetails,
+                glossary = glossary,
+                categoryNameToGuid = createCategoriesIdempotent(glossary),
+            )
+        } else {
+            Context(
+                includeGlossary = false,
+                glossaryName = "",
+                includeDetails = includeDetails,
+            )
+        }
+        runReports(ctx, outputDirectory, batchSize)
     }
 
     private fun createGlossaryIdempotent(glossaryName: String): Glossary {
@@ -113,7 +128,7 @@ object Reporter {
         val batch = AssetBatch(Atlan.getDefaultClient(), 20)
         CATEGORIES.forEach { (name, description) ->
             val builder = try {
-                val found = GlossaryCategory.findByNameFast(name, glossary.qualifiedName, listOf(GlossaryCategory.ANCHOR))[0]
+                val found = GlossaryCategory.findByNameFast(name, glossary.qualifiedName)[0]
                 found.trimToRequired().guid(found.guid)
             } catch (e: NotFoundException) {
                 GlossaryCategory.creator(name, glossary)
@@ -123,14 +138,14 @@ object Reporter {
             batch.add(category)
         }
         batch.flush()
-        batch.resolvedGuids.forEach { (placeholder, resolved) ->
-            val name = placeholderToName[placeholder]!!
+        placeholderToName.forEach { (guid, name) ->
+            val resolved = batch.resolvedGuids.getOrDefault(guid, guid)
             nameToResolved[name] = resolved
         }
         return nameToResolved
     }
 
-    private fun runReports(outputDirectory: String, batchSize: Int, includeDetails: Boolean, glossary: Glossary, categoryNameToGuid: Map<String, String>) {
+    private fun runReports(ctx: Context, outputDirectory: String, batchSize: Int) {
         ExcelWriter("$outputDirectory${File.separator}mdir.xlsx").use { xlsx ->
             val overview = xlsx.createSheet("Overview")
             xlsx.addHeader(
@@ -148,8 +163,10 @@ object Reporter {
                 val metric = Metric.get(repClass, Atlan.getDefaultClient(), batchSize, logger)
                 logger.info { "Quantifying metric: ${metric.name} ..." }
                 val quantified = metric.quantify()
-                writeMetricToGlossary(metric, quantified, glossary, categoryNameToGuid)
-                writeMetricToExcel(metric, quantified, xlsx, overview, includeDetails)
+                if (ctx.includeGlossary) {
+                    writeMetricToGlossary(metric, quantified, ctx.glossary!!, ctx.categoryNameToGuid!!)
+                }
+                writeMetricToExcel(metric, quantified, xlsx, overview, ctx.includeDetails)
             }
         }
     }
@@ -197,4 +214,12 @@ object Reporter {
             metric.outputDetailedRecords(xlsx)
         }
     }
+
+    data class Context(
+        val includeGlossary: Boolean,
+        val glossaryName: String,
+        val includeDetails: Boolean,
+        val glossary: Glossary? = null,
+        val categoryNameToGuid: Map<String, String>? = null,
+    )
 }
