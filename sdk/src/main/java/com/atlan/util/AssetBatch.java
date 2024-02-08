@@ -552,7 +552,7 @@ public class AssetBatch {
                 for (Asset one : sent) {
                     String typeName = one.getTypeName();
                     String qualifiedName = one.getQualifiedName();
-                    AssetIdentity id = new AssetIdentity(typeName, qualifiedName.toLowerCase(Locale.ROOT));
+                    AssetIdentity id = new AssetIdentity(typeName, qualifiedName, true);
                     resolvedQualifiedNames.put(id, qualifiedName);
                 }
             }
