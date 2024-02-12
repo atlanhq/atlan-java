@@ -13,16 +13,12 @@ import com.atlan.model.assets.Asset;
 import com.atlan.model.assets.Connection;
 import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.enums.AtlanConnectorType;
-import com.atlan.model.enums.AtlanWorkflowPhase;
-import com.atlan.model.packages.ConnectionDelete;
-import com.atlan.model.workflow.Workflow;
-import com.atlan.model.workflow.WorkflowResponse;
-import com.atlan.net.HttpClient;
+import com.atlan.model.enums.AtlanDeleteType;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.Optional;
+import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
-import org.slf4j.event.Level;
 import org.testng.annotations.Test;
 
 /**
@@ -32,8 +28,6 @@ import org.testng.annotations.Test;
 public class ConnectionTest extends AtlanLiveTest {
 
     private static final String PREFIX = makeUnique("CONN");
-
-    private static final AtomicInteger retryCount = new AtomicInteger(0);
 
     /**
      * Create a new connection with a unique name.
@@ -89,48 +83,39 @@ public class ConnectionTest extends AtlanLiveTest {
     }
 
     /**
-     * Run the connection delete package for the specified connection, and block until it
-     * completes successfully.
+     * Delete all assets in the specified connection, then the connection itself,
+     * and block until it completes successfully.
      *
      * @param client connectivity to the Atlan tenant from which to purge the connection
      * @param qualifiedName of the connection to delete
      * @param log into which to write status information
-     * @throws AtlanException on any errors deleting the connection
+     * @throws AtlanException on any errors deleting the connection and its assets
      * @throws InterruptedException if the busy-wait loop for monitoring is interuppted
      */
     public static void deleteConnection(AtlanClient client, String qualifiedName, Logger log)
             throws AtlanException, InterruptedException {
-        try {
-            Workflow deleteWorkflow =
-                    ConnectionDelete.creator(qualifiedName, true).build().toWorkflow();
-            WorkflowResponse response = deleteWorkflow.run(client);
-            assertNotNull(response);
-            // If we get here we've succeeded in running, so we'll reset our retry counter
-            retryCount.set(0);
-            AtlanWorkflowPhase state = response.monitorStatus(log, Level.INFO, 420L);
-            assertNotNull(state);
-            if (state == AtlanWorkflowPhase.RUNNING) {
-                // If still running after 7 minutes, stop it (so it can then be archived)
-                log.warn("Stopping hung workflow...");
-                response = response.stop();
-                String workflowTemplateName =
-                        response.getSpec().getWorkflowTemplateRef().get("name");
-                state = response.monitorStatus(log, Level.INFO, 90L);
-                assertEquals(state, AtlanWorkflowPhase.FAILED); // Status for stop is FAILED
-                client.workflows.archive(workflowTemplateName);
+        List<String> guids =
+                client.assets.select().where(Asset.QUALIFIED_NAME.startsWith(qualifiedName)).pageSize(50).stream()
+                        .map(Asset::getGuid)
+                        .collect(Collectors.toList());
+        if (!guids.isEmpty()) {
+            int totalToDelete = guids.size();
+            log.info(" --- Purging {} assets from {}... ---", totalToDelete, qualifiedName);
+            if (totalToDelete < 20) {
+                client.assets.delete(guids, AtlanDeleteType.PURGE);
             } else {
-                assertEquals(state, AtlanWorkflowPhase.SUCCESS);
-                client.workflows.archive(response.getMetadata().getName());
+                for (int i = 0; i < totalToDelete; i += 20) {
+                    log.info(" ... next batch of 20 ({}%)", Math.round((i * 100.0) / totalToDelete));
+                    List<String> sublist = guids.subList(i, Math.min(i + 20, totalToDelete));
+                    client.assets.delete(sublist, AtlanDeleteType.PURGE);
+                }
             }
-        } catch (InvalidRequestException e) {
-            // Can happen if two deletion workflows are run at the same time,
-            // in which case we should wait a few seconds and try again
-            int attempt = retryCount.incrementAndGet();
-            log.warn("Race condition on parallel deletion, waiting to retry ({})...", attempt);
-            Thread.sleep(HttpClient.waitTime(attempt).toMillis());
-            if (attempt < Atlan.getMaxNetworkRetries()) {
-                deleteConnection(client, qualifiedName, log);
-            }
+        }
+        // Purge the connection itself, now that all assets are purged
+        Optional<Asset> found = Connection.select().where(Connection.QUALIFIED_NAME.eq(qualifiedName)).stream()
+                .findFirst();
+        if (found.isPresent()) {
+            client.assets.delete(found.get().getGuid(), AtlanDeleteType.PURGE).block();
         }
     }
 

@@ -272,8 +272,8 @@ class LinkTermsTest : PackageTest() {
     fun afterClass(context: ITestContext) {
         removeConnection(connectionName, connectorType)
         removeGlossary(glossaryName)
-        AtlanTagDef.purge(tag1)
-        AtlanTagDef.purge(tag2)
+        removeTag(tag1)
+        removeTag(tag2)
         teardown(context.failedTests.size() > 0)
     }
 }

@@ -491,8 +491,8 @@ class CreateThenUpsertRABTest : PackageTest() {
     @AfterClass(alwaysRun = true)
     fun afterClass(context: ITestContext) {
         removeConnection(conn1, conn1Type)
-        AtlanTagDef.purge(tag1)
-        AtlanTagDef.purge(tag2)
+        removeTag(tag1)
+        removeTag(tag2)
         teardown(context.failedTests.size() > 0)
     }
 }
