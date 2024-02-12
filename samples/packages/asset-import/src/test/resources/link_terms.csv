@@ -1,3 +1,7 @@
 qualifiedName,name,typeName,description,userDescription,sourceReadCount,sourceReadUserCount,ownerUsers,ownerGroups,assignedTerms,atlanTags
-{CONNECTION}/db/schema/test_table1,test_table1,Table,,,10,5,,,Test Term@@@{GLOSSARY},
-{CONNECTION}/db/schema/test_table2,test_table2,View,,,3,2,,,Test Term@@@{GLOSSARY},
+{CONNECTION}/db/schema/test_table1,test_table1,Table,,,10,5,,,Test Term@@@{GLOSSARY},"{TAG1}<<PROPAGATED
+{TAG2}<<PROPAGATED"
+{CONNECTION}/db/schema/test_table1/column1,column1,Column,,,,,,,,"{TAG1}<<PROPAGATED
+{TAG2}<<PROPAGATED"
+{CONNECTION}/db/schema/test_table2,test_table2,View,,,3,2,,,Test Term@@@{GLOSSARY},"{TAG1}>>NONE
+{TAG2}<<PROPAGATED"
