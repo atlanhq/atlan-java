@@ -129,13 +129,13 @@ public class AssetSerializer extends StdSerializer<Asset> {
                                         Reference relationship = (Reference) value;
                                         switch (relationship.getSemantic()) {
                                             case APPEND:
-                                                appendRelationships.put(serializeName, attrValue);
+                                                appendRelationships.put(serializeName, relationship);
                                                 break;
                                             case REMOVE:
-                                                removeRelationships.put(serializeName, attrValue);
+                                                removeRelationships.put(serializeName, relationship);
                                                 break;
                                             default:
-                                                attributes.put(serializeName, attrValue);
+                                                attributes.put(serializeName, relationship);
                                                 break;
                                         }
                                     }
