@@ -27,6 +27,7 @@ class Users(
                 "Enabled" to "Whether the user is allowed to login (true) or not (false)",
                 "Last login" to "Last date and time when the user logged into Atlan",
                 "Personas" to "Personas assigned to the user",
+                "License type" to "Type of license assigned to the user",
             ),
         )
         val client = Atlan.getDefaultClient()
@@ -45,6 +46,7 @@ class Users(
                     user.enabled,
                     TimestampXformer.encode(user.lastLoginTime),
                     personas,
+                    user.workspaceRole,
                 ),
             )
         }

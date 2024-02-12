@@ -36,7 +36,8 @@ public class UsersEndpoint extends HeraclesEndpoint {
             "createdTimestamp",
             "lastLoginTime",
             "loginEvents",
-            "isLocked");
+            "isLocked",
+            "workspaceRole");
 
     private static final String endpoint = "/users";
 
