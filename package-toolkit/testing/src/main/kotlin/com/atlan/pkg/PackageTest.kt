@@ -4,22 +4,19 @@ package com.atlan.pkg
 
 import com.atlan.Atlan
 import com.atlan.AtlanClient
-import com.atlan.exception.InvalidRequestException
+import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Connection
 import com.atlan.model.assets.Glossary
 import com.atlan.model.assets.GlossaryTerm
 import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.model.enums.AtlanDeleteType
-import com.atlan.model.enums.AtlanWorkflowPhase
-import com.atlan.model.packages.ConnectionDelete
 import com.atlan.model.search.IndexSearchRequest
 import com.atlan.model.search.IndexSearchResponse
 import com.atlan.net.HttpClient
 import com.atlan.serde.Serde
 import com.aventrix.jnanoid.jnanoid.NanoIdUtils
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
-import mu.KLogger
-import org.slf4j.event.Level
+import mu.KotlinLogging
 import org.testng.Assert.assertEquals
 import org.testng.Assert.assertFalse
 import org.testng.Assert.assertNotNull
@@ -32,6 +29,7 @@ import java.io.File
 import java.util.Random
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.math.min
+import kotlin.math.round
 
 /**
  * Base class that all package integration tests should extend.
@@ -166,6 +164,7 @@ abstract class PackageTest {
     }
 
     companion object {
+        private val logger = KotlinLogging.logger {}
 
         init {
             // Note that this must be set here to allow us to do any
@@ -220,40 +219,33 @@ abstract class PackageTest {
          * @param name of the connection
          * @param type of the connector
          */
-        fun removeConnection(name: String, type: AtlanConnectorType, logger: KLogger? = null) {
+        fun removeConnection(name: String, type: AtlanConnectorType) {
             val results = Connection.findByName(name, type)
             if (!results.isNullOrEmpty()) {
                 results.forEach {
-                    val deleteWorkflow = ConnectionDelete.creator(it.qualifiedName, true).build().toWorkflow()
-                    try {
-                        var response = deleteWorkflow.run(client)
-                        assertNotNull(response)
-                        // If we get here we've succeeded in running, so we'll reset our retry counter
-                        retryCount.set(0)
-                        var state = response.monitorStatus(logger, Level.INFO, 420L)
-                        assertNotNull(state)
-                        val workflowName = if (state == AtlanWorkflowPhase.RUNNING) {
-                            // If still running after 7 minutes, stop it (so it can then be archived)
-                            logger?.warn { "Stopping hung workflow..." }
-                            response = response.stop()
-                            state = response.monitorStatus(logger, Level.INFO, 60L)
-                            assertEquals(state, AtlanWorkflowPhase.FAILED)
-                            response.spec.workflowTemplateRef["name"]
+                    val assets = client.assets.select()
+                        .where(Asset.QUALIFIED_NAME.startsWith(it.qualifiedName))
+                        .pageSize(50)
+                        .stream()
+                        .map(Asset::getGuid)
+                        .toList()
+                    if (assets.isNotEmpty()) {
+                        val deletionType = AtlanDeleteType.PURGE
+                        val guidList = assets.toList()
+                        val totalToDelete = guidList.size
+                        logger.info { " --- Purging $totalToDelete assets from ${it.qualifiedName}... ---" }
+                        if (totalToDelete < 20) {
+                            client.assets.delete(guidList, deletionType)
                         } else {
-                            assertEquals(state, AtlanWorkflowPhase.SUCCESS)
-                            response.metadata.name
-                        }
-                        client.workflows.archive(workflowName)
-                    } catch (e: InvalidRequestException) {
-                        // Can happen if two deletion workflows are run at the same time,
-                        // in which case we should wait a few seconds and try again
-                        val attempt = retryCount.incrementAndGet()
-                        logger?.warn { "Race condition on parallel deletion, waiting to retry ($attempt)..." }
-                        Thread.sleep(HttpClient.waitTime(attempt).toMillis())
-                        if (attempt < Atlan.getMaxNetworkRetries()) {
-                            removeConnection(name, type, logger)
+                            for (i in 0..totalToDelete step 20) {
+                                logger.info { " ... next batch of 20 (${round((i.toDouble() / totalToDelete) * 100)}%)" }
+                                val sublist = guidList.subList(i, min(i + 20, totalToDelete))
+                                client.assets.delete(sublist, deletionType)
+                            }
                         }
                     }
+                    // Purge the connection itself, now that all assets are purged
+                    client.assets.delete(it.guid, AtlanDeleteType.PURGE)
                 }
             }
         }

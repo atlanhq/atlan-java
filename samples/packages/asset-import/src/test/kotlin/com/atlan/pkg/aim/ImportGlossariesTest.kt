@@ -460,8 +460,8 @@ class ImportGlossariesTest : PackageTest() {
 
     @AfterClass(alwaysRun = true)
     fun afterClass(context: ITestContext) {
-        Glossary.purge(Glossary.findByName(glossary1).guid)
-        Glossary.purge(Glossary.findByName(glossary2).guid)
+        removeGlossary(glossary1)
+        removeGlossary(glossary2)
         AtlanTagDef.purge(tag1)
         AtlanTagDef.purge(tag2)
         teardown(context.failedTests.size() > 0)

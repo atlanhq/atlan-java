@@ -5,13 +5,18 @@ package com.atlan.pkg.aim
 import AssetImportCfg
 import com.atlan.Atlan
 import com.atlan.model.assets.Asset
+import com.atlan.model.assets.Column
 import com.atlan.model.assets.Connection
 import com.atlan.model.assets.Glossary
 import com.atlan.model.assets.GlossaryTerm
 import com.atlan.model.assets.Table
 import com.atlan.model.assets.View
 import com.atlan.model.enums.AtlanConnectorType
+import com.atlan.model.enums.AtlanIcon
+import com.atlan.model.enums.AtlanTagColor
 import com.atlan.model.search.FluentSearch
+import com.atlan.model.typedefs.AtlanTagDef
+import com.atlan.net.RequestOptions
 import com.atlan.pkg.PackageTest
 import org.testng.ITestContext
 import org.testng.annotations.AfterClass
@@ -19,6 +24,7 @@ import org.testng.annotations.BeforeClass
 import java.nio.file.Paths
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
@@ -26,10 +32,12 @@ import kotlin.test.assertTrue
  * Test import of a very simple file containing assigned terms.
  */
 class LinkTermsTest : PackageTest() {
-
     private val glossaryName = makeUnique("ltg1")
     private val connectionName = makeUnique("ltc1")
     private val connectorType = AtlanConnectorType.GENERIC
+
+    private val tag1 = makeUnique("ltt1")
+    private val tag2 = makeUnique("ltt2")
 
     private val testFile = "input.csv"
     private val revisedFile = "revised.csv"
@@ -48,9 +56,22 @@ class LinkTermsTest : PackageTest() {
                 val revised = line
                     .replace("{GLOSSARY}", glossaryName)
                     .replace("{CONNECTION}", connectionQN)
+                    .replace("{TAG1}", tag1)
+                    .replace("{TAG2}", tag2)
                 output.appendText("$revised\n")
             }
         }
+    }
+
+    private fun createTags() {
+        val maxNetworkRetries = 30
+        val client = Atlan.getDefaultClient()
+        val t1 = AtlanTagDef.creator(tag1, AtlanIcon.ROCKET_LAUNCH, AtlanTagColor.YELLOW).build()
+        val t2 = AtlanTagDef.creator(tag2, AtlanIcon.ROCKET_LAUNCH, AtlanTagColor.YELLOW).build()
+        client.typeDefs.create(
+            listOf(t1, t2),
+            RequestOptions.from(client).maxNetworkRetries(maxNetworkRetries).build(),
+        )
     }
 
     private fun modifyFile() {
@@ -92,6 +113,7 @@ class LinkTermsTest : PackageTest() {
         createGlossary()
         val connection = createConnection()
         prepFile(connection.qualifiedName)
+        createTags()
         setup(
             AssetImportCfg(
                 assetsFile = Paths.get(testDirectory, testFile).toString(),
@@ -118,6 +140,7 @@ class LinkTermsTest : PackageTest() {
             .includeOnResults(Table.NAME)
             .includeOnResults(Table.SOURCE_READ_COUNT)
             .includeOnResults(Table.SOURCE_READ_USER_COUNT)
+            .includeOnResults(Table.ATLAN_TAGS)
             .toRequest()
         val response = retrySearchUntil(request, 1)
         val tables = response.assets
@@ -125,6 +148,7 @@ class LinkTermsTest : PackageTest() {
         assertEquals("test_table1", tables[0].name)
         assertEquals(10, tables[0].sourceReadCount)
         assertEquals(5, tables[0].sourceReadUserCount)
+        assertTrue(tables[0].atlanTags.isEmpty())
     }
 
     @Test(groups = ["create"])
@@ -135,6 +159,7 @@ class LinkTermsTest : PackageTest() {
             .includeOnResults(View.NAME)
             .includeOnResults(View.SOURCE_READ_COUNT)
             .includeOnResults(View.SOURCE_READ_USER_COUNT)
+            .includeOnResults(View.ATLAN_TAGS)
             .toRequest()
         val response = retrySearchUntil(request, 1)
         val views = response.assets
@@ -142,6 +167,24 @@ class LinkTermsTest : PackageTest() {
         assertEquals("test_table2", views[0].name)
         assertEquals(3, views[0].sourceReadCount)
         assertEquals(2, views[0].sourceReadUserCount)
+        assertEquals(1, views[0].atlanTags.size)
+        assertEquals(tag1, views[0].atlanTags.first().typeName)
+        assertFalse(views[0].atlanTags.first().propagate)
+    }
+
+    @Test(groups = ["create"])
+    fun columnCreated() {
+        val c = Connection.findByName(connectionName, connectorType)[0]!!
+        val request = Column.select()
+            .where(Column.QUALIFIED_NAME.startsWith(c.qualifiedName))
+            .includeOnResults(Column.NAME)
+            .includeOnResults(Column.ATLAN_TAGS)
+            .toRequest()
+        val response = retrySearchUntil(request, 1)
+        val columns = response.assets
+        assertEquals(1, columns.size)
+        assertEquals("column1", columns[0].name)
+        assertTrue(columns[0].atlanTags.isEmpty())
     }
 
     @Test(groups = ["create"])
@@ -229,6 +272,8 @@ class LinkTermsTest : PackageTest() {
     fun afterClass(context: ITestContext) {
         removeConnection(connectionName, connectorType)
         removeGlossary(glossaryName)
+        AtlanTagDef.purge(tag1)
+        AtlanTagDef.purge(tag2)
         teardown(context.failedTests.size() > 0)
     }
 }
