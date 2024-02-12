@@ -7,9 +7,23 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder
 
 @JsonPropertyOrder("name", "valueFrom")
 class ConfigMapEntry(
-    val name: String,
+    name: String,
     @JsonIgnore val configMapName: String,
     @JsonIgnore val configMapKey: String,
+    @JsonIgnore val default: String? = null,
 ) : NamedPair(name) {
-    val valueFrom = mapOf("configMapKeyRef" to mapOf("name" to configMapName, "key" to configMapKey))
+    val valueFrom = if (default != null) {
+        mapOf(
+            "default" to default,
+            "configMapKeyRef" to mapOf(
+                "name" to configMapName, "key" to configMapKey,
+            ),
+        )
+    } else {
+        mapOf(
+            "configMapKeyRef" to mapOf(
+                "name" to configMapName, "key" to configMapKey,
+            ),
+        )
+    }
 }

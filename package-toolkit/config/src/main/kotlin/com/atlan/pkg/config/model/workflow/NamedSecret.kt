@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder
 
 @JsonPropertyOrder("name", "valueFrom")
 class NamedSecret(
-    val name: String,
+    name: String,
     @JsonIgnore val secretName: String,
     @JsonIgnore val secretKey: String,
 ) : NamedPair(name) {
