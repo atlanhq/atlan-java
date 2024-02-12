@@ -5,7 +5,7 @@ package com.atlan.pkg.config.model.workflow
 import com.fasterxml.jackson.annotation.JsonPropertyOrder
 
 @JsonPropertyOrder("name", "path")
-data class NamePathPair(
-    val name: String,
+class NamePathPair(
+    name: String,
     val path: String,
 ) : NamedPair(name)

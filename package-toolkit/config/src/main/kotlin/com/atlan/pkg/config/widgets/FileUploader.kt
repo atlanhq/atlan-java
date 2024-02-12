@@ -45,5 +45,6 @@ class FileUploader(
         placeholder,
     ) {
         val accept: List<String> = fileTypes
+        val fileMetadata: Boolean = true
     }
 }

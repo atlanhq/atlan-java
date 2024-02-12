@@ -16,7 +16,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize
 
 @JsonPropertyOrder("name", "value")
 class NestedConfig(
-    val name: String,
+    name: String,
     @JsonSerialize(using = NestedConfigSerializer::class) val value: Map<String, Widget>,
 ) : NamedPair(name) {
     class NestedConfigSerializer : JsonSerializer<Map<String, Widget>>() {

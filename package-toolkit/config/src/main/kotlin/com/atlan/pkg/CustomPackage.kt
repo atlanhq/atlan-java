@@ -102,16 +102,16 @@ open class CustomPackage(
         workflowTemplate = WorkflowTemplate(
             name,
             WorkflowTemplateDefinition(
-                uiConfig,
-                WorkflowContainer(
+                config = uiConfig,
+                container = WorkflowContainer(
                     uiConfig,
                     containerImage,
                     command = command,
                     args = args,
                     containerImagePullPolicy,
                 ),
-                outputs,
-                name,
+                outputs = outputs,
+                pkgName = name,
             ),
         )
     }
