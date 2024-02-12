@@ -125,19 +125,31 @@ public class AssetSerializer extends StdSerializer<Asset> {
                                 Collection<?> values = (Collection<?>) attrValue;
                                 Optional<?> first = values.stream().findFirst();
                                 if (first.isPresent() && first.get() instanceof Reference) {
+                                    List<Object> appends = new ArrayList<>();
+                                    List<Object> removes = new ArrayList<>();
+                                    List<Object> replace = new ArrayList<>();
                                     for (Object value : values) {
                                         Reference relationship = (Reference) value;
                                         switch (relationship.getSemantic()) {
                                             case APPEND:
-                                                appendRelationships.put(serializeName, attrValue);
+                                                appends.add(relationship);
                                                 break;
                                             case REMOVE:
-                                                removeRelationships.put(serializeName, attrValue);
+                                                removes.add(relationship);
                                                 break;
                                             default:
-                                                attributes.put(serializeName, attrValue);
+                                                replace.add(relationship);
                                                 break;
                                         }
+                                    }
+                                    if (!appends.isEmpty()) {
+                                        appendRelationships.put(serializeName, appends);
+                                    }
+                                    if (!removes.isEmpty()) {
+                                        removeRelationships.put(serializeName, removes);
+                                    }
+                                    if (!replace.isEmpty()) {
+                                        attributes.put(serializeName, replace);
                                     }
                                 } else {
                                     attributes.put(serializeName, attrValue);
