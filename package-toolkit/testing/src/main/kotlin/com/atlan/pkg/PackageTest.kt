@@ -4,6 +4,7 @@ package com.atlan.pkg
 
 import com.atlan.Atlan
 import com.atlan.AtlanClient
+import com.atlan.exception.ConflictException
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Connection
 import com.atlan.model.assets.Glossary
@@ -12,6 +13,7 @@ import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.model.enums.AtlanDeleteType
 import com.atlan.model.search.IndexSearchRequest
 import com.atlan.model.search.IndexSearchResponse
+import com.atlan.model.typedefs.AtlanTagDef
 import com.atlan.net.HttpClient
 import com.atlan.serde.Serde
 import com.aventrix.jnanoid.jnanoid.NanoIdUtils
@@ -245,7 +247,27 @@ abstract class PackageTest {
                         }
                     }
                     // Purge the connection itself, now that all assets are purged
-                    client.assets.delete(it.guid, AtlanDeleteType.PURGE)
+                    client.assets.delete(it.guid, AtlanDeleteType.PURGE).block()
+                }
+            }
+        }
+
+        /**
+         * Remove the specified tag.
+         *
+         * @param displayName human-readable display name of the tag to remove
+         * @throws ConflictException if the tag cannot be removed because there are still references to it
+         */
+        @Throws(ConflictException::class)
+        fun removeTag(displayName: String, retryCount: Int = 0) {
+            try {
+                AtlanTagDef.purge(displayName)
+            } catch (e: ConflictException) {
+                if (retryCount < client.maxNetworkRetries) {
+                    Thread.sleep(HttpClient.waitTime(retryCount).toMillis())
+                    removeTag(displayName, retryCount + 1)
+                } else {
+                    throw e
                 }
             }
         }

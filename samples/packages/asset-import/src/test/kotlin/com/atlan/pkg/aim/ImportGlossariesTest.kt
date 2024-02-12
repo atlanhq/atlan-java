@@ -462,8 +462,8 @@ class ImportGlossariesTest : PackageTest() {
     fun afterClass(context: ITestContext) {
         removeGlossary(glossary1)
         removeGlossary(glossary2)
-        AtlanTagDef.purge(tag1)
-        AtlanTagDef.purge(tag2)
+        removeTag(tag1)
+        removeTag(tag2)
         teardown(context.failedTests.size() > 0)
     }
 }
