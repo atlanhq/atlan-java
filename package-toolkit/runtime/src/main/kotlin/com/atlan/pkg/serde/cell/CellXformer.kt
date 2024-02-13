@@ -116,7 +116,7 @@ object CellXformer {
         return if (values.isNullOrEmpty()) {
             listOf()
         } else {
-            values.split(LIST_DELIMITER)
+            values.split(LIST_DELIMITER).map { it.trim() }
         }
     }
 }
