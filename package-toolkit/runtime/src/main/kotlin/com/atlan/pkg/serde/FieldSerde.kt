@@ -107,7 +107,7 @@ object FieldSerde {
         return if (value.isNullOrEmpty()) {
             listOf()
         } else {
-            value.split(CellXformer.LIST_DELIMITER)
+            value.split(CellXformer.LIST_DELIMITER).map { it.trim() }
         }
     }
 
