@@ -24,7 +24,7 @@ public class FileTest extends AtlanLiveTest {
 
     private static final String PREFIX = makeUnique("File");
 
-    public static final AtlanConnectorType CONNECTOR_TYPE = AtlanConnectorType.API;
+    public static final AtlanConnectorType CONNECTOR_TYPE = AtlanConnectorType.FILE;
     public static final String CONNECTION_NAME = PREFIX;
     private static final String FILE_NAME = PREFIX + "-file.pdf";
 
