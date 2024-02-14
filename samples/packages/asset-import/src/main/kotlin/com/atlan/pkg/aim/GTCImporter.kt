@@ -66,17 +66,17 @@ abstract class GTCImporter(
     }
 
     /**
-     * Calculate a fallback qualifiedName, if the qualifiedName value in this row is empty.
+     * Determine the qualifiedName for the glossary, term or category, irrespective of whether it is
+     * present in the input file or not. Since these qualifiedNames are generated, and the object may
+     * have been created in a previous pass (and cached), we can resolve to its known qualifiedName
+     * here based on the information in the row of the input file.
      *
      * @param deserializer a row of deserialized values
      * @return the qualifiedName, calculated from the deserialized values
      */
     private fun generateQualifiedName(deserializer: RowDeserializer): String {
-        val qn = deserializer.getValue(Asset.QUALIFIED_NAME.atlanFieldName)?.let { it as String } ?: ""
-        return qn.ifBlank {
-            val cacheId = getCacheId(deserializer)
-            cache.getByIdentity(cacheId)?.qualifiedName ?: cacheId
-        }
+        val cacheId = getCacheId(deserializer)
+        return cache.getByIdentity(cacheId)?.qualifiedName ?: cacheId
     }
 
     /**
