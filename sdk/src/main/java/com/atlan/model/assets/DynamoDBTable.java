@@ -175,6 +175,7 @@ public class DynamoDBTable extends Asset
 
     /** Time (epoch) at which this asset was last profiled, in milliseconds. */
     @Attribute
+    @Date
     Long lastProfiledAt;
 
     /** Represents attributes for describing the key schema for the table and indexes. */
@@ -219,6 +220,7 @@ public class DynamoDBTable extends Asset
 
     /** Time (epoch) at which the query count was last updated, in milliseconds. */
     @Attribute
+    @Date
     Long queryCountUpdatedAt;
 
     /** Configuration for preview queries. */

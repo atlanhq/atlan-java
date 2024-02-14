@@ -60,6 +60,7 @@ public class GCSBucket extends Asset
 
     /** Effective time for retention of objects in this bucket. */
     @Attribute
+    @Date
     Long gcsBucketRetentionEffectiveTime;
 
     /** Whether retention is locked for this bucket (true) or not (false). */

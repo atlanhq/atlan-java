@@ -94,6 +94,7 @@ public class SodaCheck extends Asset implements ISodaCheck, ISoda, IDataQuality,
 
     /** TBC */
     @Attribute
+    @Date
     Long sodaCheckLastScanAt;
 
     /**

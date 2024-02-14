@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.serde.cell
 
+import com.atlan.cache.ReflectionCache
 import com.atlan.model.assets.Asset
 import com.atlan.model.core.AtlanTag
 import com.atlan.model.enums.AtlanEnum
@@ -14,15 +15,16 @@ object CellXformer {
     const val LIST_DELIMITER = "\n"
 
     fun encode(
-        guid: String,
         value: Any?,
+        guid: String,
+        dates: Boolean,
     ): String {
         return when (value) {
             is String -> value
             is Collection<*> -> {
                 val list = mutableListOf<String>()
                 for (element in value) {
-                    val encoded = encode(guid, element)
+                    val encoded = encode(element, guid, dates)
                     list.add(encoded)
                 }
                 return getDelimitedList(list)
@@ -30,7 +32,7 @@ object CellXformer {
             is Map<*, *> -> {
                 val list = mutableListOf<String>()
                 for ((key, embeddedValue) in value) {
-                    list.add(key.toString() + "=" + encode(guid, embeddedValue))
+                    list.add(key.toString() + "=" + encode(embeddedValue, guid, dates))
                 }
                 return getDelimitedList(list)
             }
@@ -38,6 +40,13 @@ object CellXformer {
             is AtlanEnum -> EnumXformer.encode(value)
             is AtlanStruct -> StructXformer.encode(value)
             is AtlanTag -> AtlanTagXformer.encode(guid, value)
+            is Long -> {
+                if (dates) {
+                    TimestampXformer.encode(value)
+                } else {
+                    value.toString()
+                }
+            }
             is Any -> value.toString()
             else -> ""
         }
@@ -65,7 +74,11 @@ object CellXformer {
         } else if (Integer::class.java.isAssignableFrom(type) || java.lang.Integer::class.java.isAssignableFrom(type)) {
             value.toInt()
         } else if (Long::class.java.isAssignableFrom(type) || java.lang.Long::class.java.isAssignableFrom(type)) {
-            value.toLong()
+            if (ReflectionCache.isDate(type, fieldName)) {
+                TimestampXformer.decode(value, fieldName)
+            } else {
+                value.toLong()
+            }
         } else if (Double::class.java.isAssignableFrom(type) || java.lang.Double::class.java.isAssignableFrom(type)) {
             value.toDouble()
         } else if (Collection::class.java.isAssignableFrom(type)) {

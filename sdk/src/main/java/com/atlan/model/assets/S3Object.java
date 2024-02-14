@@ -140,6 +140,7 @@ public class S3Object extends Asset
 
     /** Time (epoch) at which this object was last updated, in milliseconds, or when it was created if it has never been modified. */
     @Attribute
+    @Date
     Long s3ObjectLastModifiedTime;
 
     /** Object size in bytes. */

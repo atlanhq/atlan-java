@@ -136,6 +136,7 @@ public class MongoDBCollection extends Asset
 
     /** Time (epoch) at which this asset was last profiled, in milliseconds. */
     @Attribute
+    @Date
     Long lastProfiledAt;
 
     /** Average size of an object in the collection. */
@@ -232,6 +233,7 @@ public class MongoDBCollection extends Asset
 
     /** Time (epoch) at which the query count was last updated, in milliseconds. */
     @Attribute
+    @Date
     Long queryCountUpdatedAt;
 
     /** Configuration for preview queries. */

@@ -89,6 +89,11 @@ public class Purpose extends Asset implements IPurpose, IAccessControl, IAsset, 
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<String> displayPreferences;
+
+    /** TBC */
+    @Attribute
     Boolean isAccessControlEnabled;
 
     /** TBC */

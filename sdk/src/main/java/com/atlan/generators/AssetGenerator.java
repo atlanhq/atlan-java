@@ -363,6 +363,10 @@ public class AssetGenerator extends TypeGenerator implements Comparable<AssetGen
             return null;
         }
 
+        public boolean isDate() {
+            return getType().getOriginalBase().toLowerCase(Locale.ROOT).equals("date");
+        }
+
         private Map<IndexType, String> getIndexesForAttribute(AttributeDef attributeDef) {
 
             Map<IndexType, String> searchable = new LinkedHashMap<>();

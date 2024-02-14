@@ -272,6 +272,7 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
 
     /** Time (epoch) at which this asset was last profiled, in milliseconds. */
     @Attribute
+    @Date
     Long lastProfiledAt;
 
     /** Materialized view in which this column exists. */
@@ -333,6 +334,7 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
 
     /** Time (epoch) at which this column was pinned, in milliseconds. */
     @Attribute
+    @Date
     Long pinnedAt;
 
     /** User who pinned this column. */
@@ -354,6 +356,7 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
 
     /** Time (epoch) at which the query count was last updated, in milliseconds. */
     @Attribute
+    @Date
     Long queryCountUpdatedAt;
 
     /** Number of unique users who have queried this asset. */

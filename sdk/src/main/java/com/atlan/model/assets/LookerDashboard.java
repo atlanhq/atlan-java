@@ -81,10 +81,12 @@ public class LookerDashboard extends Asset implements ILookerDashboard, ILooker,
 
     /** Timestamp (epoch) when the dashboard was last accessed by a user, in milliseconds. */
     @Attribute
+    @Date
     Long sourceLastAccessedAt;
 
     /** Timestamp (epoch) when the dashboard was last viewed by a user. */
     @Attribute
+    @Date
     Long sourceLastViewedAt;
 
     /** Identifier of the dashboard's content metadata, from Looker. */

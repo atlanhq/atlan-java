@@ -57,6 +57,7 @@ public class AirflowDag extends Asset implements IAirflowDag, IAirflow, ICatalog
 
     /** End time of the run. */
     @Attribute
+    @Date
     Long airflowRunEndTime;
 
     /** Name of the run. */
@@ -73,6 +74,7 @@ public class AirflowDag extends Asset implements IAirflowDag, IAirflow, ICatalog
 
     /** Start time of the run. */
     @Attribute
+    @Date
     Long airflowRunStartTime;
 
     /** Type of the run. */

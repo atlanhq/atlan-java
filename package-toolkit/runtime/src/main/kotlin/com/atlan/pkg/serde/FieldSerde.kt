@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.serde
 
+import com.atlan.Atlan
 import com.atlan.cache.ReflectionCache
 import com.atlan.model.assets.Asset
 import com.atlan.model.fields.AtlanField
@@ -32,15 +33,22 @@ object FieldSerde {
         field: AtlanField,
         logger: KLogger,
     ): String {
-        val value =
-            if (field is CustomMetadataField) {
-                asset.getCustomMetadata(field.setName, field.attributeName)
-            } else {
-                val deserializedName = ReflectionCache.getDeserializedName(asset.javaClass, field.atlanFieldName)
-                ReflectionCache.getValue(asset, deserializedName)
-            }
+        val value: Any?
+        val dates: Boolean
+        if (field is CustomMetadataField) {
+            val client = Atlan.getDefaultClient()
+            value = asset.getCustomMetadata(field.setName, field.attributeName)
+            val attrId = client.customMetadataCache.getAttrIdForName(field.setName, field.attributeName)
+            val attrDef = client.customMetadataCache.getAttributeDef(attrId)
+            dates = attrDef.typeName.lowercase() == "date"
+        } else {
+            val deserializedName = ReflectionCache.getDeserializedName(asset.javaClass, field.atlanFieldName)
+            value = ReflectionCache.getValue(asset, deserializedName)
+            // TODO: confirm whether we should use this field name or the deserializedName
+            dates = ReflectionCache.isDate(asset.javaClass, field.atlanFieldName)
+        }
         return try {
-            CellXformer.encode(asset.guid, value)
+            CellXformer.encode(value, asset.guid, dates)
         } catch (e: Exception) {
             if (FAIL_ON_ERRORS.get()) {
                 throw e

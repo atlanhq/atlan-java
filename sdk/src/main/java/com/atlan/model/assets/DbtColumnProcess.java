@@ -91,6 +91,7 @@ public class DbtColumnProcess extends Asset
 
     /** TBC */
     @Attribute
+    @Date
     Long dbtJobLastRun;
 
     /** TBC */
@@ -99,6 +100,7 @@ public class DbtColumnProcess extends Asset
 
     /** TBC */
     @Attribute
+    @Date
     Long dbtJobNextRun;
 
     /** TBC */

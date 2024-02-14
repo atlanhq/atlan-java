@@ -86,6 +86,7 @@ public class DbtProcess extends Asset implements IDbtProcess, IDbt, ILineageProc
 
     /** TBC */
     @Attribute
+    @Date
     Long dbtJobLastRun;
 
     /** TBC */
@@ -94,6 +95,7 @@ public class DbtProcess extends Asset implements IDbtProcess, IDbt, ILineageProc
 
     /** TBC */
     @Attribute
+    @Date
     Long dbtJobNextRun;
 
     /** TBC */

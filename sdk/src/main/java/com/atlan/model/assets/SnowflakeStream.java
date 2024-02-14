@@ -88,6 +88,7 @@ public class SnowflakeStream extends Asset implements ISnowflakeStream, ISQL, IC
 
     /** Time (epoch) at which this asset was last profiled, in milliseconds. */
     @Attribute
+    @Date
     Long lastProfiledAt;
 
     /** Tasks from which this asset is output. */
@@ -106,6 +107,7 @@ public class SnowflakeStream extends Asset implements ISnowflakeStream, ISQL, IC
 
     /** Time (epoch) at which the query count was last updated, in milliseconds. */
     @Attribute
+    @Date
     Long queryCountUpdatedAt;
 
     /** Number of unique users who have queried this asset. */
@@ -144,6 +146,7 @@ public class SnowflakeStream extends Asset implements ISnowflakeStream, ISQL, IC
 
     /** Time (epoch) after which this stream will be stale, in milliseconds. */
     @Attribute
+    @Date
     Long snowflakeStreamStaleAfter;
 
     /** Type of this stream, for example: standard, append-only, insert-only, etc. */

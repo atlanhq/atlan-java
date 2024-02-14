@@ -36,9 +36,11 @@
     final String updatedBy;
 
     /** Time (epoch) at which the asset was created, in milliseconds. */
+    @Date
     final Long createTime;
 
     /** Time (epoch) at which the asset was last updated, in milliseconds. */
+    @Date
     final Long updateTime;
 
     /** Details on the handler used for deletion of the asset. */

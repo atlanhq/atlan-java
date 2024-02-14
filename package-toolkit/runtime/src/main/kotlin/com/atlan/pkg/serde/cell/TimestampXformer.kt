@@ -3,11 +3,11 @@
 package com.atlan.pkg.serde.cell
 
 import java.time.Instant
-import java.time.ZoneOffset
-import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
 object TimestampXformer {
+
+    private val FORMATTER = DateTimeFormatter.ISO_INSTANT
 
     /**
      * Encodes (serializes) an epoch-based numeric timestamp into a human-readable date
@@ -20,8 +20,7 @@ object TimestampXformer {
         return if (ts == null) {
             ""
         } else {
-            ZonedDateTime.ofInstant(Instant.ofEpochMilli(ts), ZoneOffset.UTC)
-                .format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+            FORMATTER.format(Instant.ofEpochMilli(ts))
         }
     }
 
@@ -34,9 +33,27 @@ object TimestampXformer {
      * @return an epoch-based numeric timestamp
      */
     fun decode(
-        ts: String,
+        ts: String?,
         fieldName: String,
-    ): Long {
-        TODO("Not yet implemented")
+    ): Long? {
+        return if (ts.isNullOrBlank()) {
+            null
+        } else {
+            FORMATTER.parse(ts, Instant::from).toEpochMilli()
+        }
+    }
+
+    /**
+     * Decodes (deserializes) a numeric timestamp into an epoch-based numeric timestamp.
+     *
+     * @param ts epoch-based numeric timestamp
+     * @param fieldName name of the field where the timestamp appears
+     * @return the epoch-based numeric timestamp
+     */
+    fun decode(
+        ts: Long?,
+        fieldName: String,
+    ): Long? {
+        return ts
     }
 }

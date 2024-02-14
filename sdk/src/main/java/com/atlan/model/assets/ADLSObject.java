@@ -78,6 +78,7 @@ public class ADLSObject extends Asset
 
     /** Time (epoch) when the acccess tier for this object was last modified, in milliseconds. */
     @Attribute
+    @Date
     Long adlsObjectAccessTierLastModifiedTime;
 
     /** Archive status of this object. */
