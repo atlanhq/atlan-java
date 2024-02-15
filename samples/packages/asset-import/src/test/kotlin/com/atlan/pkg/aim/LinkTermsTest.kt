@@ -141,6 +141,7 @@ class LinkTermsTest : PackageTest() {
             .includeOnResults(Table.SOURCE_READ_COUNT)
             .includeOnResults(Table.SOURCE_READ_USER_COUNT)
             .includeOnResults(Table.ATLAN_TAGS)
+            .includeOnResults(Table.LAST_ROW_CHANGED_AT)
             .toRequest()
         val response = retrySearchUntil(request, 1)
         val tables = response.assets
@@ -149,6 +150,7 @@ class LinkTermsTest : PackageTest() {
         assertEquals(10, tables[0].sourceReadCount)
         assertEquals(5, tables[0].sourceReadUserCount)
         assertTrue(tables[0].atlanTags.isEmpty())
+        assertEquals(1708035825000L, tables[0].lastRowChangedAt)
     }
 
     @Test(groups = ["create"])
@@ -233,6 +235,7 @@ class LinkTermsTest : PackageTest() {
             .includeOnResults(Table.NAME)
             .includeOnResults(Table.ASSIGNED_TERMS)
             .includeOnResults(Table.DESCRIPTION)
+            .includeOnResults(Table.LAST_ROW_CHANGED_AT)
             .includeOnRelations(GlossaryTerm.NAME)
             .toRequest()
         val response = retrySearchUntil(request, 1)
@@ -242,6 +245,7 @@ class LinkTermsTest : PackageTest() {
         assertEquals(1, tables[0].assignedTerms.size)
         assertEquals("Test Term", tables[0].assignedTerms.first().name)
         assertNull(tables[0].description)
+        assertEquals(1708035825000L, tables[0].lastRowChangedAt)
     }
 
     @Test(groups = ["update"], dependsOnGroups = ["runUpdate"])

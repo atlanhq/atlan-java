@@ -169,6 +169,7 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
 
     /** TBC */
     @Attribute
+    @Date
     Long vectorEmbeddingsUpdatedAt;
 
     /**

@@ -1,6 +1,7 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2023 Atlan Pte. Ltd. */
 import com.atlan.model.assets.Asset
+import com.atlan.model.fields.CustomMetadataField
 import com.atlan.pkg.Utils
 import com.atlan.pkg.aim.Importer
 import com.atlan.pkg.serde.RowSerde
@@ -46,7 +47,7 @@ object EnrichmentMigrator {
             }
         } else {
             defaultAttrsToExtract.forEach {
-                if (!it.atlanFieldName.contains(RowSerde.CM_HEADING_DELIMITER)) {
+                if (it !is CustomMetadataField) {
                     val fieldName = RowSerde.getHeaderForField(it)
                     start.add(fieldName)
                 }
@@ -62,7 +63,7 @@ object EnrichmentMigrator {
             start.toList()
         } else {
             defaultAttrsToExtract.forEach {
-                if (it.atlanFieldName.contains(RowSerde.CM_HEADING_DELIMITER)) {
+                if (it is CustomMetadataField) {
                     val fieldName = RowSerde.getHeaderForField(it)
                     start.add(fieldName)
                 }

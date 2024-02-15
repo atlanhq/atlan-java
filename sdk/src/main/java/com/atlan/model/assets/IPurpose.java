@@ -300,6 +300,9 @@ public interface IPurpose {
     String getDisplayName();
 
     /** TBC */
+    SortedSet<String> getDisplayPreferences();
+
+    /** TBC */
     SortedSet<IFile> getFiles();
 
     /** Whether this asset has lineage (true) or not (false). */

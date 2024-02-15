@@ -100,6 +100,7 @@ public class GCSObject extends Asset
 
     /** Time (epoch) at which this object's data was last modified, in milliseconds. */
     @Attribute
+    @Date
     Long gcsObjectDataLastModifiedTime;
 
     /** Generation ID of this object. */
@@ -124,6 +125,7 @@ public class GCSObject extends Asset
 
     /** Retention expiration date of this object. */
     @Attribute
+    @Date
     Long gcsObjectRetentionExpirationDate;
 
     /** Object size in bytes. */

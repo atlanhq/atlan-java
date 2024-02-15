@@ -488,6 +488,8 @@ public enum KeywordFields implements AtlanSearchableField {
     DETAIL_COLUMNS("detailColumns"),
     /** Human-readable name of this asset used for display purposes (in user interface). */
     DISPLAY_NAME("displayName.keyword"),
+    /** TBC */
+    DISPLAY_PREFERENCES("displayPreferences"),
     /** Specifies the partition key of the DynamoDB Table/Index */
     DYNAMO_DB_PARTITION_KEY("dynamoDBPartitionKey"),
     /** Specifies attributes that are projected from the DynamoDB table into the index */

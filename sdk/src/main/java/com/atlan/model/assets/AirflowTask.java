@@ -61,6 +61,7 @@ public class AirflowTask extends Asset implements IAirflowTask, IAirflow, ICatal
 
     /** End time of the run. */
     @Attribute
+    @Date
     Long airflowRunEndTime;
 
     /** Name of the run. */
@@ -77,6 +78,7 @@ public class AirflowTask extends Asset implements IAirflowTask, IAirflow, ICatal
 
     /** Start time of the run. */
     @Attribute
+    @Date
     Long airflowRunStartTime;
 
     /** Type of the run. */

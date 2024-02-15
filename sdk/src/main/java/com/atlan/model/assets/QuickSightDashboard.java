@@ -74,6 +74,7 @@ public class QuickSightDashboard extends Asset
 
     /** Time (epoch) at which this dashboard was last published, in milliseconds. */
     @Attribute
+    @Date
     Long quickSightDashboardLastPublishedTime;
 
     /** Version number of the published dashboard. */

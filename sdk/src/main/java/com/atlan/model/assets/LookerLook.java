@@ -96,10 +96,12 @@ public class LookerLook extends Asset implements ILookerLook, ILooker, IBI, ICat
 
     /** Time (epoch) when the Look was last accessed by a user, in milliseconds. */
     @Attribute
+    @Date
     Long sourceLastAccessedAt;
 
     /** Time (epoch) when the Look was last viewed by a user, in milliseconds. */
     @Attribute
+    @Date
     Long sourceLastViewedAt;
 
     /** Identifier of the query for the Look, from Looker. */

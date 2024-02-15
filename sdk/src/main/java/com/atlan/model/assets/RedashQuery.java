@@ -74,6 +74,7 @@ public class RedashQuery extends Asset implements IRedashQuery, IRedash, IBI, IC
 
     /** Time (epoch) when this query was last executed, in milliseconds. */
     @Attribute
+    @Date
     Long redashQueryLastExecutedAt;
 
     /** Elapsed time of the last execution of this query. */

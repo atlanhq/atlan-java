@@ -77,6 +77,7 @@ public class DbtModel extends Asset implements IDbtModel, IDbt, ICatalog, IAsset
 
     /** TBC */
     @Attribute
+    @Date
     Long dbtJobLastRun;
 
     /** TBC */
@@ -85,6 +86,7 @@ public class DbtModel extends Asset implements IDbtModel, IDbt, ICatalog, IAsset
 
     /** TBC */
     @Attribute
+    @Date
     Long dbtJobNextRun;
 
     /** TBC */
@@ -123,18 +125,22 @@ public class DbtModel extends Asset implements IDbtModel, IDbt, ICatalog, IAsset
 
     /** TBC */
     @Attribute
+    @Date
     Long dbtModelCompileCompletedAt;
 
     /** TBC */
     @Attribute
+    @Date
     Long dbtModelCompileStartedAt;
 
     /** TBC */
     @Attribute
+    @Date
     Long dbtModelExecuteCompletedAt;
 
     /** TBC */
     @Attribute
+    @Date
     Long dbtModelExecuteStartedAt;
 
     /** TBC */
@@ -147,6 +153,7 @@ public class DbtModel extends Asset implements IDbtModel, IDbt, ICatalog, IAsset
 
     /** TBC */
     @Attribute
+    @Date
     Long dbtModelRunGeneratedAt;
 
     /** TBC */

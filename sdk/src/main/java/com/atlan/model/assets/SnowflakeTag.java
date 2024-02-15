@@ -89,6 +89,7 @@ public class SnowflakeTag extends Asset implements ISnowflakeTag, ITag, ISQL, IC
 
     /** Time (epoch) at which this asset was last profiled, in milliseconds. */
     @Attribute
+    @Date
     Long lastProfiledAt;
 
     /** Name of the classification in Atlan that is mapped to this tag. */
@@ -112,6 +113,7 @@ public class SnowflakeTag extends Asset implements ISnowflakeTag, ITag, ISQL, IC
 
     /** Time (epoch) at which the query count was last updated, in milliseconds. */
     @Attribute
+    @Date
     Long queryCountUpdatedAt;
 
     /** Number of unique users who have queried this asset. */

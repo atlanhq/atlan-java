@@ -109,10 +109,12 @@ public class MCMonitor extends Asset
 
     /** Time at which the next execution of the rule should occur. */
     @Attribute
+    @Date
     Long mcMonitorRuleNextExecutionTime;
 
     /** Time at which the previous execution of the rule occurred. */
     @Attribute
+    @Date
     Long mcMonitorRulePreviousExecutionTime;
 
     /** Schedule details for the rule. */
