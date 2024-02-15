@@ -74,14 +74,17 @@ public class SisenseDatamodel extends Asset
 
     /** Time (epoch) when this datamodel was last built, in milliseconds. */
     @Attribute
+    @Date
     Long sisenseDatamodelLastBuildTime;
 
     /** Time (epoch) when this datamodel was last published, in milliseconds. */
     @Attribute
+    @Date
     Long sisenseDatamodelLastPublishTime;
 
     /** Time (epoch) when this datamodel was last built successfully, in milliseconds. */
     @Attribute
+    @Date
     Long sisenseDatamodelLastSuccessfulBuildTime;
 
     /** Default relation type for this datamodel. 'extract' type Datamodels have regular relations by default. 'live' type Datamodels have direct relations by default. */

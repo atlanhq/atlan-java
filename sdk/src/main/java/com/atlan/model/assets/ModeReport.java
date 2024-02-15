@@ -108,6 +108,7 @@ public class ModeReport extends Asset implements IModeReport, IMode, IBI, ICatal
 
     /** TBC */
     @Attribute
+    @Date
     Long modeReportPublishedAt;
 
     /** TBC */

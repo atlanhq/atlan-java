@@ -75,6 +75,7 @@ public class DbtMetric extends Asset
 
     /** TBC */
     @Attribute
+    @Date
     Long dbtJobLastRun;
 
     /** TBC */
@@ -83,6 +84,7 @@ public class DbtMetric extends Asset
 
     /** TBC */
     @Attribute
+    @Date
     Long dbtJobNextRun;
 
     /** TBC */

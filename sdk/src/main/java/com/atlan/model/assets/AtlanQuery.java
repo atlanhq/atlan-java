@@ -119,6 +119,7 @@ public class AtlanQuery extends Asset implements IAtlanQuery, ISQL, ICatalog, IA
 
     /** TBC */
     @Attribute
+    @Date
     Long lastProfiledAt;
 
     /** TBC */
@@ -149,6 +150,7 @@ public class AtlanQuery extends Asset implements IAtlanQuery, ISQL, ICatalog, IA
 
     /** TBC */
     @Attribute
+    @Date
     Long queryCountUpdatedAt;
 
     /** TBC */

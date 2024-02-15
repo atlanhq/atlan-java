@@ -70,6 +70,7 @@ public class DbtTag extends Asset implements IDbtTag, IDbt, ITag, ICatalog, IAss
 
     /** TBC */
     @Attribute
+    @Date
     Long dbtJobLastRun;
 
     /** TBC */
@@ -78,6 +79,7 @@ public class DbtTag extends Asset implements IDbtTag, IDbt, ITag, ICatalog, IAss
 
     /** TBC */
     @Attribute
+    @Date
     Long dbtJobNextRun;
 
     /** TBC */

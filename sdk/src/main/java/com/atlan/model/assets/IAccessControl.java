@@ -56,6 +56,9 @@ public interface IAccessControl {
     KeywordField DENY_NAVIGATION_PAGES = new KeywordField("denyNavigationPages", "denyNavigationPages");
 
     /** TBC */
+    KeywordField DISPLAY_PREFERENCES = new KeywordField("displayPreferences", "displayPreferences");
+
+    /** TBC */
     BooleanField IS_ACCESS_CONTROL_ENABLED = new BooleanField("isAccessControlEnabled", "isAccessControlEnabled");
 
     /** TBC */
@@ -324,6 +327,9 @@ public interface IAccessControl {
 
     /** Human-readable name of this asset used for display purposes (in user interface). */
     String getDisplayName();
+
+    /** TBC */
+    SortedSet<String> getDisplayPreferences();
 
     /** TBC */
     SortedSet<IFile> getFiles();

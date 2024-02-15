@@ -109,6 +109,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 import com.atlan.model.assets.Attribute;
+import com.atlan.model.assets.Date;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.assets.IGlossaryTerm;
 <#list superTypes as parent>
@@ -161,6 +162,7 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
 <#list classAttributes as attribute>
     /** ${attribute.description} */
     @Attribute
+    <#if attribute.date>@Date</#if>
     <#if attribute.singular??>@Singular<#if attribute.singular?has_content>("${attribute.singular}")</#if></#if>
     <#if className == "GlossaryCategory" && attribute.renamed == "childrenCategories">@Setter(AccessLevel.PACKAGE)</#if>
     <#if attribute.renamed != attribute.originalName>

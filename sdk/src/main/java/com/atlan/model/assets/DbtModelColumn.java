@@ -68,6 +68,7 @@ public class DbtModelColumn extends Asset implements IDbtModelColumn, IDbt, ICat
 
     /** TBC */
     @Attribute
+    @Date
     Long dbtJobLastRun;
 
     /** TBC */
@@ -76,6 +77,7 @@ public class DbtModelColumn extends Asset implements IDbtModelColumn, IDbt, ICat
 
     /** TBC */
     @Attribute
+    @Date
     Long dbtJobNextRun;
 
     /** TBC */

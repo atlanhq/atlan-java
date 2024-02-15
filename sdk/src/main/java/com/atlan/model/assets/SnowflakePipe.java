@@ -92,6 +92,7 @@ public class SnowflakePipe extends Asset implements ISnowflakePipe, ISQL, ICatal
 
     /** Time (epoch) at which this asset was last profiled, in milliseconds. */
     @Attribute
+    @Date
     Long lastProfiledAt;
 
     /** Tasks from which this asset is output. */
@@ -110,6 +111,7 @@ public class SnowflakePipe extends Asset implements ISnowflakePipe, ISQL, ICatal
 
     /** Time (epoch) at which the query count was last updated, in milliseconds. */
     @Attribute
+    @Date
     Long queryCountUpdatedAt;
 
     /** Number of unique users who have queried this asset. */

@@ -90,6 +90,11 @@ public class Persona extends Asset implements IPersona, IAccessControl, IAsset, 
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<String> displayPreferences;
+
+    /** TBC */
+    @Attribute
     Boolean isAccessControlEnabled;
 
     /** TBC */

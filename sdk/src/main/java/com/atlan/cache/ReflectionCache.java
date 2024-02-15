@@ -4,6 +4,7 @@ package com.atlan.cache;
 
 import com.atlan.model.assets.Asset;
 import com.atlan.model.assets.Attribute;
+import com.atlan.model.assets.Date;
 import com.atlan.serde.Removable;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -27,6 +28,7 @@ public class ReflectionCache {
     private static final Map<String, Map<String, String>> fieldNameToDeserialize = new ConcurrentHashMap<>();
 
     private static final Map<String, Set<String>> fieldList = new ConcurrentHashMap<>();
+    private static final Map<String, Set<String>> dateFields = new ConcurrentHashMap<>();
 
     /**
      * Build up a map of all fields that exist in the class (and its superclasses).
@@ -60,6 +62,10 @@ public class ReflectionCache {
                     // an attributes map for serialization, and un-nest that same map into flattened
                     // class members on deserialization
                     attributesMap.get(originalClassName).put(fieldName, fieldName);
+                }
+                if (field.isAnnotationPresent(Date.class)) {
+                    // If the field has a Date annotation, track it as a date field
+                    dateFields.get(originalClassName).add(fieldName);
                 }
             }
         }
@@ -108,6 +114,9 @@ public class ReflectionCache {
             }
             if (!attributesMap.containsKey(className)) {
                 attributesMap.put(className, new ConcurrentHashMap<>());
+            }
+            if (!dateFields.containsKey(className)) {
+                dateFields.put(className, ConcurrentHashMap.newKeySet());
             }
             HashMap<String, Field> map = new HashMap<>();
             getAllFields(map, b, b);
@@ -174,6 +183,18 @@ public class ReflectionCache {
     public static boolean isAttribute(Class<?> b, String fieldName) {
         addClass(b);
         return attributesMap.get(b.getCanonicalName()).containsKey(fieldName);
+    }
+
+    /**
+     * Check whether the provided field name is annotated as a date (true) or not (false).
+     *
+     * @param b class of the asset type
+     * @param fieldName name of the field
+     * @return true if the field should be treated as a date, false otherwise
+     */
+    public static boolean isDate(Class<?> b, String fieldName) {
+        addClass(b);
+        return dateFields.get(b.getCanonicalName()).contains(fieldName);
     }
 
     /**

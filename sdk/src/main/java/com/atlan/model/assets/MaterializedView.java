@@ -114,6 +114,7 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
 
     /** TBC */
     @Attribute
+    @Date
     Long lastProfiledAt;
 
     /** TBC */
@@ -132,6 +133,7 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
 
     /** TBC */
     @Attribute
+    @Date
     Long queryCountUpdatedAt;
 
     /** TBC */
@@ -189,6 +191,7 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
 
     /** TBC */
     @Attribute
+    @Date
     Long staleSinceDate;
 
     /** TBC */

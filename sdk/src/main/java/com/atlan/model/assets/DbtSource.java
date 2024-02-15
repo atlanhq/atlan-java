@@ -73,6 +73,7 @@ public class DbtSource extends Asset implements IDbtSource, IDbt, ICatalog, IAss
 
     /** TBC */
     @Attribute
+    @Date
     Long dbtJobLastRun;
 
     /** TBC */
@@ -81,6 +82,7 @@ public class DbtSource extends Asset implements IDbtSource, IDbt, ICatalog, IAss
 
     /** TBC */
     @Attribute
+    @Date
     Long dbtJobNextRun;
 
     /** TBC */

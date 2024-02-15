@@ -68,6 +68,7 @@ public class DbtTest extends Asset implements IDbtTest, IDbt, ICatalog, IAsset, 
 
     /** TBC */
     @Attribute
+    @Date
     Long dbtJobLastRun;
 
     /** TBC */
@@ -76,6 +77,7 @@ public class DbtTest extends Asset implements IDbtTest, IDbt, ICatalog, IAsset, 
 
     /** TBC */
     @Attribute
+    @Date
     Long dbtJobNextRun;
 
     /** TBC */

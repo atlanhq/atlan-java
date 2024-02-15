@@ -97,6 +97,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
 
     /** Time (epoch) at which the announcement was last updated, in milliseconds. */
     @Attribute
+    @Date
     Long announcementUpdatedAt;
 
     /** Name of the user who last updated the announcement. */
@@ -125,6 +126,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
 
     /** Time (epoch) at which the job that materialized this asset in dbt last ran, in milliseconds. */
     @Attribute
+    @Date
     Long assetDbtJobLastRun;
 
     /** Path in S3 to the artifacts saved from the last run of the job that materialized this asset in dbt. */
@@ -137,10 +139,12 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
 
     /** Time (epoch) at which the job that materialized this asset in dbt was last created, in milliseconds. */
     @Attribute
+    @Date
     Long assetDbtJobLastRunCreatedAt;
 
     /** Time (epoch) at which the job that materialized this asset in dbt was dequeued, in milliseconds. */
     @Attribute
+    @Date
     Long assetDbtJobLastRunDequedAt;
 
     /** Thread ID of the user who executed the last run of the job that materialized this asset in dbt. */
@@ -189,6 +193,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
 
     /** Time (epoch) at which the job that materialized this asset in dbt was started running, in milliseconds. */
     @Attribute
+    @Date
     Long assetDbtJobLastRunStartedAt;
 
     /** Status message of the last run of the job that materialized this asset in dbt. */
@@ -205,6 +210,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
 
     /** Time (epoch) at which the job that materialized this asset in dbt was last updated, in milliseconds. */
     @Attribute
+    @Date
     Long assetDbtJobLastRunUpdatedAt;
 
     /** URL of the last run of the job that materialized this asset in dbt. */
@@ -217,6 +223,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
 
     /** Time (epoch) when the next run of the job that materializes this asset in dbt is scheduled. */
     @Attribute
+    @Date
     Long assetDbtJobNextRun;
 
     /** Human-readable time when the next run of the job that materializes this asset in dbt is scheduled. */
@@ -304,6 +311,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
 
     /** Time (epoch) at which this asset was last synced from Monte Carlo. */
     @Attribute
+    @Date
     Long assetMcLastSyncRunAt;
 
     /** List of Monte Carlo monitor names attached to this asset. */
@@ -345,10 +353,12 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
 
     /** TBC */
     @Attribute
+    @Date
     Long assetSodaLastScanAt;
 
     /** TBC */
     @Attribute
+    @Date
     Long assetSodaLastSyncRunAt;
 
     /** TBC */
@@ -380,6 +390,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
 
     /** Time (epoch) at which the certification was last updated, in milliseconds. */
     @Attribute
+    @Date
     Long certificateUpdatedAt;
 
     /** Name of the user who last updated the certification of this asset. */
@@ -439,6 +450,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
 
     /** Time (epoch) of the last operation that inserted, updated, or deleted rows, in milliseconds. */
     @Attribute
+    @Date
     Long lastRowChangedAt;
 
     /** Name of the last run of the crawler that last synchronized this asset. */
@@ -447,6 +459,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
 
     /** Time (epoch) at which this asset was last crawled, in milliseconds. */
     @Attribute
+    @Date
     Long lastSyncRunAt;
 
     /** Name of the crawler that last synchronized this asset. */
@@ -524,6 +537,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
 
     /** Time (epoch) at which this asset was created in the source system, in milliseconds. */
     @Attribute
+    @Date
     Long sourceCreatedAt;
 
     /** Name of the user who created this asset, in the source system. */
@@ -536,6 +550,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
 
     /** Timestamp of most recent read operation. */
     @Attribute
+    @Date
     Long sourceLastReadAt;
 
     /** List of owners of this asset, in the source system. */
@@ -618,6 +633,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
 
     /** Time (epoch) at which this asset was last updated in the source system, in milliseconds. */
     @Attribute
+    @Date
     Long sourceUpdatedAt;
 
     /** Name of the user who last updated this asset, in the source system. */
@@ -702,9 +718,11 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     final String updatedBy;
 
     /** Time (epoch) at which the asset was created, in milliseconds. */
+    @Date
     final Long createTime;
 
     /** Time (epoch) at which the asset was last updated, in milliseconds. */
+    @Date
     final Long updateTime;
 
     /** Details on the handler used for deletion of the asset. */

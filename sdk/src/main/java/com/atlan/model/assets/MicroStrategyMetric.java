@@ -76,6 +76,7 @@ public class MicroStrategyMetric extends Asset
 
     /** Time (epoch) this asset was certified in MicroStrategy, in milliseconds. */
     @Attribute
+    @Date
     Long microStrategyCertifiedAt;
 
     /** User who certified this asset, in MicroStrategy. */
