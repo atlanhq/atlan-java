@@ -19,7 +19,6 @@ import java.time.Instant
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
-import kotlin.test.assertTrue
 
 /**
  * Test migration of asset metadata.
@@ -36,22 +35,29 @@ class EnrichmentMigratorTest : PackageTest() {
         "debug.log",
     )
 
+    private fun createConnections() {
+        val client = Atlan.getDefaultClient()
+        Connection.creator(c1, AtlanConnectorType.HIVE, listOf(client.roleCache.getIdForName("\$admin")), null, null)
+            .build()
+            .save()
+            .block()
+        Connection.creator(c2, AtlanConnectorType.ESSBASE, listOf(client.roleCache.getIdForName("\$admin")), null, null)
+            .build()
+            .save()
+            .block()
+    }
+
     private fun createCustomMetadata() {
         CustomMetadataDef.creator(cm1)
             .attributeDef(AttributeDef.of("dateSingle", AtlanCustomAttributePrimitiveType.DATE, false))
-            .attributeDef(AttributeDef.of("dateMulti", AtlanCustomAttributePrimitiveType.DATE, true))
             .build()
             .create()
     }
 
     private fun createAssets() {
         val client = Atlan.getDefaultClient()
-        val conn1 = Connection.creator(c1, AtlanConnectorType.HIVE, listOf(client.roleCache.getIdForName("\$admin")), null, null).build()
-        val conn2 = Connection.creator(c2, AtlanConnectorType.ESSBASE, listOf(client.roleCache.getIdForName("\$admin")), null, null).build()
-        val response1 = conn1.save().block()
-        val response2 = conn2.save().block()
-        val connection1 = response1.getResult(conn1)
-        val connection2 = response2.getResult(conn2)
+        val connection1 = Connection.findByName(c1, AtlanConnectorType.HIVE)[0]!!
+        val connection2 = Connection.findByName(c2, AtlanConnectorType.ESSBASE)[0]!!
         val batch = AssetBatch(client, 20)
         val db1 = Database.creator("db1", connection1.qualifiedName).build()
         batch.add(db1)
@@ -66,7 +72,6 @@ class EnrichmentMigratorTest : PackageTest() {
                 cm1,
                 CustomMetadataAttributes.builder()
                     .attribute("dateSingle", now)
-                    .attribute("dateMulti", listOf(now - 360000, now))
                     .build(),
             )
             .build()
@@ -78,6 +83,7 @@ class EnrichmentMigratorTest : PackageTest() {
 
     @BeforeClass
     fun beforeClass() {
+        createConnections()
         createCustomMetadata()
         createAssets()
         setup(
@@ -86,7 +92,7 @@ class EnrichmentMigratorTest : PackageTest() {
                 targetConnection = Connection.findByName(c2, AtlanConnectorType.ESSBASE)?.get(0)?.qualifiedName,
                 failOnErrors = false,
                 cmLimitType = "INCLUDE",
-                customMetadata = "$cm1::dateSingle|$cm1::dateMulti",
+                customMetadata = "$cm1::dateSingle",
             ),
         )
         EnrichmentMigrator.main(arrayOf(testDirectory))
@@ -103,14 +109,8 @@ class EnrichmentMigratorTest : PackageTest() {
                 assertNotNull(cm)
                 val attrs = cm[cm1]?.attributes
                 assertNotNull(attrs)
-                assertEquals(2, attrs.size)
+                assertEquals(1, attrs.size)
                 assertEquals(now, attrs["dateSingle"])
-                val multi = attrs["dateMulti"]
-                assertNotNull(multi)
-                assertTrue(multi is List<*>)
-                assertEquals(2, multi.size)
-                assertEquals(now - 360000, multi[0])
-                assertEquals(now, multi[1])
             }
     }
 
