@@ -129,7 +129,7 @@ class RowDeserializer(
                     val attrId = cache.getAttrIdForName(setName, attrName)
                     if (attrId != null) {
                         val attrDef = cache.getAttributeDef(attrId)
-                        return FieldSerde.getCustomMetadataValueFromString(rValue, attrDef.options?.multiValueSelect ?: false)
+                        return FieldSerde.getCustomMetadataValueFromString(attrDef, rValue)
                     } else {
                         // If we cannot translate via the attribute def, return it as-is
                         rValue

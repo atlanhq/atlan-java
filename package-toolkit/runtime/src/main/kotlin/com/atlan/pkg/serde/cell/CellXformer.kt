@@ -54,6 +54,7 @@ object CellXformer {
 
     @Suppress("UNCHECKED_CAST")
     fun decode(
+        assetClass: Class<*>?,
         value: String?,
         type: Class<*>,
         innerType: Class<*>?,
@@ -74,7 +75,7 @@ object CellXformer {
         } else if (Integer::class.java.isAssignableFrom(type) || java.lang.Integer::class.java.isAssignableFrom(type)) {
             value.toInt()
         } else if (Long::class.java.isAssignableFrom(type) || java.lang.Long::class.java.isAssignableFrom(type)) {
-            if (ReflectionCache.isDate(type, fieldName)) {
+            if (ReflectionCache.isDate(assetClass, fieldName)) {
                 TimestampXformer.decode(value, fieldName)
             } else {
                 value.toLong()
@@ -87,7 +88,7 @@ object CellXformer {
             val list = mutableListOf<Any>()
             if (innerType != null) {
                 for (element in values) {
-                    val decoded = decode(element, innerType, null, fieldName)
+                    val decoded = decode(assetClass, element, innerType, null, fieldName)
                     if (decoded != null) {
                         list.add(decoded)
                     }

@@ -38,6 +38,8 @@ object TimestampXformer {
     ): Long? {
         return if (ts.isNullOrBlank()) {
             null
+        } else if (ts.toLongOrNull() != null) {
+            return ts.toLong()
         } else {
             FORMATTER.parse(ts, Instant::from).toEpochMilli()
         }

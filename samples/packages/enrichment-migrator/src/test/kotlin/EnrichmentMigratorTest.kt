@@ -8,6 +8,7 @@ import com.atlan.model.assets.Table
 import com.atlan.model.core.CustomMetadataAttributes
 import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.model.enums.AtlanCustomAttributePrimitiveType
+import com.atlan.model.fields.CustomMetadataField
 import com.atlan.model.typedefs.AttributeDef
 import com.atlan.model.typedefs.CustomMetadataDef
 import com.atlan.pkg.PackageTest
@@ -99,10 +100,12 @@ class EnrichmentMigratorTest : PackageTest() {
     }
 
     @Test
-    fun customMetadataOnTarget() {
+    fun datesOnTarget() {
         val targetConnection = Connection.findByName(c2, AtlanConnectorType.ESSBASE)[0]!!
+        val client = Atlan.getDefaultClient()
         Table.select()
             .where(Table.QUALIFIED_NAME.startsWith(targetConnection.qualifiedName))
+            .includeOnResults(CustomMetadataField.of(client, cm1, "dateSingle"))
             .stream()
             .forEach {
                 val cm = it.customMetadataSets

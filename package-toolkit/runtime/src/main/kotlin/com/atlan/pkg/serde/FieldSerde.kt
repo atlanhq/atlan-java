@@ -7,7 +7,9 @@ import com.atlan.cache.ReflectionCache
 import com.atlan.model.assets.Asset
 import com.atlan.model.fields.AtlanField
 import com.atlan.model.fields.CustomMetadataField
+import com.atlan.model.typedefs.AttributeDef
 import com.atlan.pkg.serde.cell.CellXformer
+import com.atlan.pkg.serde.cell.TimestampXformer
 import com.atlan.serde.Serde
 import mu.KLogger
 import java.lang.reflect.Method
@@ -81,7 +83,8 @@ object FieldSerde {
             innerClass = ReflectionCache.getClassOfParameterizedType(paramType)
         }
         return try {
-            CellXformer.decode(value, paramClass, innerClass, fieldName)
+            val assetClass = setter.declaringClass.enclosingClass
+            CellXformer.decode(assetClass, value, paramClass, innerClass, fieldName)
         } catch (e: Exception) {
             if (FAIL_ON_ERRORS.get()) {
                 throw e
@@ -97,25 +100,33 @@ object FieldSerde {
      * Deserialize a single field's value from a row of tabular data, when that field
      * is stored as custom metadata.
      *
+     * @param attrDef attribute definition of the field
      * @param value the single field's value
-     * @param multiValued true if the custom attribute allows multiple values, otherwise false
      * @return the deserialized form of that field's value
      */
-    fun getCustomMetadataValueFromString(value: String?, multiValued: Boolean): Any? {
+    fun getCustomMetadataValueFromString(attrDef: AttributeDef, value: String?): Any? {
         return if (value.isNullOrEmpty()) {
             null
-        } else if (multiValued) {
-            getMultiValuedCustomMetadata(value)
+        } else if (attrDef.options?.multiValueSelect == true) {
+            getMultiValuedCustomMetadata(attrDef, value)
         } else {
-            value
+            getSingleValuedCustomMetadata(attrDef, value)
         }
     }
 
-    private fun getMultiValuedCustomMetadata(value: String?): List<String> {
+    private fun getMultiValuedCustomMetadata(attrDef: AttributeDef, value: String?): List<String> {
         return if (value.isNullOrEmpty()) {
             listOf()
         } else {
-            value.split(CellXformer.LIST_DELIMITER).map { it.trim() }
+            value.split(CellXformer.LIST_DELIMITER).map { getSingleValuedCustomMetadata(attrDef, it.trim()).toString() }
+        }
+    }
+
+    private fun getSingleValuedCustomMetadata(attrDef: AttributeDef, value: String?): Any? {
+        return if (attrDef.typeName.lowercase() == "date") {
+            TimestampXformer.decode(value, "unused")
+        } else {
+            value
         }
     }
 
