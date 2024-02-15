@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9,"i11":9};
+var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9,"i11":9,"i12":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -261,6 +261,14 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code>static boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isDate(java.lang.Class,java.lang.String)">isDate</a></span>&#8203;(java.lang.Class&lt;?&gt;&nbsp;b,
+      java.lang.String&nbsp;fieldName)</code></th>
+<td class="colLast">
+<div class="block">Check whether the provided field name is annotated as a date (true) or not (false).</div>
+</td>
+</tr>
+<tr id="i12" class="altColor">
+<td class="colFirst"><code>static boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setValue(com.atlan.model.assets.Asset.AssetBuilder,java.lang.String,java.lang.Object)">setValue</a></span>&#8203;(<a href="../model/assets/Asset.AssetBuilder.html" title="class in com.atlan.model.assets">Asset.AssetBuilder</a>&lt;?,&#8203;?&gt;&nbsp;builder,
         java.lang.String&nbsp;fieldName,
         java.lang.Object&nbsp;value)</code></th>
@@ -360,6 +368,24 @@ extends java.lang.Object</pre>
 <dd><code>fieldName</code> - name of the field</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>true if the field should be attributes-nested, false otherwise</dd>
+</dl>
+</li>
+</ul>
+<a id="isDate(java.lang.Class,java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isDate</h4>
+<pre class="methodSignature">public static&nbsp;boolean&nbsp;isDate&#8203;(java.lang.Class&lt;?&gt;&nbsp;b,
+                             java.lang.String&nbsp;fieldName)</pre>
+<div class="block">Check whether the provided field name is annotated as a date (true) or not (false).</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>b</code> - class of the asset type</dd>
+<dd><code>fieldName</code> - name of the field</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>true if the field should be treated as a date, false otherwise</dd>
 </dl>
 </li>
 </ul>
