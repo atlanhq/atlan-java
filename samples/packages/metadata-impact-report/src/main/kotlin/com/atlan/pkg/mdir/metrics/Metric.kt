@@ -4,9 +4,12 @@ package com.atlan.pkg.mdir.metrics
 
 import com.atlan.AtlanClient
 import com.atlan.model.assets.Asset
+import com.atlan.model.assets.GlossaryTerm
+import com.atlan.model.relations.Reference
 import com.atlan.model.search.AggregationBucketResult
 import com.atlan.model.search.FluentSearch.FluentSearchBuilder
 import com.atlan.pkg.serde.xls.ExcelWriter
+import com.atlan.util.AssetBatch
 import mu.KLogger
 
 abstract class Metric(
@@ -68,8 +71,10 @@ abstract class Metric(
      * Output the detailed records for this report.
      *
      * @param xlsx the Excel writer in which to create a sheet and dump out the detailed result records
+     * @param term the glossary term that defines the metric, to which to associate assets
+     * @param batch through which to bulk-process the term assignments
      */
-    fun outputDetailedRecords(xlsx: ExcelWriter) {
+    fun outputDetailedRecords(xlsx: ExcelWriter, term: GlossaryTerm?, batch: AssetBatch?) {
         val header = getDetailedHeader()
         if (header.isNotEmpty()) {
             val sheet = xlsx.createSheet(getShortName())
@@ -77,6 +82,13 @@ abstract class Metric(
             query().stream().forEach { asset ->
                 val row = getDetailedRecord(asset)
                 xlsx.appendRow(sheet, row)
+                if (term != null && batch != null && category != "Headline numbers") {
+                    batch.add(
+                        asset.trimToRequired()
+                            .assignedTerm(GlossaryTerm.refByGuid(term.guid, Reference.SaveSemantic.APPEND))
+                            .build(),
+                    )
+                }
             }
         }
     }
