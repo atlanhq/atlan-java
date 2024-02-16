@@ -8,6 +8,7 @@ import com.atlan.model.assets.GlossaryTerm
 import com.atlan.model.relations.Reference
 import com.atlan.model.search.AggregationBucketResult
 import com.atlan.model.search.FluentSearch.FluentSearchBuilder
+import com.atlan.pkg.mdir.Reporter
 import com.atlan.pkg.serde.xls.ExcelWriter
 import com.atlan.util.AssetBatch
 import mu.KLogger
@@ -82,7 +83,7 @@ abstract class Metric(
             query().stream().forEach { asset ->
                 val row = getDetailedRecord(asset)
                 xlsx.appendRow(sheet, row)
-                if (term != null && batch != null && category != "Headline numbers") {
+                if (term != null && batch != null && category != Reporter.CAT_HEADLINES) {
                     batch.add(
                         asset.trimToRequired()
                             .assignedTerm(GlossaryTerm.refByGuid(term.guid, Reference.SaveSemantic.APPEND))
