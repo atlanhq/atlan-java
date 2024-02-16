@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -271,12 +271,27 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 </tr>
 <tr id="i12" class="altColor">
 <td class="colFirst"><code><a href="WorkflowRunResponse.html" title="class in com.atlan.model.workflow">WorkflowRunResponse</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#rerun(com.atlan.AtlanClient)">rerun</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#rerun(boolean)">rerun</a></span>&#8203;(boolean&nbsp;idempotent)</code></th>
 <td class="colLast">
 <div class="block">Re-run this workflow.</div>
 </td>
 </tr>
 <tr id="i13" class="rowColor">
+<td class="colFirst"><code><a href="WorkflowRunResponse.html" title="class in com.atlan.model.workflow">WorkflowRunResponse</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#rerun(com.atlan.AtlanClient)">rerun</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)</code></th>
+<td class="colLast">
+<div class="block">Re-run this workflow.</div>
+</td>
+</tr>
+<tr id="i14" class="altColor">
+<td class="colFirst"><code><a href="WorkflowRunResponse.html" title="class in com.atlan.model.workflow">WorkflowRunResponse</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#rerun(com.atlan.AtlanClient,boolean)">rerun</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+     boolean&nbsp;idempotent)</code></th>
+<td class="colLast">
+<div class="block">Re-run this workflow.</div>
+</td>
+</tr>
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 </tr>
@@ -371,6 +386,46 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <dd><code>client</code> - connectivity to the Atlan tenant on which to rerun the workflow</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>details of the workflow run</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication issue</dd>
+</dl>
+</li>
+</ul>
+<a id="rerun(boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>rerun</h4>
+<pre class="methodSignature">public&nbsp;<a href="WorkflowRunResponse.html" title="class in com.atlan.model.workflow">WorkflowRunResponse</a>&nbsp;rerun&#8203;(boolean&nbsp;idempotent)
+                          throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Re-run this workflow.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>idempotent</code> - if true, the workflow will only be rerun if it is not already currently running</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>details of the workflow run (if idempotent, will return details of the already-running workflow)</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication issue</dd>
+</dl>
+</li>
+</ul>
+<a id="rerun(com.atlan.AtlanClient,boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>rerun</h4>
+<pre class="methodSignature">public&nbsp;<a href="WorkflowRunResponse.html" title="class in com.atlan.model.workflow">WorkflowRunResponse</a>&nbsp;rerun&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+                                 boolean&nbsp;idempotent)
+                          throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Re-run this workflow.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>client</code> - connectivity to the Atlan tenant on which to rerun the workflow</dd>
+<dd><code>idempotent</code> - if true, the workflow will only be rerun if it is not already currently running</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>details of the workflow run (if idempotent, will return details of the already-running workflow)</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication issue</dd>
 </dl>
