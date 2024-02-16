@@ -89,7 +89,7 @@ public class WorkflowsEndpoint extends HeraclesEndpoint {
         String url = String.format("%s%s", getBaseUrl(), workflows_endpoint_run_existing);
         ReRunRequest request = ReRunRequest.builder()
                 .namespace(workflow.getMetadata().getNamespace())
-                .resourceName(workflow.getMetadata().getName())
+                .resourceName(workflow.getSpec().getWorkflowTemplateRef().get("name"))
                 .build();
         WorkflowRunResponse response = ApiResource.request(
                 client, ApiResource.RequestMethod.POST, url, request, WorkflowRunResponse.class, options);
