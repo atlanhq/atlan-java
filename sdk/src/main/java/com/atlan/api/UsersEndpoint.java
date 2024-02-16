@@ -412,11 +412,48 @@ public class UsersEndpoint extends HeraclesEndpoint {
      * Retrieve the groups this user belongs to.
      *
      * @param id unique identifier (GUID) of the user
+     * @param request containing details about which groups to retrieve
+     * @return groups this user belongs to
+     * @throws AtlanException on any API communication issue
+     */
+    public GroupResponse listGroups(String id, GroupRequest request) throws AtlanException {
+        return listGroups(id, request, null);
+    }
+
+    /**
+     * Retrieve the groups this user belongs to.
+     *
+     * @param id unique identifier (GUID) of the user
+     * @param request containing details about which groups to retrieve
+     * @param options to override default client settings
+     * @return groups this user belongs to
+     * @throws AtlanException on any API communication issue
+     */
+    public GroupResponse listGroups(String id, GroupRequest request, RequestOptions options) throws AtlanException {
+        List<String> queryParams = new ArrayList<>();
+        queryParams.add("offset=" + request.getOffset());
+        queryParams.add("limit=" + request.getLimit());
+        queryParams.add("sort=" + ApiResource.urlEncode(request.getSort()));
+        if (request.getFilter() != null) {
+            queryParams.add("filter=" + ApiResource.urlEncode(request.getFilter()));
+        }
+        String url = String.format("%s%s/%s/groups?%s", getBaseUrl(), endpoint, id, String.join("&", queryParams));
+        GroupResponse response =
+                ApiResource.request(client, ApiResource.RequestMethod.GET, url, "", GroupResponse.class, options);
+        response.setClient(client);
+        response.setRequest(request);
+        return response;
+    }
+
+    /**
+     * Retrieve the groups this user belongs to.
+     *
+     * @param id unique identifier (GUID) of the user
      * @return groups this user belongs to
      * @throws AtlanException on any API communication issue
      */
     public GroupResponse listGroups(String id) throws AtlanException {
-        return listGroups(id, null);
+        return listGroups(id, (RequestOptions) null);
     }
 
     /**
@@ -428,8 +465,7 @@ public class UsersEndpoint extends HeraclesEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public GroupResponse listGroups(String id, RequestOptions options) throws AtlanException {
-        String url = String.format("%s%s/%s/groups", getBaseUrl(), endpoint, id);
-        return ApiResource.request(client, ApiResource.RequestMethod.GET, url, "", GroupResponse.class, options);
+        return listGroups(id, GroupRequest.builder().build(), options);
     }
 
     /**

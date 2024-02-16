@@ -290,11 +290,51 @@ public class GroupsEndpoint extends HeraclesEndpoint {
      * Retrieves the members (users) of a group.
      *
      * @param id unique identifier (GUID) of the group from which to retrieve members
+     * @param request containing details about which members to retrieve
+     * @return list of users that are members of the group
+     * @throws AtlanException on any API communication issue
+     */
+    public UserResponse listMembers(String id, UserRequest request) throws AtlanException {
+        return listMembers(id, request, null);
+    }
+
+    /**
+     * Retrieves the members (users) of a group.
+     *
+     * @param id unique identifier (GUID) of the group from which to retrieve members
+     * @param request containing details about which members to retrieve
+     * @param options to override default client settings
+     * @return list of users that are members of the group
+     * @throws AtlanException on any API communication issue
+     */
+    public UserResponse listMembers(String id, UserRequest request, RequestOptions options) throws AtlanException {
+        List<String> queryParams = new ArrayList<>();
+        queryParams.add("offset=" + request.getOffset());
+        queryParams.add("limit=" + request.getLimit());
+        queryParams.add("sort=" + ApiResource.urlEncode(request.getSort()));
+        if (request.getFilter() != null) {
+            queryParams.add("filter=" + ApiResource.urlEncode(request.getFilter()));
+        }
+        if (request.getColumns() != null && !request.getColumns().isEmpty()) {
+            queryParams.add("columns=" + String.join(",", request.getColumns()));
+        }
+        String url = String.format("%s%s/%s/members?%s", getBaseUrl(), endpoint, id, String.join("&", queryParams));
+        UserResponse response =
+                ApiResource.request(client, ApiResource.RequestMethod.GET, url, "", UserResponse.class, options);
+        response.setClient(client);
+        response.setRequest(request);
+        return response;
+    }
+
+    /**
+     * Retrieves the members (users) of a group.
+     *
+     * @param id unique identifier (GUID) of the group from which to retrieve members
      * @return list of users that are members of the group
      * @throws AtlanException on any API communication issue
      */
     public UserResponse listMembers(String id) throws AtlanException {
-        return listMembers(id, null);
+        return listMembers(id, (RequestOptions) null);
     }
 
     /**
@@ -306,8 +346,7 @@ public class GroupsEndpoint extends HeraclesEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public UserResponse listMembers(String id, RequestOptions options) throws AtlanException {
-        String url = String.format("%s%s/%s/members", getBaseUrl(), endpoint, id);
-        return ApiResource.request(client, ApiResource.RequestMethod.GET, url, "", UserResponse.class, options);
+        return listMembers(id, UserRequest.builder().build(), options);
     }
 
     /**
