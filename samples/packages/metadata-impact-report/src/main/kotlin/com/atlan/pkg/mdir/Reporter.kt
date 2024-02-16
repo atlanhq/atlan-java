@@ -108,14 +108,14 @@ object Reporter {
                 includeDetails = includeDetails,
             )
         }
-        runReports(ctx, outputDirectory, batchSize)
+        val reportFile = runReports(ctx, outputDirectory, batchSize)
 
         if (emails.isNotEmpty()) {
             Utils.sendEmail(
                 "[Atlan] Metadata Impact Report",
                 emails,
                 "Hi there! As requested, please find attached the Metadata Impact Report.\n\nAll the best!\nAtlan",
-                listOf(File("$outputDirectory${File.separator}mdir.xlsx")),
+                listOf(File(reportFile)),
             )
         }
     }
@@ -155,8 +155,9 @@ object Reporter {
         return nameToResolved
     }
 
-    private fun runReports(ctx: Context, outputDirectory: String, batchSize: Int) {
-        ExcelWriter("$outputDirectory${File.separator}mdir.xlsx").use { xlsx ->
+    private fun runReports(ctx: Context, outputDirectory: String, batchSize: Int): String {
+        val outputFile = "$outputDirectory${File.separator}mdir.xlsx"
+        ExcelWriter(outputFile).use { xlsx ->
             val overview = xlsx.createSheet("Overview")
             xlsx.addHeader(
                 overview,
@@ -173,15 +174,18 @@ object Reporter {
                 val metric = Metric.get(repClass, Atlan.getDefaultClient(), batchSize, logger)
                 logger.info { "Quantifying metric: ${metric.name} ..." }
                 val quantified = metric.quantify()
-                if (ctx.includeGlossary) {
+                val term = if (ctx.includeGlossary) {
                     writeMetricToGlossary(metric, quantified, ctx.glossary!!, ctx.categoryNameToGuid!!)
+                } else {
+                    null
                 }
-                writeMetricToExcel(metric, quantified, xlsx, overview, ctx.includeDetails)
+                writeMetricToExcel(metric, quantified, xlsx, overview, ctx.includeDetails, term, batchSize)
             }
         }
+        return outputFile
     }
 
-    private fun writeMetricToGlossary(metric: Metric, quantified: Double, glossary: Glossary, categoryNameToGuid: Map<String, String>) {
+    private fun writeMetricToGlossary(metric: Metric, quantified: Double, glossary: Glossary, categoryNameToGuid: Map<String, String>): GlossaryTerm {
         val builder = try {
             GlossaryTerm.findByNameFast(metric.name, glossary.qualifiedName).trimToRequired()
         } catch (e: NotFoundException) {
@@ -206,10 +210,11 @@ object Reporter {
             .certificateStatusMessage(prettyQuantity)
             .category(GlossaryCategory.refByGuid(categoryNameToGuid[metric.category]))
             .build()
-        term.save()
+        val response = term.save()
+        return response.getResult(term) ?: term.trimToRequired().guid(response.getAssignedGuid(term)).build()
     }
 
-    private fun writeMetricToExcel(metric: Metric, quantified: Double, xlsx: ExcelWriter, overview: Sheet, includeDetails: Boolean) {
+    private fun writeMetricToExcel(metric: Metric, quantified: Double, xlsx: ExcelWriter, overview: Sheet, includeDetails: Boolean, term: GlossaryTerm?, batchSize: Int) {
         xlsx.appendRow(
             overview,
             listOf(
@@ -221,7 +226,24 @@ object Reporter {
             ),
         )
         if (includeDetails) {
-            metric.outputDetailedRecords(xlsx)
+            val batch = if (term != null) {
+                AssetBatch(
+                    Atlan.getDefaultClient(),
+                    batchSize,
+                    false,
+                    AssetBatch.CustomMetadataHandling.IGNORE,
+                    true,
+                    false,
+                    false,
+                    false,
+                    AssetBatch.AssetCreationHandling.FULL,
+                    false,
+                )
+            } else {
+                null
+            }
+            metric.outputDetailedRecords(xlsx, term, batch)
+            batch?.flush()
         }
     }
 

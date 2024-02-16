@@ -198,6 +198,7 @@ class ImpactReportTest : PackageTest() {
     fun rerunReport() {
         setup(
             MetadataImpactReportCfg(
+                includeGlossary = "TRUE",
                 glossaryName = glossaryName,
                 includeDetails = true,
             ),
