@@ -11,6 +11,7 @@ import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.enums.AtlanPackageType;
+import com.atlan.model.enums.AtlanWorkflowPhase;
 import com.atlan.model.search.IndexSearchDSL;
 import java.util.List;
 import lombok.EqualsAndHashCode;
@@ -89,6 +90,49 @@ public class WorkflowSearchRequest extends IndexSearchDSL {
             List<WorkflowSearchResult> results = response.getHits().getHits();
             if (results != null && !results.isEmpty()) {
                 return results.get(0);
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Find the most current, still-running run of a given workflow.
+     *
+     * @param client connectivity to the Atlan tenant on which to find the current run of the workflow
+     * @param workflowName name of the workflow for which to find the current run
+     * @return the singular result giving the latest currently-running run of the workflow, or null if it is not currently running
+     */
+    public static WorkflowSearchResult findCurrentRun(AtlanClient client, String workflowName) throws AtlanException {
+
+        SortOptions sort = SortOptions.of(s -> s.field(FieldSort.of(f -> f.field("metadata.creationTimestamp")
+                .order(SortOrder.Desc)
+                .nested(NestedSortValue.of(v -> v.path("metadata"))))));
+
+        Query name = TermQuery.of(
+                        t -> t.field("spec.workflowTemplateRef.name.keyword").value(workflowName))
+                ._toQuery();
+
+        Query byName = NestedQuery.of(n -> n.path("spec").query(name))._toQuery();
+
+        Query query = BoolQuery.of(b -> b.filter(byName))._toQuery();
+
+        WorkflowSearchRequest request = WorkflowSearchRequest.builder()
+                .from(0)
+                .size(50)
+                .sortOption(sort)
+                .query(query)
+                .build();
+
+        WorkflowSearchResponse response = client.workflows.searchRuns(request);
+        if (response != null) {
+            List<WorkflowSearchResult> results = response.getHits().getHits();
+            if (results != null && !results.isEmpty()) {
+                for (WorkflowSearchResult result : results) {
+                    if (result.getStatus() == AtlanWorkflowPhase.RUNNING
+                            || result.getStatus() == AtlanWorkflowPhase.PENDING) {
+                        return result;
+                    }
+                }
             }
         }
         return null;

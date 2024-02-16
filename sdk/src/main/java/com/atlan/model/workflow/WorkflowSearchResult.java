@@ -47,7 +47,7 @@ public class WorkflowSearchResult extends AtlanObject {
      * @throws AtlanException on any API communication issue
      */
     public WorkflowRunResponse rerun() throws AtlanException {
-        return rerun(Atlan.getDefaultClient());
+        return rerun(false);
     }
 
     /**
@@ -58,7 +58,47 @@ public class WorkflowSearchResult extends AtlanObject {
      * @throws AtlanException on any API communication issue
      */
     public WorkflowRunResponse rerun(AtlanClient client) throws AtlanException {
+        return rerun(client, false);
+    }
+
+    /**
+     * Re-run this workflow.
+     *
+     * @param idempotent if true, the workflow will only be rerun if it is not already currently running
+     * @return details of the workflow run (if idempotent, will return details of the already-running workflow)
+     * @throws AtlanException on any API communication issue
+     */
+    public WorkflowRunResponse rerun(boolean idempotent) throws AtlanException {
+        return rerun(Atlan.getDefaultClient(), idempotent);
+    }
+
+    /**
+     * Re-run this workflow.
+     *
+     * @param client connectivity to the Atlan tenant on which to rerun the workflow
+     * @param idempotent if true, the workflow will only be rerun if it is not already currently running
+     * @return details of the workflow run (if idempotent, will return details of the already-running workflow)
+     * @throws AtlanException on any API communication issue
+     */
+    public WorkflowRunResponse rerun(AtlanClient client, boolean idempotent) throws AtlanException {
         if (_source != null) {
+            if (idempotent) {
+                String name = _source.getSpec().getWorkflowTemplateRef().get("name");
+                try {
+                    Thread.sleep(10000);
+                    WorkflowSearchResult running = WorkflowSearchRequest.findCurrentRun(client, name);
+                    if (running != null) {
+                        WorkflowRunResponse response = new WorkflowRunResponse();
+                        response.client = client;
+                        response.metadata = running._source.getMetadata();
+                        response.spec = running._source.getSpec();
+                        response.status = running._source.status;
+                        return response;
+                    }
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+            }
             return client.workflows.run(_source);
         }
         return null;
