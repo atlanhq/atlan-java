@@ -1934,6 +1934,47 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </li>
 </ul>
 </li>
+<li class="blockList"><a id="com.atlan.model.admin.GroupRequest">
+<!--   -->
+</a>
+<h3>Class <a href="com/atlan/model/admin/GroupRequest.html" title="class in com.atlan.model.admin">com.atlan.model.admin.GroupRequest</a> extends <a href="com/atlan/model/core/AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>count</h4>
+<pre>boolean count</pre>
+<div class="block">Whether to include an overall count of groups (true) or not (false).</div>
+</li>
+<li class="blockList">
+<h4>filter</h4>
+<pre>java.lang.String filter</pre>
+<div class="block">Criteria by which to filter the list of groups to retrieve.</div>
+</li>
+<li class="blockList">
+<h4>limit</h4>
+<pre>int limit</pre>
+<div class="block">Maximum number of groups to return per page.</div>
+</li>
+<li class="blockList">
+<h4>offset</h4>
+<pre>int offset</pre>
+<div class="block">Starting point for the list of groups when paging.</div>
+</li>
+<li class="blockListLast">
+<h4>sort</h4>
+<pre>java.lang.String sort</pre>
+<div class="block">Property by which to sort the resulting list of groups.</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="blockList"><a id="com.atlan.model.admin.GroupResponse">
 <!--   -->
 </a>
@@ -1947,16 +1988,29 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <h3>Serialized Fields</h3>
 <ul class="blockList">
 <li class="blockList">
+<h4>client</h4>
+<pre><a href="com/atlan/AtlanClient.html" title="class in com.atlan">AtlanClient</a> client</pre>
+<div class="block">Connectivity to the Atlan tenant where the search was run.</div>
+</li>
+<li class="blockList">
 <h4>filterRecord</h4>
 <pre>java.lang.Integer filterRecord</pre>
+<div class="block">Filtered number of groups.</div>
 </li>
 <li class="blockList">
 <h4>records</h4>
 <pre>java.util.List&lt;<a href="com/atlan/model/admin/AtlanGroup.html" title="class in com.atlan.model.admin">AtlanGroup</a>&gt; records</pre>
+<div class="block">Details about each group in this page of the response.</div>
+</li>
+<li class="blockList">
+<h4>request</h4>
+<pre><a href="com/atlan/model/admin/GroupRequest.html" title="class in com.atlan.model.admin">GroupRequest</a> request</pre>
+<div class="block">Request that produced this response.</div>
 </li>
 <li class="blockListLast">
 <h4>totalRecord</h4>
 <pre>java.lang.Integer totalRecord</pre>
+<div class="block">Total number of groups.</div>
 </li>
 </ul>
 </li>
@@ -3129,6 +3183,57 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </li>
 </ul>
 </li>
+<li class="blockList"><a id="com.atlan.model.admin.UserRequest">
+<!--   -->
+</a>
+<h3>Class <a href="com/atlan/model/admin/UserRequest.html" title="class in com.atlan.model.admin">com.atlan.model.admin.UserRequest</a> extends <a href="com/atlan/model/core/AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>columns</h4>
+<pre>java.util.List&lt;java.lang.String&gt; columns</pre>
+<div class="block">List of columns to be returned about each user in the response.</div>
+</li>
+<li class="blockList">
+<h4>count</h4>
+<pre>boolean count</pre>
+<div class="block">Whether to include an overall count of users (true) or not (false).</div>
+</li>
+<li class="blockList">
+<h4>filter</h4>
+<pre>java.lang.String filter</pre>
+<div class="block">Criteria by which to filter the list of users to retrieve.</div>
+</li>
+<li class="blockList">
+<h4>limit</h4>
+<pre>int limit</pre>
+<div class="block">Maximum number of users to return per page.</div>
+</li>
+<li class="blockList">
+<h4>maxLoginEvents</h4>
+<pre>int maxLoginEvents</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>offset</h4>
+<pre>int offset</pre>
+<div class="block">Starting point for the list of users when paging.</div>
+</li>
+<li class="blockListLast">
+<h4>sort</h4>
+<pre>java.lang.String sort</pre>
+<div class="block">Property by which to sort the resulting list of users.</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="blockList"><a id="com.atlan.model.admin.UserResponse">
 <!--   -->
 </a>
@@ -3142,16 +3247,29 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <h3>Serialized Fields</h3>
 <ul class="blockList">
 <li class="blockList">
+<h4>client</h4>
+<pre><a href="com/atlan/AtlanClient.html" title="class in com.atlan">AtlanClient</a> client</pre>
+<div class="block">Connectivity to the Atlan tenant where the search was run.</div>
+</li>
+<li class="blockList">
 <h4>filterRecord</h4>
 <pre>java.lang.Integer filterRecord</pre>
+<div class="block">Filtered number of users.</div>
 </li>
 <li class="blockList">
 <h4>records</h4>
 <pre>java.util.List&lt;<a href="com/atlan/model/admin/AtlanUser.html" title="class in com.atlan.model.admin">AtlanUser</a>&gt; records</pre>
+<div class="block">Details about each user in this page of the response.</div>
+</li>
+<li class="blockList">
+<h4>request</h4>
+<pre><a href="com/atlan/model/admin/UserRequest.html" title="class in com.atlan.model.admin">UserRequest</a> request</pre>
+<div class="block">Request that produced this response.</div>
 </li>
 <li class="blockListLast">
 <h4>totalRecord</h4>
 <pre>java.lang.Integer totalRecord</pre>
+<div class="block">Total number of users.</div>
 </li>
 </ul>
 </li>
