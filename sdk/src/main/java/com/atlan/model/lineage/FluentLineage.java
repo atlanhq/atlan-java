@@ -68,9 +68,17 @@ public class FluentLineage {
     @Singular
     List<LineageFilter> whereAssets;
 
+    /** Whether the {@code whereAssets} criteria should be combined (AND) or any matching is sufficient (OR). */
+    @Builder.Default
+    FilterList.Condition assetsCondition = FilterList.Condition.AND;
+
     /** Filters to apply on relationships. Any relationships excluded by the filters will exclude all assets and relationships beyond, as well. */
     @Singular
     List<LineageFilter> whereRelationships;
+
+    /** Whether the {@code whereRelationships} criteria should be combined (AND) or any matching is sufficient (OR). */
+    @Builder.Default
+    FilterList.Condition relationshipsCondition = FilterList.Condition.AND;
 
     /**
      * Assets to include in the results. Any assets not matching these filters will not be included in the results,
@@ -79,6 +87,10 @@ public class FluentLineage {
      */
     @Singular("includeInResults")
     List<LineageFilter> includesInResults;
+
+    /** Whether the {@code includesInResults} criteria should be combined (AND) or any matching is sufficient (OR). */
+    @Builder.Default
+    FilterList.Condition includesCondition = FilterList.Condition.AND;
 
     /** Attributes to retrieve for each asset in the lineage results. */
     @Singular("includeOnResults")
@@ -103,7 +115,7 @@ public class FluentLineage {
             request.depth(depth);
         }
         if (whereAssets != null) {
-            FilterList.FilterListBuilder<?, ?> entities = FilterList.builder().condition("AND");
+            FilterList.FilterListBuilder<?, ?> entities = FilterList.builder().condition(assetsCondition);
             for (LineageFilter asset : whereAssets) {
                 String attrName = getInternalAtlanName(asset.getField());
                 entities.criterion(EntityFilter.builder()
@@ -116,7 +128,7 @@ public class FluentLineage {
         }
         if (whereRelationships != null) {
             FilterList.FilterListBuilder<?, ?> relationships =
-                    FilterList.builder().condition("AND");
+                    FilterList.builder().condition(relationshipsCondition);
             for (LineageFilter relationship : whereRelationships) {
                 String attrName = getInternalAtlanName(relationship.getField());
                 relationships.criterion(EntityFilter.builder()
@@ -128,7 +140,7 @@ public class FluentLineage {
             request.relationshipTraversalFilters(relationships.build());
         }
         if (includesInResults != null) {
-            FilterList.FilterListBuilder<?, ?> entities = FilterList.builder().condition("AND");
+            FilterList.FilterListBuilder<?, ?> entities = FilterList.builder().condition(includesCondition);
             for (LineageFilter asset : includesInResults) {
                 String attrName = getInternalAtlanName(asset.getField());
                 entities.criterion(EntityFilter.builder()
