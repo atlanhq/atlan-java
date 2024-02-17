@@ -55,11 +55,13 @@ class TermImporter(
         logger.info { "--- Loading terms in first pass, without term-to-term relationships... ---" }
         val firstPassResults = super.import(GlossaryTermXformer.TERM_TO_TERM_FIELDS)
         return if (firstPassResults != null) {
+            logger.info { "--- Caching any created terms... ---" }
+            cacheCreated(firstPassResults.primary.created ?: emptyList())
             // In this second pass we need to ignore fields that were loaded in the first pass,
             // or we will end up with duplicates (links) or extra audit log messages (tags, README)
             logger.info { "--- Loading term-to-term relationships (second pass)... ---" }
             val secondPassResults = super.import(secondPassIgnore)
-            return if (secondPassResults != null) {
+            if (secondPassResults != null) {
                 firstPassResults.combinedWith(secondPassResults)
             } else {
                 firstPassResults
