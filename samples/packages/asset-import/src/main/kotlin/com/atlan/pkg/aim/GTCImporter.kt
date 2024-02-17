@@ -25,7 +25,6 @@ import mu.KLogger
  * @param cache of existing glossaries, terms or categories (will be preloaded by import)
  * @param typeNameFilter name of the specific type that should be handled by this importer
  * @param logger through which to log any problems
- * @param trackBatches if true, minimal details about every asset created or updated is tracked (if false, only counts of each are tracked)
  */
 abstract class GTCImporter(
     filename: String,
@@ -35,7 +34,6 @@ abstract class GTCImporter(
     protected val cache: AssetCache,
     typeNameFilter: String,
     logger: KLogger,
-    private val trackBatches: Boolean = true,
 ) : CSVImporter(
     filename,
     logger,
@@ -43,7 +41,7 @@ abstract class GTCImporter(
     attrsToOverwrite,
     updateOnly = updateOnly,
     batchSize = batchSize,
-    trackBatches = trackBatches,
+    trackBatches = true, // Always track batches for GTC importers, to ensure cache is managed
 ) {
     /** {@inheritDoc} */
     override fun cacheCreated(list: List<Asset>) {
