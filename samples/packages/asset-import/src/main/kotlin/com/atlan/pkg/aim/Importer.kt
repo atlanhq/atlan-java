@@ -74,15 +74,15 @@ object Importer {
             FieldSerde.FAIL_ON_ERRORS.set(glossariesFailOnErrors)
             logger.info { "=== Importing glossaries... ===" }
             val glossaryImporter =
-                GlossaryImporter(glossariesInput, glossaryAttrsToOverwrite, glossariesUpdateOnly, batchSize, trackBatches)
+                GlossaryImporter(glossariesInput, glossaryAttrsToOverwrite, glossariesUpdateOnly, batchSize)
             val resultsGlossary = glossaryImporter.import()
             logger.info { "=== Importing categories... ===" }
             val categoryImporter =
-                CategoryImporter(glossariesInput, glossaryAttrsToOverwrite, glossariesUpdateOnly, batchSize, trackBatches)
+                CategoryImporter(glossariesInput, glossaryAttrsToOverwrite, glossariesUpdateOnly, batchSize)
             val resultsCategory = categoryImporter.import()
             logger.info { "=== Importing terms... ===" }
             val termImporter =
-                TermImporter(glossariesInput, glossaryAttrsToOverwrite, glossariesUpdateOnly, batchSize, trackBatches)
+                TermImporter(glossariesInput, glossaryAttrsToOverwrite, glossariesUpdateOnly, batchSize)
             val resultsTerm = termImporter.import()
             resultsGlossary?.combinedWith(resultsCategory)?.combinedWith(resultsTerm)
         } else {
