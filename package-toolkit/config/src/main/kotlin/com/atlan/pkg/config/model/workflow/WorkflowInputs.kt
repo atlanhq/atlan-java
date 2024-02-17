@@ -45,7 +45,7 @@ class WorkflowInputs(
                     }
                 }
                 is BooleanInput.BooleanInputWidget -> {
-                    params.add(NameValueBoolPair(k, false))
+                    params.add(NameValueBoolPair(k, u.ui.default))
                 }
                 is NumericInput.NumericInputWidget,
                 is DateInput.DateInputWidget,

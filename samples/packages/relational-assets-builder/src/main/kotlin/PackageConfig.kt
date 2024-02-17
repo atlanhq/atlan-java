@@ -104,6 +104,7 @@ object PackageConfig : CustomPackage(
                         label = "Track asset details",
                         required = false,
                         hidden = true,
+                        default = true,
                         help = "Whether to track details about every asset across batches (Yes) or only counts (No).",
                     ),
                 ),
