@@ -29,7 +29,6 @@ import uk.org.webcompere.systemstubs.properties.SystemProperties
 import uk.org.webcompere.systemstubs.security.SystemExit
 import java.io.File
 import java.util.Random
-import java.util.concurrent.atomic.AtomicInteger
 import kotlin.math.min
 import kotlin.math.round
 
@@ -182,11 +181,11 @@ abstract class PackageTest {
             'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
         )
         private const val PREFIX = "jpkg_"
+        private const val TAG_REMOVAL_RETRIES = 30
 
         // Necessary combination to both (de)serialize Atlan objects (like connections)
         // and use the JsonProperty annotations inherent in the configuration data classes
         private val mapper = Serde.createMapper(client).registerKotlinModule()
-        private val retryCount = AtomicInteger(0)
 
         /**
          * Remove these files.
@@ -263,7 +262,7 @@ abstract class PackageTest {
             try {
                 AtlanTagDef.purge(displayName)
             } catch (e: ConflictException) {
-                if (retryCount < client.maxNetworkRetries) {
+                if (retryCount < TAG_REMOVAL_RETRIES) {
                     Thread.sleep(HttpClient.waitTime(retryCount).toMillis())
                     removeTag(displayName, retryCount + 1)
                 } else {
