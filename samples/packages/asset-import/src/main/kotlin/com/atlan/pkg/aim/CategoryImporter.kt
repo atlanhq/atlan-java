@@ -49,13 +49,15 @@ class CategoryImporter(
     /** {@inheritDoc} */
     override fun import(columnsToSkip: Set<String>): ImportResults? {
         cache.preload()
+        val colsToSkip = columnsToSkip.toMutableSet()
+        colsToSkip.add(GlossaryCategory.QUALIFIED_NAME.atlanFieldName)
         // Import categories by level, top-to-bottom, and stop when we hit a level with no categories
         logger.info { "Loading categories in multiple passes, by level..." }
         var combinedResults: ImportResults? = null
         while (levelToProcess < maxCategoryDepth.get()) {
             levelToProcess += 1
             logger.info { "--- Loading level $levelToProcess categories... ---" }
-            val results = super.import(columnsToSkip)
+            val results = super.import(colsToSkip)
             if (combinedResults == null) {
                 combinedResults = results
             } else if (results != null) {
