@@ -48,14 +48,20 @@ class TermImporter(
     /** {@inheritDoc} */
     override fun import(columnsToSkip: Set<String>): ImportResults? {
         cache.preload()
+        val firstPassSkip = columnsToSkip.toMutableSet()
+        firstPassSkip.add(GlossaryTerm.QUALIFIED_NAME.atlanFieldName)
+        firstPassSkip.addAll(GlossaryTermXformer.TERM_TO_TERM_FIELDS)
         // Import categories by level, top-to-bottom, and stop when we hit a level with no categories
         logger.info { "--- Loading terms in first pass, without term-to-term relationships... ---" }
-        val firstPassResults = super.import(GlossaryTermXformer.TERM_TO_TERM_FIELDS)
+        val firstPassResults = super.import(firstPassSkip)
         return if (firstPassResults != null) {
+            val secondPassSkip = columnsToSkip.toMutableSet()
+            secondPassSkip.add(GlossaryTerm.QUALIFIED_NAME.atlanFieldName)
+            secondPassSkip.addAll(secondPassIgnore)
             // In this second pass we need to ignore fields that were loaded in the first pass,
             // or we will end up with duplicates (links) or extra audit log messages (tags, README)
             logger.info { "--- Loading term-to-term relationships (second pass)... ---" }
-            val secondPassResults = super.import(secondPassIgnore)
+            val secondPassResults = super.import(secondPassSkip)
             if (secondPassResults != null) {
                 firstPassResults.combinedWith(secondPassResults)
             } else {
