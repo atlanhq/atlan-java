@@ -6,6 +6,7 @@ import com.atlan.model.assets.Glossary
 import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.cache.GlossaryCache
 import com.atlan.pkg.serde.RowDeserializer
+import com.atlan.pkg.serde.csv.ImportResults
 import mu.KotlinLogging
 
 /**
@@ -35,6 +36,12 @@ class GlossaryImporter(
     typeNameFilter = Glossary.TYPE_NAME,
     logger = KotlinLogging.logger {},
 ) {
+    /** {@inheritDoc} */
+    override fun import(columnsToSkip: Set<String>): ImportResults? {
+        cache.preload()
+        return super.import(columnsToSkip)
+    }
+
     /** {@inheritDoc} */
     override fun getCacheId(deserializer: RowDeserializer): String {
         return deserializer.getValue(Glossary.NAME.atlanFieldName)?.let { it as String } ?: ""
