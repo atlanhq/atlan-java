@@ -73,6 +73,8 @@ public class SnowflakeTagTest {
                     .tagAttributeProperties(Map.of("key1", "value1", "key2", "value2"))
                     .build())
             .tagId("String0")
+            .calculationViewName("String0")
+            .calculationViewQualifiedName("String0")
             .databaseName("String0")
             .databaseQualifiedName("String0")
             .dbtModel(DbtModel.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))

@@ -16,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
  * Lazily-loaded cache for translating Atlan-internal groups into their various IDs.
  */
 @Slf4j
-public class GroupCache extends AbstractCache {
+public class GroupCache extends AbstractMassCache {
 
     private Map<String, String> mapAliasToId = new ConcurrentHashMap<>();
 

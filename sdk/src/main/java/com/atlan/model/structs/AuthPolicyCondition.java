@@ -33,6 +33,7 @@ public class AuthPolicyCondition extends AtlanStruct {
     String policyConditionType;
 
     /** TBC */
+    @Singular
     List<String> policyConditionValues;
 
     /**

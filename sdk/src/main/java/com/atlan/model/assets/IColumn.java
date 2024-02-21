@@ -37,6 +37,9 @@ public interface IColumn {
 
     public static final String TYPE_NAME = "Column";
 
+    /** Calculate view in which this column exists. */
+    RelationField CALCULATION_VIEW = new RelationField("calculationView");
+
     /** Average value in this column. */
     NumericField COLUMN_AVERAGE = new NumericField("columnAverage", "columnAverage");
 
@@ -456,6 +459,15 @@ public interface IColumn {
 
     /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
+
+    /** Calculate view in which this column exists. */
+    ICalculationView getCalculationView();
+
+    /** Simple name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
+    String getCalculationViewName();
+
+    /** Unique name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
+    String getCalculationViewQualifiedName();
 
     /** Status of this asset's certification. */
     CertificateStatus getCertificateStatus();

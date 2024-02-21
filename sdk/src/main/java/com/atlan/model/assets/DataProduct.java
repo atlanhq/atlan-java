@@ -69,6 +69,10 @@ public class DataProduct extends Asset implements IDataProduct, IDataMesh, ICata
     @Attribute
     DataProductCriticality dataProductCriticality;
 
+    /** Score of this data product. */
+    @Attribute
+    Double dataProductScoreValue;
+
     /** Information sensitivity of this data product. */
     @Attribute
     DataProductSensitivity dataProductSensitivity;

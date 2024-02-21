@@ -35,6 +35,14 @@ public interface ISQL {
 
     public static final String TYPE_NAME = "SQL";
 
+    /** Simple name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
+    KeywordTextField CALCULATION_VIEW_NAME =
+            new KeywordTextField("calculationViewName", "calculationViewName.keyword", "calculationViewName");
+
+    /** Unique name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
+    KeywordField CALCULATION_VIEW_QUALIFIED_NAME =
+            new KeywordField("calculationViewQualifiedName", "calculationViewQualifiedName");
+
     /** Simple name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
     KeywordTextField DATABASE_NAME = new KeywordTextField("databaseName", "databaseName.keyword", "databaseName");
 
@@ -304,6 +312,12 @@ public interface ISQL {
 
     /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
+
+    /** Simple name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
+    String getCalculationViewName();
+
+    /** Unique name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
+    String getCalculationViewQualifiedName();
 
     /** Status of this asset's certification. */
     CertificateStatus getCertificateStatus();

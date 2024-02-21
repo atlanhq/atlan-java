@@ -21,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
  * custom metadata (including attributes).
  */
 @Slf4j
-public class CustomMetadataCache extends AbstractCache {
+public class CustomMetadataCache extends AbstractMassCache {
 
     private Map<String, CustomMetadataDef> cacheById = new ConcurrentHashMap<>();
     private Map<String, AttributeDef> attrCacheById = new ConcurrentHashMap<>();

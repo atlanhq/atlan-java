@@ -16,9 +16,9 @@ import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @SuppressWarnings("deprecation")
-public class TableTest {
+public class CalculationViewTest {
 
-    private static final Table full = Table._internal()
+    private static final CalculationView full = CalculationView._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -408,46 +408,27 @@ public class TableTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
-            .alias("String0")
+            .calculationViewActivatedAt(123456789L)
+            .calculationViewActivatedBy("String0")
+            .calculationViewVersionId(123456789L)
             .columnCount(123456789L)
             .column(Column.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .column(Column.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .dimension(Table.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .dimension(Table.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .externalLocation("String0")
-            .externalLocationFormat("String0")
-            .externalLocationRegion("String0")
-            .fact(Table.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .fact(Table.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .isPartitioned(true)
-            .isQueryPreview(true)
-            .isTemporary(true)
-            .partitionCount(123456789L)
-            .partitionList("String0")
-            .partitionStrategy("String0")
-            .partition(TablePartition.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .partition(TablePartition.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .query(AtlanQuery.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .query(AtlanQuery.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .putQueryPreviewConfig("key1", "value1")
-            .putQueryPreviewConfig("key2", "value2")
-            .rowCount(123456789L)
             .schema(Schema.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .sizeBytes(123456789L)
             .build();
 
     private static final int hash = full.hashCode();
-    private static Table frodo;
+    private static CalculationView frodo;
     private static String serialized;
 
-    @Test(groups = {"Table.builderEquivalency"})
+    @Test(groups = {"CalculationView.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"Table.serialize"},
-            dependsOnGroups = {"Table.builderEquivalency"})
+            groups = {"CalculationView.serialize"},
+            dependsOnGroups = {"CalculationView.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson(Atlan.getDefaultClient());
@@ -456,17 +437,17 @@ public class TableTest {
     }
 
     @Test(
-            groups = {"Table.deserialize"},
-            dependsOnGroups = {"Table.serialize"})
+            groups = {"CalculationView.deserialize"},
+            dependsOnGroups = {"CalculationView.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = Atlan.getDefaultClient().readValue(serialized, Table.class);
+        frodo = Atlan.getDefaultClient().readValue(serialized, CalculationView.class);
         assertNotNull(frodo);
     }
 
     @Test(
-            groups = {"Table.equivalency"},
-            dependsOnGroups = {"Table.serialize", "Table.deserialize"})
+            groups = {"CalculationView.equivalency"},
+            dependsOnGroups = {"CalculationView.serialize", "CalculationView.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -475,8 +456,8 @@ public class TableTest {
     }
 
     @Test(
-            groups = {"Table.equivalency"},
-            dependsOnGroups = {"Table.serialize", "Table.deserialize"})
+            groups = {"CalculationView.equivalency"},
+            dependsOnGroups = {"CalculationView.serialize", "CalculationView.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

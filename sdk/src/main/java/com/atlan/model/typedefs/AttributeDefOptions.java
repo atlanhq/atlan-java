@@ -49,6 +49,7 @@ public class AttributeDefOptions extends AtlanObject {
             AzureEventHubConsumerGroup.TYPE_NAME,
             BIProcess.TYPE_NAME,
             Badge.TYPE_NAME,
+            CalculationView.TYPE_NAME,
             Column.TYPE_NAME,
             ColumnProcess.TYPE_NAME,
             Connection.TYPE_NAME,

@@ -83,6 +83,9 @@ public interface ICatalog {
             case AzureEventHubConsumerGroup.TYPE_NAME:
                 ref = AzureEventHubConsumerGroup.refByQualifiedName(qualifiedName);
                 break;
+            case CalculationView.TYPE_NAME:
+                ref = CalculationView.refByQualifiedName(qualifiedName);
+                break;
             case Column.TYPE_NAME:
                 ref = Column.refByQualifiedName(qualifiedName);
                 break;

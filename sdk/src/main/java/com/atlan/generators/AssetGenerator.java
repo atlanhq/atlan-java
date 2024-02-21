@@ -356,13 +356,6 @@ public class AssetGenerator extends TypeGenerator implements Comparable<AssetGen
             }
         }
 
-        public String getSingular() {
-            if (getType().getContainer() != null) {
-                return cfg.resolveSingular(getOriginalName());
-            }
-            return null;
-        }
-
         public boolean isDate() {
             return getType().getOriginalBase().toLowerCase(Locale.ROOT).equals("date");
         }

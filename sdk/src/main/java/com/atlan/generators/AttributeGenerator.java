@@ -72,4 +72,11 @@ public class AttributeGenerator extends TypeGenerator {
         }
         return refType;
     }
+
+    public String getSingular() {
+        if (getType().getContainer() != null) {
+            return cfg.resolveSingular(getOriginalName());
+        }
+        return null;
+    }
 }

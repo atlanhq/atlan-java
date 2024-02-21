@@ -12,6 +12,7 @@ import com.atlan.model.enums.DataProductSensitivity;
 import com.atlan.model.enums.DataProductStatus;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
@@ -47,6 +48,9 @@ public interface IDataProduct {
 
     /** Criticality of this data product. */
     KeywordField DATA_PRODUCT_CRITICALITY = new KeywordField("dataProductCriticality", "dataProductCriticality");
+
+    /** Score of this data product. */
+    NumericField DATA_PRODUCT_SCORE_VALUE = new NumericField("dataProductScoreValue", "dataProductScoreValue");
 
     /** Information sensitivity of this data product. */
     KeywordField DATA_PRODUCT_SENSITIVITY = new KeywordField("dataProductSensitivity", "dataProductSensitivity");
@@ -302,6 +306,9 @@ public interface IDataProduct {
 
     /** Criticality of this data product. */
     DataProductCriticality getDataProductCriticality();
+
+    /** Score of this data product. */
+    Double getDataProductScoreValue();
 
     /** Information sensitivity of this data product. */
     DataProductSensitivity getDataProductSensitivity();

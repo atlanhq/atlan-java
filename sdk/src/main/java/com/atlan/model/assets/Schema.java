@@ -50,6 +50,19 @@ public class Schema extends Asset implements ISchema, ISQL, ICatalog, IAsset, IR
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Simple name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
+    @Attribute
+    String calculationViewName;
+
+    /** Unique name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
+    @Attribute
+    String calculationViewQualifiedName;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ICalculationView> calculationViews;
+
     /** Database in which this schema exists. */
     @Attribute
     IDatabase database;

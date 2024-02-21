@@ -14,6 +14,7 @@ import com.atlan.model.assets.Connection;
 import com.atlan.model.assets.IAirflowTask;
 import com.atlan.model.assets.IAsset;
 import com.atlan.model.assets.IAtlanQuery;
+import com.atlan.model.assets.ICalculationView;
 import com.atlan.model.assets.ICatalog;
 import com.atlan.model.assets.IColumn;
 import com.atlan.model.assets.IDbtMetric;
@@ -74,6 +75,18 @@ public class GuacamoleColumn extends Asset
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
+
+    /** Calculate view in which this column exists. */
+    @Attribute
+    ICalculationView calculationView;
+
+    /** Simple name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
+    @Attribute
+    String calculationViewName;
+
+    /** Unique name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
+    @Attribute
+    String calculationViewQualifiedName;
 
     /** TBC */
     @Attribute

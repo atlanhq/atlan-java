@@ -34,6 +34,7 @@ import javax.annotation.processing.Generated;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
+<#if mapContainers??>@SuppressWarnings("cast")</#if>
 public class ${className} extends AtlanStruct {
     private static final long serialVersionUID = 2L;
 
@@ -47,6 +48,7 @@ public class ${className} extends AtlanStruct {
 
 <#list attributes as attribute>
     /** ${attribute.description} */
+    <#if attribute.singular??>@Singular<#if attribute.singular?has_content>("${attribute.singular}")</#if></#if>
     <#if attribute.renamed != attribute.originalName>
     @JsonProperty("${attribute.originalName}")
     </#if>

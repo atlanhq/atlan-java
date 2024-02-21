@@ -54,6 +54,14 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
     @Attribute
     String alias;
 
+    /** Simple name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
+    @Attribute
+    String calculationViewName;
+
+    /** Unique name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
+    @Attribute
+    String calculationViewQualifiedName;
+
     /** Number of columns in this view. */
     @Attribute
     Long columnCount;

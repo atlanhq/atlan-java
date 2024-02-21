@@ -298,6 +298,12 @@ public interface IAtlanQuery {
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
+    String getCalculationViewName();
+
+    /** TBC */
+    String getCalculationViewQualifiedName();
+
+    /** TBC */
     CertificateStatus getCertificateStatus();
 
     /** TBC */
