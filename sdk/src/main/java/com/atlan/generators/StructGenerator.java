@@ -4,6 +4,7 @@ package com.atlan.generators;
 
 import com.atlan.model.typedefs.AttributeDef;
 import com.atlan.model.typedefs.StructDef;
+import com.atlan.util.StringUtils;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
@@ -17,6 +18,7 @@ public class StructGenerator extends TypeGenerator {
 
     private final StructDef structDef;
     private List<Attribute> attributes;
+    private List<String> mapContainers = null;
 
     public StructGenerator(StructDef structDef, GeneratorConfig cfg) {
         super(structDef, cfg);
@@ -42,6 +44,17 @@ public class StructGenerator extends TypeGenerator {
                         .build());
             }
             attributes.add(attribute);
+            checkAndAddMapContainer(attribute);
+        }
+    }
+
+    private void checkAndAddMapContainer(Attribute attribute) {
+        if (attribute.getType().getContainer() != null
+                && attribute.getType().getContainer().contains("Map")) {
+            if (mapContainers == null) {
+                mapContainers = new ArrayList<>();
+            }
+            mapContainers.add(attribute.getRenamed());
         }
     }
 
@@ -50,6 +63,13 @@ public class StructGenerator extends TypeGenerator {
 
         public Attribute(String className, AttributeDef attributeDef, GeneratorConfig cfg) {
             super(className, attributeDef, cfg);
+        }
+
+        @Override
+        protected void resolveName() {
+            super.resolveName();
+            setRenamed(cfg.resolveAttributeName(getOriginalName()));
+            setSnakeCaseRenamed(StringUtils.getLowerSnakeCase(getRenamed()));
         }
 
         @Override

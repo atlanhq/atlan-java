@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
  * Lazily-loaded cache for translating Atlan-internal users into their various IDs.
  */
 @Slf4j
-public class UserCache extends AbstractCache {
+public class UserCache extends AbstractMassCache {
 
     private Map<String, String> mapEmailToId = new ConcurrentHashMap<>();
 

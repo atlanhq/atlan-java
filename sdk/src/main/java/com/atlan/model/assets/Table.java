@@ -54,6 +54,14 @@ public class Table extends Asset implements ITable, ISQL, ICatalog, IAsset, IRef
     @Attribute
     String alias;
 
+    /** Simple name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
+    @Attribute
+    String calculationViewName;
+
+    /** Unique name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
+    @Attribute
+    String calculationViewQualifiedName;
+
     /** Number of columns in this table. */
     @Attribute
     Long columnCount;

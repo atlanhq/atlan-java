@@ -102,6 +102,8 @@ public enum TextFields implements AtlanSearchableField {
     AWS_OWNER_NAME("awsOwnerName.text"),
     /** Resource identifier of this asset in Azure. */
     AZURE_RESOURCE_ID("azureResourceId.text"),
+    /** Simple name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
+    CALCULATION_VIEW_NAME("calculationViewName"),
     /** Status of this asset's certification. */
     CERTIFICATE_STATUS("certificateStatus.text"),
     /** Unique name of the collection in which this query exists. */

@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
  * Atlan tags.
  */
 @Slf4j
-public class AtlanTagCache extends AbstractCache {
+public class AtlanTagCache extends AbstractMassCache {
 
     private Map<String, String> mapIdToSourceTagsAttrId = new ConcurrentHashMap<>();
     private final Set<String> deletedIds = ConcurrentHashMap.newKeySet();

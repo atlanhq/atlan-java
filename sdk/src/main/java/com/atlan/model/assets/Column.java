@@ -52,6 +52,18 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Calculate view in which this column exists. */
+    @Attribute
+    ICalculationView calculationView;
+
+    /** Simple name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
+    @Attribute
+    String calculationViewName;
+
+    /** Unique name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
+    @Attribute
+    String calculationViewQualifiedName;
+
     /** Average value in this column. */
     @Attribute
     Double columnAverage;

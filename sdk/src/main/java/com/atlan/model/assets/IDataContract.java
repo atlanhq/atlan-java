@@ -346,9 +346,6 @@ public interface IDataContract {
     /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
-    /** Data products for which this asset is an output port. */
-    SortedSet<IDataProduct> getOutputPortDataProducts();
-
     /** List of groups who own this asset. */
     SortedSet<String> getOwnerGroups();
 

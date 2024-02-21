@@ -53,6 +53,14 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
     @Attribute
     String alias;
 
+    /** Simple name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
+    @Attribute
+    String calculationViewName;
+
+    /** Unique name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
+    @Attribute
+    String calculationViewQualifiedName;
+
     /** Partitions that exist within this partition. */
     @Attribute
     @Singular

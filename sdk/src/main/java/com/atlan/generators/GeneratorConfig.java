@@ -92,7 +92,8 @@ public class GeneratorConfig {
             Map.entry("sqlAsset", "primarySqlAsset"),
             Map.entry("mappedClassificationName", "mappedAtlanTagName"),
             Map.entry("purposeClassifications", "purposeAtlanTags"),
-            Map.entry("starredDetailsList", "starredDetails"));
+            Map.entry("starredDetailsList", "starredDetails"),
+            Map.entry("sourceTagValue", "sourceTagValues"));
 
     private static final Map<String, String> DEFAULT_ATTRIBUTE_ENUMS = Map.ofEntries(
             Map.entry("announcementType", "AtlanAnnouncementType"),

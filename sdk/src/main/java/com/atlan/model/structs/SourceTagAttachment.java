@@ -3,6 +3,7 @@
 package com.atlan.model.structs;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import javax.annotation.processing.Generated;
 import lombok.*;
@@ -42,7 +43,9 @@ public class SourceTagAttachment extends AtlanStruct {
     String sourceTagConnectorName;
 
     /** Value of the tag attachment, from the source. */
-    List<SourceTagAttachmentValue> sourceTagValue;
+    @Singular
+    @JsonProperty("sourceTagValue")
+    List<SourceTagAttachmentValue> sourceTagValues;
 
     /** Whether the tag attachment has been synced at the source (true) or not (false). */
     Boolean isSourceTagSynced;
@@ -59,7 +62,7 @@ public class SourceTagAttachment extends AtlanStruct {
      * @param sourceTagQualifiedName Unique name of the source tag, in Atlan.
      * @param sourceTagGuid Unique identifier (GUID) of the source tag, in Atlan.
      * @param sourceTagConnectorName Connector that is the source of the tag.
-     * @param sourceTagValue Value of the tag attachment, from the source.
+     * @param sourceTagValues Value of the tag attachment, from the source.
      * @param isSourceTagSynced Whether the tag attachment has been synced at the source (true) or not (false).
      * @param sourceTagSyncTimestamp Time (epoch) when the tag attachment was synced at the source, in milliseconds.
      * @param sourceTagSyncError Error message if the tag attachment sync at the source failed.
@@ -70,7 +73,7 @@ public class SourceTagAttachment extends AtlanStruct {
             String sourceTagQualifiedName,
             String sourceTagGuid,
             String sourceTagConnectorName,
-            List<SourceTagAttachmentValue> sourceTagValue,
+            List<SourceTagAttachmentValue> sourceTagValues,
             Boolean isSourceTagSynced,
             Long sourceTagSyncTimestamp,
             String sourceTagSyncError) {
@@ -79,7 +82,7 @@ public class SourceTagAttachment extends AtlanStruct {
                 .sourceTagQualifiedName(sourceTagQualifiedName)
                 .sourceTagGuid(sourceTagGuid)
                 .sourceTagConnectorName(sourceTagConnectorName)
-                .sourceTagValue(sourceTagValue)
+                .sourceTagValues(sourceTagValues)
                 .isSourceTagSynced(isSourceTagSynced)
                 .sourceTagSyncTimestamp(sourceTagSyncTimestamp)
                 .sourceTagSyncError(sourceTagSyncError)

@@ -292,6 +292,12 @@ public enum KeywordFields implements AtlanSearchableField {
     BADGE_CONDITIONS("badgeConditions"),
     /** Custom metadata attribute for which to show the badge. */
     BADGE_METADATA_ATTRIBUTE("badgeMetadataAttribute"),
+    /** The owner who activated the calculation view */
+    CALCULATION_VIEW_ACTIVATED_BY("calculationViewActivatedBy"),
+    /** Simple name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
+    CALCULATION_VIEW_NAME("calculationViewName.keyword"),
+    /** Unique name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
+    CALCULATION_VIEW_QUALIFIED_NAME("calculationViewQualifiedName"),
     /** Categories in which the term is organized, searchable by the qualifiedName of the category. */
     CATEGORIES("__categories"),
     /** Type of connection, for example WAREHOUSE, RDBMS, etc. */

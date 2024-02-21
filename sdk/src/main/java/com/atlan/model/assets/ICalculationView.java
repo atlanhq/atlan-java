@@ -7,9 +7,9 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
-import com.atlan.model.enums.DynamoDBSecondaryIndexProjectionType;
-import com.atlan.model.enums.DynamoDBStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
@@ -24,17 +24,34 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Atlan DynamoDB Global Secondary Index
+ * Instance of a calculation view in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IDynamoDBGlobalSecondaryIndex {
+public interface ICalculationView {
 
-    public static final String TYPE_NAME = "DynamoDBGlobalSecondaryIndex";
+    public static final String TYPE_NAME = "CalculationView";
+
+    /** Time at which this calculation view was activated at */
+    NumericField CALCULATION_VIEW_ACTIVATED_AT =
+            new NumericField("calculationViewActivatedAt", "calculationViewActivatedAt");
+
+    /** The owner who activated the calculation view */
+    KeywordField CALCULATION_VIEW_ACTIVATED_BY =
+            new KeywordField("calculationViewActivatedBy", "calculationViewActivatedBy");
+
+    /** The version ID of this calculation view. */
+    NumericField CALCULATION_VIEW_VERSION_ID = new NumericField("calculationViewVersionId", "calculationViewVersionId");
+
+    /** Number of columns in this calculation view. */
+    NumericField COLUMN_COUNT = new NumericField("columnCount", "columnCount");
+
+    /** Columns that exist within this sap calculate view. */
+    RelationField COLUMNS = new RelationField("columns");
 
     /** TBC */
-    RelationField DYNAMO_DB_TABLE = new RelationField("dynamoDBTable");
+    RelationField SCHEMA = new RelationField("atlanSchema");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -44,9 +61,6 @@ public interface IDynamoDBGlobalSecondaryIndex {
 
     /** List of users who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminUsers();
-
-    /** Alias for this table. */
-    String getAlias();
 
     /** Detailed message to include in the announcement on this asset. */
     String getAnnouncementMessage();
@@ -252,11 +266,20 @@ public interface IDynamoDBGlobalSecondaryIndex {
     /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
+    /** Time at which this calculation view was activated at */
+    Long getCalculationViewActivatedAt();
+
+    /** The owner who activated the calculation view */
+    String getCalculationViewActivatedBy();
+
     /** Simple name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
     String getCalculationViewName();
 
     /** Unique name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
     String getCalculationViewQualifiedName();
+
+    /** The version ID of this calculation view. */
+    Long getCalculationViewVersionId();
 
     /** Status of this asset's certification. */
     CertificateStatus getCertificateStatus();
@@ -270,10 +293,10 @@ public interface IDynamoDBGlobalSecondaryIndex {
     /** Name of the user who last updated the certification of this asset. */
     String getCertificateUpdatedBy();
 
-    /** Number of columns in this table. */
+    /** Number of columns in this calculation view. */
     Long getColumnCount();
 
-    /** Columns that exist within this table. */
+    /** Columns that exist within this sap calculate view. */
     SortedSet<IColumn> getColumns();
 
     /** Simple name of the connection through which this asset is accessible. */
@@ -306,44 +329,8 @@ public interface IDynamoDBGlobalSecondaryIndex {
     /** Description of this asset, for example as crawled from a source. Fallback for display purposes, if userDescription is empty. */
     String getDescription();
 
-    /** TBC */
-    SortedSet<ITable> getDimensions();
-
     /** Human-readable name of this asset used for display purposes (in user interface). */
     String getDisplayName();
-
-    /** Specifies the partition key of the DynamoDB Table/Index */
-    String getDynamoDBPartitionKey();
-
-    /** The maximum number of strongly consistent reads consumed per second before DynamoDB returns a ThrottlingException */
-    Long getDynamoDBReadCapacityUnits();
-
-    /** Specifies attributes that are projected from the DynamoDB table into the index */
-    DynamoDBSecondaryIndexProjectionType getDynamoDBSecondaryIndexProjectionType();
-
-    /** Specifies the sort key of the DynamoDB Table/Index */
-    String getDynamoDBSortKey();
-
-    /** Status of the DynamoDB Asset */
-    DynamoDBStatus getDynamoDBStatus();
-
-    /** TBC */
-    IDynamoDBTable getDynamoDBTable();
-
-    /** The maximum number of writes consumed per second before DynamoDB returns a ThrottlingException */
-    Long getDynamoDBWriteCapacityUnits();
-
-    /** External location of this table, for example: an S3 object location. */
-    String getExternalLocation();
-
-    /** Format of the external location of this table, for example: JSON, CSV, PARQUET, etc. */
-    String getExternalLocationFormat();
-
-    /** Region of the external location of this table, for example: S3 region. */
-    String getExternalLocationRegion();
-
-    /** TBC */
-    SortedSet<ITable> getFacts();
 
     /** TBC */
     SortedSet<IFile> getFiles();
@@ -369,17 +356,8 @@ public interface IDynamoDBGlobalSecondaryIndex {
     /** TBC */
     Boolean getIsPartial();
 
-    /** Whether this table is partitioned (true) or not (false). */
-    Boolean getIsPartitioned();
-
     /** Whether this asset has been profiled (true) or not (false). */
     Boolean getIsProfiled();
-
-    /** Whether preview queries are allowed for this table (true) or not (false). */
-    Boolean getIsQueryPreview();
-
-    /** Whether this table is temporary (true) or not (false). */
-    Boolean getIsTemporary();
 
     /** Time (epoch) at which this asset was last profiled, in milliseconds. */
     Long getLastProfiledAt();
@@ -411,9 +389,6 @@ public interface IDynamoDBGlobalSecondaryIndex {
     /** Name of this asset. Fallback for display purposes, if displayName is empty. */
     String getName();
 
-    /** Represents attributes for describing the key schema for the table and indexes. */
-    String getNoSQLSchemaDefinition();
-
     /** Tasks from which this asset is output. */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
@@ -429,35 +404,17 @@ public interface IDynamoDBGlobalSecondaryIndex {
     /** List of users who own this asset. */
     SortedSet<String> getOwnerUsers();
 
-    /** Number of partitions in this table. */
-    Long getPartitionCount();
-
-    /** List of partitions in this table. */
-    String getPartitionList();
-
-    /** Partition strategy for this table. */
-    String getPartitionStrategy();
-
-    /** Partitions that exist within this table. */
-    SortedSet<ITablePartition> getPartitions();
-
     /** Popularity score for this asset. */
     Double getPopularityScore();
 
     /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
     String getQualifiedName();
 
-    /** Queries that access this table. */
-    SortedSet<IAtlanQuery> getQueries();
-
     /** Number of times this asset has been queried. */
     Long getQueryCount();
 
     /** Time (epoch) at which the query count was last updated, in milliseconds. */
     Long getQueryCountUpdatedAt();
-
-    /** Configuration for preview queries. */
-    Map<String, String> getQueryPreviewConfig();
 
     /** Number of unique users who have queried this asset. */
     Long getQueryUserCount();
@@ -468,13 +425,10 @@ public interface IDynamoDBGlobalSecondaryIndex {
     /** README that is linked to this asset. */
     IReadme getReadme();
 
-    /** Number of rows in this table. */
-    Long getRowCount();
-
     /** URL for sample data for this asset. */
     String getSampleDataUrl();
 
-    /** Schema in which this table exists. */
+    /** TBC */
     ISchema getSchema();
 
     /** Simple name of the schema in which this SQL asset exists, or empty if it does not exist within a schema. */
@@ -485,9 +439,6 @@ public interface IDynamoDBGlobalSecondaryIndex {
 
     /** TBC */
     SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
-
-    /** Size of this table, in bytes. */
-    Long getSizeBytes();
 
     /** TBC */
     SortedSet<ISodaCheck> getSodaChecks();

@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
  * Lazily-loaded cache for translating Atlan-internal roles into their various IDs.
  */
 @Slf4j
-public class RoleCache extends AbstractCache {
+public class RoleCache extends AbstractMassCache {
 
     private final RolesEndpoint rolesEndpoint;
 

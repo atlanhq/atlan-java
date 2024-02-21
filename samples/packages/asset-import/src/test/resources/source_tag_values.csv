@@ -1,0 +1,5 @@
+qualifiedName,typeName,name,displayName,description,userDescription,ownerUsers,ownerGroups,certificateStatus,certificateStatusMessage,announcementType,announcementTitle,announcementMessage,assignedTerms,atlanTags,links,readme,starredDetails,connectorType,connectionQualifiedName,databaseQualifiedName,databaseName,schemaQualifiedName,schemaName
+{{CONNECTION}}/ANALYTICS/WIDE_WORLD_IMPORTERS/{{TABLE}},Table,{{TABLE}},,,,,,,,,,,,"Confidential {{snowflake/development@@ANALYTICS/WIDE_WORLD_IMPORTERS/CONFIDENTIAL??=Not Restricted}}
+Hourly {{dbt/development@@account/24670/project/211208/tag/hourly}}
+Mart {{dbt/development@@account/24670/project/211208/tag/mart}}
+Wide_world_importers {{dbt/development@@account/24670/project/211208/tag/wide_world_importers}}",,,,snowflake,{{CONNECTION}},{{CONNECTION}}/ANALYTICS,ANALYTICS,{{CONNECTION}}/ANALYTICS/WIDE_WORLD_IMPORTERS,WIDE_WORLD_IMPORTERS

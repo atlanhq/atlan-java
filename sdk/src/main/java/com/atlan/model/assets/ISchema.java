@@ -32,6 +32,9 @@ public interface ISchema {
 
     public static final String TYPE_NAME = "Schema";
 
+    /** TBC */
+    RelationField CALCULATION_VIEWS = new RelationField("calculationViews");
+
     /** Database in which this schema exists. */
     RelationField DATABASE = new RelationField("database");
 
@@ -280,6 +283,15 @@ public interface ISchema {
 
     /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
+
+    /** Simple name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
+    String getCalculationViewName();
+
+    /** Unique name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
+    String getCalculationViewQualifiedName();
+
+    /** TBC */
+    SortedSet<ICalculationView> getCalculationViews();
 
     /** Status of this asset's certification. */
     CertificateStatus getCertificateStatus();

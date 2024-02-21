@@ -11,20 +11,30 @@ import java.util.concurrent.ConcurrentHashMap;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Base class for reusable components that are common to all caches
+ * Base class for reusable components that are common to all caches, where
+ * a cache is populated entry-by-entry.
  */
 @Slf4j
-public abstract class AbstractCache {
+public abstract class AbstractLazyCache {
 
     private final Map<String, String> mapIdToName = new ConcurrentHashMap<>();
     private final Map<String, String> mapNameToId = new ConcurrentHashMap<>();
 
     /**
-     * Logic to refresh the cache of objects from Atlan.
+     * Logic to refresh the cache for a single object from Atlan.
      *
-     * @throws AtlanException on any error communicating with Atlan to refresh the cache of objects
+     * @param id the identity of a single item to lookup
+     * @throws AtlanException on any error communicating with Atlan to lookup the object
      */
-    public abstract void refreshCache() throws AtlanException;
+    public abstract void lookupById(String id) throws AtlanException;
+
+    /**
+     * Logic to refresh the cache for a single object from Atlan.
+     *
+     * @param name the name of a single item to lookup
+     * @throws AtlanException on any error communicating with Atlan to lookup the object
+     */
+    public abstract void lookupByName(String name) throws AtlanException;
 
     /**
      * Add an entry to the cache
@@ -87,7 +97,7 @@ public abstract class AbstractCache {
             String id = mapNameToId.get(name);
             if (id == null && allowRefresh) {
                 // If not found, refresh the cache and look again (could be stale)
-                refreshCache();
+                lookupByName(name);
                 id = mapNameToId.get(name);
             }
             if (id == null) {
@@ -127,7 +137,7 @@ public abstract class AbstractCache {
             String name = mapIdToName.get(id);
             if (name == null && allowRefresh) {
                 // If not found, refresh the cache and look again (could be stale)
-                refreshCache();
+                lookupById(id);
                 name = mapIdToName.get(id);
             }
             if (name == null) {

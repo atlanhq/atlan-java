@@ -54,6 +54,10 @@ public enum NumericFields implements AtlanSearchableField {
     ASSET_SODA_LAST_SYNC_RUN_AT("assetSodaLastSyncRunAt"),
     /** TBC */
     AUTH_SERVICE_POLICY_LAST_SYNC("authServicePolicyLastSync"),
+    /** Time at which this calculation view was activated at */
+    CALCULATION_VIEW_ACTIVATED_AT("calculationViewActivatedAt"),
+    /** The version ID of this calculation view. */
+    CALCULATION_VIEW_VERSION_ID("calculationViewVersionId"),
     /** Time (epoch) at which the certification was last updated, in milliseconds. */
     CERTIFICATE_UPDATED_AT("certificateUpdatedAt"),
     /** Average value in this column. */
@@ -108,6 +112,8 @@ public enum NumericFields implements AtlanSearchableField {
     DATAFLOW_COUNT("dataflowCount"),
     /** Number of datasets in this workspace. */
     DATASET_COUNT("datasetCount"),
+    /** Score of this data product. */
+    DATA_PRODUCT_SCORE_VALUE("dataProductScoreValue"),
     /** TBC */
     DBT_JOB_LAST_RUN("dbtJobLastRun"),
     /** TBC */

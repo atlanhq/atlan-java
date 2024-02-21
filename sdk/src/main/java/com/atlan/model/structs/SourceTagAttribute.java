@@ -18,6 +18,7 @@ import lombok.extern.jackson.Jacksonized;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
+@SuppressWarnings("cast")
 public class SourceTagAttribute extends AtlanStruct {
     private static final long serialVersionUID = 2L;
 
@@ -36,6 +37,7 @@ public class SourceTagAttribute extends AtlanStruct {
     String tagAttributeValue;
 
     /** Properties of the attribute. */
+    @Singular
     Map<String, String> tagAttributeProperties;
 
     /**
