@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":6,"i2":10,"i3":10,"i4":6,"i5":10,"i6":10};
+var data = {"i0":10,"i1":6,"i2":10,"i3":10,"i4":10,"i5":10,"i6":6,"i7":10,"i8":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -200,25 +200,35 @@ extends <a href="AtlanStruct.AtlanStructBuilder.html" title="class in com.atlan.
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="AuthPolicyCondition.AuthPolicyConditionBuilder.html" title="type parameter in AuthPolicyCondition.AuthPolicyConditionBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#policyConditionType(java.lang.String)">policyConditionType</a></span>&#8203;(java.lang.String&nbsp;policyConditionType)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearPolicyConditionValues()">clearPolicyConditionValues</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="AuthPolicyCondition.AuthPolicyConditionBuilder.html" title="type parameter in AuthPolicyCondition.AuthPolicyConditionBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#policyConditionValues(java.util.List)">policyConditionValues</a></span>&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;policyConditionValues)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#policyConditionType(java.lang.String)">policyConditionType</a></span>&#8203;(java.lang.String&nbsp;policyConditionType)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
+<td class="colFirst"><code><a href="AuthPolicyCondition.AuthPolicyConditionBuilder.html" title="type parameter in AuthPolicyCondition.AuthPolicyConditionBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#policyConditionValue(java.lang.String)">policyConditionValue</a></span>&#8203;(java.lang.String&nbsp;policyConditionValue)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code><a href="AuthPolicyCondition.AuthPolicyConditionBuilder.html" title="type parameter in AuthPolicyCondition.AuthPolicyConditionBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#policyConditionValues(java.util.Collection)">policyConditionValues</a></span>&#8203;(java.util.Collection&lt;? extends java.lang.String&gt;&nbsp;policyConditionValues)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>protected abstract <a href="AuthPolicyCondition.AuthPolicyConditionBuilder.html" title="type parameter in AuthPolicyCondition.AuthPolicyConditionBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#self()">self</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code><a href="AuthPolicyCondition.AuthPolicyConditionBuilder.html" title="type parameter in AuthPolicyCondition.AuthPolicyConditionBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#typeName(java.lang.String)">typeName</a></span>&#8203;(java.lang.String&nbsp;typeName)</code></th>
 <td class="colLast">&nbsp;</td>
@@ -335,17 +345,31 @@ extends <a href="AtlanStruct.AtlanStructBuilder.html" title="class in com.atlan.
 </dl>
 </li>
 </ul>
-<a id="policyConditionValues(java.util.List)">
+<a id="policyConditionValue(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>policyConditionValue</h4>
+<pre class="methodSignature">public&nbsp;<a href="AuthPolicyCondition.AuthPolicyConditionBuilder.html" title="type parameter in AuthPolicyCondition.AuthPolicyConditionBuilder">B</a>&nbsp;policyConditionValue&#8203;(java.lang.String&nbsp;policyConditionValue)</pre>
+</li>
+</ul>
+<a id="policyConditionValues(java.util.Collection)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>policyConditionValues</h4>
-<pre class="methodSignature">public&nbsp;<a href="AuthPolicyCondition.AuthPolicyConditionBuilder.html" title="type parameter in AuthPolicyCondition.AuthPolicyConditionBuilder">B</a>&nbsp;policyConditionValues&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;policyConditionValues)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
+<pre class="methodSignature">public&nbsp;<a href="AuthPolicyCondition.AuthPolicyConditionBuilder.html" title="type parameter in AuthPolicyCondition.AuthPolicyConditionBuilder">B</a>&nbsp;policyConditionValues&#8203;(java.util.Collection&lt;? extends java.lang.String&gt;&nbsp;policyConditionValues)</pre>
+</li>
+</ul>
+<a id="clearPolicyConditionValues()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clearPolicyConditionValues</h4>
+<pre class="methodSignature">public&nbsp;<a href="AuthPolicyCondition.AuthPolicyConditionBuilder.html" title="type parameter in AuthPolicyCondition.AuthPolicyConditionBuilder">B</a>&nbsp;clearPolicyConditionValues()</pre>
 </li>
 </ul>
 <a id="toString()">

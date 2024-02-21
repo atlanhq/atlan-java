@@ -123,7 +123,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li><a href="AbstractCache.html" title="class in com.atlan.cache">com.atlan.cache.AbstractCache</a></li>
+<li><a href="AbstractMassCache.html" title="class in com.atlan.cache">com.atlan.cache.AbstractMassCache</a></li>
 <li>
 <ul class="inheritance">
 <li>com.atlan.cache.UserCache</li>
@@ -137,7 +137,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <hr>
 <pre>public class <span class="typeNameLabel">UserCache</span>
-extends <a href="AbstractCache.html" title="class in com.atlan.cache">AbstractCache</a></pre>
+extends <a href="AbstractMassCache.html" title="class in com.atlan.cache">AbstractMassCache</a></pre>
 <div class="block">Lazily-loaded cache for translating Atlan-internal users into their various IDs.</div>
 </li>
 </ul>
@@ -221,11 +221,11 @@ extends <a href="AbstractCache.html" title="class in com.atlan.cache">AbstractCa
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a id="methods.inherited.from.class.com.atlan.cache.AbstractCache">
+<li class="blockList"><a id="methods.inherited.from.class.com.atlan.cache.AbstractMassCache">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;com.atlan.cache.<a href="AbstractCache.html" title="class in com.atlan.cache">AbstractCache</a></h3>
-<code><a href="AbstractCache.html#cache(java.lang.String,java.lang.String)">cache</a>, <a href="AbstractCache.html#getIdForName(java.lang.String)">getIdForName</a>, <a href="AbstractCache.html#getNameForId(java.lang.String)">getNameForId</a>, <a href="AbstractCache.html#isIdKnown(java.lang.String)">isIdKnown</a>, <a href="AbstractCache.html#isNameKnown(java.lang.String)">isNameKnown</a></code></li>
+<h3>Methods inherited from class&nbsp;com.atlan.cache.<a href="AbstractMassCache.html" title="class in com.atlan.cache">AbstractMassCache</a></h3>
+<code><a href="AbstractMassCache.html#cache(java.lang.String,java.lang.String)">cache</a>, <a href="AbstractMassCache.html#getIdForName(java.lang.String)">getIdForName</a>, <a href="AbstractMassCache.html#getNameForId(java.lang.String)">getNameForId</a>, <a href="AbstractMassCache.html#isIdKnown(java.lang.String)">isIdKnown</a>, <a href="AbstractMassCache.html#isNameKnown(java.lang.String)">isNameKnown</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
@@ -281,7 +281,7 @@ extends <a href="AbstractCache.html" title="class in com.atlan.cache">AbstractCa
 <div class="block">Logic to refresh the cache of objects from Atlan.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="AbstractCache.html#refreshCache()">refreshCache</a></code>&nbsp;in class&nbsp;<code><a href="AbstractCache.html" title="class in com.atlan.cache">AbstractCache</a></code></dd>
+<dd><code><a href="AbstractMassCache.html#refreshCache()">refreshCache</a></code>&nbsp;in class&nbsp;<code><a href="AbstractMassCache.html" title="class in com.atlan.cache">AbstractMassCache</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any error communicating with Atlan to refresh the cache of objects</dd>
 </dl>
@@ -299,7 +299,7 @@ extends <a href="AbstractCache.html" title="class in com.atlan.cache">AbstractCa
 <div class="block">Translate the provided human-readable username to its GUID.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="AbstractCache.html#getIdForName(java.lang.String,boolean)">getIdForName</a></code>&nbsp;in class&nbsp;<code><a href="AbstractCache.html" title="class in com.atlan.cache">AbstractCache</a></code></dd>
+<dd><code><a href="AbstractMassCache.html#getIdForName(java.lang.String,boolean)">getIdForName</a></code>&nbsp;in class&nbsp;<code><a href="AbstractMassCache.html" title="class in com.atlan.cache">AbstractMassCache</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>username</code> - human-readable name of the user</dd>
 <dd><code>allowRefresh</code> - whether to allow a refresh of the cache (true) or not (false)</dd>
@@ -368,7 +368,7 @@ extends <a href="AbstractCache.html" title="class in com.atlan.cache">AbstractCa
 <div class="block">Translate the provided user GUID to the user's username.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="AbstractCache.html#getNameForId(java.lang.String,boolean)">getNameForId</a></code>&nbsp;in class&nbsp;<code><a href="AbstractCache.html" title="class in com.atlan.cache">AbstractCache</a></code></dd>
+<dd><code><a href="AbstractMassCache.html#getNameForId(java.lang.String,boolean)">getNameForId</a></code>&nbsp;in class&nbsp;<code><a href="AbstractMassCache.html" title="class in com.atlan.cache">AbstractMassCache</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>id</code> - unique identifier (GUID) of the user</dd>
 <dd><code>allowRefresh</code> - whether to allow a refresh of the cache (true) or not (false)</dd>

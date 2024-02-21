@@ -322,7 +322,7 @@ extends <a href="AtlanStruct.html" title="class in com.atlan.model.structs">Atla
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="SourceTagAttachmentValue.html" title="class in com.atlan.model.structs">SourceTagAttachmentValue</a>&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSourceTagValue()">getSourceTagValue</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSourceTagValues()">getSourceTagValues</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Value of the tag attachment, from the source.</div>
 </td>
@@ -345,7 +345,7 @@ extends <a href="AtlanStruct.html" title="class in com.atlan.model.structs">Atla
   java.lang.String&nbsp;sourceTagQualifiedName,
   java.lang.String&nbsp;sourceTagGuid,
   java.lang.String&nbsp;sourceTagConnectorName,
-  java.util.List&lt;<a href="SourceTagAttachmentValue.html" title="class in com.atlan.model.structs">SourceTagAttachmentValue</a>&gt;&nbsp;sourceTagValue,
+  java.util.List&lt;<a href="SourceTagAttachmentValue.html" title="class in com.atlan.model.structs">SourceTagAttachmentValue</a>&gt;&nbsp;sourceTagValues,
   java.lang.Boolean&nbsp;isSourceTagSynced,
   java.lang.Long&nbsp;sourceTagSyncTimestamp,
   java.lang.String&nbsp;sourceTagSyncError)</code></th>
@@ -445,7 +445,7 @@ extends <a href="AtlanStruct.html" title="class in com.atlan.model.structs">Atla
                                      java.lang.String&nbsp;sourceTagQualifiedName,
                                      java.lang.String&nbsp;sourceTagGuid,
                                      java.lang.String&nbsp;sourceTagConnectorName,
-                                     java.util.List&lt;<a href="SourceTagAttachmentValue.html" title="class in com.atlan.model.structs">SourceTagAttachmentValue</a>&gt;&nbsp;sourceTagValue,
+                                     java.util.List&lt;<a href="SourceTagAttachmentValue.html" title="class in com.atlan.model.structs">SourceTagAttachmentValue</a>&gt;&nbsp;sourceTagValues,
                                      java.lang.Boolean&nbsp;isSourceTagSynced,
                                      java.lang.Long&nbsp;sourceTagSyncTimestamp,
                                      java.lang.String&nbsp;sourceTagSyncError)</pre>
@@ -456,7 +456,7 @@ extends <a href="AtlanStruct.html" title="class in com.atlan.model.structs">Atla
 <dd><code>sourceTagQualifiedName</code> - Unique name of the source tag, in Atlan.</dd>
 <dd><code>sourceTagGuid</code> - Unique identifier (GUID) of the source tag, in Atlan.</dd>
 <dd><code>sourceTagConnectorName</code> - Connector that is the source of the tag.</dd>
-<dd><code>sourceTagValue</code> - Value of the tag attachment, from the source.</dd>
+<dd><code>sourceTagValues</code> - Value of the tag attachment, from the source.</dd>
 <dd><code>isSourceTagSynced</code> - Whether the tag attachment has been synced at the source (true) or not (false).</dd>
 <dd><code>sourceTagSyncTimestamp</code> - Time (epoch) when the tag attachment was synced at the source, in milliseconds.</dd>
 <dd><code>sourceTagSyncError</code> - Error message if the tag attachment sync at the source failed.</dd>
@@ -523,13 +523,13 @@ extends <a href="AtlanStruct.html" title="class in com.atlan.model.structs">Atla
 <div class="block">Connector that is the source of the tag.</div>
 </li>
 </ul>
-<a id="getSourceTagValue()">
+<a id="getSourceTagValues()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getSourceTagValue</h4>
-<pre class="methodSignature">public&nbsp;java.util.List&lt;<a href="SourceTagAttachmentValue.html" title="class in com.atlan.model.structs">SourceTagAttachmentValue</a>&gt;&nbsp;getSourceTagValue()</pre>
+<h4>getSourceTagValues</h4>
+<pre class="methodSignature">public&nbsp;java.util.List&lt;<a href="SourceTagAttachmentValue.html" title="class in com.atlan.model.structs">SourceTagAttachmentValue</a>&gt;&nbsp;getSourceTagValues()</pre>
 <div class="block">Value of the tag attachment, from the source.</div>
 </li>
 </ul>

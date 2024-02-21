@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":6,"i2":6,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10};
+var data = {"i0":10,"i1":6,"i2":10,"i3":6,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -199,31 +199,42 @@ extends <a href="AtlanStruct.AtlanStructBuilder.html" title="class in com.atlan.
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
+<td class="colFirst"><code><a href="SourceTagAttribute.SourceTagAttributeBuilder.html" title="type parameter in SourceTagAttribute.SourceTagAttributeBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearTagAttributeProperties()">clearTagAttributeProperties</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>protected abstract <a href="SourceTagAttribute.SourceTagAttributeBuilder.html" title="type parameter in SourceTagAttribute.SourceTagAttributeBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#self()">self</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="SourceTagAttribute.SourceTagAttributeBuilder.html" title="type parameter in SourceTagAttribute.SourceTagAttributeBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#tagAttributeKey(java.lang.String)">tagAttributeKey</a></span>&#8203;(java.lang.String&nbsp;tagAttributeKey)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="SourceTagAttribute.SourceTagAttributeBuilder.html" title="type parameter in SourceTagAttribute.SourceTagAttributeBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#tagAttributeProperties(java.util.Map)">tagAttributeProperties</a></span>&#8203;(java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;tagAttributeProperties)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#tagAttributeProperties(java.util.Map)">tagAttributeProperties</a></span>&#8203;(java.util.Map&lt;? extends java.lang.String,&#8203;? extends java.lang.String&gt;&nbsp;tagAttributeProperties)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i6" class="altColor">
+<td class="colFirst"><code><a href="SourceTagAttribute.SourceTagAttributeBuilder.html" title="type parameter in SourceTagAttribute.SourceTagAttributeBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#tagAttributeProperty(java.lang.String,java.lang.String)">tagAttributeProperty</a></span>&#8203;(java.lang.String&nbsp;tagAttributePropertyKey,
+                    java.lang.String&nbsp;tagAttributePropertyValue)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="SourceTagAttribute.SourceTagAttributeBuilder.html" title="type parameter in SourceTagAttribute.SourceTagAttributeBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#tagAttributeValue(java.lang.String)">tagAttributeValue</a></span>&#8203;(java.lang.String&nbsp;tagAttributeValue)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code><a href="SourceTagAttribute.SourceTagAttributeBuilder.html" title="type parameter in SourceTagAttribute.SourceTagAttributeBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#typeName(java.lang.String)">typeName</a></span>&#8203;(java.lang.String&nbsp;typeName)</code></th>
 <td class="colLast">&nbsp;</td>
@@ -353,17 +364,32 @@ extends <a href="AtlanStruct.AtlanStructBuilder.html" title="class in com.atlan.
 </dl>
 </li>
 </ul>
+<a id="tagAttributeProperty(java.lang.String,java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>tagAttributeProperty</h4>
+<pre class="methodSignature">public&nbsp;<a href="SourceTagAttribute.SourceTagAttributeBuilder.html" title="type parameter in SourceTagAttribute.SourceTagAttributeBuilder">B</a>&nbsp;tagAttributeProperty&#8203;(java.lang.String&nbsp;tagAttributePropertyKey,
+                              java.lang.String&nbsp;tagAttributePropertyValue)</pre>
+</li>
+</ul>
 <a id="tagAttributeProperties(java.util.Map)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>tagAttributeProperties</h4>
-<pre class="methodSignature">public&nbsp;<a href="SourceTagAttribute.SourceTagAttributeBuilder.html" title="type parameter in SourceTagAttribute.SourceTagAttributeBuilder">B</a>&nbsp;tagAttributeProperties&#8203;(java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;tagAttributeProperties)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
+<pre class="methodSignature">public&nbsp;<a href="SourceTagAttribute.SourceTagAttributeBuilder.html" title="type parameter in SourceTagAttribute.SourceTagAttributeBuilder">B</a>&nbsp;tagAttributeProperties&#8203;(java.util.Map&lt;? extends java.lang.String,&#8203;? extends java.lang.String&gt;&nbsp;tagAttributeProperties)</pre>
+</li>
+</ul>
+<a id="clearTagAttributeProperties()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clearTagAttributeProperties</h4>
+<pre class="methodSignature">public&nbsp;<a href="SourceTagAttribute.SourceTagAttributeBuilder.html" title="type parameter in SourceTagAttribute.SourceTagAttributeBuilder">B</a>&nbsp;clearTagAttributeProperties()</pre>
 </li>
 </ul>
 <a id="toString()">
