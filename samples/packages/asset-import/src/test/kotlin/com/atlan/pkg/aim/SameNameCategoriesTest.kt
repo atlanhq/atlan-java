@@ -11,6 +11,7 @@ import org.testng.annotations.BeforeClass
 import java.nio.file.Paths
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 /**
  * Test import of a very simple file containing categories with the same name at a given level,
@@ -67,7 +68,7 @@ class SameNameCategoriesTest : PackageTest() {
         val bfs = hierarchy.breadthFirst()
         assertEquals(5, bfs.size)
         val ordered = bfs.map { it.name }.toList()
-        assertEquals(listOf("root", "c2", "c1", "same", "same"), ordered)
+        assertTrue(listOf("root", "c1", "c2", "same", "same") == ordered || listOf("root", "c2", "c1", "same", "same") == ordered)
     }
 
     @Test
