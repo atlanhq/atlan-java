@@ -110,7 +110,7 @@ class CategoryImporter(
                 categoryName
             } else {
                 val parentIdx = deserializer.heading.indexOf(GlossaryCategory.PARENT_CATEGORY.atlanFieldName)
-                val parentPath = deserializer.row[parentIdx].split(CATEGORY_DELIMITER)[0]
+                val parentPath = deserializer.row[parentIdx].split(GLOSSARY_DELIMITER)[0]
                 "$parentPath$CATEGORY_DELIMITER$categoryName"
             }
             "$categoryPath$GLOSSARY_DELIMITER$glossaryName"

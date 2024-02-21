@@ -1,0 +1,7 @@
+name,anchor,typeName,parentCategory
+{GLOSSARY},,AtlasGlossary,
+root,{GLOSSARY},AtlasGlossaryCategory,
+c1,{GLOSSARY},AtlasGlossaryCategory,root@@@{GLOSSARY}
+c2,{GLOSSARY},AtlasGlossaryCategory,root@@@{GLOSSARY}
+same,{GLOSSARY},AtlasGlossaryCategory,root@c1@@@{GLOSSARY}
+same,{GLOSSARY},AtlasGlossaryCategory,root@c2@@@{GLOSSARY}
