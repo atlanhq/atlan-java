@@ -7,20 +7,15 @@ LABEL org.opencontainers.image.vendor="Atlan Pte. Ltd." \
       org.opencontainers.image.description="Atlan Java SDK bundled together for layering on any additional Java code." \
       org.opencontainers.image.licenses=Apache-2
 
-RUN apt-get update \
-    && apt-get install -y libexpat1 fonts-dejavu-core fontconfig-config libfontconfig1 libfreetype6 libpng16-16 \
-    && rm -rf /var/lib/apt/lists/*
+# RUN apt-get update \
+#     && apt-get install -y libexpat1 fonts-dejavu-core fontconfig-config libfontconfig1 libfreetype6 libpng16-16 \
+#     && rm -rf /var/lib/apt/lists/*
 
 RUN wget -O /dumb-init https://github.com/Yelp/dumb-init/releases/download/v1.2.5/dumb-init_1.2.5_x86_64 \
         && chmod +x /dumb-init
 
 COPY assembly /opt/jars
 
-# ENV JAVA_HOME=/opt/java/openjdk
-# ENV PATH "${JAVA_HOME}/bin:${PATH}"
 ENV CLASSPATH "/opt/jars/*:/opt/app/*"
-# COPY --from=jre-build /javaruntime $JAVA_HOME
-# COPY --from=jre-build /opt/jars /opt/jars
-# COPY --from=jre-build /dumb-init /dumb-init
 
 ENTRYPOINT ["/dumb-init", "--", "java"]
