@@ -17,6 +17,7 @@ parsson = "1.1.5"
 simplejavamail = "8.5.1"
 swagger = "2.1.19"
 jsonpath = "2.9.0"
+commons-compress = "1.26.0"
 
 [libraries]
 jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson" }
@@ -41,6 +42,7 @@ parsson = { module = "org.eclipse.parsson:parsson", version.ref = "parsson" }
 simple-java-mail = { module = "org.simplejavamail:simple-java-mail", version.ref = "simplejavamail" }
 swagger-parser = { module = "io.swagger.parser.v3:swagger-parser", version.ref = "swagger" }
 json-path = { module = "com.jayway.jsonpath:json-path", version.ref = "jsonpath" }
+commons-compress = { module = "org.apache.commons:commons-compress", version.ref = "commons-compress" }
 
 [bundles]
 java-test = [ "jnanoid", "testng", "wiremock" ]

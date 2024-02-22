@@ -10,6 +10,14 @@ plugins {
 }
 
 dependencies {
+    constraints {
+        api(libs.commons.compress) {
+            because("version 1.25.0 pulled from poi-ooxml has CWE-835 (CVE-2024-25710) and CWE-770 (CVE-2024-26308)")
+        }
+        api(libs.parsson) {
+            because("version 1.0.0 pulled from elasticsearch-java has CWE-20 (CVE-2023-4043)")
+        }
+    }
     api(libs.jackson.kotlin)
     api(libs.fastcsv)
     api(libs.bundles.poi)
