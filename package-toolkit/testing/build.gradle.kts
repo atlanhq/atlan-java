@@ -10,6 +10,11 @@ plugins {
 }
 
 dependencies {
+    constraints {
+        api(libs.json.path) {
+            because("version 2.8.0 pulled from wiremock has CWE (CVE-2023-51074)")
+        }
+    }
     implementation(project(":package-toolkit:runtime"))
     api(libs.system.stubs)
     api(libs.bundles.java.test)
