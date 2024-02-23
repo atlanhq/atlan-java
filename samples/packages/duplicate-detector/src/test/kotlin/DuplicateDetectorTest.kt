@@ -36,7 +36,7 @@ class DuplicateDetectorTest : PackageTest() {
                 assetTypes = listOf(Table.TYPE_NAME, View.TYPE_NAME, MaterializedView.TYPE_NAME),
             ),
         )
-        DuplicateDetector.main(arrayOf())
+        DuplicateDetector.main(arrayOf(testDirectory))
     }
 
     @Test

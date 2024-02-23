@@ -58,7 +58,7 @@ class InvalidUsersGroupsTest : PackageTest() {
                 glossariesFailOnErrors = false,
             ),
         )
-        Importer.main(arrayOf())
+        Importer.main(arrayOf(testDirectory))
     }
 
     @Test

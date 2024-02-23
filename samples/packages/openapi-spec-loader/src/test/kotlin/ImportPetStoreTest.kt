@@ -35,7 +35,7 @@ class ImportPetStoreTest : PackageTest() {
                 connectionQualifiedName = null,
             ),
         )
-        OpenAPISpecLoader.main(arrayOf())
+        OpenAPISpecLoader.main(arrayOf(testDirectory))
     }
 
     @Test

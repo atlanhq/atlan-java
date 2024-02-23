@@ -61,7 +61,7 @@ class InvalidParentTest : PackageTest() {
             ),
         )
         assertFailsWith(IllegalStateException::class, "Could not find any table/view at: $conn1/azure-cosmos-db/cosmosdb/xyz/schemaMismatch") {
-            Importer.main(arrayOf())
+            Importer.main(arrayOf(testDirectory))
         }
     }
 
