@@ -17,6 +17,7 @@ com.atlan.model.relations
 com.atlan.model.search
 com.atlan.model.search.aggregates
 com.atlan.model.structs
+com.atlan.model.tasks
 com.atlan.model.typedefs
 com.atlan.model.workflow
 com.atlan.net

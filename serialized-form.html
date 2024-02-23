@@ -24825,6 +24825,156 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </li>
 <li class="blockList">
 <section>
+<h2 title="Package">Package&nbsp;com.atlan.model.tasks</h2>
+<ul class="blockList">
+<li class="blockList"><a id="com.atlan.model.tasks.AtlanTask">
+<!--   -->
+</a>
+<h3>Class <a href="com/atlan/model/tasks/AtlanTask.html" title="class in com.atlan.model.tasks">com.atlan.model.tasks.AtlanTask</a> extends <a href="com/atlan/model/core/AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>attemptCount</h4>
+<pre>java.lang.Long attemptCount</pre>
+<div class="block">Number of times the task has been attempted.</div>
+</li>
+<li class="blockList">
+<h4>classificationId</h4>
+<pre>java.lang.String classificationId</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>createdBy</h4>
+<pre>java.lang.String createdBy</pre>
+<div class="block">User who created the task.</div>
+</li>
+<li class="blockList">
+<h4>createdTime</h4>
+<pre>java.lang.Long createdTime</pre>
+<div class="block">Time (epoch) at which the task was created, in milliseconds.</div>
+</li>
+<li class="blockList">
+<h4>endTime</h4>
+<pre>java.lang.Long endTime</pre>
+<div class="block">Time (epoch) at which the task was ended, in milliseconds.</div>
+</li>
+<li class="blockList">
+<h4>entityGuid</h4>
+<pre>java.lang.String entityGuid</pre>
+<div class="block">Unique identifier of the asset the task originated from.</div>
+</li>
+<li class="blockList">
+<h4>guid</h4>
+<pre>java.lang.String guid</pre>
+<div class="block">Unique identifier of the task.</div>
+</li>
+<li class="blockList">
+<h4>parameters</h4>
+<pre>java.util.Map&lt;java.lang.String,&#8203;java.lang.Object&gt; parameters</pre>
+<div class="block">Parameters used for running the task.</div>
+</li>
+<li class="blockList">
+<h4>startTime</h4>
+<pre>java.lang.Long startTime</pre>
+<div class="block">Time (epoch) at which the task was started, in milliseconds.</div>
+</li>
+<li class="blockList">
+<h4>status</h4>
+<pre><a href="com/atlan/model/enums/AtlanTaskStatus.html" title="enum in com.atlan.model.enums">AtlanTaskStatus</a> status</pre>
+<div class="block">Status of the task.</div>
+</li>
+<li class="blockList">
+<h4>timeTakenInSeconds</h4>
+<pre>java.lang.Long timeTakenInSeconds</pre>
+<div class="block">Total time taken to complete the task, in seconds.</div>
+</li>
+<li class="blockList">
+<h4>type</h4>
+<pre><a href="com/atlan/model/enums/AtlanTaskType.html" title="enum in com.atlan.model.enums">AtlanTaskType</a> type</pre>
+<div class="block">Type of the task.</div>
+</li>
+<li class="blockListLast">
+<h4>updatedTime</h4>
+<pre>java.lang.Long updatedTime</pre>
+<div class="block">Time (epoch) at which the task was last updated, in milliseconds.</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList"><a id="com.atlan.model.tasks.TaskSearchRequest">
+<!--   -->
+</a>
+<h3>Class <a href="com/atlan/model/tasks/TaskSearchRequest.html" title="class in com.atlan.model.tasks">com.atlan.model.tasks.TaskSearchRequest</a> extends <a href="com/atlan/model/core/AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockListLast">
+<h4>dsl</h4>
+<pre><a href="com/atlan/model/search/IndexSearchDSL.html" title="class in com.atlan.model.search">IndexSearchDSL</a> dsl</pre>
+<div class="block">Parameters for the search itself.</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList"><a id="com.atlan.model.tasks.TaskSearchResponse">
+<!--   -->
+</a>
+<h3>Class <a href="com/atlan/model/tasks/TaskSearchResponse.html" title="class in com.atlan.model.tasks">com.atlan.model.tasks.TaskSearchResponse</a> extends <a href="com/atlan/net/ApiResource.html" title="class in com.atlan.net">ApiResource</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>aggregations</h4>
+<pre>java.util.Map&lt;java.lang.String,&#8203;<a href="com/atlan/model/search/AggregationResult.html" title="class in com.atlan.model.search">AggregationResult</a>&gt; aggregations</pre>
+<div class="block">Map of results for the requested aggregations.</div>
+</li>
+<li class="blockList">
+<h4>approximateCount</h4>
+<pre>java.lang.Long approximateCount</pre>
+<div class="block">Total number of results.</div>
+</li>
+<li class="blockList">
+<h4>client</h4>
+<pre><a href="com/atlan/AtlanClient.html" title="class in com.atlan">AtlanClient</a> client</pre>
+<div class="block">Connectivity to the Atlan tenant where the search was run.</div>
+</li>
+<li class="blockList">
+<h4>request</h4>
+<pre><a href="com/atlan/model/tasks/TaskSearchRequest.html" title="class in com.atlan.model.tasks">TaskSearchRequest</a> request</pre>
+<div class="block">Request used to produce this task queue response.</div>
+</li>
+<li class="blockListLast">
+<h4>tasks</h4>
+<pre>java.util.List&lt;<a href="com/atlan/model/tasks/AtlanTask.html" title="class in com.atlan.model.tasks">AtlanTask</a>&gt; tasks</pre>
+<div class="block">List of results from the search.</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+</li>
+<li class="blockList">
+<section>
 <h2 title="Package">Package&nbsp;com.atlan.model.typedefs</h2>
 <ul class="blockList">
 <li class="blockList"><a id="com.atlan.model.typedefs.AtlanTagDef">
