@@ -27,13 +27,13 @@ object TermCache : AssetCache() {
             if (glossary != null) {
                 try {
                     val term =
-                        GlossaryTerm.select(true)
+                        GlossaryTerm.select()
                             .where(GlossaryTerm.NAME.eq(termName))
                             .where(GlossaryTerm.ANCHOR.eq(glossary.qualifiedName))
                             .includesOnResults(includesOnResults)
                             .includeOnResults(GlossaryTerm.STATUS)
                             .includesOnRelations(includesOnRelations)
-                            .pageSize(2)
+                            .pageSize(1)
                             .stream()
                             .findFirst()
                     if (term.isPresent) {
@@ -48,6 +48,7 @@ object TermCache : AssetCache() {
         } else {
             logger.error { "Unable to lookup or find term, unexpected reference: $identity" }
         }
+        identity?.let { addToIgnore(identity) }
         return null
     }
 
@@ -55,11 +56,11 @@ object TermCache : AssetCache() {
     override fun lookupAssetByGuid(guid: String?, currentAttempt: Int, maxRetries: Int): Asset? {
         try {
             val term =
-                GlossaryTerm.select(true)
+                GlossaryTerm.select()
                     .where(GlossaryTerm.GUID.eq(guid))
                     .includesOnResults(includesOnResults)
                     .includesOnRelations(includesOnRelations)
-                    .pageSize(2)
+                    .pageSize(1)
                     .stream()
                     .findFirst()
             if (term.isPresent) {
@@ -75,6 +76,7 @@ object TermCache : AssetCache() {
         } catch (e: AtlanException) {
             logger.error("Unable to lookup or find term: {}", guid, e)
         }
+        guid?.let { addToIgnore(guid) }
         return null
     }
 

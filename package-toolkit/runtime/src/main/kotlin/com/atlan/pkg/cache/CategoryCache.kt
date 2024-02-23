@@ -30,12 +30,12 @@ object CategoryCache : AssetCache() {
     override fun lookupAssetByGuid(guid: String?, currentAttempt: Int, maxRetries: Int): Asset? {
         try {
             val category =
-                GlossaryCategory.select(true)
+                GlossaryCategory.select()
                     .where(GlossaryCategory.GUID.eq(guid))
                     .includesOnResults(includesOnResults)
                     .includeOnResults(GlossaryTerm.STATUS)
                     .includesOnRelations(includesOnRelations)
-                    .pageSize(2)
+                    .pageSize(1)
                     .stream()
                     .findFirst()
             if (category.isPresent) {
@@ -51,6 +51,7 @@ object CategoryCache : AssetCache() {
         } catch (e: AtlanException) {
             logger.error("Unable to lookup or find category: {}", guid, e)
         }
+        guid?.let { addToIgnore(guid) }
         return null
     }
 
