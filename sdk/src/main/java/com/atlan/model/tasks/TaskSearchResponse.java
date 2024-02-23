@@ -1,12 +1,13 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2022 Atlan Pte. Ltd. */
-package com.atlan.model.search;
+package com.atlan.model.tasks;
 
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
+import com.atlan.model.search.AggregationResult;
+import com.atlan.model.search.IndexSearchDSL;
 import com.atlan.net.ApiResource;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
@@ -18,14 +19,13 @@ import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Captures the response from a search against Atlan's search log. Also provides the ability to iteratively
- * page through results, without needing to track or re-run the original query using {@link #getNextPage()}.
+ * Captures the response from a search against Atlan's task queue.
  */
 @Getter
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
 @Slf4j
-public class SearchLogResponse extends ApiResource implements Iterable<SearchLogEntry> {
+public class TaskSearchResponse extends ApiResource implements Iterable<AtlanTask> {
     private static final long serialVersionUID = 2L;
 
     private static final int CHARACTERISTICS = Spliterator.NONNULL
@@ -39,18 +39,19 @@ public class SearchLogResponse extends ApiResource implements Iterable<SearchLog
     @JsonIgnore
     AtlanClient client;
 
-    /** Parameters for the search. */
-    SearchLogRequest searchParameters;
+    /** Request used to produce this task queue response. */
+    @Setter
+    @JsonIgnore
+    TaskSearchRequest request;
 
     /** List of results from the search. */
-    @JsonProperty("logs")
-    List<SearchLogEntry> logEntries;
-
-    /** Approximate number of total results. */
-    Long approximateCount;
+    List<AtlanTask> tasks;
 
     /** Map of results for the requested aggregations. */
     Map<String, AggregationResult> aggregations;
+
+    /** Total number of results. */
+    Long approximateCount;
 
     /**
      * Retrieve the next page of results from this response.
@@ -59,13 +60,13 @@ public class SearchLogResponse extends ApiResource implements Iterable<SearchLog
      * @throws AtlanException on any API interaction problem
      */
     @JsonIgnore
-    public SearchLogResponse getNextPage() throws AtlanException {
-        IndexSearchDSL dsl = getSearchParameters().getDsl();
+    public TaskSearchResponse getNextPage() throws AtlanException {
+        IndexSearchDSL dsl = getRequest().getDsl();
         int from = dsl.getFrom() == null ? 0 : dsl.getFrom();
         int page = dsl.getSize() == null ? 10 : dsl.getSize();
         dsl = dsl.toBuilder().from(from + page).build();
 
-        SearchLogRequest.SearchLogRequestBuilder<?, ?> next = SearchLogRequest.builder(dsl);
+        TaskSearchRequest.TaskSearchRequestBuilder<?, ?> next = TaskSearchRequest.builder(dsl);
         return next.build().search(client);
     }
 
@@ -78,15 +79,13 @@ public class SearchLogResponse extends ApiResource implements Iterable<SearchLog
      * @throws AtlanException on any API interaction problem
      */
     @JsonIgnore
-    public List<SearchLogEntry> getSpecificPage(int offset, int pageSize) throws AtlanException {
-        IndexSearchDSL dsl = getSearchParameters().getDsl().toBuilder()
-                .from(offset)
-                .size(pageSize)
-                .build();
-        SearchLogRequest.SearchLogRequestBuilder<?, ?> next = SearchLogRequest.builder(dsl);
-        SearchLogResponse response = next.build().search(client);
-        if (response != null && response.getLogEntries() != null) {
-            return response.getLogEntries();
+    public List<AtlanTask> getSpecificPage(int offset, int pageSize) throws AtlanException {
+        IndexSearchDSL dsl =
+                getRequest().getDsl().toBuilder().from(offset).size(pageSize).build();
+        TaskSearchRequest.TaskSearchRequestBuilder<?, ?> next = TaskSearchRequest.builder(dsl);
+        TaskSearchResponse response = next.build().search(client);
+        if (response != null && response.getTasks() != null) {
+            return response.getTasks();
         } else {
             return Collections.emptyList();
         }
@@ -94,21 +93,18 @@ public class SearchLogResponse extends ApiResource implements Iterable<SearchLog
 
     /** {@inheritDoc} */
     @Override
-    public Iterator<SearchLogEntry> iterator() {
-        return new SearchLogResponseIterator(this);
+    public Iterator<AtlanTask> iterator() {
+        return new TaskSearchResponseIterator(this);
     }
 
     /** {@inheritDoc} */
     @Override
-    public Spliterator<SearchLogEntry> spliterator() {
-        Integer pageSize = getSearchParameters().getDsl().getSize();
-        if (pageSize == null) {
-            pageSize = 50;
-        }
-        SearchLogResponseSpliterator spliterator =
-                new SearchLogResponseSpliterator(this, 0, this.getApproximateCount(), pageSize);
-        List<SearchLogEntry> entries = getLogEntries() == null ? Collections.emptyList() : getLogEntries();
-        spliterator.firstPage = entries.spliterator();
+    public Spliterator<AtlanTask> spliterator() {
+        long pageSize = getRequest().getDsl().getSize();
+        TaskSearchResponseSpliterator spliterator =
+                new TaskSearchResponseSpliterator(this, 0, this.getApproximateCount(), pageSize);
+        List<AtlanTask> tasks = getTasks() == null ? Collections.emptyList() : getTasks();
+        spliterator.firstPage = tasks.spliterator();
         return spliterator;
     }
 
@@ -116,7 +112,7 @@ public class SearchLogResponse extends ApiResource implements Iterable<SearchLog
      * Stream the results (lazily) for processing without needing to manually manage paging.
      * @return a lazily-loaded stream of results from the search
      */
-    public Stream<SearchLogEntry> stream() {
+    public Stream<AtlanTask> stream() {
         return StreamSupport.stream(Spliterators.spliterator(iterator(), approximateCount, CHARACTERISTICS), false);
     }
 
@@ -124,7 +120,7 @@ public class SearchLogResponse extends ApiResource implements Iterable<SearchLog
      * Stream the results in parallel across all pages (may do more than limited to in a request).
      * @return a lazily-loaded stream of results from the search
      */
-    public Stream<SearchLogEntry> parallelStream() {
+    public Stream<AtlanTask> parallelStream() {
         return StreamSupport.stream(this::spliterator, CHARACTERISTICS, true);
     }
 
@@ -132,16 +128,16 @@ public class SearchLogResponse extends ApiResource implements Iterable<SearchLog
      * Allow results to be iterated through in parallel without managing paging retrievals.
      * With inspiration from: https://stackoverflow.com/questions/38128274/how-can-i-create-a-general-purpose-paging-spliterator
      */
-    private static class SearchLogResponseSpliterator implements Spliterator<SearchLogEntry> {
+    private static class TaskSearchResponseSpliterator implements Spliterator<AtlanTask> {
 
-        private final SearchLogResponse response;
+        private final TaskSearchResponse response;
         private long start;
         private final long end;
         private final long pageSize;
-        private Spliterator<SearchLogEntry> firstPage;
-        private Spliterator<SearchLogEntry> currentPage;
+        private Spliterator<AtlanTask> firstPage;
+        private Spliterator<AtlanTask> currentPage;
 
-        SearchLogResponseSpliterator(SearchLogResponse response, long start, long end, long pageSize) {
+        TaskSearchResponseSpliterator(TaskSearchResponse response, long start, long end, long pageSize) {
             this.response = response;
             this.start = start;
             this.end = end;
@@ -150,7 +146,7 @@ public class SearchLogResponse extends ApiResource implements Iterable<SearchLog
 
         /** {@inheritDoc} */
         @Override
-        public boolean tryAdvance(Consumer<? super SearchLogEntry> action) {
+        public boolean tryAdvance(Consumer<? super AtlanTask> action) {
             while (true) {
                 if (ensurePage().tryAdvance(action)) {
                     // If we're able to advance the page we're on, go for it
@@ -168,7 +164,7 @@ public class SearchLogResponse extends ApiResource implements Iterable<SearchLog
 
         /** {@inheritDoc} */
         @Override
-        public void forEachRemaining(Consumer<? super SearchLogEntry> action) {
+        public void forEachRemaining(Consumer<? super AtlanTask> action) {
             do {
                 ensurePage().forEachRemaining(action);
                 currentPage = null;
@@ -177,10 +173,10 @@ public class SearchLogResponse extends ApiResource implements Iterable<SearchLog
 
         /** {@inheritDoc} */
         @Override
-        public Spliterator<SearchLogEntry> trySplit() {
+        public Spliterator<AtlanTask> trySplit() {
             if (firstPage != null) {
                 // If we have a first page already fetched, use it
-                Spliterator<SearchLogEntry> fp = firstPage;
+                Spliterator<AtlanTask> fp = firstPage;
                 firstPage = null; // clear it once we've used it
                 start = fp.getExactSizeIfKnown();
                 return fp;
@@ -198,23 +194,23 @@ public class SearchLogResponse extends ApiResource implements Iterable<SearchLog
                 }
                 // Create a new spliterator with the new mid-point, while resetting this existing
                 // spliterator's end-point to the midpoint
-                return new SearchLogResponseSpliterator(response, start, start = mid, pageSize);
+                return new TaskSearchResponseSpliterator(response, start, start = mid, pageSize);
             }
             return ensurePage().trySplit();
         }
 
         /** Only fetch data immediately before traversing or sub-page splitting. */
-        private Spliterator<SearchLogEntry> ensurePage() {
+        private Spliterator<AtlanTask> ensurePage() {
             if (firstPage != null) {
                 // If we already have a first page fetched, use it
-                Spliterator<SearchLogEntry> fp = firstPage;
+                Spliterator<AtlanTask> fp = firstPage;
                 firstPage = null; // clear it once we've used it
                 currentPage = fp;
                 start = fp.getExactSizeIfKnown();
                 return fp;
             } else {
                 // Otherwise, try to use the current page (if any)
-                Spliterator<SearchLogEntry> sp = currentPage;
+                Spliterator<AtlanTask> sp = currentPage;
                 if (sp == null) {
                     // ... and if there is no current page...
                     if (start >= end) {
@@ -222,19 +218,19 @@ public class SearchLogResponse extends ApiResource implements Iterable<SearchLog
                         return Spliterators.emptySpliterator();
                     } else {
                         // Otherwise (only NOW), go fetch the next specific page of results needed
-                        List<SearchLogEntry> entries;
+                        List<AtlanTask> tasks;
                         try {
-                            entries = response.getSpecificPage((int) start, (int) Math.min(end - start, pageSize));
+                            tasks = response.getSpecificPage((int) start, (int) Math.min(end - start, pageSize));
                         } catch (AtlanException e) {
                             log.warn(
                                     "Unable to fetch the specific page from {} to {}",
                                     start,
                                     Math.min(end - start, pageSize),
                                     e);
-                            entries = Collections.emptyList();
+                            tasks = Collections.emptyList();
                         }
                         // And update this spliterator's starting point accordingly
-                        sp = entries.spliterator();
+                        sp = tasks.spliterator();
                         if (sp.getExactSizeIfKnown() > 0) {
                             // If there are any results in the page, increment the start by the size
                             start += sp.getExactSizeIfKnown();
@@ -269,12 +265,12 @@ public class SearchLogResponse extends ApiResource implements Iterable<SearchLog
     /**
      * Allow results to be iterated through without managing paging retrievals.
      */
-    private static class SearchLogResponseIterator implements Iterator<SearchLogEntry> {
+    private static class TaskSearchResponseIterator implements Iterator<AtlanTask> {
 
-        private SearchLogResponse response;
+        private TaskSearchResponse response;
         private int i;
 
-        public SearchLogResponseIterator(SearchLogResponse response) {
+        public TaskSearchResponseIterator(TaskSearchResponse response) {
             this.response = response;
             this.i = 0;
         }
@@ -282,14 +278,13 @@ public class SearchLogResponse extends ApiResource implements Iterable<SearchLog
         /** {@inheritDoc} */
         @Override
         public boolean hasNext() {
-            if (response.getLogEntries() != null && response.getLogEntries().size() > i) {
+            if (response.getTasks() != null && response.getTasks().size() > i) {
                 return true;
             } else {
                 try {
                     response = response.getNextPage();
                     i = 0;
-                    return response.getLogEntries() != null
-                            && response.getLogEntries().size() > i;
+                    return response.getTasks() != null && response.getTasks().size() > i;
                 } catch (AtlanException e) {
                     throw new RuntimeException("Unable to iterate through all pages of search results.", e);
                 }
@@ -298,8 +293,8 @@ public class SearchLogResponse extends ApiResource implements Iterable<SearchLog
 
         /** {@inheritDoc} */
         @Override
-        public SearchLogEntry next() {
-            return response.getLogEntries().get(i++);
+        public AtlanTask next() {
+            return response.getTasks().get(i++);
         }
     }
 }

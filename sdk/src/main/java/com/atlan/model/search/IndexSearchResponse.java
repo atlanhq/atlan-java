@@ -270,7 +270,7 @@ public class IndexSearchResponse extends ApiResource implements Iterable<Asset> 
                         // And update this spliterator's starting point accordingly
                         sp = assets.spliterator();
                         if (sp.getExactSizeIfKnown() > 0) {
-                            // If there is are any results in the page, increment the start by the size
+                            // If there are any results in the page, increment the start by the size
                             start += sp.getExactSizeIfKnown();
                         } else {
                             // Otherwise, increment the start by the page size (so we skip over this "page"
