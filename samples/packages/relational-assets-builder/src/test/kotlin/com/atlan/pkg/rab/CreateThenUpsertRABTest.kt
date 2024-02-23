@@ -174,7 +174,7 @@ class CreateThenUpsertRABTest : PackageTest() {
                 trackBatches = false,
             ),
         )
-        Importer.main(arrayOf())
+        Importer.main(arrayOf(testDirectory))
     }
 
     @Test(groups = ["create"])

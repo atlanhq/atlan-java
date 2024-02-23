@@ -133,7 +133,7 @@ class ImportGlossariesTest : PackageTest() {
                 glossariesFailOnErrors = true,
             ),
         )
-        Importer.main(arrayOf())
+        Importer.main(arrayOf(testDirectory))
     }
 
     @Test
