@@ -23,7 +23,6 @@ import kotlin.test.assertNotNull
 class ImportSourceTagValuesTest : PackageTest() {
 
     private val table = makeUnique("istv")
-    private val snowflakeConnection = Connection.findByName("development", AtlanConnectorType.SNOWFLAKE)?.get(0)!!
 
     private val testFile = "source_tag_values.csv"
 
@@ -32,14 +31,14 @@ class ImportSourceTagValuesTest : PackageTest() {
         "debug.log",
     )
 
-    private fun prepFile() {
+    private fun prepFile(connectionQN: String) {
         // Prepare a copy of the file with unique names for glossaries and tags
         val input = Paths.get("src", "test", "resources", testFile).toFile()
         val output = Paths.get(testDirectory, testFile).toFile()
         input.useLines { lines ->
             lines.forEach { line ->
                 val revised = line
-                    .replace("{{CONNECTION}}", snowflakeConnection.qualifiedName)
+                    .replace("{{CONNECTION}}", connectionQN)
                     .replace("{{TABLE}}", table)
                 output.appendText("$revised\n")
             }
@@ -48,7 +47,8 @@ class ImportSourceTagValuesTest : PackageTest() {
 
     @BeforeClass
     fun beforeClass() {
-        prepFile()
+        val snowflakeConnection = Connection.findByName("development", AtlanConnectorType.SNOWFLAKE)?.get(0)!!
+        prepFile(snowflakeConnection.qualifiedName)
         setup(
             AssetImportCfg(
                 assetsFile = Paths.get(testDirectory, testFile).toString(),
@@ -61,6 +61,7 @@ class ImportSourceTagValuesTest : PackageTest() {
 
     @Test
     fun tableWithTagValues() {
+        val snowflakeConnection = Connection.findByName("development", AtlanConnectorType.SNOWFLAKE)?.get(0)!!
         val snowflakeQN = snowflakeConnection.qualifiedName
         val dbtQN = Connection.findByName("development", AtlanConnectorType.DBT)?.get(0)?.qualifiedName!!
         val request = Table.select()
@@ -122,6 +123,7 @@ class ImportSourceTagValuesTest : PackageTest() {
 
     @AfterClass(alwaysRun = true)
     fun afterClass(context: ITestContext) {
+        val snowflakeConnection = Connection.findByName("development", AtlanConnectorType.SNOWFLAKE)?.get(0)!!
         Table.select()
             .where(Table.CONNECTION_QUALIFIED_NAME.eq(snowflakeConnection.qualifiedName))
             .where(Table.NAME.eq(table))
