@@ -240,7 +240,14 @@ public class AuditSearchResponse extends ApiResource implements Iterable<EntityA
                         }
                         // And update this spliterator's starting point accordingly
                         sp = audits.spliterator();
-                        start += sp.getExactSizeIfKnown();
+                        if (sp.getExactSizeIfKnown() > 0) {
+                            // If there are any results in the page, increment the start by the size
+                            start += sp.getExactSizeIfKnown();
+                        } else {
+                            // Otherwise, increment the start by the page size (so we skip over this "page"
+                            // entirely rather than attempting to re-retrieve it endlessly)
+                            start += pageSize;
+                        }
                         currentPage = sp;
                     }
                 }
