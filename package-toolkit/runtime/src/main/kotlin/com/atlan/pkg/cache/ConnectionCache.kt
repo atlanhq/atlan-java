@@ -41,6 +41,7 @@ object ConnectionCache : AssetCache() {
         } else {
             logger.error { "Unable to lookup or find connection, unexpected reference: $identity" }
         }
+        identity?.let { addToIgnore(identity) }
         return null
     }
 
@@ -48,10 +49,10 @@ object ConnectionCache : AssetCache() {
     override fun lookupAssetByGuid(guid: String?, currentAttempt: Int, maxRetries: Int): Asset? {
         try {
             val connection =
-                Connection.select(true)
+                Connection.select()
                     .where(Connection.GUID.eq(guid))
                     .includesOnResults(includesOnResults)
-                    .pageSize(2)
+                    .pageSize(1)
                     .stream()
                     .findFirst()
             if (connection.isPresent) {
@@ -67,6 +68,7 @@ object ConnectionCache : AssetCache() {
         } catch (e: AtlanException) {
             logger.error("Unable to lookup or find connection: {}", guid, e)
         }
+        guid?.let { addToIgnore(guid) }
         return null
     }
 

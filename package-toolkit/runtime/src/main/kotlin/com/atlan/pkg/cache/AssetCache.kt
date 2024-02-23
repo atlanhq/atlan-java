@@ -125,6 +125,15 @@ abstract class AssetCache {
     }
 
     /**
+     * Mark the provided asset identity as one to ignore.
+     *
+     * @param id any identity for the asset, either GUID or string identity
+     */
+    protected fun addToIgnore(id: String) {
+        ignore[id] = id
+    }
+
+    /**
      * Check whether the asset is archived, and if so mark it to be ignored.
      *
      * @param id any identity for the asset, either GUID or string identity
@@ -133,7 +142,7 @@ abstract class AssetCache {
     private fun isArchived(id: String, asset: Asset): Boolean {
         return if (asset.status != AtlanStatus.ACTIVE) {
             logger.warn { "Unable to cache archived asset: $id" }
-            ignore[id] = id
+            addToIgnore(id)
             true
         } else {
             false
