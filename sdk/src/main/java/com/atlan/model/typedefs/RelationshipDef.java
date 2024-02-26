@@ -6,6 +6,8 @@ import com.atlan.model.enums.AtlanTypeCategory;
 import com.atlan.model.enums.PropagateTags;
 import com.atlan.model.enums.RelationshipCategory;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import lombok.Builder;
@@ -71,7 +73,7 @@ public class RelationshipDef extends TypeDef {
      * @return a builder for a relationship definition
      */
     public static RelationshipDefBuilder<?, ?> creator(String name, RelationshipEndDef end1, RelationshipEndDef end2) {
-        return creator(name, end1, end2, null);
+        return creator(name, end1, end2, Collections.emptyList());
     }
 
     /**

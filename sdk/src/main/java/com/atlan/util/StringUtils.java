@@ -19,6 +19,7 @@ import java.util.regex.Pattern;
 public final class StringUtils {
     private static final Pattern whitespacePattern = Pattern.compile("\\s");
     private static final Pattern connectionQNPrefix = Pattern.compile("(default/[a-z0-9-]+/[0-9]{10})/.*");
+    private static final Pattern domainQNPrefix = Pattern.compile("(default/domain/[a-zA-Z0-9-]+)/.*");
     private static final Pattern uuidPattern =
             Pattern.compile("^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$");
 
@@ -100,6 +101,24 @@ public final class StringUtils {
             Matcher m = connectionQNPrefix.matcher(qualifiedName);
             if (m.find() && m.groupCount() > 0) {
                 return m.group(1);
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Retrieve the domain's top-most ancestral domain qualifiedName.
+     *
+     * @param domainQualifiedName of the domain, from which to retrieve the top-most ancestral domain qualifiedName
+     * @return the qualifiedName of the top-most ancestral domain, or null if none can be determined
+     */
+    public static String getSuperDomainQualifiedName(String domainQualifiedName) {
+        if (domainQualifiedName != null) {
+            Matcher m = domainQNPrefix.matcher(domainQualifiedName);
+            if (m.find() && m.groupCount() > 0) {
+                return m.group(1);
+            } else if (domainQualifiedName.startsWith("default/domain/")) {
+                return domainQualifiedName;
             }
         }
         return null;

@@ -15,6 +15,7 @@ import com.atlan.model.enums.DataProductCriticality;
 import com.atlan.model.enums.DataProductSensitivity;
 import com.atlan.model.enums.DataProductStatus;
 import com.atlan.model.fields.AtlanField;
+import com.atlan.model.mesh.DataProductAssetsDSL;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.CompoundQuery;
@@ -473,7 +474,7 @@ public class DataProduct extends Asset implements IDataProduct, IDataMesh, ICata
     public static DataProductBuilder<?, ?> creator(
             AtlanClient client, String name, DataDomain domain, FluentSearch assetSelection)
             throws InvalidRequestException {
-        return creator(client, name, domain, IndexSearchDSL.of(assetSelection.toQuery()));
+        return creator(client, name, domain, IndexSearchDSL.of(assetSelection.toUnfilteredQuery()));
     }
 
     /**
@@ -524,20 +525,26 @@ public class DataProduct extends Asset implements IDataProduct, IDataMesh, ICata
         String slug = IDataMesh.generateSlugForName(name);
         return DataProduct._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
-                .qualifiedName(generateQualifiedName(slug))
+                .qualifiedName(generateQualifiedName(domainQualifiedName, slug))
                 .name(name)
+                .dataProductStatus(DataProductStatus.ACTIVE)
+                .parentDomainQualifiedName(domainQualifiedName)
+                .superDomainQualifiedName(StringUtils.getSuperDomainQualifiedName(domainQualifiedName))
                 .dataDomain(DataDomain.refByQualifiedName(domainQualifiedName))
-                .dataProductAssetsDSL(assetSelection.toJson(client));
+                .dataProductAssetsDSL(
+                        DataProductAssetsDSL.builder(assetSelection).build().toJson(client))
+                .dataProductAssetsPlaybookFilter("{\"condition\":\"AND\",\"isGroupLocked\":false,\"rules\":[]}");
     }
 
     /**
      * Generate a unique DataProduct name.
      *
+     * @param domainQualifiedName unique name of the DataDomain in which this product exists
      * @param slug unique URL for the DataProduct
      * @return a unique name for the DataProduct
      */
-    public static String generateQualifiedName(String slug) {
-        return "default/product/" + slug;
+    public static String generateQualifiedName(String domainQualifiedName, String slug) {
+        return domainQualifiedName + "/product/" + slug;
     }
 
     /**
