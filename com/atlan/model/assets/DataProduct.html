@@ -560,7 +560,8 @@ implements <a href="IDataProduct.html" title="interface in com.atlan.model.asset
 </tr>
 <tr id="i28" class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#generateQualifiedName(java.lang.String)">generateQualifiedName</a></span>&#8203;(java.lang.String&nbsp;slug)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#generateQualifiedName(java.lang.String,java.lang.String)">generateQualifiedName</a></span>&#8203;(java.lang.String&nbsp;domainQualifiedName,
+                     java.lang.String&nbsp;slug)</code></th>
 <td class="colLast">
 <div class="block">Generate a unique DataProduct name.</div>
 </td>
@@ -1723,16 +1724,18 @@ public static&nbsp;<a href="DataProduct.html" title="class in com.atlan.model.as
 </dl>
 </li>
 </ul>
-<a id="generateQualifiedName(java.lang.String)">
+<a id="generateQualifiedName(java.lang.String,java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>generateQualifiedName</h4>
-<pre class="methodSignature">public static&nbsp;java.lang.String&nbsp;generateQualifiedName&#8203;(java.lang.String&nbsp;slug)</pre>
+<pre class="methodSignature">public static&nbsp;java.lang.String&nbsp;generateQualifiedName&#8203;(java.lang.String&nbsp;domainQualifiedName,
+                                                     java.lang.String&nbsp;slug)</pre>
 <div class="block">Generate a unique DataProduct name.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>domainQualifiedName</code> - unique name of the DataDomain in which this product exists</dd>
 <dd><code>slug</code> - unique URL for the DataProduct</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>a unique name for the DataProduct</dd>
