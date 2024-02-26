@@ -6,7 +6,6 @@ import com.atlan.model.enums.AtlanTypeCategory;
 import com.atlan.model.enums.PropagateTags;
 import com.atlan.model.enums.RelationshipCategory;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
