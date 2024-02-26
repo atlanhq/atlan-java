@@ -431,7 +431,7 @@ public class DataDomain extends Asset implements IDataDomain, IDataMesh, ICatalo
      * @throws InvalidRequestException will never throw but required given signature of called method
      */
     public static DataDomainBuilder<?, ?> creator(String name) throws InvalidRequestException {
-        return creator(name, null);
+        return creator(name, (DataDomain) null);
     }
 
     /**
@@ -443,17 +443,29 @@ public class DataDomain extends Asset implements IDataDomain, IDataMesh, ICatalo
      * @throws InvalidRequestException if the parent domain provided is without a qualifiedName
      */
     public static DataDomainBuilder<?, ?> creator(String name, DataDomain parent) throws InvalidRequestException {
+        if (parent != null) {
+            return creator(name, parent.getQualifiedName()).parentDomain(parent.trimToReference());
+        }
+        return creator(name, (String) null);
+    }
+
+    /**
+     * Builds the minimal object necessary for creating a DataDomain.
+     *
+     * @param name of the DataDomain
+     * @param parentDomainQualifiedName (optional) unique name of the data domain in which to create this subdomain
+     * @return the minimal request necessary to create the DataDomain, as a builder
+     */
+    public static DataDomainBuilder<?, ?> creator(String name, String parentDomainQualifiedName)
+            throws InvalidRequestException {
         String slug = IDataMesh.generateSlugForName(name);
         DataDomainBuilder<?, ?> builder = DataDomain._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
-                .qualifiedName(generateQualifiedName(slug, parent == null ? null : parent.getQualifiedName()))
+                .qualifiedName(generateQualifiedName(slug, parentDomainQualifiedName))
                 .name(name);
-        if (parent != null) {
-            if (parent.getQualifiedName() == null || parent.getQualifiedName().isEmpty()) {
-                throw new InvalidRequestException(
-                        ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, "DataDomain", "qualifiedName");
-            }
-            builder.parentDomain(parent.trimToReference()).parentDomainQualifiedName(parent.getQualifiedName());
+        if (parentDomainQualifiedName != null) {
+            builder.parentDomain(DataDomain.refByQualifiedName(parentDomainQualifiedName))
+                    .parentDomainQualifiedName(parentDomainQualifiedName);
         }
         return builder;
     }
