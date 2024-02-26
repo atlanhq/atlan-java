@@ -156,9 +156,27 @@ public class CompoundQuery {
      * @return an Elastic Query object that represents the compound query
      */
     public Query toQuery() {
+        return toQuery(true);
+    }
+
+    /**
+     * Translate the Atlan compound query into an Elastic Query object, with an outer
+     * bool query and inner filtered bool query (necessary for some UI elements).
+     *
+     * @return the Elastic Query object that represents the compound query
+     */
+    public Query toUnfilteredQuery() {
+        return toQuery(false);
+    }
+
+    private Query toQuery(boolean filter) {
         BoolQuery.Builder builder = new BoolQuery.Builder();
         if (wheres != null && !wheres.isEmpty()) {
-            builder.filter(wheres);
+            if (filter) {
+                builder.filter(wheres);
+            } else {
+                builder.must(wheres);
+            }
         }
         if (whereNots != null && !whereNots.isEmpty()) {
             builder.mustNot(whereNots);
