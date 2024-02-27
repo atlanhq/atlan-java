@@ -47,7 +47,7 @@ public interface IDataMesh {
      * @return a URL-embeddable slug for the asset
      */
     public static String generateSlugForName(String name) {
-        return StringUtils.getLowerCamelCase(name);
+        return StringUtils.getLowerCamelCaseAggressive(name);
     }
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */

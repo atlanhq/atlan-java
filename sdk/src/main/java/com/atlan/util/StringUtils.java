@@ -199,7 +199,8 @@ public final class StringUtils {
     }
 
     /**
-     * Convert the provided string to lowerCamelCase.
+     * Convert the provided string to lowerCamelCase, leaving alone consecutive capital letters.
+     * For example: "MySQLDatabase" -> "mySQLDatabase"
      *
      * @param text to convert
      * @return the original text, in lowerCamelCase
@@ -213,6 +214,34 @@ public final class StringUtils {
                 word = word.isEmpty() ? word : Character.toLowerCase(word.charAt(0)) + word.substring(1);
             } else {
                 word = word.isEmpty() ? word : Character.toUpperCase(word.charAt(0)) + word.substring(1);
+            }
+            builder.append(word);
+        }
+        return builder.toString();
+    }
+
+    /**
+     * Convert the provided string to lowerCamelCase, aggressively lowercasing consecutive capital letters.
+     * For example: "MySQLDatabase" -> "mysqldatabase"
+     *
+     * @param text to convert
+     * @return the original text, in lowerCamelCase
+     */
+    public static String getLowerCamelCaseAggressive(String text) {
+        String[] words = text.split("[\\W_]+");
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < words.length; i++) {
+            String word = words[i];
+            if (i == 0) {
+                word = word.isEmpty()
+                        ? word
+                        : Character.toLowerCase(word.charAt(0))
+                                + word.substring(1).toLowerCase(Locale.ROOT);
+            } else {
+                word = word.isEmpty()
+                        ? word
+                        : Character.toUpperCase(word.charAt(0))
+                                + word.substring(1).toLowerCase(Locale.ROOT);
             }
             builder.append(word);
         }
