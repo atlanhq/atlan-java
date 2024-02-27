@@ -107,7 +107,9 @@ public enum AtlanConnectorType implements AtlanEnum {
     MPARTICLE("mparticle", AtlanConnectionCategory.DATABASE),
     ESSBASE("essbase", AtlanConnectionCategory.DATABASE),
     GENERIC("genericdb", AtlanConnectionCategory.DATABASE),
-    FILE("file", AtlanConnectionCategory.OBJECT_STORE);
+    FILE("file", AtlanConnectionCategory.OBJECT_STORE),
+    MICROSTRATEGY("microstrategy", AtlanConnectionCategory.BI),
+    ;
 
     @JsonValue
     @Getter(onMethod_ = {@Override})
