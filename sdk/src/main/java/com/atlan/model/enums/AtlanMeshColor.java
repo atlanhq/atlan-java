@@ -13,7 +13,7 @@ public enum AtlanMeshColor implements AtlanEnum {
     BLUE("#0CD1FA"),
     GREEN("#00A680"),
     YELLOW("#FFB119"),
-    GREY("#525C73"),
+    GRAY("#525C73"),
     ;
 
     @JsonValue
