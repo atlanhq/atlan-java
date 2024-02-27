@@ -200,7 +200,7 @@ public final class StringUtils {
 
     /**
      * Convert the provided string to lowerCamelCase, leaving alone consecutive capital letters.
-     * For example: "MySQLDatabase" -> "mySQLDatabase"
+     * For example: "MySQLDatabase" turns into "mySQLDatabase"
      *
      * @param text to convert
      * @return the original text, in lowerCamelCase
@@ -222,7 +222,7 @@ public final class StringUtils {
 
     /**
      * Convert the provided string to lowerCamelCase, aggressively lowercasing consecutive capital letters.
-     * For example: "MySQLDatabase" -> "mysqldatabase"
+     * For example: "MySQLDatabase" turns into "mysqldatabase"
      *
      * @param text to convert
      * @return the original text, in lowerCamelCase
