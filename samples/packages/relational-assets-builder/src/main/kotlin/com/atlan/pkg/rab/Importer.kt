@@ -130,15 +130,15 @@ object Importer {
         val reader = CsvReader.builder()
             .fieldSeparator(fieldSeparator)
             .quoteCharacter(quoteCharacter)
-            .skipEmptyRows(true)
-            .errorOnDifferentFieldCount(true)
+            .skipEmptyLines(true)
+            .ignoreDifferentFieldCount(false)
         val writer = CsvWriter.builder()
             .fieldSeparator(fieldSeparator)
             .quoteCharacter(quoteCharacter)
             .build(revisedFile, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.WRITE)
 
         // Start processing...
-        reader.build(inputFile).use { tmp ->
+        reader.ofCsvRecord(inputFile).use { tmp ->
             var hasLinks = false
             var hasTermAssignments = false
             val entityQualifiedNameToType = mutableMapOf<String, String>()
@@ -150,7 +150,7 @@ object Importer {
             var lastParentQN = ""
             var columnOrder = 1
             tmp.stream().forEach { row ->
-                if (row.originalLineNumber == 1L) {
+                if (row.startingLineNumber == 1L) {
                     header = row.fields.toMutableList()
                     // Inject two columns at the end that we need for column assets
                     header.add(Column.ORDER.atlanFieldName)
@@ -162,7 +162,7 @@ object Importer {
                         hasTermAssignments = true
                     }
                     typeIdx = header.indexOf(Asset.TYPE_NAME.atlanFieldName)
-                    writer.writeRow(header)
+                    writer.writeRecord(header)
                 } else {
                     val values = row.fields.toMutableList()
                     val typeName = values[typeIdx]
@@ -208,7 +208,7 @@ object Importer {
                             values.add(qnDetails.parentPartialQN)
                         }
                     }
-                    writer.writeRow(values)
+                    writer.writeRecord(values)
                 }
             }
             writer.close()

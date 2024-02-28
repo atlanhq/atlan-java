@@ -30,7 +30,7 @@ spotless {
 }
 
 lombok {
-    version.set("1.18.24")
+    version.set("1.18.30")
 }
 
 tasks.delombok {

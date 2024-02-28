@@ -6,7 +6,7 @@ import com.atlan.model.assets.Asset
 import com.atlan.pkg.Utils
 import de.siegmar.fastcsv.writer.CsvWriter
 import de.siegmar.fastcsv.writer.LineDelimiter
-import de.siegmar.fastcsv.writer.QuoteStrategy
+import de.siegmar.fastcsv.writer.QuoteStrategies
 import mu.KLogger
 import java.io.Closeable
 import java.io.IOException
@@ -22,16 +22,12 @@ import java.util.stream.Stream
  */
 class CSVWriter @JvmOverloads constructor(path: String, fieldSeparator: Char = ',') : Closeable {
 
-    private val writer: CsvWriter
-
-    init {
-        writer = CsvWriter.builder()
-            .fieldSeparator(fieldSeparator)
-            .quoteCharacter('"')
-            .quoteStrategy(QuoteStrategy.REQUIRED)
-            .lineDelimiter(LineDelimiter.PLATFORM)
-            .build(ThreadSafeWriter(path))
-    }
+    private val writer = CsvWriter.builder()
+        .fieldSeparator(fieldSeparator)
+        .quoteCharacter('"')
+        .quoteStrategy(QuoteStrategies.NON_EMPTY)
+        .lineDelimiter(LineDelimiter.PLATFORM)
+        .build(ThreadSafeWriter(path))
 
     /**
      * Write a header row into the CSV file.
@@ -39,7 +35,7 @@ class CSVWriter @JvmOverloads constructor(path: String, fieldSeparator: Char = '
      * @param values to use for the header
      */
     fun writeHeader(values: Iterable<String?>?) {
-        writer.writeRow(values)
+        writer.writeRecord(values)
     }
 
     /**
@@ -86,7 +82,7 @@ class CSVWriter @JvmOverloads constructor(path: String, fieldSeparator: Char = '
             logger.warn("Hit a duplicate asset entry — there could be page skew: {}", duplicate)
         }
         val values = assetToRow.buildFromAsset(a)
-        synchronized(writer) { writer.writeRow(values) }
+        synchronized(writer) { writer.writeRecord(values) }
         Utils.logProgress(count, totalAssetCount, logger, pageSize)
     }
 
