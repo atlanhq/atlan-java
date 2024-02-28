@@ -92,6 +92,10 @@ public class RelationshipDef extends TypeDef {
      */
     public static RelationshipDefBuilder<?, ?> creator(
             String name, RelationshipEndDef end1, RelationshipEndDef end2, List<AttributeDef> attributes) {
+        RelationshipCategory categoryToUse = RelationshipCategory.ASSOCIATION;
+        if (end1.isContainer || end2.isContainer) {
+            categoryToUse = RelationshipCategory.AGGREGATION;
+        }
         return RelationshipDef.builder()
                 .name(name)
                 .serviceType("custom_extension")
@@ -100,6 +104,7 @@ public class RelationshipDef extends TypeDef {
                 .endDef2(end2)
                 .relationshipLabel("__" + end1.type + "." + end1.name)
                 .attributeDefs(attributes)
+                .relationshipCategory(categoryToUse)
                 .category(null);
     }
 }
