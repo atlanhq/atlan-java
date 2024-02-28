@@ -496,6 +496,18 @@ public enum KeywordFields implements AtlanSearchableField {
     DISPLAY_NAME("displayName.keyword"),
     /** TBC */
     DISPLAY_PREFERENCES("displayPreferences"),
+    /** Type of the Domo Card. */
+    DOMO_CARD_TYPE("domoCardType"),
+    /** Type of Domo Dataset Column. */
+    DOMO_DATASET_COLUMN_TYPE("domoDatasetColumnType"),
+    /** An ISO-8601 representation of the time the DataSet was last run. */
+    DOMO_DATASET_LAST_RUN("domoDatasetLastRun"),
+    /** Qualified name of domo dataset of this column. */
+    DOMO_DATASET_QUALIFIED_NAME("domoDatasetQualifiedName"),
+    /** Id of the Domo dataset. */
+    DOMO_ID("domoId"),
+    /** Id of the owner of the Domo dataset. */
+    DOMO_OWNER_ID("domoOwnerId"),
     /** Specifies the partition key of the DynamoDB Table/Index */
     DYNAMO_DB_PARTITION_KEY("dynamoDBPartitionKey"),
     /** Specifies attributes that are projected from the DynamoDB table into the index */
@@ -1262,10 +1274,20 @@ public enum KeywordFields implements AtlanSearchableField {
     TERM_TYPE("termType"),
     /** TBC */
     THOUGHTSPOT_CHART_TYPE("thoughtspotChartType"),
+    /** Specifies the technical format of data stored in a column such as integer, float, string, date, boolean etc. */
+    THOUGHTSPOT_COLUMN_DATA_TYPE("thoughtspotColumnDataType"),
+    /** Defines the analytical role of a column in data analysis categorizing it as a dimension, measure, or attribute. */
+    THOUGHTSPOT_COLUMN_TYPE("thoughtspotColumnType"),
     /** Simple name of the liveboard in which this dashlet exists. */
     THOUGHTSPOT_LIVEBOARD_NAME("thoughtspotLiveboardName.keyword"),
     /** Unique name of the liveboard in which this dashlet exists. */
     THOUGHTSPOT_LIVEBOARD_QUALIFIED_NAME("thoughtspotLiveboardQualifiedName"),
+    /** Unique name of the table in which this column exists. */
+    THOUGHTSPOT_TABLE_QUALIFIED_NAME("thoughtspotTableQualifiedName"),
+    /** Unique name of the view in which this column exists. */
+    THOUGHTSPOT_VIEW_QUALIFIED_NAME("thoughtspotViewQualifiedName"),
+    /** Unique name of the worksheet in which this column exists. */
+    THOUGHTSPOT_WORKSHEET_QUALIFIED_NAME("thoughtspotWorksheetQualifiedName"),
     /** Simple name of the top-level project in which this workbook exists. */
     TOP_LEVEL_PROJECT_NAME("topLevelProjectName"),
     /** Unique name of the top-level project in which this dashboard exists. */

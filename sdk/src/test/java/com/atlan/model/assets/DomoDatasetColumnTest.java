@@ -16,9 +16,9 @@ import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @SuppressWarnings("deprecation")
-public class ThoughtspotLiveboardTest {
+public class DomoDatasetColumnTest {
 
-    private static final ThoughtspotLiveboard full = ThoughtspotLiveboard._internal()
+    private static final DomoDatasetColumn full = DomoDatasetColumn._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -59,10 +59,8 @@ public class ThoughtspotLiveboardTest {
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
                             .build())
-            .thoughtspotChartType("String0")
-            .thoughtspotColumnCount(123456789L)
-            .thoughtspotJoinCount(123456789L)
-            .thoughtspotQuestionText("String0")
+            .domoId("String0")
+            .domoOwnerId("String0")
             .inputToAirflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .inputToAirflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .inputToProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -385,23 +383,23 @@ public class ThoughtspotLiveboardTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
-            .thoughtspotDashlet(ThoughtspotDashlet.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .thoughtspotDashlet(
-                    ThoughtspotDashlet.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .domoDataset(DomoDataset.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .domoDatasetColumnType("String0")
+            .domoDatasetQualifiedName("String0")
             .build();
 
     private static final int hash = full.hashCode();
-    private static ThoughtspotLiveboard frodo;
+    private static DomoDatasetColumn frodo;
     private static String serialized;
 
-    @Test(groups = {"ThoughtspotLiveboard.builderEquivalency"})
+    @Test(groups = {"DomoDatasetColumn.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"ThoughtspotLiveboard.serialize"},
-            dependsOnGroups = {"ThoughtspotLiveboard.builderEquivalency"})
+            groups = {"DomoDatasetColumn.serialize"},
+            dependsOnGroups = {"DomoDatasetColumn.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson(Atlan.getDefaultClient());
@@ -410,17 +408,17 @@ public class ThoughtspotLiveboardTest {
     }
 
     @Test(
-            groups = {"ThoughtspotLiveboard.deserialize"},
-            dependsOnGroups = {"ThoughtspotLiveboard.serialize"})
+            groups = {"DomoDatasetColumn.deserialize"},
+            dependsOnGroups = {"DomoDatasetColumn.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = Atlan.getDefaultClient().readValue(serialized, ThoughtspotLiveboard.class);
+        frodo = Atlan.getDefaultClient().readValue(serialized, DomoDatasetColumn.class);
         assertNotNull(frodo);
     }
 
     @Test(
-            groups = {"ThoughtspotLiveboard.equivalency"},
-            dependsOnGroups = {"ThoughtspotLiveboard.serialize", "ThoughtspotLiveboard.deserialize"})
+            groups = {"DomoDatasetColumn.equivalency"},
+            dependsOnGroups = {"DomoDatasetColumn.serialize", "DomoDatasetColumn.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -429,8 +427,8 @@ public class ThoughtspotLiveboardTest {
     }
 
     @Test(
-            groups = {"ThoughtspotLiveboard.equivalency"},
-            dependsOnGroups = {"ThoughtspotLiveboard.serialize", "ThoughtspotLiveboard.deserialize"})
+            groups = {"DomoDatasetColumn.equivalency"},
+            dependsOnGroups = {"DomoDatasetColumn.serialize", "DomoDatasetColumn.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

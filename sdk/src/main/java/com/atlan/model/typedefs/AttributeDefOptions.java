@@ -65,6 +65,10 @@ public class AttributeDefOptions extends AtlanObject {
             DbtSource.TYPE_NAME,
             DbtTag.TYPE_NAME,
             DbtTest.TYPE_NAME,
+            DomoCard.TYPE_NAME,
+            DomoDashboard.TYPE_NAME,
+            DomoDataset.TYPE_NAME,
+            DomoDatasetColumn.TYPE_NAME,
             DynamoDBGlobalSecondaryIndex.TYPE_NAME,
             DynamoDBLocalSecondaryIndex.TYPE_NAME,
             DynamoDBTable.TYPE_NAME,
@@ -188,8 +192,12 @@ public class AttributeDefOptions extends AtlanObject {
             TableauWorksheet.TYPE_NAME,
             TagAttachment.TYPE_NAME,
             ThoughtspotAnswer.TYPE_NAME,
+            ThoughtspotColumn.TYPE_NAME,
             ThoughtspotDashlet.TYPE_NAME,
             ThoughtspotLiveboard.TYPE_NAME,
+            ThoughtspotTable.TYPE_NAME,
+            ThoughtspotView.TYPE_NAME,
+            ThoughtspotWorksheet.TYPE_NAME,
             View.TYPE_NAME);
     public static final Set<String> ALL_GLOSSARY_TYPES =
             Set.of(Glossary.TYPE_NAME, GlossaryTerm.TYPE_NAME, GlossaryCategory.TYPE_NAME);

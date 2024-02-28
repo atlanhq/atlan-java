@@ -8,6 +8,8 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.KeywordTextField;
 import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
@@ -22,17 +24,44 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a Thoughtspot liveboard in Atlan.
+ * Instance of a Thoughtspot column in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IThoughtspotLiveboard {
+public interface IThoughtspotColumn {
 
-    public static final String TYPE_NAME = "ThoughtspotLiveboard";
+    public static final String TYPE_NAME = "ThoughtspotColumn";
 
-    /** Dashlets that exist within this liveboard. */
-    RelationField THOUGHTSPOT_DASHLETS = new RelationField("thoughtspotDashlets");
+    /** Specifies the technical format of data stored in a column such as integer, float, string, date, boolean etc. */
+    KeywordField THOUGHTSPOT_COLUMN_DATA_TYPE =
+            new KeywordField("thoughtspotColumnDataType", "thoughtspotColumnDataType");
+
+    /** Defines the analytical role of a column in data analysis categorizing it as a dimension, measure, or attribute. */
+    KeywordField THOUGHTSPOT_COLUMN_TYPE = new KeywordField("thoughtspotColumnType", "thoughtspotColumnType");
+
+    /** TBC */
+    RelationField THOUGHTSPOT_TABLE = new RelationField("thoughtspotTable");
+
+    /** Unique name of the table in which this column exists. */
+    KeywordTextField THOUGHTSPOT_TABLE_QUALIFIED_NAME = new KeywordTextField(
+            "thoughtspotTableQualifiedName", "thoughtspotTableQualifiedName", "thoughtspotTableQualifiedName.text");
+
+    /** TBC */
+    RelationField THOUGHTSPOT_VIEW = new RelationField("thoughtspotView");
+
+    /** Unique name of the view in which this column exists. */
+    KeywordTextField THOUGHTSPOT_VIEW_QUALIFIED_NAME = new KeywordTextField(
+            "thoughtspotViewQualifiedName", "thoughtspotViewQualifiedName", "thoughtspotViewQualifiedName.text");
+
+    /** TBC */
+    RelationField THOUGHTSPOT_WORKSHEET = new RelationField("thoughtspotWorksheet");
+
+    /** Unique name of the worksheet in which this column exists. */
+    KeywordTextField THOUGHTSPOT_WORKSHEET_QUALIFIED_NAME = new KeywordTextField(
+            "thoughtspotWorksheetQualifiedName",
+            "thoughtspotWorksheetQualifiedName",
+            "thoughtspotWorksheetQualifiedName.text");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -448,14 +477,35 @@ public interface IThoughtspotLiveboard {
     /** Number of Columns. */
     Long getThoughtspotColumnCount();
 
-    /** Dashlets that exist within this liveboard. */
-    SortedSet<IThoughtspotDashlet> getThoughtspotDashlets();
+    /** Specifies the technical format of data stored in a column such as integer, float, string, date, boolean etc. */
+    String getThoughtspotColumnDataType();
+
+    /** Defines the analytical role of a column in data analysis categorizing it as a dimension, measure, or attribute. */
+    String getThoughtspotColumnType();
 
     /** Total number of data table joins executed for analysis. */
     Long getThoughtspotJoinCount();
 
     /** TBC */
     String getThoughtspotQuestionText();
+
+    /** TBC */
+    IThoughtspotTable getThoughtspotTable();
+
+    /** Unique name of the table in which this column exists. */
+    String getThoughtspotTableQualifiedName();
+
+    /** TBC */
+    IThoughtspotView getThoughtspotView();
+
+    /** Unique name of the view in which this column exists. */
+    String getThoughtspotViewQualifiedName();
+
+    /** TBC */
+    IThoughtspotWorksheet getThoughtspotWorksheet();
+
+    /** Unique name of the worksheet in which this column exists. */
+    String getThoughtspotWorksheetQualifiedName();
 
     /** Description of this asset, as provided by a user. If present, this will be used for the description in user interface. */
     String getUserDescription();

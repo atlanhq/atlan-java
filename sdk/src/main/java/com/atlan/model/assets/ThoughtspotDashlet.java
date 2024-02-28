@@ -71,6 +71,14 @@ public class ThoughtspotDashlet extends Asset
     @Attribute
     String thoughtspotChartType;
 
+    /** Number of Columns. */
+    @Attribute
+    Long thoughtspotColumnCount;
+
+    /** Total number of data table joins executed for analysis. */
+    @Attribute
+    Long thoughtspotJoinCount;
+
     /** Liveboard in which this dashlet exists. */
     @Attribute
     IThoughtspotLiveboard thoughtspotLiveboard;
