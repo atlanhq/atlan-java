@@ -3,10 +3,10 @@
 package com.atlan.pkg.serde.csv
 
 import de.siegmar.fastcsv.reader.CsvReader
-import de.siegmar.fastcsv.reader.CsvRow
+import de.siegmar.fastcsv.reader.CsvRecord
 import de.siegmar.fastcsv.writer.CsvWriter
 import de.siegmar.fastcsv.writer.LineDelimiter
-import de.siegmar.fastcsv.writer.QuoteStrategy
+import de.siegmar.fastcsv.writer.QuoteStrategies
 import mu.KLogger
 import java.io.Closeable
 import java.io.IOException
@@ -31,8 +31,8 @@ abstract class CSVXformer(
     private val logger: KLogger,
     private val fieldSeparator: Char = ',',
 ) : Closeable, RowTransformer {
-    private val reader: CsvReader
-    private val counter: CsvReader
+    private val reader: CsvReader<CsvRecord>
+    private val counter: CsvReader<CsvRecord>
     private val header: List<String>
 
     init {
@@ -40,11 +40,11 @@ abstract class CSVXformer(
         val builder = CsvReader.builder()
             .fieldSeparator(fieldSeparator)
             .quoteCharacter('"')
-            .skipEmptyRows(true)
-            .errorOnDifferentFieldCount(true)
+            .skipEmptyLines(true)
+            .ignoreDifferentFieldCount(false)
         header = getHeader(inputFile, fieldSeparator)
-        reader = builder.build(input)
-        counter = builder.build(input)
+        reader = builder.ofCsvRecord(input)
+        counter = builder.ofCsvRecord(input)
     }
 
     companion object {
@@ -53,11 +53,11 @@ abstract class CSVXformer(
             val builder = CsvReader.builder()
                 .fieldSeparator(fieldSeparator)
                 .quoteCharacter('"')
-                .skipEmptyRows(true)
-                .errorOnDifferentFieldCount(true)
-            builder.build(input).use { tmp ->
+                .skipEmptyLines(true)
+                .ignoreDifferentFieldCount(false)
+            builder.ofCsvRecord(input).use { tmp ->
                 val one = tmp.stream().findFirst()
-                return one.map { obj: CsvRow -> obj.fields }
+                return one.map { obj: CsvRecord -> obj.fields }
                     .orElse(emptyList())
             }
         }
@@ -72,7 +72,7 @@ abstract class CSVXformer(
         CsvWriter.builder()
             .fieldSeparator(fieldSeparator)
             .quoteCharacter('"')
-            .quoteStrategy(QuoteStrategy.REQUIRED)
+            .quoteStrategy(QuoteStrategies.NON_EMPTY)
             .lineDelimiter(LineDelimiter.PLATFORM)
             .build(
                 Paths.get(outputFile),
@@ -96,7 +96,7 @@ abstract class CSVXformer(
      */
     private fun map(writer: CsvWriter) {
         // Start by outputting the header row in the target CSV file
-        writer.writeRow(targetHeader)
+        writer.writeRecord(targetHeader)
         // Calculate total number of rows that need to be transformed...
         val filteredRowCount = AtomicLong(0)
         counter.stream().skip(1).forEach { row -> // TODO: parallelize?
@@ -112,7 +112,7 @@ abstract class CSVXformer(
             val inputRow = getRowByHeader(row.fields)
             if (includeRow(inputRow)) {
                 mapRow(inputRow).forEach { outputRow ->
-                    writer.writeRow(outputRow)
+                    writer.writeRecord(outputRow)
                 }
             }
         }

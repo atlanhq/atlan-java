@@ -14,7 +14,7 @@ import com.atlan.util.AssetBatch.AssetCreationHandling
 import com.atlan.util.AssetBatch.CustomMetadataHandling
 import com.atlan.util.ParallelBatch
 import de.siegmar.fastcsv.reader.CsvReader
-import de.siegmar.fastcsv.reader.CsvRow
+import de.siegmar.fastcsv.reader.CsvRecord
 import mu.KLogger
 import java.io.Closeable
 import java.io.IOException
@@ -45,8 +45,8 @@ class CSVReader @JvmOverloads constructor(
     fieldSeparator: Char = ',',
 ) : Closeable {
 
-    private val reader: CsvReader
-    private val counter: CsvReader
+    private val reader: CsvReader<CsvRecord>
+    private val counter: CsvReader<CsvRecord>
     private val header: List<String>
     private val typeIdx: Int
     private val qualifiedNameIdx: Int
@@ -56,12 +56,12 @@ class CSVReader @JvmOverloads constructor(
         val builder = CsvReader.builder()
             .fieldSeparator(fieldSeparator)
             .quoteCharacter('"')
-            .skipEmptyRows(true)
-            .errorOnDifferentFieldCount(true)
-        builder.build(inputFile).use { tmp ->
+            .skipEmptyLines(true)
+            .ignoreDifferentFieldCount(false)
+        builder.ofCsvRecord(inputFile).use { tmp ->
             val one = tmp.stream().findFirst()
             header =
-                one.map { obj: CsvRow -> obj.fields }
+                one.map { obj: CsvRecord -> obj.fields }
                     .orElse(emptyList())
         }
         typeIdx = header.indexOf(Asset.TYPE_NAME.atlanFieldName)
@@ -71,8 +71,8 @@ class CSVReader @JvmOverloads constructor(
                 "Unable to find the column 'typeName'. This is a mandatory column in the input CSV.",
             )
         }
-        reader = builder.build(inputFile)
-        counter = builder.build(inputFile)
+        reader = builder.ofCsvRecord(inputFile)
+        counter = builder.ofCsvRecord(inputFile)
     }
 
     /**
@@ -127,7 +127,7 @@ class CSVReader @JvmOverloads constructor(
         // Step 1: load the main assets
         logger.info { "Loading a total of $totalRowCount assets..." }
         val count = AtomicLong(0)
-        reader.stream().skip(1).parallel().forEach { r: CsvRow ->
+        reader.stream().skip(1).parallel().forEach { r: CsvRecord ->
             val assets = rowToAsset.buildFromRow(r.fields, header, typeIdx, qualifiedNameIdx, skipColumns)
             if (assets != null) {
                 try {
