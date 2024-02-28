@@ -196,12 +196,17 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="LineageFilter.LineageFilterBuilder.html" title="type parameter in LineageFilter.LineageFilterBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#field(com.atlan.model.fields.SearchableField)">field</a></span>&#8203;(<a href="../fields/SearchableField.html" title="class in com.atlan.model.fields">SearchableField</a>&nbsp;field)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Field on which filtering should be applied.</div>
+</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="LineageFilter.LineageFilterBuilder.html" title="type parameter in LineageFilter.LineageFilterBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#operator(com.atlan.model.enums.AtlanComparisonOperator)">operator</a></span>&#8203;(<a href="../enums/AtlanComparisonOperator.html" title="enum in com.atlan.model.enums">AtlanComparisonOperator</a>&nbsp;operator)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Comparison that should be used when checking <a href="#field"><code>field</code></a>'s value against
+ the provided <a href="#value"><code>value</code></a>.</div>
+</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>protected abstract <a href="LineageFilter.LineageFilterBuilder.html" title="type parameter in LineageFilter.LineageFilterBuilder">B</a></code></td>
@@ -216,7 +221,9 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="LineageFilter.LineageFilterBuilder.html" title="type parameter in LineageFilter.LineageFilterBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#value(java.lang.String)">value</a></span>&#8203;(java.lang.String&nbsp;value)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Value that <a href="#field"><code>field</code></a>'s value should be compared against.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -276,6 +283,49 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 </dl>
 </li>
 </ul>
+<a id="field(com.atlan.model.fields.SearchableField)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>field</h4>
+<pre class="methodSignature">public&nbsp;<a href="LineageFilter.LineageFilterBuilder.html" title="type parameter in LineageFilter.LineageFilterBuilder">B</a>&nbsp;field&#8203;(<a href="../fields/SearchableField.html" title="class in com.atlan.model.fields">SearchableField</a>&nbsp;field)</pre>
+<div class="block">Field on which filtering should be applied.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="operator(com.atlan.model.enums.AtlanComparisonOperator)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>operator</h4>
+<pre class="methodSignature">public&nbsp;<a href="LineageFilter.LineageFilterBuilder.html" title="type parameter in LineageFilter.LineageFilterBuilder">B</a>&nbsp;operator&#8203;(<a href="../enums/AtlanComparisonOperator.html" title="enum in com.atlan.model.enums">AtlanComparisonOperator</a>&nbsp;operator)</pre>
+<div class="block">Comparison that should be used when checking <a href="#field"><code>field</code></a>'s value against
+ the provided <a href="#value"><code>value</code></a>.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="value(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>value</h4>
+<pre class="methodSignature">public&nbsp;<a href="LineageFilter.LineageFilterBuilder.html" title="type parameter in LineageFilter.LineageFilterBuilder">B</a>&nbsp;value&#8203;(java.lang.String&nbsp;value)</pre>
+<div class="block">Value that <a href="#field"><code>field</code></a>'s value should be compared against.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
 <a id="self()">
 <!--   -->
 </a>
@@ -299,45 +349,6 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../core/AtlanObject.AtlanObjectBuilder.html#build()">build</a></code>&nbsp;in class&nbsp;<code><a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in com.atlan.model.core">AtlanObject.AtlanObjectBuilder</a>&lt;<a href="LineageFilter.LineageFilterBuilder.html" title="type parameter in LineageFilter.LineageFilterBuilder">C</a> extends <a href="LineageFilter.html" title="class in com.atlan.model.lineage">LineageFilter</a>,&#8203;<a href="LineageFilter.LineageFilterBuilder.html" title="type parameter in LineageFilter.LineageFilterBuilder">B</a> extends <a href="LineageFilter.LineageFilterBuilder.html" title="class in com.atlan.model.lineage">LineageFilter.LineageFilterBuilder</a>&lt;<a href="LineageFilter.LineageFilterBuilder.html" title="type parameter in LineageFilter.LineageFilterBuilder">C</a>,&#8203;<a href="LineageFilter.LineageFilterBuilder.html" title="type parameter in LineageFilter.LineageFilterBuilder">B</a>&gt;&gt;</code></dd>
-</dl>
-</li>
-</ul>
-<a id="field(com.atlan.model.fields.SearchableField)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>field</h4>
-<pre class="methodSignature">public&nbsp;<a href="LineageFilter.LineageFilterBuilder.html" title="type parameter in LineageFilter.LineageFilterBuilder">B</a>&nbsp;field&#8203;(<a href="../fields/SearchableField.html" title="class in com.atlan.model.fields">SearchableField</a>&nbsp;field)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="operator(com.atlan.model.enums.AtlanComparisonOperator)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>operator</h4>
-<pre class="methodSignature">public&nbsp;<a href="LineageFilter.LineageFilterBuilder.html" title="type parameter in LineageFilter.LineageFilterBuilder">B</a>&nbsp;operator&#8203;(<a href="../enums/AtlanComparisonOperator.html" title="enum in com.atlan.model.enums">AtlanComparisonOperator</a>&nbsp;operator)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="value(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>value</h4>
-<pre class="methodSignature">public&nbsp;<a href="LineageFilter.LineageFilterBuilder.html" title="type parameter in LineageFilter.LineageFilterBuilder">B</a>&nbsp;value&#8203;(java.lang.String&nbsp;value)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
 </dl>
 </li>
 </ul>

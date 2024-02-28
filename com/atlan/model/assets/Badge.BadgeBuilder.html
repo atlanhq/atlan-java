@@ -211,7 +211,9 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="Badge.BadgeBuilder.html" title="type parameter in Badge.BadgeBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#badgeMetadataAttribute(java.lang.String)">badgeMetadataAttribute</a></span>&#8203;(java.lang.String&nbsp;badgeMetadataAttribute)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Custom metadata attribute for which to show the badge.</div>
+</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>abstract <a href="Badge.BadgeBuilder.html" title="type parameter in Badge.BadgeBuilder">C</a></code></td>
@@ -236,7 +238,9 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <tr id="i8" class="altColor">
 <td class="colFirst"><code><a href="Badge.BadgeBuilder.html" title="type parameter in Badge.BadgeBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#typeName(java.lang.String)">typeName</a></span>&#8203;(java.lang.String&nbsp;typeName)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Fixed typeName for Badges.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -310,32 +314,6 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 </dl>
 </li>
 </ul>
-<a id="self()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>self</h4>
-<pre class="methodSignature">protected abstract&nbsp;<a href="Badge.BadgeBuilder.html" title="type parameter in Badge.BadgeBuilder">B</a>&nbsp;self()</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="Asset.AssetBuilder.html#self()">self</a></code>&nbsp;in class&nbsp;<code><a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets">Asset.AssetBuilder</a>&lt;<a href="Badge.BadgeBuilder.html" title="type parameter in Badge.BadgeBuilder">C</a> extends <a href="Badge.html" title="class in com.atlan.model.assets">Badge</a>,&#8203;<a href="Badge.BadgeBuilder.html" title="type parameter in Badge.BadgeBuilder">B</a> extends <a href="Badge.BadgeBuilder.html" title="class in com.atlan.model.assets">Badge.BadgeBuilder</a>&lt;<a href="Badge.BadgeBuilder.html" title="type parameter in Badge.BadgeBuilder">C</a>,&#8203;<a href="Badge.BadgeBuilder.html" title="type parameter in Badge.BadgeBuilder">B</a>&gt;&gt;</code></dd>
-</dl>
-</li>
-</ul>
-<a id="build()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>build</h4>
-<pre class="methodSignature">public abstract&nbsp;<a href="Badge.BadgeBuilder.html" title="type parameter in Badge.BadgeBuilder">C</a>&nbsp;build()</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="Asset.AssetBuilder.html#build()">build</a></code>&nbsp;in class&nbsp;<code><a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets">Asset.AssetBuilder</a>&lt;<a href="Badge.BadgeBuilder.html" title="type parameter in Badge.BadgeBuilder">C</a> extends <a href="Badge.html" title="class in com.atlan.model.assets">Badge</a>,&#8203;<a href="Badge.BadgeBuilder.html" title="type parameter in Badge.BadgeBuilder">B</a> extends <a href="Badge.BadgeBuilder.html" title="class in com.atlan.model.assets">Badge.BadgeBuilder</a>&lt;<a href="Badge.BadgeBuilder.html" title="type parameter in Badge.BadgeBuilder">C</a>,&#8203;<a href="Badge.BadgeBuilder.html" title="type parameter in Badge.BadgeBuilder">B</a>&gt;&gt;</code></dd>
-</dl>
-</li>
-</ul>
 <a id="typeName(java.lang.String)">
 <!--   -->
 </a>
@@ -343,6 +321,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>typeName</h4>
 <pre class="methodSignature">public&nbsp;<a href="Badge.BadgeBuilder.html" title="type parameter in Badge.BadgeBuilder">B</a>&nbsp;typeName&#8203;(java.lang.String&nbsp;typeName)</pre>
+<div class="block">Fixed typeName for Badges.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="../relations/Reference.ReferenceBuilder.html#typeName(java.lang.String)">typeName</a></code>&nbsp;in class&nbsp;<code><a href="../relations/Reference.ReferenceBuilder.html" title="class in com.atlan.model.relations">Reference.ReferenceBuilder</a>&lt;<a href="Badge.BadgeBuilder.html" title="type parameter in Badge.BadgeBuilder">C</a> extends <a href="Badge.html" title="class in com.atlan.model.assets">Badge</a>,&#8203;<a href="Badge.BadgeBuilder.html" title="type parameter in Badge.BadgeBuilder">B</a> extends <a href="Badge.BadgeBuilder.html" title="class in com.atlan.model.assets">Badge.BadgeBuilder</a>&lt;<a href="Badge.BadgeBuilder.html" title="type parameter in Badge.BadgeBuilder">C</a>,&#8203;<a href="Badge.BadgeBuilder.html" title="type parameter in Badge.BadgeBuilder">B</a>&gt;&gt;</code></dd>
@@ -385,9 +364,36 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>badgeMetadataAttribute</h4>
 <pre class="methodSignature">public&nbsp;<a href="Badge.BadgeBuilder.html" title="type parameter in Badge.BadgeBuilder">B</a>&nbsp;badgeMetadataAttribute&#8203;(java.lang.String&nbsp;badgeMetadataAttribute)</pre>
+<div class="block">Custom metadata attribute for which to show the badge.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="self()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>self</h4>
+<pre class="methodSignature">protected abstract&nbsp;<a href="Badge.BadgeBuilder.html" title="type parameter in Badge.BadgeBuilder">B</a>&nbsp;self()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="Asset.AssetBuilder.html#self()">self</a></code>&nbsp;in class&nbsp;<code><a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets">Asset.AssetBuilder</a>&lt;<a href="Badge.BadgeBuilder.html" title="type parameter in Badge.BadgeBuilder">C</a> extends <a href="Badge.html" title="class in com.atlan.model.assets">Badge</a>,&#8203;<a href="Badge.BadgeBuilder.html" title="type parameter in Badge.BadgeBuilder">B</a> extends <a href="Badge.BadgeBuilder.html" title="class in com.atlan.model.assets">Badge.BadgeBuilder</a>&lt;<a href="Badge.BadgeBuilder.html" title="type parameter in Badge.BadgeBuilder">C</a>,&#8203;<a href="Badge.BadgeBuilder.html" title="type parameter in Badge.BadgeBuilder">B</a>&gt;&gt;</code></dd>
+</dl>
+</li>
+</ul>
+<a id="build()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>build</h4>
+<pre class="methodSignature">public abstract&nbsp;<a href="Badge.BadgeBuilder.html" title="type parameter in Badge.BadgeBuilder">C</a>&nbsp;build()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="Asset.AssetBuilder.html#build()">build</a></code>&nbsp;in class&nbsp;<code><a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets">Asset.AssetBuilder</a>&lt;<a href="Badge.BadgeBuilder.html" title="type parameter in Badge.BadgeBuilder">C</a> extends <a href="Badge.html" title="class in com.atlan.model.assets">Badge</a>,&#8203;<a href="Badge.BadgeBuilder.html" title="type parameter in Badge.BadgeBuilder">B</a> extends <a href="Badge.BadgeBuilder.html" title="class in com.atlan.model.assets">Badge.BadgeBuilder</a>&lt;<a href="Badge.BadgeBuilder.html" title="type parameter in Badge.BadgeBuilder">C</a>,&#8203;<a href="Badge.BadgeBuilder.html" title="type parameter in Badge.BadgeBuilder">B</a>&gt;&gt;</code></dd>
 </dl>
 </li>
 </ul>

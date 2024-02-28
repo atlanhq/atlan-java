@@ -226,17 +226,23 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#calculationView(com.atlan.model.assets.ICalculationView)">calculationView</a></span>&#8203;(<a href="ICalculationView.html" title="interface in com.atlan.model.assets">ICalculationView</a>&nbsp;calculationView)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Calculate view in which this column exists.</div>
+</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#calculationViewName(java.lang.String)">calculationViewName</a></span>&#8203;(java.lang.String&nbsp;calculationViewName)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Simple name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view.</div>
+</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#calculationViewQualifiedName(java.lang.String)">calculationViewQualifiedName</a></span>&#8203;(java.lang.String&nbsp;calculationViewQualifiedName)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Unique name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view.</div>
+</td>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
@@ -356,12 +362,16 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <tr id="i32" class="altColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#columnAverage(java.lang.Double)">columnAverage</a></span>&#8203;(java.lang.Double&nbsp;columnAverage)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Average value in this column.</div>
+</td>
 </tr>
 <tr id="i33" class="rowColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#columnAverageLength(java.lang.Double)">columnAverageLength</a></span>&#8203;(java.lang.Double&nbsp;columnAverageLength)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Average length of values in a string column.</div>
+</td>
 </tr>
 <tr id="i34" class="altColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
@@ -376,27 +386,37 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <tr id="i36" class="altColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#columnDepthLevel(java.lang.Integer)">columnDepthLevel</a></span>&#8203;(java.lang.Integer&nbsp;columnDepthLevel)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Level of nesting of this column, used for STRUCT and NESTED columns.</div>
+</td>
 </tr>
 <tr id="i37" class="rowColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#columnDistinctValuesCount(java.lang.Integer)">columnDistinctValuesCount</a></span>&#8203;(java.lang.Integer&nbsp;columnDistinctValuesCount)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Number of rows that contain distinct values.</div>
+</td>
 </tr>
 <tr id="i38" class="altColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#columnDistinctValuesCountLong(java.lang.Long)">columnDistinctValuesCountLong</a></span>&#8203;(java.lang.Long&nbsp;columnDistinctValuesCountLong)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Number of rows that contain distinct values.</div>
+</td>
 </tr>
 <tr id="i39" class="rowColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#columnDuplicateValuesCount(java.lang.Integer)">columnDuplicateValuesCount</a></span>&#8203;(java.lang.Integer&nbsp;columnDuplicateValuesCount)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Number of rows that contain duplicate values.</div>
+</td>
 </tr>
 <tr id="i40" class="altColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#columnDuplicateValuesCountLong(java.lang.Long)">columnDuplicateValuesCountLong</a></span>&#8203;(java.lang.Long&nbsp;columnDuplicateValuesCountLong)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Number of rows that contain duplicate values.</div>
+</td>
 </tr>
 <tr id="i41" class="rowColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
@@ -406,12 +426,16 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <tr id="i42" class="altColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#columnMax(java.lang.Double)">columnMax</a></span>&#8203;(java.lang.Double&nbsp;columnMax)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Greatest value in a numeric column.</div>
+</td>
 </tr>
 <tr id="i43" class="rowColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#columnMaximumStringLength(java.lang.Integer)">columnMaximumStringLength</a></span>&#8203;(java.lang.Integer&nbsp;columnMaximumStringLength)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Length of the longest value in a string column.</div>
+</td>
 </tr>
 <tr id="i44" class="altColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
@@ -421,22 +445,30 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <tr id="i45" class="rowColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#columnMean(java.lang.Double)">columnMean</a></span>&#8203;(java.lang.Double&nbsp;columnMean)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Arithmetic mean of the values in a numeric column.</div>
+</td>
 </tr>
 <tr id="i46" class="altColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#columnMedian(java.lang.Double)">columnMedian</a></span>&#8203;(java.lang.Double&nbsp;columnMedian)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Calculated median of the values in a numeric column.</div>
+</td>
 </tr>
 <tr id="i47" class="rowColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#columnMin(java.lang.Double)">columnMin</a></span>&#8203;(java.lang.Double&nbsp;columnMin)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Least value in a numeric column.</div>
+</td>
 </tr>
 <tr id="i48" class="altColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#columnMinimumStringLength(java.lang.Integer)">columnMinimumStringLength</a></span>&#8203;(java.lang.Integer&nbsp;columnMinimumStringLength)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Length of the shortest value in a string column.</div>
+</td>
 </tr>
 <tr id="i49" class="rowColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
@@ -446,27 +478,37 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <tr id="i50" class="altColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#columnMissingValuesCount(java.lang.Integer)">columnMissingValuesCount</a></span>&#8203;(java.lang.Integer&nbsp;columnMissingValuesCount)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Number of rows in a column that do not contain content.</div>
+</td>
 </tr>
 <tr id="i51" class="rowColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#columnMissingValuesCountLong(java.lang.Long)">columnMissingValuesCountLong</a></span>&#8203;(java.lang.Long&nbsp;columnMissingValuesCountLong)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Number of rows in a column that do not contain content.</div>
+</td>
 </tr>
 <tr id="i52" class="altColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#columnMissingValuesPercentage(java.lang.Double)">columnMissingValuesPercentage</a></span>&#8203;(java.lang.Double&nbsp;columnMissingValuesPercentage)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Percentage of rows in a column that do not contain content.</div>
+</td>
 </tr>
 <tr id="i53" class="rowColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#columnStandardDeviation(java.lang.Double)">columnStandardDeviation</a></span>&#8203;(java.lang.Double&nbsp;columnStandardDeviation)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Calculated standard deviation of the values in a numeric column.</div>
+</td>
 </tr>
 <tr id="i54" class="altColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#columnSum(java.lang.Double)">columnSum</a></span>&#8203;(java.lang.Double&nbsp;columnSum)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Calculated sum of the values in a numeric column.</div>
+</td>
 </tr>
 <tr id="i55" class="rowColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
@@ -481,32 +523,44 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <tr id="i57" class="rowColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#columnUniquenessPercentage(java.lang.Double)">columnUniquenessPercentage</a></span>&#8203;(java.lang.Double&nbsp;columnUniquenessPercentage)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Ratio indicating how unique data in this column is: 0 indicates that all values are the same, 100 indicates that all values in this column are unique.</div>
+</td>
 </tr>
 <tr id="i58" class="altColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#columnUniqueValuesCount(java.lang.Integer)">columnUniqueValuesCount</a></span>&#8203;(java.lang.Integer&nbsp;columnUniqueValuesCount)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Number of rows in which a value in this column appears only once.</div>
+</td>
 </tr>
 <tr id="i59" class="rowColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#columnUniqueValuesCountLong(java.lang.Long)">columnUniqueValuesCountLong</a></span>&#8203;(java.lang.Long&nbsp;columnUniqueValuesCountLong)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Number of rows in which a value in this column appears only once.</div>
+</td>
 </tr>
 <tr id="i60" class="altColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#columnVariance(java.lang.Double)">columnVariance</a></span>&#8203;(java.lang.Double&nbsp;columnVariance)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Calculated variance of the values in a numeric column.</div>
+</td>
 </tr>
 <tr id="i61" class="rowColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#databaseName(java.lang.String)">databaseName</a></span>&#8203;(java.lang.String&nbsp;databaseName)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Simple name of the database in which this SQL asset exists, or empty if it does not exist within a database.</div>
+</td>
 </tr>
 <tr id="i62" class="altColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#databaseQualifiedName(java.lang.String)">databaseQualifiedName</a></span>&#8203;(java.lang.String&nbsp;databaseQualifiedName)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Unique name of the database in which this SQL asset exists, or empty if it does not exist within a database.</div>
+</td>
 </tr>
 <tr id="i63" class="rowColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
@@ -521,7 +575,9 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <tr id="i65" class="rowColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#dataType(java.lang.String)">dataType</a></span>&#8203;(java.lang.String&nbsp;dataType)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Data type of values in this column.</div>
+</td>
 </tr>
 <tr id="i66" class="altColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
@@ -576,12 +632,16 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <tr id="i76" class="altColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#defaultValue(java.lang.String)">defaultValue</a></span>&#8203;(java.lang.String&nbsp;defaultValue)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Default value for this column.</div>
+</td>
 </tr>
 <tr id="i77" class="rowColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#foreignKeyFrom(com.atlan.model.assets.IColumn)">foreignKeyFrom</a></span>&#8203;(<a href="IColumn.html" title="interface in com.atlan.model.assets">IColumn</a>&nbsp;foreignKeyFrom)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Column this foreign key column refers to.</div>
+</td>
 </tr>
 <tr id="i78" class="altColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
@@ -611,67 +671,93 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <tr id="i83" class="rowColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isClustered(java.lang.Boolean)">isClustered</a></span>&#8203;(java.lang.Boolean&nbsp;isClustered)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Whether this column is a clustered column (true) or not (false).</div>
+</td>
 </tr>
 <tr id="i84" class="altColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isDist(java.lang.Boolean)">isDist</a></span>&#8203;(java.lang.Boolean&nbsp;isDist)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Whether this column is a distribution column (true) or not (false).</div>
+</td>
 </tr>
 <tr id="i85" class="rowColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isForeign(java.lang.Boolean)">isForeign</a></span>&#8203;(java.lang.Boolean&nbsp;isForeign)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">When true, this column is a foreign key to another table.</div>
+</td>
 </tr>
 <tr id="i86" class="altColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isIndexed(java.lang.Boolean)">isIndexed</a></span>&#8203;(java.lang.Boolean&nbsp;isIndexed)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">When true, this column is indexed in the database.</div>
+</td>
 </tr>
 <tr id="i87" class="rowColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isNullable(java.lang.Boolean)">isNullable</a></span>&#8203;(java.lang.Boolean&nbsp;isNullable)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">When true, the values in this column can be null.</div>
+</td>
 </tr>
 <tr id="i88" class="altColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isPartition(java.lang.Boolean)">isPartition</a></span>&#8203;(java.lang.Boolean&nbsp;isPartition)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Whether this column is a partition column (true) or not (false).</div>
+</td>
 </tr>
 <tr id="i89" class="rowColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isPinned(java.lang.Boolean)">isPinned</a></span>&#8203;(java.lang.Boolean&nbsp;isPinned)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Whether this column is pinned (true) or not (false).</div>
+</td>
 </tr>
 <tr id="i90" class="altColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isPrimary(java.lang.Boolean)">isPrimary</a></span>&#8203;(java.lang.Boolean&nbsp;isPrimary)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">When true, this column is the primary key for the table.</div>
+</td>
 </tr>
 <tr id="i91" class="rowColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isProfiled(java.lang.Boolean)">isProfiled</a></span>&#8203;(java.lang.Boolean&nbsp;isProfiled)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Whether this asset has been profiled (true) or not (false).</div>
+</td>
 </tr>
 <tr id="i92" class="altColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isSort(java.lang.Boolean)">isSort</a></span>&#8203;(java.lang.Boolean&nbsp;isSort)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Whether this column is a sort column (true) or not (false).</div>
+</td>
 </tr>
 <tr id="i93" class="rowColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#lastProfiledAt(java.lang.Long)">lastProfiledAt</a></span>&#8203;(java.lang.Long&nbsp;lastProfiledAt)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Time (epoch) at which this asset was last profiled, in milliseconds.</div>
+</td>
 </tr>
 <tr id="i94" class="altColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#materializedView(com.atlan.model.assets.IMaterializedView)">materializedView</a></span>&#8203;(<a href="IMaterializedView.html" title="interface in com.atlan.model.assets">IMaterializedView</a>&nbsp;materializedView)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Materialized view in which this column exists.</div>
+</td>
 </tr>
 <tr id="i95" class="rowColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#maxLength(java.lang.Long)">maxLength</a></span>&#8203;(java.lang.Long&nbsp;maxLength)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Maximum length of a value in this column.</div>
+</td>
 </tr>
 <tr id="i96" class="altColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
@@ -691,7 +777,9 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <tr id="i99" class="rowColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#nestedColumnCount(java.lang.Integer)">nestedColumnCount</a></span>&#8203;(java.lang.Integer&nbsp;nestedColumnCount)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Number of columns nested within this (STRUCT or NESTED) column.</div>
+</td>
 </tr>
 <tr id="i100" class="altColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
@@ -701,12 +789,16 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <tr id="i101" class="rowColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#numericScale(java.lang.Double)">numericScale</a></span>&#8203;(java.lang.Double&nbsp;numericScale)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Number of digits allowed to the right of the decimal point.</div>
+</td>
 </tr>
 <tr id="i102" class="altColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#order(java.lang.Integer)">order</a></span>&#8203;(java.lang.Integer&nbsp;order)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Order (position) in which this column appears in the table (starting at 1).</div>
+</td>
 </tr>
 <tr id="i103" class="rowColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
@@ -731,37 +823,51 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <tr id="i107" class="rowColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parentColumn(com.atlan.model.assets.IColumn)">parentColumn</a></span>&#8203;(<a href="IColumn.html" title="interface in com.atlan.model.assets">IColumn</a>&nbsp;parentColumn)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Column in which this sub-column is nested.</div>
+</td>
 </tr>
 <tr id="i108" class="altColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parentColumnName(java.lang.String)">parentColumnName</a></span>&#8203;(java.lang.String&nbsp;parentColumnName)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Simple name of the column this column is nested within, for STRUCT and NESTED columns.</div>
+</td>
 </tr>
 <tr id="i109" class="rowColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parentColumnQualifiedName(java.lang.String)">parentColumnQualifiedName</a></span>&#8203;(java.lang.String&nbsp;parentColumnQualifiedName)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Unique name of the column this column is nested within, for STRUCT and NESTED columns.</div>
+</td>
 </tr>
 <tr id="i110" class="altColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#partitionOrder(java.lang.Integer)">partitionOrder</a></span>&#8203;(java.lang.Integer&nbsp;partitionOrder)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Order (position) of this partition column in the table.</div>
+</td>
 </tr>
 <tr id="i111" class="rowColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#pinnedAt(java.lang.Long)">pinnedAt</a></span>&#8203;(java.lang.Long&nbsp;pinnedAt)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Time (epoch) at which this column was pinned, in milliseconds.</div>
+</td>
 </tr>
 <tr id="i112" class="altColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#pinnedBy(java.lang.String)">pinnedBy</a></span>&#8203;(java.lang.String&nbsp;pinnedBy)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">User who pinned this column.</div>
+</td>
 </tr>
 <tr id="i113" class="rowColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#precision(java.lang.Integer)">precision</a></span>&#8203;(java.lang.Integer&nbsp;precision)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Total number of digits allowed, when the dataType is numeric.</div>
+</td>
 </tr>
 <tr id="i114" class="altColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
@@ -782,17 +888,23 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <tr id="i117" class="rowColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#queryCount(java.lang.Long)">queryCount</a></span>&#8203;(java.lang.Long&nbsp;queryCount)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Number of times this asset has been queried.</div>
+</td>
 </tr>
 <tr id="i118" class="altColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#queryCountUpdatedAt(java.lang.Long)">queryCountUpdatedAt</a></span>&#8203;(java.lang.Long&nbsp;queryCountUpdatedAt)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Time (epoch) at which the query count was last updated, in milliseconds.</div>
+</td>
 </tr>
 <tr id="i119" class="rowColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#queryUserCount(java.lang.Long)">queryUserCount</a></span>&#8203;(java.lang.Long&nbsp;queryUserCount)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Number of unique users who have queried this asset.</div>
+</td>
 </tr>
 <tr id="i120" class="altColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
@@ -802,17 +914,23 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <tr id="i121" class="rowColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#rawDataTypeDefinition(java.lang.String)">rawDataTypeDefinition</a></span>&#8203;(java.lang.String&nbsp;rawDataTypeDefinition)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">TBC</div>
+</td>
 </tr>
 <tr id="i122" class="altColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#schemaName(java.lang.String)">schemaName</a></span>&#8203;(java.lang.String&nbsp;schemaName)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Simple name of the schema in which this SQL asset exists, or empty if it does not exist within a schema.</div>
+</td>
 </tr>
 <tr id="i123" class="rowColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#schemaQualifiedName(java.lang.String)">schemaQualifiedName</a></span>&#8203;(java.lang.String&nbsp;schemaQualifiedName)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Unique name of the schema in which this SQL asset exists, or empty if it does not exist within a schema.</div>
+</td>
 </tr>
 <tr id="i124" class="altColor">
 <td class="colFirst"><code>protected abstract <a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
@@ -822,7 +940,9 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <tr id="i125" class="rowColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#snowflakeDynamicTable(com.atlan.model.assets.ISnowflakeDynamicTable)">snowflakeDynamicTable</a></span>&#8203;(<a href="ISnowflakeDynamicTable.html" title="interface in com.atlan.model.assets">ISnowflakeDynamicTable</a>&nbsp;snowflakeDynamicTable)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Snowflake dynamic table in which this column exists.</div>
+</td>
 </tr>
 <tr id="i126" class="altColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
@@ -847,27 +967,37 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <tr id="i130" class="altColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#subDataType(java.lang.String)">subDataType</a></span>&#8203;(java.lang.String&nbsp;subDataType)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Sub-data type of this column.</div>
+</td>
 </tr>
 <tr id="i131" class="rowColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#table(com.atlan.model.assets.ITable)">table</a></span>&#8203;(<a href="ITable.html" title="interface in com.atlan.model.assets">ITable</a>&nbsp;table)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Table in which this column exists.</div>
+</td>
 </tr>
 <tr id="i132" class="altColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#tableName(java.lang.String)">tableName</a></span>&#8203;(java.lang.String&nbsp;tableName)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table.</div>
+</td>
 </tr>
 <tr id="i133" class="rowColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#tablePartition(com.atlan.model.assets.ITablePartition)">tablePartition</a></span>&#8203;(<a href="ITablePartition.html" title="interface in com.atlan.model.assets">ITablePartition</a>&nbsp;tablePartition)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Table partition that contains this column.</div>
+</td>
 </tr>
 <tr id="i134" class="altColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#tableQualifiedName(java.lang.String)">tableQualifiedName</a></span>&#8203;(java.lang.String&nbsp;tableQualifiedName)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Unique name of the table in which this SQL asset exists, or empty if it does not exist within a table.</div>
+</td>
 </tr>
 <tr id="i135" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
@@ -877,7 +1007,9 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <tr id="i136" class="altColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#typeName(java.lang.String)">typeName</a></span>&#8203;(java.lang.String&nbsp;typeName)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Fixed typeName for Columns.</div>
+</td>
 </tr>
 <tr id="i137" class="rowColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
@@ -893,17 +1025,23 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <tr id="i139" class="rowColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#view(com.atlan.model.assets.IView)">view</a></span>&#8203;(<a href="IView.html" title="interface in com.atlan.model.assets">IView</a>&nbsp;view)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">View in which this column exists.</div>
+</td>
 </tr>
 <tr id="i140" class="altColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#viewName(java.lang.String)">viewName</a></span>&#8203;(java.lang.String&nbsp;viewName)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Simple name of the view in which this SQL asset exists, or empty if it does not exist within a view.</div>
+</td>
 </tr>
 <tr id="i141" class="rowColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#viewQualifiedName(java.lang.String)">viewQualifiedName</a></span>&#8203;(java.lang.String&nbsp;viewQualifiedName)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Unique name of the view in which this SQL asset exists, or empty if it does not exist within a view.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -977,32 +1115,6 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 </dl>
 </li>
 </ul>
-<a id="self()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>self</h4>
-<pre class="methodSignature">protected abstract&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;self()</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="Asset.AssetBuilder.html#self()">self</a></code>&nbsp;in class&nbsp;<code><a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets">Asset.AssetBuilder</a>&lt;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">C</a> extends <a href="Column.html" title="class in com.atlan.model.assets">Column</a>,&#8203;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a> extends <a href="Column.ColumnBuilder.html" title="class in com.atlan.model.assets">Column.ColumnBuilder</a>&lt;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">C</a>,&#8203;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&gt;&gt;</code></dd>
-</dl>
-</li>
-</ul>
-<a id="build()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>build</h4>
-<pre class="methodSignature">public abstract&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">C</a>&nbsp;build()</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="Asset.AssetBuilder.html#build()">build</a></code>&nbsp;in class&nbsp;<code><a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets">Asset.AssetBuilder</a>&lt;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">C</a> extends <a href="Column.html" title="class in com.atlan.model.assets">Column</a>,&#8203;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a> extends <a href="Column.ColumnBuilder.html" title="class in com.atlan.model.assets">Column.ColumnBuilder</a>&lt;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">C</a>,&#8203;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&gt;&gt;</code></dd>
-</dl>
-</li>
-</ul>
 <a id="typeName(java.lang.String)">
 <!--   -->
 </a>
@@ -1010,6 +1122,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>typeName</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;typeName&#8203;(java.lang.String&nbsp;typeName)</pre>
+<div class="block">Fixed typeName for Columns.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="../relations/Reference.ReferenceBuilder.html#typeName(java.lang.String)">typeName</a></code>&nbsp;in class&nbsp;<code><a href="../relations/Reference.ReferenceBuilder.html" title="class in com.atlan.model.relations">Reference.ReferenceBuilder</a>&lt;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">C</a> extends <a href="Column.html" title="class in com.atlan.model.assets">Column</a>,&#8203;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a> extends <a href="Column.ColumnBuilder.html" title="class in com.atlan.model.assets">Column.ColumnBuilder</a>&lt;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">C</a>,&#8203;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&gt;&gt;</code></dd>
@@ -1025,6 +1138,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>calculationView</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;calculationView&#8203;(<a href="ICalculationView.html" title="interface in com.atlan.model.assets">ICalculationView</a>&nbsp;calculationView)</pre>
+<div class="block">Calculate view in which this column exists.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -1038,6 +1152,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>calculationViewName</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;calculationViewName&#8203;(java.lang.String&nbsp;calculationViewName)</pre>
+<div class="block">Simple name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -1051,6 +1166,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>calculationViewQualifiedName</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;calculationViewQualifiedName&#8203;(java.lang.String&nbsp;calculationViewQualifiedName)</pre>
+<div class="block">Unique name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -1064,6 +1180,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>columnAverage</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;columnAverage&#8203;(java.lang.Double&nbsp;columnAverage)</pre>
+<div class="block">Average value in this column.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -1077,6 +1194,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>columnAverageLength</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;columnAverageLength&#8203;(java.lang.Double&nbsp;columnAverageLength)</pre>
+<div class="block">Average length of values in a string column.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -1117,6 +1235,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>columnDepthLevel</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;columnDepthLevel&#8203;(java.lang.Integer&nbsp;columnDepthLevel)</pre>
+<div class="block">Level of nesting of this column, used for STRUCT and NESTED columns.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -1130,6 +1249,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>columnDistinctValuesCount</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;columnDistinctValuesCount&#8203;(java.lang.Integer&nbsp;columnDistinctValuesCount)</pre>
+<div class="block">Number of rows that contain distinct values.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -1143,6 +1263,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>columnDistinctValuesCountLong</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;columnDistinctValuesCountLong&#8203;(java.lang.Long&nbsp;columnDistinctValuesCountLong)</pre>
+<div class="block">Number of rows that contain distinct values.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -1156,6 +1277,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>columnDuplicateValuesCount</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;columnDuplicateValuesCount&#8203;(java.lang.Integer&nbsp;columnDuplicateValuesCount)</pre>
+<div class="block">Number of rows that contain duplicate values.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -1169,6 +1291,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>columnDuplicateValuesCountLong</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;columnDuplicateValuesCountLong&#8203;(java.lang.Long&nbsp;columnDuplicateValuesCountLong)</pre>
+<div class="block">Number of rows that contain duplicate values.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -1209,6 +1332,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>columnMax</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;columnMax&#8203;(java.lang.Double&nbsp;columnMax)</pre>
+<div class="block">Greatest value in a numeric column.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -1222,6 +1346,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>columnMaximumStringLength</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;columnMaximumStringLength&#8203;(java.lang.Integer&nbsp;columnMaximumStringLength)</pre>
+<div class="block">Length of the longest value in a string column.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -1262,6 +1387,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>columnMean</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;columnMean&#8203;(java.lang.Double&nbsp;columnMean)</pre>
+<div class="block">Arithmetic mean of the values in a numeric column.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -1275,6 +1401,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>columnMedian</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;columnMedian&#8203;(java.lang.Double&nbsp;columnMedian)</pre>
+<div class="block">Calculated median of the values in a numeric column.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -1288,6 +1415,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>columnMin</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;columnMin&#8203;(java.lang.Double&nbsp;columnMin)</pre>
+<div class="block">Least value in a numeric column.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -1301,6 +1429,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>columnMinimumStringLength</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;columnMinimumStringLength&#8203;(java.lang.Integer&nbsp;columnMinimumStringLength)</pre>
+<div class="block">Length of the shortest value in a string column.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -1341,6 +1470,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>columnMissingValuesCount</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;columnMissingValuesCount&#8203;(java.lang.Integer&nbsp;columnMissingValuesCount)</pre>
+<div class="block">Number of rows in a column that do not contain content.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -1354,6 +1484,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>columnMissingValuesCountLong</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;columnMissingValuesCountLong&#8203;(java.lang.Long&nbsp;columnMissingValuesCountLong)</pre>
+<div class="block">Number of rows in a column that do not contain content.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -1367,6 +1498,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>columnMissingValuesPercentage</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;columnMissingValuesPercentage&#8203;(java.lang.Double&nbsp;columnMissingValuesPercentage)</pre>
+<div class="block">Percentage of rows in a column that do not contain content.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -1380,6 +1512,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>columnStandardDeviation</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;columnStandardDeviation&#8203;(java.lang.Double&nbsp;columnStandardDeviation)</pre>
+<div class="block">Calculated standard deviation of the values in a numeric column.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -1393,6 +1526,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>columnSum</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;columnSum&#8203;(java.lang.Double&nbsp;columnSum)</pre>
+<div class="block">Calculated sum of the values in a numeric column.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -1433,6 +1567,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>columnUniqueValuesCount</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;columnUniqueValuesCount&#8203;(java.lang.Integer&nbsp;columnUniqueValuesCount)</pre>
+<div class="block">Number of rows in which a value in this column appears only once.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -1446,6 +1581,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>columnUniqueValuesCountLong</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;columnUniqueValuesCountLong&#8203;(java.lang.Long&nbsp;columnUniqueValuesCountLong)</pre>
+<div class="block">Number of rows in which a value in this column appears only once.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -1459,6 +1595,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>columnUniquenessPercentage</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;columnUniquenessPercentage&#8203;(java.lang.Double&nbsp;columnUniquenessPercentage)</pre>
+<div class="block">Ratio indicating how unique data in this column is: 0 indicates that all values are the same, 100 indicates that all values in this column are unique.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -1472,6 +1609,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>columnVariance</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;columnVariance&#8203;(java.lang.Double&nbsp;columnVariance)</pre>
+<div class="block">Calculated variance of the values in a numeric column.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -1512,6 +1650,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>dataType</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;dataType&#8203;(java.lang.String&nbsp;dataType)</pre>
+<div class="block">Data type of values in this column.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -1525,6 +1664,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>databaseName</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;databaseName&#8203;(java.lang.String&nbsp;databaseName)</pre>
+<div class="block">Simple name of the database in which this SQL asset exists, or empty if it does not exist within a database.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -1538,6 +1678,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>databaseQualifiedName</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;databaseQualifiedName&#8203;(java.lang.String&nbsp;databaseQualifiedName)</pre>
+<div class="block">Unique name of the database in which this SQL asset exists, or empty if it does not exist within a database.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -1686,6 +1827,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>defaultValue</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;defaultValue&#8203;(java.lang.String&nbsp;defaultValue)</pre>
+<div class="block">Default value for this column.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -1699,6 +1841,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>foreignKeyFrom</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;foreignKeyFrom&#8203;(<a href="IColumn.html" title="interface in com.atlan.model.assets">IColumn</a>&nbsp;foreignKeyFrom)</pre>
+<div class="block">Column this foreign key column refers to.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -1793,6 +1936,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>isClustered</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;isClustered&#8203;(java.lang.Boolean&nbsp;isClustered)</pre>
+<div class="block">Whether this column is a clustered column (true) or not (false).</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -1806,6 +1950,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>isDist</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;isDist&#8203;(java.lang.Boolean&nbsp;isDist)</pre>
+<div class="block">Whether this column is a distribution column (true) or not (false).</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -1819,6 +1964,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>isForeign</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;isForeign&#8203;(java.lang.Boolean&nbsp;isForeign)</pre>
+<div class="block">When true, this column is a foreign key to another table. NOTE: this must be true when using the foreignKeyTo relationship to specify columns that refer to this column as a foreign key.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -1832,6 +1978,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>isIndexed</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;isIndexed&#8203;(java.lang.Boolean&nbsp;isIndexed)</pre>
+<div class="block">When true, this column is indexed in the database.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -1845,6 +1992,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>isNullable</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;isNullable&#8203;(java.lang.Boolean&nbsp;isNullable)</pre>
+<div class="block">When true, the values in this column can be null.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -1858,6 +2006,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>isPartition</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;isPartition&#8203;(java.lang.Boolean&nbsp;isPartition)</pre>
+<div class="block">Whether this column is a partition column (true) or not (false).</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -1871,6 +2020,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>isPinned</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;isPinned&#8203;(java.lang.Boolean&nbsp;isPinned)</pre>
+<div class="block">Whether this column is pinned (true) or not (false).</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -1884,6 +2034,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>isPrimary</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;isPrimary&#8203;(java.lang.Boolean&nbsp;isPrimary)</pre>
+<div class="block">When true, this column is the primary key for the table.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -1897,6 +2048,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>isProfiled</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;isProfiled&#8203;(java.lang.Boolean&nbsp;isProfiled)</pre>
+<div class="block">Whether this asset has been profiled (true) or not (false).</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -1910,6 +2062,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>isSort</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;isSort&#8203;(java.lang.Boolean&nbsp;isSort)</pre>
+<div class="block">Whether this column is a sort column (true) or not (false).</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -1923,6 +2076,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>lastProfiledAt</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;lastProfiledAt&#8203;(java.lang.Long&nbsp;lastProfiledAt)</pre>
+<div class="block">Time (epoch) at which this asset was last profiled, in milliseconds.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -1936,6 +2090,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>materializedView</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;materializedView&#8203;(<a href="IMaterializedView.html" title="interface in com.atlan.model.assets">IMaterializedView</a>&nbsp;materializedView)</pre>
+<div class="block">Materialized view in which this column exists.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -1949,6 +2104,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>maxLength</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;maxLength&#8203;(java.lang.Long&nbsp;maxLength)</pre>
+<div class="block">Maximum length of a value in this column.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -1989,6 +2145,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>nestedColumnCount</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;nestedColumnCount&#8203;(java.lang.Integer&nbsp;nestedColumnCount)</pre>
+<div class="block">Number of columns nested within this (STRUCT or NESTED) column.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -2029,6 +2186,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>numericScale</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;numericScale&#8203;(java.lang.Double&nbsp;numericScale)</pre>
+<div class="block">Number of digits allowed to the right of the decimal point.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -2042,6 +2200,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>order</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;order&#8203;(java.lang.Integer&nbsp;order)</pre>
+<div class="block">Order (position) in which this column appears in the table (starting at 1).</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -2109,6 +2268,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>parentColumn</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;parentColumn&#8203;(<a href="IColumn.html" title="interface in com.atlan.model.assets">IColumn</a>&nbsp;parentColumn)</pre>
+<div class="block">Column in which this sub-column is nested.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -2122,6 +2282,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>parentColumnName</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;parentColumnName&#8203;(java.lang.String&nbsp;parentColumnName)</pre>
+<div class="block">Simple name of the column this column is nested within, for STRUCT and NESTED columns.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -2135,6 +2296,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>parentColumnQualifiedName</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;parentColumnQualifiedName&#8203;(java.lang.String&nbsp;parentColumnQualifiedName)</pre>
+<div class="block">Unique name of the column this column is nested within, for STRUCT and NESTED columns.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -2148,6 +2310,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>partitionOrder</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;partitionOrder&#8203;(java.lang.Integer&nbsp;partitionOrder)</pre>
+<div class="block">Order (position) of this partition column in the table.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -2161,6 +2324,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>pinnedAt</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;pinnedAt&#8203;(java.lang.Long&nbsp;pinnedAt)</pre>
+<div class="block">Time (epoch) at which this column was pinned, in milliseconds.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -2174,6 +2338,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>pinnedBy</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;pinnedBy&#8203;(java.lang.String&nbsp;pinnedBy)</pre>
+<div class="block">User who pinned this column.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -2187,6 +2352,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>precision</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;precision&#8203;(java.lang.Integer&nbsp;precision)</pre>
+<div class="block">Total number of digits allowed, when the dataType is numeric.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -2227,6 +2393,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>queryCount</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;queryCount&#8203;(java.lang.Long&nbsp;queryCount)</pre>
+<div class="block">Number of times this asset has been queried.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -2240,6 +2407,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>queryCountUpdatedAt</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;queryCountUpdatedAt&#8203;(java.lang.Long&nbsp;queryCountUpdatedAt)</pre>
+<div class="block">Time (epoch) at which the query count was last updated, in milliseconds.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -2253,6 +2421,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>queryUserCount</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;queryUserCount&#8203;(java.lang.Long&nbsp;queryUserCount)</pre>
+<div class="block">Number of unique users who have queried this asset.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -2294,6 +2463,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>rawDataTypeDefinition</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;rawDataTypeDefinition&#8203;(java.lang.String&nbsp;rawDataTypeDefinition)</pre>
+<div class="block">TBC</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -2307,6 +2477,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>schemaName</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;schemaName&#8203;(java.lang.String&nbsp;schemaName)</pre>
+<div class="block">Simple name of the schema in which this SQL asset exists, or empty if it does not exist within a schema.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -2320,6 +2491,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>schemaQualifiedName</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;schemaQualifiedName&#8203;(java.lang.String&nbsp;schemaQualifiedName)</pre>
+<div class="block">Unique name of the schema in which this SQL asset exists, or empty if it does not exist within a schema.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -2333,6 +2505,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>snowflakeDynamicTable</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;snowflakeDynamicTable&#8203;(<a href="ISnowflakeDynamicTable.html" title="interface in com.atlan.model.assets">ISnowflakeDynamicTable</a>&nbsp;snowflakeDynamicTable)</pre>
+<div class="block">Snowflake dynamic table in which this column exists.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -2400,6 +2573,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>subDataType</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;subDataType&#8203;(java.lang.String&nbsp;subDataType)</pre>
+<div class="block">Sub-data type of this column.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -2413,6 +2587,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>table</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;table&#8203;(<a href="ITable.html" title="interface in com.atlan.model.assets">ITable</a>&nbsp;table)</pre>
+<div class="block">Table in which this column exists.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -2426,6 +2601,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>tableName</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;tableName&#8203;(java.lang.String&nbsp;tableName)</pre>
+<div class="block">Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -2439,6 +2615,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>tablePartition</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;tablePartition&#8203;(<a href="ITablePartition.html" title="interface in com.atlan.model.assets">ITablePartition</a>&nbsp;tablePartition)</pre>
+<div class="block">Table partition that contains this column.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -2452,6 +2629,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>tableQualifiedName</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;tableQualifiedName&#8203;(java.lang.String&nbsp;tableQualifiedName)</pre>
+<div class="block">Unique name of the table in which this SQL asset exists, or empty if it does not exist within a table.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -2493,6 +2671,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>view</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;view&#8203;(<a href="IView.html" title="interface in com.atlan.model.assets">IView</a>&nbsp;view)</pre>
+<div class="block">View in which this column exists.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -2506,6 +2685,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>viewName</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;viewName&#8203;(java.lang.String&nbsp;viewName)</pre>
+<div class="block">Simple name of the view in which this SQL asset exists, or empty if it does not exist within a view.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -2519,9 +2699,36 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>viewQualifiedName</h4>
 <pre class="methodSignature">public&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;viewQualifiedName&#8203;(java.lang.String&nbsp;viewQualifiedName)</pre>
+<div class="block">Unique name of the view in which this SQL asset exists, or empty if it does not exist within a view.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="self()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>self</h4>
+<pre class="methodSignature">protected abstract&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&nbsp;self()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="Asset.AssetBuilder.html#self()">self</a></code>&nbsp;in class&nbsp;<code><a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets">Asset.AssetBuilder</a>&lt;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">C</a> extends <a href="Column.html" title="class in com.atlan.model.assets">Column</a>,&#8203;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a> extends <a href="Column.ColumnBuilder.html" title="class in com.atlan.model.assets">Column.ColumnBuilder</a>&lt;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">C</a>,&#8203;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&gt;&gt;</code></dd>
+</dl>
+</li>
+</ul>
+<a id="build()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>build</h4>
+<pre class="methodSignature">public abstract&nbsp;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">C</a>&nbsp;build()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="Asset.AssetBuilder.html#build()">build</a></code>&nbsp;in class&nbsp;<code><a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets">Asset.AssetBuilder</a>&lt;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">C</a> extends <a href="Column.html" title="class in com.atlan.model.assets">Column</a>,&#8203;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a> extends <a href="Column.ColumnBuilder.html" title="class in com.atlan.model.assets">Column.ColumnBuilder</a>&lt;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">C</a>,&#8203;<a href="Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&gt;&gt;</code></dd>
 </dl>
 </li>
 </ul>

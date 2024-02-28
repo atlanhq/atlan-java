@@ -286,12 +286,16 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <tr id="i18" class="altColor">
 <td class="colFirst"><code><a href="DataDomain.DataDomainBuilder.html" title="type parameter in DataDomain.DataDomainBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parentDomain(com.atlan.model.assets.IDataDomain)">parentDomain</a></span>&#8203;(<a href="IDataDomain.html" title="interface in com.atlan.model.assets">IDataDomain</a>&nbsp;parentDomain)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Parent data domain in which this sub-data domain exists.</div>
+</td>
 </tr>
 <tr id="i19" class="rowColor">
 <td class="colFirst"><code><a href="DataDomain.DataDomainBuilder.html" title="type parameter in DataDomain.DataDomainBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parentDomainQualifiedName(java.lang.String)">parentDomainQualifiedName</a></span>&#8203;(java.lang.String&nbsp;parentDomainQualifiedName)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Unique name of the parent domain in which this asset exists.</div>
+</td>
 </tr>
 <tr id="i20" class="altColor">
 <td class="colFirst"><code>protected abstract <a href="DataDomain.DataDomainBuilder.html" title="type parameter in DataDomain.DataDomainBuilder">B</a></code></td>
@@ -311,7 +315,9 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <tr id="i23" class="rowColor">
 <td class="colFirst"><code><a href="DataDomain.DataDomainBuilder.html" title="type parameter in DataDomain.DataDomainBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#superDomainQualifiedName(java.lang.String)">superDomainQualifiedName</a></span>&#8203;(java.lang.String&nbsp;superDomainQualifiedName)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Unique name of the top-level domain in which this asset exists.</div>
+</td>
 </tr>
 <tr id="i24" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
@@ -321,7 +327,9 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <tr id="i25" class="rowColor">
 <td class="colFirst"><code><a href="DataDomain.DataDomainBuilder.html" title="type parameter in DataDomain.DataDomainBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#typeName(java.lang.String)">typeName</a></span>&#8203;(java.lang.String&nbsp;typeName)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Fixed typeName for DataDomains.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -395,32 +403,6 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 </dl>
 </li>
 </ul>
-<a id="self()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>self</h4>
-<pre class="methodSignature">protected abstract&nbsp;<a href="DataDomain.DataDomainBuilder.html" title="type parameter in DataDomain.DataDomainBuilder">B</a>&nbsp;self()</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="Asset.AssetBuilder.html#self()">self</a></code>&nbsp;in class&nbsp;<code><a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets">Asset.AssetBuilder</a>&lt;<a href="DataDomain.DataDomainBuilder.html" title="type parameter in DataDomain.DataDomainBuilder">C</a> extends <a href="DataDomain.html" title="class in com.atlan.model.assets">DataDomain</a>,&#8203;<a href="DataDomain.DataDomainBuilder.html" title="type parameter in DataDomain.DataDomainBuilder">B</a> extends <a href="DataDomain.DataDomainBuilder.html" title="class in com.atlan.model.assets">DataDomain.DataDomainBuilder</a>&lt;<a href="DataDomain.DataDomainBuilder.html" title="type parameter in DataDomain.DataDomainBuilder">C</a>,&#8203;<a href="DataDomain.DataDomainBuilder.html" title="type parameter in DataDomain.DataDomainBuilder">B</a>&gt;&gt;</code></dd>
-</dl>
-</li>
-</ul>
-<a id="build()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>build</h4>
-<pre class="methodSignature">public abstract&nbsp;<a href="DataDomain.DataDomainBuilder.html" title="type parameter in DataDomain.DataDomainBuilder">C</a>&nbsp;build()</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="Asset.AssetBuilder.html#build()">build</a></code>&nbsp;in class&nbsp;<code><a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets">Asset.AssetBuilder</a>&lt;<a href="DataDomain.DataDomainBuilder.html" title="type parameter in DataDomain.DataDomainBuilder">C</a> extends <a href="DataDomain.html" title="class in com.atlan.model.assets">DataDomain</a>,&#8203;<a href="DataDomain.DataDomainBuilder.html" title="type parameter in DataDomain.DataDomainBuilder">B</a> extends <a href="DataDomain.DataDomainBuilder.html" title="class in com.atlan.model.assets">DataDomain.DataDomainBuilder</a>&lt;<a href="DataDomain.DataDomainBuilder.html" title="type parameter in DataDomain.DataDomainBuilder">C</a>,&#8203;<a href="DataDomain.DataDomainBuilder.html" title="type parameter in DataDomain.DataDomainBuilder">B</a>&gt;&gt;</code></dd>
-</dl>
-</li>
-</ul>
 <a id="typeName(java.lang.String)">
 <!--   -->
 </a>
@@ -428,6 +410,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>typeName</h4>
 <pre class="methodSignature">public&nbsp;<a href="DataDomain.DataDomainBuilder.html" title="type parameter in DataDomain.DataDomainBuilder">B</a>&nbsp;typeName&#8203;(java.lang.String&nbsp;typeName)</pre>
+<div class="block">Fixed typeName for DataDomains.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="../relations/Reference.ReferenceBuilder.html#typeName(java.lang.String)">typeName</a></code>&nbsp;in class&nbsp;<code><a href="../relations/Reference.ReferenceBuilder.html" title="class in com.atlan.model.relations">Reference.ReferenceBuilder</a>&lt;<a href="DataDomain.DataDomainBuilder.html" title="type parameter in DataDomain.DataDomainBuilder">C</a> extends <a href="DataDomain.html" title="class in com.atlan.model.assets">DataDomain</a>,&#8203;<a href="DataDomain.DataDomainBuilder.html" title="type parameter in DataDomain.DataDomainBuilder">B</a> extends <a href="DataDomain.DataDomainBuilder.html" title="class in com.atlan.model.assets">DataDomain.DataDomainBuilder</a>&lt;<a href="DataDomain.DataDomainBuilder.html" title="type parameter in DataDomain.DataDomainBuilder">C</a>,&#8203;<a href="DataDomain.DataDomainBuilder.html" title="type parameter in DataDomain.DataDomainBuilder">B</a>&gt;&gt;</code></dd>
@@ -578,6 +561,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>parentDomain</h4>
 <pre class="methodSignature">public&nbsp;<a href="DataDomain.DataDomainBuilder.html" title="type parameter in DataDomain.DataDomainBuilder">B</a>&nbsp;parentDomain&#8203;(<a href="IDataDomain.html" title="interface in com.atlan.model.assets">IDataDomain</a>&nbsp;parentDomain)</pre>
+<div class="block">Parent data domain in which this sub-data domain exists.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -591,6 +575,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>parentDomainQualifiedName</h4>
 <pre class="methodSignature">public&nbsp;<a href="DataDomain.DataDomainBuilder.html" title="type parameter in DataDomain.DataDomainBuilder">B</a>&nbsp;parentDomainQualifiedName&#8203;(java.lang.String&nbsp;parentDomainQualifiedName)</pre>
+<div class="block">Unique name of the parent domain in which this asset exists.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -631,9 +616,36 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>superDomainQualifiedName</h4>
 <pre class="methodSignature">public&nbsp;<a href="DataDomain.DataDomainBuilder.html" title="type parameter in DataDomain.DataDomainBuilder">B</a>&nbsp;superDomainQualifiedName&#8203;(java.lang.String&nbsp;superDomainQualifiedName)</pre>
+<div class="block">Unique name of the top-level domain in which this asset exists.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="self()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>self</h4>
+<pre class="methodSignature">protected abstract&nbsp;<a href="DataDomain.DataDomainBuilder.html" title="type parameter in DataDomain.DataDomainBuilder">B</a>&nbsp;self()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="Asset.AssetBuilder.html#self()">self</a></code>&nbsp;in class&nbsp;<code><a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets">Asset.AssetBuilder</a>&lt;<a href="DataDomain.DataDomainBuilder.html" title="type parameter in DataDomain.DataDomainBuilder">C</a> extends <a href="DataDomain.html" title="class in com.atlan.model.assets">DataDomain</a>,&#8203;<a href="DataDomain.DataDomainBuilder.html" title="type parameter in DataDomain.DataDomainBuilder">B</a> extends <a href="DataDomain.DataDomainBuilder.html" title="class in com.atlan.model.assets">DataDomain.DataDomainBuilder</a>&lt;<a href="DataDomain.DataDomainBuilder.html" title="type parameter in DataDomain.DataDomainBuilder">C</a>,&#8203;<a href="DataDomain.DataDomainBuilder.html" title="type parameter in DataDomain.DataDomainBuilder">B</a>&gt;&gt;</code></dd>
+</dl>
+</li>
+</ul>
+<a id="build()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>build</h4>
+<pre class="methodSignature">public abstract&nbsp;<a href="DataDomain.DataDomainBuilder.html" title="type parameter in DataDomain.DataDomainBuilder">C</a>&nbsp;build()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="Asset.AssetBuilder.html#build()">build</a></code>&nbsp;in class&nbsp;<code><a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets">Asset.AssetBuilder</a>&lt;<a href="DataDomain.DataDomainBuilder.html" title="type parameter in DataDomain.DataDomainBuilder">C</a> extends <a href="DataDomain.html" title="class in com.atlan.model.assets">DataDomain</a>,&#8203;<a href="DataDomain.DataDomainBuilder.html" title="type parameter in DataDomain.DataDomainBuilder">B</a> extends <a href="DataDomain.DataDomainBuilder.html" title="class in com.atlan.model.assets">DataDomain.DataDomainBuilder</a>&lt;<a href="DataDomain.DataDomainBuilder.html" title="type parameter in DataDomain.DataDomainBuilder">C</a>,&#8203;<a href="DataDomain.DataDomainBuilder.html" title="type parameter in DataDomain.DataDomainBuilder">B</a>&gt;&gt;</code></dd>
 </dl>
 </li>
 </ul>

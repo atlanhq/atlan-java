@@ -196,22 +196,30 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="Session.SessionBuilder.html" title="type parameter in Session.SessionBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clients(java.util.Map)">clients</a></span>&#8203;(java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;clients)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Map of clientId (GUIDs) to client names.</div>
+</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="Session.SessionBuilder.html" title="type parameter in Session.SessionBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#id(java.lang.String)">id</a></span>&#8203;(java.lang.String&nbsp;id)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Unique identifier (GUID) for the session.</div>
+</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="Session.SessionBuilder.html" title="type parameter in Session.SessionBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ipAddress(java.lang.String)">ipAddress</a></span>&#8203;(java.lang.String&nbsp;ipAddress)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">IP address from which the session originated.</div>
+</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="Session.SessionBuilder.html" title="type parameter in Session.SessionBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#lastAccess(java.lang.Long)">lastAccess</a></span>&#8203;(java.lang.Long&nbsp;lastAccess)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Time (epoch) at which the session was last used, in nanoseconds.</div>
+</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>protected abstract <a href="Session.SessionBuilder.html" title="type parameter in Session.SessionBuilder">B</a></code></td>
@@ -221,7 +229,9 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="Session.SessionBuilder.html" title="type parameter in Session.SessionBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#start(java.lang.Long)">start</a></span>&#8203;(java.lang.Long&nbsp;start)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Time (epoch) at which the session was created, in nanoseconds.</div>
+</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
@@ -231,12 +241,16 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code><a href="Session.SessionBuilder.html" title="type parameter in Session.SessionBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#userId(java.lang.String)">userId</a></span>&#8203;(java.lang.String&nbsp;userId)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Unique identifier (GUID) of the user that started the session.</div>
+</td>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code><a href="Session.SessionBuilder.html" title="type parameter in Session.SessionBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#username(java.lang.String)">username</a></span>&#8203;(java.lang.String&nbsp;username)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Username of the user that started the session.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -296,6 +310,104 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 </dl>
 </li>
 </ul>
+<a id="clients(java.util.Map)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clients</h4>
+<pre class="methodSignature">public&nbsp;<a href="Session.SessionBuilder.html" title="type parameter in Session.SessionBuilder">B</a>&nbsp;clients&#8203;(java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;clients)</pre>
+<div class="block">Map of clientId (GUIDs) to client names.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="id(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>id</h4>
+<pre class="methodSignature">public&nbsp;<a href="Session.SessionBuilder.html" title="type parameter in Session.SessionBuilder">B</a>&nbsp;id&#8203;(java.lang.String&nbsp;id)</pre>
+<div class="block">Unique identifier (GUID) for the session.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="ipAddress(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>ipAddress</h4>
+<pre class="methodSignature">public&nbsp;<a href="Session.SessionBuilder.html" title="type parameter in Session.SessionBuilder">B</a>&nbsp;ipAddress&#8203;(java.lang.String&nbsp;ipAddress)</pre>
+<div class="block">IP address from which the session originated.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="lastAccess(java.lang.Long)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>lastAccess</h4>
+<pre class="methodSignature">public&nbsp;<a href="Session.SessionBuilder.html" title="type parameter in Session.SessionBuilder">B</a>&nbsp;lastAccess&#8203;(java.lang.Long&nbsp;lastAccess)</pre>
+<div class="block">Time (epoch) at which the session was last used, in nanoseconds.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="start(java.lang.Long)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>start</h4>
+<pre class="methodSignature">public&nbsp;<a href="Session.SessionBuilder.html" title="type parameter in Session.SessionBuilder">B</a>&nbsp;start&#8203;(java.lang.Long&nbsp;start)</pre>
+<div class="block">Time (epoch) at which the session was created, in nanoseconds.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="userId(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>userId</h4>
+<pre class="methodSignature">public&nbsp;<a href="Session.SessionBuilder.html" title="type parameter in Session.SessionBuilder">B</a>&nbsp;userId&#8203;(java.lang.String&nbsp;userId)</pre>
+<div class="block">Unique identifier (GUID) of the user that started the session.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="username(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>username</h4>
+<pre class="methodSignature">public&nbsp;<a href="Session.SessionBuilder.html" title="type parameter in Session.SessionBuilder">B</a>&nbsp;username&#8203;(java.lang.String&nbsp;username)</pre>
+<div class="block">Username of the user that started the session.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
 <a id="self()">
 <!--   -->
 </a>
@@ -319,97 +431,6 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../core/AtlanObject.AtlanObjectBuilder.html#build()">build</a></code>&nbsp;in class&nbsp;<code><a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in com.atlan.model.core">AtlanObject.AtlanObjectBuilder</a>&lt;<a href="Session.SessionBuilder.html" title="type parameter in Session.SessionBuilder">C</a> extends <a href="Session.html" title="class in com.atlan.model.admin">Session</a>,&#8203;<a href="Session.SessionBuilder.html" title="type parameter in Session.SessionBuilder">B</a> extends <a href="Session.SessionBuilder.html" title="class in com.atlan.model.admin">Session.SessionBuilder</a>&lt;<a href="Session.SessionBuilder.html" title="type parameter in Session.SessionBuilder">C</a>,&#8203;<a href="Session.SessionBuilder.html" title="type parameter in Session.SessionBuilder">B</a>&gt;&gt;</code></dd>
-</dl>
-</li>
-</ul>
-<a id="clients(java.util.Map)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>clients</h4>
-<pre class="methodSignature">public&nbsp;<a href="Session.SessionBuilder.html" title="type parameter in Session.SessionBuilder">B</a>&nbsp;clients&#8203;(java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;clients)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="id(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>id</h4>
-<pre class="methodSignature">public&nbsp;<a href="Session.SessionBuilder.html" title="type parameter in Session.SessionBuilder">B</a>&nbsp;id&#8203;(java.lang.String&nbsp;id)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="ipAddress(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>ipAddress</h4>
-<pre class="methodSignature">public&nbsp;<a href="Session.SessionBuilder.html" title="type parameter in Session.SessionBuilder">B</a>&nbsp;ipAddress&#8203;(java.lang.String&nbsp;ipAddress)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="lastAccess(java.lang.Long)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>lastAccess</h4>
-<pre class="methodSignature">public&nbsp;<a href="Session.SessionBuilder.html" title="type parameter in Session.SessionBuilder">B</a>&nbsp;lastAccess&#8203;(java.lang.Long&nbsp;lastAccess)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="start(java.lang.Long)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>start</h4>
-<pre class="methodSignature">public&nbsp;<a href="Session.SessionBuilder.html" title="type parameter in Session.SessionBuilder">B</a>&nbsp;start&#8203;(java.lang.Long&nbsp;start)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="userId(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>userId</h4>
-<pre class="methodSignature">public&nbsp;<a href="Session.SessionBuilder.html" title="type parameter in Session.SessionBuilder">B</a>&nbsp;userId&#8203;(java.lang.String&nbsp;userId)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="username(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>username</h4>
-<pre class="methodSignature">public&nbsp;<a href="Session.SessionBuilder.html" title="type parameter in Session.SessionBuilder">B</a>&nbsp;username&#8203;(java.lang.String&nbsp;username)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
 </dl>
 </li>
 </ul>

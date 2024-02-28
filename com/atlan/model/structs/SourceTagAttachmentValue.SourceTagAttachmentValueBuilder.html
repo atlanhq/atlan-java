@@ -206,12 +206,16 @@ extends <a href="AtlanStruct.AtlanStructBuilder.html" title="class in com.atlan.
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="SourceTagAttachmentValue.SourceTagAttachmentValueBuilder.html" title="type parameter in SourceTagAttachmentValue.SourceTagAttachmentValueBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#tagAttachmentKey(java.lang.String)">tagAttachmentKey</a></span>&#8203;(java.lang.String&nbsp;tagAttachmentKey)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Attachment key, for example: 'has_pii' or 'type_pii'.</div>
+</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="SourceTagAttachmentValue.SourceTagAttachmentValueBuilder.html" title="type parameter in SourceTagAttachmentValue.SourceTagAttachmentValueBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#tagAttachmentValue(java.lang.String)">tagAttachmentValue</a></span>&#8203;(java.lang.String&nbsp;tagAttachmentValue)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Attachment value, for example: 'true' or 'email'.</div>
+</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
@@ -221,7 +225,9 @@ extends <a href="AtlanStruct.AtlanStructBuilder.html" title="class in com.atlan.
 <tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="SourceTagAttachmentValue.SourceTagAttachmentValueBuilder.html" title="type parameter in SourceTagAttachmentValue.SourceTagAttachmentValueBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#typeName(java.lang.String)">typeName</a></span>&#8203;(java.lang.String&nbsp;typeName)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Fixed typeName for SourceTagAttachmentValue.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -281,6 +287,50 @@ extends <a href="AtlanStruct.AtlanStructBuilder.html" title="class in com.atlan.
 </dl>
 </li>
 </ul>
+<a id="typeName(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>typeName</h4>
+<pre class="methodSignature">public&nbsp;<a href="SourceTagAttachmentValue.SourceTagAttachmentValueBuilder.html" title="type parameter in SourceTagAttachmentValue.SourceTagAttachmentValueBuilder">B</a>&nbsp;typeName&#8203;(java.lang.String&nbsp;typeName)</pre>
+<div class="block">Fixed typeName for SourceTagAttachmentValue.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<dd><code><a href="AtlanStruct.AtlanStructBuilder.html#typeName(java.lang.String)">typeName</a></code>&nbsp;in class&nbsp;<code><a href="AtlanStruct.AtlanStructBuilder.html" title="class in com.atlan.model.structs">AtlanStruct.AtlanStructBuilder</a>&lt;<a href="SourceTagAttachmentValue.SourceTagAttachmentValueBuilder.html" title="type parameter in SourceTagAttachmentValue.SourceTagAttachmentValueBuilder">C</a> extends <a href="SourceTagAttachmentValue.html" title="class in com.atlan.model.structs">SourceTagAttachmentValue</a>,&#8203;<a href="SourceTagAttachmentValue.SourceTagAttachmentValueBuilder.html" title="type parameter in SourceTagAttachmentValue.SourceTagAttachmentValueBuilder">B</a> extends <a href="SourceTagAttachmentValue.SourceTagAttachmentValueBuilder.html" title="class in com.atlan.model.structs">SourceTagAttachmentValue.SourceTagAttachmentValueBuilder</a>&lt;<a href="SourceTagAttachmentValue.SourceTagAttachmentValueBuilder.html" title="type parameter in SourceTagAttachmentValue.SourceTagAttachmentValueBuilder">C</a>,&#8203;<a href="SourceTagAttachmentValue.SourceTagAttachmentValueBuilder.html" title="type parameter in SourceTagAttachmentValue.SourceTagAttachmentValueBuilder">B</a>&gt;&gt;</code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="tagAttachmentKey(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>tagAttachmentKey</h4>
+<pre class="methodSignature">public&nbsp;<a href="SourceTagAttachmentValue.SourceTagAttachmentValueBuilder.html" title="type parameter in SourceTagAttachmentValue.SourceTagAttachmentValueBuilder">B</a>&nbsp;tagAttachmentKey&#8203;(java.lang.String&nbsp;tagAttachmentKey)</pre>
+<div class="block">Attachment key, for example: 'has_pii' or 'type_pii'.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="tagAttachmentValue(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>tagAttachmentValue</h4>
+<pre class="methodSignature">public&nbsp;<a href="SourceTagAttachmentValue.SourceTagAttachmentValueBuilder.html" title="type parameter in SourceTagAttachmentValue.SourceTagAttachmentValueBuilder">B</a>&nbsp;tagAttachmentValue&#8203;(java.lang.String&nbsp;tagAttachmentValue)</pre>
+<div class="block">Attachment value, for example: 'true' or 'email'.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
 <a id="self()">
 <!--   -->
 </a>
@@ -304,47 +354,6 @@ extends <a href="AtlanStruct.AtlanStructBuilder.html" title="class in com.atlan.
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="AtlanStruct.AtlanStructBuilder.html#build()">build</a></code>&nbsp;in class&nbsp;<code><a href="AtlanStruct.AtlanStructBuilder.html" title="class in com.atlan.model.structs">AtlanStruct.AtlanStructBuilder</a>&lt;<a href="SourceTagAttachmentValue.SourceTagAttachmentValueBuilder.html" title="type parameter in SourceTagAttachmentValue.SourceTagAttachmentValueBuilder">C</a> extends <a href="SourceTagAttachmentValue.html" title="class in com.atlan.model.structs">SourceTagAttachmentValue</a>,&#8203;<a href="SourceTagAttachmentValue.SourceTagAttachmentValueBuilder.html" title="type parameter in SourceTagAttachmentValue.SourceTagAttachmentValueBuilder">B</a> extends <a href="SourceTagAttachmentValue.SourceTagAttachmentValueBuilder.html" title="class in com.atlan.model.structs">SourceTagAttachmentValue.SourceTagAttachmentValueBuilder</a>&lt;<a href="SourceTagAttachmentValue.SourceTagAttachmentValueBuilder.html" title="type parameter in SourceTagAttachmentValue.SourceTagAttachmentValueBuilder">C</a>,&#8203;<a href="SourceTagAttachmentValue.SourceTagAttachmentValueBuilder.html" title="type parameter in SourceTagAttachmentValue.SourceTagAttachmentValueBuilder">B</a>&gt;&gt;</code></dd>
-</dl>
-</li>
-</ul>
-<a id="typeName(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>typeName</h4>
-<pre class="methodSignature">public&nbsp;<a href="SourceTagAttachmentValue.SourceTagAttachmentValueBuilder.html" title="type parameter in SourceTagAttachmentValue.SourceTagAttachmentValueBuilder">B</a>&nbsp;typeName&#8203;(java.lang.String&nbsp;typeName)</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="AtlanStruct.AtlanStructBuilder.html#typeName(java.lang.String)">typeName</a></code>&nbsp;in class&nbsp;<code><a href="AtlanStruct.AtlanStructBuilder.html" title="class in com.atlan.model.structs">AtlanStruct.AtlanStructBuilder</a>&lt;<a href="SourceTagAttachmentValue.SourceTagAttachmentValueBuilder.html" title="type parameter in SourceTagAttachmentValue.SourceTagAttachmentValueBuilder">C</a> extends <a href="SourceTagAttachmentValue.html" title="class in com.atlan.model.structs">SourceTagAttachmentValue</a>,&#8203;<a href="SourceTagAttachmentValue.SourceTagAttachmentValueBuilder.html" title="type parameter in SourceTagAttachmentValue.SourceTagAttachmentValueBuilder">B</a> extends <a href="SourceTagAttachmentValue.SourceTagAttachmentValueBuilder.html" title="class in com.atlan.model.structs">SourceTagAttachmentValue.SourceTagAttachmentValueBuilder</a>&lt;<a href="SourceTagAttachmentValue.SourceTagAttachmentValueBuilder.html" title="type parameter in SourceTagAttachmentValue.SourceTagAttachmentValueBuilder">C</a>,&#8203;<a href="SourceTagAttachmentValue.SourceTagAttachmentValueBuilder.html" title="type parameter in SourceTagAttachmentValue.SourceTagAttachmentValueBuilder">B</a>&gt;&gt;</code></dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="tagAttachmentKey(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>tagAttachmentKey</h4>
-<pre class="methodSignature">public&nbsp;<a href="SourceTagAttachmentValue.SourceTagAttachmentValueBuilder.html" title="type parameter in SourceTagAttachmentValue.SourceTagAttachmentValueBuilder">B</a>&nbsp;tagAttachmentKey&#8203;(java.lang.String&nbsp;tagAttachmentKey)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="tagAttachmentValue(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>tagAttachmentValue</h4>
-<pre class="methodSignature">public&nbsp;<a href="SourceTagAttachmentValue.SourceTagAttachmentValueBuilder.html" title="type parameter in SourceTagAttachmentValue.SourceTagAttachmentValueBuilder">B</a>&nbsp;tagAttachmentValue&#8203;(java.lang.String&nbsp;tagAttachmentValue)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
 </dl>
 </li>
 </ul>

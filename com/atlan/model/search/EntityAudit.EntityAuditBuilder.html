@@ -191,7 +191,9 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="EntityAudit.EntityAuditBuilder.html" title="type parameter in EntityAudit.EntityAuditBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#action(com.atlan.model.enums.AuditActionType)">action</a></span>&#8203;(<a href="../enums/AuditActionType.html" title="enum in com.atlan.model.enums">AuditActionType</a>&nbsp;action)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">The type of activity that was done.</div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>abstract <a href="EntityAudit.EntityAuditBuilder.html" title="type parameter in EntityAudit.EntityAuditBuilder">C</a></code></td>
@@ -201,47 +203,65 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="EntityAudit.EntityAuditBuilder.html" title="type parameter in EntityAudit.EntityAuditBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#created(java.lang.Long)">created</a></span>&#8203;(java.lang.Long&nbsp;created)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Time (epoch) at which the activity completed, in milliseconds.</div>
+</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="EntityAudit.EntityAuditBuilder.html" title="type parameter in EntityAudit.EntityAuditBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#detail(com.atlan.model.search.AuditDetail)">detail</a></span>&#8203;(<a href="AuditDetail.html" title="interface in com.atlan.model.search">AuditDetail</a>&nbsp;detail)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Details of the activity.</div>
+</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="EntityAudit.EntityAuditBuilder.html" title="type parameter in EntityAudit.EntityAuditBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#details(java.lang.Object)">details</a></span>&#8203;(java.lang.Object&nbsp;details)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Unused.</div>
+</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="EntityAudit.EntityAuditBuilder.html" title="type parameter in EntityAudit.EntityAuditBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#entity(java.lang.Object)">entity</a></span>&#8203;(java.lang.Object&nbsp;entity)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Unused.</div>
+</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="EntityAudit.EntityAuditBuilder.html" title="type parameter in EntityAudit.EntityAuditBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#entityDetail(com.atlan.model.assets.Asset)">entityDetail</a></span>&#8203;(<a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;entityDetail)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Minimal details about the asset that was acted upon.</div>
+</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code><a href="EntityAudit.EntityAuditBuilder.html" title="type parameter in EntityAudit.EntityAuditBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#entityId(java.lang.String)">entityId</a></span>&#8203;(java.lang.String&nbsp;entityId)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Unique identifier (GUID) of the asset.</div>
+</td>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code><a href="EntityAudit.EntityAuditBuilder.html" title="type parameter in EntityAudit.EntityAuditBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#entityQualifiedName(java.lang.String)">entityQualifiedName</a></span>&#8203;(java.lang.String&nbsp;entityQualifiedName)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Unique name of the asset.</div>
+</td>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code><a href="EntityAudit.EntityAuditBuilder.html" title="type parameter in EntityAudit.EntityAuditBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#eventKey(java.lang.String)">eventKey</a></span>&#8203;(java.lang.String&nbsp;eventKey)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Unique identifier of the activity.</div>
+</td>
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code><a href="EntityAudit.EntityAuditBuilder.html" title="type parameter in EntityAudit.EntityAuditBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#headers(java.util.Map)">headers</a></span>&#8203;(java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;headers)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Headers detailing how the action was taken, if not by a user.</div>
+</td>
 </tr>
 <tr id="i12" class="altColor">
 <td class="colFirst"><code>protected abstract <a href="EntityAudit.EntityAuditBuilder.html" title="type parameter in EntityAudit.EntityAuditBuilder">B</a></code></td>
@@ -251,7 +271,9 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <tr id="i13" class="rowColor">
 <td class="colFirst"><code><a href="EntityAudit.EntityAuditBuilder.html" title="type parameter in EntityAudit.EntityAuditBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#timestamp(java.lang.Long)">timestamp</a></span>&#8203;(java.lang.Long&nbsp;timestamp)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Time (epoch) at which the activity started, in milliseconds.</div>
+</td>
 </tr>
 <tr id="i14" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
@@ -261,17 +283,23 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <tr id="i15" class="rowColor">
 <td class="colFirst"><code><a href="EntityAudit.EntityAuditBuilder.html" title="type parameter in EntityAudit.EntityAuditBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#type(java.lang.Object)">type</a></span>&#8203;(java.lang.Object&nbsp;type)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Unused.</div>
+</td>
 </tr>
 <tr id="i16" class="altColor">
 <td class="colFirst"><code><a href="EntityAudit.EntityAuditBuilder.html" title="type parameter in EntityAudit.EntityAuditBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#typeName(java.lang.String)">typeName</a></span>&#8203;(java.lang.String&nbsp;typeName)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Type of the asset.</div>
+</td>
 </tr>
 <tr id="i17" class="rowColor">
 <td class="colFirst"><code><a href="EntityAudit.EntityAuditBuilder.html" title="type parameter in EntityAudit.EntityAuditBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#user(java.lang.String)">user</a></span>&#8203;(java.lang.String&nbsp;user)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">User who carried out the activity.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -331,6 +359,206 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 </dl>
 </li>
 </ul>
+<a id="entityQualifiedName(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>entityQualifiedName</h4>
+<pre class="methodSignature">public&nbsp;<a href="EntityAudit.EntityAuditBuilder.html" title="type parameter in EntityAudit.EntityAuditBuilder">B</a>&nbsp;entityQualifiedName&#8203;(java.lang.String&nbsp;entityQualifiedName)</pre>
+<div class="block">Unique name of the asset.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="typeName(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>typeName</h4>
+<pre class="methodSignature">public&nbsp;<a href="EntityAudit.EntityAuditBuilder.html" title="type parameter in EntityAudit.EntityAuditBuilder">B</a>&nbsp;typeName&#8203;(java.lang.String&nbsp;typeName)</pre>
+<div class="block">Type of the asset.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="entityId(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>entityId</h4>
+<pre class="methodSignature">public&nbsp;<a href="EntityAudit.EntityAuditBuilder.html" title="type parameter in EntityAudit.EntityAuditBuilder">B</a>&nbsp;entityId&#8203;(java.lang.String&nbsp;entityId)</pre>
+<div class="block">Unique identifier (GUID) of the asset.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="timestamp(java.lang.Long)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>timestamp</h4>
+<pre class="methodSignature">public&nbsp;<a href="EntityAudit.EntityAuditBuilder.html" title="type parameter in EntityAudit.EntityAuditBuilder">B</a>&nbsp;timestamp&#8203;(java.lang.Long&nbsp;timestamp)</pre>
+<div class="block">Time (epoch) at which the activity started, in milliseconds.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="created(java.lang.Long)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>created</h4>
+<pre class="methodSignature">public&nbsp;<a href="EntityAudit.EntityAuditBuilder.html" title="type parameter in EntityAudit.EntityAuditBuilder">B</a>&nbsp;created&#8203;(java.lang.Long&nbsp;created)</pre>
+<div class="block">Time (epoch) at which the activity completed, in milliseconds.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="user(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>user</h4>
+<pre class="methodSignature">public&nbsp;<a href="EntityAudit.EntityAuditBuilder.html" title="type parameter in EntityAudit.EntityAuditBuilder">B</a>&nbsp;user&#8203;(java.lang.String&nbsp;user)</pre>
+<div class="block">User who carried out the activity.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="action(com.atlan.model.enums.AuditActionType)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>action</h4>
+<pre class="methodSignature">public&nbsp;<a href="EntityAudit.EntityAuditBuilder.html" title="type parameter in EntityAudit.EntityAuditBuilder">B</a>&nbsp;action&#8203;(<a href="../enums/AuditActionType.html" title="enum in com.atlan.model.enums">AuditActionType</a>&nbsp;action)</pre>
+<div class="block">The type of activity that was done.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="details(java.lang.Object)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>details</h4>
+<pre class="methodSignature">public&nbsp;<a href="EntityAudit.EntityAuditBuilder.html" title="type parameter in EntityAudit.EntityAuditBuilder">B</a>&nbsp;details&#8203;(java.lang.Object&nbsp;details)</pre>
+<div class="block">Unused.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="eventKey(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>eventKey</h4>
+<pre class="methodSignature">public&nbsp;<a href="EntityAudit.EntityAuditBuilder.html" title="type parameter in EntityAudit.EntityAuditBuilder">B</a>&nbsp;eventKey&#8203;(java.lang.String&nbsp;eventKey)</pre>
+<div class="block">Unique identifier of the activity.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="entity(java.lang.Object)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>entity</h4>
+<pre class="methodSignature">public&nbsp;<a href="EntityAudit.EntityAuditBuilder.html" title="type parameter in EntityAudit.EntityAuditBuilder">B</a>&nbsp;entity&#8203;(java.lang.Object&nbsp;entity)</pre>
+<div class="block">Unused.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="type(java.lang.Object)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>type</h4>
+<pre class="methodSignature">public&nbsp;<a href="EntityAudit.EntityAuditBuilder.html" title="type parameter in EntityAudit.EntityAuditBuilder">B</a>&nbsp;type&#8203;(java.lang.Object&nbsp;type)</pre>
+<div class="block">Unused.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="detail(com.atlan.model.search.AuditDetail)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>detail</h4>
+<pre class="methodSignature">public&nbsp;<a href="EntityAudit.EntityAuditBuilder.html" title="type parameter in EntityAudit.EntityAuditBuilder">B</a>&nbsp;detail&#8203;(<a href="AuditDetail.html" title="interface in com.atlan.model.search">AuditDetail</a>&nbsp;detail)</pre>
+<div class="block">Details of the activity.
+ In practice this will either be details about an Atlan tag (for Atlan tag-
+ related actions) or an asset (for other actions).</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="entityDetail(com.atlan.model.assets.Asset)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>entityDetail</h4>
+<pre class="methodSignature">public&nbsp;<a href="EntityAudit.EntityAuditBuilder.html" title="type parameter in EntityAudit.EntityAuditBuilder">B</a>&nbsp;entityDetail&#8203;(<a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;entityDetail)</pre>
+<div class="block">Minimal details about the asset that was acted upon.
+ Note that this contains current details about the asset, not the state of the
+ asset immediately before or after the given activity.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="headers(java.util.Map)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>headers</h4>
+<pre class="methodSignature">public&nbsp;<a href="EntityAudit.EntityAuditBuilder.html" title="type parameter in EntityAudit.EntityAuditBuilder">B</a>&nbsp;headers&#8203;(java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;headers)</pre>
+<div class="block">Headers detailing how the action was taken, if not by a user.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
 <a id="self()">
 <!--   -->
 </a>
@@ -354,188 +582,6 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../core/AtlanObject.AtlanObjectBuilder.html#build()">build</a></code>&nbsp;in class&nbsp;<code><a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in com.atlan.model.core">AtlanObject.AtlanObjectBuilder</a>&lt;<a href="EntityAudit.EntityAuditBuilder.html" title="type parameter in EntityAudit.EntityAuditBuilder">C</a> extends <a href="EntityAudit.html" title="class in com.atlan.model.search">EntityAudit</a>,&#8203;<a href="EntityAudit.EntityAuditBuilder.html" title="type parameter in EntityAudit.EntityAuditBuilder">B</a> extends <a href="EntityAudit.EntityAuditBuilder.html" title="class in com.atlan.model.search">EntityAudit.EntityAuditBuilder</a>&lt;<a href="EntityAudit.EntityAuditBuilder.html" title="type parameter in EntityAudit.EntityAuditBuilder">C</a>,&#8203;<a href="EntityAudit.EntityAuditBuilder.html" title="type parameter in EntityAudit.EntityAuditBuilder">B</a>&gt;&gt;</code></dd>
-</dl>
-</li>
-</ul>
-<a id="entityQualifiedName(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>entityQualifiedName</h4>
-<pre class="methodSignature">public&nbsp;<a href="EntityAudit.EntityAuditBuilder.html" title="type parameter in EntityAudit.EntityAuditBuilder">B</a>&nbsp;entityQualifiedName&#8203;(java.lang.String&nbsp;entityQualifiedName)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="typeName(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>typeName</h4>
-<pre class="methodSignature">public&nbsp;<a href="EntityAudit.EntityAuditBuilder.html" title="type parameter in EntityAudit.EntityAuditBuilder">B</a>&nbsp;typeName&#8203;(java.lang.String&nbsp;typeName)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="entityId(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>entityId</h4>
-<pre class="methodSignature">public&nbsp;<a href="EntityAudit.EntityAuditBuilder.html" title="type parameter in EntityAudit.EntityAuditBuilder">B</a>&nbsp;entityId&#8203;(java.lang.String&nbsp;entityId)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="timestamp(java.lang.Long)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>timestamp</h4>
-<pre class="methodSignature">public&nbsp;<a href="EntityAudit.EntityAuditBuilder.html" title="type parameter in EntityAudit.EntityAuditBuilder">B</a>&nbsp;timestamp&#8203;(java.lang.Long&nbsp;timestamp)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="created(java.lang.Long)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>created</h4>
-<pre class="methodSignature">public&nbsp;<a href="EntityAudit.EntityAuditBuilder.html" title="type parameter in EntityAudit.EntityAuditBuilder">B</a>&nbsp;created&#8203;(java.lang.Long&nbsp;created)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="user(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>user</h4>
-<pre class="methodSignature">public&nbsp;<a href="EntityAudit.EntityAuditBuilder.html" title="type parameter in EntityAudit.EntityAuditBuilder">B</a>&nbsp;user&#8203;(java.lang.String&nbsp;user)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="action(com.atlan.model.enums.AuditActionType)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>action</h4>
-<pre class="methodSignature">public&nbsp;<a href="EntityAudit.EntityAuditBuilder.html" title="type parameter in EntityAudit.EntityAuditBuilder">B</a>&nbsp;action&#8203;(<a href="../enums/AuditActionType.html" title="enum in com.atlan.model.enums">AuditActionType</a>&nbsp;action)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="details(java.lang.Object)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>details</h4>
-<pre class="methodSignature">public&nbsp;<a href="EntityAudit.EntityAuditBuilder.html" title="type parameter in EntityAudit.EntityAuditBuilder">B</a>&nbsp;details&#8203;(java.lang.Object&nbsp;details)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="eventKey(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>eventKey</h4>
-<pre class="methodSignature">public&nbsp;<a href="EntityAudit.EntityAuditBuilder.html" title="type parameter in EntityAudit.EntityAuditBuilder">B</a>&nbsp;eventKey&#8203;(java.lang.String&nbsp;eventKey)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="entity(java.lang.Object)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>entity</h4>
-<pre class="methodSignature">public&nbsp;<a href="EntityAudit.EntityAuditBuilder.html" title="type parameter in EntityAudit.EntityAuditBuilder">B</a>&nbsp;entity&#8203;(java.lang.Object&nbsp;entity)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="type(java.lang.Object)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>type</h4>
-<pre class="methodSignature">public&nbsp;<a href="EntityAudit.EntityAuditBuilder.html" title="type parameter in EntityAudit.EntityAuditBuilder">B</a>&nbsp;type&#8203;(java.lang.Object&nbsp;type)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="detail(com.atlan.model.search.AuditDetail)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>detail</h4>
-<pre class="methodSignature">public&nbsp;<a href="EntityAudit.EntityAuditBuilder.html" title="type parameter in EntityAudit.EntityAuditBuilder">B</a>&nbsp;detail&#8203;(<a href="AuditDetail.html" title="interface in com.atlan.model.search">AuditDetail</a>&nbsp;detail)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="entityDetail(com.atlan.model.assets.Asset)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>entityDetail</h4>
-<pre class="methodSignature">public&nbsp;<a href="EntityAudit.EntityAuditBuilder.html" title="type parameter in EntityAudit.EntityAuditBuilder">B</a>&nbsp;entityDetail&#8203;(<a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;entityDetail)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="headers(java.util.Map)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>headers</h4>
-<pre class="methodSignature">public&nbsp;<a href="EntityAudit.EntityAuditBuilder.html" title="type parameter in EntityAudit.EntityAuditBuilder">B</a>&nbsp;headers&#8203;(java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;headers)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
 </dl>
 </li>
 </ul>

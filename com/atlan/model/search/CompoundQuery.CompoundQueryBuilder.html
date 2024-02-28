@@ -205,7 +205,9 @@ extends java.lang.Object</pre>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="CompoundQuery.CompoundQueryBuilder.html" title="type parameter in CompoundQuery.CompoundQueryBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#minSomes(int)">minSomes</a></span>&#8203;(int&nbsp;minSomes)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">The minimum number of criteria in the "whereSomes" that must match on each search result.</div>
+</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>protected abstract <a href="CompoundQuery.CompoundQueryBuilder.html" title="type parameter in CompoundQuery.CompoundQueryBuilder">B</a></code></td>
@@ -290,24 +292,6 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="self()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>self</h4>
-<pre class="methodSignature">protected abstract&nbsp;<a href="CompoundQuery.CompoundQueryBuilder.html" title="type parameter in CompoundQuery.CompoundQueryBuilder">B</a>&nbsp;self()</pre>
-</li>
-</ul>
-<a id="build()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>build</h4>
-<pre class="methodSignature">public abstract&nbsp;<a href="CompoundQuery.CompoundQueryBuilder.html" title="type parameter in CompoundQuery.CompoundQueryBuilder">C</a>&nbsp;build()</pre>
-</li>
-</ul>
 <a id="where(co.elastic.clients.elasticsearch._types.query_dsl.Query)">
 <!--   -->
 </a>
@@ -396,10 +380,29 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>minSomes</h4>
 <pre class="methodSignature">public&nbsp;<a href="CompoundQuery.CompoundQueryBuilder.html" title="type parameter in CompoundQuery.CompoundQueryBuilder">B</a>&nbsp;minSomes&#8203;(int&nbsp;minSomes)</pre>
+<div class="block">The minimum number of criteria in the "whereSomes" that must match on each search result. (Defaults to 1.)</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
 </dl>
+</li>
+</ul>
+<a id="self()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>self</h4>
+<pre class="methodSignature">protected abstract&nbsp;<a href="CompoundQuery.CompoundQueryBuilder.html" title="type parameter in CompoundQuery.CompoundQueryBuilder">B</a>&nbsp;self()</pre>
+</li>
+</ul>
+<a id="build()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>build</h4>
+<pre class="methodSignature">public abstract&nbsp;<a href="CompoundQuery.CompoundQueryBuilder.html" title="type parameter in CompoundQuery.CompoundQueryBuilder">C</a>&nbsp;build()</pre>
 </li>
 </ul>
 <a id="toString()">

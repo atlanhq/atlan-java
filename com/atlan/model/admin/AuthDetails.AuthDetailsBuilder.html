@@ -196,17 +196,23 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="AuthDetails.AuthDetailsBuilder.html" title="type parameter in AuthDetails.AuthDetailsBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clientId(java.lang.String)">clientId</a></span>&#8203;(java.lang.String&nbsp;clientId)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Unique identifier (GUID) of the client that carried out the operation.</div>
+</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="AuthDetails.AuthDetailsBuilder.html" title="type parameter in AuthDetails.AuthDetailsBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ipAddress(java.lang.String)">ipAddress</a></span>&#8203;(java.lang.String&nbsp;ipAddress)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">IP address from which the operation was carried out.</div>
+</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="AuthDetails.AuthDetailsBuilder.html" title="type parameter in AuthDetails.AuthDetailsBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#realmId(java.lang.String)">realmId</a></span>&#8203;(java.lang.String&nbsp;realmId)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Unique name of the realm from which the operation was carried out.</div>
+</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>protected abstract <a href="AuthDetails.AuthDetailsBuilder.html" title="type parameter in AuthDetails.AuthDetailsBuilder">B</a></code></td>
@@ -221,7 +227,9 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="AuthDetails.AuthDetailsBuilder.html" title="type parameter in AuthDetails.AuthDetailsBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#userId(java.lang.String)">userId</a></span>&#8203;(java.lang.String&nbsp;userId)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Unique identifier (GUID) of the user who carried out the operation.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -281,6 +289,62 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 </dl>
 </li>
 </ul>
+<a id="clientId(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clientId</h4>
+<pre class="methodSignature">public&nbsp;<a href="AuthDetails.AuthDetailsBuilder.html" title="type parameter in AuthDetails.AuthDetailsBuilder">B</a>&nbsp;clientId&#8203;(java.lang.String&nbsp;clientId)</pre>
+<div class="block">Unique identifier (GUID) of the client that carried out the operation.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="ipAddress(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>ipAddress</h4>
+<pre class="methodSignature">public&nbsp;<a href="AuthDetails.AuthDetailsBuilder.html" title="type parameter in AuthDetails.AuthDetailsBuilder">B</a>&nbsp;ipAddress&#8203;(java.lang.String&nbsp;ipAddress)</pre>
+<div class="block">IP address from which the operation was carried out.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="realmId(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>realmId</h4>
+<pre class="methodSignature">public&nbsp;<a href="AuthDetails.AuthDetailsBuilder.html" title="type parameter in AuthDetails.AuthDetailsBuilder">B</a>&nbsp;realmId&#8203;(java.lang.String&nbsp;realmId)</pre>
+<div class="block">Unique name of the realm from which the operation was carried out.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="userId(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>userId</h4>
+<pre class="methodSignature">public&nbsp;<a href="AuthDetails.AuthDetailsBuilder.html" title="type parameter in AuthDetails.AuthDetailsBuilder">B</a>&nbsp;userId&#8203;(java.lang.String&nbsp;userId)</pre>
+<div class="block">Unique identifier (GUID) of the user who carried out the operation.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
 <a id="self()">
 <!--   -->
 </a>
@@ -304,58 +368,6 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../core/AtlanObject.AtlanObjectBuilder.html#build()">build</a></code>&nbsp;in class&nbsp;<code><a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in com.atlan.model.core">AtlanObject.AtlanObjectBuilder</a>&lt;<a href="AuthDetails.AuthDetailsBuilder.html" title="type parameter in AuthDetails.AuthDetailsBuilder">C</a> extends <a href="AuthDetails.html" title="class in com.atlan.model.admin">AuthDetails</a>,&#8203;<a href="AuthDetails.AuthDetailsBuilder.html" title="type parameter in AuthDetails.AuthDetailsBuilder">B</a> extends <a href="AuthDetails.AuthDetailsBuilder.html" title="class in com.atlan.model.admin">AuthDetails.AuthDetailsBuilder</a>&lt;<a href="AuthDetails.AuthDetailsBuilder.html" title="type parameter in AuthDetails.AuthDetailsBuilder">C</a>,&#8203;<a href="AuthDetails.AuthDetailsBuilder.html" title="type parameter in AuthDetails.AuthDetailsBuilder">B</a>&gt;&gt;</code></dd>
-</dl>
-</li>
-</ul>
-<a id="clientId(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>clientId</h4>
-<pre class="methodSignature">public&nbsp;<a href="AuthDetails.AuthDetailsBuilder.html" title="type parameter in AuthDetails.AuthDetailsBuilder">B</a>&nbsp;clientId&#8203;(java.lang.String&nbsp;clientId)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="ipAddress(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>ipAddress</h4>
-<pre class="methodSignature">public&nbsp;<a href="AuthDetails.AuthDetailsBuilder.html" title="type parameter in AuthDetails.AuthDetailsBuilder">B</a>&nbsp;ipAddress&#8203;(java.lang.String&nbsp;ipAddress)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="realmId(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>realmId</h4>
-<pre class="methodSignature">public&nbsp;<a href="AuthDetails.AuthDetailsBuilder.html" title="type parameter in AuthDetails.AuthDetailsBuilder">B</a>&nbsp;realmId&#8203;(java.lang.String&nbsp;realmId)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="userId(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>userId</h4>
-<pre class="methodSignature">public&nbsp;<a href="AuthDetails.AuthDetailsBuilder.html" title="type parameter in AuthDetails.AuthDetailsBuilder">B</a>&nbsp;userId&#8203;(java.lang.String&nbsp;userId)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
 </dl>
 </li>
 </ul>

@@ -201,27 +201,37 @@ extends <a href="AttributeDef.AttributeDefBuilder.html" title="class in com.atla
 <tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="RelationshipEndDef.RelationshipEndDefBuilder.html" title="type parameter in RelationshipEndDef.RelationshipEndDefBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#cardinality(com.atlan.model.enums.AtlanCustomAttributeCardinality)">cardinality</a></span>&#8203;(<a href="../enums/AtlanCustomAttributeCardinality.html" title="enum in com.atlan.model.enums">AtlanCustomAttributeCardinality</a>&nbsp;cardinality)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Cardinality of this end of the relationship.</div>
+</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="RelationshipEndDef.RelationshipEndDefBuilder.html" title="type parameter in RelationshipEndDef.RelationshipEndDefBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#description(java.lang.String)">description</a></span>&#8203;(java.lang.String&nbsp;description)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Description of the relationship from this end of it.</div>
+</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="RelationshipEndDef.RelationshipEndDefBuilder.html" title="type parameter in RelationshipEndDef.RelationshipEndDefBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isContainer(java.lang.Boolean)">isContainer</a></span>&#8203;(java.lang.Boolean&nbsp;isContainer)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Whether this end of the relationship is a container ("owns" the other end's assets).</div>
+</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="RelationshipEndDef.RelationshipEndDefBuilder.html" title="type parameter in RelationshipEndDef.RelationshipEndDefBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isLegacyAttribute(java.lang.Boolean)">isLegacyAttribute</a></span>&#8203;(java.lang.Boolean&nbsp;isLegacyAttribute)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Unused.</div>
+</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="RelationshipEndDef.RelationshipEndDefBuilder.html" title="type parameter in RelationshipEndDef.RelationshipEndDefBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#name(java.lang.String)">name</a></span>&#8203;(java.lang.String&nbsp;name)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Name of the attribute that represents this end of the relationship.</div>
+</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>protected abstract <a href="RelationshipEndDef.RelationshipEndDefBuilder.html" title="type parameter in RelationshipEndDef.RelationshipEndDefBuilder">B</a></code></td>
@@ -236,7 +246,9 @@ extends <a href="AttributeDef.AttributeDefBuilder.html" title="class in com.atla
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code><a href="RelationshipEndDef.RelationshipEndDefBuilder.html" title="type parameter in RelationshipEndDef.RelationshipEndDefBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#type(java.lang.String)">type</a></span>&#8203;(java.lang.String&nbsp;type)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Name of the type definition (entity type) for the other end of the relationship.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -303,6 +315,96 @@ extends <a href="AttributeDef.AttributeDefBuilder.html" title="class in com.atla
 </dl>
 </li>
 </ul>
+<a id="name(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>name</h4>
+<pre class="methodSignature">public&nbsp;<a href="RelationshipEndDef.RelationshipEndDefBuilder.html" title="type parameter in RelationshipEndDef.RelationshipEndDefBuilder">B</a>&nbsp;name&#8203;(java.lang.String&nbsp;name)</pre>
+<div class="block">Name of the attribute that represents this end of the relationship.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<dd><code><a href="AttributeDef.AttributeDefBuilder.html#name(java.lang.String)">name</a></code>&nbsp;in class&nbsp;<code><a href="AttributeDef.AttributeDefBuilder.html" title="class in com.atlan.model.typedefs">AttributeDef.AttributeDefBuilder</a>&lt;<a href="RelationshipEndDef.RelationshipEndDefBuilder.html" title="type parameter in RelationshipEndDef.RelationshipEndDefBuilder">C</a> extends <a href="RelationshipEndDef.html" title="class in com.atlan.model.typedefs">RelationshipEndDef</a>,&#8203;<a href="RelationshipEndDef.RelationshipEndDefBuilder.html" title="type parameter in RelationshipEndDef.RelationshipEndDefBuilder">B</a> extends <a href="RelationshipEndDef.RelationshipEndDefBuilder.html" title="class in com.atlan.model.typedefs">RelationshipEndDef.RelationshipEndDefBuilder</a>&lt;<a href="RelationshipEndDef.RelationshipEndDefBuilder.html" title="type parameter in RelationshipEndDef.RelationshipEndDefBuilder">C</a>,&#8203;<a href="RelationshipEndDef.RelationshipEndDefBuilder.html" title="type parameter in RelationshipEndDef.RelationshipEndDefBuilder">B</a>&gt;&gt;</code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="description(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>description</h4>
+<pre class="methodSignature">public&nbsp;<a href="RelationshipEndDef.RelationshipEndDefBuilder.html" title="type parameter in RelationshipEndDef.RelationshipEndDefBuilder">B</a>&nbsp;description&#8203;(java.lang.String&nbsp;description)</pre>
+<div class="block">Description of the relationship from this end of it.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<dd><code><a href="AttributeDef.AttributeDefBuilder.html#description(java.lang.String)">description</a></code>&nbsp;in class&nbsp;<code><a href="AttributeDef.AttributeDefBuilder.html" title="class in com.atlan.model.typedefs">AttributeDef.AttributeDefBuilder</a>&lt;<a href="RelationshipEndDef.RelationshipEndDefBuilder.html" title="type parameter in RelationshipEndDef.RelationshipEndDefBuilder">C</a> extends <a href="RelationshipEndDef.html" title="class in com.atlan.model.typedefs">RelationshipEndDef</a>,&#8203;<a href="RelationshipEndDef.RelationshipEndDefBuilder.html" title="type parameter in RelationshipEndDef.RelationshipEndDefBuilder">B</a> extends <a href="RelationshipEndDef.RelationshipEndDefBuilder.html" title="class in com.atlan.model.typedefs">RelationshipEndDef.RelationshipEndDefBuilder</a>&lt;<a href="RelationshipEndDef.RelationshipEndDefBuilder.html" title="type parameter in RelationshipEndDef.RelationshipEndDefBuilder">C</a>,&#8203;<a href="RelationshipEndDef.RelationshipEndDefBuilder.html" title="type parameter in RelationshipEndDef.RelationshipEndDefBuilder">B</a>&gt;&gt;</code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="type(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>type</h4>
+<pre class="methodSignature">public&nbsp;<a href="RelationshipEndDef.RelationshipEndDefBuilder.html" title="type parameter in RelationshipEndDef.RelationshipEndDefBuilder">B</a>&nbsp;type&#8203;(java.lang.String&nbsp;type)</pre>
+<div class="block">Name of the type definition (entity type) for the other end of the relationship.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="isContainer(java.lang.Boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isContainer</h4>
+<pre class="methodSignature">public&nbsp;<a href="RelationshipEndDef.RelationshipEndDefBuilder.html" title="type parameter in RelationshipEndDef.RelationshipEndDefBuilder">B</a>&nbsp;isContainer&#8203;(java.lang.Boolean&nbsp;isContainer)</pre>
+<div class="block">Whether this end of the relationship is a container ("owns" the other end's assets).</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="isLegacyAttribute(java.lang.Boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isLegacyAttribute</h4>
+<pre class="methodSignature">public&nbsp;<a href="RelationshipEndDef.RelationshipEndDefBuilder.html" title="type parameter in RelationshipEndDef.RelationshipEndDefBuilder">B</a>&nbsp;isLegacyAttribute&#8203;(java.lang.Boolean&nbsp;isLegacyAttribute)</pre>
+<div class="block">Unused.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="cardinality(com.atlan.model.enums.AtlanCustomAttributeCardinality)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>cardinality</h4>
+<pre class="methodSignature">public&nbsp;<a href="RelationshipEndDef.RelationshipEndDefBuilder.html" title="type parameter in RelationshipEndDef.RelationshipEndDefBuilder">B</a>&nbsp;cardinality&#8203;(<a href="../enums/AtlanCustomAttributeCardinality.html" title="enum in com.atlan.model.enums">AtlanCustomAttributeCardinality</a>&nbsp;cardinality)</pre>
+<div class="block">Cardinality of this end of the relationship.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<dd><code><a href="AttributeDef.AttributeDefBuilder.html#cardinality(com.atlan.model.enums.AtlanCustomAttributeCardinality)">cardinality</a></code>&nbsp;in class&nbsp;<code><a href="AttributeDef.AttributeDefBuilder.html" title="class in com.atlan.model.typedefs">AttributeDef.AttributeDefBuilder</a>&lt;<a href="RelationshipEndDef.RelationshipEndDefBuilder.html" title="type parameter in RelationshipEndDef.RelationshipEndDefBuilder">C</a> extends <a href="RelationshipEndDef.html" title="class in com.atlan.model.typedefs">RelationshipEndDef</a>,&#8203;<a href="RelationshipEndDef.RelationshipEndDefBuilder.html" title="type parameter in RelationshipEndDef.RelationshipEndDefBuilder">B</a> extends <a href="RelationshipEndDef.RelationshipEndDefBuilder.html" title="class in com.atlan.model.typedefs">RelationshipEndDef.RelationshipEndDefBuilder</a>&lt;<a href="RelationshipEndDef.RelationshipEndDefBuilder.html" title="type parameter in RelationshipEndDef.RelationshipEndDefBuilder">C</a>,&#8203;<a href="RelationshipEndDef.RelationshipEndDefBuilder.html" title="type parameter in RelationshipEndDef.RelationshipEndDefBuilder">B</a>&gt;&gt;</code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
 <a id="self()">
 <!--   -->
 </a>
@@ -326,90 +428,6 @@ extends <a href="AttributeDef.AttributeDefBuilder.html" title="class in com.atla
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="AttributeDef.AttributeDefBuilder.html#build()">build</a></code>&nbsp;in class&nbsp;<code><a href="AttributeDef.AttributeDefBuilder.html" title="class in com.atlan.model.typedefs">AttributeDef.AttributeDefBuilder</a>&lt;<a href="RelationshipEndDef.RelationshipEndDefBuilder.html" title="type parameter in RelationshipEndDef.RelationshipEndDefBuilder">C</a> extends <a href="RelationshipEndDef.html" title="class in com.atlan.model.typedefs">RelationshipEndDef</a>,&#8203;<a href="RelationshipEndDef.RelationshipEndDefBuilder.html" title="type parameter in RelationshipEndDef.RelationshipEndDefBuilder">B</a> extends <a href="RelationshipEndDef.RelationshipEndDefBuilder.html" title="class in com.atlan.model.typedefs">RelationshipEndDef.RelationshipEndDefBuilder</a>&lt;<a href="RelationshipEndDef.RelationshipEndDefBuilder.html" title="type parameter in RelationshipEndDef.RelationshipEndDefBuilder">C</a>,&#8203;<a href="RelationshipEndDef.RelationshipEndDefBuilder.html" title="type parameter in RelationshipEndDef.RelationshipEndDefBuilder">B</a>&gt;&gt;</code></dd>
-</dl>
-</li>
-</ul>
-<a id="name(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>name</h4>
-<pre class="methodSignature">public&nbsp;<a href="RelationshipEndDef.RelationshipEndDefBuilder.html" title="type parameter in RelationshipEndDef.RelationshipEndDefBuilder">B</a>&nbsp;name&#8203;(java.lang.String&nbsp;name)</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="AttributeDef.AttributeDefBuilder.html#name(java.lang.String)">name</a></code>&nbsp;in class&nbsp;<code><a href="AttributeDef.AttributeDefBuilder.html" title="class in com.atlan.model.typedefs">AttributeDef.AttributeDefBuilder</a>&lt;<a href="RelationshipEndDef.RelationshipEndDefBuilder.html" title="type parameter in RelationshipEndDef.RelationshipEndDefBuilder">C</a> extends <a href="RelationshipEndDef.html" title="class in com.atlan.model.typedefs">RelationshipEndDef</a>,&#8203;<a href="RelationshipEndDef.RelationshipEndDefBuilder.html" title="type parameter in RelationshipEndDef.RelationshipEndDefBuilder">B</a> extends <a href="RelationshipEndDef.RelationshipEndDefBuilder.html" title="class in com.atlan.model.typedefs">RelationshipEndDef.RelationshipEndDefBuilder</a>&lt;<a href="RelationshipEndDef.RelationshipEndDefBuilder.html" title="type parameter in RelationshipEndDef.RelationshipEndDefBuilder">C</a>,&#8203;<a href="RelationshipEndDef.RelationshipEndDefBuilder.html" title="type parameter in RelationshipEndDef.RelationshipEndDefBuilder">B</a>&gt;&gt;</code></dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="description(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>description</h4>
-<pre class="methodSignature">public&nbsp;<a href="RelationshipEndDef.RelationshipEndDefBuilder.html" title="type parameter in RelationshipEndDef.RelationshipEndDefBuilder">B</a>&nbsp;description&#8203;(java.lang.String&nbsp;description)</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="AttributeDef.AttributeDefBuilder.html#description(java.lang.String)">description</a></code>&nbsp;in class&nbsp;<code><a href="AttributeDef.AttributeDefBuilder.html" title="class in com.atlan.model.typedefs">AttributeDef.AttributeDefBuilder</a>&lt;<a href="RelationshipEndDef.RelationshipEndDefBuilder.html" title="type parameter in RelationshipEndDef.RelationshipEndDefBuilder">C</a> extends <a href="RelationshipEndDef.html" title="class in com.atlan.model.typedefs">RelationshipEndDef</a>,&#8203;<a href="RelationshipEndDef.RelationshipEndDefBuilder.html" title="type parameter in RelationshipEndDef.RelationshipEndDefBuilder">B</a> extends <a href="RelationshipEndDef.RelationshipEndDefBuilder.html" title="class in com.atlan.model.typedefs">RelationshipEndDef.RelationshipEndDefBuilder</a>&lt;<a href="RelationshipEndDef.RelationshipEndDefBuilder.html" title="type parameter in RelationshipEndDef.RelationshipEndDefBuilder">C</a>,&#8203;<a href="RelationshipEndDef.RelationshipEndDefBuilder.html" title="type parameter in RelationshipEndDef.RelationshipEndDefBuilder">B</a>&gt;&gt;</code></dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="type(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>type</h4>
-<pre class="methodSignature">public&nbsp;<a href="RelationshipEndDef.RelationshipEndDefBuilder.html" title="type parameter in RelationshipEndDef.RelationshipEndDefBuilder">B</a>&nbsp;type&#8203;(java.lang.String&nbsp;type)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="isContainer(java.lang.Boolean)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>isContainer</h4>
-<pre class="methodSignature">public&nbsp;<a href="RelationshipEndDef.RelationshipEndDefBuilder.html" title="type parameter in RelationshipEndDef.RelationshipEndDefBuilder">B</a>&nbsp;isContainer&#8203;(java.lang.Boolean&nbsp;isContainer)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="isLegacyAttribute(java.lang.Boolean)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>isLegacyAttribute</h4>
-<pre class="methodSignature">public&nbsp;<a href="RelationshipEndDef.RelationshipEndDefBuilder.html" title="type parameter in RelationshipEndDef.RelationshipEndDefBuilder">B</a>&nbsp;isLegacyAttribute&#8203;(java.lang.Boolean&nbsp;isLegacyAttribute)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="cardinality(com.atlan.model.enums.AtlanCustomAttributeCardinality)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>cardinality</h4>
-<pre class="methodSignature">public&nbsp;<a href="RelationshipEndDef.RelationshipEndDefBuilder.html" title="type parameter in RelationshipEndDef.RelationshipEndDefBuilder">B</a>&nbsp;cardinality&#8203;(<a href="../enums/AtlanCustomAttributeCardinality.html" title="enum in com.atlan.model.enums">AtlanCustomAttributeCardinality</a>&nbsp;cardinality)</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="AttributeDef.AttributeDefBuilder.html#cardinality(com.atlan.model.enums.AtlanCustomAttributeCardinality)">cardinality</a></code>&nbsp;in class&nbsp;<code><a href="AttributeDef.AttributeDefBuilder.html" title="class in com.atlan.model.typedefs">AttributeDef.AttributeDefBuilder</a>&lt;<a href="RelationshipEndDef.RelationshipEndDefBuilder.html" title="type parameter in RelationshipEndDef.RelationshipEndDefBuilder">C</a> extends <a href="RelationshipEndDef.html" title="class in com.atlan.model.typedefs">RelationshipEndDef</a>,&#8203;<a href="RelationshipEndDef.RelationshipEndDefBuilder.html" title="type parameter in RelationshipEndDef.RelationshipEndDefBuilder">B</a> extends <a href="RelationshipEndDef.RelationshipEndDefBuilder.html" title="class in com.atlan.model.typedefs">RelationshipEndDef.RelationshipEndDefBuilder</a>&lt;<a href="RelationshipEndDef.RelationshipEndDefBuilder.html" title="type parameter in RelationshipEndDef.RelationshipEndDefBuilder">C</a>,&#8203;<a href="RelationshipEndDef.RelationshipEndDefBuilder.html" title="type parameter in RelationshipEndDef.RelationshipEndDefBuilder">B</a>&gt;&gt;</code></dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
 </dl>
 </li>
 </ul>

@@ -206,12 +206,16 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#calculationViewName(java.lang.String)">calculationViewName</a></span>&#8203;(java.lang.String&nbsp;calculationViewName)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Simple name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view.</div>
+</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#calculationViewQualifiedName(java.lang.String)">calculationViewQualifiedName</a></span>&#8203;(java.lang.String&nbsp;calculationViewQualifiedName)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Unique name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view.</div>
+</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a></code></td>
@@ -271,12 +275,16 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <tr id="i15" class="rowColor">
 <td class="colFirst"><code><a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#databaseName(java.lang.String)">databaseName</a></span>&#8203;(java.lang.String&nbsp;databaseName)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Simple name of the database in which this SQL asset exists, or empty if it does not exist within a database.</div>
+</td>
 </tr>
 <tr id="i16" class="altColor">
 <td class="colFirst"><code><a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#databaseQualifiedName(java.lang.String)">databaseQualifiedName</a></span>&#8203;(java.lang.String&nbsp;databaseQualifiedName)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Unique name of the database in which this SQL asset exists, or empty if it does not exist within a database.</div>
+</td>
 </tr>
 <tr id="i17" class="rowColor">
 <td class="colFirst"><code><a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a></code></td>
@@ -321,42 +329,58 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <tr id="i25" class="rowColor">
 <td class="colFirst"><code><a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#functionDefinition(java.lang.String)">functionDefinition</a></span>&#8203;(java.lang.String&nbsp;functionDefinition)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Code or set of statements that determine the output of the function.</div>
+</td>
 </tr>
 <tr id="i26" class="altColor">
 <td class="colFirst"><code><a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#functionIsExternal(java.lang.Boolean)">functionIsExternal</a></span>&#8203;(java.lang.Boolean&nbsp;functionIsExternal)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Whether the function is stored or executed externally (true) or internally (false).</div>
+</td>
 </tr>
 <tr id="i27" class="rowColor">
 <td class="colFirst"><code><a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#functionIsMemoizable(java.lang.Boolean)">functionIsMemoizable</a></span>&#8203;(java.lang.Boolean&nbsp;functionIsMemoizable)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Whether the function must re-compute if there are no underlying changes in the values (false) or not (true).</div>
+</td>
 </tr>
 <tr id="i28" class="altColor">
 <td class="colFirst"><code><a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#functionIsSecure(java.lang.Boolean)">functionIsSecure</a></span>&#8203;(java.lang.Boolean&nbsp;functionIsSecure)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Whether sensitive information of the function is omitted for unauthorized users (true) or not (false).</div>
+</td>
 </tr>
 <tr id="i29" class="rowColor">
 <td class="colFirst"><code><a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#functionLanguage(java.lang.String)">functionLanguage</a></span>&#8203;(java.lang.String&nbsp;functionLanguage)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Programming language in which the function is written.</div>
+</td>
 </tr>
 <tr id="i30" class="altColor">
 <td class="colFirst"><code><a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#functionReturnType(java.lang.String)">functionReturnType</a></span>&#8203;(java.lang.String&nbsp;functionReturnType)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Data type of the value returned by the function.</div>
+</td>
 </tr>
 <tr id="i31" class="rowColor">
 <td class="colFirst"><code><a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#functionSchema(com.atlan.model.assets.ISchema)">functionSchema</a></span>&#8203;(<a href="ISchema.html" title="interface in com.atlan.model.assets">ISchema</a>&nbsp;functionSchema)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Schema in which this function exists.</div>
+</td>
 </tr>
 <tr id="i32" class="altColor">
 <td class="colFirst"><code><a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#functionType(java.lang.String)">functionType</a></span>&#8203;(java.lang.String&nbsp;functionType)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Type of function.</div>
+</td>
 </tr>
 <tr id="i33" class="rowColor">
 <td class="colFirst"><code><a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a></code></td>
@@ -381,12 +405,16 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <tr id="i37" class="rowColor">
 <td class="colFirst"><code><a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isProfiled(java.lang.Boolean)">isProfiled</a></span>&#8203;(java.lang.Boolean&nbsp;isProfiled)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Whether this asset has been profiled (true) or not (false).</div>
+</td>
 </tr>
 <tr id="i38" class="altColor">
 <td class="colFirst"><code><a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#lastProfiledAt(java.lang.Long)">lastProfiledAt</a></span>&#8203;(java.lang.Long&nbsp;lastProfiledAt)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Time (epoch) at which this asset was last profiled, in milliseconds.</div>
+</td>
 </tr>
 <tr id="i39" class="rowColor">
 <td class="colFirst"><code><a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a></code></td>
@@ -417,17 +445,23 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <tr id="i44" class="altColor">
 <td class="colFirst"><code><a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#queryCount(java.lang.Long)">queryCount</a></span>&#8203;(java.lang.Long&nbsp;queryCount)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Number of times this asset has been queried.</div>
+</td>
 </tr>
 <tr id="i45" class="rowColor">
 <td class="colFirst"><code><a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#queryCountUpdatedAt(java.lang.Long)">queryCountUpdatedAt</a></span>&#8203;(java.lang.Long&nbsp;queryCountUpdatedAt)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Time (epoch) at which the query count was last updated, in milliseconds.</div>
+</td>
 </tr>
 <tr id="i46" class="altColor">
 <td class="colFirst"><code><a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#queryUserCount(java.lang.Long)">queryUserCount</a></span>&#8203;(java.lang.Long&nbsp;queryUserCount)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Number of unique users who have queried this asset.</div>
+</td>
 </tr>
 <tr id="i47" class="rowColor">
 <td class="colFirst"><code><a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a></code></td>
@@ -437,12 +471,16 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <tr id="i48" class="altColor">
 <td class="colFirst"><code><a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#schemaName(java.lang.String)">schemaName</a></span>&#8203;(java.lang.String&nbsp;schemaName)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Simple name of the schema in which this SQL asset exists, or empty if it does not exist within a schema.</div>
+</td>
 </tr>
 <tr id="i49" class="rowColor">
 <td class="colFirst"><code><a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#schemaQualifiedName(java.lang.String)">schemaQualifiedName</a></span>&#8203;(java.lang.String&nbsp;schemaQualifiedName)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Unique name of the schema in which this SQL asset exists, or empty if it does not exist within a schema.</div>
+</td>
 </tr>
 <tr id="i50" class="altColor">
 <td class="colFirst"><code>protected abstract <a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a></code></td>
@@ -472,12 +510,16 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <tr id="i55" class="rowColor">
 <td class="colFirst"><code><a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#tableName(java.lang.String)">tableName</a></span>&#8203;(java.lang.String&nbsp;tableName)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table.</div>
+</td>
 </tr>
 <tr id="i56" class="altColor">
 <td class="colFirst"><code><a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#tableQualifiedName(java.lang.String)">tableQualifiedName</a></span>&#8203;(java.lang.String&nbsp;tableQualifiedName)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Unique name of the table in which this SQL asset exists, or empty if it does not exist within a table.</div>
+</td>
 </tr>
 <tr id="i57" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
@@ -487,17 +529,23 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <tr id="i58" class="altColor">
 <td class="colFirst"><code><a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#typeName(java.lang.String)">typeName</a></span>&#8203;(java.lang.String&nbsp;typeName)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Fixed typeName for Functions.</div>
+</td>
 </tr>
 <tr id="i59" class="rowColor">
 <td class="colFirst"><code><a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#viewName(java.lang.String)">viewName</a></span>&#8203;(java.lang.String&nbsp;viewName)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Simple name of the view in which this SQL asset exists, or empty if it does not exist within a view.</div>
+</td>
 </tr>
 <tr id="i60" class="altColor">
 <td class="colFirst"><code><a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#viewQualifiedName(java.lang.String)">viewQualifiedName</a></span>&#8203;(java.lang.String&nbsp;viewQualifiedName)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Unique name of the view in which this SQL asset exists, or empty if it does not exist within a view.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -571,32 +619,6 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 </dl>
 </li>
 </ul>
-<a id="self()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>self</h4>
-<pre class="methodSignature">protected abstract&nbsp;<a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a>&nbsp;self()</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="Asset.AssetBuilder.html#self()">self</a></code>&nbsp;in class&nbsp;<code><a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets">Asset.AssetBuilder</a>&lt;<a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">C</a> extends <a href="Function.html" title="class in com.atlan.model.assets">Function</a>,&#8203;<a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a> extends <a href="Function.FunctionBuilder.html" title="class in com.atlan.model.assets">Function.FunctionBuilder</a>&lt;<a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">C</a>,&#8203;<a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a>&gt;&gt;</code></dd>
-</dl>
-</li>
-</ul>
-<a id="build()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>build</h4>
-<pre class="methodSignature">public abstract&nbsp;<a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">C</a>&nbsp;build()</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="Asset.AssetBuilder.html#build()">build</a></code>&nbsp;in class&nbsp;<code><a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets">Asset.AssetBuilder</a>&lt;<a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">C</a> extends <a href="Function.html" title="class in com.atlan.model.assets">Function</a>,&#8203;<a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a> extends <a href="Function.FunctionBuilder.html" title="class in com.atlan.model.assets">Function.FunctionBuilder</a>&lt;<a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">C</a>,&#8203;<a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a>&gt;&gt;</code></dd>
-</dl>
-</li>
-</ul>
 <a id="typeName(java.lang.String)">
 <!--   -->
 </a>
@@ -604,6 +626,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>typeName</h4>
 <pre class="methodSignature">public&nbsp;<a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a>&nbsp;typeName&#8203;(java.lang.String&nbsp;typeName)</pre>
+<div class="block">Fixed typeName for Functions.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="../relations/Reference.ReferenceBuilder.html#typeName(java.lang.String)">typeName</a></code>&nbsp;in class&nbsp;<code><a href="../relations/Reference.ReferenceBuilder.html" title="class in com.atlan.model.relations">Reference.ReferenceBuilder</a>&lt;<a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">C</a> extends <a href="Function.html" title="class in com.atlan.model.assets">Function</a>,&#8203;<a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a> extends <a href="Function.FunctionBuilder.html" title="class in com.atlan.model.assets">Function.FunctionBuilder</a>&lt;<a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">C</a>,&#8203;<a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a>&gt;&gt;</code></dd>
@@ -619,6 +642,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>calculationViewName</h4>
 <pre class="methodSignature">public&nbsp;<a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a>&nbsp;calculationViewName&#8203;(java.lang.String&nbsp;calculationViewName)</pre>
+<div class="block">Simple name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -632,6 +656,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>calculationViewQualifiedName</h4>
 <pre class="methodSignature">public&nbsp;<a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a>&nbsp;calculationViewQualifiedName&#8203;(java.lang.String&nbsp;calculationViewQualifiedName)</pre>
+<div class="block">Unique name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -645,6 +670,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>databaseName</h4>
 <pre class="methodSignature">public&nbsp;<a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a>&nbsp;databaseName&#8203;(java.lang.String&nbsp;databaseName)</pre>
+<div class="block">Simple name of the database in which this SQL asset exists, or empty if it does not exist within a database.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -658,6 +684,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>databaseQualifiedName</h4>
 <pre class="methodSignature">public&nbsp;<a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a>&nbsp;databaseQualifiedName&#8203;(java.lang.String&nbsp;databaseQualifiedName)</pre>
+<div class="block">Unique name of the database in which this SQL asset exists, or empty if it does not exist within a database.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -779,6 +806,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>functionDefinition</h4>
 <pre class="methodSignature">public&nbsp;<a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a>&nbsp;functionDefinition&#8203;(java.lang.String&nbsp;functionDefinition)</pre>
+<div class="block">Code or set of statements that determine the output of the function.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -792,6 +820,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>functionIsExternal</h4>
 <pre class="methodSignature">public&nbsp;<a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a>&nbsp;functionIsExternal&#8203;(java.lang.Boolean&nbsp;functionIsExternal)</pre>
+<div class="block">Whether the function is stored or executed externally (true) or internally (false).</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -805,6 +834,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>functionIsMemoizable</h4>
 <pre class="methodSignature">public&nbsp;<a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a>&nbsp;functionIsMemoizable&#8203;(java.lang.Boolean&nbsp;functionIsMemoizable)</pre>
+<div class="block">Whether the function must re-compute if there are no underlying changes in the values (false) or not (true).</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -818,6 +848,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>functionIsSecure</h4>
 <pre class="methodSignature">public&nbsp;<a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a>&nbsp;functionIsSecure&#8203;(java.lang.Boolean&nbsp;functionIsSecure)</pre>
+<div class="block">Whether sensitive information of the function is omitted for unauthorized users (true) or not (false).</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -831,6 +862,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>functionLanguage</h4>
 <pre class="methodSignature">public&nbsp;<a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a>&nbsp;functionLanguage&#8203;(java.lang.String&nbsp;functionLanguage)</pre>
+<div class="block">Programming language in which the function is written.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -844,6 +876,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>functionReturnType</h4>
 <pre class="methodSignature">public&nbsp;<a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a>&nbsp;functionReturnType&#8203;(java.lang.String&nbsp;functionReturnType)</pre>
+<div class="block">Data type of the value returned by the function.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -857,6 +890,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>functionSchema</h4>
 <pre class="methodSignature">public&nbsp;<a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a>&nbsp;functionSchema&#8203;(<a href="ISchema.html" title="interface in com.atlan.model.assets">ISchema</a>&nbsp;functionSchema)</pre>
+<div class="block">Schema in which this function exists.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -870,6 +904,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>functionType</h4>
 <pre class="methodSignature">public&nbsp;<a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a>&nbsp;functionType&#8203;(java.lang.String&nbsp;functionType)</pre>
+<div class="block">Type of function.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -937,6 +972,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>isProfiled</h4>
 <pre class="methodSignature">public&nbsp;<a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a>&nbsp;isProfiled&#8203;(java.lang.Boolean&nbsp;isProfiled)</pre>
+<div class="block">Whether this asset has been profiled (true) or not (false).</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -950,6 +986,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>lastProfiledAt</h4>
 <pre class="methodSignature">public&nbsp;<a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a>&nbsp;lastProfiledAt&#8203;(java.lang.Long&nbsp;lastProfiledAt)</pre>
+<div class="block">Time (epoch) at which this asset was last profiled, in milliseconds.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -1017,6 +1054,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>queryCount</h4>
 <pre class="methodSignature">public&nbsp;<a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a>&nbsp;queryCount&#8203;(java.lang.Long&nbsp;queryCount)</pre>
+<div class="block">Number of times this asset has been queried.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -1030,6 +1068,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>queryCountUpdatedAt</h4>
 <pre class="methodSignature">public&nbsp;<a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a>&nbsp;queryCountUpdatedAt&#8203;(java.lang.Long&nbsp;queryCountUpdatedAt)</pre>
+<div class="block">Time (epoch) at which the query count was last updated, in milliseconds.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -1043,6 +1082,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>queryUserCount</h4>
 <pre class="methodSignature">public&nbsp;<a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a>&nbsp;queryUserCount&#8203;(java.lang.Long&nbsp;queryUserCount)</pre>
+<div class="block">Number of unique users who have queried this asset.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -1084,6 +1124,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>schemaName</h4>
 <pre class="methodSignature">public&nbsp;<a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a>&nbsp;schemaName&#8203;(java.lang.String&nbsp;schemaName)</pre>
+<div class="block">Simple name of the schema in which this SQL asset exists, or empty if it does not exist within a schema.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -1097,6 +1138,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>schemaQualifiedName</h4>
 <pre class="methodSignature">public&nbsp;<a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a>&nbsp;schemaQualifiedName&#8203;(java.lang.String&nbsp;schemaQualifiedName)</pre>
+<div class="block">Unique name of the schema in which this SQL asset exists, or empty if it does not exist within a schema.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -1164,6 +1206,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>tableName</h4>
 <pre class="methodSignature">public&nbsp;<a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a>&nbsp;tableName&#8203;(java.lang.String&nbsp;tableName)</pre>
+<div class="block">Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -1177,6 +1220,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>tableQualifiedName</h4>
 <pre class="methodSignature">public&nbsp;<a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a>&nbsp;tableQualifiedName&#8203;(java.lang.String&nbsp;tableQualifiedName)</pre>
+<div class="block">Unique name of the table in which this SQL asset exists, or empty if it does not exist within a table.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -1190,6 +1234,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>viewName</h4>
 <pre class="methodSignature">public&nbsp;<a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a>&nbsp;viewName&#8203;(java.lang.String&nbsp;viewName)</pre>
+<div class="block">Simple name of the view in which this SQL asset exists, or empty if it does not exist within a view.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -1203,9 +1248,36 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>viewQualifiedName</h4>
 <pre class="methodSignature">public&nbsp;<a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a>&nbsp;viewQualifiedName&#8203;(java.lang.String&nbsp;viewQualifiedName)</pre>
+<div class="block">Unique name of the view in which this SQL asset exists, or empty if it does not exist within a view.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="self()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>self</h4>
+<pre class="methodSignature">protected abstract&nbsp;<a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a>&nbsp;self()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="Asset.AssetBuilder.html#self()">self</a></code>&nbsp;in class&nbsp;<code><a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets">Asset.AssetBuilder</a>&lt;<a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">C</a> extends <a href="Function.html" title="class in com.atlan.model.assets">Function</a>,&#8203;<a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a> extends <a href="Function.FunctionBuilder.html" title="class in com.atlan.model.assets">Function.FunctionBuilder</a>&lt;<a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">C</a>,&#8203;<a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a>&gt;&gt;</code></dd>
+</dl>
+</li>
+</ul>
+<a id="build()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>build</h4>
+<pre class="methodSignature">public abstract&nbsp;<a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">C</a>&nbsp;build()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="Asset.AssetBuilder.html#build()">build</a></code>&nbsp;in class&nbsp;<code><a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets">Asset.AssetBuilder</a>&lt;<a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">C</a> extends <a href="Function.html" title="class in com.atlan.model.assets">Function</a>,&#8203;<a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a> extends <a href="Function.FunctionBuilder.html" title="class in com.atlan.model.assets">Function.FunctionBuilder</a>&lt;<a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">C</a>,&#8203;<a href="Function.FunctionBuilder.html" title="type parameter in Function.FunctionBuilder">B</a>&gt;&gt;</code></dd>
 </dl>
 </li>
 </ul>

@@ -200,42 +200,58 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#completeObject(boolean)">completeObject</a></span>&#8203;(boolean&nbsp;completeObject)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Internal tracking of whether this represents a complete view of an object, or not.</div>
+</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#displayText(java.lang.String)">displayText</a></span>&#8203;(java.lang.String&nbsp;displayText)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Human-readable name of the entity.</div>
+</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#entityStatus(java.lang.String)">entityStatus</a></span>&#8203;(java.lang.String&nbsp;entityStatus)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Status of the entity (if this is a related entity).</div>
+</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#guid(java.lang.String)">guid</a></span>&#8203;(java.lang.String&nbsp;guid)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Globally-unique identifier for the entity.</div>
+</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#relationshipAttributes(java.util.Map)">relationshipAttributes</a></span>&#8203;(java.util.Map&lt;java.lang.String,&#8203;java.lang.Object&gt;&nbsp;relationshipAttributes)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Attributes specific to the relationship (unused).</div>
+</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#relationshipGuid(java.lang.String)">relationshipGuid</a></span>&#8203;(java.lang.String&nbsp;relationshipGuid)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Unique identifier of the relationship (when this is a related entity).</div>
+</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code><a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#relationshipStatus(com.atlan.model.enums.AtlanStatus)">relationshipStatus</a></span>&#8203;(<a href="../enums/AtlanStatus.html" title="enum in com.atlan.model.enums">AtlanStatus</a>&nbsp;relationshipStatus)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Status of the relationship (when this is a related entity).</div>
+</td>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code><a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#relationshipType(java.lang.String)">relationshipType</a></span>&#8203;(java.lang.String&nbsp;relationshipType)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Type of the relationship (if this is a related entity).</div>
+</td>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>protected abstract <a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a></code></td>
@@ -245,7 +261,9 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code><a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#semantic(com.atlan.model.relations.Reference.SaveSemantic)">semantic</a></span>&#8203;(<a href="Reference.SaveSemantic.html" title="enum in com.atlan.model.relations">Reference.SaveSemantic</a>&nbsp;semantic)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Semantic for how this relationship should be saved, if used in an asset request on which .save() is called.</div>
+</td>
 </tr>
 <tr id="i12" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
@@ -255,12 +273,16 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <tr id="i13" class="rowColor">
 <td class="colFirst"><code><a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#typeName(java.lang.String)">typeName</a></span>&#8203;(java.lang.String&nbsp;typeName)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Name of the type that defines the entity.</div>
+</td>
 </tr>
 <tr id="i14" class="altColor">
 <td class="colFirst"><code><a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#uniqueAttributes(com.atlan.model.relations.UniqueAttributes)">uniqueAttributes</a></span>&#8203;(<a href="UniqueAttributes.html" title="class in com.atlan.model.relations">UniqueAttributes</a>&nbsp;uniqueAttributes)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Attribute(s) that uniquely identify the entity (when this is a related entity).</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -320,6 +342,161 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 </dl>
 </li>
 </ul>
+<a id="semantic(com.atlan.model.relations.Reference.SaveSemantic)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>semantic</h4>
+<pre class="methodSignature">public&nbsp;<a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a>&nbsp;semantic&#8203;(<a href="Reference.SaveSemantic.html" title="enum in com.atlan.model.relations">Reference.SaveSemantic</a>&nbsp;semantic)</pre>
+<div class="block">Semantic for how this relationship should be saved, if used in an asset request on which .save() is called.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="completeObject(boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>completeObject</h4>
+<pre class="methodSignature">public&nbsp;<a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a>&nbsp;completeObject&#8203;(boolean&nbsp;completeObject)</pre>
+<div class="block">Internal tracking of whether this represents a complete view of an object, or not.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="typeName(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>typeName</h4>
+<pre class="methodSignature">public&nbsp;<a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a>&nbsp;typeName&#8203;(java.lang.String&nbsp;typeName)</pre>
+<div class="block">Name of the type that defines the entity.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="guid(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>guid</h4>
+<pre class="methodSignature">public&nbsp;<a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a>&nbsp;guid&#8203;(java.lang.String&nbsp;guid)</pre>
+<div class="block">Globally-unique identifier for the entity.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="displayText(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>displayText</h4>
+<pre class="methodSignature">public&nbsp;<a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a>&nbsp;displayText&#8203;(java.lang.String&nbsp;displayText)</pre>
+<div class="block">Human-readable name of the entity.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="entityStatus(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>entityStatus</h4>
+<pre class="methodSignature">public&nbsp;<a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a>&nbsp;entityStatus&#8203;(java.lang.String&nbsp;entityStatus)</pre>
+<div class="block">Status of the entity (if this is a related entity).</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="relationshipType(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>relationshipType</h4>
+<pre class="methodSignature">public&nbsp;<a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a>&nbsp;relationshipType&#8203;(java.lang.String&nbsp;relationshipType)</pre>
+<div class="block">Type of the relationship (if this is a related entity).</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="relationshipGuid(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>relationshipGuid</h4>
+<pre class="methodSignature">public&nbsp;<a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a>&nbsp;relationshipGuid&#8203;(java.lang.String&nbsp;relationshipGuid)</pre>
+<div class="block">Unique identifier of the relationship (when this is a related entity).</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="relationshipStatus(com.atlan.model.enums.AtlanStatus)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>relationshipStatus</h4>
+<pre class="methodSignature">public&nbsp;<a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a>&nbsp;relationshipStatus&#8203;(<a href="../enums/AtlanStatus.html" title="enum in com.atlan.model.enums">AtlanStatus</a>&nbsp;relationshipStatus)</pre>
+<div class="block">Status of the relationship (when this is a related entity).</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="relationshipAttributes(java.util.Map)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>relationshipAttributes</h4>
+<pre class="methodSignature">public&nbsp;<a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a>&nbsp;relationshipAttributes&#8203;(java.util.Map&lt;java.lang.String,&#8203;java.lang.Object&gt;&nbsp;relationshipAttributes)</pre>
+<div class="block">Attributes specific to the relationship (unused).</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="uniqueAttributes(com.atlan.model.relations.UniqueAttributes)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>uniqueAttributes</h4>
+<pre class="methodSignature">public&nbsp;<a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a>&nbsp;uniqueAttributes&#8203;(<a href="UniqueAttributes.html" title="class in com.atlan.model.relations">UniqueAttributes</a>&nbsp;uniqueAttributes)</pre>
+<div class="block">Attribute(s) that uniquely identify the entity (when this is a related entity).
+ If the guid is not provided, these must be provided.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
 <a id="self()">
 <!--   -->
 </a>
@@ -343,149 +520,6 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../core/AtlanObject.AtlanObjectBuilder.html#build()">build</a></code>&nbsp;in class&nbsp;<code><a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in com.atlan.model.core">AtlanObject.AtlanObjectBuilder</a>&lt;<a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">C</a> extends <a href="Reference.html" title="class in com.atlan.model.relations">Reference</a>,&#8203;<a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a> extends <a href="Reference.ReferenceBuilder.html" title="class in com.atlan.model.relations">Reference.ReferenceBuilder</a>&lt;<a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">C</a>,&#8203;<a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a>&gt;&gt;</code></dd>
-</dl>
-</li>
-</ul>
-<a id="semantic(com.atlan.model.relations.Reference.SaveSemantic)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>semantic</h4>
-<pre class="methodSignature">public&nbsp;<a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a>&nbsp;semantic&#8203;(<a href="Reference.SaveSemantic.html" title="enum in com.atlan.model.relations">Reference.SaveSemantic</a>&nbsp;semantic)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="completeObject(boolean)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>completeObject</h4>
-<pre class="methodSignature">public&nbsp;<a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a>&nbsp;completeObject&#8203;(boolean&nbsp;completeObject)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="typeName(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>typeName</h4>
-<pre class="methodSignature">public&nbsp;<a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a>&nbsp;typeName&#8203;(java.lang.String&nbsp;typeName)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="guid(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>guid</h4>
-<pre class="methodSignature">public&nbsp;<a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a>&nbsp;guid&#8203;(java.lang.String&nbsp;guid)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="displayText(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>displayText</h4>
-<pre class="methodSignature">public&nbsp;<a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a>&nbsp;displayText&#8203;(java.lang.String&nbsp;displayText)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="entityStatus(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>entityStatus</h4>
-<pre class="methodSignature">public&nbsp;<a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a>&nbsp;entityStatus&#8203;(java.lang.String&nbsp;entityStatus)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="relationshipType(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>relationshipType</h4>
-<pre class="methodSignature">public&nbsp;<a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a>&nbsp;relationshipType&#8203;(java.lang.String&nbsp;relationshipType)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="relationshipGuid(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>relationshipGuid</h4>
-<pre class="methodSignature">public&nbsp;<a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a>&nbsp;relationshipGuid&#8203;(java.lang.String&nbsp;relationshipGuid)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="relationshipStatus(com.atlan.model.enums.AtlanStatus)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>relationshipStatus</h4>
-<pre class="methodSignature">public&nbsp;<a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a>&nbsp;relationshipStatus&#8203;(<a href="../enums/AtlanStatus.html" title="enum in com.atlan.model.enums">AtlanStatus</a>&nbsp;relationshipStatus)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="relationshipAttributes(java.util.Map)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>relationshipAttributes</h4>
-<pre class="methodSignature">public&nbsp;<a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a>&nbsp;relationshipAttributes&#8203;(java.util.Map&lt;java.lang.String,&#8203;java.lang.Object&gt;&nbsp;relationshipAttributes)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="uniqueAttributes(com.atlan.model.relations.UniqueAttributes)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>uniqueAttributes</h4>
-<pre class="methodSignature">public&nbsp;<a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a>&nbsp;uniqueAttributes&#8203;(<a href="UniqueAttributes.html" title="class in com.atlan.model.relations">UniqueAttributes</a>&nbsp;uniqueAttributes)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
 </dl>
 </li>
 </ul>

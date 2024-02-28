@@ -196,12 +196,16 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="QueryRequest.QueryRequestBuilder.html" title="type parameter in QueryRequest.QueryRequestBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#dataSourceName(java.lang.String)">dataSourceName</a></span>&#8203;(java.lang.String&nbsp;dataSourceName)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Unique name of the connection to use for the query.</div>
+</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="QueryRequest.QueryRequestBuilder.html" title="type parameter in QueryRequest.QueryRequestBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#defaultSchema(java.lang.String)">defaultSchema</a></span>&#8203;(java.lang.String&nbsp;defaultSchema)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Default schema name to use for unqualified objects in the SQL, in the form <code>DB.SCHEMA</code>.</div>
+</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>protected abstract <a href="QueryRequest.QueryRequestBuilder.html" title="type parameter in QueryRequest.QueryRequestBuilder">B</a></code></td>
@@ -211,7 +215,9 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="QueryRequest.QueryRequestBuilder.html" title="type parameter in QueryRequest.QueryRequestBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sql(java.lang.String)">sql</a></span>&#8203;(java.lang.String&nbsp;sql)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">SQL query to run.</div>
+</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
@@ -276,6 +282,48 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 </dl>
 </li>
 </ul>
+<a id="sql(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>sql</h4>
+<pre class="methodSignature">public&nbsp;<a href="QueryRequest.QueryRequestBuilder.html" title="type parameter in QueryRequest.QueryRequestBuilder">B</a>&nbsp;sql&#8203;(java.lang.String&nbsp;sql)</pre>
+<div class="block">SQL query to run.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="dataSourceName(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>dataSourceName</h4>
+<pre class="methodSignature">public&nbsp;<a href="QueryRequest.QueryRequestBuilder.html" title="type parameter in QueryRequest.QueryRequestBuilder">B</a>&nbsp;dataSourceName&#8203;(java.lang.String&nbsp;dataSourceName)</pre>
+<div class="block">Unique name of the connection to use for the query.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="defaultSchema(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>defaultSchema</h4>
+<pre class="methodSignature">public&nbsp;<a href="QueryRequest.QueryRequestBuilder.html" title="type parameter in QueryRequest.QueryRequestBuilder">B</a>&nbsp;defaultSchema&#8203;(java.lang.String&nbsp;defaultSchema)</pre>
+<div class="block">Default schema name to use for unqualified objects in the SQL, in the form <code>DB.SCHEMA</code>.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
 <a id="self()">
 <!--   -->
 </a>
@@ -299,45 +347,6 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../core/AtlanObject.AtlanObjectBuilder.html#build()">build</a></code>&nbsp;in class&nbsp;<code><a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in com.atlan.model.core">AtlanObject.AtlanObjectBuilder</a>&lt;<a href="QueryRequest.QueryRequestBuilder.html" title="type parameter in QueryRequest.QueryRequestBuilder">C</a> extends <a href="QueryRequest.html" title="class in com.atlan.model.admin">QueryRequest</a>,&#8203;<a href="QueryRequest.QueryRequestBuilder.html" title="type parameter in QueryRequest.QueryRequestBuilder">B</a> extends <a href="QueryRequest.QueryRequestBuilder.html" title="class in com.atlan.model.admin">QueryRequest.QueryRequestBuilder</a>&lt;<a href="QueryRequest.QueryRequestBuilder.html" title="type parameter in QueryRequest.QueryRequestBuilder">C</a>,&#8203;<a href="QueryRequest.QueryRequestBuilder.html" title="type parameter in QueryRequest.QueryRequestBuilder">B</a>&gt;&gt;</code></dd>
-</dl>
-</li>
-</ul>
-<a id="sql(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>sql</h4>
-<pre class="methodSignature">public&nbsp;<a href="QueryRequest.QueryRequestBuilder.html" title="type parameter in QueryRequest.QueryRequestBuilder">B</a>&nbsp;sql&#8203;(java.lang.String&nbsp;sql)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="dataSourceName(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>dataSourceName</h4>
-<pre class="methodSignature">public&nbsp;<a href="QueryRequest.QueryRequestBuilder.html" title="type parameter in QueryRequest.QueryRequestBuilder">B</a>&nbsp;dataSourceName&#8203;(java.lang.String&nbsp;dataSourceName)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="defaultSchema(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>defaultSchema</h4>
-<pre class="methodSignature">public&nbsp;<a href="QueryRequest.QueryRequestBuilder.html" title="type parameter in QueryRequest.QueryRequestBuilder">B</a>&nbsp;defaultSchema&#8203;(java.lang.String&nbsp;defaultSchema)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
 </dl>
 </li>
 </ul>

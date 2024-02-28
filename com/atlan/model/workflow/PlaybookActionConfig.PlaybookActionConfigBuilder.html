@@ -191,7 +191,9 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="PlaybookActionConfig.PlaybookActionConfigBuilder.html" title="type parameter in PlaybookActionConfig.PlaybookActionConfigBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#atlanTagsConfig(java.lang.String)">atlanTagsConfig</a></span>&#8203;(java.lang.String&nbsp;atlanTagsConfig)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Details of the Atlan tag(s) to apply, for bulk-Atlan tag actions.</div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>abstract <a href="PlaybookActionConfig.PlaybookActionConfigBuilder.html" title="type parameter in PlaybookActionConfig.PlaybookActionConfigBuilder">C</a></code></td>
@@ -201,17 +203,23 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="PlaybookActionConfig.PlaybookActionConfigBuilder.html" title="type parameter in PlaybookActionConfig.PlaybookActionConfigBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#outputFilename(java.lang.String)">outputFilename</a></span>&#8203;(java.lang.String&nbsp;outputFilename)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Filename for the template being output.</div>
+</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="PlaybookActionConfig.PlaybookActionConfigBuilder.html" title="type parameter in PlaybookActionConfig.PlaybookActionConfigBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#replaceAtlanTags(java.lang.Boolean)">replaceAtlanTags</a></span>&#8203;(java.lang.Boolean&nbsp;replaceAtlanTags)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Whether to replace all Atlan tags (true) or none (false).</div>
+</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="PlaybookActionConfig.PlaybookActionConfigBuilder.html" title="type parameter in PlaybookActionConfig.PlaybookActionConfigBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#replaceCustomMetadata(java.lang.Boolean)">replaceCustomMetadata</a></span>&#8203;(java.lang.Boolean&nbsp;replaceCustomMetadata)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Whether to replace all custom metadata (true) or none (false).</div>
+</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>protected abstract <a href="PlaybookActionConfig.PlaybookActionConfigBuilder.html" title="type parameter in PlaybookActionConfig.PlaybookActionConfigBuilder">B</a></code></td>
@@ -221,7 +229,9 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="PlaybookActionConfig.PlaybookActionConfigBuilder.html" title="type parameter in PlaybookActionConfig.PlaybookActionConfigBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#template(java.lang.String)">template</a></span>&#8203;(java.lang.String&nbsp;template)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Base64-encoded jinja template detailing the action.</div>
+</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
@@ -286,6 +296,76 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 </dl>
 </li>
 </ul>
+<a id="replaceAtlanTags(java.lang.Boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>replaceAtlanTags</h4>
+<pre class="methodSignature">public&nbsp;<a href="PlaybookActionConfig.PlaybookActionConfigBuilder.html" title="type parameter in PlaybookActionConfig.PlaybookActionConfigBuilder">B</a>&nbsp;replaceAtlanTags&#8203;(java.lang.Boolean&nbsp;replaceAtlanTags)</pre>
+<div class="block">Whether to replace all Atlan tags (true) or none (false).</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="replaceCustomMetadata(java.lang.Boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>replaceCustomMetadata</h4>
+<pre class="methodSignature">public&nbsp;<a href="PlaybookActionConfig.PlaybookActionConfigBuilder.html" title="type parameter in PlaybookActionConfig.PlaybookActionConfigBuilder">B</a>&nbsp;replaceCustomMetadata&#8203;(java.lang.Boolean&nbsp;replaceCustomMetadata)</pre>
+<div class="block">Whether to replace all custom metadata (true) or none (false).</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="outputFilename(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>outputFilename</h4>
+<pre class="methodSignature">public&nbsp;<a href="PlaybookActionConfig.PlaybookActionConfigBuilder.html" title="type parameter in PlaybookActionConfig.PlaybookActionConfigBuilder">B</a>&nbsp;outputFilename&#8203;(java.lang.String&nbsp;outputFilename)</pre>
+<div class="block">Filename for the template being output.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="template(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>template</h4>
+<pre class="methodSignature">public&nbsp;<a href="PlaybookActionConfig.PlaybookActionConfigBuilder.html" title="type parameter in PlaybookActionConfig.PlaybookActionConfigBuilder">B</a>&nbsp;template&#8203;(java.lang.String&nbsp;template)</pre>
+<div class="block">Base64-encoded jinja template detailing the action.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="atlanTagsConfig(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>atlanTagsConfig</h4>
+<pre class="methodSignature">public&nbsp;<a href="PlaybookActionConfig.PlaybookActionConfigBuilder.html" title="type parameter in PlaybookActionConfig.PlaybookActionConfigBuilder">B</a>&nbsp;atlanTagsConfig&#8203;(java.lang.String&nbsp;atlanTagsConfig)</pre>
+<div class="block">Details of the Atlan tag(s) to apply, for bulk-Atlan tag actions.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
 <a id="self()">
 <!--   -->
 </a>
@@ -309,71 +389,6 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../core/AtlanObject.AtlanObjectBuilder.html#build()">build</a></code>&nbsp;in class&nbsp;<code><a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in com.atlan.model.core">AtlanObject.AtlanObjectBuilder</a>&lt;<a href="PlaybookActionConfig.PlaybookActionConfigBuilder.html" title="type parameter in PlaybookActionConfig.PlaybookActionConfigBuilder">C</a> extends <a href="PlaybookActionConfig.html" title="class in com.atlan.model.workflow">PlaybookActionConfig</a>,&#8203;<a href="PlaybookActionConfig.PlaybookActionConfigBuilder.html" title="type parameter in PlaybookActionConfig.PlaybookActionConfigBuilder">B</a> extends <a href="PlaybookActionConfig.PlaybookActionConfigBuilder.html" title="class in com.atlan.model.workflow">PlaybookActionConfig.PlaybookActionConfigBuilder</a>&lt;<a href="PlaybookActionConfig.PlaybookActionConfigBuilder.html" title="type parameter in PlaybookActionConfig.PlaybookActionConfigBuilder">C</a>,&#8203;<a href="PlaybookActionConfig.PlaybookActionConfigBuilder.html" title="type parameter in PlaybookActionConfig.PlaybookActionConfigBuilder">B</a>&gt;&gt;</code></dd>
-</dl>
-</li>
-</ul>
-<a id="replaceAtlanTags(java.lang.Boolean)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>replaceAtlanTags</h4>
-<pre class="methodSignature">public&nbsp;<a href="PlaybookActionConfig.PlaybookActionConfigBuilder.html" title="type parameter in PlaybookActionConfig.PlaybookActionConfigBuilder">B</a>&nbsp;replaceAtlanTags&#8203;(java.lang.Boolean&nbsp;replaceAtlanTags)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="replaceCustomMetadata(java.lang.Boolean)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>replaceCustomMetadata</h4>
-<pre class="methodSignature">public&nbsp;<a href="PlaybookActionConfig.PlaybookActionConfigBuilder.html" title="type parameter in PlaybookActionConfig.PlaybookActionConfigBuilder">B</a>&nbsp;replaceCustomMetadata&#8203;(java.lang.Boolean&nbsp;replaceCustomMetadata)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="outputFilename(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>outputFilename</h4>
-<pre class="methodSignature">public&nbsp;<a href="PlaybookActionConfig.PlaybookActionConfigBuilder.html" title="type parameter in PlaybookActionConfig.PlaybookActionConfigBuilder">B</a>&nbsp;outputFilename&#8203;(java.lang.String&nbsp;outputFilename)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="template(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>template</h4>
-<pre class="methodSignature">public&nbsp;<a href="PlaybookActionConfig.PlaybookActionConfigBuilder.html" title="type parameter in PlaybookActionConfig.PlaybookActionConfigBuilder">B</a>&nbsp;template&#8203;(java.lang.String&nbsp;template)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="atlanTagsConfig(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>atlanTagsConfig</h4>
-<pre class="methodSignature">public&nbsp;<a href="PlaybookActionConfig.PlaybookActionConfigBuilder.html" title="type parameter in PlaybookActionConfig.PlaybookActionConfigBuilder">B</a>&nbsp;atlanTagsConfig&#8203;(java.lang.String&nbsp;atlanTagsConfig)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
 </dl>
 </li>
 </ul>

@@ -196,42 +196,58 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="ParsedQuery.DatabaseObject.DatabaseObjectBuilder.html" title="type parameter in ParsedQuery.DatabaseObject.DatabaseObjectBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#columns(java.util.List)">columns</a></span>&#8203;(java.util.List&lt;<a href="ParsedQuery.DatabaseColumn.html" title="class in com.atlan.model.admin">ParsedQuery.DatabaseColumn</a>&gt;&nbsp;columns)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">List of details about the columns queried within the object.</div>
+</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="ParsedQuery.DatabaseObject.DatabaseObjectBuilder.html" title="type parameter in ParsedQuery.DatabaseObject.DatabaseObjectBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#database(java.lang.String)">database</a></span>&#8203;(java.lang.String&nbsp;database)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Name of the database the object exists within.</div>
+</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="ParsedQuery.DatabaseObject.DatabaseObjectBuilder.html" title="type parameter in ParsedQuery.DatabaseObject.DatabaseObjectBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#displayName(java.lang.String)">displayName</a></span>&#8203;(java.lang.String&nbsp;displayName)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Fully-qualified name of the SQL object.</div>
+</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="ParsedQuery.DatabaseObject.DatabaseObjectBuilder.html" title="type parameter in ParsedQuery.DatabaseObject.DatabaseObjectBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#id(java.lang.String)">id</a></span>&#8203;(java.lang.String&nbsp;id)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Numeric identifier for the object.</div>
+</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="ParsedQuery.DatabaseObject.DatabaseObjectBuilder.html" title="type parameter in ParsedQuery.DatabaseObject.DatabaseObjectBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#name(java.lang.String)">name</a></span>&#8203;(java.lang.String&nbsp;name)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Name of the object (unqualified).</div>
+</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="ParsedQuery.DatabaseObject.DatabaseObjectBuilder.html" title="type parameter in ParsedQuery.DatabaseObject.DatabaseObjectBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#procedureName(java.lang.String)">procedureName</a></span>&#8203;(java.lang.String&nbsp;procedureName)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Name of the procedure (only for process objects).</div>
+</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code><a href="ParsedQuery.DatabaseObject.DatabaseObjectBuilder.html" title="type parameter in ParsedQuery.DatabaseObject.DatabaseObjectBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#queryHashId(java.lang.String)">queryHashId</a></span>&#8203;(java.lang.String&nbsp;queryHashId)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Unique hash representing the query (only for process objects).</div>
+</td>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code><a href="ParsedQuery.DatabaseObject.DatabaseObjectBuilder.html" title="type parameter in ParsedQuery.DatabaseObject.DatabaseObjectBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#schema(java.lang.String)">schema</a></span>&#8203;(java.lang.String&nbsp;schema)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Name of the schema the object exists within.</div>
+</td>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>protected abstract <a href="ParsedQuery.DatabaseObject.DatabaseObjectBuilder.html" title="type parameter in ParsedQuery.DatabaseObject.DatabaseObjectBuilder">B</a></code></td>
@@ -246,7 +262,9 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <tr id="i12" class="altColor">
 <td class="colFirst"><code><a href="ParsedQuery.DatabaseObject.DatabaseObjectBuilder.html" title="type parameter in ParsedQuery.DatabaseObject.DatabaseObjectBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#type(java.lang.String)">type</a></span>&#8203;(java.lang.String&nbsp;type)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Type of the object.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -306,6 +324,132 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 </dl>
 </li>
 </ul>
+<a id="displayName(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>displayName</h4>
+<pre class="methodSignature">public&nbsp;<a href="ParsedQuery.DatabaseObject.DatabaseObjectBuilder.html" title="type parameter in ParsedQuery.DatabaseObject.DatabaseObjectBuilder">B</a>&nbsp;displayName&#8203;(java.lang.String&nbsp;displayName)</pre>
+<div class="block">Fully-qualified name of the SQL object. (Only present on non-process objects.)</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="id(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>id</h4>
+<pre class="methodSignature">public&nbsp;<a href="ParsedQuery.DatabaseObject.DatabaseObjectBuilder.html" title="type parameter in ParsedQuery.DatabaseObject.DatabaseObjectBuilder">B</a>&nbsp;id&#8203;(java.lang.String&nbsp;id)</pre>
+<div class="block">Numeric identifier for the object.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="name(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>name</h4>
+<pre class="methodSignature">public&nbsp;<a href="ParsedQuery.DatabaseObject.DatabaseObjectBuilder.html" title="type parameter in ParsedQuery.DatabaseObject.DatabaseObjectBuilder">B</a>&nbsp;name&#8203;(java.lang.String&nbsp;name)</pre>
+<div class="block">Name of the object (unqualified).</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="type(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>type</h4>
+<pre class="methodSignature">public&nbsp;<a href="ParsedQuery.DatabaseObject.DatabaseObjectBuilder.html" title="type parameter in ParsedQuery.DatabaseObject.DatabaseObjectBuilder">B</a>&nbsp;type&#8203;(java.lang.String&nbsp;type)</pre>
+<div class="block">Type of the object.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="database(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>database</h4>
+<pre class="methodSignature">public&nbsp;<a href="ParsedQuery.DatabaseObject.DatabaseObjectBuilder.html" title="type parameter in ParsedQuery.DatabaseObject.DatabaseObjectBuilder">B</a>&nbsp;database&#8203;(java.lang.String&nbsp;database)</pre>
+<div class="block">Name of the database the object exists within.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="schema(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>schema</h4>
+<pre class="methodSignature">public&nbsp;<a href="ParsedQuery.DatabaseObject.DatabaseObjectBuilder.html" title="type parameter in ParsedQuery.DatabaseObject.DatabaseObjectBuilder">B</a>&nbsp;schema&#8203;(java.lang.String&nbsp;schema)</pre>
+<div class="block">Name of the schema the object exists within.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="columns(java.util.List)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>columns</h4>
+<pre class="methodSignature">public&nbsp;<a href="ParsedQuery.DatabaseObject.DatabaseObjectBuilder.html" title="type parameter in ParsedQuery.DatabaseObject.DatabaseObjectBuilder">B</a>&nbsp;columns&#8203;(java.util.List&lt;<a href="ParsedQuery.DatabaseColumn.html" title="class in com.atlan.model.admin">ParsedQuery.DatabaseColumn</a>&gt;&nbsp;columns)</pre>
+<div class="block">List of details about the columns queried within the object. (Only present on non-process objects.)</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="procedureName(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>procedureName</h4>
+<pre class="methodSignature">public&nbsp;<a href="ParsedQuery.DatabaseObject.DatabaseObjectBuilder.html" title="type parameter in ParsedQuery.DatabaseObject.DatabaseObjectBuilder">B</a>&nbsp;procedureName&#8203;(java.lang.String&nbsp;procedureName)</pre>
+<div class="block">Name of the procedure (only for process objects).</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="queryHashId(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>queryHashId</h4>
+<pre class="methodSignature">public&nbsp;<a href="ParsedQuery.DatabaseObject.DatabaseObjectBuilder.html" title="type parameter in ParsedQuery.DatabaseObject.DatabaseObjectBuilder">B</a>&nbsp;queryHashId&#8203;(java.lang.String&nbsp;queryHashId)</pre>
+<div class="block">Unique hash representing the query (only for process objects).</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
 <a id="self()">
 <!--   -->
 </a>
@@ -329,123 +473,6 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../core/AtlanObject.AtlanObjectBuilder.html#build()">build</a></code>&nbsp;in class&nbsp;<code><a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in com.atlan.model.core">AtlanObject.AtlanObjectBuilder</a>&lt;<a href="ParsedQuery.DatabaseObject.DatabaseObjectBuilder.html" title="type parameter in ParsedQuery.DatabaseObject.DatabaseObjectBuilder">C</a> extends <a href="ParsedQuery.DatabaseObject.html" title="class in com.atlan.model.admin">ParsedQuery.DatabaseObject</a>,&#8203;<a href="ParsedQuery.DatabaseObject.DatabaseObjectBuilder.html" title="type parameter in ParsedQuery.DatabaseObject.DatabaseObjectBuilder">B</a> extends <a href="ParsedQuery.DatabaseObject.DatabaseObjectBuilder.html" title="class in com.atlan.model.admin">ParsedQuery.DatabaseObject.DatabaseObjectBuilder</a>&lt;<a href="ParsedQuery.DatabaseObject.DatabaseObjectBuilder.html" title="type parameter in ParsedQuery.DatabaseObject.DatabaseObjectBuilder">C</a>,&#8203;<a href="ParsedQuery.DatabaseObject.DatabaseObjectBuilder.html" title="type parameter in ParsedQuery.DatabaseObject.DatabaseObjectBuilder">B</a>&gt;&gt;</code></dd>
-</dl>
-</li>
-</ul>
-<a id="displayName(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>displayName</h4>
-<pre class="methodSignature">public&nbsp;<a href="ParsedQuery.DatabaseObject.DatabaseObjectBuilder.html" title="type parameter in ParsedQuery.DatabaseObject.DatabaseObjectBuilder">B</a>&nbsp;displayName&#8203;(java.lang.String&nbsp;displayName)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="id(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>id</h4>
-<pre class="methodSignature">public&nbsp;<a href="ParsedQuery.DatabaseObject.DatabaseObjectBuilder.html" title="type parameter in ParsedQuery.DatabaseObject.DatabaseObjectBuilder">B</a>&nbsp;id&#8203;(java.lang.String&nbsp;id)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="name(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>name</h4>
-<pre class="methodSignature">public&nbsp;<a href="ParsedQuery.DatabaseObject.DatabaseObjectBuilder.html" title="type parameter in ParsedQuery.DatabaseObject.DatabaseObjectBuilder">B</a>&nbsp;name&#8203;(java.lang.String&nbsp;name)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="type(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>type</h4>
-<pre class="methodSignature">public&nbsp;<a href="ParsedQuery.DatabaseObject.DatabaseObjectBuilder.html" title="type parameter in ParsedQuery.DatabaseObject.DatabaseObjectBuilder">B</a>&nbsp;type&#8203;(java.lang.String&nbsp;type)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="database(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>database</h4>
-<pre class="methodSignature">public&nbsp;<a href="ParsedQuery.DatabaseObject.DatabaseObjectBuilder.html" title="type parameter in ParsedQuery.DatabaseObject.DatabaseObjectBuilder">B</a>&nbsp;database&#8203;(java.lang.String&nbsp;database)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="schema(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>schema</h4>
-<pre class="methodSignature">public&nbsp;<a href="ParsedQuery.DatabaseObject.DatabaseObjectBuilder.html" title="type parameter in ParsedQuery.DatabaseObject.DatabaseObjectBuilder">B</a>&nbsp;schema&#8203;(java.lang.String&nbsp;schema)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="columns(java.util.List)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>columns</h4>
-<pre class="methodSignature">public&nbsp;<a href="ParsedQuery.DatabaseObject.DatabaseObjectBuilder.html" title="type parameter in ParsedQuery.DatabaseObject.DatabaseObjectBuilder">B</a>&nbsp;columns&#8203;(java.util.List&lt;<a href="ParsedQuery.DatabaseColumn.html" title="class in com.atlan.model.admin">ParsedQuery.DatabaseColumn</a>&gt;&nbsp;columns)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="procedureName(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>procedureName</h4>
-<pre class="methodSignature">public&nbsp;<a href="ParsedQuery.DatabaseObject.DatabaseObjectBuilder.html" title="type parameter in ParsedQuery.DatabaseObject.DatabaseObjectBuilder">B</a>&nbsp;procedureName&#8203;(java.lang.String&nbsp;procedureName)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="queryHashId(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>queryHashId</h4>
-<pre class="methodSignature">public&nbsp;<a href="ParsedQuery.DatabaseObject.DatabaseObjectBuilder.html" title="type parameter in ParsedQuery.DatabaseObject.DatabaseObjectBuilder">B</a>&nbsp;queryHashId&#8203;(java.lang.String&nbsp;queryHashId)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
 </dl>
 </li>
 </ul>

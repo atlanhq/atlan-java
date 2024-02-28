@@ -201,22 +201,30 @@ extends <a href="AtlanStruct.AtlanStructBuilder.html" title="class in com.atlan.
 <tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="MCRuleSchedule.MCRuleScheduleBuilder.html" title="type parameter in MCRuleSchedule.MCRuleScheduleBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#mcRuleScheduleCrontab(java.lang.String)">mcRuleScheduleCrontab</a></span>&#8203;(java.lang.String&nbsp;mcRuleScheduleCrontab)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Crontab for the schedule.</div>
+</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="MCRuleSchedule.MCRuleScheduleBuilder.html" title="type parameter in MCRuleSchedule.MCRuleScheduleBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#mcRuleScheduleIntervalInMinutes(java.lang.Integer)">mcRuleScheduleIntervalInMinutes</a></span>&#8203;(java.lang.Integer&nbsp;mcRuleScheduleIntervalInMinutes)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">How often the monitor should run, in minutes.</div>
+</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="MCRuleSchedule.MCRuleScheduleBuilder.html" title="type parameter in MCRuleSchedule.MCRuleScheduleBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#mcRuleScheduleStartTime(java.lang.Long)">mcRuleScheduleStartTime</a></span>&#8203;(java.lang.Long&nbsp;mcRuleScheduleStartTime)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">When the first execution of the rule should occur (blank means immediate).</div>
+</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="MCRuleSchedule.MCRuleScheduleBuilder.html" title="type parameter in MCRuleSchedule.MCRuleScheduleBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#mcRuleScheduleType(java.lang.String)">mcRuleScheduleType</a></span>&#8203;(java.lang.String&nbsp;mcRuleScheduleType)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Type of schedule for the rule, for example dynamic or manual.</div>
+</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>protected abstract <a href="MCRuleSchedule.MCRuleScheduleBuilder.html" title="type parameter in MCRuleSchedule.MCRuleScheduleBuilder">B</a></code></td>
@@ -231,7 +239,9 @@ extends <a href="AtlanStruct.AtlanStructBuilder.html" title="class in com.atlan.
 <tr id="i8" class="altColor">
 <td class="colFirst"><code><a href="MCRuleSchedule.MCRuleScheduleBuilder.html" title="type parameter in MCRuleSchedule.MCRuleScheduleBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#typeName(java.lang.String)">typeName</a></span>&#8203;(java.lang.String&nbsp;typeName)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Fixed typeName for MCRuleSchedule.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -291,6 +301,78 @@ extends <a href="AtlanStruct.AtlanStructBuilder.html" title="class in com.atlan.
 </dl>
 </li>
 </ul>
+<a id="typeName(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>typeName</h4>
+<pre class="methodSignature">public&nbsp;<a href="MCRuleSchedule.MCRuleScheduleBuilder.html" title="type parameter in MCRuleSchedule.MCRuleScheduleBuilder">B</a>&nbsp;typeName&#8203;(java.lang.String&nbsp;typeName)</pre>
+<div class="block">Fixed typeName for MCRuleSchedule.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<dd><code><a href="AtlanStruct.AtlanStructBuilder.html#typeName(java.lang.String)">typeName</a></code>&nbsp;in class&nbsp;<code><a href="AtlanStruct.AtlanStructBuilder.html" title="class in com.atlan.model.structs">AtlanStruct.AtlanStructBuilder</a>&lt;<a href="MCRuleSchedule.MCRuleScheduleBuilder.html" title="type parameter in MCRuleSchedule.MCRuleScheduleBuilder">C</a> extends <a href="MCRuleSchedule.html" title="class in com.atlan.model.structs">MCRuleSchedule</a>,&#8203;<a href="MCRuleSchedule.MCRuleScheduleBuilder.html" title="type parameter in MCRuleSchedule.MCRuleScheduleBuilder">B</a> extends <a href="MCRuleSchedule.MCRuleScheduleBuilder.html" title="class in com.atlan.model.structs">MCRuleSchedule.MCRuleScheduleBuilder</a>&lt;<a href="MCRuleSchedule.MCRuleScheduleBuilder.html" title="type parameter in MCRuleSchedule.MCRuleScheduleBuilder">C</a>,&#8203;<a href="MCRuleSchedule.MCRuleScheduleBuilder.html" title="type parameter in MCRuleSchedule.MCRuleScheduleBuilder">B</a>&gt;&gt;</code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="mcRuleScheduleType(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>mcRuleScheduleType</h4>
+<pre class="methodSignature">public&nbsp;<a href="MCRuleSchedule.MCRuleScheduleBuilder.html" title="type parameter in MCRuleSchedule.MCRuleScheduleBuilder">B</a>&nbsp;mcRuleScheduleType&#8203;(java.lang.String&nbsp;mcRuleScheduleType)</pre>
+<div class="block">Type of schedule for the rule, for example dynamic or manual.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="mcRuleScheduleIntervalInMinutes(java.lang.Integer)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>mcRuleScheduleIntervalInMinutes</h4>
+<pre class="methodSignature">public&nbsp;<a href="MCRuleSchedule.MCRuleScheduleBuilder.html" title="type parameter in MCRuleSchedule.MCRuleScheduleBuilder">B</a>&nbsp;mcRuleScheduleIntervalInMinutes&#8203;(java.lang.Integer&nbsp;mcRuleScheduleIntervalInMinutes)</pre>
+<div class="block">How often the monitor should run, in minutes.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="mcRuleScheduleStartTime(java.lang.Long)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>mcRuleScheduleStartTime</h4>
+<pre class="methodSignature">public&nbsp;<a href="MCRuleSchedule.MCRuleScheduleBuilder.html" title="type parameter in MCRuleSchedule.MCRuleScheduleBuilder">B</a>&nbsp;mcRuleScheduleStartTime&#8203;(java.lang.Long&nbsp;mcRuleScheduleStartTime)</pre>
+<div class="block">When the first execution of the rule should occur (blank means immediate).</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="mcRuleScheduleCrontab(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>mcRuleScheduleCrontab</h4>
+<pre class="methodSignature">public&nbsp;<a href="MCRuleSchedule.MCRuleScheduleBuilder.html" title="type parameter in MCRuleSchedule.MCRuleScheduleBuilder">B</a>&nbsp;mcRuleScheduleCrontab&#8203;(java.lang.String&nbsp;mcRuleScheduleCrontab)</pre>
+<div class="block">Crontab for the schedule.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
 <a id="self()">
 <!--   -->
 </a>
@@ -314,73 +396,6 @@ extends <a href="AtlanStruct.AtlanStructBuilder.html" title="class in com.atlan.
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="AtlanStruct.AtlanStructBuilder.html#build()">build</a></code>&nbsp;in class&nbsp;<code><a href="AtlanStruct.AtlanStructBuilder.html" title="class in com.atlan.model.structs">AtlanStruct.AtlanStructBuilder</a>&lt;<a href="MCRuleSchedule.MCRuleScheduleBuilder.html" title="type parameter in MCRuleSchedule.MCRuleScheduleBuilder">C</a> extends <a href="MCRuleSchedule.html" title="class in com.atlan.model.structs">MCRuleSchedule</a>,&#8203;<a href="MCRuleSchedule.MCRuleScheduleBuilder.html" title="type parameter in MCRuleSchedule.MCRuleScheduleBuilder">B</a> extends <a href="MCRuleSchedule.MCRuleScheduleBuilder.html" title="class in com.atlan.model.structs">MCRuleSchedule.MCRuleScheduleBuilder</a>&lt;<a href="MCRuleSchedule.MCRuleScheduleBuilder.html" title="type parameter in MCRuleSchedule.MCRuleScheduleBuilder">C</a>,&#8203;<a href="MCRuleSchedule.MCRuleScheduleBuilder.html" title="type parameter in MCRuleSchedule.MCRuleScheduleBuilder">B</a>&gt;&gt;</code></dd>
-</dl>
-</li>
-</ul>
-<a id="typeName(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>typeName</h4>
-<pre class="methodSignature">public&nbsp;<a href="MCRuleSchedule.MCRuleScheduleBuilder.html" title="type parameter in MCRuleSchedule.MCRuleScheduleBuilder">B</a>&nbsp;typeName&#8203;(java.lang.String&nbsp;typeName)</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="AtlanStruct.AtlanStructBuilder.html#typeName(java.lang.String)">typeName</a></code>&nbsp;in class&nbsp;<code><a href="AtlanStruct.AtlanStructBuilder.html" title="class in com.atlan.model.structs">AtlanStruct.AtlanStructBuilder</a>&lt;<a href="MCRuleSchedule.MCRuleScheduleBuilder.html" title="type parameter in MCRuleSchedule.MCRuleScheduleBuilder">C</a> extends <a href="MCRuleSchedule.html" title="class in com.atlan.model.structs">MCRuleSchedule</a>,&#8203;<a href="MCRuleSchedule.MCRuleScheduleBuilder.html" title="type parameter in MCRuleSchedule.MCRuleScheduleBuilder">B</a> extends <a href="MCRuleSchedule.MCRuleScheduleBuilder.html" title="class in com.atlan.model.structs">MCRuleSchedule.MCRuleScheduleBuilder</a>&lt;<a href="MCRuleSchedule.MCRuleScheduleBuilder.html" title="type parameter in MCRuleSchedule.MCRuleScheduleBuilder">C</a>,&#8203;<a href="MCRuleSchedule.MCRuleScheduleBuilder.html" title="type parameter in MCRuleSchedule.MCRuleScheduleBuilder">B</a>&gt;&gt;</code></dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="mcRuleScheduleType(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>mcRuleScheduleType</h4>
-<pre class="methodSignature">public&nbsp;<a href="MCRuleSchedule.MCRuleScheduleBuilder.html" title="type parameter in MCRuleSchedule.MCRuleScheduleBuilder">B</a>&nbsp;mcRuleScheduleType&#8203;(java.lang.String&nbsp;mcRuleScheduleType)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="mcRuleScheduleIntervalInMinutes(java.lang.Integer)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>mcRuleScheduleIntervalInMinutes</h4>
-<pre class="methodSignature">public&nbsp;<a href="MCRuleSchedule.MCRuleScheduleBuilder.html" title="type parameter in MCRuleSchedule.MCRuleScheduleBuilder">B</a>&nbsp;mcRuleScheduleIntervalInMinutes&#8203;(java.lang.Integer&nbsp;mcRuleScheduleIntervalInMinutes)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="mcRuleScheduleStartTime(java.lang.Long)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>mcRuleScheduleStartTime</h4>
-<pre class="methodSignature">public&nbsp;<a href="MCRuleSchedule.MCRuleScheduleBuilder.html" title="type parameter in MCRuleSchedule.MCRuleScheduleBuilder">B</a>&nbsp;mcRuleScheduleStartTime&#8203;(java.lang.Long&nbsp;mcRuleScheduleStartTime)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="mcRuleScheduleCrontab(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>mcRuleScheduleCrontab</h4>
-<pre class="methodSignature">public&nbsp;<a href="MCRuleSchedule.MCRuleScheduleBuilder.html" title="type parameter in MCRuleSchedule.MCRuleScheduleBuilder">B</a>&nbsp;mcRuleScheduleCrontab&#8203;(java.lang.String&nbsp;mcRuleScheduleCrontab)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
 </dl>
 </li>
 </ul>

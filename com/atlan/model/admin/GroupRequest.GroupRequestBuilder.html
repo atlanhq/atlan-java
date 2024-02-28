@@ -196,22 +196,30 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="GroupRequest.GroupRequestBuilder.html" title="type parameter in GroupRequest.GroupRequestBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#count(boolean)">count</a></span>&#8203;(boolean&nbsp;count)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Whether to include an overall count of groups (true) or not (false).</div>
+</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="GroupRequest.GroupRequestBuilder.html" title="type parameter in GroupRequest.GroupRequestBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#filter(java.lang.String)">filter</a></span>&#8203;(java.lang.String&nbsp;filter)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Criteria by which to filter the list of groups to retrieve.</div>
+</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="GroupRequest.GroupRequestBuilder.html" title="type parameter in GroupRequest.GroupRequestBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#limit(int)">limit</a></span>&#8203;(int&nbsp;limit)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Maximum number of groups to return per page.</div>
+</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="GroupRequest.GroupRequestBuilder.html" title="type parameter in GroupRequest.GroupRequestBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#offset(int)">offset</a></span>&#8203;(int&nbsp;offset)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Starting point for the list of groups when paging.</div>
+</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>protected abstract <a href="GroupRequest.GroupRequestBuilder.html" title="type parameter in GroupRequest.GroupRequestBuilder">B</a></code></td>
@@ -221,7 +229,9 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="GroupRequest.GroupRequestBuilder.html" title="type parameter in GroupRequest.GroupRequestBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sort(java.lang.String)">sort</a></span>&#8203;(java.lang.String&nbsp;sort)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Property by which to sort the resulting list of groups.</div>
+</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
@@ -286,6 +296,76 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 </dl>
 </li>
 </ul>
+<a id="filter(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>filter</h4>
+<pre class="methodSignature">public&nbsp;<a href="GroupRequest.GroupRequestBuilder.html" title="type parameter in GroupRequest.GroupRequestBuilder">B</a>&nbsp;filter&#8203;(java.lang.String&nbsp;filter)</pre>
+<div class="block">Criteria by which to filter the list of groups to retrieve.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="sort(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>sort</h4>
+<pre class="methodSignature">public&nbsp;<a href="GroupRequest.GroupRequestBuilder.html" title="type parameter in GroupRequest.GroupRequestBuilder">B</a>&nbsp;sort&#8203;(java.lang.String&nbsp;sort)</pre>
+<div class="block">Property by which to sort the resulting list of groups.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="count(boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>count</h4>
+<pre class="methodSignature">public&nbsp;<a href="GroupRequest.GroupRequestBuilder.html" title="type parameter in GroupRequest.GroupRequestBuilder">B</a>&nbsp;count&#8203;(boolean&nbsp;count)</pre>
+<div class="block">Whether to include an overall count of groups (true) or not (false).</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="offset(int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>offset</h4>
+<pre class="methodSignature">public&nbsp;<a href="GroupRequest.GroupRequestBuilder.html" title="type parameter in GroupRequest.GroupRequestBuilder">B</a>&nbsp;offset&#8203;(int&nbsp;offset)</pre>
+<div class="block">Starting point for the list of groups when paging.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="limit(int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>limit</h4>
+<pre class="methodSignature">public&nbsp;<a href="GroupRequest.GroupRequestBuilder.html" title="type parameter in GroupRequest.GroupRequestBuilder">B</a>&nbsp;limit&#8203;(int&nbsp;limit)</pre>
+<div class="block">Maximum number of groups to return per page.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
 <a id="self()">
 <!--   -->
 </a>
@@ -309,71 +389,6 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../core/AtlanObject.AtlanObjectBuilder.html#build()">build</a></code>&nbsp;in class&nbsp;<code><a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in com.atlan.model.core">AtlanObject.AtlanObjectBuilder</a>&lt;<a href="GroupRequest.GroupRequestBuilder.html" title="type parameter in GroupRequest.GroupRequestBuilder">C</a> extends <a href="GroupRequest.html" title="class in com.atlan.model.admin">GroupRequest</a>,&#8203;<a href="GroupRequest.GroupRequestBuilder.html" title="type parameter in GroupRequest.GroupRequestBuilder">B</a> extends <a href="GroupRequest.GroupRequestBuilder.html" title="class in com.atlan.model.admin">GroupRequest.GroupRequestBuilder</a>&lt;<a href="GroupRequest.GroupRequestBuilder.html" title="type parameter in GroupRequest.GroupRequestBuilder">C</a>,&#8203;<a href="GroupRequest.GroupRequestBuilder.html" title="type parameter in GroupRequest.GroupRequestBuilder">B</a>&gt;&gt;</code></dd>
-</dl>
-</li>
-</ul>
-<a id="filter(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>filter</h4>
-<pre class="methodSignature">public&nbsp;<a href="GroupRequest.GroupRequestBuilder.html" title="type parameter in GroupRequest.GroupRequestBuilder">B</a>&nbsp;filter&#8203;(java.lang.String&nbsp;filter)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="sort(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>sort</h4>
-<pre class="methodSignature">public&nbsp;<a href="GroupRequest.GroupRequestBuilder.html" title="type parameter in GroupRequest.GroupRequestBuilder">B</a>&nbsp;sort&#8203;(java.lang.String&nbsp;sort)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="count(boolean)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>count</h4>
-<pre class="methodSignature">public&nbsp;<a href="GroupRequest.GroupRequestBuilder.html" title="type parameter in GroupRequest.GroupRequestBuilder">B</a>&nbsp;count&#8203;(boolean&nbsp;count)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="offset(int)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>offset</h4>
-<pre class="methodSignature">public&nbsp;<a href="GroupRequest.GroupRequestBuilder.html" title="type parameter in GroupRequest.GroupRequestBuilder">B</a>&nbsp;offset&#8203;(int&nbsp;offset)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="limit(int)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>limit</h4>
-<pre class="methodSignature">public&nbsp;<a href="GroupRequest.GroupRequestBuilder.html" title="type parameter in GroupRequest.GroupRequestBuilder">B</a>&nbsp;limit&#8203;(int&nbsp;limit)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
 </dl>
 </li>
 </ul>

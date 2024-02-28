@@ -201,7 +201,9 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="FilterList.FilterListBuilder.html" title="type parameter in FilterList.FilterListBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#condition(com.atlan.model.lineage.FilterList.Condition)">condition</a></span>&#8203;(<a href="FilterList.Condition.html" title="enum in com.atlan.model.lineage">FilterList.Condition</a>&nbsp;condition)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Whether the criteria must all match (AND) or any matching is sufficient (OR).</div>
+</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="FilterList.FilterListBuilder.html" title="type parameter in FilterList.FilterListBuilder">B</a></code></td>
@@ -281,32 +283,6 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 </dl>
 </li>
 </ul>
-<a id="self()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>self</h4>
-<pre class="methodSignature">protected abstract&nbsp;<a href="FilterList.FilterListBuilder.html" title="type parameter in FilterList.FilterListBuilder">B</a>&nbsp;self()</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../core/AtlanObject.AtlanObjectBuilder.html#self()">self</a></code>&nbsp;in class&nbsp;<code><a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in com.atlan.model.core">AtlanObject.AtlanObjectBuilder</a>&lt;<a href="FilterList.FilterListBuilder.html" title="type parameter in FilterList.FilterListBuilder">C</a> extends <a href="FilterList.html" title="class in com.atlan.model.lineage">FilterList</a>,&#8203;<a href="FilterList.FilterListBuilder.html" title="type parameter in FilterList.FilterListBuilder">B</a> extends <a href="FilterList.FilterListBuilder.html" title="class in com.atlan.model.lineage">FilterList.FilterListBuilder</a>&lt;<a href="FilterList.FilterListBuilder.html" title="type parameter in FilterList.FilterListBuilder">C</a>,&#8203;<a href="FilterList.FilterListBuilder.html" title="type parameter in FilterList.FilterListBuilder">B</a>&gt;&gt;</code></dd>
-</dl>
-</li>
-</ul>
-<a id="build()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>build</h4>
-<pre class="methodSignature">public abstract&nbsp;<a href="FilterList.FilterListBuilder.html" title="type parameter in FilterList.FilterListBuilder">C</a>&nbsp;build()</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../core/AtlanObject.AtlanObjectBuilder.html#build()">build</a></code>&nbsp;in class&nbsp;<code><a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in com.atlan.model.core">AtlanObject.AtlanObjectBuilder</a>&lt;<a href="FilterList.FilterListBuilder.html" title="type parameter in FilterList.FilterListBuilder">C</a> extends <a href="FilterList.html" title="class in com.atlan.model.lineage">FilterList</a>,&#8203;<a href="FilterList.FilterListBuilder.html" title="type parameter in FilterList.FilterListBuilder">B</a> extends <a href="FilterList.FilterListBuilder.html" title="class in com.atlan.model.lineage">FilterList.FilterListBuilder</a>&lt;<a href="FilterList.FilterListBuilder.html" title="type parameter in FilterList.FilterListBuilder">C</a>,&#8203;<a href="FilterList.FilterListBuilder.html" title="type parameter in FilterList.FilterListBuilder">B</a>&gt;&gt;</code></dd>
-</dl>
-</li>
-</ul>
 <a id="condition(com.atlan.model.lineage.FilterList.Condition)">
 <!--   -->
 </a>
@@ -314,6 +290,7 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <li class="blockList">
 <h4>condition</h4>
 <pre class="methodSignature">public&nbsp;<a href="FilterList.FilterListBuilder.html" title="type parameter in FilterList.FilterListBuilder">B</a>&nbsp;condition&#8203;(<a href="FilterList.Condition.html" title="enum in com.atlan.model.lineage">FilterList.Condition</a>&nbsp;condition)</pre>
+<div class="block">Whether the criteria must all match (AND) or any matching is sufficient (OR).</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -345,6 +322,32 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <li class="blockList">
 <h4>clearCriteria</h4>
 <pre class="methodSignature">public&nbsp;<a href="FilterList.FilterListBuilder.html" title="type parameter in FilterList.FilterListBuilder">B</a>&nbsp;clearCriteria()</pre>
+</li>
+</ul>
+<a id="self()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>self</h4>
+<pre class="methodSignature">protected abstract&nbsp;<a href="FilterList.FilterListBuilder.html" title="type parameter in FilterList.FilterListBuilder">B</a>&nbsp;self()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../core/AtlanObject.AtlanObjectBuilder.html#self()">self</a></code>&nbsp;in class&nbsp;<code><a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in com.atlan.model.core">AtlanObject.AtlanObjectBuilder</a>&lt;<a href="FilterList.FilterListBuilder.html" title="type parameter in FilterList.FilterListBuilder">C</a> extends <a href="FilterList.html" title="class in com.atlan.model.lineage">FilterList</a>,&#8203;<a href="FilterList.FilterListBuilder.html" title="type parameter in FilterList.FilterListBuilder">B</a> extends <a href="FilterList.FilterListBuilder.html" title="class in com.atlan.model.lineage">FilterList.FilterListBuilder</a>&lt;<a href="FilterList.FilterListBuilder.html" title="type parameter in FilterList.FilterListBuilder">C</a>,&#8203;<a href="FilterList.FilterListBuilder.html" title="type parameter in FilterList.FilterListBuilder">B</a>&gt;&gt;</code></dd>
+</dl>
+</li>
+</ul>
+<a id="build()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>build</h4>
+<pre class="methodSignature">public abstract&nbsp;<a href="FilterList.FilterListBuilder.html" title="type parameter in FilterList.FilterListBuilder">C</a>&nbsp;build()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../core/AtlanObject.AtlanObjectBuilder.html#build()">build</a></code>&nbsp;in class&nbsp;<code><a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in com.atlan.model.core">AtlanObject.AtlanObjectBuilder</a>&lt;<a href="FilterList.FilterListBuilder.html" title="type parameter in FilterList.FilterListBuilder">C</a> extends <a href="FilterList.html" title="class in com.atlan.model.lineage">FilterList</a>,&#8203;<a href="FilterList.FilterListBuilder.html" title="type parameter in FilterList.FilterListBuilder">B</a> extends <a href="FilterList.FilterListBuilder.html" title="class in com.atlan.model.lineage">FilterList.FilterListBuilder</a>&lt;<a href="FilterList.FilterListBuilder.html" title="type parameter in FilterList.FilterListBuilder">C</a>,&#8203;<a href="FilterList.FilterListBuilder.html" title="type parameter in FilterList.FilterListBuilder">B</a>&gt;&gt;</code></dd>
+</dl>
 </li>
 </ul>
 <a id="toString()">

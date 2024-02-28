@@ -196,22 +196,30 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="KeycloakEvent.KeycloakEventBuilder.html" title="type parameter in KeycloakEvent.KeycloakEventBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clientId(java.lang.String)">clientId</a></span>&#8203;(java.lang.String&nbsp;clientId)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Where the event occurred (usually <code>atlan-frontend</code>).</div>
+</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="KeycloakEvent.KeycloakEventBuilder.html" title="type parameter in KeycloakEvent.KeycloakEventBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#details(java.lang.String)">details</a></span>&#8203;(java.lang.String&nbsp;details)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">TBC</div>
+</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="KeycloakEvent.KeycloakEventBuilder.html" title="type parameter in KeycloakEvent.KeycloakEventBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ipAddress(java.lang.String)">ipAddress</a></span>&#8203;(java.lang.String&nbsp;ipAddress)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">IP address from which the user logged in.</div>
+</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="KeycloakEvent.KeycloakEventBuilder.html" title="type parameter in KeycloakEvent.KeycloakEventBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#realmId(java.lang.String)">realmId</a></span>&#8203;(java.lang.String&nbsp;realmId)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Unique identifier of the realm in which the event was logged (usually <code>default</code>.</div>
+</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>protected abstract <a href="KeycloakEvent.KeycloakEventBuilder.html" title="type parameter in KeycloakEvent.KeycloakEventBuilder">B</a></code></td>
@@ -221,12 +229,16 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="KeycloakEvent.KeycloakEventBuilder.html" title="type parameter in KeycloakEvent.KeycloakEventBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sessionId(java.lang.String)">sessionId</a></span>&#8203;(java.lang.String&nbsp;sessionId)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Unique identifier (GUID) of the session for the event.</div>
+</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code><a href="KeycloakEvent.KeycloakEventBuilder.html" title="type parameter in KeycloakEvent.KeycloakEventBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#time(java.lang.Long)">time</a></span>&#8203;(java.lang.Long&nbsp;time)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Time (epoch) when the event occurred, in milliseconds.</div>
+</td>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
@@ -236,12 +248,16 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <tr id="i10" class="altColor">
 <td class="colFirst"><code><a href="KeycloakEvent.KeycloakEventBuilder.html" title="type parameter in KeycloakEvent.KeycloakEventBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#type(com.atlan.model.enums.KeycloakEventType)">type</a></span>&#8203;(<a href="../enums/KeycloakEventType.html" title="enum in com.atlan.model.enums">KeycloakEventType</a>&nbsp;type)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Type of event that occurred.</div>
+</td>
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code><a href="KeycloakEvent.KeycloakEventBuilder.html" title="type parameter in KeycloakEvent.KeycloakEventBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#userId(java.lang.String)">userId</a></span>&#8203;(java.lang.String&nbsp;userId)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Unique identifier (GUID) of the user that triggered the event.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -301,6 +317,118 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 </dl>
 </li>
 </ul>
+<a id="clientId(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clientId</h4>
+<pre class="methodSignature">public&nbsp;<a href="KeycloakEvent.KeycloakEventBuilder.html" title="type parameter in KeycloakEvent.KeycloakEventBuilder">B</a>&nbsp;clientId&#8203;(java.lang.String&nbsp;clientId)</pre>
+<div class="block">Where the event occurred (usually <code>atlan-frontend</code>).</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="details(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>details</h4>
+<pre class="methodSignature">public&nbsp;<a href="KeycloakEvent.KeycloakEventBuilder.html" title="type parameter in KeycloakEvent.KeycloakEventBuilder">B</a>&nbsp;details&#8203;(java.lang.String&nbsp;details)</pre>
+<div class="block">TBC</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="ipAddress(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>ipAddress</h4>
+<pre class="methodSignature">public&nbsp;<a href="KeycloakEvent.KeycloakEventBuilder.html" title="type parameter in KeycloakEvent.KeycloakEventBuilder">B</a>&nbsp;ipAddress&#8203;(java.lang.String&nbsp;ipAddress)</pre>
+<div class="block">IP address from which the user logged in.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="realmId(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>realmId</h4>
+<pre class="methodSignature">public&nbsp;<a href="KeycloakEvent.KeycloakEventBuilder.html" title="type parameter in KeycloakEvent.KeycloakEventBuilder">B</a>&nbsp;realmId&#8203;(java.lang.String&nbsp;realmId)</pre>
+<div class="block">Unique identifier of the realm in which the event was logged (usually <code>default</code>.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="sessionId(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>sessionId</h4>
+<pre class="methodSignature">public&nbsp;<a href="KeycloakEvent.KeycloakEventBuilder.html" title="type parameter in KeycloakEvent.KeycloakEventBuilder">B</a>&nbsp;sessionId&#8203;(java.lang.String&nbsp;sessionId)</pre>
+<div class="block">Unique identifier (GUID) of the session for the event.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="time(java.lang.Long)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>time</h4>
+<pre class="methodSignature">public&nbsp;<a href="KeycloakEvent.KeycloakEventBuilder.html" title="type parameter in KeycloakEvent.KeycloakEventBuilder">B</a>&nbsp;time&#8203;(java.lang.Long&nbsp;time)</pre>
+<div class="block">Time (epoch) when the event occurred, in milliseconds.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="type(com.atlan.model.enums.KeycloakEventType)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>type</h4>
+<pre class="methodSignature">public&nbsp;<a href="KeycloakEvent.KeycloakEventBuilder.html" title="type parameter in KeycloakEvent.KeycloakEventBuilder">B</a>&nbsp;type&#8203;(<a href="../enums/KeycloakEventType.html" title="enum in com.atlan.model.enums">KeycloakEventType</a>&nbsp;type)</pre>
+<div class="block">Type of event that occurred.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="userId(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>userId</h4>
+<pre class="methodSignature">public&nbsp;<a href="KeycloakEvent.KeycloakEventBuilder.html" title="type parameter in KeycloakEvent.KeycloakEventBuilder">B</a>&nbsp;userId&#8203;(java.lang.String&nbsp;userId)</pre>
+<div class="block">Unique identifier (GUID) of the user that triggered the event.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
 <a id="self()">
 <!--   -->
 </a>
@@ -324,110 +452,6 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../core/AtlanObject.AtlanObjectBuilder.html#build()">build</a></code>&nbsp;in class&nbsp;<code><a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in com.atlan.model.core">AtlanObject.AtlanObjectBuilder</a>&lt;<a href="KeycloakEvent.KeycloakEventBuilder.html" title="type parameter in KeycloakEvent.KeycloakEventBuilder">C</a> extends <a href="KeycloakEvent.html" title="class in com.atlan.model.admin">KeycloakEvent</a>,&#8203;<a href="KeycloakEvent.KeycloakEventBuilder.html" title="type parameter in KeycloakEvent.KeycloakEventBuilder">B</a> extends <a href="KeycloakEvent.KeycloakEventBuilder.html" title="class in com.atlan.model.admin">KeycloakEvent.KeycloakEventBuilder</a>&lt;<a href="KeycloakEvent.KeycloakEventBuilder.html" title="type parameter in KeycloakEvent.KeycloakEventBuilder">C</a>,&#8203;<a href="KeycloakEvent.KeycloakEventBuilder.html" title="type parameter in KeycloakEvent.KeycloakEventBuilder">B</a>&gt;&gt;</code></dd>
-</dl>
-</li>
-</ul>
-<a id="clientId(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>clientId</h4>
-<pre class="methodSignature">public&nbsp;<a href="KeycloakEvent.KeycloakEventBuilder.html" title="type parameter in KeycloakEvent.KeycloakEventBuilder">B</a>&nbsp;clientId&#8203;(java.lang.String&nbsp;clientId)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="details(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>details</h4>
-<pre class="methodSignature">public&nbsp;<a href="KeycloakEvent.KeycloakEventBuilder.html" title="type parameter in KeycloakEvent.KeycloakEventBuilder">B</a>&nbsp;details&#8203;(java.lang.String&nbsp;details)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="ipAddress(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>ipAddress</h4>
-<pre class="methodSignature">public&nbsp;<a href="KeycloakEvent.KeycloakEventBuilder.html" title="type parameter in KeycloakEvent.KeycloakEventBuilder">B</a>&nbsp;ipAddress&#8203;(java.lang.String&nbsp;ipAddress)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="realmId(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>realmId</h4>
-<pre class="methodSignature">public&nbsp;<a href="KeycloakEvent.KeycloakEventBuilder.html" title="type parameter in KeycloakEvent.KeycloakEventBuilder">B</a>&nbsp;realmId&#8203;(java.lang.String&nbsp;realmId)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="sessionId(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>sessionId</h4>
-<pre class="methodSignature">public&nbsp;<a href="KeycloakEvent.KeycloakEventBuilder.html" title="type parameter in KeycloakEvent.KeycloakEventBuilder">B</a>&nbsp;sessionId&#8203;(java.lang.String&nbsp;sessionId)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="time(java.lang.Long)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>time</h4>
-<pre class="methodSignature">public&nbsp;<a href="KeycloakEvent.KeycloakEventBuilder.html" title="type parameter in KeycloakEvent.KeycloakEventBuilder">B</a>&nbsp;time&#8203;(java.lang.Long&nbsp;time)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="type(com.atlan.model.enums.KeycloakEventType)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>type</h4>
-<pre class="methodSignature">public&nbsp;<a href="KeycloakEvent.KeycloakEventBuilder.html" title="type parameter in KeycloakEvent.KeycloakEventBuilder">B</a>&nbsp;type&#8203;(<a href="../enums/KeycloakEventType.html" title="enum in com.atlan.model.enums">KeycloakEventType</a>&nbsp;type)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="userId(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>userId</h4>
-<pre class="methodSignature">public&nbsp;<a href="KeycloakEvent.KeycloakEventBuilder.html" title="type parameter in KeycloakEvent.KeycloakEventBuilder">B</a>&nbsp;userId&#8203;(java.lang.String&nbsp;userId)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
 </dl>
 </li>
 </ul>

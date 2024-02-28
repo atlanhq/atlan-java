@@ -191,12 +191,16 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="EntityFilter.EntityFilterBuilder.html" title="type parameter in EntityFilter.EntityFilterBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#attributeName(java.lang.String)">attributeName</a></span>&#8203;(java.lang.String&nbsp;attributeName)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Name of the attribute on which filtering should be applied.</div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="EntityFilter.EntityFilterBuilder.html" title="type parameter in EntityFilter.EntityFilterBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#attributeValue(java.lang.String)">attributeValue</a></span>&#8203;(java.lang.String&nbsp;attributeValue)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Value that <a href="#attributeName"><code>attributeName</code></a>'s value should be compared against.</div>
+</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>abstract <a href="EntityFilter.EntityFilterBuilder.html" title="type parameter in EntityFilter.EntityFilterBuilder">C</a></code></td>
@@ -206,7 +210,10 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="EntityFilter.EntityFilterBuilder.html" title="type parameter in EntityFilter.EntityFilterBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#operator(com.atlan.model.enums.AtlanComparisonOperator)">operator</a></span>&#8203;(<a href="../enums/AtlanComparisonOperator.html" title="enum in com.atlan.model.enums">AtlanComparisonOperator</a>&nbsp;operator)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Comparison that should be used when checking <a href="#attributeName"><code>attributeName</code></a>'s value against
+ the provided <a href="#attributeValue"><code>attributeValue</code></a>.</div>
+</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>protected abstract <a href="EntityFilter.EntityFilterBuilder.html" title="type parameter in EntityFilter.EntityFilterBuilder">B</a></code></td>
@@ -276,6 +283,49 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 </dl>
 </li>
 </ul>
+<a id="attributeName(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>attributeName</h4>
+<pre class="methodSignature">public&nbsp;<a href="EntityFilter.EntityFilterBuilder.html" title="type parameter in EntityFilter.EntityFilterBuilder">B</a>&nbsp;attributeName&#8203;(java.lang.String&nbsp;attributeName)</pre>
+<div class="block">Name of the attribute on which filtering should be applied.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="operator(com.atlan.model.enums.AtlanComparisonOperator)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>operator</h4>
+<pre class="methodSignature">public&nbsp;<a href="EntityFilter.EntityFilterBuilder.html" title="type parameter in EntityFilter.EntityFilterBuilder">B</a>&nbsp;operator&#8203;(<a href="../enums/AtlanComparisonOperator.html" title="enum in com.atlan.model.enums">AtlanComparisonOperator</a>&nbsp;operator)</pre>
+<div class="block">Comparison that should be used when checking <a href="#attributeName"><code>attributeName</code></a>'s value against
+ the provided <a href="#attributeValue"><code>attributeValue</code></a>.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="attributeValue(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>attributeValue</h4>
+<pre class="methodSignature">public&nbsp;<a href="EntityFilter.EntityFilterBuilder.html" title="type parameter in EntityFilter.EntityFilterBuilder">B</a>&nbsp;attributeValue&#8203;(java.lang.String&nbsp;attributeValue)</pre>
+<div class="block">Value that <a href="#attributeName"><code>attributeName</code></a>'s value should be compared against.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
 <a id="self()">
 <!--   -->
 </a>
@@ -299,45 +349,6 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../core/AtlanObject.AtlanObjectBuilder.html#build()">build</a></code>&nbsp;in class&nbsp;<code><a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in com.atlan.model.core">AtlanObject.AtlanObjectBuilder</a>&lt;<a href="EntityFilter.EntityFilterBuilder.html" title="type parameter in EntityFilter.EntityFilterBuilder">C</a> extends <a href="EntityFilter.html" title="class in com.atlan.model.lineage">EntityFilter</a>,&#8203;<a href="EntityFilter.EntityFilterBuilder.html" title="type parameter in EntityFilter.EntityFilterBuilder">B</a> extends <a href="EntityFilter.EntityFilterBuilder.html" title="class in com.atlan.model.lineage">EntityFilter.EntityFilterBuilder</a>&lt;<a href="EntityFilter.EntityFilterBuilder.html" title="type parameter in EntityFilter.EntityFilterBuilder">C</a>,&#8203;<a href="EntityFilter.EntityFilterBuilder.html" title="type parameter in EntityFilter.EntityFilterBuilder">B</a>&gt;&gt;</code></dd>
-</dl>
-</li>
-</ul>
-<a id="attributeName(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>attributeName</h4>
-<pre class="methodSignature">public&nbsp;<a href="EntityFilter.EntityFilterBuilder.html" title="type parameter in EntityFilter.EntityFilterBuilder">B</a>&nbsp;attributeName&#8203;(java.lang.String&nbsp;attributeName)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="operator(com.atlan.model.enums.AtlanComparisonOperator)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>operator</h4>
-<pre class="methodSignature">public&nbsp;<a href="EntityFilter.EntityFilterBuilder.html" title="type parameter in EntityFilter.EntityFilterBuilder">B</a>&nbsp;operator&#8203;(<a href="../enums/AtlanComparisonOperator.html" title="enum in com.atlan.model.enums">AtlanComparisonOperator</a>&nbsp;operator)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="attributeValue(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>attributeValue</h4>
-<pre class="methodSignature">public&nbsp;<a href="EntityFilter.EntityFilterBuilder.html" title="type parameter in EntityFilter.EntityFilterBuilder">B</a>&nbsp;attributeValue&#8203;(java.lang.String&nbsp;attributeValue)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
 </dl>
 </li>
 </ul>

@@ -191,7 +191,9 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="WorkflowSpec.WorkflowSpecBuilder.html" title="type parameter in WorkflowSpec.WorkflowSpecBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#arguments(java.lang.Object)">arguments</a></span>&#8203;(java.lang.Object&nbsp;arguments)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">TBC</div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>abstract <a href="WorkflowSpec.WorkflowSpecBuilder.html" title="type parameter in WorkflowSpec.WorkflowSpecBuilder">C</a></code></td>
@@ -201,7 +203,9 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="WorkflowSpec.WorkflowSpecBuilder.html" title="type parameter in WorkflowSpec.WorkflowSpecBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#entrypoint(java.lang.String)">entrypoint</a></span>&#8203;(java.lang.String&nbsp;entrypoint)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Name of the template to use as the starting point when running the workflow.</div>
+</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>protected abstract <a href="WorkflowSpec.WorkflowSpecBuilder.html" title="type parameter in WorkflowSpec.WorkflowSpecBuilder">B</a></code></td>
@@ -211,7 +215,9 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="WorkflowSpec.WorkflowSpecBuilder.html" title="type parameter in WorkflowSpec.WorkflowSpecBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#templates(java.util.List)">templates</a></span>&#8203;(java.util.List&lt;<a href="WorkflowTemplate.html" title="class in com.atlan.model.workflow">WorkflowTemplate</a>&gt;&nbsp;templates)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">List of specific steps in the overall workflow process.</div>
+</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
@@ -221,12 +227,16 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="WorkflowSpec.WorkflowSpecBuilder.html" title="type parameter in WorkflowSpec.WorkflowSpecBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#workflowMetadata(com.atlan.model.workflow.WorkflowMetadata)">workflowMetadata</a></span>&#8203;(<a href="WorkflowMetadata.html" title="class in com.atlan.model.workflow">WorkflowMetadata</a>&nbsp;workflowMetadata)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Metadata about the workflow, typically the <code>package.argoproj.io/name</code> annotation.</div>
+</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code><a href="WorkflowSpec.WorkflowSpecBuilder.html" title="type parameter in WorkflowSpec.WorkflowSpecBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#workflowTemplateRef(java.util.Map)">workflowTemplateRef</a></span>&#8203;(java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;workflowTemplateRef)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">TBC</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -286,6 +296,76 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 </dl>
 </li>
 </ul>
+<a id="templates(java.util.List)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>templates</h4>
+<pre class="methodSignature">public&nbsp;<a href="WorkflowSpec.WorkflowSpecBuilder.html" title="type parameter in WorkflowSpec.WorkflowSpecBuilder">B</a>&nbsp;templates&#8203;(java.util.List&lt;<a href="WorkflowTemplate.html" title="class in com.atlan.model.workflow">WorkflowTemplate</a>&gt;&nbsp;templates)</pre>
+<div class="block">List of specific steps in the overall workflow process.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="entrypoint(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>entrypoint</h4>
+<pre class="methodSignature">public&nbsp;<a href="WorkflowSpec.WorkflowSpecBuilder.html" title="type parameter in WorkflowSpec.WorkflowSpecBuilder">B</a>&nbsp;entrypoint&#8203;(java.lang.String&nbsp;entrypoint)</pre>
+<div class="block">Name of the template to use as the starting point when running the workflow.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="arguments(java.lang.Object)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>arguments</h4>
+<pre class="methodSignature">public&nbsp;<a href="WorkflowSpec.WorkflowSpecBuilder.html" title="type parameter in WorkflowSpec.WorkflowSpecBuilder">B</a>&nbsp;arguments&#8203;(java.lang.Object&nbsp;arguments)</pre>
+<div class="block">TBC</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="workflowTemplateRef(java.util.Map)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>workflowTemplateRef</h4>
+<pre class="methodSignature">public&nbsp;<a href="WorkflowSpec.WorkflowSpecBuilder.html" title="type parameter in WorkflowSpec.WorkflowSpecBuilder">B</a>&nbsp;workflowTemplateRef&#8203;(java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;workflowTemplateRef)</pre>
+<div class="block">TBC</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="workflowMetadata(com.atlan.model.workflow.WorkflowMetadata)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>workflowMetadata</h4>
+<pre class="methodSignature">public&nbsp;<a href="WorkflowSpec.WorkflowSpecBuilder.html" title="type parameter in WorkflowSpec.WorkflowSpecBuilder">B</a>&nbsp;workflowMetadata&#8203;(<a href="WorkflowMetadata.html" title="class in com.atlan.model.workflow">WorkflowMetadata</a>&nbsp;workflowMetadata)</pre>
+<div class="block">Metadata about the workflow, typically the <code>package.argoproj.io/name</code> annotation.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
 <a id="self()">
 <!--   -->
 </a>
@@ -309,71 +389,6 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../core/AtlanObject.AtlanObjectBuilder.html#build()">build</a></code>&nbsp;in class&nbsp;<code><a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in com.atlan.model.core">AtlanObject.AtlanObjectBuilder</a>&lt;<a href="WorkflowSpec.WorkflowSpecBuilder.html" title="type parameter in WorkflowSpec.WorkflowSpecBuilder">C</a> extends <a href="WorkflowSpec.html" title="class in com.atlan.model.workflow">WorkflowSpec</a>,&#8203;<a href="WorkflowSpec.WorkflowSpecBuilder.html" title="type parameter in WorkflowSpec.WorkflowSpecBuilder">B</a> extends <a href="WorkflowSpec.WorkflowSpecBuilder.html" title="class in com.atlan.model.workflow">WorkflowSpec.WorkflowSpecBuilder</a>&lt;<a href="WorkflowSpec.WorkflowSpecBuilder.html" title="type parameter in WorkflowSpec.WorkflowSpecBuilder">C</a>,&#8203;<a href="WorkflowSpec.WorkflowSpecBuilder.html" title="type parameter in WorkflowSpec.WorkflowSpecBuilder">B</a>&gt;&gt;</code></dd>
-</dl>
-</li>
-</ul>
-<a id="templates(java.util.List)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>templates</h4>
-<pre class="methodSignature">public&nbsp;<a href="WorkflowSpec.WorkflowSpecBuilder.html" title="type parameter in WorkflowSpec.WorkflowSpecBuilder">B</a>&nbsp;templates&#8203;(java.util.List&lt;<a href="WorkflowTemplate.html" title="class in com.atlan.model.workflow">WorkflowTemplate</a>&gt;&nbsp;templates)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="entrypoint(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>entrypoint</h4>
-<pre class="methodSignature">public&nbsp;<a href="WorkflowSpec.WorkflowSpecBuilder.html" title="type parameter in WorkflowSpec.WorkflowSpecBuilder">B</a>&nbsp;entrypoint&#8203;(java.lang.String&nbsp;entrypoint)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="arguments(java.lang.Object)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>arguments</h4>
-<pre class="methodSignature">public&nbsp;<a href="WorkflowSpec.WorkflowSpecBuilder.html" title="type parameter in WorkflowSpec.WorkflowSpecBuilder">B</a>&nbsp;arguments&#8203;(java.lang.Object&nbsp;arguments)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="workflowTemplateRef(java.util.Map)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>workflowTemplateRef</h4>
-<pre class="methodSignature">public&nbsp;<a href="WorkflowSpec.WorkflowSpecBuilder.html" title="type parameter in WorkflowSpec.WorkflowSpecBuilder">B</a>&nbsp;workflowTemplateRef&#8203;(java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;workflowTemplateRef)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="workflowMetadata(com.atlan.model.workflow.WorkflowMetadata)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>workflowMetadata</h4>
-<pre class="methodSignature">public&nbsp;<a href="WorkflowSpec.WorkflowSpecBuilder.html" title="type parameter in WorkflowSpec.WorkflowSpecBuilder">B</a>&nbsp;workflowMetadata&#8203;(<a href="WorkflowMetadata.html" title="class in com.atlan.model.workflow">WorkflowMetadata</a>&nbsp;workflowMetadata)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
 </dl>
 </li>
 </ul>

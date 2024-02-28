@@ -221,7 +221,9 @@ extends java.lang.Object</pre>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#_credential(com.atlan.model.admin.Credential.CredentialBuilder)">_credential</a></span>&#8203;(<a href="../admin/Credential.CredentialBuilder.html" title="class in com.atlan.model.admin">Credential.CredentialBuilder</a>&lt;?,&#8203;?&gt;&nbsp;_credential)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Credentials for the package to access its source.</div>
+</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">B</a></code></td>
@@ -237,7 +239,9 @@ extends java.lang.Object</pre>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#_name(java.lang.String)">_name</a></span>&#8203;(java.lang.String&nbsp;_name)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Unique name of the package, usually @atlan/something.</div>
+</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">B</a></code></td>
@@ -253,12 +257,16 @@ extends java.lang.Object</pre>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code><a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#_prefix(java.lang.String)">_prefix</a></span>&#8203;(java.lang.String&nbsp;_prefix)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Uniquely identifies the type of package.</div>
+</td>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code><a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#_runName(java.lang.String)">_runName</a></span>&#8203;(java.lang.String&nbsp;_runName)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Unique name for the run of a package.</div>
+</td>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>protected <a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">B</a></code></td>
@@ -391,24 +399,6 @@ extends java.lang.Object</pre>
 <pre class="methodSignature">protected&nbsp;<a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">B</a>&nbsp;$fillValuesFrom&#8203;(<a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">C</a>&nbsp;instance)</pre>
 </li>
 </ul>
-<a id="self()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>self</h4>
-<pre class="methodSignature">protected abstract&nbsp;<a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">B</a>&nbsp;self()</pre>
-</li>
-</ul>
-<a id="build()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>build</h4>
-<pre class="methodSignature">public abstract&nbsp;<a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">C</a>&nbsp;build()</pre>
-</li>
-</ul>
 <a id="_prefix(java.lang.String)">
 <!--   -->
 </a>
@@ -416,6 +406,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>_prefix</h4>
 <pre class="methodSignature">public&nbsp;<a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">B</a>&nbsp;_prefix&#8203;(java.lang.String&nbsp;_prefix)</pre>
+<div class="block">Uniquely identifies the type of package.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -429,6 +420,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>_name</h4>
 <pre class="methodSignature">public&nbsp;<a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">B</a>&nbsp;_name&#8203;(java.lang.String&nbsp;_name)</pre>
+<div class="block">Unique name of the package, usually @atlan/something.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -442,6 +434,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>_runName</h4>
 <pre class="methodSignature">public&nbsp;<a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">B</a>&nbsp;_runName&#8203;(java.lang.String&nbsp;_runName)</pre>
+<div class="block">Unique name for the run of a package.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -539,10 +532,29 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>_credential</h4>
 <pre class="methodSignature">public&nbsp;<a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">B</a>&nbsp;_credential&#8203;(<a href="../admin/Credential.CredentialBuilder.html" title="class in com.atlan.model.admin">Credential.CredentialBuilder</a>&lt;?,&#8203;?&gt;&nbsp;_credential)</pre>
+<div class="block">Credentials for the package to access its source.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
 </dl>
+</li>
+</ul>
+<a id="self()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>self</h4>
+<pre class="methodSignature">protected abstract&nbsp;<a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">B</a>&nbsp;self()</pre>
+</li>
+</ul>
+<a id="build()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>build</h4>
+<pre class="methodSignature">public abstract&nbsp;<a href="AbstractPackage.AbstractPackageBuilder.html" title="type parameter in AbstractPackage.AbstractPackageBuilder">C</a>&nbsp;build()</pre>
 </li>
 </ul>
 <a id="toString()">

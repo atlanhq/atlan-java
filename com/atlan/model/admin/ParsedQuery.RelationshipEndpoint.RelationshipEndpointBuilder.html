@@ -196,22 +196,30 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="ParsedQuery.RelationshipEndpoint.RelationshipEndpointBuilder.html" title="type parameter in ParsedQuery.RelationshipEndpoint.RelationshipEndpointBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#column(java.lang.String)">column</a></span>&#8203;(java.lang.String&nbsp;column)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Name of the column used by this end of the relationship.</div>
+</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="ParsedQuery.RelationshipEndpoint.RelationshipEndpointBuilder.html" title="type parameter in ParsedQuery.RelationshipEndpoint.RelationshipEndpointBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#id(java.lang.String)">id</a></span>&#8203;(java.lang.String&nbsp;id)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Numeric identifier for the column referred to by this end of the relationship.</div>
+</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="ParsedQuery.RelationshipEndpoint.RelationshipEndpointBuilder.html" title="type parameter in ParsedQuery.RelationshipEndpoint.RelationshipEndpointBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parentId(java.lang.String)">parentId</a></span>&#8203;(java.lang.String&nbsp;parentId)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Numeric identifier of the parent object in which the column exists.</div>
+</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="ParsedQuery.RelationshipEndpoint.RelationshipEndpointBuilder.html" title="type parameter in ParsedQuery.RelationshipEndpoint.RelationshipEndpointBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parentName(java.lang.String)">parentName</a></span>&#8203;(java.lang.String&nbsp;parentName)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Name of the parent object in which the column exists.</div>
+</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>protected abstract <a href="ParsedQuery.RelationshipEndpoint.RelationshipEndpointBuilder.html" title="type parameter in ParsedQuery.RelationshipEndpoint.RelationshipEndpointBuilder">B</a></code></td>
@@ -281,6 +289,62 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 </dl>
 </li>
 </ul>
+<a id="id(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>id</h4>
+<pre class="methodSignature">public&nbsp;<a href="ParsedQuery.RelationshipEndpoint.RelationshipEndpointBuilder.html" title="type parameter in ParsedQuery.RelationshipEndpoint.RelationshipEndpointBuilder">B</a>&nbsp;id&#8203;(java.lang.String&nbsp;id)</pre>
+<div class="block">Numeric identifier for the column referred to by this end of the relationship.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="column(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>column</h4>
+<pre class="methodSignature">public&nbsp;<a href="ParsedQuery.RelationshipEndpoint.RelationshipEndpointBuilder.html" title="type parameter in ParsedQuery.RelationshipEndpoint.RelationshipEndpointBuilder">B</a>&nbsp;column&#8203;(java.lang.String&nbsp;column)</pre>
+<div class="block">Name of the column used by this end of the relationship.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="parentId(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>parentId</h4>
+<pre class="methodSignature">public&nbsp;<a href="ParsedQuery.RelationshipEndpoint.RelationshipEndpointBuilder.html" title="type parameter in ParsedQuery.RelationshipEndpoint.RelationshipEndpointBuilder">B</a>&nbsp;parentId&#8203;(java.lang.String&nbsp;parentId)</pre>
+<div class="block">Numeric identifier of the parent object in which the column exists.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="parentName(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>parentName</h4>
+<pre class="methodSignature">public&nbsp;<a href="ParsedQuery.RelationshipEndpoint.RelationshipEndpointBuilder.html" title="type parameter in ParsedQuery.RelationshipEndpoint.RelationshipEndpointBuilder">B</a>&nbsp;parentName&#8203;(java.lang.String&nbsp;parentName)</pre>
+<div class="block">Name of the parent object in which the column exists.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
 <a id="self()">
 <!--   -->
 </a>
@@ -304,58 +368,6 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../core/AtlanObject.AtlanObjectBuilder.html#build()">build</a></code>&nbsp;in class&nbsp;<code><a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in com.atlan.model.core">AtlanObject.AtlanObjectBuilder</a>&lt;<a href="ParsedQuery.RelationshipEndpoint.RelationshipEndpointBuilder.html" title="type parameter in ParsedQuery.RelationshipEndpoint.RelationshipEndpointBuilder">C</a> extends <a href="ParsedQuery.RelationshipEndpoint.html" title="class in com.atlan.model.admin">ParsedQuery.RelationshipEndpoint</a>,&#8203;<a href="ParsedQuery.RelationshipEndpoint.RelationshipEndpointBuilder.html" title="type parameter in ParsedQuery.RelationshipEndpoint.RelationshipEndpointBuilder">B</a> extends <a href="ParsedQuery.RelationshipEndpoint.RelationshipEndpointBuilder.html" title="class in com.atlan.model.admin">ParsedQuery.RelationshipEndpoint.RelationshipEndpointBuilder</a>&lt;<a href="ParsedQuery.RelationshipEndpoint.RelationshipEndpointBuilder.html" title="type parameter in ParsedQuery.RelationshipEndpoint.RelationshipEndpointBuilder">C</a>,&#8203;<a href="ParsedQuery.RelationshipEndpoint.RelationshipEndpointBuilder.html" title="type parameter in ParsedQuery.RelationshipEndpoint.RelationshipEndpointBuilder">B</a>&gt;&gt;</code></dd>
-</dl>
-</li>
-</ul>
-<a id="id(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>id</h4>
-<pre class="methodSignature">public&nbsp;<a href="ParsedQuery.RelationshipEndpoint.RelationshipEndpointBuilder.html" title="type parameter in ParsedQuery.RelationshipEndpoint.RelationshipEndpointBuilder">B</a>&nbsp;id&#8203;(java.lang.String&nbsp;id)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="column(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>column</h4>
-<pre class="methodSignature">public&nbsp;<a href="ParsedQuery.RelationshipEndpoint.RelationshipEndpointBuilder.html" title="type parameter in ParsedQuery.RelationshipEndpoint.RelationshipEndpointBuilder">B</a>&nbsp;column&#8203;(java.lang.String&nbsp;column)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="parentId(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>parentId</h4>
-<pre class="methodSignature">public&nbsp;<a href="ParsedQuery.RelationshipEndpoint.RelationshipEndpointBuilder.html" title="type parameter in ParsedQuery.RelationshipEndpoint.RelationshipEndpointBuilder">B</a>&nbsp;parentId&#8203;(java.lang.String&nbsp;parentId)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="parentName(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>parentName</h4>
-<pre class="methodSignature">public&nbsp;<a href="ParsedQuery.RelationshipEndpoint.RelationshipEndpointBuilder.html" title="type parameter in ParsedQuery.RelationshipEndpoint.RelationshipEndpointBuilder">B</a>&nbsp;parentName&#8203;(java.lang.String&nbsp;parentName)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
 </dl>
 </li>
 </ul>

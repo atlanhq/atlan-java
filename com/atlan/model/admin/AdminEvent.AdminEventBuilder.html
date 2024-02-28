@@ -191,7 +191,9 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="AdminEvent.AdminEventBuilder.html" title="type parameter in AdminEvent.AdminEventBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#authDetails(com.atlan.model.admin.AuthDetails)">authDetails</a></span>&#8203;(<a href="AuthDetails.html" title="class in com.atlan.model.admin">AuthDetails</a>&nbsp;authDetails)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Details of who carried out the operation.</div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>abstract <a href="AdminEvent.AdminEventBuilder.html" title="type parameter in AdminEvent.AdminEventBuilder">C</a></code></td>
@@ -201,27 +203,37 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="AdminEvent.AdminEventBuilder.html" title="type parameter in AdminEvent.AdminEventBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#operationType(com.atlan.model.enums.AdminOperationType)">operationType</a></span>&#8203;(<a href="../enums/AdminOperationType.html" title="enum in com.atlan.model.enums">AdminOperationType</a>&nbsp;operationType)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Type of admin operation that occurred.</div>
+</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="AdminEvent.AdminEventBuilder.html" title="type parameter in AdminEvent.AdminEventBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#realmId(java.lang.String)">realmId</a></span>&#8203;(java.lang.String&nbsp;realmId)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Unique identifier of the realm in which the event occurred (usually <code>default</code>).</div>
+</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="AdminEvent.AdminEventBuilder.html" title="type parameter in AdminEvent.AdminEventBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#representation(java.lang.String)">representation</a></span>&#8203;(java.lang.String&nbsp;representation)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Detailed resource that was created or changed as a result of the operation.</div>
+</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="AdminEvent.AdminEventBuilder.html" title="type parameter in AdminEvent.AdminEventBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#resourcePath(java.lang.String)">resourcePath</a></span>&#8203;(java.lang.String&nbsp;resourcePath)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Location of the resource that was created or changed as a result of the operation.</div>
+</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="AdminEvent.AdminEventBuilder.html" title="type parameter in AdminEvent.AdminEventBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#resourceType(com.atlan.model.enums.AdminResourceType)">resourceType</a></span>&#8203;(<a href="../enums/AdminResourceType.html" title="enum in com.atlan.model.enums">AdminResourceType</a>&nbsp;resourceType)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Type of resource for the admin operation that occurred.</div>
+</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>protected abstract <a href="AdminEvent.AdminEventBuilder.html" title="type parameter in AdminEvent.AdminEventBuilder">B</a></code></td>
@@ -231,7 +243,9 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code><a href="AdminEvent.AdminEventBuilder.html" title="type parameter in AdminEvent.AdminEventBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#time(java.lang.Long)">time</a></span>&#8203;(java.lang.Long&nbsp;time)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Time (epoch) when the admin operation occurred, in milliseconds.</div>
+</td>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
@@ -296,6 +310,104 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 </dl>
 </li>
 </ul>
+<a id="operationType(com.atlan.model.enums.AdminOperationType)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>operationType</h4>
+<pre class="methodSignature">public&nbsp;<a href="AdminEvent.AdminEventBuilder.html" title="type parameter in AdminEvent.AdminEventBuilder">B</a>&nbsp;operationType&#8203;(<a href="../enums/AdminOperationType.html" title="enum in com.atlan.model.enums">AdminOperationType</a>&nbsp;operationType)</pre>
+<div class="block">Type of admin operation that occurred.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="realmId(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>realmId</h4>
+<pre class="methodSignature">public&nbsp;<a href="AdminEvent.AdminEventBuilder.html" title="type parameter in AdminEvent.AdminEventBuilder">B</a>&nbsp;realmId&#8203;(java.lang.String&nbsp;realmId)</pre>
+<div class="block">Unique identifier of the realm in which the event occurred (usually <code>default</code>).</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="representation(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>representation</h4>
+<pre class="methodSignature">public&nbsp;<a href="AdminEvent.AdminEventBuilder.html" title="type parameter in AdminEvent.AdminEventBuilder">B</a>&nbsp;representation&#8203;(java.lang.String&nbsp;representation)</pre>
+<div class="block">Detailed resource that was created or changed as a result of the operation.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="resourcePath(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>resourcePath</h4>
+<pre class="methodSignature">public&nbsp;<a href="AdminEvent.AdminEventBuilder.html" title="type parameter in AdminEvent.AdminEventBuilder">B</a>&nbsp;resourcePath&#8203;(java.lang.String&nbsp;resourcePath)</pre>
+<div class="block">Location of the resource that was created or changed as a result of the operation.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="resourceType(com.atlan.model.enums.AdminResourceType)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>resourceType</h4>
+<pre class="methodSignature">public&nbsp;<a href="AdminEvent.AdminEventBuilder.html" title="type parameter in AdminEvent.AdminEventBuilder">B</a>&nbsp;resourceType&#8203;(<a href="../enums/AdminResourceType.html" title="enum in com.atlan.model.enums">AdminResourceType</a>&nbsp;resourceType)</pre>
+<div class="block">Type of resource for the admin operation that occurred.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="time(java.lang.Long)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>time</h4>
+<pre class="methodSignature">public&nbsp;<a href="AdminEvent.AdminEventBuilder.html" title="type parameter in AdminEvent.AdminEventBuilder">B</a>&nbsp;time&#8203;(java.lang.Long&nbsp;time)</pre>
+<div class="block">Time (epoch) when the admin operation occurred, in milliseconds.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="authDetails(com.atlan.model.admin.AuthDetails)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>authDetails</h4>
+<pre class="methodSignature">public&nbsp;<a href="AdminEvent.AdminEventBuilder.html" title="type parameter in AdminEvent.AdminEventBuilder">B</a>&nbsp;authDetails&#8203;(<a href="AuthDetails.html" title="class in com.atlan.model.admin">AuthDetails</a>&nbsp;authDetails)</pre>
+<div class="block">Details of who carried out the operation.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
 <a id="self()">
 <!--   -->
 </a>
@@ -319,97 +431,6 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../core/AtlanObject.AtlanObjectBuilder.html#build()">build</a></code>&nbsp;in class&nbsp;<code><a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in com.atlan.model.core">AtlanObject.AtlanObjectBuilder</a>&lt;<a href="AdminEvent.AdminEventBuilder.html" title="type parameter in AdminEvent.AdminEventBuilder">C</a> extends <a href="AdminEvent.html" title="class in com.atlan.model.admin">AdminEvent</a>,&#8203;<a href="AdminEvent.AdminEventBuilder.html" title="type parameter in AdminEvent.AdminEventBuilder">B</a> extends <a href="AdminEvent.AdminEventBuilder.html" title="class in com.atlan.model.admin">AdminEvent.AdminEventBuilder</a>&lt;<a href="AdminEvent.AdminEventBuilder.html" title="type parameter in AdminEvent.AdminEventBuilder">C</a>,&#8203;<a href="AdminEvent.AdminEventBuilder.html" title="type parameter in AdminEvent.AdminEventBuilder">B</a>&gt;&gt;</code></dd>
-</dl>
-</li>
-</ul>
-<a id="operationType(com.atlan.model.enums.AdminOperationType)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>operationType</h4>
-<pre class="methodSignature">public&nbsp;<a href="AdminEvent.AdminEventBuilder.html" title="type parameter in AdminEvent.AdminEventBuilder">B</a>&nbsp;operationType&#8203;(<a href="../enums/AdminOperationType.html" title="enum in com.atlan.model.enums">AdminOperationType</a>&nbsp;operationType)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="realmId(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>realmId</h4>
-<pre class="methodSignature">public&nbsp;<a href="AdminEvent.AdminEventBuilder.html" title="type parameter in AdminEvent.AdminEventBuilder">B</a>&nbsp;realmId&#8203;(java.lang.String&nbsp;realmId)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="representation(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>representation</h4>
-<pre class="methodSignature">public&nbsp;<a href="AdminEvent.AdminEventBuilder.html" title="type parameter in AdminEvent.AdminEventBuilder">B</a>&nbsp;representation&#8203;(java.lang.String&nbsp;representation)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="resourcePath(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>resourcePath</h4>
-<pre class="methodSignature">public&nbsp;<a href="AdminEvent.AdminEventBuilder.html" title="type parameter in AdminEvent.AdminEventBuilder">B</a>&nbsp;resourcePath&#8203;(java.lang.String&nbsp;resourcePath)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="resourceType(com.atlan.model.enums.AdminResourceType)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>resourceType</h4>
-<pre class="methodSignature">public&nbsp;<a href="AdminEvent.AdminEventBuilder.html" title="type parameter in AdminEvent.AdminEventBuilder">B</a>&nbsp;resourceType&#8203;(<a href="../enums/AdminResourceType.html" title="enum in com.atlan.model.enums">AdminResourceType</a>&nbsp;resourceType)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="time(java.lang.Long)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>time</h4>
-<pre class="methodSignature">public&nbsp;<a href="AdminEvent.AdminEventBuilder.html" title="type parameter in AdminEvent.AdminEventBuilder">B</a>&nbsp;time&#8203;(java.lang.Long&nbsp;time)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="authDetails(com.atlan.model.admin.AuthDetails)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>authDetails</h4>
-<pre class="methodSignature">public&nbsp;<a href="AdminEvent.AdminEventBuilder.html" title="type parameter in AdminEvent.AdminEventBuilder">B</a>&nbsp;authDetails&#8203;(<a href="AuthDetails.html" title="class in com.atlan.model.admin">AuthDetails</a>&nbsp;authDetails)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
 </dl>
 </li>
 </ul>

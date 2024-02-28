@@ -201,17 +201,23 @@ extends <a href="TypeDef.TypeDefBuilder.html" title="class in com.atlan.model.ty
 <tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="EntityDef.EntityDefBuilder.html" title="type parameter in EntityDef.EntityDefBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#businessAttributeDefs(java.util.Map)">businessAttributeDefs</a></span>&#8203;(java.util.Map&lt;java.lang.String,&#8203;java.lang.Object&gt;&nbsp;businessAttributeDefs)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Unused.</div>
+</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="EntityDef.EntityDefBuilder.html" title="type parameter in EntityDef.EntityDefBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#category(com.atlan.model.enums.AtlanTypeCategory)">category</a></span>&#8203;(<a href="../enums/AtlanTypeCategory.html" title="enum in com.atlan.model.enums">AtlanTypeCategory</a>&nbsp;category)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Fixed category for entity typedefs.</div>
+</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="EntityDef.EntityDefBuilder.html" title="type parameter in EntityDef.EntityDefBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#relationshipAttributeDefs(java.util.List)">relationshipAttributeDefs</a></span>&#8203;(java.util.List&lt;<a href="RelationshipAttributeDef.html" title="class in com.atlan.model.typedefs">RelationshipAttributeDef</a>&gt;&nbsp;relationshipAttributeDefs)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Relationships that can exist for the entity.</div>
+</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>protected abstract <a href="EntityDef.EntityDefBuilder.html" title="type parameter in EntityDef.EntityDefBuilder">B</a></code></td>
@@ -221,12 +227,16 @@ extends <a href="TypeDef.TypeDefBuilder.html" title="class in com.atlan.model.ty
 <tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="EntityDef.EntityDefBuilder.html" title="type parameter in EntityDef.EntityDefBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#subTypes(java.util.List)">subTypes</a></span>&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;subTypes)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Subtypes of this entity type.</div>
+</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="EntityDef.EntityDefBuilder.html" title="type parameter in EntityDef.EntityDefBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#superTypes(java.util.List)">superTypes</a></span>&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;superTypes)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Supertypes of this entity type.</div>
+</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
@@ -298,6 +308,78 @@ extends <a href="TypeDef.TypeDefBuilder.html" title="class in com.atlan.model.ty
 </dl>
 </li>
 </ul>
+<a id="category(com.atlan.model.enums.AtlanTypeCategory)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>category</h4>
+<pre class="methodSignature">public&nbsp;<a href="EntityDef.EntityDefBuilder.html" title="type parameter in EntityDef.EntityDefBuilder">B</a>&nbsp;category&#8203;(<a href="../enums/AtlanTypeCategory.html" title="enum in com.atlan.model.enums">AtlanTypeCategory</a>&nbsp;category)</pre>
+<div class="block">Fixed category for entity typedefs.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<dd><code><a href="TypeDef.TypeDefBuilder.html#category(com.atlan.model.enums.AtlanTypeCategory)">category</a></code>&nbsp;in class&nbsp;<code><a href="TypeDef.TypeDefBuilder.html" title="class in com.atlan.model.typedefs">TypeDef.TypeDefBuilder</a>&lt;<a href="EntityDef.EntityDefBuilder.html" title="type parameter in EntityDef.EntityDefBuilder">C</a> extends <a href="EntityDef.html" title="class in com.atlan.model.typedefs">EntityDef</a>,&#8203;<a href="EntityDef.EntityDefBuilder.html" title="type parameter in EntityDef.EntityDefBuilder">B</a> extends <a href="EntityDef.EntityDefBuilder.html" title="class in com.atlan.model.typedefs">EntityDef.EntityDefBuilder</a>&lt;<a href="EntityDef.EntityDefBuilder.html" title="type parameter in EntityDef.EntityDefBuilder">C</a>,&#8203;<a href="EntityDef.EntityDefBuilder.html" title="type parameter in EntityDef.EntityDefBuilder">B</a>&gt;&gt;</code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="relationshipAttributeDefs(java.util.List)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>relationshipAttributeDefs</h4>
+<pre class="methodSignature">public&nbsp;<a href="EntityDef.EntityDefBuilder.html" title="type parameter in EntityDef.EntityDefBuilder">B</a>&nbsp;relationshipAttributeDefs&#8203;(java.util.List&lt;<a href="RelationshipAttributeDef.html" title="class in com.atlan.model.typedefs">RelationshipAttributeDef</a>&gt;&nbsp;relationshipAttributeDefs)</pre>
+<div class="block">Relationships that can exist for the entity.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="subTypes(java.util.List)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>subTypes</h4>
+<pre class="methodSignature">public&nbsp;<a href="EntityDef.EntityDefBuilder.html" title="type parameter in EntityDef.EntityDefBuilder">B</a>&nbsp;subTypes&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;subTypes)</pre>
+<div class="block">Subtypes of this entity type.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="superTypes(java.util.List)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>superTypes</h4>
+<pre class="methodSignature">public&nbsp;<a href="EntityDef.EntityDefBuilder.html" title="type parameter in EntityDef.EntityDefBuilder">B</a>&nbsp;superTypes&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;superTypes)</pre>
+<div class="block">Supertypes of this entity type.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="businessAttributeDefs(java.util.Map)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>businessAttributeDefs</h4>
+<pre class="methodSignature">public&nbsp;<a href="EntityDef.EntityDefBuilder.html" title="type parameter in EntityDef.EntityDefBuilder">B</a>&nbsp;businessAttributeDefs&#8203;(java.util.Map&lt;java.lang.String,&#8203;java.lang.Object&gt;&nbsp;businessAttributeDefs)</pre>
+<div class="block">Unused.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
 <a id="self()">
 <!--   -->
 </a>
@@ -321,73 +403,6 @@ extends <a href="TypeDef.TypeDefBuilder.html" title="class in com.atlan.model.ty
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="TypeDef.TypeDefBuilder.html#build()">build</a></code>&nbsp;in class&nbsp;<code><a href="TypeDef.TypeDefBuilder.html" title="class in com.atlan.model.typedefs">TypeDef.TypeDefBuilder</a>&lt;<a href="EntityDef.EntityDefBuilder.html" title="type parameter in EntityDef.EntityDefBuilder">C</a> extends <a href="EntityDef.html" title="class in com.atlan.model.typedefs">EntityDef</a>,&#8203;<a href="EntityDef.EntityDefBuilder.html" title="type parameter in EntityDef.EntityDefBuilder">B</a> extends <a href="EntityDef.EntityDefBuilder.html" title="class in com.atlan.model.typedefs">EntityDef.EntityDefBuilder</a>&lt;<a href="EntityDef.EntityDefBuilder.html" title="type parameter in EntityDef.EntityDefBuilder">C</a>,&#8203;<a href="EntityDef.EntityDefBuilder.html" title="type parameter in EntityDef.EntityDefBuilder">B</a>&gt;&gt;</code></dd>
-</dl>
-</li>
-</ul>
-<a id="category(com.atlan.model.enums.AtlanTypeCategory)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>category</h4>
-<pre class="methodSignature">public&nbsp;<a href="EntityDef.EntityDefBuilder.html" title="type parameter in EntityDef.EntityDefBuilder">B</a>&nbsp;category&#8203;(<a href="../enums/AtlanTypeCategory.html" title="enum in com.atlan.model.enums">AtlanTypeCategory</a>&nbsp;category)</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="TypeDef.TypeDefBuilder.html#category(com.atlan.model.enums.AtlanTypeCategory)">category</a></code>&nbsp;in class&nbsp;<code><a href="TypeDef.TypeDefBuilder.html" title="class in com.atlan.model.typedefs">TypeDef.TypeDefBuilder</a>&lt;<a href="EntityDef.EntityDefBuilder.html" title="type parameter in EntityDef.EntityDefBuilder">C</a> extends <a href="EntityDef.html" title="class in com.atlan.model.typedefs">EntityDef</a>,&#8203;<a href="EntityDef.EntityDefBuilder.html" title="type parameter in EntityDef.EntityDefBuilder">B</a> extends <a href="EntityDef.EntityDefBuilder.html" title="class in com.atlan.model.typedefs">EntityDef.EntityDefBuilder</a>&lt;<a href="EntityDef.EntityDefBuilder.html" title="type parameter in EntityDef.EntityDefBuilder">C</a>,&#8203;<a href="EntityDef.EntityDefBuilder.html" title="type parameter in EntityDef.EntityDefBuilder">B</a>&gt;&gt;</code></dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="relationshipAttributeDefs(java.util.List)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>relationshipAttributeDefs</h4>
-<pre class="methodSignature">public&nbsp;<a href="EntityDef.EntityDefBuilder.html" title="type parameter in EntityDef.EntityDefBuilder">B</a>&nbsp;relationshipAttributeDefs&#8203;(java.util.List&lt;<a href="RelationshipAttributeDef.html" title="class in com.atlan.model.typedefs">RelationshipAttributeDef</a>&gt;&nbsp;relationshipAttributeDefs)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="subTypes(java.util.List)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>subTypes</h4>
-<pre class="methodSignature">public&nbsp;<a href="EntityDef.EntityDefBuilder.html" title="type parameter in EntityDef.EntityDefBuilder">B</a>&nbsp;subTypes&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;subTypes)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="superTypes(java.util.List)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>superTypes</h4>
-<pre class="methodSignature">public&nbsp;<a href="EntityDef.EntityDefBuilder.html" title="type parameter in EntityDef.EntityDefBuilder">B</a>&nbsp;superTypes&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;superTypes)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="businessAttributeDefs(java.util.Map)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>businessAttributeDefs</h4>
-<pre class="methodSignature">public&nbsp;<a href="EntityDef.EntityDefBuilder.html" title="type parameter in EntityDef.EntityDefBuilder">B</a>&nbsp;businessAttributeDefs&#8203;(java.util.Map&lt;java.lang.String,&#8203;java.lang.Object&gt;&nbsp;businessAttributeDefs)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
 </dl>
 </li>
 </ul>

@@ -195,7 +195,9 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="AbstractPolicy.AbstractPolicyBuilder.html" title="type parameter in AbstractPolicy.AbstractPolicyBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#allow(java.lang.Boolean)">allow</a></span>&#8203;(java.lang.Boolean&nbsp;allow)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Whether the actions are granted (true) or explicitly denied (false).</div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>abstract <a href="AbstractPolicy.AbstractPolicyBuilder.html" title="type parameter in AbstractPolicy.AbstractPolicyBuilder">C</a></code></td>
@@ -205,27 +207,37 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="AbstractPolicy.AbstractPolicyBuilder.html" title="type parameter in AbstractPolicy.AbstractPolicyBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createdAt(java.lang.Long)">createdAt</a></span>&#8203;(java.lang.Long&nbsp;createdAt)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Time (epoch) at which this policy was created, in milliseconds.</div>
+</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="AbstractPolicy.AbstractPolicyBuilder.html" title="type parameter in AbstractPolicy.AbstractPolicyBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createdBy(java.lang.String)">createdBy</a></span>&#8203;(java.lang.String&nbsp;createdBy)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Username of the user who created this policy.</div>
+</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="AbstractPolicy.AbstractPolicyBuilder.html" title="type parameter in AbstractPolicy.AbstractPolicyBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#description(java.lang.String)">description</a></span>&#8203;(java.lang.String&nbsp;description)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Explanation of the policy.</div>
+</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="AbstractPolicy.AbstractPolicyBuilder.html" title="type parameter in AbstractPolicy.AbstractPolicyBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#id(java.lang.String)">id</a></span>&#8203;(java.lang.String&nbsp;id)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Unique identifier (GUID) of the policy.</div>
+</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="AbstractPolicy.AbstractPolicyBuilder.html" title="type parameter in AbstractPolicy.AbstractPolicyBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#name(java.lang.String)">name</a></span>&#8203;(java.lang.String&nbsp;name)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Name of the policy.</div>
+</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>protected abstract <a href="AbstractPolicy.AbstractPolicyBuilder.html" title="type parameter in AbstractPolicy.AbstractPolicyBuilder">B</a></code></td>
@@ -240,12 +252,16 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <tr id="i10" class="altColor">
 <td class="colFirst"><code><a href="AbstractPolicy.AbstractPolicyBuilder.html" title="type parameter in AbstractPolicy.AbstractPolicyBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updatedAt(java.lang.Long)">updatedAt</a></span>&#8203;(java.lang.Long&nbsp;updatedAt)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Time (epoch) at which this policy was updated, in milliseconds.</div>
+</td>
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code><a href="AbstractPolicy.AbstractPolicyBuilder.html" title="type parameter in AbstractPolicy.AbstractPolicyBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updatedBy(java.lang.String)">updatedBy</a></span>&#8203;(java.lang.String&nbsp;updatedBy)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Username of the user who updated this policy.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -305,6 +321,118 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 </dl>
 </li>
 </ul>
+<a id="id(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>id</h4>
+<pre class="methodSignature">public&nbsp;<a href="AbstractPolicy.AbstractPolicyBuilder.html" title="type parameter in AbstractPolicy.AbstractPolicyBuilder">B</a>&nbsp;id&#8203;(java.lang.String&nbsp;id)</pre>
+<div class="block">Unique identifier (GUID) of the policy.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="name(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>name</h4>
+<pre class="methodSignature">public&nbsp;<a href="AbstractPolicy.AbstractPolicyBuilder.html" title="type parameter in AbstractPolicy.AbstractPolicyBuilder">B</a>&nbsp;name&#8203;(java.lang.String&nbsp;name)</pre>
+<div class="block">Name of the policy.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="description(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>description</h4>
+<pre class="methodSignature">public&nbsp;<a href="AbstractPolicy.AbstractPolicyBuilder.html" title="type parameter in AbstractPolicy.AbstractPolicyBuilder">B</a>&nbsp;description&#8203;(java.lang.String&nbsp;description)</pre>
+<div class="block">Explanation of the policy.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="allow(java.lang.Boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>allow</h4>
+<pre class="methodSignature">public&nbsp;<a href="AbstractPolicy.AbstractPolicyBuilder.html" title="type parameter in AbstractPolicy.AbstractPolicyBuilder">B</a>&nbsp;allow&#8203;(java.lang.Boolean&nbsp;allow)</pre>
+<div class="block">Whether the actions are granted (true) or explicitly denied (false).</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="createdAt(java.lang.Long)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>createdAt</h4>
+<pre class="methodSignature">public&nbsp;<a href="AbstractPolicy.AbstractPolicyBuilder.html" title="type parameter in AbstractPolicy.AbstractPolicyBuilder">B</a>&nbsp;createdAt&#8203;(java.lang.Long&nbsp;createdAt)</pre>
+<div class="block">Time (epoch) at which this policy was created, in milliseconds.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="createdBy(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>createdBy</h4>
+<pre class="methodSignature">public&nbsp;<a href="AbstractPolicy.AbstractPolicyBuilder.html" title="type parameter in AbstractPolicy.AbstractPolicyBuilder">B</a>&nbsp;createdBy&#8203;(java.lang.String&nbsp;createdBy)</pre>
+<div class="block">Username of the user who created this policy.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="updatedAt(java.lang.Long)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>updatedAt</h4>
+<pre class="methodSignature">public&nbsp;<a href="AbstractPolicy.AbstractPolicyBuilder.html" title="type parameter in AbstractPolicy.AbstractPolicyBuilder">B</a>&nbsp;updatedAt&#8203;(java.lang.Long&nbsp;updatedAt)</pre>
+<div class="block">Time (epoch) at which this policy was updated, in milliseconds.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="updatedBy(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>updatedBy</h4>
+<pre class="methodSignature">public&nbsp;<a href="AbstractPolicy.AbstractPolicyBuilder.html" title="type parameter in AbstractPolicy.AbstractPolicyBuilder">B</a>&nbsp;updatedBy&#8203;(java.lang.String&nbsp;updatedBy)</pre>
+<div class="block">Username of the user who updated this policy.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
 <a id="self()">
 <!--   -->
 </a>
@@ -328,110 +456,6 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../core/AtlanObject.AtlanObjectBuilder.html#build()">build</a></code>&nbsp;in class&nbsp;<code><a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in com.atlan.model.core">AtlanObject.AtlanObjectBuilder</a>&lt;<a href="AbstractPolicy.AbstractPolicyBuilder.html" title="type parameter in AbstractPolicy.AbstractPolicyBuilder">C</a> extends <a href="AbstractPolicy.html" title="class in com.atlan.model.admin">AbstractPolicy</a>,&#8203;<a href="AbstractPolicy.AbstractPolicyBuilder.html" title="type parameter in AbstractPolicy.AbstractPolicyBuilder">B</a> extends <a href="AbstractPolicy.AbstractPolicyBuilder.html" title="class in com.atlan.model.admin">AbstractPolicy.AbstractPolicyBuilder</a>&lt;<a href="AbstractPolicy.AbstractPolicyBuilder.html" title="type parameter in AbstractPolicy.AbstractPolicyBuilder">C</a>,&#8203;<a href="AbstractPolicy.AbstractPolicyBuilder.html" title="type parameter in AbstractPolicy.AbstractPolicyBuilder">B</a>&gt;&gt;</code></dd>
-</dl>
-</li>
-</ul>
-<a id="id(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>id</h4>
-<pre class="methodSignature">public&nbsp;<a href="AbstractPolicy.AbstractPolicyBuilder.html" title="type parameter in AbstractPolicy.AbstractPolicyBuilder">B</a>&nbsp;id&#8203;(java.lang.String&nbsp;id)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="name(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>name</h4>
-<pre class="methodSignature">public&nbsp;<a href="AbstractPolicy.AbstractPolicyBuilder.html" title="type parameter in AbstractPolicy.AbstractPolicyBuilder">B</a>&nbsp;name&#8203;(java.lang.String&nbsp;name)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="description(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>description</h4>
-<pre class="methodSignature">public&nbsp;<a href="AbstractPolicy.AbstractPolicyBuilder.html" title="type parameter in AbstractPolicy.AbstractPolicyBuilder">B</a>&nbsp;description&#8203;(java.lang.String&nbsp;description)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="allow(java.lang.Boolean)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>allow</h4>
-<pre class="methodSignature">public&nbsp;<a href="AbstractPolicy.AbstractPolicyBuilder.html" title="type parameter in AbstractPolicy.AbstractPolicyBuilder">B</a>&nbsp;allow&#8203;(java.lang.Boolean&nbsp;allow)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="createdAt(java.lang.Long)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>createdAt</h4>
-<pre class="methodSignature">public&nbsp;<a href="AbstractPolicy.AbstractPolicyBuilder.html" title="type parameter in AbstractPolicy.AbstractPolicyBuilder">B</a>&nbsp;createdAt&#8203;(java.lang.Long&nbsp;createdAt)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="createdBy(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>createdBy</h4>
-<pre class="methodSignature">public&nbsp;<a href="AbstractPolicy.AbstractPolicyBuilder.html" title="type parameter in AbstractPolicy.AbstractPolicyBuilder">B</a>&nbsp;createdBy&#8203;(java.lang.String&nbsp;createdBy)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="updatedAt(java.lang.Long)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>updatedAt</h4>
-<pre class="methodSignature">public&nbsp;<a href="AbstractPolicy.AbstractPolicyBuilder.html" title="type parameter in AbstractPolicy.AbstractPolicyBuilder">B</a>&nbsp;updatedAt&#8203;(java.lang.Long&nbsp;updatedAt)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="updatedBy(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>updatedBy</h4>
-<pre class="methodSignature">public&nbsp;<a href="AbstractPolicy.AbstractPolicyBuilder.html" title="type parameter in AbstractPolicy.AbstractPolicyBuilder">B</a>&nbsp;updatedBy&#8203;(java.lang.String&nbsp;updatedBy)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
 </dl>
 </li>
 </ul>

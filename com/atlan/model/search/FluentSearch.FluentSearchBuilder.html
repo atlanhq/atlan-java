@@ -252,7 +252,9 @@ extends <a href="CompoundQuery.CompoundQueryBuilder.html" title="class in com.at
 <tr id="i13" class="rowColor">
 <td class="colFirst"><code><a href="FluentSearch.FluentSearchBuilder.html" title="type parameter in FluentSearch.FluentSearchBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#client(com.atlan.AtlanClient)">client</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Client through which to retrieve the assets.</div>
+</td>
 </tr>
 <tr id="i14" class="altColor">
 <td class="colFirst"><code>long</code></td>
@@ -285,7 +287,9 @@ extends <a href="CompoundQuery.CompoundQueryBuilder.html" title="class in com.at
 <tr id="i19" class="rowColor">
 <td class="colFirst"><code><a href="FluentSearch.FluentSearchBuilder.html" title="type parameter in FluentSearch.FluentSearchBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#pageSize(java.lang.Integer)">pageSize</a></span>&#8203;(java.lang.Integer&nbsp;pageSize)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Number of results to retrieve per underlying API request.</div>
+</td>
 </tr>
 <tr id="i20" class="altColor">
 <td class="colFirst"><code>protected abstract <a href="FluentSearch.FluentSearchBuilder.html" title="type parameter in FluentSearch.FluentSearchBuilder">B</a></code></td>
@@ -467,32 +471,6 @@ extends <a href="CompoundQuery.CompoundQueryBuilder.html" title="class in com.at
 </dl>
 </li>
 </ul>
-<a id="self()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>self</h4>
-<pre class="methodSignature">protected abstract&nbsp;<a href="FluentSearch.FluentSearchBuilder.html" title="type parameter in FluentSearch.FluentSearchBuilder">B</a>&nbsp;self()</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="CompoundQuery.CompoundQueryBuilder.html#self()">self</a></code>&nbsp;in class&nbsp;<code><a href="CompoundQuery.CompoundQueryBuilder.html" title="class in com.atlan.model.search">CompoundQuery.CompoundQueryBuilder</a>&lt;<a href="FluentSearch.FluentSearchBuilder.html" title="type parameter in FluentSearch.FluentSearchBuilder">C</a> extends <a href="FluentSearch.html" title="class in com.atlan.model.search">FluentSearch</a>,&#8203;<a href="FluentSearch.FluentSearchBuilder.html" title="type parameter in FluentSearch.FluentSearchBuilder">B</a> extends <a href="FluentSearch.FluentSearchBuilder.html" title="class in com.atlan.model.search">FluentSearch.FluentSearchBuilder</a>&lt;<a href="FluentSearch.FluentSearchBuilder.html" title="type parameter in FluentSearch.FluentSearchBuilder">C</a>,&#8203;<a href="FluentSearch.FluentSearchBuilder.html" title="type parameter in FluentSearch.FluentSearchBuilder">B</a>&gt;&gt;</code></dd>
-</dl>
-</li>
-</ul>
-<a id="build()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>build</h4>
-<pre class="methodSignature">public abstract&nbsp;<a href="FluentSearch.FluentSearchBuilder.html" title="type parameter in FluentSearch.FluentSearchBuilder">C</a>&nbsp;build()</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="CompoundQuery.CompoundQueryBuilder.html#build()">build</a></code>&nbsp;in class&nbsp;<code><a href="CompoundQuery.CompoundQueryBuilder.html" title="class in com.atlan.model.search">CompoundQuery.CompoundQueryBuilder</a>&lt;<a href="FluentSearch.FluentSearchBuilder.html" title="type parameter in FluentSearch.FluentSearchBuilder">C</a> extends <a href="FluentSearch.html" title="class in com.atlan.model.search">FluentSearch</a>,&#8203;<a href="FluentSearch.FluentSearchBuilder.html" title="type parameter in FluentSearch.FluentSearchBuilder">B</a> extends <a href="FluentSearch.FluentSearchBuilder.html" title="class in com.atlan.model.search">FluentSearch.FluentSearchBuilder</a>&lt;<a href="FluentSearch.FluentSearchBuilder.html" title="type parameter in FluentSearch.FluentSearchBuilder">C</a>,&#8203;<a href="FluentSearch.FluentSearchBuilder.html" title="type parameter in FluentSearch.FluentSearchBuilder">B</a>&gt;&gt;</code></dd>
-</dl>
-</li>
-</ul>
 <a id="client(com.atlan.AtlanClient)">
 <!--   -->
 </a>
@@ -500,6 +478,7 @@ extends <a href="CompoundQuery.CompoundQueryBuilder.html" title="class in com.at
 <li class="blockList">
 <h4>client</h4>
 <pre class="methodSignature">public&nbsp;<a href="FluentSearch.FluentSearchBuilder.html" title="type parameter in FluentSearch.FluentSearchBuilder">B</a>&nbsp;client&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)</pre>
+<div class="block">Client through which to retrieve the assets.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -568,6 +547,7 @@ extends <a href="CompoundQuery.CompoundQueryBuilder.html" title="class in com.at
 <li class="blockList">
 <h4>pageSize</h4>
 <pre class="methodSignature">public&nbsp;<a href="FluentSearch.FluentSearchBuilder.html" title="type parameter in FluentSearch.FluentSearchBuilder">B</a>&nbsp;pageSize&#8203;(java.lang.Integer&nbsp;pageSize)</pre>
+<div class="block">Number of results to retrieve per underlying API request.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -680,6 +660,32 @@ extends <a href="CompoundQuery.CompoundQueryBuilder.html" title="class in com.at
 <li class="blockList">
 <h4>clear_includesOnRelations</h4>
 <pre class="methodSignature">public&nbsp;<a href="FluentSearch.FluentSearchBuilder.html" title="type parameter in FluentSearch.FluentSearchBuilder">B</a>&nbsp;clear_includesOnRelations()</pre>
+</li>
+</ul>
+<a id="self()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>self</h4>
+<pre class="methodSignature">protected abstract&nbsp;<a href="FluentSearch.FluentSearchBuilder.html" title="type parameter in FluentSearch.FluentSearchBuilder">B</a>&nbsp;self()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="CompoundQuery.CompoundQueryBuilder.html#self()">self</a></code>&nbsp;in class&nbsp;<code><a href="CompoundQuery.CompoundQueryBuilder.html" title="class in com.atlan.model.search">CompoundQuery.CompoundQueryBuilder</a>&lt;<a href="FluentSearch.FluentSearchBuilder.html" title="type parameter in FluentSearch.FluentSearchBuilder">C</a> extends <a href="FluentSearch.html" title="class in com.atlan.model.search">FluentSearch</a>,&#8203;<a href="FluentSearch.FluentSearchBuilder.html" title="type parameter in FluentSearch.FluentSearchBuilder">B</a> extends <a href="FluentSearch.FluentSearchBuilder.html" title="class in com.atlan.model.search">FluentSearch.FluentSearchBuilder</a>&lt;<a href="FluentSearch.FluentSearchBuilder.html" title="type parameter in FluentSearch.FluentSearchBuilder">C</a>,&#8203;<a href="FluentSearch.FluentSearchBuilder.html" title="type parameter in FluentSearch.FluentSearchBuilder">B</a>&gt;&gt;</code></dd>
+</dl>
+</li>
+</ul>
+<a id="build()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>build</h4>
+<pre class="methodSignature">public abstract&nbsp;<a href="FluentSearch.FluentSearchBuilder.html" title="type parameter in FluentSearch.FluentSearchBuilder">C</a>&nbsp;build()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="CompoundQuery.CompoundQueryBuilder.html#build()">build</a></code>&nbsp;in class&nbsp;<code><a href="CompoundQuery.CompoundQueryBuilder.html" title="class in com.atlan.model.search">CompoundQuery.CompoundQueryBuilder</a>&lt;<a href="FluentSearch.FluentSearchBuilder.html" title="type parameter in FluentSearch.FluentSearchBuilder">C</a> extends <a href="FluentSearch.html" title="class in com.atlan.model.search">FluentSearch</a>,&#8203;<a href="FluentSearch.FluentSearchBuilder.html" title="type parameter in FluentSearch.FluentSearchBuilder">B</a> extends <a href="FluentSearch.FluentSearchBuilder.html" title="class in com.atlan.model.search">FluentSearch.FluentSearchBuilder</a>&lt;<a href="FluentSearch.FluentSearchBuilder.html" title="type parameter in FluentSearch.FluentSearchBuilder">C</a>,&#8203;<a href="FluentSearch.FluentSearchBuilder.html" title="type parameter in FluentSearch.FluentSearchBuilder">B</a>&gt;&gt;</code></dd>
+</dl>
 </li>
 </ul>
 <a id="toString()">

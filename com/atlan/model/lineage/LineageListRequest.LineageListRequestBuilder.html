@@ -211,47 +211,65 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="LineageListRequest.LineageListRequestBuilder.html" title="type parameter in LineageListRequest.LineageListRequestBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#depth(java.lang.Integer)">depth</a></span>&#8203;(java.lang.Integer&nbsp;depth)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Number of degrees of separation (hops) across which lineage should be fetched.</div>
+</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="LineageListRequest.LineageListRequestBuilder.html" title="type parameter in LineageListRequest.LineageListRequestBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#direction(com.atlan.model.enums.AtlanLineageDirection)">direction</a></span>&#8203;(<a href="../enums/AtlanLineageDirection.html" title="enum in com.atlan.model.enums">AtlanLineageDirection</a>&nbsp;direction)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Indicates whether to fetch upstream lineage only, downstream lineage only, or both.</div>
+</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="LineageListRequest.LineageListRequestBuilder.html" title="type parameter in LineageListRequest.LineageListRequestBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#entityFilters(com.atlan.model.lineage.FilterList)">entityFilters</a></span>&#8203;(<a href="FilterList.html" title="class in com.atlan.model.lineage">FilterList</a>&nbsp;entityFilters)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Filters to apply on entities.</div>
+</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code><a href="LineageListRequest.LineageListRequestBuilder.html" title="type parameter in LineageListRequest.LineageListRequestBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#entityTraversalFilters(com.atlan.model.lineage.FilterList)">entityTraversalFilters</a></span>&#8203;(<a href="FilterList.html" title="class in com.atlan.model.lineage">FilterList</a>&nbsp;entityTraversalFilters)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Filters to apply for skipping traversal based on entities.</div>
+</td>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code><a href="LineageListRequest.LineageListRequestBuilder.html" title="type parameter in LineageListRequest.LineageListRequestBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#excludeAtlanTags(java.lang.Boolean)">excludeAtlanTags</a></span>&#8203;(java.lang.Boolean&nbsp;excludeAtlanTags)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Whether to include Atlan tags for assets (false) or not (true).</div>
+</td>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code><a href="LineageListRequest.LineageListRequestBuilder.html" title="type parameter in LineageListRequest.LineageListRequestBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#excludeMeanings(java.lang.Boolean)">excludeMeanings</a></span>&#8203;(java.lang.Boolean&nbsp;excludeMeanings)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Whether to include assigned terms for assets (false) or not (true).</div>
+</td>
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code><a href="LineageListRequest.LineageListRequestBuilder.html" title="type parameter in LineageListRequest.LineageListRequestBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#from(java.lang.Integer)">from</a></span>&#8203;(java.lang.Integer&nbsp;from)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Starting point for pagination.</div>
+</td>
 </tr>
 <tr id="i12" class="altColor">
 <td class="colFirst"><code><a href="LineageListRequest.LineageListRequestBuilder.html" title="type parameter in LineageListRequest.LineageListRequestBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#guid(java.lang.String)">guid</a></span>&#8203;(java.lang.String&nbsp;guid)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Unique identifier of the asset for which to retrieve lineage.</div>
+</td>
 </tr>
 <tr id="i13" class="rowColor">
 <td class="colFirst"><code><a href="LineageListRequest.LineageListRequestBuilder.html" title="type parameter in LineageListRequest.LineageListRequestBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#relationshipTraversalFilters(com.atlan.model.lineage.FilterList)">relationshipTraversalFilters</a></span>&#8203;(<a href="FilterList.html" title="class in com.atlan.model.lineage">FilterList</a>&nbsp;relationshipTraversalFilters)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Filters to apply for skipping traversal based on relationships.</div>
+</td>
 </tr>
 <tr id="i14" class="altColor">
 <td class="colFirst"><code>protected abstract <a href="LineageListRequest.LineageListRequestBuilder.html" title="type parameter in LineageListRequest.LineageListRequestBuilder">B</a></code></td>
@@ -261,7 +279,9 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <tr id="i15" class="rowColor">
 <td class="colFirst"><code><a href="LineageListRequest.LineageListRequestBuilder.html" title="type parameter in LineageListRequest.LineageListRequestBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#size(java.lang.Integer)">size</a></span>&#8203;(java.lang.Integer&nbsp;size)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">How many results to include in each page of results.</div>
+</td>
 </tr>
 <tr id="i16" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
@@ -326,32 +346,6 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 </dl>
 </li>
 </ul>
-<a id="self()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>self</h4>
-<pre class="methodSignature">protected abstract&nbsp;<a href="LineageListRequest.LineageListRequestBuilder.html" title="type parameter in LineageListRequest.LineageListRequestBuilder">B</a>&nbsp;self()</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../core/AtlanObject.AtlanObjectBuilder.html#self()">self</a></code>&nbsp;in class&nbsp;<code><a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in com.atlan.model.core">AtlanObject.AtlanObjectBuilder</a>&lt;<a href="LineageListRequest.LineageListRequestBuilder.html" title="type parameter in LineageListRequest.LineageListRequestBuilder">C</a> extends <a href="LineageListRequest.html" title="class in com.atlan.model.lineage">LineageListRequest</a>,&#8203;<a href="LineageListRequest.LineageListRequestBuilder.html" title="type parameter in LineageListRequest.LineageListRequestBuilder">B</a> extends <a href="LineageListRequest.LineageListRequestBuilder.html" title="class in com.atlan.model.lineage">LineageListRequest.LineageListRequestBuilder</a>&lt;<a href="LineageListRequest.LineageListRequestBuilder.html" title="type parameter in LineageListRequest.LineageListRequestBuilder">C</a>,&#8203;<a href="LineageListRequest.LineageListRequestBuilder.html" title="type parameter in LineageListRequest.LineageListRequestBuilder">B</a>&gt;&gt;</code></dd>
-</dl>
-</li>
-</ul>
-<a id="build()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>build</h4>
-<pre class="methodSignature">public abstract&nbsp;<a href="LineageListRequest.LineageListRequestBuilder.html" title="type parameter in LineageListRequest.LineageListRequestBuilder">C</a>&nbsp;build()</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../core/AtlanObject.AtlanObjectBuilder.html#build()">build</a></code>&nbsp;in class&nbsp;<code><a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in com.atlan.model.core">AtlanObject.AtlanObjectBuilder</a>&lt;<a href="LineageListRequest.LineageListRequestBuilder.html" title="type parameter in LineageListRequest.LineageListRequestBuilder">C</a> extends <a href="LineageListRequest.html" title="class in com.atlan.model.lineage">LineageListRequest</a>,&#8203;<a href="LineageListRequest.LineageListRequestBuilder.html" title="type parameter in LineageListRequest.LineageListRequestBuilder">B</a> extends <a href="LineageListRequest.LineageListRequestBuilder.html" title="class in com.atlan.model.lineage">LineageListRequest.LineageListRequestBuilder</a>&lt;<a href="LineageListRequest.LineageListRequestBuilder.html" title="type parameter in LineageListRequest.LineageListRequestBuilder">C</a>,&#8203;<a href="LineageListRequest.LineageListRequestBuilder.html" title="type parameter in LineageListRequest.LineageListRequestBuilder">B</a>&gt;&gt;</code></dd>
-</dl>
-</li>
-</ul>
 <a id="guid(java.lang.String)">
 <!--   -->
 </a>
@@ -359,6 +353,7 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <li class="blockList">
 <h4>guid</h4>
 <pre class="methodSignature">public&nbsp;<a href="LineageListRequest.LineageListRequestBuilder.html" title="type parameter in LineageListRequest.LineageListRequestBuilder">B</a>&nbsp;guid&#8203;(java.lang.String&nbsp;guid)</pre>
+<div class="block">Unique identifier of the asset for which to retrieve lineage.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -372,6 +367,12 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <li class="blockList">
 <h4>depth</h4>
 <pre class="methodSignature">public&nbsp;<a href="LineageListRequest.LineageListRequestBuilder.html" title="type parameter in LineageListRequest.LineageListRequestBuilder">B</a>&nbsp;depth&#8203;(java.lang.Integer&nbsp;depth)</pre>
+<div class="block">Number of degrees of separation (hops) across which lineage should be fetched.
+ A depth of <code>1</code> will fetch the immediate upstream and/or downstream assets,
+ while <code>2</code> will also fetch the immediate upstream and/or downstream assets
+ of those assets, and so on. A large integer value (for example, 1000000) will
+ therefore in effect fetch <em>all</em> upstream and/or downstream assets.
+ (BEWARE! This could take a long time and result in a very large response payload.)</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -385,6 +386,7 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <li class="blockList">
 <h4>direction</h4>
 <pre class="methodSignature">public&nbsp;<a href="LineageListRequest.LineageListRequestBuilder.html" title="type parameter in LineageListRequest.LineageListRequestBuilder">B</a>&nbsp;direction&#8203;(<a href="../enums/AtlanLineageDirection.html" title="enum in com.atlan.model.enums">AtlanLineageDirection</a>&nbsp;direction)</pre>
+<div class="block">Indicates whether to fetch upstream lineage only, downstream lineage only, or both.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -398,6 +400,10 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <li class="blockList">
 <h4>entityFilters</h4>
 <pre class="methodSignature">public&nbsp;<a href="LineageListRequest.LineageListRequestBuilder.html" title="type parameter in LineageListRequest.LineageListRequestBuilder">B</a>&nbsp;entityFilters&#8203;(<a href="FilterList.html" title="class in com.atlan.model.lineage">FilterList</a>&nbsp;entityFilters)</pre>
+<div class="block">Filters to apply on entities.
+ Note that if the values in the properties of <code>entityFilters</code> are not valid, then the
+ filter will not be applied and you will receive all values in the response. If your filter
+ seems to be ignored, check that it is valid (if it is invalid it WILL be ignored).</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -411,6 +417,9 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <li class="blockList">
 <h4>entityTraversalFilters</h4>
 <pre class="methodSignature">public&nbsp;<a href="LineageListRequest.LineageListRequestBuilder.html" title="type parameter in LineageListRequest.LineageListRequestBuilder">B</a>&nbsp;entityTraversalFilters&#8203;(<a href="FilterList.html" title="class in com.atlan.model.lineage">FilterList</a>&nbsp;entityTraversalFilters)</pre>
+<div class="block">Filters to apply for skipping traversal based on entities.
+ Any sub-graphs beyond the entities filtered out by these filters will not be included in
+ the lineage result.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -424,6 +433,9 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <li class="blockList">
 <h4>relationshipTraversalFilters</h4>
 <pre class="methodSignature">public&nbsp;<a href="LineageListRequest.LineageListRequestBuilder.html" title="type parameter in LineageListRequest.LineageListRequestBuilder">B</a>&nbsp;relationshipTraversalFilters&#8203;(<a href="FilterList.html" title="class in com.atlan.model.lineage">FilterList</a>&nbsp;relationshipTraversalFilters)</pre>
+<div class="block">Filters to apply for skipping traversal based on relationships.
+ Any sub-graphs beyond the relationships filtered out by these filters will not be included
+ in the lineage result.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -464,6 +476,7 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <li class="blockList">
 <h4>from</h4>
 <pre class="methodSignature">public&nbsp;<a href="LineageListRequest.LineageListRequestBuilder.html" title="type parameter in LineageListRequest.LineageListRequestBuilder">B</a>&nbsp;from&#8203;(java.lang.Integer&nbsp;from)</pre>
+<div class="block">Starting point for pagination.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -477,6 +490,7 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <li class="blockList">
 <h4>size</h4>
 <pre class="methodSignature">public&nbsp;<a href="LineageListRequest.LineageListRequestBuilder.html" title="type parameter in LineageListRequest.LineageListRequestBuilder">B</a>&nbsp;size&#8203;(java.lang.Integer&nbsp;size)</pre>
+<div class="block">How many results to include in each page of results.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -490,6 +504,7 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <li class="blockList">
 <h4>excludeMeanings</h4>
 <pre class="methodSignature">public&nbsp;<a href="LineageListRequest.LineageListRequestBuilder.html" title="type parameter in LineageListRequest.LineageListRequestBuilder">B</a>&nbsp;excludeMeanings&#8203;(java.lang.Boolean&nbsp;excludeMeanings)</pre>
+<div class="block">Whether to include assigned terms for assets (false) or not (true).</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -503,9 +518,36 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <li class="blockList">
 <h4>excludeAtlanTags</h4>
 <pre class="methodSignature">public&nbsp;<a href="LineageListRequest.LineageListRequestBuilder.html" title="type parameter in LineageListRequest.LineageListRequestBuilder">B</a>&nbsp;excludeAtlanTags&#8203;(java.lang.Boolean&nbsp;excludeAtlanTags)</pre>
+<div class="block">Whether to include Atlan tags for assets (false) or not (true).</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="self()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>self</h4>
+<pre class="methodSignature">protected abstract&nbsp;<a href="LineageListRequest.LineageListRequestBuilder.html" title="type parameter in LineageListRequest.LineageListRequestBuilder">B</a>&nbsp;self()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../core/AtlanObject.AtlanObjectBuilder.html#self()">self</a></code>&nbsp;in class&nbsp;<code><a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in com.atlan.model.core">AtlanObject.AtlanObjectBuilder</a>&lt;<a href="LineageListRequest.LineageListRequestBuilder.html" title="type parameter in LineageListRequest.LineageListRequestBuilder">C</a> extends <a href="LineageListRequest.html" title="class in com.atlan.model.lineage">LineageListRequest</a>,&#8203;<a href="LineageListRequest.LineageListRequestBuilder.html" title="type parameter in LineageListRequest.LineageListRequestBuilder">B</a> extends <a href="LineageListRequest.LineageListRequestBuilder.html" title="class in com.atlan.model.lineage">LineageListRequest.LineageListRequestBuilder</a>&lt;<a href="LineageListRequest.LineageListRequestBuilder.html" title="type parameter in LineageListRequest.LineageListRequestBuilder">C</a>,&#8203;<a href="LineageListRequest.LineageListRequestBuilder.html" title="type parameter in LineageListRequest.LineageListRequestBuilder">B</a>&gt;&gt;</code></dd>
+</dl>
+</li>
+</ul>
+<a id="build()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>build</h4>
+<pre class="methodSignature">public abstract&nbsp;<a href="LineageListRequest.LineageListRequestBuilder.html" title="type parameter in LineageListRequest.LineageListRequestBuilder">C</a>&nbsp;build()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../core/AtlanObject.AtlanObjectBuilder.html#build()">build</a></code>&nbsp;in class&nbsp;<code><a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in com.atlan.model.core">AtlanObject.AtlanObjectBuilder</a>&lt;<a href="LineageListRequest.LineageListRequestBuilder.html" title="type parameter in LineageListRequest.LineageListRequestBuilder">C</a> extends <a href="LineageListRequest.html" title="class in com.atlan.model.lineage">LineageListRequest</a>,&#8203;<a href="LineageListRequest.LineageListRequestBuilder.html" title="type parameter in LineageListRequest.LineageListRequestBuilder">B</a> extends <a href="LineageListRequest.LineageListRequestBuilder.html" title="class in com.atlan.model.lineage">LineageListRequest.LineageListRequestBuilder</a>&lt;<a href="LineageListRequest.LineageListRequestBuilder.html" title="type parameter in LineageListRequest.LineageListRequestBuilder">C</a>,&#8203;<a href="LineageListRequest.LineageListRequestBuilder.html" title="type parameter in LineageListRequest.LineageListRequestBuilder">B</a>&gt;&gt;</code></dd>
 </dl>
 </li>
 </ul>

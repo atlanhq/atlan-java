@@ -191,12 +191,16 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#allowFiltering(java.lang.Boolean)">allowFiltering</a></span>&#8203;(java.lang.Boolean&nbsp;allowFiltering)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Whether this attribute should appear in the filterable facets of discovery (true) or not (false).</div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#allowSearch(java.lang.Boolean)">allowSearch</a></span>&#8203;(java.lang.Boolean&nbsp;allowSearch)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Whether the attribute should be searchable (true) or not (false).</div>
+</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">B</a></code></td>
@@ -221,7 +225,9 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#applicableEntityTypes(java.util.Set)">applicableEntityTypes</a></span>&#8203;(java.util.Set&lt;java.lang.String&gt;&nbsp;applicableEntityTypes)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Set of entities on which this attribute can be applied.</div>
+</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code><a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">B</a></code></td>
@@ -256,12 +262,16 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <tr id="i14" class="altColor">
 <td class="colFirst"><code><a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#archivedAt(java.lang.Long)">archivedAt</a></span>&#8203;(java.lang.Long&nbsp;archivedAt)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">When the attribute was deleted.</div>
+</td>
 </tr>
 <tr id="i15" class="rowColor">
 <td class="colFirst"><code><a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#archivedBy(java.lang.String)">archivedBy</a></span>&#8203;(java.lang.String&nbsp;archivedBy)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">User who deleted the attribute.</div>
+</td>
 </tr>
 <tr id="i16" class="altColor">
 <td class="colFirst"><code>abstract <a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">C</a></code></td>
@@ -297,73 +307,101 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <td class="colFirst"><code><a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#customApplicableEntityTypes(java.util.Set)">customApplicableEntityTypes</a></span>&#8203;(java.util.Set&lt;java.lang.String&gt;&nbsp;customApplicableEntityTypes)</code></th>
 <td class="colLast">
-<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">see <a href="#applicableAssetTypes"><code>applicableAssetTypes</code></a>, <a href="#applicableGlossaryTypes"><code>applicableGlossaryTypes</code></a>, <a href="#applicableOtherAssetTypes"><code>applicableOtherAssetTypes</code></a> instead</div>
+</div>
 </td>
 </tr>
 <tr id="i23" class="rowColor">
 <td class="colFirst"><code><a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#customMetadataVersion(java.lang.String)">customMetadataVersion</a></span>&#8203;(java.lang.String&nbsp;customMetadataVersion)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Indicates the version of the custom metadata structure.</div>
+</td>
 </tr>
 <tr id="i24" class="altColor">
 <td class="colFirst"><code><a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#customType(java.lang.String)">customType</a></span>&#8203;(java.lang.String&nbsp;customType)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Used for Atlan-specific types like <code>users</code>, <code>groups</code>, <code>url</code>, and <code>SQL</code>.</div>
+</td>
 </tr>
 <tr id="i25" class="rowColor">
 <td class="colFirst"><code><a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#description(java.lang.String)">description</a></span>&#8203;(java.lang.String&nbsp;description)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Optional description of the attribute.</div>
+</td>
 </tr>
 <tr id="i26" class="altColor">
 <td class="colFirst"><code><a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#enumType(java.lang.String)">enumType</a></span>&#8203;(java.lang.String&nbsp;enumType)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Name of the enumeration (options), when the attribute is an enumeration.</div>
+</td>
 </tr>
 <tr id="i27" class="rowColor">
 <td class="colFirst"><code><a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hasTimePrecision(java.lang.Boolean)">hasTimePrecision</a></span>&#8203;(java.lang.Boolean&nbsp;hasTimePrecision)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">If true for a date attribute, then time-level precision is also available in the UI (otherwise only date-level)</div>
+</td>
 </tr>
 <tr id="i28" class="altColor">
 <td class="colFirst"><code><a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isAppendOnPartialUpdate(java.lang.String)">isAppendOnPartialUpdate</a></span>&#8203;(java.lang.String&nbsp;isAppendOnPartialUpdate)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">TBC</div>
+</td>
 </tr>
 <tr id="i29" class="rowColor">
 <td class="colFirst"><code><a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isArchived(java.lang.Boolean)">isArchived</a></span>&#8203;(java.lang.Boolean&nbsp;isArchived)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Whether the attribute has been deleted (true) or is still active (false).</div>
+</td>
 </tr>
 <tr id="i30" class="altColor">
 <td class="colFirst"><code><a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isDeprecated(java.lang.String)">isDeprecated</a></span>&#8203;(java.lang.String&nbsp;isDeprecated)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Whether the attribute is deprecated ("true") or not (null or "false").</div>
+</td>
 </tr>
 <tr id="i31" class="rowColor">
 <td class="colFirst"><code><a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isEnum(java.lang.Boolean)">isEnum</a></span>&#8203;(java.lang.Boolean&nbsp;isEnum)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Whether the attribute is an enumeration (true) or not (false).</div>
+</td>
 </tr>
 <tr id="i32" class="altColor">
 <td class="colFirst"><code><a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isSoftReference(java.lang.String)">isSoftReference</a></span>&#8203;(java.lang.String&nbsp;isSoftReference)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">TBC</div>
+</td>
 </tr>
 <tr id="i33" class="rowColor">
 <td class="colFirst"><code><a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#maxStrLength(java.lang.String)">maxStrLength</a></span>&#8203;(java.lang.String&nbsp;maxStrLength)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Maximum length allowed for a string value.</div>
+</td>
 </tr>
 <tr id="i34" class="altColor">
 <td class="colFirst"><code><a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#multiValueSelect(java.lang.Boolean)">multiValueSelect</a></span>&#8203;(java.lang.Boolean&nbsp;multiValueSelect)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Whether this attribute can have multiple values (true) or only a single value (false).</div>
+</td>
 </tr>
 <tr id="i35" class="rowColor">
 <td class="colFirst"><code><a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#primitiveType(com.atlan.model.enums.AtlanCustomAttributePrimitiveType)">primitiveType</a></span>&#8203;(<a href="../enums/AtlanCustomAttributePrimitiveType.html" title="enum in com.atlan.model.enums">AtlanCustomAttributePrimitiveType</a>&nbsp;primitiveType)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Primitive type of the attribute.</div>
+</td>
 </tr>
 <tr id="i36" class="altColor">
 <td class="colFirst"><code>protected abstract <a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">B</a></code></td>
@@ -373,7 +411,9 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <tr id="i37" class="rowColor">
 <td class="colFirst"><code><a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#showInOverview(java.lang.Boolean)">showInOverview</a></span>&#8203;(java.lang.Boolean&nbsp;showInOverview)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Whether users will see this attribute in the overview tab of the sidebar (true) or not (false).</div>
+</td>
 </tr>
 <tr id="i38" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
@@ -438,32 +478,6 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 </dl>
 </li>
 </ul>
-<a id="self()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>self</h4>
-<pre class="methodSignature">protected abstract&nbsp;<a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">B</a>&nbsp;self()</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../core/AtlanObject.AtlanObjectBuilder.html#self()">self</a></code>&nbsp;in class&nbsp;<code><a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in com.atlan.model.core">AtlanObject.AtlanObjectBuilder</a>&lt;<a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">C</a> extends <a href="AttributeDefOptions.html" title="class in com.atlan.model.typedefs">AttributeDefOptions</a>,&#8203;<a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">B</a> extends <a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="class in com.atlan.model.typedefs">AttributeDefOptions.AttributeDefOptionsBuilder</a>&lt;<a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">C</a>,&#8203;<a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">B</a>&gt;&gt;</code></dd>
-</dl>
-</li>
-</ul>
-<a id="build()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>build</h4>
-<pre class="methodSignature">public abstract&nbsp;<a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">C</a>&nbsp;build()</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../core/AtlanObject.AtlanObjectBuilder.html#build()">build</a></code>&nbsp;in class&nbsp;<code><a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in com.atlan.model.core">AtlanObject.AtlanObjectBuilder</a>&lt;<a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">C</a> extends <a href="AttributeDefOptions.html" title="class in com.atlan.model.typedefs">AttributeDefOptions</a>,&#8203;<a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">B</a> extends <a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="class in com.atlan.model.typedefs">AttributeDefOptions.AttributeDefOptionsBuilder</a>&lt;<a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">C</a>,&#8203;<a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">B</a>&gt;&gt;</code></dd>
-</dl>
-</li>
-</ul>
 <a id="customMetadataVersion(java.lang.String)">
 <!--   -->
 </a>
@@ -471,6 +485,7 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <li class="blockList">
 <h4>customMetadataVersion</h4>
 <pre class="methodSignature">public&nbsp;<a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">B</a>&nbsp;customMetadataVersion&#8203;(java.lang.String&nbsp;customMetadataVersion)</pre>
+<div class="block">Indicates the version of the custom metadata structure. This determines which other options are available and used.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -484,6 +499,7 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <li class="blockList">
 <h4>description</h4>
 <pre class="methodSignature">public&nbsp;<a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">B</a>&nbsp;description&#8203;(java.lang.String&nbsp;description)</pre>
+<div class="block">Optional description of the attribute.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -497,6 +513,9 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <li class="blockList">
 <h4>applicableEntityTypes</h4>
 <pre class="methodSignature">public&nbsp;<a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">B</a>&nbsp;applicableEntityTypes&#8203;(java.util.Set&lt;java.lang.String&gt;&nbsp;applicableEntityTypes)</pre>
+<div class="block">Set of entities on which this attribute can be applied.
+ Note: generally this should be left as-is. Any overrides should instead be applied through
+ one or more of <a href="#applicableAssetTypes"><code>applicableAssetTypes</code></a>, <a href="#applicableGlossaryTypes"><code>applicableGlossaryTypes</code></a>, or <a href="#applicableOtherAssetTypes"><code>applicableOtherAssetTypes</code></a>.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -511,7 +530,11 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <h4>customApplicableEntityTypes</h4>
 <pre class="methodSignature">@Deprecated
 public&nbsp;<a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">B</a>&nbsp;customApplicableEntityTypes&#8203;(java.util.Set&lt;java.lang.String&gt;&nbsp;customApplicableEntityTypes)</pre>
-<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationComment">see <a href="#applicableAssetTypes"><code>applicableAssetTypes</code></a>, <a href="#applicableGlossaryTypes"><code>applicableGlossaryTypes</code></a>, <a href="#applicableOtherAssetTypes"><code>applicableOtherAssetTypes</code></a> instead</div>
+</div>
+<div class="block">Set of entities on which this attribute should appear.
+ Note: this is only used when customMetadataVersion is less than v2.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -660,6 +683,7 @@ public&nbsp;<a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title=
 <li class="blockList">
 <h4>allowSearch</h4>
 <pre class="methodSignature">public&nbsp;<a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">B</a>&nbsp;allowSearch&#8203;(java.lang.Boolean&nbsp;allowSearch)</pre>
+<div class="block">Whether the attribute should be searchable (true) or not (false).</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -673,6 +697,7 @@ public&nbsp;<a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title=
 <li class="blockList">
 <h4>maxStrLength</h4>
 <pre class="methodSignature">public&nbsp;<a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">B</a>&nbsp;maxStrLength&#8203;(java.lang.String&nbsp;maxStrLength)</pre>
+<div class="block">Maximum length allowed for a string value.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -686,6 +711,7 @@ public&nbsp;<a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title=
 <li class="blockList">
 <h4>allowFiltering</h4>
 <pre class="methodSignature">public&nbsp;<a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">B</a>&nbsp;allowFiltering&#8203;(java.lang.Boolean&nbsp;allowFiltering)</pre>
+<div class="block">Whether this attribute should appear in the filterable facets of discovery (true) or not (false).</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -699,6 +725,7 @@ public&nbsp;<a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title=
 <li class="blockList">
 <h4>multiValueSelect</h4>
 <pre class="methodSignature">public&nbsp;<a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">B</a>&nbsp;multiValueSelect&#8203;(java.lang.Boolean&nbsp;multiValueSelect)</pre>
+<div class="block">Whether this attribute can have multiple values (true) or only a single value (false).</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -712,6 +739,7 @@ public&nbsp;<a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title=
 <li class="blockList">
 <h4>showInOverview</h4>
 <pre class="methodSignature">public&nbsp;<a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">B</a>&nbsp;showInOverview&#8203;(java.lang.Boolean&nbsp;showInOverview)</pre>
+<div class="block">Whether users will see this attribute in the overview tab of the sidebar (true) or not (false).</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -725,6 +753,7 @@ public&nbsp;<a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title=
 <li class="blockList">
 <h4>isDeprecated</h4>
 <pre class="methodSignature">public&nbsp;<a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">B</a>&nbsp;isDeprecated&#8203;(java.lang.String&nbsp;isDeprecated)</pre>
+<div class="block">Whether the attribute is deprecated ("true") or not (null or "false").</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -738,6 +767,7 @@ public&nbsp;<a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title=
 <li class="blockList">
 <h4>primitiveType</h4>
 <pre class="methodSignature">public&nbsp;<a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">B</a>&nbsp;primitiveType&#8203;(<a href="../enums/AtlanCustomAttributePrimitiveType.html" title="enum in com.atlan.model.enums">AtlanCustomAttributePrimitiveType</a>&nbsp;primitiveType)</pre>
+<div class="block">Primitive type of the attribute.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -751,6 +781,7 @@ public&nbsp;<a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title=
 <li class="blockList">
 <h4>isEnum</h4>
 <pre class="methodSignature">public&nbsp;<a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">B</a>&nbsp;isEnum&#8203;(java.lang.Boolean&nbsp;isEnum)</pre>
+<div class="block">Whether the attribute is an enumeration (true) or not (false).</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -764,6 +795,7 @@ public&nbsp;<a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title=
 <li class="blockList">
 <h4>enumType</h4>
 <pre class="methodSignature">public&nbsp;<a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">B</a>&nbsp;enumType&#8203;(java.lang.String&nbsp;enumType)</pre>
+<div class="block">Name of the enumeration (options), when the attribute is an enumeration.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -777,6 +809,7 @@ public&nbsp;<a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title=
 <li class="blockList">
 <h4>customType</h4>
 <pre class="methodSignature">public&nbsp;<a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">B</a>&nbsp;customType&#8203;(java.lang.String&nbsp;customType)</pre>
+<div class="block">Used for Atlan-specific types like <code>users</code>, <code>groups</code>, <code>url</code>, and <code>SQL</code>.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -790,6 +823,7 @@ public&nbsp;<a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title=
 <li class="blockList">
 <h4>hasTimePrecision</h4>
 <pre class="methodSignature">public&nbsp;<a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">B</a>&nbsp;hasTimePrecision&#8203;(java.lang.Boolean&nbsp;hasTimePrecision)</pre>
+<div class="block">If true for a date attribute, then time-level precision is also available in the UI (otherwise only date-level)</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -803,6 +837,7 @@ public&nbsp;<a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title=
 <li class="blockList">
 <h4>isArchived</h4>
 <pre class="methodSignature">public&nbsp;<a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">B</a>&nbsp;isArchived&#8203;(java.lang.Boolean&nbsp;isArchived)</pre>
+<div class="block">Whether the attribute has been deleted (true) or is still active (false).</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -816,6 +851,7 @@ public&nbsp;<a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title=
 <li class="blockList">
 <h4>archivedAt</h4>
 <pre class="methodSignature">public&nbsp;<a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">B</a>&nbsp;archivedAt&#8203;(java.lang.Long&nbsp;archivedAt)</pre>
+<div class="block">When the attribute was deleted.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -829,6 +865,7 @@ public&nbsp;<a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title=
 <li class="blockList">
 <h4>archivedBy</h4>
 <pre class="methodSignature">public&nbsp;<a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">B</a>&nbsp;archivedBy&#8203;(java.lang.String&nbsp;archivedBy)</pre>
+<div class="block">User who deleted the attribute.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -842,6 +879,7 @@ public&nbsp;<a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title=
 <li class="blockList">
 <h4>isSoftReference</h4>
 <pre class="methodSignature">public&nbsp;<a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">B</a>&nbsp;isSoftReference&#8203;(java.lang.String&nbsp;isSoftReference)</pre>
+<div class="block">TBC</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -855,9 +893,36 @@ public&nbsp;<a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title=
 <li class="blockList">
 <h4>isAppendOnPartialUpdate</h4>
 <pre class="methodSignature">public&nbsp;<a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">B</a>&nbsp;isAppendOnPartialUpdate&#8203;(java.lang.String&nbsp;isAppendOnPartialUpdate)</pre>
+<div class="block">TBC</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="self()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>self</h4>
+<pre class="methodSignature">protected abstract&nbsp;<a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">B</a>&nbsp;self()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../core/AtlanObject.AtlanObjectBuilder.html#self()">self</a></code>&nbsp;in class&nbsp;<code><a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in com.atlan.model.core">AtlanObject.AtlanObjectBuilder</a>&lt;<a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">C</a> extends <a href="AttributeDefOptions.html" title="class in com.atlan.model.typedefs">AttributeDefOptions</a>,&#8203;<a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">B</a> extends <a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="class in com.atlan.model.typedefs">AttributeDefOptions.AttributeDefOptionsBuilder</a>&lt;<a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">C</a>,&#8203;<a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">B</a>&gt;&gt;</code></dd>
+</dl>
+</li>
+</ul>
+<a id="build()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>build</h4>
+<pre class="methodSignature">public abstract&nbsp;<a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">C</a>&nbsp;build()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../core/AtlanObject.AtlanObjectBuilder.html#build()">build</a></code>&nbsp;in class&nbsp;<code><a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in com.atlan.model.core">AtlanObject.AtlanObjectBuilder</a>&lt;<a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">C</a> extends <a href="AttributeDefOptions.html" title="class in com.atlan.model.typedefs">AttributeDefOptions</a>,&#8203;<a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">B</a> extends <a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="class in com.atlan.model.typedefs">AttributeDefOptions.AttributeDefOptionsBuilder</a>&lt;<a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">C</a>,&#8203;<a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="type parameter in AttributeDefOptions.AttributeDefOptionsBuilder">B</a>&gt;&gt;</code></dd>
 </dl>
 </li>
 </ul>

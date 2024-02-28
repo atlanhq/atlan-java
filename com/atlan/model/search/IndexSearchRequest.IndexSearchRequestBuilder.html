@@ -191,7 +191,9 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#allowDeletedRelations(java.lang.Boolean)">allowDeletedRelations</a></span>&#8203;(java.lang.Boolean&nbsp;allowDeletedRelations)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Whether to include deleted relationships to this asset (true) or not (false).</div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a></code></td>
@@ -221,17 +223,23 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#dsl(com.atlan.model.search.IndexSearchDSL)">dsl</a></span>&#8203;(<a href="IndexSearchDSL.html" title="class in com.atlan.model.search">IndexSearchDSL</a>&nbsp;dsl)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Parameters for the search itself.</div>
+</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code><a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#excludeAtlanTags(java.lang.Boolean)">excludeAtlanTags</a></span>&#8203;(java.lang.Boolean&nbsp;excludeAtlanTags)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Whether to include Atlan tags for assets (false) or not (true).</div>
+</td>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code><a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#excludeMeanings(java.lang.Boolean)">excludeMeanings</a></span>&#8203;(java.lang.Boolean&nbsp;excludeMeanings)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Whether to include term relationships for assets (false) or not (true).</div>
+</td>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code><a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a></code></td>
@@ -246,7 +254,9 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <tr id="i12" class="altColor">
 <td class="colFirst"><code><a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#requestMetadata(com.atlan.model.search.IndexSearchRequest.Metadata)">requestMetadata</a></span>&#8203;(<a href="IndexSearchRequest.Metadata.html" title="class in com.atlan.model.search">IndexSearchRequest.Metadata</a>&nbsp;requestMetadata)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Controls how the search is logged (if at all).</div>
+</td>
 </tr>
 <tr id="i13" class="rowColor">
 <td class="colFirst"><code>protected abstract <a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a></code></td>
@@ -256,12 +266,16 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <tr id="i14" class="altColor">
 <td class="colFirst"><code><a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#showSearchScore(java.lang.Boolean)">showSearchScore</a></span>&#8203;(java.lang.Boolean&nbsp;showSearchScore)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">When true, include the score of each result.</div>
+</td>
 </tr>
 <tr id="i15" class="rowColor">
 <td class="colFirst"><code><a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#suppressLogs(java.lang.Boolean)">suppressLogs</a></span>&#8203;(java.lang.Boolean&nbsp;suppressLogs)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">TBC</div>
+</td>
 </tr>
 <tr id="i16" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
@@ -326,32 +340,6 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 </dl>
 </li>
 </ul>
-<a id="self()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>self</h4>
-<pre class="methodSignature">protected abstract&nbsp;<a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a>&nbsp;self()</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../core/AtlanObject.AtlanObjectBuilder.html#self()">self</a></code>&nbsp;in class&nbsp;<code><a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in com.atlan.model.core">AtlanObject.AtlanObjectBuilder</a>&lt;<a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">C</a> extends <a href="IndexSearchRequest.html" title="class in com.atlan.model.search">IndexSearchRequest</a>,&#8203;<a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a> extends <a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="class in com.atlan.model.search">IndexSearchRequest.IndexSearchRequestBuilder</a>&lt;<a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">C</a>,&#8203;<a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a>&gt;&gt;</code></dd>
-</dl>
-</li>
-</ul>
-<a id="build()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>build</h4>
-<pre class="methodSignature">public abstract&nbsp;<a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">C</a>&nbsp;build()</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../core/AtlanObject.AtlanObjectBuilder.html#build()">build</a></code>&nbsp;in class&nbsp;<code><a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in com.atlan.model.core">AtlanObject.AtlanObjectBuilder</a>&lt;<a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">C</a> extends <a href="IndexSearchRequest.html" title="class in com.atlan.model.search">IndexSearchRequest</a>,&#8203;<a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a> extends <a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="class in com.atlan.model.search">IndexSearchRequest.IndexSearchRequestBuilder</a>&lt;<a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">C</a>,&#8203;<a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a>&gt;&gt;</code></dd>
-</dl>
-</li>
-</ul>
 <a id="dsl(com.atlan.model.search.IndexSearchDSL)">
 <!--   -->
 </a>
@@ -359,6 +347,7 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <li class="blockList">
 <h4>dsl</h4>
 <pre class="methodSignature">public&nbsp;<a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a>&nbsp;dsl&#8203;(<a href="IndexSearchDSL.html" title="class in com.atlan.model.search">IndexSearchDSL</a>&nbsp;dsl)</pre>
+<div class="block">Parameters for the search itself.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -426,6 +415,7 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <li class="blockList">
 <h4>suppressLogs</h4>
 <pre class="methodSignature">public&nbsp;<a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a>&nbsp;suppressLogs&#8203;(java.lang.Boolean&nbsp;suppressLogs)</pre>
+<div class="block">TBC</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -439,6 +429,7 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <li class="blockList">
 <h4>showSearchScore</h4>
 <pre class="methodSignature">public&nbsp;<a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a>&nbsp;showSearchScore&#8203;(java.lang.Boolean&nbsp;showSearchScore)</pre>
+<div class="block">When true, include the score of each result. By default, this is false and scores are excluded.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -452,6 +443,8 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <li class="blockList">
 <h4>excludeMeanings</h4>
 <pre class="methodSignature">public&nbsp;<a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a>&nbsp;excludeMeanings&#8203;(java.lang.Boolean&nbsp;excludeMeanings)</pre>
+<div class="block">Whether to include term relationships for assets (false) or not (true). By default, this is false
+ and term relationships are therefore included.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -465,6 +458,8 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <li class="blockList">
 <h4>excludeAtlanTags</h4>
 <pre class="methodSignature">public&nbsp;<a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a>&nbsp;excludeAtlanTags&#8203;(java.lang.Boolean&nbsp;excludeAtlanTags)</pre>
+<div class="block">Whether to include Atlan tags for assets (false) or not (true). By default, this is false and
+ Atlan tags are therefore included.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -478,6 +473,8 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <li class="blockList">
 <h4>allowDeletedRelations</h4>
 <pre class="methodSignature">public&nbsp;<a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a>&nbsp;allowDeletedRelations&#8203;(java.lang.Boolean&nbsp;allowDeletedRelations)</pre>
+<div class="block">Whether to include deleted relationships to this asset (true) or not (false). By default, this is false
+ and therefore only active (not deleted) relationships will be included.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -491,9 +488,36 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <li class="blockList">
 <h4>requestMetadata</h4>
 <pre class="methodSignature">public&nbsp;<a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a>&nbsp;requestMetadata&#8203;(<a href="IndexSearchRequest.Metadata.html" title="class in com.atlan.model.search">IndexSearchRequest.Metadata</a>&nbsp;requestMetadata)</pre>
+<div class="block">Controls how the search is logged (if at all).</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="self()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>self</h4>
+<pre class="methodSignature">protected abstract&nbsp;<a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a>&nbsp;self()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../core/AtlanObject.AtlanObjectBuilder.html#self()">self</a></code>&nbsp;in class&nbsp;<code><a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in com.atlan.model.core">AtlanObject.AtlanObjectBuilder</a>&lt;<a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">C</a> extends <a href="IndexSearchRequest.html" title="class in com.atlan.model.search">IndexSearchRequest</a>,&#8203;<a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a> extends <a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="class in com.atlan.model.search">IndexSearchRequest.IndexSearchRequestBuilder</a>&lt;<a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">C</a>,&#8203;<a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a>&gt;&gt;</code></dd>
+</dl>
+</li>
+</ul>
+<a id="build()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>build</h4>
+<pre class="methodSignature">public abstract&nbsp;<a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">C</a>&nbsp;build()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../core/AtlanObject.AtlanObjectBuilder.html#build()">build</a></code>&nbsp;in class&nbsp;<code><a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in com.atlan.model.core">AtlanObject.AtlanObjectBuilder</a>&lt;<a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">C</a> extends <a href="IndexSearchRequest.html" title="class in com.atlan.model.search">IndexSearchRequest</a>,&#8203;<a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a> extends <a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="class in com.atlan.model.search">IndexSearchRequest.IndexSearchRequestBuilder</a>&lt;<a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">C</a>,&#8203;<a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a>&gt;&gt;</code></dd>
 </dl>
 </li>
 </ul>

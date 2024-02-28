@@ -191,7 +191,9 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="ApiToken.ApiTokenBuilder.html" title="type parameter in ApiToken.ApiTokenBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#attributes(com.atlan.model.admin.ApiToken.ApiTokenAttributes)">attributes</a></span>&#8203;(<a href="ApiToken.ApiTokenAttributes.html" title="class in com.atlan.model.admin">ApiToken.ApiTokenAttributes</a>&nbsp;attributes)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Detailed characteristics of the API token.</div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>abstract <a href="ApiToken.ApiTokenBuilder.html" title="type parameter in ApiToken.ApiTokenBuilder">C</a></code></td>
@@ -201,17 +203,23 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="ApiToken.ApiTokenBuilder.html" title="type parameter in ApiToken.ApiTokenBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clientId(java.lang.String)">clientId</a></span>&#8203;(java.lang.String&nbsp;clientId)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Unique client identifier (GUID) of the API token.</div>
+</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="ApiToken.ApiTokenBuilder.html" title="type parameter in ApiToken.ApiTokenBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#displayName(java.lang.String)">displayName</a></span>&#8203;(java.lang.String&nbsp;displayName)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Human-readable name provided when creating the token.</div>
+</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="ApiToken.ApiTokenBuilder.html" title="type parameter in ApiToken.ApiTokenBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#id(java.lang.String)">id</a></span>&#8203;(java.lang.String&nbsp;id)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Unique identifier (GUID) of the API token.</div>
+</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>protected abstract <a href="ApiToken.ApiTokenBuilder.html" title="type parameter in ApiToken.ApiTokenBuilder">B</a></code></td>
@@ -281,6 +289,62 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 </dl>
 </li>
 </ul>
+<a id="id(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>id</h4>
+<pre class="methodSignature">public&nbsp;<a href="ApiToken.ApiTokenBuilder.html" title="type parameter in ApiToken.ApiTokenBuilder">B</a>&nbsp;id&#8203;(java.lang.String&nbsp;id)</pre>
+<div class="block">Unique identifier (GUID) of the API token.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="clientId(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clientId</h4>
+<pre class="methodSignature">public&nbsp;<a href="ApiToken.ApiTokenBuilder.html" title="type parameter in ApiToken.ApiTokenBuilder">B</a>&nbsp;clientId&#8203;(java.lang.String&nbsp;clientId)</pre>
+<div class="block">Unique client identifier (GUID) of the API token.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="displayName(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>displayName</h4>
+<pre class="methodSignature">public&nbsp;<a href="ApiToken.ApiTokenBuilder.html" title="type parameter in ApiToken.ApiTokenBuilder">B</a>&nbsp;displayName&#8203;(java.lang.String&nbsp;displayName)</pre>
+<div class="block">Human-readable name provided when creating the token.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="attributes(com.atlan.model.admin.ApiToken.ApiTokenAttributes)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>attributes</h4>
+<pre class="methodSignature">public&nbsp;<a href="ApiToken.ApiTokenBuilder.html" title="type parameter in ApiToken.ApiTokenBuilder">B</a>&nbsp;attributes&#8203;(<a href="ApiToken.ApiTokenAttributes.html" title="class in com.atlan.model.admin">ApiToken.ApiTokenAttributes</a>&nbsp;attributes)</pre>
+<div class="block">Detailed characteristics of the API token.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
 <a id="self()">
 <!--   -->
 </a>
@@ -304,58 +368,6 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../core/AtlanObject.AtlanObjectBuilder.html#build()">build</a></code>&nbsp;in class&nbsp;<code><a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in com.atlan.model.core">AtlanObject.AtlanObjectBuilder</a>&lt;<a href="ApiToken.ApiTokenBuilder.html" title="type parameter in ApiToken.ApiTokenBuilder">C</a> extends <a href="ApiToken.html" title="class in com.atlan.model.admin">ApiToken</a>,&#8203;<a href="ApiToken.ApiTokenBuilder.html" title="type parameter in ApiToken.ApiTokenBuilder">B</a> extends <a href="ApiToken.ApiTokenBuilder.html" title="class in com.atlan.model.admin">ApiToken.ApiTokenBuilder</a>&lt;<a href="ApiToken.ApiTokenBuilder.html" title="type parameter in ApiToken.ApiTokenBuilder">C</a>,&#8203;<a href="ApiToken.ApiTokenBuilder.html" title="type parameter in ApiToken.ApiTokenBuilder">B</a>&gt;&gt;</code></dd>
-</dl>
-</li>
-</ul>
-<a id="id(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>id</h4>
-<pre class="methodSignature">public&nbsp;<a href="ApiToken.ApiTokenBuilder.html" title="type parameter in ApiToken.ApiTokenBuilder">B</a>&nbsp;id&#8203;(java.lang.String&nbsp;id)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="clientId(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>clientId</h4>
-<pre class="methodSignature">public&nbsp;<a href="ApiToken.ApiTokenBuilder.html" title="type parameter in ApiToken.ApiTokenBuilder">B</a>&nbsp;clientId&#8203;(java.lang.String&nbsp;clientId)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="displayName(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>displayName</h4>
-<pre class="methodSignature">public&nbsp;<a href="ApiToken.ApiTokenBuilder.html" title="type parameter in ApiToken.ApiTokenBuilder">B</a>&nbsp;displayName&#8203;(java.lang.String&nbsp;displayName)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="attributes(com.atlan.model.admin.ApiToken.ApiTokenAttributes)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>attributes</h4>
-<pre class="methodSignature">public&nbsp;<a href="ApiToken.ApiTokenBuilder.html" title="type parameter in ApiToken.ApiTokenBuilder">B</a>&nbsp;attributes&#8203;(<a href="ApiToken.ApiTokenAttributes.html" title="class in com.atlan.model.admin">ApiToken.ApiTokenAttributes</a>&nbsp;attributes)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
 </dl>
 </li>
 </ul>

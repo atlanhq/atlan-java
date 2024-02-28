@@ -191,7 +191,9 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="WorkflowTask.WorkflowTaskBuilder.html" title="type parameter in WorkflowTask.WorkflowTaskBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#arguments(com.atlan.model.workflow.WorkflowParameters)">arguments</a></span>&#8203;(<a href="WorkflowParameters.html" title="class in com.atlan.model.workflow">WorkflowParameters</a>&nbsp;arguments)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Arguments the task uses in its execution.</div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>abstract <a href="WorkflowTask.WorkflowTaskBuilder.html" title="type parameter in WorkflowTask.WorkflowTaskBuilder">C</a></code></td>
@@ -201,7 +203,9 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="WorkflowTask.WorkflowTaskBuilder.html" title="type parameter in WorkflowTask.WorkflowTaskBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#name(java.lang.String)">name</a></span>&#8203;(java.lang.String&nbsp;name)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Name of the task.</div>
+</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>protected abstract <a href="WorkflowTask.WorkflowTaskBuilder.html" title="type parameter in WorkflowTask.WorkflowTaskBuilder">B</a></code></td>
@@ -211,7 +215,9 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="WorkflowTask.WorkflowTaskBuilder.html" title="type parameter in WorkflowTask.WorkflowTaskBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#templateRef(com.atlan.model.workflow.WorkflowTemplateRef)">templateRef</a></span>&#8203;(<a href="WorkflowTemplateRef.html" title="class in com.atlan.model.workflow">WorkflowTemplateRef</a>&nbsp;templateRef)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Reference to another workflow template that will be used to run this task.</div>
+</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
@@ -276,6 +282,48 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 </dl>
 </li>
 </ul>
+<a id="name(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>name</h4>
+<pre class="methodSignature">public&nbsp;<a href="WorkflowTask.WorkflowTaskBuilder.html" title="type parameter in WorkflowTask.WorkflowTaskBuilder">B</a>&nbsp;name&#8203;(java.lang.String&nbsp;name)</pre>
+<div class="block">Name of the task.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="arguments(com.atlan.model.workflow.WorkflowParameters)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>arguments</h4>
+<pre class="methodSignature">public&nbsp;<a href="WorkflowTask.WorkflowTaskBuilder.html" title="type parameter in WorkflowTask.WorkflowTaskBuilder">B</a>&nbsp;arguments&#8203;(<a href="WorkflowParameters.html" title="class in com.atlan.model.workflow">WorkflowParameters</a>&nbsp;arguments)</pre>
+<div class="block">Arguments the task uses in its execution.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="templateRef(com.atlan.model.workflow.WorkflowTemplateRef)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>templateRef</h4>
+<pre class="methodSignature">public&nbsp;<a href="WorkflowTask.WorkflowTaskBuilder.html" title="type parameter in WorkflowTask.WorkflowTaskBuilder">B</a>&nbsp;templateRef&#8203;(<a href="WorkflowTemplateRef.html" title="class in com.atlan.model.workflow">WorkflowTemplateRef</a>&nbsp;templateRef)</pre>
+<div class="block">Reference to another workflow template that will be used to run this task.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
 <a id="self()">
 <!--   -->
 </a>
@@ -299,45 +347,6 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../core/AtlanObject.AtlanObjectBuilder.html#build()">build</a></code>&nbsp;in class&nbsp;<code><a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in com.atlan.model.core">AtlanObject.AtlanObjectBuilder</a>&lt;<a href="WorkflowTask.WorkflowTaskBuilder.html" title="type parameter in WorkflowTask.WorkflowTaskBuilder">C</a> extends <a href="WorkflowTask.html" title="class in com.atlan.model.workflow">WorkflowTask</a>,&#8203;<a href="WorkflowTask.WorkflowTaskBuilder.html" title="type parameter in WorkflowTask.WorkflowTaskBuilder">B</a> extends <a href="WorkflowTask.WorkflowTaskBuilder.html" title="class in com.atlan.model.workflow">WorkflowTask.WorkflowTaskBuilder</a>&lt;<a href="WorkflowTask.WorkflowTaskBuilder.html" title="type parameter in WorkflowTask.WorkflowTaskBuilder">C</a>,&#8203;<a href="WorkflowTask.WorkflowTaskBuilder.html" title="type parameter in WorkflowTask.WorkflowTaskBuilder">B</a>&gt;&gt;</code></dd>
-</dl>
-</li>
-</ul>
-<a id="name(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>name</h4>
-<pre class="methodSignature">public&nbsp;<a href="WorkflowTask.WorkflowTaskBuilder.html" title="type parameter in WorkflowTask.WorkflowTaskBuilder">B</a>&nbsp;name&#8203;(java.lang.String&nbsp;name)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="arguments(com.atlan.model.workflow.WorkflowParameters)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>arguments</h4>
-<pre class="methodSignature">public&nbsp;<a href="WorkflowTask.WorkflowTaskBuilder.html" title="type parameter in WorkflowTask.WorkflowTaskBuilder">B</a>&nbsp;arguments&#8203;(<a href="WorkflowParameters.html" title="class in com.atlan.model.workflow">WorkflowParameters</a>&nbsp;arguments)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="templateRef(com.atlan.model.workflow.WorkflowTemplateRef)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>templateRef</h4>
-<pre class="methodSignature">public&nbsp;<a href="WorkflowTask.WorkflowTaskBuilder.html" title="type parameter in WorkflowTask.WorkflowTaskBuilder">B</a>&nbsp;templateRef&#8203;(<a href="WorkflowTemplateRef.html" title="class in com.atlan.model.workflow">WorkflowTemplateRef</a>&nbsp;templateRef)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
 </dl>
 </li>
 </ul>

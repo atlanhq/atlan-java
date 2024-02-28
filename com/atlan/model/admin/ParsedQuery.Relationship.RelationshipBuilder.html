@@ -196,22 +196,30 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="ParsedQuery.Relationship.RelationshipBuilder.html" title="type parameter in ParsedQuery.Relationship.RelationshipBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#effectType(java.lang.String)">effectType</a></span>&#8203;(java.lang.String&nbsp;effectType)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Type of effect made by the query (for example, select vs insert).</div>
+</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="ParsedQuery.Relationship.RelationshipBuilder.html" title="type parameter in ParsedQuery.Relationship.RelationshipBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#id(java.lang.String)">id</a></span>&#8203;(java.lang.String&nbsp;id)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Numeric identifier for the relationship.</div>
+</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="ParsedQuery.Relationship.RelationshipBuilder.html" title="type parameter in ParsedQuery.Relationship.RelationshipBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#processId(java.lang.String)">processId</a></span>&#8203;(java.lang.String&nbsp;processId)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Numeric identifier for the procedure (if any) that manages this relationship.</div>
+</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="ParsedQuery.Relationship.RelationshipBuilder.html" title="type parameter in ParsedQuery.Relationship.RelationshipBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#processType(java.lang.String)">processType</a></span>&#8203;(java.lang.String&nbsp;processType)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Type of procedure (if any) that manages this relationship.</div>
+</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>protected abstract <a href="ParsedQuery.Relationship.RelationshipBuilder.html" title="type parameter in ParsedQuery.Relationship.RelationshipBuilder">B</a></code></td>
@@ -221,12 +229,16 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="ParsedQuery.Relationship.RelationshipBuilder.html" title="type parameter in ParsedQuery.Relationship.RelationshipBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sources(java.util.List)">sources</a></span>&#8203;(java.util.List&lt;<a href="ParsedQuery.RelationshipEndpoint.html" title="class in com.atlan.model.admin">ParsedQuery.RelationshipEndpoint</a>&gt;&nbsp;sources)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">TBC</div>
+</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code><a href="ParsedQuery.Relationship.RelationshipBuilder.html" title="type parameter in ParsedQuery.Relationship.RelationshipBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#target(com.atlan.model.admin.ParsedQuery.RelationshipEndpoint)">target</a></span>&#8203;(<a href="ParsedQuery.RelationshipEndpoint.html" title="class in com.atlan.model.admin">ParsedQuery.RelationshipEndpoint</a>&nbsp;target)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">TBC</div>
+</td>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
@@ -236,7 +248,9 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <tr id="i10" class="altColor">
 <td class="colFirst"><code><a href="ParsedQuery.Relationship.RelationshipBuilder.html" title="type parameter in ParsedQuery.Relationship.RelationshipBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#type(java.lang.String)">type</a></span>&#8203;(java.lang.String&nbsp;type)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Type of the relationship.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -296,6 +310,104 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 </dl>
 </li>
 </ul>
+<a id="id(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>id</h4>
+<pre class="methodSignature">public&nbsp;<a href="ParsedQuery.Relationship.RelationshipBuilder.html" title="type parameter in ParsedQuery.Relationship.RelationshipBuilder">B</a>&nbsp;id&#8203;(java.lang.String&nbsp;id)</pre>
+<div class="block">Numeric identifier for the relationship.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="type(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>type</h4>
+<pre class="methodSignature">public&nbsp;<a href="ParsedQuery.Relationship.RelationshipBuilder.html" title="type parameter in ParsedQuery.Relationship.RelationshipBuilder">B</a>&nbsp;type&#8203;(java.lang.String&nbsp;type)</pre>
+<div class="block">Type of the relationship.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="effectType(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>effectType</h4>
+<pre class="methodSignature">public&nbsp;<a href="ParsedQuery.Relationship.RelationshipBuilder.html" title="type parameter in ParsedQuery.Relationship.RelationshipBuilder">B</a>&nbsp;effectType&#8203;(java.lang.String&nbsp;effectType)</pre>
+<div class="block">Type of effect made by the query (for example, select vs insert).</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="target(com.atlan.model.admin.ParsedQuery.RelationshipEndpoint)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>target</h4>
+<pre class="methodSignature">public&nbsp;<a href="ParsedQuery.Relationship.RelationshipBuilder.html" title="type parameter in ParsedQuery.Relationship.RelationshipBuilder">B</a>&nbsp;target&#8203;(<a href="ParsedQuery.RelationshipEndpoint.html" title="class in com.atlan.model.admin">ParsedQuery.RelationshipEndpoint</a>&nbsp;target)</pre>
+<div class="block">TBC</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="sources(java.util.List)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>sources</h4>
+<pre class="methodSignature">public&nbsp;<a href="ParsedQuery.Relationship.RelationshipBuilder.html" title="type parameter in ParsedQuery.Relationship.RelationshipBuilder">B</a>&nbsp;sources&#8203;(java.util.List&lt;<a href="ParsedQuery.RelationshipEndpoint.html" title="class in com.atlan.model.admin">ParsedQuery.RelationshipEndpoint</a>&gt;&nbsp;sources)</pre>
+<div class="block">TBC</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="processId(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>processId</h4>
+<pre class="methodSignature">public&nbsp;<a href="ParsedQuery.Relationship.RelationshipBuilder.html" title="type parameter in ParsedQuery.Relationship.RelationshipBuilder">B</a>&nbsp;processId&#8203;(java.lang.String&nbsp;processId)</pre>
+<div class="block">Numeric identifier for the procedure (if any) that manages this relationship.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="processType(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>processType</h4>
+<pre class="methodSignature">public&nbsp;<a href="ParsedQuery.Relationship.RelationshipBuilder.html" title="type parameter in ParsedQuery.Relationship.RelationshipBuilder">B</a>&nbsp;processType&#8203;(java.lang.String&nbsp;processType)</pre>
+<div class="block">Type of procedure (if any) that manages this relationship.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
 <a id="self()">
 <!--   -->
 </a>
@@ -319,97 +431,6 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../core/AtlanObject.AtlanObjectBuilder.html#build()">build</a></code>&nbsp;in class&nbsp;<code><a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in com.atlan.model.core">AtlanObject.AtlanObjectBuilder</a>&lt;<a href="ParsedQuery.Relationship.RelationshipBuilder.html" title="type parameter in ParsedQuery.Relationship.RelationshipBuilder">C</a> extends <a href="ParsedQuery.Relationship.html" title="class in com.atlan.model.admin">ParsedQuery.Relationship</a>,&#8203;<a href="ParsedQuery.Relationship.RelationshipBuilder.html" title="type parameter in ParsedQuery.Relationship.RelationshipBuilder">B</a> extends <a href="ParsedQuery.Relationship.RelationshipBuilder.html" title="class in com.atlan.model.admin">ParsedQuery.Relationship.RelationshipBuilder</a>&lt;<a href="ParsedQuery.Relationship.RelationshipBuilder.html" title="type parameter in ParsedQuery.Relationship.RelationshipBuilder">C</a>,&#8203;<a href="ParsedQuery.Relationship.RelationshipBuilder.html" title="type parameter in ParsedQuery.Relationship.RelationshipBuilder">B</a>&gt;&gt;</code></dd>
-</dl>
-</li>
-</ul>
-<a id="id(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>id</h4>
-<pre class="methodSignature">public&nbsp;<a href="ParsedQuery.Relationship.RelationshipBuilder.html" title="type parameter in ParsedQuery.Relationship.RelationshipBuilder">B</a>&nbsp;id&#8203;(java.lang.String&nbsp;id)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="type(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>type</h4>
-<pre class="methodSignature">public&nbsp;<a href="ParsedQuery.Relationship.RelationshipBuilder.html" title="type parameter in ParsedQuery.Relationship.RelationshipBuilder">B</a>&nbsp;type&#8203;(java.lang.String&nbsp;type)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="effectType(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>effectType</h4>
-<pre class="methodSignature">public&nbsp;<a href="ParsedQuery.Relationship.RelationshipBuilder.html" title="type parameter in ParsedQuery.Relationship.RelationshipBuilder">B</a>&nbsp;effectType&#8203;(java.lang.String&nbsp;effectType)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="target(com.atlan.model.admin.ParsedQuery.RelationshipEndpoint)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>target</h4>
-<pre class="methodSignature">public&nbsp;<a href="ParsedQuery.Relationship.RelationshipBuilder.html" title="type parameter in ParsedQuery.Relationship.RelationshipBuilder">B</a>&nbsp;target&#8203;(<a href="ParsedQuery.RelationshipEndpoint.html" title="class in com.atlan.model.admin">ParsedQuery.RelationshipEndpoint</a>&nbsp;target)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="sources(java.util.List)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>sources</h4>
-<pre class="methodSignature">public&nbsp;<a href="ParsedQuery.Relationship.RelationshipBuilder.html" title="type parameter in ParsedQuery.Relationship.RelationshipBuilder">B</a>&nbsp;sources&#8203;(java.util.List&lt;<a href="ParsedQuery.RelationshipEndpoint.html" title="class in com.atlan.model.admin">ParsedQuery.RelationshipEndpoint</a>&gt;&nbsp;sources)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="processId(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>processId</h4>
-<pre class="methodSignature">public&nbsp;<a href="ParsedQuery.Relationship.RelationshipBuilder.html" title="type parameter in ParsedQuery.Relationship.RelationshipBuilder">B</a>&nbsp;processId&#8203;(java.lang.String&nbsp;processId)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="processType(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>processType</h4>
-<pre class="methodSignature">public&nbsp;<a href="ParsedQuery.Relationship.RelationshipBuilder.html" title="type parameter in ParsedQuery.Relationship.RelationshipBuilder">B</a>&nbsp;processType&#8203;(java.lang.String&nbsp;processType)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
 </dl>
 </li>
 </ul>
