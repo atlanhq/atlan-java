@@ -31,7 +31,6 @@ object Loader {
     }
 
     fun import(config: LineageBuilderCfg, outputDirectory: String = "tmp") {
-        val batchSize = 20
         val defaultRegion = Utils.getEnvVar("AWS_S3_REGION")
         val defaultBucket = Utils.getEnvVar("AWS_S3_BUCKET_NAME")
         val lineageUpload = Utils.getOrDefault(config.lineageImportType, "UPLOAD") == "UPLOAD"

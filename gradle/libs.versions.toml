@@ -1,23 +1,24 @@
 [versions]
-jackson = "2.16.0"
-slf4j = "2.0.9"
-elasticsearch = "8.11.2"
+jackson = "2.16.1"
+slf4j = "2.0.12"
+elasticsearch = "8.12.2"
 freemarker = "2.3.32"
 classgraph = "4.8.165"
 testng = "7.8.0"
-log4j = "2.22.0"
-wiremock = "3.3.1"
+log4j = "2.23.0"
+wiremock = "3.4.2"
 jnanoid = "2.0.0"
 numaflow = "0.6.0"
-awssdk = "2.21.46"
-system-stubs = "2.1.5"
-fastcsv = "2.2.2"
+awssdk = "2.24.11"
+system-stubs = "2.1.6"
+fastcsv = "3.0.0"
 poi = "5.2.5"
 parsson = "1.1.5"
-simplejavamail = "8.5.1"
-swagger = "2.1.19"
+simplejavamail = "8.6.3"
+swagger = "2.1.20"
 jsonpath = "2.9.0"
 commons-compress = "1.26.0"
+sqlite = "3.45.1.0"
 
 [libraries]
 jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson" }
@@ -43,6 +44,7 @@ simple-java-mail = { module = "org.simplejavamail:simple-java-mail", version.ref
 swagger-parser = { module = "io.swagger.parser.v3:swagger-parser", version.ref = "swagger" }
 json-path = { module = "com.jayway.jsonpath:json-path", version.ref = "jsonpath" }
 commons-compress = { module = "org.apache.commons:commons-compress", version.ref = "commons-compress" }
+sqlite = { module = "org.xerial:sqlite-jdbc", version.ref = "sqlite" }
 
 [bundles]
 java-test = [ "jnanoid", "testng", "wiremock" ]
