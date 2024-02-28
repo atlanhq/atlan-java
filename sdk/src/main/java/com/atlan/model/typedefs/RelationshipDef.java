@@ -6,6 +6,7 @@ import com.atlan.model.enums.AtlanTypeCategory;
 import com.atlan.model.enums.PropagateTags;
 import com.atlan.model.enums.RelationshipCategory;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +25,10 @@ import lombok.extern.jackson.Jacksonized;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
+@JsonPropertyOrder({
+    "name", "description", "typeVersion", "relationshipCategory", "relationshipLabel",
+    "serviceType", "endDef1", "endDef2", "propagateTags", "relationshipAttributeDefs"
+})
 public class RelationshipDef extends TypeDef {
     private static final long serialVersionUID = 2L;
 
@@ -93,6 +98,8 @@ public class RelationshipDef extends TypeDef {
                 .typeVersion("1.0")
                 .endDef1(end1)
                 .endDef2(end2)
-                .attributeDefs(attributes);
+                .relationshipLabel("__" + end1.type + "." + end1.name)
+                .attributeDefs(attributes)
+                .category(null);
     }
 }
