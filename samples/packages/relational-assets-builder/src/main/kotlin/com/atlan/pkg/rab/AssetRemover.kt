@@ -13,8 +13,7 @@ import mu.KLogger
 import java.io.IOException
 import java.nio.file.Paths
 import java.util.concurrent.ConcurrentHashMap
-import java.util.concurrent.ConcurrentHashMap.KeySetView
-import kotlin.math.min
+import java.util.concurrent.atomic.AtomicLong
 import kotlin.math.round
 
 /**
@@ -40,8 +39,7 @@ class AssetRemover(
     private val purge: Boolean = false,
 ) {
     private val client = Atlan.getDefaultClient()
-    val assetsToDelete: KeySetView<AssetBatch.AssetIdentity, Boolean> = ConcurrentHashMap.newKeySet()
-    private val guidsToDelete = ConcurrentHashMap.newKeySet<String>()
+    val assetsToDelete = ConcurrentHashMap<AssetBatch.AssetIdentity, String>()
 
     companion object {
         private const val QUERY_BATCH = 50
@@ -65,7 +63,7 @@ class AssetRemover(
         val previousIdentities = getAssetIdentities(previousFile)
         previousIdentities.forEach {
             if (!currentIdentities.contains(it)) {
-                assetsToDelete.add(it)
+                assetsToDelete[it] = ""
             }
         }
     }
@@ -135,19 +133,26 @@ class AssetRemover(
      * Translate all assets to delete to their GUIDs
      */
     private fun translateToGuids() {
-        logger.info { " --- Translating qualifiedNames to GUIDs... ---" }
+        val totalToTranslate = assetsToDelete.size
+        logger.info { " --- Translating $totalToTranslate qualifiedNames to GUIDs... ---" }
         // Skip archived assets, as they're already deleted (leave it to separate process to
         // purge them, if desired)
-        val totalToTranslate = assetsToDelete.size
-        val qualifiedNamesToDelete = assetsToDelete.map { it.qualifiedName }.toList()
+        val qualifiedNamesToDelete = assetsToDelete.map { it.key.qualifiedName }.toList()
+        val currentCount = AtomicLong(0)
         if (totalToTranslate < QUERY_BATCH) {
             translate(qualifiedNamesToDelete)
         } else {
-            for (i in 0..totalToTranslate step QUERY_BATCH) {
-                logger.info { " ... next batch of $QUERY_BATCH (${round((i.toDouble() / totalToTranslate) * 100)}%)" }
-                val sublist = qualifiedNamesToDelete.subList(i, min(i + QUERY_BATCH, totalToTranslate))
-                translate(sublist)
-            }
+            // Translate from qualifiedName to GUID in parallel
+            qualifiedNamesToDelete
+                .asSequence()
+                .chunked(QUERY_BATCH)
+                .toList()
+                .parallelStream()
+                .forEach { batch ->
+                    val i = currentCount.getAndAdd(QUERY_BATCH.toLong())
+                    logger.info { " ... next batch of $QUERY_BATCH (${round((i.toDouble() / totalToTranslate) * 100)}%)" }
+                    translate(batch)
+                }
         }
     }
 
@@ -185,7 +190,7 @@ class AssetRemover(
     private fun validateResult(asset: Asset) {
         val candidate = AssetBatch.AssetIdentity(asset.typeName, asset.qualifiedName)
         if (assetsToDelete.contains(candidate)) {
-            guidsToDelete.add(asset.guid)
+            assetsToDelete[candidate] = asset.guid
         }
     }
 
@@ -193,19 +198,28 @@ class AssetRemover(
      * Delete all assets we have identified for deletion, in batches of 20 at a time.
      */
     private fun deleteAssetsByGuid() {
-        if (guidsToDelete.isNotEmpty()) {
+        if (assetsToDelete.isNotEmpty()) {
             val deletionType = if (purge) AtlanDeleteType.PURGE else AtlanDeleteType.SOFT
-            val guidList = guidsToDelete.toList()
+            val guidList = assetsToDelete.values.toList()
             val totalToDelete = guidList.size
             logger.info { " --- Deleting ($deletionType) $totalToDelete assets across $removeTypes... ---" }
+            val currentCount = AtomicLong(0)
             if (totalToDelete < DELETION_BATCH) {
                 client.assets.delete(guidList, deletionType)
             } else {
-                for (i in 0..totalToDelete step DELETION_BATCH) {
-                    logger.info { " ... next batch of $DELETION_BATCH (${round((i.toDouble() / totalToDelete) * 100)}%)" }
-                    val sublist = guidList.subList(i, min(i + DELETION_BATCH, totalToDelete))
-                    client.assets.delete(sublist, deletionType)
-                }
+                // Delete in parallel
+                guidList
+                    .asSequence()
+                    .chunked(DELETION_BATCH)
+                    .toList()
+                    .parallelStream()
+                    .forEach { batch ->
+                        val i = currentCount.getAndAdd(QUERY_BATCH.toLong())
+                        logger.info { " ... next batch of $DELETION_BATCH (${round((i.toDouble() / totalToDelete) * 100)}%)" }
+                        if (batch.isNotEmpty()) {
+                            client.assets.delete(batch, deletionType)
+                        }
+                    }
             }
         }
     }
