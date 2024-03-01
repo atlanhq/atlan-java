@@ -75,7 +75,7 @@ class AssetRemoverTest : PackageTest() {
     @Test
     fun totalAssetsToDelete() {
         assertEquals(3, remover!!.assetsToDelete.size)
-        val types = remover!!.assetsToDelete.map { it.typeName }.toSet()
+        val types = remover!!.assetsToDelete.map { it.key.typeName }.toSet()
         assertEquals(2, types.size)
         assertTrue(types.contains(View.TYPE_NAME))
         assertTrue(types.contains(Column.TYPE_NAME))
@@ -84,12 +84,12 @@ class AssetRemoverTest : PackageTest() {
     @Test
     fun specificAssetsToDelete() {
         remover!!.assetsToDelete.forEach {
-            when (it.typeName) {
-                View.TYPE_NAME -> assertTrue("$conn1QN/TEST_DB/TEST_SCHEMA/TEST_VIEW" == it.qualifiedName)
+            when (it.key.typeName) {
+                View.TYPE_NAME -> assertTrue("$conn1QN/TEST_DB/TEST_SCHEMA/TEST_VIEW" == it.key.qualifiedName)
                 Column.TYPE_NAME -> {
                     assertTrue(
-                        "$conn1QN/TEST_DB/TEST_SCHEMA/TEST_VIEW/COL3" == it.qualifiedName ||
-                            "$conn1QN/TEST_DB/TEST_SCHEMA/TEST_VIEW/COL4" == it.qualifiedName,
+                        "$conn1QN/TEST_DB/TEST_SCHEMA/TEST_VIEW/COL3" == it.key.qualifiedName ||
+                            "$conn1QN/TEST_DB/TEST_SCHEMA/TEST_VIEW/COL4" == it.key.qualifiedName,
                     )
                 }
             }

@@ -71,6 +71,14 @@ public class ThoughtspotAnswer extends Asset
     @Attribute
     String thoughtspotChartType;
 
+    /** Number of Columns. */
+    @Attribute
+    Long thoughtspotColumnCount;
+
+    /** Total number of data table joins executed for analysis. */
+    @Attribute
+    Long thoughtspotJoinCount;
+
     /** TBC */
     @Attribute
     String thoughtspotQuestionText;

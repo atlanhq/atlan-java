@@ -441,6 +441,12 @@ public interface IThoughtspotAnswer {
     /** TBC */
     String getThoughtspotChartType();
 
+    /** Number of Columns. */
+    Long getThoughtspotColumnCount();
+
+    /** Total number of data table joins executed for analysis. */
+    Long getThoughtspotJoinCount();
+
     /** TBC */
     String getThoughtspotQuestionText();
 

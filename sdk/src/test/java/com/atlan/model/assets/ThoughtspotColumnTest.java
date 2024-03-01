@@ -16,9 +16,9 @@ import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @SuppressWarnings("deprecation")
-public class ThoughtspotLiveboardTest {
+public class ThoughtspotColumnTest {
 
-    private static final ThoughtspotLiveboard full = ThoughtspotLiveboard._internal()
+    private static final ThoughtspotColumn full = ThoughtspotColumn._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -385,23 +385,28 @@ public class ThoughtspotLiveboardTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
-            .thoughtspotDashlet(ThoughtspotDashlet.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .thoughtspotDashlet(
-                    ThoughtspotDashlet.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .thoughtspotColumnDataType("String0")
+            .thoughtspotColumnType("String0")
+            .thoughtspotTable(ThoughtspotTable.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .thoughtspotTableQualifiedName("String0")
+            .thoughtspotView(ThoughtspotView.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .thoughtspotViewQualifiedName("String0")
+            .thoughtspotWorksheet(ThoughtspotWorksheet.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .thoughtspotWorksheetQualifiedName("String0")
             .build();
 
     private static final int hash = full.hashCode();
-    private static ThoughtspotLiveboard frodo;
+    private static ThoughtspotColumn frodo;
     private static String serialized;
 
-    @Test(groups = {"ThoughtspotLiveboard.builderEquivalency"})
+    @Test(groups = {"ThoughtspotColumn.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"ThoughtspotLiveboard.serialize"},
-            dependsOnGroups = {"ThoughtspotLiveboard.builderEquivalency"})
+            groups = {"ThoughtspotColumn.serialize"},
+            dependsOnGroups = {"ThoughtspotColumn.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson(Atlan.getDefaultClient());
@@ -410,17 +415,17 @@ public class ThoughtspotLiveboardTest {
     }
 
     @Test(
-            groups = {"ThoughtspotLiveboard.deserialize"},
-            dependsOnGroups = {"ThoughtspotLiveboard.serialize"})
+            groups = {"ThoughtspotColumn.deserialize"},
+            dependsOnGroups = {"ThoughtspotColumn.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = Atlan.getDefaultClient().readValue(serialized, ThoughtspotLiveboard.class);
+        frodo = Atlan.getDefaultClient().readValue(serialized, ThoughtspotColumn.class);
         assertNotNull(frodo);
     }
 
     @Test(
-            groups = {"ThoughtspotLiveboard.equivalency"},
-            dependsOnGroups = {"ThoughtspotLiveboard.serialize", "ThoughtspotLiveboard.deserialize"})
+            groups = {"ThoughtspotColumn.equivalency"},
+            dependsOnGroups = {"ThoughtspotColumn.serialize", "ThoughtspotColumn.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -429,8 +434,8 @@ public class ThoughtspotLiveboardTest {
     }
 
     @Test(
-            groups = {"ThoughtspotLiveboard.equivalency"},
-            dependsOnGroups = {"ThoughtspotLiveboard.serialize", "ThoughtspotLiveboard.deserialize"})
+            groups = {"ThoughtspotColumn.equivalency"},
+            dependsOnGroups = {"ThoughtspotColumn.serialize", "ThoughtspotColumn.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

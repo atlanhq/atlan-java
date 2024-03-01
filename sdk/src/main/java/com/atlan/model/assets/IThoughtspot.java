@@ -9,6 +9,7 @@ import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
@@ -34,6 +35,12 @@ public interface IThoughtspot {
 
     /** TBC */
     KeywordField THOUGHTSPOT_CHART_TYPE = new KeywordField("thoughtspotChartType", "thoughtspotChartType");
+
+    /** Number of Columns. */
+    NumericField THOUGHTSPOT_COLUMN_COUNT = new NumericField("thoughtspotColumnCount", "thoughtspotColumnCount");
+
+    /** Total number of data table joins executed for analysis. */
+    NumericField THOUGHTSPOT_JOIN_COUNT = new NumericField("thoughtspotJoinCount", "thoughtspotJoinCount");
 
     /** TBC */
     TextField THOUGHTSPOT_QUESTION_TEXT = new TextField("thoughtspotQuestionText", "thoughtspotQuestionText");
@@ -448,6 +455,12 @@ public interface IThoughtspot {
 
     /** TBC */
     String getThoughtspotChartType();
+
+    /** Number of Columns. */
+    Long getThoughtspotColumnCount();
+
+    /** Total number of data table joins executed for analysis. */
+    Long getThoughtspotJoinCount();
 
     /** TBC */
     String getThoughtspotQuestionText();

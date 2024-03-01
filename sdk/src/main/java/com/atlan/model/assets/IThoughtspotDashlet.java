@@ -456,6 +456,12 @@ public interface IThoughtspotDashlet {
     /** TBC */
     String getThoughtspotChartType();
 
+    /** Number of Columns. */
+    Long getThoughtspotColumnCount();
+
+    /** Total number of data table joins executed for analysis. */
+    Long getThoughtspotJoinCount();
+
     /** Liveboard in which this dashlet exists. */
     IThoughtspotLiveboard getThoughtspotLiveboard();
 

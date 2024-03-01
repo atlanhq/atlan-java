@@ -4,6 +4,7 @@ package com.atlan.model.typedefs;
 
 import com.atlan.model.enums.AtlanTypeCategory;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +23,7 @@ import lombok.extern.jackson.Jacksonized;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
+@JsonPropertyOrder({"name", "description", "typeVersion", "serviceType", "superTypes", "attributeDefs"})
 public class EntityDef extends TypeDef {
     private static final long serialVersionUID = 2L;
 
@@ -76,6 +78,7 @@ public class EntityDef extends TypeDef {
                 .serviceType("custom_extension")
                 .typeVersion("1.0")
                 .attributeDefs(attributes)
-                .superTypes(superTypes);
+                .superTypes(superTypes)
+                .category(null);
     }
 }

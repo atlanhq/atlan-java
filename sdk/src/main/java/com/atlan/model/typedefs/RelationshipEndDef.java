@@ -3,6 +3,8 @@
 package com.atlan.model.typedefs;
 
 import com.atlan.model.enums.AtlanCustomAttributeCardinality;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -17,6 +19,7 @@ import lombok.extern.jackson.Jacksonized;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
+@JsonPropertyOrder({"type", "name", "description", "isContainer", "cardinality", "isLegacyAttribute"})
 public class RelationshipEndDef extends AttributeDef {
     private static final long serialVersionUID = 2L;
 
@@ -32,8 +35,9 @@ public class RelationshipEndDef extends AttributeDef {
     /** Whether this end of the relationship is a container ("owns" the other end's assets). */
     Boolean isContainer;
 
-    /** Unused. */
-    Boolean isLegacyAttribute;
+    /** TBC */
+    @Builder.Default
+    Boolean isLegacyAttribute = false;
 
     /** Cardinality of this end of the relationship. */
     AtlanCustomAttributeCardinality cardinality;
@@ -54,6 +58,13 @@ public class RelationshipEndDef extends AttributeDef {
                 .name(name)
                 .type(type)
                 .isContainer(isContainer)
-                .cardinality(cardinality);
+                .cardinality(cardinality)
+                .isOptional(null)
+                .valuesMinCount(null)
+                .valuesMaxCount(null)
+                .isUnique(null)
+                .isIndexable(null)
+                .includeInNotification(null)
+                .isNew(null);
     }
 }
