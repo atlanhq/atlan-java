@@ -63,21 +63,21 @@ public class TaskEndpoint extends AtlasEndpoint {
         String url = String.format("%s%s", getBaseUrl(), search_endpoint);
         boolean missingSort =
                 request.getDsl().getSort() == null || request.getDsl().getSort().isEmpty();
-        boolean missingGuidSort = true;
+        boolean missingTimeSort = true;
         if (!missingSort) {
-            // If there is some sort, see whether GUID is already included
+            // If there is some sort, see whether time is already included
             for (SortOptions option : request.getDsl().getSort()) {
                 if (option.isField()) {
                     String fieldName = option.field().field();
                     if (AtlanTask.START_TIME.getNumericFieldName().equals(fieldName)) {
-                        missingGuidSort = false;
+                        missingTimeSort = false;
                         break;
                     }
                 }
             }
         }
-        if (missingGuidSort) {
-            // If there is no sort by GUID, always add it as a final (tie-breaker) criteria
+        if (missingTimeSort) {
+            // If there is no sort by time, always add it as a final (tie-breaker) criteria
             // to ensure there is consistent paging (unfortunately sorting by _doc still has duplicates
             // across large number of pages)
             request = request.toBuilder()
