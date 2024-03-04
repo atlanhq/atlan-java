@@ -623,5 +623,10 @@ public class AssetBatch {
                 this.qualifiedName = qualifiedName;
             }
         }
+
+        @Override
+        public String toString() {
+            return typeName + "::" + qualifiedName;
+        }
     }
 }
