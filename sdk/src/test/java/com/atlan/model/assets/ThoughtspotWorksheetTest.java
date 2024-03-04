@@ -16,9 +16,9 @@ import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @SuppressWarnings("deprecation")
-public class ThoughtspotLiveboardTest {
+public class ThoughtspotWorksheetTest {
 
-    private static final ThoughtspotLiveboard full = ThoughtspotLiveboard._internal()
+    private static final ThoughtspotWorksheet full = ThoughtspotWorksheet._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -385,23 +385,22 @@ public class ThoughtspotLiveboardTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
-            .thoughtspotDashlet(ThoughtspotDashlet.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .thoughtspotDashlet(
-                    ThoughtspotDashlet.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .thoughtspotColumn(ThoughtspotColumn.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .thoughtspotColumn(ThoughtspotColumn.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .build();
 
     private static final int hash = full.hashCode();
-    private static ThoughtspotLiveboard frodo;
+    private static ThoughtspotWorksheet frodo;
     private static String serialized;
 
-    @Test(groups = {"ThoughtspotLiveboard.builderEquivalency"})
+    @Test(groups = {"ThoughtspotWorksheet.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"ThoughtspotLiveboard.serialize"},
-            dependsOnGroups = {"ThoughtspotLiveboard.builderEquivalency"})
+            groups = {"ThoughtspotWorksheet.serialize"},
+            dependsOnGroups = {"ThoughtspotWorksheet.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson(Atlan.getDefaultClient());
@@ -410,17 +409,17 @@ public class ThoughtspotLiveboardTest {
     }
 
     @Test(
-            groups = {"ThoughtspotLiveboard.deserialize"},
-            dependsOnGroups = {"ThoughtspotLiveboard.serialize"})
+            groups = {"ThoughtspotWorksheet.deserialize"},
+            dependsOnGroups = {"ThoughtspotWorksheet.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = Atlan.getDefaultClient().readValue(serialized, ThoughtspotLiveboard.class);
+        frodo = Atlan.getDefaultClient().readValue(serialized, ThoughtspotWorksheet.class);
         assertNotNull(frodo);
     }
 
     @Test(
-            groups = {"ThoughtspotLiveboard.equivalency"},
-            dependsOnGroups = {"ThoughtspotLiveboard.serialize", "ThoughtspotLiveboard.deserialize"})
+            groups = {"ThoughtspotWorksheet.equivalency"},
+            dependsOnGroups = {"ThoughtspotWorksheet.serialize", "ThoughtspotWorksheet.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -429,8 +428,8 @@ public class ThoughtspotLiveboardTest {
     }
 
     @Test(
-            groups = {"ThoughtspotLiveboard.equivalency"},
-            dependsOnGroups = {"ThoughtspotLiveboard.serialize", "ThoughtspotLiveboard.deserialize"})
+            groups = {"ThoughtspotWorksheet.equivalency"},
+            dependsOnGroups = {"ThoughtspotWorksheet.serialize", "ThoughtspotWorksheet.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

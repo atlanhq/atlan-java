@@ -71,10 +71,18 @@ public class ThoughtspotLiveboard extends Asset
     @Attribute
     String thoughtspotChartType;
 
+    /** Number of Columns. */
+    @Attribute
+    Long thoughtspotColumnCount;
+
     /** Dashlets that exist within this liveboard. */
     @Attribute
     @Singular
     SortedSet<IThoughtspotDashlet> thoughtspotDashlets;
+
+    /** Total number of data table joins executed for analysis. */
+    @Attribute
+    Long thoughtspotJoinCount;
 
     /** TBC */
     @Attribute

@@ -8,6 +8,7 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
@@ -22,17 +23,26 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a Thoughtspot liveboard in Atlan.
+ * Instance of a Domo Dashboard in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IThoughtspotLiveboard {
+public interface IDomoDashboard {
 
-    public static final String TYPE_NAME = "ThoughtspotLiveboard";
+    public static final String TYPE_NAME = "DomoDashboard";
 
-    /** Dashlets that exist within this liveboard. */
-    RelationField THOUGHTSPOT_DASHLETS = new RelationField("thoughtspotDashlets");
+    /** TBC */
+    RelationField DOMO_CARDS = new RelationField("domoCards");
+
+    /** Number of cards linked to this dashboard. */
+    NumericField DOMO_DASHBOARD_CARD_COUNT = new NumericField("domoDashboardCardCount", "domoDashboardCardCount");
+
+    /** TBC */
+    RelationField DOMO_DASHBOARD_CHILDREN = new RelationField("domoDashboardChildren");
+
+    /** TBC */
+    RelationField DOMO_DASHBOARD_PARENT = new RelationField("domoDashboardParent");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -278,6 +288,24 @@ public interface IThoughtspotLiveboard {
     String getDisplayName();
 
     /** TBC */
+    SortedSet<IDomoCard> getDomoCards();
+
+    /** Number of cards linked to this dashboard. */
+    Long getDomoDashboardCardCount();
+
+    /** TBC */
+    SortedSet<IDomoDashboard> getDomoDashboardChildren();
+
+    /** TBC */
+    IDomoDashboard getDomoDashboardParent();
+
+    /** Id of the Domo dataset. */
+    String getDomoId();
+
+    /** Id of the owner of the Domo dataset. */
+    String getDomoOwnerId();
+
+    /** TBC */
     SortedSet<IFile> getFiles();
 
     /** Whether this asset has lineage (true) or not (false). */
@@ -441,21 +469,6 @@ public interface IThoughtspotLiveboard {
 
     /** Name of the Atlan workspace in which this asset exists. */
     String getTenantId();
-
-    /** TBC */
-    String getThoughtspotChartType();
-
-    /** Number of Columns. */
-    Long getThoughtspotColumnCount();
-
-    /** Dashlets that exist within this liveboard. */
-    SortedSet<IThoughtspotDashlet> getThoughtspotDashlets();
-
-    /** Total number of data table joins executed for analysis. */
-    Long getThoughtspotJoinCount();
-
-    /** TBC */
-    String getThoughtspotQuestionText();
 
     /** Description of this asset, as provided by a user. If present, this will be used for the description in user interface. */
     String getUserDescription();

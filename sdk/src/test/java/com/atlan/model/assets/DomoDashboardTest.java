@@ -16,9 +16,9 @@ import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @SuppressWarnings("deprecation")
-public class ThoughtspotLiveboardTest {
+public class DomoDashboardTest {
 
-    private static final ThoughtspotLiveboard full = ThoughtspotLiveboard._internal()
+    private static final DomoDashboard full = DomoDashboard._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -59,10 +59,8 @@ public class ThoughtspotLiveboardTest {
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
                             .build())
-            .thoughtspotChartType("String0")
-            .thoughtspotColumnCount(123456789L)
-            .thoughtspotJoinCount(123456789L)
-            .thoughtspotQuestionText("String0")
+            .domoId("String0")
+            .domoOwnerId("String0")
             .inputToAirflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .inputToAirflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .inputToProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -385,23 +383,26 @@ public class ThoughtspotLiveboardTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
-            .thoughtspotDashlet(ThoughtspotDashlet.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .thoughtspotDashlet(
-                    ThoughtspotDashlet.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .domoCard(DomoCard.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .domoCard(DomoCard.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .domoDashboardCardCount(123456789L)
+            .domoDashboardChild(DomoDashboard.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .domoDashboardChild(DomoDashboard.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .domoDashboardParent(DomoDashboard.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .build();
 
     private static final int hash = full.hashCode();
-    private static ThoughtspotLiveboard frodo;
+    private static DomoDashboard frodo;
     private static String serialized;
 
-    @Test(groups = {"ThoughtspotLiveboard.builderEquivalency"})
+    @Test(groups = {"DomoDashboard.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"ThoughtspotLiveboard.serialize"},
-            dependsOnGroups = {"ThoughtspotLiveboard.builderEquivalency"})
+            groups = {"DomoDashboard.serialize"},
+            dependsOnGroups = {"DomoDashboard.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson(Atlan.getDefaultClient());
@@ -410,17 +411,17 @@ public class ThoughtspotLiveboardTest {
     }
 
     @Test(
-            groups = {"ThoughtspotLiveboard.deserialize"},
-            dependsOnGroups = {"ThoughtspotLiveboard.serialize"})
+            groups = {"DomoDashboard.deserialize"},
+            dependsOnGroups = {"DomoDashboard.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = Atlan.getDefaultClient().readValue(serialized, ThoughtspotLiveboard.class);
+        frodo = Atlan.getDefaultClient().readValue(serialized, DomoDashboard.class);
         assertNotNull(frodo);
     }
 
     @Test(
-            groups = {"ThoughtspotLiveboard.equivalency"},
-            dependsOnGroups = {"ThoughtspotLiveboard.serialize", "ThoughtspotLiveboard.deserialize"})
+            groups = {"DomoDashboard.equivalency"},
+            dependsOnGroups = {"DomoDashboard.serialize", "DomoDashboard.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -429,8 +430,8 @@ public class ThoughtspotLiveboardTest {
     }
 
     @Test(
-            groups = {"ThoughtspotLiveboard.equivalency"},
-            dependsOnGroups = {"ThoughtspotLiveboard.serialize", "ThoughtspotLiveboard.deserialize"})
+            groups = {"DomoDashboard.equivalency"},
+            dependsOnGroups = {"DomoDashboard.serialize", "DomoDashboard.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

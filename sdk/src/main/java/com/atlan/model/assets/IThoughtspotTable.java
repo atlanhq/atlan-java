@@ -22,17 +22,17 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a Thoughtspot liveboard in Atlan.
+ * Instance of a Thoughtspot table in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IThoughtspotLiveboard {
+public interface IThoughtspotTable {
 
-    public static final String TYPE_NAME = "ThoughtspotLiveboard";
+    public static final String TYPE_NAME = "ThoughtspotTable";
 
-    /** Dashlets that exist within this liveboard. */
-    RelationField THOUGHTSPOT_DASHLETS = new RelationField("thoughtspotDashlets");
+    /** TBC */
+    RelationField THOUGHTSPOT_COLUMNS = new RelationField("thoughtspotColumns");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -448,8 +448,8 @@ public interface IThoughtspotLiveboard {
     /** Number of Columns. */
     Long getThoughtspotColumnCount();
 
-    /** Dashlets that exist within this liveboard. */
-    SortedSet<IThoughtspotDashlet> getThoughtspotDashlets();
+    /** TBC */
+    SortedSet<IThoughtspotColumn> getThoughtspotColumns();
 
     /** Total number of data table joins executed for analysis. */
     Long getThoughtspotJoinCount();

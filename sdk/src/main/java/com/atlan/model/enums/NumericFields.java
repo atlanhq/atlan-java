@@ -134,6 +134,16 @@ public enum NumericFields implements AtlanSearchableField {
     DBT_MODEL_RUN_ELAPSED_TIME("dbtModelRunElapsedTime"),
     /** TBC */
     DBT_MODEL_RUN_GENERATED_AT("dbtModelRunGeneratedAt"),
+    /** Number of dashboards linked to this card. */
+    DOMO_CARD_DASHBOARD_COUNT("domoCardDashboardCount"),
+    /** Number of cards linked to this dashboard. */
+    DOMO_DASHBOARD_CARD_COUNT("domoDashboardCardCount"),
+    /** Number of cards linked to the Domo dataset. */
+    DOMO_DATASET_CARD_COUNT("domoDatasetCardCount"),
+    /** Number of columns in the Domo dataset. */
+    DOMO_DATASET_COLUMN_COUNT("domoDatasetColumnCount"),
+    /** Number of rows in the Domo dataset. */
+    DOMO_DATASET_ROW_COUNT("domoDatasetRowCount"),
     /** The maximum number of strongly consistent reads consumed per second before DynamoDB returns a ThrottlingException */
     DYNAMO_DB_READ_CAPACITY_UNITS("dynamoDBReadCapacityUnits"),
     /** Represents the number of global secondary indexes on the table. */
@@ -404,6 +414,10 @@ public enum NumericFields implements AtlanSearchableField {
     START_TIME("startTime"),
     /** Number of tables in this schema. */
     TABLE_COUNT("tableCount"),
+    /** Number of Columns. */
+    THOUGHTSPOT_COLUMN_COUNT("thoughtspotColumnCount"),
+    /** Total number of data table joins executed for analysis. */
+    THOUGHTSPOT_JOIN_COUNT("thoughtspotJoinCount"),
     /** Number of tiles in this table. */
     TILE_COUNT("tileCount"),
     /** Time (in milliseconds) when the asset was created. */

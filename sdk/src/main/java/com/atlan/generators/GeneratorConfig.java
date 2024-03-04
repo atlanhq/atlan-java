@@ -414,10 +414,10 @@ public class GeneratorConfig {
     public String resolveEnumValue(String value) {
         if (renameEnumValues.containsKey(value)) {
             return renameEnumValues.get(value);
-        } else if (value.toUpperCase(Locale.ROOT).equals(value)) {
+        } else if (value.toUpperCase(Locale.ROOT).equals(value) && !value.contains(" ") && !value.contains("-")) {
             return value;
         }
-        String[] words = value.split("[\\W-]+");
+        String[] words = value.split("[-\\s]");
         if (words.length == 1) {
             List<String> camelCaseWords = new ArrayList<>();
             Matcher matcher = WORD_FINDER.matcher(value);

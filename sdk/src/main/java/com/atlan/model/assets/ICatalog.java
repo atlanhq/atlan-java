@@ -125,6 +125,18 @@ public interface ICatalog {
             case DbtTest.TYPE_NAME:
                 ref = DbtTest.refByQualifiedName(qualifiedName);
                 break;
+            case DomoCard.TYPE_NAME:
+                ref = DomoCard.refByQualifiedName(qualifiedName);
+                break;
+            case DomoDashboard.TYPE_NAME:
+                ref = DomoDashboard.refByQualifiedName(qualifiedName);
+                break;
+            case DomoDataset.TYPE_NAME:
+                ref = DomoDataset.refByQualifiedName(qualifiedName);
+                break;
+            case DomoDatasetColumn.TYPE_NAME:
+                ref = DomoDatasetColumn.refByQualifiedName(qualifiedName);
+                break;
             case DynamoDBGlobalSecondaryIndex.TYPE_NAME:
                 ref = DynamoDBGlobalSecondaryIndex.refByQualifiedName(qualifiedName);
                 break;
@@ -482,11 +494,23 @@ public interface ICatalog {
             case ThoughtspotAnswer.TYPE_NAME:
                 ref = ThoughtspotAnswer.refByQualifiedName(qualifiedName);
                 break;
+            case ThoughtspotColumn.TYPE_NAME:
+                ref = ThoughtspotColumn.refByQualifiedName(qualifiedName);
+                break;
             case ThoughtspotDashlet.TYPE_NAME:
                 ref = ThoughtspotDashlet.refByQualifiedName(qualifiedName);
                 break;
             case ThoughtspotLiveboard.TYPE_NAME:
                 ref = ThoughtspotLiveboard.refByQualifiedName(qualifiedName);
+                break;
+            case ThoughtspotTable.TYPE_NAME:
+                ref = ThoughtspotTable.refByQualifiedName(qualifiedName);
+                break;
+            case ThoughtspotView.TYPE_NAME:
+                ref = ThoughtspotView.refByQualifiedName(qualifiedName);
+                break;
+            case ThoughtspotWorksheet.TYPE_NAME:
+                ref = ThoughtspotWorksheet.refByQualifiedName(qualifiedName);
                 break;
             case View.TYPE_NAME:
                 ref = View.refByQualifiedName(qualifiedName);

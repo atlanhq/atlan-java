@@ -390,6 +390,12 @@ public enum TextFields implements AtlanSearchableField {
     THOUGHTSPOT_LIVEBOARD_QUALIFIED_NAME("thoughtspotLiveboardQualifiedName.text"),
     /** TBC */
     THOUGHTSPOT_QUESTION_TEXT("thoughtspotQuestionText"),
+    /** Unique name of the table in which this column exists. */
+    THOUGHTSPOT_TABLE_QUALIFIED_NAME("thoughtspotTableQualifiedName.text"),
+    /** Unique name of the view in which this column exists. */
+    THOUGHTSPOT_VIEW_QUALIFIED_NAME("thoughtspotViewQualifiedName.text"),
+    /** Unique name of the worksheet in which this column exists. */
+    THOUGHTSPOT_WORKSHEET_QUALIFIED_NAME("thoughtspotWorksheetQualifiedName.text"),
     /** Type of the asset. For example Table, Column, and so on. */
     TYPE_NAME("__typeName"),
     /** Description of this asset, as provided by a user. If present, this will be used for the description in user interface. */
