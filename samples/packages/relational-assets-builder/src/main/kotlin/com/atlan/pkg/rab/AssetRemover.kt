@@ -200,7 +200,7 @@ class AssetRemover(
     private fun deleteAssetsByGuid() {
         if (assetsToDelete.isNotEmpty()) {
             val deletionType = if (purge) AtlanDeleteType.PURGE else AtlanDeleteType.SOFT
-            val guidList = assetsToDelete.values.toList()
+            val guidList = assetsToDelete.values.filter { it.isNotBlank() }.toList()
             val totalToDelete = guidList.size
             logger.info { " --- Deleting ($deletionType) $totalToDelete assets across $removeTypes... ---" }
             val currentCount = AtomicLong(0)
