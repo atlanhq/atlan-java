@@ -189,7 +189,7 @@ class AssetRemover(
      */
     private fun validateResult(asset: Asset) {
         val candidate = AssetBatch.AssetIdentity(asset.typeName, asset.qualifiedName)
-        if (assetsToDelete.contains(candidate)) {
+        if (assetsToDelete.containsKey(candidate)) {
             assetsToDelete[candidate] = asset.guid
         }
     }
@@ -205,7 +205,9 @@ class AssetRemover(
             logger.info { " --- Deleting ($deletionType) $totalToDelete assets across $removeTypes... ---" }
             val currentCount = AtomicLong(0)
             if (totalToDelete < DELETION_BATCH) {
-                client.assets.delete(guidList, deletionType)
+                if (totalToDelete > 0) {
+                    client.assets.delete(guidList, deletionType)
+                }
             } else {
                 // Delete in parallel
                 guidList
