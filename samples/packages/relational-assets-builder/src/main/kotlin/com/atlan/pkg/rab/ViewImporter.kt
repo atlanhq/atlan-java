@@ -22,6 +22,7 @@ import mu.KotlinLogging
  * @param batchSize maximum number of records to save per API request
  * @param connectionImporter that was used to import connections
  * @param trackBatches if true, minimal details about every asset created or updated is tracked (if false, only counts of each are tracked)
+ * @param fieldSeparator character to use to separate fields (for example ',' or ';')
  */
 class ViewImporter(
     private val preprocessed: Importer.PreprocessedCsv,
@@ -30,6 +31,7 @@ class ViewImporter(
     private val batchSize: Int,
     private val connectionImporter: ConnectionImporter,
     trackBatches: Boolean,
+    fieldSeparator: Char,
 ) : AssetImporter(
     preprocessed.preprocessedFile,
     attrsToOverwrite,
@@ -38,6 +40,7 @@ class ViewImporter(
     View.TYPE_NAME,
     KotlinLogging.logger {},
     trackBatches,
+    fieldSeparator,
 ) {
     /** {@inheritDoc} */
     override fun getBuilder(deserializer: RowDeserializer): Asset.AssetBuilder<*, *> {

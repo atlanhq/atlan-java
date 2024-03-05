@@ -27,7 +27,10 @@ object Importer {
     }
 
     fun import(config: AssetImportCfg, outputDirectory: String = "tmp"): ImportResults? {
-        val batchSize = 20
+        val assetsBatchSize = Utils.getOrDefault(config.assetsBatchSize, 20).toInt()
+        val glossariesBatchSize = Utils.getOrDefault(config.glossariesBatchSize, 20).toInt()
+        val assetsFieldSeparator = Utils.getOrDefault(config.assetsFieldSeparator, ",")[0]
+        val glossariesFieldSeparator = Utils.getOrDefault(config.glossariesFieldSeparator, ",")[0]
         val defaultRegion = Utils.getEnvVar("AWS_S3_REGION")
         val defaultBucket = Utils.getEnvVar("AWS_S3_BUCKET_NAME")
         val assetsUpload = Utils.getOrDefault(config.assetsImportType, "UPLOAD") == "UPLOAD"
@@ -74,15 +77,15 @@ object Importer {
             FieldSerde.FAIL_ON_ERRORS.set(glossariesFailOnErrors)
             logger.info { "=== Importing glossaries... ===" }
             val glossaryImporter =
-                GlossaryImporter(glossariesInput, glossaryAttrsToOverwrite, glossariesUpdateOnly, batchSize)
+                GlossaryImporter(glossariesInput, glossaryAttrsToOverwrite, glossariesUpdateOnly, glossariesBatchSize, glossariesFieldSeparator)
             val resultsGlossary = glossaryImporter.import()
             logger.info { "=== Importing categories... ===" }
             val categoryImporter =
-                CategoryImporter(glossariesInput, glossaryAttrsToOverwrite, glossariesUpdateOnly, batchSize)
+                CategoryImporter(glossariesInput, glossaryAttrsToOverwrite, glossariesUpdateOnly, glossariesBatchSize, glossariesFieldSeparator)
             val resultsCategory = categoryImporter.import()
             logger.info { "=== Importing terms... ===" }
             val termImporter =
-                TermImporter(glossariesInput, glossaryAttrsToOverwrite, glossariesUpdateOnly, batchSize)
+                TermImporter(glossariesInput, glossaryAttrsToOverwrite, glossariesUpdateOnly, glossariesBatchSize, glossariesFieldSeparator)
             val resultsTerm = termImporter.import()
             resultsGlossary?.combinedWith(resultsCategory)?.combinedWith(resultsTerm)
         } else {
@@ -109,12 +112,13 @@ object Importer {
                 assetsInput,
                 assetAttrsToOverwrite,
                 creationHandling == AssetCreationHandling.NONE,
-                batchSize,
+                assetsBatchSize,
                 assetsCaseSensitive,
                 creationHandling,
                 assetsTableViewAgnostic,
                 assetsFailOnErrors,
                 trackBatches,
+                assetsFieldSeparator,
             )
             assetImporter.import()
         } else {

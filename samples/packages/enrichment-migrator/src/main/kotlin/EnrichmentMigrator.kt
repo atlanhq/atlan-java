@@ -19,6 +19,8 @@ object EnrichmentMigrator {
     fun main(args: Array<String>) {
         val outputDirectory = if (args.isEmpty()) "tmp" else args[0]
         val config = Utils.setPackageOps<EnrichmentMigratorCfg>()
+        val batchSize = Utils.getOrDefault(config.batchSize, 20)
+        val fieldSeparator = Utils.getOrDefault(config.fieldSeparator, ",")[0]
         val sourceConnectionQN = Utils.getOrDefault(config.sourceConnection, "")
         val targetConnectionQN = Utils.getOrDefault(config.targetConnection, "")
         val sourcePrefix = Utils.getOrDefault(config.sourceQnPrefix, "")
@@ -78,7 +80,13 @@ object EnrichmentMigrator {
             targetConnectionQN = targetConnectionQN,
         )
         val transformedFile = "$outputDirectory${File.separator}CSA_EM_transformed.csv"
-        val transformer = Transformer(ctx, extractFile, header.toList(), logger)
+        val transformer = Transformer(
+            ctx,
+            extractFile,
+            header.toList(),
+            logger,
+            fieldSeparator,
+        )
         transformer.transform(transformedFile)
 
         // 3. Import the transformed file
@@ -86,6 +94,8 @@ object EnrichmentMigrator {
             assetsFile = transformedFile,
             assetsUpsertSemantic = "update",
             assetsFailOnErrors = Utils.getOrDefault(config.failOnErrors, true),
+            assetsBatchSize = batchSize,
+            assetsFieldSeparator = fieldSeparator.toString(),
         )
         Importer.import(importConfig, outputDirectory)
     }

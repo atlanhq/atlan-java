@@ -31,6 +31,8 @@ object Loader {
     }
 
     fun import(config: LineageBuilderCfg, outputDirectory: String = "tmp") {
+        val batchSize = Utils.getOrDefault(config.batchSize, 20)
+        val fieldSeparator = Utils.getOrDefault(config.fieldSeparator, ",")[0]
         val defaultRegion = Utils.getEnvVar("AWS_S3_REGION")
         val defaultBucket = Utils.getEnvVar("AWS_S3_BUCKET_NAME")
         val lineageUpload = Utils.getOrDefault(config.lineageImportType, "UPLOAD") == "UPLOAD"
@@ -73,7 +75,12 @@ object Loader {
             // 1. Transform the assets, so we can load the prior to creating any lineage relationships
             logger.info { "=== Processing assets... ===" }
             val assetsFile = "$outputDirectory${File.separator}CSA_LB_assets.csv"
-            val assetXform = AssetTransformer(ctx, lineageInput, logger)
+            val assetXform = AssetTransformer(
+                ctx,
+                lineageInput,
+                logger,
+                fieldSeparator,
+            )
             assetXform.transform(assetsFile)
 
             // 2. Create the assets
@@ -82,6 +89,8 @@ object Loader {
                 assetsUpsertSemantic = lineageAssetSemantic,
                 assetsFailOnErrors = lineageFailOnErrors,
                 assetsCaseSensitive = lineageCaseSensitive,
+                assetsBatchSize = batchSize,
+                assetsFieldSeparator = fieldSeparator.toString(),
             )
             val assetResults = Importer.import(importConfig, outputDirectory)
 
@@ -106,7 +115,14 @@ object Loader {
             inputHeaders.removeAll(AssetTransformer.INPUT_HEADERS)
             inputHeaders.removeAll(LineageTransformer.INPUT_HEADERS)
             inputHeaders.forEach { lineageHeaders.add(it) }
-            val lineageXform = LineageTransformer(ctx, lineageInput, lineageHeaders, qualifiedNameMap, logger)
+            val lineageXform = LineageTransformer(
+                ctx,
+                lineageInput,
+                lineageHeaders,
+                qualifiedNameMap,
+                logger,
+                fieldSeparator,
+            )
             lineageXform.transform(lineageFile)
 
             // 4. Load the lineage processes
@@ -115,6 +131,8 @@ object Loader {
                 assetsUpsertSemantic = "upsert", // Note that for these we want a full, not partial, create
                 assetsFailOnErrors = lineageFailOnErrors,
                 assetsCaseSensitive = lineageCaseSensitive,
+                assetsBatchSize = batchSize,
+                assetsFieldSeparator = fieldSeparator.toString(),
             )
             Importer.import(lineageConfig, outputDirectory)
         }

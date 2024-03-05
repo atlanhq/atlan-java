@@ -17,7 +17,10 @@ data class EnrichmentMigratorCfg(
     @JsonProperty("source_connection") val sourceConnection: String? = null,
     @JsonProperty("source_qn_prefix") val sourceQnPrefix: String? = null,
     @JsonProperty("target_connection") val targetConnection: String? = null,
+    @JsonProperty("config_type") val configType: String? = null,
     @JsonProperty("fail_on_errors") val failOnErrors: Boolean? = null,
+    @JsonProperty("field_separator") val fieldSeparator: String? = null,
+    @JsonProperty("batch_size") val batchSize: Number? = null,
     @JsonProperty("limit_type") val limitType: String? = null,
     @JsonDeserialize(using = WidgetSerde.MultiSelectDeserializer::class)
     @JsonSerialize(using = WidgetSerde.MultiSelectSerializer::class)

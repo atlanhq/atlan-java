@@ -34,6 +34,7 @@ import kotlin.system.exitProcess
  * @param creationHandling if assets are to be created, how they should be created (as full assets or only partial assets)
  * @param tableViewAgnostic if true, tables and views will be treated interchangeably (an asset in the batch marked as a table will attempt to match a view if not found as a table, and vice versa)
  * @param failOnErrors if true, fail if errors are encountered, otherwise continue processing
+ * @param fieldSeparator character to use to separate fields (for example ',' or ';')
  */
 abstract class CSVImporter(
     private val filename: String,
@@ -47,6 +48,7 @@ abstract class CSVImporter(
     private val creationHandling: AssetCreationHandling = AssetCreationHandling.FULL,
     private val tableViewAgnostic: Boolean = false,
     private val failOnErrors: Boolean = true,
+    private val fieldSeparator: Char = ',',
 ) : AssetGenerator {
 
     /**
@@ -64,6 +66,7 @@ abstract class CSVImporter(
             AssetBatch.CustomMetadataHandling.MERGE,
             creationHandling,
             tableViewAgnostic,
+            fieldSeparator,
         ).use { csv ->
             val start = System.currentTimeMillis()
             val results = csv.streamRows(this, batchSize, logger, columnsToSkip)

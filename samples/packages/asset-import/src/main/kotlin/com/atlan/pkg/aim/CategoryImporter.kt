@@ -25,12 +25,14 @@ import kotlin.math.max
  * @param attrsToOverwrite list of fields that should be overwritten in Atlan, if their value is empty in the CSV
  * @param updateOnly if true, only update an asset (first check it exists), if false allow upserts (create if it does not exist)
  * @param batchSize maximum number of records to save per API request
+ * @param fieldSeparator character to use to separate fields (for example ',' or ';')
  */
 class CategoryImporter(
     private val filename: String,
     private val attrsToOverwrite: List<AtlanField>,
     private val updateOnly: Boolean,
     private val batchSize: Int,
+    private val fieldSeparator: Char,
 ) : GTCImporter(
     filename = filename,
     attrsToOverwrite = attrsToOverwrite,
@@ -39,6 +41,7 @@ class CategoryImporter(
     cache = CategoryCache,
     typeNameFilter = GlossaryCategory.TYPE_NAME,
     logger = KotlinLogging.logger {},
+    fieldSeparator = fieldSeparator,
 ) {
     private var levelToProcess = 0
 

@@ -29,6 +29,7 @@ import mu.KLogger
  * @param updateOnly if true, only update an asset (first check it exists), if false allow upserts (create if it does not exist)
  * @param batchSize maximum number of records to save per API request
  * @param trackBatches if true, minimal details about every asset created or updated is tracked (if false, only counts of each are tracked)
+ * @param fieldSeparator character to use to separate fields (for example ',' or ';')
  */
 abstract class AssetImporter(
     private val filename: String,
@@ -38,6 +39,7 @@ abstract class AssetImporter(
     typeNameFilter: String,
     logger: KLogger,
     trackBatches: Boolean,
+    fieldSeparator: Char,
 ) : CSVImporter(
     filename,
     logger,
@@ -45,6 +47,7 @@ abstract class AssetImporter(
     attrsToOverwrite,
     batchSize = batchSize,
     trackBatches = trackBatches,
+    fieldSeparator = fieldSeparator,
 ) {
 
     /** {@inheritDoc} */

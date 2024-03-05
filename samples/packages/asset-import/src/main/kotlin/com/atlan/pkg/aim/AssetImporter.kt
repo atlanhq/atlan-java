@@ -27,6 +27,7 @@ import mu.KotlinLogging
  * @param tableViewAgnostic if true, tables and views will be treated interchangeably (an asset in the batch marked as a table will attempt to match a view if not found as a table, and vice versa)
  * @param failOnErrors if true, fail if errors are encountered, otherwise continue processing
  * @param trackBatches if true, minimal details about every asset created or updated is tracked (if false, only counts of each are tracked)
+ * @param fieldSeparator character to use to separate fields (for example ',' or ';')
  */
 class AssetImporter(
     private val filename: String,
@@ -38,6 +39,7 @@ class AssetImporter(
     private val tableViewAgnostic: Boolean = false,
     private val failOnErrors: Boolean = true,
     private val trackBatches: Boolean = true,
+    private val fieldSeparator: Char = ',',
 ) : CSVImporter(
     filename,
     logger = KotlinLogging.logger {},
@@ -49,6 +51,7 @@ class AssetImporter(
     tableViewAgnostic = tableViewAgnostic,
     failOnErrors = failOnErrors,
     trackBatches = trackBatches,
+    fieldSeparator = fieldSeparator,
 ) {
     /** {@inheritDoc} */
     override fun getBuilder(deserializer: RowDeserializer): Asset.AssetBuilder<*, *> {

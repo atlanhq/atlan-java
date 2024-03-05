@@ -17,6 +17,9 @@ data class LineageBuilderCfg(
     @JsonProperty("lineage_s3_bucket") val lineageS3Bucket: String? = null,
     @JsonProperty("lineage_s3_object_key") val lineageS3ObjectKey: String? = null,
     @JsonProperty("lineage_upsert_semantic") val lineageUpsertSemantic: String? = null,
+    @JsonProperty("lineage_config_type") val lineageConfigType: String? = null,
     @JsonProperty("lineage_fail_on_errors") val lineageFailOnErrors: Boolean? = null,
     @JsonProperty("lineage_case_sensitive") val lineageCaseSensitive: Boolean? = null,
+    @JsonProperty("field_separator") val fieldSeparator: String? = null,
+    @JsonProperty("batch_size") val batchSize: Number? = null,
 ) : CustomConfig()
