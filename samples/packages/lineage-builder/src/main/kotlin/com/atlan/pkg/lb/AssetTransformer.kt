@@ -11,6 +11,7 @@ class AssetTransformer(
     private val ctx: Loader.Context,
     private val inputFile: String,
     private val logger: KLogger,
+    private val fieldSeparator: Char,
 ) : CSVXformer(
     inputFile,
     listOf(
@@ -21,6 +22,7 @@ class AssetTransformer(
         Asset.CONNECTION_QUALIFIED_NAME.atlanFieldName,
     ),
     logger,
+    fieldSeparator,
 ) {
     companion object {
         const val TYPE = "Type"

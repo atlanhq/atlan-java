@@ -11,6 +11,7 @@ import com.atlan.pkg.config.model.workflow.WorkflowOutputs
 import com.atlan.pkg.config.widgets.BooleanInput
 import com.atlan.pkg.config.widgets.DropDown
 import com.atlan.pkg.config.widgets.FileUploader
+import com.atlan.pkg.config.widgets.NumericInput
 import com.atlan.pkg.config.widgets.Radio
 import com.atlan.pkg.config.widgets.TextInput
 
@@ -67,6 +68,27 @@ object PackageConfig : CustomPackage(
                         placeholder = "some/where/file.csv",
                         grid = 8,
                     ),
+                    "assets_upsert_semantic" to Radio(
+                        label = "Input handling",
+                        required = false,
+                        possibleValues = mapOf(
+                            "upsert" to "Create full",
+                            "partial" to "Create partial",
+                            "update" to "Update only",
+                        ),
+                        default = "update",
+                        help = "Whether to allow the creation of new assets from the input CSV (full or partial assets), or ensure assets are only updated if they already exist in Atlan.",
+                    ),
+                    "assets_config" to Radio(
+                        label = "Options",
+                        required = true,
+                        possibleValues = mapOf(
+                            "default" to "Default",
+                            "advanced" to "Advanced",
+                        ),
+                        default = "default",
+                        help = "Options to optimize how assets are imported.",
+                    ),
                     "assets_attr_to_overwrite" to DropDown(
                         label = "Remove attributes, if empty",
                         required = false,
@@ -85,17 +107,6 @@ object PackageConfig : CustomPackage(
                         multiSelect = true,
                         grid = 8,
                     ),
-                    "assets_upsert_semantic" to Radio(
-                        label = "Input handling",
-                        required = false,
-                        possibleValues = mapOf(
-                            "upsert" to "Create full",
-                            "partial" to "Create partial",
-                            "update" to "Update only",
-                        ),
-                        default = "update",
-                        help = "Whether to allow the creation of new assets from the input CSV (full or partial assets), or ensure assets are only updated if they already exist in Atlan.",
-                    ),
                     "assets_fail_on_errors" to BooleanInput(
                         label = "Fail on errors",
                         required = false,
@@ -110,6 +121,20 @@ object PackageConfig : CustomPackage(
                         label = "Table/view agnostic?",
                         required = false,
                         help = "Whether to treat tables, views and materialized views as interchangeable (Yes) or strictly adhere to specified types in the input (No).",
+                    ),
+                    "assets_field_separator" to TextInput(
+                        label = "Field separator",
+                        required = false,
+                        help = "Character used to separate fields in the input file (for example, ',' or ';').",
+                        placeholder = ",",
+                        grid = 4,
+                    ),
+                    "assets_batch_size" to NumericInput(
+                        label = "Batch size",
+                        required = false,
+                        help = "Maximum number of rows to process at a time (per API request).",
+                        placeholder = "20",
+                        grid = 4,
                     ),
                     "track_batches" to BooleanInput(
                         label = "Track asset details",
@@ -162,6 +187,26 @@ object PackageConfig : CustomPackage(
                         placeholder = "some/where/file.csv",
                         grid = 8,
                     ),
+                    "glossaries_upsert_semantic" to Radio(
+                        label = "Input handling",
+                        required = false,
+                        possibleValues = mapOf(
+                            "upsert" to "Create and update",
+                            "update" to "Update only",
+                        ),
+                        default = "upsert",
+                        help = "Whether to allow the creation of new glossaries, categories and terms from the input CSV, or ensure these are only updated if they already exist in Atlan.",
+                    ),
+                    "glossaries_config" to Radio(
+                        label = "Options",
+                        required = true,
+                        possibleValues = mapOf(
+                            "default" to "Default",
+                            "advanced" to "Advanced",
+                        ),
+                        default = "default",
+                        help = "Options to optimize how assets are imported.",
+                    ),
                     "glossaries_attr_to_overwrite" to DropDown(
                         label = "Remove attributes, if empty",
                         required = false,
@@ -180,20 +225,24 @@ object PackageConfig : CustomPackage(
                         multiSelect = true,
                         grid = 8,
                     ),
-                    "glossaries_upsert_semantic" to Radio(
-                        label = "Input handling",
-                        required = false,
-                        possibleValues = mapOf(
-                            "upsert" to "Create and update",
-                            "update" to "Update only",
-                        ),
-                        default = "upsert",
-                        help = "Whether to allow the creation of new glossaries, categories and terms from the input CSV, or ensure these are only updated if they already exist in Atlan.",
-                    ),
                     "glossaries_fail_on_errors" to BooleanInput(
                         label = "Fail on errors",
                         required = false,
                         help = "Whether an invalid value in a field should cause the import to fail (Yes) or log a warning, skip that value, and proceed (No).",
+                    ),
+                    "glossaries_field_separator" to TextInput(
+                        label = "Field separator",
+                        required = false,
+                        help = "Character used to separate fields in the input file (for example, ',' or ';').",
+                        placeholder = ",",
+                        grid = 4,
+                    ),
+                    "glossaries_batch_size" to NumericInput(
+                        label = "Batch size",
+                        required = false,
+                        help = "Maximum number of rows to process at a time (per API request).",
+                        placeholder = "20",
+                        grid = 4,
                     ),
                 ),
             ),
@@ -208,12 +257,32 @@ object PackageConfig : CustomPackage(
                 required = listOf("assets_s3_region", "assets_s3_bucket", "assets_s3_object_key"),
             ),
             UIRule(
+                whenInputs = mapOf("assets_config" to "advanced"),
+                required = listOf(
+                    "assets_attr_to_overwrite",
+                    "assets_fail_on_errors",
+                    "assets_case_sensitive",
+                    "assets_table_view_agnostic",
+                    "assets_field_separator",
+                    "assets_batch_size",
+                ),
+            ),
+            UIRule(
                 whenInputs = mapOf("glossaries_import_type" to "UPLOAD"),
                 required = listOf("glossaries_file"),
             ),
             UIRule(
                 whenInputs = mapOf("glossaries_import_type" to "S3"),
                 required = listOf("glossaries_s3_region", "glossaries_s3_bucket", "glossaries_s3_object_key"),
+            ),
+            UIRule(
+                whenInputs = mapOf("glossaries_config" to "advanced"),
+                required = listOf(
+                    "glossaries_attr_to_overwrite",
+                    "glossaries_fail_on_errors",
+                    "glossaries_field_separator",
+                    "glossaries_batch_size",
+                ),
             ),
         ),
     ),

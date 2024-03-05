@@ -19,10 +19,13 @@ data class RelationalAssetsBuilderCfg(
     @JsonProperty("assets_s3_region") val assetsS3Region: String? = null,
     @JsonProperty("assets_s3_bucket") val assetsS3Bucket: String? = null,
     @JsonProperty("assets_s3_object_key") val assetsS3ObjectKey: String? = null,
+    @JsonProperty("assets_upsert_semantic") val assetsUpsertSemantic: String? = null,
+    @JsonProperty("assets_config_type") val assetsConfigType: String? = null,
     @JsonDeserialize(using = WidgetSerde.MultiSelectDeserializer::class)
     @JsonSerialize(using = WidgetSerde.MultiSelectSerializer::class)
     @JsonProperty("assets_attr_to_overwrite") val assetsAttrToOverwrite: List<String>? = null,
-    @JsonProperty("assets_upsert_semantic") val assetsUpsertSemantic: String? = null,
     @JsonProperty("assets_fail_on_errors") val assetsFailOnErrors: Boolean? = null,
+    @JsonProperty("assets_field_separator") val assetsFieldSeparator: String? = null,
+    @JsonProperty("assets_batch_size") val assetsBatchSize: Number? = null,
     @JsonProperty("track_batches") val trackBatches: Boolean? = null,
 ) : CustomConfig()

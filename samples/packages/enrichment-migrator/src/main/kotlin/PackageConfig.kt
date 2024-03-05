@@ -4,11 +4,13 @@ import com.atlan.Atlan
 import com.atlan.model.assets.Asset
 import com.atlan.pkg.CustomPackage
 import com.atlan.pkg.config.model.ui.UIConfig
+import com.atlan.pkg.config.model.ui.UIRule
 import com.atlan.pkg.config.model.ui.UIStep
 import com.atlan.pkg.config.model.workflow.WorkflowOutputs
 import com.atlan.pkg.config.widgets.BooleanInput
 import com.atlan.pkg.config.widgets.ConnectionSelector
 import com.atlan.pkg.config.widgets.DropDown
+import com.atlan.pkg.config.widgets.NumericInput
 import com.atlan.pkg.config.widgets.Radio
 import com.atlan.pkg.config.widgets.TextInput
 
@@ -45,10 +47,34 @@ object PackageConfig : CustomPackage(
                         help = "Connection into which to load the enriched metadata.",
                         grid = 4,
                     ),
+                    "config_type" to Radio(
+                        label = "Options",
+                        required = true,
+                        possibleValues = mapOf(
+                            "default" to "Default",
+                            "advanced" to "Advanced",
+                        ),
+                        default = "default",
+                        help = "Options to optimize how assets are imported.",
+                    ),
                     "fail_on_errors" to BooleanInput(
                         label = "Fail on errors",
                         required = false,
                         help = "Whether an invalid value in a field should cause the import to fail (Yes) or log a warning, skip that value, and proceed (No).",
+                    ),
+                    "field_separator" to TextInput(
+                        label = "Field separator",
+                        required = false,
+                        help = "Character used to separate fields in the input file (for example, ',' or ';').",
+                        placeholder = ",",
+                        grid = 4,
+                    ),
+                    "batch_size" to NumericInput(
+                        label = "Batch size",
+                        required = false,
+                        help = "Maximum number of rows to process at a time (per API request).",
+                        placeholder = "20",
+                        grid = 4,
                     ),
                 ),
             ),
@@ -106,6 +132,16 @@ object PackageConfig : CustomPackage(
                         placeholder = "Data Quality::Completeness|Data Quality::Accuracy",
                         grid = 8,
                     ),
+                ),
+            ),
+        ),
+        rules = listOf(
+            UIRule(
+                whenInputs = mapOf("config_type" to "advanced"),
+                required = listOf(
+                    "fail_on_errors",
+                    "field_separator",
+                    "batch_size",
                 ),
             ),
         ),

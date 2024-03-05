@@ -8,10 +8,12 @@ class Transformer(
     private val inputFile: String,
     private val header: List<String>,
     private val logger: KLogger,
+    private val fieldSeparator: Char,
 ) : CSVXformer(
     inputFile,
     header,
     logger,
+    fieldSeparator,
 ) {
     /** {@inheritDoc} */
     override fun mapRow(inputRow: Map<String, String>): List<List<String>> {

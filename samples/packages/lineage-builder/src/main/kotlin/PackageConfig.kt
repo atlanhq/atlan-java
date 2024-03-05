@@ -9,6 +9,7 @@ import com.atlan.pkg.config.model.ui.UIStep
 import com.atlan.pkg.config.model.workflow.WorkflowOutputs
 import com.atlan.pkg.config.widgets.BooleanInput
 import com.atlan.pkg.config.widgets.FileUploader
+import com.atlan.pkg.config.widgets.NumericInput
 import com.atlan.pkg.config.widgets.Radio
 import com.atlan.pkg.config.widgets.TextInput
 import com.atlan.pkg.lb.Loader
@@ -77,6 +78,16 @@ object PackageConfig : CustomPackage(
                         default = "partial",
                         help = "How to handle assets that do not yet exist in Atlan.",
                     ),
+                    "lineage_config_type" to Radio(
+                        label = "Options",
+                        required = true,
+                        possibleValues = mapOf(
+                            "default" to "Default",
+                            "advanced" to "Advanced",
+                        ),
+                        default = "default",
+                        help = "Options to optimize how lineage is imported.",
+                    ),
                     "lineage_fail_on_errors" to BooleanInput(
                         label = "Fail on errors",
                         required = false,
@@ -86,6 +97,20 @@ object PackageConfig : CustomPackage(
                         label = "Case-sensitive match for assets",
                         required = false,
                         help = "Whether to use case-sensitive matching for assets (Yes) or try case-insensitive matching (No).",
+                    ),
+                    "field_separator" to TextInput(
+                        label = "Field separator",
+                        required = false,
+                        help = "Character used to separate fields in the input file (for example, ',' or ';').",
+                        placeholder = ",",
+                        grid = 4,
+                    ),
+                    "batch_size" to NumericInput(
+                        label = "Batch size",
+                        required = false,
+                        help = "Maximum number of rows to process at a time (per API request).",
+                        placeholder = "20",
+                        grid = 4,
                     ),
                 ),
             ),
@@ -98,6 +123,15 @@ object PackageConfig : CustomPackage(
             UIRule(
                 whenInputs = mapOf("lineage_import_type" to "S3"),
                 required = listOf("lineage_s3_region", "lineage_s3_bucket", "lineage_s3_object_key"),
+            ),
+            UIRule(
+                whenInputs = mapOf("lineage_config_type" to "advanced"),
+                required = listOf(
+                    "lineage_fail_on_errors",
+                    "lineage_case_sensitive",
+                    "field_separator",
+                    "batch_size",
+                ),
             ),
         ),
     ),
