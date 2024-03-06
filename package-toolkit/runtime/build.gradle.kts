@@ -67,6 +67,11 @@ tasks {
             include(dependency("com.pivovarit:throwing-function:.*"))
             include(dependency("jakarta.mail:jakarta.mail-api:.*"))
             include(dependency("jakarta.activation:jakarta.activation-api:.*"))
+            include(dependency("org.eclipse.angus:angus-mail:.*"))
+            include(dependency("org.eclipse.angus:angus-core:.*"))
+            include(dependency("org.eclipse.angus:angus-activation:.*"))
+            include(dependency("org.eclipse.angus:smtp:.*"))
+            include(dependency("org.eclipse.angus:logging-mailhandler:.*"))
             // S3
             include(dependency("software.amazon.awssdk:.*:.*"))
             include(dependency("org.reactivestreams:reactive-streams:.*"))
