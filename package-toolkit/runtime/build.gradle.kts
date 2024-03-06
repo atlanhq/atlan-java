@@ -22,6 +22,7 @@ dependencies {
     api(libs.fastcsv)
     api(libs.bundles.poi)
     api(libs.awssdk.s3)
+    implementation(libs.sqlite)
     implementation(libs.simple.java.mail)
     // You would not need the dependencies below in reality, they are to simulate a running tenant
     testImplementation(libs.bundles.java.test)
@@ -64,6 +65,8 @@ tasks {
             include(dependency("com.sanctionco.jmail:jmail:.*"))
             include(dependency("com.github.bbottema:jetbrains-runtime-annotations:.*"))
             include(dependency("com.pivovarit:throwing-function:.*"))
+            include(dependency("jakarta.mail:jakarta.mail-api:.*"))
+            include(dependency("jakarta.activation:jakarta.activation-api:.*"))
             // S3
             include(dependency("software.amazon.awssdk:.*:.*"))
             include(dependency("org.reactivestreams:reactive-streams:.*"))
