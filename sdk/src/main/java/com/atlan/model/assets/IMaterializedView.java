@@ -365,6 +365,9 @@ public interface IMaterializedView {
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
+    SortedSet<ISparkJob> getInputToSparkJobs();
+
+    /** TBC */
     Boolean getIsAIGenerated();
 
     /** TBC */
@@ -420,6 +423,9 @@ public interface IMaterializedView {
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();
+
+    /** TBC */
+    SortedSet<ISparkJob> getOutputFromSparkJobs();
 
     /** TBC */
     SortedSet<IDataProduct> getOutputPortDataProducts();

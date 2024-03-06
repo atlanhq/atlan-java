@@ -56,6 +56,11 @@ public class ModeWorkspace extends Asset implements IModeWorkspace, IMode, IBI, 
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** Number of collections in this workspace. */
     @Attribute
     Long modeCollectionCount;
@@ -110,6 +115,11 @@ public class ModeWorkspace extends Asset implements IModeWorkspace, IMode, IBI, 
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /**
      * Builds the minimal object necessary to create a relationship to a ModeWorkspace, from a potentially

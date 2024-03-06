@@ -59,6 +59,11 @@ public class MicroStrategyAttribute extends Asset
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** JSON string specifying the attribute's name, description, displayFormat, etc. */
     @Attribute
     String microStrategyAttributeForms;
@@ -137,6 +142,11 @@ public class MicroStrategyAttribute extends Asset
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /**
      * Builds the minimal object necessary to create a relationship to a MicroStrategyAttribute, from a potentially

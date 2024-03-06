@@ -56,6 +56,11 @@ public class SigmaWorkbook extends Asset implements ISigmaWorkbook, ISigma, IBI,
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** Tasks from which this asset is output. */
     @Attribute
     @Singular
@@ -65,6 +70,11 @@ public class SigmaWorkbook extends Asset implements ISigmaWorkbook, ISigma, IBI,
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /** Simple name of the data element in which this asset exists. */
     @Attribute

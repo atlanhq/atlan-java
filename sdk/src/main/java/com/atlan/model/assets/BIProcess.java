@@ -78,6 +78,11 @@ public class BIProcess extends Asset implements IBIProcess, ILineageProcess, IAs
     @Singular
     SortedSet<ICatalog> outputs;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> sparkJobs;
+
     /** SQL query that ran to produce the outputs. */
     @Attribute
     String sql;

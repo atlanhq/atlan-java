@@ -64,6 +64,11 @@ public class LookerDashboard extends Asset implements ILookerDashboard, ILooker,
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** Looks that are used within this dashboard. */
     @Attribute
     @Singular
@@ -78,6 +83,11 @@ public class LookerDashboard extends Asset implements ILookerDashboard, ILooker,
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /** Timestamp (epoch) when the dashboard was last accessed by a user, in milliseconds. */
     @Attribute

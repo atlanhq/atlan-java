@@ -126,6 +126,11 @@ public class Function extends Asset implements IFunction, ISQL, ICatalog, IAsset
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** Whether this asset has been profiled (true) or not (false). */
     @Attribute
     Boolean isProfiled;
@@ -144,6 +149,11 @@ public class Function extends Asset implements IFunction, ISQL, ICatalog, IAsset
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /** Number of times this asset has been queried. */
     @Attribute

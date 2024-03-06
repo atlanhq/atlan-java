@@ -56,6 +56,11 @@ public class SisenseWidget extends Asset implements ISisenseWidget, ISisense, IB
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** Tasks from which this asset is output. */
     @Attribute
     @Singular
@@ -65,6 +70,11 @@ public class SisenseWidget extends Asset implements ISisenseWidget, ISisense, IB
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /** Dashboard in which this widget exists. */
     @Attribute

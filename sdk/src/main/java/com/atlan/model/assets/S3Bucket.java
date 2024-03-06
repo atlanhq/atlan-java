@@ -96,6 +96,11 @@ public class S3Bucket extends Asset
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** S3 objects within this bucket. */
     @Attribute
     @Singular
@@ -110,6 +115,11 @@ public class S3Bucket extends Asset
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /** Whether versioning is enabled for the bucket (true) or not (false). */
     @Attribute

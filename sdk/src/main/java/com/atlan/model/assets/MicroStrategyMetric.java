@@ -59,6 +59,11 @@ public class MicroStrategyMetric extends Asset
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** List of simple names of attributes related to this metric. */
     @Attribute
     @Singular
@@ -182,6 +187,11 @@ public class MicroStrategyMetric extends Asset
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /**
      * Builds the minimal object necessary to create a relationship to a MicroStrategyMetric, from a potentially

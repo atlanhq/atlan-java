@@ -71,6 +71,11 @@ public class File extends Asset implements IFile, IResource, ICatalog, IAsset, I
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** Whether the resource is global (true) or not (false). */
     @Attribute
     Boolean isGlobal;
@@ -88,6 +93,11 @@ public class File extends Asset implements IFile, IResource, ICatalog, IAsset, I
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /** Reference to the resource. */
     @Attribute

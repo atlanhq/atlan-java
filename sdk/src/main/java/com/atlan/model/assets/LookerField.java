@@ -60,6 +60,11 @@ public class LookerField extends Asset implements ILookerField, ILooker, IBI, IC
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** Unique name of the Explore in which this field exists. */
     @Attribute
     String lookerExploreQualifiedName;
@@ -93,6 +98,11 @@ public class LookerField extends Asset implements ILookerField, ILooker, IBI, IC
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /** Project in which this field exists. */
     @Attribute

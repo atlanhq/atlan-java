@@ -110,6 +110,11 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
+    /** TBC */
+    @Attribute
     Boolean isProfiled;
 
     /** TBC */
@@ -134,6 +139,11 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /** TBC */
     @Attribute

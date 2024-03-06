@@ -58,6 +58,11 @@ public class TableauMetric extends Asset implements ITableauMetric, ITableau, IB
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** Tasks from which this asset is output. */
     @Attribute
     @Singular
@@ -67,6 +72,11 @@ public class TableauMetric extends Asset implements ITableauMetric, ITableau, IB
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /** Project in which this metric exists. */
     @Attribute

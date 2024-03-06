@@ -61,6 +61,11 @@ public class LookerExplore extends Asset implements ILookerExplore, ILooker, IBI
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** Model in which this explore exists. */
     @Attribute
     ILookerModel model;
@@ -78,6 +83,11 @@ public class LookerExplore extends Asset implements ILookerExplore, ILooker, IBI
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /** Project in which this explore exists. */
     @Attribute

@@ -60,6 +60,11 @@ public class LookerTile extends Asset implements ILookerTile, ILooker, IBI, ICat
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** Look in which this tile exists. */
     @Attribute
     ILookerLook look;
@@ -89,6 +94,11 @@ public class LookerTile extends Asset implements ILookerTile, ILooker, IBI, ICat
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /** Deprecated. */
     @Attribute

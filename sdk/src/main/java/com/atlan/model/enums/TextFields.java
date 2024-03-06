@@ -368,6 +368,8 @@ public enum TextFields implements AtlanSearchableField {
     SISENSE_WIDGET_FOLDER_QUALIFIED_NAME("sisenseWidgetFolderQualifiedName.text"),
     /** Name of the notification channel for this pipe. */
     SNOWFLAKE_PIPE_NOTIFICATION_CHANNEL_NAME("snowflakePipeNotificationChannelName.text"),
+    /** Name of the Spark app containing this Spark Job For eg. extract_raw_data */
+    SPARK_APP_NAME("sparkAppName"),
     /** Unique name of the top-level domain in which this asset exists. */
     SUPER_DOMAIN_QUALIFIED_NAME("superDomainQualifiedName.text"),
     /** All super types of an asset. */

@@ -69,6 +69,11 @@ public class PowerBITile extends Asset implements IPowerBITile, IPowerBI, IBI, I
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** Tasks from which this asset is output. */
     @Attribute
     @Singular
@@ -78,6 +83,11 @@ public class PowerBITile extends Asset implements IPowerBITile, IPowerBI, IBI, I
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /** Endorsement status of this asset, in Power BI. */
     @Attribute

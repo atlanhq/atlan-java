@@ -83,6 +83,11 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
     @Attribute
     ILineageProcess process;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> sparkJobs;
+
     /** SQL query that ran to produce the outputs. */
     @Attribute
     String sql;

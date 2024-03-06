@@ -124,6 +124,11 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** Whether this partition is further partitioned (true) or not (false). */
     @Attribute
     Boolean isPartitioned;
@@ -154,6 +159,11 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /** Table in which this partition exists. */
     @Attribute

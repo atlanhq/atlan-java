@@ -112,6 +112,8 @@ public enum NumericFields implements AtlanSearchableField {
     DATAFLOW_COUNT("dataflowCount"),
     /** Number of datasets in this workspace. */
     DATASET_COUNT("datasetCount"),
+    /** Timestamp when the score of this data product was last updated. */
+    DATA_PRODUCT_SCORE_UPDATED_AT("dataProductScoreUpdatedAt"),
     /** Score of this data product. */
     DATA_PRODUCT_SCORE_VALUE("dataProductScoreValue"),
     /** TBC */
@@ -406,6 +408,10 @@ public enum NumericFields implements AtlanSearchableField {
     SOURCE_USER_ID("sourceUserId"),
     /** Number of times the dashboard has been viewed through the Looker web UI. */
     SOURCE_VIEW_COUNT("sourceViewCount"),
+    /** End time of the Spark Job eg. 1695673598218 */
+    SPARK_RUN_END_TIME("sparkRunEndTime"),
+    /** Start time of the Spark Job eg. 1695673598218 */
+    SPARK_RUN_START_TIME("sparkRunStartTime"),
     /** Time (epoch) from which this materialized view is stale, in milliseconds. */
     STALE_SINCE_DATE("staleSinceDate"),
     /** Number of users who have starred this asset. */

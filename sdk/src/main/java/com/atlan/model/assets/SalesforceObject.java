@@ -71,6 +71,11 @@ public class SalesforceObject extends Asset
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** Whether this object is a custom object (true) or not (false). */
     @Attribute
     Boolean isCustom;
@@ -105,6 +110,11 @@ public class SalesforceObject extends Asset
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /**
      * Builds the minimal object necessary to create a relationship to a SalesforceObject, from a potentially

@@ -57,6 +57,11 @@ public class MetabaseDashboard extends Asset
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** Collection in which this dashboard exists. */
     @Attribute
     IMetabaseCollection metabaseCollection;
@@ -87,6 +92,11 @@ public class MetabaseDashboard extends Asset
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /**
      * Builds the minimal object necessary to create a relationship to a MetabaseDashboard, from a potentially

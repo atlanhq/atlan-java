@@ -60,6 +60,11 @@ public class Readme extends Asset implements IReadme, IResource, ICatalog, IAsse
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** Whether the resource is global (true) or not (false). */
     @Attribute
     Boolean isGlobal;
@@ -77,6 +82,11 @@ public class Readme extends Asset implements IReadme, IResource, ICatalog, IAsse
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /** Reference to the resource. */
     @Attribute

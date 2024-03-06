@@ -58,6 +58,11 @@ public class KafkaConsumerGroup extends Asset
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** Number of members in this consumer group. */
     @Attribute
     Long kafkaConsumerGroupMemberCount;
@@ -91,6 +96,11 @@ public class KafkaConsumerGroup extends Asset
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /**
      * Builds the minimal object necessary to create a relationship to a KafkaConsumerGroup, from a potentially

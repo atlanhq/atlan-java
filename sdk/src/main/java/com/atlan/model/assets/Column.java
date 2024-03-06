@@ -242,6 +242,11 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** Whether this column is a clustered column (true) or not (false). */
     @Attribute
     Boolean isClustered;
@@ -327,6 +332,11 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /** Column in which this sub-column is nested. */
     @Attribute

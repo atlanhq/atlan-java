@@ -59,6 +59,11 @@ public class MCMonitor extends Asset
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** List of unique names of assets that are part of this Monte Carlo asset. */
     @Attribute
     @Singular
@@ -155,6 +160,11 @@ public class MCMonitor extends Asset
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /**
      * Builds the minimal object necessary to create a relationship to a MCMonitor, from a potentially
