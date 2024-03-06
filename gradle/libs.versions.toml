@@ -19,6 +19,7 @@ swagger = "2.1.20"
 jsonpath = "2.9.0"
 commons-compress = "1.26.0"
 sqlite = "3.45.1.0"
+jakarta-mail = "2.1.3"
 
 [libraries]
 jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson" }
@@ -45,6 +46,7 @@ swagger-parser = { module = "io.swagger.parser.v3:swagger-parser", version.ref =
 json-path = { module = "com.jayway.jsonpath:json-path", version.ref = "jsonpath" }
 commons-compress = { module = "org.apache.commons:commons-compress", version.ref = "commons-compress" }
 sqlite = { module = "org.xerial:sqlite-jdbc", version.ref = "sqlite" }
+jakarta-mail = { module = "com.sun.mail:jakarta.mail", version.ref = "jakarta-mail" }
 
 [bundles]
 java-test = [ "jnanoid", "testng", "wiremock" ]
