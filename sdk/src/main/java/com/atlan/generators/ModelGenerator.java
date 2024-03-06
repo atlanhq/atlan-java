@@ -51,8 +51,8 @@ public class ModelGenerator extends AbstractGenerator {
         Template structTemplate = ftl.getTemplate("struct.ftl");
         for (StructDef structDef : cache.getStructDefCache().values()) {
             StructGenerator generator = new StructGenerator(structDef, cfg);
+            createDirectoryIdempotent(cfg.getPackagePath() + File.separator + StructGenerator.DIRECTORY);
             if (cfg.includeTypedef(structDef)) {
-                createDirectoryIdempotent(cfg.getPackagePath() + File.separator + StructGenerator.DIRECTORY);
                 String filename = cfg.getPackagePath() + File.separator + StructGenerator.DIRECTORY + File.separator
                         + generator.getClassName() + ".java";
                 try (BufferedWriter fs = new BufferedWriter(
