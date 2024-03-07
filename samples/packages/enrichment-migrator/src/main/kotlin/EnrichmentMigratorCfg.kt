@@ -14,9 +14,13 @@ import javax.annotation.processing.Generated
 @Generated("com.atlan.pkg.CustomPackage")
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 data class EnrichmentMigratorCfg(
-    @JsonProperty("source_connection") val sourceConnection: String? = null,
+    @JsonDeserialize(using = WidgetSerde.MultiSelectDeserializer::class)
+    @JsonSerialize(using = WidgetSerde.MultiSelectSerializer::class)
+    @JsonProperty("source_connection") val sourceConnection: List<String>? = null,
     @JsonProperty("source_qn_prefix") val sourceQnPrefix: String? = null,
-    @JsonProperty("target_connection") val targetConnection: String? = null,
+    @JsonDeserialize(using = WidgetSerde.MultiSelectDeserializer::class)
+    @JsonSerialize(using = WidgetSerde.MultiSelectSerializer::class)
+    @JsonProperty("target_connection") val targetConnection: List<String>? = null,
     @JsonProperty("config_type") val configType: String? = null,
     @JsonProperty("fail_on_errors") val failOnErrors: Boolean? = null,
     @JsonProperty("field_separator") val fieldSeparator: String? = null,

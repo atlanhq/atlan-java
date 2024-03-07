@@ -32,7 +32,6 @@ class ImportPetStoreTest : PackageTest() {
                 specUrl = "https://petstore3.swagger.io/api/v3/openapi.json",
                 connectionUsage = "CREATE",
                 connection = Connection.creator(testId, AtlanConnectorType.API, listOf(Atlan.getDefaultClient().roleCache.getIdForName("\$admin")), null, null).build(),
-                connectionQualifiedName = null,
             ),
         )
         OpenAPISpecLoader.main(arrayOf(testDirectory))

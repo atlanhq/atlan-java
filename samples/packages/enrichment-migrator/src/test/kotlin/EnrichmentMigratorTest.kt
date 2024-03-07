@@ -89,8 +89,8 @@ class EnrichmentMigratorTest : PackageTest() {
         createAssets()
         setup(
             EnrichmentMigratorCfg(
-                sourceConnection = Connection.findByName(c1, AtlanConnectorType.HIVE)?.get(0)?.qualifiedName,
-                targetConnection = Connection.findByName(c2, AtlanConnectorType.ESSBASE)?.get(0)?.qualifiedName,
+                sourceConnection = listOf(Connection.findByName(c1, AtlanConnectorType.HIVE)?.get(0)?.qualifiedName!!),
+                targetConnection = listOf(Connection.findByName(c2, AtlanConnectorType.ESSBASE)?.get(0)?.qualifiedName!!),
                 failOnErrors = false,
                 cmLimitType = "INCLUDE",
                 customMetadata = "$cm1::dateSingle",

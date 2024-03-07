@@ -21,8 +21,8 @@ object EnrichmentMigrator {
         val config = Utils.setPackageOps<EnrichmentMigratorCfg>()
         val batchSize = Utils.getOrDefault(config.batchSize, 20)
         val fieldSeparator = Utils.getOrDefault(config.fieldSeparator, ",")[0]
-        val sourceConnectionQN = Utils.getOrDefault(config.sourceConnection, "")
-        val targetConnectionQN = Utils.getOrDefault(config.targetConnection, "")
+        val sourceConnectionQN = Utils.getOrDefault(config.sourceConnection, listOf(""))[0]
+        val targetConnectionQN = Utils.getOrDefault(config.targetConnection, listOf(""))[0]
         val sourcePrefix = Utils.getOrDefault(config.sourceQnPrefix, "")
         val sourceQN = if (sourcePrefix.isBlank()) sourceConnectionQN else "$sourceConnectionQN/$sourcePrefix"
 
