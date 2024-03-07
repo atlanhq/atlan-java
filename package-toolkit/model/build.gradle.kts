@@ -10,9 +10,6 @@ plugins {
 }
 
 dependencies {
-    implementation(libs.jackson.kotlin)
-    implementation(libs.jackson.yaml)
-    implementation(libs.pkl.codegen)
     api(libs.pkl.config)
 }
 
@@ -22,8 +19,6 @@ tasks {
         archiveBaseName.set(jarName)
         archiveClassifier.set("jar-with-dependencies")
         dependencies {
-            include(dependency("com.fasterxml.jackson.module:jackson-module-kotlin:.*"))
-            include(dependency("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:.*"))
             include(dependency("org.pkl-lang:pkl-config-kotlin:.*"))
             include(dependency("org.pkl-lang:pkl-config-java-all:.*"))
             include(dependency("org.jetbrains.kotlin:kotlin-reflect:.*"))
