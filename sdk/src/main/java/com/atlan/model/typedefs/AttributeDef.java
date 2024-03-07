@@ -313,7 +313,7 @@ public class AttributeDef extends AtlanObject implements Comparable<AttributeDef
 
     /** Specifies whether the attribute can be searched (true) or not (false). */
     @Builder.Default
-    Boolean isIndexable = true;
+    Boolean isIndexable = false;
 
     /** Whether changes to this attribute's value generate an event (true) or not (false). */
     @Builder.Default
