@@ -3,20 +3,42 @@
 @ModuleInfo { minPklVersion = "0.25.1" }
 module CustomAtlanModel
 
-prefix: String
+/// Prefix that should be used to namespace all types in the custom model.
+t: String
+
+/// Prefix that should be used to namespace all attributes in the custom model.
+a: String = t.toLowerCase()
+
+/// Supertype from which all other types in the custom model should inherit.
+/// You can also optionally include any enumerations or structural definitions that
+/// will be reused by a number of custom assets in the model.
 supertype: CustomGroup
+
+/// One or more custom assets that should be included in the custom model.
+/// You should define a single entity type per custom asset, and optionally any number
+/// of relationships, enumerations, and / or structures specific to that entity type.
 customTypes: Listing<CustomAsset>?
 
 class CustomGroup {
+  /// Singular entity type that should act as the supertype for all other entity types in the custom model.
   groupDefinition: EntityDef
+  /// (Optional) Enumerations that should be reused by a number of custom assets in the model.
   enumerations: Listing<EnumDef>?
+  /// (Optional) Structures that define complex, embeddable types that should be reused by a number of custom assets in the model.
   structures: Listing<StructDef>?
 }
 
 class CustomAsset {
+  /// Singular entity type that should be included in the custom model.
   assetDefinition: EntityDef
+  /// (Optional) Enumerations that are specific to the custom asset.
   enumerations: Listing<EnumDef>?
+  /// (Optional) Structures that define complex, embeddable types that are specific to the custom asset.
   structures: Listing<StructDef>?
+  /// (Optional) Relationships that are specific to the custom asset.
+  /// You should generally define these only on any child entity types, pointing to their parent entity type.
+  /// (But in any case, a given relationship should only ever be defined once in the model, not repeated across
+  /// entity types.)
   relationships: Listing<RelationshipDef>?
 }
 
@@ -111,19 +133,19 @@ class TypeDefFile {
 const function getLowerSnakeCase(text: String): String = getSnakeCase(text).toLowerCase()
 const function getSnakeCase(text: String): String = text.replaceAll("_", "").replaceAll(Regex("([A-Z]+)([A-Z][a-z])"), "$1_$2").replaceAll(Regex("([a-z])([A-Z])"), "$1_$2")
 
-const function getOutputs(self): Mapping<String, FileOutput> = new Mapping {
-  ["\(self.supertype.groupDefinition.name).json"] = new FileOutput {
+const function getOutputs(m): Mapping<String, FileOutput> = new Mapping {
+  ["\(m.supertype.groupDefinition.name).json"] = new FileOutput {
     value = new TypeDefFile {
       entityDefs {
-        self.supertype.groupDefinition
+        m.supertype.groupDefinition
       }
-      enumDefs = self.supertype.enumerations
-      structDefs = self.supertype.structures
+      enumDefs = m.supertype.enumerations
+      structDefs = m.supertype.structures
     }
     renderer = new JsonRenderer {}
   }
-  for (asset in self.customTypes) {
-    ["\(self.supertype.groupDefinition.name)/\(asset.assetDefinition.name).json"] = new FileOutput {
+  for (asset in m.customTypes) {
+    ["\(m.supertype.groupDefinition.name)/\(asset.assetDefinition.name).json"] = new FileOutput {
       value = new TypeDefFile {
         entityDefs {
           asset.assetDefinition
@@ -136,3 +158,9 @@ const function getOutputs(self): Mapping<String, FileOutput> = new Mapping {
     }
   }
 }
+
+const function getModuleOutput(m): ModuleOutput = new ModuleOutput {
+  files = getOutputs(m)
+}
+
+output = getModuleOutput(this)
