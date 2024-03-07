@@ -1,0 +1,138 @@
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
+@ModuleInfo { minPklVersion = "0.25.1" }
+module CustomAtlanModel
+
+prefix: String
+supertype: CustomGroup
+customTypes: Listing<CustomAsset>?
+
+class CustomGroup {
+  groupDefinition: EntityDef
+  enumerations: Listing<EnumDef>?
+  structures: Listing<StructDef>?
+}
+
+class CustomAsset {
+  assetDefinition: EntityDef
+  enumerations: Listing<EnumDef>?
+  structures: Listing<StructDef>?
+  relationships: Listing<RelationshipDef>?
+}
+
+open class TypeDef {
+  name: String
+  fixed category: String = "ERROR"
+  version: Int32?
+  description: String
+  serviceType: String = "atlan"
+  typeVersion: String = "1.0"
+  attributeDefs: Listing<AttributeDef>?
+}
+
+class EntityDef extends TypeDef {
+  fixed category = "ENTITY"
+  superTypes: Listing<String>(length > 0)
+}
+
+open class AttributeDef {
+  name: String
+  description: String
+  typeName: String
+  defaultValue: String?
+  isDefaultValueNull: Boolean?
+  isOptional: Boolean = true
+  cardinality: String = "SINGLE"
+  valuesMinCount: Int32 = 0
+  valuesMaxCount: Int32 = 1
+  isUnique: Boolean = false
+  isIndexable: Boolean = false
+  includeInNotification: Boolean = true
+  skipScrubbing: Boolean = true
+  searchWeight: Int32?
+  indexType: String?
+  // options: AttributeDefOptions
+  // isNew: Boolean = true
+  enumValues: Listing<String>?
+  // constraints: Listing<Constraint>
+  indexTypeESConfig: Mapping<String, String>?
+  indexTypeESFields: Mapping<String, Mapping<String, String>>?
+  autoUpdateAttributes: Mapping<String, Listing<String>>?
+}
+
+class RelationshipDef extends TypeDef {
+  fixed category = "RELATIONSHIP"
+  endDef1: RelationshipEndDef
+  endDef2: RelationshipEndDef
+  propagateTags: String = "NONE"
+  name = "\(getLowerSnakeCase(endDef2.name))_\(getLowerSnakeCase(endDef1.name))"
+  relationshipLabel = "__\(endDef1.type).\(endDef1.name)"
+  relationshipCategory = if (endDef1.isContainer || endDef2.isContainer) "AGGREGATION" else "ASSOCIATION"
+  // relationshipAttributeDefs: Listing<RelationshipAttributeDef>
+}
+
+class RelationshipEndDef {
+  name: String
+  description: String
+  type: String
+  isContainer: Boolean = false
+  isLegacyAttribute: Boolean = false
+  fixed cardinality = if (isContainer) "SET" else "SINGLE"
+}
+
+class RelationshipAttributeDef extends AttributeDef {
+  isLegacyAttribute: Boolean
+  relationshipTypeName: String
+}
+
+class EnumDef extends TypeDef {
+  fixed category = "ENUM"
+  serviceType = "atlas_core"
+  elementDefs: Listing<EnumElementDef>
+}
+
+class EnumElementDef {
+  ordinal: Int32
+  value: String
+  description: String?
+}
+
+class StructDef extends TypeDef {
+  fixed category = "STRUCT"
+}
+
+class TypeDefFile {
+  entityDefs: Listing<EntityDef>?
+  enumDefs: Listing<EnumDef>?
+  structDefs: Listing<StructDef>?
+  relationshipDefs: Listing<RelationshipDef>?
+}
+
+const function getLowerSnakeCase(text: String): String = getSnakeCase(text).toLowerCase()
+const function getSnakeCase(text: String): String = text.replaceAll("_", "").replaceAll(Regex("([A-Z]+)([A-Z][a-z])"), "$1_$2").replaceAll(Regex("([a-z])([A-Z])"), "$1_$2")
+
+const function getOutputs(self): Mapping<String, FileOutput> = new Mapping {
+  ["\(self.supertype.groupDefinition.name).json"] = new FileOutput {
+    value = new TypeDefFile {
+      entityDefs {
+        self.supertype.groupDefinition
+      }
+      enumDefs = self.supertype.enumerations
+      structDefs = self.supertype.structures
+    }
+    renderer = new JsonRenderer {}
+  }
+  for (asset in self.customTypes) {
+    ["\(self.supertype.groupDefinition.name)/\(asset.assetDefinition.name).json"] = new FileOutput {
+      value = new TypeDefFile {
+        entityDefs {
+          asset.assetDefinition
+        }
+        enumDefs = asset.enumerations
+        structDefs = asset.structures
+        relationshipDefs = asset.relationships
+      }
+      renderer = new JsonRenderer {}
+    }
+  }
+}

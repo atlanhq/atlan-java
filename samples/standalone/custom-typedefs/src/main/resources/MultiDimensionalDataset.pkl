@@ -1,0 +1,178 @@
+import "modulepath:/CustomAtlanModel.pkl"
+
+const fixed tp = "Cube"
+const fixed ap = tp.toLowerCase()
+
+model = (CustomAtlanModel) {
+  prefix = tp
+  supertype {
+    groupDefinition {
+      name = "MultiDimensionalDataset"
+      description = "A dataset with multiple dimensions"
+      superTypes { "Catalog" }
+      attributeDefs {
+        new {
+          name = "\(ap)Name"
+          description = "Simple name of the cube in which this asset exists, or empty if it is itself a cube."
+          typeName = "string"
+          indexTypeESConfig { ["analyzer"] = "atlan_text_analyzer" }
+          indexTypeESFields { ["keyword"] {
+            ["type"] = "keyword"
+            ["normalizer"] = "atlan_normalizer"
+          }}
+        }
+        new {
+          name = "\(ap)QualifiedName"
+          description = "Unique name of the cube in which this asset exists, or empty if it is itself a cube."
+          typeName = "string"
+          indexType = "STRING"
+        }
+        new {
+          name = "\(ap)DimensionName"
+          description = "Simple name of the cube dimension in which this asset exists, or empty if it is itself a dimension."
+          typeName = "string"
+          indexTypeESConfig { ["analyzer"] = "atlan_text_analyzer" }
+          indexTypeESFields { ["keyword"] {
+            ["type"] = "keyword"
+            ["normalizer"] = "atlan_normalizer"
+          }}
+        }
+        new {
+          name = "\(ap)DimensionQualifiedName"
+          description = "Unique name of the cube dimension in which this asset exists, or empty if it is itself a dimension."
+          typeName = "string"
+          indexType = "STRING"
+        }
+        new {
+          name = "\(ap)HierarchyName"
+          description = "Simple name of the dimension hierarchy in which this asset exists, or empty if it is itself a hierarchy."
+          typeName = "string"
+          indexTypeESConfig { ["analyzer"] = "atlan_text_analyzer" }
+          indexTypeESFields { ["keyword"] {
+            ["type"] = "keyword"
+            ["normalizer"] = "atlan_normalizer"
+          }}
+        }
+        new {
+          name = "\(ap)HierarchyQualifiedName"
+          description = "Unique name of the dimension hierarchy in which this asset exists, or empty if it is itself a hierarchy."
+          typeName = "string"
+          indexType = "STRING"
+        }
+      }
+    }
+  }
+  customTypes {
+    new {
+      assetDefinition {
+        name = tp
+        description = "Instance of a cube in Atlan."
+        superTypes { "MultiDimensionalDataset" }
+      }
+    }
+    new {
+      assetDefinition {
+        name = "\(tp)Dimension"
+        description = "Instance of a cube dimension in Atlan."
+        superTypes { "MultiDimensionalDataset" }
+      }
+      relationships {
+        new {
+          description = "Containment relationship between \(tp) (parent) and \(tp)Dimension (children)."
+          endDef1 {
+            description = "Individual dimensions that make up the cube."
+            type = tp
+            name = "\(ap)Dimensions"
+            isContainer = true
+          }
+          endDef2 {
+            description = "Cube in which this dimension exists."
+            type = "\(tp)Dimension"
+            name = ap
+          }
+        }
+      }
+    }
+    new {
+      assetDefinition {
+        name = "\(tp)Hierchy"
+        description = "Instance of a cube hierarchy in Atlan."
+        superTypes { "MultiDimensionalDataset" }
+      }
+      relationships {
+        new {
+          description = "Containment relationship between \(tp)Dimension (parent) and \(tp)Hierarchy (children)."
+          endDef1 {
+            description = "Individual hierarchies that make up the dimension."
+            type = "\(tp)Dimension"
+            name = "\(ap)Hierarchies"
+            isContainer = true
+          }
+          endDef2 {
+            description = "Dimension in which this hierarchy exists."
+            type = "\(tp)Hierarchy"
+            name = "\(ap)Dimension"
+          }
+        }
+      }
+    }
+    new {
+      assetDefinition {
+        name = "\(tp)Field"
+        description = "Instance of a cube field in Atlan."
+        superTypes { "MultiDimensionalDataset" }
+        attributeDefs {
+          new {
+            name = "\(ap)FieldLevel"
+            description = "Level of the field in the cube hierarchy."
+            typeName = "int"
+          }
+          new {
+            name = "\(ap)FieldMeasureExpression"
+            description = "Expression used to calculate this measure."
+            typeName = "string"
+            indexTypeESConfig { ["analyzer"] = "atlan_text_analyzer" }
+            indexTypeESFields { ["keyword"] {
+              ["type"] = "keyword"
+              ["normalizer"] = "atlan_normalizer"
+            }}
+          }
+        }
+      }
+      relationships {
+        new {
+          description = "Containment relationship between \(tp)Hierarchy (parent) and \(tp)Field (children)."
+          endDef1 {
+            description = "Individual fields that make up the hierarchy."
+            type = "\(tp)Hierarchy"
+            name = "\(ap)Fields"
+            isContainer = true
+          }
+          endDef2 {
+            description = "Hierarchy in which this field exists."
+            type = "\(tp)Field"
+            name = "\(ap)Hierarchy"
+          }
+        }
+        new {
+          description = "Hierarchical nesting relationship between \(tp)Fields."
+          endDef1 {
+            description = "Individual fields nested within this cube field."
+            type = "\(tp)Field"
+            name = "\(ap)NestedFields"
+            isContainer = true
+          }
+          endDef2 {
+            description = "Parent field in which this field is nested."
+            type = "\(tp)Field"
+            name = "\(ap)ParentField"
+          }
+        }
+      }
+    }
+  }
+}
+
+output {
+  files = CustomAtlanModel.getOutputs(model)
+}
