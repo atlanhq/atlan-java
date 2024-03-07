@@ -11,6 +11,7 @@ package com.atlan.pkg.config.widgets
  * @param hidden whether the widget will be shown in the UI (false) or not (true)
  * @param help informational text to place in a hover-over to describe the use of the input
  * @param placeholder example text to place within the widget to exemplify its use
+ * @param multiSelect whether multiple connections can be selected (true) or only a single connection (false)
  * @param grid sizing of the input on the UI (8 is full-width, 4 is half-width)
  * @param start TBC
  */
@@ -20,6 +21,7 @@ class ConnectionSelector(
     hidden: Boolean = false,
     help: String = "",
     placeholder: String = "",
+    multiSelect: Boolean = false,
     grid: Int = 4,
     start: Int = 1,
 ) : UIElement(
@@ -27,6 +29,7 @@ class ConnectionSelector(
     required,
     ConnectionSelectorWidget(
         label,
+        if (multiSelect) "multiple" else "",
         hidden,
         help,
         placeholder,
@@ -36,6 +39,7 @@ class ConnectionSelector(
 ) {
     class ConnectionSelectorWidget(
         label: String,
+        val mode: String,
         hidden: Boolean = false,
         help: String = "",
         placeholder: String = "",

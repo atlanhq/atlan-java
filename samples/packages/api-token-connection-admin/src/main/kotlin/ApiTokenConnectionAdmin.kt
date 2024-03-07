@@ -19,7 +19,7 @@ object ApiTokenConnectionAdmin {
     fun main(args: Array<String>) {
         val config = Utils.setPackageOps<APITokenConnectionAdminCfg>()
 
-        val connectionQN = Utils.reuseConnection(config.connectionQualifiedName)
+        val connectionQN = Utils.reuseConnection(config.connectionQualifiedName?.let { it[0] })
         val apiTokenGuid = Utils.getOrDefault(config.apiTokenGuid, "")
 
         if (connectionQN == "" || apiTokenGuid == "") {

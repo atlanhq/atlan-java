@@ -20,5 +20,7 @@ data class OpenAPISpecLoaderCfg(
     @JsonDeserialize(using = WidgetSerde.ConnectionDeserializer::class)
     @JsonSerialize(using = WidgetSerde.ConnectionSerializer::class)
     @JsonProperty("connection") val connection: Connection? = null,
-    @JsonProperty("connection_qualified_name") val connectionQualifiedName: String? = null,
+    @JsonDeserialize(using = WidgetSerde.MultiSelectDeserializer::class)
+    @JsonSerialize(using = WidgetSerde.MultiSelectSerializer::class)
+    @JsonProperty("connection_qualified_name") val connectionQualifiedName: List<String>? = null,
 ) : CustomConfig()
