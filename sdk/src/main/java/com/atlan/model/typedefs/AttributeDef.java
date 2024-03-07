@@ -317,7 +317,7 @@ public class AttributeDef extends AtlanObject implements Comparable<AttributeDef
 
     /** Whether changes to this attribute's value generate an event (true) or not (false). */
     @Builder.Default
-    Boolean includeInNotification = false;
+    Boolean includeInNotification = true;
 
     /** TBC */
     final Boolean skipScrubbing;
