@@ -13,6 +13,7 @@ import com.atlan.pkg.config.model.workflow.WorkflowOutputs
 import com.atlan.pkg.config.model.workflow.WorkflowTemplateDefinition
 import com.atlan.pkg.config.widgets.BooleanInput
 import com.atlan.pkg.config.widgets.ConnectionCreator
+import com.atlan.pkg.config.widgets.ConnectionSelector
 import com.atlan.pkg.config.widgets.ConnectorTypeSelector
 import com.atlan.pkg.config.widgets.DateInput
 import com.atlan.pkg.config.widgets.DropDown
@@ -190,6 +191,7 @@ open class CustomPackage(
                 is DropDown.DropDownWidget,
                 is MultipleGroups.MultipleGroupsWidget,
                 is MultipleUsers.MultipleUsersWidget,
+                is ConnectionSelector.ConnectionSelectorWidget,
                 -> {
                     builder.append("    @JsonDeserialize(using = WidgetSerde.MultiSelectDeserializer::class)\n")
                     builder.append("    @JsonSerialize(using = WidgetSerde.MultiSelectSerializer::class)\n")

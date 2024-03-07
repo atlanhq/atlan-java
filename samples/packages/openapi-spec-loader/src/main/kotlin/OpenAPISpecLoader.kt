@@ -30,8 +30,9 @@ object OpenAPISpecLoader {
         val specUrl = Utils.getOrDefault(config.specUrl, "")
         val batchSize = 20
 
+        val inputQN = config.connectionQualifiedName?.let { it[0] }
         val connectionQN =
-            Utils.createOrReuseConnection(config.connectionUsage, config.connectionQualifiedName, config.connection)
+            Utils.createOrReuseConnection(config.connectionUsage, inputQN, config.connection)
 
         if (connectionQN == "" || specUrl == "") {
             logger.error { "Missing required parameter - you must provide BOTH a connection name and specification URL." }
