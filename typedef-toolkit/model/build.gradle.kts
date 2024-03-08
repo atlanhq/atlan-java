@@ -56,7 +56,7 @@ pkl {
 
 publishing {
     publications {
-        create<MavenPublication>("mavenJavaPkgCfg") {
+        create<MavenPublication>("mavenJavaTypeMdlCfg") {
             groupId = providers.gradleProperty("GROUP").get()
             artifactId = providers.gradleProperty("PKG_MDL_ARTIFACT_ID").get()
             version = providers.gradleProperty("VERSION_NAME").get()
@@ -96,7 +96,7 @@ publishing {
 
 signing {
     useGpgCmd()
-    sign(publishing.publications["mavenJavaPkgCfg"])
+    sign(publishing.publications["mavenJavaTypeMdlCfg"])
 }
 
 spotless {

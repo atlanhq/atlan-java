@@ -3,8 +3,8 @@ amends "modulepath:/CustomAtlanModel.pkl"
 t = "EnumAttribute"
 a = "ea"
 
-supertype {
-  groupDefinition {
+shared {
+  supertypeDefinition {
     name = t
     description = "Enumerated Attribute"
     superTypes { "Catalog" }

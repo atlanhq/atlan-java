@@ -1,10 +1,12 @@
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2024 Atlan Pte. Ltd. */
 amends "modulepath:/CustomAtlanModel.pkl"
 
 t = "Cube"
 a = t.toLowerCase()
 
-supertype {
-  groupDefinition {
+shared {
+  supertypeDefinition {
     name = "MultiDimensionalDataset"
     description = "A dataset with multiple dimensions"
     superTypes { "Catalog" }

@@ -3,8 +3,8 @@ amends "modulepath:/CustomAtlanModel.pkl"
 t = "NoIndexString"
 a = "nis"
 
-supertype {
-  groupDefinition {
+shared {
+  supertypeDefinition {
     name = t
     description = "No Index String"
     superTypes { "Catalog" }

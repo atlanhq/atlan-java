@@ -3,8 +3,8 @@ amends "modulepath:/CustomAtlanModel.pkl"
 t = "NoIndex"
 a = "ni"
 
-supertype {
-  groupDefinition {
+shared {
+  supertypeDefinition {
     name = t
     description = "No Index"
     superTypes { "Catalog" }

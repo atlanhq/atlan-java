@@ -90,6 +90,6 @@ class ModelUnitTest {
     }
 
     private fun getAttribute(model: CustomAtlanModel): CustomAtlanModel.AttributeDef {
-        return model.supertype.groupDefinition.attributeDefs?.get(0)!!
+        return model.shared.supertypeDefinition.attributeDefs?.get(0)!!
     }
 }
