@@ -4,6 +4,7 @@ val jarName = "package-toolkit-model"
 
 plugins {
     id("com.atlan.kotlin")
+    alias(libs.plugins.pkl)
     alias(libs.plugins.shadow)
     `maven-publish`
     signing
@@ -43,7 +44,7 @@ java {
     withJavadocJar()
 }
 
-/*pkl {
+pkl {
     kotlinCodeGenerators {
         register("genKotlin") {
             indent.set("    ")
@@ -51,7 +52,7 @@ java {
             sourceModules.add(file("src/main/resources/CustomAtlanModel.pkl"))
         }
     }
-}*/
+}
 
 publishing {
     publications {
