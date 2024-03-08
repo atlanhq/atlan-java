@@ -36,7 +36,7 @@ tasks {
 }
 
 task("sourcesJar", type = Jar::class) {
-    duplicatesStrategy = DuplicatesStrategy.WARN
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
 }
 
 java {
