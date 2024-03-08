@@ -39,8 +39,8 @@ jobs:
           path: package-toolkit/config/build/libs/package-toolkit-config-*-jar-with-dependencies.jar
       - uses: actions/upload-artifact@v4
         with:
-          name: package-toolkit-model
-          path: package-toolkit/model/build/libs/package-toolkit-model-*-jar-with-dependencies.jar
+          name: typedef-toolkit-config
+          path: typedef-toolkit/config/build/libs/typedef-toolkit-config-*-jar-with-dependencies.jar
       - uses: actions/upload-artifact@v4
         with:
           name: package-toolkit-runtime
