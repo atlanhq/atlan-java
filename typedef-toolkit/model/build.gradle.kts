@@ -98,3 +98,11 @@ signing {
     useGpgCmd()
     sign(publishing.publications["mavenJavaPkgCfg"])
 }
+
+spotless {
+    // For now disable the check, as generated code will not be properly formatted
+    isEnforceCheck = false
+    /*kotlin {
+        ignoreErrorForPath("src/main/kotlin/CustomAtlanModel.kt")
+    }*/
+}
