@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":41,"i2":41,"i3":41,"i4":41,"i5":41,"i6":41,"i7":41,"i8":41,"i9":9,"i10":9,"i11":9,"i12":9,"i13":9,"i14":9,"i15":10,"i16":10,"i17":9,"i18":9,"i19":9,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":9,"i27":9,"i28":9,"i29":9,"i30":9,"i31":9,"i32":9,"i33":9,"i34":9,"i35":9,"i36":9,"i37":9,"i38":9,"i39":9,"i40":9,"i41":9,"i42":9,"i43":9,"i44":9,"i45":9,"i46":9,"i47":9,"i48":41,"i49":41,"i50":41,"i51":41,"i52":9,"i53":9,"i54":9,"i55":9,"i56":10,"i57":10,"i58":10,"i59":10,"i60":9,"i61":9,"i62":9,"i63":9,"i64":9};
+var data = {"i0":9,"i1":41,"i2":41,"i3":41,"i4":41,"i5":41,"i6":41,"i7":41,"i8":41,"i9":9,"i10":9,"i11":9,"i12":9,"i13":9,"i14":9,"i15":10,"i16":10,"i17":9,"i18":9,"i19":9,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":9,"i29":9,"i30":9,"i31":9,"i32":9,"i33":9,"i34":9,"i35":9,"i36":9,"i37":9,"i38":9,"i39":9,"i40":9,"i41":9,"i42":9,"i43":9,"i44":9,"i45":9,"i46":9,"i47":9,"i48":9,"i49":9,"i50":41,"i51":41,"i52":41,"i53":41,"i54":9,"i55":9,"i56":9,"i57":9,"i58":10,"i59":10,"i60":10,"i61":10,"i62":9,"i63":9,"i64":9,"i65":9,"i66":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -241,7 +241,7 @@ implements <a href="IInsight.html" title="interface in com.atlan.model.assets">I
 <!--   -->
 </a>
 <h3>Fields inherited from interface&nbsp;com.atlan.model.assets.<a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a></h3>
-<code><a href="ICatalog.html#INPUT_TO_AIRFLOW_TASKS">INPUT_TO_AIRFLOW_TASKS</a>, <a href="ICatalog.html#INPUT_TO_PROCESSES">INPUT_TO_PROCESSES</a>, <a href="ICatalog.html#OUTPUT_FROM_AIRFLOW_TASKS">OUTPUT_FROM_AIRFLOW_TASKS</a>, <a href="ICatalog.html#OUTPUT_FROM_PROCESSES">OUTPUT_FROM_PROCESSES</a></code></li>
+<code><a href="ICatalog.html#INPUT_TO_AIRFLOW_TASKS">INPUT_TO_AIRFLOW_TASKS</a>, <a href="ICatalog.html#INPUT_TO_PROCESSES">INPUT_TO_PROCESSES</a>, <a href="ICatalog.html#INPUT_TO_SPARK_JOBS">INPUT_TO_SPARK_JOBS</a>, <a href="ICatalog.html#OUTPUT_FROM_AIRFLOW_TASKS">OUTPUT_FROM_AIRFLOW_TASKS</a>, <a href="ICatalog.html#OUTPUT_FROM_PROCESSES">OUTPUT_FROM_PROCESSES</a>, <a href="ICatalog.html#OUTPUT_FROM_SPARK_JOBS">OUTPUT_FROM_SPARK_JOBS</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="fields.inherited.from.class.com.atlan.model.assets.IReferenceable">
@@ -486,39 +486,53 @@ implements <a href="IInsight.html" title="interface in com.atlan.model.assets">I
 </td>
 </tr>
 <tr id="i22" class="altColor">
+<td class="colFirst"><code>java.util.SortedSet&lt;<a href="ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInputToSparkJobs()">getInputToSparkJobs</a></span>()</code></th>
+<td class="colLast">
+<div class="block">TBC</div>
+</td>
+</tr>
+<tr id="i23" class="rowColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOutputFromAirflowTasks()">getOutputFromAirflowTasks</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Tasks from which this asset is output.</div>
 </td>
 </tr>
-<tr id="i23" class="rowColor">
+<tr id="i24" class="altColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOutputFromProcesses()">getOutputFromProcesses</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Processes from which this asset is produced as output.</div>
 </td>
 </tr>
-<tr id="i24" class="altColor">
+<tr id="i25" class="rowColor">
+<td class="colFirst"><code>java.util.SortedSet&lt;<a href="ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOutputFromSparkJobs()">getOutputFromSparkJobs</a></span>()</code></th>
+<td class="colLast">
+<div class="block">TBC</div>
+</td>
+</tr>
+<tr id="i26" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTypeName()">getTypeName</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Fixed typeName for Insights.</div>
 </td>
 </tr>
-<tr id="i25" class="rowColor">
+<tr id="i27" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i26" class="altColor">
+<tr id="i28" class="altColor">
 <td class="colFirst"><code>static <a href="Insight.html" title="class in com.atlan.model.assets">Insight</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#refByGuid(java.lang.String)">refByGuid</a></span>&#8203;(java.lang.String&nbsp;guid)</code></th>
 <td class="colLast">
 <div class="block">Reference to a Insight by GUID.</div>
 </td>
 </tr>
-<tr id="i27" class="rowColor">
+<tr id="i29" class="rowColor">
 <td class="colFirst"><code>static <a href="Insight.html" title="class in com.atlan.model.assets">Insight</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#refByGuid(java.lang.String,com.atlan.model.relations.Reference.SaveSemantic)">refByGuid</a></span>&#8203;(java.lang.String&nbsp;guid,
          <a href="../relations/Reference.SaveSemantic.html" title="enum in com.atlan.model.relations">Reference.SaveSemantic</a>&nbsp;semantic)</code></th>
@@ -526,14 +540,14 @@ implements <a href="IInsight.html" title="interface in com.atlan.model.assets">I
 <div class="block">Reference to a Insight by GUID.</div>
 </td>
 </tr>
-<tr id="i28" class="altColor">
+<tr id="i30" class="altColor">
 <td class="colFirst"><code>static <a href="Insight.html" title="class in com.atlan.model.assets">Insight</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#refByQualifiedName(java.lang.String)">refByQualifiedName</a></span>&#8203;(java.lang.String&nbsp;qualifiedName)</code></th>
 <td class="colLast">
 <div class="block">Reference to a Insight by qualifiedName.</div>
 </td>
 </tr>
-<tr id="i29" class="rowColor">
+<tr id="i31" class="rowColor">
 <td class="colFirst"><code>static <a href="Insight.html" title="class in com.atlan.model.assets">Insight</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#refByQualifiedName(java.lang.String,com.atlan.model.relations.Reference.SaveSemantic)">refByQualifiedName</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                   <a href="../relations/Reference.SaveSemantic.html" title="enum in com.atlan.model.relations">Reference.SaveSemantic</a>&nbsp;semantic)</code></th>
@@ -541,7 +555,7 @@ implements <a href="IInsight.html" title="interface in com.atlan.model.assets">I
 <div class="block">Reference to a Insight by qualifiedName.</div>
 </td>
 </tr>
-<tr id="i30" class="altColor">
+<tr id="i32" class="altColor">
 <td class="colFirst"><code>static <a href="Insight.html" title="class in com.atlan.model.assets">Insight</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeAnnouncement(com.atlan.AtlanClient,java.lang.String,java.lang.String)">removeAnnouncement</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
                   java.lang.String&nbsp;qualifiedName,
@@ -550,7 +564,7 @@ implements <a href="IInsight.html" title="interface in com.atlan.model.assets">I
 <div class="block">Remove the announcement from a Insight.</div>
 </td>
 </tr>
-<tr id="i31" class="rowColor">
+<tr id="i33" class="rowColor">
 <td class="colFirst"><code>static <a href="Insight.html" title="class in com.atlan.model.assets">Insight</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeAnnouncement(java.lang.String,java.lang.String)">removeAnnouncement</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                   java.lang.String&nbsp;name)</code></th>
@@ -558,7 +572,7 @@ implements <a href="IInsight.html" title="interface in com.atlan.model.assets">I
 <div class="block">Remove the announcement from a Insight.</div>
 </td>
 </tr>
-<tr id="i32" class="altColor">
+<tr id="i34" class="altColor">
 <td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeAtlanTag(com.atlan.AtlanClient,java.lang.String,java.lang.String)">removeAtlanTag</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
               java.lang.String&nbsp;qualifiedName,
@@ -567,7 +581,7 @@ implements <a href="IInsight.html" title="interface in com.atlan.model.assets">I
 <div class="block">Remove an Atlan tag from a Insight.</div>
 </td>
 </tr>
-<tr id="i33" class="rowColor">
+<tr id="i35" class="rowColor">
 <td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeAtlanTag(java.lang.String,java.lang.String)">removeAtlanTag</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
               java.lang.String&nbsp;atlanTagName)</code></th>
@@ -575,7 +589,7 @@ implements <a href="IInsight.html" title="interface in com.atlan.model.assets">I
 <div class="block">Remove an Atlan tag from a Insight.</div>
 </td>
 </tr>
-<tr id="i34" class="altColor">
+<tr id="i36" class="altColor">
 <td class="colFirst"><code>static <a href="Insight.html" title="class in com.atlan.model.assets">Insight</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeCertificate(com.atlan.AtlanClient,java.lang.String,java.lang.String)">removeCertificate</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
                  java.lang.String&nbsp;qualifiedName,
@@ -584,7 +598,7 @@ implements <a href="IInsight.html" title="interface in com.atlan.model.assets">I
 <div class="block">Remove the certificate from a Insight.</div>
 </td>
 </tr>
-<tr id="i35" class="rowColor">
+<tr id="i37" class="rowColor">
 <td class="colFirst"><code>static <a href="Insight.html" title="class in com.atlan.model.assets">Insight</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeCertificate(java.lang.String,java.lang.String)">removeCertificate</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                  java.lang.String&nbsp;name)</code></th>
@@ -592,7 +606,7 @@ implements <a href="IInsight.html" title="interface in com.atlan.model.assets">I
 <div class="block">Remove the certificate from a Insight.</div>
 </td>
 </tr>
-<tr id="i36" class="altColor">
+<tr id="i38" class="altColor">
 <td class="colFirst"><code>static <a href="Insight.html" title="class in com.atlan.model.assets">Insight</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeDescription(com.atlan.AtlanClient,java.lang.String,java.lang.String)">removeDescription</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
                  java.lang.String&nbsp;qualifiedName,
@@ -601,7 +615,7 @@ implements <a href="IInsight.html" title="interface in com.atlan.model.assets">I
 <div class="block">Remove the system description from a Insight.</div>
 </td>
 </tr>
-<tr id="i37" class="rowColor">
+<tr id="i39" class="rowColor">
 <td class="colFirst"><code>static <a href="Insight.html" title="class in com.atlan.model.assets">Insight</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeDescription(java.lang.String,java.lang.String)">removeDescription</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                  java.lang.String&nbsp;name)</code></th>
@@ -609,7 +623,7 @@ implements <a href="IInsight.html" title="interface in com.atlan.model.assets">I
 <div class="block">Remove the system description from a Insight.</div>
 </td>
 </tr>
-<tr id="i38" class="altColor">
+<tr id="i40" class="altColor">
 <td class="colFirst"><code>static <a href="Insight.html" title="class in com.atlan.model.assets">Insight</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeOwners(com.atlan.AtlanClient,java.lang.String,java.lang.String)">removeOwners</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
             java.lang.String&nbsp;qualifiedName,
@@ -618,7 +632,7 @@ implements <a href="IInsight.html" title="interface in com.atlan.model.assets">I
 <div class="block">Remove the owners from a Insight.</div>
 </td>
 </tr>
-<tr id="i39" class="rowColor">
+<tr id="i41" class="rowColor">
 <td class="colFirst"><code>static <a href="Insight.html" title="class in com.atlan.model.assets">Insight</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeOwners(java.lang.String,java.lang.String)">removeOwners</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
             java.lang.String&nbsp;name)</code></th>
@@ -626,7 +640,7 @@ implements <a href="IInsight.html" title="interface in com.atlan.model.assets">I
 <div class="block">Remove the owners from a Insight.</div>
 </td>
 </tr>
-<tr id="i40" class="altColor">
+<tr id="i42" class="altColor">
 <td class="colFirst"><code>static <a href="Insight.html" title="class in com.atlan.model.assets">Insight</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeTerms(com.atlan.AtlanClient,java.lang.String,java.util.List)">removeTerms</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
            java.lang.String&nbsp;qualifiedName,
@@ -635,7 +649,7 @@ implements <a href="IInsight.html" title="interface in com.atlan.model.assets">I
 <div class="block">Remove terms from a Insight, without replacing all existing terms linked to the Insight.</div>
 </td>
 </tr>
-<tr id="i41" class="rowColor">
+<tr id="i43" class="rowColor">
 <td class="colFirst"><code>static <a href="Insight.html" title="class in com.atlan.model.assets">Insight</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeTerms(java.lang.String,java.util.List)">removeTerms</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
            java.util.List&lt;<a href="IGlossaryTerm.html" title="interface in com.atlan.model.assets">IGlossaryTerm</a>&gt;&nbsp;terms)</code></th>
@@ -643,7 +657,7 @@ implements <a href="IInsight.html" title="interface in com.atlan.model.assets">I
 <div class="block">Remove terms from a Insight, without replacing all existing terms linked to the Insight.</div>
 </td>
 </tr>
-<tr id="i42" class="altColor">
+<tr id="i44" class="altColor">
 <td class="colFirst"><code>static <a href="Insight.html" title="class in com.atlan.model.assets">Insight</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeUserDescription(com.atlan.AtlanClient,java.lang.String,java.lang.String)">removeUserDescription</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
                      java.lang.String&nbsp;qualifiedName,
@@ -652,7 +666,7 @@ implements <a href="IInsight.html" title="interface in com.atlan.model.assets">I
 <div class="block">Remove the user's description from a Insight.</div>
 </td>
 </tr>
-<tr id="i43" class="rowColor">
+<tr id="i45" class="rowColor">
 <td class="colFirst"><code>static <a href="Insight.html" title="class in com.atlan.model.assets">Insight</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeUserDescription(java.lang.String,java.lang.String)">removeUserDescription</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                      java.lang.String&nbsp;name)</code></th>
@@ -660,7 +674,7 @@ implements <a href="IInsight.html" title="interface in com.atlan.model.assets">I
 <div class="block">Remove the user's description from a Insight.</div>
 </td>
 </tr>
-<tr id="i44" class="altColor">
+<tr id="i46" class="altColor">
 <td class="colFirst"><code>static <a href="Insight.html" title="class in com.atlan.model.assets">Insight</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#replaceTerms(com.atlan.AtlanClient,java.lang.String,java.lang.String,java.util.List)">replaceTerms</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
             java.lang.String&nbsp;qualifiedName,
@@ -670,7 +684,7 @@ implements <a href="IInsight.html" title="interface in com.atlan.model.assets">I
 <div class="block">Replace the terms linked to the Insight.</div>
 </td>
 </tr>
-<tr id="i45" class="rowColor">
+<tr id="i47" class="rowColor">
 <td class="colFirst"><code>static <a href="Insight.html" title="class in com.atlan.model.assets">Insight</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#replaceTerms(java.lang.String,java.lang.String,java.util.List)">replaceTerms</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
             java.lang.String&nbsp;name,
@@ -679,7 +693,7 @@ implements <a href="IInsight.html" title="interface in com.atlan.model.assets">I
 <div class="block">Replace the terms linked to the Insight.</div>
 </td>
 </tr>
-<tr id="i46" class="altColor">
+<tr id="i48" class="altColor">
 <td class="colFirst"><code>static boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#restore(com.atlan.AtlanClient,java.lang.String)">restore</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
        java.lang.String&nbsp;qualifiedName)</code></th>
@@ -687,14 +701,14 @@ implements <a href="IInsight.html" title="interface in com.atlan.model.assets">I
 <div class="block">Restore the archived (soft-deleted) Insight to active.</div>
 </td>
 </tr>
-<tr id="i47" class="rowColor">
+<tr id="i49" class="rowColor">
 <td class="colFirst"><code>static boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#restore(java.lang.String)">restore</a></span>&#8203;(java.lang.String&nbsp;qualifiedName)</code></th>
 <td class="colLast">
 <div class="block">Restore the archived (soft-deleted) Insight to active.</div>
 </td>
 </tr>
-<tr id="i48" class="altColor">
+<tr id="i50" class="altColor">
 <td class="colFirst"><code>static <a href="Insight.html" title="class in com.atlan.model.assets">Insight</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#retrieveByGuid(com.atlan.AtlanClient,java.lang.String)">retrieveByGuid</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
               java.lang.String&nbsp;guid)</code></th>
@@ -704,7 +718,7 @@ implements <a href="IInsight.html" title="interface in com.atlan.model.assets">I
 </div>
 </td>
 </tr>
-<tr id="i49" class="rowColor">
+<tr id="i51" class="rowColor">
 <td class="colFirst"><code>static <a href="Insight.html" title="class in com.atlan.model.assets">Insight</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#retrieveByGuid(java.lang.String)">retrieveByGuid</a></span>&#8203;(java.lang.String&nbsp;guid)</code></th>
 <td class="colLast">
@@ -713,7 +727,7 @@ implements <a href="IInsight.html" title="interface in com.atlan.model.assets">I
 </div>
 </td>
 </tr>
-<tr id="i50" class="altColor">
+<tr id="i52" class="altColor">
 <td class="colFirst"><code>static <a href="Insight.html" title="class in com.atlan.model.assets">Insight</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#retrieveByQualifiedName(com.atlan.AtlanClient,java.lang.String)">retrieveByQualifiedName</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
                        java.lang.String&nbsp;qualifiedName)</code></th>
@@ -723,7 +737,7 @@ implements <a href="IInsight.html" title="interface in com.atlan.model.assets">I
 </div>
 </td>
 </tr>
-<tr id="i51" class="rowColor">
+<tr id="i53" class="rowColor">
 <td class="colFirst"><code>static <a href="Insight.html" title="class in com.atlan.model.assets">Insight</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#retrieveByQualifiedName(java.lang.String)">retrieveByQualifiedName</a></span>&#8203;(java.lang.String&nbsp;qualifiedName)</code></th>
 <td class="colLast">
@@ -732,28 +746,28 @@ implements <a href="IInsight.html" title="interface in com.atlan.model.assets">I
 </div>
 </td>
 </tr>
-<tr id="i52" class="altColor">
+<tr id="i54" class="altColor">
 <td class="colFirst"><code>static <a href="../search/FluentSearch.FluentSearchBuilder.html" title="class in com.atlan.model.search">FluentSearch.FluentSearchBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#select()">select</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Start a fluent search that will return all Insight assets.</div>
 </td>
 </tr>
-<tr id="i53" class="rowColor">
+<tr id="i55" class="rowColor">
 <td class="colFirst"><code>static <a href="../search/FluentSearch.FluentSearchBuilder.html" title="class in com.atlan.model.search">FluentSearch.FluentSearchBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#select(boolean)">select</a></span>&#8203;(boolean&nbsp;includeArchived)</code></th>
 <td class="colLast">
 <div class="block">Start a fluent search that will return all Insight assets.</div>
 </td>
 </tr>
-<tr id="i54" class="altColor">
+<tr id="i56" class="altColor">
 <td class="colFirst"><code>static <a href="../search/FluentSearch.FluentSearchBuilder.html" title="class in com.atlan.model.search">FluentSearch.FluentSearchBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#select(com.atlan.AtlanClient)">select</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)</code></th>
 <td class="colLast">
 <div class="block">Start a fluent search that will return all Insight assets.</div>
 </td>
 </tr>
-<tr id="i55" class="rowColor">
+<tr id="i57" class="rowColor">
 <td class="colFirst"><code>static <a href="../search/FluentSearch.FluentSearchBuilder.html" title="class in com.atlan.model.search">FluentSearch.FluentSearchBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#select(com.atlan.AtlanClient,boolean)">select</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
       boolean&nbsp;includeArchived)</code></th>
@@ -761,16 +775,16 @@ implements <a href="IInsight.html" title="interface in com.atlan.model.assets">I
 <div class="block">Start a fluent search that will return all Insight assets.</div>
 </td>
 </tr>
-<tr id="i56" class="altColor">
+<tr id="i58" class="altColor">
 <td class="colFirst"><code><a href="Insight.InsightBuilder.html" title="class in com.atlan.model.assets">Insight.InsightBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toBuilder()">toBuilder</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i57" class="rowColor">
+<tr id="i59" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 </tr>
-<tr id="i58" class="altColor">
+<tr id="i60" class="altColor">
 <td class="colFirst"><code><a href="Insight.html" title="class in com.atlan.model.assets">Insight</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#trimToReference()">trimToReference</a></span>()</code></th>
 <td class="colLast">
@@ -778,7 +792,7 @@ implements <a href="IInsight.html" title="interface in com.atlan.model.assets">I
  more-complete Insight object.</div>
 </td>
 </tr>
-<tr id="i59" class="rowColor">
+<tr id="i61" class="rowColor">
 <td class="colFirst"><code><a href="Insight.InsightBuilder.html" title="class in com.atlan.model.assets">Insight.InsightBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#trimToRequired()">trimToRequired</a></span>()</code></th>
 <td class="colLast">
@@ -786,7 +800,7 @@ implements <a href="IInsight.html" title="interface in com.atlan.model.assets">I
  more-complete Insight object.</div>
 </td>
 </tr>
-<tr id="i60" class="altColor">
+<tr id="i62" class="altColor">
 <td class="colFirst"><code>static <a href="Insight.html" title="class in com.atlan.model.assets">Insight</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateAnnouncement(com.atlan.AtlanClient,java.lang.String,com.atlan.model.enums.AtlanAnnouncementType,java.lang.String,java.lang.String)">updateAnnouncement</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
                   java.lang.String&nbsp;qualifiedName,
@@ -797,7 +811,7 @@ implements <a href="IInsight.html" title="interface in com.atlan.model.assets">I
 <div class="block">Update the announcement on a Insight.</div>
 </td>
 </tr>
-<tr id="i61" class="rowColor">
+<tr id="i63" class="rowColor">
 <td class="colFirst"><code>static <a href="Insight.html" title="class in com.atlan.model.assets">Insight</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateAnnouncement(java.lang.String,com.atlan.model.enums.AtlanAnnouncementType,java.lang.String,java.lang.String)">updateAnnouncement</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                   <a href="../enums/AtlanAnnouncementType.html" title="enum in com.atlan.model.enums">AtlanAnnouncementType</a>&nbsp;type,
@@ -807,7 +821,7 @@ implements <a href="IInsight.html" title="interface in com.atlan.model.assets">I
 <div class="block">Update the announcement on a Insight.</div>
 </td>
 </tr>
-<tr id="i62" class="altColor">
+<tr id="i64" class="altColor">
 <td class="colFirst"><code>static <a href="Insight.html" title="class in com.atlan.model.assets">Insight</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateCertificate(com.atlan.AtlanClient,java.lang.String,com.atlan.model.enums.CertificateStatus,java.lang.String)">updateCertificate</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
                  java.lang.String&nbsp;qualifiedName,
@@ -817,7 +831,7 @@ implements <a href="IInsight.html" title="interface in com.atlan.model.assets">I
 <div class="block">Update the certificate on a Insight.</div>
 </td>
 </tr>
-<tr id="i63" class="rowColor">
+<tr id="i65" class="rowColor">
 <td class="colFirst"><code>static <a href="Insight.html" title="class in com.atlan.model.assets">Insight</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateCertificate(java.lang.String,com.atlan.model.enums.CertificateStatus,java.lang.String)">updateCertificate</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                  <a href="../enums/CertificateStatus.html" title="enum in com.atlan.model.enums">CertificateStatus</a>&nbsp;certificate,
@@ -826,7 +840,7 @@ implements <a href="IInsight.html" title="interface in com.atlan.model.assets">I
 <div class="block">Update the certificate on a Insight.</div>
 </td>
 </tr>
-<tr id="i64" class="altColor">
+<tr id="i66" class="altColor">
 <td class="colFirst"><code>static <a href="Insight.InsightBuilder.html" title="class in com.atlan.model.assets">Insight.InsightBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updater(java.lang.String,java.lang.String)">updater</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
        java.lang.String&nbsp;name)</code></th>
@@ -2222,6 +2236,22 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 </dl>
 </li>
 </ul>
+<a id="getInputToSparkJobs()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getInputToSparkJobs</h4>
+<pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt;&nbsp;getInputToSparkJobs()</pre>
+<div class="block">TBC</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="ICatalog.html#getInputToSparkJobs()">getInputToSparkJobs</a></code>&nbsp;in interface&nbsp;<code><a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a></code></dd>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="IInsight.html#getInputToSparkJobs()">getInputToSparkJobs</a></code>&nbsp;in interface&nbsp;<code><a href="IInsight.html" title="interface in com.atlan.model.assets">IInsight</a></code></dd>
+</dl>
+</li>
+</ul>
 <a id="getOutputFromAirflowTasks()">
 <!--   -->
 </a>
@@ -2251,6 +2281,22 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <dd><code><a href="ICatalog.html#getOutputFromProcesses()">getOutputFromProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IInsight.html#getOutputFromProcesses()">getOutputFromProcesses</a></code>&nbsp;in interface&nbsp;<code><a href="IInsight.html" title="interface in com.atlan.model.assets">IInsight</a></code></dd>
+</dl>
+</li>
+</ul>
+<a id="getOutputFromSparkJobs()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getOutputFromSparkJobs</h4>
+<pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt;&nbsp;getOutputFromSparkJobs()</pre>
+<div class="block">TBC</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="ICatalog.html#getOutputFromSparkJobs()">getOutputFromSparkJobs</a></code>&nbsp;in interface&nbsp;<code><a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a></code></dd>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="IInsight.html#getOutputFromSparkJobs()">getOutputFromSparkJobs</a></code>&nbsp;in interface&nbsp;<code><a href="IInsight.html" title="interface in com.atlan.model.assets">IInsight</a></code></dd>
 </dl>
 </li>
 </ul>

@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":6,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":6,"i26":10,"i27":10};
+var data = {"i0":10,"i1":6,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":6,"i32":10,"i33":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -215,142 +215,172 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="ModeChart.ModeChartBuilder.html" title="type parameter in ModeChart.ModeChartBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearOutputFromAirflowTasks()">clearOutputFromAirflowTasks</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearInputToSparkJobs()">clearInputToSparkJobs</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="ModeChart.ModeChartBuilder.html" title="type parameter in ModeChart.ModeChartBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearOutputFromProcesses()">clearOutputFromProcesses</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearOutputFromAirflowTasks()">clearOutputFromAirflowTasks</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="ModeChart.ModeChartBuilder.html" title="type parameter in ModeChart.ModeChartBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#inputToAirflowTask(com.atlan.model.assets.IAirflowTask)">inputToAirflowTask</a></span>&#8203;(<a href="IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&nbsp;inputToAirflowTask)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearOutputFromProcesses()">clearOutputFromProcesses</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="ModeChart.ModeChartBuilder.html" title="type parameter in ModeChart.ModeChartBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#inputToAirflowTasks(java.util.Collection)">inputToAirflowTasks</a></span>&#8203;(java.util.Collection&lt;? extends <a href="IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt;&nbsp;inputToAirflowTasks)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearOutputFromSparkJobs()">clearOutputFromSparkJobs</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code><a href="ModeChart.ModeChartBuilder.html" title="type parameter in ModeChart.ModeChartBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#inputToProcess(com.atlan.model.assets.ILineageProcess)">inputToProcess</a></span>&#8203;(<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&nbsp;inputToProcess)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#inputToAirflowTask(com.atlan.model.assets.IAirflowTask)">inputToAirflowTask</a></span>&#8203;(<a href="IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&nbsp;inputToAirflowTask)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code><a href="ModeChart.ModeChartBuilder.html" title="type parameter in ModeChart.ModeChartBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#inputToProcesses(java.util.Collection)">inputToProcesses</a></span>&#8203;(java.util.Collection&lt;? extends <a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;inputToProcesses)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#inputToAirflowTasks(java.util.Collection)">inputToAirflowTasks</a></span>&#8203;(java.util.Collection&lt;? extends <a href="IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt;&nbsp;inputToAirflowTasks)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i10" class="altColor">
+<td class="colFirst"><code><a href="ModeChart.ModeChartBuilder.html" title="type parameter in ModeChart.ModeChartBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#inputToProcess(com.atlan.model.assets.ILineageProcess)">inputToProcess</a></span>&#8203;(<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&nbsp;inputToProcess)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i11" class="rowColor">
+<td class="colFirst"><code><a href="ModeChart.ModeChartBuilder.html" title="type parameter in ModeChart.ModeChartBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#inputToProcesses(java.util.Collection)">inputToProcesses</a></span>&#8203;(java.util.Collection&lt;? extends <a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;inputToProcesses)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i12" class="altColor">
+<td class="colFirst"><code><a href="ModeChart.ModeChartBuilder.html" title="type parameter in ModeChart.ModeChartBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#inputToSparkJob(com.atlan.model.assets.ISparkJob)">inputToSparkJob</a></span>&#8203;(<a href="ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&nbsp;inputToSparkJob)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i13" class="rowColor">
+<td class="colFirst"><code><a href="ModeChart.ModeChartBuilder.html" title="type parameter in ModeChart.ModeChartBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#inputToSparkJobs(java.util.Collection)">inputToSparkJobs</a></span>&#8203;(java.util.Collection&lt;? extends <a href="ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt;&nbsp;inputToSparkJobs)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i14" class="altColor">
 <td class="colFirst"><code><a href="ModeChart.ModeChartBuilder.html" title="type parameter in ModeChart.ModeChartBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#modeChartType(java.lang.String)">modeChartType</a></span>&#8203;(java.lang.String&nbsp;modeChartType)</code></th>
 <td class="colLast">
 <div class="block">Type of chart.</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code><a href="ModeChart.ModeChartBuilder.html" title="type parameter in ModeChart.ModeChartBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#modeId(java.lang.String)">modeId</a></span>&#8203;(java.lang.String&nbsp;modeId)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code><a href="ModeChart.ModeChartBuilder.html" title="type parameter in ModeChart.ModeChartBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#modeQuery(com.atlan.model.assets.IModeQuery)">modeQuery</a></span>&#8203;(<a href="IModeQuery.html" title="interface in com.atlan.model.assets">IModeQuery</a>&nbsp;modeQuery)</code></th>
 <td class="colLast">
 <div class="block">Query in which this chart exists.</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code><a href="ModeChart.ModeChartBuilder.html" title="type parameter in ModeChart.ModeChartBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#modeQueryName(java.lang.String)">modeQueryName</a></span>&#8203;(java.lang.String&nbsp;modeQueryName)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i18" class="altColor">
 <td class="colFirst"><code><a href="ModeChart.ModeChartBuilder.html" title="type parameter in ModeChart.ModeChartBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#modeQueryQualifiedName(java.lang.String)">modeQueryQualifiedName</a></span>&#8203;(java.lang.String&nbsp;modeQueryQualifiedName)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code><a href="ModeChart.ModeChartBuilder.html" title="type parameter in ModeChart.ModeChartBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#modeReportName(java.lang.String)">modeReportName</a></span>&#8203;(java.lang.String&nbsp;modeReportName)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i20" class="altColor">
 <td class="colFirst"><code><a href="ModeChart.ModeChartBuilder.html" title="type parameter in ModeChart.ModeChartBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#modeReportQualifiedName(java.lang.String)">modeReportQualifiedName</a></span>&#8203;(java.lang.String&nbsp;modeReportQualifiedName)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i21" class="rowColor">
 <td class="colFirst"><code><a href="ModeChart.ModeChartBuilder.html" title="type parameter in ModeChart.ModeChartBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#modeToken(java.lang.String)">modeToken</a></span>&#8203;(java.lang.String&nbsp;modeToken)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i18" class="altColor">
+<tr id="i22" class="altColor">
 <td class="colFirst"><code><a href="ModeChart.ModeChartBuilder.html" title="type parameter in ModeChart.ModeChartBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#modeWorkspaceName(java.lang.String)">modeWorkspaceName</a></span>&#8203;(java.lang.String&nbsp;modeWorkspaceName)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i19" class="rowColor">
+<tr id="i23" class="rowColor">
 <td class="colFirst"><code><a href="ModeChart.ModeChartBuilder.html" title="type parameter in ModeChart.ModeChartBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#modeWorkspaceQualifiedName(java.lang.String)">modeWorkspaceQualifiedName</a></span>&#8203;(java.lang.String&nbsp;modeWorkspaceQualifiedName)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i20" class="altColor">
+<tr id="i24" class="altColor">
 <td class="colFirst"><code><a href="ModeChart.ModeChartBuilder.html" title="type parameter in ModeChart.ModeChartBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#modeWorkspaceUsername(java.lang.String)">modeWorkspaceUsername</a></span>&#8203;(java.lang.String&nbsp;modeWorkspaceUsername)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i21" class="rowColor">
+<tr id="i25" class="rowColor">
 <td class="colFirst"><code><a href="ModeChart.ModeChartBuilder.html" title="type parameter in ModeChart.ModeChartBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#outputFromAirflowTask(com.atlan.model.assets.IAirflowTask)">outputFromAirflowTask</a></span>&#8203;(<a href="IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&nbsp;outputFromAirflowTask)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i22" class="altColor">
+<tr id="i26" class="altColor">
 <td class="colFirst"><code><a href="ModeChart.ModeChartBuilder.html" title="type parameter in ModeChart.ModeChartBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#outputFromAirflowTasks(java.util.Collection)">outputFromAirflowTasks</a></span>&#8203;(java.util.Collection&lt;? extends <a href="IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt;&nbsp;outputFromAirflowTasks)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i23" class="rowColor">
+<tr id="i27" class="rowColor">
 <td class="colFirst"><code><a href="ModeChart.ModeChartBuilder.html" title="type parameter in ModeChart.ModeChartBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#outputFromProcess(com.atlan.model.assets.ILineageProcess)">outputFromProcess</a></span>&#8203;(<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&nbsp;outputFromProcess)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i24" class="altColor">
+<tr id="i28" class="altColor">
 <td class="colFirst"><code><a href="ModeChart.ModeChartBuilder.html" title="type parameter in ModeChart.ModeChartBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#outputFromProcesses(java.util.Collection)">outputFromProcesses</a></span>&#8203;(java.util.Collection&lt;? extends <a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;outputFromProcesses)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i25" class="rowColor">
+<tr id="i29" class="rowColor">
+<td class="colFirst"><code><a href="ModeChart.ModeChartBuilder.html" title="type parameter in ModeChart.ModeChartBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#outputFromSparkJob(com.atlan.model.assets.ISparkJob)">outputFromSparkJob</a></span>&#8203;(<a href="ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&nbsp;outputFromSparkJob)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i30" class="altColor">
+<td class="colFirst"><code><a href="ModeChart.ModeChartBuilder.html" title="type parameter in ModeChart.ModeChartBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#outputFromSparkJobs(java.util.Collection)">outputFromSparkJobs</a></span>&#8203;(java.util.Collection&lt;? extends <a href="ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt;&nbsp;outputFromSparkJobs)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i31" class="rowColor">
 <td class="colFirst"><code>protected abstract <a href="ModeChart.ModeChartBuilder.html" title="type parameter in ModeChart.ModeChartBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#self()">self</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i26" class="altColor">
+<tr id="i32" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i27" class="rowColor">
+<tr id="i33" class="rowColor">
 <td class="colFirst"><code><a href="ModeChart.ModeChartBuilder.html" title="type parameter in ModeChart.ModeChartBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#typeName(java.lang.String)">typeName</a></span>&#8203;(java.lang.String&nbsp;typeName)</code></th>
 <td class="colLast">
@@ -497,6 +527,33 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>clearInputToProcesses</h4>
 <pre class="methodSignature">public&nbsp;<a href="ModeChart.ModeChartBuilder.html" title="type parameter in ModeChart.ModeChartBuilder">B</a>&nbsp;clearInputToProcesses()</pre>
+</li>
+</ul>
+<a id="inputToSparkJob(com.atlan.model.assets.ISparkJob)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>inputToSparkJob</h4>
+<pre class="methodSignature">public&nbsp;<a href="ModeChart.ModeChartBuilder.html" title="type parameter in ModeChart.ModeChartBuilder">B</a>&nbsp;inputToSparkJob&#8203;(<a href="ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&nbsp;inputToSparkJob)</pre>
+</li>
+</ul>
+<a id="inputToSparkJobs(java.util.Collection)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>inputToSparkJobs</h4>
+<pre class="methodSignature">public&nbsp;<a href="ModeChart.ModeChartBuilder.html" title="type parameter in ModeChart.ModeChartBuilder">B</a>&nbsp;inputToSparkJobs&#8203;(java.util.Collection&lt;? extends <a href="ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt;&nbsp;inputToSparkJobs)</pre>
+</li>
+</ul>
+<a id="clearInputToSparkJobs()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clearInputToSparkJobs</h4>
+<pre class="methodSignature">public&nbsp;<a href="ModeChart.ModeChartBuilder.html" title="type parameter in ModeChart.ModeChartBuilder">B</a>&nbsp;clearInputToSparkJobs()</pre>
 </li>
 </ul>
 <a id="modeChartType(java.lang.String)">
@@ -705,6 +762,33 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>clearOutputFromProcesses</h4>
 <pre class="methodSignature">public&nbsp;<a href="ModeChart.ModeChartBuilder.html" title="type parameter in ModeChart.ModeChartBuilder">B</a>&nbsp;clearOutputFromProcesses()</pre>
+</li>
+</ul>
+<a id="outputFromSparkJob(com.atlan.model.assets.ISparkJob)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>outputFromSparkJob</h4>
+<pre class="methodSignature">public&nbsp;<a href="ModeChart.ModeChartBuilder.html" title="type parameter in ModeChart.ModeChartBuilder">B</a>&nbsp;outputFromSparkJob&#8203;(<a href="ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&nbsp;outputFromSparkJob)</pre>
+</li>
+</ul>
+<a id="outputFromSparkJobs(java.util.Collection)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>outputFromSparkJobs</h4>
+<pre class="methodSignature">public&nbsp;<a href="ModeChart.ModeChartBuilder.html" title="type parameter in ModeChart.ModeChartBuilder">B</a>&nbsp;outputFromSparkJobs&#8203;(java.util.Collection&lt;? extends <a href="ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt;&nbsp;outputFromSparkJobs)</pre>
+</li>
+</ul>
+<a id="clearOutputFromSparkJobs()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clearOutputFromSparkJobs</h4>
+<pre class="methodSignature">public&nbsp;<a href="ModeChart.ModeChartBuilder.html" title="type parameter in ModeChart.ModeChartBuilder">B</a>&nbsp;clearOutputFromSparkJobs()</pre>
 </li>
 </ul>
 <a id="self()">
