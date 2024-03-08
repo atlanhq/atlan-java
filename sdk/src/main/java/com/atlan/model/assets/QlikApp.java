@@ -56,6 +56,11 @@ public class QlikApp extends Asset implements IQlikApp, IQlik, IBI, ICatalog, IA
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** Tasks from which this asset is output. */
     @Attribute
     @Singular
@@ -65,6 +70,11 @@ public class QlikApp extends Asset implements IQlikApp, IQlik, IBI, ICatalog, IA
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /** Identifier of the app in which this asset belongs, from Qlik. */
     @Attribute

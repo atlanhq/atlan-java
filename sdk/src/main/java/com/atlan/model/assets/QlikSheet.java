@@ -56,6 +56,11 @@ public class QlikSheet extends Asset implements IQlikSheet, IQlik, IBI, ICatalog
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** Tasks from which this asset is output. */
     @Attribute
     @Singular
@@ -65,6 +70,11 @@ public class QlikSheet extends Asset implements IQlikSheet, IQlik, IBI, ICatalog
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /** App in which this sheet exists. */
     @Attribute

@@ -61,6 +61,11 @@ public class LookerView extends Asset implements ILookerView, ILooker, IBI, ICat
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** File name of this view. */
     @Attribute
     String lookerViewFileName;
@@ -78,6 +83,11 @@ public class LookerView extends Asset implements ILookerView, ILooker, IBI, ICat
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /** Project in which this view exists. */
     @Attribute

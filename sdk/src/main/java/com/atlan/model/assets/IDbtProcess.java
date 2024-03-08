@@ -358,6 +358,9 @@ public interface IDbtProcess {
     /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
+    /** TBC */
+    SortedSet<ISparkJob> getInputToSparkJobs();
+
     /** Assets that are inputs to this task. */
     SortedSet<ICatalog> getInputs();
 
@@ -408,6 +411,9 @@ public interface IDbtProcess {
 
     /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
+
+    /** TBC */
+    SortedSet<ISparkJob> getOutputFromSparkJobs();
 
     /** Data products for which this asset is an output port. */
     SortedSet<IDataProduct> getOutputPortDataProducts();
@@ -504,6 +510,9 @@ public interface IDbtProcess {
 
     /** Name of the user who last updated this asset, in the source system. */
     String getSourceUpdatedBy();
+
+    /** TBC */
+    SortedSet<ISparkJob> getSparkJobs();
 
     /** SQL query that ran to produce the outputs. */
     String getSql();

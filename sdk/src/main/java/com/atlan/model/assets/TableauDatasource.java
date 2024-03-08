@@ -81,6 +81,11 @@ public class TableauDatasource extends Asset
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** Whether this datasource is certified in Tableau (true) or not (false). */
     @Attribute
     Boolean isCertified;
@@ -98,6 +103,11 @@ public class TableauDatasource extends Asset
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /** Project in which this datasource exists. */
     @Attribute

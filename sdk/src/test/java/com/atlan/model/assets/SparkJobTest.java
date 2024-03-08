@@ -16,9 +16,9 @@ import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @SuppressWarnings("deprecation")
-public class DataContractTest {
+public class SparkJobTest {
 
-    private static final DataContract full = DataContract._internal()
+    private static final SparkJob full = SparkJob._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -59,20 +59,23 @@ public class DataContractTest {
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
                             .build())
-            .isPublished(true)
-            .meshAbbreviation("String0")
-            .meshCoverImageUrl("String0")
-            .meshSlug("String0")
-            .parentDomainQualifiedName("String0")
-            .superDomainQualifiedName("String0")
+            .sparkRunEndTime(123456789L)
+            .sparkRunOpenLineageState(OpenLineageRunState.START)
+            .sparkRunOpenLineageVersion("String0")
+            .sparkRunStartTime(123456789L)
+            .sparkRunVersion("String0")
             .inputToAirflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .inputToAirflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .inputToProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .inputToProcess(LineageProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .inputToSparkJob(SparkJob.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .inputToSparkJob(SparkJob.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .outputFromAirflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .outputFromAirflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .outputFromProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .outputFromProcess(LineageProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .outputFromSparkJob(SparkJob.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .outputFromSparkJob(SparkJob.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .adminGroup("String0")
             .adminGroup("String1")
             .adminRole("String0")
@@ -158,6 +161,7 @@ public class DataContractTest {
             .assetSodaSourceURL("String0")
             .assetTag("String0")
             .assetTag("String1")
+            .assetThemeHex("String0")
             .assignedTerm(GlossaryTerm.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .assignedTerm(GlossaryTerm.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .certificateStatus(CertificateStatus.DEPRECATED)
@@ -386,21 +390,27 @@ public class DataContractTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
-            .dataProduct(DataProduct.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .input(AirflowDag.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .input(AirflowDag.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .output(AirflowDag.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .output(AirflowDag.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .process(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .sparkAppName("String0")
+            .sparkMaster("String0")
             .build();
 
     private static final int hash = full.hashCode();
-    private static DataContract frodo;
+    private static SparkJob frodo;
     private static String serialized;
 
-    @Test(groups = {"DataContract.builderEquivalency"})
+    @Test(groups = {"SparkJob.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"DataContract.serialize"},
-            dependsOnGroups = {"DataContract.builderEquivalency"})
+            groups = {"SparkJob.serialize"},
+            dependsOnGroups = {"SparkJob.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson(Atlan.getDefaultClient());
@@ -409,17 +419,17 @@ public class DataContractTest {
     }
 
     @Test(
-            groups = {"DataContract.deserialize"},
-            dependsOnGroups = {"DataContract.serialize"})
+            groups = {"SparkJob.deserialize"},
+            dependsOnGroups = {"SparkJob.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = Atlan.getDefaultClient().readValue(serialized, DataContract.class);
+        frodo = Atlan.getDefaultClient().readValue(serialized, SparkJob.class);
         assertNotNull(frodo);
     }
 
     @Test(
-            groups = {"DataContract.equivalency"},
-            dependsOnGroups = {"DataContract.serialize", "DataContract.deserialize"})
+            groups = {"SparkJob.equivalency"},
+            dependsOnGroups = {"SparkJob.serialize", "SparkJob.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -428,8 +438,8 @@ public class DataContractTest {
     }
 
     @Test(
-            groups = {"DataContract.equivalency"},
-            dependsOnGroups = {"DataContract.serialize", "DataContract.deserialize"})
+            groups = {"SparkJob.equivalency"},
+            dependsOnGroups = {"SparkJob.serialize", "SparkJob.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

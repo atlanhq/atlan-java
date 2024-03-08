@@ -100,6 +100,11 @@ public class S3Object extends Asset
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** Tasks from which this asset is output. */
     @Attribute
     @Singular
@@ -109,6 +114,11 @@ public class S3Object extends Asset
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /** Simple name of the bucket in which this object exists. */
     @Attribute

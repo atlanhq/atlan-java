@@ -54,6 +54,9 @@ public interface ILineageProcess {
     KeywordField OUTPUTS = new KeywordField("outputs", "outputs");
 
     /** TBC */
+    RelationField SPARK_JOBS = new RelationField("sparkJobs");
+
+    /** TBC */
     KeywordField SQL = new KeywordField("sql", "sql");
 
     /** TBC */
@@ -457,6 +460,9 @@ public interface ILineageProcess {
 
     /** TBC */
     String getSourceUpdatedBy();
+
+    /** TBC */
+    SortedSet<ISparkJob> getSparkJobs();
 
     /** TBC */
     String getSql();

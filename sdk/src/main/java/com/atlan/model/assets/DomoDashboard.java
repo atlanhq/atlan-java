@@ -82,6 +82,11 @@ public class DomoDashboard extends Asset implements IDomoDashboard, IDomo, IBI, 
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** Tasks from which this asset is output. */
     @Attribute
     @Singular
@@ -91,6 +96,11 @@ public class DomoDashboard extends Asset implements IDomoDashboard, IDomo, IBI, 
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /**
      * Builds the minimal object necessary to create a relationship to a DomoDashboard, from a potentially

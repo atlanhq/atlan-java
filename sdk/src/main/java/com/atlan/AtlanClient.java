@@ -8,6 +8,8 @@ import com.atlan.cache.*;
 import com.atlan.serde.*;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
+import com.fasterxml.jackson.core.util.Separators;
 import com.fasterxml.jackson.databind.*;
 import java.io.IOException;
 import java.net.PasswordAuthentication;
@@ -96,6 +98,8 @@ public class AtlanClient {
     private final UserCache userCache;
 
     private final ObjectMapper mapper;
+    private final DefaultPrettyPrinter prettyPrinter = new DefaultPrettyPrinter()
+            .withSeparators(Separators.createDefaultInstance().withObjectFieldValueSpacing(Separators.Spacing.AFTER));
 
     /** Endpoint with operations to manage type definitions. */
     public final TypeDefsEndpoint typeDefs;
@@ -280,6 +284,17 @@ public class AtlanClient {
      */
     public <T> String writeValueAsString(T value) throws IOException {
         return mapper.writeValueAsString(value);
+    }
+
+    /**
+     * Serialize an object into a pretty-printed JSON string.
+     * @param value the object to serialize
+     * @return a string giving the JSON representing the object, nicely formatted for human readability
+     * @param <T> type of the object
+     * @throws IOException on any errors doing the serialization
+     */
+    public <T> String writeValueAsPrettyString(T value) throws IOException {
+        return mapper.writer(prettyPrinter).writeValueAsString(value);
     }
 
     /**

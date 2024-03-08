@@ -58,6 +58,11 @@ public class ModeReport extends Asset implements IModeReport, IMode, IBI, ICatal
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
+    /** TBC */
+    @Attribute
     Long modeChartCount;
 
     /** TBC */
@@ -140,6 +145,11 @@ public class ModeReport extends Asset implements IModeReport, IMode, IBI, ICatal
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /**
      * Builds the minimal object necessary to create a relationship to a ModeReport, from a potentially

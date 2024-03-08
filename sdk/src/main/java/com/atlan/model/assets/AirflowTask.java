@@ -140,6 +140,11 @@ public class AirflowTask extends Asset implements IAirflowTask, IAirflow, ICatal
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** Assets that are inputs to this task. */
     @Attribute
     @Singular
@@ -154,6 +159,11 @@ public class AirflowTask extends Asset implements IAirflowTask, IAirflow, ICatal
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /** Assets that are outputs from this task. */
     @Attribute

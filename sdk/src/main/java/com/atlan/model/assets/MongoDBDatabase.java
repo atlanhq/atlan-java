@@ -90,6 +90,11 @@ public class MongoDBDatabase extends Asset
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** Whether this asset has been profiled (true) or not (false). */
     @Attribute
     Boolean isProfiled;
@@ -121,6 +126,11 @@ public class MongoDBDatabase extends Asset
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /** Number of times this asset has been queried. */
     @Attribute

@@ -59,6 +59,11 @@ public class MatillionComponent extends Asset
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** Unique identifier of the component in Matillion. */
     @Attribute
     String matillionComponentId;
@@ -114,6 +119,11 @@ public class MatillionComponent extends Asset
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /**
      * Builds the minimal object necessary to create a relationship to a MatillionComponent, from a potentially

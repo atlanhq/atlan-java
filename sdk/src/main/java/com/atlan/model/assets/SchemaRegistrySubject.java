@@ -64,6 +64,11 @@ public class SchemaRegistrySubject extends Asset
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** Tasks from which this asset is output. */
     @Attribute
     @Singular
@@ -73,6 +78,11 @@ public class SchemaRegistrySubject extends Asset
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /** Unique identifier for schema definition set by the schema registry. */
     @Attribute

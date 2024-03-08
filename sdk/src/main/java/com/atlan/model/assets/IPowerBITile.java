@@ -313,6 +313,9 @@ public interface IPowerBITile {
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
+    SortedSet<ISparkJob> getInputToSparkJobs();
+
+    /** TBC */
     Boolean getIsAIGenerated();
 
     /** Whether this asset is discoverable through the UI (true) or not (false). */
@@ -356,6 +359,9 @@ public interface IPowerBITile {
 
     /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
+
+    /** TBC */
+    SortedSet<ISparkJob> getOutputFromSparkJobs();
 
     /** Data products for which this asset is an output port. */
     SortedSet<IDataProduct> getOutputPortDataProducts();

@@ -94,6 +94,11 @@ public class Procedure extends Asset implements IProcedure, ISQL, ICatalog, IAss
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** Whether this asset has been profiled (true) or not (false). */
     @Attribute
     Boolean isProfiled;
@@ -112,6 +117,11 @@ public class Procedure extends Asset implements IProcedure, ISQL, ICatalog, IAss
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /** Number of times this asset has been queried. */
     @Attribute

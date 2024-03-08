@@ -61,6 +61,11 @@ public class LookerFolder extends Asset implements ILookerFolder, ILooker, IBI, 
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** Folder in which this subfolder exists. */
     @Attribute
     ILookerFolder lookerParentFolder;
@@ -84,6 +89,11 @@ public class LookerFolder extends Asset implements ILookerFolder, ILooker, IBI, 
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /** Number of subfolders in this folder. */
     @Attribute

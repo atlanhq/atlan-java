@@ -57,6 +57,11 @@ public class PresetDataset extends Asset implements IPresetDataset, IPreset, IBI
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** Tasks from which this asset is output. */
     @Attribute
     @Singular
@@ -66,6 +71,11 @@ public class PresetDataset extends Asset implements IPresetDataset, IPreset, IBI
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /** Dashboard in which this dataset exists. */
     @Attribute

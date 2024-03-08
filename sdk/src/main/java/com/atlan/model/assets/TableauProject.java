@@ -73,6 +73,11 @@ public class TableauProject extends Asset implements ITableauProject, ITableau, 
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** Whether this project is a top-level project (true) or not (false). */
     @Attribute
     Boolean isTopLevelProject;
@@ -86,6 +91,11 @@ public class TableauProject extends Asset implements ITableauProject, ITableau, 
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /** Project in which this sub-project exists. */
     @Attribute

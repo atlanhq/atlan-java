@@ -1,0 +1,20 @@
+amends "modulepath:/CustomAtlanModel.pkl"
+
+t = "NoIndex"
+a = "ni"
+
+supertype {
+  groupDefinition {
+    name = t
+    description = "No Index"
+    superTypes { "Catalog" }
+    attributeDefs {
+      new {
+        name = a
+        description = a
+        type = "string"
+        multiValued = true
+      }
+    }
+  }
+}

@@ -29,6 +29,7 @@ import com.atlan.model.assets.IMetric;
 import com.atlan.model.assets.IReferenceable;
 import com.atlan.model.assets.ISQL;
 import com.atlan.model.assets.ISnowflakeDynamicTable;
+import com.atlan.model.assets.ISparkJob;
 import com.atlan.model.assets.ITable;
 import com.atlan.model.assets.ITablePartition;
 import com.atlan.model.assets.IView;
@@ -280,6 +281,11 @@ public class GuacamoleColumn extends Asset
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
+    /** TBC */
+    @Attribute
     Boolean isClustered;
 
     /** TBC */
@@ -362,6 +368,11 @@ public class GuacamoleColumn extends Asset
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /** Column in which this sub-column is nested. */
     @Attribute

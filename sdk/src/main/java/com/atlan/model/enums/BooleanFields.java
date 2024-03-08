@@ -114,6 +114,8 @@ public enum BooleanFields implements AtlanSearchableField {
     IS_QUERY_PREVIEW("isQueryPreview"),
     /** Whether sample data can be previewed for this connection (true) or not (false). */
     IS_SAMPLE_DATA_PREVIEW_ENABLED("isSampleDataPreviewEnabled"),
+    /** Whether this table is a sharded table (true) or not (false). */
+    IS_SHARDED("isSharded"),
     /** Whether this column is a sort column (true) or not (false). */
     IS_SORT("isSort"),
     /** Whether this query is a SQL snippet (true) or not (false). */

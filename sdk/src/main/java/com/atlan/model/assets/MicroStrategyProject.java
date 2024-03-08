@@ -59,6 +59,11 @@ public class MicroStrategyProject extends Asset
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** Attributes that exist within this project. */
     @Attribute
     @Singular
@@ -154,6 +159,11 @@ public class MicroStrategyProject extends Asset
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /**
      * Builds the minimal object necessary to create a relationship to a MicroStrategyProject, from a potentially

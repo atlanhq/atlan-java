@@ -85,6 +85,11 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ISparkJob> sparkJobs;
+
+    /** TBC */
+    @Attribute
     String sql;
 
     /**

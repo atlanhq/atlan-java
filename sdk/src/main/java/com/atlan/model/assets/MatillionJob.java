@@ -57,6 +57,11 @@ public class MatillionJob extends Asset implements IMatillionJob, IMatillion, IC
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** Components that exist within this job. */
     @Attribute
     @Singular
@@ -103,6 +108,11 @@ public class MatillionJob extends Asset implements IMatillionJob, IMatillion, IC
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /**
      * Builds the minimal object necessary to create a relationship to a MatillionJob, from a potentially

@@ -56,6 +56,11 @@ public class ModeQuery extends Asset implements IModeQuery, IMode, IBI, ICatalog
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** Charts that exist within this query. */
     @Attribute
     @Singular
@@ -118,6 +123,11 @@ public class ModeQuery extends Asset implements IModeQuery, IMode, IBI, ICatalog
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /**
      * Builds the minimal object necessary to create a relationship to a ModeQuery, from a potentially

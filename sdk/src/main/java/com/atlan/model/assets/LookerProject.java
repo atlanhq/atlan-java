@@ -66,6 +66,11 @@ public class LookerProject extends Asset implements ILookerProject, ILooker, IBI
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** Models that exist within this project. */
     @Attribute
     @Singular
@@ -80,6 +85,11 @@ public class LookerProject extends Asset implements ILookerProject, ILooker, IBI
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /** Views that exist within this project. */
     @Attribute

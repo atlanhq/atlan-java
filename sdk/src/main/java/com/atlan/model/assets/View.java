@@ -108,6 +108,11 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** Whether this asset has been profiled (true) or not (false). */
     @Attribute
     Boolean isProfiled;
@@ -134,6 +139,11 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /** Queries that access this view. */
     @Attribute

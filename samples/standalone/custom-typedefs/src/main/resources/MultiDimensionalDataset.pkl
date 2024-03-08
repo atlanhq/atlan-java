@@ -1,0 +1,156 @@
+amends "modulepath:/CustomAtlanModel.pkl"
+
+t = "Cube"
+a = t.toLowerCase()
+
+supertype {
+  groupDefinition {
+    name = "MultiDimensionalDataset"
+    description = "A dataset with multiple dimensions"
+    superTypes { "Catalog" }
+    attributeDefs {
+      new {
+        name = "\(a)Name"
+        description = "Simple name of the cube in which this asset exists, or empty if it is itself a cube."
+        type = "string"
+        indexAs = "both"
+      }
+      new {
+        name = "\(a)QualifiedName"
+        description = "Unique name of the cube in which this asset exists, or empty if it is itself a cube."
+        type = "string"
+        indexAs = "keyword"
+      }
+      new {
+        name = "\(a)DimensionName"
+        description = "Simple name of the cube dimension in which this asset exists, or empty if it is itself a dimension."
+        type = "string"
+        indexAs = "both"
+      }
+      new {
+        name = "\(a)DimensionQualifiedName"
+        description = "Unique name of the cube dimension in which this asset exists, or empty if it is itself a dimension."
+        type = "string"
+        indexAs = "keyword"
+      }
+      new {
+        name = "\(a))HierarchyName"
+        description = "Simple name of the dimension hierarchy in which this asset exists, or empty if it is itself a hierarchy."
+        type = "string"
+        indexAs = "both"
+      }
+      new {
+        name = "\(a)HierarchyQualifiedName"
+        description = "Unique name of the dimension hierarchy in which this asset exists, or empty if it is itself a hierarchy."
+        type = "string"
+        indexAs = "keyword"
+      }
+    }
+  }
+}
+
+customTypes {
+  new {
+    assetDefinition {
+      name = t
+      description = "Instance of a cube in Atlan."
+      superTypes { "MultiDimensionalDataset" }
+    }
+  }
+  new {
+    assetDefinition {
+      name = "\(t)Dimension"
+      description = "Instance of a cube dimension in Atlan."
+      superTypes { "MultiDimensionalDataset" }
+    }
+    relationships {
+      new {
+        description = "Containment relationship between \(t) (parent) and \(t)Dimension (children)."
+        endDef1 {
+          description = "Individual dimensions that make up the cube."
+          type = t
+          name = "\(a)Dimensions"
+          isContainer = true
+        }
+        endDef2 {
+          description = "Cube in which this dimension exists."
+          type = "\(t)Dimension"
+          name = a
+        }
+      }
+    }
+  }
+  new {
+    assetDefinition {
+      name = "\(t)Hierchy"
+      description = "Instance of a cube hierarchy in Atlan."
+      superTypes { "MultiDimensionalDataset" }
+    }
+    relationships {
+      new {
+        description = "Containment relationship between \(t)Dimension (parent) and \(t)Hierarchy (children)."
+        endDef1 {
+          description = "Individual hierarchies that make up the dimension."
+          type = "\(t)Dimension"
+          name = "\(a)Hierarchies"
+          isContainer = true
+        }
+        endDef2 {
+          description = "Dimension in which this hierarchy exists."
+          type = "\(t)Hierarchy"
+          name = "\(a)Dimension"
+        }
+      }
+    }
+  }
+  new {
+    assetDefinition {
+      name = "\(t)Field"
+      description = "Instance of a cube field in Atlan."
+      superTypes { "MultiDimensionalDataset" }
+      attributeDefs {
+        new {
+          name = "\(a)FieldLevel"
+          description = "Level of the field in the cube hierarchy."
+          type = "int"
+        }
+        new {
+          name = "\(a)FieldMeasureExpression"
+          description = "Expression used to calculate this measure."
+          type = "string"
+          indexAs = "both"
+        }
+      }
+    }
+    relationships {
+      new {
+        description = "Containment relationship between \(t)Hierarchy (parent) and \(t)Field (children)."
+        endDef1 {
+          description = "Individual fields that make up the hierarchy."
+          type = "\(t)Hierarchy"
+          name = "\(a)Fields"
+          isContainer = true
+        }
+        endDef2 {
+          description = "Hierarchy in which this field exists."
+          type = "\(t)Field"
+          name = "\(a)Hierarchy"
+        }
+      }
+      new {
+        description = "Hierarchical nesting relationship between \(t)Fields."
+        endDef1 {
+          description = "Individual fields nested within this cube field."
+          type = "\(t)Field"
+          name = "\(a)NestedFields"
+          isContainer = true
+        }
+        endDef2 {
+          description = "Parent field in which this field is nested."
+          type = "\(t)Field"
+          name = "\(a)ParentField"
+        }
+      }
+    }
+  }
+}

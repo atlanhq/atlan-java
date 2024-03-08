@@ -37,11 +37,17 @@ public interface ICatalog {
     /** Processes to which this asset provides input. */
     RelationField INPUT_TO_PROCESSES = new RelationField("inputToProcesses");
 
+    /** TBC */
+    RelationField INPUT_TO_SPARK_JOBS = new RelationField("inputToSparkJobs");
+
     /** Tasks from which this asset is output. */
     RelationField OUTPUT_FROM_AIRFLOW_TASKS = new RelationField("outputFromAirflowTasks");
 
     /** Processes from which this asset is produced as output. */
     RelationField OUTPUT_FROM_PROCESSES = new RelationField("outputFromProcesses");
+
+    /** TBC */
+    RelationField OUTPUT_FROM_SPARK_JOBS = new RelationField("outputFromSparkJobs");
 
     /**
      * Reference to an asset by its qualifiedName.
@@ -455,6 +461,9 @@ public interface ICatalog {
             case SodaCheck.TYPE_NAME:
                 ref = SodaCheck.refByQualifiedName(qualifiedName);
                 break;
+            case SparkJob.TYPE_NAME:
+                ref = SparkJob.refByQualifiedName(qualifiedName);
+                break;
             case Table.TYPE_NAME:
                 ref = Table.refByQualifiedName(qualifiedName);
                 break;
@@ -778,6 +787,9 @@ public interface ICatalog {
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
+    SortedSet<ISparkJob> getInputToSparkJobs();
+
+    /** TBC */
     Boolean getIsAIGenerated();
 
     /** Whether this asset is discoverable through the UI (true) or not (false). */
@@ -821,6 +833,9 @@ public interface ICatalog {
 
     /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
+
+    /** TBC */
+    SortedSet<ISparkJob> getOutputFromSparkJobs();
 
     /** Data products for which this asset is an output port. */
     SortedSet<IDataProduct> getOutputPortDataProducts();
