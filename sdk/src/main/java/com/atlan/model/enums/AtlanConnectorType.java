@@ -109,6 +109,8 @@ public enum AtlanConnectorType implements AtlanEnum {
     GENERIC("genericdb", AtlanConnectionCategory.DATABASE),
     FILE("file", AtlanConnectionCategory.OBJECT_STORE),
     MICROSTRATEGY("microstrategy", AtlanConnectionCategory.BI),
+    AWS_GREENGRASS("aws-greengrass", AtlanConnectionCategory.DATABASE),
+    AWS_SITE_WISE("aws-sitewise", AtlanConnectionCategory.DATABASE),
     ;
 
     @JsonValue
