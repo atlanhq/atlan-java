@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
 version = providers.gradleProperty("VERSION_NAME").get()
-val jarName = "typedef-toolkit-config"
+val jarName = "typedef-toolkit-model"
 
 plugins {
     id("com.atlan.kotlin")

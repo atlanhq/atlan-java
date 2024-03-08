@@ -17,10 +17,10 @@ repositories {
 
 dependencies {
     implementation(project(":sdk"))
-    implementation(project(":typedef-toolkit:config"))
+    implementation(project(":typedef-toolkit:model"))
     // In your own project, you would use these in place of the 3 dependencies above:
     //implementation("com.atlan:atlan-java:+")
-    //implementation("com.atlan:typedef-toolkit-config:+")
+    //implementation("com.atlan:typedef-toolkit-model:+")
     implementation("io.github.microutils:kotlin-logging-jvm:3.0.5")
     runtimeOnly("org.apache.logging.log4j:log4j-core:2.23.0")
     runtimeOnly("org.apache.logging.log4j:log4j-slf4j2-impl:2.23.0")
