@@ -22,3 +22,4 @@ generate/src/main/resources/markdown/**
 
 ### Generated packages ###
 generated-packages/**
+/package-toolkit/model/src/main/kotlin/CustomAtlanModel.kt

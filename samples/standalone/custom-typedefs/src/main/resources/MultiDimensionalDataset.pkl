@@ -12,50 +12,38 @@ supertype {
       new {
         name = "\(a)Name"
         description = "Simple name of the cube in which this asset exists, or empty if it is itself a cube."
-        typeName = "string"
-        indexTypeESConfig { ["analyzer"] = "atlan_text_analyzer" }
-        indexTypeESFields { ["keyword"] {
-          ["type"] = "keyword"
-          ["normalizer"] = "atlan_normalizer"
-        }}
+        type = "string"
+        indexAs = "both"
       }
       new {
         name = "\(a)QualifiedName"
         description = "Unique name of the cube in which this asset exists, or empty if it is itself a cube."
-        typeName = "string"
-        indexType = "STRING"
+        type = "string"
+        indexAs = "keyword"
       }
       new {
         name = "\(a)DimensionName"
         description = "Simple name of the cube dimension in which this asset exists, or empty if it is itself a dimension."
-        typeName = "string"
-        indexTypeESConfig { ["analyzer"] = "atlan_text_analyzer" }
-        indexTypeESFields { ["keyword"] {
-          ["type"] = "keyword"
-          ["normalizer"] = "atlan_normalizer"
-        }}
+        type = "string"
+        indexAs = "both"
       }
       new {
         name = "\(a)DimensionQualifiedName"
         description = "Unique name of the cube dimension in which this asset exists, or empty if it is itself a dimension."
-        typeName = "string"
-        indexType = "STRING"
+        type = "string"
+        indexAs = "keyword"
       }
       new {
         name = "\(a))HierarchyName"
         description = "Simple name of the dimension hierarchy in which this asset exists, or empty if it is itself a hierarchy."
-        typeName = "string"
-        indexTypeESConfig { ["analyzer"] = "atlan_text_analyzer" }
-        indexTypeESFields { ["keyword"] {
-          ["type"] = "keyword"
-          ["normalizer"] = "atlan_normalizer"
-        }}
+        type = "string"
+        indexAs = "both"
       }
       new {
         name = "\(a)HierarchyQualifiedName"
         description = "Unique name of the dimension hierarchy in which this asset exists, or empty if it is itself a hierarchy."
-        typeName = "string"
-        indexType = "STRING"
+        type = "string"
+        indexAs = "keyword"
       }
     }
   }
@@ -124,17 +112,13 @@ customTypes {
         new {
           name = "\(a)FieldLevel"
           description = "Level of the field in the cube hierarchy."
-          typeName = "int"
+          type = "int"
         }
         new {
           name = "\(a)FieldMeasureExpression"
           description = "Expression used to calculate this measure."
-          typeName = "string"
-          indexTypeESConfig { ["analyzer"] = "atlan_text_analyzer" }
-          indexTypeESFields { ["keyword"] {
-            ["type"] = "keyword"
-            ["normalizer"] = "atlan_normalizer"
-          } }
+          type = "string"
+          indexAs = "both"
         }
       }
     }

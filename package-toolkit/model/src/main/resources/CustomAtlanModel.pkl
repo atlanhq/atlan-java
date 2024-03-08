@@ -43,87 +43,165 @@ class CustomAsset {
 }
 
 open class TypeDef {
+  /// Name for the new type.
   name: String
+  /// Fixed category for the type -- this will be set automatically, and cannot be overridden.
   fixed category: String = "ERROR"
-  version: Int32?
+  /// Explanation of the type definition.
   description: String
+  /// Overall namespace for the type definition. This should be left as-is (`atlan`) unless told otherwise.
   serviceType: String = "atlan"
+  /// Version number for the type definition. This should be incremented any time you are modifying an existing type definition.
   typeVersion: String = "1.0"
+  /// (Optional) List of attributes for the type definition. Remember that attributes from any supertypes will automatically be
+  /// inherited and should not be listed again here in the subtype.
   attributeDefs: Listing<AttributeDef>?
 }
 
 class EntityDef extends TypeDef {
+  /// Category is set automatically and fixed (should not be changed).
   fixed category = "ENTITY"
+  /// List of super types for the entity definition. This should include the supertype for the custom model in any custom
+  /// assets, and usually the supertype of `Catalog` for the group definition.
   superTypes: Listing<String>(length > 0)
 }
 
 open class AttributeDef {
+  /// Name for the new attribute.
   name: String
+  /// Explanation of the attribute.
   description: String
-  typeName: String
+  /// Type of the attribute -- this will be set automatically from the
+  /// `type`, `multiValued` and `enumName` parameters.
+  fixed typeName = if (multiValued) "array<\(resolvedType)>" else resolvedType
+  local resolvedType = if (type == "enum") enumName else type
+  /// Type of the attribute. This should be either:
+  /// - A primitive Atlan type.
+  /// - The special value `enum` to indicate an enumeration. In this case, you must also specify `enumName` as an additional property for the attribute.</li>
+  hidden type: String(matches(Regex("string|int|float|boolean|date|enum")))
+  /// Whether this attribute should allow multiple values (true) or not (false - default).
+  hidden multiValued: Boolean = false
+  /// Name of the enumeration that this attribute should use, if you have specified type = `enum`.
+  hidden enumName: String(if (type == "enum") this != "" else true) = ""
+  /// Default value for the attribute.
   defaultValue: String?
+  /// Indicates whether the attribute has a default value of being empty (true) or not (false).
   isDefaultValueNull: Boolean?
+  /// Indicates whether the attribute is mandatory (false) or optional (true - default).
   isOptional: Boolean = true
-  cardinality: String = "SINGLE"
+  /// Specifies whether the attribute is single or multivalued -- this will be set automatically
+  /// from the `multiValued` parameter.
+  fixed cardinality = if (multiValued) "SET" else "SINGLE"
+  /// Minimum number of values that the attribute should have.
   valuesMinCount: Int32 = 0
+  /// Maximum number of values that the attribute should have.
   valuesMaxCount: Int32 = 1
+  /// Whether the attribute is unique (true) or not (false - default).
   isUnique: Boolean = false
+  /// Whether the attribute is indexed in-memory via Cassandra (true) or not (false - default).
   isIndexable: Boolean = false
+  /// Whether the attribute should generate a notification when its value changes (true - default) or not (false).
   includeInNotification: Boolean = true
+  /// TBC
   skipScrubbing: Boolean = true
+  /// TBC
   searchWeight: Int32?
-  indexType: String?
-  // options: AttributeDefOptions
-  // isNew: Boolean = true
-  enumValues: Listing<String>?
-  // constraints: Listing<Constraint>
-  indexTypeESConfig: Mapping<String, String>?
-  indexTypeESFields: Mapping<String, Mapping<String, String>>?
-  autoUpdateAttributes: Mapping<String, Listing<String>>?
+  /// What kind of index(es) to create in Elastic for this attribute.
+  /// - `keyword` creates only a keyword (exact match) index
+  /// - `text` creates only a textual (tokenized) index
+  /// - `both` creates both a keyword and a textual index
+  hidden indexAs: String(matches(Regex("default|keyword|text|both"))) = "default"
+  /// Details to set a keyword index in Elastic -- this is managed automatically through setting
+  /// `indexAs`.
+  fixed indexType = if (indexAs == "keyword" || indexAs == "both" || (indexAs == "default" && (type == "string" || type == "enum"))) "STRING" else null
+  /// Details to set a textual index in Elastic -- this is managed automatically through setting
+  /// `indexAs`.
+  fixed indexTypeESConfig: Mapping<String, String>? = if (indexAs == "text") new Mapping {
+    ["analyzer"] = "atlan_text_analyzer"
+  } else null
+  /// Details to set a textual index in Elastic -- this is managed automatically through setting
+  /// `indexAs`.
+  fixed indexTypeESFields: Mapping<String, Mapping<String, String>>? = if (indexAs == "both") new Mapping {
+    ["text"] = new Mapping {
+      ["type"] = "text"
+      ["analyzer"] = "atlan_text_analyzer"
+    }
+  } else null
 }
 
 class RelationshipDef extends TypeDef {
+  /// Category is set automatically and fixed (should not be changed).
   fixed category = "RELATIONSHIP"
+  /// Definition for the first endpoint of the relationship.
   endDef1: RelationshipEndDef
+  /// Definition for the second endpoint of the relationship.
   endDef2: RelationshipEndDef
-  propagateTags: String = "NONE"
+  /// Whether Atlan tags should propagate through this relationship, and if so in which direction(s):
+  /// - `NONE` tags will not be propagated through this relationship (default)
+  /// - `ONE_TO_TWO` tags will be propagated from endDef1 to endDef2
+  /// - `TWO_TO_ONE` tags will be propagated from endDef2 to endDef1
+  /// - `BOTH` tags will be propagated in both directions
+  propagateTags: String(matches(Regex("NONE|ONE_TO_TWO|TWO_TO_ONE|BOTH"))) = "NONE"
+  /// Unique name for the relationship type definition -- this will be generated automatically
+  /// based on the `endDef1` and `endDef2` parameters.
   name = "\(getLowerSnakeCase(endDef2.name))_\(getLowerSnakeCase(endDef1.name))"
-  relationshipLabel = "__\(endDef1.type).\(endDef1.name)"
-  relationshipCategory = if (endDef1.isContainer || endDef2.isContainer) "AGGREGATION" else "ASSOCIATION"
-  // relationshipAttributeDefs: Listing<RelationshipAttributeDef>
+  /// Unique label for the relationship type definition -- this will be generated automatically
+  /// based on the `endDef1` parameter.
+  fixed relationshipLabel = "__\(endDef1.type).\(endDef1.name)"
+  /// Kind of relationship -- this will be set automatically based on whether either endDef is defined as
+  /// a container.
+  fixed relationshipCategory = if (endDef1.isContainer || endDef2.isContainer) "AGGREGATION" else "ASSOCIATION"
+  /// (Optional) List of attributes that can be managed on each instance of the relationship.
+  relationshipAttributeDefs: Listing<RelationshipAttributeDef>?
 }
 
 class RelationshipEndDef {
+  /// Name of the attribute that represents this end of the relationship.
   name: String
+  /// Description of the relationship from this end of it.
   description: String
+  /// Name of the type definition (entity type) this relationship points to (the other end of the relationship).
   type: String
+  /// Whether this end of the relationship is a container ("owns" the other end's assets) (default: false).
   isContainer: Boolean = false
+  /// TBC
   isLegacyAttribute: Boolean = false
+  /// Cardinality of this end of the relationship -- this will be set automatically based on `isContainer`.
   fixed cardinality = if (isContainer) "SET" else "SINGLE"
 }
 
 class RelationshipAttributeDef extends AttributeDef {
-  isLegacyAttribute: Boolean
-  relationshipTypeName: String
+  /// TBC
+  isLegacyAttribute: Boolean?
+  /// TBC
+  relationshipTypeName: String?
 }
 
 class EnumDef extends TypeDef {
+  /// Category is set automatically and fixed (should not be changed).
   fixed category = "ENUM"
+  /// Overall namespace for the type definition. This should be left as-is (`atlas_core`) to avoid the enumeration
+  /// appearing as one defined via the UI.
   serviceType = "atlas_core"
+  /// List of valid values for the enumeration.
   elementDefs: Listing<EnumElementDef>
 }
 
 class EnumElementDef {
+  /// Position of the element within the list of valid values (must be unique, sequential).
   ordinal: Int32
+  /// Value of the element (the valid value).
   value: String
+  /// (Optional) Description of the element.
   description: String?
 }
 
 class StructDef extends TypeDef {
+  /// Category is set automatically and fixed (should not be changed).
   fixed category = "STRUCT"
 }
 
-class TypeDefFile {
+local class TypeDefFile {
   entityDefs: Listing<EntityDef>?
   enumDefs: Listing<EnumDef>?
   structDefs: Listing<StructDef>?
@@ -144,17 +222,19 @@ const function getOutputs(m): Mapping<String, FileOutput> = new Mapping {
     }
     renderer = new JsonRenderer {}
   }
-  for (asset in m.customTypes) {
-    ["\(m.supertype.groupDefinition.name)/\(asset.assetDefinition.name).json"] = new FileOutput {
-      value = new TypeDefFile {
-        entityDefs {
-          asset.assetDefinition
+  when (m.customTypes != null) {
+    for (asset in m.customTypes) {
+      ["\(m.supertype.groupDefinition.name)/\(asset.assetDefinition.name).json"] = new FileOutput {
+        value = new TypeDefFile {
+          entityDefs {
+            asset.assetDefinition
+          }
+          enumDefs = asset.enumerations
+          structDefs = asset.structures
+          relationshipDefs = asset.relationships
         }
-        enumDefs = asset.enumerations
-        structDefs = asset.structures
-        relationshipDefs = asset.relationships
+        renderer = new JsonRenderer {}
       }
-      renderer = new JsonRenderer {}
     }
   }
 }
