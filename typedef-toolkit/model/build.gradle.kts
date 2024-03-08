@@ -28,6 +28,7 @@ tasks {
     }
     jar {
         archiveBaseName.set(jarName)
+        archiveClassifier.set("slim")
         dependsOn(shadowJar)
     }
     processResources {
@@ -36,6 +37,7 @@ tasks {
 }
 
 task("sourcesJar", type = Jar::class) {
+    archiveClassifier.set("sources")
     duplicatesStrategy = DuplicatesStrategy.INCLUDE
 }
 
