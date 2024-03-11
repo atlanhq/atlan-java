@@ -24,7 +24,7 @@ import kotlin.test.assertNotNull
 /**
  * Test migration of asset metadata.
  */
-class EnrichmentMigratorTest : PackageTest() {
+class EnrichmentMigratorSingleTargetTest : PackageTest() {
 
     private val c1 = makeUnique("emc1")
     private val c2 = makeUnique("emc2")

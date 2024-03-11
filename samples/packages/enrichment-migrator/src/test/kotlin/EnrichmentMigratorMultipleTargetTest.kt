@@ -24,17 +24,19 @@ import kotlin.test.assertNotNull
 /**
  * Test migration of asset metadata.
  */
-class EnrichmentMigratorSingleTargetTest : PackageTest() {
+class EnrichmentMigratorMultipleTargetTest : PackageTest() {
 
     private val c1 = makeUnique("emc1")
     private val c2 = makeUnique("emc2")
+    private val c3 = makeUnique("emc3")
     private val cm1 = makeUnique("emcm")
     private val now = Instant.now().toEpochMilli()
 
     private val files = listOf(
         "asset-export.csv",
         "debug.log",
-        "CSA_EM_transformed_0.csv"
+        "CSA_EM_transformed_0.csv",
+        "CSA_EM_transformed_1.csv"
     )
 
     private fun createConnections() {
@@ -44,6 +46,10 @@ class EnrichmentMigratorSingleTargetTest : PackageTest() {
             .save()
             .block()
         Connection.creator(c2, AtlanConnectorType.ESSBASE, listOf(client.roleCache.getIdForName("\$admin")), null, null)
+            .build()
+            .save()
+            .block()
+        Connection.creator(c3, AtlanConnectorType.ESSBASE, listOf(client.roleCache.getIdForName("\$admin")), null, null)
             .build()
             .save()
             .block()
@@ -60,15 +66,20 @@ class EnrichmentMigratorSingleTargetTest : PackageTest() {
         val client = Atlan.getDefaultClient()
         val connection1 = Connection.findByName(c1, AtlanConnectorType.HIVE)[0]!!
         val connection2 = Connection.findByName(c2, AtlanConnectorType.ESSBASE)[0]!!
+        val connection3 = Connection.findByName(c3, AtlanConnectorType.ESSBASE)[0]!!
         val batch = AssetBatch(client, 20)
         val db1 = Database.creator("db1", connection1.qualifiedName).build()
         batch.add(db1)
         val db2 = Database.creator("db1", connection2.qualifiedName).build()
         batch.add(db2)
+        val db3 = Database.creator("db1", connection3.qualifiedName).build()
+        batch.add(db3)
         val sch1 = Schema.creator("sch1", db1).build()
         batch.add(sch1)
         val sch2 = Schema.creator("sch1", db2).build()
         batch.add(sch2)
+        val sch3 = Schema.creator("sch1", db3).build()
+        batch.add(sch3)
         val tbl1 = Table.creator("tbl1", sch1)
             .customMetadata(
                 cm1,
@@ -80,6 +91,8 @@ class EnrichmentMigratorSingleTargetTest : PackageTest() {
         batch.add(tbl1)
         val tbl2 = Table.creator("tbl1", sch2).build()
         batch.add(tbl2)
+        val tbl3 = Table.creator("tbl1", sch3).build()
+        batch.add(tbl3)
         batch.flush()
     }
 
@@ -91,7 +104,10 @@ class EnrichmentMigratorSingleTargetTest : PackageTest() {
         setup(
             EnrichmentMigratorCfg(
                 sourceConnection = listOf(Connection.findByName(c1, AtlanConnectorType.HIVE)?.get(0)?.qualifiedName!!),
-                targetConnection = listOf(Connection.findByName(c2, AtlanConnectorType.ESSBASE)?.get(0)?.qualifiedName!!),
+                targetConnection = listOf(
+                    Connection.findByName(c2, AtlanConnectorType.ESSBASE)?.get(0)?.qualifiedName!!,
+                    Connection.findByName(c3, AtlanConnectorType.ESSBASE)?.get(0)?.qualifiedName!!
+                ),
                 failOnErrors = false,
                 cmLimitType = "INCLUDE",
                 customMetadata = "$cm1::dateSingle",
@@ -133,6 +149,7 @@ class EnrichmentMigratorSingleTargetTest : PackageTest() {
         val client = Atlan.getDefaultClient()
         removeConnection(c1, AtlanConnectorType.HIVE)
         removeConnection(c2, AtlanConnectorType.ESSBASE)
+        removeConnection(c3, AtlanConnectorType.ESSBASE)
         client.typeDefs.purge(client.customMetadataCache.getIdForName(cm1))
         teardown(context.failedTests.size() > 0)
     }
