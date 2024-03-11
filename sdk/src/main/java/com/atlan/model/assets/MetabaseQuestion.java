@@ -57,6 +57,11 @@ public class MetabaseQuestion extends Asset
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** Collection in which this question exists. */
     @Attribute
     IMetabaseCollection metabaseCollection;
@@ -95,6 +100,11 @@ public class MetabaseQuestion extends Asset
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /**
      * Builds the minimal object necessary to create a relationship to a MetabaseQuestion, from a potentially

@@ -70,6 +70,11 @@ public class DataProduct extends Asset implements IDataProduct, IDataMesh, ICata
     @Attribute
     DataProductCriticality dataProductCriticality;
 
+    /** Timestamp when the score of this data product was last updated. */
+    @Attribute
+    @Date
+    Long dataProductScoreUpdatedAt;
+
     /** Score of this data product. */
     @Attribute
     Double dataProductScoreValue;
@@ -92,6 +97,11 @@ public class DataProduct extends Asset implements IDataProduct, IDataMesh, ICata
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** Tasks from which this asset is output. */
     @Attribute
     @Singular
@@ -101,6 +111,11 @@ public class DataProduct extends Asset implements IDataProduct, IDataMesh, ICata
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /** Output ports for this data product. */
     @Attribute

@@ -108,6 +108,11 @@ public class DataStudioAsset extends Asset
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** Whether the Google Data Studio asset has been trashed (true) or not (false). */
     @Attribute
     Boolean isTrashedDataStudioAsset;
@@ -121,6 +126,11 @@ public class DataStudioAsset extends Asset
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /**
      * Builds the minimal object necessary to create a relationship to a DataStudioAsset, from a potentially

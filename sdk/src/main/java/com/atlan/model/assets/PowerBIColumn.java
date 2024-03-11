@@ -61,6 +61,11 @@ public class PowerBIColumn extends Asset implements IPowerBIColumn, IPowerBI, IB
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** Tasks from which this asset is output. */
     @Attribute
     @Singular
@@ -70,6 +75,11 @@ public class PowerBIColumn extends Asset implements IPowerBIColumn, IPowerBI, IB
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /** Data category that describes the data in this column. */
     @Attribute

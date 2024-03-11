@@ -49,6 +49,10 @@ public interface IDataProduct {
     /** Criticality of this data product. */
     KeywordField DATA_PRODUCT_CRITICALITY = new KeywordField("dataProductCriticality", "dataProductCriticality");
 
+    /** Timestamp when the score of this data product was last updated. */
+    NumericField DATA_PRODUCT_SCORE_UPDATED_AT =
+            new NumericField("dataProductScoreUpdatedAt", "dataProductScoreUpdatedAt");
+
     /** Score of this data product. */
     NumericField DATA_PRODUCT_SCORE_VALUE = new NumericField("dataProductScoreValue", "dataProductScoreValue");
 
@@ -307,6 +311,9 @@ public interface IDataProduct {
     /** Criticality of this data product. */
     DataProductCriticality getDataProductCriticality();
 
+    /** Timestamp when the score of this data product was last updated. */
+    Long getDataProductScoreUpdatedAt();
+
     /** Score of this data product. */
     Double getDataProductScoreValue();
 
@@ -336,6 +343,9 @@ public interface IDataProduct {
 
     /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
+
+    /** TBC */
+    SortedSet<ISparkJob> getInputToSparkJobs();
 
     /** TBC */
     Boolean getIsAIGenerated();
@@ -381,6 +391,9 @@ public interface IDataProduct {
 
     /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
+
+    /** TBC */
+    SortedSet<ISparkJob> getOutputFromSparkJobs();
 
     /** Data products for which this asset is an output port. */
     SortedSet<IDataProduct> getOutputPortDataProducts();

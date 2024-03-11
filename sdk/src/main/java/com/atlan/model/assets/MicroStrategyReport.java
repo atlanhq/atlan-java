@@ -59,6 +59,11 @@ public class MicroStrategyReport extends Asset
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** Attributes used by this report. */
     @Attribute
     @Singular
@@ -132,6 +137,11 @@ public class MicroStrategyReport extends Asset
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /**
      * Builds the minimal object necessary to create a relationship to a MicroStrategyReport, from a potentially

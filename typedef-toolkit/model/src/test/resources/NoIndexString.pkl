@@ -1,0 +1,19 @@
+amends "modulepath:/CustomAtlanModel.pkl"
+
+t = "NoIndexString"
+a = "nis"
+
+shared {
+  supertypeDefinition {
+    name = t
+    description = "No Index String"
+    superTypes { "Catalog" }
+    attributeDefs {
+      new {
+        name = a
+        description = a
+        type = "string"
+      }
+    }
+  }
+}

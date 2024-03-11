@@ -111,6 +111,11 @@ public class AtlanQuery extends Asset implements IAtlanQuery, ISQL, ICatalog, IA
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
+    /** TBC */
+    @Attribute
     Boolean isPrivate;
 
     /** TBC */
@@ -143,6 +148,11 @@ public class AtlanQuery extends Asset implements IAtlanQuery, ISQL, ICatalog, IA
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /** TBC */
     @Attribute

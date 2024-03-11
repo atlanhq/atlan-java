@@ -68,6 +68,11 @@ public class LookerLook extends Asset implements ILookerLook, ILooker, IBI, ICat
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** Model in which this Look exists. */
     @Attribute
     ILookerModel model;
@@ -85,6 +90,11 @@ public class LookerLook extends Asset implements ILookerLook, ILooker, IBI, ICat
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /** Deprecated. */
     @Attribute

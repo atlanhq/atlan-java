@@ -68,6 +68,11 @@ public class SalesforceOrganization extends Asset
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** Objects that exist within this organization. */
     @Attribute
     @Singular
@@ -86,6 +91,11 @@ public class SalesforceOrganization extends Asset
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /** Reports that exist within this organization. */
     @Attribute

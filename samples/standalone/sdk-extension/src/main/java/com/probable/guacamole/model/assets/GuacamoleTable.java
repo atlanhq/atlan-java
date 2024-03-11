@@ -24,6 +24,7 @@ import com.atlan.model.assets.ILineageProcess;
 import com.atlan.model.assets.IReferenceable;
 import com.atlan.model.assets.ISQL;
 import com.atlan.model.assets.ISchema;
+import com.atlan.model.assets.ISparkJob;
 import com.atlan.model.assets.ITable;
 import com.atlan.model.assets.ITablePartition;
 import com.atlan.model.assets.Schema;
@@ -163,6 +164,11 @@ public class GuacamoleTable extends Asset implements IGuacamoleTable, ITable, IS
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
+    /** TBC */
+    @Attribute
     Boolean isPartitioned;
 
     /** TBC */
@@ -172,6 +178,10 @@ public class GuacamoleTable extends Asset implements IGuacamoleTable, ITable, IS
     /** TBC */
     @Attribute
     Boolean isQueryPreview;
+
+    /** Whether this table is a sharded table (true) or not (false). */
+    @Attribute
+    Boolean isSharded;
 
     /** TBC */
     @Attribute
@@ -190,6 +200,11 @@ public class GuacamoleTable extends Asset implements IGuacamoleTable, ITable, IS
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /** TBC */
     @Attribute

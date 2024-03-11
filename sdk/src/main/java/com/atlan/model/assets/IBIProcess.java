@@ -432,6 +432,9 @@ public interface IBIProcess {
     /** Name of the user who last updated this asset, in the source system. */
     String getSourceUpdatedBy();
 
+    /** TBC */
+    SortedSet<ISparkJob> getSparkJobs();
+
     /** SQL query that ran to produce the outputs. */
     String getSql();
 

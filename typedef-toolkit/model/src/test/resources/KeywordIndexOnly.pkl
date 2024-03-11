@@ -1,0 +1,20 @@
+amends "modulepath:/CustomAtlanModel.pkl"
+
+t = "KeywordIndexOnly"
+a = "kio"
+
+shared {
+  supertypeDefinition {
+    name = t
+    description = "Keyword Index Only"
+    superTypes { "Catalog" }
+    attributeDefs {
+      new {
+        name = a
+        description = a
+        type = "string"
+        indexAs = "keyword"
+      }
+    }
+  }
+}

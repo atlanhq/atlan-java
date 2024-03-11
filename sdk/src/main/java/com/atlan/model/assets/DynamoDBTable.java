@@ -165,6 +165,11 @@ public class DynamoDBTable extends Asset
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** Whether this table is partitioned (true) or not (false). */
     @Attribute
     Boolean isPartitioned;
@@ -176,6 +181,10 @@ public class DynamoDBTable extends Asset
     /** Whether preview queries are allowed for this table (true) or not (false). */
     @Attribute
     Boolean isQueryPreview;
+
+    /** Whether this table is a sharded table (true) or not (false). */
+    @Attribute
+    Boolean isSharded;
 
     /** Whether this table is temporary (true) or not (false). */
     @Attribute
@@ -199,6 +208,11 @@ public class DynamoDBTable extends Asset
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /** Number of partitions in this table. */
     @Attribute

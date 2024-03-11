@@ -58,6 +58,11 @@ public class RedashQuery extends Asset implements IRedashQuery, IRedash, IBI, IC
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** Tasks from which this asset is output. */
     @Attribute
     @Singular
@@ -67,6 +72,11 @@ public class RedashQuery extends Asset implements IRedashQuery, IRedash, IBI, IC
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /** Whether this asset is published in Redash (true) or not (false). */
     @Attribute

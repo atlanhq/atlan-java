@@ -56,6 +56,11 @@ public class MatillionGroup extends Asset implements IMatillionGroup, IMatillion
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** Number of projects within the group. */
     @Attribute
     Long matillionProjectCount;
@@ -78,6 +83,11 @@ public class MatillionGroup extends Asset implements IMatillionGroup, IMatillion
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /**
      * Builds the minimal object necessary to create a relationship to a MatillionGroup, from a potentially

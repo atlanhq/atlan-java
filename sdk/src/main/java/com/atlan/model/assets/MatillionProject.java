@@ -56,6 +56,11 @@ public class MatillionProject extends Asset implements IMatillionProject, IMatil
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** List of environments in the project. */
     @Attribute
     @Singular
@@ -100,6 +105,11 @@ public class MatillionProject extends Asset implements IMatillionProject, IMatil
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /**
      * Builds the minimal object necessary to create a relationship to a MatillionProject, from a potentially

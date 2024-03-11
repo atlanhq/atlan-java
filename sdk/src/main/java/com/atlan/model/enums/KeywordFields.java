@@ -1214,6 +1214,16 @@ public enum KeywordFields implements AtlanSearchableField {
     SOURCE_UPDATED_BY("sourceUpdatedBy"),
     /** URL to the resource within the source application, used to create a button to view this asset in the source application. */
     SOURCE_URL("sourceURL"),
+    /** Name of the Spark app containing this Spark Job For eg. extract_raw_data */
+    SPARK_APP_NAME("sparkAppName.keyword"),
+    /** The Spark master URL eg. local, local[4], or spark://master:7077 */
+    SPARK_MASTER("sparkMaster"),
+    /** OpenLineage state of the Spark Job run eg. COMPLETE */
+    SPARK_RUN_OPEN_LINEAGE_STATE("sparkRunOpenLineageState"),
+    /** OpenLineage Version of the Spark Job run eg. 1.1.0 */
+    SPARK_RUN_OPEN_LINEAGE_VERSION("sparkRunOpenLineageVersion"),
+    /** Spark Version for the Spark Job run eg. 3.4.1 */
+    SPARK_RUN_VERSION("sparkRunVersion"),
     /** SQL query that ran to produce the outputs. */
     SQL("sql"),
     /** Name of the SQL table used to declare the Explore. */

@@ -63,6 +63,11 @@ public class TableauFlow extends Asset implements ITableauFlow, ITableau, IBI, I
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** List of fields that are outputs from this flow. */
     @Attribute
     @Singular
@@ -77,6 +82,11 @@ public class TableauFlow extends Asset implements ITableauFlow, ITableau, IBI, I
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /** List of steps that are outputs from this flow. */
     @Attribute

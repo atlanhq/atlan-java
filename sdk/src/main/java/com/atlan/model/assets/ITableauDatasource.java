@@ -353,6 +353,9 @@ public interface ITableauDatasource {
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
+    SortedSet<ISparkJob> getInputToSparkJobs();
+
+    /** TBC */
     Boolean getIsAIGenerated();
 
     /** Whether this datasource is certified in Tableau (true) or not (false). */
@@ -402,6 +405,9 @@ public interface ITableauDatasource {
 
     /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
+
+    /** TBC */
+    SortedSet<ISparkJob> getOutputFromSparkJobs();
 
     /** Data products for which this asset is an output port. */
     SortedSet<IDataProduct> getOutputPortDataProducts();

@@ -66,6 +66,11 @@ public class LookerModel extends Asset implements ILookerModel, ILooker, IBI, IC
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** Look that exists for this model. */
     @Attribute
     ILookerLook look;
@@ -79,6 +84,11 @@ public class LookerModel extends Asset implements ILookerModel, ILooker, IBI, IC
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /** Project in which this model exists. */
     @Attribute

@@ -61,6 +61,11 @@ public class LookerQuery extends Asset implements ILookerQuery, ILooker, IBI, IC
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** Deprecated. */
     @Attribute
     @Singular
@@ -79,6 +84,11 @@ public class LookerQuery extends Asset implements ILookerQuery, ILooker, IBI, IC
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /** Deprecated. */
     @Attribute

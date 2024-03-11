@@ -155,6 +155,11 @@ public class DbtMetric extends Asset
     /** TBC */
     @Attribute
     @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
+    /** TBC */
+    @Attribute
+    @Singular
     SortedSet<IColumn> metricDimensionColumns;
 
     /** Filters to be applied to the metric query. */
@@ -187,6 +192,11 @@ public class DbtMetric extends Asset
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /**
      * Builds the minimal object necessary to create a relationship to a DbtMetric, from a potentially

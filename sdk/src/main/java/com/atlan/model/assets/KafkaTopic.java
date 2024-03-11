@@ -58,6 +58,11 @@ public class KafkaTopic extends Asset implements IKafkaTopic, IKafka, IEventStor
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** Consumer groups subscribed to this topic. */
     @Attribute
     @Singular
@@ -108,6 +113,11 @@ public class KafkaTopic extends Asset implements IKafkaTopic, IKafka, IEventStor
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /**
      * Builds the minimal object necessary to create a relationship to a KafkaTopic, from a potentially

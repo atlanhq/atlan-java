@@ -59,6 +59,11 @@ public class MicroStrategyVisualization extends Asset
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** Time (epoch) this asset was certified in MicroStrategy, in milliseconds. */
     @Attribute
     @Date
@@ -134,6 +139,11 @@ public class MicroStrategyVisualization extends Asset
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /**
      * Builds the minimal object necessary to create a relationship to a MicroStrategyVisualization, from a potentially

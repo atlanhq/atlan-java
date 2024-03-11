@@ -57,6 +57,11 @@ public class PresetWorkspace extends Asset implements IPresetWorkspace, IPreset,
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** Tasks from which this asset is output. */
     @Attribute
     @Singular
@@ -66,6 +71,11 @@ public class PresetWorkspace extends Asset implements IPresetWorkspace, IPreset,
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /** Identifier of the dashboard in which this asset exists, in Preset. */
     @Attribute

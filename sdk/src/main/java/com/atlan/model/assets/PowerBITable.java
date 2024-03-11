@@ -70,6 +70,11 @@ public class PowerBITable extends Asset implements IPowerBITable, IPowerBI, IBI,
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** Measures that exist within this table. */
     @Attribute
     @Singular
@@ -84,6 +89,11 @@ public class PowerBITable extends Asset implements IPowerBITable, IPowerBI, IBI,
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /** Endorsement status of this asset, in Power BI. */
     @Attribute

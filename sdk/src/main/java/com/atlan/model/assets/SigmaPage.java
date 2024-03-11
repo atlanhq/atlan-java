@@ -56,6 +56,11 @@ public class SigmaPage extends Asset implements ISigmaPage, ISigma, IBI, ICatalo
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** Tasks from which this asset is output. */
     @Attribute
     @Singular
@@ -65,6 +70,11 @@ public class SigmaPage extends Asset implements ISigmaPage, ISigma, IBI, ICatalo
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /** Number of data elements on this page. */
     @Attribute

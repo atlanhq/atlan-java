@@ -56,6 +56,11 @@ public class ModeChart extends Asset implements IModeChart, IMode, IBI, ICatalog
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** Type of chart. */
     @Attribute
     String modeChartType;
@@ -109,6 +114,11 @@ public class ModeChart extends Asset implements IModeChart, IMode, IBI, ICatalog
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /**
      * Builds the minimal object necessary to create a relationship to a ModeChart, from a potentially

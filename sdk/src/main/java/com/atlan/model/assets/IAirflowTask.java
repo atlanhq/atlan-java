@@ -399,6 +399,9 @@ public interface IAirflowTask {
     /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
 
+    /** TBC */
+    SortedSet<ISparkJob> getInputToSparkJobs();
+
     /** Assets that are inputs to this task. */
     SortedSet<ICatalog> getInputs();
 
@@ -446,6 +449,9 @@ public interface IAirflowTask {
 
     /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
+
+    /** TBC */
+    SortedSet<ISparkJob> getOutputFromSparkJobs();
 
     /** Data products for which this asset is an output port. */
     SortedSet<IDataProduct> getOutputPortDataProducts();

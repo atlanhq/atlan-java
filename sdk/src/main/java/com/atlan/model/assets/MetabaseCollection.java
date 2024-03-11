@@ -57,6 +57,11 @@ public class MetabaseCollection extends Asset
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** Simple name of the Metabase collection in which this asset exists. */
     @Attribute
     String metabaseCollectionName;
@@ -100,6 +105,11 @@ public class MetabaseCollection extends Asset
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /**
      * Builds the minimal object necessary to create a relationship to a MetabaseCollection, from a potentially

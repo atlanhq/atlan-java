@@ -78,6 +78,11 @@ public class SalesforceField extends Asset
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** Whether this field is calculated (true) or not (false). */
     @Attribute
     Boolean isCalculated;
@@ -140,6 +145,11 @@ public class SalesforceField extends Asset
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /** List of values from which a user can pick while adding a record. */
     @Attribute

@@ -56,6 +56,11 @@ public class ModeCollection extends Asset implements IModeCollection, IMode, IBI
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** State of this collection. */
     @Attribute
     String modeCollectionState;
@@ -118,6 +123,11 @@ public class ModeCollection extends Asset implements IModeCollection, IMode, IBI
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /**
      * Builds the minimal object necessary to create a relationship to a ModeCollection, from a potentially

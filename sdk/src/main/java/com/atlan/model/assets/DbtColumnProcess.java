@@ -154,6 +154,11 @@ public class DbtColumnProcess extends Asset
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** Assets that are inputs to this task. */
     @Attribute
     @Singular
@@ -173,6 +178,11 @@ public class DbtColumnProcess extends Asset
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
+
     /** Assets that are outputs from this task. */
     @Attribute
     @Singular
@@ -181,6 +191,11 @@ public class DbtColumnProcess extends Asset
     /** Process in which this task exists. */
     @Attribute
     ILineageProcess process;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> sparkJobs;
 
     /** SQL query that ran to produce the outputs. */
     @Attribute

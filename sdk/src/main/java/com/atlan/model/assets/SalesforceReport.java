@@ -75,6 +75,11 @@ public class SalesforceReport extends Asset
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** Organization in which this report exists. */
     @Attribute
     ISalesforceOrganization organization;
@@ -92,6 +97,11 @@ public class SalesforceReport extends Asset
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /** Type of report in Salesforce. */
     @Attribute

@@ -63,6 +63,11 @@ public class AzureEventHub extends Asset
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** Consumer groups subscribed to this topic. */
     @Attribute
     @Singular
@@ -113,6 +118,11 @@ public class AzureEventHub extends Asset
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /**
      * Builds the minimal object necessary to create a relationship to a AzureEventHub, from a potentially

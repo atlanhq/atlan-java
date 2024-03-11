@@ -373,6 +373,9 @@ public interface IAtlanQuery {
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
+    SortedSet<ISparkJob> getInputToSparkJobs();
+
+    /** TBC */
     Boolean getIsAIGenerated();
 
     /** TBC */
@@ -434,6 +437,9 @@ public interface IAtlanQuery {
 
     /** TBC */
     SortedSet<ILineageProcess> getOutputFromProcesses();
+
+    /** TBC */
+    SortedSet<ISparkJob> getOutputFromSparkJobs();
 
     /** TBC */
     SortedSet<IDataProduct> getOutputPortDataProducts();
