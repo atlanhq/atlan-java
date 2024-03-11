@@ -26,9 +26,9 @@ import kotlin.test.assertNotNull
  */
 class EnrichmentMigratorSingleTargetTest : PackageTest() {
 
-    private val c1 = makeUnique("emc1")
-    private val c2 = makeUnique("emc2")
-    private val cm1 = makeUnique("emcm")
+    private val c1 = makeUnique("emsc1")
+    private val c2 = makeUnique("emsc2")
+    private val cm1 = makeUnique("emscm")
     private val now = Instant.now().toEpochMilli()
 
     private val files = listOf(
