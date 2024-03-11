@@ -200,6 +200,7 @@ open class AttributeDef {
 ///
 /// | Variable | | Usage |
 /// |---|---|---|
+/// | description | | Explanation of the relationship |
 /// | **[endDef1][RelationshipEndDef]** | | Definition for the first endpoint of the relationship |
 /// | **[endDef2][RelationshipEndDef]** | | Definition for the second endpoint of the relationship |
 /// | **propagateTags** | | (Optional) Whether Atlan tags should propagate throguh this relationship or not (default: not) |
@@ -207,9 +208,9 @@ open class AttributeDef {
 class RelationshipDef extends TypeDef {
   /// Category is set automatically and fixed (should not be changed).
   fixed category = "RELATIONSHIP"
-  /// Definition for the first endpoint of the relationship.
+  /// Definition for the first [endpoint][RelationshipEndDef] of the relationship.
   endDef1: RelationshipEndDef
-  /// Definition for the second endpoint of the relationship.
+  /// Definition for the second [endpoint][RelationshipEndDef] of the relationship.
   endDef2: RelationshipEndDef
   /// Whether Atlan tags should propagate through this relationship, and if so in which direction(s):
   /// - `NONE` tags will not be propagated through this relationship (default)
@@ -236,18 +237,18 @@ class RelationshipDef extends TypeDef {
 ///
 /// | Variable | | Usage |
 /// |---|---|---|
-/// | **name** | | Name of the attribute that represents this end of the relationship |
+/// | **type** | | Name of the custom entity type at this end of the relationship |
+/// | **name** | | Name of the attribute on this end of the relationship, that refers to the *other* entity type (other end of the relationship) |
 /// | **description** | | Explanation of the relationship from this end of it |
-/// | **type** | | Name of the custom entity type this relationship points to (the type at the other end of the relationship) |
 /// | **isContainer** | | (Optional) Whether this end of the relationship is a container ("owns" the other end's assets) (default: false) |
 /// | **isLegacyAttribute** | | (Optional) TBC |
 class RelationshipEndDef {
-  /// Name of the attribute that represents this end of the relationship.
+  /// Name of the custom entity type at this end of the relationship.
+  type: String
+  /// Name of the attribute on this end of the relationship, that refers to the *other* entity type (other end of the relationship).
   name: String
   /// Description of the relationship from this end of it.
   description: String
-  /// Name of the type definition (entity type) this relationship points to (the other end of the relationship).
-  type: String
   /// Whether this end of the relationship is a container ("owns" the other end's assets) (default: false).
   isContainer: Boolean = false
   /// TBC
