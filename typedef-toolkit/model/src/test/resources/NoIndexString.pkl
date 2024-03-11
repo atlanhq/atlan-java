@@ -1,4 +1,4 @@
-amends "modulepath:/CustomAtlanModel.pkl"
+amends "modulepath:/Model.pkl"
 
 t = "NoIndexString"
 a = "nis"

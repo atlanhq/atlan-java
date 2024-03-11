@@ -1,5 +1,6 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2023 Atlan Pte. Ltd. */
+import com.atlan.typedef.Model
 import org.pkl.config.java.ConfigEvaluator
 import org.pkl.config.kotlin.forKotlin
 import org.pkl.config.kotlin.to
@@ -71,6 +72,8 @@ class ModelUnitTest {
         val attr = getAttribute(model)
         assertEquals("SomeEnumeration", attr.typeName)
         assertEquals("SINGLE", attr.cardinality)
+        assertEquals(0, attr.valuesMinCount)
+        assertEquals(1, attr.valuesMaxCount)
     }
 
     @Test
@@ -80,16 +83,18 @@ class ModelUnitTest {
         val attr = getAttribute(model)
         assertEquals("SET", attr.cardinality)
         assertEquals("array<string>", attr.typeName)
+        assertNull(attr.valuesMinCount)
+        assertNull(attr.valuesMaxCount)
     }
 
-    private fun evaluateModel(input: String): CustomAtlanModel {
+    private fun evaluateModel(input: String): Model {
         val source = ModuleSource.path("src/test/resources/$input.pkl")
         return ConfigEvaluator.preconfigured().forKotlin().use { evaluator ->
-            evaluator.evaluate(source).to<CustomAtlanModel>()
+            evaluator.evaluate(source).to<Model>()
         }
     }
 
-    private fun getAttribute(model: CustomAtlanModel): CustomAtlanModel.AttributeDef {
+    private fun getAttribute(model: Model): Model.AttributeDef {
         return model.shared.supertypeDefinition.attributeDefs?.get(0)!!
     }
 }

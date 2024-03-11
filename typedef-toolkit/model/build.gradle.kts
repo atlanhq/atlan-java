@@ -32,7 +32,7 @@ tasks {
         dependsOn(shadowJar)
     }
     processResources {
-        duplicatesStrategy = DuplicatesStrategy.WARN
+        duplicatesStrategy = DuplicatesStrategy.INCLUDE
     }
 }
 
@@ -51,7 +51,7 @@ pkl {
         register("genKotlin") {
             indent.set("    ")
             outputDir.set(layout.projectDirectory.dir("src/main"))
-            sourceModules.add(file("src/main/resources/CustomAtlanModel.pkl"))
+            sourceModules.add(file("src/main/resources/Model.pkl"))
         }
     }
 }

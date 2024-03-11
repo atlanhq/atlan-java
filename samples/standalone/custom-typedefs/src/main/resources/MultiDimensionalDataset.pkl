@@ -1,6 +1,6 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2024 Atlan Pte. Ltd. */
-amends "modulepath:/CustomAtlanModel.pkl"
+amends "modulepath:/Model.pkl"
 
 t = "Cube"
 a = t.toLowerCase()
@@ -36,7 +36,7 @@ shared {
         indexAs = "keyword"
       }
       new {
-        name = "\(a))HierarchyName"
+        name = "\(a)HierarchyName"
         description = "Simple name of the dimension hierarchy in which this asset exists, or empty if it is itself a hierarchy."
         type = "string"
         indexAs = "both"
