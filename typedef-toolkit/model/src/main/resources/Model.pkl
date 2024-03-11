@@ -100,7 +100,7 @@ open class TypeDef {
 /// | **superTypes** | | At least one super type, typically the type defined in the `supertypeDefinition` |
 /// | **[attributeDefs][AttributeDef]** | | (Optional) List of attributes unique to this custom entity type |
 class EntityDef extends TypeDef {
-  name: String(upperCamelCase)
+  name: String(UpperCamelCase)
   /// Category is set automatically and fixed (should not be changed).
   fixed category = "ENTITY"
   /// List of super types for the entity definition. This should include the supertype for the custom model in any custom
@@ -221,7 +221,7 @@ class RelationshipDef extends TypeDef {
   propagateTags: PropagationType = "NONE"
   /// Unique name for the relationship type definition -- this will be generated automatically
   /// based on the `endDef1` and `endDef2` parameters.
-  name: String(lowerSnakeCase) = "\(getLowerSnakeCase(endDef2.name))_\(getLowerSnakeCase(endDef1.name))"
+  name: String(lower_snake_case) = "\(getLowerSnakeCase(endDef2.name))_\(getLowerSnakeCase(endDef1.name))"
   /// Unique label for the relationship type definition -- this will be generated automatically
   /// based on the `endDef1` parameter.
   fixed relationshipLabel = "__\(endDef1.type).\(endDef1.name)"
@@ -326,9 +326,9 @@ local class TypeDefFile {
   relationshipDefs: Listing<RelationshipDef>?
 }
 
-const upperCamelCase = (str) -> str.matches(Regex("[A-Z][a-zA-Z0-9]*"))
-const lowerCamelCase = (str) -> str.matches(Regex("[a-z][a-zA-Z0-9]*"))
-const lowerSnakeCase = (str) -> str.matches(Regex("[a-z0-9_]*"))
+local const UpperCamelCase = (str) -> str.matches(Regex("[A-Z][a-zA-Z0-9]*"))
+local const lowerCamelCase = (str) -> str.matches(Regex("[a-z][a-zA-Z0-9]*"))
+local const lower_snake_case = (str) -> str.matches(Regex("[a-z0-9_]*"))
 
 /// Type of an attribute.
 /// - `string`
