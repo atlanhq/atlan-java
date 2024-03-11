@@ -22,7 +22,7 @@ object EnrichmentMigrator {
         val batchSize = Utils.getOrDefault(config.batchSize, 20)
         val fieldSeparator = Utils.getOrDefault(config.fieldSeparator, ",")[0]
         val sourceConnectionQN = Utils.getOrDefault(config.sourceConnection, listOf(""))[0]
-        val targetConnectionQN = Utils.getOrDefault(config.targetConnection, listOf(""))[0]
+        val targetConnectionQNs = Utils.getOrDefault(config.targetConnection, listOf(""))
         val sourcePrefix = Utils.getOrDefault(config.sourceQnPrefix, "")
         val sourceQN = if (sourcePrefix.isBlank()) sourceConnectionQN else "$sourceConnectionQN/$sourcePrefix"
 
@@ -75,29 +75,31 @@ object EnrichmentMigrator {
             }
             start.toList()
         }
-        val ctx = MigratorContext(
-            sourceConnectionQN = sourceConnectionQN,
-            targetConnectionQN = targetConnectionQN,
-        )
-        val transformedFile = "$outputDirectory${File.separator}CSA_EM_transformed.csv"
-        val transformer = Transformer(
-            ctx,
-            extractFile,
-            header.toList(),
-            logger,
-            fieldSeparator,
-        )
-        transformer.transform(transformedFile)
+        targetConnectionQNs.forEachIndexed { index, targetConnectionQN ->
+            val ctx = MigratorContext(
+                sourceConnectionQN = sourceConnectionQN,
+                targetConnectionQN = targetConnectionQN,
+            )
+            val transformedFile = "$outputDirectory${File.separator}CSA_EM_transformed_$index.csv"
+            val transformer = Transformer(
+                ctx,
+                extractFile,
+                header.toList(),
+                logger,
+                fieldSeparator,
+            )
+            transformer.transform(transformedFile)
 
-        // 3. Import the transformed file
-        val importConfig = AssetImportCfg(
-            assetsFile = transformedFile,
-            assetsUpsertSemantic = "update",
-            assetsFailOnErrors = Utils.getOrDefault(config.failOnErrors, true),
-            assetsBatchSize = batchSize,
-            assetsFieldSeparator = fieldSeparator.toString(),
-        )
-        Importer.import(importConfig, outputDirectory)
+            // 3. Import the transformed file
+            val importConfig = AssetImportCfg(
+                assetsFile = transformedFile,
+                assetsUpsertSemantic = "update",
+                assetsFailOnErrors = Utils.getOrDefault(config.failOnErrors, true),
+                assetsBatchSize = batchSize,
+                assetsFieldSeparator = fieldSeparator.toString(),
+            )
+            Importer.import(importConfig, outputDirectory)
+        }
     }
 
     data class MigratorContext(

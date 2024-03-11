@@ -46,6 +46,7 @@ object PackageConfig : CustomPackage(
                         required = true,
                         help = "Connection into which to load the enriched metadata.",
                         grid = 4,
+                        multiSelect = true,
                     ),
                     "config_type" to Radio(
                         label = "Options",
@@ -151,8 +152,6 @@ object PackageConfig : CustomPackage(
     outputs = WorkflowOutputs(
         mapOf(
             "debug-logs" to "/tmp/debug.log",
-            "assets-csv" to "/tmp/asset-export.csv",
-            "transformed-csv" to "/tmp/transformed.csv",
         ),
     ),
     keywords = listOf("kotlin", "utility"),
