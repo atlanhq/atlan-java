@@ -11,7 +11,6 @@ import com.atlan.util.AssetBatch
 import org.testng.ITestContext
 import org.testng.annotations.AfterClass
 import org.testng.annotations.BeforeClass
-import java.time.Instant
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -23,7 +22,6 @@ class EnrichmentMigratorMultipleTargetTest : PackageTest() {
     private val c1 = makeUnique("emmc1")
     private val c2 = makeUnique("emmc2")
     private val c3 = makeUnique("emmc3")
-    private val now = Instant.now().toEpochMilli()
 
     private val files = listOf(
         "asset-export.csv",
