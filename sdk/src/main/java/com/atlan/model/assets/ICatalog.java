@@ -95,6 +95,18 @@ public interface ICatalog {
             case Column.TYPE_NAME:
                 ref = Column.refByQualifiedName(qualifiedName);
                 break;
+            case Cube.TYPE_NAME:
+                ref = Cube.refByQualifiedName(qualifiedName);
+                break;
+            case CubeDimension.TYPE_NAME:
+                ref = CubeDimension.refByQualifiedName(qualifiedName);
+                break;
+            case CubeField.TYPE_NAME:
+                ref = CubeField.refByQualifiedName(qualifiedName);
+                break;
+            case CubeHierarchy.TYPE_NAME:
+                ref = CubeHierarchy.refByQualifiedName(qualifiedName);
+                break;
             case DataDomain.TYPE_NAME:
                 ref = DataDomain.refByQualifiedName(qualifiedName);
                 break;

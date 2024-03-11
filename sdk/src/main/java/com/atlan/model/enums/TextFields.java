@@ -112,6 +112,14 @@ public enum TextFields implements AtlanSearchableField {
     CONNECTION_NAME("connectionName.text"),
     /** Unique name of the connection through which this asset is accessible. */
     CONNECTION_QUALIFIED_NAME("connectionQualifiedName.text"),
+    /** Simple name of the cube dimension in which this asset exists, or empty if it is itself a dimension. */
+    CUBE_DIMENSION_NAME("cubeDimensionName.text"),
+    /** Expression used to calculate this measure. */
+    CUBE_FIELD_MEASURE_EXPRESSION("cubeFieldMeasureExpression.text"),
+    /** Simple name of the dimension hierarchy in which this asset exists, or empty if it is itself a hierarchy. */
+    CUBE_HIERARCHY_NAME("cubeHierarchyName.text"),
+    /** Simple name of the cube in which this asset exists, or empty if it is itself a cube. */
+    CUBE_NAME("cubeName.text"),
     /** Simple name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
     DATABASE_NAME("databaseName"),
     /** Title of the Google Data Studio asset. */
