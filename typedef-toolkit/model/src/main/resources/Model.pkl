@@ -9,7 +9,7 @@
 /// | **[shared][ReusableElements]** | | An abstract model defining common attributes or structures for other assets in the custom model |
 /// | **[customTypes][CustomAssetType]** | | A list of custom entity types that can be instantiated in the custom model |
 @ModuleInfo { minPklVersion = "0.25.1" }
-module CustomAtlanModel
+module com.atlan.typedef.Model
 
 /// Prefix to namespace all **types** in the custom model.
 ///
@@ -77,7 +77,7 @@ class CustomAssetType {
 
 open class TypeDef {
   /// Name for the new type.
-  name: String
+  name: String(matches(Regex("[A-Z][a-zA-Z0-9]*")))
   /// Fixed category for the type -- this will be set automatically, and cannot be overridden.
   fixed category: String = "ERROR"
   /// Explanation of the type definition.
@@ -129,7 +129,7 @@ class EntityDef extends TypeDef {
 /// | **indexAs** | | (Optional) What kind of index(es) to create in Elastic for this attribute |
 open class AttributeDef {
   /// Name for the new attribute.
-  name: String
+  name: String(matches(Regex("[a-z][a-zA-Z0-9]*")))
   /// Explanation of the attribute (what data it holds, how it is used).
   description: String
   /// Type of the attribute -- this will be set automatically from the
@@ -154,9 +154,9 @@ open class AttributeDef {
   /// from the `multiValued` parameter.
   fixed cardinality = if (multiValued) "SET" else "SINGLE"
   /// Minimum number of values the attribute should have.
-  valuesMinCount: Int32 = 0
+  valuesMinCount: Int32? = if (!multiValued) 0 else null
   /// Maximum number of values the attribute should have.
-  valuesMaxCount: Int32 = 1
+  valuesMaxCount: Int32? = if (!multiValued) 1 else null
   /// Whether the attribute is unique (true) or not (false - default).
   isUnique: Boolean = false
   /// Whether the attribute is indexed in-memory via Cassandra (true) or not (false - default).
@@ -246,7 +246,7 @@ class RelationshipEndDef {
   /// Name of the custom entity type at this end of the relationship.
   type: String
   /// Name of the attribute on this end of the relationship, that refers to the *other* entity type (other end of the relationship).
-  name: String
+  name: String(matches(Regex("[a-z][a-zA-Z0-9]*")))
   /// Description of the relationship from this end of it.
   description: String
   /// Whether this end of the relationship is a container ("owns" the other end's assets) (default: false).
