@@ -36,7 +36,7 @@ class EnrichmentMigratorMultipleTargetTest : PackageTest() {
         "asset-export.csv",
         "debug.log",
         "CSA_EM_transformed_0.csv",
-        "CSA_EM_transformed_1.csv"
+        "CSA_EM_transformed_1.csv",
     )
 
     private fun createConnections() {
@@ -106,7 +106,7 @@ class EnrichmentMigratorMultipleTargetTest : PackageTest() {
                 sourceConnection = listOf(Connection.findByName(c1, AtlanConnectorType.HIVE)?.get(0)?.qualifiedName!!),
                 targetConnection = listOf(
                     Connection.findByName(c2, AtlanConnectorType.ESSBASE)?.get(0)?.qualifiedName!!,
-                    Connection.findByName(c3, AtlanConnectorType.ESSBASE)?.get(0)?.qualifiedName!!
+                    Connection.findByName(c3, AtlanConnectorType.ESSBASE)?.get(0)?.qualifiedName!!,
                 ),
                 failOnErrors = false,
                 cmLimitType = "INCLUDE",

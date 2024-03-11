@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
-import javax.annotation.processing.Generated;
+import javax.annotation.processing.Generated
 
 /**
  * Expected configuration for the Enrichment Migrator custom package.
