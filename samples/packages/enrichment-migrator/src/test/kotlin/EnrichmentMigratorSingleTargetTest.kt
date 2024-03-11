@@ -34,6 +34,7 @@ class EnrichmentMigratorTest : PackageTest() {
     private val files = listOf(
         "asset-export.csv",
         "debug.log",
+        "CSA_EM_transformed_0.csv"
     )
 
     private fun createConnections() {
