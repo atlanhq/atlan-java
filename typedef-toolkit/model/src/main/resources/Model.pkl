@@ -77,7 +77,7 @@ class CustomAssetType {
 
 open class TypeDef {
   /// Name for the new type.
-  name: String(matches(Regex("[A-Z][a-zA-Z0-9]*")))
+  name: String
   /// Fixed category for the type -- this will be set automatically, and cannot be overridden.
   fixed category: String = "ERROR"
   /// Explanation of the type definition.
@@ -100,6 +100,7 @@ open class TypeDef {
 /// | **superTypes** | | At least one super type, typically the type defined in the `supertypeDefinition` |
 /// | **[attributeDefs][AttributeDef]** | | (Optional) List of attributes unique to this custom entity type |
 class EntityDef extends TypeDef {
+  name: String(upperCamelCase)
   /// Category is set automatically and fixed (should not be changed).
   fixed category = "ENTITY"
   /// List of super types for the entity definition. This should include the supertype for the custom model in any custom
@@ -129,7 +130,7 @@ class EntityDef extends TypeDef {
 /// | **indexAs** | | (Optional) What kind of index(es) to create in Elastic for this attribute |
 open class AttributeDef {
   /// Name for the new attribute.
-  name: String(matches(Regex("[a-z][a-zA-Z0-9]*")))
+  name: String(lowerCamelCase)
   /// Explanation of the attribute (what data it holds, how it is used).
   description: String
   /// Type of the attribute -- this will be set automatically from the
@@ -139,7 +140,7 @@ open class AttributeDef {
   /// Type of the attribute. This should be either:
   /// - A primitive Atlan type.
   /// - The special value `enum` to indicate an enumeration. In this case, you must also specify `enumName` as an additional property for the attribute.</li>
-  hidden type: String(matches(Regex("string|int|float|boolean|date|enum")))
+  hidden type: DataType
   /// Whether this attribute should allow multiple values (true) or not (false - default).
   hidden multiValued: Boolean = false
   /// Name of the enumeration that this attribute should use, if you have specified type = `enum`.
@@ -171,7 +172,7 @@ open class AttributeDef {
   /// - `keyword` creates only a keyword (exact match) index
   /// - `text` creates only a textual (tokenized) index
   /// - `both` creates both a keyword and a textual index
-  hidden indexAs: String(matches(Regex("default|keyword|text|both"))) = "default"
+  hidden indexAs: IndexType = "default"
   /// Details to set a keyword index in Elastic -- this is managed automatically through setting
   /// `indexAs`.
   fixed indexType = if (indexAs == "keyword" || indexAs == "both" || (indexAs == "default" && (type == "string" || type == "enum"))) "STRING" else null
@@ -217,10 +218,10 @@ class RelationshipDef extends TypeDef {
   /// - `ONE_TO_TWO` tags will be propagated from endDef1 to endDef2
   /// - `TWO_TO_ONE` tags will be propagated from endDef2 to endDef1
   /// - `BOTH` tags will be propagated in both directions
-  propagateTags: String(matches(Regex("NONE|ONE_TO_TWO|TWO_TO_ONE|BOTH"))) = "NONE"
+  propagateTags: PropagationType = "NONE"
   /// Unique name for the relationship type definition -- this will be generated automatically
   /// based on the `endDef1` and `endDef2` parameters.
-  name = "\(getLowerSnakeCase(endDef2.name))_\(getLowerSnakeCase(endDef1.name))"
+  name: String(lowerSnakeCase) = "\(getLowerSnakeCase(endDef2.name))_\(getLowerSnakeCase(endDef1.name))"
   /// Unique label for the relationship type definition -- this will be generated automatically
   /// based on the `endDef1` parameter.
   fixed relationshipLabel = "__\(endDef1.type).\(endDef1.name)"
@@ -246,7 +247,7 @@ class RelationshipEndDef {
   /// Name of the custom entity type at this end of the relationship.
   type: String
   /// Name of the attribute on this end of the relationship, that refers to the *other* entity type (other end of the relationship).
-  name: String(matches(Regex("[a-z][a-zA-Z0-9]*")))
+  name: String(lowerCamelCase)
   /// Description of the relationship from this end of it.
   description: String
   /// Whether this end of the relationship is a container ("owns" the other end's assets) (default: false).
@@ -324,6 +325,33 @@ local class TypeDefFile {
   structDefs: Listing<StructDef>?
   relationshipDefs: Listing<RelationshipDef>?
 }
+
+const upperCamelCase = (str) -> str.matches(Regex("[A-Z][a-zA-Z0-9]*"))
+const lowerCamelCase = (str) -> str.matches(Regex("[a-z][a-zA-Z0-9]*"))
+const lowerSnakeCase = (str) -> str.matches(Regex("[a-z0-9_]*"))
+
+/// Type of an attribute.
+/// - `string`
+/// - `int` for whole numbers
+/// - `float` for decimal numbers
+/// - `boolean`
+/// - `date` for date and time
+/// - `enum` for an enumeration, in which case you must also specify `enumName` as an additional property for the attribute
+typealias DataType = "string"|"int"|"float"|"boolean"|"date"|"enum"
+
+/// Type of index in Elastic for this attribute.
+/// - `default`
+/// - `keyword` allows exact matches and "starts-with" searches
+/// - `text` allows full-text searches (tokenization of the value)
+/// - `both` allows both exact matches and full-text searches
+typealias IndexType = "default"|"keyword"|"text"|"both"
+
+/// Type of tag propagation through the relationship.
+/// - `NONE` tags will not be propagated through this relationship
+/// - `ONE_TO_TWO` tags will be propagated from endDef1 to endDef2
+/// - `TWO_TO_ONE` tags will be propagated from endDef2 to endDef1
+/// - `BOTH` tags will be propagated in both directions
+typealias PropagationType = "NONE"|"ONE_TO_TWO"|"TWO_TO_ONE"|"BOTH"
 
 const function getLowerSnakeCase(text: String): String = getSnakeCase(text).toLowerCase()
 const function getSnakeCase(text: String): String = text.replaceAll("_", "").replaceAll(Regex("([A-Z]+)([A-Z][a-z])"), "$1_$2").replaceAll(Regex("([a-z])([A-Z])"), "$1_$2")
