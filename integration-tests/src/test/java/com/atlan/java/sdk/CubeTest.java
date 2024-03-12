@@ -154,7 +154,7 @@ public class CubeTest extends AtlanLiveTest {
             groups = {"mdd.create.level2"},
             dependsOnGroups = {"mdd.create.level1"})
     void createLevel2() throws AtlanException {
-        level2 = CubeField.creator(LEVEL2_NAME, hierarchy, level1).build();
+        level2 = CubeField.creator(LEVEL2_NAME, level1).build();
         AssetMutationResponse response = level2.save();
         assertNotNull(response);
         assertEquals(response.getUpdatedAssets().size(), 2);
@@ -188,7 +188,7 @@ public class CubeTest extends AtlanLiveTest {
             groups = {"mdd.create.level3"},
             dependsOnGroups = {"mdd.create.level2"})
     void createLevel3() throws AtlanException {
-        level3 = CubeField.creator(LEVEL3_NAME, hierarchy, level2).build();
+        level3 = CubeField.creator(LEVEL3_NAME, level2).build();
         AssetMutationResponse response = level3.save();
         assertNotNull(response);
         assertEquals(response.getUpdatedAssets().size(), 2);
