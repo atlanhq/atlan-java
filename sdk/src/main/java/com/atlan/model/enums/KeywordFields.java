@@ -354,6 +354,24 @@ public enum KeywordFields implements AtlanSearchableField {
     CREATED_BY("__createdBy"),
     /** Credential strategy to use for this connection for queries. */
     CREDENTIAL_STRATEGY("credentialStrategy"),
+    /** Simple name of the cube dimension in which this asset exists, or empty if it is itself a dimension. */
+    CUBE_DIMENSION_NAME("cubeDimensionName.keyword"),
+    /** Unique name of the cube dimension in which this asset exists, or empty if it is itself a dimension. */
+    CUBE_DIMENSION_QUALIFIED_NAME("cubeDimensionQualifiedName"),
+    /** Expression used to calculate this measure. */
+    CUBE_FIELD_MEASURE_EXPRESSION("cubeFieldMeasureExpression.keyword"),
+    /** Simple name of the dimension hierarchy in which this asset exists, or empty if it is itself a hierarchy. */
+    CUBE_HIERARCHY_NAME("cubeHierarchyName.keyword"),
+    /** Unique name of the dimension hierarchy in which this asset exists, or empty if it is itself a hierarchy. */
+    CUBE_HIERARCHY_QUALIFIED_NAME("cubeHierarchyQualifiedName"),
+    /** Simple name of the cube in which this asset exists, or empty if it is itself a cube. */
+    CUBE_NAME("cubeName.keyword"),
+    /** Name of the parent field in which this field is nested. */
+    CUBE_PARENT_FIELD_NAME("cubeParentFieldName.keyword"),
+    /** Unique name of the parent field in which this field is nested. */
+    CUBE_PARENT_FIELD_QUALIFIED_NAME("cubeParentFieldQualifiedName"),
+    /** Unique name of the cube in which this asset exists, or empty if it is itself a cube. */
+    CUBE_QUALIFIED_NAME("cubeQualifiedName"),
     /** Unique name of the dashboard in which this tile is pinned. */
     DASHBOARD_QUALIFIED_NAME("dashboardQualifiedName"),
     /** Type of dashboard in Salesforce. */

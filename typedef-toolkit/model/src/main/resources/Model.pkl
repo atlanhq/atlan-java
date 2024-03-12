@@ -247,20 +247,20 @@ open class AttributeDef {
 
   /// Details to set a keyword index in Elastic -- this is managed automatically through setting
   /// `indexAs`.
-  fixed indexType = if (indexAs == "keyword" || indexAs == "both" || (indexAs == "default" && (type == "string" || type == "enum"))) "STRING" else null
+  fixed indexType = if (indexAs == "keyword" || (indexAs == "default" && (type == "string" || type == "enum"))) "STRING" else null
 
   /// Details to set a textual index in Elastic -- this is managed automatically through setting
   /// `indexAs`.
-  fixed indexTypeESConfig: Mapping<String, String>? = if (indexAs == "text") new Mapping {
+  fixed indexTypeESConfig: Mapping<String, String>? = if (indexAs == "text" || indexAs == "both") new Mapping {
     ["analyzer"] = "atlan_text_analyzer"
   } else null
 
   /// Details to set a textual index in Elastic -- this is managed automatically through setting
   /// `indexAs`.
   fixed indexTypeESFields: Mapping<String, Mapping<String, String>>? = if (indexAs == "both") new Mapping {
-    ["text"] = new Mapping {
-      ["type"] = "text"
-      ["analyzer"] = "atlan_text_analyzer"
+    ["keyword"] = new Mapping {
+      ["type"] = "keyword"
+      ["analyzer"] = "atlan_normalizer"
     }
   } else null
 }

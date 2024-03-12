@@ -71,6 +71,10 @@ jobs:
           path: jars/asset-import-*.jar
       - uses: actions/upload-artifact@v4
         with:
+          name: cube-assets-builder
+          path: jars/cube-assets-builder-*.jar
+      - uses: actions/upload-artifact@v4
+        with:
           name: duplicate-detector
           path: jars/duplicate-detector-*.jar
       - uses: actions/upload-artifact@v4
@@ -197,6 +201,7 @@ jobs:
           - adoption-export
           - asset-export-basic
           - asset-import
+          - cube-assets-builder
           - duplicate-detector
           - enrichment-migrator
           - lineage-builder

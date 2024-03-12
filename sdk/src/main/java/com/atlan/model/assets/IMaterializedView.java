@@ -359,6 +359,9 @@ public interface IMaterializedView {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IDataProduct> getInputPortDataProducts();
+
+    /** TBC */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
     /** TBC */

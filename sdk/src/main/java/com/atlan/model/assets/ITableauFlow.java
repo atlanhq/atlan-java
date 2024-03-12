@@ -309,6 +309,9 @@ public interface ITableauFlow {
     /** List of fields that are inputs to this flow. */
     List<Map<String, String>> getInputFields();
 
+    /** Data products for which this asset is an input port. */
+    SortedSet<IDataProduct> getInputPortDataProducts();
+
     /** Tasks to which this asset provides input. */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 

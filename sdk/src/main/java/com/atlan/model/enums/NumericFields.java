@@ -106,6 +106,8 @@ public enum NumericFields implements AtlanSearchableField {
     COLUMN_UNIQUE_VALUES_COUNT_LONG("columnUniqueValuesCountLong"),
     /** Calculated variance of the values in a numeric column. */
     COLUMN_VARIANCE("columnVariance"),
+    /** Level of the field in the cube hierarchy. */
+    CUBE_FIELD_LEVEL("cubeFieldLevel"),
     /** Number of dashboards in this workspace. */
     DASHBOARD_COUNT("dashboardCount"),
     /** Number of dataflows in this workspace. */

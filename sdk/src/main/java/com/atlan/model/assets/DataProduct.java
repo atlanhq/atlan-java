@@ -87,6 +87,11 @@ public class DataProduct extends Asset implements IDataProduct, IDataMesh, ICata
     @Attribute
     DataProductStatus dataProductStatus;
 
+    /** Input ports for this data product. */
+    @Attribute
+    @Singular
+    SortedSet<IAsset> inputPorts;
+
     /** Tasks to which this asset provides input. */
     @Attribute
     @Singular

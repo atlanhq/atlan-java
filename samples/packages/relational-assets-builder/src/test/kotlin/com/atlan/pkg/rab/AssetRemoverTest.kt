@@ -6,6 +6,8 @@ import com.atlan.model.assets.Column
 import com.atlan.model.assets.View
 import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.pkg.PackageTest
+import com.atlan.pkg.util.AssetRemover
+import com.atlan.pkg.util.AssetResolver
 import mu.KotlinLogging
 import org.testng.Assert.assertTrue
 import org.testng.ITestContext
@@ -20,7 +22,7 @@ import kotlin.test.assertEquals
  * Test pre-processing of full-load CSV files to detect which assets should be removed.
  */
 class AssetRemoverTest : PackageTest() {
-    private val conn1 = makeUnique("ar")
+    private val conn1 = makeUnique("rab_ar")
     private val conn1Type = AtlanConnectorType.MPARTICLE
     private val conn1QN = "default/${conn1Type.value}/1234567890"
 
@@ -58,9 +60,9 @@ class AssetRemoverTest : PackageTest() {
     fun beforeClass() {
         prepFile()
         val connectionsMap = mapOf(
-            AssetImporter.ConnectionIdentity(conn1, conn1Type.value) to conn1QN,
+            AssetResolver.ConnectionIdentity(conn1, conn1Type.value) to conn1QN,
         )
-        remover = AssetRemover(connectionsMap, KotlinLogging.logger {})
+        remover = AssetRemover(connectionsMap, AssetImporter.Companion, KotlinLogging.logger {})
         remover!!.calculateDeletions(
             Paths.get(testDirectory, currentFile).toString(),
             Paths.get(testDirectory, previousFile).toString(),

@@ -300,6 +300,9 @@ public interface IAtlanCollection {
     IconType getIconType();
 
     /** TBC */
+    SortedSet<IDataProduct> getInputPortDataProducts();
+
+    /** TBC */
     Boolean getIsAIGenerated();
 
     /** TBC */

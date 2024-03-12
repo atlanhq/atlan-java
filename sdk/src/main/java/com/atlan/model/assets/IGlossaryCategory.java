@@ -319,6 +319,9 @@ public interface IGlossaryCategory {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IDataProduct> getInputPortDataProducts();
+
+    /** TBC */
     Boolean getIsAIGenerated();
 
     /** TBC */

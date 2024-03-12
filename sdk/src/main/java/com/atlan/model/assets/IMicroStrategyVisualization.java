@@ -302,6 +302,9 @@ public interface IMicroStrategyVisualization {
     /** Whether this asset has lineage (true) or not (false). */
     Boolean getHasLineage();
 
+    /** Data products for which this asset is an input port. */
+    SortedSet<IDataProduct> getInputPortDataProducts();
+
     /** Tasks to which this asset provides input. */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 

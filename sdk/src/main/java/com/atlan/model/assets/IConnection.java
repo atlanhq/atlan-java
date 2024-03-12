@@ -409,6 +409,9 @@ public interface IConnection {
     /** Host name of this connection's source. */
     String getHost();
 
+    /** Data products for which this asset is an input port. */
+    SortedSet<IDataProduct> getInputPortDataProducts();
+
     /** TBC */
     Boolean getIsAIGenerated();
 

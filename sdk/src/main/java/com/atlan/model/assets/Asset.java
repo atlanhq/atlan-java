@@ -432,6 +432,11 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @JsonProperty("__hasLineage")
     Boolean hasLineage;
 
+    /** Data products for which this asset is an input port. */
+    @Attribute
+    @Singular
+    SortedSet<IDataProduct> inputPortDataProducts;
+
     /** TBC */
     @Attribute
     Boolean isAIGenerated;
