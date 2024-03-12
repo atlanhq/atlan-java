@@ -119,6 +119,18 @@ customTypes {
       superTypes { supertypeName }
       attributeDefs {
         new {
+          name = "\(a)Parent\(field)Name"
+          description = "Name of the parent field in which this field is nested."
+          type = "string"
+          indexAs = "both"
+        }
+        new {
+          name = "\(a)Parent\(field)QualifiedName"
+          description = "Unique name of the parent field in which this field is nested."
+          type = "string"
+          indexAs = "keyword"
+        }
+        new {
           name = "\(a)\(field)Level"
           description = "Level of the field in the cube hierarchy."
           type = "int"

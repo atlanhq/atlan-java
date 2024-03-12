@@ -8,6 +8,7 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.KeywordTextField;
 import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
@@ -38,7 +39,7 @@ public interface ICubeField {
 
     /** Expression used to calculate this measure. */
     KeywordTextField CUBE_FIELD_MEASURE_EXPRESSION = new KeywordTextField(
-            "cubeFieldMeasureExpression", "cubeFieldMeasureExpression", "cubeFieldMeasureExpression.text");
+            "cubeFieldMeasureExpression", "cubeFieldMeasureExpression.keyword", "cubeFieldMeasureExpression");
 
     /** Hierarchy in which this field exists. */
     RelationField CUBE_HIERARCHY = new RelationField("cubeHierarchy");
@@ -48,6 +49,14 @@ public interface ICubeField {
 
     /** Parent field in which this field is nested. */
     RelationField CUBE_PARENT_FIELD = new RelationField("cubeParentField");
+
+    /** Name of the parent field in which this field is nested. */
+    KeywordTextField CUBE_PARENT_FIELD_NAME =
+            new KeywordTextField("cubeParentFieldName", "cubeParentFieldName.keyword", "cubeParentFieldName");
+
+    /** Unique name of the parent field in which this field is nested. */
+    KeywordField CUBE_PARENT_FIELD_QUALIFIED_NAME =
+            new KeywordField("cubeParentFieldQualifiedName", "cubeParentFieldQualifiedName");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -313,6 +322,12 @@ public interface ICubeField {
     /** Parent field in which this field is nested. */
     ICubeField getCubeParentField();
 
+    /** Name of the parent field in which this field is nested. */
+    String getCubeParentFieldName();
+
+    /** Unique name of the parent field in which this field is nested. */
+    String getCubeParentFieldQualifiedName();
+
     /** Unique name of the cube in which this asset exists, or empty if it is itself a cube. */
     String getCubeQualifiedName();
 
@@ -330,6 +345,9 @@ public interface ICubeField {
 
     /** Whether this asset has lineage (true) or not (false). */
     Boolean getHasLineage();
+
+    /** Data products for which this asset is an input port. */
+    SortedSet<IDataProduct> getInputPortDataProducts();
 
     /** Tasks to which this asset provides input. */
     SortedSet<IAirflowTask> getInputToAirflowTasks();

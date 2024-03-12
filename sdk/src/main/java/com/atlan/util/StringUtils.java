@@ -131,10 +131,25 @@ public final class StringUtils {
      * @return the name of the data asset
      */
     public static String getNameFromQualifiedName(String qualifiedName) {
-        if (qualifiedName != null && qualifiedName.indexOf("/") > 0) {
-            return qualifiedName.substring(qualifiedName.lastIndexOf("/") + 1);
+        return getNameFromQualifiedName(qualifiedName, "/");
+    }
+
+    /**
+     * Retrieve the name of a data asset from the provided qualifiedName.
+     *
+     * @param qualifiedName from which to retrieve the name component
+     * @param delimiter by which the (non-connection) components of the qualifiedName are separated
+     * @return the name of the data asset
+     */
+    public static String getNameFromQualifiedName(String qualifiedName, String delimiter) {
+        if (qualifiedName == null) {
+            return null;
+        } else if (qualifiedName.indexOf(delimiter) > 0) {
+            return qualifiedName.substring(qualifiedName.lastIndexOf(delimiter) + 1);
+        } else {
+            String connectionQN = getConnectionQualifiedName(qualifiedName);
+            return qualifiedName.substring(connectionQN.length() + 1);
         }
-        return null;
     }
 
     /**
@@ -144,8 +159,19 @@ public final class StringUtils {
      * @return the qualifiedName of the parent data asset
      */
     public static String getParentQualifiedNameFromQualifiedName(String qualifiedName) {
-        if (qualifiedName != null && qualifiedName.indexOf("/") > 0) {
-            return qualifiedName.substring(0, qualifiedName.lastIndexOf("/"));
+        return getParentQualifiedNameFromQualifiedName(qualifiedName, "/");
+    }
+
+    /**
+     * Retrieve the qualifiedName of the parent data asset of the provided asset's qualifiedName.
+     *
+     * @param qualifiedName from which to retrieve the parent asset's qualifiedName
+     * @param delimiter by which the (non-connection) components of the qualifiedName are separated
+     * @return the qualifiedName of the parent data asset
+     */
+    public static String getParentQualifiedNameFromQualifiedName(String qualifiedName, String delimiter) {
+        if (qualifiedName != null && qualifiedName.indexOf(delimiter) > 0) {
+            return qualifiedName.substring(0, qualifiedName.lastIndexOf(delimiter));
         }
         return null;
     }

@@ -321,6 +321,9 @@ public interface ILineageProcess {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IDataProduct> getInputPortDataProducts();
+
+    /** TBC */
     SortedSet<ICatalog> getInputs();
 
     /** TBC */

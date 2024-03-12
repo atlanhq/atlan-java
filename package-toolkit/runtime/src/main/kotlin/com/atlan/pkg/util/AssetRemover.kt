@@ -1,6 +1,6 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2023 Atlan Pte. Ltd. */
-package com.atlan.pkg.rab
+package com.atlan.pkg.util
 
 import com.atlan.Atlan
 import com.atlan.model.assets.Asset
@@ -26,13 +26,15 @@ import kotlin.math.round
  * thereby reducing time to calculate which assets should be removed.
  *
  * @param connectionsMap a mapping from tenant-agnostic connection identity to tenant-specific qualifiedName for the connection
+ * @param resolver for resolving asset identities entirely from CSV file input (no calls to Atlan)
  * @param logger for tracking status and documenting any errors
  * @param removeTypes names of asset types that should be considered for deleted (default: all)
  * @param removalPrefix qualifiedName prefix that must match an asset for it to be deleted (default: all)
  * @param purge if true, any asset that matches will be permanently deleted (otherwise, default: only archived)
  */
 class AssetRemover(
-    private val connectionsMap: Map<AssetImporter.ConnectionIdentity, String>,
+    private val connectionsMap: Map<AssetResolver.ConnectionIdentity, String>,
+    private val resolver: AssetResolver,
     private val logger: KLogger,
     private val removeTypes: List<String> = listOf(),
     private val removalPrefix: String = "",
@@ -115,9 +117,9 @@ class AssetRemover(
         reader.stream().skip(1).forEach { r: CsvRecord ->
             val values = r.fields
             val typeName = values[typeIdx]!!
-            val qnDetails = AssetImporter.getQualifiedNameDetails(values, header, typeName)
+            val qnDetails = resolver.getQualifiedNameDetails(values, header, typeName)
             val agnosticQN = qnDetails.uniqueQN
-            val connectionIdentity = AssetImporter.getConnectionIdentityFromQN(agnosticQN)
+            val connectionIdentity = resolver.getConnectionIdentityFromQN(agnosticQN)
             if (connectionIdentity != null && connectionsMap.containsKey(connectionIdentity)) {
                 val qualifiedName =
                     agnosticQN.replaceFirst(connectionIdentity.toString(), connectionsMap[connectionIdentity]!!)

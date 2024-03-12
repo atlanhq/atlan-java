@@ -325,6 +325,9 @@ public interface IAsset {
     /** Whether this asset has lineage (true) or not (false). */
     BooleanField HAS_LINEAGE = new BooleanField("__hasLineage", "__hasLineage");
 
+    /** Data products for which this asset is an input port. */
+    RelationField INPUT_PORT_DATA_PRODUCTS = new RelationField("inputPortDataProducts");
+
     /** TBC */
     BooleanField IS_AI_GENERATED = new BooleanField("isAIGenerated", "isAIGenerated");
 
@@ -741,6 +744,9 @@ public interface IAsset {
 
     /** Whether this asset has lineage (true) or not (false). */
     Boolean getHasLineage();
+
+    /** Data products for which this asset is an input port. */
+    SortedSet<IDataProduct> getInputPortDataProducts();
 
     /** TBC */
     Boolean getIsAIGenerated();

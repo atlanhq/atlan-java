@@ -469,10 +469,13 @@ public class CubeHierarchy extends Asset
      * @return the minimal request necessary to create the CubeHierarchy, as a builder
      */
     public static CubeHierarchyBuilder<?, ?> creator(String name, String dimensionQualifiedName) {
-        String dimensionName = StringUtils.getNameFromQualifiedName(dimensionQualifiedName);
-        String cubeQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(dimensionQualifiedName);
-        String cubeName = StringUtils.getNameFromQualifiedName(cubeQualifiedName);
-        String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(cubeQualifiedName);
+        String dimensionName =
+                StringUtils.getNameFromQualifiedName(dimensionQualifiedName, IMultiDimensionalDataset.QN_DELIMITER);
+        String cubeQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(
+                dimensionQualifiedName, IMultiDimensionalDataset.QN_DELIMITER);
+        String cubeName =
+                StringUtils.getNameFromQualifiedName(cubeQualifiedName, IMultiDimensionalDataset.QN_DELIMITER);
+        String connectionQualifiedName = StringUtils.getConnectionQualifiedName(cubeQualifiedName);
         AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         return CubeHierarchy._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
@@ -509,7 +512,7 @@ public class CubeHierarchy extends Asset
      * @return a unique name for the CubeHierarchy
      */
     public static String generateQualifiedName(String name, String dimensionQualifiedName) {
-        return dimensionQualifiedName + "/" + name;
+        return dimensionQualifiedName + IMultiDimensionalDataset.QN_DELIMITER + name;
     }
 
     /**

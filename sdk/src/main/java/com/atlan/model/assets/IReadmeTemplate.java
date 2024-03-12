@@ -293,6 +293,9 @@ public interface IReadmeTemplate {
     /** Type of icon, for example: image or emoji. */
     IconType getIconType();
 
+    /** Data products for which this asset is an input port. */
+    SortedSet<IDataProduct> getInputPortDataProducts();
+
     /** Tasks to which this asset provides input. */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 

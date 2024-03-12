@@ -62,6 +62,9 @@ public interface IDataProduct {
     /** Status of this data product. */
     KeywordField DATA_PRODUCT_STATUS = new KeywordField("dataProductStatus", "dataProductStatus");
 
+    /** Input ports for this data product. */
+    RelationField INPUT_PORTS = new RelationField("inputPorts");
+
     /** Output ports for this data product. */
     RelationField OUTPUT_PORTS = new RelationField("outputPorts");
 
@@ -337,6 +340,12 @@ public interface IDataProduct {
 
     /** Whether this asset has lineage (true) or not (false). */
     Boolean getHasLineage();
+
+    /** Data products for which this asset is an input port. */
+    SortedSet<IDataProduct> getInputPortDataProducts();
+
+    /** Input ports for this data product. */
+    SortedSet<IAsset> getInputPorts();
 
     /** Tasks to which this asset provides input. */
     SortedSet<IAirflowTask> getInputToAirflowTasks();

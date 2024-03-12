@@ -25,8 +25,8 @@ import com.atlan.model.assets.Connection;
      * @return the minimal request necessary to create the CubeDimension, as a builder
      */
     public static CubeDimensionBuilder<?, ?> creator(String name, String cubeQualifiedName) {
-        String cubeName = StringUtils.getNameFromQualifiedName(cubeQualifiedName);
-        String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(cubeQualifiedName);
+        String cubeName = StringUtils.getNameFromQualifiedName(cubeQualifiedName, IMultiDimensionalDataset.QN_DELIMITER);
+        String connectionQualifiedName = StringUtils.getConnectionQualifiedName(cubeQualifiedName);
         AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         return CubeDimension._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
@@ -61,7 +61,7 @@ import com.atlan.model.assets.Connection;
      * @return a unique name for the CubeDimension
      */
     public static String generateQualifiedName(String name, String cubeQualifiedName) {
-        return cubeQualifiedName + "/" + name;
+        return cubeQualifiedName + IMultiDimensionalDataset.QN_DELIMITER + name;
     }
 
     /**

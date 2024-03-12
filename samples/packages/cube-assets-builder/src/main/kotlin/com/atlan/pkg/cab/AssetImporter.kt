@@ -1,0 +1,132 @@
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
+package com.atlan.pkg.cab
+
+import com.atlan.model.assets.Asset
+import com.atlan.model.assets.Connection
+import com.atlan.model.assets.Cube
+import com.atlan.model.assets.CubeDimension
+import com.atlan.model.assets.CubeField
+import com.atlan.model.assets.CubeHierarchy
+import com.atlan.model.assets.IMultiDimensionalDataset
+import com.atlan.model.fields.AtlanField
+import com.atlan.pkg.serde.csv.CSVImporter
+import com.atlan.pkg.serde.csv.ImportResults
+import com.atlan.pkg.util.AssetResolver
+import com.atlan.pkg.util.AssetResolver.ConnectionIdentity
+import com.atlan.pkg.util.AssetResolver.QualifiedNameDetails
+import mu.KLogger
+
+/**
+ * Import assets into Atlan from a provided CSV file.
+ *
+ * Only the assets and attributes in the provided CSV file will attempt to be loaded.
+ * By default, any blank values in a cell in the CSV file will be ignored. If you would like any
+ * particular column's blank values to actually overwrite (i.e. remove) existing values for that
+ * asset in Atlan, then add that column's field to getAttributesToOverwrite.
+ *
+ * @param filename name of the file to import
+ * @param attrsToOverwrite list of fields that should be overwritten in Atlan, if their value is empty in the CSV
+ * @param updateOnly if true, only update an asset (first check it exists), if false allow upserts (create if it does not exist)
+ * @param batchSize maximum number of records to save per API request
+ * @param trackBatches if true, minimal details about every asset created or updated is tracked (if false, only counts of each are tracked)
+ * @param fieldSeparator character to use to separate fields (for example ',' or ';')
+ */
+abstract class AssetImporter(
+    private val filename: String,
+    private val attrsToOverwrite: List<AtlanField>,
+    private val updateOnly: Boolean,
+    private val batchSize: Int,
+    typeNameFilter: String,
+    logger: KLogger,
+    trackBatches: Boolean,
+    fieldSeparator: Char,
+) : CSVImporter(
+    filename,
+    logger,
+    typeNameFilter,
+    attrsToOverwrite,
+    batchSize = batchSize,
+    trackBatches = trackBatches,
+    fieldSeparator = fieldSeparator,
+) {
+
+    /** {@inheritDoc} */
+    override fun import(columnsToSkip: Set<String>): ImportResults? {
+        // Can skip all of these columns when deserializing a row as they will be set by
+        // the creator methods anyway
+        return super.import(
+            setOf(
+                Asset.CONNECTION_NAME.atlanFieldName,
+                // ConnectionImporter.CONNECTOR_TYPE, // Let this be loaded, for mis-named connections
+                IMultiDimensionalDataset.CUBE_NAME.atlanFieldName,
+                IMultiDimensionalDataset.CUBE_DIMENSION_NAME.atlanFieldName,
+                IMultiDimensionalDataset.CUBE_HIERARCHY_NAME.atlanFieldName,
+            ),
+        )
+    }
+
+    companion object : AssetResolver {
+        /** {@inheritDoc} */
+        override fun getQualifiedNameDetails(row: List<String>, header: List<String>, typeName: String): QualifiedNameDetails {
+            val parent: QualifiedNameDetails?
+            val current: String
+            val unique: String
+            val partial: String
+            when (typeName) {
+                Connection.TYPE_NAME -> {
+                    val connection = row[header.indexOf(Asset.CONNECTION_NAME.atlanFieldName)]
+                    val connector = row[header.indexOf(ConnectionImporter.CONNECTOR_TYPE)]
+                    parent = null
+                    unique = ConnectionIdentity(connection, connector).toString()
+                    partial = ""
+                }
+                Cube.TYPE_NAME -> {
+                    current = row[header.indexOf(IMultiDimensionalDataset.CUBE_NAME.atlanFieldName)]
+                    parent = getQualifiedNameDetails(row, header, Connection.TYPE_NAME)
+                    unique = "${parent.uniqueQN}/$current"
+                    partial = current
+                }
+                CubeDimension.TYPE_NAME -> {
+                    current = row[header.indexOf(IMultiDimensionalDataset.CUBE_DIMENSION_NAME.atlanFieldName)]
+                    parent = getQualifiedNameDetails(row, header, Cube.TYPE_NAME)
+                    unique = "${parent.uniqueQN}~$current"
+                    partial = "${parent.partialQN}~$current"
+                }
+                CubeHierarchy.TYPE_NAME -> {
+                    current = row[header.indexOf(IMultiDimensionalDataset.CUBE_HIERARCHY_NAME.atlanFieldName)]
+                    parent = getQualifiedNameDetails(row, header, CubeDimension.TYPE_NAME)
+                    unique = "${parent.uniqueQN}~$current"
+                    partial = "${parent.partialQN}~$current"
+                }
+                CubeField.TYPE_NAME -> {
+                    current = row[header.indexOf(FieldImporter.FIELD_NAME)]
+                    val parentField = row[header.indexOf(FieldImporter.PARENT_FIELD_QN)]
+                    if (parentField.isBlank()) {
+                        parent = getQualifiedNameDetails(row, header, CubeHierarchy.TYPE_NAME)
+                        unique = "${parent.uniqueQN}~$current"
+                        partial = "${parent.partialQN}~$current"
+                    } else {
+                        val hierarchy = getQualifiedNameDetails(row, header, CubeHierarchy.TYPE_NAME)
+                        val grandParent = if (parentField.indexOf("~") > 0) parentField.substringBeforeLast("~") else ""
+                        parent = QualifiedNameDetails(
+                            "${hierarchy.uniqueQN}~$parentField",
+                            "${hierarchy.partialQN}~$parentField",
+                            if (grandParent.isNotBlank()) "${hierarchy.uniqueQN}~$grandParent" else hierarchy.uniqueQN,
+                            if (grandParent.isNotBlank()) "${hierarchy.partialQN}~$grandParent" else hierarchy.partialQN,
+                        )
+                        unique = "${parent.uniqueQN}~$current"
+                        partial = "${parent.partialQN}~$current"
+                    }
+                }
+                else -> throw IllegalStateException("Unknown multi-dimensional dataset type: $typeName")
+            }
+            return QualifiedNameDetails(
+                unique,
+                partial,
+                parent?.uniqueQN ?: "",
+                parent?.partialQN ?: "",
+            )
+        }
+    }
+}

@@ -34,7 +34,7 @@ public interface IMultiDimensionalDataset {
 
     /** Simple name of the cube dimension in which this asset exists, or empty if it is itself a dimension. */
     KeywordTextField CUBE_DIMENSION_NAME =
-            new KeywordTextField("cubeDimensionName", "cubeDimensionName", "cubeDimensionName.text");
+            new KeywordTextField("cubeDimensionName", "cubeDimensionName.keyword", "cubeDimensionName");
 
     /** Unique name of the cube dimension in which this asset exists, or empty if it is itself a dimension. */
     KeywordField CUBE_DIMENSION_QUALIFIED_NAME =
@@ -42,17 +42,20 @@ public interface IMultiDimensionalDataset {
 
     /** Simple name of the dimension hierarchy in which this asset exists, or empty if it is itself a hierarchy. */
     KeywordTextField CUBE_HIERARCHY_NAME =
-            new KeywordTextField("cubeHierarchyName", "cubeHierarchyName", "cubeHierarchyName.text");
+            new KeywordTextField("cubeHierarchyName", "cubeHierarchyName.keyword", "cubeHierarchyName");
 
     /** Unique name of the dimension hierarchy in which this asset exists, or empty if it is itself a hierarchy. */
     KeywordField CUBE_HIERARCHY_QUALIFIED_NAME =
             new KeywordField("cubeHierarchyQualifiedName", "cubeHierarchyQualifiedName");
 
     /** Simple name of the cube in which this asset exists, or empty if it is itself a cube. */
-    KeywordTextField CUBE_NAME = new KeywordTextField("cubeName", "cubeName", "cubeName.text");
+    KeywordTextField CUBE_NAME = new KeywordTextField("cubeName", "cubeName.keyword", "cubeName");
 
     /** Unique name of the cube in which this asset exists, or empty if it is itself a cube. */
     KeywordField CUBE_QUALIFIED_NAME = new KeywordField("cubeQualifiedName", "cubeQualifiedName");
+
+    /** Delimiter to use for qualifiedName components (other than connection portion). */
+    public static final String QN_DELIMITER = "~";
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -320,6 +323,9 @@ public interface IMultiDimensionalDataset {
 
     /** Whether this asset has lineage (true) or not (false). */
     Boolean getHasLineage();
+
+    /** Data products for which this asset is an input port. */
+    SortedSet<IDataProduct> getInputPortDataProducts();
 
     /** Tasks to which this asset provides input. */
     SortedSet<IAirflowTask> getInputToAirflowTasks();

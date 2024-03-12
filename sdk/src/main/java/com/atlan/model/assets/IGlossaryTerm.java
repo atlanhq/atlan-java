@@ -376,6 +376,9 @@ public interface IGlossaryTerm {
     Boolean getHasLineage();
 
     /** TBC */
+    SortedSet<IDataProduct> getInputPortDataProducts();
+
+    /** TBC */
     SortedSet<IGlossaryTerm> getIsA();
 
     /** TBC */
