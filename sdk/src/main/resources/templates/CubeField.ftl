@@ -40,8 +40,7 @@ import java.util.regex.Pattern;
      * Builds the minimal object necessary to create a CubeField.
      *
      * @param name of the CubeField
-     * @param hierarchyQualifiedName unique name of the hierarchy in which this CubeField exists
-     * @param parentFieldQualifiedName (optional) unique name of the parent field in which this CubeField exists
+     * @param parentQualifiedName unique name of the parent of the CubeField (either of its hierarchy or parent field)
      * @return the minimal request necessary to create the CubeField, as a builder
      */
     public static CubeFieldBuilder<?, ?> creator(String name, String parentQualifiedName) {
