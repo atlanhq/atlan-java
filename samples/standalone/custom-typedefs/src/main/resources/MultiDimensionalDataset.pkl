@@ -64,6 +64,13 @@ customTypes {
       name = t
       description = "Instance of a cube in Atlan."
       superTypes { supertypeName }
+      attributeDefs {
+        new {
+          name = "\(a)DimensionCount"
+          description = "Number of dimensions in the cube."
+          type = "long"
+        }
+      }
     }
   }
   new {
@@ -71,6 +78,13 @@ customTypes {
       name = "\(t)\(dimension)"
       description = "Instance of a cube dimension in Atlan."
       superTypes { supertypeName }
+      attributeDefs {
+        new {
+          name = "\(a)HierarchyCount"
+          description = "Number of hierarchies in the cube dimension."
+          type = "long"
+        }
+      }
     }
     relationships {
       new {
@@ -94,6 +108,13 @@ customTypes {
       name = "\(t)\(hierarchy)"
       description = "Instance of a cube hierarchy in Atlan."
       superTypes { supertypeName }
+      attributeDefs {
+        new {
+          name = "\(a)FieldCount"
+          description = "Number of fields in the cube hierarchy."
+          type = "long"
+        }
+      }
     }
     relationships {
       new {
