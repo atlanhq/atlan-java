@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9,"i11":9,"i12":9,"i13":9,"i14":9,"i15":9};
+var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9,"i11":9,"i12":9,"i13":9,"i14":9,"i15":9,"i16":9,"i17":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -241,40 +241,56 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getNameFromQualifiedName(java.lang.String,java.lang.String)">getNameFromQualifiedName</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
+                        java.lang.String&nbsp;delimiter)</code></th>
+<td class="colLast">
+<div class="block">Retrieve the name of a data asset from the provided qualifiedName.</div>
+</td>
+</tr>
+<tr id="i10" class="altColor">
+<td class="colFirst"><code>static java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getParentQualifiedNameFromQualifiedName(java.lang.String)">getParentQualifiedNameFromQualifiedName</a></span>&#8203;(java.lang.String&nbsp;qualifiedName)</code></th>
 <td class="colLast">
 <div class="block">Retrieve the qualifiedName of the parent data asset of the provided asset's qualifiedName.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i11" class="rowColor">
+<td class="colFirst"><code>static java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getParentQualifiedNameFromQualifiedName(java.lang.String,java.lang.String)">getParentQualifiedNameFromQualifiedName</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
+                                       java.lang.String&nbsp;delimiter)</code></th>
+<td class="colLast">
+<div class="block">Retrieve the qualifiedName of the parent data asset of the provided asset's qualifiedName.</div>
+</td>
+</tr>
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSuperDomainQualifiedName(java.lang.String)">getSuperDomainQualifiedName</a></span>&#8203;(java.lang.String&nbsp;domainQualifiedName)</code></th>
 <td class="colLast">
 <div class="block">Retrieve the domain's top-most ancestral domain qualifiedName.</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getUpperCamelCase(java.lang.String)">getUpperCamelCase</a></span>&#8203;(java.lang.String&nbsp;text)</code></th>
 <td class="colLast">
 <div class="block">Convert the provided string into UpperCamelCase.</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getUpperSnakeCase(java.lang.String)">getUpperSnakeCase</a></span>&#8203;(java.lang.String&nbsp;text)</code></th>
 <td class="colLast">
 <div class="block">Convert the provided string to UPPER_SNAKE_CASE.</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>static boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isUUID(java.lang.String)">isUUID</a></span>&#8203;(java.lang.String&nbsp;str)</code></th>
 <td class="colLast">
 <div class="block">Checks whether a string is a valid UUID(v4) or not.</div>
 </td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>static boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#secureCompare(java.lang.String,java.lang.String)">secureCompare</a></span>&#8203;(java.lang.String&nbsp;a,
              java.lang.String&nbsp;b)</code></th>
@@ -282,7 +298,7 @@ extends java.lang.Object</pre>
 <div class="block">Compares two strings for equality.</div>
 </td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#trimPathDelimiters(java.lang.String)">trimPathDelimiters</a></span>&#8203;(java.lang.String&nbsp;toTrim)</code></th>
 <td class="colLast">
@@ -466,6 +482,24 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
+<a id="getNameFromQualifiedName(java.lang.String,java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getNameFromQualifiedName</h4>
+<pre class="methodSignature">public static&nbsp;java.lang.String&nbsp;getNameFromQualifiedName&#8203;(java.lang.String&nbsp;qualifiedName,
+                                                        java.lang.String&nbsp;delimiter)</pre>
+<div class="block">Retrieve the name of a data asset from the provided qualifiedName.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>qualifiedName</code> - from which to retrieve the name component</dd>
+<dd><code>delimiter</code> - by which the (non-connection) components of the qualifiedName are separated</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the name of the data asset</dd>
+</dl>
+</li>
+</ul>
 <a id="getParentQualifiedNameFromQualifiedName(java.lang.String)">
 <!--   -->
 </a>
@@ -477,6 +511,24 @@ extends java.lang.Object</pre>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>qualifiedName</code> - from which to retrieve the parent asset's qualifiedName</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the qualifiedName of the parent data asset</dd>
+</dl>
+</li>
+</ul>
+<a id="getParentQualifiedNameFromQualifiedName(java.lang.String,java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getParentQualifiedNameFromQualifiedName</h4>
+<pre class="methodSignature">public static&nbsp;java.lang.String&nbsp;getParentQualifiedNameFromQualifiedName&#8203;(java.lang.String&nbsp;qualifiedName,
+                                                                       java.lang.String&nbsp;delimiter)</pre>
+<div class="block">Retrieve the qualifiedName of the parent data asset of the provided asset's qualifiedName.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>qualifiedName</code> - from which to retrieve the parent asset's qualifiedName</dd>
+<dd><code>delimiter</code> - by which the (non-connection) components of the qualifiedName are separated</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the qualifiedName of the parent data asset</dd>
 </dl>
