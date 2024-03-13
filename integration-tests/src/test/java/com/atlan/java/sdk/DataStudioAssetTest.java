@@ -36,7 +36,7 @@ public class DataStudioAssetTest extends AtlanLiveTest {
     private static DataStudioAsset source = null;
 
     @Test(groups = {"gds.create.connection"})
-    void createConnection() throws AtlanException {
+    void createConnection() throws AtlanException, InterruptedException {
         connection = ConnectionTest.createConnection(CONNECTION_NAME, CONNECTOR_TYPE);
     }
 
