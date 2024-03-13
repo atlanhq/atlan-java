@@ -19,7 +19,6 @@ import com.atlan.pkg.serde.csv.CSVImporter
 import com.atlan.pkg.util.AssetRemover
 import de.siegmar.fastcsv.reader.CsvReader
 import mu.KotlinLogging
-import java.io.File
 import java.nio.file.Paths
 import java.time.Instant
 import java.time.ZoneId
@@ -36,9 +35,8 @@ import kotlin.system.exitProcess
 object Importer {
     private val logger = KotlinLogging.logger {}
 
-    private const val PREVIOUS_FILES_PREFIX = "csa-cube-assets-builder"
-    private const val PREVIOUS_FILE_RAW_EXT = ".raw"
-    private const val PREVIOUS_FILE_PROCESSED_EXT = ".processed"
+    const val PREVIOUS_FILES_PREFIX = "csa-cube-assets-builder"
+    const val PREVIOUS_FILE_PROCESSED_EXT = ".processed"
 
     @JvmStatic
     fun main(args: Array<String>) {
@@ -170,19 +168,7 @@ object Importer {
             } else if (skipS3) {
                 ""
             } else {
-                val previousProcessed = s3.copyLatestFromS3(previousFileLocation, PREVIOUS_FILE_PROCESSED_EXT, outputDirectory)
-                if (previousProcessed.isNotBlank()) {
-                    // If there is a previously-processed file, use it (remember to prepend any directory onto it)
-                    logger.info { "Found previous processed file, using it: $previousProcessed" }
-                    "$outputDirectory${File.separator}$previousProcessed"
-                } else {
-                    val previousRaw = s3.copyLatestFromS3(previousFileLocation, PREVIOUS_FILE_RAW_EXT, outputDirectory)
-                    if (previousRaw.isNotBlank()) {
-                        transformPreviousRaw("$outputDirectory${File.separator}$previousRaw", cubeName, fieldSeparator)
-                    } else {
-                        ""
-                    }
-                }
+                s3.copyLatestFromS3(previousFileLocation, PREVIOUS_FILE_PROCESSED_EXT, outputDirectory)
             }
             if (lastCubesFile.isNotBlank()) {
                 // If there was a previous file, calculate the delta to see what we need
@@ -212,16 +198,20 @@ object Importer {
 
             // Copy processed files to specified location in S3 for future comparison purposes
             if (!skipS3) {
-                val sortedTime = DateTimeFormatter.ofPattern("yyyyMMdd-HHmmssSSS")
-                    .withZone(ZoneId.of("UTC"))
-                    .format(Instant.now())
-                s3.uploadToS3(assetsInput, "$previousFileLocation/$sortedTime$PREVIOUS_FILE_RAW_EXT")
-                s3.uploadToS3(
-                    preprocessedDetails.preprocessedFile,
-                    "$previousFileLocation/$sortedTime$PREVIOUS_FILE_PROCESSED_EXT",
-                )
+                uploadToS3(s3, preprocessedDetails.preprocessedFile, cubeName, PREVIOUS_FILE_PROCESSED_EXT)
             }
         }
+    }
+
+    fun uploadToS3(s3: S3Sync, localFile: String, cubeName: String, s3Extension: String) {
+        val previousFileLocation = "$PREVIOUS_FILES_PREFIX/$cubeName"
+        val sortedTime = DateTimeFormatter.ofPattern("yyyyMMdd-HHmmssSSS")
+            .withZone(ZoneId.of("UTC"))
+            .format(Instant.now())
+        s3.uploadToS3(
+            localFile,
+            "$previousFileLocation/$sortedTime$s3Extension",
+        )
     }
 
     private fun preprocessCSV(originalFile: String, fieldSeparator: Char): PreprocessedCsv {
