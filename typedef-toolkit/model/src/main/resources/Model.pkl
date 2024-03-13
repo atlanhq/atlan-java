@@ -57,13 +57,12 @@ local const function getSnakeCase(text: String): String = text.replaceAll("_", "
 
 /// Type of an attribute.
 /// - `string`
-/// - `int` for small whole numbers
-/// - `long` for potentially large whole numbers
+/// - `long` for whole numbers
 /// - `float` for decimal numbers
 /// - `boolean`
 /// - `date` for date and time
 /// - `enum` for an enumeration, in which case you must also specify `enumName` as an additional property for the attribute
-typealias DataType = "string"|"int"|"long"|"float"|"boolean"|"date"|"enum"
+typealias DataType = "string"|"long"|"float"|"boolean"|"date"|"enum"
 
 /// Type of index in Elastic for this attribute.
 /// - `default`
