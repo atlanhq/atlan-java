@@ -31,7 +31,7 @@ public class APIAssetTest extends AtlanLiveTest {
     private static APIPath path = null;
 
     @Test(groups = {"api.create.connection"})
-    void createConnection() throws AtlanException {
+    void createConnection() throws AtlanException, InterruptedException {
         connection = ConnectionTest.createConnection(CONNECTION_NAME, CONNECTOR_TYPE);
     }
 

@@ -33,7 +33,7 @@ public class PersonaTest extends AtlanLiveTest {
     private static Glossary glossary = null;
 
     @Test(groups = {"persona.create.connection"})
-    void createConnection() throws AtlanException {
+    void createConnection() throws AtlanException, InterruptedException {
         connection = ConnectionTest.createConnection(CONNECTION_NAME, CONNECTOR_TYPE);
     }
 

@@ -83,7 +83,7 @@ public class RequestsTest extends AtlanLiveTest {
     }
 
     @Test(groups = {"request.create.connection"})
-    void createConnection() throws AtlanException {
+    void createConnection() throws AtlanException, InterruptedException {
         connection = ConnectionTest.createConnection(Atlan.getDefaultClient(), PREFIX, CONNECTOR_TYPE);
         Database toCreate =
                 Database.creator(PREFIX, connection.getQualifiedName()).build();
