@@ -12,7 +12,7 @@ shared {
       new {
         name = a
         description = a
-        type = "int"
+        type = "long"
       }
     }
   }
