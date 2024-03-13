@@ -177,7 +177,11 @@ object Importer {
                     "$outputDirectory${File.separator}$previousProcessed"
                 } else {
                     val previousRaw = s3.copyLatestFromS3(previousFileLocation, PREVIOUS_FILE_RAW_EXT, outputDirectory)
-                    transformPreviousRaw("$outputDirectory${File.separator}$previousRaw", cubeName, fieldSeparator)
+                    if (previousRaw.isNotBlank()) {
+                        transformPreviousRaw("$outputDirectory${File.separator}$previousRaw", cubeName, fieldSeparator)
+                    } else {
+                        ""
+                    }
                 }
             }
             if (lastCubesFile.isNotBlank()) {
