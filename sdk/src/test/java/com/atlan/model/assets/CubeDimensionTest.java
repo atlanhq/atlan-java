@@ -396,6 +396,7 @@ public class CubeDimensionTest {
             .cube(Cube.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .cubeHierarchy(CubeHierarchy.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .cubeHierarchy(CubeHierarchy.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .cubeHierarchyCount(123456789L)
             .build();
 
     private static final int hash = full.hashCode();

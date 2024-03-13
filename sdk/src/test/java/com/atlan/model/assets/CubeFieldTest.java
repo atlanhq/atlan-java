@@ -393,6 +393,7 @@ public class CubeFieldTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
+            .cubeFieldCount(123456789L)
             .cubeFieldLevel(123)
             .cubeFieldMeasureExpression("String0")
             .cubeHierarchy(CubeHierarchy.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))

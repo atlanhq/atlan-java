@@ -46,8 +46,8 @@ class CubeImporter(
     override fun getBuilder(deserializer: RowDeserializer): Asset.AssetBuilder<*, *> {
         val name = deserializer.getValue(Cube.CUBE_NAME.atlanFieldName)?.let { it as String } ?: ""
         val connectionQN = connectionImporter.getBuilder(deserializer).build().qualifiedName
-        // TODO: val qnDetails = getQualifiedNameDetails(deserializer.row, deserializer.heading, typeNameFilter)
+        val qnDetails = getQualifiedNameDetails(deserializer.row, deserializer.heading, typeNameFilter)
         return Cube.creator(name, connectionQN)
-        // TODO: .cubeDimensionCount(preprocessed.qualifiedNameToChildCount[qnDetails.uniqueQN]?.toInt())
+            .cubeDimensionCount(preprocessed.qualifiedNameToChildCount[qnDetails.uniqueQN]?.toLong())
     }
 }

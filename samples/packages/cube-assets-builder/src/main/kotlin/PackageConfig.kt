@@ -134,6 +134,45 @@ object PackageConfig : CustomPackage(
                     ),
                 ),
             ),
+            UIStep(
+                title = "Semantics",
+                description = "Processing logic",
+                inputs = mapOf(
+                    "delta_semantic" to Radio(
+                        label = "Delta handling",
+                        required = false,
+                        possibleValues = mapOf(
+                            "full" to "Full replacement",
+                            "delta" to "Incremental",
+                        ),
+                        default = "full",
+                        help = "Whether to treat the input file as an initial load, full replacement (deleting any existing assets not in the file) or only incremental (no deletion of existing assets).",
+                    ),
+                    "delta_removal_type" to Radio(
+                        label = "Removal type",
+                        required = false,
+                        possibleValues = mapOf(
+                            "archive" to "Archive (recoverable)",
+                            "purge" to "Purge (cannot be recovered)",
+                        ),
+                        default = "archive",
+                        help = "How to delete any assets not found in the latest file.",
+                    ),
+                    "previous_file_direct" to TextInput(
+                        label = "Previous file",
+                        required = false,
+                        hidden = true,
+                        help = "Path to a direct file (locally) to use for delta processing.",
+                    ),
+                    "skip_s3" to BooleanInput(
+                        label = "Skip S3",
+                        required = false,
+                        hidden = true,
+                        default = false,
+                        help = "Whether to skip S3 operations (uploading and downloading files) as part of delta processing.",
+                    ),
+                ),
+            ),
         ),
         rules = listOf(
             UIRule(
@@ -152,6 +191,10 @@ object PackageConfig : CustomPackage(
                     "assets_field_separator",
                     "assets_batch_size",
                 ),
+            ),
+            UIRule(
+                whenInputs = mapOf("delta_semantic" to "full"),
+                required = listOf("delta_removal_type"),
             ),
         ),
     ),

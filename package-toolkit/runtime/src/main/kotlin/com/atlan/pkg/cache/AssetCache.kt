@@ -6,6 +6,7 @@ import com.atlan.model.assets.Asset
 import com.atlan.model.enums.AtlanStatus
 import mu.KotlinLogging
 import java.util.concurrent.ConcurrentHashMap
+import java.util.stream.Collectors.toSet
 
 /**
  * Utility class for lazy-loading a cache of assets based on some human-constructable identity.
@@ -15,14 +16,14 @@ abstract class AssetCache {
 
     private val byIdentity: MutableMap<String, String?> = ConcurrentHashMap()
     private val toIdentity: MutableMap<String, String?> = ConcurrentHashMap()
-    private val byGuid: MutableMap<String, Asset?> = ConcurrentHashMap()
+    private val byGuid: MutableMap<String, Asset> = ConcurrentHashMap()
     private val ignore: MutableMap<String, String?> = ConcurrentHashMap()
 
     /**
      * Retrieve an asset from the cache by its human-readable identity, lazily-loading it on any cache misses.
      *
      * @param identity of the asset to retrieve
-     * @return the asset with the specified identity
+     * @return the asset with the specified identity, or null if no such asset is in the cache
      */
     fun getByIdentity(identity: String): Asset? {
         if (this.ignore.containsKey(identity)) {
@@ -46,7 +47,7 @@ abstract class AssetCache {
      *
      * @param guid unique identifier (GUID) of the asset to retrieve
      * @param maxRetries maximum number of times to retry the lookup if not found immediately
-     * @return the asset with the specified GUID
+     * @return the asset with the specified GUID, or null if no such asset is in the cache
      */
     fun getByGuid(guid: String, maxRetries: Int = 0): Asset? {
         if (this.ignore.containsKey(guid)) {
@@ -134,10 +135,20 @@ abstract class AssetCache {
     }
 
     /**
+     * List all the assets held in the cache.
+     *
+     * @return the set of all assets in the cache
+     */
+    protected fun listAll(): Set<Asset> {
+        return byGuid.values.toSet()
+    }
+
+    /**
      * Check whether the asset is archived, and if so mark it to be ignored.
      *
      * @param id any identity for the asset, either GUID or string identity
      * @param asset the asset to check
+     * @return true if the asset is archived, false otherwise
      */
     private fun isArchived(id: String, asset: Asset): Boolean {
         return if (asset.status != AtlanStatus.ACTIVE) {

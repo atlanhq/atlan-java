@@ -16,6 +16,7 @@ import com.atlan.model.fields.AtlanField
 import com.atlan.net.HttpClient
 import com.atlan.net.RequestOptions
 import com.atlan.pkg.serde.cell.ConnectionXformer
+import com.atlan.pkg.util.AssetResolver
 import mu.KotlinLogging
 
 object ConnectionCache : AssetCache() {
@@ -95,6 +96,21 @@ object ConnectionCache : AssetCache() {
      */
     fun getIdentityForAsset(name: String, type: AtlanConnectorType): String {
         return ConnectionXformer.encode(name, type.value)
+    }
+
+    /**
+     * Get a map of all connections in the cache, indexed by their identity with values
+     * giving the resolved qualifiedName for the connection.
+     *
+     * @return map of all connections, indexed by their identity
+     */
+    fun getIdentityMap(): Map<AssetResolver.ConnectionIdentity, String> {
+        val map = mutableMapOf<AssetResolver.ConnectionIdentity, String>()
+        listAll().forEach { connection ->
+            connection as Connection
+            map[AssetResolver.ConnectionIdentity(connection.name, connection.connectorType.value)] = connection.qualifiedName
+        }
+        return map
     }
 
     /** {@inheritDoc} */

@@ -34,6 +34,9 @@ public interface ICubeField {
 
     public static final String TYPE_NAME = "CubeField";
 
+    /** Number of sub-fields that are direct children of this field. */
+    NumericField CUBE_FIELD_COUNT = new NumericField("cubeFieldCount", "cubeFieldCount");
+
     /** Level of the field in the cube hierarchy. */
     NumericField CUBE_FIELD_LEVEL = new NumericField("cubeFieldLevel", "cubeFieldLevel");
 
@@ -297,6 +300,9 @@ public interface ICubeField {
 
     /** Unique name of the cube dimension in which this asset exists, or empty if it is itself a dimension. */
     String getCubeDimensionQualifiedName();
+
+    /** Number of sub-fields that are direct children of this field. */
+    Long getCubeFieldCount();
 
     /** Level of the field in the cube hierarchy. */
     Integer getCubeFieldLevel();

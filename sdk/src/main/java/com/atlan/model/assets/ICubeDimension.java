@@ -8,6 +8,7 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
@@ -36,6 +37,9 @@ public interface ICubeDimension {
 
     /** Individual hierarchies that make up the dimension. */
     RelationField CUBE_HIERARCHIES = new RelationField("cubeHierarchies");
+
+    /** Number of hierarchies in the cube dimension. */
+    NumericField CUBE_HIERARCHY_COUNT = new NumericField("cubeHierarchyCount", "cubeHierarchyCount");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -282,6 +286,9 @@ public interface ICubeDimension {
 
     /** Individual hierarchies that make up the dimension. */
     SortedSet<ICubeHierarchy> getCubeHierarchies();
+
+    /** Number of hierarchies in the cube dimension. */
+    Long getCubeHierarchyCount();
 
     /** Simple name of the dimension hierarchy in which this asset exists, or empty if it is itself a hierarchy. */
     String getCubeHierarchyName();
