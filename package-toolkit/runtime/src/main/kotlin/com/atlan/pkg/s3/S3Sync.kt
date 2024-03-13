@@ -78,7 +78,7 @@ class S3Sync(
      * @param s3Prefix from which to copy the file
      * @param extension unique extension the file must have to be copied
      * @param localDirectory into which to copy the file
-     * @return name of the file that was downloaded, or blank if no file was downloaded
+     * @return path to the file that was downloaded (locally), or blank if no file was downloaded
      */
     fun copyLatestFromS3(s3Prefix: String, extension: String, localDirectory: String): String {
         logger.info { "Copying latest $extension file from s3://$bucketName/$s3Prefix to $localDirectory" }
@@ -103,14 +103,18 @@ class S3Sync(
             ""
         }
 
-        if (latestFile.isNotBlank()) {
+        val localFilePath = if (latestFile.isNotBlank()) {
+            val local = File(localDirectory, latestFile).path
             downloadFromS3(
                 s3Client,
                 File(s3Prefix, latestFile).path,
-                File(localDirectory, latestFile).path,
+                local,
             )
+            local
+        } else {
+            ""
         }
-        return latestFile
+        return localFilePath
     }
 
     /**

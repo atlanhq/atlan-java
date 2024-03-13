@@ -7,9 +7,11 @@ import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Cube
 import com.atlan.model.assets.CubeDimension
 import com.atlan.model.assets.CubeField
+import com.atlan.model.assets.CubeField.getHierarchyQualifiedName
 import com.atlan.model.assets.CubeHierarchy
 import com.atlan.pkg.Utils
 import com.atlan.pkg.cab.AssetImporter.Companion.getQualifiedNameDetails
+import com.atlan.pkg.cab.Importer.PREVIOUS_FILES_PREFIX
 import com.atlan.pkg.cache.ConnectionCache
 import com.atlan.pkg.cache.LinkCache
 import com.atlan.pkg.cache.TermCache
@@ -19,7 +21,6 @@ import com.atlan.pkg.serde.csv.CSVImporter
 import com.atlan.pkg.util.AssetRemover
 import de.siegmar.fastcsv.reader.CsvReader
 import mu.KotlinLogging
-import java.io.File
 import java.nio.file.Paths
 import java.time.Instant
 import java.time.ZoneId
@@ -36,9 +37,8 @@ import kotlin.system.exitProcess
 object Importer {
     private val logger = KotlinLogging.logger {}
 
-    private const val PREVIOUS_FILES_PREFIX = "csa-cube-assets-builder"
-    private const val PREVIOUS_FILE_RAW_EXT = ".raw"
-    private const val PREVIOUS_FILE_PROCESSED_EXT = ".processed"
+    const val PREVIOUS_FILES_PREFIX = "csa-cube-assets-builder"
+    const val PREVIOUS_FILE_PROCESSED_EXT = ".processed"
 
     @JvmStatic
     fun main(args: Array<String>) {
@@ -47,7 +47,14 @@ object Importer {
         import(config, outputDirectory)
     }
 
-    fun import(config: CubeAssetsBuilderCfg, outputDirectory: String = "tmp") {
+    /**
+     * Actually import the cube assets.
+     *
+     * @param config the configuration for the import
+     * @param outputDirectory (optional) into which to write any logs or preprocessing information
+     * @return the qualifiedName of the cube that was imported, or null if no cube was loaded
+     */
+    fun import(config: CubeAssetsBuilderCfg, outputDirectory: String = "tmp"): String? {
         val batchSize = Utils.getOrDefault(config.assetsBatchSize, 20).toInt()
         val fieldSeparator = Utils.getOrDefault(config.assetsFieldSeparator, ",")[0]
         val defaultRegion = Utils.getEnvVar("AWS_S3_REGION")
@@ -157,42 +164,32 @@ object Importer {
         )
         fieldImporter.import()
 
+        // Retrieve the qualifiedName of the cube that was imported
+        val cubeQN = cubeImporterResults?.primary?.guidAssignments?.values?.first().let {
+            Cube.select().where(Cube.GUID.eq(it)).pageSize(1).stream().findFirst().getOrNull()?.qualifiedName
+        }
+
         val runAssetRemoval = Utils.getOrDefault(config.deltaSemantic, "full") == "full"
         if (runAssetRemoval) {
-            val purgeAssets = Utils.getOrDefault(config.deltaRemovalType, "archive") == "purge"
-            val previousFileDirect = Utils.getOrDefault(config.previousFileDirect, "")
-            val skipS3 = Utils.getOrDefault(config.skipS3, false)
-            val cubeName = preprocessedDetails.cubeName
-            val s3 = S3Sync(defaultBucket, defaultRegion, logger)
-            val previousFileLocation = "$PREVIOUS_FILES_PREFIX/$cubeName"
-            val lastCubesFile = if (previousFileDirect.isNotBlank()) {
-                transformPreviousRaw(previousFileDirect, cubeName, fieldSeparator)
-            } else if (skipS3) {
-                ""
+            if (cubeQN == null) {
+                logger.warn { "Unable to determine cube's qualifiedName, will not delete any assets." }
             } else {
-                val previousProcessed = s3.copyLatestFromS3(previousFileLocation, PREVIOUS_FILE_PROCESSED_EXT, outputDirectory)
-                if (previousProcessed.isNotBlank()) {
-                    // If there is a previously-processed file, use it (remember to prepend any directory onto it)
-                    logger.info { "Found previous processed file, using it: $previousProcessed" }
-                    "$outputDirectory${File.separator}$previousProcessed"
+                val purgeAssets = Utils.getOrDefault(config.deltaRemovalType, "archive") == "purge"
+                val previousFileDirect = Utils.getOrDefault(config.previousFileDirect, "")
+                val skipS3 = Utils.getOrDefault(config.skipS3, false)
+                val cubeName = preprocessedDetails.cubeName
+                val s3 = S3Sync(defaultBucket, defaultRegion, logger)
+                val previousFileLocation = "$PREVIOUS_FILES_PREFIX/$cubeQN"
+                val lastCubesFile = if (previousFileDirect.isNotBlank()) {
+                    transformPreviousRaw(previousFileDirect, cubeName, fieldSeparator)
+                } else if (skipS3) {
+                    ""
                 } else {
-                    val previousRaw = s3.copyLatestFromS3(previousFileLocation, PREVIOUS_FILE_RAW_EXT, outputDirectory)
-                    if (previousRaw.isNotBlank()) {
-                        transformPreviousRaw("$outputDirectory${File.separator}$previousRaw", cubeName, fieldSeparator)
-                    } else {
-                        ""
-                    }
+                    s3.copyLatestFromS3(previousFileLocation, PREVIOUS_FILE_PROCESSED_EXT, outputDirectory)
                 }
-            }
-            if (lastCubesFile.isNotBlank()) {
-                // If there was a previous file, calculate the delta to see what we need
-                // to delete
-                val cubeQN = cubeImporterResults?.primary?.guidAssignments?.values?.first().let {
-                    Cube.select().where(Cube.GUID.eq(it)).pageSize(1).stream().findFirst().getOrNull()?.qualifiedName
-                }
-                if (cubeQN == null) {
-                    logger.warn { "Unable to determine cube's qualifiedName, will not delete any assets." }
-                } else {
+                if (lastCubesFile.isNotBlank()) {
+                    // If there was a previous file, calculate the delta to see what we need
+                    // to delete
                     val assetRemover = AssetRemover(
                         ConnectionCache.getIdentityMap(),
                         AssetImporter.Companion,
@@ -205,23 +202,35 @@ object Importer {
                     if (assetRemover.hasAnythingToDelete()) {
                         assetRemover.deleteAssets()
                     }
+                } else {
+                    logger.info { "No previous file found for cube, treated it as an initial load." }
                 }
-            } else {
-                logger.info { "No previous file found for cube, treated it as an initial load." }
-            }
-
-            // Copy processed files to specified location in S3 for future comparison purposes
-            if (!skipS3) {
-                val sortedTime = DateTimeFormatter.ofPattern("yyyyMMdd-HHmmssSSS")
-                    .withZone(ZoneId.of("UTC"))
-                    .format(Instant.now())
-                s3.uploadToS3(assetsInput, "$previousFileLocation/$sortedTime$PREVIOUS_FILE_RAW_EXT")
-                s3.uploadToS3(
-                    preprocessedDetails.preprocessedFile,
-                    "$previousFileLocation/$sortedTime$PREVIOUS_FILE_PROCESSED_EXT",
-                )
+                // Copy processed files to specified location in S3 for future comparison purposes
+                if (!skipS3) {
+                    uploadToS3(s3, preprocessedDetails.preprocessedFile, cubeQN, PREVIOUS_FILE_PROCESSED_EXT)
+                }
             }
         }
+        return cubeQN
+    }
+
+    /**
+     * Upload a file used to load the cube to S3.
+     *
+     * @param s3 connectivity to S3 bucket into which to upload the file
+     * @param localFile the full path of the local file to upload
+     * @param cubeQualifiedName the qualified name of the cube to which the file belongs
+     * @param s3Extension the extension to add to the file in S3
+     */
+    fun uploadToS3(s3: S3Sync, localFile: String, cubeQualifiedName: String, s3Extension: String) {
+        val previousFileLocation = "$PREVIOUS_FILES_PREFIX/$cubeQualifiedName"
+        val sortedTime = DateTimeFormatter.ofPattern("yyyyMMdd-HHmmssSSS")
+            .withZone(ZoneId.of("UTC"))
+            .format(Instant.now())
+        s3.uploadToS3(
+            localFile,
+            "$previousFileLocation/$sortedTime$s3Extension",
+        )
     }
 
     private fun preprocessCSV(originalFile: String, fieldSeparator: Char): PreprocessedCsv {
