@@ -35,12 +35,13 @@ object ConnectionCache : AssetCache() {
                 return found[0]
             } catch (e: NotFoundException) {
                 logger.warn { "Unable to find connection: $identity" }
-                logger.debug("Full stack trace:", e)
+                logger.debug(e) { "Full stack trace:" }
             } catch (e: AtlanException) {
-                logger.error("Unable to lookup or find connection: {}", identity, e)
+                logger.warn { "Unable to lookup or find connection: $identity" }
+                logger.debug(e) { "Full stack trace:" }
             }
         } else {
-            logger.error { "Unable to lookup or find connection, unexpected reference: $identity" }
+            logger.warn { "Unable to lookup or find connection, unexpected reference: $identity" }
         }
         identity?.let { addToIgnore(identity) }
         return null
@@ -60,14 +61,15 @@ object ConnectionCache : AssetCache() {
                 return isAccessible(connection.get())
             } else {
                 if (currentAttempt >= maxRetries) {
-                    logger.error { "No connection found with GUID: $guid" }
+                    logger.warn { "No connection found with GUID: $guid" }
                 } else {
                     Thread.sleep(HttpClient.waitTime(currentAttempt).toMillis())
                     return lookupAssetByGuid(guid, currentAttempt + 1, maxRetries)
                 }
             }
         } catch (e: AtlanException) {
-            logger.error("Unable to lookup or find connection: {}", guid, e)
+            logger.warn { "Unable to lookup or find connection: $guid" }
+            logger.debug(e) { "Full stack trace:" }
         }
         guid?.let { addToIgnore(guid) }
         return null

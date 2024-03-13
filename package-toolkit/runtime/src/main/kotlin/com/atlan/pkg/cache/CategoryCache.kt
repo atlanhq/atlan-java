@@ -42,14 +42,15 @@ object CategoryCache : AssetCache() {
                 return category.get()
             } else {
                 if (currentAttempt >= maxRetries) {
-                    logger.error { "No category found with GUID: $guid" }
+                    logger.warn { "No category found with GUID: $guid" }
                 } else {
                     Thread.sleep(HttpClient.waitTime(currentAttempt).toMillis())
                     return lookupAssetByGuid(guid, currentAttempt + 1, maxRetries)
                 }
             }
         } catch (e: AtlanException) {
-            logger.error("Unable to lookup or find category: {}", guid, e)
+            logger.warn { "Unable to lookup or find category: $guid" }
+            logger.debug(e) { "Full stack trace:" }
         }
         guid?.let { addToIgnore(guid) }
         return null
@@ -89,7 +90,7 @@ object CategoryCache : AssetCache() {
                 logger.warn { "There are no categories in glossary $glossaryName -- nothing to cache." }
             }
         } else {
-            logger.error {
+            logger.warn {
                 "Unable to find glossary $glossaryName, and therefore unable to find any categories within it."
             }
         }
