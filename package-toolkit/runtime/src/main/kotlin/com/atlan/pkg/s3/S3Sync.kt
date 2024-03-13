@@ -29,9 +29,9 @@ class S3Sync(
      *
      * @param s3Prefix from which to copy the files
      * @param localDirectory into which to copy the files
-     * @return true if any files were copied, otherwise false
+     * @return list of files that were copied (as a local target path)
      */
-    fun copyFromS3(s3Prefix: String, localDirectory: String): Boolean {
+    fun copyFromS3(s3Prefix: String, localDirectory: String): List<String> {
         logger.info { "Syncing files from s3://$bucketName/$s3Prefix to $localDirectory" }
 
         val s3Client = S3Client.builder().region(Region.of(region)).build()
@@ -56,17 +56,17 @@ class S3Sync(
             }
         }
 
-        var anySynced = false
-
+        val copiedList = mutableListOf<String>()
         s3FilesToDownload.forEach {
+            val target = File(localDirectory, it).path
             downloadFromS3(
                 s3Client,
                 File(s3Prefix, it).path,
-                File(localDirectory, it).path,
+                target,
             )
-            anySynced = true
+            copiedList.add(target)
         }
-        return anySynced
+        return copiedList
     }
 
     /**

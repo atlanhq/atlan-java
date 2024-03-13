@@ -36,8 +36,8 @@ class S3ConfigSync {
      */
     inline fun <reified T : CustomConfig> sync(): T? {
         val s3Sync = S3Sync(bucketName, region, logger)
-        val anySynced = s3Sync.copyFromS3(configPrefix, localPath)
-        return if (anySynced) {
+        val synced = s3Sync.copyFromS3(configPrefix, localPath)
+        return if (synced.isNotEmpty()) {
             Utils.parseConfig(File(CONFIG_FILE).readText(), File(RUNTIME_FILE).readText())
         } else {
             null
