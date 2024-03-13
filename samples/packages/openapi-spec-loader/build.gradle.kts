@@ -20,6 +20,7 @@ tasks {
             include(dependency("io.swagger.core.v3:swagger-core:.*"))
             include(dependency("io.swagger.parser.v3:swagger-parser-core:.*"))
             include(dependency("io.swagger.parser.v3:swagger-parser-v3:.*"))
+            include(dependency("io.swagger.parser.v3:swagger-parser-safe-url-resolver:.*"))
             include(dependency("io.swagger.core.v3:swagger-annotations:.*"))
             include(dependency("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:.*"))
             include(dependency("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:.*"))

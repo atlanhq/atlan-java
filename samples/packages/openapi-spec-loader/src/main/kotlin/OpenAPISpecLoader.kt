@@ -30,7 +30,9 @@ object OpenAPISpecLoader {
         val specUrl = Utils.getOrDefault(config.specUrl, "")
         val batchSize = 20
 
-        val inputQN = config.connectionQualifiedName?.let { it[0] }
+        val inputQN = config.connectionQualifiedName?.let {
+            if (it.isNotEmpty()) it[0] else null
+        }
         val connectionQN =
             Utils.createOrReuseConnection(config.connectionUsage, inputQN, config.connection)
 
