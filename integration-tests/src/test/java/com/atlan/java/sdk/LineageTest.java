@@ -54,7 +54,7 @@ public class LineageTest extends AtlanLiveTest {
     private static LineageProcess end = null;
 
     @Test(groups = {"lineage.create.connection"})
-    void createConnection() throws AtlanException {
+    void createConnection() throws AtlanException, InterruptedException {
         connection = ConnectionTest.createConnection(CONNECTION_NAME, CONNECTOR_TYPE);
         Database database = SQLAssetTest.createDatabase(DATABASE_NAME, connection.getQualifiedName());
         Schema schema = SQLAssetTest.createSchema(SCHEMA_NAME, database);

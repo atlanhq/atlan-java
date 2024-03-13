@@ -41,7 +41,7 @@ public class PresetAssetTest extends AtlanLiveTest {
     private static PresetDataset dataset = null;
 
     @Test(groups = {"preset.create.connection"})
-    void createConnection() throws AtlanException {
+    void createConnection() throws AtlanException, InterruptedException {
         connection = ConnectionTest.createConnection(CONNECTION_NAME, CONNECTOR_TYPE);
     }
 

@@ -290,7 +290,7 @@ public class SQLAssetTest extends AtlanLiveTest {
     }
 
     @Test(groups = {"asset.create.connection"})
-    void createConnection() throws AtlanException {
+    void createConnection() throws AtlanException, InterruptedException {
         connection = ConnectionTest.createConnection(CONNECTION_NAME, CONNECTOR_TYPE);
     }
 

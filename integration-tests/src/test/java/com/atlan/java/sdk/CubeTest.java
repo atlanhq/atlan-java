@@ -55,7 +55,7 @@ public class CubeTest extends AtlanLiveTest {
     private static CubeField level3 = null;
 
     @Test(groups = {"mdd.create.connection"})
-    void createConnection() throws AtlanException {
+    void createConnection() throws AtlanException, InterruptedException {
         connection = ConnectionTest.createConnection(CONNECTION_NAME, CONNECTOR_TYPE);
     }
 

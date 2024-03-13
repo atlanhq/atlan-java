@@ -14,6 +14,7 @@ import com.atlan.model.assets.Connection;
 import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanDeleteType;
+import com.atlan.net.HttpClient;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -36,8 +37,10 @@ public class ConnectionTest extends AtlanLiveTest {
      * @param type of the connection to create
      * @return the connection that was created
      * @throws AtlanException on any error creating or reading-back the connection
+     * @throws InterruptedException if the creation retry loop was interrupted
      */
-    public static Connection createConnection(String prefix, AtlanConnectorType type) throws AtlanException {
+    public static Connection createConnection(String prefix, AtlanConnectorType type)
+            throws AtlanException, InterruptedException {
         return createConnection(Atlan.getDefaultClient(), prefix, type);
     }
 
@@ -49,13 +52,32 @@ public class ConnectionTest extends AtlanLiveTest {
      * @param type of the connection to create
      * @return the connection that was created
      * @throws AtlanException on any error creating or reading-back the connection
+     * @throws InterruptedException if the creation retry loop was interrupted
      */
     public static Connection createConnection(AtlanClient client, String prefix, AtlanConnectorType type)
-            throws AtlanException {
+            throws AtlanException, InterruptedException {
         String adminRoleGuid = client.getRoleCache().getIdForName("$admin");
         Connection connection = Connection.creator(client, prefix, type, List.of(adminRoleGuid), null, null)
                 .build();
-        AssetMutationResponse response = connection.save(client).block();
+        AssetMutationResponse response = null;
+        int retryCount = 0;
+        while (response == null && retryCount < Atlan.getMaxNetworkRetries()) {
+            retryCount++;
+            try {
+                response = connection.save(client).block();
+            } catch (InvalidRequestException e) {
+                if (retryCount < Atlan.getMaxNetworkRetries()) {
+                    if (e.getCode() != null
+                            && e.getCode().equals("ATLAN-JAVA-400-000")
+                            && e.getMessage().equals("Server responded with ATLAS-400-00-029: Auth request failed")) {
+                        Thread.sleep(HttpClient.waitTime(retryCount).toMillis());
+                    }
+                } else {
+                    log.error("Overran retry limit ({}), rethrowing exception.", Atlan.getMaxNetworkRetries());
+                    throw e;
+                }
+            }
+        }
         assertNotNull(response);
         assertTrue(response.getUpdatedAssets().isEmpty());
         assertTrue(response.getDeletedAssets().isEmpty());

@@ -32,7 +32,7 @@ public class FileTest extends AtlanLiveTest {
     private static File file = null;
 
     @Test(groups = {"file.create.connection"})
-    void createConnection() throws AtlanException {
+    void createConnection() throws AtlanException, InterruptedException {
         connection = ConnectionTest.createConnection(CONNECTION_NAME, CONNECTOR_TYPE);
     }
 

@@ -42,7 +42,7 @@ public class S3AssetTest extends AtlanLiveTest {
     private static S3Object objectByName = null;
 
     @Test(groups = {"s3.create.connection"})
-    void createConnection() throws AtlanException {
+    void createConnection() throws AtlanException, InterruptedException {
         connection = ConnectionTest.createConnection(CONNECTION_NAME, CONNECTOR_TYPE);
     }
 
