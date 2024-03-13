@@ -60,6 +60,10 @@ public class CubeHierarchy extends Asset
     @Attribute
     String cubeDimensionQualifiedName;
 
+    /** Number of total fields in the cube hierarchy. */
+    @Attribute
+    Long cubeFieldCount;
+
     /** Individual fields that make up the hierarchy. */
     @Attribute
     @Singular

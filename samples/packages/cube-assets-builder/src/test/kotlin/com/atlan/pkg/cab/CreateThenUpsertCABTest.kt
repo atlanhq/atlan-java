@@ -10,10 +10,8 @@ import com.atlan.model.assets.Cube
 import com.atlan.model.assets.CubeDimension
 import com.atlan.model.assets.CubeField
 import com.atlan.model.assets.CubeHierarchy
-import com.atlan.model.assets.ICubeField
 import com.atlan.model.assets.Readme
 import com.atlan.model.assets.Schema
-import com.atlan.model.core.AtlanTag
 import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.model.enums.AtlanIcon
 import com.atlan.model.enums.AtlanTagColor
@@ -48,6 +46,7 @@ class CreateThenUpsertCABTest : PackageTest() {
 
     private val files = listOf(
         testFile,
+        revisedFile,
         "debug.log",
     )
 
@@ -79,7 +78,6 @@ class CreateThenUpsertCABTest : PackageTest() {
                 }
             }
         }
-        output.copyTo(input, true)
     }
 
     private fun createTags() {
@@ -108,6 +106,7 @@ class CreateThenUpsertCABTest : PackageTest() {
         Cube.DISPLAY_NAME,
         Cube.DESCRIPTION,
         Cube.CUBE_DIMENSIONS,
+        Cube.CUBE_DIMENSION_COUNT,
     )
 
     private val dimensionAttrs: List<AtlanField> = listOf(
@@ -119,6 +118,7 @@ class CreateThenUpsertCABTest : PackageTest() {
         CubeDimension.CUBE_NAME,
         CubeDimension.CUBE_QUALIFIED_NAME,
         CubeDimension.CUBE_HIERARCHIES,
+        CubeDimension.CUBE_HIERARCHY_COUNT,
     )
 
     private val hierarchyAttrs: List<AtlanField> = listOf(
@@ -137,6 +137,7 @@ class CreateThenUpsertCABTest : PackageTest() {
         CubeHierarchy.README,
         CubeHierarchy.ATLAN_TAGS,
         CubeHierarchy.CUBE_FIELDS,
+        CubeHierarchy.CUBE_FIELD_COUNT,
     )
 
     private val fieldAttrs: List<AtlanField> = listOf(
@@ -155,6 +156,7 @@ class CreateThenUpsertCABTest : PackageTest() {
         CubeField.CUBE_FIELD_LEVEL,
         CubeField.CUBE_PARENT_FIELD,
         CubeField.CUBE_NESTED_FIELDS,
+        CubeField.CUBE_FIELD_COUNT,
     )
 
     @BeforeClass
@@ -167,6 +169,7 @@ class CreateThenUpsertCABTest : PackageTest() {
                 assetsUpsertSemantic = "upsert",
                 assetsFailOnErrors = true,
                 trackBatches = false,
+                skipS3 = true,
             ),
         )
         Importer.main(arrayOf(testDirectory))
@@ -213,6 +216,7 @@ class CreateThenUpsertCABTest : PackageTest() {
         assertEquals(conn1Type, cube.connectorType)
         assertEquals(1, cube.cubeDimensions.size)
         assertEquals("TEST_DIM", cube.cubeDimensions.first().name)
+        assertEquals(1, cube.cubeDimensionCount)
     }
 
     @Test(groups = ["create"])
@@ -220,7 +224,7 @@ class CreateThenUpsertCABTest : PackageTest() {
         validateDimension("Test dimension")
     }
 
-    private fun validateDimension(displayName: String) {
+    private fun validateDimension(displayName: String, expectedCount: Long = 2) {
         val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
         val request = CubeDimension.select()
             .where(CubeDimension.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
@@ -237,10 +241,13 @@ class CreateThenUpsertCABTest : PackageTest() {
         assertEquals(conn1Type, dim.connectorType)
         assertEquals("TEST_CUBE", dim.cubeName)
         assertTrue(dim.cubeQualifiedName.endsWith("/TEST_CUBE"))
-        assertEquals(2, dim.cubeHierarchies.size)
-        val hierarchyNames = dim.cubeHierarchies.stream().map { it.name }.toList()
+        assertEquals(expectedCount.toInt(), dim.cubeHierarchies.size)
+        val hierarchyNames = dim.cubeHierarchies.stream()
+            .map { it.name }
+            .toList()
         assertTrue(hierarchyNames.contains("TEST_HIERARCHY1"))
-        assertTrue(hierarchyNames.contains("TEST_HIERARCHY2"))
+        if (expectedCount > 1) assertTrue(hierarchyNames.contains("TEST_HIERARCHY2"))
+        assertEquals(expectedCount, dim.cubeHierarchyCount)
     }
 
     @Test(groups = ["create"])
@@ -273,7 +280,9 @@ class CreateThenUpsertCABTest : PackageTest() {
         assertEquals("Ready to use", hier.certificateStatusMessage)
         assertEquals("<h1>Table readme</h1>", hier.readme.description)
         assertEquals(2, hier.atlanTags.size)
-        val tagNames = hier.atlanTags.stream().map(AtlanTag::getTypeName).toList()
+        val tagNames = hier.atlanTags.stream()
+            .map { it.typeName }
+            .toList()
         assertTrue(tagNames.contains(tag1))
         assertTrue(tagNames.contains(tag2))
         hier.atlanTags.forEach { tag ->
@@ -289,10 +298,13 @@ class CreateThenUpsertCABTest : PackageTest() {
             }
         }
         assertEquals(3, hier.cubeFields.size)
-        val colNames = hier.cubeFields.stream().map(ICubeField::getName).toList()
+        val colNames = hier.cubeFields.stream()
+            .map { it.name }
+            .toList()
         assertTrue(colNames.contains("COL1"))
         assertTrue(colNames.contains("COL2"))
         assertTrue(colNames.contains("COL3"))
+        assertEquals(3, hier.cubeFieldCount)
     }
 
     @Test(groups = ["create"])
@@ -311,7 +323,9 @@ class CreateThenUpsertCABTest : PackageTest() {
         val response = retrySearchUntil(request, 3)
         val found = response.assets
         assertEquals(3, found.size)
-        val fieldNames = found.stream().map(Asset::getName).toList()
+        val fieldNames = found.stream()
+            .map { it.name }
+            .toList()
         assertTrue(fieldNames.contains("COL1"))
         assertTrue(fieldNames.contains("COL2"))
         assertTrue(fieldNames.contains("COL3"))
@@ -332,6 +346,7 @@ class CreateThenUpsertCABTest : PackageTest() {
                     assertEquals(1, field.cubeFieldLevel)
                     assertNotNull(field.cubeNestedFields)
                     assertEquals(1, field.cubeNestedFields.size)
+                    assertEquals(1, field.cubeFieldCount)
                 }
                 "COL2" -> {
                     assertEquals(displayCol2, field.displayName)
@@ -340,6 +355,7 @@ class CreateThenUpsertCABTest : PackageTest() {
                     assertEquals(2, field.cubeFieldLevel)
                     assertNotNull(field.cubeNestedFields)
                     assertEquals(1, field.cubeNestedFields.size)
+                    assertEquals(1, field.cubeFieldCount)
                 }
                 "COL3" -> {
                     assertEquals(displayCol3, field.displayName)
@@ -347,6 +363,7 @@ class CreateThenUpsertCABTest : PackageTest() {
                     assertEquals("COL2", field.cubeParentField.name)
                     assertEquals(3, field.cubeFieldLevel)
                     assertTrue(field.cubeNestedFields.isNullOrEmpty())
+                    assertEquals(0, field.cubeFieldCount)
                 }
             }
         }
@@ -382,9 +399,12 @@ class CreateThenUpsertCABTest : PackageTest() {
         assertTrue(hier.atlanTags.first().propagate)
         assertTrue(hier.atlanTags.first().removePropagationsOnEntityDelete)
         assertTrue(hier.atlanTags.first().restrictPropagationThroughLineage)
-        val fieldNames = hier.cubeFields.stream().map(ICubeField::getName).toList()
+        val fieldNames = hier.cubeFields.stream()
+            .map { it.name }
+            .toList()
         assertTrue(fieldNames.contains("COL4"))
         assertTrue(fieldNames.contains("COL5"))
+        assertEquals(2, hier.cubeFieldCount)
     }
 
     @Test(groups = ["create"])
@@ -403,7 +423,9 @@ class CreateThenUpsertCABTest : PackageTest() {
         val response = retrySearchUntil(request, 2)
         val found = response.assets
         assertEquals(2, found.size)
-        val fieldNames = found.stream().map(Asset::getName).toList()
+        val fieldNames = found.stream()
+            .map { it.name }
+            .toList()
         assertTrue(fieldNames.contains("COL4"))
         assertTrue(fieldNames.contains("COL5"))
         found.forEach { field ->
@@ -423,6 +445,7 @@ class CreateThenUpsertCABTest : PackageTest() {
                     assertEquals(1, field.cubeFieldLevel)
                     assertNotNull(field.cubeNestedFields)
                     assertEquals(1, field.cubeNestedFields.size)
+                    assertEquals(1, field.cubeFieldCount)
                 }
                 "COL2" -> {
                     assertEquals("Test field 5", field.displayName)
@@ -430,6 +453,7 @@ class CreateThenUpsertCABTest : PackageTest() {
                     assertEquals("COL4", field.cubeParentField.name)
                     assertEquals(2, field.cubeFieldLevel)
                     assertTrue(field.cubeNestedFields.isNullOrEmpty())
+                    assertEquals(0, field.cubeFieldCount)
                 }
             }
         }
@@ -440,9 +464,12 @@ class CreateThenUpsertCABTest : PackageTest() {
         modifyFile()
         setup(
             CubeAssetsBuilderCfg(
-                assetsFile = Paths.get(testDirectory, testFile).toString(),
+                assetsFile = Paths.get(testDirectory, revisedFile).toString(),
                 assetsUpsertSemantic = "upsert",
                 assetsFailOnErrors = true,
+                deltaSemantic = "full",
+                previousFileDirect = Paths.get(testDirectory, testFile).toString(),
+                skipS3 = true,
             ),
         )
         Importer.main(arrayOf())
@@ -462,7 +489,7 @@ class CreateThenUpsertCABTest : PackageTest() {
 
     @Test(groups = ["update"], dependsOnGroups = ["runUpdate"])
     fun dimensionChanged() {
-        validateDimension("Revised dimension")
+        validateDimension("Revised dimension", 1)
     }
 
     @Test(groups = ["update"], dependsOnGroups = ["runUpdate"])
@@ -476,13 +503,30 @@ class CreateThenUpsertCABTest : PackageTest() {
     }
 
     @Test(groups = ["update"], dependsOnGroups = ["runUpdate"])
-    fun hierarchy2Unchanged() {
-        validateHierarchy2()
+    fun hierarchy2Gone() {
+        val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
+        val request = CubeHierarchy.select()
+            .where(CubeHierarchy.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
+            .where(CubeHierarchy.NAME.eq("TEST_HIERARCHY2"))
+            .includesOnResults(hierarchyAttrs)
+            .includeOnRelations(Asset.NAME)
+            .includeOnRelations(Readme.DESCRIPTION)
+            .toRequest()
+        val response = retrySearchUntil(request, 0)
+        assertTrue(response.assets.isNullOrEmpty())
     }
 
     @Test(groups = ["update"], dependsOnGroups = ["runUpdate"])
-    fun fieldsForHierarchy2Unchanged() {
-        validateFieldsForHierarchy2()
+    fun fieldsForHierarchy2Gone() {
+        val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
+        val request = CubeField.select()
+            .where(CubeField.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
+            .where(CubeField.CUBE_HIERARCHY_NAME.eq("TEST_HIERARCHY2"))
+            .includesOnResults(fieldAttrs)
+            .includeOnRelations(Asset.NAME)
+            .toRequest()
+        val response = retrySearchUntil(request, 0)
+        assertTrue(response.assets.isNullOrEmpty())
     }
 
     @Test(dependsOnGroups = ["create", "runUpdate", "update"])

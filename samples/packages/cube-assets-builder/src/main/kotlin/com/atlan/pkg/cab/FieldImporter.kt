@@ -114,5 +114,6 @@ class FieldImporter(
         val parentQN = "$connectionQN/${qnDetails.parentPartialQN}"
         return CubeField.creator(name, parentQN)
             .cubeFieldLevel(levelToProcess)
+            .cubeFieldCount(preprocessed.qualifiedNameToChildCount[qnDetails.uniqueQN]?.toLong())
     }
 }

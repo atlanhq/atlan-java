@@ -28,4 +28,8 @@ data class CubeAssetsBuilderCfg(
     @JsonProperty("assets_field_separator") val assetsFieldSeparator: String? = null,
     @JsonProperty("assets_batch_size") val assetsBatchSize: Number? = null,
     @JsonProperty("track_batches") val trackBatches: Boolean? = null,
+    @JsonProperty("delta_semantic") val deltaSemantic: String? = null,
+    @JsonProperty("delta_removal_type") val deltaRemovalType: String? = null,
+    @JsonProperty("previous_file_direct") val previousFileDirect: String? = null,
+    @JsonProperty("skip_s3") val skipS3: Boolean? = null,
 ) : CustomConfig()

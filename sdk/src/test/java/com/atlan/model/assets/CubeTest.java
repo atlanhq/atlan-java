@@ -393,6 +393,7 @@ public class CubeTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
+            .cubeDimensionCount(123456789L)
             .cubeDimension(CubeDimension.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .cubeDimension(CubeDimension.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .build();

@@ -65,6 +65,10 @@ public class CubeDimension extends Asset
     @Singular
     SortedSet<ICubeHierarchy> cubeHierarchies;
 
+    /** Number of hierarchies in the cube dimension. */
+    @Attribute
+    Long cubeHierarchyCount;
+
     /** Simple name of the dimension hierarchy in which this asset exists, or empty if it is itself a hierarchy. */
     @Attribute
     String cubeHierarchyName;

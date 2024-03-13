@@ -66,7 +66,7 @@ customTypes {
       superTypes { supertypeName }
       attributeDefs {
         new {
-          name = "\(a)DimensionCount"
+          name = "\(a)\(dimension)Count"
           description = "Number of dimensions in the cube."
           type = "long"
         }
@@ -80,7 +80,7 @@ customTypes {
       superTypes { supertypeName }
       attributeDefs {
         new {
-          name = "\(a)HierarchyCount"
+          name = "\(a)\(hierarchy)Count"
           description = "Number of hierarchies in the cube dimension."
           type = "long"
         }
@@ -110,8 +110,8 @@ customTypes {
       superTypes { supertypeName }
       attributeDefs {
         new {
-          name = "\(a)FieldCount"
-          description = "Number of fields in the cube hierarchy."
+          name = "\(a)\(field)Count"
+          description = "Number of total fields in the cube hierarchy."
           type = "long"
         }
       }
@@ -161,6 +161,11 @@ customTypes {
           description = "Expression used to calculate this measure."
           type = "string"
           indexAs = "both"
+        }
+        new {
+          name = "\(a)\(field)Count"
+          description = "Number of sub-fields that are direct children of this field."
+          type = "long"
         }
       }
     }

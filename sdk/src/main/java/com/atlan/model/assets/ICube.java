@@ -8,6 +8,7 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
@@ -30,6 +31,9 @@ import javax.annotation.processing.Generated;
 public interface ICube {
 
     public static final String TYPE_NAME = "Cube";
+
+    /** Number of dimensions in the cube. */
+    NumericField CUBE_DIMENSION_COUNT = new NumericField("cubeDimensionCount", "cubeDimensionCount");
 
     /** Individual dimensions that make up the cube. */
     RelationField CUBE_DIMENSIONS = new RelationField("cubeDimensions");
@@ -267,6 +271,9 @@ public interface ICube {
 
     /** Type of the connector through which this asset is accessible. */
     AtlanConnectorType getConnectorType();
+
+    /** Number of dimensions in the cube. */
+    Long getCubeDimensionCount();
 
     /** Simple name of the cube dimension in which this asset exists, or empty if it is itself a dimension. */
     String getCubeDimensionName();

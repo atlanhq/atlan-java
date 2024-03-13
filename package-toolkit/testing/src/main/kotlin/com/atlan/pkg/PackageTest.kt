@@ -224,7 +224,7 @@ abstract class PackageTest {
             val results = Connection.findByName(name, type)
             if (!results.isNullOrEmpty()) {
                 results.forEach {
-                    val assets = client.assets.select()
+                    val assets = client.assets.select(true)
                         .where(Asset.QUALIFIED_NAME.startsWith(it.qualifiedName))
                         .pageSize(50)
                         .stream()
