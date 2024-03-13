@@ -43,7 +43,7 @@ public class RequestOptions {
         return RequestOptions.builder()
                 .connectTimeout(Atlan.DEFAULT_CONNECT_TIMEOUT)
                 .readTimeout(Atlan.DEFAULT_READ_TIMEOUT)
-                .maxNetworkRetries(Atlan.DEFAULT_NETWORK_RETRIES)
+                .maxNetworkRetries(Atlan.getMaxNetworkRetries())
                 .extraHeaders(Atlan.EXTRA_HEADERS)
                 .build();
     }
