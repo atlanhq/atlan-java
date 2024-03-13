@@ -430,4 +430,38 @@ object Utils {
             }
         }
     }
+
+    /**
+     * Return the (container-)local input file names whenever a user is given the
+     * choice of how to provide an input file (either by uploading directly or through S3).
+     * If using the S3 details, the objects will be downloaded from S3 and placed into local
+     * storage as part of this method.
+     *
+     * @param uploadResult filename from a direct upload
+     * @param s3Region name of the S3 region for an S3 download
+     * @param s3Bucket name of the S3 bucket for an S3 download
+     * @param s3ObjectKey full path to the S3 object within the bucket (if it ends with a /, all objects in that prefix will be downloaded)
+     * @param outputDirectory local directory where any S3-downloaded files should be placed
+     * @param preferUpload if true, take the directly-uploaded file; otherwise use the S3 details to download the file(s)
+     * @return the name(s) of the file(s) that are on local container storage from which we can read information
+     */
+    fun getInputFiles(uploadResult: String, s3Region: String, s3Bucket: String, s3ObjectKey: String, outputDirectory: String, preferUpload: Boolean = true): List<String> {
+        return if (preferUpload) {
+            listOf(uploadResult)
+        } else {
+            if (s3ObjectKey.isNotBlank()) {
+                val sync = S3Sync(s3Bucket, s3Region, logger)
+                if (s3ObjectKey.endsWith("/")) {
+                    sync.copyFromS3(s3ObjectKey, outputDirectory)
+                } else {
+                    val filename = File(s3ObjectKey).name
+                    val path = "$outputDirectory${File.separator}$filename"
+                    sync.downloadFromS3(s3ObjectKey, path)
+                    listOf(path)
+                }
+            } else {
+                emptyList()
+            }
+        }
+    }
 }
