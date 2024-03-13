@@ -28,7 +28,6 @@ tasks {
     }
     jar {
         archiveBaseName.set(jarName)
-        archiveClassifier.set("slim")
         dependsOn(shadowJar)
     }
     processResources {
