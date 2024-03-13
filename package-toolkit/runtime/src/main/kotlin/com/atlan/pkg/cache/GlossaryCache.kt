@@ -39,14 +39,15 @@ object GlossaryCache : AssetCache() {
                 return glossary.get()
             } else {
                 if (currentAttempt >= maxRetries) {
-                    logger.error { "No glossary found with GUID: $guid" }
+                    logger.warn { "No glossary found with GUID: $guid" }
                 } else {
                     Thread.sleep(HttpClient.waitTime(currentAttempt).toMillis())
                     return lookupAssetByGuid(guid, currentAttempt + 1, maxRetries)
                 }
             }
         } catch (e: AtlanException) {
-            logger.error("Unable to lookup or find glossary: {}", guid, e)
+            logger.warn { "Unable to lookup or find glossary: $guid" }
+            logger.debug(e) { "Full stack trace:" }
         }
         guid?.let { addToIgnore(guid) }
         return null

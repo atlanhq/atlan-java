@@ -40,13 +40,14 @@ object TermCache : AssetCache() {
                         return term.get()
                     }
                 } catch (e: AtlanException) {
-                    logger.error("Unable to lookup or find term: {}", identity, e)
+                    logger.warn { "Unable to lookup or find term: $identity" }
+                    logger.debug(e) { "Full stack trace:" }
                 }
             } else {
-                logger.error { "Unable to find glossary $glossaryName for term reference: $identity" }
+                logger.warn { "Unable to find glossary $glossaryName for term reference: $identity" }
             }
         } else {
-            logger.error { "Unable to lookup or find term, unexpected reference: $identity" }
+            logger.warn { "Unable to lookup or find term, unexpected reference: $identity" }
         }
         identity?.let { addToIgnore(identity) }
         return null
@@ -67,14 +68,15 @@ object TermCache : AssetCache() {
                 return term.get()
             } else {
                 if (currentAttempt >= maxRetries) {
-                    logger.error { "No term found with GUID: $guid" }
+                    logger.warn { "No term found with GUID: $guid" }
                 } else {
                     Thread.sleep(HttpClient.waitTime(currentAttempt).toMillis())
                     return lookupAssetByGuid(guid, currentAttempt + 1, maxRetries)
                 }
             }
         } catch (e: AtlanException) {
-            logger.error("Unable to lookup or find term: {}", guid, e)
+            logger.warn { "Unable to lookup or find term: $guid" }
+            logger.debug(e) { "Full stack trace:" }
         }
         guid?.let { addToIgnore(guid) }
         return null
