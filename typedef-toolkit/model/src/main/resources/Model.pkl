@@ -265,7 +265,7 @@ open class AttributeDef {
   fixed indexTypeESFields: Mapping<String, Mapping<String, String>>? = if (indexAs == "both") new Mapping {
     ["keyword"] = new Mapping {
       ["type"] = "keyword"
-      ["analyzer"] = "atlan_normalizer"
+      ["normalizer"] = "atlan_normalizer"
     }
   } else null
 }
