@@ -154,7 +154,7 @@ customTypes {
         new {
           name = "\(a)\(field)Level"
           description = "Level of the field in the cube hierarchy."
-          type = "int"
+          type = "long"
         }
         new {
           name = "\(a)\(field)MeasureExpression"
