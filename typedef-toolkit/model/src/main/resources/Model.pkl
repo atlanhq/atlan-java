@@ -62,7 +62,8 @@ local const function getSnakeCase(text: String): String = text.replaceAll("_", "
 /// - `boolean`
 /// - `date` for date and time
 /// - `enum` for an enumeration, in which case you must also specify `enumName` as an additional property for the attribute
-typealias DataType = "string"|"long"|"float"|"boolean"|"date"|"enum"
+/// - `struct` for a struct, in which case you must also specify `structName` as an additional property for the attribute
+typealias DataType = "string"|"long"|"float"|"boolean"|"date"|"enum"|"struct"
 
 /// Type of index in Elastic for this attribute.
 /// - `default`
@@ -169,6 +170,7 @@ class EntityDef extends TypeDef {
 /// | **description** | | Explanation of the attribute |
 /// | **type** | | Type of the attribute, either a primitive (`string`, `int`, `float`, `boolean`, `date`) or `enum` |
 /// | **enumName** | | (Optional) Name of the enumeration this attribute should use, if type is `enum` |
+/// | **structName** | | (Optional) Name of the struct this attribute should use, if type is `struct` |
 /// | **multiValued** | | (Optional) Whether this attribute should allow multiple values (true) or not (false - default) |
 /// | **defaultValue** | | (Optional) Default value for the attribute |
 /// | **isDefaultValueNull** | | (Optional) Whether the attribute has a default value of being empty (true) or not (false) |
@@ -182,7 +184,7 @@ class EntityDef extends TypeDef {
 /// | **searchWeight** | | (Optional) TBC |
 /// | **indexAs** | | (Optional) What kind of index(es) to create in Elastic for this attribute |
 open class AttributeDef {
-  local resolvedType = if (type == "enum") enumName else type
+  local resolvedType = if (type == "enum") enumName else if (type == "struct") structName else type
 
   /// Name for the new attribute.
   name: String(camelCase)
@@ -204,6 +206,9 @@ open class AttributeDef {
 
   /// Name of the enumeration that this attribute should use, if you have specified type = `enum`.
   hidden enumName: String(if (type == "enum") this != "" else true) = ""
+
+  /// Name of the struct that this attribute should use, if you have specified type = `struct`.
+  hidden structName: String(if (type == "struct") this != "" else true) = ""
 
   /// Default value for the attribute.
   defaultValue: String?
