@@ -163,7 +163,7 @@ customTypes {
           indexAs = "both"
         }
         new {
-          name = "\(a)\(field)Count"
+          name = "\(a)Sub\(field)Count"
           description = "Number of sub-fields that are direct children of this field."
           type = "long"
         }
