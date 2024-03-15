@@ -59,7 +59,7 @@ class ModelUnitTest {
         val attr = getAttribute(model)
         assertNull(attr.indexType)
         assertEquals("keyword", attr.indexTypeESFields?.get("keyword")?.get("type"))
-        assertEquals("atlan_normalizer", attr.indexTypeESFields?.get("keyword")?.get("analyzer"))
+        assertEquals("atlan_normalizer", attr.indexTypeESFields?.get("keyword")?.get("normalizer"))
         assertEquals("atlan_text_analyzer", attr.indexTypeESConfig?.get("analyzer"))
         assertEquals("SINGLE", attr.cardinality)
         assertEquals("string", attr.typeName)
@@ -72,8 +72,6 @@ class ModelUnitTest {
         val attr = getAttribute(model)
         assertEquals("SomeEnumeration", attr.typeName)
         assertEquals("SINGLE", attr.cardinality)
-        assertEquals(0, attr.valuesMinCount)
-        assertEquals(1, attr.valuesMaxCount)
     }
 
     @Test
@@ -83,8 +81,6 @@ class ModelUnitTest {
         val attr = getAttribute(model)
         assertEquals("SET", attr.cardinality)
         assertEquals("array<string>", attr.typeName)
-        assertNull(attr.valuesMinCount)
-        assertNull(attr.valuesMaxCount)
     }
 
     private fun evaluateModel(input: String): Model {

@@ -398,6 +398,8 @@ public enum KeywordFields implements AtlanSearchableField {
     DATA_PRODUCT_SENSITIVITY("dataProductSensitivity"),
     /** Status of this data product. */
     DATA_PRODUCT_STATUS("dataProductStatus"),
+    /** Visibility of a data product. */
+    DATA_PRODUCT_VISIBILITY("dataProductVisibility"),
     /** Owner of the asset, from Google Data Studio. */
     DATA_STUDIO_ASSET_OWNER("dataStudioAssetOwner"),
     /** Title of the Google Data Studio asset. */
@@ -516,6 +518,8 @@ public enum KeywordFields implements AtlanSearchableField {
     DISPLAY_PREFERENCES("displayPreferences"),
     /** Type of the Domo Card. */
     DOMO_CARD_TYPE("domoCardType"),
+    /** Type of the Domo Card. */
+    DOMO_CARD_TYPE_VALUE("domoCardTypeValue"),
     /** Type of Domo Dataset Column. */
     DOMO_DATASET_COLUMN_TYPE("domoDatasetColumnType"),
     /** An ISO-8601 representation of the time the DataSet was last run. */
@@ -644,6 +648,8 @@ public enum KeywordFields implements AtlanSearchableField {
     LAST_SYNC_WORKFLOW_NAME("lastSyncWorkflowName"),
     /** URL to the resource. */
     LINK("link"),
+    /** Unique name of the Linked Schema on which this Schema is dependent. This concept is mostly applicable for linked datasets/datasource in Google BigQuery via Analytics Hub Listing */
+    LINKED_SCHEMA_QUALIFIED_NAME("linkedSchemaQualifiedName"),
     /** Unused. Detailed definition of the term. See 'readme' instead. */
     LONG_DESCRIPTION("longDescription"),
     /** Raw SQL query string. */

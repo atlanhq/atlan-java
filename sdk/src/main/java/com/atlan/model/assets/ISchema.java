@@ -8,6 +8,7 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
@@ -40,6 +41,10 @@ public interface ISchema {
 
     /** Functions that exist within this schema. */
     RelationField FUNCTIONS = new RelationField("functions");
+
+    /** Unique name of the Linked Schema on which this Schema is dependent. This concept is mostly applicable for linked datasets/datasource in Google BigQuery via Analytics Hub Listing */
+    KeywordField LINKED_SCHEMA_QUALIFIED_NAME =
+            new KeywordField("linkedSchemaQualifiedName", "linkedSchemaQualifiedName");
 
     /** Materialized views that exist within this schema. */
     RelationField MATERIALIZED_VIEWS = new RelationField("materialisedViews");
@@ -391,6 +396,9 @@ public interface ISchema {
 
     /** Name of the crawler that last synchronized this asset. */
     String getLastSyncWorkflowName();
+
+    /** Unique name of the Linked Schema on which this Schema is dependent. This concept is mostly applicable for linked datasets/datasource in Google BigQuery via Analytics Hub Listing */
+    String getLinkedSchemaQualifiedName();
 
     /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();

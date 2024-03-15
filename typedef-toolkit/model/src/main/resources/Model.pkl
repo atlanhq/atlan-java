@@ -224,10 +224,10 @@ open class AttributeDef {
   fixed cardinality = if (multiValued) "SET" else "SINGLE"
 
   /// Minimum number of values the attribute should have.
-  valuesMinCount: Int32? = if (!multiValued) 0 else null
+  valuesMinCount: Int32?
 
   /// Maximum number of values the attribute should have.
-  valuesMaxCount: Int32? = if (!multiValued) 1 else null
+  valuesMaxCount: Int32?
 
   /// Whether the attribute is unique (true) or not (false - default).
   isUnique: Boolean = false
@@ -265,7 +265,7 @@ open class AttributeDef {
   fixed indexTypeESFields: Mapping<String, Mapping<String, String>>? = if (indexAs == "both") new Mapping {
     ["keyword"] = new Mapping {
       ["type"] = "keyword"
-      ["analyzer"] = "atlan_normalizer"
+      ["normalizer"] = "atlan_normalizer"
     }
   } else null
 }
