@@ -34,9 +34,6 @@ public interface ICubeField {
 
     public static final String TYPE_NAME = "CubeField";
 
-    /** Number of sub-fields that are direct children of this field. */
-    NumericField CUBE_FIELD_COUNT = new NumericField("cubeFieldCount", "cubeFieldCount");
-
     /** Level of the field in the cube hierarchy. */
     NumericField CUBE_FIELD_LEVEL = new NumericField("cubeFieldLevel", "cubeFieldLevel");
 
@@ -60,6 +57,9 @@ public interface ICubeField {
     /** Unique name of the parent field in which this field is nested. */
     KeywordField CUBE_PARENT_FIELD_QUALIFIED_NAME =
             new KeywordField("cubeParentFieldQualifiedName", "cubeParentFieldQualifiedName");
+
+    /** Number of sub-fields that are direct children of this field. */
+    NumericField CUBE_SUB_FIELD_COUNT = new NumericField("cubeSubFieldCount", "cubeSubFieldCount");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -301,11 +301,8 @@ public interface ICubeField {
     /** Unique name of the cube dimension in which this asset exists, or empty if it is itself a dimension. */
     String getCubeDimensionQualifiedName();
 
-    /** Number of sub-fields that are direct children of this field. */
-    Long getCubeFieldCount();
-
     /** Level of the field in the cube hierarchy. */
-    Integer getCubeFieldLevel();
+    Long getCubeFieldLevel();
 
     /** Expression used to calculate this measure. */
     String getCubeFieldMeasureExpression();
@@ -336,6 +333,9 @@ public interface ICubeField {
 
     /** Unique name of the cube in which this asset exists, or empty if it is itself a cube. */
     String getCubeQualifiedName();
+
+    /** Number of sub-fields that are direct children of this field. */
+    Long getCubeSubFieldCount();
 
     /** Unique name of this asset in dbt. */
     String getDbtQualifiedName();

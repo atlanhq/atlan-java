@@ -14,6 +14,7 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.DataProductCriticality;
 import com.atlan.model.enums.DataProductSensitivity;
 import com.atlan.model.enums.DataProductStatus;
+import com.atlan.model.enums.DataProductVisibility;
 import com.atlan.model.fields.AtlanField;
 import com.atlan.model.mesh.DataProductAssetsDSL;
 import com.atlan.model.relations.Reference;
@@ -86,6 +87,10 @@ public class DataProduct extends Asset implements IDataProduct, IDataMesh, ICata
     /** Status of this data product. */
     @Attribute
     DataProductStatus dataProductStatus;
+
+    /** Visibility of a data product. */
+    @Attribute
+    DataProductVisibility dataProductVisibility;
 
     /** Input ports for this data product. */
     @Attribute

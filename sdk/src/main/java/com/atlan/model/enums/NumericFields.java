@@ -114,6 +114,8 @@ public enum NumericFields implements AtlanSearchableField {
     CUBE_FIELD_LEVEL("cubeFieldLevel"),
     /** Number of hierarchies in the cube dimension. */
     CUBE_HIERARCHY_COUNT("cubeHierarchyCount"),
+    /** Number of sub-fields that are direct children of this field. */
+    CUBE_SUB_FIELD_COUNT("cubeSubFieldCount"),
     /** Number of dashboards in this workspace. */
     DASHBOARD_COUNT("dashboardCount"),
     /** Number of dataflows in this workspace. */

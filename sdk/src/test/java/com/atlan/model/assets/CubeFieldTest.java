@@ -393,8 +393,7 @@ public class CubeFieldTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
-            .cubeFieldCount(123456789L)
-            .cubeFieldLevel(123)
+            .cubeFieldLevel(123456789L)
             .cubeFieldMeasureExpression("String0")
             .cubeHierarchy(CubeHierarchy.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .cubeNestedField(CubeField.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -402,6 +401,7 @@ public class CubeFieldTest {
             .cubeParentField(CubeField.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .cubeParentFieldName("String0")
             .cubeParentFieldQualifiedName("String0")
+            .cubeSubFieldCount(123456789L)
             .build();
 
     private static final int hash = full.hashCode();

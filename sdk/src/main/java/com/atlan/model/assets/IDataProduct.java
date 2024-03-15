@@ -10,6 +10,7 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.DataProductCriticality;
 import com.atlan.model.enums.DataProductSensitivity;
 import com.atlan.model.enums.DataProductStatus;
+import com.atlan.model.enums.DataProductVisibility;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.NumericField;
@@ -61,6 +62,9 @@ public interface IDataProduct {
 
     /** Status of this data product. */
     KeywordField DATA_PRODUCT_STATUS = new KeywordField("dataProductStatus", "dataProductStatus");
+
+    /** Visibility of a data product. */
+    KeywordField DATA_PRODUCT_VISIBILITY = new KeywordField("dataProductVisibility", "dataProductVisibility");
 
     /** Input ports for this data product. */
     RelationField INPUT_PORTS = new RelationField("inputPorts");
@@ -325,6 +329,9 @@ public interface IDataProduct {
 
     /** Status of this data product. */
     DataProductStatus getDataProductStatus();
+
+    /** Visibility of a data product. */
+    DataProductVisibility getDataProductVisibility();
 
     /** Unique name of this asset in dbt. */
     String getDbtQualifiedName();

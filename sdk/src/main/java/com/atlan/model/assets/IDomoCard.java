@@ -40,6 +40,9 @@ public interface IDomoCard {
     /** Type of the Domo Card. */
     KeywordField DOMO_CARD_TYPE = new KeywordField("domoCardType", "domoCardType");
 
+    /** Type of the Domo Card. */
+    KeywordField DOMO_CARD_TYPE_VALUE = new KeywordField("domoCardTypeValue", "domoCardTypeValue");
+
     /** TBC */
     RelationField DOMO_DASHBOARDS = new RelationField("domoDashboards");
 
@@ -294,6 +297,9 @@ public interface IDomoCard {
 
     /** Type of the Domo Card. */
     DomoCardType getDomoCardType();
+
+    /** Type of the Domo Card. */
+    String getDomoCardTypeValue();
 
     /** TBC */
     SortedSet<IDomoDashboard> getDomoDashboards();

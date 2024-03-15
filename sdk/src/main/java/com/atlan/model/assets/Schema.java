@@ -119,6 +119,10 @@ public class Schema extends Asset implements ISchema, ISQL, ICatalog, IAsset, IR
     @Date
     Long lastProfiledAt;
 
+    /** Unique name of the Linked Schema on which this Schema is dependent. This concept is mostly applicable for linked datasets/datasource in Google BigQuery via Analytics Hub Listing */
+    @Attribute
+    String linkedSchemaQualifiedName;
+
     /** Materialized views that exist within this schema. */
     @Attribute
     @Singular

@@ -4,7 +4,7 @@ val jarName = "typedef-toolkit-model"
 
 plugins {
     id("com.atlan.kotlin")
-    alias(libs.plugins.pkl)
+    id("org.pkl-lang")
     alias(libs.plugins.shadow)
     `maven-publish`
     signing
@@ -51,6 +51,13 @@ pkl {
             indent.set("    ")
             outputDir.set(layout.projectDirectory.dir("src/main"))
             sourceModules.add(file("src/main/resources/Model.pkl"))
+        }
+    }
+    project {
+        packagers {
+            register("makePklPackages") {
+                projectDirectories.from(file("src/main/resources/"))
+            }
         }
     }
 }
