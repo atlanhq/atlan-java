@@ -248,7 +248,7 @@ implements <a href="ICubeField.html" title="interface in com.atlan.model.assets"
 <!--   -->
 </a>
 <h3>Fields inherited from interface&nbsp;com.atlan.model.assets.<a href="ICubeField.html" title="interface in com.atlan.model.assets">ICubeField</a></h3>
-<code><a href="ICubeField.html#CUBE_FIELD_COUNT">CUBE_FIELD_COUNT</a>, <a href="ICubeField.html#CUBE_FIELD_LEVEL">CUBE_FIELD_LEVEL</a>, <a href="ICubeField.html#CUBE_FIELD_MEASURE_EXPRESSION">CUBE_FIELD_MEASURE_EXPRESSION</a>, <a href="ICubeField.html#CUBE_HIERARCHY">CUBE_HIERARCHY</a>, <a href="ICubeField.html#CUBE_NESTED_FIELDS">CUBE_NESTED_FIELDS</a>, <a href="ICubeField.html#CUBE_PARENT_FIELD">CUBE_PARENT_FIELD</a>, <a href="ICubeField.html#CUBE_PARENT_FIELD_NAME">CUBE_PARENT_FIELD_NAME</a>, <a href="ICubeField.html#CUBE_PARENT_FIELD_QUALIFIED_NAME">CUBE_PARENT_FIELD_QUALIFIED_NAME</a></code></li>
+<code><a href="ICubeField.html#CUBE_FIELD_LEVEL">CUBE_FIELD_LEVEL</a>, <a href="ICubeField.html#CUBE_FIELD_MEASURE_EXPRESSION">CUBE_FIELD_MEASURE_EXPRESSION</a>, <a href="ICubeField.html#CUBE_HIERARCHY">CUBE_HIERARCHY</a>, <a href="ICubeField.html#CUBE_NESTED_FIELDS">CUBE_NESTED_FIELDS</a>, <a href="ICubeField.html#CUBE_PARENT_FIELD">CUBE_PARENT_FIELD</a>, <a href="ICubeField.html#CUBE_PARENT_FIELD_NAME">CUBE_PARENT_FIELD_NAME</a>, <a href="ICubeField.html#CUBE_PARENT_FIELD_QUALIFIED_NAME">CUBE_PARENT_FIELD_QUALIFIED_NAME</a>, <a href="ICubeField.html#CUBE_SUB_FIELD_COUNT">CUBE_SUB_FIELD_COUNT</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="fields.inherited.from.class.com.atlan.model.assets.IMultiDimensionalDataset">
@@ -533,86 +533,86 @@ implements <a href="ICubeField.html" title="interface in com.atlan.model.assets"
 </tr>
 <tr id="i26" class="altColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCubeFieldCount()">getCubeFieldCount</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Number of sub-fields that are direct children of this field.</div>
-</td>
-</tr>
-<tr id="i27" class="rowColor">
-<td class="colFirst"><code>java.lang.Integer</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCubeFieldLevel()">getCubeFieldLevel</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Level of the field in the cube hierarchy.</div>
 </td>
 </tr>
-<tr id="i28" class="altColor">
+<tr id="i27" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCubeFieldMeasureExpression()">getCubeFieldMeasureExpression</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Expression used to calculate this measure.</div>
 </td>
 </tr>
-<tr id="i29" class="rowColor">
+<tr id="i28" class="altColor">
 <td class="colFirst"><code><a href="ICubeHierarchy.html" title="interface in com.atlan.model.assets">ICubeHierarchy</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCubeHierarchy()">getCubeHierarchy</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Hierarchy in which this field exists.</div>
 </td>
 </tr>
-<tr id="i30" class="altColor">
+<tr id="i29" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCubeHierarchyName()">getCubeHierarchyName</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Simple name of the dimension hierarchy in which this asset exists, or empty if it is itself a hierarchy.</div>
 </td>
 </tr>
-<tr id="i31" class="rowColor">
+<tr id="i30" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCubeHierarchyQualifiedName()">getCubeHierarchyQualifiedName</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Unique name of the dimension hierarchy in which this asset exists, or empty if it is itself a hierarchy.</div>
 </td>
 </tr>
-<tr id="i32" class="altColor">
+<tr id="i31" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCubeName()">getCubeName</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Simple name of the cube in which this asset exists, or empty if it is itself a cube.</div>
 </td>
 </tr>
-<tr id="i33" class="rowColor">
+<tr id="i32" class="altColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ICubeField.html" title="interface in com.atlan.model.assets">ICubeField</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCubeNestedFields()">getCubeNestedFields</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Individual fields nested within this cube field.</div>
 </td>
 </tr>
-<tr id="i34" class="altColor">
+<tr id="i33" class="rowColor">
 <td class="colFirst"><code><a href="ICubeField.html" title="interface in com.atlan.model.assets">ICubeField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCubeParentField()">getCubeParentField</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Parent field in which this field is nested.</div>
 </td>
 </tr>
-<tr id="i35" class="rowColor">
+<tr id="i34" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCubeParentFieldName()">getCubeParentFieldName</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Name of the parent field in which this field is nested.</div>
 </td>
 </tr>
-<tr id="i36" class="altColor">
+<tr id="i35" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCubeParentFieldQualifiedName()">getCubeParentFieldQualifiedName</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Unique name of the parent field in which this field is nested.</div>
 </td>
 </tr>
-<tr id="i37" class="rowColor">
+<tr id="i36" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCubeQualifiedName()">getCubeQualifiedName</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Unique name of the cube in which this asset exists, or empty if it is itself a cube.</div>
+</td>
+</tr>
+<tr id="i37" class="rowColor">
+<td class="colFirst"><code>java.lang.Long</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCubeSubFieldCount()">getCubeSubFieldCount</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Number of sub-fields that are direct children of this field.</div>
 </td>
 </tr>
 <tr id="i38" class="altColor">
@@ -2488,27 +2488,13 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 </dl>
 </li>
 </ul>
-<a id="getCubeFieldCount()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getCubeFieldCount</h4>
-<pre class="methodSignature">public&nbsp;java.lang.Long&nbsp;getCubeFieldCount()</pre>
-<div class="block">Number of sub-fields that are direct children of this field.</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="ICubeField.html#getCubeFieldCount()">getCubeFieldCount</a></code>&nbsp;in interface&nbsp;<code><a href="ICubeField.html" title="interface in com.atlan.model.assets">ICubeField</a></code></dd>
-</dl>
-</li>
-</ul>
 <a id="getCubeFieldLevel()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getCubeFieldLevel</h4>
-<pre class="methodSignature">public&nbsp;java.lang.Integer&nbsp;getCubeFieldLevel()</pre>
+<pre class="methodSignature">public&nbsp;java.lang.Long&nbsp;getCubeFieldLevel()</pre>
 <div class="block">Level of the field in the cube hierarchy.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
@@ -2661,6 +2647,20 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <dd><code><a href="ICubeField.html#getCubeQualifiedName()">getCubeQualifiedName</a></code>&nbsp;in interface&nbsp;<code><a href="ICubeField.html" title="interface in com.atlan.model.assets">ICubeField</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IMultiDimensionalDataset.html#getCubeQualifiedName()">getCubeQualifiedName</a></code>&nbsp;in interface&nbsp;<code><a href="IMultiDimensionalDataset.html" title="interface in com.atlan.model.assets">IMultiDimensionalDataset</a></code></dd>
+</dl>
+</li>
+</ul>
+<a id="getCubeSubFieldCount()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getCubeSubFieldCount</h4>
+<pre class="methodSignature">public&nbsp;java.lang.Long&nbsp;getCubeSubFieldCount()</pre>
+<div class="block">Number of sub-fields that are direct children of this field.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="ICubeField.html#getCubeSubFieldCount()">getCubeSubFieldCount</a></code>&nbsp;in interface&nbsp;<code><a href="ICubeField.html" title="interface in com.atlan.model.assets">ICubeField</a></code></dd>
 </dl>
 </li>
 </ul>

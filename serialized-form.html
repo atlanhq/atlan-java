@@ -6815,13 +6815,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Unique name of the cube dimension in which this asset exists, or empty if it is itself a dimension.</div>
 </li>
 <li class="blockList">
-<h4>cubeFieldCount</h4>
-<pre>java.lang.Long cubeFieldCount</pre>
-<div class="block">Number of sub-fields that are direct children of this field.</div>
-</li>
-<li class="blockList">
 <h4>cubeFieldLevel</h4>
-<pre>java.lang.Integer cubeFieldLevel</pre>
+<pre>java.lang.Long cubeFieldLevel</pre>
 <div class="block">Level of the field in the cube hierarchy.</div>
 </li>
 <li class="blockList">
@@ -6873,6 +6868,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <h4>cubeQualifiedName</h4>
 <pre>java.lang.String cubeQualifiedName</pre>
 <div class="block">Unique name of the cube in which this asset exists, or empty if it is itself a cube.</div>
+</li>
+<li class="blockList">
+<h4>cubeSubFieldCount</h4>
+<pre>java.lang.Long cubeSubFieldCount</pre>
+<div class="block">Number of sub-fields that are direct children of this field.</div>
 </li>
 <li class="blockList">
 <h4>inputToAirflowTasks</h4>
@@ -7302,6 +7302,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <h4>dataProductStatus</h4>
 <pre><a href="com/atlan/model/enums/DataProductStatus.html" title="enum in com.atlan.model.enums">DataProductStatus</a> dataProductStatus</pre>
 <div class="block">Status of this data product.</div>
+</li>
+<li class="blockList">
+<h4>dataProductVisibility</h4>
+<pre><a href="com/atlan/model/enums/DataProductVisibility.html" title="enum in com.atlan.model.enums">DataProductVisibility</a> dataProductVisibility</pre>
+<div class="block">Visibility of a data product.</div>
 </li>
 <li class="blockList">
 <h4>inputPorts</h4>
@@ -9006,6 +9011,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <h4>domoCardType</h4>
 <pre><a href="com/atlan/model/enums/DomoCardType.html" title="enum in com.atlan.model.enums">DomoCardType</a> domoCardType</pre>
+<div class="block">Type of the Domo Card.</div>
+</li>
+<li class="blockList">
+<h4>domoCardTypeValue</h4>
+<pre>java.lang.String domoCardTypeValue</pre>
 <div class="block">Type of the Domo Card.</div>
 </li>
 <li class="blockList">
@@ -20243,6 +20253,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <h4>lastProfiledAt</h4>
 <pre>java.lang.Long lastProfiledAt</pre>
 <div class="block">Time (epoch) at which this asset was last profiled, in milliseconds.</div>
+</li>
+<li class="blockList">
+<h4>linkedSchemaQualifiedName</h4>
+<pre>java.lang.String linkedSchemaQualifiedName</pre>
+<div class="block">Unique name of the Linked Schema on which this Schema is dependent. This concept is mostly applicable for linked datasets/datasource in Google BigQuery via Analytics Hub Listing</div>
 </li>
 <li class="blockList">
 <h4>materializedViews</h4>
