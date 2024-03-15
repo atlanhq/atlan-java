@@ -57,13 +57,9 @@ public class CubeField extends Asset implements ICubeField, IMultiDimensionalDat
     @Attribute
     String cubeDimensionQualifiedName;
 
-    /** Number of sub-fields that are direct children of this field. */
-    @Attribute
-    Long cubeFieldCount;
-
     /** Level of the field in the cube hierarchy. */
     @Attribute
-    Integer cubeFieldLevel;
+    Long cubeFieldLevel;
 
     /** Expression used to calculate this measure. */
     @Attribute
@@ -105,6 +101,10 @@ public class CubeField extends Asset implements ICubeField, IMultiDimensionalDat
     /** Unique name of the cube in which this asset exists, or empty if it is itself a cube. */
     @Attribute
     String cubeQualifiedName;
+
+    /** Number of sub-fields that are direct children of this field. */
+    @Attribute
+    Long cubeSubFieldCount;
 
     /** Tasks to which this asset provides input. */
     @Attribute

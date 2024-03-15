@@ -397,6 +397,7 @@ public class DataProductTest {
             .dataProductScoreValue(123.456)
             .dataProductSensitivity(DataProductSensitivity.PUBLIC)
             .dataProductStatus(DataProductStatus.ACTIVE)
+            .dataProductVisibility(DataProductVisibility.PRIVATE)
             .inputPort(TagAttachment.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .inputPort(TagAttachment.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .outputPort(TagAttachment.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))

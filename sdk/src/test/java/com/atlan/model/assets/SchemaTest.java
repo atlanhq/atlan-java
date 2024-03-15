@@ -419,6 +419,7 @@ public class SchemaTest {
             .database(Database.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .function(Function.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .function(Function.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .linkedSchemaQualifiedName("String0")
             .materializedView(MaterializedView.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .materializedView(MaterializedView.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .procedure(Procedure.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
