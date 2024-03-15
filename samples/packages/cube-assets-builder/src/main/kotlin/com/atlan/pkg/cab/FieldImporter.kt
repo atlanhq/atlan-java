@@ -9,7 +9,7 @@ import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.serde.RowDeserializer
 import com.atlan.pkg.serde.csv.ImportResults
 import mu.KotlinLogging
-import java.util.concurrent.atomic.AtomicInteger
+import java.util.concurrent.atomic.AtomicLong
 import kotlin.math.max
 
 /**
@@ -46,11 +46,11 @@ class FieldImporter(
     trackBatches,
     fieldSeparator,
 ) {
-    private var levelToProcess = 0
+    private var levelToProcess = 0L
 
     // Maximum depth of any field in the CSV -- will be updated on first pass through the CSV
     // file by includeRow() method
-    private val maxFieldLevel = AtomicInteger(1)
+    private val maxFieldLevel = AtomicLong(1)
 
     companion object {
         const val PARENT_FIELD_QN = "parentFieldQualifiedName"
@@ -87,10 +87,10 @@ class FieldImporter(
             return false
         }
         val fieldLevel = if (row[parentIdx].isBlank()) {
-            1
+            1L
         } else {
             val parentPath = row[parentIdx].split(IMultiDimensionalDataset.QN_DELIMITER)
-            parentPath.size + 1
+            (parentPath.size + 1).toLong()
         }
         // Consider whether we need to update the maximum depth of categories we need to load
         val currentMax = maxFieldLevel.get()
@@ -114,6 +114,6 @@ class FieldImporter(
         val parentQN = "$connectionQN/${qnDetails.parentPartialQN}"
         return CubeField.creator(name, parentQN)
             .cubeFieldLevel(levelToProcess)
-            .cubeFieldCount(preprocessed.qualifiedNameToChildCount[qnDetails.uniqueQN]?.toLong())
+            .cubeSubFieldCount(preprocessed.qualifiedNameToChildCount[qnDetails.uniqueQN]?.toLong())
     }
 }
