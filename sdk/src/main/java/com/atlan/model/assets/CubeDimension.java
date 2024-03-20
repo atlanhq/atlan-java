@@ -471,8 +471,8 @@ public class CubeDimension extends Asset
      * @return the minimal request necessary to create the CubeDimension, as a builder
      */
     public static CubeDimensionBuilder<?, ?> creator(String name, String cubeQualifiedName) {
-        String cubeName =
-                StringUtils.getNameFromQualifiedName(cubeQualifiedName, IMultiDimensionalDataset.QN_DELIMITER);
+        String cubeSlug = StringUtils.getNameFromQualifiedName(cubeQualifiedName);
+        String cubeName = IMultiDimensionalDataset.getNameFromSlug(cubeSlug);
         String connectionQualifiedName = StringUtils.getConnectionQualifiedName(cubeQualifiedName);
         AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         return CubeDimension._internal()
@@ -508,7 +508,7 @@ public class CubeDimension extends Asset
      * @return a unique name for the CubeDimension
      */
     public static String generateQualifiedName(String name, String cubeQualifiedName) {
-        return cubeQualifiedName + IMultiDimensionalDataset.QN_DELIMITER + name;
+        return cubeQualifiedName + "/" + IMultiDimensionalDataset.getSlugForName(name);
     }
 
     /**

@@ -15,6 +15,7 @@ import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
 import com.atlan.serde.AssetDeserializer;
 import com.atlan.serde.AssetSerializer;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.List;
@@ -54,8 +55,27 @@ public interface IMultiDimensionalDataset {
     /** Unique name of the cube in which this asset exists, or empty if it is itself a cube. */
     KeywordField CUBE_QUALIFIED_NAME = new KeywordField("cubeQualifiedName", "cubeQualifiedName");
 
-    /** Delimiter to use for qualifiedName components (other than connection portion). */
-    public static final String QN_DELIMITER = "~";
+    /**
+     * Generate a unique name that does not include any path delimiters.
+     *
+     * @param name of the object for which to generate a unique name
+     * @return a unique name for the object
+     */
+    @JsonIgnore
+    public static String getSlugForName(String name) {
+        return name.replaceAll("/", "±");
+    }
+
+    /**
+     * Reverse a unique name without path delimiters back to the original name.
+     *
+     * @param unique name of the object for which to reverse back to its name
+     * @return original name of the object
+     */
+    @JsonIgnore
+    public static String getNameFromSlug(String slug) {
+        return slug.replaceAll("±", "/");
+    }
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();

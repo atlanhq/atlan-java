@@ -17,39 +17,33 @@ shared {
     name = supertypeName
     description = "A dataset with multiple dimensions"
     superTypes { "Catalog" }
-    attributeDefs {
-      new {
-        name = "\(a)\(attrName)"
+    attributes {
+      ["\(a)\(attrName)"] {
         description = "Simple name of the cube in which this asset exists, or empty if it is itself a cube."
         type = "string"
         indexAs = "both"
       }
-      new {
-        name = "\(a)\(qualifiedName)"
+      ["\(a)\(qualifiedName)"] {
         description = "Unique name of the cube in which this asset exists, or empty if it is itself a cube."
         type = "string"
         indexAs = "keyword"
       }
-      new {
-        name = "\(a)\(dimension)\(attrName)"
+      ["\(a)\(dimension)\(attrName)"] {
         description = "Simple name of the cube dimension in which this asset exists, or empty if it is itself a dimension."
         type = "string"
         indexAs = "both"
       }
-      new {
-        name = "\(a)\(dimension)\(qualifiedName)"
+      ["\(a)\(dimension)\(qualifiedName)"] {
         description = "Unique name of the cube dimension in which this asset exists, or empty if it is itself a dimension."
         type = "string"
         indexAs = "keyword"
       }
-      new {
-        name = "\(a)\(hierarchy)\(attrName)"
+      ["\(a)\(hierarchy)\(attrName)"] {
         description = "Simple name of the dimension hierarchy in which this asset exists, or empty if it is itself a hierarchy."
         type = "string"
         indexAs = "both"
       }
-      new {
-        name = "\(a)\(hierarchy)\(qualifiedName)"
+      ["\(a)\(hierarchy)\(qualifiedName)"] {
         description = "Unique name of the dimension hierarchy in which this asset exists, or empty if it is itself a hierarchy."
         type = "string"
         indexAs = "keyword"
@@ -59,35 +53,25 @@ shared {
 }
 
 customTypes {
-  new {
-    assetDefinition {
-      name = t
-      description = "Instance of a cube in Atlan."
-      superTypes { supertypeName }
-      attributeDefs {
-        new {
-          name = "\(a)\(dimension)Count"
-          description = "Number of dimensions in the cube."
-          type = "long"
-        }
+  [t] {
+    description = "Instance of a cube in Atlan."
+    attributes {
+      ["\(a)\(dimension)Count"] {
+        description = "Number of dimensions in the cube."
+        type = "long"
       }
     }
   }
-  new {
-    assetDefinition {
-      name = "\(t)\(dimension)"
-      description = "Instance of a cube dimension in Atlan."
-      superTypes { supertypeName }
-      attributeDefs {
-        new {
-          name = "\(a)\(hierarchy)Count"
-          description = "Number of hierarchies in the cube dimension."
-          type = "long"
-        }
+  ["\(t)\(dimension)"] {
+    description = "Instance of a cube dimension in Atlan."
+    attributes {
+      ["\(a)\(hierarchy)Count"] {
+        description = "Number of hierarchies in the cube dimension."
+        type = "long"
       }
     }
     relationships {
-      new {
+      [a] {
         description = "Containment relationship between \(t) (parent) and \(t)\(dimension) (children)."
         endDef1 {
           description = "Individual dimensions that make up the cube."
@@ -103,21 +87,16 @@ customTypes {
       }
     }
   }
-  new {
-    assetDefinition {
-      name = "\(t)\(hierarchy)"
-      description = "Instance of a cube hierarchy in Atlan."
-      superTypes { supertypeName }
-      attributeDefs {
-        new {
-          name = "\(a)\(field)Count"
-          description = "Number of total fields in the cube hierarchy."
-          type = "long"
-        }
+  ["\(t)\(hierarchy)"] {
+    description = "Instance of a cube hierarchy in Atlan."
+    attributes {
+      ["\(a)\(field)Count"] {
+        description = "Number of total fields in the cube hierarchy."
+        type = "long"
       }
     }
     relationships {
-      new {
+      ["\(a)\(dimension)"] {
         description = "Containment relationship between \(t)\(dimension) (parent) and \(t)\(hierarchy) (children)."
         endDef1 {
           description = "Individual hierarchies that make up the dimension."
@@ -133,44 +112,35 @@ customTypes {
       }
     }
   }
-  new {
-    assetDefinition {
-      name = "\(t)\(field)"
-      description = "Instance of a cube field in Atlan."
-      superTypes { supertypeName }
-      attributeDefs {
-        new {
-          name = "\(a)Parent\(field)Name"
-          description = "Name of the parent field in which this field is nested."
-          type = "string"
-          indexAs = "both"
-        }
-        new {
-          name = "\(a)Parent\(field)QualifiedName"
-          description = "Unique name of the parent field in which this field is nested."
-          type = "string"
-          indexAs = "keyword"
-        }
-        new {
-          name = "\(a)\(field)Level"
-          description = "Level of the field in the cube hierarchy."
-          type = "long"
-        }
-        new {
-          name = "\(a)\(field)MeasureExpression"
-          description = "Expression used to calculate this measure."
-          type = "string"
-          indexAs = "both"
-        }
-        new {
-          name = "\(a)Sub\(field)Count"
-          description = "Number of sub-fields that are direct children of this field."
-          type = "long"
-        }
+  ["\(t)\(field)"] {
+    description = "Instance of a cube field in Atlan."
+    attributes {
+      ["\(a)Parent\(field)Name"] {
+        description = "Name of the parent field in which this field is nested."
+        type = "string"
+        indexAs = "both"
+      }
+      ["\(a)Parent\(field)QualifiedName"] {
+        description = "Unique name of the parent field in which this field is nested."
+        type = "string"
+        indexAs = "keyword"
+      }
+      ["\(a)\(field)Level"] {
+        description = "Level of the field in the cube hierarchy."
+        type = "long"
+      }
+      ["\(a)\(field)MeasureExpression"] {
+        description = "Expression used to calculate this measure."
+        type = "string"
+        indexAs = "both"
+      }
+      ["\(a)Sub\(field)Count"] {
+        description = "Number of sub-fields that are direct children of this field."
+        type = "long"
       }
     }
     relationships {
-      new {
+      ["\(a)\(hierarchy)"] {
         description = "Containment relationship between \(t)\(hierarchy) (parent) and \(t)\(field) (children)."
         endDef1 {
           description = "Individual fields that make up the hierarchy."
@@ -184,7 +154,7 @@ customTypes {
           name = "\(a)\(hierarchy)"
         }
       }
-      new {
+      ["\(a)Parent\(field)"] {
         description = "Hierarchical nesting relationship between \(t)\(field)s."
         endDef1 {
           description = "Individual fields nested within this cube field."

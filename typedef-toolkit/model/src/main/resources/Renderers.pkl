@@ -1,0 +1,260 @@
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2024 Atlan Pte. Ltd. */
+
+/// Module for rendering the various portions of front-end code necessary to use the typedef via the UI.
+@ModuleInfo { minPklVersion = "0.25.1" }
+module com.atlan.typedef.Renderers
+import "Model.pkl"
+
+abstract class TypeScriptRenderer extends ValueRenderer {
+  model: Model?
+  converters: Mapping<Class|String, (unknown) -> Any>
+
+  /// Render the given value as TypeScript code.
+  abstract function renderTypeScript(): String
+
+  /// Render the given value as TypeScript code, only if it can be rendered by this renderer;
+  /// otherwise throw an error.
+  function renderDocument(value: Any) =
+    if (model == null)
+      throw("""
+        Invalid input: model has not been passed through to the renderer.
+        """)
+    else
+      renderTypeScript()
+}
+
+/// Renders the TypeScript code for index.ts file
+class Index extends TypeScriptRenderer {
+  model = super.model
+  fixed supertype = model.shared.supertypeDefinition
+  fixed supertypeCamel = supertype.name.decapitalize()
+  fixed ui = model.shared.ui
+
+  function renderTypeScript(): String =
+    new Listing {
+      """
+      import \(supertype.name) from '\(ui?.image?.svgUrl)'
+      import \(supertype.name)SVG from '\(ui?.image?.svgPath)'
+      import { sourceInterface } from '~/types/sourceConfigs/source.interface'
+      import { assetTypeList } from './assetTypes'
+      import { getAssetTypes } from './getAssetTypes'
+
+      const \(supertypeCamel): sourceInterface = {
+          id: '\(supertype.name.toLowerCase())',
+          label: '\(supertype.label ?? supertype.name)',
+          image: \(supertype.name),
+          svg: \(supertype.name)SVG,
+          isQueryableSource: \(ui?.isQueryableSource ?? false),
+          hierarchyFilters: [
+      """
+      when (ui?.hierarchyFilters != null) {
+        for (filter in ui.hierarchyFilters!!) {
+            """
+                    {
+                        typeName: '\(filter.typeName)',
+                        name: '\(filter.label)',
+                        parent: '\(filter.parent)',
+                        attribute: '\(filter.attribute)',
+                        level: \(filter.level),
+                        image: '\(filter.image)',
+                    },
+            """
+        }
+      }
+      """
+          ],
+          assetTypes: assetTypeList,
+          sourceLevelCommonProjections: [],
+          getAssetTypes,
+      }
+
+      export default \(supertypeCamel)
+      """
+    }.join("\n")
+}
+
+/// Renders the TypeScript code for assetTypes.ts file
+class AssetType extends TypeScriptRenderer {
+  model = super.model
+  fixed supertype = model.shared.supertypeDefinition
+  fixed assetTypes = model.customTypes
+  fixed orderedTypeNames = assetTypes.fold(List(), (acc: List<String>, typeName, _) -> acc.add(typeName))
+
+  function renderTypeScript(): String =
+    new Listing {
+            """
+            import { assetTypeInterface } from '~/types/sourceConfigs/assetType.interface'
+            """
+          for (typeName, _ in assetTypes) {
+            """
+            import { \(typeName)MinimalAttributes, \(typeName)AdditionalAttributes } from '../attributes/\(typeName.decapitalize())'
+            """
+          }
+      """
+
+      export const assetTypeList: assetTypeInterface[] = [
+      """
+          for (idx, typeName in orderedTypeNames) {
+            let (assetType = assetTypes.getOrNull(typeName))
+            // TODO: introspect relationships to include from assetType
+              """
+                  {
+                      id: '\(typeName)',
+                      label: '\(assetType?.label ?? typeName)',
+                      fullLabel: '\(assetType?.label ?? typeName)',
+                      image: 'CubeGray',
+                      source: 'essbase',
+                      categoryType: '\(supertype.name)',
+                      relationships: ['cubeDimensions'],
+                      priorityOrder: \(idx + 1),
+                      projections: {
+                          required: \(typeName)MinimalAttributes,
+                          additional: \(typeName)AdditionalAttributes,
+                      },
+                  },
+              """
+          }
+      """
+      ]
+      """
+        }.join("\n")
+}
+
+/// Renders the TypeScript code for each attributes/..ts file detailing attribute projections
+/// for each asset type
+class Attributes extends TypeScriptRenderer {
+  model = super.model
+  assetType: String
+  fixed asset = model.customTypes.getOrNull(assetType)
+  fixed entityDef = new Model.EntityDef {
+    name = assetType
+    description = asset.description
+    superTypes { model.shared.supertypeDefinition.name }
+    attributes = asset.attributes
+  }
+
+  function renderTypeScript(): String =
+    new Listing {
+        """
+        import {
+            EntityAttributeKeyFomTypeName,
+            IndexSearchResponseEntity,
+            RelationEntityAttributeKeyFomTypeName,
+        } from '~/api/metastore/types'
+        import { AssetRelationAttributes } from '~/utils/metastore/asset'
+
+        // attributes for asset cards, preview
+        export const \(entityDef.name)MinimalAttributes = [
+        """
+      when (entityDef.attributeDefs != null) {
+        for (attributeDef in entityDef.attributeDefs!!) {
+          // TODO: Need to include supertype attributes necesary at this asset type's level
+          //  - so this shouldn't really be driven by the presence of a label at all (parentQualifiedName
+          //    will also be necessary attributes, even though they won't appear labeled in the UI)
+          when (attributeDef.label != null || attributeDef.labelPlural != null) {
+              """
+                  '\(attributeDef.name)',
+              """
+          }
+        }
+      }
+        """
+        ] as const satisfies ReadonlyArray<EntityAttributeKeyFomTypeName<'\(entityDef.name)'>>
+
+        // additional attributes, for asset profile
+        export const \(entityDef.name)AdditionalAttributes = [
+        """
+      when (entityDef.attributeDefs != null) {
+        for (attributeDef in entityDef.attributeDefs!!) {
+          when (attributeDef.label == null && attributeDef.labelPlural == null) {
+            // TODO: output only those attributeDefs that are additional, and still needed
+              """
+                  '\(attributeDef.name)',
+              """
+          }
+        }
+      }
+        """
+        ] as const satisfies ReadonlyArray<
+            EntityAttributeKeyFomTypeName<'\(entityDef.name)'>
+        >
+
+        // combined attributes
+        export const \(entityDef.name)Attributes = [
+            ...\(entityDef.name)MinimalAttributes,
+            ...\(entityDef.name)AdditionalAttributes,
+        ] as const satisfies ReadonlyArray<EntityAttributeKeyFomTypeName<'\(entityDef.name)'>>
+
+        // relation attributes
+        export const \(entityDef.name)RelationAttributes = [
+            ...AssetRelationAttributes,
+        ] as const satisfies ReadonlyArray<
+            RelationEntityAttributeKeyFomTypeName<'\(entityDef.name)'>
+        >
+
+        // types
+        export type \(entityDef.name)Entity<IncludeAdditionalAttributes extends boolean = false> =
+            IncludeAdditionalAttributes extends true
+                ? IndexSearchResponseEntity<
+                    '\(entityDef.name)',
+                    (typeof \(entityDef.name)Attributes)[number],
+                    (typeof \(entityDef.name)RelationAttributes)[number]
+                  >
+                : IndexSearchResponseEntity<
+                    '\(entityDef.name)',
+                    (typeof \(entityDef.name)MinimalAttributes)[number],
+                    (typeof \(entityDef.name)RelationAttributes)[number]
+                  >
+        """
+    }.join("\n")
+
+}
+
+// TODO: add renderer for getAssetTypes.ts file
+/// Renders the TypeScript code for the getAssetTypes.ts file.
+class GetAssetTypes extends TypeScriptRenderer {
+  model = super.model
+
+  function renderTypeScript(): String =
+    new Listing {
+        """
+        import { GetAssetTypes } from '~/types/sourceConfigs/source.interface'
+        import { getVisibleItems } from '~/utils/getVisibleItems'
+        import { DisplayPreference } from '~/constant/displayProperties'
+        import {
+            getOverviewTab,
+            getLineageTab,
+            getRelatedAssetsTab,
+            getPreviewActivityTab,
+            getPreviewLineageTab,
+            getPreviewOverviewTab,
+            getPreviewPropertiesTab,
+            getPreviewRelationsTab,
+            getPreviewRequestsTab,
+            getPreviewResourcesTab,
+        } from '~/constant/source/utils'
+        import { AtomicBlocks, CompositeBlocks, SummaryBlocks } from '@/source'
+        """
+      when (model.customTypes != null) {
+        for (assetType, _ in model.customTypes!!) {
+            """
+            import { \(assetType)MinimalAttributes } from '../attributes/\(assetType.decapitalize())'
+            """
+        }
+      }
+        """
+
+        export const getAssetTypes: GetAssetTypes = ({
+            displayPreferences,
+            hideStar,
+            searchQueries,
+            isCompact,
+            t,
+        }) => [
+
+        ]
+        """
+    }.join("\n")
+
+}

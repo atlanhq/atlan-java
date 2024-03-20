@@ -12,6 +12,8 @@
 @ModuleInfo { minPklVersion = "0.25.1" }
 module com.atlan.typedef.Model
 
+import "Renderers.pkl"
+
 /// Prefix to namespace all **types** in the custom model.
 ///
 /// This should be in CamelCase.
@@ -27,19 +29,19 @@ shared: ReusableElements
 
 /// One or more [CustomAssetType]s that can be instantiated in the custom model.
 ///
-/// Remember in Pkl to define a list:
+/// Remember in Pkl to define a mapping, put the key in square brackets and the value in curly braces:
 /// ```
 /// customTypes {
-///   new {
+///   ["NameOfAssetType1"] {
 ///     ...
 ///   }
-///   new {
+///   ["NameOfAssetType2"] {
 ///     ...
 ///   }
 ///   ...
 /// }
 /// ```
-customTypes: Listing<CustomAssetType>?
+customTypes: Mapping<String, CustomAssetType>?
 
 /// Validates the provided string value is in PascalCase.
 local const PascalCase = (str) -> str.matches(Regex("[A-Z][a-zA-Z0-9]*"))
@@ -96,20 +98,35 @@ class ReusableElements {
 
   /// (Optional) Structures that define [complex, embeddable types][StructDef] that should be reused by a number of custom assets in the model.
   structures: Listing<StructDef>?
+
+  /// Configuration of the user interface for the overall model.
+  ui: AreaUI?
 }
 
 /// A specific type that can be instantiated within the custom model.
 ///
+/// Note that the name of the type will be taken from the outer mapping in which it is defined,
+/// while the supertype will automatically be set to the supertype defined in [shared][ReusableElements].
+///
 /// | Variable | | Usage |
 /// |---|---|---|
-/// | **[assetDefinition][EntityDef]** | | Define a single entity type that can be instantiated |
+/// | **description** | | Explain the custom asset type |
+/// | **[attributes][AttributeDef]** | | (Optional) map of attributes unique to this custom asset |
 /// | **[enumerations][EnumDef]** | | (Optional) enumerations that are specific to the custom entity type |
 /// | **[structures][StructDef]** | | (Optional) complex, embeddable types that are specific to the custom entity type |
 /// | **[relationships][RelationshipDef]** | | (Optional) relationships that are specific to the custom entity type |
 class CustomAssetType {
 
-  /// Singular [entity type][EntityDef] that should be included in the custom model.
-  assetDefinition: EntityDef
+  /// Explanation of the custom asset.
+  hidden description: String
+
+  /// (Optional) Map (by unique name) of [attributes][AttributeDef] for the custom asset.
+  /// Remember that attributes from any supertypes will automatically be inherited and should not be listed again here
+  /// in the subtype.
+  hidden attributes: Mapping<String, AttributeDef>?
+
+  /// Label for this type as it should appear in the UI.
+  hidden label: String?
 
   /// (Optional) [Enumerations][EnumDef] that are specific to the custom asset.
   enumerations: Listing<EnumDef>?
@@ -118,7 +135,7 @@ class CustomAssetType {
   structures: Listing<StructDef>?
 
   /// (Optional) [Relationships][RelationshipDef] that are specific to the custom asset.
-  relationships: Listing<RelationshipDef>?
+  relationships: Mapping<String, RelationshipDef>?
 }
 
 open class TypeDef {
@@ -138,9 +155,20 @@ open class TypeDef {
   /// Version number for the type definition. This should be incremented any time you are modifying an existing type definition.
   typeVersion: String = "1.0"
 
-  /// (Optional) List of [attributes][AttributeDef] for the type definition. Remember that attributes from any supertypes will automatically be
-  /// inherited and should not be listed again here in the subtype.
-  attributeDefs: Listing<AttributeDef>?
+  /// Generated list of [attributes][AttributeDef] for the type definition.
+  fixed attributeDefs: List<AttributeDef>? = attributes?.fold(List(), (acc: List<AttributeDef>, key, value) ->
+    let (attrDef =
+      (value) {
+        name = key // Set the name from the map's key
+      }
+    )
+      acc.add(attrDef)
+  )
+
+  /// (Optional) Map (by unique name) of [attributes][AttributeDef] for the type definition.
+  /// Remember that attributes from any supertypes will automatically be inherited and should not be listed again here
+  /// in the subtype.
+  hidden attributes: Mapping<String, AttributeDef>?
 }
 
 /// Definition of a type of custom entity.
@@ -154,12 +182,18 @@ open class TypeDef {
 class EntityDef extends TypeDef {
   name: String(PascalCase)
 
+  /// Label for this type as it should appear in the UI.
+  hidden label: String?
+
   /// Category is set automatically and fixed (should not be changed).
   fixed category = "ENTITY"
 
   /// List of super types for the entity definition. This should include the supertype for the custom model in any custom
   /// assets, and usually the supertype of `Catalog` for the supertype definition.
   superTypes: Listing<String>(length > 0)
+
+  /// Configuration of the user interface for this typedef.
+  hidden ui: TypeUI?
 }
 
 /// Definition of a single attribute within a type definition.
@@ -188,6 +222,12 @@ open class AttributeDef {
 
   /// Name for the new attribute.
   name: String(camelCase)
+
+  /// Label for this attribute as it should appear in the UI (when singular).
+  hidden label: String?
+
+  /// Label for this attribute as it should appear in the UI (when plural).
+  hidden labelPlural: String?
 
   /// Explanation of the attribute (what data it holds, how it is used).
   description: String
@@ -421,43 +461,170 @@ class StructDef extends TypeDef {
   fixed category = "STRUCT"
 }
 
+/// Configuration of the user interface for this entire model area.
+class AreaUI {
+  /// Filename of the SVG for the image, which must exist under assets/images/source/svg.
+  svgName: String(endsWith(".svg"))
+
+  /// Filters, in top-down order, for the model area's overall discovery.
+  filters: Mapping<String, FilterUI>?
+
+  /// Whether the source can be queried (true) or not (false - default).
+  isQueryableSource: Boolean = false
+
+  /// (Generated) Details about the overall image for the model area.
+  fixed image: ImageDetails = new ImageDetails {
+    svg = svgName
+  }
+
+  /// (Generated) List of filters, automatically populating the level and parent details.
+  fixed hierarchyFilters: List<FilterUI>?(length <= 2) = filters.fold(List(), (acc: List<FilterUI>, type, value) ->
+    let (fullFilter = (value) {
+      typeName = type
+      level = acc.length + 1
+      parent = acc.getOrNull(acc.length - 1)?.typeName ?? ""
+    })
+    acc.add(fullFilter)
+  )
+}
+
+/// Details for the overall image to use for this model area.
+class ImageDetails {
+  fixed svgUrl = "\(svgPath)?url"
+  fixed svgPath = "~/assets/images/source/svg/\(svg)"
+  svg: String(endsWith(".svg"))
+}
+
+/// Details for a single level of the hierarchy to filter by in overall discovery.
+class FilterUI {
+  /// (Generated) Name of the asset type that is selected at this level of the filter hierarchy.
+  typeName: String
+
+  /// Label to show in the UI when describing this level of the filter.
+  label: String
+
+  /// (Generated) Name of the parent level in the filter hierarchy.
+  parent: String
+
+  /// Name of the attribute to use to filter assets within this level of the hierarchy.
+  attribute: String
+
+  /// (Generated) Level of the filter in the hierarchy.
+  level: Int32
+
+  /// Name of the image to use to repersent this level of the filter, which must already exist in the iconMap.
+  image: String
+}
+
+/// Configuration of the user interface specific to one asset type.
+class TypeUI {
+
+  /// Name of the image to use to repersent this level of the filter, which must already exist in the iconMap.
+  image: String
+  searchCard: SearchCardUI?
+  profileTabs: ProfileTabUI?
+  sidebarTabs: SidebarTabUI?
+}
+
+class SearchCardUI {
+  footerBlocks: Listing<UIBlock>?
+}
+
+class ProfileTabUI {
+  overviewSummaryBlocks: Listing<UIBlock>?
+  includeAIDescription: Boolean = true
+  relationsTab: String? // TODO
+}
+
+class SidebarTabUI {
+  overviewTab: String? // TODO
+  relationsTab: String? // TODO
+  propertiesTab: String? // TODO
+  includeLineageTab: Boolean = false
+  includeActivityTab: Boolean = true
+  includeResourcesTab: Boolean = true
+  includeRequestsTab: Boolean = true
+}
+
+class UIBlock {
+  attribute: String
+  prefix: String?
+  suffix: String?
+  plural: String
+}
+
 /// Used to render the appropriately-wrapped output files for typedef management.
 local class TypeDefFile {
   entityDefs: Listing<EntityDef>?
   enumDefs: Listing<EnumDef>?
   structDefs: Listing<StructDef>?
-  relationshipDefs: Listing<RelationshipDef>?
+  relationshipDefs: List<RelationshipDef>?
 }
 
 /// Set up multiple outputs for the module, one for each custom type definition.
+/// - `m` the model to generate outputs for
 const function getOutputs(m): Mapping<String, FileOutput> = new Mapping {
-  ["\(m.shared.supertypeDefinition.name).json"] = new FileOutput {
-    value = new TypeDefFile {
-      entityDefs {
-        m.shared.supertypeDefinition
-      }
-      enumDefs = m.shared.enumerations
-      structDefs = m.shared.structures
-    }
-    renderer = new JsonRenderer {}
+  ["frontend/src/constant/source/\(m.shared.supertypeDefinition.name.decapitalize())/common/index.ts"] = new FileOutput {
+    renderer = new Renderers.Index { model = m }
   }
+  ["models/\(m.shared.supertypeDefinition.name).json"] = getSupertypeJson(m)
+  ["frontend/src/api/schemas/metastore/atlas/entityDefs/\(m.shared.supertypeDefinition.name).json"] = getSupertypeJson(m)
   when (m.customTypes != null) {
-    for (asset in m.customTypes) {
-      ["\(m.shared.supertypeDefinition.name)/\(asset.assetDefinition.name).json"] = new FileOutput {
-        value = new TypeDefFile {
-          entityDefs {
-            asset.assetDefinition
-          }
-          enumDefs = asset.enumerations
-          structDefs = asset.structures
-          relationshipDefs = asset.relationships
+    ["frontend/src/constant/source/\(m.shared.supertypeDefinition.name.decapitalize())/common/assetTypes.ts"] = new FileOutput {
+      renderer = new Renderers.AssetType { model = m }
+    }
+    ["frontend/src/constant/source/\(m.shared.supertypeDefinition.name.decapitalize())/common/getAssetTypes.ts"] = new FileOutput {
+      renderer = new Renderers.GetAssetTypes { model = m }
+    }
+    for (typeName, asset in m.customTypes) {
+      ["models/\(m.shared.supertypeDefinition.name)/\(typeName).json"] = getCustomTypeJson(typeName, asset, m.shared.supertypeDefinition.name)
+      ["frontend/src/api/schemas/metastore/atlas/entityDefs/\(m.shared.supertypeDefinition.name)/\(typeName).json"] = getCustomTypeJson(typeName, asset, m.shared.supertypeDefinition.name)
+      ["frontend/src/constant/source/\(m.shared.supertypeDefinition.name.decapitalize())/attributes/\(typeName.decapitalize()).ts"] = new FileOutput {
+        renderer = new Renderers.Attributes {
+          model = m
+          assetType = typeName
         }
-        renderer = new JsonRenderer {}
       }
     }
   }
 }
 
+/// Generate the JSON for the supertype definition.
+/// - `m` the model to generate JSON for
+const function getSupertypeJson(m): FileOutput = new FileOutput {
+  value = new TypeDefFile {
+    entityDefs {
+      m.shared.supertypeDefinition
+    }
+    enumDefs = m.shared.enumerations
+    structDefs = m.shared.structures
+  }
+  renderer = new JsonRenderer {}
+}
+
+/// Generate the JSON for a single custom type definition.
+/// - `typeName` the name of the custom type definition to generate JSON for
+/// - `asset` the custom type definition to generate JSON for
+/// - `supertypeName` the name of the super types for the custom type definition
+const function getCustomTypeJson(typeName: String, asset: CustomAssetType, supertypeName: String): FileOutput = new FileOutput {
+  value = new TypeDefFile {
+    entityDefs {
+      new EntityDef {
+        name = typeName
+        description = asset.description
+        superTypes { supertypeName }
+        attributes = asset.attributes
+      }
+    }
+    enumDefs = asset.enumerations
+    structDefs = asset.structures
+    relationshipDefs = asset.relationships?.fold(List(), (acc: List<RelationshipDef>, _, value) -> acc.add(value))
+  }
+  renderer = new JsonRenderer {}
+}
+
+/// Translate the model content into a set of files for both type definitions (JSON)
+/// and UI configuration (TypeScript).
 const function getModuleOutput(m): ModuleOutput = new ModuleOutput {
   files = getOutputs(m)
 }

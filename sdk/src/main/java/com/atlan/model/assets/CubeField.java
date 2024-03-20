@@ -20,11 +20,12 @@ import com.atlan.util.QueryFactory;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -513,21 +514,20 @@ public class CubeField extends Asset implements ICubeField, IMultiDimensionalDat
                 CubeField._internal().name(name).qualifiedName(generateQualifiedName(name, parentQualifiedName));
         String hierarchyQualifiedName = getHierarchyQualifiedName(parentQualifiedName);
         if (hierarchyQualifiedName != parentQualifiedName) {
+            String parentSlug = StringUtils.getNameFromQualifiedName(parentQualifiedName);
+            String parentName = IMultiDimensionalDataset.getNameFromSlug(parentSlug);
             builder.cubeParentField(CubeField.refByQualifiedName(parentQualifiedName))
-                    .cubeParentFieldName(StringUtils.getNameFromQualifiedName(
-                            parentQualifiedName, IMultiDimensionalDataset.QN_DELIMITER))
+                    .cubeParentFieldName(parentName)
                     .cubeParentFieldQualifiedName(parentQualifiedName);
         }
-        String hierarchyName =
-                StringUtils.getNameFromQualifiedName(hierarchyQualifiedName, IMultiDimensionalDataset.QN_DELIMITER);
-        String dimensionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(
-                hierarchyQualifiedName, IMultiDimensionalDataset.QN_DELIMITER);
-        String dimensionName =
-                StringUtils.getNameFromQualifiedName(dimensionQualifiedName, IMultiDimensionalDataset.QN_DELIMITER);
-        String cubeQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(
-                dimensionQualifiedName, IMultiDimensionalDataset.QN_DELIMITER);
-        String cubeName =
-                StringUtils.getNameFromQualifiedName(cubeQualifiedName, IMultiDimensionalDataset.QN_DELIMITER);
+        String hierarchySlug = StringUtils.getNameFromQualifiedName(hierarchyQualifiedName);
+        String hierarchyName = IMultiDimensionalDataset.getNameFromSlug(hierarchySlug);
+        String dimensionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(hierarchyQualifiedName);
+        String dimensionSlug = StringUtils.getNameFromQualifiedName(dimensionQualifiedName);
+        String dimensionName = IMultiDimensionalDataset.getNameFromSlug(dimensionSlug);
+        String cubeQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(dimensionQualifiedName);
+        String cubeSlug = StringUtils.getNameFromQualifiedName(cubeQualifiedName);
+        String cubeName = IMultiDimensionalDataset.getNameFromSlug(cubeSlug);
         String connectionQualifiedName = StringUtils.getConnectionQualifiedName(cubeQualifiedName);
         AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         return builder.guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
@@ -567,10 +567,8 @@ public class CubeField extends Asset implements ICubeField, IMultiDimensionalDat
      */
     public static String getHierarchyQualifiedName(String parentQualifiedName) {
         if (parentQualifiedName != null) {
-            Matcher m = hierarchyQNPrefix.matcher(parentQualifiedName);
-            if (m.find() && m.groupCount() > 0) {
-                return m.group(1);
-            }
+            List<String> tokens = Arrays.stream(parentQualifiedName.split("/")).collect(Collectors.toList());
+            return String.join("/", tokens.subList(0, 6));
         }
         return null;
     }
@@ -583,7 +581,7 @@ public class CubeField extends Asset implements ICubeField, IMultiDimensionalDat
      * @return a unique name for the CubeField
      */
     public static String generateQualifiedName(String name, String parentQualifiedName) {
-        return parentQualifiedName + IMultiDimensionalDataset.QN_DELIMITER + name;
+        return parentQualifiedName + "/" + IMultiDimensionalDataset.getSlugForName(name);
     }
 
     /**
