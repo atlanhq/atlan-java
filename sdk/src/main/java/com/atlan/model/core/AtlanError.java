@@ -3,6 +3,7 @@
 package com.atlan.model.core;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.Map;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -40,6 +41,9 @@ public class AtlanError extends AtlanObject {
 
     /** TBC */
     String info;
+
+    /** Details about where the error occurred. */
+    Map<String, String> errorDetailsMap;
 
     /**
      * Find the code within the error.
