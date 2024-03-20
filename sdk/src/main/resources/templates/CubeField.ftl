@@ -49,15 +49,20 @@ import java.util.regex.Pattern;
                 .qualifiedName(generateQualifiedName(name, parentQualifiedName));
         String hierarchyQualifiedName = getHierarchyQualifiedName(parentQualifiedName);
         if (hierarchyQualifiedName != parentQualifiedName) {
+            String parentSlug = StringUtils.getNameFromQualifiedName(parentQualifiedName);
+            String parentName = IMultiDimensionalDataset.getNameFromSlug(parentSlug);
             builder.cubeParentField(CubeField.refByQualifiedName(parentQualifiedName))
-                    .cubeParentFieldName(StringUtils.getNameFromQualifiedName(parentQualifiedName, IMultiDimensionalDataset.QN_DELIMITER))
+                    .cubeParentFieldName(parentName)
                     .cubeParentFieldQualifiedName(parentQualifiedName);
         }
-        String hierarchyName = StringUtils.getNameFromQualifiedName(hierarchyQualifiedName, IMultiDimensionalDataset.QN_DELIMITER);
-        String dimensionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(hierarchyQualifiedName, IMultiDimensionalDataset.QN_DELIMITER);
-        String dimensionName = StringUtils.getNameFromQualifiedName(dimensionQualifiedName, IMultiDimensionalDataset.QN_DELIMITER);
-        String cubeQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(dimensionQualifiedName, IMultiDimensionalDataset.QN_DELIMITER);
-        String cubeName = StringUtils.getNameFromQualifiedName(cubeQualifiedName, IMultiDimensionalDataset.QN_DELIMITER);
+        String hierarchySlug = StringUtils.getNameFromQualifiedName(hierarchyQualifiedName);
+        String hierarchyName = IMultiDimensionalDataset.getNameFromSlug(hierarchySlug);
+        String dimensionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(hierarchyQualifiedName);
+        String dimensionSlug = StringUtils.getNameFromQualifiedName(dimensionQualifiedName);
+        String dimensionName = IMultiDimensionalDataset.getNameFromSlug(dimensionSlug);
+        String cubeQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(dimensionQualifiedName);
+        String cubeSlug = StringUtils.getNameFromQualifiedName(cubeQualifiedName);
+        String cubeName = IMultiDimensionalDataset.getNameFromSlug(cubeSlug);
         String connectionQualifiedName = StringUtils.getConnectionQualifiedName(cubeQualifiedName);
         AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         return builder
@@ -97,10 +102,8 @@ import java.util.regex.Pattern;
      */
     public static String getHierarchyQualifiedName(String parentQualifiedName) {
         if (parentQualifiedName != null) {
-            Matcher m = hierarchyQNPrefix.matcher(parentQualifiedName);
-            if (m.find() && m.groupCount() > 0) {
-                return m.group(1);
-            }
+            List<String> tokens = Arrays.stream(parentQualifiedName.split("/")).collect(Collectors.toList());
+            return String.join("/", tokens.subList(0, 6));
         }
         return null;
     }
@@ -113,7 +116,7 @@ import java.util.regex.Pattern;
      * @return a unique name for the CubeField
      */
     public static String generateQualifiedName(String name, String parentQualifiedName) {
-        return parentQualifiedName + IMultiDimensionalDataset.QN_DELIMITER + name;
+        return parentQualifiedName + "/" + IMultiDimensionalDataset.getSlugForName(name);
     }
 
     /**
