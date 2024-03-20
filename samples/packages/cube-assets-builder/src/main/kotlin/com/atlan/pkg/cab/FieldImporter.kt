@@ -4,7 +4,6 @@ package com.atlan.pkg.cab
 
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.CubeField
-import com.atlan.model.assets.IMultiDimensionalDataset
 import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.serde.RowDeserializer
 import com.atlan.pkg.serde.csv.ImportResults
@@ -89,7 +88,7 @@ class FieldImporter(
         val fieldLevel = if (row[parentIdx].isBlank()) {
             1L
         } else {
-            val parentPath = row[parentIdx].split(IMultiDimensionalDataset.QN_DELIMITER)
+            val parentPath = row[parentIdx].split(Importer.QN_DELIMITER)
             (parentPath.size + 1).toLong()
         }
         // Consider whether we need to update the maximum depth of categories we need to load

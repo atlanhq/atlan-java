@@ -37,6 +37,7 @@ import kotlin.system.exitProcess
 object Importer {
     private val logger = KotlinLogging.logger {}
 
+    const val QN_DELIMITER = "~"
     const val PREVIOUS_FILES_PREFIX = "csa-cube-assets-builder"
     const val PREVIOUS_FILE_PROCESSED_EXT = ".processed"
 
