@@ -85,9 +85,9 @@ class AssetType extends TypeScriptRenderer {
             """
             import { assetTypeInterface } from '~/types/sourceConfigs/assetType.interface'
             """
-          for (typeName, _ in assetTypes) {
+          for (entityDef in assetTypes) {
             """
-            import { \(typeName)MinimalAttributes, \(typeName)AdditionalAttributes } from '../attributes/\(typeName.decapitalize())'
+            import { \(entityDef.name)MinimalAttributes, \(entityDef.name)AdditionalAttributes } from '../attributes/\(entityDef.name.decapitalize())'
             """
           }
       """
