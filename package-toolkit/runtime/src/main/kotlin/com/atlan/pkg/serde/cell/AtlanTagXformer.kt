@@ -4,6 +4,7 @@ package com.atlan.pkg.serde.cell
 
 import com.atlan.Atlan
 import com.atlan.cache.AbstractLazyCache
+import com.atlan.exception.NotFoundException
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Connection
 import com.atlan.model.assets.ITag
@@ -103,21 +104,23 @@ object AtlanTagXformer {
             val attachments = mutableListOf<String>()
             atlanTag.sourceTagAttachments.forEach { sta ->
                 val sourceTagIdentity = encodeSourceTagIdentity(sta.sourceTagQualifiedName)
-                val values = mutableListOf<String>()
-                sta.sourceTagValues.forEach { v ->
-                    values.add(
-                        if (v.tagAttachmentKey.isNullOrBlank()) "=${v.tagAttachmentValue}" else "${v.tagAttachmentKey}=${v.tagAttachmentValue}",
-                    )
-                }
-                if (values.isNotEmpty()) {
-                    attachments.add(
-                        "$sourceTagIdentity$VALUE_SEPARATOR${values.joinToString(VALUE_DELIMITER)}",
-                    )
-                } else {
-                    attachments.add(sourceTagIdentity)
+                if (sourceTagIdentity.isNotBlank()) {
+                    val values = mutableListOf<String>()
+                    sta.sourceTagValues.forEach { v ->
+                        values.add(
+                            if (v.tagAttachmentKey.isNullOrBlank()) "=${v.tagAttachmentValue}" else "${v.tagAttachmentKey}=${v.tagAttachmentValue}",
+                        )
+                    }
+                    if (values.isNotEmpty()) {
+                        attachments.add(
+                            "$sourceTagIdentity$VALUE_SEPARATOR${values.joinToString(VALUE_DELIMITER)}",
+                        )
+                    } else {
+                        attachments.add(sourceTagIdentity)
+                    }
                 }
             }
-            " {{${attachments.joinToString(ATTACHMENT_DELIMITER)}}}"
+            if (attachments.isNotEmpty()) " {{${attachments.joinToString(ATTACHMENT_DELIMITER)}}}" else ""
         }
     }
 
@@ -164,7 +167,11 @@ object AtlanTagXformer {
     }
 
     private fun encodeSourceTagIdentity(sourceTagQN: String): String {
-        return localTagCache.getNameForId(sourceTagQN)
+        return try {
+            localTagCache.getNameForId(sourceTagQN)
+        } catch (e: NotFoundException) {
+            ""
+        }
     }
 
     private fun decodeSourceTag(sourceTagIdentity: String): ITag? {
