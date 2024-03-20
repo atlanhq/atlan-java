@@ -139,9 +139,12 @@ abstract class AssetImporter(
                 CubeField.generateQualifiedName(parentField, appendToPath)
             } else {
                 val tokens = parentField.split(QN_DELIMITER)
+                val parentPath = tokens.subList(0, tokens.size - 1).joinToString("/") {
+                    IMultiDimensionalDataset.getSlugForName(it)
+                }
                 CubeField.generateQualifiedName(
                     tokens[tokens.size - 1],
-                    "$appendToPath/${tokens.subList(0, tokens.size - 1).joinToString(QN_DELIMITER)}",
+                    "$appendToPath/$parentPath",
                 )
             }
         }
