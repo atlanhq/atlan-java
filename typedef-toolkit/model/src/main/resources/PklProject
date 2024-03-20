@@ -5,6 +5,6 @@ amends "pkl:Project"
 package {
   name = "typedef"
   baseUri = "package://developer.atlan.com/toolkits/\(name)"
-  version = "0.1.2"
+  version = "0.2.0"
   packageZipUrl = "https://developer.atlan.com/toolkits/\(name)/\(name)@\(version).zip"
 }
