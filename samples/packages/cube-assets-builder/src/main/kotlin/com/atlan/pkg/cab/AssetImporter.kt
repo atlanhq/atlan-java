@@ -10,6 +10,7 @@ import com.atlan.model.assets.CubeField
 import com.atlan.model.assets.CubeHierarchy
 import com.atlan.model.assets.IMultiDimensionalDataset
 import com.atlan.model.fields.AtlanField
+import com.atlan.pkg.cab.Importer.QN_DELIMITER
 import com.atlan.pkg.serde.csv.CSVImporter
 import com.atlan.pkg.serde.csv.ImportResults
 import com.atlan.pkg.util.AssetResolver
@@ -84,39 +85,43 @@ abstract class AssetImporter(
                 Cube.TYPE_NAME -> {
                     current = row[header.indexOf(IMultiDimensionalDataset.CUBE_NAME.atlanFieldName)]
                     parent = getQualifiedNameDetails(row, header, Connection.TYPE_NAME)
-                    unique = "${parent.uniqueQN}/$current"
+                    unique = Cube.generateQualifiedName(current, parent.uniqueQN)
                     partial = current
                 }
                 CubeDimension.TYPE_NAME -> {
                     current = row[header.indexOf(IMultiDimensionalDataset.CUBE_DIMENSION_NAME.atlanFieldName)]
                     parent = getQualifiedNameDetails(row, header, Cube.TYPE_NAME)
-                    unique = "${parent.uniqueQN}~$current"
-                    partial = "${parent.partialQN}~$current"
+                    unique = CubeDimension.generateQualifiedName(current, parent.uniqueQN)
+                    partial = CubeDimension.generateQualifiedName(current, parent.partialQN)
                 }
                 CubeHierarchy.TYPE_NAME -> {
                     current = row[header.indexOf(IMultiDimensionalDataset.CUBE_HIERARCHY_NAME.atlanFieldName)]
                     parent = getQualifiedNameDetails(row, header, CubeDimension.TYPE_NAME)
-                    unique = "${parent.uniqueQN}~$current"
-                    partial = "${parent.partialQN}~$current"
+                    unique = CubeHierarchy.generateQualifiedName(current, parent.uniqueQN)
+                    partial = CubeHierarchy.generateQualifiedName(current, parent.partialQN)
                 }
                 CubeField.TYPE_NAME -> {
                     current = row[header.indexOf(FieldImporter.FIELD_NAME)]
                     val parentField = row[header.indexOf(FieldImporter.PARENT_FIELD_QN)]
                     if (parentField.isBlank()) {
                         parent = getQualifiedNameDetails(row, header, CubeHierarchy.TYPE_NAME)
-                        unique = "${parent.uniqueQN}~$current"
-                        partial = "${parent.partialQN}~$current"
+                        unique = CubeField.generateQualifiedName(current, parent.uniqueQN)
+                        partial = CubeField.generateQualifiedName(current, parent.partialQN)
                     } else {
                         val hierarchy = getQualifiedNameDetails(row, header, CubeHierarchy.TYPE_NAME)
-                        val grandParent = if (parentField.indexOf("~") > 0) parentField.substringBeforeLast("~") else ""
+                        val grandParent = if (parentField.indexOf(QN_DELIMITER) > 0) parentField.substringBeforeLast(QN_DELIMITER) else ""
+                        val parentUnique = calculatePath(parentField, hierarchy.uniqueQN)
+                        val parentPartial = calculatePath(parentField, hierarchy.partialQN)
+                        val grandParentUnique = if (grandParent.isNotBlank()) calculatePath(grandParent, hierarchy.uniqueQN) else hierarchy.uniqueQN
+                        val grandParentPartial = if (grandParent.isNotBlank()) calculatePath(grandParent, hierarchy.partialQN) else hierarchy.partialQN
                         parent = QualifiedNameDetails(
-                            "${hierarchy.uniqueQN}~$parentField",
-                            "${hierarchy.partialQN}~$parentField",
-                            if (grandParent.isNotBlank()) "${hierarchy.uniqueQN}~$grandParent" else hierarchy.uniqueQN,
-                            if (grandParent.isNotBlank()) "${hierarchy.partialQN}~$grandParent" else hierarchy.partialQN,
+                            parentUnique,
+                            parentPartial,
+                            grandParentUnique,
+                            grandParentPartial,
                         )
-                        unique = "${parent.uniqueQN}~$current"
-                        partial = "${parent.partialQN}~$current"
+                        unique = CubeField.generateQualifiedName(current, parent.uniqueQN)
+                        partial = CubeField.generateQualifiedName(current, parent.partialQN)
                     }
                 }
                 else -> throw IllegalStateException("Unknown multi-dimensional dataset type: $typeName")
@@ -127,6 +132,18 @@ abstract class AssetImporter(
                 parent?.uniqueQN ?: "",
                 parent?.partialQN ?: "",
             )
+        }
+
+        private fun calculatePath(parentField: String, appendToPath: String): String {
+            return if (!parentField.contains(QN_DELIMITER)) {
+                CubeField.generateQualifiedName(parentField, appendToPath)
+            } else {
+                val tokens = parentField.split(QN_DELIMITER)
+                CubeField.generateQualifiedName(
+                    tokens[tokens.size - 1],
+                    "$appendToPath/${tokens.subList(0, tokens.size - 1).joinToString(QN_DELIMITER)}",
+                )
+            }
         }
     }
 }

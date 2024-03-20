@@ -88,11 +88,11 @@ class AssetRemoverTest : PackageTest() {
     fun specificAssetsToDelete() {
         remover!!.assetsToDelete.forEach {
             when (it.key.typeName) {
-                CubeHierarchy.TYPE_NAME -> assertTrue("$conn1QN/TEST_CUBE~TEST_DIM~TEST_HIERARCHY2" == it.key.qualifiedName)
+                CubeHierarchy.TYPE_NAME -> assertTrue("$conn1QN/TEST_CUBE/TEST_DIM/TEST_HIERARCHY2" == it.key.qualifiedName)
                 CubeField.TYPE_NAME -> {
                     assertTrue(
-                        "$conn1QN/TEST_CUBE~TEST_DIM~TEST_HIERARCHY2~COL4" == it.key.qualifiedName ||
-                            "$conn1QN/TEST_CUBE~TEST_DIM~TEST_HIERARCHY2~COL4~COL5" == it.key.qualifiedName,
+                        "$conn1QN/TEST_CUBE/TEST_DIM/TEST_HIERARCHY2/COL4" == it.key.qualifiedName ||
+                            "$conn1QN/TEST_CUBE/TEST_DIM/TEST_HIERARCHY2/COL4/COL5" == it.key.qualifiedName,
                     )
                 }
             }

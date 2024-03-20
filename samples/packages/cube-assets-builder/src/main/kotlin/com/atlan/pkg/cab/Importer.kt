@@ -7,11 +7,9 @@ import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Cube
 import com.atlan.model.assets.CubeDimension
 import com.atlan.model.assets.CubeField
-import com.atlan.model.assets.CubeField.getHierarchyQualifiedName
 import com.atlan.model.assets.CubeHierarchy
 import com.atlan.pkg.Utils
 import com.atlan.pkg.cab.AssetImporter.Companion.getQualifiedNameDetails
-import com.atlan.pkg.cab.Importer.PREVIOUS_FILES_PREFIX
 import com.atlan.pkg.cache.ConnectionCache
 import com.atlan.pkg.cache.LinkCache
 import com.atlan.pkg.cache.TermCache
@@ -327,7 +325,7 @@ object Importer {
         val qualifiedNameToChildCount: Map<String, AtomicInteger>,
     )
 
-    private val hierarchyQNPrefix: Pattern = Pattern.compile("([^/]*/[a-z0-9-]+/[^~]*(~[^~]*){2}).*")
+    private val hierarchyQNPrefix: Pattern = Pattern.compile("([^/]*/[a-z0-9-]+/[^/]*(/[^/]*){2}).*")
 
     /**
      * Extracts the unique name of the hierarchy from the qualified name of the CubeField's parent.
