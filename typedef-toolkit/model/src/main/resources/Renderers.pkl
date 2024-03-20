@@ -34,8 +34,8 @@ class Index extends TypeScriptRenderer {
   function renderTypeScript(): String =
     new Listing {
       """
-      import \(supertype.name) from '\(ui.image.svgUrl)'
-      import \(supertype.name)SVG from '\(ui.image.svgPath)'
+      import \(supertype.name) from '\(ui?.image?.svgUrl)'
+      import \(supertype.name)SVG from '\(ui?.image?.svgPath)'
       import { sourceInterface } from '~/types/sourceConfigs/source.interface'
       import { assetTypeList } from './assetTypes'
       import { getAssetTypes } from './getAssetTypes'
@@ -45,10 +45,10 @@ class Index extends TypeScriptRenderer {
           label: '\(supertype.label ?? supertype.name)',
           image: \(supertype.name),
           svg: \(supertype.name)SVG,
-          isQueryableSource: \(ui.isQueryableSource),
+          isQueryableSource: \(ui?.isQueryableSource ?? false),
           hierarchyFilters: [
       """
-      when (ui.hierarchyFilters != null) {
+      when (ui?.hierarchyFilters != null) {
         for (filter in ui.hierarchyFilters!!) {
             """
                     {
