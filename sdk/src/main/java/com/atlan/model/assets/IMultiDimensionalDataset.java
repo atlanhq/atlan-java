@@ -69,7 +69,7 @@ public interface IMultiDimensionalDataset {
     /**
      * Reverse a unique name without path delimiters back to the original name.
      *
-     * @param unique name of the object for which to reverse back to its name
+     * @param slug unique name of the object for which to reverse back to its name
      * @return original name of the object
      */
     @JsonIgnore
