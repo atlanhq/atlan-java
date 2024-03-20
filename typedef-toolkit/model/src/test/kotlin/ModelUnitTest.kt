@@ -61,7 +61,7 @@ class ModelUnitTest {
         assertEquals("keyword", attr.indexTypeESFields?.get("keyword")?.get("type"))
         assertEquals("atlan_normalizer", attr.indexTypeESFields?.get("keyword")?.get("normalizer"))
         assertEquals("atlan_text_analyzer", attr.indexTypeESConfig?.get("analyzer"))
-        assertEquals("SINGLE", attr.cardinality)
+        assertEquals(Model.Cardinality.SINGLE, attr.cardinality)
         assertEquals("string", attr.typeName)
     }
 
@@ -71,7 +71,7 @@ class ModelUnitTest {
         assertNotNull(model)
         val attr = getAttribute(model)
         assertEquals("SomeEnumeration", attr.typeName)
-        assertEquals("SINGLE", attr.cardinality)
+        assertEquals(Model.Cardinality.SINGLE, attr.cardinality)
     }
 
     @Test
@@ -79,7 +79,7 @@ class ModelUnitTest {
         val model = evaluateModel("MultiValuedAttribute")
         assertNotNull(model)
         val attr = getAttribute(model)
-        assertEquals("SET", attr.cardinality)
+        assertEquals(Model.Cardinality.SET, attr.cardinality)
         assertEquals("array<string>", attr.typeName)
     }
 

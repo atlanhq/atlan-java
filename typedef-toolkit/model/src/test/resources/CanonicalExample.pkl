@@ -1,0 +1,82 @@
+amends "modulepath:/Model.pkl"
+
+t = "Custom"
+a = t.toLowerCase()
+
+shared {
+  supertypeDefinition {
+    name = t
+    description = "Base class for all \(t) types."
+    superTypes { "Catalog" }
+    attributes {
+      ["\(a)SourceId"] {
+        description = "Unique identifier for the \(t) asset from the source system."
+        type = "string"
+      }
+    }
+  }
+}
+
+customTypes {
+  ["\(t)Table"] {
+    description = "Instances of \(t)Table in Atlan."
+    attributes {
+      ["\(a)Ratings"] {
+        description = "Ratings for the \(t)Table asset from the source system."
+        type = "struct"
+        structName = "\(t)Ratings"
+        multiValued = true
+      }
+    }
+    structs {
+      ["\(t)Ratings"] {
+        description = "Ratings for an asset from the source system."
+        attributes {
+          ["\(a)RatingFrom"] {
+            description = "Username of the user who left the rating."
+            type = "string"
+          }
+          ["\(a)RatingOf"] {
+            description = "Numeric score for the rating left by the user."
+            type = "long"
+          }
+        }
+      }
+    }
+  }
+  ["\(t)Field"] {
+    description = "Instances of \(t)Field in Atlan."
+    attributes {
+      ["\(a)Temperature"] {
+        description = "Temperature of the \(t)Table asset."
+        type = "enum"
+        enumName = "\(t)TemperatureType"
+      }
+    }
+    enums {
+      ["\(t)TemperatureType"] {
+        description = "Valid values for \(t)Table temperatures."
+        validValues {
+          ["COLD"] { description = "Lowest availability, can be offline storage." }
+          ["HOT"] { description = "Highest availability, must be on solid-state or in-memory storage." }
+        }
+      }
+    }
+    relationships {
+      ["\(a)Table"] {
+        description = "Containment relationship between \(t)Table and \(t)Field."
+        endDef1 {
+          type = "\(t)Table"
+          name = "\(a)Fields"
+          description = "\(t)Field assets contained within this \(t)Table."
+          isContainer = true
+        }
+        endDef2 {
+          type = "\(t)Field"
+          name = "\(a)Table"
+          description = "\(t)Table asset containing this \(t)Field."
+        }
+      }
+    }
+  }
+}

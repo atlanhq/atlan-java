@@ -1,0 +1,49 @@
+amends "Model.pkl"
+
+t = "BothIndexes"
+a = "bi"
+
+shared {
+  supertypeDefinition {
+    name = t
+    description = "Both Indexes"
+    superTypes { "Catalog" }
+    attributeDefs {
+      new {
+        name = a
+        description = a
+        type = "string"
+        indexAs = "both"
+      }
+    }
+  }
+}
+
+customTypes {
+  new {
+    assetDefinition {
+      name = "SomeType"
+      description = "Explanation of the type"
+      superTypes { t }
+      attributeDefs {
+        new {
+          name = "someAttribute"
+          description = "Explanation of the attribute"
+          type = "string"
+          indexAs = "both"
+        }
+      }
+      ui {
+        searchCard {
+          footerBlocks {
+            new {
+              attribute = "someAttribute"
+              suffix = "dimension"
+              plural = "dimensions"
+            }
+          }
+        }
+      }
+    }
+  }
+}
