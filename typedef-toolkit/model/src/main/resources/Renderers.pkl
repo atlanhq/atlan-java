@@ -78,8 +78,7 @@ class Index extends TypeScriptRenderer {
 class AssetType extends TypeScriptRenderer {
   model = super.model
   fixed supertype = model.shared.supertypeDefinition
-  fixed assetTypes = model.customTypes
-  fixed orderedTypeNames = assetTypes.fold(List(), (acc: List<String>, typeName, _) -> acc.add(typeName))
+  fixed assetTypes = model.customEntityDefs
 
   function renderTypeScript(): String =
     new Listing {
@@ -95,8 +94,8 @@ class AssetType extends TypeScriptRenderer {
 
       export const assetTypeList: assetTypeInterface[] = [
       """
-          for (idx, typeName in orderedTypeNames) {
-            let (assetType = assetTypes.getOrNull(typeName))
+          for (idx, assetType in assetTypes) {
+            let (typeName = assetType.name)
             // TODO: introspect relationships to include from assetType
               """
                   {

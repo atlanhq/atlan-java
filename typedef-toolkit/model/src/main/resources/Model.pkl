@@ -81,23 +81,28 @@ typealias IndexType = "default"|"keyword"|"text"|"both"
 /// - `BOTH` tags will be propagated in both directions
 typealias PropagationType = "NONE"|"ONE_TO_TWO"|"TWO_TO_ONE"|"BOTH"
 
+/// Cardinality of an attribute.
+/// - `SINGLE` for a single value
+/// - `SET` for multiple values
+typealias Cardinality = "SINGLE"|"SET"
+
 /// Metadata shared across other types in the custom model.
 ///
 /// | Variable | | Usage |
 /// |---|---|---|
 /// | **[supertypeDefinition][EntityDef]** | | Define a single entity type all others will inherit from |
-/// | **[enumerations][EnumDef]** | | (Optional) enumerations that are reused by a number of custom asset types in the model |
-/// | **[structures][StructDef]** | | (Optional) complex, embeddable types that are reused by a number of custom assets in the model |
+/// | **[enums][EnumDef]** | | (Optional) enumerations that are reused by a number of custom asset types in the model |
+/// | **[structs][StructDef]** | | (Optional) complex, embeddable types that are reused by a number of custom assets in the model |
 class ReusableElements {
 
   /// Singular [entity type][EntityDef] that should be the supertype for all other entity types in the custom model.
   supertypeDefinition: EntityDef
 
   /// (Optional) [Enumerations][EnumDef] that should be reused by a number of custom assets in the model.
-  enumerations: Listing<EnumDef>?
+  enums: Mapping<String, EnumDef>?
 
   /// (Optional) Structures that define [complex, embeddable types][StructDef] that should be reused by a number of custom assets in the model.
-  structures: Listing<StructDef>?
+  structs: Mapping<String, StructDef>?
 
   /// Configuration of the user interface for the overall model.
   ui: AreaUI?
@@ -112,13 +117,13 @@ class ReusableElements {
 /// |---|---|---|
 /// | **description** | | Explain the custom asset type |
 /// | **[attributes][AttributeDef]** | | (Optional) map of attributes unique to this custom asset |
-/// | **[enumerations][EnumDef]** | | (Optional) enumerations that are specific to the custom entity type |
-/// | **[structures][StructDef]** | | (Optional) complex, embeddable types that are specific to the custom entity type |
+/// | **[enums][EnumDef]** | | (Optional) enumerations that are specific to the custom entity type |
+/// | **[structs][StructDef]** | | (Optional) complex, embeddable types that are specific to the custom entity type |
 /// | **[relationships][RelationshipDef]** | | (Optional) relationships that are specific to the custom entity type |
 class CustomAssetType {
 
   /// Explanation of the custom asset.
-  hidden description: String
+  description: String
 
   /// (Optional) Map (by unique name) of [attributes][AttributeDef] for the custom asset.
   /// Remember that attributes from any supertypes will automatically be inherited and should not be listed again here
@@ -129,13 +134,13 @@ class CustomAssetType {
   hidden label: String?
 
   /// (Optional) [Enumerations][EnumDef] that are specific to the custom asset.
-  enumerations: Listing<EnumDef>?
+  hidden enums: Mapping<String, EnumDef>?
 
   /// (Optional) Structures that define [complex, embeddable types][StructDef] that are specific to the custom asset.
-  structures: Listing<StructDef>?
+  hidden structs: Mapping<String, StructDef>?
 
   /// (Optional) [Relationships][RelationshipDef] that are specific to the custom asset.
-  relationships: Mapping<String, RelationshipDef>?
+  hidden relationships: Mapping<String, RelationshipDef>?
 }
 
 open class TypeDef {
@@ -261,7 +266,7 @@ open class AttributeDef {
 
   /// Specifies whether the attribute is single or multivalued -- this will be set automatically
   /// from the `multiValued` parameter.
-  fixed cardinality = if (multiValued) "SET" else "SINGLE"
+  fixed cardinality: Cardinality = if (multiValued) "SET" else "SINGLE"
 
   /// Minimum number of values the attribute should have.
   valuesMinCount: Int32?
@@ -355,8 +360,18 @@ class RelationshipDef extends TypeDef {
   /// a container.
   fixed relationshipCategory = if (endDef1.isContainer || endDef2.isContainer) "AGGREGATION" else "ASSOCIATION"
 
+  /// Generated list of [relationship attributes][RelationshipAttributeDef] for the type definition.
+  fixed relationshipAttributeDefs: List<RelationshipAttributeDef>? = relationshipAttributes?.fold(List(), (acc: List<RelationshipAttributeDef>, key, value) ->
+    let (attrDef =
+      (value) {
+        name = key // Set the name from the map's key
+      }
+    )
+      acc.add(attrDef)
+  )
+
   /// (Optional) List of attributes that can be managed on each instance of the relationship.
-  relationshipAttributeDefs: Listing<RelationshipAttributeDef>?
+  hidden relationshipAttributes: Mapping<String, RelationshipAttributeDef>?
 }
 
 /// Definition of one end of a relationship.
@@ -388,7 +403,7 @@ class RelationshipEndDef {
   isLegacyAttribute: Boolean = false
 
   /// Cardinality of this end of the relationship -- this will be set automatically based on `isContainer`.
-  fixed cardinality = if (isContainer) "SET" else "SINGLE"
+  fixed cardinality: Cardinality = if (isContainer) "SET" else "SINGLE"
 }
 
 /// Definition of an attribute that can be managed on each instance of the relationship.
@@ -426,7 +441,18 @@ class EnumDef extends TypeDef {
   serviceType = "atlas_core"
 
   /// List of valid values for the enumeration.
-  elementDefs: Listing<EnumElementDef>
+  hidden validValues: Mapping<String, EnumElementDef>
+
+  /// (Generated) List of valid values for the enumeration.
+  fixed elementDefs: List<EnumElementDef> = validValues.fold(List(), (acc: List<EnumElementDef>, key, element) ->
+    let (elementDef =
+      (element) {
+        ordinal = acc.length
+        value = key // Set the value from the map's key
+      }
+    )
+      acc.add(elementDef)
+  )
 }
 
 /// Definition of a single valid value for an enumeration.
@@ -556,8 +582,8 @@ class UIBlock {
 /// Used to render the appropriately-wrapped output files for typedef management.
 local class TypeDefFile {
   entityDefs: Listing<EntityDef>?
-  enumDefs: Listing<EnumDef>?
-  structDefs: Listing<StructDef>?
+  enumDefs: List<EnumDef>?
+  structDefs: List<StructDef>?
   relationshipDefs: List<RelationshipDef>?
 }
 
@@ -596,8 +622,8 @@ const function getSupertypeJson(m): FileOutput = new FileOutput {
     entityDefs {
       m.shared.supertypeDefinition
     }
-    enumDefs = m.shared.enumerations
-    structDefs = m.shared.structures
+    enumDefs = listifyEnums(m.shared.enums)
+    structDefs = listifyStructs(m.shared.structs)
   }
   renderer = new JsonRenderer {}
 }
@@ -609,18 +635,43 @@ const function getSupertypeJson(m): FileOutput = new FileOutput {
 const function getCustomTypeJson(typeName: String, asset: CustomAssetType, supertypeName: String): FileOutput = new FileOutput {
   value = new TypeDefFile {
     entityDefs {
-      new EntityDef {
-        name = typeName
-        description = asset.description
-        superTypes { supertypeName }
-        attributes = asset.attributes
-      }
+      customTypeToEntityDef(asset, typeName, supertypeName)
     }
-    enumDefs = asset.enumerations
-    structDefs = asset.structures
-    relationshipDefs = asset.relationships?.fold(List(), (acc: List<RelationshipDef>, _, value) -> acc.add(value))
+    enumDefs = listifyEnums(asset.enums)
+    structDefs = listifyStructs(asset.structs)
+    relationshipDefs = listifyRelationships(asset.relationships)
   }
   renderer = new JsonRenderer {}
+}
+
+const function customTypeToEntityDef(customType: CustomAssetType, typeName: String, supertypeName: String): EntityDef = new EntityDef {
+  name = typeName
+  description = customType.description
+  superTypes { supertypeName }
+  attributes = customType.attributes
+}
+
+const function listifyEnums(enums: Mapping<String, EnumDef>?): List<EnumDef>? =
+  enums?.fold(List(), (acc: List<EnumDef>, typeName, value) ->
+    acc.add(resolveEnum(typeName, value))
+  )
+
+const function listifyStructs(structs: Mapping<String, StructDef>?): List<StructDef>? =
+  structs?.fold(List(), (acc: List<StructDef>, typeName, value) ->
+    acc.add(resolveStruct(typeName, value))
+  )
+
+const function listifyRelationships(relations: Mapping<String, RelationshipDef>?): List<RelationshipDef>? =
+  relations?.fold(List(), (acc: List<RelationshipDef>, _, value) ->
+    acc.add(value)
+  )
+
+const function resolveEnum(enumName: String, enum: EnumDef): EnumDef = (enum) {
+  name = enumName
+}
+
+const function resolveStruct(structName: String, struct: StructDef): StructDef = (struct) {
+  name = structName
 }
 
 /// Translate the model content into a set of files for both type definitions (JSON)
@@ -631,3 +682,23 @@ const function getModuleOutput(m): ModuleOutput = new ModuleOutput {
 
 /// Set the output of the module to be separate files for each custom type definition in the model.
 output = getModuleOutput(this)
+
+/// (Generated) List of [EntityDef]s for the custom model.
+fixed customEntityDefs: List<EntityDef>? = customTypes?.fold(List(), (acc: List<EntityDef>, typeName, details) ->
+  acc.add(customTypeToEntityDef(details, typeName, shared.supertypeDefinition.name))
+)
+
+/// (Generated) List of [StructDef]s for the custom model.
+fixed customStructDefs: List<StructDef>? = customTypes?.fold(List(), (acc: List<StructDef>, _, details) ->
+  acc + (listifyStructs(details.structs) ?? List())
+)
+
+/// (Generated) List of [EnumDef]s for the custom model.
+fixed customEnumDefs: List<EnumDef>? = customTypes?.fold(List(), (acc: List<EnumDef>, _, details) ->
+  acc + (listifyEnums(details.enums) ?? List())
+)
+
+/// (Generated) List of [RelationshipDef]s for the custom model.
+fixed customRelationshipDefs: List<RelationshipDef>? = customTypes?.fold(List(), (acc: List<RelationshipDef>, _, details) ->
+  acc + (listifyRelationships(details.relationships) ?? List())
+)
