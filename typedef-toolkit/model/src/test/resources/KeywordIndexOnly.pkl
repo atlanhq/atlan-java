@@ -8,9 +8,8 @@ shared {
     name = t
     description = "Keyword Index Only"
     superTypes { "Catalog" }
-    attributeDefs {
-      new {
-        name = a
+    attributes {
+      [a] {
         description = a
         type = "string"
         indexAs = "keyword"

@@ -8,9 +8,8 @@ shared {
     name = t
     description = "Enumerated Attribute"
     superTypes { "Catalog" }
-    attributeDefs {
-      new {
-        name = a
+    attributes {
+      [a] {
         description = a
         type = "enum"
         enumName = "SomeEnumeration"
