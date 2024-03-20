@@ -275,7 +275,7 @@ class CreateThenUpsertCABTest : PackageTest() {
         assertEquals("TEST_CUBE", hier.cubeName)
         assertTrue(hier.cubeQualifiedName.endsWith("/TEST_CUBE"))
         assertEquals("TEST_DIM", hier.cubeDimensionName)
-        assertTrue(hier.cubeDimensionQualifiedName.endsWith("/TEST_CUBE~TEST_DIM"))
+        assertTrue(hier.cubeDimensionQualifiedName.endsWith("/TEST_CUBE/TEST_DIM"))
         assertEquals(CertificateStatus.VERIFIED, hier.certificateStatus)
         assertEquals("Ready to use", hier.certificateStatusMessage)
         assertEquals("<h1>Table readme</h1>", hier.readme.description)
@@ -336,9 +336,9 @@ class CreateThenUpsertCABTest : PackageTest() {
             assertEquals("TEST_CUBE", field.cubeName)
             assertTrue(field.cubeQualifiedName.endsWith("/TEST_CUBE"))
             assertEquals("TEST_DIM", field.cubeDimensionName)
-            assertTrue(field.cubeDimensionQualifiedName.endsWith("/TEST_CUBE~TEST_DIM"))
+            assertTrue(field.cubeDimensionQualifiedName.endsWith("/TEST_CUBE/TEST_DIM"))
             assertEquals("TEST_HIERARCHY1", field.cubeHierarchyName)
-            assertTrue(field.cubeHierarchyQualifiedName.endsWith("/TEST_CUBE~TEST_DIM~TEST_HIERARCHY1"))
+            assertTrue(field.cubeHierarchyQualifiedName.endsWith("/TEST_CUBE/TEST_DIM/TEST_HIERARCHY1"))
             when (field.name) {
                 "COL1" -> {
                     assertEquals(displayCol1, field.displayName)
@@ -435,9 +435,9 @@ class CreateThenUpsertCABTest : PackageTest() {
             assertEquals("TEST_CUBE", field.cubeName)
             assertTrue(field.cubeQualifiedName.endsWith("/TEST_CUBE"))
             assertEquals("TEST_DIM", field.cubeDimensionName)
-            assertTrue(field.cubeDimensionQualifiedName.endsWith("/TEST_CUBE~TEST_DIM"))
+            assertTrue(field.cubeDimensionQualifiedName.endsWith("/TEST_CUBE/TEST_DIM"))
             assertEquals("TEST_HIERARCHY2", field.cubeHierarchyName)
-            assertTrue(field.cubeHierarchyQualifiedName.endsWith("/TEST_CUBE~TEST_DIM~TEST_HIERARCHY2"))
+            assertTrue(field.cubeHierarchyQualifiedName.endsWith("/TEST_CUBE/TEST_DIM/TEST_HIERARCHY2"))
             when (field.name) {
                 "COL4" -> {
                     assertEquals("Test field 4", field.displayName)

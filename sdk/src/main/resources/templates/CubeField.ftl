@@ -48,7 +48,7 @@ import java.util.regex.Pattern;
                 .name(name)
                 .qualifiedName(generateQualifiedName(name, parentQualifiedName));
         String hierarchyQualifiedName = getHierarchyQualifiedName(parentQualifiedName);
-        if (hierarchyQualifiedName != parentQualifiedName) {
+        if (!hierarchyQualifiedName.equals(parentQualifiedName)) {
             String parentSlug = StringUtils.getNameFromQualifiedName(parentQualifiedName);
             String parentName = IMultiDimensionalDataset.getNameFromSlug(parentSlug);
             builder.cubeParentField(CubeField.refByQualifiedName(parentQualifiedName))
@@ -91,8 +91,6 @@ import java.util.regex.Pattern;
                 .qualifiedName(qualifiedName)
                 .name(name);
     }
-
-    private static final Pattern hierarchyQNPrefix = Pattern.compile("(default/[a-z0-9-]+/[0-9]{10}/[^~]*(~[^~]*){2}).*");
 
     /**
      * Extracts the unique name of the hierarchy from the qualified name of the CubeField's parent.

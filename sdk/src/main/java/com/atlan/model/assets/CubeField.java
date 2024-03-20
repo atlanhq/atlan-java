@@ -24,7 +24,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import javax.annotation.processing.Generated;
 import lombok.*;
@@ -513,7 +512,7 @@ public class CubeField extends Asset implements ICubeField, IMultiDimensionalDat
         CubeFieldBuilder<?, ?> builder =
                 CubeField._internal().name(name).qualifiedName(generateQualifiedName(name, parentQualifiedName));
         String hierarchyQualifiedName = getHierarchyQualifiedName(parentQualifiedName);
-        if (hierarchyQualifiedName != parentQualifiedName) {
+        if (!hierarchyQualifiedName.equals(parentQualifiedName)) {
             String parentSlug = StringUtils.getNameFromQualifiedName(parentQualifiedName);
             String parentName = IMultiDimensionalDataset.getNameFromSlug(parentSlug);
             builder.cubeParentField(CubeField.refByQualifiedName(parentQualifiedName))
@@ -555,9 +554,6 @@ public class CubeField extends Asset implements ICubeField, IMultiDimensionalDat
                 .qualifiedName(qualifiedName)
                 .name(name);
     }
-
-    private static final Pattern hierarchyQNPrefix =
-            Pattern.compile("(default/[a-z0-9-]+/[0-9]{10}/[^~]*(~[^~]*){2}).*");
 
     /**
      * Extracts the unique name of the hierarchy from the qualified name of the CubeField's parent.
