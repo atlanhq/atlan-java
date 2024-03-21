@@ -542,6 +542,7 @@ class CreateThenUpsertCABTest : PackageTest() {
     @AfterClass(alwaysRun = true)
     fun afterClass(context: ITestContext) {
         removeConnection(conn1, conn1Type)
+        Thread.sleep(5000) // Wait for deletion to sync before attempting to remove tags
         removeTag(tag1)
         removeTag(tag2)
         teardown(context.failedTests.size() > 0)
