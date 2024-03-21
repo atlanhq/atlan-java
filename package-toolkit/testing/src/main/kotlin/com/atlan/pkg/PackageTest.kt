@@ -29,6 +29,7 @@ import uk.org.webcompere.systemstubs.properties.SystemProperties
 import uk.org.webcompere.systemstubs.security.SystemExit
 import java.io.File
 import java.util.Random
+import java.util.concurrent.atomic.AtomicLong
 import kotlin.math.min
 import kotlin.math.round
 
@@ -181,7 +182,7 @@ abstract class PackageTest {
             'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
         )
         private const val PREFIX = "jpkg_"
-        private const val TAG_REMOVAL_RETRIES = 60
+        private const val TAG_REMOVAL_RETRIES = 30
 
         // Necessary combination to both (de)serialize Atlan objects (like connections)
         // and use the JsonProperty annotations inherent in the configuration data classes
@@ -226,6 +227,7 @@ abstract class PackageTest {
                 results.forEach {
                     val assets = client.assets.select(true)
                         .where(Asset.QUALIFIED_NAME.startsWith(it.qualifiedName))
+                        .whereNot(Asset.TYPE_NAME.eq(Connection.TYPE_NAME))
                         .pageSize(50)
                         .stream()
                         .map(Asset::getGuid)
@@ -238,14 +240,23 @@ abstract class PackageTest {
                         if (totalToDelete < 20) {
                             client.assets.delete(guidList, deletionType)
                         } else {
-                            for (i in 0..totalToDelete step 20) {
-                                logger.info { " ... next batch of 20 (${round((i.toDouble() / totalToDelete) * 100)}%)" }
-                                val sublist = guidList.subList(i, min(i + 20, totalToDelete))
-                                client.assets.delete(sublist, deletionType)
-                            }
+                            val currentCount = AtomicLong(0)
+                            guidList
+                                .asSequence()
+                                .chunked(20)
+                                .toList()
+                                .parallelStream()
+                                .forEach { batch ->
+                                    val i = currentCount.getAndAdd(20)
+                                    logger.info { " ... next batch of 20 (${round((i.toDouble() / totalToDelete) * 100)}%)" }
+                                    if (batch.isNotEmpty()) {
+                                        client.assets.delete(batch, deletionType)
+                                    }
+                                }
                         }
                     }
                     // Purge the connection itself, now that all assets are purged
+                    logger.info { " --- Purging connection: ${it.qualifiedName}... ---" }
                     client.assets.delete(it.guid, AtlanDeleteType.PURGE).block()
                 }
             }
