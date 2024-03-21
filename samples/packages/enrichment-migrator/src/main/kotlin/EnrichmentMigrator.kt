@@ -80,7 +80,8 @@ object EnrichmentMigrator {
                 sourceConnectionQN = sourceConnectionQN,
                 targetConnectionQN = targetConnectionQN,
             )
-            val transformedFile = "$outputDirectory${File.separator}CSA_EM_transformed_$index.csv"
+            val targetConnectionFilename = targetConnectionQN.replace("/", "_")
+            val transformedFile = "$outputDirectory${File.separator}CSA_EM_transformed_$targetConnectionFilename.csv"
             val transformer = Transformer(
                 ctx,
                 extractFile,

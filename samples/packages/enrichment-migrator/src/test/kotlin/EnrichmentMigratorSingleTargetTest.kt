@@ -34,7 +34,6 @@ class EnrichmentMigratorSingleTargetTest : PackageTest() {
     private val files = listOf(
         "asset-export.csv",
         "debug.log",
-        "CSA_EM_transformed_0.csv",
     )
 
     private fun createConnections() {
@@ -105,10 +104,14 @@ class EnrichmentMigratorSingleTargetTest : PackageTest() {
     fun datesOnTarget() {
         val targetConnection = Connection.findByName(c2, AtlanConnectorType.ESSBASE)[0]!!
         val client = Atlan.getDefaultClient()
-        Table.select()
+        val cmField = CustomMetadataField.of(client, cm1, "dateSingle")
+        val request = Table.select()
             .where(Table.QUALIFIED_NAME.startsWith(targetConnection.qualifiedName))
-            .includeOnResults(CustomMetadataField.of(client, cm1, "dateSingle"))
-            .stream()
+            .where(cmField.hasAnyValue())
+            .includeOnResults(cmField)
+            .toRequest()
+        val response = retrySearchUntil(request, 1)
+        response.stream()
             .forEach {
                 val cm = it.customMetadataSets
                 assertNotNull(cm)
@@ -122,6 +125,9 @@ class EnrichmentMigratorSingleTargetTest : PackageTest() {
     @Test
     fun filesCreated() {
         validateFilesExist(files)
+        val targetConnection = Connection.findByName(c2, AtlanConnectorType.ESSBASE)[0]!!
+        val filename = targetConnection.qualifiedName.replace("/", "_")
+        validateFilesExist(listOf("CSA_EM_transformed_$filename.csv"))
     }
 
     @Test
