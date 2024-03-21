@@ -27,8 +27,8 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10};
-var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
+var data = {"i0":10,"i1":9,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10};
+var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -247,7 +247,7 @@ implements <a href="AtlanAsyncMutator.html" title="interface in com.atlan.model.
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colSecond" scope="col">Method</th>
@@ -262,35 +262,44 @@ implements <a href="AtlanAsyncMutator.html" title="interface in com.atlan.model.
 </td>
 </tr>
 <tr id="i1" class="rowColor">
+<td class="colFirst"><code>static void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#blockForBackgroundTasks(com.atlan.AtlanClient,java.util.List,int)">blockForBackgroundTasks</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+                       java.util.List&lt;java.lang.String&gt;&nbsp;guids,
+                       int&nbsp;maxRetries)</code></th>
+<td class="colLast">
+<div class="block">Block until any pending or in-progress background tasks for the given guids are completed.</div>
+</td>
+</tr>
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>protected boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#canEqual(java.lang.Object)">canEqual</a></span>&#8203;(java.lang.Object&nbsp;other)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#equals(java.lang.Object)">equals</a></span>&#8203;(java.lang.Object&nbsp;o)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getClient()">getClient</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Connectivity to the Atlan tenant where the asset deletion was run.</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setClient(com.atlan.AtlanClient)">setClient</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)</code></th>
 <td class="colLast">
 <div class="block">Connectivity to the Atlan tenant where the asset deletion was run.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 </tr>
@@ -375,6 +384,29 @@ implements <a href="AtlanAsyncMutator.html" title="interface in com.atlan.model.
 <dd>the original mutation response, only after the changes are confirmed</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../exception/ApiException.html" title="class in com.atlan.exception">ApiException</a></code> - if the retry loop is interrupted or the maximum number of retries is hit</dd>
+</dl>
+</li>
+</ul>
+<a id="blockForBackgroundTasks(com.atlan.AtlanClient,java.util.List,int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>blockForBackgroundTasks</h4>
+<pre class="methodSignature">public static&nbsp;void&nbsp;blockForBackgroundTasks&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+                                           java.util.List&lt;java.lang.String&gt;&nbsp;guids,
+                                           int&nbsp;maxRetries)
+                                    throws java.lang.InterruptedException,
+                                           <a href="../../exception/ApiException.html" title="class in com.atlan.exception">ApiException</a></pre>
+<div class="block">Block until any pending or in-progress background tasks for the given guids are completed.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>client</code> - connectivity to the Atlan tenant on which to run the task checks</dd>
+<dd><code>guids</code> - list of guids to check for background tasks</dd>
+<dd><code>maxRetries</code> - maximum number of retries to wait for the background tasks to complete</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code>java.lang.InterruptedException</code> - if the retry loop is interrupted</dd>
+<dd><code><a href="../../exception/ApiException.html" title="class in com.atlan.exception">ApiException</a></code> - if the maximum number of retries is hit without the background tasks being completed</dd>
 </dl>
 </li>
 </ul>
