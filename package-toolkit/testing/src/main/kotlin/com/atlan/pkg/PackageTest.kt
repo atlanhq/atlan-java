@@ -181,7 +181,7 @@ abstract class PackageTest {
             'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
         )
         private const val PREFIX = "jpkg_"
-        private const val TAG_REMOVAL_RETRIES = 30
+        private const val TAG_REMOVAL_RETRIES = 60
 
         // Necessary combination to both (de)serialize Atlan objects (like connections)
         // and use the JsonProperty annotations inherent in the configuration data classes
