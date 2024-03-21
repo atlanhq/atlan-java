@@ -26,8 +26,6 @@ class EnrichmentMigratorMultipleTargetTest : PackageTest() {
     private val files = listOf(
         "asset-export.csv",
         "debug.log",
-        "CSA_EM_transformed_0.csv",
-        "CSA_EM_transformed_1.csv",
     )
 
     private fun createConnections() {
@@ -110,6 +108,11 @@ class EnrichmentMigratorMultipleTargetTest : PackageTest() {
     @Test
     fun filesCreated() {
         validateFilesExist(files)
+        val t1 = Connection.findByName(c2, AtlanConnectorType.ESSBASE)[0]!!
+        val t2 = Connection.findByName(c3, AtlanConnectorType.ESSBASE)[0]!!
+        val f1 = t1.qualifiedName.replace("/", "_")
+        val f2 = t2.qualifiedName.replace("/", "_")
+        validateFilesExist(listOf("CSA_EM_transformed_$f1.csv", "CSA_EM_transformed_$f2.csv"))
     }
 
     @Test
