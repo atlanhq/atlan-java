@@ -93,7 +93,7 @@ object ConnectionCache : AssetCache() {
      * Build a connection identity from its component parts.
      *
      * @param name of the connection
-     * @param type of the connector for the connection (as a string)
+     * @param type of the connector for the connection (as a valid connector type)
      * @return identity for the connection
      */
     fun getIdentityForAsset(name: String, type: AtlanConnectorType): String {
@@ -110,7 +110,12 @@ object ConnectionCache : AssetCache() {
         val map = mutableMapOf<AssetResolver.ConnectionIdentity, String>()
         listAll().forEach { connection ->
             connection as Connection
-            map[AssetResolver.ConnectionIdentity(connection.name, connection.connectorType.value)] = connection.qualifiedName
+            val connectorType = if (connection.connectorType == null) {
+                "(not enumerated)"
+            } else {
+                connection.connectorType.value
+            }
+            map[AssetResolver.ConnectionIdentity(connection.name, connectorType)] = connection.qualifiedName
         }
         return map
     }
