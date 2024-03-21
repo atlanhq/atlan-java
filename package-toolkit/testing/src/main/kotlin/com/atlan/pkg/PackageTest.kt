@@ -238,7 +238,7 @@ abstract class PackageTest {
                         val totalToDelete = guidList.size
                         logger.info { " --- Purging $totalToDelete assets from ${it.qualifiedName}... ---" }
                         if (totalToDelete < 20) {
-                            client.assets.delete(guidList, deletionType)
+                            client.assets.delete(guidList, deletionType).block()
                         } else {
                             val currentCount = AtomicLong(0)
                             guidList
@@ -250,7 +250,7 @@ abstract class PackageTest {
                                     val i = currentCount.getAndAdd(20)
                                     logger.info { " ... next batch of 20 (${round((i.toDouble() / totalToDelete) * 100)}%)" }
                                     if (batch.isNotEmpty()) {
-                                        client.assets.delete(batch, deletionType)
+                                        client.assets.delete(batch, deletionType).block()
                                     }
                                 }
                         }
