@@ -597,7 +597,7 @@ public class AssetBatch {
         private final Exception failureReason;
 
         public FailedBatch(List<Asset> failedAssets, Exception failureReason) {
-            this.failedAssets = Collections.unmodifiableList(failedAssets);
+            this.failedAssets = List.copyOf(failedAssets);
             this.failureReason = failureReason;
         }
     }
