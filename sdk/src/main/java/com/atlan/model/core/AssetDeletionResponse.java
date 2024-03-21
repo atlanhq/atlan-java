@@ -47,7 +47,7 @@ public class AssetDeletionResponse extends AssetMutationResponse implements Atla
             try {
                 retrieveAndCheck(toCheck, 0);
                 blockForBackgroundTasks(
-                    client, toCheck.stream().map(Asset::getGuid).collect(Collectors.toList()), MAX_ASYNC_RETRIES);
+                        client, toCheck.stream().map(Asset::getGuid).collect(Collectors.toList()), MAX_ASYNC_RETRIES);
             } catch (InterruptedException e) {
                 throw new ApiException(ErrorCode.RETRIES_INTERRUPTED, e);
             }
