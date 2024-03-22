@@ -3,6 +3,8 @@
 package com.atlan.pkg.ae.exports
 
 import com.atlan.Atlan
+import com.atlan.api.UsersEndpoint
+import com.atlan.model.admin.UserRequest
 import com.atlan.pkg.serde.cell.TimestampXformer
 import com.atlan.pkg.serde.xls.ExcelWriter
 import mu.KLogger
@@ -28,12 +30,23 @@ class Users(
                 "Last login" to "Last date and time when the user logged into Atlan",
                 "Personas" to "Personas assigned to the user",
                 "License type" to "Type of license assigned to the user",
+                "Designation" to "Designation of the user",
             ),
         )
         val client = Atlan.getDefaultClient()
-        client.users.list().forEach { user ->
+        val request = UserRequest.builder()
+            .columns(UsersEndpoint.DEFAULT_PROJECTIONS)
+            .column("profileRole")
+            .column("profileRoleOther")
+            .build()
+        client.users.list(request).forEach { user ->
             val personas = user.personas?.joinToString("\n") { it.displayName } ?: ""
             val groups = client.users.listGroups(user.id)?.records?.joinToString("\n") { it.name } ?: ""
+            val designation = if (user.attributes?.profileRole?.get(0) == "Other") {
+                user.attributes?.profileRoleOther?.get(0)
+            } else {
+                user.attributes?.profileRole?.get(0)
+            }
             xlsx.appendRow(
                 sheet,
                 listOf(
@@ -47,6 +60,7 @@ class Users(
                     TimestampXformer.encode(user.lastLoginTime),
                     personas,
                     user.workspaceRole,
+                    designation,
                 ),
             )
         }

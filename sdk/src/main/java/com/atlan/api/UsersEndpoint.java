@@ -20,7 +20,7 @@ import lombok.experimental.SuperBuilder;
  */
 public class UsersEndpoint extends HeraclesEndpoint {
 
-    private static final List<String> projections = List.of(
+    public static final List<String> DEFAULT_PROJECTIONS = List.of(
             "firstName",
             "lastName",
             "username",
@@ -157,7 +157,12 @@ public class UsersEndpoint extends HeraclesEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public UserResponse list(String filter, RequestOptions options) throws AtlanException {
-        return list(UserRequest.builder().filter(filter).columns(projections).build(), options);
+        return list(
+                UserRequest.builder()
+                        .filter(filter)
+                        .columns(DEFAULT_PROJECTIONS)
+                        .build(),
+                options);
     }
 
     /**
@@ -191,8 +196,12 @@ public class UsersEndpoint extends HeraclesEndpoint {
      */
     public List<AtlanUser> list(int pageSize, RequestOptions options) throws AtlanException {
         List<AtlanUser> users = new ArrayList<>();
-        UserResponse response =
-                list(UserRequest.builder().limit(pageSize).columns(projections).build(), options);
+        UserResponse response = list(
+                UserRequest.builder()
+                        .limit(pageSize)
+                        .columns(DEFAULT_PROJECTIONS)
+                        .build(),
+                options);
         if (response != null) {
             for (AtlanUser user : response) {
                 users.add(user);

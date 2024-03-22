@@ -469,7 +469,7 @@ public class AtlanUser extends AtlanObject {
     public static final class UserAttributes extends AtlanObject {
         private static final long serialVersionUID = 2L;
 
-        /** Designation for the user, such as an honorific or title. */
+        /** (Unused) */
         List<String> designation;
 
         /** Skills the user possesses. */
@@ -489,6 +489,12 @@ public class AtlanUser extends AtlanObject {
 
         /** TBC */
         List<String> invitedByName;
+
+        /** User-provided role during initial registration. */
+        List<String> profileRole;
+
+        /** User-provided role during initial registration when profileRole is "other". */
+        List<String> profileRoleOther;
     }
 
     /**
