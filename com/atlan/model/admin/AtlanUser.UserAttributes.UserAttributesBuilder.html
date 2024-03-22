@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":6,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":6,"i8":10,"i9":10,"i10":10};
+var data = {"i0":10,"i1":6,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":6,"i10":10,"i11":10,"i12":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -197,7 +197,7 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <td class="colFirst"><code><a href="AtlanUser.UserAttributes.UserAttributesBuilder.html" title="type parameter in AtlanUser.UserAttributes.UserAttributesBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#designation(java.util.List)">designation</a></span>&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;designation)</code></th>
 <td class="colLast">
-<div class="block">Designation for the user, such as an honorific or title.</div>
+<div class="block">(Unused)</div>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
@@ -229,25 +229,39 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 </td>
 </tr>
 <tr id="i7" class="rowColor">
+<td class="colFirst"><code><a href="AtlanUser.UserAttributes.UserAttributesBuilder.html" title="type parameter in AtlanUser.UserAttributes.UserAttributesBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#profileRole(java.util.List)">profileRole</a></span>&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;profileRole)</code></th>
+<td class="colLast">
+<div class="block">User-provided role during initial registration.</div>
+</td>
+</tr>
+<tr id="i8" class="altColor">
+<td class="colFirst"><code><a href="AtlanUser.UserAttributes.UserAttributesBuilder.html" title="type parameter in AtlanUser.UserAttributes.UserAttributesBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#profileRoleOther(java.util.List)">profileRoleOther</a></span>&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;profileRoleOther)</code></th>
+<td class="colLast">
+<div class="block">User-provided role during initial registration when profileRole is "other".</div>
+</td>
+</tr>
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>protected abstract <a href="AtlanUser.UserAttributes.UserAttributesBuilder.html" title="type parameter in AtlanUser.UserAttributes.UserAttributesBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#self()">self</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code><a href="AtlanUser.UserAttributes.UserAttributesBuilder.html" title="type parameter in AtlanUser.UserAttributes.UserAttributesBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#skills(java.util.List)">skills</a></span>&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;skills)</code></th>
 <td class="colLast">
 <div class="block">Skills the user possesses.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code><a href="AtlanUser.UserAttributes.UserAttributesBuilder.html" title="type parameter in AtlanUser.UserAttributes.UserAttributesBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#slack(java.util.List)">slack</a></span>&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;slack)</code></th>
 <td class="colLast">
 <div class="block">Unique Slack member identifier.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
@@ -317,7 +331,7 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <li class="blockList">
 <h4>designation</h4>
 <pre class="methodSignature">public&nbsp;<a href="AtlanUser.UserAttributes.UserAttributesBuilder.html" title="type parameter in AtlanUser.UserAttributes.UserAttributesBuilder">B</a>&nbsp;designation&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;designation)</pre>
-<div class="block">Designation for the user, such as an honorific or title.</div>
+<div class="block">(Unused)</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -402,6 +416,34 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <h4>invitedByName</h4>
 <pre class="methodSignature">public&nbsp;<a href="AtlanUser.UserAttributes.UserAttributesBuilder.html" title="type parameter in AtlanUser.UserAttributes.UserAttributesBuilder">B</a>&nbsp;invitedByName&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;invitedByName)</pre>
 <div class="block">TBC</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="profileRole(java.util.List)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>profileRole</h4>
+<pre class="methodSignature">public&nbsp;<a href="AtlanUser.UserAttributes.UserAttributesBuilder.html" title="type parameter in AtlanUser.UserAttributes.UserAttributesBuilder">B</a>&nbsp;profileRole&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;profileRole)</pre>
+<div class="block">User-provided role during initial registration.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="profileRoleOther(java.util.List)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>profileRoleOther</h4>
+<pre class="methodSignature">public&nbsp;<a href="AtlanUser.UserAttributes.UserAttributesBuilder.html" title="type parameter in AtlanUser.UserAttributes.UserAttributesBuilder">B</a>&nbsp;profileRoleOther&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;profileRoleOther)</pre>
+<div class="block">User-provided role during initial registration when profileRole is "other".</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>

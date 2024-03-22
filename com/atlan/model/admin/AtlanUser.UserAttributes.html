@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10};
+var data = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -242,7 +242,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <td class="colFirst"><code>java.util.List&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDesignation()">getDesignation</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Designation for the user, such as an honorific or title.</div>
+<div class="block">(Unused)</div>
 </td>
 </tr>
 <tr id="i4" class="altColor">
@@ -275,29 +275,43 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>java.util.List&lt;java.lang.String&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getProfileRole()">getProfileRole</a></span>()</code></th>
+<td class="colLast">
+<div class="block">User-provided role during initial registration.</div>
+</td>
+</tr>
+<tr id="i9" class="rowColor">
+<td class="colFirst"><code>java.util.List&lt;java.lang.String&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getProfileRoleOther()">getProfileRoleOther</a></span>()</code></th>
+<td class="colLast">
+<div class="block">User-provided role during initial registration when profileRole is "other".</div>
+</td>
+</tr>
+<tr id="i10" class="altColor">
+<td class="colFirst"><code>java.util.List&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSkills()">getSkills</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Skills the user possesses.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>java.util.List&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSlack()">getSlack</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Unique Slack member identifier.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code><a href="AtlanUser.UserAttributes.UserAttributesBuilder.html" title="class in com.atlan.model.admin">AtlanUser.UserAttributes.UserAttributesBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toBuilder()">toBuilder</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 </tr>
@@ -376,7 +390,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <li class="blockList">
 <h4>getDesignation</h4>
 <pre class="methodSignature">public&nbsp;java.util.List&lt;java.lang.String&gt;&nbsp;getDesignation()</pre>
-<div class="block">Designation for the user, such as an honorific or title.</div>
+<div class="block">(Unused)</div>
 </li>
 </ul>
 <a id="getSkills()">
@@ -437,6 +451,26 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <h4>getInvitedByName</h4>
 <pre class="methodSignature">public&nbsp;java.util.List&lt;java.lang.String&gt;&nbsp;getInvitedByName()</pre>
 <div class="block">TBC</div>
+</li>
+</ul>
+<a id="getProfileRole()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getProfileRole</h4>
+<pre class="methodSignature">public&nbsp;java.util.List&lt;java.lang.String&gt;&nbsp;getProfileRole()</pre>
+<div class="block">User-provided role during initial registration.</div>
+</li>
+</ul>
+<a id="getProfileRoleOther()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getProfileRoleOther</h4>
+<pre class="methodSignature">public&nbsp;java.util.List&lt;java.lang.String&gt;&nbsp;getProfileRoleOther()</pre>
+<div class="block">User-provided role during initial registration when profileRole is "other".</div>
 </li>
 </ul>
 <a id="equals(java.lang.Object)">
