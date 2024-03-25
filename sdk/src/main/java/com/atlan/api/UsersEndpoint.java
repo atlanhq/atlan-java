@@ -9,7 +9,9 @@ import com.atlan.model.core.AtlanObject;
 import com.atlan.net.ApiResource;
 import com.atlan.net.RequestOptions;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Singular;
@@ -247,6 +249,40 @@ public class UsersEndpoint extends HeraclesEndpoint {
     }
 
     /**
+     * Retrieves all users with the email addresses provided.
+     *
+     * @param emails list of email addresses for which to retrieve users
+     * @return all users who have one of the provided email addresses
+     * @throws AtlanException on any error during API invocation
+     */
+    public List<AtlanUser> getByEmails(List<String> emails) throws AtlanException {
+        return getByEmails(emails, null);
+    }
+
+    /**
+     * Retrieves all users with the email addresses provided.
+     *
+     * @param emails list of email addresses for which to retrieve users
+     * @param options to override default client settings
+     * @return all users who have one of the provided email addresses
+     * @throws AtlanException on any error during API invocation
+     */
+    public List<AtlanUser> getByEmails(List<String> emails, RequestOptions options) throws AtlanException {
+        String emailList;
+        if (emails == null || emails.isEmpty()) {
+            emailList = "[\"\"]";
+        } else {
+            emailList = "[" + emails.stream().map(u -> "\"" + u + "\"").collect(Collectors.joining(",")) + "]";
+        }
+        UserResponse response = list("{\"email\":{\"$in\":" + emailList + "}}", options);
+        if (response != null && response.getRecords() != null) {
+            return response.getRecords();
+        } else {
+            return Collections.emptyList();
+        }
+    }
+
+    /**
      * Retrieves a user based on the username. (This attempts an exact match on username rather than a
      * contains search.)
      *
@@ -273,6 +309,42 @@ public class UsersEndpoint extends HeraclesEndpoint {
             return response.getRecords().get(0);
         } else {
             return null;
+        }
+    }
+
+    /**
+     * Retrieves users based on a list of usernames. (This attempts an exact match on username rather than a
+     * contains search.)
+     *
+     * @param users the usernames by which to find the users
+     * @return the users with one of those usernames
+     * @throws AtlanException on any error during API invocation
+     */
+    public List<AtlanUser> getByUsernames(List<String> users) throws AtlanException {
+        return getByUsernames(users, null);
+    }
+
+    /**
+     * Retrieves users based on a list of usernames. (This attempts an exact match on username rather than a
+     * contains search.)
+     *
+     * @param users the usernames by which to find the users
+     * @param options to override default client settings
+     * @return the users with one of those usernames
+     * @throws AtlanException on any error during API invocation
+     */
+    public List<AtlanUser> getByUsernames(List<String> users, RequestOptions options) throws AtlanException {
+        String userList;
+        if (users == null || users.isEmpty()) {
+            userList = "[\"\"]";
+        } else {
+            userList = "[" + users.stream().map(u -> "\"" + u + "\"").collect(Collectors.joining(",")) + "]";
+        }
+        UserResponse response = list("{\"username\":{\"$in\":" + userList + "}}", options);
+        if (response != null && response.getRecords() != null) {
+            return response.getRecords();
+        } else {
+            return Collections.emptyList();
         }
     }
 
@@ -341,7 +413,7 @@ public class UsersEndpoint extends HeraclesEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public void create(AtlanUser user) throws AtlanException {
-        create(user, null);
+        create(user, (RequestOptions) null);
     }
 
     /**
@@ -353,6 +425,36 @@ public class UsersEndpoint extends HeraclesEndpoint {
      */
     public void create(AtlanUser user, RequestOptions options) throws AtlanException {
         create(List.of(user), options);
+    }
+
+    /**
+     * Create a new user.
+     *
+     * @param user the details of the new user
+     * @param returnUser if true, lookup and return the created user as well
+     * @return the created user
+     * @throws AtlanException on any API communication issue
+     */
+    public AtlanUser create(AtlanUser user, boolean returnUser) throws AtlanException {
+        return create(user, returnUser, null);
+    }
+
+    /**
+     * Create a new user.
+     *
+     * @param user the details of the new user
+     * @param returnUser if true, lookup and return the created user as well
+     * @param options to override default client settings
+     * @return the created user
+     * @throws AtlanException on any API communication issue
+     */
+    public AtlanUser create(AtlanUser user, boolean returnUser, RequestOptions options) throws AtlanException {
+        create(List.of(user), options);
+        if (returnUser) {
+            return getByUsername(user.getUsername());
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -384,6 +486,37 @@ public class UsersEndpoint extends HeraclesEndpoint {
                     .build());
         }
         ApiResource.request(client, ApiResource.RequestMethod.POST, url, cur.build(), options);
+    }
+
+    /**
+     * Create multiple new users.
+     *
+     * @param users the details of the new users
+     * @param returnUsers if true, lookup and return the created users as well
+     * @return the created users
+     * @throws AtlanException on any API communication issue
+     */
+    public List<AtlanUser> create(List<AtlanUser> users, boolean returnUsers) throws AtlanException {
+        return create(users, returnUsers, null);
+    }
+
+    /**
+     * Create multiple new users.
+     *
+     * @param users the details of the new users
+     * @param returnUsers if true, lookup and return the created users as well
+     * @param options to override default client settings
+     * @return the created users
+     * @throws AtlanException on any API communication issue
+     */
+    public List<AtlanUser> create(List<AtlanUser> users, boolean returnUsers, RequestOptions options)
+            throws AtlanException {
+        create(users, options);
+        if (returnUsers) {
+            return getByUsernames(users.stream().map(AtlanUser::getUsername).collect(Collectors.toList()), options);
+        } else {
+            return Collections.emptyList();
+        }
     }
 
     /**

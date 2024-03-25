@@ -122,6 +122,31 @@ public class AtlanUser extends AtlanObject {
     }
 
     /**
+     * Send this user to Atlan to create the user in Atlan, and return the created user.
+     * Note: this will make 2 API calls, one to create the user and a second to retrieve the created user.
+     *
+     * @param returnUser whether to return the created user (true) or not (false)
+     * @return the created user
+     * @throws AtlanException on any error during API invocation
+     */
+    public AtlanUser create(boolean returnUser) throws AtlanException {
+        return create(Atlan.getDefaultClient(), returnUser);
+    }
+
+    /**
+     * Send this user to Atlan to create the user in Atlan, and return the created user.
+     * Note: this will make 2 API calls, one to create the user and a second to retrieve the created user.
+     *
+     * @param client connectivity to the Atlan tenant on which to create the user
+     * @param returnUser whether to return the created user (true) or not (false)
+     * @return the created user
+     * @throws AtlanException on any error during API invocation
+     */
+    public AtlanUser create(AtlanClient client, boolean returnUser) throws AtlanException {
+        return client.users.create(this, returnUser);
+    }
+
+    /**
      * Send this user to Atlan to update the user in Atlan.
      * Note: you can only update users that have already signed up to Atlan. Users that are
      * only invited (but have not yet logged in) cannot be updated.

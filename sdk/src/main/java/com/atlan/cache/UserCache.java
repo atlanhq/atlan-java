@@ -39,8 +39,10 @@ public class UserCache extends AbstractMassCache {
             String userId = user.getId();
             String userName = user.getUsername();
             String email = user.getEmail();
-            cache(userId, userName);
-            mapEmailToId.put(email, userId);
+            if (userId != null && userName != null && email != null) {
+                cache(userId, userName);
+                mapEmailToId.put(email, userId);
+            }
         }
     }
 
