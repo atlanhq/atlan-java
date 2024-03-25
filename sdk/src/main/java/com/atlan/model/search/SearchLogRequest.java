@@ -37,6 +37,8 @@ import lombok.extern.jackson.Jacksonized;
 public class SearchLogRequest extends AtlanObject {
     private static final long serialVersionUID = 2L;
 
+    public static final List<String> EXCLUDE_USERS = List.of("support", "atlansupport");
+
     public static final Query VIEWED = FluentSearch.builder()
             .whereSome(SearchLogEntry.UTM_TAGS.eq(UTMTags.UI_PROFILE))
             .whereSome(SearchLogEntry.UTM_TAGS.eq(UTMTags.UI_SIDEBAR))
@@ -73,9 +75,24 @@ public class SearchLogRequest extends AtlanObject {
      * @return a request builder pre-configured with these criteria
      */
     public static SearchLogRequestBuilder<?, ?> views() {
+        return views(null);
+    }
+
+    /**
+     * Start building a search log request for the views of assets.
+     *
+     * @param excludeUsers list of usernames to exclude from the results
+     * @return a request builder pre-configured with these criteria
+     */
+    public static SearchLogRequestBuilder<?, ?> views(List<String> excludeUsers) {
+        List<String> exclusion = new ArrayList<>(EXCLUDE_USERS);
+        if (excludeUsers != null) {
+            exclusion.addAll(excludeUsers);
+        }
         Query viewedByGuid = FluentSearch.builder()
                 .where(SearchLogEntry.UTM_TAGS.eq(UTMTags.ACTION_ASSET_VIEWED))
                 .where(VIEWED)
+                .whereNot(SearchLogEntry.USER.in(exclusion))
                 .build()
                 .toQuery();
         return SearchLogRequest.builder(viewedByGuid);
@@ -88,10 +105,26 @@ public class SearchLogRequest extends AtlanObject {
      * @return a request builder pre-configured with these criteria
      */
     public static SearchLogRequestBuilder<?, ?> viewsByGuid(String guid) {
+        return viewsByGuid(guid, null);
+    }
+
+    /**
+     * Start building a search log request for the views of an asset, by its GUID.
+     *
+     * @param guid unique identifier of the asset for which to retrieve the view history
+     * @param excludeUsers list of usernames to exclude from the results
+     * @return a request builder pre-configured with these criteria
+     */
+    public static SearchLogRequestBuilder<?, ?> viewsByGuid(String guid, List<String> excludeUsers) {
+        List<String> exclusion = new ArrayList<>(EXCLUDE_USERS);
+        if (excludeUsers != null) {
+            exclusion.addAll(excludeUsers);
+        }
         Query viewedByGuid = FluentSearch.builder()
                 .where(SearchLogEntry.UTM_TAGS.eq(UTMTags.ACTION_ASSET_VIEWED))
                 .where(SearchLogEntry.ENTITY_ID.eq(guid))
                 .where(VIEWED)
+                .whereNot(SearchLogEntry.USER.in(exclusion))
                 .build()
                 .toQuery();
         return SearchLogRequest.builder(viewedByGuid);
@@ -106,7 +139,21 @@ public class SearchLogRequest extends AtlanObject {
      * @throws AtlanException on any issues interacting with the Atlan APIs
      */
     public static List<UserViews> mostRecentViewers(String guid, int maxUsers) throws AtlanException {
-        return mostRecentViewers(Atlan.getDefaultClient(), guid, maxUsers);
+        return mostRecentViewers(guid, maxUsers, null);
+    }
+
+    /**
+     * Find the most recent viewers of the asset in Atlan.
+     *
+     * @param guid of the asset
+     * @param maxUsers maximum number of recent users to consider
+     * @param excludeUsers list of usernames to exclude from the results
+     * @return the list of users that most-recently viewed the asset, in descending order (most-recently viewed first)
+     * @throws AtlanException on any issues interacting with the Atlan APIs
+     */
+    public static List<UserViews> mostRecentViewers(String guid, int maxUsers, List<String> excludeUsers)
+            throws AtlanException {
+        return mostRecentViewers(Atlan.getDefaultClient(), guid, maxUsers, excludeUsers);
     }
 
     /**
@@ -120,12 +167,27 @@ public class SearchLogRequest extends AtlanObject {
      */
     public static List<UserViews> mostRecentViewers(AtlanClient client, String guid, int maxUsers)
             throws AtlanException {
+        return mostRecentViewers(client, guid, maxUsers, null);
+    }
+
+    /**
+     * Find the most recent viewers of the asset in Atlan.
+     *
+     * @param client connectivity to the Atlan tenant on which to run the search
+     * @param guid of the asset
+     * @param maxUsers maximum number of recent users to consider
+     * @param excludeUsers list of usernames to exclude from the results
+     * @return the list of users that most-recently viewed the asset, in descending order (most-recently viewed first)
+     * @throws AtlanException on any issues interacting with the Atlan APIs
+     */
+    public static List<UserViews> mostRecentViewers(
+            AtlanClient client, String guid, int maxUsers, List<String> excludeUsers) throws AtlanException {
         List<UserViews> list = new ArrayList<>();
         Aggregation byUser = SearchLogEntry.USER.bucketBy(
                 maxUsers,
                 Map.of("latestTimestamp", SearchLogEntry.SEARCHED_AT.max()),
                 List.of(NamedValue.of("latestTimestamp", SortOrder.Desc)));
-        SearchLogRequest request = viewsByGuid(guid)
+        SearchLogRequest request = viewsByGuid(guid, excludeUsers)
                 .aggregation("uniqueUsers", byUser)
                 .aggregation("totalDistinctUsers", SearchLogEntry.USER.distinct(1000))
                 .pageSize(0) // Do not need the detailed results, only the aggregates
@@ -155,7 +217,21 @@ public class SearchLogRequest extends AtlanObject {
      * @throws AtlanException on any issues interacting with the Atlan APIs
      */
     public static List<AssetViews> mostViewedAssets(int maxAssets, boolean byDifferentUsers) throws AtlanException {
-        return mostViewedAssets(Atlan.getDefaultClient(), maxAssets, byDifferentUsers);
+        return mostViewedAssets(maxAssets, byDifferentUsers, null);
+    }
+
+    /**
+     * Find the most-viewed assets in Atlan.
+     *
+     * @param maxAssets maximum number of assets to consider
+     * @param byDifferentUsers when true, will consider assets viewed by more users as more important than total view count, otherwise will consider total view count most important
+     * @param excludeUsers list of usernames to exclude from the results
+     * @return the list of assets that are most-viewed, in descending order (most-viewed first)
+     * @throws AtlanException on any issues interacting with the Atlan APIs
+     */
+    public static List<AssetViews> mostViewedAssets(int maxAssets, boolean byDifferentUsers, List<String> excludeUsers)
+            throws AtlanException {
+        return mostViewedAssets(Atlan.getDefaultClient(), maxAssets, byDifferentUsers, excludeUsers);
     }
 
     /**
@@ -169,6 +245,22 @@ public class SearchLogRequest extends AtlanObject {
      */
     public static List<AssetViews> mostViewedAssets(AtlanClient client, int maxAssets, boolean byDifferentUsers)
             throws AtlanException {
+        return mostViewedAssets(client, maxAssets, byDifferentUsers, null);
+    }
+
+    /**
+     * Find the most-viewed assets in Atlan.
+     *
+     * @param client connectivity to the Atlan tenant on which to run the search
+     * @param maxAssets maximum number of assets to consider
+     * @param byDifferentUsers when true, will consider assets viewed by more users as more important than total view count, otherwise will consider total view count most important
+     * @param excludeUsers list of usernames to exclude from the results
+     * @return the list of assets that are most-viewed, in descending order (most-viewed first)
+     * @throws AtlanException on any issues interacting with the Atlan APIs
+     */
+    public static List<AssetViews> mostViewedAssets(
+            AtlanClient client, int maxAssets, boolean byDifferentUsers, List<String> excludeUsers)
+            throws AtlanException {
         List<AssetViews> list = new ArrayList<>();
         List<NamedValue<SortOrder>> sort = null;
         if (byDifferentUsers) {
@@ -176,7 +268,8 @@ public class SearchLogRequest extends AtlanObject {
         }
         Aggregation byGuid = SearchLogEntry.ENTITY_ID.bucketBy(
                 maxAssets, Map.of("uniqueUsers", SearchLogEntry.USER.distinct(1000)), sort);
-        SearchLogRequest request = views().aggregation("uniqueAssets", byGuid)
+        SearchLogRequest request = views(excludeUsers)
+                .aggregation("uniqueAssets", byGuid)
                 .aggregation("totalDistinctUsers", SearchLogEntry.USER.distinct(1000))
                 .pageSize(1) // Do not need the detailed results, only the aggregates
                 .build();
