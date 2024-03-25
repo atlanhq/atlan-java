@@ -20,6 +20,7 @@ import com.atlan.model.typedefs.*;
 import com.atlan.net.HttpClient;
 import com.atlan.net.RequestOptions;
 import java.util.*;
+import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.Test;
 
@@ -282,6 +283,28 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertFalse(one.getOptions().getMultiValueSelect());
         assertEquals(one.getOptions().getPrimitiveType(), AtlanCustomAttributePrimitiveType.OPTIONS);
         assertEquals(one.getOptions().getEnumType(), CM_ENUM_DQ_TYPE);
+    }
+
+    @Test(
+            groups = {"cm.update.cm.dq"},
+            dependsOnGroups = {"cm.create.cm.dq", "cm.update.term.add.dq"})
+    void updateCustomMetadataDQ() throws AtlanException {
+        EnumDef enumDef = EnumDef.updater(
+                        Atlan.getDefaultClient(), CM_ENUM_DQ_TYPE, List.of("Accuracy", "Awesomeness"), false)
+                .build();
+        assertNotNull(enumDef);
+        EnumDef updated = enumDef.update();
+        assertNotNull(updated);
+        assertEquals(updated.getCategory(), AtlanTypeCategory.ENUM);
+        assertNotNull(updated.getName());
+        assertEquals(updated.getName(), CM_ENUM_DQ_TYPE);
+        assertNotNull(updated.getElementDefs());
+        assertEquals(updated.getElementDefs().size(), 7);
+        List<String> values = updated.getElementDefs().stream()
+                .map(EnumDef.ElementDef::getValue)
+                .collect(Collectors.toList());
+        assertTrue(values.contains("Awesomeness"));
+        assertTrue(values.contains("Accuracy"));
     }
 
     @Test(
