@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":42,"i1":42,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":42,"i11":42,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10};
+var data = {"i0":42,"i1":42,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":42,"i15":42,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10,"i37":10,"i38":10,"i39":10,"i40":10,"i41":10,"i42":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -276,6 +276,23 @@ extends <a href="HeraclesEndpoint.html" title="class in com.atlan.api">HeraclesE
 </td>
 </tr>
 <tr id="i7" class="rowColor">
+<td class="colFirst"><code><a href="../model/admin/AtlanUser.html" title="class in com.atlan.model.admin">AtlanUser</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#create(com.atlan.model.admin.AtlanUser,boolean)">create</a></span>&#8203;(<a href="../model/admin/AtlanUser.html" title="class in com.atlan.model.admin">AtlanUser</a>&nbsp;user,
+      boolean&nbsp;returnUser)</code></th>
+<td class="colLast">
+<div class="block">Create a new user.</div>
+</td>
+</tr>
+<tr id="i8" class="altColor">
+<td class="colFirst"><code><a href="../model/admin/AtlanUser.html" title="class in com.atlan.model.admin">AtlanUser</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#create(com.atlan.model.admin.AtlanUser,boolean,com.atlan.net.RequestOptions)">create</a></span>&#8203;(<a href="../model/admin/AtlanUser.html" title="class in com.atlan.model.admin">AtlanUser</a>&nbsp;user,
+      boolean&nbsp;returnUser,
+      <a href="../net/RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)</code></th>
+<td class="colLast">
+<div class="block">Create a new user.</div>
+</td>
+</tr>
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#create(com.atlan.model.admin.AtlanUser,com.atlan.net.RequestOptions)">create</a></span>&#8203;(<a href="../model/admin/AtlanUser.html" title="class in com.atlan.model.admin">AtlanUser</a>&nbsp;user,
       <a href="../net/RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)</code></th>
@@ -283,14 +300,31 @@ extends <a href="HeraclesEndpoint.html" title="class in com.atlan.api">HeraclesE
 <div class="block">Create a new user.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#create(java.util.List)">create</a></span>&#8203;(java.util.List&lt;<a href="../model/admin/AtlanUser.html" title="class in com.atlan.model.admin">AtlanUser</a>&gt;&nbsp;users)</code></th>
 <td class="colLast">
 <div class="block">Create multiple new users.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i11" class="rowColor">
+<td class="colFirst"><code>java.util.List&lt;<a href="../model/admin/AtlanUser.html" title="class in com.atlan.model.admin">AtlanUser</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#create(java.util.List,boolean)">create</a></span>&#8203;(java.util.List&lt;<a href="../model/admin/AtlanUser.html" title="class in com.atlan.model.admin">AtlanUser</a>&gt;&nbsp;users,
+      boolean&nbsp;returnUsers)</code></th>
+<td class="colLast">
+<div class="block">Create multiple new users.</div>
+</td>
+</tr>
+<tr id="i12" class="altColor">
+<td class="colFirst"><code>java.util.List&lt;<a href="../model/admin/AtlanUser.html" title="class in com.atlan.model.admin">AtlanUser</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#create(java.util.List,boolean,com.atlan.net.RequestOptions)">create</a></span>&#8203;(java.util.List&lt;<a href="../model/admin/AtlanUser.html" title="class in com.atlan.model.admin">AtlanUser</a>&gt;&nbsp;users,
+      boolean&nbsp;returnUsers,
+      <a href="../net/RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)</code></th>
+<td class="colLast">
+<div class="block">Create multiple new users.</div>
+</td>
+</tr>
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#create(java.util.List,com.atlan.net.RequestOptions)">create</a></span>&#8203;(java.util.List&lt;<a href="../model/admin/AtlanUser.html" title="class in com.atlan.model.admin">AtlanUser</a>&gt;&nbsp;users,
       <a href="../net/RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)</code></th>
@@ -298,7 +332,7 @@ extends <a href="HeraclesEndpoint.html" title="class in com.atlan.api">HeraclesE
 <div class="block">Create multiple new users.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code><a href="../model/admin/UserMinimalResponse.html" title="class in com.atlan.model.admin">UserMinimalResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#deactivate(java.lang.String)">deactivate</a></span>&#8203;(java.lang.String&nbsp;id)</code></th>
 <td class="colLast">
@@ -307,7 +341,7 @@ extends <a href="HeraclesEndpoint.html" title="class in com.atlan.api">HeraclesE
 </div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code><a href="../model/admin/UserMinimalResponse.html" title="class in com.atlan.model.admin">UserMinimalResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#deactivate(java.lang.String,com.atlan.net.RequestOptions)">deactivate</a></span>&#8203;(java.lang.String&nbsp;id,
           <a href="../net/RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)</code></th>
@@ -317,14 +351,14 @@ extends <a href="HeraclesEndpoint.html" title="class in com.atlan.api">HeraclesE
 </div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="../model/admin/AtlanUser.html" title="class in com.atlan.model.admin">AtlanUser</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getByEmail(java.lang.String)">getByEmail</a></span>&#8203;(java.lang.String&nbsp;email)</code></th>
 <td class="colLast">
 <div class="block">Retrieves all users with email addresses that contain the provided email.</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="../model/admin/AtlanUser.html" title="class in com.atlan.model.admin">AtlanUser</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getByEmail(java.lang.String,com.atlan.net.RequestOptions)">getByEmail</a></span>&#8203;(java.lang.String&nbsp;email,
           <a href="../net/RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)</code></th>
@@ -332,14 +366,29 @@ extends <a href="HeraclesEndpoint.html" title="class in com.atlan.api">HeraclesE
 <div class="block">Retrieves all users with email addresses that contain the provided email.</div>
 </td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i18" class="altColor">
+<td class="colFirst"><code>java.util.List&lt;<a href="../model/admin/AtlanUser.html" title="class in com.atlan.model.admin">AtlanUser</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getByEmails(java.util.List)">getByEmails</a></span>&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;emails)</code></th>
+<td class="colLast">
+<div class="block">Retrieves all users with the email addresses provided.</div>
+</td>
+</tr>
+<tr id="i19" class="rowColor">
+<td class="colFirst"><code>java.util.List&lt;<a href="../model/admin/AtlanUser.html" title="class in com.atlan.model.admin">AtlanUser</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getByEmails(java.util.List,com.atlan.net.RequestOptions)">getByEmails</a></span>&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;emails,
+           <a href="../net/RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)</code></th>
+<td class="colLast">
+<div class="block">Retrieves all users with the email addresses provided.</div>
+</td>
+</tr>
+<tr id="i20" class="altColor">
 <td class="colFirst"><code><a href="../model/admin/AtlanUser.html" title="class in com.atlan.model.admin">AtlanUser</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getByUsername(java.lang.String)">getByUsername</a></span>&#8203;(java.lang.String&nbsp;user)</code></th>
 <td class="colLast">
 <div class="block">Retrieves a user based on the username.</div>
 </td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i21" class="rowColor">
 <td class="colFirst"><code><a href="../model/admin/AtlanUser.html" title="class in com.atlan.model.admin">AtlanUser</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getByUsername(java.lang.String,com.atlan.net.RequestOptions)">getByUsername</a></span>&#8203;(java.lang.String&nbsp;user,
              <a href="../net/RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)</code></th>
@@ -347,28 +396,43 @@ extends <a href="HeraclesEndpoint.html" title="class in com.atlan.api">HeraclesE
 <div class="block">Retrieves a user based on the username.</div>
 </td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i22" class="altColor">
+<td class="colFirst"><code>java.util.List&lt;<a href="../model/admin/AtlanUser.html" title="class in com.atlan.model.admin">AtlanUser</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getByUsernames(java.util.List)">getByUsernames</a></span>&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;users)</code></th>
+<td class="colLast">
+<div class="block">Retrieves users based on a list of usernames.</div>
+</td>
+</tr>
+<tr id="i23" class="rowColor">
+<td class="colFirst"><code>java.util.List&lt;<a href="../model/admin/AtlanUser.html" title="class in com.atlan.model.admin">AtlanUser</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getByUsernames(java.util.List,com.atlan.net.RequestOptions)">getByUsernames</a></span>&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;users,
+              <a href="../net/RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)</code></th>
+<td class="colLast">
+<div class="block">Retrieves users based on a list of usernames.</div>
+</td>
+</tr>
+<tr id="i24" class="altColor">
 <td class="colFirst"><code><a href="../model/admin/UserMinimalResponse.html" title="class in com.atlan.model.admin">UserMinimalResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCurrentUser()">getCurrentUser</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Retrieve the current user (representing the API token).</div>
 </td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i25" class="rowColor">
 <td class="colFirst"><code><a href="../model/admin/UserMinimalResponse.html" title="class in com.atlan.model.admin">UserMinimalResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCurrentUser(com.atlan.net.RequestOptions)">getCurrentUser</a></span>&#8203;(<a href="../net/RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)</code></th>
 <td class="colLast">
 <div class="block">Retrieve the current user (representing the API token).</div>
 </td>
 </tr>
-<tr id="i18" class="altColor">
+<tr id="i26" class="altColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="../model/admin/AtlanUser.html" title="class in com.atlan.model.admin">AtlanUser</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#list()">list</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Retrieve all users defined in Atlan.</div>
 </td>
 </tr>
-<tr id="i19" class="rowColor">
+<tr id="i27" class="rowColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="../model/admin/AtlanUser.html" title="class in com.atlan.model.admin">AtlanUser</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#list(int,com.atlan.net.RequestOptions)">list</a></span>&#8203;(int&nbsp;pageSize,
     <a href="../net/RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)</code></th>
@@ -376,14 +440,14 @@ extends <a href="HeraclesEndpoint.html" title="class in com.atlan.api">HeraclesE
 <div class="block">Retrieve all users defined in Atlan.</div>
 </td>
 </tr>
-<tr id="i20" class="altColor">
+<tr id="i28" class="altColor">
 <td class="colFirst"><code><a href="../model/admin/UserResponse.html" title="class in com.atlan.model.admin">UserResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#list(com.atlan.model.admin.UserRequest)">list</a></span>&#8203;(<a href="../model/admin/UserRequest.html" title="class in com.atlan.model.admin">UserRequest</a>&nbsp;request)</code></th>
 <td class="colLast">
 <div class="block">Retrieve users defined in Atlan.</div>
 </td>
 </tr>
-<tr id="i21" class="rowColor">
+<tr id="i29" class="rowColor">
 <td class="colFirst"><code><a href="../model/admin/UserResponse.html" title="class in com.atlan.model.admin">UserResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#list(com.atlan.model.admin.UserRequest,com.atlan.net.RequestOptions)">list</a></span>&#8203;(<a href="../model/admin/UserRequest.html" title="class in com.atlan.model.admin">UserRequest</a>&nbsp;request,
     <a href="../net/RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)</code></th>
@@ -391,21 +455,21 @@ extends <a href="HeraclesEndpoint.html" title="class in com.atlan.api">HeraclesE
 <div class="block">Retrieve users defined in Atlan.</div>
 </td>
 </tr>
-<tr id="i22" class="altColor">
+<tr id="i30" class="altColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="../model/admin/AtlanUser.html" title="class in com.atlan.model.admin">AtlanUser</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#list(com.atlan.net.RequestOptions)">list</a></span>&#8203;(<a href="../net/RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)</code></th>
 <td class="colLast">
 <div class="block">Retrieve all users defined in Atlan.</div>
 </td>
 </tr>
-<tr id="i23" class="rowColor">
+<tr id="i31" class="rowColor">
 <td class="colFirst"><code><a href="../model/admin/UserResponse.html" title="class in com.atlan.model.admin">UserResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#list(java.lang.String)">list</a></span>&#8203;(java.lang.String&nbsp;filter)</code></th>
 <td class="colLast">
 <div class="block">Retrieves a list of the users defined in Atlan.</div>
 </td>
 </tr>
-<tr id="i24" class="altColor">
+<tr id="i32" class="altColor">
 <td class="colFirst"><code><a href="../model/admin/UserResponse.html" title="class in com.atlan.model.admin">UserResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#list(java.lang.String,com.atlan.net.RequestOptions)">list</a></span>&#8203;(java.lang.String&nbsp;filter,
     <a href="../net/RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)</code></th>
@@ -413,7 +477,7 @@ extends <a href="HeraclesEndpoint.html" title="class in com.atlan.api">HeraclesE
 <div class="block">Retrieves a list of the users defined in Atlan.</div>
 </td>
 </tr>
-<tr id="i25" class="rowColor">
+<tr id="i33" class="rowColor">
 <td class="colFirst"><code><a href="../model/admin/UserResponse.html" title="class in com.atlan.model.admin">UserResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#list(java.lang.String,java.lang.String,boolean,int,int)">list</a></span>&#8203;(java.lang.String&nbsp;filter,
     java.lang.String&nbsp;sort,
@@ -424,7 +488,7 @@ extends <a href="HeraclesEndpoint.html" title="class in com.atlan.api">HeraclesE
 <div class="block">Retrieves a list of the users defined in Atlan.</div>
 </td>
 </tr>
-<tr id="i26" class="altColor">
+<tr id="i34" class="altColor">
 <td class="colFirst"><code><a href="../model/admin/UserResponse.html" title="class in com.atlan.model.admin">UserResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#list(java.lang.String,java.lang.String,boolean,int,int,com.atlan.net.RequestOptions)">list</a></span>&#8203;(java.lang.String&nbsp;filter,
     java.lang.String&nbsp;sort,
@@ -436,14 +500,14 @@ extends <a href="HeraclesEndpoint.html" title="class in com.atlan.api">HeraclesE
 <div class="block">Retrieves a list of the users defined in Atlan.</div>
 </td>
 </tr>
-<tr id="i27" class="rowColor">
+<tr id="i35" class="rowColor">
 <td class="colFirst"><code><a href="../model/admin/GroupResponse.html" title="class in com.atlan.model.admin">GroupResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#listGroups(java.lang.String)">listGroups</a></span>&#8203;(java.lang.String&nbsp;id)</code></th>
 <td class="colLast">
 <div class="block">Retrieve the groups this user belongs to.</div>
 </td>
 </tr>
-<tr id="i28" class="altColor">
+<tr id="i36" class="altColor">
 <td class="colFirst"><code><a href="../model/admin/GroupResponse.html" title="class in com.atlan.model.admin">GroupResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#listGroups(java.lang.String,com.atlan.model.admin.GroupRequest)">listGroups</a></span>&#8203;(java.lang.String&nbsp;id,
           <a href="../model/admin/GroupRequest.html" title="class in com.atlan.model.admin">GroupRequest</a>&nbsp;request)</code></th>
@@ -451,7 +515,7 @@ extends <a href="HeraclesEndpoint.html" title="class in com.atlan.api">HeraclesE
 <div class="block">Retrieve the groups this user belongs to.</div>
 </td>
 </tr>
-<tr id="i29" class="rowColor">
+<tr id="i37" class="rowColor">
 <td class="colFirst"><code><a href="../model/admin/GroupResponse.html" title="class in com.atlan.model.admin">GroupResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#listGroups(java.lang.String,com.atlan.model.admin.GroupRequest,com.atlan.net.RequestOptions)">listGroups</a></span>&#8203;(java.lang.String&nbsp;id,
           <a href="../model/admin/GroupRequest.html" title="class in com.atlan.model.admin">GroupRequest</a>&nbsp;request,
@@ -460,7 +524,7 @@ extends <a href="HeraclesEndpoint.html" title="class in com.atlan.api">HeraclesE
 <div class="block">Retrieve the groups this user belongs to.</div>
 </td>
 </tr>
-<tr id="i30" class="altColor">
+<tr id="i38" class="altColor">
 <td class="colFirst"><code><a href="../model/admin/GroupResponse.html" title="class in com.atlan.model.admin">GroupResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#listGroups(java.lang.String,com.atlan.net.RequestOptions)">listGroups</a></span>&#8203;(java.lang.String&nbsp;id,
           <a href="../net/RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)</code></th>
@@ -468,14 +532,14 @@ extends <a href="HeraclesEndpoint.html" title="class in com.atlan.api">HeraclesE
 <div class="block">Retrieve the groups this user belongs to.</div>
 </td>
 </tr>
-<tr id="i31" class="rowColor">
+<tr id="i39" class="rowColor">
 <td class="colFirst"><code><a href="../model/admin/SessionResponse.html" title="class in com.atlan.model.admin">SessionResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#listSessions(java.lang.String)">listSessions</a></span>&#8203;(java.lang.String&nbsp;id)</code></th>
 <td class="colLast">
 <div class="block">Retrieve the sessions for a given user.</div>
 </td>
 </tr>
-<tr id="i32" class="altColor">
+<tr id="i40" class="altColor">
 <td class="colFirst"><code><a href="../model/admin/SessionResponse.html" title="class in com.atlan.model.admin">SessionResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#listSessions(java.lang.String,com.atlan.net.RequestOptions)">listSessions</a></span>&#8203;(java.lang.String&nbsp;id,
             <a href="../net/RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)</code></th>
@@ -483,7 +547,7 @@ extends <a href="HeraclesEndpoint.html" title="class in com.atlan.api">HeraclesE
 <div class="block">Retrieve the sessions for a given user.</div>
 </td>
 </tr>
-<tr id="i33" class="rowColor">
+<tr id="i41" class="rowColor">
 <td class="colFirst"><code><a href="../model/admin/UserMinimalResponse.html" title="class in com.atlan.model.admin">UserMinimalResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#update(java.lang.String,com.atlan.model.admin.AtlanUser)">update</a></span>&#8203;(java.lang.String&nbsp;id,
       <a href="../model/admin/AtlanUser.html" title="class in com.atlan.model.admin">AtlanUser</a>&nbsp;user)</code></th>
@@ -491,7 +555,7 @@ extends <a href="HeraclesEndpoint.html" title="class in com.atlan.api">HeraclesE
 <div class="block">Update a user.</div>
 </td>
 </tr>
-<tr id="i34" class="altColor">
+<tr id="i42" class="altColor">
 <td class="colFirst"><code><a href="../model/admin/UserMinimalResponse.html" title="class in com.atlan.model.admin">UserMinimalResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#update(java.lang.String,com.atlan.model.admin.AtlanUser,com.atlan.net.RequestOptions)">update</a></span>&#8203;(java.lang.String&nbsp;id,
       <a href="../model/admin/AtlanUser.html" title="class in com.atlan.model.admin">AtlanUser</a>&nbsp;user,
@@ -817,6 +881,46 @@ extends <a href="HeraclesEndpoint.html" title="class in com.atlan.api">HeraclesE
 </dl>
 </li>
 </ul>
+<a id="getByEmails(java.util.List)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getByEmails</h4>
+<pre class="methodSignature">public&nbsp;java.util.List&lt;<a href="../model/admin/AtlanUser.html" title="class in com.atlan.model.admin">AtlanUser</a>&gt;&nbsp;getByEmails&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;emails)
+                                      throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Retrieves all users with the email addresses provided.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>emails</code> - list of email addresses for which to retrieve users</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>all users who have one of the provided email addresses</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any error during API invocation</dd>
+</dl>
+</li>
+</ul>
+<a id="getByEmails(java.util.List,com.atlan.net.RequestOptions)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getByEmails</h4>
+<pre class="methodSignature">public&nbsp;java.util.List&lt;<a href="../model/admin/AtlanUser.html" title="class in com.atlan.model.admin">AtlanUser</a>&gt;&nbsp;getByEmails&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;emails,
+                                             <a href="../net/RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)
+                                      throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Retrieves all users with the email addresses provided.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>emails</code> - list of email addresses for which to retrieve users</dd>
+<dd><code>options</code> - to override default client settings</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>all users who have one of the provided email addresses</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any error during API invocation</dd>
+</dl>
+</li>
+</ul>
 <a id="getByUsername(java.lang.String)">
 <!--   -->
 </a>
@@ -854,6 +958,48 @@ extends <a href="HeraclesEndpoint.html" title="class in com.atlan.api">HeraclesE
 <dd><code>options</code> - to override default client settings</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the user with that username</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any error during API invocation</dd>
+</dl>
+</li>
+</ul>
+<a id="getByUsernames(java.util.List)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getByUsernames</h4>
+<pre class="methodSignature">public&nbsp;java.util.List&lt;<a href="../model/admin/AtlanUser.html" title="class in com.atlan.model.admin">AtlanUser</a>&gt;&nbsp;getByUsernames&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;users)
+                                         throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Retrieves users based on a list of usernames. (This attempts an exact match on username rather than a
+ contains search.)</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>users</code> - the usernames by which to find the users</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the users with one of those usernames</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any error during API invocation</dd>
+</dl>
+</li>
+</ul>
+<a id="getByUsernames(java.util.List,com.atlan.net.RequestOptions)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getByUsernames</h4>
+<pre class="methodSignature">public&nbsp;java.util.List&lt;<a href="../model/admin/AtlanUser.html" title="class in com.atlan.model.admin">AtlanUser</a>&gt;&nbsp;getByUsernames&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;users,
+                                                <a href="../net/RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)
+                                         throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Retrieves users based on a list of usernames. (This attempts an exact match on username rather than a
+ contains search.)</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>users</code> - the usernames by which to find the users</dd>
+<dd><code>options</code> - to override default client settings</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the users with one of those usernames</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any error during API invocation</dd>
 </dl>
@@ -995,6 +1141,50 @@ public&nbsp;<a href="../model/admin/UserMinimalResponse.html" title="class in co
 </dl>
 </li>
 </ul>
+<a id="create(com.atlan.model.admin.AtlanUser,boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>create</h4>
+<pre class="methodSignature">public&nbsp;<a href="../model/admin/AtlanUser.html" title="class in com.atlan.model.admin">AtlanUser</a>&nbsp;create&#8203;(<a href="../model/admin/AtlanUser.html" title="class in com.atlan.model.admin">AtlanUser</a>&nbsp;user,
+                        boolean&nbsp;returnUser)
+                 throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Create a new user.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>user</code> - the details of the new user</dd>
+<dd><code>returnUser</code> - if true, lookup and return the created user as well</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the created user</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication issue</dd>
+</dl>
+</li>
+</ul>
+<a id="create(com.atlan.model.admin.AtlanUser,boolean,com.atlan.net.RequestOptions)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>create</h4>
+<pre class="methodSignature">public&nbsp;<a href="../model/admin/AtlanUser.html" title="class in com.atlan.model.admin">AtlanUser</a>&nbsp;create&#8203;(<a href="../model/admin/AtlanUser.html" title="class in com.atlan.model.admin">AtlanUser</a>&nbsp;user,
+                        boolean&nbsp;returnUser,
+                        <a href="../net/RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)
+                 throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Create a new user.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>user</code> - the details of the new user</dd>
+<dd><code>returnUser</code> - if true, lookup and return the created user as well</dd>
+<dd><code>options</code> - to override default client settings</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the created user</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication issue</dd>
+</dl>
+</li>
+</ul>
 <a id="create(java.util.List)">
 <!--   -->
 </a>
@@ -1026,6 +1216,50 @@ public&nbsp;<a href="../model/admin/UserMinimalResponse.html" title="class in co
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>users</code> - the details of the new users</dd>
 <dd><code>options</code> - to override default client settings</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication issue</dd>
+</dl>
+</li>
+</ul>
+<a id="create(java.util.List,boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>create</h4>
+<pre class="methodSignature">public&nbsp;java.util.List&lt;<a href="../model/admin/AtlanUser.html" title="class in com.atlan.model.admin">AtlanUser</a>&gt;&nbsp;create&#8203;(java.util.List&lt;<a href="../model/admin/AtlanUser.html" title="class in com.atlan.model.admin">AtlanUser</a>&gt;&nbsp;users,
+                                        boolean&nbsp;returnUsers)
+                                 throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Create multiple new users.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>users</code> - the details of the new users</dd>
+<dd><code>returnUsers</code> - if true, lookup and return the created users as well</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the created users</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication issue</dd>
+</dl>
+</li>
+</ul>
+<a id="create(java.util.List,boolean,com.atlan.net.RequestOptions)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>create</h4>
+<pre class="methodSignature">public&nbsp;java.util.List&lt;<a href="../model/admin/AtlanUser.html" title="class in com.atlan.model.admin">AtlanUser</a>&gt;&nbsp;create&#8203;(java.util.List&lt;<a href="../model/admin/AtlanUser.html" title="class in com.atlan.model.admin">AtlanUser</a>&gt;&nbsp;users,
+                                        boolean&nbsp;returnUsers,
+                                        <a href="../net/RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)
+                                 throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Create multiple new users.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>users</code> - the details of the new users</dd>
+<dd><code>returnUsers</code> - if true, lookup and return the created users as well</dd>
+<dd><code>options</code> - to override default client settings</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the created users</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication issue</dd>
 </dl>
