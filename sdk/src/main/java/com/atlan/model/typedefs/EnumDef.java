@@ -64,6 +64,49 @@ public class EnumDef extends TypeDef {
     }
 
     /**
+     * Builds the minimal object necessary to update an enumeration definition.
+     *
+     * @param displayName the human-readable name for the enumeration
+     * @param values the list of additional valid values (as strings) to add to the existing enumeration
+     * @param replaceExisting if true, will replace all existing values in the enumeration with the new ones; or if false the new ones will be appended to the existing set
+     * @return the minimal request necessary to update the enumeration typedef, as a builder
+     * @throws AtlanException on any API issues related to retrieving the existing enumeration
+     */
+    public static EnumDefBuilder<?, ?> updater(String displayName, List<String> values, boolean replaceExisting)
+            throws AtlanException {
+        return updater(Atlan.getDefaultClient(), displayName, values, replaceExisting);
+    }
+
+    /**
+     * Builds the minimal object necessary to update an enumeration definition.
+     *
+     * @param client connectivity to the Atlan tenant on which to update the enumeration
+     * @param displayName the human-readable name for the enumeration
+     * @param values the list of additional valid values (as strings) to add to the existing enumeration
+     * @param replaceExisting if true, will replace all existing values in the enumeration with the new ones; or if false the new ones will be appended to the existing set
+     * @return the minimal request necessary to update the enumeration typedef, as a builder
+     * @throws AtlanException on any API issues related to retrieving the existing enumeration
+     */
+    public static EnumDefBuilder<?, ?> updater(
+            AtlanClient client, String displayName, List<String> values, boolean replaceExisting)
+            throws AtlanException {
+        List<String> combined;
+        if (replaceExisting) {
+            combined = values;
+        } else {
+            combined = new ArrayList<>();
+            List<String> existing = client.getEnumCache().getByName(displayName).getValidValues();
+            for (String one : existing) {
+                if (!values.contains(one)) {
+                    combined.add(one);
+                }
+            }
+            combined.addAll(values);
+        }
+        return EnumDef.builder().name(displayName).elementDefs(ElementDef.from(combined));
+    }
+
+    /**
      * Create this enumeration definition in Atlan.
      * @return the result of the creation, or null if the creation failed
      * @throws AtlanException on any API communication issues
@@ -81,6 +124,31 @@ public class EnumDef extends TypeDef {
      */
     public synchronized EnumDef create(AtlanClient client) throws AtlanException {
         TypeDefResponse response = client.typeDefs.create(this);
+        if (response != null && !response.getEnumDefs().isEmpty()) {
+            return response.getEnumDefs().get(0);
+        }
+        return null;
+    }
+
+    /**
+     * Update this enumeration definition in Atlan.
+     *
+     * @return the result of the update, or null if the update failed
+     * @throws AtlanException on any API communication issues
+     */
+    public synchronized EnumDef update() throws AtlanException {
+        return update(Atlan.getDefaultClient());
+    }
+
+    /**
+     * Update this enumeration definition in Atlan.
+     *
+     * @param client connectivity to the Atlan tenant on which to update the enumeration
+     * @return the result of the update, or null if the update failed
+     * @throws AtlanException on any API communication issues
+     */
+    public synchronized EnumDef update(AtlanClient client) throws AtlanException {
+        TypeDefResponse response = client.typeDefs.update(this);
         if (response != null && !response.getEnumDefs().isEmpty()) {
             return response.getEnumDefs().get(0);
         }
