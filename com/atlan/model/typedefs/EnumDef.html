@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":9,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":9,"i11":9,"i12":10,"i13":10};
+var data = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":9,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":9,"i11":9,"i12":10,"i13":10,"i14":10,"i15":10,"i16":9,"i17":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -328,6 +328,39 @@ extends <a href="TypeDef.html" title="class in com.atlan.model.typedefs">TypeDef
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 </tr>
+<tr id="i14" class="altColor">
+<td class="colFirst"><code><a href="EnumDef.html" title="class in com.atlan.model.typedefs">EnumDef</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#update()">update</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Update this enumeration definition in Atlan.</div>
+</td>
+</tr>
+<tr id="i15" class="rowColor">
+<td class="colFirst"><code><a href="EnumDef.html" title="class in com.atlan.model.typedefs">EnumDef</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#update(com.atlan.AtlanClient)">update</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)</code></th>
+<td class="colLast">
+<div class="block">Update this enumeration definition in Atlan.</div>
+</td>
+</tr>
+<tr id="i16" class="altColor">
+<td class="colFirst"><code>static <a href="EnumDef.EnumDefBuilder.html" title="class in com.atlan.model.typedefs">EnumDef.EnumDefBuilder</a>&lt;?,&#8203;?&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updater(com.atlan.AtlanClient,java.lang.String,java.util.List,boolean)">updater</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+       java.lang.String&nbsp;displayName,
+       java.util.List&lt;java.lang.String&gt;&nbsp;values,
+       boolean&nbsp;replaceExisting)</code></th>
+<td class="colLast">
+<div class="block">Builds the minimal object necessary to update an enumeration definition.</div>
+</td>
+</tr>
+<tr id="i17" class="rowColor">
+<td class="colFirst"><code>static <a href="EnumDef.EnumDefBuilder.html" title="class in com.atlan.model.typedefs">EnumDef.EnumDefBuilder</a>&lt;?,&#8203;?&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updater(java.lang.String,java.util.List,boolean)">updater</a></span>&#8203;(java.lang.String&nbsp;displayName,
+       java.util.List&lt;java.lang.String&gt;&nbsp;values,
+       boolean&nbsp;replaceExisting)</code></th>
+<td class="colLast">
+<div class="block">Builds the minimal object necessary to update an enumeration definition.</div>
+</td>
+</tr>
 </table>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.com.atlan.model.typedefs.TypeDef">
@@ -417,6 +450,54 @@ extends <a href="TypeDef.html" title="class in com.atlan.model.typedefs">TypeDef
 </dl>
 </li>
 </ul>
+<a id="updater(java.lang.String,java.util.List,boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>updater</h4>
+<pre class="methodSignature">public static&nbsp;<a href="EnumDef.EnumDefBuilder.html" title="class in com.atlan.model.typedefs">EnumDef.EnumDefBuilder</a>&lt;?,&#8203;?&gt;&nbsp;updater&#8203;(java.lang.String&nbsp;displayName,
+                                                        java.util.List&lt;java.lang.String&gt;&nbsp;values,
+                                                        boolean&nbsp;replaceExisting)
+                                                 throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Builds the minimal object necessary to update an enumeration definition.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>displayName</code> - the human-readable name for the enumeration</dd>
+<dd><code>values</code> - the list of additional valid values (as strings) to add to the existing enumeration</dd>
+<dd><code>replaceExisting</code> - if true, will replace all existing values in the enumeration with the new ones; or if false the new ones will be appended to the existing set</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the minimal request necessary to update the enumeration typedef, as a builder</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API issues related to retrieving the existing enumeration</dd>
+</dl>
+</li>
+</ul>
+<a id="updater(com.atlan.AtlanClient,java.lang.String,java.util.List,boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>updater</h4>
+<pre class="methodSignature">public static&nbsp;<a href="EnumDef.EnumDefBuilder.html" title="class in com.atlan.model.typedefs">EnumDef.EnumDefBuilder</a>&lt;?,&#8203;?&gt;&nbsp;updater&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+                                                        java.lang.String&nbsp;displayName,
+                                                        java.util.List&lt;java.lang.String&gt;&nbsp;values,
+                                                        boolean&nbsp;replaceExisting)
+                                                 throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Builds the minimal object necessary to update an enumeration definition.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>client</code> - connectivity to the Atlan tenant on which to update the enumeration</dd>
+<dd><code>displayName</code> - the human-readable name for the enumeration</dd>
+<dd><code>values</code> - the list of additional valid values (as strings) to add to the existing enumeration</dd>
+<dd><code>replaceExisting</code> - if true, will replace all existing values in the enumeration with the new ones; or if false the new ones will be appended to the existing set</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the minimal request necessary to update the enumeration typedef, as a builder</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API issues related to retrieving the existing enumeration</dd>
+</dl>
+</li>
+</ul>
 <a id="create()">
 <!--   -->
 </a>
@@ -448,6 +529,42 @@ extends <a href="TypeDef.html" title="class in com.atlan.model.typedefs">TypeDef
 <dd><code>client</code> - connectivity to the Atlan tenant on which to create the enumeration</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the result of the creation, or null if the creation failed</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication issues</dd>
+</dl>
+</li>
+</ul>
+<a id="update()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>update</h4>
+<pre class="methodSignature">public&nbsp;<a href="EnumDef.html" title="class in com.atlan.model.typedefs">EnumDef</a>&nbsp;update()
+               throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Update this enumeration definition in Atlan.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the result of the update, or null if the update failed</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication issues</dd>
+</dl>
+</li>
+</ul>
+<a id="update(com.atlan.AtlanClient)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>update</h4>
+<pre class="methodSignature">public&nbsp;<a href="EnumDef.html" title="class in com.atlan.model.typedefs">EnumDef</a>&nbsp;update&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)
+               throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Update this enumeration definition in Atlan.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>client</code> - connectivity to the Atlan tenant on which to update the enumeration</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the result of the update, or null if the update failed</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication issues</dd>
 </dl>
