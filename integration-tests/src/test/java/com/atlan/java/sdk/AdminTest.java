@@ -104,6 +104,13 @@ public class AdminTest extends AtlanLiveTest {
         assertNotNull(user1);
         assertNotNull(user1.getId());
         assertEquals(user1.getGroupCount().longValue(), defaultGroupCount);
+        users = Atlan.getDefaultClient().users.getByUsernames(List.of(FIXED_USER));
+        assertNotNull(users);
+        assertEquals(users.size(), 1);
+        assertEquals(user1.getId(), users.get(0).getId());
+        users = Atlan.getDefaultClient().users.getByUsernames(List.of());
+        assertNotNull(users);
+        assertEquals(users.size(), 0);
         users = AtlanUser.getByEmail(EMAIL_DOMAIN);
         assertNotNull(users);
         assertFalse(users.isEmpty());
@@ -112,6 +119,13 @@ public class AdminTest extends AtlanLiveTest {
         assertNotNull(users);
         assertEquals(users.size(), 1);
         assertEquals(user1.getId(), users.get(0).getId());
+        users = Atlan.getDefaultClient().users.getByEmails(List.of(user1.getEmail()));
+        assertNotNull(users);
+        assertEquals(users.size(), 1);
+        assertEquals(user1.getId(), users.get(0).getId());
+        users = Atlan.getDefaultClient().users.getByEmails(List.of());
+        assertNotNull(users);
+        assertEquals(users.size(), 0);
     }
 
     @Test(
