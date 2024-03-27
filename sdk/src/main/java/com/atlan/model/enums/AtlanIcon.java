@@ -8,6 +8,7 @@ import lombok.Getter;
 public enum AtlanIcon implements AtlanEnum {
     ATLAN_TAG("atlanTags"),
     ATLAN_SHIELD("atlanShield"),
+    ATLAN_METADATA("atlanMetadata"),
     ADDRESS_BOOK("PhAddressBook"),
     AIR_TRAFFIC_CONTROL("PhAirTrafficControl"),
     AIRPLANE("PhAirplane"),
