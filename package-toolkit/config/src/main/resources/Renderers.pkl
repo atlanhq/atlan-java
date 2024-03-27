@@ -1,8 +1,12 @@
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2024 Atlan Pte. Ltd. */
+
 /// Module for rendering the outputs for a custom package's configuration in Atlan.
 @ModuleInfo { minPklVersion = "0.25.1" }
 module com.atlan.pkg.Renderers
 
 import "Config.pkl"
+import "Connectors.pkl"
 
 /// Render the configmap YAML file.
 const function getConfigMap(m: Config): FileOutput = new FileOutput {
@@ -64,7 +68,6 @@ const function getPackageJson(m: Config): FileOutput = new FileOutput {
 
 /// Render the Kotlin class file that strongly-types the configuration handover.
 const function getConfigClassKt(m: Config, className: String): FileOutput = new FileOutput {
-  // TODO: Write our own code generator(s) for the Kotlin class
   text = new Listing {
     """
     /* SPDX-License-Identifier: Apache-2.0
@@ -101,11 +104,11 @@ const function getConfigClassKt(m: Config, className: String): FileOutput = new 
         """
       else if (u is Config.BooleanInput)
         """
-            @JsonProperty(\"\(k)\") val \(getLowerCamelCase(k)): Boolean? = \(u.defaultSelection),
+            @JsonProperty(\"\(k)\") val \(getLowerCamelCase(k)): Boolean? = null,
         """
       else if (u is Config.NumericInput)
         """
-            @JsonProperty(\"\(k)\") val \(getLowerCamelCase(k)): Number? = \(if (u.placeholderText.isBlank) "null" else u.placeholderText),
+            @JsonProperty(\"\(k)\") val \(getLowerCamelCase(k)): Number? = null,
         """
       else if (u is Config.DateInput)
         """
@@ -239,7 +242,7 @@ local class PackageDefinition {
   hidden allowSchedule: Boolean = true
   hidden certified: Boolean = true
   hidden preview: Boolean = false
-  hidden connectorType: String?
+  hidden connectorType: Connectors.Type?
   hidden category: String = "custom"
   fixed homepage: String = "https://packages.atlan.com/-/web/detail/\(packageId)"
   fixed main: String = "index.js"
@@ -262,8 +265,8 @@ local class PackageDefinition {
     labels = new Mapping {
       ["orchestration.atlan.com/verified"] = "true"
       ["orchestration.atlan.com/type"] = category
-      ["orchestration.atlan.com/source"] = connectorType ?? "atlan"
-      ["orchestration.atlan.com/sourceCategory"] = "utility" // TODO: connectorType?.category ?? "utility"
+      ["orchestration.atlan.com/source"] = connectorType?.value ?? "atlan"
+      ["orchestration.atlan.com/sourceCategory"] = connectorType?.category ?? "utility"
       ["orchestration.atlan.com/certified"] = certified.toString()
       ["orchestration.atlan.com/preview"] = preview.toString()
     }

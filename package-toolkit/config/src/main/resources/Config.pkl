@@ -7,6 +7,7 @@ module com.atlan.pkg.Config
 
 import "pkl:semver"
 import "Renderers.pkl"
+import "Connectors.pkl"
 
 /// Unique identifier for the package, including its namespace.
 /// For example: @csa/open-api-spec-loader
@@ -55,7 +56,7 @@ certified: Boolean = true
 preview: Boolean = false
 
 /// (Optional) If the package needs to configure a connector, specify its type here.
-connectorType: String?
+connectorType: Connectors.Type?
 
 /// Name of the pill under which the package should be categorized in the marketplace in the UI.
 category: String = "custom"

@@ -1,6 +1,7 @@
 amends "modulepath:/Config.pkl"
 
 import "pkl:semver"
+import "modulepath:/Connectors.pkl"
 
 packageId = "@csa/openapi-spec-loader"
 packageName = "OpenAPI Spec Loader"
@@ -26,7 +27,7 @@ keywords {
   "openapi"
 }
 preview = true
-connectorType = "api"
+connectorType = Connectors.API
 
 uiConfig {
   tasks {

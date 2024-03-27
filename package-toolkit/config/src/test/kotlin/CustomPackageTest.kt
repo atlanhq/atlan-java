@@ -38,7 +38,7 @@ object CustomPackageTest {
         assertEquals(listOf("/dumb-init", "--", "java", "OpenAPISpecLoaderKt"), config.containerCommand)
         assertEquals(listOf("kotlin", "crawler", "openapi"), config.keywords)
         assertTrue(config.preview)
-        assertEquals("api", config.connectorType)
+        assertEquals("api", config.connectorType?.value)
         assertNotNull(config.outputs)
         assertEquals(Config.ImagePullPolicy.IF_NOT_PRESENT, config.containerImagePullPolicy)
         assertNotNull(config.outputs)
