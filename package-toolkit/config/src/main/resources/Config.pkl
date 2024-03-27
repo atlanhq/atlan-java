@@ -72,7 +72,8 @@ class UIConfig {
   fixed properties: Map<String, UIElement> = tasks.fold(Map(), (acc: Map<String, UIElement>, _, step) ->
     acc + (resolveInputs(step.inputs).toMap())
   )
-  rules: Listing<UIRule> = new Listing {}
+  hidden rules: Listing<UIRule> = new Listing {}
+  fixed anyOf: List<UIRule> = rules.toList()
   fixed steps: List<UIStep> = tasks.fold(List(), (acc: List<UIStep>, key, value) ->
     acc.add(resolveStep(key, value))
   )
@@ -122,7 +123,7 @@ class UIRule {
 /// Class defining any outputs the package's logic will produce.
 class WorkflowOutputs {
   /// Files the package will produce in the local filesystem.
-  files: Mapping<String, String>?
+  hidden files: Mapping<String, String>?
 
   /// Outputs the package will produce into S3.
   s3Objects: Listing<S3Artifact>?
@@ -217,7 +218,7 @@ abstract class UIElement {
 
 /// Base class for all UI elements that use some enumeration of valid values.
 abstract class UIElementWithEnum extends UIElement {
-  possibleValues: Mapping<String, String>
+  hidden possibleValues: Mapping<String, String>
   default: String?
 
   fixed enum: List<String> = possibleValues.fold(List(), (acc: List<String>, key, _) -> acc.add(key))
@@ -282,7 +283,7 @@ class Radio extends UIElementWithEnum {
 
   /// Possible values that can be selected in the radio button.
   /// The key is the value that will be returned, and the value is the text to display.
-  possibleValues: Mapping<String, String>
+  hidden possibleValues: Mapping<String, String>
 
   /// Default value to select in the radio button (its key).
   default: String
@@ -473,5 +474,28 @@ class BooleanInput extends UIElement {
   fixed ui {
     widget = "boolean"
     default = defaultSelection
+  }
+}
+
+/// Widget that allows you to select from a drop-down of provided options.
+///
+/// | Field | | Description | Default |
+/// |---|---|---|---|
+/// | **`title`** | | name to show in the UI for the widget | |
+/// | **`possibleValues`** | | map of option keys to the value that will be display for each option in the drop-down | |
+/// | `required` | | whether a value must be selected to proceed with the UI setup | `false` |
+/// | `hide` | | whether the widget will be shown in the UI (false) or not (true) | `false` |
+/// | `helpText` | | informational text to place in a hover-over to describe the use of the input | `""` |
+/// | `multiSelect` | | whether multiple options can be selected (true) or only a single option (false) | `false` |
+/// | `width` | | sizing of the input on the UI (8 is full-width, 4 is half-width) | `8` |
+class DropDown extends UIElementWithEnum {
+  fixed type = "string"
+  required: Boolean = false // Necessary for generated Kotlin copy method override
+
+  hidden multiSelect: Boolean = false
+
+  fixed ui {
+    widget = "select"
+    mode = if (multiSelect) "multiple" else ""
   }
 }
