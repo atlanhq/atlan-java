@@ -3,6 +3,7 @@ val jarPath = "$rootDir/jars"
 
 plugins {
     kotlin("jvm")
+    id("org.pkl-lang")
     id("com.diffplug.spotless")
     id("jvm-test-suite")
     id("com.adarshr.test-logger")
