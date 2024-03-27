@@ -1,0 +1,81 @@
+amends "modulepath:/Config.pkl"
+
+import "pkl:semver"
+
+packageId = "@csa/openapi-spec-loader"
+packageName = "OpenAPI Spec Loader"
+version = semver.Version("1.0.0")
+description = "Loads API specs and paths from an OpenAPI (v3) definition."
+iconUrl = "http://assets.atlan.com/assets/apispec.png"
+docsUrl = "https://developer.atlan.com/samples/loaders/openapi/"
+containerImage = "ghcr.io/atlanhq/atlan-kotlin-samples:0.3.0"
+containerCommand {
+  "/dumb-init"
+  "--"
+  "java"
+  "OpenAPISpecLoaderKt"
+}
+outputs {
+  files {
+    ["debug-logs"] = "/tmp/debug.log"
+  }
+}
+keywords {
+  "kotlin"
+  "crawler"
+  "openapi"
+}
+preview = true
+connectorType = "api"
+
+uiConfig {
+  tasks {
+    ["Configuration"] {
+      description = "OpenAPI spec configuration"
+      inputs {
+        ["spec_url"] = new TextInput {
+          title = "Specification URL"
+          required = true
+          helpText = "Full URL to the JSON form of the OpenAPI specification."
+          placeholderText = "https://petstore3.swagger.io/api/v3/openapi.json"
+        }
+      }
+    }
+    ["Connection"] {
+      description = "Connection details"
+      inputs {
+        ["connection_usage"] = new Radio {
+          title = "Connection"
+          required = true
+          possibleValues {
+            ["CREATE"] = "Create"
+            ["REUSE"] = "Reuse"
+          }
+          default = "REUSE"
+          helpText = "Whether to create a new connection to hold these API assets, or reuse an existing connection."
+        }
+        ["connection"] = new ConnectionCreator {
+          title = "Connection"
+          required = true
+          helpText = "Enter details for a new connection to be created."
+          placeholderText = "Swagger"
+        }
+        ["connection_qualified_name"] = new ConnectionSelector {
+          title = "Connection"
+          required = true
+          helpText = "Select an existing connection to load assets into."
+        }
+      }
+    }
+  }
+  rules {
+    new UIRule {
+      whenInputs { ["connection_usage"] = "REUSE" }
+      required { "connection_qualified_name" }
+    }
+    new UIRule {
+      whenInputs { ["connection_usage"] = "CREATE" }
+      required { "connection" }
+    }
+  }
+}

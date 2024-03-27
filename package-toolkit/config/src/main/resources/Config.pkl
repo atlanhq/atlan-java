@@ -1,0 +1,978 @@
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2024 Atlan Pte. Ltd. */
+
+/// Template for defining configuration for a custom package in Atlan.
+@ModuleInfo { minPklVersion = "0.25.1" }
+module com.atlan.pkg.Config
+
+import "pkl:semver"
+
+/// Unique identifier for the package, including its namespace.
+/// For example: @csa/open-api-spec-loader
+packageId: String
+
+/// Display name for the package, as it should be shown in the UI.
+packageName: String
+
+/// Version of this package, following semantic versioning.
+version: semver.Version
+
+/// Description for the package, as it should be shown in the UI.
+description: String
+
+/// Link to an icon to use for the package, as it should be shown in the UI.
+iconUrl: String
+
+/// Link to an online document describing the package.
+docsUrl: String
+
+/// Configuration for the UI of the custom package.
+uiConfig: UIConfig
+
+/// Container image to run the logic of the custom package.
+containerImage: String
+
+/// Full command to run in the container image, as a list rather than spaced.
+containerCommand: Listing<String>
+
+/// (Optional) Override the default IfNotPresent policy.
+containerImagePullPolicy: ImagePullPolicy = "IfNotPresent"
+
+/// (Optional) Any outputs that the custom package logic is expected to produce.
+outputs: WorkflowOutputs?
+
+/// (Optional) Any keyword labels to apply to the package.
+keywords: Listing<String> = new Listing {}
+
+/// (Optional) Whether to allow the package to be scheduled (default, true) or only run immediately (false).
+allowSchedule: Boolean = true
+
+/// (Optional) Whether the package should be listed as certified (default, true) or not (false).
+certified: Boolean = true
+
+/// (Optional) Whether the package should be labeled as an early preview in the UI (true) or not (default, false).
+preview: Boolean = false
+
+/// (Optional) If the package needs to configure a connector, specify its type here.
+connectorType: String?
+
+/// Name of the pill under which the package should be categorized in the marketplace in the UI.
+category: String = "custom"
+
+// --- CONTENT ABOVE THIS LINE IS INTENDED INPUT ---
+// --- CONTENT BELOW THIS LINE IS USED TO GENERATE OUTPUTS ---
+
+fixed command: List<String> = List(containerCommand[0])
+fixed args: List<String> = containerCommand.toList().sublist(1, containerCommand.length)
+
+class UIConfig {
+  hidden tasks: Mapping<String, UIStep>
+  // TODO: Ideally should validate no duplicate property names across steps (throw error if any found)
+  fixed properties: Map<String, UIElement> = tasks.fold(Map(), (acc: Map<String, UIElement>, _, step) ->
+    acc + (resolveInputs(step.inputs).toMap())
+  )
+  rules: Listing<UIRule> = new Listing {}
+  fixed steps: List<UIStep> = tasks.fold(List(), (acc: List<UIStep>, key, value) ->
+    acc.add(resolveStep(key, value))
+  )
+}
+
+const function resolveInputs(inputs: Mapping<String, UIElement>): Mapping<String, UIElement> = inputs.fold(new Mapping {}, (acc: Mapping<String, UIElement>, inputKey, input) ->
+  (acc) {
+    [inputKey] = input
+  }
+)
+
+const function resolveStep(stepName: String, step: UIStep): UIStep = (step) {
+  title = stepName
+}
+
+class UIStep {
+  title: String
+  description: String = ""
+  hidden inputs: Mapping<String(lower_snake_case), UIElement>
+
+  fixed id = title.replaceAll(" ", "_").toLowerCase()
+  fixed properties: List<String> = inputs.fold(List(), (acc, key, _) -> acc.add(key))
+}
+
+/// Validates the provided string value is in snake_case.
+local const lower_snake_case = (str) -> str.matches(Regex("[a-z0-9_]*"))
+
+/// Configure basic UI rules that when the specified inputs have specified values, certain
+/// other fields become required.
+///
+/// | Field | | Description | Default |
+/// |---|---|---|---|
+/// | **`whenInputs`** | | mapping from input ID to value for the step | |
+/// | **`required`** | | list of input IDs that should become required when the inputs all match | |
+class UIRule {
+  fixed properties: Mapping<String, Mapping<String, String>> = new Mapping {
+    for (k, v in whenInputs) {
+      [k] = new Mapping {
+        ["const"] = v
+      }
+    }
+  }
+  hidden whenInputs: Mapping<String, String>
+  required: Listing<String>
+}
+
+/// Class defining any outputs the package's logic will produce.
+class WorkflowOutputs {
+  /// Files the package will produce in the local filesystem.
+  files: Mapping<String, String>?
+
+  /// Outputs the package will produce into S3.
+  s3Objects: Listing<S3Artifact>?
+
+  /// (Generated) List of all artifacts the package will produce.
+  fixed artifacts: List<NamedPair> = (s3Objects?.toList() ?? List())
+    + (files?.fold(List(), (acc: List<NamedPair>, key, value) ->
+    acc.add(new NamePathPair {
+      name=key
+      path=value
+    })) ?? List())
+}
+
+class S3Artifact extends NamedPair {
+  /// Name of the object in S3
+  name: String
+
+  /// Path on the container's local filesystem for the object
+  path: String = "/tmp/\(name).json"
+
+  /// (Optional) Configuration for how the S3 object should be archived.
+  archive: Mapping<String, Mapping<String, String>> = new Mapping {
+    ["none"] = new Mapping {}
+  }
+
+  /// (Optional) Configuration for how the S3 object should be mapped.
+  s3: Mapping<String, String> = new Mapping {
+    ["key"] = "{{inputs.parameters.output_prefix}}/\(name).json"
+  }
+
+  /// (Optional) Configuration for how the S3 object should be garbage collected.
+  artifactGC: Mapping<String, String> = new Mapping {
+    ["strategy"] = "OnWorkflowDeletion"
+  }
+}
+
+class NamePathS3Tuple extends NamedPair {
+  hidden inputName: String
+  name: String = "\(inputName)_s3"
+  path: String = "/tmp/$inputName/{{inputs.parameters.\(inputName)}}"
+  s3: Mapping<String, String> = new Mapping {
+    ["key"] = "{{inputs.parameters.\(inputName)}}"
+  }
+}
+
+class ConfigMapEntry extends NamedPair {
+  name: String
+  fixed valueFrom = (value) {
+    when (default != null) {
+      ["default"] = default
+    }
+  }
+  hidden configMapName: String
+  hidden configMapKey: String
+  hidden default: String? = null
+  hidden value = new Mapping {
+    ["configMapKeyRef"] = new Mapping {
+      ["name"] = configMapName
+      ["key"] = configMapKey
+    }
+  }
+}
+
+class NamedSecret extends NamedPair {
+  name: String
+  fixed valueFrom = new Mapping {
+    ["secretKeyRef"] = new Mapping {
+      ["name"] = secretName
+      ["key"] = secretKey
+    }
+  }
+  hidden secretName: String
+  hidden secretKey: String
+}
+
+local class NestedConfig extends NamedPair {
+  name: String = "NESTED_CONFIG"
+  fixed value: String = new Listing {
+    if (inputs == null || inputs.isEmpty)
+      "null"
+    else
+      "{"
+      new Listing {
+        for (k, ui in inputs) {
+          if (ui is FileUploader || ui is FileCopier)
+            "\"\(k)\": \"/tmp/\(k)/{{inputs.parameters.\(k)}}\""
+          else if (ui is NumericInput || ui is DateInput || ui is BooleanInput)
+            "\"\(k)\": {{inputs.parameters.\(k)}}"
+          else
+            "\"\(k)\": {{=toJson(inputs.parameters.\(k))}}"
+        }
+      }.join(",\n")
+      "}"
+  }.join("\n")
+  hidden inputs: Map<String, UIElement>
+}
+
+class NameValuePair extends NamedPair {
+  name: String
+  value: String
+}
+
+class NamePathPair extends NamedPair {
+  name: String
+  path: String
+}
+
+abstract class NamedPair {
+  name: String
+}
+
+/// Image pull policy for the container image.
+/// For more details on behavior, see: https://kubernetes.io/docs/concepts/containers/images/#image-pull-policy
+typealias ImagePullPolicy = "Always"|"IfNotPresent"|"Never"
+
+/// (Generated) Unique name to use for file-based objects for the package.
+hidden fixed name = packageId.replaceAll("@", "").replaceAll("/", "-")
+
+/// Used to render the appropriately-wrapped output file for the UI portion of a package.
+local class ConfigMap {
+  fixed apiVersion = "v1"
+  fixed kind = "ConfigMap"
+  fixed metadata: Mapping<String, String> = new Mapping {
+    ["name"] = name
+  }
+  fixed data: Mapping<String, String> = new Mapping {
+    ["config"] = new JsonRenderer {}.renderValue(config)
+  }
+  hidden name: String
+  hidden config: UIConfig
+}
+
+local class PackageDefinition {
+  hidden packageId: String
+  hidden packageName: String
+  fixed name: String = packageId
+  version: String
+  description: String
+  keywords: Listing<String> = new Listing {}
+  hidden iconUrl: String
+  hidden docsUrl: String
+  hidden allowSchedule: Boolean = true
+  hidden certified: Boolean = true
+  hidden preview: Boolean = false
+  hidden connectorType: String?
+  hidden category: String = "custom"
+  fixed homepage: String = "https://packages.atlan.com/-/web/detail/\(packageId)"
+  fixed main: String = "index.js"
+  fixed scripts: Map<String, String> = Map()
+  fixed author: Map<String, String> = new Mapping {
+    ["name"] = "Atlan CSA"
+    ["email"] = "csa@atlan.com"
+    ["url"] = "https://atlan.com"
+  }.toMap()
+  fixed repository: Map<String, String> = new Mapping {
+    ["type"] = "git"
+    ["url"] = "https://github.com/atlanhq/marketplace-packages.git"
+  }.toMap()
+  fixed license: String = "MIT"
+  fixed bugs: Map<String, String> = new Mapping {
+    ["url"] = "https://atlan.com"
+    ["email"] = "support@atlan.com"
+  }.toMap()
+  fixed config: PackageConfig = new PackageConfig {
+    labels = new Mapping {
+      ["orchestration.atlan.com/verified"] = "true"
+      ["orchestration.atlan.com/type"] = category
+      ["orchestration.atlan.com/source"] = connectorType ?? "atlan"
+      ["orchestration.atlan.com/sourceCategory"] = "utility" // TODO: connectorType?.category ?? "utility"
+      ["orchestration.atlan.com/certified"] = certified.toString()
+      ["orchestration.atlan.com/preview"] = preview.toString()
+    }
+    annotations = new Mapping {
+      ["orchestration.atlan.com/name"] = packageName
+      ["orchestration.atlan.com/allowSchedule"] = allowSchedule.toString()
+      ["orchestration.atlan.com/dependentPackage"] = ""
+      ["orchestration.atlan.com/emoji"] = "🚀"
+      ["orchestration.atlan.com/categories"] = keywords.join(",")
+      ["orchestration.atlan.com/icon"] = iconUrl
+      ["orchestration.atlan.com/logo"] = iconUrl
+      ["orchestration.atlan.com/docsUrl"] = docsUrl
+    }
+  }
+}
+
+local class PackageConfig {
+  labels: Mapping<String, String>
+  annotations: Mapping<String, String>
+}
+
+/// Used to render the appropriately-wrapped output file for the Argo hand-over portion of a package.
+local class WorkflowTemplate {
+  fixed apiVersion = "argoproj.io/v1alpha1"
+  fixed kind = "WorkflowTemplate"
+  fixed metadata = new Mapping {
+    ["name"] = name
+  }
+  fixed spec: Map<String, List<WorkflowTemplateDefinition>> = new Mapping {
+    when (fileMoves.isEmpty) {
+      ["templates"] = List(template)
+    } else {
+      ["templates"] = List(setup, (template) { name = "process" })
+    }
+  }.toMap()
+  hidden name: String
+  hidden template: WorkflowTemplateDefinition
+  hidden fileMoves: Listing<TaskDefinition> = new Listing {
+    for (k, u in template.inputs.config.properties) {
+      when (u is FileUploader) {
+        new TaskDefinition {
+          name = "move-\(getSafeTaskName(k))"
+          templateRef = new TemplateRef {
+            name = "atlan-workflow-helpers"
+            template = "move-artifact-to-s3"
+          }
+          condition = "'{{inputs.parameters.cloud_provider}}' == 'azure' && {{inputs.parameters.is_azure_artifacts}} == false && '{{inputs.parameters.\(k)_id}}' != ''"
+          arguments = new Arguments {
+            parameters = new Listing {
+              new NameValuePair {
+                name = "file-id"
+                value = "{{inputs.parameters.\(k)_id}}"
+              }
+              new NameValuePair {
+                name = "s3-file-key"
+                value = "{{inputs.parameters.\(k)_key}}"
+              }
+            }.toList()
+          }
+        }
+      }
+    }
+  }
+  hidden setup: WorkflowTemplateDefinition? = (if (!fileMoves.isEmpty)
+    new WorkflowTemplateDefinition {
+      c = template.c
+      dag = new WorkflowDag {
+        tasks = fileMoves.toList() + new Listing {
+              new TaskDefinition {
+                name = "process"
+                template = "process"
+                depends = fileMoves.toList().map((it) -> it.name).join(" && ")
+                arguments = new Arguments {
+                  parameters = passthrough
+                }
+              }
+            }.toList()
+      }
+      name = "main"
+      p = template.p
+      f = true
+    } else null)
+  hidden passthrough: List<NameValuePair> = (if (!fileMoves.isEmpty) new Listing {
+    new NameValuePair {
+      name = "output_prefix"
+      value = "{{inputs.parameters.output_prefix}}"
+    }
+    for (k, u in template.inputs.config.properties) {
+      when (u is FileUploader) {
+        new NameValuePair {
+          name = k
+          value = "{{inputs.parameters.\(k)_key}}"
+        }
+      } else {
+        new NameValuePair {
+          name = k
+          value = "{{inputs.parameters.\(k)}}"
+        }
+      }
+    }
+  }.toList() else List())
+}
+
+local class WorkflowTemplateDefinition {
+  name: String = "main"
+  fixed inputs: WorkflowInputs = new WorkflowInputs {
+    config = c
+    pkgName = p
+    fileInputSetup = f
+  }
+  outputs: WorkflowOutputs?
+  container: WorkflowContainer?
+  dag: WorkflowDag?
+  hidden c: UIConfig
+  hidden p: String = ""
+  hidden f: Boolean = false
+}
+
+local class WorkflowInputs {
+  fixed parameters: List<NamedPair> = params.toList()
+  fixed artifacts: List<NamePathS3Tuple> = if (fileInputSetup) List() else arts.toList()
+  hidden config: UIConfig
+  hidden pkgName: String = ""
+  hidden fileInputSetup: Boolean = false
+
+  hidden arts: Listing<NamePathS3Tuple> = new Listing {
+    for (k, u in config.properties) {
+      when (u is FileUploader || u is FileCopier) {
+        new NamePathS3Tuple {
+          inputName = k
+        }
+      }
+    }
+  }
+  hidden params: Listing<NamedPair> = new Listing {
+    when (!pkgName.isEmpty) {
+      new NameValuePair {
+        name = "output_prefix"
+        value = pkgName
+      }
+      when (fileInputSetup) {
+        new ConfigMapEntry {
+          name = "is_azure_artifacts"
+          configMapName = "atlan-defaults"
+          configMapKey = "azure_artifacts"
+          default = "false"
+        }
+        new ConfigMapEntry {
+          name = "cloud_provider"
+          configMapName = "atlan-defaults"
+          configMapKey = "cloud"
+          default = "aws"
+        }
+      }
+    }
+    for (k, u in config.properties) {
+      when (u is FileUploader || u is FileCopier) {
+        when (fileInputSetup) {
+          new NameValuePair {
+            name = k
+            value = "{}"
+          }
+          new NameValuePair {
+            name = "\(k)_key"
+            value = "{{= sprig.dig('fileKey', '\(DEFAULT_FILE)', sprig.mustFromJson(inputs.parameters.\(k)) }}"
+          }
+          new NameValuePair {
+            name = "\(k)_id"
+            value = "{{= sprig.dig('fileId', '', sprig.mustFromJson(inputs.parameters.\(k)) }}"
+          }
+        } else {
+          new NameValuePair {
+            name = k
+            value = DEFAULT_FILE
+          }
+        }
+      } else {
+        when (u is BooleanInput) {
+          new NameValuePair {
+            name = k
+            value = u.ui.default.toString()
+          }
+        } else {
+          when (u is NumericInput || u is DateInput) {
+            new NameValuePair {
+              name = k
+              value = "-1"
+            }
+          } else {
+            new NameValuePair {
+              name = k
+              value = ""
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+local class WorkflowDag {
+  tasks: List<TaskDefinition>
+}
+
+local class TaskDefinition {
+  name: String
+  depends: String?
+  template: String?
+  templateRef: TemplateRef?
+  fixed `when` = condition
+  arguments: Arguments
+  hidden condition: String?
+}
+
+local class TemplateRef {
+  name: String
+  template: String
+}
+
+local class Arguments {
+  parameters: List<NamedPair>
+}
+
+local class WorkflowContainer {
+  image: String
+  imagePullPolicy: ImagePullPolicy = "IfNotPresent"
+  command: List<String>
+  args: List<String> = List()
+  hidden config: UIConfig
+  hidden defaultVars: List<NamedPair> = new Listing {
+    new NameValuePair {
+      name = "ATLAN_BASE_URL"
+      value = "INTERNAL"
+    }
+    new NameValuePair {
+      name = "ATLAN_USER_ID"
+      value = "{{=sprig.dig('labels', 'workflows', 'argoproj', 'io/creator', '', workflow)}}"
+    }
+    new NameValuePair {
+      name = "X_ATLAN_AGENT"
+      value = "workflow"
+    }
+    new NameValuePair {
+      name = "X_ATLAN_AGENT_ID"
+      value = "{{workflow.name}}"
+    }
+    new NameValuePair {
+      name = "X_ATLAN_AGENT_PACKAGE_NAME"
+      value = "{{=sprig.dig('annotations', 'package', 'argoproj', 'io/name', '', workflow)}}"
+    }
+    new NameValuePair {
+      name = "X_ATLAN_AGENT_WORKFLOW_ID"
+      value = "{{=sprig.dig('labels', 'workflows', 'argoproj', 'io/workflow-template', '', workflow)}}"
+    }
+    new ConfigMapEntry {
+      name = "AWS_S3_BUCKET_NAME"
+      configMapName = "atlan-defaults"
+      configMapKey = "bucket"
+    }
+    new ConfigMapEntry {
+      name = "AWS_S3_REGION"
+      configMapName = "atlan-defaults"
+      configMapKey = "region"
+    }
+    new NamedSecret {
+      name = "CLIENT_ID"
+      secretName = "argo-client-creds"
+      secretKey = "login"
+    }
+    new NamedSecret {
+      name = "CLIENT_SECRET"
+      secretName = "argo-client-creds"
+      secretKey = "password"
+    }
+    new NamedSecret {
+      name = "SMTP_HOST"
+      secretName = "support-smtp-creds"
+      secretKey = "host"
+    }
+    new NamedSecret {
+      name = "SMTP_PORT"
+      secretName = "support-smtp-creds"
+      secretKey = "port"
+    }
+    new NamedSecret {
+      name = "SMTP_FROM"
+      secretName = "support-smtp-creds"
+      secretKey = "from"
+    }
+    new NamedSecret {
+      name = "SMTP_USER"
+      secretName = "support-smtp-creds"
+      secretKey = "login"
+    }
+    new NamedSecret {
+      name = "SMTP_PASS"
+      secretName = "workflow-parameter-store"
+      secretKey = "smtp_password"
+    }
+    new ConfigMapEntry {
+      name = "DOMAIN"
+      configMapName = "atlan-defaults"
+      configMapKey = "domain"
+    }
+  }.toList()
+  hidden configVars: List<NamedPair> = config.properties.fold(List(), (acc: List<NamedPair>, key, property) ->
+    acc.add(resolvePropertyToVar(key, property))
+  )
+  hidden nestedConfig: NestedConfig = new NestedConfig {
+    inputs = config.properties.fold(new Mapping {}, (acc: Mapping<String, UIElement>, key, property) ->
+      (acc) {
+        [key] = property
+      }
+    ).toMap()
+  }
+  env: List<NamedPair> = defaultVars + configVars + List(nestedConfig)
+}
+
+const function resolvePropertyToVar(key: String, property: UIElement): NameValuePair = new NameValuePair {
+  name = key.toUpperCase()
+  value = if (property is FileUploader || property is FileCopier)
+    new NamePathS3Tuple { name = key }.path
+  else
+    "{{inputs.parameters.\(key)}}"
+}
+
+const function getSafeTaskName(name: String): String = name.replaceAll("_", "-")
+
+/// Set up multiple outputs for the module, one for each configuration file.
+/// - `m` the package config to generate outputs for
+const function getOutputs(m): Mapping<String, FileOutput> = new Mapping {
+  ["generated-packages/\(m.name)/configmaps/default.yaml"] = new FileOutput {
+    value = new ConfigMap {
+      name = m.name
+      config = m.uiConfig
+    }
+    renderer = new YamlRenderer {}
+  }
+  ["generated-packages/\(m.name)/templates/default.yaml"] = new FileOutput {
+    value = new WorkflowTemplate {
+      name = m.name
+      template = new WorkflowTemplateDefinition {
+        c = m.uiConfig
+        container = new WorkflowContainer {
+          config = m.uiConfig
+          image = m.containerImage
+          command = m.command
+          args = m.args
+          imagePullPolicy = m.containerImagePullPolicy
+        }
+        outputs = m.outputs
+        p = m.name
+      }
+    }
+    renderer = new YamlRenderer {}
+  }
+  ["generated-packages/\(m.name)/index.js"] = new FileOutput {
+    text = """
+      function dummy() {
+          console.log("don't call this.")
+      }
+      module.exports = dummy;
+      """
+  }
+  ["generated-packages/\(m.name)/package.json"] = new FileOutput {
+    value = new PackageDefinition {
+      packageId = m.packageId
+      packageName = m.packageName
+      version = m.version.toString()
+      description = m.description
+      iconUrl = m.iconUrl
+      docsUrl = m.docsUrl
+      keywords = m.keywords
+      allowSchedule = m.allowSchedule
+      certified = m.certified
+      preview = m.preview
+      connectorType = m.connectorType
+      category = m.category
+    }
+    renderer = new JsonRenderer {}
+  }
+  // TODO: Write our own code generator(s) for the Python and Kotlin classes?
+}
+
+/// Translate the model content into a set of files for both type definitions (JSON)
+/// and UI configuration (TypeScript).
+const function getModuleOutput(m): ModuleOutput = new ModuleOutput {
+  files = getOutputs(m)
+}
+
+/// Set the output of the module to be separate files for each custom type definition in the model.
+output = getModuleOutput(this)
+
+// --- WIDGETS ---
+/// Base class for all UI elements that can be used in the configuration of a package.
+abstract class UIElement {
+  /// Type of the element, which can be used to determine how to render it in the UI.
+  fixed type: String
+
+  /// Name to show in the UI for the widget.
+  hidden title: String
+
+  /// Whether a value must be selected to proceed with the UI setup.
+  required: Boolean = false
+
+  /// Whether the widget will be shown in the UI (false) or not (true).
+  hidden hide: Boolean = false
+
+  /// Informational text to place in a hover-over to describe the use of the input.
+  hidden helpText: String = ""
+
+  /// Sizing of the input on the UI (8 is full-width, 4 is half-width).
+  hidden width: Int = 8
+
+  /// (Generated) UI configuration for the element.
+  fixed ui: Widget = new Widget {
+    label = title
+    `hidden` = hide
+    help = helpText
+    grid = width
+  }
+}
+
+/// Base class for all UI elements that use some enumeration of valid values.
+abstract class UIElementWithEnum extends UIElement {
+  possibleValues: Mapping<String, String>
+  default: String?
+
+  fixed enum: List<String> = possibleValues.fold(List(), (acc: List<String>, key, _) -> acc.add(key))
+  fixed enumNames: List<String> = possibleValues.fold(List(), (acc: List<String>, _, value) -> acc.add(value))
+}
+
+/// Base class for all generated elements of the UI.
+class Widget {
+  widget: String
+  label: String
+  `hidden`: Boolean = false
+  help: String = ""
+  placeholder: String?
+  grid: Int = 8
+  mode: String?
+  start: Int?
+  accept: List<String>?
+  fileMetadata: Boolean?
+  min: Int?
+  max: Int?
+  default: Any?
+}
+
+/// Widget that allows you to enter arbitrary text into a single-line text input field,
+/// and returns the value of the text that was entered.
+///
+/// | Field | | Description | Default |
+/// |---|---|---|---|
+/// | **`title`** | | name to show in the UI for the widget | |
+/// | `required` | | whether a value must be selected to proceed with the UI setup | `false` |
+/// | `hide` | | whether the widget will be shown in the UI (false) or not (true) | `false` |
+/// | `helpText` | | informational text to place in a hover-over to describe the use of the input | `""` |
+/// | `placeholder` | | example text to place within the widget to exemplify its use | `""` |
+/// | `width` | | sizing of the input on the UI (8 is full-width, 4 is half-width) | `8` |
+class TextInput extends UIElement {
+  fixed type = "string"
+  required: Boolean = false // Necessary for generated Kotlin copy method override
+
+  /// Example text to place within the widget to exemplify its use.
+  hidden placeholderText: String = ""
+
+  fixed ui {
+    widget = "input"
+    placeholder = placeholderText
+  }
+}
+
+/// Widget that allows you to select just one option from a set of options, and returns the key of
+/// the selected option.
+/// Typically, this is used to control mutually exclusive options in the UI.
+///
+/// | Field | | Description | Default |
+/// |---|---|---|---|
+/// | **`title`** | | name to show in the UI for the widget | |
+/// | **`possibleValues`** | | possible values that can be selected in the radio button | |
+/// | **`default`** | | default value to select in the radio button (its key) | |
+/// | `required` | | whether a value must be selected to proceed with the UI setup | `false` |
+/// | `hide` | | whether the widget will be shown in the UI (false) or not (true) | `false` |
+/// | `helpText` | | informational text to place in a hover-over to describe the use of the input | `""` |
+class Radio extends UIElementWithEnum {
+  fixed type = "string"
+
+  /// Possible values that can be selected in the radio button.
+  /// The key is the value that will be returned, and the value is the text to display.
+  possibleValues: Mapping<String, String>
+
+  /// Default value to select in the radio button (its key).
+  default: String
+
+  fixed ui {
+    widget = "radio"
+  }
+}
+
+/// Widget that allows you to create a new connection by providing a name and list of admins,
+/// and returns a string representation of the connection object that should be created.
+///
+/// | Field | | Description | Default |
+/// |---|---|---|---|
+/// | **`title`** | | name to show in the UI for the widget | |
+/// | `required` | | whether a value must be selected to proceed with the UI setup | `false` |
+/// | `hide` | | whether the widget will be shown in the UI (false) or not (true) | `false` |
+/// | `helpText` | | informational text to place in a hover-over to describe the use of the input | `""` |
+/// | `placeholderText` | | example text to place within the widget to exemplify its use | `""` |
+class ConnectionCreator extends UIElement {
+  fixed type = "string"
+  required: Boolean = false // Necessary for generated Kotlin copy method override
+
+  /// Example text to place within the widget to give an example of a connection name.
+  hidden placeholderText: String = ""
+
+  fixed ui {
+    widget = "connection"
+    placeholder = placeholderText
+  }
+}
+
+/// Widget that allows you to select an existing connection from a drop-down list,
+/// and returns the qualified name of the selected connection.
+///
+/// | Field | | Description | Default |
+/// |---|---|---|---|
+/// | **`title`** | | name to show in the UI for the widget | |
+/// | `required` | | whether a value must be selected to proceed with the UI setup | `false` |
+/// | `hide` | | whether the widget will be shown in the UI (false) or not (true) | `false` |
+/// | `helpText` | | informational text to place in a hover-over to describe the use of the input | `""` |
+/// | `multiSelect` | | whether multiple connections can be selected (true) or only a single connection (false) | `false` |
+/// | `width` | | sizing of the input on the UI (8 is full-width, 4 is half-width) | `8` |
+/// | `begin` | | TBC | `1` |
+class ConnectionSelector extends UIElement {
+  fixed type = "string"
+  required: Boolean = false // Necessary for generated Kotlin copy method override
+
+  /// Whether multiple connections can be selected (true) or only a single connection (false).
+  hidden multiSelect: Boolean = false
+
+  /// TBC
+  hidden begin: Int = 1
+
+  fixed ui {
+    widget = "connectionSelector"
+    mode = if (multiSelect) "multiple" else ""
+    start = begin
+  }
+}
+
+/// Widget that allows you to upload a file, and returns the GUID-based name of the file (as it is
+/// renamed after upload).
+///
+/// | Field | | Description | Default |
+/// |---|---|---|---|
+/// | **`title`** | | name to show in the UI for the widget | |
+/// | **`fileTypes`** | | list of the mime-types of files that should be accepted | |
+/// | `required` | | whether a value must be selected to proceed with the UI setup | `false` |
+/// | `hide` | | whether the widget will be shown in the UI (false) or not (true) | `false` |
+/// | `helpText` | | informational text to place in a hover-over to describe the use of the input | `""` |
+/// | `placeholderText` | | example text to place within the widget to exemplify its use | `""` |
+class FileUploader extends UIElement {
+  fixed type = "string"
+  required: Boolean = false // Necessary for generated Kotlin copy method override
+
+  /// List of the mime-types of files that should be accepted.
+  hidden fileTypes: List<String>
+
+  /// Example text to place within the widget to exemplify its use.
+  hidden placeholderText: String = ""
+
+  fixed ui {
+    widget = "fileUpload"
+    placeholder = placeholderText
+    accept = fileTypes
+    fileMetadata = true
+  }
+}
+
+/// Widget that allows you to copy a file from the tenant's S3 bucket, and returns the name of the file
+/// (as it is named in S3).
+///
+/// | Field | | Description | Default |
+/// |---|---|---|---|
+/// | **`title`** | | name to show in the UI for the widget | |
+/// | `required` | | whether a value must be entered to proceed with the UI setup | `false` |
+/// | `hide` | | whether the widget will be shown in the UI (false) or not (true) | `false` |
+/// | `helpText` | | informational text to place in a hover-over to describe the use of the input | `""` |
+/// | `placeholderText` | | example text to place within the widget to exemplify its use | `""` |
+/// | `width` | | sizing of the input on the UI (8 is full-width, 4 is half-width) | `8` |
+class FileCopier extends UIElement {
+  fixed type = "string"
+  required: Boolean = false // Necessary for generated Kotlin copy method override
+
+  fixed ui {
+    widget = "input"
+  }
+}
+
+/// Widget that allows you to enter an arbitrary number into a single-line text input field,
+/// and returns the value of the number that was entered.
+///
+/// | Field | | Description | Default |
+/// |---|---|---|---|
+/// | **`title`** | | name to show in the UI for the widget | |
+/// | `required` | | whether a value must be selected to proceed with the UI setup | `false` |
+/// | `hide` | | whether the widget will be shown in the UI (false) or not (true) | `false` |
+/// | `helpText` | | informational text to place in a hover-over to describe the use of the input | `""` |
+/// | `placeholderText` | | example text to place within the widget to exemplify its use | `""` |
+/// | `width` | | sizing of the input on the UI (8 is full-width, 4 is half-width) | `8` |
+class NumericInput extends UIElement {
+  fixed type = "number"
+  required: Boolean = false // Necessary for generated Kotlin copy method override
+
+  fixed ui {
+    widget = "inputNumber"
+  }
+}
+
+/// Widget that allows you to enter or select a date (not including time) from a calendar,
+/// and returns the epoch-based number representing that selected date in seconds.
+///
+/// | Field | | Description | Default |
+/// |---|---|---|---|
+/// | **`title`** | | name to show in the UI for the widget | |
+/// | `required` | | whether a value must be selected to proceed with the UI setup | `false` |
+/// | `hide` | | whether the widget will be shown in the UI (false) or not (true) | `false` |
+/// | `helpText` | | informational text to place in a hover-over to describe the use of the input | `""` |
+/// | `past` | | an offset from today (0) that indicates how far back in the calendar can be selected (-1 is yesterday, 1 is tomorrow, and so on) | `-14` |
+/// | `future` | | an offset from today (0) that indicates how far forward in the calendar can be selected (-1 is yesterday, 1 is tomorrow, and so on) | `0` |
+/// | `defaultDay` | | an offset from today that indicates the default date that should be selected in the calendar (0 is today, -1 is yesterday, 1 is tomorrow, and so on) | `0` |
+/// | `begin` | | TBC | `1` |
+/// | `width` | | sizing of the input on the UI (8 is full-width, 4 is half-width) | `8` |
+class DateInput extends UIElement {
+  fixed type = "number"
+  required: Boolean = false // Necessary for generated Kotlin copy method override
+
+  /// An offset from today (0) that indicates how far back in the calendar can be selected (-1 is yesterday, 1 is tomorrow, and so on).
+  hidden past: Int = -14
+
+  /// An offset from today (0) that indicates how far forward in the calendar can be selected (-1 is yesterday, 1 is tomorrow, and so on).
+  hidden future: Int = 0
+
+  /// An offset from today that indicates the default date that should be selected in the calendar (0 is today, -1 is yesterday, 1 is tomorrow, and so on).
+  hidden defaultDay: Int = 0
+
+  /// TBC
+  hidden begin: Int = 1
+
+  fixed ui {
+    widget = "date"
+    start = begin
+    min = past
+    max = future
+    default = defaultDay
+  }
+}
+
+/// Widget that allows you to choose either "Yes" or "No",
+/// and returns the value that was selected.
+///
+/// | Field | | Description | Default |
+/// |---|---|---|---|
+/// | **`title`** | | name to show in the UI for the widget | |
+/// | `required` | | whether a value must be selected to proceed with the UI setup | `false` |
+/// | `hide` | | whether the widget will be shown in the UI (false) or not (true) | `false` |
+/// | `defaultSelection` | | the default value to use for this boolean input | `false` |
+/// | `helpText` | | informational text to place in a hover-over to describe the use of the input | `""` |
+/// | `width` | | sizing of the input on the UI (8 is full-width, 4 is half-width) | `8` |
+class BooleanInput extends UIElement {
+  fixed type = "boolean"
+  required: Boolean = false // Necessary for generated Kotlin copy method override
+
+  /// The default value to use for this boolean input.
+  hidden defaultSelection: Boolean = false
+
+  fixed ui {
+    widget = "boolean"
+    default = defaultSelection
+  }
+}
+
+const DEFAULT_FILE = "argo-artifacts/atlan-update/@atlan-packages-last-safe-run.txt"
