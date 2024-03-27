@@ -43,6 +43,7 @@ public class AtlanTag extends AtlanObject implements AuditDetail, Comparable<Atl
                 .propagate(true)
                 .removePropagationsOnEntityDelete(true)
                 .restrictPropagationThroughLineage(false)
+                .propagationOnlyThroughLineage(false)
                 .build();
     }
 
@@ -61,6 +62,7 @@ public class AtlanTag extends AtlanObject implements AuditDetail, Comparable<Atl
                 .propagate(true)
                 .removePropagationsOnEntityDelete(true)
                 .restrictPropagationThroughLineage(false)
+                .propagationOnlyThroughLineage(false)
                 .build();
     }
 
@@ -97,6 +99,11 @@ public class AtlanTag extends AtlanObject implements AuditDetail, Comparable<Atl
      * propagate through lineage (false).
      */
     Boolean restrictPropagationThroughLineage;
+
+    /**
+     * Whether to propagate this Atlan tag only through lineage (true), when propagation is enabled.
+     */
+    Boolean propagationOnlyThroughLineage;
 
     /** List of attachments of this tag to source-specific tags. */
     @Singular
