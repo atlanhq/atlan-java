@@ -1,6 +1,7 @@
 /* SPDX-License-Identifier: Apache-2.0
-   Copyright 2023 Atlan Pte. Ltd. */
+   Copyright 2024 Atlan Pte. Ltd. */
 import com.atlan.pkg.Config
+import com.atlan.pkg.Renderers
 import org.pkl.config.java.ConfigEvaluator
 import org.pkl.config.kotlin.forKotlin
 import org.pkl.config.kotlin.to
@@ -13,7 +14,7 @@ import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
-object CanonicalExampleTest {
+object CustomPackageTest {
 
     lateinit var config: Config
 
@@ -52,7 +53,7 @@ object CanonicalExampleTest {
         val artifacts = config.outputs!!.artifacts
         assertNotNull(artifacts)
         assertEquals(1, artifacts.size)
-        assertEquals(Config.NamePathPair("debug-logs", "/tmp/debug.log"), artifacts[0])
+        assertEquals(Renderers.NamePathPair("debug-logs", "/tmp/debug.log"), artifacts[0])
     }
 
     @Test
