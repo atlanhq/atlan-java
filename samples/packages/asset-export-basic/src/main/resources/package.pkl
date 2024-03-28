@@ -10,7 +10,7 @@ version = semver.Version(BuildInfo.VERSION)
 description = "Export assets with all enrichment that could be made against them via the Atlan UI."
 iconUrl = "http://assets.atlan.com/assets/ph-cloud-arrow-down-light.svg"
 docsUrl = "https://solutions.atlan.com/asset-export-basic/"
-containerImage = "ghcr.io/atlanhq/csa-asset-export-basic:\(BuildInfo.VERSION)"
+containerImage = "ghcr.io/atlanhq/\(name):\(BuildInfo.VERSION)"
 containerCommand {
   "/dumb-init"
   "--"

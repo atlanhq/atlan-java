@@ -10,7 +10,7 @@ version = semver.Version(BuildInfo.VERSION)
 description = "Assigns an API token as a connection admin for an existing connection."
 iconUrl = "http://assets.atlan.com/assets/ph-key-light.svg"
 docsUrl = "https://solutions.atlan.com/api-token-connection-admin/"
-containerImage = "ghcr.io/atlanhq/csa-api-token-connection-admin:\(BuildInfo.VERSION)"
+containerImage = "ghcr.io/atlanhq/\(name):\(BuildInfo.VERSION)"
 containerCommand {
   "/dumb-init"
   "--"
