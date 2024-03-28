@@ -310,7 +310,7 @@ public interface IGuacamoleColumn {
     Long getColumnDuplicateValuesCountLong();
 
     /** TBC */
-    List<Histogram> getColumnHistogram();
+    Histogram getColumnHistogram();
 
     /** TBC */
     Double getColumnMax();

@@ -99,8 +99,7 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
 
     /** List of values in a histogram that represents the contents of this column. */
     @Attribute
-    @Singular("addColumnHistogram")
-    List<Histogram> columnHistogram;
+    Histogram columnHistogram;
 
     /** Greatest value in a numeric column. */
     @Attribute

@@ -124,8 +124,7 @@ public class MCMonitor extends Asset
 
     /** Schedule details for the rule. */
     @Attribute
-    @Singular("addMcMonitorRuleSchedule")
-    List<MCRuleSchedule> mcMonitorRuleScheduleConfig;
+    MCRuleSchedule mcMonitorRuleScheduleConfig;
 
     /** Readable description of the schedule for the rule. */
     @Attribute

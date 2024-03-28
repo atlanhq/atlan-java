@@ -77,7 +77,7 @@ public abstract class TypeGenerator {
             } else {
                 MappedType.Type baseTypeOfMapped = mappedType.getType();
                 builder.type(baseTypeOfMapped).name(mappedType.getName());
-                if (baseTypeOfMapped == MappedType.Type.STRUCT) {
+                if (baseTypeOfMapped == MappedType.Type.STRUCT && container != null) {
                     // If the referred object is a struct, change the container to a list rather
                     // than a set
                     container = "List<";

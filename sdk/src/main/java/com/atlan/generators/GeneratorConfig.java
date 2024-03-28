@@ -58,19 +58,18 @@ public class GeneratorConfig {
             Map.entry("presetChartFormData", "putPresetChartFormData"),
             Map.entry("resourceMetadata", "putResourceMetadata"),
             Map.entry("adlsObjectMetadata", "putAdlsObjectMetadata"),
-            Map.entry("columnHistogram", "addColumnHistogram"),
             Map.entry("foreignKeyTo", "addForeignKeyTo"),
             Map.entry("quickSightFolderHierarchy", "addQuickSightFolderHierarchy"),
             Map.entry("columnMaxs", "addColumnMax"),
             Map.entry("columnMins", "addColumnMin"),
             Map.entry("redashQuerySchedule", "putRedashQuerySchedule"),
-            Map.entry("mcMonitorRuleScheduleConfig", "addMcMonitorRuleSchedule"),
             Map.entry("policyValiditySchedule", "addPolicyValiditySchedule"),
             Map.entry("authServiceConfig", "putAuthServiceConfig"),
             Map.entry("microStrategyLocation", "putMicroStrategyLocation"),
             Map.entry("starredBy", "addStarredBy"),
             Map.entry("matillionComponentLinkedJob", "putMatillionComponentLinkedJob"),
-            Map.entry("matillionVersions", "addMatillionVersion"));
+            Map.entry("matillionVersions", "addMatillionVersion"),
+            Map.entry("cogniteTimeseries", "addCogniteTimeseries"));
 
     private static final Map<String, String> DEFAULT_ATTRIBUTE_RENAMES = Map.ofEntries(
             Map.entry("connectorName", "connectorType"),

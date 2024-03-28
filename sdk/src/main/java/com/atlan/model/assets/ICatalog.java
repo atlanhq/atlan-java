@@ -92,6 +92,24 @@ public interface ICatalog {
             case CalculationView.TYPE_NAME:
                 ref = CalculationView.refByQualifiedName(qualifiedName);
                 break;
+            case Cognite3DModel.TYPE_NAME:
+                ref = Cognite3DModel.refByQualifiedName(qualifiedName);
+                break;
+            case CogniteAsset.TYPE_NAME:
+                ref = CogniteAsset.refByQualifiedName(qualifiedName);
+                break;
+            case CogniteEvent.TYPE_NAME:
+                ref = CogniteEvent.refByQualifiedName(qualifiedName);
+                break;
+            case CogniteFile.TYPE_NAME:
+                ref = CogniteFile.refByQualifiedName(qualifiedName);
+                break;
+            case CogniteSequence.TYPE_NAME:
+                ref = CogniteSequence.refByQualifiedName(qualifiedName);
+                break;
+            case CogniteTimeSeries.TYPE_NAME:
+                ref = CogniteTimeSeries.refByQualifiedName(qualifiedName);
+                break;
             case Column.TYPE_NAME:
                 ref = Column.refByQualifiedName(qualifiedName);
                 break;
@@ -689,6 +707,9 @@ public interface ICatalog {
 
     /** Unique identifier of this asset in dbt. */
     String getAssetDbtUniqueId();
+
+    /** Name of the DBT workflow in Atlan that last updated the asset. */
+    String getAssetDbtWorkflowLastUpdated();
 
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();

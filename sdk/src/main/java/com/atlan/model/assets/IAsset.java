@@ -217,6 +217,10 @@ public interface IAsset {
     KeywordTextField ASSET_DBT_UNIQUE_ID =
             new KeywordTextField("assetDbtUniqueId", "assetDbtUniqueId.keyword", "assetDbtUniqueId");
 
+    /** Name of the DBT workflow in Atlan that last updated the asset. */
+    KeywordField ASSET_DBT_WORKFLOW_LAST_UPDATED =
+            new KeywordField("assetDbtWorkflowLastUpdated", "assetDbtWorkflowLastUpdated");
+
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     KeywordField ASSET_ICON = new KeywordField("assetIcon", "assetIcon");
 
@@ -642,6 +646,9 @@ public interface IAsset {
 
     /** Unique identifier of this asset in dbt. */
     String getAssetDbtUniqueId();
+
+    /** Name of the DBT workflow in Atlan that last updated the asset. */
+    String getAssetDbtWorkflowLastUpdated();
 
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();

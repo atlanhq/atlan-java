@@ -136,6 +136,7 @@ public class ADLSAccountTest {
             .assetDbtTag("String1")
             .assetDbtTestStatus("String0")
             .assetDbtUniqueId("String0")
+            .assetDbtWorkflowLastUpdated("String0")
             .assetIcon(AtlanIcon.ATLAN_TAG)
             .assetMcIncidentName("String0")
             .assetMcIncidentName("String1")
