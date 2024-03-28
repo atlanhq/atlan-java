@@ -11,16 +11,6 @@ dependencies {
     implementation(project(":samples:packages:asset-import"))
 }
 
-pkl {
-    evaluators {
-        register("genCustomPkg") {
-            sourceModules.add("src/main/resources/package.pkl")
-            modulePath.from(file("$rootDir/package-toolkit/config/build/resources/main"))
-            multipleFileOutputDir.set(layout.projectDirectory)
-        }
-    }
-}
-
 tasks {
     shadowJar {
         isZip64 = true
@@ -30,13 +20,6 @@ tasks {
             include(project(":samples:packages:asset-import"))
         }
         mergeServiceFiles()
-    }
-    getByName("genCustomPkg") {
-        dependsOn(":package-toolkit:config:generateBuildInfo")
-        dependsOn(":package-toolkit:config:processResources")
-    }
-    assemble {
-        dependsOn(getByName("genCustomPkg"))
     }
     jar {
         // Override the default jar task so we get the shadowed jar

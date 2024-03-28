@@ -1,0 +1,351 @@
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2024 Atlan Pte. Ltd. */
+
+/// Template for defining configuration for a custom event-driven pipeline in Atlan.
+@ModuleInfo { minPklVersion = "0.25.1" }
+module com.atlan.pkg.PipelineConfig
+
+extends "Config.pkl"
+import "Renderers.pkl"
+
+/// Command to run the pipeline's custom processing logic, as a list rather than a string.
+containerCommand: Listing<String>
+
+/// (Optional) Command to run to sync the pipeline's configuration, as a list rather than a string.
+configCommand: Listing<String>? = new Listing {
+  "/dumb-init"
+  "--"
+  "java"
+  "com.atlan.pkg.events.WriteConfig"
+}
+
+/// (Optional) Sprig expression used to filter the messages that will be processed by the pipeline.
+filter: String?
+
+/// (Optional) Minimum amount of memory to allocate to the custom logic for the pipeline, in megabytes (default: 128).
+minMemory: Int = 128
+
+/// (Optional) Maximum amount of memory to allocate to the custom logic for the pipeline, in megabytes (default: 256).
+maxMemory: Int = 256
+
+/// Name of the pill under which the package should be categorized in the marketplace in the UI
+category = "always-on"
+
+// --- CONTENT ABOVE THIS LINE IS INTENDED INPUT ---
+// --- CONTENT BELOW THIS LINE IS USED TO GENERATE OUTPUTS ---
+
+/// Should always be false, as pipelines are always running (always-on).
+allowSchedule: Boolean = false
+
+outputs {
+  files {
+    ["debug-logs"] = "/tmp/debug.log"
+  }
+  s3Objects {
+    new S3Artifact { name = "config" }
+    new S3Artifact { name = "runtime" }
+  }
+}
+
+/// Set up multiple outputs for the module, one for each configuration file.
+/// - `m` the package config to generate outputs for
+const function getOutputs(m): Mapping<String, FileOutput> = (super.getOutputs(m)) {
+  ["build/package/\(m.name)/pipelines/default.yaml"] = getPipeline(m)
+}
+
+/// Render the configmap YAML file.
+const function getPipeline(m): FileOutput = new FileOutput {
+  value = new Pipeline {
+    packageId = m.packageId
+    _name = m.name
+    _containerImage = m.containerImage
+    _command = m.command
+    _args = m.args
+    _containerImagePullPolicy = m.containerImagePullPolicy
+    description = m.description
+    _filter = m.filter
+    _minMemory = m.minMemory
+    _maxMemory = m.maxMemory
+    version = m.version.toString()
+  }
+  renderer = new YamlRenderer {}
+}
+
+local class Pipeline {
+  fixed apiVersion: String = "numaflow.numaproj.io/v1alpha1"
+  fixed kind: String = "Pipeline"
+  fixed metadata: Mapping<String, Any> = new Mapping {
+    ["name"] = _name
+    ["annotations"] = new Mapping {
+      ["numaflow.numaproj.io/description"] = description
+      ["numaflow.numaproj.io/owner"] = "atlanhq"
+      ["numaflow.numaproj.io/pipeline-name"] = _name
+      ["numaflow.numaproj.io/test"] = "true"
+      ["package.argoproj.io/author"] = "\"Atlan CSA\""
+      ["package.argoproj.io/description"] = description
+      ["package.argoproj.io/homepage"] = ""
+      ["package.argoproj.io/name"] = packageId
+      ["package.argoproj.io/parent"] = "."
+      ["package.argoproj.io/registry"] = "local"
+      ["package.argoproj.io/support"] = "\"\""
+    }
+    ["finalizers"] = List("pipeline-controller")
+    ["labels"] = new Mapping {
+      ["numaflow.numaproj.io/component"] = "pipeline"
+      ["numaflow.numaproj.io/created-by"] = "controller-manager"
+      ["numaflow.numaproj.io/name"] = _name
+      ["numaflow.numaproj.io/part-of"] = "numaflow"
+      ["package.argoproj.io/installer"] = "argopm"
+      ["package.argoproj.io/name"] = "a-t-rcsas-l-a-s-h\(_name)"
+      ["package.argoproj.io/parent"] = "\"\""
+      ["package.argoproj.io/registry"] = "local"
+      ["package.argoproj.io/version"] = version
+    }
+  }
+  fixed spec: PipelineSpec = new PipelineSpec {
+    name = _name
+    containerImage = _containerImage
+    command = _command
+    args = _args
+    containerImagePullPolicy = _containerImagePullPolicy
+    filter = _filter
+    minMemory = _minMemory
+    maxMemory = _maxMemory
+  }
+  hidden packageId: String
+  hidden _name: String
+  hidden _containerImage: String
+  hidden _command: List<String>
+  hidden _args: List<String>
+  hidden _containerImagePullPolicy: String
+  hidden description: String = ""
+  hidden _filter: String = ""
+  hidden _minMemory: Int
+  hidden _maxMemory: Int
+  hidden version: String
+}
+
+local class PipelineSpec {
+  fixed templates: Map<String, Any> = new Mapping { ["daemon"] = SETTINGS }.toMap()
+  fixed vertices: List<Map<String, Any>> = new Listing {
+    // Initial source
+    source("atlas-source", "ATLAS_ENTITIES", "nf-\(name)", 2, filter)
+    // User-defined processing
+    udf("process", 5, containerImage, command, args)
+    // Retry of user-defined processing
+    retry()
+    // Sink messages for DLQ
+    sink("dlq", "nf-\(name)-dlq")
+  }.toList()
+  fixed edges: List<Edge> = new Listing {
+    new Edge {
+      from = "atlas-source"
+      to = "process"
+    }
+    new Edge {
+      from = "process"
+      to = "retry"
+      conditions = new RoutingCondition { tag = "retry" }
+    }
+    new Edge {
+      from = "retry"
+      to = "process"
+    }
+    new Edge {
+      from = "process"
+      to = "dlq"
+      conditions = new RoutingCondition { tag = "dlq" }
+    }
+  }.toList()
+  fixed lifecycle: Map<String, Any> = new Mapping {
+    ["deleteGracePeriodSeconds"] = 30
+    ["desiredPhase"] = "Running"
+    ["pauseGracePeriodSeconds"] = 30
+  }.toMap()
+  fixed limits: Map<String, Any> = new Mapping {
+    ["readBatchSize"] = 500
+    ["bufferedMaxLength"] = 30000
+    ["bufferUSageLimit"] = 80
+    ["readTimeout"] = "1s"
+  }.toMap()
+  fixed watermark: Map<String, String> = new Mapping { ["maxDelay"] = "0s" }.toMap()
+  hidden name: String
+  hidden containerImage: String
+  hidden command: List<String>
+  hidden args: List<String>
+  hidden containerImagePullPolicy: String
+  hidden filter: String
+  hidden minMemory: Int
+  hidden maxMemory: Int
+}
+
+const SETTINGS: Mapping<String, Any> = new Mapping {
+  ["metadata"] = new Mapping {
+    ["annotations"] = new Mapping {
+      ["cluster-autoscaler.kubernetes.io/safe-to-evict"] = "true"
+    }
+  }
+  ["imagePullSecrets"] = new Listing {
+    new Mapping {
+      ["name"] = "github-docker-registry"
+    }
+  }
+  ["tolerations"] = new Listing {
+    new Mapping {
+      ["key"] = "kubernetes.azure.com/scalesetpriority"
+      ["operator"] = "Equal"
+      ["value"] = "spot"
+      ["effect"] = "NoSchedule"
+    }
+  }
+}
+
+local const function source(sourceName: String, topicName: String, consumerGroupName: String, maxScale: Int, filter: String): Map<String, Any> =
+  (SETTINGS) {
+    ["name"] = sourceName
+    ["source"] = new Mapping {
+      ["kafka"] = new Mapping {
+        ["brokers"] = List("kafka-headless.kafka.svc.cluster.local:9092")
+        ["topic"] = topicName
+        ["consumerGroup"] = consumerGroupName
+      }
+      when (!filter.isEmpty) {
+        ["transformer"] = new Mapping {
+          ["builtin"] = new Mapping {
+            ["name"] = "filter"
+            ["kwargs"] = new Mapping {
+              ["expression"] = "\(filter)\n"
+            }
+          }
+        }
+      }
+    }
+    ["scale"] = new Scale { max = maxScale }
+  }.toMap()
+
+local const function udf(udfName: String, maxScale: Int, containerImage: String, command: List<String>, args: List<String>): Map<String, Any> =
+  (SETTINGS) {
+    ["name"] = udfName
+    ["udf"] = new Mapping {
+      ["container"] = new Mapping {
+        ["image"] = containerImage
+        ["command"] = command
+        ["args"] = args
+        ["env"] = new Listing {
+          new Renderers.NameValuePair {
+            name = "ATLAN_BASE_URL"
+            value = "INTERNAL"
+          }
+          new Renderers.NameValuePair {
+            name = "CONFIG_PREFIX"
+            value = name
+          }
+          new Renderers.NamedSecret {
+            name = "CLIENT_ID"
+            secretName = "argo-client-creds"
+            secretKey = "login"
+          }
+          new Renderers.NamedSecret {
+            name = "CLIENT_SECRET"
+            secretName = "argo-client-creds"
+            secretKey = "password"
+          }
+          new Renderers.ConfigMapEntry {
+            name = "AWS_S3_BUCKET_NAME"
+            configMapName = "atlan-defaults"
+            configMapKey = "bucket"
+          }
+          new Renderers.ConfigMapEntry {
+            name = "AWS_S3_REGION"
+            configMapName = "atlan-defaults"
+            configMapKey = "region"
+          }
+          new Renderers.NamedSecret {
+            name = "SMTP_HOST"
+            secretName = "support-smtp-creds"
+            secretKey = "host"
+          }
+          new Renderers.NamedSecret {
+            name = "SMTP_PORT"
+            secretName = "support-smtp-creds"
+            secretKey = "port"
+          }
+          new Renderers.NamedSecret {
+            name = "SMTP_FROM"
+            secretName = "support-smtp-creds"
+            secretKey = "from"
+          }
+          new Renderers.NamedSecret {
+            name = "SMTP_USER"
+            secretName = "support-smtp-creds"
+            secretKey = "login"
+          }
+          new Renderers.NamedSecret {
+            name = "SMTP_PASS"
+            secretName = "workflow-parameter-store"
+            secretKey = "smtp_password"
+          }
+          new Renderers.ConfigMapEntry {
+            name = "DOMAIN"
+            configMapName = "atlan-defaults"
+            configMapKey = "domain"
+          }
+        }
+      }
+    }
+    ["scale"] = new Scale { max = maxScale }
+  }.toMap()
+
+local const function retry(): Map<String, Any> =
+  (SETTINGS) {
+    ["name"] = "retry"
+    ["udf"] = new Mapping {
+      ["builtin"] = new Mapping {
+        ["name"] = "cat"
+      }
+    }
+    // TODO: replace this entire UDF with a reusable retry container that embeds exponential back-off + jitter based on a retry counter
+    ["scale"] = new Scale {
+      min = 0
+      max = 1
+      zeroReplicaSleepSeconds = 5
+    }
+  }.toMap()
+
+local const function sink(sinkName: String, topicName: String): Map<String, Any> =
+  (SETTINGS) {
+    ["name"] = sinkName
+    ["sink"] = new Mapping {
+      ["kafka"] = new Mapping {
+        ["brokers"] = List("kafka-headless.kafka.svc.cluster.local:9092")
+        ["topic"] = topicName
+      }
+    }
+    ["scale"] = new Scale { max = 1 }
+  }.toMap()
+
+local class Scale {
+  disabled: Boolean = false
+  min: Int = 1
+  max: Int = 1
+  lookbackSeconds: Int = 120
+  scaleUpCooldownSeconds: Int = 90
+  scaleDownCooldownSeconds: Int = 90
+  zeroReplicaSleepSeconds: Int = 120
+  targetProcessingSeconds: Int = 20
+  targetBufferAvailability: Int = 50
+  replicasPerScale: Int = 2
+}
+
+local class Edge {
+  from: String
+  to: String
+  conditions: RoutingCondition?
+}
+
+local class RoutingCondition {
+  hidden tag: String
+  fixed tags: Map<String, List<String>> = new Mapping {
+    ["values"] = List(tag)
+  }.toMap()
+}

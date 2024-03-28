@@ -1,0 +1,100 @@
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2024 Atlan Pte. Ltd. */
+amends "modulepath:/PipelineConfig.pkl"
+import "pkl:semver"
+import "modulepath:/BuildInfo.pkl"
+
+packageId = "@csa/verification-enforcer"
+packageName = "Verification Enforcer"
+version = semver.Version(BuildInfo.VERSION)
+description = "Ensures any asset marked VERIFIED meets a minimum standard, or if not it is automatically reverted to DRAFT."
+iconUrl = "https://assets.atlan.com/assets/ph-seal-check-light.svg"
+docsUrl = "https://solutions.atlan.com/verification-enforcer/"
+containerImage = "ghcr.io/atlanhq/\(name):\(BuildInfo.VERSION)"
+containerCommand {
+  "/dumb-init"
+  "--"
+  "java"
+  "VerificationEnforcer"
+}
+filter = "json(payload).message.operationType in [\"ENTITY_CREATE\", \"ENTITY_UPDATE\"] && json(payload).message.entity.attributes.certificateStatus in [\"VERIFIED\"]"
+keywords {
+  "kotlin"
+  "governance"
+  "pipeline"
+}
+preview = true
+
+uiConfig {
+  tasks {
+    ["Logic"] {
+      description = "Configure pipeline"
+      inputs {
+        ["asset_types"] = new DropDown {
+          title = "Asset types"
+          required = true
+          helpText = "Select asset types to score, or leave blank to score all asset types."
+          possibleValues {
+            ["Table"] = "Table"
+            ["View"] = "View"
+            ["MaterialisedView"] = "Materialized View"
+            ["AtlasGlossaryTerm"] = "Term"
+            ["AtlasGlossaryCategory"] = "Category"
+            ["AtlasGlossary"] = "Glossary"
+          }
+          multiSelect = true
+          width = 8
+        }
+        ["must_haves"] = new DropDown {
+          title = "Must have"
+          required = true
+          helpText = "Select all the characteristics an asset must have to be verified."
+          possibleValues {
+            ["description"] = "Description"
+            ["lineage"] = "Lineage"
+            ["owner"] = "Owner"
+            ["readme"] = "README"
+            ["tag"] = "Tag"
+            ["term"] = "Term"
+          }
+          multiSelect = true
+          width = 8
+        }
+        ["enforcement_message"] = new TextInput {
+          title = "Enforcement message"
+          required = false
+          helpText = "Message to include when an asset is reverted to DRAFT by the pipeline."
+          placeholderText = "To be verified, an asset must have a description, at least one owner, and lineage."
+          width = 8
+        }
+      }
+    }
+    ["Runtime"] {
+      description = "Execution options"
+      inputs {
+        ["credential_usage"] = new Radio {
+          title = "Run as..."
+          required = true
+          possibleValues {
+            ["USER"] = "User (me)"
+            ["TOKEN"] = "API token"
+          }
+          default = "USER"
+          helpText = "Select the credentials to use for running the always-on pipeline."
+        }
+        ["api_token"] = new APITokenSelector {
+          title = "API token"
+          required = true
+          helpText = "Select the API token for the pipeline to run as. If blank, the pipeline will run as the user configuring this workflow."
+          width = 4
+        }
+      }
+    }
+  }
+  rules {
+    new UIRule {
+      whenInputs { ["credential_usage"] = "TOKEN" }
+      required { "api_token" }
+    }
+  }
+}

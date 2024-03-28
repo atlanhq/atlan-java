@@ -33,29 +33,14 @@ dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test:1.9.22")
 }
 
-tasks.create<JavaExec>("customPkgCfg") {
-    dependsOn(tasks.build)
-    mainClass.set("PackageConfig")
-    classpath = sourceSets.main.get().runtimeClasspath
-    args = listOf(
-        "config",
-        "src/main/kotlin",
-    )
-}
-
-tasks.create<JavaExec>("customPkgGen") {
-    dependsOn(tasks.getByName("customPkgCfg"))
-    mainClass.set("PackageConfig")
-    classpath = sourceSets.main.get().runtimeClasspath
-    workingDir = rootDir
-    args = listOf(
-        "package",
-        "generated-packages",
-    )
-}
-
-tasks.create("customPkg") {
-    dependsOn(tasks.getByName("customPkgGen"))
+pkl {
+    evaluators {
+        register("genCustomPkg") {
+            sourceModules.add("src/main/resources/package.pkl")
+            modulePath.from(file("$rootDir/package-toolkit/config/build/resources/main"))
+            multipleFileOutputDir.set(layout.projectDirectory)
+        }
+    }
 }
 
 testing {
@@ -90,6 +75,13 @@ tasks {
     }
     clean {
         delete(jarPath)
+    }
+    getByName("genCustomPkg") {
+        dependsOn(":package-toolkit:config:generateBuildInfo")
+        dependsOn(":package-toolkit:config:processResources")
+    }
+    assemble {
+        dependsOn(getByName("genCustomPkg"))
     }
 }
 

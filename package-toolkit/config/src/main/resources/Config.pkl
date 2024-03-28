@@ -3,7 +3,7 @@
 
 /// Template for defining configuration for a custom package in Atlan.
 @ModuleInfo { minPklVersion = "0.25.1" }
-module com.atlan.pkg.Config
+open module com.atlan.pkg.Config
 
 import "pkl:semver"
 import "Renderers.pkl"

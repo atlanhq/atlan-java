@@ -156,7 +156,7 @@ local class NamePathS3Tuple extends NamedPair {
   }
 }
 
-local class ConfigMapEntry extends NamedPair {
+class ConfigMapEntry extends NamedPair {
   name: String
   fixed valueFrom = (value) {
     when (default != null) {
@@ -166,7 +166,7 @@ local class ConfigMapEntry extends NamedPair {
   hidden configMapName: String
   hidden configMapKey: String
   hidden default: String? = null
-  hidden value = new Mapping {
+  hidden fixed value = new Mapping {
     ["configMapKeyRef"] = new Mapping {
       ["name"] = configMapName
       ["key"] = configMapKey
@@ -174,7 +174,7 @@ local class ConfigMapEntry extends NamedPair {
   }
 }
 
-local class NamedSecret extends NamedPair {
+class NamedSecret extends NamedPair {
   name: String
   fixed valueFrom = new Mapping {
     ["secretKeyRef"] = new Mapping {
