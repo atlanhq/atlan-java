@@ -138,7 +138,7 @@ uiConfig {
           title = "Batch size"
           required = false
           helpText = "Maximum number of rows to process at a time (per API request)."
-          placeholderText = "20"
+          placeholderValue = 20
           width = 4
         }
         ["track_batches"] = new BooleanInput {
@@ -245,7 +245,7 @@ uiConfig {
           title = "Batch size"
           required = false
           helpText = "Maximum number of rows to process at a time (per API request)."
-          placeholderText = "20"
+          placeholderValue = 20
           width = 4
         }
       }

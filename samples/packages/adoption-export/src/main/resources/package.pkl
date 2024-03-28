@@ -51,7 +51,7 @@ uiConfig {
           title = "Maximum assets"
           helpText = "Maximum number of results to include for the most-viewed assets."
           required = false
-          placeholderText = "100"
+          placeholderValue = 100
           width = 4
         }
       }
@@ -117,7 +117,7 @@ uiConfig {
           title = "Maximum assets"
           helpText = "Maximum number of assets for which to calculate the number of changes made."
           required = false
-          placeholderText = "100"
+          placeholderValue = 100
           width = 4
         }
 
@@ -140,7 +140,7 @@ uiConfig {
           title = "Maximum"
           helpText = "Maximum number of searches to include for the most-run searches."
           required = false
-          placeholderText = "50"
+          placeholderValue = 50
           width = 4
         }
       }

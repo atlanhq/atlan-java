@@ -1,0 +1,152 @@
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2024 Atlan Pte. Ltd. */
+amends "modulepath:/Config.pkl"
+import "pkl:semver"
+import "modulepath:/BuildInfo.pkl"
+
+packageId = "@csa/enrichment-migrator"
+packageName = "Enrichment Migrator"
+version = semver.Version(BuildInfo.VERSION)
+description = "Migrate enrichment from one set of assets to another."
+iconUrl = "http://assets.atlan.com/assets/ph-flow-arrow-light.svg"
+docsUrl = "https://solutions.atlan.com/enrichment-migrator/"
+containerImage = "ghcr.io/atlanhq/\(name):\(BuildInfo.VERSION)"
+containerCommand {
+  "/dumb-init"
+  "--"
+  "java"
+  "EnrichmentMigrator"
+}
+outputs {
+  files {
+    ["debug-logs"] = "/tmp/debug.log"
+  }
+}
+keywords {
+  "kotlin"
+  "utility"
+}
+preview = true
+
+uiConfig {
+  tasks {
+    ["Assets"] {
+      description = "Assets to include"
+      inputs {
+        ["source_connection"] = new ConnectionSelector {
+          title = "Source"
+          required = true
+          helpText = "Connection from which to extract the enriched metadata."
+          width = 4
+        }
+        ["source_qn_prefix"] = new TextInput {
+          title = "Limit to (prefix)"
+          required = false
+          helpText = "Further limit the assets in the source connection by this qualifiedName (not including the connection portion of the qualifiedName)."
+          width = 4
+        }
+        ["target_connection"] = new ConnectionSelector {
+          title = "Target"
+          required = true
+          helpText = "Connection into which to load the enriched metadata."
+          width = 4
+          multiSelect = true
+        }
+        ["config_type"] = new Radio {
+          title = "Options"
+          required = true
+          possibleValues {
+            ["default"] = "Default"
+            ["advanced"] = "Advanced"
+          }
+          default = "default"
+          helpText = "Options to optimize how assets are imported."
+        }
+        ["fail_on_errors"] = new BooleanInput {
+          title = "Fail on errors"
+          required = false
+          helpText = "Whether an invalid value in a field should cause the import to fail (Yes) or log a warning, skip that value, and proceed (No)."
+        }
+        ["field_separator"] = new TextInput {
+          title = "Field separator"
+          required = false
+          helpText = "Character used to separate fields in the input file (for example, ',' or ';')."
+          placeholderText = ","
+          width = 4
+        }
+        ["batch_size"] = new NumericInput {
+          title = "Batch size"
+          required = false
+          helpText = "Maximum number of rows to process at a time (per API request)."
+          placeholderValue = 20
+          width = 4
+        }
+      }
+    }
+    ["Attributes"] {
+      description = "Attributes to migrate"
+      inputs {
+        ["limit_type"] = new Radio {
+          title = "Limit to"
+          required = true
+          helpText = "Select whether to limit the attributes to migrate to only those selected, or to exclude only those selected (by default all enriched attributes will be migrated)."
+          possibleValues {
+            ["INCLUDE"] = "Only the following"
+            ["EXCLUDE"] = "All enrichment except"
+          }
+          default = "EXCLUDE"
+        }
+        ["attributes_list"] = new DropDown {
+          title = "Attributes"
+          required = false
+          possibleValues {
+            ["description"] = "System description"
+            ["userDescription"] = "User-provided description"
+            ["displayName"] = "Display name"
+            ["ownerUsers"] = "Owners (users)"
+            ["ownerGroups"] = "Owners (groups)"
+            ["certificateStatus"] = "Certificate (status)"
+            ["certificateStatusMessage"] = "Certificate (message)"
+            ["announcementType"] = "Announcement (type)"
+            ["announcementTitle"] = "Announcement (title)"
+            ["announcementMessage"] = "Announcement (message)"
+            ["assignedTerms"] = "Assigned terms"
+            ["atlanTags"] = "Atlan tags"
+            ["links"] = "Links"
+            ["readme"] = "README"
+          }
+          helpText = "Attributes to include or exclude (based on option selected above)."
+          multiSelect = true
+          width = 8
+        }
+        ["cm_limit_type"] = new Radio {
+          title = "Limit custom metadata to"
+          required = true
+          helpText = "Select whether to limit the custom metadata attributes to migrate to only those selected, or to exclude only those selected (by default all custom metadata will be migrated)."
+          possibleValues {
+            ["INCLUDE"] = "Only the following"
+            ["EXCLUDE"] = "All custom metadata except"
+          }
+          default = "EXCLUDE"
+        }
+        ["custom_metadata"] = new TextInput {
+          title = "Custom metadata"
+          required = false
+          helpText = "Custom metadata to include or exclude (based on option selected above), pipe-separated attributes with each in the form of 'Custom Metadata Set::Attribute Name'."
+          placeholderText = "Data Quality::Completeness|Data Quality::Accuracy"
+          width = 8
+        }
+      }
+    }
+  }
+  rules {
+    new UIRule {
+      whenInputs { ["config_type"] = "advanced" }
+      required {
+        "fail_on_errors"
+        "field_separator"
+        "batch_size"
+      }
+    }
+  }
+}

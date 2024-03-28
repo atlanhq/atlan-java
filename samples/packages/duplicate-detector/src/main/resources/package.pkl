@@ -1,0 +1,81 @@
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2024 Atlan Pte. Ltd. */
+amends "modulepath:/Config.pkl"
+import "pkl:semver"
+import "modulepath:/BuildInfo.pkl"
+
+packageId = "@csa/duplicate-detector"
+packageName = "Duplicate Detector"
+version = semver.Version(BuildInfo.VERSION)
+description = "Detect possible duplicate tables, views and materialized views based on their columns."
+iconUrl = "http://assets.atlan.com/assets/ph-copy-light.svg"
+docsUrl = "https://solutions.atlan.com/duplicate-detector/"
+containerImage = "ghcr.io/atlanhq/\(name):\(BuildInfo.VERSION)"
+containerCommand {
+  "/dumb-init"
+  "--"
+  "java"
+  "DuplicateDetector"
+}
+outputs {
+  files {
+    ["debug-logs"] = "/tmp/debug.log"
+  }
+}
+keywords {
+  "kotlin"
+  "utility"
+}
+preview = true
+
+uiConfig {
+  tasks {
+    ["Configuration"] {
+      description = "Duplicate detection configuration"
+      inputs {
+        ["glossary_name"] = new TextInput {
+          title = "Glossary name"
+          required = true
+          helpText = "Name for the glossary where the duplicate sets of assets will be recorded and tracked."
+          placeholderText = "Duplicate assets"
+          width = 4
+        }
+        ["qn_prefix"] = new TextInput {
+          title = "Qualified name prefix"
+          required = false
+          helpText = "Starting value for a qualifiedName that will determine which assets to check for duplicates."
+          placeholderText = "default"
+          width = 4
+        }
+        ["control_config_strategy"] = new Radio {
+          title = "Options"
+          required = true
+          possibleValues {
+            ["default"] = "Default"
+            ["advanced"] = "Advanced"
+          }
+          default = "default"
+          helpText = "Options to optimize how the utility runs."
+        }
+        ["asset_types"] = new DropDown {
+          title = "Asset types"
+          required = false
+          possibleValues {
+            ["Table"] = "Table"
+            ["View"] = "View"
+            ["MaterialisedView"] = "Materialized view"
+          }
+          helpText = "Select asset types to check for duplicates."
+          multiSelect = true
+          width = 4
+        }
+      }
+    }
+  }
+  rules {
+    new UIRule {
+      whenInputs { ["control_config_strategy"] = "advanced" }
+      required { "asset_types" }
+    }
+  }
+}

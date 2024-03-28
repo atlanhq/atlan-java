@@ -1,0 +1,78 @@
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2024 Atlan Pte. Ltd. */
+amends "modulepath:/Config.pkl"
+import "pkl:semver"
+import "modulepath:/BuildInfo.pkl"
+
+packageId = "@csa/metadata-impact-report"
+packageName = "Metadata Impact Report"
+version = semver.Version(BuildInfo.VERSION)
+description = "Produce a detailed report of different areas of potential impact, based on the metadata available."
+iconUrl = "http://assets.atlan.com/assets/ph-projector-screen-chart-light.svg"
+docsUrl = "https://solutions.atlan.com/metadata-impact-report/"
+containerImage = "ghcr.io/atlanhq/\(name):\(BuildInfo.VERSION)"
+containerCommand {
+  "/dumb-init"
+  "--"
+  "java"
+  "com.atlan.pkg.mdir.Reporter"
+}
+outputs {
+  files {
+    ["debug-logs"] = "/tmp/debug.log"
+    ["mdir"] = "/tmp/mdir.xlsx"
+  }
+}
+keywords {
+  "kotlin"
+  "utility"
+}
+preview = true
+
+uiConfig {
+  tasks {
+    ["Outputs"] {
+      description = "Report outputs"
+      inputs {
+        ["include_glossary"] = new Radio {
+          title = "Generate glossary?"
+          required = true
+          possibleValues {
+            ["TRUE"] = "Yes"
+            ["FALSE"] = "No (Excel only)"
+          }
+          default = "TRUE"
+          helpText = "Whether to generate a glossary of metadata metrics used in the report. (An Excel will always be generated.)"
+        }
+        ["glossary_name"] = new TextInput {
+          title = "Glossary name"
+          required = true
+          helpText = "Name of the glossary in which to store the metadata metrics."
+          placeholderText = "Metadata metrics"
+        }
+        ["include_details"] = new BooleanInput {
+          title = "Include details"
+          required = true
+          helpText = "Whether to include detailed results (Yes), or only the headline metrics (No) in the Excel file produced."
+        }
+      }
+    }
+    ["Delivery"] {
+      description = "Where to send"
+      inputs {
+        ["email_addresses"] = new TextInput {
+          title = "Email address(es)"
+          helpText = "Provide any email addresses you want the report sent to, separated by commas."
+          required = false
+          placeholderText = "one@example.com,two@example.com"
+        }
+      }
+    }
+  }
+  rules {
+    new UIRule {
+      whenInputs { ["include_glossary"] = "TRUE" }
+      required { "glossary_name" }
+    }
+  }
+}

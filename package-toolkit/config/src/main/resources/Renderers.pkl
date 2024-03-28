@@ -102,6 +102,12 @@ const function getConfigClassKt(m: Config, className: String): FileOutput = new 
             @JsonSerialize(using = WidgetSerde.ConnectorAndConnectionsSerializer::class)
             @JsonProperty(\"\(k)\") val \(getLowerCamelCase(k)): ConnectorAndConnections? = null,
         """
+      else if (u is Config.ConnectionCreator)
+        """
+            @JsonDeserialize(using = WidgetSerde.ConnectionDeserializer::class)
+            @JsonSerialize(using = WidgetSerde.ConnectionSerializer::class)
+            @JsonProperty(\"\(k)\") val \(getLowerCamelCase(k)): Connection? = null,
+        """
       else if (u is Config.BooleanInput)
         """
             @JsonProperty(\"\(k)\") val \(getLowerCamelCase(k)): Boolean? = null,
@@ -387,7 +393,7 @@ local class WorkflowTemplateDefinition {
 
 local class WorkflowInputs {
   fixed parameters: List<NamedPair> = params.toList()
-  fixed artifacts: List<NamePathS3Tuple> = if (fileInputSetup) List() else arts.toList()
+  fixed artifacts: List<NamePathS3Tuple>? = if (fileInputSetup) null else arts.toList()
   hidden config: Config.UIConfig
   hidden pkgName: String = ""
   hidden fileInputSetup: Boolean = false

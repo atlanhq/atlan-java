@@ -1,0 +1,46 @@
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2024 Atlan Pte. Ltd. */
+amends "modulepath:/Config.pkl"
+import "pkl:semver"
+import "modulepath:/BuildInfo.pkl"
+
+packageId = "@csa/owner-propagator"
+packageName = "Owner Propagator"
+version = semver.Version(BuildInfo.VERSION)
+description = "Propagate owners from schema downwards."
+iconUrl = "https://assets.atlan.com/assets/ph-user-switch-light.svg"
+docsUrl = "https://solutions.atlan.com/"
+containerImage = "ghcr.io/atlanhq/\(name):\(BuildInfo.VERSION)"
+containerCommand {
+  "/dumb-init"
+  "--"
+  "java"
+  "OwnerPropagator"
+}
+outputs {
+  files {
+    ["debug-logs"] = "/tmp/debug.log"
+  }
+}
+keywords {
+  "kotlin"
+  "utility"
+}
+preview = true
+
+uiConfig {
+  tasks {
+    ["Configuration"] {
+      description = "Owner propagation configuration"
+      inputs {
+        ["qn_prefix"] = new TextInput {
+          title = "Qualified name prefix"
+          required = false
+          helpText = "Provide the starting name for schemas from which to propagate ownership."
+          placeholderText = "default/snowflake/1234567890"
+          width = 4
+        }
+      }
+    }
+  }
+}

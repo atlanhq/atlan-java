@@ -1,0 +1,206 @@
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2024 Atlan Pte. Ltd. */
+amends "modulepath:/Config.pkl"
+import "pkl:semver"
+import "modulepath:/BuildInfo.pkl"
+
+packageId = "@csa/cube-assets-builder"
+packageName = "Cube Assets Builder"
+version = semver.Version(BuildInfo.VERSION)
+description = "Build (and update) cube assets managed through a CSV file."
+iconUrl = "http://assets.atlan.com/assets/ph-cube-light.svg"
+docsUrl = "https://solutions.atlan.com/cube-assets-builder/"
+containerImage = "ghcr.io/atlanhq/\(name):\(BuildInfo.VERSION)"
+containerCommand {
+  "/dumb-init"
+  "--"
+  "java"
+  "com.atlan.pkg.cab.Importer"
+}
+outputs {
+  files {
+    ["debug-logs"] = "/tmp/debug.log"
+  }
+}
+keywords {
+  "kotlin"
+  "utility"
+}
+preview = true
+
+uiConfig {
+  tasks {
+    ["Assets"] {
+      description = "Assets to import"
+      inputs {
+        ["assets_import_type"] = new Radio {
+          title = "Import assets from"
+          required = true
+          helpText = "Select how you want to provide the file containing cube assets to be imported."
+          possibleValues {
+            ["UPLOAD"] = "Direct upload"
+            ["S3"] = "S3 object"
+          }
+          default = "UPLOAD"
+        }
+        ["assets_file"] = new FileUploader {
+          title = "Assets file"
+          fileTypes { "text/csv" }
+          required = false
+          helpText = "Select the file containing the cube assets to import."
+          placeholderText = "Select assets CSV file"
+        }
+        ["assets_s3_region"] = new TextInput {
+          title = "S3 region"
+          required = false
+          helpText = "Enter the S3 region from which to retrieve the S3 object. If empty, will use the region of Atlan's own back-end storage."
+          placeholderText = "ap-south-1"
+          width = 4
+        }
+        ["assets_s3_bucket"] = new TextInput {
+          title = "S3 bucket"
+          required = false
+          helpText = "Enter the S3 bucket from which to retrieve the S3 object. If empty, will use the bucket of Atlan's own back-end storage."
+          placeholderText = "bucket-name"
+          width = 4
+        }
+        ["assets_s3_object_key"] = new TextInput {
+          title = "S3 object key"
+          required = false
+          helpText = "Enter the S3 object key, including the name of the object and its prefix (path) in the S3 bucket."
+          placeholderText = "some/where/file.csv"
+          width = 8
+        }
+        ["assets_upsert_semantic"] = new Radio {
+          title = "Input handling"
+          required = false
+          possibleValues {
+            ["upsert"] = "Create and update"
+            ["update"] = "Update only"
+          }
+          default = "upsert"
+          helpText = "Whether to allow the creation of new assets from the input CSV, or ensure assets are only updated if they already exist in Atlan."
+        }
+        ["assets_config_type"] = new Radio {
+          title = "Options"
+          required = true
+          possibleValues {
+            ["default"] = "Default"
+            ["advanced"] = "Advanced"
+          }
+          default = "default"
+          helpText = "Options to optimize how assets are imported."
+        }
+        ["assets_attr_to_overwrite"] = new DropDown {
+          title = "Remove attributes, if empty"
+          required = false
+          possibleValues {
+            ["certificateStatus"] = "Certificate"
+            ["announcementType"] = "Announcement"
+            ["displayName"] = "Display name"
+            ["description"] = "Description (system)"
+            ["userDescription"] = "Description (user)"
+            ["ownerUsers"] = "Owners (users)"
+            ["ownerGroups"] = "Owners (groups)"
+            ["assignedTerms"] = "Assigned terms"
+            ["readme"] = "README"
+          }
+          helpText = "Select attributes you want to clear (remove) from assets if their value is blank in the provided file."
+          multiSelect = true
+          width = 8
+        }
+        ["assets_fail_on_errors"] = new BooleanInput {
+          title = "Fail on errors"
+          required = false
+          helpText = "Whether an invalid value in a field should cause the import to fail (Yes) or log a warning, skip that value, and proceed (No)."
+        }
+        ["assets_field_separator"] = new TextInput {
+          title = "Field separator"
+          required = false
+          helpText = "Character used to separate fields in the input file (for example, ',' or ';')."
+          placeholderText = ","
+          width = 4
+        }
+        ["assets_batch_size"] = new NumericInput {
+          title = "Batch size"
+          required = false
+          helpText = "Maximum number of rows to process at a time (per API request)."
+          placeholderValue = 20
+          width = 4
+        }
+        ["track_batches"] = new BooleanInput {
+          title = "Track asset details"
+          required = false
+          hide = true
+          defaultSelection = true
+          helpText = "Whether to track details about every asset across batches (Yes) or only counts (No)."
+        }
+      }
+    }
+    ["Semantics"] {
+      description = "Processing logic"
+      inputs {
+        ["delta_semantic"] = new Radio {
+          title = "Delta handling"
+          required = false
+          possibleValues {
+            ["full"] = "Full replacement"
+            ["delta"] = "Incremental"
+          }
+          default = "full"
+          helpText = "Whether to treat the input file as an initial load, full replacement (deleting any existing assets not in the file) or only incremental (no deletion of existing assets)."
+        }
+        ["delta_removal_type"] = new Radio {
+          title = "Removal type"
+          required = false
+          possibleValues {
+            ["archive"] = "Archive (recoverable)"
+            ["purge"] = "Purge (cannot be recovered)"
+          }
+          default = "archive"
+          helpText = "How to delete any assets not found in the latest file."
+        }
+        ["previous_file_direct"] = new TextInput {
+          title = "Previous file"
+          required = false
+          hide = true
+          helpText = "Path to a direct file (locally) to use for delta processing."
+        }
+        ["skip_s3"] = new BooleanInput {
+          title = "Skip S3"
+          required = false
+          hide = true
+          defaultSelection = false
+          helpText = "Whether to skip S3 operations (uploading and downloading files) as part of delta processing."
+        }
+      }
+    }
+  }
+  rules {
+    new UIRule {
+      whenInputs { ["assets_import_type"] = "UPLOAD" }
+      required { "assets_file" }
+    }
+    new UIRule {
+      whenInputs { ["assets_import_type"] = "S3" }
+      required {
+        "assets_s3_region"
+        "assets_s3_bucket"
+        "assets_s3_object_key"
+      }
+    }
+    new UIRule {
+      whenInputs { ["assets_config_type"] = "advanced" }
+      required {
+        "assets_attr_to_overwrite"
+        "assets_fail_on_errors"
+        "assets_field_separator"
+        "assets_batch_size"
+      }
+    }
+    new UIRule {
+      whenInputs { ["delta_semantic"] = "full" }
+      required { "delta_removal_type" }
+    }
+  }
+}
