@@ -54,6 +54,10 @@ tasks.javadoc {
     title = "Atlan Java SDK $versionId"
 }
 
+tasks.spotlessJava {
+    dependsOn("generateJava")
+}
+
 gitPublish {
     repoUri.set("https://github.com/atlanhq/atlan-java.git")
     branch.set("gh-pages")
