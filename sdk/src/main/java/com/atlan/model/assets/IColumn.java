@@ -394,6 +394,9 @@ public interface IColumn {
     /** Unique identifier of this asset in dbt. */
     String getAssetDbtUniqueId();
 
+    /** Name of the DBT workflow in Atlan that last updated the asset. */
+    String getAssetDbtWorkflowLastUpdated();
+
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();
 
@@ -506,7 +509,7 @@ public interface IColumn {
     Long getColumnDuplicateValuesCountLong();
 
     /** List of values in a histogram that represents the contents of this column. */
-    List<Histogram> getColumnHistogram();
+    Histogram getColumnHistogram();
 
     /** Greatest value in a numeric column. */
     Double getColumnMax();

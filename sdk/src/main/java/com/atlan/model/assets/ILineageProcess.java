@@ -210,6 +210,9 @@ public interface ILineageProcess {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetDbtWorkflowLastUpdated();
+
+    /** TBC */
     AtlanIcon getAssetIcon();
 
     /** TBC */

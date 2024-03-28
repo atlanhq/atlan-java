@@ -247,6 +247,9 @@ public interface ISQL {
     /** Unique identifier of this asset in dbt. */
     String getAssetDbtUniqueId();
 
+    /** Name of the DBT workflow in Atlan that last updated the asset. */
+    String getAssetDbtWorkflowLastUpdated();
+
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();
 

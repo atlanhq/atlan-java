@@ -208,6 +208,9 @@ public interface IGlossary {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetDbtWorkflowLastUpdated();
+
+    /** TBC */
     AtlanIcon getAssetIcon();
 
     /** TBC */
