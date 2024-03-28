@@ -28,3 +28,4 @@ generated-packages/**
 /package-toolkit/config/src/main/kotlin/com/atlan/pkg/Connectors.kt
 /package-toolkit/config/src/main/kotlin/com/atlan/pkg/Renderers.kt
 /package-toolkit/config/src/main/resources/META-INF/org/pkl/config/java/mapper/classes/
+/package-toolkit/config/src/main/resources/BuildInfo.pkl

@@ -66,6 +66,19 @@ gitPublish {
     }
 }
 
+tasks.create<Copy>("generateJava") {
+    val templateContext = mapOf("version" to version)
+    inputs.properties(templateContext) // for gradle up-to-date check
+    from("src/template/java")
+    into("$buildDir/generated/java")
+    expand(templateContext)
+}
+
+tasks.compileJava {
+    sourceSets["main"].java.srcDir("$buildDir/generated/java")
+    dependsOn(tasks.getByName("generateJava"))
+}
+
 tasks.create<Zip>("buildZip") {
     into("java/lib") {
         from(tasks.shadowJar)

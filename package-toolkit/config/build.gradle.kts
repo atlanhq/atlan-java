@@ -30,6 +30,7 @@ tasks {
             include(dependency("org.jetbrains.kotlin:kotlin-reflect:.*"))
         }
         mergeServiceFiles()
+        dependsOn("generateBuildInfo")
     }
     jar {
         archiveBaseName.set(jarName)
@@ -37,6 +38,10 @@ tasks {
     }
     processResources {
         duplicatesStrategy = DuplicatesStrategy.INCLUDE
+        dependsOn("generateBuildInfo")
+    }
+    assemble {
+        dependsOn("makePklPackages")
     }
 }
 
@@ -63,10 +68,26 @@ pkl {
     project {
         packagers {
             register("makePklPackages") {
-                projectDirectories.from(file("src/main/resources/"))
+                projectDirectories.from(file("build/resources/main/"))
             }
         }
     }
+}
+
+tasks.create<Copy>("generateBuildInfo") {
+    val templateContext = mapOf("version" to version)
+    inputs.properties(templateContext) // for gradle up-to-date check
+    from("src/main/templates/BuildInfo.pkl")
+    into("src/main/resources")
+    expand(templateContext)
+    dependsOn(tasks.getByName("genKotlin"))
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+}
+
+tasks.getByName("makePklPackages") {
+    sourceSets["main"].resources.srcDir("$buildDir/resources/main")
+    dependsOn(tasks.getByName("generateBuildInfo"))
+    dependsOn("processResources")
 }
 
 publishing {
