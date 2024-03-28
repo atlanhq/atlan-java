@@ -1,0 +1,184 @@
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2024 Atlan Pte. Ltd. */
+amends "modulepath:/Config.pkl"
+import "pkl:semver"
+import "modulepath:/BuildInfo.pkl"
+
+packageId = "@csa/adoption-export"
+packageName = "Adoption Export"
+version = semver.Version(BuildInfo.VERSION)
+description = "Exports key details about Atlan adoption from a tenant."
+iconUrl = "https://assets.atlan.com/assets/ph-heartbeat-light.svg"
+docsUrl = "https://solutions.atlan.com/adoption-export/"
+containerImage = "ghcr.io/atlanhq/csa-adoption-export:\(BuildInfo.VERSION)"
+containerCommand {
+  "/dumb-init"
+  "--"
+  "java"
+  "com.atlan.pkg.adoption.AdoptionExporter"
+}
+outputs {
+  files {
+    ["debug-logs"] = "/tmp/debug.log"
+    ["adoption-export"] = "/tmp/adoption-export.xlsx"
+  }
+}
+keywords {
+  "kotlin"
+  "utility"
+  "adoption"
+  "export"
+}
+preview = true
+
+uiConfig {
+  tasks {
+    ["Views"] {
+      description = "Asset views"
+      inputs {
+        ["include_views"] = new Radio {
+          title = "Include most-viewed assets?"
+          possibleValues {
+            ["BY_USERS"] = "By unique users"
+            ["BY_VIEWS"] = "By raw views"
+            ["NONE"] = "No"
+          }
+          default = "BY_VIEWS"
+          helpText = "If including most-viewed assets, whether to include number of distinct users or raw view count as more important."
+          required = true
+        }
+        ["views_max"] = new NumericInput {
+          title = "Maximum assets"
+          helpText = "Maximum number of results to include for the most-viewed assets."
+          required = false
+          placeholderText = "100"
+          width = 4
+        }
+      }
+    }
+    ["Changes"] {
+      description = "Asset changes"
+      inputs {
+        ["include_changes"] = new Radio {
+          title = "Include asset changes?"
+          possibleValues {
+            ["YES"] = "Yes"
+            ["NO"] = "No"
+          }
+          default = "NO"
+          helpText = "Whether to include changes to assets (Yes) or not (No)."
+          required = true
+        }
+        ["changes_by_user"] = new MultipleUsers {
+          title = "Limit to user"
+          helpText = "Only extract changes by the selected users (leave empty for all users)."
+          required = false
+          width = 4
+        }
+        ["changes_types"] = new DropDown {
+          title = "Limit by action"
+          helpText = "Only extract changes of the selected kind(s)."
+          possibleValues {
+            ["ENTITY_CREATE"] = "Asset created"
+            ["ENTITY_UPDATE"] = "Asset updated"
+            ["ENTITY_DELETE"] = "Asset archived"
+            ["BUSINESS_ATTRIBUTE_UPDATE"] = "Custom metadata updated"
+            ["CLASSIFICATION_ADD"] = "Asset tagged (directly)"
+            ["PROPAGATED_CLASSIFICATION_ADD"] = "Asset tagged (propagated)"
+            ["CLASSIFICATION_DELETE"] = "Asset tag removed (directly)"
+            ["PROPAGATED_CLASSIFICATION_DELETE"] = "Asset tag removed (propagated)"
+            ["CLASSIFICATION_UPDATE"] = "Asset tag updated (directly)"
+            ["PROPAGATED_CLASSIFICATION_UPDATE"] = "Asset tag updated (propagated)"
+            ["TERM_ADD"] = "Term assigned"
+            ["TERM_DELETE"] = "Term unassigned"
+          }
+          multiSelect = true
+          required = false
+          width = 4
+        }
+        ["changes_from"] = new DateInput {
+          title = "From date"
+          helpText = "Only extract changes after the specified date (leave empty for all changes)."
+          required = false
+          past = -90 // start as far back as 90 days ago
+          future = -1 // maximum from would be yesterday
+          defaultDay = -90
+          width = 4
+        }
+        ["changes_to"] = new DateInput {
+          title = "To date"
+          helpText = "Only extract changes before the specified date (leave empty for all changes)."
+          required = false
+          past = -89 // maximum to would be 89 days ago
+          defaultDay = 0 // start with today
+          width = 4
+        }
+        ["changes_max"] = new NumericInput {
+          title = "Maximum assets"
+          helpText = "Maximum number of assets for which to calculate the number of changes made."
+          required = false
+          placeholderText = "100"
+          width = 4
+        }
+
+      }
+    }
+    ["Searches"] {
+      description = "Asset searches"
+      inputs {
+        ["include_searches"] = new Radio {
+          title = "Include user searches?"
+          helpText = "Whether to include searches users have run (Yes) or not (No)."
+          required = true
+          possibleValues {
+            ["YES"] = "Yes"
+            ["NO"] = "No"
+          }
+          default = "NO"
+        }
+        ["maximum_searches"] = new NumericInput {
+          title = "Maximum"
+          helpText = "Maximum number of searches to include for the most-run searches."
+          required = false
+          placeholderText = "50"
+          width = 4
+        }
+      }
+    }
+    ["Delivery"] {
+      description = "Where to send"
+      inputs {
+        ["email_addresses"] = new TextInput {
+          title = "Email address(es)"
+          helpText = "Provide any email addresses you want the extract sent to, separated by commas."
+          required = false
+          placeholderText = "one@example.com,two@example.com"
+        }
+      }
+    }
+  }
+  rules {
+    new UIRule {
+      whenInputs { ["include_views"] = "BY_USERS" }
+      required { "views_max" }
+    }
+    new UIRule {
+      whenInputs { ["include_views"] = "BY_VIEWS" }
+      required { "views_max" }
+    }
+    new UIRule {
+      whenInputs { ["include_changes"] = "YES" }
+      required {
+        "changes_by_user"
+        "changes_types"
+        "changes_from"
+        "changes_to"
+        "changes_max"
+      }
+    }
+    new UIRule {
+      whenInputs { ["include_searches"] = "YES" }
+      required { "maximum_searches" }
+    }
+  }
+}

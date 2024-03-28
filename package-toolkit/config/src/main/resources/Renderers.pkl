@@ -144,7 +144,7 @@ const function getConfigClassPy(m: Config): FileOutput = new FileOutput {
 local class NamePathS3Tuple extends NamedPair {
   hidden inputName: String
   name: String = "\(inputName)_s3"
-  path: String = "/tmp/$inputName/{{inputs.parameters.\(inputName)}}"
+  path: String = "/tmp/\(inputName)/{{inputs.parameters.\(inputName)}}"
   s3: Mapping<String, String> = new Mapping {
     ["key"] = "{{inputs.parameters.\(inputName)}}"
   }
@@ -588,7 +588,7 @@ local class WorkflowContainer {
 const function resolvePropertyToVar(key: String, property: Config.UIElement): NameValuePair = new NameValuePair {
   name = key.toUpperCase()
   value = if (property is Config.FileUploader || property is Config.FileCopier)
-    new NamePathS3Tuple { name = key }.path
+    new NamePathS3Tuple { inputName = key }.path
   else
     "{{inputs.parameters.\(key)}}"
 }

@@ -1,0 +1,51 @@
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2024 Atlan Pte. Ltd. */
+amends "modulepath:/Config.pkl"
+import "pkl:semver"
+import "modulepath:/BuildInfo.pkl"
+
+packageId = "@csa/api-token-connection-admin"
+packageName = "API Token Connection Admin"
+version = semver.Version(BuildInfo.VERSION)
+description = "Assigns an API token as a connection admin for an existing connection."
+iconUrl = "http://assets.atlan.com/assets/ph-key-light.svg"
+docsUrl = "https://solutions.atlan.com/api-token-connection-admin/"
+containerImage = "ghcr.io/atlanhq/csa-api-token-connection-admin:\(BuildInfo.VERSION)"
+containerCommand {
+  "/dumb-init"
+  "--"
+  "java"
+  "ApiTokenConnectionAdmin"
+}
+outputs {
+  files {
+    ["debug-logs"] = "/tmp/debug.log"
+  }
+}
+keywords {
+  "kotlin"
+  "utility"
+}
+preview = true
+
+uiConfig {
+  tasks {
+    ["Configuration"] {
+      description = "Configuration"
+      inputs {
+        ["connection_qualified_name"] = new ConnectionSelector {
+          title = "Connection"
+          required = true
+          helpText = "Select the connection to add the API token to as a connection admin."
+          width = 4
+        }
+        ["api_token_guid"] = new APITokenSelector {
+          title = "API token"
+          required = true
+          helpText = "Select the API token to add to the connection as an admin."
+          width = 4
+        }
+      }
+    }
+  }
+}

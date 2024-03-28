@@ -74,7 +74,7 @@ class UIConfig {
     acc + (resolveInputs(step.inputs).toMap())
   )
   hidden rules: Listing<UIRule> = new Listing {}
-  fixed anyOf: List<UIRule> = rules.toList()
+  fixed anyOf: List<UIRule>? = if (rules.isEmpty) null else rules.toList()
   fixed steps: List<UIStep> = tasks.fold(List(), (acc: List<UIStep>, key, value) ->
     acc.add(resolveStep(key, value))
   )
@@ -293,7 +293,7 @@ class Radio extends UIElementWithEnum {
   hidden possibleValues: Mapping<String, String>
 
   /// Default value to select in the radio button (its key).
-  default: String
+  default: String(possibleValues.keys.contains(this))
 
   fixed ui {
     widget = "radio"
@@ -368,7 +368,7 @@ class FileUploader extends UIElement {
   required: Boolean = false // Necessary for generated Kotlin copy method override
 
   /// List of the mime-types of files that should be accepted.
-  hidden fileTypes: List<String>
+  hidden fileTypes: Listing<String>
 
   /// Example text to place within the widget to exemplify its use.
   hidden placeholderText: String = ""
@@ -376,7 +376,7 @@ class FileUploader extends UIElement {
   fixed ui {
     widget = "fileUpload"
     placeholder = placeholderText
-    accept = fileTypes
+    accept = fileTypes.toList()
     fileMetadata = true
   }
 }

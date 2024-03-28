@@ -5,4 +5,5 @@
 @ModuleInfo { minPklVersion = "0.25.2" }
 module BuildInfo
 
-hidden const VERSION = "${version}"
+/// Version of the SDK used to build the package config toolkit.
+hidden const VERSION: String = "${version}"
