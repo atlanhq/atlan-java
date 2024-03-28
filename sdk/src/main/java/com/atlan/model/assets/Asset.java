@@ -275,6 +275,10 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Attribute
     String assetDbtUniqueId;
 
+    /** Name of the DBT workflow in Atlan that last updated the asset. */
+    @Attribute
+    String assetDbtWorkflowLastUpdated;
+
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     @Attribute
     AtlanIcon assetIcon;

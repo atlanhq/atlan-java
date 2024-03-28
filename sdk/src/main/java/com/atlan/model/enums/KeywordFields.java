@@ -212,6 +212,8 @@ public enum KeywordFields implements AtlanSearchableField {
     ASSET_DBT_TEST_STATUS("assetDbtTestStatus"),
     /** Unique identifier of this asset in dbt. */
     ASSET_DBT_UNIQUE_ID("assetDbtUniqueId.keyword"),
+    /** Name of the DBT workflow in Atlan that last updated the asset. */
+    ASSET_DBT_WORKFLOW_LAST_UPDATED("assetDbtWorkflowLastUpdated"),
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     ASSET_ICON("assetIcon"),
     /** List of Monte Carlo incident names attached to this asset. */

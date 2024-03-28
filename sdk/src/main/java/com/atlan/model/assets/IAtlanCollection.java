@@ -186,6 +186,9 @@ public interface IAtlanCollection {
     String getAssetDbtUniqueId();
 
     /** TBC */
+    String getAssetDbtWorkflowLastUpdated();
+
+    /** TBC */
     AtlanIcon getAssetIcon();
 
     /** TBC */

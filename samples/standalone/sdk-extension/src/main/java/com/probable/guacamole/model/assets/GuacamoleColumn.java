@@ -124,8 +124,7 @@ public class GuacamoleColumn extends Asset
 
     /** TBC */
     @Attribute
-    @Singular("addColumnHistogram")
-    List<Histogram> columnHistogram;
+    Histogram columnHistogram;
 
     /** TBC */
     @Attribute
