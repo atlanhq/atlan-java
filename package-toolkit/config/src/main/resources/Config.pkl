@@ -157,7 +157,7 @@ class S3Artifact extends Renderers.NamedPair {
 
   /// (Optional) Configuration for how the S3 object should be mapped.
   s3: Mapping<String, String> = new Mapping {
-    ["key"] = "{{inputs.parameters.output_prefix}}/\(name).json"
+    ["key"] = "{{inputs.parameters.\(Renderers.S3_CONFIG_PREFIX)}}/\(name).json"
   }
 
   /// (Optional) Configuration for how the S3 object should be garbage collected.

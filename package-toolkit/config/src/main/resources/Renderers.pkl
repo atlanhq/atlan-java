@@ -208,6 +208,11 @@ local class NestedConfig extends NamedPair {
   hidden inputs: Map<String, Config.UIElement>
 }
 
+class NameValueBoolPair extends NamedPair {
+  name: String
+  value: Boolean
+}
+
 class NameValuePair extends NamedPair {
   name: String
   value: String
@@ -451,9 +456,9 @@ local class WorkflowInputs {
         }
       } else {
         when (u is Config.BooleanInput) {
-          new NameValuePair {
+          new NameValueBoolPair {
             name = k
-            value = u.ui.default.toString()
+            value = u.ui.default as Boolean
           }
         } else {
           when (u is Config.NumericInput || u is Config.DateInput) {
