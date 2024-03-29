@@ -16,5 +16,5 @@ dependencies {
     implementation("io.freefair.gradle:lombok-plugin:8.6")
     implementation("net.ltgt.gradle:gradle-errorprone-plugin:3.1.0")
     implementation("com.adarshr:gradle-test-logger-plugin:4.0.0")
-    implementation("org.pkl-lang:org.pkl-lang.gradle.plugin:0.25.2")
+    implementation("org.pkl-lang:org.pkl-lang.gradle.plugin:0.25.3")
 }
