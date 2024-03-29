@@ -2,6 +2,27 @@
    Copyright 2024 Atlan Pte. Ltd. */
 
 /// Template for defining configuration for a custom package in Atlan.
+///
+/// | Variable | | Usage | Default |
+/// |---|---|---|---|
+/// | **packageId** | | Unique identifier for the package, including its namespace. | |
+/// | **packageName** | | Display name for the package, as it should be shown in the UI. | |
+/// | **version** | | Version of this package, following semantic versioning. | |
+/// | **description** | | Description for the package, as it should be shown in the UI. | |
+/// | **iconUrl** | | Link to an icon to use for the package, as it should be shown in the UI. | |
+/// | **docsUrl** | | Link to an online document describing the package. | |
+/// | **uiConfig** | | Configuration for the UI of the custom package. | |
+/// | **implementationLanguage** | | Coding language the package is implemented in. | |
+/// | **containerImage** | | Container image to run the logic of the custom package. | |
+/// | **containerCommand** | | Full command to run in the container image, as a list rather than spaced. | |
+/// | containerImagePullPolicy | | (Optional) Override the default IfNotPresent policy. | `IfNotPresent` |
+/// | outputs | | (Optional) Any outputs that the custom package logic is expected to produce. | |
+/// | keywords | | (Optional) Any keyword labels to apply to the package. | |
+/// | allowSchedule | | (Optional) Whether to allow the package to be scheduled (true) or only run immediately (false). | `true` |
+/// | certified | | (Optional) Whether the package should be listed as certified (true) or not (false). | `true` |
+/// | preview | | (Optional) Whether the package should be labeled as an early preview in the UI (true) or not (false). | `false` |
+/// | connectorType | | (Optional) If the package needs to configure a connector, specify its type here. | |
+/// | category | | Name of the pill under which the package should be categorized in the marketplace in the UI. | `custom` |
 @ModuleInfo { minPklVersion = "0.25.1" }
 open module com.atlan.pkg.Config
 
@@ -11,7 +32,7 @@ import "Connectors.pkl"
 
 /// Unique identifier for the package, including its namespace.
 /// For example: @csa/open-api-spec-loader
-packageId: String
+packageId: String(matches(Regex("@[a-z0-9-]+/[a-z0-9-]+")))
 
 /// Display name for the package, as it should be shown in the UI.
 packageName: String
@@ -29,6 +50,11 @@ iconUrl: String
 docsUrl: String
 
 /// Configuration for the UI of the custom package.
+///
+/// | Variable | | Usage |
+/// |---|---|---|
+/// | **[tasks][UIStep]** | | Mapping of top-level tasks to be configured, keyed by the name of the task as it should appear in the UI. |
+/// | **[rules][UIRule]** | | Listing of rules to control which inputs appear based on values selected in other inputs. |
 uiConfig: UIConfig
 
 /// Coding language the package is implemented in.
@@ -69,17 +95,63 @@ category: String = "custom"
 // --- CONTENT ABOVE THIS LINE IS INTENDED INPUT ---
 // --- CONTENT BELOW THIS LINE IS USED TO GENERATE OUTPUTS ---
 
+/// (Generated) Command to run in the container image.
 fixed command: List<String> = List(containerCommand[0])
+
+/// (Generated) Arguments to provide to the command that runs in the container image.
 fixed args: List<String> = containerCommand.toList().sublist(1, containerCommand.length)
 
+/// Configuration for the UI of the custom package.
+///
+/// | Variable | | Usage |
+/// |---|---|---|
+/// | **[tasks][UIStep]** | | Mapping of top-level tasks to be configured, keyed by the name of the task as it should appear in the UI. |
+/// | **[rules][UIRule]** | | Listing of rules to control which [inputs][UIElement] appear based on values selected in other inputs. |
 class UIConfig {
+
+  /// Mapping of top-level tasks to be configured, keyed by the name of the task as it should appear in the UI.
+  ///
+  /// Remember in Pkl to define a mapping, put the key in square brackets and the value in curly braces:
+  /// ```
+  /// tasks {
+  ///   ["Input"] {
+  ///     ...
+  ///   }
+  ///   ["Delivery"] {
+  ///     ...
+  ///   }
+  ///   ...
+  /// }
+  /// ```
   hidden tasks: Mapping<String, UIStep>
+
   // TODO: Ideally should validate no duplicate property names across steps (throw error if any found)
+  /// (Generated) Details of all inputs across all steps for the UI.
   fixed properties: Map<String, UIElement> = tasks.fold(Map(), (acc: Map<String, UIElement>, _, step) ->
     acc + (resolveInputs(step.inputs).toMap())
   )
+
+  /// Listing of rules to control which [inputs][UIElement] appear based on values selected in other inputs.
+  ///
+  /// Remember in Pkl to define a listing, use curly braces and create new elements within:
+  /// ```
+  /// rules {
+  ///   new UIRule {
+  ///     whenInputs { ["export_scope"] = "ENRICHED_ONLY" }
+  ///     required = { "qn_prefix" }
+  ///   }
+  ///   new UIRule {
+  ///     ...
+  ///   }
+  ///   ...
+  /// }
+  /// ```
   hidden rules: Listing<UIRule> = new Listing {}
+
+  /// (Generated) Details of all UI rules to use to control the UI.
   fixed anyOf: List<UIRule>? = if (rules.isEmpty) null else rules.toList()
+
+  /// (Generated) Details about each task (top-level step) to use in the UI.
   fixed steps: List<UIStep> = tasks.fold(List(), (acc: List<UIStep>, key, value) ->
     acc.add(resolveStep(key, value))
   )
@@ -95,12 +167,43 @@ const function resolveStep(stepName: String, step: UIStep): UIStep = (step) {
   title = stepName
 }
 
+/// Configure a top-level step in the UI for the package.
+///
+/// | Field | | Description |
+/// |---|---|---|
+/// | **`title`** | | name to show in the UI for the step |
+/// | `description` | | description to show in the UI for the step |
+/// | **[inputs][UIElement]** | | mapping of inputs to be configured for the step, keyed by a unique (variable) name for the input |
 class UIStep {
+
+  /// Name to show in the UI for the step.
+  /// This will be set automatically from the key of the outer map in which this step is defined.
   title: String
+
+  /// Description to show in the UI for the step.
   description: String = ""
+
+  /// Mapping of [inputs][UIElement] to be configured for the step, keyed by a unique (variable) name for the input.
+  /// Note: the name of the variable (key of the map) should be in lower_snake_case.
+  ///
+  /// Remember in Pkl to define a mapping, put the key in square brackets and the value in curly braces:
+  /// ```
+  /// inputs {
+  ///   ["export_scope"] = new Radio {
+  ///     ...
+  ///   }
+  ///   ["qn_prefix"] = new TextInput {
+  ///     ...
+  ///   }
+  ///   ...
+  /// }
+  /// ```
   hidden inputs: Mapping<String(lower_snake_case), UIElement>
 
+  /// (Generated) Unique identifier for the step.
   fixed id = title.replaceAll(" ", "_").toLowerCase()
+
+  /// (Generated) List of inputs contained within the step.
   fixed properties: List<String> = inputs.fold(List(), (acc, key, _) -> acc.add(key))
 }
 
@@ -110,10 +213,10 @@ local const lower_snake_case = (str) -> str.matches(Regex("[a-z0-9_]*"))
 /// Configure basic UI rules that when the specified inputs have specified values, certain
 /// other fields become required.
 ///
-/// | Field | | Description | Default |
-/// |---|---|---|---|
-/// | **`whenInputs`** | | mapping from input ID to value for the step | |
-/// | **`required`** | | list of input IDs that should become required when the inputs all match | |
+/// | Field | | Description |
+/// |---|---|---|
+/// | **`whenInputs`** | | mapping from input ID to value for the step |
+/// | **`required`** | | list of input IDs that should become required when the inputs all match |
 class UIRule {
   fixed properties: Mapping<String, Mapping<String, String>> = new Mapping {
     for (k, v in whenInputs) {
@@ -122,7 +225,11 @@ class UIRule {
       }
     }
   }
+
+  /// Mapping from input ID (variable name for the input) to value for the step
   hidden whenInputs: Mapping<String, String>
+
+  /// List of input IDs (variable names) that should become required when the inputs all match
   required: Listing<String>
 }
 
@@ -208,6 +315,29 @@ const function getClassName(name: String): String = "\(getPascalCase(name))Cfg"
 
 // --- WIDGETS ---
 /// Base class for all UI elements that can be used in the configuration of a package.
+///
+/// You will not use this class directly, but will use one of its subclasses:
+///
+/// | Widget | | Usage |
+/// |---|---|---|
+/// | [APITokenSelector] | | select an existing API token from a drop-down list, and returns the GUID of the selected API token |
+/// | [BooleanInput] | | choose either "Yes" or "No", and returns the value that was selected |
+/// | [ConnectionCreator] | | create a new connection by providing a name and list of admins, and returns a string representation of the connection object that should be created |
+/// | [ConnectionSelector] | | select an existing connection from a drop-down list, and returns the qualified name of the selected connection |
+/// | [ConnectorTypeSelector] | | select from the types of connectors that exist in the tenant (for example "Snowflake"), without needing to select a specific instance of a connection (for example, the "production" connection for Snowflake); will return a string-encoded object giving the connection type that was selected and a list of all connections in the tenant that have that type |
+/// | [DateInput] | | enter or select a date (not including time) from a calendar, and returns the epoch-based number representing that selected date in seconds |
+/// | [DropDown] | | select from a drop-down of provided options |
+/// | [FileCopier] | | copy a file from the tenant's S3 bucket, and returns the name of the file (as it is named in S3) |
+/// | [FileUploader] | | upload a file, and returns the GUID-based name of the file (as it is renamed after upload) |
+/// | [KeygenInput] | | generate a unique key that could be used for securing an exchange or other unique identification purposes, and provides buttons to regenerate the key or copy its text; will return the generated key as clear text |
+/// | [MultipleGroups] | | choose multiple groups, and returns an array of group names that were selected |
+/// | [MultipleUsers] | | choose multiple users, and returns an array of usernames that were selected |
+/// | [NumericInput] | | enter an arbitrary number into a single-line text input field, and returns the value of the number that was entered |
+/// | [PasswordInput] | | enter arbitrary text, but the text will be shown as dots when entered rather than being displayed in clear text; will return the entered text in clear text |
+/// | [Radio] | | select just one option from a set of options, and returns the key of the selected option (typically, this is used to control mutually exclusive options in the UI) |
+/// | [SingleGroup] | | select a single group, and returns the group name of the selected group |
+/// | [SingleUser] | | select a single user, and returns the username of the selected user |
+/// | [TextInput] | | enter arbitrary text into a single-line text input field, and returns the value of the text that was entered |
 abstract class UIElement {
   /// Type of the element, which can be used to determine how to render it in the UI.
   fixed type: String
@@ -238,27 +368,60 @@ abstract class UIElement {
 
 /// Base class for all UI elements that use some enumeration of valid values.
 abstract class UIElementWithEnum extends UIElement {
+
+  /// Mapping of possible values for the input, keyed by a unique (variable) name for the value.
   hidden possibleValues: Mapping<String, String>
+
+  /// Default value to select in the input.
   default: String?
 
+  /// (Generated) Listing of the unique variable names for the possible values.
   fixed enum: List<String> = possibleValues.fold(List(), (acc: List<String>, key, _) -> acc.add(key))
+
+  /// (Generated) Listing of the display values for each possible value.
   fixed enumNames: List<String> = possibleValues.fold(List(), (acc: List<String>, _, value) -> acc.add(value))
 }
 
 /// Base class for all generated elements of the UI.
 class Widget {
+
+  /// Internal name of this widget, that controls what kind of widget is rendered in the UI.
   widget: String
+
+  /// Label to show in the UI for the widget.
   label: String
+
+  /// Whether the widget will be shown in the UI (false) or not (true).
   `hidden`: Boolean = false
+
+  /// Informational text to place in a hover-over to describe the use of the input.
   help: String = ""
+
+  /// Example text to place within the widget to exemplify its use.
   placeholder: String?
+
+  /// Sizing of the input on the UI (8 is full-width, 4 is half-width).
   grid: Int = 8
+
+  /// Mode of the widget, if applicable (usually whether something allows multiple selections or only a single selection).
   mode: String?
+
+  /// TBC
   start: Int?
+
+  /// List of the mime-types of files that should be accepted.
   accept: List<String>?
+
+  /// Whether the widget should return file metadata.
   fileMetadata: Boolean?
+
+  /// Most distant past value that can be selected through the widget.
   min: Int?
+
+  /// Most distant future value that can be selected through the widget.
   max: Int?
+
+  /// Default value to select in the widget.
   default: Any?
 }
 
@@ -280,6 +443,7 @@ class TextInput extends UIElement {
   /// Example text to place within the widget to exemplify its use.
   hidden placeholderText: String = ""
 
+  /// (Generated) Internal configuration for the UI's rendering.
   fixed ui {
     widget = "input"
     placeholder = placeholderText
@@ -308,6 +472,7 @@ class Radio extends UIElementWithEnum {
   /// Default value to select in the radio button (its key).
   default: String(possibleValues.keys.contains(this))
 
+  /// (Generated) Internal configuration for the UI's rendering.
   fixed ui {
     widget = "radio"
   }
@@ -330,6 +495,7 @@ class ConnectionCreator extends UIElement {
   /// Example text to place within the widget to give an example of a connection name.
   hidden placeholderText: String = ""
 
+  /// (Generated) Internal configuration for the UI's rendering.
   fixed ui {
     widget = "connection"
     placeholder = placeholderText
@@ -346,7 +512,6 @@ class ConnectionCreator extends UIElement {
 /// | `hide` | | whether the widget will be shown in the UI (false) or not (true) | `false` |
 /// | `helpText` | | informational text to place in a hover-over to describe the use of the input | `""` |
 /// | `multiSelect` | | whether multiple connections can be selected (true) or only a single connection (false) | `false` |
-/// | `width` | | sizing of the input on the UI (8 is full-width, 4 is half-width) | `8` |
 /// | `begin` | | TBC | `1` |
 class ConnectionSelector extends UIElement {
   fixed type = "string"
@@ -358,6 +523,7 @@ class ConnectionSelector extends UIElement {
   /// TBC
   hidden begin: Int = 1
 
+  /// (Generated) Internal configuration for the UI's rendering.
   fixed ui {
     widget = "connectionSelector"
     mode = if (multiSelect) "multiple" else ""
@@ -386,6 +552,7 @@ class FileUploader extends UIElement {
   /// Example text to place within the widget to exemplify its use.
   hidden placeholderText: String = ""
 
+  /// (Generated) Internal configuration for the UI's rendering.
   fixed ui {
     widget = "fileUpload"
     placeholder = placeholderText
@@ -409,8 +576,13 @@ class FileCopier extends UIElement {
   fixed type = "string"
   required: Boolean = false // Necessary for generated Kotlin copy method override
 
+  /// Example text to place within the widget to exemplify its use.
+  hidden placeholderText: String = ""
+
+  /// (Generated) Internal configuration for the UI's rendering.
   fixed ui {
     widget = "input"
+    placeholder = placeholderText
   }
 }
 
@@ -432,6 +604,7 @@ class NumericInput extends UIElement {
   /// Example text to place within the widget to exemplify its use.
   hidden placeholderValue: Number?
 
+  /// (Generated) Internal configuration for the UI's rendering.
   fixed ui {
     widget = "inputNumber"
     placeholder = placeholderValue?.toString()
@@ -468,6 +641,7 @@ class DateInput extends UIElement {
   /// TBC
   hidden begin: Int = 1
 
+  /// (Generated) Internal configuration for the UI's rendering.
   fixed ui {
     widget = "date"
     start = begin
@@ -487,7 +661,6 @@ class DateInput extends UIElement {
 /// | `hide` | | whether the widget will be shown in the UI (false) or not (true) | `false` |
 /// | `defaultSelection` | | the default value to use for this boolean input | `false` |
 /// | `helpText` | | informational text to place in a hover-over to describe the use of the input | `""` |
-/// | `width` | | sizing of the input on the UI (8 is full-width, 4 is half-width) | `8` |
 class BooleanInput extends UIElement {
   fixed type = "boolean"
   required: Boolean = false // Necessary for generated Kotlin copy method override
@@ -495,6 +668,7 @@ class BooleanInput extends UIElement {
   /// The default value to use for this boolean input.
   hidden defaultSelection: Boolean = false
 
+  /// (Generated) Internal configuration for the UI's rendering.
   fixed ui {
     widget = "boolean"
     default = defaultSelection
@@ -516,15 +690,17 @@ class DropDown extends UIElementWithEnum {
   fixed type = "string"
   required: Boolean = false // Necessary for generated Kotlin copy method override
 
+  /// Whether multiple values can be selected (true) or only a single value (false).
   hidden multiSelect: Boolean = false
 
+  /// (Generated) Internal configuration for the UI's rendering.
   fixed ui {
     widget = "select"
     mode = if (multiSelect) "multiple" else ""
   }
 }
 
-/// Widget that allows yo uto choose multiple groups,
+/// Widget that allows you to choose multiple groups,
 /// and returns an array of group names that were selected.
 ///
 /// | Field | | Description | Default |
@@ -538,6 +714,7 @@ class MultipleGroups extends UIElement {
   fixed type = "string"
   required: Boolean = false // Necessary for generated Kotlin copy method override
 
+  /// (Generated) Internal configuration for the UI's rendering.
   fixed ui {
     widget = "groupMultiple"
   }
@@ -557,6 +734,7 @@ class SingleGroup extends UIElement {
   fixed type = "string"
   required: Boolean = false // Necessary for generated Kotlin copy method override
 
+  /// (Generated) Internal configuration for the UI's rendering.
   fixed ui {
     widget = "groups"
   }
@@ -576,6 +754,7 @@ class MultipleUsers extends UIElement {
   fixed type = "string"
   required: Boolean = false // Necessary for generated Kotlin copy method override
 
+  /// (Generated) Internal configuration for the UI's rendering.
   fixed ui {
     widget = "userMultiple"
   }
@@ -595,6 +774,7 @@ class SingleUser extends UIElement {
   fixed type = "string"
   required: Boolean = false // Necessary for generated Kotlin copy method override
 
+  /// (Generated) Internal configuration for the UI's rendering.
   fixed ui {
     widget = "users"
   }
@@ -621,6 +801,7 @@ class ConnectorTypeSelector extends UIElement {
   /// TBC
   hidden begin: Int = 1
 
+  /// (Generated) Internal configuration for the UI's rendering.
   fixed ui {
     widget = "sourceConnectionSelector"
     start = begin
@@ -638,11 +819,11 @@ class ConnectorTypeSelector extends UIElement {
 /// | `required` | | whether a value must be selected to proceed with the UI setup | `false` |
 /// | `hide` | | whether the widget will be shown in the UI (false) or not (true) | `false` |
 /// | `helpText` | | informational text to place in a hover-over to describe the use of the input | `""` |
-/// | `width` | | sizing of the input on the UI (8 is full-width, 4 is half-width) | `8` |
 class APITokenSelector extends UIElement {
   fixed type = "string"
   required: Boolean = false // Necessary for generated Kotlin copy method override
 
+  /// (Generated) Internal configuration for the UI's rendering.
   fixed ui {
     widget = "apiTokenSelect"
   }
@@ -663,6 +844,7 @@ class KeygenInput extends UIElement {
   fixed type = "string"
   required: Boolean = false // Necessary for generated Kotlin copy method override
 
+  /// (Generated) Internal configuration for the UI's rendering.
   fixed ui {
     widget = "keygen"
   }
@@ -682,6 +864,7 @@ class PasswordInput extends UIElement {
   fixed type = "string"
   required: Boolean = false // Necessary for generated Kotlin copy method override
 
+  /// (Generated) Internal configuration for the UI's rendering.
   fixed ui {
     widget = "password"
   }
