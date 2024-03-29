@@ -437,11 +437,11 @@ local class WorkflowInputs {
           }
           new NameValuePair {
             name = "\(k)_key"
-            value = "{{= sprig.dig('fileKey', '\(DEFAULT_FILE)', sprig.mustFromJson(inputs.parameters.\(k)) }}"
+            value = "{{= sprig.dig('fileKey', '\(DEFAULT_FILE)', sprig.mustFromJson(inputs.parameters.\(k))) }}"
           }
           new NameValuePair {
             name = "\(k)_id"
-            value = "{{= sprig.dig('fileId', '', sprig.mustFromJson(inputs.parameters.\(k)) }}"
+            value = "{{= sprig.dig('fileId', '', sprig.mustFromJson(inputs.parameters.\(k))) }}"
           }
         } else {
           new NameValuePair {
