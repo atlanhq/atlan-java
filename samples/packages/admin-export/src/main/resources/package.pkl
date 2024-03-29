@@ -10,6 +10,7 @@ version = semver.Version(BuildInfo.VERSION)
 description = "Exports key administrative details from a tenant."
 iconUrl = "https://assets.atlan.com/assets/ph-user-circle-gear-light.svg"
 docsUrl = "https://solutions.atlan.com/admin-export/"
+implementationLanguage = "Kotlin"
 containerImage = "ghcr.io/atlanhq/\(name):\(BuildInfo.VERSION)"
 containerCommand {
   "/dumb-init"

@@ -10,6 +10,7 @@ version = semver.Version(BuildInfo.VERSION)
 description = "Migrate enrichment from one set of assets to another."
 iconUrl = "http://assets.atlan.com/assets/ph-flow-arrow-light.svg"
 docsUrl = "https://solutions.atlan.com/enrichment-migrator/"
+implementationLanguage = "Kotlin"
 containerImage = "ghcr.io/atlanhq/\(name):\(BuildInfo.VERSION)"
 containerCommand {
   "/dumb-init"

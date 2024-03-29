@@ -10,6 +10,7 @@ version = semver.Version(BuildInfo.VERSION)
 description = "Build (and update) relational assets managed through a CSV file."
 iconUrl = "http://assets.atlan.com/assets/ph-database-light.svg"
 docsUrl = "https://solutions.atlan.com/relational-assets-builder/"
+implementationLanguage = "Kotlin"
 containerImage = "ghcr.io/atlanhq/\(name):\(BuildInfo.VERSION)"
 containerCommand {
   "/dumb-init"

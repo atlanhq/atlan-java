@@ -10,6 +10,7 @@ version = semver.Version(BuildInfo.VERSION)
 description = "Detect possible duplicate tables, views and materialized views based on their columns."
 iconUrl = "http://assets.atlan.com/assets/ph-copy-light.svg"
 docsUrl = "https://solutions.atlan.com/duplicate-detector/"
+implementationLanguage = "Kotlin"
 containerImage = "ghcr.io/atlanhq/\(name):\(BuildInfo.VERSION)"
 containerCommand {
   "/dumb-init"

@@ -10,6 +10,7 @@ version = semver.Version(BuildInfo.VERSION)
 description = "Build lineage from a CSV file."
 iconUrl = "http://assets.atlan.com/assets/ph-tree-structure-light.svg"
 docsUrl = "https://solutions.atlan.com/lineage-builder/"
+implementationLanguage = "Kotlin"
 containerImage = "ghcr.io/atlanhq/\(name):\(BuildInfo.VERSION)"
 containerCommand {
   "/dumb-init"

@@ -143,7 +143,7 @@ const function getLowerCamelCase(s: String): String =
 const function getConfigClassPy(m: Config): FileOutput = new FileOutput {
   // TODO: Write our own code generator(s) for the Python class
   text = new Listing {
-
+    trace("Python class not yet implemented.")
   }.join("\n")
 }
 

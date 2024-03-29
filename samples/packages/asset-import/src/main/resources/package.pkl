@@ -10,6 +10,7 @@ version = semver.Version(BuildInfo.VERSION)
 description = "Import assets from a CSV file."
 iconUrl = "http://assets.atlan.com/assets/ph-cloud-arrow-up-light.svg"
 docsUrl = "https://solutions.atlan.com/asset-import/"
+implementationLanguage = "Kotlin"
 containerImage = "ghcr.io/atlanhq/\(name):\(BuildInfo.VERSION)"
 containerCommand {
   "/dumb-init"

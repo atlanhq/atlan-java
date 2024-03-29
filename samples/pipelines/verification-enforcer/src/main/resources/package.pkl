@@ -10,6 +10,7 @@ version = semver.Version(BuildInfo.VERSION)
 description = "Ensures any asset marked VERIFIED meets a minimum standard, or if not it is automatically reverted to DRAFT."
 iconUrl = "https://assets.atlan.com/assets/ph-seal-check-light.svg"
 docsUrl = "https://solutions.atlan.com/verification-enforcer/"
+implementationLanguage = "Kotlin"
 containerImage = "ghcr.io/atlanhq/\(name):\(BuildInfo.VERSION)"
 containerCommand {
   "/dumb-init"

@@ -9,6 +9,7 @@ version = semver.Version("1.0.0")
 description = "Loads API specs and paths from an OpenAPI (v3) definition."
 iconUrl = "http://assets.atlan.com/assets/apispec.png"
 docsUrl = "https://developer.atlan.com/samples/loaders/openapi/"
+implementationLanguage = "Kotlin"
 containerImage = "ghcr.io/atlanhq/atlan-kotlin-samples:\(version)"
 containerCommand {
   "/dumb-init"

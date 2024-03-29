@@ -10,6 +10,7 @@ version = semver.Version(BuildInfo.VERSION)
 description = "Propagate owners from schema downwards."
 iconUrl = "https://assets.atlan.com/assets/ph-user-switch-light.svg"
 docsUrl = "https://solutions.atlan.com/"
+implementationLanguage = "Kotlin"
 containerImage = "ghcr.io/atlanhq/\(name):\(BuildInfo.VERSION)"
 containerCommand {
   "/dumb-init"

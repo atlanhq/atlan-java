@@ -10,6 +10,7 @@ version = semver.Version(BuildInfo.VERSION)
 description = "Produce a detailed report of different areas of potential impact, based on the metadata available."
 iconUrl = "http://assets.atlan.com/assets/ph-projector-screen-chart-light.svg"
 docsUrl = "https://solutions.atlan.com/metadata-impact-report/"
+implementationLanguage = "Kotlin"
 containerImage = "ghcr.io/atlanhq/\(name):\(BuildInfo.VERSION)"
 containerCommand {
   "/dumb-init"

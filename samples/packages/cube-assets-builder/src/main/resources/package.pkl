@@ -10,6 +10,7 @@ version = semver.Version(BuildInfo.VERSION)
 description = "Build (and update) cube assets managed through a CSV file."
 iconUrl = "http://assets.atlan.com/assets/ph-cube-light.svg"
 docsUrl = "https://solutions.atlan.com/cube-assets-builder/"
+implementationLanguage = "Kotlin"
 containerImage = "ghcr.io/atlanhq/\(name):\(BuildInfo.VERSION)"
 containerCommand {
   "/dumb-init"

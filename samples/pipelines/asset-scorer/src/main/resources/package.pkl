@@ -10,6 +10,7 @@ version = semver.Version(BuildInfo.VERSION)
 description = "Calculates a completeness score for an asset based on the context it contains."
 iconUrl = "http://assets.atlan.com/assets/ph-gauge-light.svg"
 docsUrl = "https://solutions.atlan.com/asset-scorer/"
+implementationLanguage = "Kotlin"
 containerImage = "ghcr.io/atlanhq/\(name):\(BuildInfo.VERSION)"
 containerCommand {
   "/dumb-init"

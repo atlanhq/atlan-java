@@ -10,6 +10,7 @@ version = semver.Version(BuildInfo.VERSION)
 description = "Exports key details about Atlan adoption from a tenant."
 iconUrl = "https://assets.atlan.com/assets/ph-heartbeat-light.svg"
 docsUrl = "https://solutions.atlan.com/adoption-export/"
+implementationLanguage = "Kotlin"
 containerImage = "ghcr.io/atlanhq/\(name):\(BuildInfo.VERSION)"
 containerCommand {
   "/dumb-init"
