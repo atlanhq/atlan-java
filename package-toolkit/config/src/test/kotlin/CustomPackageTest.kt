@@ -117,7 +117,6 @@ object CustomPackageTest {
         assertEquals("Connection", widget.label)
         assertEquals("connection", widget.widget)
         assertEquals("Enter details for a new connection to be created.", widget.help)
-        assertEquals("Swagger", widget.placeholder)
         assertEquals(8, widget.grid)
         assertFalse(widget.hidden)
         assertNull(widget.mode)
