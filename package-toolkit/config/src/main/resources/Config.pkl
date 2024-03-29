@@ -487,18 +487,13 @@ class Radio extends UIElementWithEnum {
 /// | `required` | | whether a value must be selected to proceed with the UI setup | `false` |
 /// | `hide` | | whether the widget will be shown in the UI (false) or not (true) | `false` |
 /// | `helpText` | | informational text to place in a hover-over to describe the use of the input | `""` |
-/// | `placeholderText` | | example text to place within the widget to exemplify its use | `""` |
 class ConnectionCreator extends UIElement {
   fixed type = "string"
   required: Boolean = false // Necessary for generated Kotlin copy method override
 
-  /// Example text to place within the widget to give an example of a connection name.
-  hidden placeholderText: String = ""
-
   /// (Generated) Internal configuration for the UI's rendering.
   fixed ui {
     widget = "connection"
-    placeholder = placeholderText
   }
 }
 
