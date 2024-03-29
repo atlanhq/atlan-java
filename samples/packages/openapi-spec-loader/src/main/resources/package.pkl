@@ -62,7 +62,6 @@ uiConfig {
           title = "Connection"
           required = true
           helpText = "Enter details for a new connection to be created."
-          placeholderText = "Swagger"
         }
         ["connection_qualified_name"] = new ConnectionSelector {
           title = "Connection"
