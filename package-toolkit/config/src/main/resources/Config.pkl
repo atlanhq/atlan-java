@@ -512,7 +512,6 @@ class ConnectionCreator extends UIElement {
 /// | `hide` | | whether the widget will be shown in the UI (false) or not (true) | `false` |
 /// | `helpText` | | informational text to place in a hover-over to describe the use of the input | `""` |
 /// | `multiSelect` | | whether multiple connections can be selected (true) or only a single connection (false) | `false` |
-/// | `width` | | sizing of the input on the UI (8 is full-width, 4 is half-width) | `8` |
 /// | `begin` | | TBC | `1` |
 class ConnectionSelector extends UIElement {
   fixed type = "string"
@@ -577,9 +576,13 @@ class FileCopier extends UIElement {
   fixed type = "string"
   required: Boolean = false // Necessary for generated Kotlin copy method override
 
+  /// Example text to place within the widget to exemplify its use.
+  hidden placeholderText: String = ""
+
   /// (Generated) Internal configuration for the UI's rendering.
   fixed ui {
     widget = "input"
+    placeholder = placeholderText
   }
 }
 
@@ -658,7 +661,6 @@ class DateInput extends UIElement {
 /// | `hide` | | whether the widget will be shown in the UI (false) or not (true) | `false` |
 /// | `defaultSelection` | | the default value to use for this boolean input | `false` |
 /// | `helpText` | | informational text to place in a hover-over to describe the use of the input | `""` |
-/// | `width` | | sizing of the input on the UI (8 is full-width, 4 is half-width) | `8` |
 class BooleanInput extends UIElement {
   fixed type = "boolean"
   required: Boolean = false // Necessary for generated Kotlin copy method override
@@ -817,7 +819,6 @@ class ConnectorTypeSelector extends UIElement {
 /// | `required` | | whether a value must be selected to proceed with the UI setup | `false` |
 /// | `hide` | | whether the widget will be shown in the UI (false) or not (true) | `false` |
 /// | `helpText` | | informational text to place in a hover-over to describe the use of the input | `""` |
-/// | `width` | | sizing of the input on the UI (8 is full-width, 4 is half-width) | `8` |
 class APITokenSelector extends UIElement {
   fixed type = "string"
   required: Boolean = false // Necessary for generated Kotlin copy method override
