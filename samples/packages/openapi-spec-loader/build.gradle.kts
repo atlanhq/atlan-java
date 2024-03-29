@@ -29,7 +29,6 @@ tasks {
         }
         mergeServiceFiles()
     }
-
     jar {
         // Override the default jar task so we get the shadowed jar
         // as the only jar output

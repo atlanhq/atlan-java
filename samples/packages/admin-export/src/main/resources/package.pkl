@@ -1,0 +1,72 @@
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
+amends "modulepath:/Config.pkl"
+import "pkl:semver"
+import "modulepath:/BuildInfo.pkl"
+
+packageId = "@csa/admin-export"
+packageName = "Admin Export"
+version = semver.Version(BuildInfo.VERSION)
+description = "Exports key administrative details from a tenant."
+iconUrl = "https://assets.atlan.com/assets/ph-user-circle-gear-light.svg"
+docsUrl = "https://solutions.atlan.com/admin-export/"
+implementationLanguage = "Kotlin"
+containerImage = "ghcr.io/atlanhq/\(name):\(BuildInfo.VERSION)"
+containerCommand {
+  "/dumb-init"
+  "--"
+  "java"
+  "com.atlan.pkg.ae.AdminExporter"
+}
+outputs {
+  files {
+    ["debug-logs"] = "/tmp/debug.log"
+    ["admin-export"] = "/tmp/admin-export.xlsx"
+  }
+}
+keywords {
+  "kotlin"
+  "utility"
+  "admin"
+  "export"
+}
+preview = true
+
+uiConfig {
+  tasks {
+    ["Scope"] {
+      description = "What to include"
+      inputs {
+        ["objects_to_include"] = new DropDown {
+          title = "Objects to include"
+          possibleValues {
+            ["users"] = "Users"
+            ["groups"] = "Groups"
+            ["personas"] = "Personas"
+            ["purposes"] = "Purposes"
+            ["policies"] = "Policies"
+          }
+          helpText = "Select the objects you want to include in the exported Excel file."
+          multiSelect = true
+          required = true
+        }
+        ["include_native_policies"] = new BooleanInput {
+          title = "Include out-of-the-box policies?"
+          helpText = "Whether to include out-of-the-box policies (Yes) or only those policies you can manage directly (No)."
+          required = false
+        }
+      }
+    }
+    ["Delivery"] {
+      description = "Where to send"
+      inputs {
+        ["email_addresses"] = new TextInput {
+          title = "Email address(es)"
+          helpText = "Provide any email addresses you want the extract sent to, separated by commas."
+          required = false
+          placeholderText = "one@example.com,two@example.com"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,146 @@
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2024 Atlan Pte. Ltd. */
+amends "modulepath:/Config.pkl"
+import "pkl:semver"
+import "modulepath:/BuildInfo.pkl"
+
+packageId = "@csa/lineage-builder"
+packageName = "Lineage Builder"
+version = semver.Version(BuildInfo.VERSION)
+description = "Build lineage from a CSV file."
+iconUrl = "http://assets.atlan.com/assets/ph-tree-structure-light.svg"
+docsUrl = "https://solutions.atlan.com/lineage-builder/"
+implementationLanguage = "Kotlin"
+containerImage = "ghcr.io/atlanhq/\(name):\(BuildInfo.VERSION)"
+containerCommand {
+  "/dumb-init"
+  "--"
+  "java"
+  "com.atlan.pkg.lb.Loader"
+}
+outputs {
+  files {
+    ["debug-logs"] = "/tmp/debug.log"
+  }
+}
+keywords {
+  "kotlin"
+  "utility"
+}
+preview = true
+
+uiConfig {
+  tasks {
+    ["Lineage"] {
+      description = "Lineage to import"
+      inputs {
+        ["lineage_import_type"] = new Radio {
+          title = "Import lineage from"
+          required = true
+          helpText = "Select how you want to provide the file containing lineage details to be imported."
+          possibleValues {
+            ["UPLOAD"] = "Direct upload"
+            ["S3"] = "S3 object"
+          }
+          default = "UPLOAD"
+        }
+        ["lineage_file"] = new FileUploader {
+          title = "Lineage file"
+          fileTypes { "text/csv" }
+          required = true
+          helpText = "Select the file containing lineage to import."
+          placeholderText = "Select lineage CSV file"
+        }
+        ["lineage_s3_region"] = new TextInput {
+          title = "S3 region"
+          required = false
+          helpText = "Enter the S3 region from which to retrieve the S3 object. If empty, will use the region of Atlan's own back-end storage."
+          placeholderText = "ap-south-1"
+          width = 4
+        }
+        ["lineage_s3_bucket"] = new TextInput {
+          title = "S3 bucket"
+          required = false
+          helpText = "Enter the S3 bucket from which to retrieve the S3 object. If empty, will use the bucket of Atlan's own back-end storage."
+          placeholderText = "bucket-name"
+          width = 4
+        }
+        ["lineage_s3_object_key"] = new TextInput {
+          title = "S3 object key"
+          required = true
+          helpText = "Enter the S3 object key, including the name of the object and its prefix (path) in the S3 bucket."
+          placeholderText = "some/where/file.csv"
+          width = 8
+        }
+        ["lineage_upsert_semantic"] = new Radio {
+          title = "Unknown asset handling"
+          required = false
+          possibleValues {
+            ["update"] = "Skip them"
+            ["partial"] = "Create partial assets"
+            ["upsert"] = "Create full assets"
+          }
+          default = "partial"
+          helpText = "How to handle assets that do not yet exist in Atlan."
+        }
+        ["lineage_config_type"] = new Radio {
+          title = "Options"
+          required = true
+          possibleValues {
+            ["default"] = "Default"
+            ["advanced"] = "Advanced"
+          }
+          default = "default"
+          helpText = "Options to optimize how lineage is imported."
+        }
+        ["lineage_fail_on_errors"] = new BooleanInput {
+          title = "Fail on errors"
+          required = false
+          helpText = "Whether an invalid value in a field should cause the import to fail (Yes) or log a warning, skip that value, and proceed (No)."
+        }
+        ["lineage_case_sensitive"] = new BooleanInput {
+          title = "Case-sensitive match for assets"
+          required = false
+          helpText = "Whether to use case-sensitive matching for assets (Yes) or try case-insensitive matching (No)."
+        }
+        ["field_separator"] = new TextInput {
+          title = "Field separator"
+          required = false
+          helpText = "Character used to separate fields in the input file (for example, ',' or ';')."
+          placeholderText = ","
+          width = 4
+        }
+        ["batch_size"] = new NumericInput {
+          title = "Batch size"
+          required = false
+          helpText = "Maximum number of rows to process at a time (per API request)."
+          placeholderValue = 20
+          width = 4
+        }
+      }
+    }
+  }
+  rules {
+    new UIRule {
+      whenInputs { ["lineage_import_type"] = "UPLOAD" }
+      required { "lineage_file" }
+    }
+    new UIRule {
+      whenInputs { ["lineage_import_type"] = "S3" }
+      required {
+        "lineage_s3_region"
+        "lineage_s3_bucket"
+        "lineage_s3_object_key"
+      }
+    }
+    new UIRule {
+      whenInputs { ["lineage_config_type"] = "advanced" }
+      required {
+        "lineage_fail_on_errors"
+        "lineage_case_sensitive"
+        "field_separator"
+        "batch_size"
+      }
+    }
+  }
+}

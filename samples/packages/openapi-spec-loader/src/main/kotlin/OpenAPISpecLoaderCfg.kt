@@ -1,5 +1,5 @@
 /* SPDX-License-Identifier: Apache-2.0
-   Copyright 2023 Atlan Pte. Ltd. */
+   Copyright 2024 Atlan Pte. Ltd. */
 import com.atlan.model.assets.Connection
 import com.atlan.pkg.CustomConfig
 import com.atlan.pkg.serde.WidgetSerde

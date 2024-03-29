@@ -1,0 +1,83 @@
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2024 Atlan Pte. Ltd. */
+amends "modulepath:/PipelineConfig.pkl"
+import "pkl:semver"
+import "modulepath:/BuildInfo.pkl"
+
+packageId = "@csa/asset-scorer"
+packageName = "Asset Scorer"
+version = semver.Version(BuildInfo.VERSION)
+description = "Calculates a completeness score for an asset based on the context it contains."
+iconUrl = "http://assets.atlan.com/assets/ph-gauge-light.svg"
+docsUrl = "https://solutions.atlan.com/asset-scorer/"
+implementationLanguage = "Kotlin"
+containerImage = "ghcr.io/atlanhq/\(name):\(BuildInfo.VERSION)"
+containerCommand {
+  "/dumb-init"
+  "--"
+  "java"
+  "AssetScorer"
+}
+configCommand = new Listing {
+  "/dumb-init"
+  "--"
+  "java"
+  "CreateCMWriteConfig"
+}
+filter = "json(payload).message.operationType in [\"ENTITY_CREATE\", \"ENTITY_UPDATE\", \"BUSINESS_ATTRIBUTE_UPDATE\", \"CLASSIFICATION_ADD\", \"CLASSIFICATION_DELETE\"]"
+keywords {
+  "kotlin"
+  "governance"
+  "pipeline"
+}
+preview = true
+
+uiConfig {
+  tasks {
+    ["Logic"] {
+      description = "Configure pipeline"
+      inputs {
+        ["asset_types"] = new DropDown {
+          title = "Asset types"
+          required = true
+          helpText = "Select asset types to score, or leave blank to score all asset types."
+          possibleValues {
+            ["Table"] = "Table"
+            ["View"] = "View"
+            ["MaterialisedView"] = "Materialized View"
+            ["AtlasGlossaryTerm"] = "Term"
+          }
+          multiSelect = true
+          width = 8
+        }
+      }
+    }
+    ["Runtime"] {
+      description = "Execution options"
+      inputs {
+        ["credential_usage"] = new Radio {
+          title = "Run as..."
+          required = true
+          possibleValues {
+            ["USER"] = "User (me)"
+            ["TOKEN"] = "API token"
+          }
+          default = "USER"
+          helpText = "Select the credentials to use for running the always-on pipeline."
+        }
+        ["api_token"] = new APITokenSelector {
+          title = "API token"
+          required = true
+          helpText = "Select the API token for the pipeline to run as. If blank, the pipeline will run as the user configuring this workflow."
+          width = 4
+        }
+      }
+    }
+  }
+  rules {
+    new UIRule {
+      whenInputs { ["credential_usage"] = "TOKEN" }
+      required { "api_token" }
+    }
+  }
+}

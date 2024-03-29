@@ -4,12 +4,14 @@ val jarName = "package-toolkit-config"
 
 plugins {
     id("com.atlan.kotlin")
+    id("org.pkl-lang")
     alias(libs.plugins.shadow)
     `maven-publish`
     signing
 }
 
 dependencies {
+    api(libs.pkl.config)
     implementation(libs.jackson.kotlin)
     implementation(libs.jackson.yaml)
     implementation(project(":package-toolkit:runtime"))
@@ -21,21 +23,71 @@ tasks {
         archiveBaseName.set(jarName)
         archiveClassifier.set("jar-with-dependencies")
         dependencies {
+            include(dependency("org.pkl-lang:pkl-config-kotlin:.*"))
+            include(dependency("org.pkl-lang:pkl-config-java-all:.*"))
             include(dependency("com.fasterxml.jackson.module:jackson-module-kotlin:.*"))
             include(dependency("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:.*"))
+            include(dependency("org.jetbrains.kotlin:kotlin-reflect:.*"))
         }
         mergeServiceFiles()
+        dependsOn("generateBuildInfo")
     }
-
     jar {
         archiveBaseName.set(jarName)
         dependsOn(shadowJar)
     }
+    processResources {
+        duplicatesStrategy = DuplicatesStrategy.INCLUDE
+        dependsOn("generateBuildInfo")
+    }
+    assemble {
+        dependsOn("makePklPackages")
+    }
+}
+
+task("sourcesJar", type = Jar::class) {
+    archiveClassifier.set("sources")
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
 }
 
 java {
     withSourcesJar()
     withJavadocJar()
+}
+
+pkl {
+    kotlinCodeGenerators {
+        register("genKotlin") {
+            indent.set("    ")
+            outputDir.set(layout.projectDirectory.dir("src/main"))
+            sourceModules.add(file("src/main/resources/Config.pkl"))
+            sourceModules.add(file("src/main/resources/Connectors.pkl"))
+            sourceModules.add(file("src/main/resources/Renderers.pkl"))
+        }
+    }
+    project {
+        packagers {
+            register("makePklPackages") {
+                projectDirectories.from(file("build/resources/main/"))
+            }
+        }
+    }
+}
+
+tasks.create<Copy>("generateBuildInfo") {
+    val templateContext = mapOf("version" to version)
+    inputs.properties(templateContext) // for gradle up-to-date check
+    from("src/main/templates/BuildInfo.pkl")
+    into("src/main/resources")
+    expand(templateContext)
+    dependsOn(tasks.getByName("genKotlin"))
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+}
+
+tasks.getByName("makePklPackages") {
+    sourceSets["main"].resources.srcDir("$buildDir/resources/main")
+    dependsOn(tasks.getByName("generateBuildInfo"))
+    dependsOn("processResources")
 }
 
 publishing {
@@ -81,4 +133,12 @@ publishing {
 signing {
     useGpgCmd()
     sign(publishing.publications["mavenJavaPkgCfg"])
+}
+
+spotless {
+    // For now disable the check, as generated code will not be properly formatted
+    isEnforceCheck = false
+    /*kotlin {
+        ignoreErrorForPath("src/main/kotlin/CustomAtlanModel.kt")
+    }*/
 }

@@ -1,0 +1,10 @@
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2024 Atlan Pte. Ltd. */
+amends "pkl:Project"
+
+package {
+  name = "package-config"
+  baseUri = "package://developer.atlan.com/toolkits/\(name)"
+  version = "0.3.0"
+  packageZipUrl = "https://developer.atlan.com/toolkits/\(name)/\(name)@\(version).zip"
+}

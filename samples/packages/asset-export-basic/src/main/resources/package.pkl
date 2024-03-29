@@ -1,0 +1,113 @@
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2024 Atlan Pte. Ltd. */
+amends "modulepath:/Config.pkl"
+import "pkl:semver"
+import "modulepath:/BuildInfo.pkl"
+
+packageId = "@csa/asset-export-basic"
+packageName = "Asset Export (Basic)"
+version = semver.Version(BuildInfo.VERSION)
+description = "Export assets with all enrichment that could be made against them via the Atlan UI."
+iconUrl = "http://assets.atlan.com/assets/ph-cloud-arrow-down-light.svg"
+docsUrl = "https://solutions.atlan.com/asset-export-basic/"
+implementationLanguage = "Kotlin"
+containerImage = "ghcr.io/atlanhq/\(name):\(BuildInfo.VERSION)"
+containerCommand {
+  "/dumb-init"
+  "--"
+  "java"
+  "Exporter"
+}
+outputs {
+  files {
+    ["debug-logs"] = "/tmp/debug.log"
+    ["assets-csv"] = "/tmp/asset-export.csv"
+    ["glossaries-csv"] = "/tmp/glossary-export.csv"
+  }
+}
+keywords {
+  "kotlin"
+  "utility"
+}
+preview = true
+
+uiConfig {
+  tasks {
+    ["Scope"] {
+      description = "Assets to include"
+      inputs {
+        ["export_scope"] = new Radio {
+          title = "Export scope"
+          required = true
+          possibleValues {
+            ["GLOSSARIES_ONLY"] = "Glossaries only"
+            ["ENRICHED_ONLY"] = "Enriched only"
+            ["ALL"] = "All"
+          }
+          default = "ENRICHED_ONLY"
+          helpText = "Whether to export only those assets that were enriched by users, or all assets with the qualified name prefix."
+        }
+        ["qn_prefix"] = new TextInput {
+          title = "Qualified name prefix (for assets)"
+          required = false
+          helpText = "Starting value for a qualifiedName that will determine which assets to export."
+          placeholderText = "default"
+          width = 6
+        }
+        ["include_description"] = new BooleanInput {
+          title = "Include description?"
+          required = false
+          helpText = "Whether to extract only user-entered description (No), or to also include system-level description (Yes)."
+          width = 4
+        }
+        ["include_glossaries"] = new BooleanInput {
+          title = "Include glossaries?"
+          required = false
+          helpText = "Whether glossaries (and their terms and categories) should be exported, too."
+          width = 4
+        }
+        ["asset_types_to_include"] = new TextInput {
+          title = "Asset types to include"
+          required = false
+          hide = true
+          helpText = "Comma-separated list of asset types to include in the export."
+        }
+        ["attributes_to_include"] = new TextInput {
+          title = "Attributes to include"
+          required = false
+          hide = true
+          helpText = "Comma-separated list of attributes to include in the export."
+        }
+      }
+    }
+    ["Delivery"] {
+      description = "Where to send"
+      inputs {
+        ["email_addresses"] = new TextInput {
+          title = "Email address(es)"
+          helpText = "Provide any email addresses you want the extract sent to, separated by commas."
+          required = false
+          placeholderText = "one@example.com,two@example.com"
+        }
+      }
+    }
+  }
+  rules {
+    new UIRule {
+      whenInputs { ["export_scope"] = "ENRICHED_ONLY" }
+      required {
+        "qn_prefix"
+        "include_description"
+        "include_glossaries"
+      }
+    }
+    new UIRule {
+      whenInputs { ["export_scope"] = "ALL" }
+      required {
+        "qn_prefix"
+        "include_description"
+        "include_glossaries"
+      }
+    }
+  }
+}
