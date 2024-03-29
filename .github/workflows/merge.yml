@@ -25,7 +25,7 @@ jobs:
       - name: Check formatting
         run: ./gradlew check
       - name: Build artifacts
-        run: ./gradlew assemble shadowJar makePklPackages buildZip
+        run: ./gradlew assemble shadowJar buildZip
         env:
           GH_USERNAME: ${{ github.actor }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
