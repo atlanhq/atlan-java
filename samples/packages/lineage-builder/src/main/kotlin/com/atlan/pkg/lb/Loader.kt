@@ -111,7 +111,7 @@ object Loader {
             // Determine any non-standard lineage fields in the header and append them to the end of
             // the list of standard header fields, so they're passed-through to be used as part of
             // defining the lineage process itself
-            val inputHeaders = getHeader(lineageInput).toMutableList()
+            val inputHeaders = getHeader(lineageInput, fieldSeparator = fieldSeparator).toMutableList()
             inputHeaders.removeAll(AssetTransformer.INPUT_HEADERS)
             inputHeaders.removeAll(LineageTransformer.INPUT_HEADERS)
             inputHeaders.forEach { lineageHeaders.add(it) }
