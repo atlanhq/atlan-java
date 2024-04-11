@@ -102,6 +102,7 @@ public class GeneratorConfig {
             Map.entry("policyResourceCategory", "AuthPolicyResourceCategory"),
             Map.entry("policyActions", "AtlanPolicyAction"),
             Map.entry("denyAssetTabs", "AssetSidebarTab"),
+            Map.entry("denyAssetFilters", "AssetFilterGroup"),
             Map.entry("policyMaskType", "DataMaskingType"),
             Map.entry("assetIcon", "AtlanIcon"));
 

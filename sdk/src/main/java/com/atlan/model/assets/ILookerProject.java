@@ -37,6 +37,12 @@ public interface ILookerProject {
     /** Fields that exist within this project. */
     RelationField FIELDS = new RelationField("fields");
 
+    /** TBC */
+    RelationField LOOKER_CHILD_PROJECTS = new RelationField("lookerChildProjects");
+
+    /** TBC */
+    RelationField LOOKER_PARENT_PROJECTS = new RelationField("lookerParentProjects");
+
     /** Models that exist within this project. */
     RelationField MODELS = new RelationField("models");
 
@@ -339,6 +345,12 @@ public interface ILookerProject {
 
     /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
+
+    /** TBC */
+    SortedSet<ILookerProject> getLookerChildProjects();
+
+    /** TBC */
+    SortedSet<ILookerProject> getLookerParentProjects();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();

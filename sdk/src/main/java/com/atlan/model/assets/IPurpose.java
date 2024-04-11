@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
+import com.atlan.model.enums.AssetFilterGroup;
 import com.atlan.model.enums.AssetSidebarTab;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
@@ -282,7 +283,7 @@ public interface IPurpose {
     String getDefaultNavigation();
 
     /** TBC */
-    SortedSet<String> getDenyAssetFilters();
+    SortedSet<AssetFilterGroup> getDenyAssetFilters();
 
     /** TBC */
     SortedSet<AssetSidebarTab> getDenyAssetTabs();

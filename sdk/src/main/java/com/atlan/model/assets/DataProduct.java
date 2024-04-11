@@ -55,6 +55,22 @@ public class DataProduct extends Asset implements IDataProduct, IDataMesh, ICata
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Criticality of this data product. */
+    @Attribute
+    DataProductCriticality daapCriticality;
+
+    /** Information sensitivity of this data product. */
+    @Attribute
+    DataProductSensitivity daapSensitivity;
+
+    /** Status of this data product. */
+    @Attribute
+    DataProductStatus daapStatus;
+
+    /** Visibility of a data product. */
+    @Attribute
+    DataProductVisibility daapVisibility;
+
     /** Data domain in which this data product exists. */
     @Attribute
     IDataDomain dataDomain;

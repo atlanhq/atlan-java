@@ -71,6 +71,16 @@ public class LookerProject extends Asset implements ILookerProject, ILooker, IBI
     @Singular
     SortedSet<ISparkJob> inputToSparkJobs;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILookerProject> lookerChildProjects;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILookerProject> lookerParentProjects;
+
     /** Models that exist within this project. */
     @Attribute
     @Singular
