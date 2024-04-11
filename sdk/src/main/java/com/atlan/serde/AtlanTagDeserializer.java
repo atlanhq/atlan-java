@@ -102,7 +102,8 @@ public class AtlanTagDeserializer extends StdDeserializer<AtlanTag> {
                         JacksonUtils.deserializeBoolean(root, "removePropagationsOnEntityDelete"))
                 .restrictPropagationThroughLineage(
                         JacksonUtils.deserializeBoolean(root, "restrictPropagationThroughLineage"))
-                .propagationOnlyThroughLineage(JacksonUtils.deserializeBoolean(root, "propagationOnlyThroughLineage"))
+                .restrictPropagationThroughHierarchy(
+                        JacksonUtils.deserializeBoolean(root, "restrictPropagationThroughHierarchy"))
                 .sourceTagAttachments(attachments)
                 .build();
     }

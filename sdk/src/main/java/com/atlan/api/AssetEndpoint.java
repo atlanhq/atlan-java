@@ -804,6 +804,40 @@ public class AssetEndpoint extends AtlasEndpoint {
      * @param propagate whether to propagate the Atlan tag (true) or not (false)
      * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
      * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
+     * @param restrictHierarchyPropagation whether to avoid propagating through hierarchy (true) or do propagate through hierarchy (false)
+     * @throws AtlanException on any API issues, or if any one of the Atlan tags already exists on the asset
+     */
+    public void addAtlanTags(
+            String typeName,
+            String qualifiedName,
+            List<String> atlanTagNames,
+            boolean propagate,
+            boolean removePropagationsOnDelete,
+            boolean restrictLineagePropagation,
+            boolean restrictHierarchyPropagation)
+            throws AtlanException {
+        addAtlanTags(
+                typeName,
+                qualifiedName,
+                atlanTagNames,
+                propagate,
+                removePropagationsOnDelete,
+                restrictLineagePropagation,
+                restrictHierarchyPropagation,
+                null);
+    }
+
+    /**
+     * Add one or more Atlan tags to the provided asset.
+     * Note: if one or more of the provided Atlan tags already exists on the asset, an InvalidRequestException
+     * will be thrown with error code {@code ATLAS-400-00-01A}.
+     *
+     * @param typeName type of asset to which to add the Atlan tags
+     * @param qualifiedName of the asset to which to add the Atlan tags
+     * @param atlanTagNames human-readable names of the Atlan tags to add to the asset
+     * @param propagate whether to propagate the Atlan tag (true) or not (false)
+     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
+     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
      * @param options to override the default client settings
      * @throws AtlanException on any API issues, or if any one of the Atlan tags already exists on the asset
      */
@@ -816,6 +850,42 @@ public class AssetEndpoint extends AtlasEndpoint {
             boolean restrictLineagePropagation,
             RequestOptions options)
             throws AtlanException {
+        addAtlanTags(
+                typeName,
+                qualifiedName,
+                atlanTagNames,
+                propagate,
+                removePropagationsOnDelete,
+                restrictLineagePropagation,
+                false,
+                options);
+    }
+
+    /**
+     * Add one or more Atlan tags to the provided asset.
+     * Note: if one or more of the provided Atlan tags already exists on the asset, an InvalidRequestException
+     * will be thrown with error code {@code ATLAS-400-00-01A}.
+     *
+     * @param typeName type of asset to which to add the Atlan tags
+     * @param qualifiedName of the asset to which to add the Atlan tags
+     * @param atlanTagNames human-readable names of the Atlan tags to add to the asset
+     * @param propagate whether to propagate the Atlan tag (true) or not (false)
+     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
+     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
+     * @param restrictHierarchyPropagation whether to avoid propagating through hierarchy (true) or do propagate through hierarchy (false)
+     * @param options to override the default client settings
+     * @throws AtlanException on any API issues, or if any one of the Atlan tags already exists on the asset
+     */
+    public void addAtlanTags(
+            String typeName,
+            String qualifiedName,
+            List<String> atlanTagNames,
+            boolean propagate,
+            boolean removePropagationsOnDelete,
+            boolean restrictLineagePropagation,
+            boolean restrictHierarchyPropagation,
+            RequestOptions options)
+            throws AtlanException {
         modifyTags(
                 typeName,
                 qualifiedName,
@@ -823,6 +893,7 @@ public class AssetEndpoint extends AtlasEndpoint {
                 propagate,
                 removePropagationsOnDelete,
                 restrictLineagePropagation,
+                restrictHierarchyPropagation,
                 options,
                 ApiResource.RequestMethod.POST);
     }
@@ -925,6 +996,40 @@ public class AssetEndpoint extends AtlasEndpoint {
      * @param propagate whether to propagate the Atlan tags (true) or not (false)
      * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
      * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
+     * @param restrictHierarchyPropagation whether to avoid propagating through hierarchy (true) or do propagate through hierarchy (false)
+     * @throws AtlanException on any API issues, or if any one of the Atlan tags already exists on the asset
+     */
+    public void updateAtlanTags(
+            String typeName,
+            String qualifiedName,
+            List<String> atlanTagNames,
+            boolean propagate,
+            boolean removePropagationsOnDelete,
+            boolean restrictLineagePropagation,
+            boolean restrictHierarchyPropagation)
+            throws AtlanException {
+        updateAtlanTags(
+                typeName,
+                qualifiedName,
+                atlanTagNames,
+                propagate,
+                removePropagationsOnDelete,
+                restrictLineagePropagation,
+                restrictHierarchyPropagation,
+                null);
+    }
+
+    /**
+     * Update one or more Atlan tags on the provided asset.
+     * Note: if one or more of the provided Atlan tags does not exist on the asset, an InvalidRequestException
+     * will be thrown with error code {@code ATLAS-400-00-06D}.
+     *
+     * @param typeName type of asset on which to update the Atlan tags
+     * @param qualifiedName of the asset on which to update the Atlan tags
+     * @param atlanTagNames human-readable names of the Atlan tags to update on the asset
+     * @param propagate whether to propagate the Atlan tags (true) or not (false)
+     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
+     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
      * @param options to override the default client settings
      * @throws AtlanException on any API issues, or if any one of the Atlan tags already exists on the asset
      */
@@ -937,6 +1042,42 @@ public class AssetEndpoint extends AtlasEndpoint {
             boolean restrictLineagePropagation,
             RequestOptions options)
             throws AtlanException {
+        updateAtlanTags(
+                typeName,
+                qualifiedName,
+                atlanTagNames,
+                propagate,
+                removePropagationsOnDelete,
+                restrictLineagePropagation,
+                false,
+                options);
+    }
+
+    /**
+     * Update one or more Atlan tags on the provided asset.
+     * Note: if one or more of the provided Atlan tags does not exist on the asset, an InvalidRequestException
+     * will be thrown with error code {@code ATLAS-400-00-06D}.
+     *
+     * @param typeName type of asset on which to update the Atlan tags
+     * @param qualifiedName of the asset on which to update the Atlan tags
+     * @param atlanTagNames human-readable names of the Atlan tags to update on the asset
+     * @param propagate whether to propagate the Atlan tags (true) or not (false)
+     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
+     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
+     * @param restrictHierarchyPropagation whether to avoid propagating through hierarchy (true) or do propagate through hierarchy (false)
+     * @param options to override the default client settings
+     * @throws AtlanException on any API issues, or if any one of the Atlan tags already exists on the asset
+     */
+    public void updateAtlanTags(
+            String typeName,
+            String qualifiedName,
+            List<String> atlanTagNames,
+            boolean propagate,
+            boolean removePropagationsOnDelete,
+            boolean restrictLineagePropagation,
+            boolean restrictHierarchyPropagation,
+            RequestOptions options)
+            throws AtlanException {
         modifyTags(
                 typeName,
                 qualifiedName,
@@ -944,6 +1085,7 @@ public class AssetEndpoint extends AtlasEndpoint {
                 propagate,
                 removePropagationsOnDelete,
                 restrictLineagePropagation,
+                restrictHierarchyPropagation,
                 options,
                 ApiResource.RequestMethod.PUT);
     }
@@ -958,6 +1100,7 @@ public class AssetEndpoint extends AtlasEndpoint {
      * @param propagate whether to propagate the Atlan tags (true) or not (false)
      * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
      * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
+     * @param restrictHierarchyPropagation whether to avoid propagating through hierarchy (true) or do propagate through hierarchy (false)
      * @param options to override the default client settings
      * @param method of the call: PUT for an update, POST for an addition
      * @throws AtlanException on any API issues, or if any one of the Atlan tags already exists on the asset
@@ -969,6 +1112,7 @@ public class AssetEndpoint extends AtlasEndpoint {
             boolean propagate,
             boolean removePropagationsOnDelete,
             boolean restrictLineagePropagation,
+            boolean restrictHierarchyPropagation,
             RequestOptions options,
             ApiResource.RequestMethod method)
             throws AtlanException {
@@ -981,6 +1125,7 @@ public class AssetEndpoint extends AtlasEndpoint {
                     .propagate(propagate)
                     .removePropagationsOnEntityDelete(removePropagationsOnDelete)
                     .restrictPropagationThroughLineage(restrictLineagePropagation)
+                    .restrictPropagationThroughHierarchy(restrictHierarchyPropagation)
                     .build());
         }
         String url = String.format(
