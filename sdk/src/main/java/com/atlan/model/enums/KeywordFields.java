@@ -374,6 +374,14 @@ public enum KeywordFields implements AtlanSearchableField {
     CUBE_PARENT_FIELD_QUALIFIED_NAME("cubeParentFieldQualifiedName"),
     /** Unique name of the cube in which this asset exists, or empty if it is itself a cube. */
     CUBE_QUALIFIED_NAME("cubeQualifiedName"),
+    /** Criticality of this data product. */
+    DAAP_CRITICALITY("daapCriticality"),
+    /** Information sensitivity of this data product. */
+    DAAP_SENSITIVITY("daapSensitivity"),
+    /** Status of this data product. */
+    DAAP_STATUS("daapStatus"),
+    /** Visibility of a data product. */
+    DAAP_VISIBILITY("daapVisibility"),
     /** Unique name of the dashboard in which this tile is pinned. */
     DASHBOARD_QUALIFIED_NAME("dashboardQualifiedName"),
     /** Type of dashboard in Salesforce. */
