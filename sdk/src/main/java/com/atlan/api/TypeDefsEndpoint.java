@@ -125,7 +125,9 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
         String url = String.format("%s%s/%s", getBaseUrl(), endpoint_by_name, internalName);
         WrappedTypeDef response =
                 ApiResource.request(client, ApiResource.RequestMethod.GET, url, "", WrappedTypeDef.class, options);
-        return response.getTypeDef();
+        TypeDef typeDef = response.getTypeDef();
+        typeDef.setRawJsonObject(response.getRawJsonObject());
+        return typeDef;
     }
 
     /**

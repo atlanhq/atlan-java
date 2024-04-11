@@ -93,7 +93,7 @@ public class AtlanTagDeserializer extends StdDeserializer<AtlanTag> {
 
         // TODO: Unfortunately, attempts to use a AtlanTagBeanDeserializerModifier to avoid the direct
         //  deserialization below were not successful — something to investigate another time
-        return AtlanTag.builder()
+        AtlanTag result = AtlanTag.builder()
                 .typeName(clsName)
                 .entityGuid(JacksonUtils.deserializeString(root, "entityGuid"))
                 .entityStatus(JacksonUtils.deserializeObject(client, root, "entityStatus", new TypeReference<>() {}))
@@ -106,5 +106,7 @@ public class AtlanTagDeserializer extends StdDeserializer<AtlanTag> {
                         JacksonUtils.deserializeBoolean(root, "restrictPropagationThroughHierarchy"))
                 .sourceTagAttachments(attachments)
                 .build();
+        result.setRawJsonObject(root);
+        return result;
     }
 }

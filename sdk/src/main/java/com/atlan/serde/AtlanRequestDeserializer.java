@@ -134,7 +134,7 @@ public class AtlanRequestDeserializer extends StdDeserializer<AtlanRequest> {
                     ((ObjectNode) destinationEntity).set("typeName", entityType);
                     builder.destinationEntity(client.convertValue(destinationEntity, new TypeReference<>() {}));
                 }
-                return builder.id(JacksonUtils.deserializeString(root, "id"))
+                AtlanRequest request = builder.id(JacksonUtils.deserializeString(root, "id"))
                         .version(JacksonUtils.deserializeString(root, "version"))
                         .isActive(JacksonUtils.deserializeBoolean(root, "isActive"))
                         .createdAt(JacksonUtils.deserializeLong(root, "createdAt"))
@@ -173,6 +173,8 @@ public class AtlanRequestDeserializer extends StdDeserializer<AtlanRequest> {
                         .requestDenyRoles(JacksonUtils.deserializeObject(
                                 client, root, "requestDenyRoles", new TypeReference<>() {}))
                         .build();
+                request.setRawJsonObject(root);
+                return request;
             }
 
             /* Unused.

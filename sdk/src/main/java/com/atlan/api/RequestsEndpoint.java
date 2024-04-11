@@ -62,7 +62,9 @@ public class RequestsEndpoint extends HeraclesEndpoint {
         WrappedRequest result =
                 ApiResource.request(client, ApiResource.RequestMethod.GET, url, "", WrappedRequest.class, options);
         if (result != null) {
-            return result.getRequest();
+            AtlanRequest request = result.getRequest();
+            request.setRawJsonObject(result.getRawJsonObject());
+            return request;
         }
         return null;
     }

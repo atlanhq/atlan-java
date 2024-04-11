@@ -260,7 +260,9 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
             builder.atlanTagNames(clsNames);
         }
 
-        return builder.build();
+        Asset result = builder.build();
+        result.setRawJsonObject(root);
+        return result;
     }
 
     private Object deserialize(JsonNode jsonNode, Method method, String fieldName)

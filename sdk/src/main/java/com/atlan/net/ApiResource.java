@@ -40,9 +40,6 @@ public abstract class ApiResource extends AtlanObject implements AtlanResponseIn
     @JsonIgnore
     private transient AtlanResponse lastResponse;
 
-    @JsonIgnore
-    private transient JsonNode rawJsonObject;
-
     /**
      * {@inheritDoc}
      */
@@ -72,6 +69,7 @@ public abstract class ApiResource extends AtlanObject implements AtlanResponseIn
      *
      * @return The raw JsonNode.
      */
+    @Override
     @JsonIgnore
     public JsonNode getRawJsonObject() {
         // Lazily initialize this the first time the getter is called.

@@ -191,7 +191,9 @@ public class ApiTokensEndpoint extends HeraclesEndpoint {
         WrappedApiToken response =
                 ApiResource.request(client, ApiResource.RequestMethod.POST, url, atr, WrappedApiToken.class, options);
         if (response != null) {
-            return response.getToken();
+            ApiToken token = response.getToken();
+            token.setRawJsonObject(response.getRawJsonObject());
+            return token;
         }
         return null;
     }
@@ -229,7 +231,9 @@ public class ApiTokensEndpoint extends HeraclesEndpoint {
         WrappedApiToken response =
                 ApiResource.request(client, ApiResource.RequestMethod.POST, url, atr, WrappedApiToken.class, options);
         if (response != null) {
-            return response.getToken();
+            ApiToken token = response.getToken();
+            token.setRawJsonObject(response.getRawJsonObject());
+            return token;
         }
         return null;
     }
