@@ -116,10 +116,11 @@ class ReusableElements {
 /// | Variable | | Usage |
 /// |---|---|---|
 /// | **description** | | Explain the custom asset type |
-/// | **[attributes][AttributeDef]** | | (Optional) map of attributes unique to this custom asset |
-/// | **[enums][EnumDef]** | | (Optional) enumerations that are specific to the custom entity type |
-/// | **[structs][StructDef]** | | (Optional) complex, embeddable types that are specific to the custom entity type |
-/// | **[relationships][RelationshipDef]** | | (Optional) relationships that are specific to the custom entity type |
+/// | [attributes][AttributeDef] | | (Optional) map of attributes unique to this custom asset |
+/// | [enums][EnumDef] | | (Optional) enumerations that are specific to the custom entity type |
+/// | [structs][StructDef] | | (Optional) complex, embeddable types that are specific to the custom entity type |
+/// | [relationships][RelationshipDef] | | (Optional) relationships that are specific to the custom entity type |
+/// | superTypes | | (Optional) names of additional supertypes for the custom entity type |
 class CustomAssetType {
 
   /// Explanation of the custom asset.
@@ -141,6 +142,10 @@ class CustomAssetType {
 
   /// (Optional) [Relationships][RelationshipDef] that are specific to the custom asset.
   hidden relationships: Mapping<String, RelationshipDef>?
+
+  /// (Optional) Names of additional supertypes for the custom asset.
+  /// Note: the core supertype defined as part of this model will always be included (automatically).
+  hidden superTypes: Listing<String>?
 }
 
 open class TypeDef {
@@ -647,7 +652,14 @@ const function getCustomTypeJson(typeName: String, asset: CustomAssetType, super
 const function customTypeToEntityDef(customType: CustomAssetType, typeName: String, supertypeName: String): EntityDef = new EntityDef {
   name = typeName
   description = customType.description
-  superTypes { supertypeName }
+  superTypes = new {
+    supertypeName
+    for (extraType in customType.superTypes ?? List()) {
+      when (extraType != supertypeName) {
+        extraType
+      }
+    }
+  }
   attributes = customType.attributes
 }
 
