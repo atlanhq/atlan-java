@@ -83,6 +83,32 @@ class ModelUnitTest {
         assertEquals("array<string>", attr.typeName)
     }
 
+    @Test
+    fun multipleSupertypes() {
+        val model = evaluateModel("MultipleSupertypes")
+        assertNotNull(model)
+        assertNotNull(model.customEnumDefs)
+        assertEquals(1, model.customEntityDefs?.size)
+        val customType = model.customEntityDefs?.get(0)
+        assertNotNull(customType)
+        assertEquals(2, customType.superTypes.size)
+        assertEquals("MultipleSupertypes", customType.superTypes[0])
+        assertEquals("Table", customType.superTypes[1])
+    }
+
+    @Test
+    fun multipleSupertypesRedundant() {
+        val model = evaluateModel("MultipleSuperRedundant")
+        assertNotNull(model)
+        assertNotNull(model.customEnumDefs)
+        assertEquals(1, model.customEntityDefs?.size)
+        val customType = model.customEntityDefs?.get(0)
+        assertNotNull(customType)
+        assertEquals(2, customType.superTypes.size)
+        assertEquals("MultipleSuperRedundant", customType.superTypes[0])
+        assertEquals("Table", customType.superTypes[1])
+    }
+
     private fun evaluateModel(input: String): Model {
         val source = ModuleSource.path("src/test/resources/$input.pkl")
         return ConfigEvaluator.preconfigured().forKotlin().use { evaluator ->
