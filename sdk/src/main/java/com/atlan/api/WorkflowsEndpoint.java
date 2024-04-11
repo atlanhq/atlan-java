@@ -224,7 +224,9 @@ public class WorkflowsEndpoint extends HeraclesEndpoint {
         WrappedWorkflow response = ApiResource.request(
                 client, ApiResource.RequestMethod.POST, url, request, WrappedWorkflow.class, options);
         if (response != null) {
-            return response.getWorkflow();
+            Workflow workflow = response.getWorkflow();
+            workflow.setRawJsonObject(response.getRawJsonObject());
+            return workflow;
         }
         return null;
     }

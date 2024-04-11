@@ -49,19 +49,22 @@ public class AggregationResultDeserializer extends StdDeserializer<AggregationRe
             return null;
         }
         try (JsonParser next = root.traverse(parser.getCodec())) {
+            AggregationResult result;
             next.nextToken();
             if (value != null && value.isNumber()) {
                 // Delegate to metrics deserialization
-                return context.readValue(next, AggregationMetricResult.class);
+                result = context.readValue(next, AggregationMetricResult.class);
             } else if (buckets != null) {
                 // Delegate to bucket deserialization
-                return context.readValue(next, AggregationBucketResult.class);
+                result = context.readValue(next, AggregationBucketResult.class);
             } else if (hits != null) {
                 // Delegate to hits deserialization
-                return context.readValue(next, AggregationHitsResult.class);
+                result = context.readValue(next, AggregationHitsResult.class);
             } else {
                 throw new IOException("Aggregation currently not handled: " + root);
             }
+            result.setRawJsonObject(root);
+            return result;
         }
     }
 }

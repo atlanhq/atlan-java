@@ -406,7 +406,7 @@ public class ApiToken extends AtlanObject {
                         JacksonUtils.deserializeObject(client, root, "workspacePermissions", new TypeReference<>() {});
             }
 
-            return ApiTokenAttributes.builder()
+            ApiTokenAttributes result = ApiTokenAttributes.builder()
                     .accessTokenLifespan(JacksonUtils.deserializeLong(root, "access.token.lifespan"))
                     .accessToken(JacksonUtils.deserializeString(root, "accessToken"))
                     .clientId(JacksonUtils.deserializeString(root, "clientId"))
@@ -417,6 +417,8 @@ public class ApiToken extends AtlanObject {
                     .personas(personas)
                     .workspacePermissions(workspacePermissions)
                     .build();
+            result.setRawJsonObject(root);
+            return result;
         }
     }
 }

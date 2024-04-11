@@ -47,15 +47,18 @@ public class AuditDetailDeserializer extends StdDeserializer<AuditDetail> {
         JsonNode root = parser.getCodec().readTree(parser);
         JsonNode guid = root.get("guid"); // only exists on entities
         JsonNode attributes = root.get("attributes"); // exists on entities and custom metadata
+        AuditDetail detail;
         if (guid != null && guid.isTextual()) {
             // Delegate to entity deserialization
-            return client.getAssetDeserializer().deserialize(root);
+            detail = client.getAssetDeserializer().deserialize(root);
         } else if (attributes != null) {
             // Delegate to the custom metadata deserialization
-            return client.getCustomMetadataAuditDeserializer().deserialize(root);
+            detail = client.getCustomMetadataAuditDeserializer().deserialize(root);
         } else {
             // Delegate to Atlan tag deserialization
-            return client.getAtlanTagDeserializer().deserialize(root);
+            detail = client.getAtlanTagDeserializer().deserialize(root);
         }
+        detail.setRawJsonObject(root);
+        return detail;
     }
 }
