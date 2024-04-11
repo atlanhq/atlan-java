@@ -268,17 +268,18 @@ implements <a href="../search/AuditDetail.html" title="interface in com.atlan.mo
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPropagationOnlyThroughLineage()">getPropagationOnlyThroughLineage</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Whether to propagate this Atlan tag only through lineage (true), when propagation is enabled.</div>
-</td>
-</tr>
-<tr id="i8" class="altColor">
-<td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRemovePropagationsOnEntityDelete()">getRemovePropagationsOnEntityDelete</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Whether to remove this Atlan tag from other entities to which it has been propagated when
  the Atlan tag is removed from this entity.</div>
+</td>
+</tr>
+<tr id="i8" class="altColor">
+<td class="colFirst"><code>java.lang.Boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRestrictPropagationThroughHierarchy()">getRestrictPropagationThroughHierarchy</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Whether to prevent this Atlan tag from propagating through hierarchy (true) or allow it to
+ propagate through hierarchy (false).</div>
 </td>
 </tr>
 <tr id="i9" class="rowColor">
@@ -524,14 +525,15 @@ implements <a href="../search/AuditDetail.html" title="interface in com.atlan.mo
  propagate through lineage (false).</div>
 </li>
 </ul>
-<a id="getPropagationOnlyThroughLineage()">
+<a id="getRestrictPropagationThroughHierarchy()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getPropagationOnlyThroughLineage</h4>
-<pre class="methodSignature">public&nbsp;java.lang.Boolean&nbsp;getPropagationOnlyThroughLineage()</pre>
-<div class="block">Whether to propagate this Atlan tag only through lineage (true), when propagation is enabled.</div>
+<h4>getRestrictPropagationThroughHierarchy</h4>
+<pre class="methodSignature">public&nbsp;java.lang.Boolean&nbsp;getRestrictPropagationThroughHierarchy()</pre>
+<div class="block">Whether to prevent this Atlan tag from propagating through hierarchy (true) or allow it to
+ propagate through hierarchy (false).</div>
 </li>
 </ul>
 <a id="getSourceTagAttachments()">

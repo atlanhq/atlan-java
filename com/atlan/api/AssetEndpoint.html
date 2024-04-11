@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":42,"i5":42,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":42,"i18":42,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10,"i37":10,"i38":10,"i39":10,"i40":10,"i41":10,"i42":10,"i43":10,"i44":10,"i45":10,"i46":10,"i47":10,"i48":10,"i49":10,"i50":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":42,"i7":42,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":42,"i20":42,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10,"i37":10,"i38":10,"i39":10,"i40":10,"i41":10,"i42":10,"i43":10,"i44":10,"i45":10,"i46":10,"i47":10,"i48":10,"i49":10,"i50":10,"i51":10,"i52":10,"i53":10,"i54":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -250,6 +250,33 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addAtlanTags(java.lang.String,java.lang.String,java.util.List,boolean,boolean,boolean,boolean)">addAtlanTags</a></span>&#8203;(java.lang.String&nbsp;typeName,
+            java.lang.String&nbsp;qualifiedName,
+            java.util.List&lt;java.lang.String&gt;&nbsp;atlanTagNames,
+            boolean&nbsp;propagate,
+            boolean&nbsp;removePropagationsOnDelete,
+            boolean&nbsp;restrictLineagePropagation,
+            boolean&nbsp;restrictHierarchyPropagation)</code></th>
+<td class="colLast">
+<div class="block">Add one or more Atlan tags to the provided asset.</div>
+</td>
+</tr>
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addAtlanTags(java.lang.String,java.lang.String,java.util.List,boolean,boolean,boolean,boolean,com.atlan.net.RequestOptions)">addAtlanTags</a></span>&#8203;(java.lang.String&nbsp;typeName,
+            java.lang.String&nbsp;qualifiedName,
+            java.util.List&lt;java.lang.String&gt;&nbsp;atlanTagNames,
+            boolean&nbsp;propagate,
+            boolean&nbsp;removePropagationsOnDelete,
+            boolean&nbsp;restrictLineagePropagation,
+            boolean&nbsp;restrictHierarchyPropagation,
+            <a href="../net/RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)</code></th>
+<td class="colLast">
+<div class="block">Add one or more Atlan tags to the provided asset.</div>
+</td>
+</tr>
+<tr id="i4" class="altColor">
+<td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addAtlanTags(java.lang.String,java.lang.String,java.util.List,boolean,boolean,boolean,com.atlan.net.RequestOptions)">addAtlanTags</a></span>&#8203;(java.lang.String&nbsp;typeName,
             java.lang.String&nbsp;qualifiedName,
             java.util.List&lt;java.lang.String&gt;&nbsp;atlanTagNames,
@@ -261,7 +288,7 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 <div class="block">Add one or more Atlan tags to the provided asset.</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addAtlanTags(java.lang.String,java.lang.String,java.util.List,com.atlan.net.RequestOptions)">addAtlanTags</a></span>&#8203;(java.lang.String&nbsp;typeName,
             java.lang.String&nbsp;qualifiedName,
@@ -271,7 +298,7 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 <div class="block">Add one or more Atlan tags to the provided asset.</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="../model/core/AssetFilter.AssetFilterBuilder.html" title="class in com.atlan.model.core">AssetFilter.AssetFilterBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#all()">all</a></span>()</code></th>
 <td class="colLast">
@@ -280,7 +307,7 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 </div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="../model/core/AssetFilter.AssetFilterBuilder.html" title="class in com.atlan.model.core">AssetFilter.AssetFilterBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#all(boolean)">all</a></span>&#8203;(boolean&nbsp;includeArchived)</code></th>
 <td class="colLast">
@@ -289,14 +316,14 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 </div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code><a href="../model/search/AuditSearchResponse.html" title="class in com.atlan.model.search">AuditSearchResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#auditLogs(com.atlan.model.search.AuditSearchRequest)">auditLogs</a></span>&#8203;(<a href="../model/search/AuditSearchRequest.html" title="class in com.atlan.model.search">AuditSearchRequest</a>&nbsp;request)</code></th>
 <td class="colLast">
 <div class="block">Run the requested search.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code><a href="../model/search/AuditSearchResponse.html" title="class in com.atlan.model.search">AuditSearchResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#auditLogs(com.atlan.model.search.AuditSearchRequest,com.atlan.net.RequestOptions)">auditLogs</a></span>&#8203;(<a href="../model/search/AuditSearchRequest.html" title="class in com.atlan.model.search">AuditSearchRequest</a>&nbsp;request,
          <a href="../net/RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)</code></th>
@@ -304,7 +331,7 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 <div class="block">Run the requested search.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code><a href="../model/core/AssetDeletionResponse.html" title="class in com.atlan.model.core">AssetDeletionResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#delete(java.lang.String,com.atlan.model.enums.AtlanDeleteType)">delete</a></span>&#8203;(java.lang.String&nbsp;guid,
       <a href="../model/enums/AtlanDeleteType.html" title="enum in com.atlan.model.enums">AtlanDeleteType</a>&nbsp;deleteType)</code></th>
@@ -312,7 +339,7 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 <div class="block">Deletes any asset.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code><a href="../model/core/AssetDeletionResponse.html" title="class in com.atlan.model.core">AssetDeletionResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#delete(java.util.List,com.atlan.model.enums.AtlanDeleteType)">delete</a></span>&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;guids,
       <a href="../model/enums/AtlanDeleteType.html" title="enum in com.atlan.model.enums">AtlanDeleteType</a>&nbsp;deleteType)</code></th>
@@ -320,7 +347,7 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 <div class="block">Deletes any assets.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code><a href="../model/core/AssetDeletionResponse.html" title="class in com.atlan.model.core">AssetDeletionResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#delete(java.util.List,com.atlan.model.enums.AtlanDeleteType,com.atlan.net.RequestOptions)">delete</a></span>&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;guids,
       <a href="../model/enums/AtlanDeleteType.html" title="enum in com.atlan.model.enums">AtlanDeleteType</a>&nbsp;deleteType,
@@ -329,7 +356,7 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 <div class="block">Deletes any assets.</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code><a href="../model/core/AssetResponse.html" title="class in com.atlan.model.core">AssetResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#get(java.lang.String,boolean,boolean)">get</a></span>&#8203;(java.lang.String&nbsp;guid,
    boolean&nbsp;ignoreRelationships,
@@ -338,7 +365,7 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 <div class="block">Retrieves any asset by its GUID.</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code><a href="../model/core/AssetResponse.html" title="class in com.atlan.model.core">AssetResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#get(java.lang.String,boolean,boolean,com.atlan.net.RequestOptions)">get</a></span>&#8203;(java.lang.String&nbsp;guid,
    boolean&nbsp;ignoreRelationships,
@@ -348,7 +375,7 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 <div class="block">Retrieves any asset by its GUID.</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code><a href="../model/core/AssetResponse.html" title="class in com.atlan.model.core">AssetResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#get(java.lang.String,java.lang.String,boolean,boolean)">get</a></span>&#8203;(java.lang.String&nbsp;typeName,
    java.lang.String&nbsp;qualifiedName,
@@ -358,7 +385,7 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 <div class="block">Retrieves any asset by its qualifiedName.</div>
 </td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code><a href="../model/core/AssetResponse.html" title="class in com.atlan.model.core">AssetResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#get(java.lang.String,java.lang.String,boolean,boolean,com.atlan.net.RequestOptions)">get</a></span>&#8203;(java.lang.String&nbsp;typeName,
    java.lang.String&nbsp;qualifiedName,
@@ -369,14 +396,14 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 <div class="block">Retrieves any asset by its qualifiedName.</div>
 </td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code><a href="../model/lineage/LineageListResponse.html" title="class in com.atlan.model.lineage">LineageListResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#lineage(com.atlan.model.lineage.LineageListRequest)">lineage</a></span>&#8203;(<a href="../model/lineage/LineageListRequest.html" title="class in com.atlan.model.lineage">LineageListRequest</a>&nbsp;request)</code></th>
 <td class="colLast">
 <div class="block">Retrieve lineage using the higher-performance "list" API.</div>
 </td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i18" class="altColor">
 <td class="colFirst"><code><a href="../model/lineage/LineageListResponse.html" title="class in com.atlan.model.lineage">LineageListResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#lineage(com.atlan.model.lineage.LineageListRequest,com.atlan.net.RequestOptions)">lineage</a></span>&#8203;(<a href="../model/lineage/LineageListRequest.html" title="class in com.atlan.model.lineage">LineageListRequest</a>&nbsp;request,
        <a href="../net/RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)</code></th>
@@ -384,7 +411,7 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 <div class="block">Retrieve lineage using the higher-performance "list" API.</div>
 </td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code><a href="../model/lineage/LineageResponse.html" title="class in com.atlan.model.lineage">LineageResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#lineage(com.atlan.model.lineage.LineageRequest)">lineage</a></span>&#8203;(<a href="../model/lineage/LineageRequest.html" title="class in com.atlan.model.lineage">LineageRequest</a>&nbsp;request)</code></th>
 <td class="colLast">
@@ -393,7 +420,7 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 </div>
 </td>
 </tr>
-<tr id="i18" class="altColor">
+<tr id="i20" class="altColor">
 <td class="colFirst"><code><a href="../model/lineage/LineageResponse.html" title="class in com.atlan.model.lineage">LineageResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#lineage(com.atlan.model.lineage.LineageRequest,com.atlan.net.RequestOptions)">lineage</a></span>&#8203;(<a href="../model/lineage/LineageRequest.html" title="class in com.atlan.model.lineage">LineageRequest</a>&nbsp;request,
        <a href="../net/RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)</code></th>
@@ -403,7 +430,7 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 </div>
 </td>
 </tr>
-<tr id="i19" class="rowColor">
+<tr id="i21" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeAtlanTag(java.lang.String,java.lang.String,java.lang.String,boolean)">removeAtlanTag</a></span>&#8203;(java.lang.String&nbsp;typeName,
               java.lang.String&nbsp;qualifiedName,
@@ -413,7 +440,7 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 <div class="block">Removes a single Atlan tag from the provided asset.</div>
 </td>
 </tr>
-<tr id="i20" class="altColor">
+<tr id="i22" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeAtlanTag(java.lang.String,java.lang.String,java.lang.String,boolean,com.atlan.net.RequestOptions)">removeAtlanTag</a></span>&#8203;(java.lang.String&nbsp;typeName,
               java.lang.String&nbsp;qualifiedName,
@@ -424,7 +451,7 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 <div class="block">Removes a single Atlan tag from the provided asset.</div>
 </td>
 </tr>
-<tr id="i21" class="rowColor">
+<tr id="i23" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeCustomMetadata(java.lang.String,java.lang.String)">removeCustomMetadata</a></span>&#8203;(java.lang.String&nbsp;guid,
                     java.lang.String&nbsp;cmName)</code></th>
@@ -432,7 +459,7 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 <div class="block">Removes specific custom metadata from the specified asset.</div>
 </td>
 </tr>
-<tr id="i22" class="altColor">
+<tr id="i24" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeCustomMetadata(java.lang.String,java.lang.String,com.atlan.net.RequestOptions)">removeCustomMetadata</a></span>&#8203;(java.lang.String&nbsp;guid,
                     java.lang.String&nbsp;cmName,
@@ -441,7 +468,7 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 <div class="block">Removes specific custom metadata from the specified asset.</div>
 </td>
 </tr>
-<tr id="i23" class="rowColor">
+<tr id="i25" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#replaceCustomMetadata(java.lang.String,java.lang.String,com.atlan.model.core.CustomMetadataAttributes)">replaceCustomMetadata</a></span>&#8203;(java.lang.String&nbsp;guid,
                      java.lang.String&nbsp;cmName,
@@ -450,7 +477,7 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 <div class="block">Replaces specific custom metadata for the specified asset.</div>
 </td>
 </tr>
-<tr id="i24" class="altColor">
+<tr id="i26" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#replaceCustomMetadata(java.lang.String,java.lang.String,com.atlan.model.core.CustomMetadataAttributes,com.atlan.net.RequestOptions)">replaceCustomMetadata</a></span>&#8203;(java.lang.String&nbsp;guid,
                      java.lang.String&nbsp;cmName,
@@ -460,14 +487,14 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 <div class="block">Replaces specific custom metadata for the specified asset.</div>
 </td>
 </tr>
-<tr id="i25" class="rowColor">
+<tr id="i27" class="rowColor">
 <td class="colFirst"><code><a href="../model/core/AssetMutationResponse.html" title="class in com.atlan.model.core">AssetMutationResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#restore(com.atlan.model.assets.Asset)">restore</a></span>&#8203;(<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;value)</code></th>
 <td class="colLast">
 <div class="block">Restores any asset from a soft-deleted (archived) to an active state.</div>
 </td>
 </tr>
-<tr id="i26" class="altColor">
+<tr id="i28" class="altColor">
 <td class="colFirst"><code><a href="../model/core/AssetMutationResponse.html" title="class in com.atlan.model.core">AssetMutationResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#restore(com.atlan.model.assets.Asset,com.atlan.net.RequestOptions)">restore</a></span>&#8203;(<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;value,
        <a href="../net/RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)</code></th>
@@ -475,14 +502,14 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 <div class="block">Restores any asset from a soft-deleted (archived) to an active state.</div>
 </td>
 </tr>
-<tr id="i27" class="rowColor">
+<tr id="i29" class="rowColor">
 <td class="colFirst"><code><a href="../model/core/AssetMutationResponse.html" title="class in com.atlan.model.core">AssetMutationResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#restore(java.util.List)">restore</a></span>&#8203;(java.util.List&lt;<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;&nbsp;values)</code></th>
 <td class="colLast">
 <div class="block">Restores any assets in the list provided from a soft-deleted (archived) to active state.</div>
 </td>
 </tr>
-<tr id="i28" class="altColor">
+<tr id="i30" class="altColor">
 <td class="colFirst"><code><a href="../model/core/AssetMutationResponse.html" title="class in com.atlan.model.core">AssetMutationResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#restore(java.util.List,com.atlan.net.RequestOptions)">restore</a></span>&#8203;(java.util.List&lt;<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;&nbsp;values,
        <a href="../net/RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)</code></th>
@@ -490,7 +517,7 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 <div class="block">Restores any assets in the list provided from a soft-deleted (archived) to active state.</div>
 </td>
 </tr>
-<tr id="i29" class="rowColor">
+<tr id="i31" class="rowColor">
 <td class="colFirst"><code><a href="../model/core/AssetMutationResponse.html" title="class in com.atlan.model.core">AssetMutationResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#save(com.atlan.model.assets.Asset)">save</a></span>&#8203;(<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;value)</code></th>
 <td class="colLast">
@@ -498,7 +525,7 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
  ignoring any custom metadata.</div>
 </td>
 </tr>
-<tr id="i30" class="altColor">
+<tr id="i32" class="altColor">
 <td class="colFirst"><code><a href="../model/core/AssetMutationResponse.html" title="class in com.atlan.model.core">AssetMutationResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#save(com.atlan.model.assets.Asset,boolean)">save</a></span>&#8203;(<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;value,
     boolean&nbsp;replaceAtlanTags)</code></th>
@@ -507,7 +534,7 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
  ignoring any custom metadata.</div>
 </td>
 </tr>
-<tr id="i31" class="rowColor">
+<tr id="i33" class="rowColor">
 <td class="colFirst"><code><a href="../model/core/AssetMutationResponse.html" title="class in com.atlan.model.core">AssetMutationResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#save(com.atlan.model.assets.Asset,boolean,com.atlan.net.RequestOptions)">save</a></span>&#8203;(<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;value,
     boolean&nbsp;replaceAtlanTags,
@@ -517,7 +544,7 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
  ignoring any custom metadata.</div>
 </td>
 </tr>
-<tr id="i32" class="altColor">
+<tr id="i34" class="altColor">
 <td class="colFirst"><code><a href="../model/core/AssetMutationResponse.html" title="class in com.atlan.model.core">AssetMutationResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#save(com.atlan.model.assets.Asset,com.atlan.net.RequestOptions)">save</a></span>&#8203;(<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;value,
     <a href="../net/RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)</code></th>
@@ -526,7 +553,7 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
  ignoring any custom metadata.</div>
 </td>
 </tr>
-<tr id="i33" class="rowColor">
+<tr id="i35" class="rowColor">
 <td class="colFirst"><code><a href="../model/core/ConnectionCreationResponse.html" title="class in com.atlan.model.core">ConnectionCreationResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#save(com.atlan.model.assets.Connection,boolean)">save</a></span>&#8203;(<a href="../model/assets/Connection.html" title="class in com.atlan.model.assets">Connection</a>&nbsp;value,
     boolean&nbsp;replaceAtlanTags)</code></th>
@@ -534,7 +561,7 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 <div class="block">Creates any assets, optionally overwriting the existing assets' Atlan tags.</div>
 </td>
 </tr>
-<tr id="i34" class="altColor">
+<tr id="i36" class="altColor">
 <td class="colFirst"><code><a href="../model/core/ConnectionCreationResponse.html" title="class in com.atlan.model.core">ConnectionCreationResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#save(com.atlan.model.assets.Connection,boolean,com.atlan.net.RequestOptions)">save</a></span>&#8203;(<a href="../model/assets/Connection.html" title="class in com.atlan.model.assets">Connection</a>&nbsp;value,
     boolean&nbsp;replaceAtlanTags,
@@ -543,7 +570,7 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 <div class="block">Creates any assets, optionally overwriting the existing assets' Atlan tags.</div>
 </td>
 </tr>
-<tr id="i35" class="rowColor">
+<tr id="i37" class="rowColor">
 <td class="colFirst"><code><a href="../model/core/AssetMutationResponse.html" title="class in com.atlan.model.core">AssetMutationResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#save(java.util.List,boolean)">save</a></span>&#8203;(java.util.List&lt;<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;&nbsp;values,
     boolean&nbsp;replaceAtlanTags)</code></th>
@@ -552,7 +579,7 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
  ignoring any custom metadata.</div>
 </td>
 </tr>
-<tr id="i36" class="altColor">
+<tr id="i38" class="altColor">
 <td class="colFirst"><code><a href="../model/core/AssetMutationResponse.html" title="class in com.atlan.model.core">AssetMutationResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#save(java.util.List,boolean,com.atlan.net.RequestOptions)">save</a></span>&#8203;(java.util.List&lt;<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;&nbsp;values,
     boolean&nbsp;replaceAtlanTags,
@@ -562,7 +589,7 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
  ignoring any custom metadata.</div>
 </td>
 </tr>
-<tr id="i37" class="rowColor">
+<tr id="i39" class="rowColor">
 <td class="colFirst"><code><a href="../model/core/AssetMutationResponse.html" title="class in com.atlan.model.core">AssetMutationResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#saveMergingCM(java.util.List,boolean)">saveMergingCM</a></span>&#8203;(java.util.List&lt;<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;&nbsp;values,
              boolean&nbsp;replaceAtlanTags)</code></th>
@@ -571,7 +598,7 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
  provided custom metadata values (but leaving any existing custom metadata values as-is).</div>
 </td>
 </tr>
-<tr id="i38" class="altColor">
+<tr id="i40" class="altColor">
 <td class="colFirst"><code><a href="../model/core/AssetMutationResponse.html" title="class in com.atlan.model.core">AssetMutationResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#saveMergingCM(java.util.List,boolean,com.atlan.net.RequestOptions)">saveMergingCM</a></span>&#8203;(java.util.List&lt;<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;&nbsp;values,
              boolean&nbsp;replaceAtlanTags,
@@ -581,7 +608,7 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
  provided custom metadata values (but leaving any existing custom metadata values as-is).</div>
 </td>
 </tr>
-<tr id="i39" class="rowColor">
+<tr id="i41" class="rowColor">
 <td class="colFirst"><code><a href="../model/core/AssetMutationResponse.html" title="class in com.atlan.model.core">AssetMutationResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#saveReplacingCM(java.util.List,boolean)">saveReplacingCM</a></span>&#8203;(java.util.List&lt;<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;&nbsp;values,
                boolean&nbsp;replaceAtlanTags)</code></th>
@@ -591,7 +618,7 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
  on the asset that is not also provided in the request).</div>
 </td>
 </tr>
-<tr id="i40" class="altColor">
+<tr id="i42" class="altColor">
 <td class="colFirst"><code><a href="../model/core/AssetMutationResponse.html" title="class in com.atlan.model.core">AssetMutationResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#saveReplacingCM(java.util.List,boolean,com.atlan.net.RequestOptions)">saveReplacingCM</a></span>&#8203;(java.util.List&lt;<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;&nbsp;values,
                boolean&nbsp;replaceAtlanTags,
@@ -602,14 +629,14 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
  on the asset that is not also provided in the request).</div>
 </td>
 </tr>
-<tr id="i41" class="rowColor">
+<tr id="i43" class="rowColor">
 <td class="colFirst"><code><a href="../model/search/IndexSearchResponse.html" title="class in com.atlan.model.search">IndexSearchResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#search(com.atlan.model.search.IndexSearchRequest)">search</a></span>&#8203;(<a href="../model/search/IndexSearchRequest.html" title="class in com.atlan.model.search">IndexSearchRequest</a>&nbsp;request)</code></th>
 <td class="colLast">
 <div class="block">Run the requested search.</div>
 </td>
 </tr>
-<tr id="i42" class="altColor">
+<tr id="i44" class="altColor">
 <td class="colFirst"><code><a href="../model/search/IndexSearchResponse.html" title="class in com.atlan.model.search">IndexSearchResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#search(com.atlan.model.search.IndexSearchRequest,com.atlan.net.RequestOptions)">search</a></span>&#8203;(<a href="../model/search/IndexSearchRequest.html" title="class in com.atlan.model.search">IndexSearchRequest</a>&nbsp;request,
       <a href="../net/RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)</code></th>
@@ -617,21 +644,21 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 <div class="block">Run the requested search.</div>
 </td>
 </tr>
-<tr id="i43" class="rowColor">
+<tr id="i45" class="rowColor">
 <td class="colFirst"><code><a href="../model/search/FluentSearch.FluentSearchBuilder.html" title="class in com.atlan.model.search">FluentSearch.FluentSearchBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#select()">select</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Start a fluent search that will return all assets.</div>
 </td>
 </tr>
-<tr id="i44" class="altColor">
+<tr id="i46" class="altColor">
 <td class="colFirst"><code><a href="../model/search/FluentSearch.FluentSearchBuilder.html" title="class in com.atlan.model.search">FluentSearch.FluentSearchBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#select(boolean)">select</a></span>&#8203;(boolean&nbsp;includeArchived)</code></th>
 <td class="colLast">
 <div class="block">Start a fluent search that will return all assets.</div>
 </td>
 </tr>
-<tr id="i45" class="rowColor">
+<tr id="i47" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateAtlanTags(java.lang.String,java.lang.String,java.util.List,boolean,boolean,boolean)">updateAtlanTags</a></span>&#8203;(java.lang.String&nbsp;typeName,
                java.lang.String&nbsp;qualifiedName,
@@ -643,7 +670,34 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 <div class="block">Update one or more Atlan tags on the provided asset.</div>
 </td>
 </tr>
-<tr id="i46" class="altColor">
+<tr id="i48" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateAtlanTags(java.lang.String,java.lang.String,java.util.List,boolean,boolean,boolean,boolean)">updateAtlanTags</a></span>&#8203;(java.lang.String&nbsp;typeName,
+               java.lang.String&nbsp;qualifiedName,
+               java.util.List&lt;java.lang.String&gt;&nbsp;atlanTagNames,
+               boolean&nbsp;propagate,
+               boolean&nbsp;removePropagationsOnDelete,
+               boolean&nbsp;restrictLineagePropagation,
+               boolean&nbsp;restrictHierarchyPropagation)</code></th>
+<td class="colLast">
+<div class="block">Update one or more Atlan tags on the provided asset.</div>
+</td>
+</tr>
+<tr id="i49" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateAtlanTags(java.lang.String,java.lang.String,java.util.List,boolean,boolean,boolean,boolean,com.atlan.net.RequestOptions)">updateAtlanTags</a></span>&#8203;(java.lang.String&nbsp;typeName,
+               java.lang.String&nbsp;qualifiedName,
+               java.util.List&lt;java.lang.String&gt;&nbsp;atlanTagNames,
+               boolean&nbsp;propagate,
+               boolean&nbsp;removePropagationsOnDelete,
+               boolean&nbsp;restrictLineagePropagation,
+               boolean&nbsp;restrictHierarchyPropagation,
+               <a href="../net/RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)</code></th>
+<td class="colLast">
+<div class="block">Update one or more Atlan tags on the provided asset.</div>
+</td>
+</tr>
+<tr id="i50" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateAtlanTags(java.lang.String,java.lang.String,java.util.List,boolean,boolean,boolean,com.atlan.net.RequestOptions)">updateAtlanTags</a></span>&#8203;(java.lang.String&nbsp;typeName,
                java.lang.String&nbsp;qualifiedName,
@@ -656,7 +710,7 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 <div class="block">Update one or more Atlan tags on the provided asset.</div>
 </td>
 </tr>
-<tr id="i47" class="rowColor">
+<tr id="i51" class="rowColor">
 <td class="colFirst"><code><a href="../model/core/AssetMutationResponse.html" title="class in com.atlan.model.core">AssetMutationResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateAttributes(java.lang.String,java.lang.String,com.atlan.model.assets.Asset)">updateAttributes</a></span>&#8203;(java.lang.String&nbsp;typeName,
                 java.lang.String&nbsp;qualifiedName,
@@ -665,7 +719,7 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 <div class="block">Updates any simple attributes provided.</div>
 </td>
 </tr>
-<tr id="i48" class="altColor">
+<tr id="i52" class="altColor">
 <td class="colFirst"><code><a href="../model/core/AssetMutationResponse.html" title="class in com.atlan.model.core">AssetMutationResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateAttributes(java.lang.String,java.lang.String,com.atlan.model.assets.Asset,com.atlan.net.RequestOptions)">updateAttributes</a></span>&#8203;(java.lang.String&nbsp;typeName,
                 java.lang.String&nbsp;qualifiedName,
@@ -675,7 +729,7 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 <div class="block">Updates any simple attributes provided.</div>
 </td>
 </tr>
-<tr id="i49" class="rowColor">
+<tr id="i53" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateCustomMetadataAttributes(java.lang.String,java.lang.String,com.atlan.model.core.CustomMetadataAttributes)">updateCustomMetadataAttributes</a></span>&#8203;(java.lang.String&nbsp;guid,
                               java.lang.String&nbsp;cmName,
@@ -684,7 +738,7 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 <div class="block">Updates only the provided custom metadata attributes on the asset.</div>
 </td>
 </tr>
-<tr id="i50" class="altColor">
+<tr id="i54" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateCustomMetadataAttributes(java.lang.String,java.lang.String,com.atlan.model.core.CustomMetadataAttributes,com.atlan.net.RequestOptions)">updateCustomMetadataAttributes</a></span>&#8203;(java.lang.String&nbsp;guid,
                               java.lang.String&nbsp;cmName,
@@ -1652,6 +1706,37 @@ public&nbsp;<a href="../model/core/AssetFilter.AssetFilterBuilder.html" title="c
 </dl>
 </li>
 </ul>
+<a id="addAtlanTags(java.lang.String,java.lang.String,java.util.List,boolean,boolean,boolean,boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>addAtlanTags</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;addAtlanTags&#8203;(java.lang.String&nbsp;typeName,
+                         java.lang.String&nbsp;qualifiedName,
+                         java.util.List&lt;java.lang.String&gt;&nbsp;atlanTagNames,
+                         boolean&nbsp;propagate,
+                         boolean&nbsp;removePropagationsOnDelete,
+                         boolean&nbsp;restrictLineagePropagation,
+                         boolean&nbsp;restrictHierarchyPropagation)
+                  throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Add one or more Atlan tags to the provided asset.
+ Note: if one or more of the provided Atlan tags already exists on the asset, an InvalidRequestException
+ will be thrown with error code <code>ATLAS-400-00-01A</code>.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>typeName</code> - type of asset to which to add the Atlan tags</dd>
+<dd><code>qualifiedName</code> - of the asset to which to add the Atlan tags</dd>
+<dd><code>atlanTagNames</code> - human-readable names of the Atlan tags to add to the asset</dd>
+<dd><code>propagate</code> - whether to propagate the Atlan tag (true) or not (false)</dd>
+<dd><code>removePropagationsOnDelete</code> - whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)</dd>
+<dd><code>restrictLineagePropagation</code> - whether to avoid propagating through lineage (true) or do propagate through lineage (false)</dd>
+<dd><code>restrictHierarchyPropagation</code> - whether to avoid propagating through hierarchy (true) or do propagate through hierarchy (false)</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API issues, or if any one of the Atlan tags already exists on the asset</dd>
+</dl>
+</li>
+</ul>
 <a id="addAtlanTags(java.lang.String,java.lang.String,java.util.List,boolean,boolean,boolean,com.atlan.net.RequestOptions)">
 <!--   -->
 </a>
@@ -1677,6 +1762,39 @@ public&nbsp;<a href="../model/core/AssetFilter.AssetFilterBuilder.html" title="c
 <dd><code>propagate</code> - whether to propagate the Atlan tag (true) or not (false)</dd>
 <dd><code>removePropagationsOnDelete</code> - whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)</dd>
 <dd><code>restrictLineagePropagation</code> - whether to avoid propagating through lineage (true) or do propagate through lineage (false)</dd>
+<dd><code>options</code> - to override the default client settings</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API issues, or if any one of the Atlan tags already exists on the asset</dd>
+</dl>
+</li>
+</ul>
+<a id="addAtlanTags(java.lang.String,java.lang.String,java.util.List,boolean,boolean,boolean,boolean,com.atlan.net.RequestOptions)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>addAtlanTags</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;addAtlanTags&#8203;(java.lang.String&nbsp;typeName,
+                         java.lang.String&nbsp;qualifiedName,
+                         java.util.List&lt;java.lang.String&gt;&nbsp;atlanTagNames,
+                         boolean&nbsp;propagate,
+                         boolean&nbsp;removePropagationsOnDelete,
+                         boolean&nbsp;restrictLineagePropagation,
+                         boolean&nbsp;restrictHierarchyPropagation,
+                         <a href="../net/RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)
+                  throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Add one or more Atlan tags to the provided asset.
+ Note: if one or more of the provided Atlan tags already exists on the asset, an InvalidRequestException
+ will be thrown with error code <code>ATLAS-400-00-01A</code>.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>typeName</code> - type of asset to which to add the Atlan tags</dd>
+<dd><code>qualifiedName</code> - of the asset to which to add the Atlan tags</dd>
+<dd><code>atlanTagNames</code> - human-readable names of the Atlan tags to add to the asset</dd>
+<dd><code>propagate</code> - whether to propagate the Atlan tag (true) or not (false)</dd>
+<dd><code>removePropagationsOnDelete</code> - whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)</dd>
+<dd><code>restrictLineagePropagation</code> - whether to avoid propagating through lineage (true) or do propagate through lineage (false)</dd>
+<dd><code>restrictHierarchyPropagation</code> - whether to avoid propagating through hierarchy (true) or do propagate through hierarchy (false)</dd>
 <dd><code>options</code> - to override the default client settings</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API issues, or if any one of the Atlan tags already exists on the asset</dd>
@@ -1766,6 +1884,37 @@ public&nbsp;<a href="../model/core/AssetFilter.AssetFilterBuilder.html" title="c
 </dl>
 </li>
 </ul>
+<a id="updateAtlanTags(java.lang.String,java.lang.String,java.util.List,boolean,boolean,boolean,boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>updateAtlanTags</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;updateAtlanTags&#8203;(java.lang.String&nbsp;typeName,
+                            java.lang.String&nbsp;qualifiedName,
+                            java.util.List&lt;java.lang.String&gt;&nbsp;atlanTagNames,
+                            boolean&nbsp;propagate,
+                            boolean&nbsp;removePropagationsOnDelete,
+                            boolean&nbsp;restrictLineagePropagation,
+                            boolean&nbsp;restrictHierarchyPropagation)
+                     throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Update one or more Atlan tags on the provided asset.
+ Note: if one or more of the provided Atlan tags does not exist on the asset, an InvalidRequestException
+ will be thrown with error code <code>ATLAS-400-00-06D</code>.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>typeName</code> - type of asset on which to update the Atlan tags</dd>
+<dd><code>qualifiedName</code> - of the asset on which to update the Atlan tags</dd>
+<dd><code>atlanTagNames</code> - human-readable names of the Atlan tags to update on the asset</dd>
+<dd><code>propagate</code> - whether to propagate the Atlan tags (true) or not (false)</dd>
+<dd><code>removePropagationsOnDelete</code> - whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)</dd>
+<dd><code>restrictLineagePropagation</code> - whether to avoid propagating through lineage (true) or do propagate through lineage (false)</dd>
+<dd><code>restrictHierarchyPropagation</code> - whether to avoid propagating through hierarchy (true) or do propagate through hierarchy (false)</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API issues, or if any one of the Atlan tags already exists on the asset</dd>
+</dl>
+</li>
+</ul>
 <a id="updateAtlanTags(java.lang.String,java.lang.String,java.util.List,boolean,boolean,boolean,com.atlan.net.RequestOptions)">
 <!--   -->
 </a>
@@ -1791,6 +1940,39 @@ public&nbsp;<a href="../model/core/AssetFilter.AssetFilterBuilder.html" title="c
 <dd><code>propagate</code> - whether to propagate the Atlan tags (true) or not (false)</dd>
 <dd><code>removePropagationsOnDelete</code> - whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)</dd>
 <dd><code>restrictLineagePropagation</code> - whether to avoid propagating through lineage (true) or do propagate through lineage (false)</dd>
+<dd><code>options</code> - to override the default client settings</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API issues, or if any one of the Atlan tags already exists on the asset</dd>
+</dl>
+</li>
+</ul>
+<a id="updateAtlanTags(java.lang.String,java.lang.String,java.util.List,boolean,boolean,boolean,boolean,com.atlan.net.RequestOptions)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>updateAtlanTags</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;updateAtlanTags&#8203;(java.lang.String&nbsp;typeName,
+                            java.lang.String&nbsp;qualifiedName,
+                            java.util.List&lt;java.lang.String&gt;&nbsp;atlanTagNames,
+                            boolean&nbsp;propagate,
+                            boolean&nbsp;removePropagationsOnDelete,
+                            boolean&nbsp;restrictLineagePropagation,
+                            boolean&nbsp;restrictHierarchyPropagation,
+                            <a href="../net/RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)
+                     throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Update one or more Atlan tags on the provided asset.
+ Note: if one or more of the provided Atlan tags does not exist on the asset, an InvalidRequestException
+ will be thrown with error code <code>ATLAS-400-00-06D</code>.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>typeName</code> - type of asset on which to update the Atlan tags</dd>
+<dd><code>qualifiedName</code> - of the asset on which to update the Atlan tags</dd>
+<dd><code>atlanTagNames</code> - human-readable names of the Atlan tags to update on the asset</dd>
+<dd><code>propagate</code> - whether to propagate the Atlan tags (true) or not (false)</dd>
+<dd><code>removePropagationsOnDelete</code> - whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)</dd>
+<dd><code>restrictLineagePropagation</code> - whether to avoid propagating through lineage (true) or do propagate through lineage (false)</dd>
+<dd><code>restrictHierarchyPropagation</code> - whether to avoid propagating through hierarchy (true) or do propagate through hierarchy (false)</dd>
 <dd><code>options</code> - to override the default client settings</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API issues, or if any one of the Atlan tags already exists on the asset</dd>

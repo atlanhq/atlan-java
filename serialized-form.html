@@ -25372,15 +25372,16 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
  Atlan tag is attached.</div>
 </li>
 <li class="blockList">
-<h4>propagationOnlyThroughLineage</h4>
-<pre>java.lang.Boolean propagationOnlyThroughLineage</pre>
-<div class="block">Whether to propagate this Atlan tag only through lineage (true), when propagation is enabled.</div>
-</li>
-<li class="blockList">
 <h4>removePropagationsOnEntityDelete</h4>
 <pre>java.lang.Boolean removePropagationsOnEntityDelete</pre>
 <div class="block">Whether to remove this Atlan tag from other entities to which it has been propagated when
  the Atlan tag is removed from this entity.</div>
+</li>
+<li class="blockList">
+<h4>restrictPropagationThroughHierarchy</h4>
+<pre>java.lang.Boolean restrictPropagationThroughHierarchy</pre>
+<div class="block">Whether to prevent this Atlan tag from propagating through hierarchy (true) or allow it to
+ propagate through hierarchy (false).</div>
 </li>
 <li class="blockList">
 <h4>restrictPropagationThroughLineage</h4>
