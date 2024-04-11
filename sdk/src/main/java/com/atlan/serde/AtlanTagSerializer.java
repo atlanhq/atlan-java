@@ -84,7 +84,8 @@ public class AtlanTagSerializer extends StdSerializer<AtlanTag> {
                     gen, "removePropagationsOnEntityDelete", cls.getRemovePropagationsOnEntityDelete());
             JacksonUtils.serializeBoolean(
                     gen, "restrictPropagationThroughLineage", cls.getRestrictPropagationThroughLineage());
-            JacksonUtils.serializeBoolean(gen, "propagationOnlyThroughLineage", cls.getPropagationOnlyThroughLineage());
+            JacksonUtils.serializeBoolean(
+                    gen, "restrictPropagationThroughHierarchy", cls.getRestrictPropagationThroughHierarchy());
             if (!sourceAttachmentsAttrId.isEmpty()) {
                 gen.writeObjectFieldStart("attributes");
                 JacksonUtils.serializeObject(gen, sourceAttachmentsAttrId, cls.getSourceTagAttachments());

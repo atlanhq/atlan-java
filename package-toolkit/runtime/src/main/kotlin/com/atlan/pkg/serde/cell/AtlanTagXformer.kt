@@ -30,6 +30,7 @@ object AtlanTagXformer {
         FULL,
         NONE,
         HIERARCHY_ONLY,
+        LINEAGE_ONLY,
         PROPAGATED,
     }
 
@@ -43,6 +44,7 @@ object AtlanTagXformer {
             return when (val propagation = encodePropagation(atlanTag)) {
                 PropagationType.FULL -> "${atlanTag.typeName}$attributes$SETTINGS_DELIMITER${propagation.name}"
                 PropagationType.HIERARCHY_ONLY -> "${atlanTag.typeName}$attributes$SETTINGS_DELIMITER${propagation.name}"
+                PropagationType.LINEAGE_ONLY -> "${atlanTag.typeName}$attributes$SETTINGS_DELIMITER${propagation.name}"
                 else -> "${atlanTag.typeName}$attributes"
             }
         } else {
@@ -66,8 +68,9 @@ object AtlanTagXformer {
     private fun encodePropagation(atlanTag: AtlanTag): PropagationType {
         return if (atlanTag.propagate) {
             return when {
-                atlanTag.removePropagationsOnEntityDelete && !atlanTag.restrictPropagationThroughLineage -> PropagationType.FULL
-                atlanTag.removePropagationsOnEntityDelete && atlanTag.restrictPropagationThroughLineage -> PropagationType.HIERARCHY_ONLY
+                !atlanTag.restrictPropagationThroughLineage && !atlanTag.restrictPropagationThroughHierarchy -> PropagationType.FULL
+                atlanTag.restrictPropagationThroughLineage && !atlanTag.restrictPropagationThroughHierarchy -> PropagationType.HIERARCHY_ONLY
+                !atlanTag.restrictPropagationThroughLineage && atlanTag.restrictPropagationThroughHierarchy -> PropagationType.LINEAGE_ONLY
                 else -> PropagationType.NONE
             }
         } else {
@@ -84,11 +87,21 @@ object AtlanTagXformer {
                 PropagationType.FULL.name ->
                     builder.propagate(
                         true,
-                    ).removePropagationsOnEntityDelete(true).restrictPropagationThroughLineage(false)
+                    ).removePropagationsOnEntityDelete(true)
+                        .restrictPropagationThroughLineage(false)
+                        .restrictPropagationThroughHierarchy(false)
                 PropagationType.HIERARCHY_ONLY.name ->
                     builder.propagate(
                         true,
-                    ).removePropagationsOnEntityDelete(true).restrictPropagationThroughLineage(true)
+                    ).removePropagationsOnEntityDelete(true)
+                        .restrictPropagationThroughLineage(true)
+                        .restrictPropagationThroughHierarchy(false)
+                PropagationType.LINEAGE_ONLY.name ->
+                    builder.propagate(
+                        true,
+                    ).removePropagationsOnEntityDelete(true)
+                        .restrictPropagationThroughLineage(false)
+                        .restrictPropagationThroughHierarchy(true)
                 else -> builder.propagate(false)
             }
         } else {
