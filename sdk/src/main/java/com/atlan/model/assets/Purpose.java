@@ -9,6 +9,7 @@ import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.core.AssetFilter;
+import com.atlan.model.enums.AssetFilterGroup;
 import com.atlan.model.enums.AssetSidebarTab;
 import com.atlan.model.enums.AuthPolicyCategory;
 import com.atlan.model.enums.AuthPolicyResourceCategory;
@@ -65,7 +66,7 @@ public class Purpose extends Asset implements IPurpose, IAccessControl, IAsset, 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<String> denyAssetFilters;
+    SortedSet<AssetFilterGroup> denyAssetFilters;
 
     /** TBC */
     @Attribute

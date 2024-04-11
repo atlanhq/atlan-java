@@ -37,6 +37,18 @@ public interface IDataProduct {
 
     public static final String TYPE_NAME = "DataProduct";
 
+    /** Criticality of this data product. */
+    KeywordField DAAP_CRITICALITY = new KeywordField("daapCriticality", "daapCriticality");
+
+    /** Information sensitivity of this data product. */
+    KeywordField DAAP_SENSITIVITY = new KeywordField("daapSensitivity", "daapSensitivity");
+
+    /** Status of this data product. */
+    KeywordField DAAP_STATUS = new KeywordField("daapStatus", "daapStatus");
+
+    /** Visibility of a data product. */
+    KeywordField DAAP_VISIBILITY = new KeywordField("daapVisibility", "daapVisibility");
+
     /** Data domain in which this data product exists. */
     RelationField DATA_DOMAIN = new RelationField("dataDomain");
 
@@ -308,6 +320,18 @@ public interface IDataProduct {
 
     /** Type of the connector through which this asset is accessible. */
     AtlanConnectorType getConnectorType();
+
+    /** Criticality of this data product. */
+    DataProductCriticality getDaapCriticality();
+
+    /** Information sensitivity of this data product. */
+    DataProductSensitivity getDaapSensitivity();
+
+    /** Status of this data product. */
+    DataProductStatus getDaapStatus();
+
+    /** Visibility of a data product. */
+    DataProductVisibility getDaapVisibility();
 
     /** Data domain in which this data product exists. */
     IDataDomain getDataDomain();

@@ -5,7 +5,7 @@ package com.atlan.model.enums;
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 
-public enum AssetFilter implements AtlanEnum {
+public enum AssetFilterGroup implements AtlanEnum {
     TERMS("terms"),
     OWNERS("owners"),
     USAGE("usage"),
@@ -17,12 +17,12 @@ public enum AssetFilter implements AtlanEnum {
     @Getter(onMethod_ = {@Override})
     private final String value;
 
-    AssetFilter(String value) {
+    AssetFilterGroup(String value) {
         this.value = value;
     }
 
-    public static AssetFilter fromValue(String value) {
-        for (AssetFilter b : AssetFilter.values()) {
+    public static AssetFilterGroup fromValue(String value) {
+        for (AssetFilterGroup b : AssetFilterGroup.values()) {
             if (b.value.equals(value)) {
                 return b;
             }
