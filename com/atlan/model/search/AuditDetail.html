@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":6};
+var data = {"i0":6,"i1":6,"i2":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -153,10 +153,24 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
+<td class="colFirst"><code>com.fasterxml.jackson.databind.JsonNode</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRawJsonObject()">getRawJsonObject</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Returns the raw JsonNode exposed by the Jackson library.</div>
+</td>
+</tr>
+<tr id="i1" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTypeName()">getTypeName</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns the type of the instance details in the audit entry.</div>
+</td>
+</tr>
+<tr id="i2" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setRawJsonObject(com.fasterxml.jackson.databind.JsonNode)">setRawJsonObject</a></span>&#8203;(com.fasterxml.jackson.databind.JsonNode&nbsp;rawJsonObject)</code></th>
+<td class="colLast">
+<div class="block">Sets the raw response from the API.</div>
 </td>
 </tr>
 </table>
@@ -179,11 +193,46 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <a id="getTypeName()">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>getTypeName</h4>
 <pre class="methodSignature">java.lang.String&nbsp;getTypeName()</pre>
 <div class="block">Returns the type of the instance details in the audit entry.</div>
+</li>
+</ul>
+<a id="getRawJsonObject()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getRawJsonObject</h4>
+<pre class="methodSignature">com.fasterxml.jackson.databind.JsonNode&nbsp;getRawJsonObject()</pre>
+<div class="block">Returns the raw JsonNode exposed by the Jackson library. This can be used to access properties
+ that are not directly exposed by Atlan's Java library.
+
+ <p>Note: You should always prefer using the standard property accessors whenever possible.
+ Because this method exposes Jackson's underlying API, it is not considered fully stable. Atlan's
+ Java library might move off Jackson in the future and this method would be removed or change
+ significantly.</p></div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The raw JsonNode.</dd>
+</dl>
+</li>
+</ul>
+<a id="setRawJsonObject(com.fasterxml.jackson.databind.JsonNode)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>setRawJsonObject</h4>
+<pre class="methodSignature">void&nbsp;setRawJsonObject&#8203;(com.fasterxml.jackson.databind.JsonNode&nbsp;rawJsonObject)</pre>
+<div class="block">Sets the raw response from the API. This is used to expose properties that are not
+ directly exposed by Atlan's Java library.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>rawJsonObject</code> - the raw JSON from the API response</dd>
+</dl>
 </li>
 </ul>
 </li>
