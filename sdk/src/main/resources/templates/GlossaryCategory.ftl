@@ -279,6 +279,7 @@
                 .where(GlossaryCategory.ANCHOR.eq(glossaryQualifiedName))
                 .includeOnResults(GlossaryCategory.ANCHOR)
                 ._includesOnResults(attributes == null ? Collections.emptyList() : attributes)
+                .includeOnRelations(Asset.NAME)
                 .stream()
                 .filter(a -> a instanceof GlossaryCategory)
                 .forEach(c -> results.add((GlossaryCategory) c));
@@ -307,6 +308,7 @@
                 .where(GlossaryCategory.ANCHOR.eq(glossaryQualifiedName))
                 .includeOnResults(GlossaryCategory.ANCHOR)
                 .includesOnResults(attributes == null ? Collections.emptyList() : attributes)
+                .includeOnRelations(Asset.NAME)
                 .stream()
                 .filter(a -> a instanceof GlossaryCategory)
                 .forEach(c -> results.add((GlossaryCategory) c));
