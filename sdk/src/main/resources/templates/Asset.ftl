@@ -77,6 +77,12 @@
     @Singular
     final SortedSet<String> pendingTasks;
 
+    /** {@inheritDoc} */
+    @Override
+    public String getQualifiedName() {
+        return qualifiedName != null ? qualifiedName : (getUniqueAttributes() != null ? getUniqueAttributes().getQualifiedName() : null);
+    }
+
     /**
      * Retrieve the value of the custom metadata attribute from this asset.
      * Note: returns null in all cases where the custom metadata does not exist, is not available on this asset,
