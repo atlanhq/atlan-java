@@ -4,10 +4,10 @@ amends "pkl:Project"
 import "BuildInfo.pkl"
 
 package {
-  name = "package-config"
-  baseUri = "package://developer.atlan.com/toolkits/\(name)"
+  name = "config"
+  baseUri = "package://developer.atlan.com/toolkits/custom-package"
   version = BuildInfo.VERSION
-  packageZipUrl = "https://developer.atlan.com/toolkits/\(name)/\(name)@\(version).zip"
+  packageZipUrl = "https://developer.atlan.com/toolkits/custom-package/\(name)@\(version).zip"
   sourceCode = "https://github.com/atlanhq/atlan-java"
   sourceCodeUrlScheme = "\(sourceCode)/blob/v\(version)/pkl%{path}#L%{line}-%{endLine}"
 }

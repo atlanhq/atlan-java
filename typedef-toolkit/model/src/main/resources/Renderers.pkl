@@ -15,7 +15,7 @@ abstract class TypeScriptRenderer extends ValueRenderer {
 
   /// Render the given value as TypeScript code, only if it can be rendered by this renderer;
   /// otherwise throw an error.
-  function renderDocument(value: Any) =
+  function renderDocument(_) =
     if (model == null)
       throw("""
         Invalid input: model has not been passed through to the renderer.
@@ -25,7 +25,7 @@ abstract class TypeScriptRenderer extends ValueRenderer {
 }
 
 /// Renders the TypeScript code for index.ts file
-class Index extends TypeScriptRenderer {
+class IndexL3 extends TypeScriptRenderer {
   model = super.model
   fixed supertype = model.shared.supertypeDefinition
   fixed supertypeCamel = supertype.name.decapitalize()
@@ -37,6 +37,7 @@ class Index extends TypeScriptRenderer {
       import \(supertype.name) from '\(ui?.image?.svgUrl)'
       import \(supertype.name)SVG from '\(ui?.image?.svgPath)'
       import { sourceInterface } from '~/types/sourceConfigs/source.interface'
+      import { hierarchyFilters } from './hierarchyFilters'
       import { assetTypeList } from './assetTypes'
       import { getAssetTypes } from './getAssetTypes'
 
@@ -46,24 +47,7 @@ class Index extends TypeScriptRenderer {
           image: \(supertype.name),
           svg: \(supertype.name)SVG,
           isQueryableSource: \(ui?.isQueryableSource ?? false),
-          hierarchyFilters: [
-      """
-      when (ui?.hierarchyFilters != null) {
-        for (filter in ui.hierarchyFilters!!) {
-            """
-                    {
-                        typeName: '\(filter.typeName)',
-                        name: '\(filter.label)',
-                        parent: '\(filter.parent)',
-                        attribute: '\(filter.attribute)',
-                        level: \(filter.level),
-                        image: '\(filter.image)',
-                    },
-            """
-        }
-      }
-      """
-          ],
+          hierarchyFilters: hierarchyFilters,
           assetTypes: assetTypeList,
           sourceLevelCommonProjections: [],
           getAssetTypes,
@@ -75,7 +59,7 @@ class Index extends TypeScriptRenderer {
 }
 
 /// Renders the TypeScript code for assetTypes.ts file
-class AssetType extends TypeScriptRenderer {
+class AssetTypes extends TypeScriptRenderer {
   model = super.model
   fixed supertype = model.shared.supertypeDefinition
   fixed assetTypes = model.customEntityDefs
@@ -95,30 +79,47 @@ class AssetType extends TypeScriptRenderer {
       export const assetTypeList: assetTypeInterface[] = [
       """
           for (idx, assetType in assetTypes) {
-            let (typeName = assetType.name)
-            // TODO: introspect relationships to include from assetType
-              """
-                  {
-                      id: '\(typeName)',
-                      label: '\(assetType?.label ?? typeName)',
-                      fullLabel: '\(assetType?.label ?? typeName)',
-                      image: 'CubeGray',
-                      source: 'essbase',
-                      categoryType: '\(supertype.name)',
-                      relationships: ['cubeDimensions'],
-                      priorityOrder: \(idx + 1),
-                      projections: {
-                          required: \(typeName)MinimalAttributes,
-                          additional: \(typeName)AdditionalAttributes,
-                      },
-                  },
-              """
+            let (children: String = childRelationshipNames(assetType, model.customTypes!!))
+            """
+                {
+                    id: '\(assetType.name)',
+                    label: '\(assetType?.label ?? assetType.name)',
+                    fullLabel: '\(assetType?.label ?? assetType.name)',
+                    image: '\(assetType?.image ?? assetType.name)',
+                    source: '\(supertype.name)',
+                    categoryType: '\(supertype.name)',
+                    relationships: [\(children)],
+                    priorityOrder: \(idx + 1),
+                    projections: {
+                        required: \(assetType.name)MinimalAttributes,
+                        additional: \(assetType.name)AdditionalAttributes,
+                    },
+                },
+            """
           }
       """
       ]
       """
         }.join("\n")
 }
+
+/// Returns the names of the child relationships from fromAsset to toAsset.
+///
+/// - toAsset - the asset type that is the child in the relationship
+/// - fromAsset - the asset type that is the parent in the relationship
+const function childRelationshipNames(fromAsset: Model.EntityDef, customTypes: Mapping<String, Model.CustomAssetType>): String =
+  new Listing {
+    for (_, type in customTypes) {
+      for (relnDef in type.relationships ?? List()) {
+        when (relnDef.endDef1.type == fromAsset.name && relnDef.endDef1.isContainer) {
+          "'\(relnDef.endDef1.name)'"
+        }
+        when (relnDef.endDef2.type == fromAsset.name && relnDef.endDef2.isContainer) {
+          "'\(relnDef.endDef2.name)'"
+        }
+      }
+    }
+  }.join(", ")
 
 /// Renders the TypeScript code for each attributes/..ts file detailing attribute projections
 /// for each asset type
@@ -146,16 +147,14 @@ class Attributes extends TypeScriptRenderer {
         // attributes for asset cards, preview
         export const \(entityDef.name)MinimalAttributes = [
         """
-      when (entityDef.attributeDefs != null) {
-        for (attributeDef in entityDef.attributeDefs!!) {
-          // TODO: Need to include supertype attributes necesary at this asset type's level
-          //  - so this shouldn't really be driven by the presence of a label at all (parentQualifiedName
-          //    will also be necessary attributes, even though they won't appear labeled in the UI)
-          when (attributeDef.label != null || attributeDef.labelPlural != null) {
-              """
-                  '\(attributeDef.name)',
-              """
-          }
+      for (attributeDef in entityDef.attributeDefs ?? List()) {
+        // TODO: Need to include supertype attributes necesary at this asset type's level
+        //  - so this shouldn't really be driven by the presence of a label at all (parentQualifiedName
+        //    will also be necessary attributes, even though they won't appear labeled in the UI)
+        when (attributeDef.label != null || attributeDef.labelPlural != null) {
+            """
+                '\(attributeDef.name)',
+            """
         }
       }
         """
@@ -164,14 +163,12 @@ class Attributes extends TypeScriptRenderer {
         // additional attributes, for asset profile
         export const \(entityDef.name)AdditionalAttributes = [
         """
-      when (entityDef.attributeDefs != null) {
-        for (attributeDef in entityDef.attributeDefs!!) {
-          when (attributeDef.label == null && attributeDef.labelPlural == null) {
-            // TODO: output only those attributeDefs that are additional, and still needed
-              """
-                  '\(attributeDef.name)',
-              """
-          }
+      for (attributeDef in entityDef.attributeDefs ?? List()) {
+        when (attributeDef.label == null && attributeDef.labelPlural == null) {
+          // TODO: output only those attributeDefs that are additional, and still needed
+            """
+                '\(attributeDef.name)',
+            """
         }
       }
         """
@@ -210,6 +207,68 @@ class Attributes extends TypeScriptRenderer {
 
 }
 
+/// Renders the TypeScript code for methods.ts file.
+class Methods extends TypeScriptRenderer {
+  model = super.model
+  fixed typeNames: List<String> = model.customEntityDefs.fold(List(), (acc: List<String>, entityDef) -> acc.add("'\(entityDef.name)'"))
+  fixed superTypeName: String = model.shared.supertypeDefinition.name
+
+  function renderTypeScript(): String =
+    new Listing {
+        """
+        import {
+            IndexSearchResponseEntity,
+            GetChildrenEntityNameIncludingSelf,
+        } from '~/api/metastore/types'
+
+        export default function use\(superTypeName)Info<
+            T extends IndexSearchResponseEntity = IndexSearchResponseEntity,
+        >() {
+        """
+      for (_, details in model.shared.ui.breadcrumb ?? Map()) {
+          """
+              const \(details.q) = (asset: T) => asset?.attributes?.\(details.q) ?? ''
+              const \(details.n) = (asset: T) => asset?.attributes?.\(details.n) ?? ''
+          """
+      }
+        """
+
+            function is\(superTypeName)Asset(
+                asset?: IndexSearchResponseEntity<
+                    GetChildrenEntityNameIncludingSelf<'Asset'>
+                >
+            ): asset is IndexSearchResponseEntity<
+                \(typeNames.join(" | "))
+            > {
+                return (
+        """
+      new Listing {
+        for (typeName in typeNames) {
+            """
+                        asset?.typeName === \(typeName)
+            """
+        }
+      }.join(" ||\n")
+        """
+                )
+            }
+
+            return {
+        """
+      for (_, details in model.shared.ui.breadcrumb ?? Map()) {
+          """
+                  \(details.q),
+                  \(details.n),
+          """
+      }
+        """
+                is\(superTypeName)Asset,
+            }
+        }
+        """
+    }.join("\n")
+}
+
 // TODO: add renderer for getAssetTypes.ts file
 /// Renders the TypeScript code for the getAssetTypes.ts file.
 class GetAssetTypes extends TypeScriptRenderer {
@@ -235,12 +294,10 @@ class GetAssetTypes extends TypeScriptRenderer {
         } from '~/constant/source/utils'
         import { AtomicBlocks, CompositeBlocks, SummaryBlocks } from '@/source'
         """
-      when (model.customTypes != null) {
-        for (assetType, _ in model.customTypes!!) {
-            """
-            import { \(assetType)MinimalAttributes } from '../attributes/\(assetType.decapitalize())'
-            """
-        }
+      for (assetType, _ in model.customTypes ?? Map()) {
+          """
+          import { \(assetType)MinimalAttributes } from '../attributes/\(assetType.decapitalize())'
+          """
       }
         """
 
@@ -256,4 +313,237 @@ class GetAssetTypes extends TypeScriptRenderer {
         """
     }.join("\n")
 
+}
+
+/// Renders the TypeScript code for the hierarchyFilters.ts file.
+class HierarchyFilters extends TypeScriptRenderer {
+  model = super.model
+
+  function renderTypeScript(): String =
+    new Listing {
+        """
+        import { hierarchyFiltersInterface } from '~/types/sourceConfigs/hierarchyFilters.interface'
+
+        export const hierarchyFilters: hierarchyFiltersInterface[] = [
+        """
+      for (filter in model.shared.ui?.hierarchyFilters ?? List()) {
+          """
+                    {
+                        typeName: '\(filter.typeName)',
+                        name: '\(filter.label)',
+                        parent: '\(filter.parent)',
+                        attribute: '\(filter.attribute)',
+                        level: \(filter.level),
+                        image: '\(filter.image)',
+                    },
+          """
+      }
+        """
+        ]
+        """
+    }.join("\n")
+
+}
+
+/// Renders the TypeScript code for the index.ts file at the root of the super-type-specific UI area.
+class IndexL2 extends TypeScriptRenderer {
+  model = super.model
+
+  function renderTypeScript(): String =
+    new Listing {
+        """
+        export * as \(model.shared.supertypeDefinition.name.decapitalize()) from './common'
+        """
+    }.join("\n")
+}
+
+/// Renders the TypeScript snippet for the index.ts file at the root of the entire source-config UI area.
+class IndexL1 extends TypeScriptRenderer {
+  model = super.model
+
+  function renderTypeScript(): String =
+    new Listing {
+        """
+        export * as \(model.shared.supertypeDefinition.name.decapitalize()) from './\(model.shared.supertypeDefinition.name.decapitalize())'
+        """
+    }.join("\n")
+}
+
+/// Renders the JSON snippet for en.json English-language localizations.
+class Localizations extends TypeScriptRenderer {
+  model = super.model
+
+  function renderTypeScript(): String =
+    new Listing {
+      for (entityDef: Model.EntityDef in model.customEntityDefs ?? List()) {
+        """
+        "\(entityDef.label ?? entityDef.name)": "\(entityDef.label ?? entityDef.name)"
+        """
+        for (attrDef: Model.AttributeDef in entityDef.attributeDefs) {
+          """
+          "\(attrDef.label ?? attrDef.name)": "\(attrDef.label ?? attrDef.name)"
+          """
+          when (attrDef.labelPlural != null) {
+            """
+            "\(attrDef.labelPlural)": "\(attrDef.labelPlural)"
+            """
+          }
+        }
+      }
+      for (_, filter in model.shared.ui.filters ?? Map()) {
+        """
+        "\(filter.label)": "\(filter.label)"
+        """
+      }
+      // TODO: there could be duplicates across the labels above, so we should deduplicate them
+      // TODO: others once we've implemented the getAssetTypes class
+    }.join("\n")
+}
+
+/// Renders the TypeScript snippet for iconMap.ts to include any custom icons.
+class IconMap extends TypeScriptRenderer {
+  model = super.model
+
+  function renderTypeScript(): String =
+    new Listing {
+      // TODO: iterate through images to output icon entries
+        /*"""
+        // Towards the top, with other similar lines...
+        import \(iconName) from '~/assets/images/icons/\(svgName)'
+
+        // Skip towards the bottom...
+        export default { // This line should already exist
+            \(iconName),
+            ...
+        } // This line should already exist
+        """*/
+    }.join("\n")
+}
+
+/// Renders the Vue code for parentAssetInline.vue to include any breadcrumbs for parent paths.
+class ParentAssetInline extends TypeScriptRenderer {
+  model = super.model
+  fixed superTypeName: String = model.shared.supertypeDefinition.name
+
+  function renderTypeScript(): String =
+    new Listing {
+      """
+      <template>
+          <div class="flex items-center gap-x-1.5 gap-y-1">
+          <!-- *** COPY / PASTE START *** -->
+      """
+      for (typeName, details in model.shared.ui.breadcrumb ?? Map()) {
+        let (type = model.customTypes?.getOrNull(typeName)!!)
+          """
+              <AssetItemFilterTooltip
+                  v-if="is\(superTypeName)Asset(asset) && \(details.n)(asset) && !isCompact"
+                  type="\(typeName)"
+                  icon="\(type.image)"
+                  :title="\(details.n)(asset)"
+                  :hideSearch="page !== 'assets'"
+                  :showDrawerIcon="page !== 'assets'"
+                  :isButtonHidden="isAssetPartial"
+                  :showCaret="
+                      !page.startsWith('excel') && !page.startsWith('gsheets')
+                  "
+                  @guidToFetch="
+                      handleOpenDrawer('\(details.q)', \(details.q)(asset))
+                  "
+              />
+          """
+      }
+      """
+          <!-- *** END COPY / PASTE *** -->
+          </div>
+      </template>
+
+      <script lang="ts">
+          import { computed, defineComponent, PropType, toRefs } from 'vue'
+          import { useI18n } from 'vue-i18n'
+          import { Tooltip as AntTooltip } from 'ant-design-vue'
+
+          // Composables
+          import useAssetInfo from '~/composables/discovery/useAssetInfo'
+          import { getPluralString } from '~/utils/number'
+          <!-- *** COPY / PASTE START *** -->
+          import use\(superTypeName)Info from '~/constant/source/\(superTypeName.decapitalize())/methods'
+          <!-- *** END COPY / PASTE *** -->
+
+          // Types
+          import { assetInterface } from '~/types/assets/asset.interface'
+
+          // Components
+          import AssetItemFilterTooltip from '~/components/common/assets/misc/assetItemFilterTooltip.vue'
+          import AtlanIcon from '@/common/icon/atlanIcon.vue'
+
+          export default defineComponent({
+              components: { AssetItemFilterTooltip, AtlanIcon, AntTooltip },
+              props: {
+                  asset: {
+                      type: Object as PropType<assetInterface>,
+                      required: true,
+                  },
+                  preference: {
+                      type: Object,
+                      required: false,
+                      default() {
+                          return {}
+                      },
+                  },
+                  page: {
+                      type: String,
+                      required: false,
+                      default: 'notAssets',
+                  },
+                  isCompact: {
+                      type: Boolean,
+                      default: false,
+                      required: false,
+                  },
+              },
+              emits: ['guidToFetch', 'handleBrowseAsset', 'qfToFetch'],
+              setup(props, { emit }) {
+                  const { t } = useI18n()
+                  const {
+                      ...
+                  } = useAssetInfo()
+                  <!-- *** COPY / PASTE START *** -->
+                  const {
+      """
+      for (_, details in model.shared.ui.breadcrumb ?? Map()) {
+          """
+                          \(details.q),
+                          \(details.n),
+          """
+      }
+      """
+                      is\(superTypeName)Asset,
+                  } = use\(superTypeName)Info()
+                  <!-- *** END COPY / PASTE *** -->
+
+                  const { page } = toRefs(props)
+
+                  // Computed Methods
+                  ...
+
+                  return {
+                      ...
+                      t,
+                      <!-- *** COPY / PASTE START *** -->
+      """
+      for (_, details in model.shared.ui.breadcrumb ?? Map()) {
+          """
+                          \(details.q),
+                          \(details.n),
+          """
+      }
+      """
+                      is\(superTypeName)Asset,
+                      <!-- *** END COPY / PASTE *** -->
+                  }
+              },
+          })
+      </script>
+      """
+    }.join("\n")
 }

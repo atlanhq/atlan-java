@@ -134,6 +134,9 @@ class CustomAssetType {
   /// Label for this type as it should appear in the UI.
   hidden label: String?
 
+  /// Image to represent the custom asset in the UI.
+  hidden image: String?
+
   /// (Optional) [Enumerations][EnumDef] that are specific to the custom asset.
   hidden enums: Mapping<String, EnumDef>?
 
@@ -166,14 +169,12 @@ open class TypeDef {
   typeVersion: String = "1.0"
 
   /// Generated list of [attributes][AttributeDef] for the type definition.
-  fixed attributeDefs: List<AttributeDef>? = attributes?.fold(List(), (acc: List<AttributeDef>, key, value) ->
-    let (attrDef =
-      (value) {
-        name = key // Set the name from the map's key
-      }
-    )
-      acc.add(attrDef)
-  )
+  fixed attributeDefs: List<AttributeDef> = if (attributes != null)
+    attributes.fold(List(), (acc: List<AttributeDef>, key, value) ->
+      let (attrDef =
+        (value) { name = key } // Set the name from the map's key
+      ) acc.add(attrDef)
+    ) else List()
 
   /// (Optional) Map (by unique name) of [attributes][AttributeDef] for the type definition.
   /// Remember that attributes from any supertypes will automatically be inherited and should not be listed again here
@@ -194,6 +195,9 @@ class EntityDef extends TypeDef {
 
   /// Label for this type as it should appear in the UI.
   hidden label: String?
+
+  /// Image to represent the asset in the UI.
+  hidden image: String?
 
   /// Category is set automatically and fixed (should not be changed).
   fixed category = "ENTITY"
@@ -503,6 +507,10 @@ class AreaUI {
   /// Whether the source can be queried (true) or not (false - default).
   isQueryableSource: Boolean = false
 
+  /// Hierarchy (top-down) that defines any breadcrumb for the model area, keyed by typeName of each type of
+  /// asset to include in the breadcrumb hierarchy.
+  breadcrumb: Mapping<String, Breadcrumb>?
+
   /// (Generated) Details about the overall image for the model area.
   fixed image: ImageDetails = new ImageDetails {
     svg = svgName
@@ -517,6 +525,14 @@ class AreaUI {
     })
     acc.add(fullFilter)
   )
+}
+
+class Breadcrumb {
+  /// Name of the attribute containing the qualifiedName for this level of the breadcrumb trail.
+  q: String
+
+  /// Name of the attribute containing the simple (not qualified) name for this level of the breadcrumb trail.
+  n: String
 }
 
 /// Details for the overall image to use for this model area.
@@ -595,20 +611,47 @@ local class TypeDefFile {
 /// Set up multiple outputs for the module, one for each custom type definition.
 /// - `m` the model to generate outputs for
 const function getOutputs(m): Mapping<String, FileOutput> = new Mapping {
-  ["frontend/src/constant/source/\(m.shared.supertypeDefinition.name.decapitalize())/common/index.ts"] = new FileOutput {
-    renderer = new Renderers.Index { model = m }
-  }
   ["models/\(m.shared.supertypeDefinition.name).json"] = getSupertypeJson(m)
+  when (m.customTypes != null) {
+    for (typeName, asset in m.customTypes) {
+      ["models/\(m.shared.supertypeDefinition.name)/\(typeName).json"] = getCustomTypeJson(typeName, asset, m.shared.supertypeDefinition.name)
+    }
+  }
+  ["frontend/src/constant/source/\(m.shared.supertypeDefinition.name.decapitalize())/common/index.ts"] = new FileOutput {
+    renderer = new Renderers.IndexL3 { model = m }
+  }
+  ["frontend/src/constant/source/\(m.shared.supertypeDefinition.name.decapitalize())/index.ts"] = new FileOutput {
+    renderer = new Renderers.IndexL2 { model = m }
+  }
+  ["frontend/src/constant/source/\(m.shared.supertypeDefinition.name.decapitalize())/methods.ts"] = new FileOutput {
+    renderer = new Renderers.Methods { model = m }
+  }
+  ["frontend/src/constant/source/index.ts-snippet"] = new FileOutput {
+    renderer = new Renderers.IndexL1 { model = m }
+  }
+  ["frontend/src/components/common/widgets/summary/types/parentAssetInline.vue-snippet"] = new FileOutput {
+    renderer = new Renderers.ParentAssetInline { model = m }
+  }
+  ["frontend/src/locales/en.json-snippet"] = new FileOutput {
+    renderer = new Renderers.Localizations { model = m }
+  }
+  // TODO: render placeholders for each of the custom icons?
+  // ["frontend/src/assets/images/icons/...svg"]
+  ["frontend/src/components/common/icon/iconMap.ts-snippet"] = new FileOutput {
+    renderer = new Renderers.IconMap { model = m }
+  }
   ["frontend/src/api/schemas/metastore/atlas/entityDefs/\(m.shared.supertypeDefinition.name).json"] = getSupertypeJson(m)
   when (m.customTypes != null) {
     ["frontend/src/constant/source/\(m.shared.supertypeDefinition.name.decapitalize())/common/assetTypes.ts"] = new FileOutput {
-      renderer = new Renderers.AssetType { model = m }
+      renderer = new Renderers.AssetTypes { model = m }
     }
     ["frontend/src/constant/source/\(m.shared.supertypeDefinition.name.decapitalize())/common/getAssetTypes.ts"] = new FileOutput {
       renderer = new Renderers.GetAssetTypes { model = m }
     }
+    ["frontend/src/constant/source/\(m.shared.supertypeDefinition.name.decapitalize())/common/hierarchyFilters.ts"] = new FileOutput {
+      renderer = new Renderers.HierarchyFilters { model = m }
+    }
     for (typeName, asset in m.customTypes) {
-      ["models/\(m.shared.supertypeDefinition.name)/\(typeName).json"] = getCustomTypeJson(typeName, asset, m.shared.supertypeDefinition.name)
       ["frontend/src/api/schemas/metastore/atlas/entityDefs/\(m.shared.supertypeDefinition.name)/\(typeName).json"] = getCustomTypeJson(typeName, asset, m.shared.supertypeDefinition.name)
       ["frontend/src/constant/source/\(m.shared.supertypeDefinition.name.decapitalize())/attributes/\(typeName.decapitalize()).ts"] = new FileOutput {
         renderer = new Renderers.Attributes {
@@ -651,6 +694,8 @@ const function getCustomTypeJson(typeName: String, asset: CustomAssetType, super
 
 const function customTypeToEntityDef(customType: CustomAssetType, typeName: String, supertypeName: String): EntityDef = new EntityDef {
   name = typeName
+  label = customType.label
+  image = customType.image
   description = customType.description
   superTypes = new {
     supertypeName
