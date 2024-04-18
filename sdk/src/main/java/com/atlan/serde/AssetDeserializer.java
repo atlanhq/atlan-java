@@ -219,7 +219,7 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
             try {
                 cm = client.getCustomMetadataCache().getCustomMetadataFromSearchResult(leftOverAttributes);
             } catch (AtlanException e) {
-                throw new IOException("Unable to deserialize custom metadata from search result.", e);
+                throw new IOException(e);
             }
         }
 
@@ -229,7 +229,7 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
             try {
                 cm = client.getCustomMetadataCache().getCustomMetadataFromBusinessAttributes(businessAttributes);
             } catch (AtlanException e) {
-                throw new IOException("Unable to deserialize custom metadata.", e);
+                throw new IOException(e);
             }
         }
 
@@ -243,7 +243,7 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
                     clsNames.add(name);
                 }
             } catch (AtlanException e) {
-                throw new IOException("Unable to deserialize Atlan tag name.", e);
+                throw new IOException(e);
             }
         }
 

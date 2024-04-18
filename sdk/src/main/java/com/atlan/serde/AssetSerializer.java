@@ -193,7 +193,7 @@ public class AssetSerializer extends StdSerializer<Asset> {
             }
 
         } catch (AtlanException e) {
-            throw new IOException("Unable to retrieve the available custom metadata in Atlan.", e);
+            throw new IOException(e);
         }
 
         if (!attributes.isEmpty()) {
