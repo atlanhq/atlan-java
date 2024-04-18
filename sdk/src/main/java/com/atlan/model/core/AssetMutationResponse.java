@@ -156,13 +156,17 @@ public class AssetMutationResponse extends ApiResource {
             return null;
         }
         String guid = input.getGuid();
-        if (StringUtils.isUUID(guid)) {
-            return guid;
-        } else if (guidAssignments != null) {
-            return guidAssignments.getOrDefault(guid, null);
-        } else {
-            return null;
+        String assigned = null;
+        if (guidAssignments != null) {
+            // If the provided GUID was either a placeholder, or a real UUID but not
+            // a matching UUID, it will be present in the guidAssignments
+            assigned = guidAssignments.getOrDefault(guid, null);
         }
+        if (assigned == null && StringUtils.isUUID(guid)) {
+            // If not in the map, but a valid UUID, then the GUID was used as-is
+            assigned = guid;
+        }
+        return assigned;
     }
 
     /**
