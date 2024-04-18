@@ -458,6 +458,22 @@ public class AirflowDag extends Asset implements IAirflowDag, IAirflow, ICatalog
     }
 
     /**
+     * Builds the minimal object necessary to create an AirflowDag.
+     *
+     * @param name of the AirflowDag
+     * @param connectionQualifiedName unique name of the connection through which the DAG is accessible
+     * @return the minimal object necessary to create the AirflowDag, as a builder
+     */
+    public static AirflowDagBuilder<?, ?> creator(String name, String connectionQualifiedName) {
+        return AirflowDag._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(connectionQualifiedName + "/" + name)
+                .name(name)
+                .connectionQualifiedName(connectionQualifiedName)
+                .connectorType(Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName));
+    }
+
+    /**
      * Builds the minimal object necessary to update a AirflowDag.
      *
      * @param qualifiedName of the AirflowDag
@@ -489,7 +505,7 @@ public class AirflowDag extends Asset implements IAirflowDag, IAirflow, ICatalog
         }
         if (!missing.isEmpty()) {
             throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "AirflowDag", String.join(",", missing));
+                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, TYPE_NAME, String.join(",", missing));
         }
         return updater(this.getQualifiedName(), this.getName());
     }
