@@ -72,7 +72,8 @@ typealias DataType = "string"|"long"|"float"|"boolean"|"date"|"enum"|"struct"
 /// - `keyword` allows exact matches and "starts-with" searches
 /// - `text` allows full-text searches (tokenization of the value)
 /// - `both` allows both exact matches and full-text searches
-typealias IndexType = "default"|"keyword"|"text"|"both"
+/// - `truncate` truncates what can actually be searched (use for very long strings)
+typealias IndexType = "default"|"keyword"|"text"|"both"|"truncate"
 
 /// Type of tag propagation through the relationship.
 /// - `NONE` tags will not be propagated through this relationship
@@ -310,9 +311,12 @@ open class AttributeDef {
 
   /// Details to set a textual index in Elastic -- this is managed automatically through setting
   /// `indexAs`.
-  fixed indexTypeESConfig: Mapping<String, String>? = if (indexAs == "text" || indexAs == "both") new Mapping {
-    ["analyzer"] = "atlan_text_analyzer"
-  } else null
+  fixed indexTypeESConfig: Mapping<String, String>? =
+    if (indexAs == "text" || indexAs == "both") new Mapping {
+      ["analyzer"] = "atlan_text_analyzer"
+    } else if (indexAs == "truncate") new Mapping {
+      ["analyzer"] = "truncate_analyzer"
+    } else null
 
   /// Details to set a textual index in Elastic -- this is managed automatically through setting
   /// `indexAs`.
