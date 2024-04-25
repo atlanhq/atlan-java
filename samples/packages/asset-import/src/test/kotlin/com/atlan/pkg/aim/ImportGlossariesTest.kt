@@ -21,6 +21,7 @@ import com.atlan.model.fields.AtlanField
 import com.atlan.model.typedefs.AtlanTagDef
 import com.atlan.net.RequestOptions
 import com.atlan.pkg.PackageTest
+import com.atlan.pkg.serde.cell.GlossaryCategoryXformer
 import org.testng.Assert.assertNull
 import org.testng.Assert.assertTrue
 import org.testng.ITestContext
@@ -456,6 +457,21 @@ class ImportGlossariesTest : PackageTest() {
     @Test
     fun errorFreeLog() {
         validateErrorFreeLog()
+    }
+
+    @Test
+    fun transformer() {
+        val g1 = Glossary.findByName(glossary1)!!
+        val request = GlossaryCategory.select()
+            .where(GlossaryCategory.ANCHOR.eq(g1.qualifiedName))
+            .includesOnResults(categoryAttrs)
+            .includeOnRelations(Glossary.NAME)
+            .toRequest()
+        val response = retrySearchUntil(request, 4)
+        val g1categories = response.assets
+        assertEquals(4, g1categories.size)
+        val x = GlossaryCategoryXformer.encode(g1categories[0])
+        assertEquals("abc", x)
     }
 
     @AfterClass(alwaysRun = true)

@@ -1,0 +1,4 @@
+qualifiedName,typeName,name,parentDomain,displayName,description,userDescription,ownerUsers,ownerGroups
+,DataDomain,{{DATADOMAIN1}},,,,Test domain for asset import,ernest,admins
+,DataDomain,{{DATADOMAIN2}},{{DATADOMAIN1}},,,Test subdomain,ernest,admins
+,DataDomain,{{DATADOMAIN3}},{{DATADOMAIN1}}@{{DATADOMAIN2}},,,Test sub sub domain,ernest,admins
