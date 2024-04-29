@@ -80,7 +80,7 @@ class EnrichmentMigratorArchivedTest : PackageTest() {
             ),
         )
         EnrichmentMigrator.main(arrayOf(testDirectory))
-        Thread.sleep(5000)
+        Thread.sleep(10000)
     }
 
     @Test
@@ -90,11 +90,17 @@ class EnrichmentMigratorArchivedTest : PackageTest() {
             .where(Table.QUALIFIED_NAME.startsWith(targetConnection.qualifiedName))
             .includeOnResults(Table.STATUS)
             .toRequest()
-        val response = retrySearchUntil(request, 1)
-        val list = response.stream().toList()
-        assertTrue(list.isNotEmpty())
-        assertEquals(1, list.size)
-        assertEquals(AtlanStatus.ACTIVE, list[0].status)
+        var count = 0
+        var status = AtlanStatus.DELETED
+        while (status == AtlanStatus.DELETED && count < Atlan.getDefaultClient().maxNetworkRetries) {
+            val response = retrySearchUntil(request, 1)
+            val list = response.stream().toList()
+            assertTrue(list.isNotEmpty())
+            assertEquals(1, list.size)
+            status = list[0].status
+            count++
+        }
+        assertEquals(AtlanStatus.ACTIVE, status)
     }
 
     @Test
