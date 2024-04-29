@@ -64,7 +64,7 @@ class AssetExporter(
 
     private fun getAssetsToExtract(): FluentSearch.FluentSearchBuilder<*, *> {
         val builder = Atlan.getDefaultClient().assets
-            .select()
+            .select(ctx.includeArchived)
             .where(Asset.QUALIFIED_NAME.startsWith(ctx.assetsQualifiedNamePrefix))
             .whereNot(FluentSearch.superTypes(listOf(IAccessControl.TYPE_NAME, INamespace.TYPE_NAME)))
             .whereNot(FluentSearch.assetTypes(listOf(AuthPolicy.TYPE_NAME, Procedure.TYPE_NAME, AtlanQuery.TYPE_NAME)))

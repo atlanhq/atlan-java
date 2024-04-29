@@ -15,6 +15,7 @@ data class AssetExportBasicCfg(
     @JsonProperty("qn_prefix") val qnPrefix: String? = null,
     @JsonProperty("include_description") val includeDescription: Boolean? = null,
     @JsonProperty("include_glossaries") val includeGlossaries: Boolean? = null,
+    @JsonProperty("include_archived") val includeArchived: Boolean? = null,
     @JsonProperty("asset_types_to_include") val assetTypesToInclude: String? = null,
     @JsonProperty("attributes_to_include") val attributesToInclude: String? = null,
     @JsonProperty("email_addresses") val emailAddresses: String? = null,
