@@ -66,6 +66,12 @@ uiConfig {
           helpText = "Whether glossaries (and their terms and categories) should be exported, too."
           width = 4
         }
+        ["include_archived"] = new BooleanInput {
+          title = "Include archived?"
+          required = false
+          helpText = "Whether to include archived assets in the export (Yes) or only active assets (No)."
+          width = 4
+        }
         ["asset_types_to_include"] = new TextInput {
           title = "Asset types to include"
           required = false

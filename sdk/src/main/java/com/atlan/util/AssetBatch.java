@@ -423,12 +423,12 @@ public class AssetBatch {
                         _batch.stream().map(Asset::getQualifiedName).collect(Collectors.toList());
                 FluentSearch.FluentSearchBuilder<?, ?> builder;
                 if (caseInsensitive) {
-                    builder = client.assets.select().minSomes(1);
+                    builder = client.assets.select(true).minSomes(1);
                     for (String qn : qualifiedNames) {
                         builder.whereSome(Asset.QUALIFIED_NAME.eq(qn, true));
                     }
                 } else {
-                    builder = client.assets.select().where(Asset.QUALIFIED_NAME.in(qualifiedNames));
+                    builder = client.assets.select(true).where(Asset.QUALIFIED_NAME.in(qualifiedNames));
                 }
                 builder.pageSize(maxSize).stream().forEach(asset -> {
                     AssetIdentity assetId = new AssetIdentity(asset.getTypeName(), asset.getQualifiedName(), true);

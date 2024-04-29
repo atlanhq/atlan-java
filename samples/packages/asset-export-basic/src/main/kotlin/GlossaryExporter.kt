@@ -46,7 +46,7 @@ class GlossaryExporter(
             val start = System.currentTimeMillis()
 
             // Retrieve all glossaries up-front
-            val glossaries = Glossary.select()
+            val glossaries = Glossary.select(ctx.includeArchived)
                 .pageSize(batchSize)
                 .includesOnResults(getAttributesToExtract())
                 .includesOnRelations(getRelatedAttributesToExtract())
@@ -72,7 +72,7 @@ class GlossaryExporter(
             }
 
             // And finally extract all the terms
-            val assets = GlossaryTerm.select()
+            val assets = GlossaryTerm.select(ctx.includeArchived)
                 .pageSize(batchSize)
                 .includesOnResults(getAttributesToExtract())
                 .includesOnRelations(getRelatedAttributesToExtract())

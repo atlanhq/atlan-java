@@ -53,6 +53,12 @@ uiConfig {
           width = 4
           multiSelect = true
         }
+        ["include_archived"] = new BooleanInput {
+          title = "Include archived?"
+          required = false
+          helpText = "Whether to include archived assets from the source (Yes) or only active assets (No)."
+          width = 4
+        }
         ["config_type"] = new Radio {
           title = "Options"
           required = true

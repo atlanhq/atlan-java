@@ -24,6 +24,7 @@ object EnrichmentMigrator {
         val sourceConnectionQN = Utils.getOrDefault(config.sourceConnection, listOf(""))[0]
         val targetConnectionQNs = Utils.getOrDefault(config.targetConnection, listOf(""))
         val sourcePrefix = Utils.getOrDefault(config.sourceQnPrefix, "")
+        val includeArchived = Utils.getOrDefault(config.includeArchived, false)
         val sourceQN = if (sourcePrefix.isBlank()) sourceConnectionQN else "$sourceConnectionQN/$sourcePrefix"
 
         // 1. Extract the enriched metadata
@@ -31,6 +32,7 @@ object EnrichmentMigrator {
             exportScope = "ENRICHED_ONLY",
             qnPrefix = sourceQN,
             includeGlossaries = false,
+            includeArchived = includeArchived,
         )
         Exporter.export(extractConfig, outputDirectory)
         val extractFile = "$outputDirectory${File.separator}asset-export.csv"
@@ -42,6 +44,9 @@ object EnrichmentMigrator {
         val includeCM = Utils.getOrDefault(config.cmLimitType, "EXCLUDE") == "INCLUDE"
         val start = mutableListOf(Asset.QUALIFIED_NAME.atlanFieldName, Asset.TYPE_NAME.atlanFieldName)
         val defaultAttrsToExtract = AssetExporter.getAttributesToExtract(true)
+        if (includeArchived) {
+            start.add(Asset.STATUS.atlanFieldName)
+        }
         if (includeOOTB) {
             start.add(Asset.NAME.atlanFieldName)
             attributeLimits.forEach {
@@ -79,6 +84,7 @@ object EnrichmentMigrator {
             val ctx = MigratorContext(
                 sourceConnectionQN = sourceConnectionQN,
                 targetConnectionQN = targetConnectionQN,
+                includeArchived = includeArchived,
             )
             val targetConnectionFilename = targetConnectionQN.replace("/", "_")
             val transformedFile = "$outputDirectory${File.separator}CSA_EM_transformed_$targetConnectionFilename.csv"
@@ -106,5 +112,6 @@ object EnrichmentMigrator {
     data class MigratorContext(
         val sourceConnectionQN: String,
         val targetConnectionQN: String,
+        val includeArchived: Boolean,
     )
 }
