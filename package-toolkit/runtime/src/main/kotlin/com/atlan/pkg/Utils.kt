@@ -384,12 +384,14 @@ object Utils {
             builder.withAttachment(it.name, FileDataSource(it))
         }
         val email = builder.buildEmail()
-        MailerBuilder.withSMTPServer(
+        val mailer = MailerBuilder.withSMTPServer(
             getEnvVar("SMTP_HOST", "smtp.sendgrid.net"),
             getEnvVar("SMTP_PORT", "587").toInt(),
             getEnvVar("SMTP_USER"),
             getEnvVar("SMTP_PASS"),
-        ).buildMailer().sendMail(email)
+        ).buildMailer()
+        mailer.sendMail(email).get()
+        mailer.shutdownConnectionPool().get()
     }
 
     /**
