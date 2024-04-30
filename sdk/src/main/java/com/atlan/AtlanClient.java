@@ -151,6 +151,9 @@ public class AtlanClient {
     /** Endpoint with operations to manage background tasks. */
     public final TaskEndpoint tasks;
 
+    /** Endpoint with operations to manage SSO configuration. */
+    public final SSOEndpoint sso;
+
     /** Client-aware asset deserializer. */
     @Getter
     private final AssetDeserializer assetDeserializer;
@@ -200,6 +203,7 @@ public class AtlanClient {
         searchLog = new SearchLogEndpoint(this);
         credentials = new CredentialsEndpoint(this);
         tasks = new TaskEndpoint(this);
+        sso = new SSOEndpoint(this);
         atlanTagCache = new AtlanTagCache(typeDefs);
         customMetadataCache = new CustomMetadataCache(typeDefs);
         enumCache = new EnumCache(typeDefs);
