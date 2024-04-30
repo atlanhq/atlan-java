@@ -101,6 +101,26 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <section>
 <h2 title="Package">Package&nbsp;com.atlan.api</h2>
 <ul class="blockList">
+<li class="blockList"><a id="com.atlan.api.AbstractEndpoint.RawResponse">
+<!--   -->
+</a>
+<h3>Class <a href="com/atlan/api/AbstractEndpoint.RawResponse.html" title="class in com.atlan.api">com.atlan.api.AbstractEndpoint.RawResponse</a> extends <a href="com/atlan/net/ApiResource.html" title="class in com.atlan.net">ApiResource</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockListLast">
+<h4>payload</h4>
+<pre>java.lang.String payload</pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="blockList"><a id="com.atlan.api.AssetEndpoint.AtlanTagList">
 <!--   -->
 </a>
@@ -3081,6 +3101,98 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockListLast">
 <h4>sessions</h4>
 <pre>java.util.List&lt;<a href="com/atlan/model/admin/Session.html" title="class in com.atlan.model.admin">Session</a>&gt; sessions</pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList"><a id="com.atlan.model.admin.SSOMapping">
+<!--   -->
+</a>
+<h3>Class <a href="com/atlan/model/admin/SSOMapping.html" title="class in com.atlan.model.admin">com.atlan.model.admin.SSOMapping</a> extends <a href="com/atlan/net/ApiResource.html" title="class in com.atlan.net">ApiResource</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>config</h4>
+<pre><a href="com/atlan/model/admin/SSOMapping.Config.html" title="class in com.atlan.model.admin">SSOMapping.Config</a> config</pre>
+<div class="block">Configuration for the mapping.</div>
+</li>
+<li class="blockList">
+<h4>id</h4>
+<pre>java.lang.String id</pre>
+<div class="block">Unique identifier (GUID) of the mapping.</div>
+</li>
+<li class="blockList">
+<h4>identityProviderAlias</h4>
+<pre>java.lang.String identityProviderAlias</pre>
+<div class="block">Alias for the identity provider, typically a value from AtlanSSO enumeration.</div>
+</li>
+<li class="blockList">
+<h4>identityProviderMapper</h4>
+<pre>java.lang.String identityProviderMapper</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockListLast">
+<h4>name</h4>
+<pre>java.lang.String name</pre>
+<div class="block">Name of the mapping.</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList"><a id="com.atlan.model.admin.SSOMapping.Config">
+<!--   -->
+</a>
+<h3>Class <a href="com/atlan/model/admin/SSOMapping.Config.html" title="class in com.atlan.model.admin">com.atlan.model.admin.SSOMapping.Config</a> extends <a href="com/atlan/model/core/AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>attributeFriendlyName</h4>
+<pre>java.lang.String attributeFriendlyName</pre>
+<div class="block">Human-readable name of the attribute containing the mapping.</div>
+</li>
+<li class="blockList">
+<h4>attributeName</h4>
+<pre>java.lang.String attributeName</pre>
+<div class="block">Name of the SSO attribute containing the mapping.</div>
+</li>
+<li class="blockList">
+<h4>attributes</h4>
+<pre>java.lang.String attributes</pre>
+<div class="block">Any additional attributes for the mapping.</div>
+</li>
+<li class="blockList">
+<h4>attributeValue</h4>
+<pre>java.lang.String attributeValue</pre>
+<div class="block">Value of the SSO attribute which should map to the group.</div>
+</li>
+<li class="blockList">
+<h4>attributeValuesRegex</h4>
+<pre>java.lang.String attributeValuesRegex</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>groupName</h4>
+<pre>java.lang.String groupName</pre>
+<div class="block">Internal name of the mapped group in Atlan.</div>
+</li>
+<li class="blockListLast">
+<h4>syncMode</h4>
+<pre>java.lang.String syncMode</pre>
+<div class="block">Mechanism used for the mapping.</div>
 </li>
 </ul>
 </li>

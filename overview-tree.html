@@ -156,6 +156,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="circle">com.atlan.api.<a href="com/atlan/api/LogsEndpoint.html" title="class in com.atlan.api"><span class="typeNameLink">LogsEndpoint</span></a></li>
 <li class="circle">com.atlan.api.<a href="com/atlan/api/RequestsEndpoint.html" title="class in com.atlan.api"><span class="typeNameLink">RequestsEndpoint</span></a></li>
 <li class="circle">com.atlan.api.<a href="com/atlan/api/RolesEndpoint.html" title="class in com.atlan.api"><span class="typeNameLink">RolesEndpoint</span></a></li>
+<li class="circle">com.atlan.api.<a href="com/atlan/api/SSOEndpoint.html" title="class in com.atlan.api"><span class="typeNameLink">SSOEndpoint</span></a></li>
 <li class="circle">com.atlan.api.<a href="com/atlan/api/UsersEndpoint.html" title="class in com.atlan.api"><span class="typeNameLink">UsersEndpoint</span></a></li>
 <li class="circle">com.atlan.api.<a href="com/atlan/api/WorkflowsEndpoint.html" title="class in com.atlan.api"><span class="typeNameLink">WorkflowsEndpoint</span></a>
 <ul>
@@ -329,6 +330,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </li>
 <li class="circle">com.atlan.net.<a href="com/atlan/net/ApiResource.html" title="class in com.atlan.net"><span class="typeNameLink">ApiResource</span></a> (implements com.atlan.model.core.<a href="com/atlan/model/core/AtlanResponseInterface.html" title="interface in com.atlan.model.core">AtlanResponseInterface</a>)
 <ul>
+<li class="circle">com.atlan.api.<a href="com/atlan/api/AbstractEndpoint.RawResponse.html" title="class in com.atlan.api"><span class="typeNameLink">AbstractEndpoint.RawResponse</span></a></li>
 <li class="circle">com.atlan.model.admin.<a href="com/atlan/model/admin/AdminEventResponse.html" title="class in com.atlan.model.admin"><span class="typeNameLink">AdminEventResponse</span></a> (implements java.lang.Iterable&lt;T&gt;)</li>
 <li class="circle">com.atlan.model.admin.<a href="com/atlan/model/admin/ApiTokenResponse.html" title="class in com.atlan.model.admin"><span class="typeNameLink">ApiTokenResponse</span></a></li>
 <li class="circle">com.atlan.model.core.<a href="com/atlan/model/core/AssetMutationResponse.html" title="class in com.atlan.model.core"><span class="typeNameLink">AssetMutationResponse</span></a>
@@ -354,6 +356,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="circle">com.atlan.model.admin.<a href="com/atlan/model/admin/RoleResponse.html" title="class in com.atlan.model.admin"><span class="typeNameLink">RoleResponse</span></a></li>
 <li class="circle">com.atlan.model.search.<a href="com/atlan/model/search/SearchLogResponse.html" title="class in com.atlan.model.search"><span class="typeNameLink">SearchLogResponse</span></a> (implements java.lang.Iterable&lt;T&gt;)</li>
 <li class="circle">com.atlan.model.admin.<a href="com/atlan/model/admin/SessionResponse.html" title="class in com.atlan.model.admin"><span class="typeNameLink">SessionResponse</span></a></li>
+<li class="circle">com.atlan.model.admin.<a href="com/atlan/model/admin/SSOMapping.html" title="class in com.atlan.model.admin"><span class="typeNameLink">SSOMapping</span></a></li>
 <li class="circle">com.atlan.model.tasks.<a href="com/atlan/model/tasks/TaskSearchResponse.html" title="class in com.atlan.model.tasks"><span class="typeNameLink">TaskSearchResponse</span></a> (implements java.lang.Iterable&lt;T&gt;)</li>
 <li class="circle">com.atlan.model.typedefs.<a href="com/atlan/model/typedefs/TypeDefResponse.html" title="class in com.atlan.model.typedefs"><span class="typeNameLink">TypeDefResponse</span></a></li>
 <li class="circle">com.atlan.model.admin.<a href="com/atlan/model/admin/UserMinimalResponse.html" title="class in com.atlan.model.admin"><span class="typeNameLink">UserMinimalResponse</span></a></li>
@@ -678,6 +681,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="circle">com.atlan.model.search.<a href="com/atlan/model/search/SearchLogRequest.html" title="class in com.atlan.model.search"><span class="typeNameLink">SearchLogRequest</span></a></li>
 <li class="circle">com.atlan.model.search.<a href="com/atlan/model/search/SearchParameters.html" title="class in com.atlan.model.search"><span class="typeNameLink">SearchParameters</span></a></li>
 <li class="circle">com.atlan.model.admin.<a href="com/atlan/model/admin/Session.html" title="class in com.atlan.model.admin"><span class="typeNameLink">Session</span></a></li>
+<li class="circle">com.atlan.model.admin.<a href="com/atlan/model/admin/SSOMapping.Config.html" title="class in com.atlan.model.admin"><span class="typeNameLink">SSOMapping.Config</span></a></li>
 <li class="circle">com.atlan.model.tasks.<a href="com/atlan/model/tasks/TaskSearchRequest.html" title="class in com.atlan.model.tasks"><span class="typeNameLink">TaskSearchRequest</span></a></li>
 <li class="circle">com.atlan.model.typedefs.<a href="com/atlan/model/typedefs/TypeDef.html" title="class in com.atlan.model.typedefs"><span class="typeNameLink">TypeDef</span></a>
 <ul>
@@ -1193,6 +1197,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="circle">com.atlan.serde.<a href="com/atlan/serde/Serde.html" title="class in com.atlan.serde"><span class="typeNameLink">Serde</span></a></li>
 <li class="circle">com.atlan.generators.<a href="com/atlan/generators/SerdeGenerator.html" title="class in com.atlan.generators"><span class="typeNameLink">SerdeGenerator</span></a></li>
 <li class="circle">com.atlan.generators.lombok.<a href="com/atlan/generators/lombok/Singulars.html" title="class in com.atlan.generators.lombok"><span class="typeNameLink">Singulars</span></a></li>
+<li class="circle">com.atlan.model.admin.<a href="com/atlan/model/admin/SSOMapping.Config.ConfigBuilder.html" title="class in com.atlan.model.admin"><span class="typeNameLink">SSOMapping.Config.ConfigBuilder</span></a></li>
+<li class="circle">com.atlan.model.admin.<a href="com/atlan/model/admin/SSOMapping.SSOMappingBuilder.html" title="class in com.atlan.model.admin"><span class="typeNameLink">SSOMapping.SSOMappingBuilder</span></a></li>
 <li class="circle">com.atlan.util.<a href="com/atlan/util/Stopwatch.html" title="class in com.atlan.util"><span class="typeNameLink">Stopwatch</span></a></li>
 <li class="circle">com.atlan.util.<a href="com/atlan/util/StreamUtils.html" title="class in com.atlan.util"><span class="typeNameLink">StreamUtils</span></a></li>
 <li class="circle">com.atlan.util.<a href="com/atlan/util/StringUtils.html" title="class in com.atlan.util"><span class="typeNameLink">StringUtils</span></a></li>
@@ -1566,6 +1572,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="circle">com.atlan.model.enums.<a href="com/atlan/model/enums/AtlanPackageType.html" title="enum in com.atlan.model.enums"><span class="typeNameLink">AtlanPackageType</span></a> (implements com.atlan.model.enums.<a href="com/atlan/model/enums/AtlanEnum.html" title="interface in com.atlan.model.enums">AtlanEnum</a>)</li>
 <li class="circle">com.atlan.model.enums.<a href="com/atlan/model/enums/AtlanRequestStatus.html" title="enum in com.atlan.model.enums"><span class="typeNameLink">AtlanRequestStatus</span></a> (implements com.atlan.model.enums.<a href="com/atlan/model/enums/AtlanEnum.html" title="interface in com.atlan.model.enums">AtlanEnum</a>)</li>
 <li class="circle">com.atlan.model.enums.<a href="com/atlan/model/enums/AtlanRequestType.html" title="enum in com.atlan.model.enums"><span class="typeNameLink">AtlanRequestType</span></a> (implements com.atlan.model.enums.<a href="com/atlan/model/enums/AtlanEnum.html" title="interface in com.atlan.model.enums">AtlanEnum</a>)</li>
+<li class="circle">com.atlan.model.enums.<a href="com/atlan/model/enums/AtlanSSO.html" title="enum in com.atlan.model.enums"><span class="typeNameLink">AtlanSSO</span></a> (implements com.atlan.model.enums.<a href="com/atlan/model/enums/AtlanEnum.html" title="interface in com.atlan.model.enums">AtlanEnum</a>)</li>
 <li class="circle">com.atlan.model.enums.<a href="com/atlan/model/enums/AtlanStatus.html" title="enum in com.atlan.model.enums"><span class="typeNameLink">AtlanStatus</span></a> (implements com.atlan.model.enums.<a href="com/atlan/model/enums/AtlanEnum.html" title="interface in com.atlan.model.enums">AtlanEnum</a>)</li>
 <li class="circle">com.atlan.model.enums.<a href="com/atlan/model/enums/AtlanTagColor.html" title="enum in com.atlan.model.enums"><span class="typeNameLink">AtlanTagColor</span></a> (implements com.atlan.model.enums.<a href="com/atlan/model/enums/AtlanEnum.html" title="interface in com.atlan.model.enums">AtlanEnum</a>)</li>
 <li class="circle">com.atlan.model.enums.<a href="com/atlan/model/enums/AtlanTaskStatus.html" title="enum in com.atlan.model.enums"><span class="typeNameLink">AtlanTaskStatus</span></a> (implements com.atlan.model.enums.<a href="com/atlan/model/enums/AtlanEnum.html" title="interface in com.atlan.model.enums">AtlanEnum</a>)</li>
