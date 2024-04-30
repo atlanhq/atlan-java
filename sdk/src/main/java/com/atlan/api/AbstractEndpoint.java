@@ -4,6 +4,14 @@ package com.atlan.api;
 
 import com.atlan.AtlanClient;
 import com.atlan.exception.ApiConnectionException;
+import com.atlan.net.ApiResource;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import java.io.IOException;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
 public abstract class AbstractEndpoint {
     protected final AtlanClient client;
@@ -22,5 +30,40 @@ public abstract class AbstractEndpoint {
      */
     protected String getBaseUrl(String service, String prefix) throws ApiConnectionException {
         return client.isInternal() ? service : client.getBaseUrl() + prefix;
+    }
+
+    /**
+     * Utility class for introspecting raw responses from API endpoints.
+     */
+    @Getter
+    @JsonDeserialize(using = RawResponseDeserializer.class)
+    @EqualsAndHashCode(callSuper = false)
+    public static final class RawResponse extends ApiResource {
+        private static final long serialVersionUID = 2L;
+        String payload;
+
+        public RawResponse(String payload) {
+            this.payload = payload;
+        }
+    }
+
+    private static class RawResponseDeserializer extends StdDeserializer<RawResponse> {
+        private static final long serialVersionUID = 2L;
+
+        public RawResponseDeserializer() {
+            this(RawResponse.class);
+        }
+
+        public RawResponseDeserializer(Class<?> t) {
+            super(t);
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public RawResponse deserialize(JsonParser parser, DeserializationContext context) throws IOException {
+            return new RawResponse(parser.getCodec().readTree(parser).toString());
+        }
     }
 }

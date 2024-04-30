@@ -252,6 +252,11 @@ public enum ErrorCode implements ExceptionMessageSet {
             "ATLAN-JAVA-400-045",
             "No ID was provided when attempting to retrieve or update the object.",
             "You must provide an ID when attempting to retrieve or update an object."),
+    SSO_GROUP_MAPPING_ALREADY_EXISTS(
+            400,
+            "ATLAN-JAVA-400-046",
+            "SSO group mapping already exists between {0} (Atlan group) and {1} (SSO group).",
+            "Use updateGroupMapping() to update the existing group mapping."),
 
     AUTHENTICATION_PASSTHROUGH(
             401,
