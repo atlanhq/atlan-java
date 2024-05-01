@@ -7,11 +7,14 @@ import com.atlan.model.assets.Asset
 import com.atlan.model.assets.DataDomain
 import com.atlan.model.assets.IDataMesh
 import com.atlan.model.fields.AtlanField
+import com.atlan.pkg.cache.AssetCache
 import com.atlan.pkg.cache.DataDomainCache
 import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.RowDeserializer
 import com.atlan.pkg.serde.cell.DataDomainXformer.DATA_DOMAIN_DELIMITER
+import com.atlan.pkg.serde.csv.CSVImporter
 import com.atlan.pkg.serde.csv.ImportResults
+import mu.KLogger
 import mu.KotlinLogging
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.math.max
@@ -37,14 +40,14 @@ class DomainImporter(
     private val updateOnly: Boolean,
     private val batchSize: Int,
     private val fieldSeparator: Char,
-) : DDPImporter(
-    filename = filename,
-    attrsToOverwrite = attrsToOverwrite,
+): CSVImporter(
+    filename,
+    logger = KotlinLogging.logger {},
+    typeNameFilter = DataDomain.TYPE_NAME,
+    attrsToOverwrite,
     updateOnly = updateOnly,
     batchSize = batchSize,
-    cache = DataDomainCache,
-    typeNameFilter = DataDomain.TYPE_NAME,
-    logger = KotlinLogging.logger {},
+    trackBatches = true, // Always track batches for GTC importers, to ensure cache is managed
     fieldSeparator = fieldSeparator,
 ) {
     private var levelToProcess = 0
@@ -52,6 +55,21 @@ class DomainImporter(
     // Maximum depth of any domain in the CSV -- will be updated on first pass through the CSV
     // file by includeRow() method
     private val maxCategoryDepth = AtomicInteger(1)
+
+    private val cache = DataDomainCache
+
+    /** {@inheritDoc} */
+    override fun cacheCreated(list: List<Asset>) {
+        // Cache any assets that were created by processing
+        list.forEach { asset ->
+            // We must look up the asset and then cache to ensure we have the necessary identity
+            // characteristics and status
+            val result = cache.lookupAssetByGuid(asset.guid, maxRetries = 5)
+            result?.let {
+                cache.addByGuid(asset.guid, result)
+            } ?: throw IllegalStateException("Result of searching by GUID for ${asset.guid} was null.")
+        }
+    }
 
     /** {@inheritDoc} */
     override fun import(columnsToSkip: Set<String>): ImportResults? {
@@ -122,8 +140,13 @@ class DomainImporter(
         return builder
     }
 
-    /** {@inheritDoc} */
-    override fun getCacheId(deserializer: RowDeserializer): String {
+    /**
+     * Calculate the cache identity for this row of the CSV, based purely on the information in the CSV.
+     *
+     * @param deserializer a row of deserialized values
+     * @return the cache identity for the row
+     */
+    fun getCacheId(deserializer: RowDeserializer): String {
         val domainName = deserializer.getValue(DataDomain.NAME.atlanFieldName)
         val parentDomain = deserializer.getValue(DataDomain.PARENT_DOMAIN.atlanFieldName)?.let { it as DataDomain }
         return if (parentDomain != null ) {

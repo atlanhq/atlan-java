@@ -91,7 +91,7 @@ class ImportDataDomainTest : PackageTest() {
     @BeforeClass
     fun beforeClass() {
         prepFile()
-        createTags()
+//        createTags()
         setup(
             AssetImportCfg(
                 assetsFile = null,
@@ -173,7 +173,7 @@ class ImportDataDomainTest : PackageTest() {
         removeDomain(dataDomain2)
         removeDomain(dataDomain3)
         removeProduct(dataProduct1)
-        removeTag(tag1)
+//        removeTag(tag1)
 //        removeTag(tag2)
         teardown(context.failedTests.size() > 0)
     }
