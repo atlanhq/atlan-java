@@ -74,8 +74,8 @@ class ImportDataDomainTest : PackageTest() {
         DataDomain.CERTIFICATE_STATUS,
         DataDomain.CERTIFICATE_STATUS_MESSAGE,
         DataDomain.PARENT_DOMAIN,
-        DataDomain.PARENT_DOMAIN_QUALIFIED_NAME ,
-        DataDomain.SUPER_DOMAIN_QUALIFIED_NAME
+        DataDomain.PARENT_DOMAIN_QUALIFIED_NAME,
+        DataDomain.SUPER_DOMAIN_QUALIFIED_NAME,
     )
 
     private val dataProductAttrs: List<AtlanField> = listOf(
@@ -85,7 +85,7 @@ class ImportDataDomainTest : PackageTest() {
         DataProduct.OWNER_GROUPS,
         DataProduct.CERTIFICATE_STATUS,
         DataProduct.CERTIFICATE_STATUS_MESSAGE,
-        DataProduct.DATA_DOMAIN
+        DataProduct.DATA_DOMAIN,
     )
 
     @BeforeClass
@@ -165,7 +165,6 @@ class ImportDataDomainTest : PackageTest() {
         val response = retrySearchUntil(request, 1)
         return response.stream().filter { a: Asset? -> a is DataProduct }.findFirst().get() as DataProduct
     }
-
 
     @AfterClass(alwaysRun = true)
     fun afterClass(context: ITestContext) {

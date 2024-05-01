@@ -3,17 +3,13 @@ package com.atlan.pkg.aim
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.DataDomain
 import com.atlan.model.assets.DataProduct
-import com.atlan.model.assets.Glossary
 import com.atlan.model.fields.AtlanField
-import com.atlan.pkg.cache.DataDomainCache
-import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.RowDeserializer
-import com.atlan.pkg.serde.cell.DataDomainXformer.DATA_DOMAIN_DELIMITER
 import com.atlan.pkg.serde.csv.CSVImporter
 import com.atlan.pkg.serde.csv.ImportResults
 import mu.KotlinLogging
 
-class ProductImporter (
+class ProductImporter(
     private val filename: String,
     private val attrsToOverwrite: List<AtlanField>,
     private val updateOnly: Boolean,
@@ -44,5 +40,4 @@ class ProductImporter (
         val dataProductAssetsDSL = deserializer.getValue(DataProduct.DATA_PRODUCT_ASSETS_DSL.atlanFieldName) as String
         return DataProduct.creator(name, dataDomain?.qualifiedName, dataProductAssetsDSL)
     }
-
 }

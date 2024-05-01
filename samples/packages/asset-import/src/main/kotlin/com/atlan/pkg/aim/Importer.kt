@@ -69,7 +69,7 @@ object Importer {
         val assetsFileProvided = (assetsUpload && assetsFilename.isNotBlank()) || (!assetsUpload && assetsS3ObjectKey.isNotBlank())
         val glossariesFileProvided = (glossariesUpload && glossariesFilename.isNotBlank()) || (!glossariesUpload && glossariesS3ObjectKey.isNotBlank())
         val dataProductsFileProvided = (dataProductsUpload && dataProductsFilename.isNotBlank()) || (!dataProductsUpload && dataProductsS3ObjectKey.isNotBlank())
-        if (!assetsFileProvided && !glossariesFileProvided  && !dataProductsFileProvided) {
+        if (!assetsFileProvided && !glossariesFileProvided && !dataProductsFileProvided) {
             logger.error { "No input file was provided for either data products, glossaries or assets." }
             exitProcess(1)
         }

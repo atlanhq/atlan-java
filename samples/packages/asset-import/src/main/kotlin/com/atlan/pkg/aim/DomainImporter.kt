@@ -2,23 +2,18 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.aim
 
-import kotlin.text.Regex
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.DataDomain
-import com.atlan.model.assets.IDataMesh
 import com.atlan.model.fields.AtlanField
-import com.atlan.pkg.cache.AssetCache
 import com.atlan.pkg.cache.DataDomainCache
-import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.RowDeserializer
 import com.atlan.pkg.serde.cell.DataDomainXformer.DATA_DOMAIN_DELIMITER
 import com.atlan.pkg.serde.csv.CSVImporter
 import com.atlan.pkg.serde.csv.ImportResults
-import mu.KLogger
 import mu.KotlinLogging
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.math.max
-
+import kotlin.text.Regex
 
 /**
  * Import data domains (only) into Atlan from a provided CSV file.
@@ -40,7 +35,7 @@ class DomainImporter(
     private val updateOnly: Boolean,
     private val batchSize: Int,
     private val fieldSeparator: Char,
-): CSVImporter(
+) : CSVImporter(
     filename,
     logger = KotlinLogging.logger {},
     typeNameFilter = DataDomain.TYPE_NAME,
@@ -149,7 +144,7 @@ class DomainImporter(
     fun getCacheId(deserializer: RowDeserializer): String {
         val domainName = deserializer.getValue(DataDomain.NAME.atlanFieldName)
         val parentDomain = deserializer.getValue(DataDomain.PARENT_DOMAIN.atlanFieldName)?.let { it as DataDomain }
-        return if (parentDomain != null ) {
+        return if (parentDomain != null) {
             val parentIdx = deserializer.heading.indexOf(DataDomain.PARENT_DOMAIN.atlanFieldName)
             val parentPath = deserializer.row[parentIdx]
             "${parentPath}$DATA_DOMAIN_DELIMITER$domainName"
