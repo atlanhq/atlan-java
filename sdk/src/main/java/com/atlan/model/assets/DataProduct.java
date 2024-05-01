@@ -588,17 +588,16 @@ public class DataProduct extends Asset implements IDataProduct, IDataMesh, ICata
     public static DataProductBuilder<?, ?> creator(String name, String domainQualifiedName, String assetSelection) {
         String slug = IDataMesh.generateSlugForName(name);
         return DataProduct._internal()
-            .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
-            .qualifiedName(generateQualifiedName(domainQualifiedName, slug))
-            .name(name)
-            .dataProductStatus(DataProductStatus.ACTIVE)
-            .parentDomainQualifiedName(domainQualifiedName)
-            .superDomainQualifiedName(StringUtils.getSuperDomainQualifiedName(domainQualifiedName))
-            .dataDomain(DataDomain.refByQualifiedName(domainQualifiedName))
-            .dataProductAssetsDSL(assetSelection)
-            .dataProductAssetsPlaybookFilter("{\"condition\":\"AND\",\"isGroupLocked\":false,\"rules\":[]}");
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(generateQualifiedName(domainQualifiedName, slug))
+                .name(name)
+                .dataProductStatus(DataProductStatus.ACTIVE)
+                .parentDomainQualifiedName(domainQualifiedName)
+                .superDomainQualifiedName(StringUtils.getSuperDomainQualifiedName(domainQualifiedName))
+                .dataDomain(DataDomain.refByQualifiedName(domainQualifiedName))
+                .dataProductAssetsDSL(assetSelection)
+                .dataProductAssetsPlaybookFilter("{\"condition\":\"AND\",\"isGroupLocked\":false,\"rules\":[]}");
     }
-
 
     /**
      * Generate a unique DataProduct name.

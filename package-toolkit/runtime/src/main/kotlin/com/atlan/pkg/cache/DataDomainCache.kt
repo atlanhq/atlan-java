@@ -6,7 +6,6 @@ import co.elastic.clients.elasticsearch._types.SortOrder
 import com.atlan.exception.AtlanException
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.DataDomain
-import com.atlan.model.assets.IDataMesh
 import com.atlan.model.fields.AtlanField
 import com.atlan.net.HttpClient
 import com.atlan.pkg.serde.cell.DataDomainXformer

@@ -6,8 +6,8 @@ import com.atlan.Atlan
 import com.atlan.AtlanClient
 import com.atlan.exception.ConflictException
 import com.atlan.model.assets.Asset
-import com.atlan.model.assets.DataDomain
 import com.atlan.model.assets.Connection
+import com.atlan.model.assets.DataDomain
 import com.atlan.model.assets.DataProduct
 import com.atlan.model.assets.Glossary
 import com.atlan.model.assets.GlossaryTerm
@@ -316,7 +316,6 @@ abstract class PackageTest {
                 .map { it.guid }
                 .toList()
             if (domainGuids.isNotEmpty()) client.assets.delete(domainGuids, AtlanDeleteType.HARD)
-
         }
 
         /**
@@ -331,7 +330,6 @@ abstract class PackageTest {
                 .map { it.guid }
                 .toList()
             if (domainGuids.isNotEmpty()) client.assets.delete(domainGuids, AtlanDeleteType.HARD)
-
         }
     }
 
