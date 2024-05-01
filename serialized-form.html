@@ -4783,6 +4783,13 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Details on the handler used for deletion of the asset.</div>
 </li>
 <li class="blockList">
+<h4>depth</h4>
+<pre>java.lang.Integer depth</pre>
+<div class="block">Depth of this asset within lineage.
+ Note: this will only available in assets retrieved via lineage, and will vary even for
+ the same asset depending on the starting point of the lineage requested.</div>
+</li>
+<li class="blockList">
 <h4>description</h4>
 <pre>java.lang.String description</pre>
 <div class="block">Description of this asset, for example as crawled from a source. Fallback for display purposes, if userDescription is empty.</div>
