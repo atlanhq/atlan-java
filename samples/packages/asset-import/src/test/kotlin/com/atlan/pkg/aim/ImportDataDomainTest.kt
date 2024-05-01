@@ -4,6 +4,7 @@ package com.atlan.pkg.aim
 
 import AssetImportCfg
 import com.atlan.Atlan
+import com.atlan.model.assets.Asset
 import com.atlan.model.assets.DataDomain
 import com.atlan.model.assets.DataProduct
 import com.atlan.model.assets.IDataMesh
@@ -90,7 +91,7 @@ class ImportDataDomainTest : PackageTest() {
     @BeforeClass
     fun beforeClass() {
         prepFile()
-//        createTags()
+        createTags()
         setup(
             AssetImportCfg(
                 assetsFile = null,
@@ -148,15 +149,21 @@ class ImportDataDomainTest : PackageTest() {
         assertEquals(d3.qualifiedName, DataDomain.generateQualifiedName(IDataMesh.generateSlugForName(dataDomain3), d2.qualifiedName))
         assertEquals(d3.parentDomainQualifiedName, d2.qualifiedName)
         assertEquals(d1.qualifiedName, d3.superDomainQualifiedName)
-        val level1_products = DataProduct.findByName(dataProduct1, dataProductAttrs)
-        assertNotNull(level1_products)
-        assertEquals(level1_products.size, 1)
-        val p1 = level1_products[0]
+        val p1 = findDataProductWithRetry(dataProduct1)
         assertEquals(dataProduct1, p1.name)
         assertEquals("Test data product", p1.userDescription)
         assertEquals(setOf("ernest"), p1.ownerUsers)
         assertEquals(setOf("admins"), p1.ownerGroups)
         assertEquals(d3.qualifiedName, p1.dataDomain.qualifiedName)
+    }
+
+    private fun findDataProductWithRetry(productName: String): DataProduct {
+        val request = DataProduct.select()
+            .where(DataProduct.NAME.eq(productName))
+            .includesOnResults(dataProductAttrs)
+            .toRequest()
+        val response = retrySearchUntil(request, 1)
+        return response.stream().filter { a: Asset? -> a is DataProduct }.findFirst().get() as DataProduct
     }
 
 
@@ -166,7 +173,7 @@ class ImportDataDomainTest : PackageTest() {
         removeDomain(dataDomain2)
         removeDomain(dataDomain3)
         removeProduct(dataProduct1)
-//        removeTag(tag1)
+        removeTag(tag1)
 //        removeTag(tag2)
         teardown(context.failedTests.size() > 0)
     }
