@@ -5,6 +5,7 @@ package com.atlan.pkg.aim
 import AssetImportCfg
 import com.atlan.Atlan
 import com.atlan.model.assets.DataDomain
+import com.atlan.model.assets.DataProduct
 import com.atlan.model.assets.IDataMesh
 import com.atlan.model.enums.AtlanIcon
 import com.atlan.model.enums.AtlanTagColor
@@ -76,6 +77,16 @@ class ImportDataDomainTest : PackageTest() {
         DataDomain.SUPER_DOMAIN_QUALIFIED_NAME
     )
 
+    private val dataProductAttrs: List<AtlanField> = listOf(
+        DataProduct.NAME,
+        DataProduct.USER_DESCRIPTION,
+        DataProduct.OWNER_USERS,
+        DataProduct.OWNER_GROUPS,
+        DataProduct.CERTIFICATE_STATUS,
+        DataProduct.CERTIFICATE_STATUS_MESSAGE,
+        DataProduct.DATA_DOMAIN
+    )
+
     @BeforeClass
     fun beforeClass() {
         prepFile()
@@ -137,11 +148,15 @@ class ImportDataDomainTest : PackageTest() {
         assertEquals(d3.qualifiedName, DataDomain.generateQualifiedName(IDataMesh.generateSlugForName(dataDomain3), d2.qualifiedName))
         assertEquals(d3.parentDomainQualifiedName, d2.qualifiedName)
         assertEquals(d1.qualifiedName, d3.superDomainQualifiedName)
-        val level1_products = DataDomain.findByName(dataProduct1, dataDomainAttrs)
+        val level1_products = DataProduct.findByName(dataProduct1, dataProductAttrs)
         assertNotNull(level1_products)
         assertEquals(level1_products.size, 1)
         val p1 = level1_products[0]
         assertEquals(dataProduct1, p1.name)
+        assertEquals("Test data product", p1.userDescription)
+        assertEquals(setOf("ernest"), p1.ownerUsers)
+        assertEquals(setOf("admins"), p1.ownerGroups)
+        assertEquals(d3.qualifiedName, p1.dataDomain.qualifiedName)
     }
 
 

@@ -156,7 +156,7 @@ object Importer {
             val productImporter =
                 ProductImporter(dataProductsInput, dataProductAttrsToOverwrite, dataProductsUpdateOnly, dataProductsBatchSize, dataProductsFieldSeparator)
             val resultsProduct = productImporter.import()
-            resultsDomain?.combinedWith(resultsDomain)
+            resultsDomain?.combinedWith(resultsProduct)
         } else {
             null
         }

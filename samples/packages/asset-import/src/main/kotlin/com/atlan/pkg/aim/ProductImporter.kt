@@ -9,6 +9,7 @@ import com.atlan.pkg.cache.DataDomainCache
 import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.RowDeserializer
 import com.atlan.pkg.serde.cell.DataDomainXformer.DATA_DOMAIN_DELIMITER
+import com.atlan.pkg.serde.csv.CSVImporter
 import com.atlan.pkg.serde.csv.ImportResults
 import mu.KotlinLogging
 
@@ -18,12 +19,11 @@ class ProductImporter (
     private val updateOnly: Boolean,
     private val batchSize: Int,
     private val fieldSeparator: Char,
-) : DDPImporter(
+) : CSVImporter(
     filename = filename,
     attrsToOverwrite = attrsToOverwrite,
     updateOnly = updateOnly,
     batchSize = batchSize,
-    cache = DataDomainCache,
     typeNameFilter = DataProduct.TYPE_NAME,
     logger = KotlinLogging.logger {},
     fieldSeparator = fieldSeparator,
@@ -31,7 +31,6 @@ class ProductImporter (
 
     /** {@inheritDoc} */
     override fun import(columnsToSkip: Set<String>): ImportResults? {
-        cache.preload()
         // Also ignore any inbound qualifiedName
         val colsToSkip = columnsToSkip.toMutableSet()
         colsToSkip.add(DataProduct.QUALIFIED_NAME.atlanFieldName)
@@ -46,8 +45,4 @@ class ProductImporter (
         return DataProduct.creator(name, dataDomain?.qualifiedName, dataProductAssetsDSL)
     }
 
-    /** {@inheritDoc} */
-    override fun getCacheId(deserializer: RowDeserializer): String {
-        return ""
-    }
 }
