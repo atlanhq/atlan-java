@@ -22,6 +22,7 @@ object Exporter {
         val limitToAttributes = Utils.getAsList(config.attributesToInclude)
         val assetsQualifiedNamePrefix = Utils.getOrDefault(config.qnPrefix, "default")
         val includeDescription = Utils.getOrDefault(config.includeDescription, true)
+        val includeArchived = Utils.getOrDefault(config.includeArchived, false)
         val emails = Utils.getAsList(config.emailAddresses)
 
         val ctx = Context(
@@ -30,6 +31,7 @@ object Exporter {
             limitToAttributes,
             assetsQualifiedNamePrefix,
             includeDescription,
+            includeArchived,
         )
 
         val exportedFiles = mutableListOf<File>()
@@ -68,5 +70,6 @@ object Exporter {
         val limitToAttributes: List<String>,
         val assetsQualifiedNamePrefix: String,
         val includeDescription: Boolean,
+        val includeArchived: Boolean,
     )
 }

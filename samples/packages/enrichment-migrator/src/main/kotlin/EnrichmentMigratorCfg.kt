@@ -21,6 +21,7 @@ data class EnrichmentMigratorCfg(
     @JsonDeserialize(using = WidgetSerde.MultiSelectDeserializer::class)
     @JsonSerialize(using = WidgetSerde.MultiSelectSerializer::class)
     @JsonProperty("target_connection") val targetConnection: List<String>? = null,
+    @JsonProperty("include_archived") val includeArchived: Boolean? = null,
     @JsonProperty("config_type") val configType: String? = null,
     @JsonProperty("fail_on_errors") val failOnErrors: Boolean? = null,
     @JsonProperty("field_separator") val fieldSeparator: String? = null,
