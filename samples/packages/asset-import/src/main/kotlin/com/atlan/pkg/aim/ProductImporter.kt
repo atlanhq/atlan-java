@@ -32,6 +32,7 @@ class ProductImporter(
         colsToSkip.add(DataProduct.QUALIFIED_NAME.atlanFieldName)
         colsToSkip.add(DataDomain.PARENT_DOMAIN.atlanFieldName)
         colsToSkip.add(DataDomain.ASSET_ICON.atlanFieldName)
+        colsToSkip.add(DataDomain.ASSET_THEME_HEX.atlanFieldName)
         return super.import(colsToSkip)
     }
 
