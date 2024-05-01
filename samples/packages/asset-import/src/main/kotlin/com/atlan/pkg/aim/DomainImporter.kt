@@ -4,6 +4,7 @@ package com.atlan.pkg.aim
 
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.DataDomain
+import com.atlan.model.assets.DataProduct
 import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.cache.DataDomainCache
 import com.atlan.pkg.serde.RowDeserializer
@@ -72,6 +73,7 @@ class DomainImporter(
         // Also ignore any inbound qualifiedName
         val colsToSkip = columnsToSkip.toMutableSet()
         colsToSkip.add(DataDomain.QUALIFIED_NAME.atlanFieldName)
+        colsToSkip.add(DataProduct.DATA_DOMAIN.atlanFieldName)
 
         logger.info { "Loading domains in multiple passes, by level..." }
         var combinedResults: ImportResults? = null

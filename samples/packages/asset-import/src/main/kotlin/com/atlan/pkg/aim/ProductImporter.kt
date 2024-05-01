@@ -30,6 +30,8 @@ class ProductImporter(
         // Also ignore any inbound qualifiedName
         val colsToSkip = columnsToSkip.toMutableSet()
         colsToSkip.add(DataProduct.QUALIFIED_NAME.atlanFieldName)
+        colsToSkip.add(DataDomain.PARENT_DOMAIN.atlanFieldName)
+        colsToSkip.add(DataDomain.ASSET_ICON.atlanFieldName)
         return super.import(colsToSkip)
     }
 

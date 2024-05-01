@@ -68,6 +68,7 @@ class ImportDataDomainTest : PackageTest() {
 
     private val dataDomainAttrs: List<AtlanField> = listOf(
         DataDomain.NAME,
+        DataDomain.ASSET_ICON,
         DataDomain.USER_DESCRIPTION,
         DataDomain.OWNER_USERS,
         DataDomain.OWNER_GROUPS,
@@ -118,6 +119,7 @@ class ImportDataDomainTest : PackageTest() {
         assertEquals(level1_domains.size, 1)
         val d1 = level1_domains[0]
         assertEquals(dataDomain1, d1.name)
+        assertEquals(AtlanIcon.FILE_CLOUD, d1.assetIcon)
         assertEquals("Test domain for asset import", d1.userDescription)
         assertEquals(setOf("ernest"), d1.ownerUsers)
         assertEquals(setOf("admins"), d1.ownerGroups)
