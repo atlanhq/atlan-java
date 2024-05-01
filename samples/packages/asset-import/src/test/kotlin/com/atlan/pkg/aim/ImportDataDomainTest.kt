@@ -70,6 +70,7 @@ class ImportDataDomainTest : PackageTest() {
         DataDomain.NAME,
         DataDomain.ASSET_ICON,
         DataDomain.ASSET_THEME_HEX,
+        DataDomain.ASSET_COVER_IMAGE,
         DataDomain.USER_DESCRIPTION,
         DataDomain.OWNER_USERS,
         DataDomain.OWNER_GROUPS,
@@ -82,6 +83,7 @@ class ImportDataDomainTest : PackageTest() {
 
     private val dataProductAttrs: List<AtlanField> = listOf(
         DataProduct.NAME,
+        DataProduct.ASSET_COVER_IMAGE,
         DataProduct.USER_DESCRIPTION,
         DataProduct.OWNER_USERS,
         DataProduct.OWNER_GROUPS,
@@ -122,6 +124,7 @@ class ImportDataDomainTest : PackageTest() {
         assertEquals(dataDomain1, d1.name)
         assertEquals(AtlanIcon.FILE_CLOUD, d1.assetIcon)
         assertEquals("#3940E1", d1.assetThemeHex)
+        assertEquals("/assets/default-domain-cover-HZNqYyE-.png", d1.assetCoverImage)
         assertEquals("Test domain for asset import", d1.userDescription)
         assertEquals(setOf("ernest"), d1.ownerUsers)
         assertEquals(setOf("admins"), d1.ownerGroups)
