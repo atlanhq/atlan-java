@@ -8,6 +8,7 @@ import com.atlan.model.assets.DataDomain
 import com.atlan.model.assets.IDataMesh
 import com.atlan.model.enums.AtlanIcon
 import com.atlan.model.enums.AtlanTagColor
+import com.atlan.model.enums.CertificateStatus
 import com.atlan.model.fields.AtlanField
 import com.atlan.model.typedefs.AtlanTagDef
 import com.atlan.net.RequestOptions
@@ -25,6 +26,7 @@ class ImportDataDomainTest : PackageTest() {
     private val dataDomain1 = makeUnique("idd1")
     private val dataDomain2 = makeUnique("idd2")
     private val dataDomain3 = makeUnique("idd3")
+    private val dataProduct1 = makeUnique("idp1")
     private val tag1 = makeUnique("idt1")
 
     private val testFile = "input.csv"
@@ -44,6 +46,7 @@ class ImportDataDomainTest : PackageTest() {
                     .replace("{{DATADOMAIN1}}", dataDomain1)
                     .replace("{{DATADOMAIN2}}", dataDomain2)
                     .replace("{{DATADOMAIN3}}", dataDomain3)
+                    .replace("{{DATAPRODUCT1}}", dataProduct1)
                     .replace("{{TAG1}}", tag1)
                 output.appendText("$revised\n")
             }
@@ -69,13 +72,14 @@ class ImportDataDomainTest : PackageTest() {
         DataDomain.CERTIFICATE_STATUS,
         DataDomain.CERTIFICATE_STATUS_MESSAGE,
         DataDomain.PARENT_DOMAIN,
-        DataDomain.PARENT_DOMAIN_QUALIFIED_NAME
+        DataDomain.PARENT_DOMAIN_QUALIFIED_NAME ,
+        DataDomain.SUPER_DOMAIN_QUALIFIED_NAME
     )
 
     @BeforeClass
     fun beforeClass() {
         prepFile()
-        createTags()
+//        createTags()
         setup(
             AssetImportCfg(
                 assetsFile = null,
@@ -109,6 +113,7 @@ class ImportDataDomainTest : PackageTest() {
         val level2_domains = DataDomain.findByName(dataDomain2, dataDomainAttrs)
         assertNotNull(level2_domains)
         assertEquals(level2_domains.size, 1)
+        assertEquals(CertificateStatus.VERIFIED, d1.certificateStatus)
         val d2 = level2_domains[0]
         assertEquals(dataDomain2, d2.name)
         assertEquals("Test subdomain", d2.userDescription)
@@ -117,9 +122,12 @@ class ImportDataDomainTest : PackageTest() {
         assertEquals(d1.guid, d2.parentDomain.guid)
         assertEquals(d2.qualifiedName, DataDomain.generateQualifiedName(IDataMesh.generateSlugForName(dataDomain2), d1.qualifiedName))
         assertEquals(d2.parentDomainQualifiedName, d1.qualifiedName)
+        assertEquals(d1.qualifiedName, d2.superDomainQualifiedName)
         val level3_domains = DataDomain.findByName(dataDomain3, dataDomainAttrs)
         assertNotNull(level3_domains)
         assertEquals(level3_domains.size, 1)
+        assertEquals(CertificateStatus.DRAFT, d2.certificateStatus)
+        assertEquals("With a message!", d2.certificateStatusMessage)
         val d3 = level3_domains[0]
         assertEquals(dataDomain3, d3.name)
         assertEquals("Test sub sub domain", d3.userDescription)
@@ -128,7 +136,12 @@ class ImportDataDomainTest : PackageTest() {
         assertEquals(d2.guid, d3.parentDomain.guid)
         assertEquals(d3.qualifiedName, DataDomain.generateQualifiedName(IDataMesh.generateSlugForName(dataDomain3), d2.qualifiedName))
         assertEquals(d3.parentDomainQualifiedName, d2.qualifiedName)
-//        assertEquals(CertificateStatus.VERIFIED, d1.certificateStatus)
+        assertEquals(d1.qualifiedName, d3.superDomainQualifiedName)
+        val level1_products = DataDomain.findByName(dataProduct1, dataDomainAttrs)
+        assertNotNull(level1_products)
+        assertEquals(level1_products.size, 1)
+        val p1 = level1_products[0]
+        assertEquals(dataProduct1, p1.name)
     }
 
 
@@ -137,7 +150,8 @@ class ImportDataDomainTest : PackageTest() {
         removeDomain(dataDomain1)
         removeDomain(dataDomain2)
         removeDomain(dataDomain3)
-        removeTag(tag1)
+        removeProduct(dataProduct1)
+//        removeTag(tag1)
 //        removeTag(tag2)
         teardown(context.failedTests.size() > 0)
     }

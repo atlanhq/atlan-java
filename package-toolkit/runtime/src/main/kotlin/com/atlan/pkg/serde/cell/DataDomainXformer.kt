@@ -4,6 +4,7 @@ package com.atlan.pkg.serde.cell
 
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.DataDomain
+import com.atlan.model.assets.DataProduct
 import com.atlan.pkg.cache.DataDomainCache
 
 /**
@@ -45,9 +46,12 @@ object DataDomainXformer {
         fieldName: String,
     ): Asset {
         return when (fieldName) {
-            DataDomain.PARENT_DOMAIN.atlanFieldName -> {
-                DataDomainCache.getByIdentity(assetRef)?.trimToReference()
-                    ?: throw NoSuchElementException("Parent domain $assetRef not found.")
+            DataDomain.PARENT_DOMAIN.atlanFieldName, DataProduct.DATA_DOMAIN.atlanFieldName -> {
+                val dataDomain = DataDomainCache.getByIdentity(assetRef)
+                if (dataDomain == null ) {
+                    throw NoSuchElementException("Parent domain $assetRef not found.")
+                }
+                DataDomain.refByQualifiedName(dataDomain.qualifiedName)
             }
             else -> AssetRefXformer.decode(assetRef, fieldName)
         }

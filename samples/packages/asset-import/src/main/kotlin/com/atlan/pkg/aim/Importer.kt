@@ -151,7 +151,12 @@ object Importer {
             logger.info { "=== Importing domains... ===" }
             val domainImporter =
                 DomainImporter(dataProductsInput, dataProductAttrsToOverwrite, dataProductsUpdateOnly, dataProductsBatchSize, dataProductsFieldSeparator)
-            domainImporter.import()
+            val resultsDomain = domainImporter.import()
+            logger.info { "=== Importing products... ===" }
+            val productImporter =
+                ProductImporter(dataProductsInput, dataProductAttrsToOverwrite, dataProductsUpdateOnly, dataProductsBatchSize, dataProductsFieldSeparator)
+            val resultsProduct = productImporter.import()
+            resultsDomain?.combinedWith(resultsDomain)
         } else {
             null
         }

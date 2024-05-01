@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.aim
 
+import kotlin.text.Regex
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.DataDomain
 import com.atlan.model.assets.IDataMesh
@@ -107,14 +108,18 @@ class DomainImporter(
     /** {@inheritDoc} */
     override fun getBuilder(deserializer: RowDeserializer): Asset.AssetBuilder<*, *> {
         val name = deserializer.getValue(DataDomain.NAME.atlanFieldName) as String
-        val slug = IDataMesh.generateSlugForName(name)
         val parentDomain = deserializer.getValue(DataDomain.PARENT_DOMAIN.atlanFieldName)?.let { it as DataDomain }
-        val parentQualifiedName = if (parentDomain != null ) {
-            cache.getByGuid(parentDomain.guid)?.qualifiedName
-        } else {
-            null
+        val parentQualifiedName = parentDomain?.qualifiedName
+        var builder = DataDomain.creator(name, parentQualifiedName)
+        if (parentQualifiedName != null) {
+            val regex = Regex("^[^/]+[/][^/]+[/][^/]+")
+            val match = regex.find(parentQualifiedName)
+            val superDomainQualifiedName = match?.groups?.first()?.value
+            if (superDomainQualifiedName != null) {
+                builder = builder.superDomainQualifiedName(superDomainQualifiedName)
+            }
         }
-        return DataDomain.creator(name, parentQualifiedName)
+        return builder
     }
 
     /** {@inheritDoc} */
