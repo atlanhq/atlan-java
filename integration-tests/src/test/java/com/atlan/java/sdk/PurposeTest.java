@@ -330,6 +330,11 @@ public class PurposeTest extends AtlanLiveTest {
             dependsOnGroups = {"purpose.create.*", "purpose.read.*", "purpose.update.*", "purpose.purge.purposes"},
             alwaysRun = true)
     void purgeToken() throws AtlanException {
-        RequestsTest.deleteToken(token.getId());
+        if (token != null) {
+            RequestsTest.deleteToken(token.getId());
+        } else {
+            ApiToken local = Atlan.getDefaultClient().apiTokens.get(API_TOKEN_NAME);
+            RequestsTest.deleteToken(local.getId());
+        }
     }
 }
