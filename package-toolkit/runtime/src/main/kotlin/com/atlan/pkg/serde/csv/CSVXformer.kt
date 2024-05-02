@@ -127,7 +127,9 @@ abstract class CSVXformer(
     private fun getRowByHeader(values: List<String>): Map<String, String> {
         val map = mutableMapOf<String, String>()
         header.forEachIndexed { index, s ->
-            map[s] = values.getOrElse(index) { "" }
+            // Explicitly trim all whitespace from headers, including byte order mark (BOM) or zero-width space (ZWSP) characters
+            val trimmed = s.trim().trim('\uFEFF', '\u200B')
+            map[trimmed] = values.getOrElse(index) { "" }
         }
         return map.toMap()
     }
