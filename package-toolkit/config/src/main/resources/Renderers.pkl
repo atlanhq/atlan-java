@@ -17,6 +17,15 @@ const function getConfigMap(m: Config): FileOutput = new FileOutput {
   renderer = new YamlRenderer {}
 }
 
+/// Render the connector-specific credential configmap YAML file.
+const function getCredentialConfigMap(m: Config): FileOutput = new FileOutput {
+  value = new ConnectorConfigMap {
+    name = m.name
+    config = m.credentialConfig!!
+  }
+  renderer = new YamlRenderer {}
+}
+
 /// Render the workflow template YAML file.
 const function getWorkflowTemplate(m: Config): FileOutput = new FileOutput {
   value = new WorkflowTemplate {
@@ -29,9 +38,87 @@ const function getWorkflowTemplate(m: Config): FileOutput = new FileOutput {
         command = m.command
         args = m.args
         imagePullPolicy = m.containerImagePullPolicy
+        volumeMounts = if (credVariable != null) new Listing {
+          new VolumeMount {
+            name = "credentials"
+            mountPath = "/tmp/credentials"
+          }
+        } else null
       }
       outputs = m.outputs
       p = m.name
+      credVariable = let (creds = m.uiConfig.properties.filter((_, u) -> u is Config.CredentialInput))
+          if (creds.isEmpty) null else creds.keys.first
+      volumes = if (credVariable != null) new Listing {
+        new EmptyDirVolume {
+          name = "credentials"
+        }
+      } else null
+      initContainers = if (credVariable != null) new Listing {
+        new WorkflowContainer {
+          name = "fetch-credentials"
+          image = "ghcr.io/atlanhq/rest-master:165b7e5"
+          command = List("python3", "main.py")
+          env = new Listing {
+            new NameValuePair {
+              name = "OAUTHLIB_INSECURE_TRANSPORT"
+              value = "1"
+            }
+            new NamedSecret {
+              name = "CLIENT_ID"
+              secretName = "argo-client-creds"
+              secretKey = "login"
+            }
+            new NamedSecret {
+              name = "CLIENT_SECRET"
+              secretName = "argo-client-creds"
+              secretKey = "password"
+            }
+            new NamedSecret {
+              name = "TOKEN_URL"
+              secretName = "argo-client-creds"
+              secretKey = "host"
+            }
+          }.toList()
+          mirrorVolumeMounts = true
+          args = new Listing {
+            "GET"
+            "http://heracles-service.heracles.svc.cluster.local/credentials/{{inputs.parameters.\(credVariable)}}/use"
+            "--raw-input"
+            "{}"
+            "--raw-input-file-pattern"
+            ""
+            "--raw-input-file-sort"
+            ""
+            "--raw-input-multiline"
+            "f"
+            "--execution-script"
+            "{{inputs.parameters.execution-script}}"
+            "--raw-input-paginate"
+            "0"
+            "--auth-type"
+            "oauth2"
+            "--auth-oauth2-type"
+            "client_credentials"
+            "--auth-oauth2-impersonate-user"
+            "{{=sprig.ternary(sprig.dig('labels', 'workflows', 'argoproj', 'io/creator', '', workflow), '', 'true' == inputs.parameters['impersonate'])}}"
+            "--auth-oauth2-client-credentials-client-id"
+            "CLIENT_ID"
+            "--auth-oauth2-client-credentials-secret"
+            "CLIENT_SECRET"
+            "--auth-oauth2-client-credentials-token-url"
+            "TOKEN_URL"
+            "--output-chunk-size"
+            "0"
+            "--output-file-prefix"
+            "/tmp/credentials"
+            "--pagination-wait-time"
+            "0"
+            "--max-retries"
+            "10"
+          }.toList()
+        }
+      } else null
     }
   }
   renderer = new YamlRenderer {}
@@ -141,9 +228,112 @@ const function getLowerCamelCase(s: String): String =
 
 /// Render the Python class file that strongly-types the configuration handover.
 const function getConfigClassPy(m: Config): FileOutput = new FileOutput {
-  // TODO: Write our own code generator(s) for the Python class
   text = new Listing {
-    trace("Python class not yet implemented.")
+    """
+    from datetime import datetime
+    from pathlib import Path
+    from pydantic.v1 import BaseModel, BaseSettings, Field, validator
+    from pyatlan.model.assets import Connection
+    from pyatlan.pkg.models import ConnectorAndConnection
+    from pyatlan.pkg.utils import validate_connection, validate_multiselect, validate_connector_and_connection
+    from typing import Any, Optional, Union, Dict
+    import logging.config
+
+    PARENT = Path(__file__).parent
+    LOGGING_CONF = PARENT / "logging.conf"
+    if LOGGING_CONF.exists():
+    logging.config.fileConfig(LOGGING_CONF)
+    LOGGER = logging.getLogger(__name__)
+
+    ENV = 'env'
+
+    class CustomConfig(BaseModel):
+        \"\"\"\"\"\"\"\"
+    """
+    for (k, u in m.uiConfig.properties) {
+      if (u is Config.DropDown || u is Config.MultipleGroups || u is Config.MultipleUsers || u is Config.ConnectionSelector)
+        """
+            \(k): Optional[List[str]] = Field(default_factory=list)
+            _validate_\(k) = validator("\(k)", pre=True, allow_reuse=True)(validate_multiselect)
+        """
+
+      else if (u is Config.ConnectorTypeSelector)
+        """
+            \(k): Optional[ConnectorAndConnection] = None
+            _validate_\(k) = validator("\(k)", pre=True, allow_reuse=True)(validate_connector_and_connection)
+        """
+      else if (u is Config.ConnectionCreator)
+        """
+            \(k): Optional[Connection] = None
+            _validate_\(k) = validator("\(k)", pre=True, allow_reuse=True)(validate_connection)
+        """
+      else if (u is Config.BooleanInput)
+        """
+            \(k): bool = None
+        """
+      else if (u is Config.NumericInput)
+        """
+            \(k): Optional[Union[int,float]] = None
+        """
+      else if (u is Config.DateInput)
+        """
+            \(k): Optional[datetime] = None
+        """
+      else
+        """
+            \(k): str
+        """
+    }
+    """
+
+    class RuntimeConfig(BaseSettings):
+        user_id:Optional[str] = Field(default="")
+        agent:Optional[str] = Field(default="")
+        agent_id:Optional[str] = Field(default="")
+        agent_pkg:Optional[str] = Field(default="")
+        agent_wfl:Optional[str] = Field(default="")
+        custom_config:Optional[CustomConfig] = None
+
+        class Config:
+            fields = {
+                'user_id': {
+                    ENV: 'ATLAN_USER_ID',
+                },
+                'agent': {
+                    ENV: 'X_ATLAN_AGENT'
+                },
+                'agent_id': {
+                    ENV: 'X_ATLAN_AGENT_ID'
+                },
+                'agent_pkg': {
+                    ENV: 'X_ATLAN_AGENT_PACKAGE_NAME'
+                },
+                'agent_wfl': {
+                    ENV: 'X_ATLAN_AGENT_WORKFLOW_ID'
+                },
+                'custom_config': {
+                    ENV: 'NESTED_CONFIG'
+                }
+            }
+            @classmethod
+            def parse_env_var(cls, field_name:str, raw_value:str)->Any:
+                if field_name == 'custom_config':
+                    return CustomConfig.parse_raw(raw_value)
+                return cls.json_loads(raw_value)
+
+        @property
+        def envars_as_dict(self) -> Dict[str, Any]:
+            \"\"\"
+            :return dict: returns a dict of the environment variable names and values consumed by this RuntimeConfig.
+            the name of an environment variable will be the key and the value will be the value. This is provided
+            to facilitate testing
+            \"\"\"
+            ret_val: Dict[str, Any] = {}
+            for key, value in RuntimeConfig.Config.fields.items():
+                if field_value := getattr(self, key):
+                    ret_val[value["env"]] = field_value.json()
+            return ret_val
+    """
   }.join("\n")
 }
 
@@ -223,15 +413,29 @@ class NamePathPair extends NamedPair {
   path: String
 }
 
+class VolumeMount extends NamedPair {
+  name: String
+  mountPath: String
+}
+
+open class WorkflowVolume extends NamedPair {
+  name: String
+}
+
+class EmptyDirVolume extends WorkflowVolume {
+  name: String
+  fixed emptyDir: Map<String, String> = new Mapping {}.toMap()
+}
+
 abstract class NamedPair {
   name: String
 }
 
 /// Used to render the appropriately-wrapped output file for the UI portion of a package.
-local class ConfigMap {
+local open class ConfigMap {
   fixed apiVersion = "v1"
   fixed kind = "ConfigMap"
-  fixed metadata: Mapping<String, String> = new Mapping {
+  fixed metadata: Mapping<String, Any> = new Mapping {
     ["name"] = name
   }
   fixed data: Mapping<String, String> = new Mapping {
@@ -359,6 +563,12 @@ local class WorkflowTemplate {
         name = "main"
         p = template.p
         f = true
+        credVariable = template.credVariable
+        volumes = if (credVariable != null) new Listing {
+          new EmptyDirVolume {
+            name = "credentials"
+          }
+        } else null
       } else null)
   hidden passthrough: List<NameValuePair> = (if (!fileMoves.isEmpty) new Listing {
       new NameValuePair {
@@ -387,13 +597,17 @@ local class WorkflowTemplateDefinition {
     config = c
     pkgName = p
     fileInputSetup = f
+    credentialInjection = (credVariable != null)
   }
   outputs: Config.WorkflowOutputs?
+  volumes: Listing<WorkflowVolume>?
   container: WorkflowContainer?
+  initContainers: Listing<WorkflowContainer>?
   dag: WorkflowDag?
   hidden c: Config.UIConfig
   hidden p: String = ""
   hidden f: Boolean = false
+  hidden credVariable: String?
 }
 
 local class WorkflowInputs {
@@ -402,6 +616,7 @@ local class WorkflowInputs {
   hidden config: Config.UIConfig
   hidden pkgName: String = ""
   hidden fileInputSetup: Boolean = false
+  hidden credentialInjection: Boolean = false
 
   hidden arts: Listing<NamePathS3Tuple> = new Listing {
     for (k, u in config.properties) {
@@ -430,6 +645,20 @@ local class WorkflowInputs {
           configMapName = "atlan-defaults"
           configMapKey = "cloud"
           default = "aws"
+        }
+      }
+      when (credentialInjection) {
+        new NameValuePair {
+          name = "execution-script"
+          value = """
+            if state == ExecutionState.API_FAIL and (response.status_code >= 500 or response.status_code in {400}):
+              LOGGER.debug('Heracles is unavailable. Performing retry with back-off')
+              failure_handler = FailureHandler.RETRY
+            if state == ExecutionState.OUTPUT_PROCESS:
+              output = json.loads(output)
+            if state == ExecutionState.API_POST:
+              stop = True
+            """
         }
       }
     }
@@ -502,6 +731,9 @@ local class Arguments {
 }
 
 local class WorkflowContainer {
+  name: String?
+  volumeMounts: Listing<VolumeMount>?
+  mirrorVolumeMounts: Boolean?
   image: String
   imagePullPolicy: Config.ImagePullPolicy = "IfNotPresent"
   command: List<String>
@@ -594,6 +826,36 @@ local class WorkflowContainer {
     ).toMap()
   }
   env: List<NamedPair> = defaultVars + configVars + List(nestedConfig)
+}
+
+/// Used to render the configmap for a new connector type.
+local class ConnectorConfigMap extends ConfigMap {
+  fixed metadata: Mapping<String, Any> = new Mapping {
+    ["name"] = config.name
+    ["labels"] = new Mapping<String, String> {
+      ["workflows.argoproj.io/configmap-type"] = "Parameter"
+      ["orchestration.atlan.com/version"] = "1"
+      ["orchestration.atlan.com/source"] = config.source.value
+    }
+  }
+  fixed data: Mapping<String, String> = new Mapping {
+    ["icon"] = config.icon
+    ["helpdeskLink"] = config.helpdesk
+    ["logo"] = config.logo
+    ["connector"] = config.source.value
+    ["defautConnectorType"] = config.connectorType
+    ["jdbcCredentialTemplate"] = config.jdbcCredential
+    ["restCredentialTemplate"] = config.restCredential
+    ["odbcCredentialTemplate"] = config.odbcCredential
+    ["grpcCredentialTemplate"] = config.grpcCredential
+    ["restMetadataTemplate"] = config.restMetadata
+    ["restMetadataOutputTransformerTemplate"] = config.restTransformer
+    when (config.sage != null) { ["sageTemplate"] = config.sage }
+    when (config.soda != null) { ["sodaConnectionTemplate"] = config.soda }
+    ["config"] = new JsonRenderer {}.renderValue(config)
+  }
+  hidden name: String
+  hidden config: Config.CredentialConfig
 }
 
 const function resolvePropertyToVar(key: String, property: Config.UIElement): NameValuePair = new NameValuePair {

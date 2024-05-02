@@ -59,7 +59,7 @@ object CustomPackageTest {
     @Test
     fun testProperties() {
         assertNotNull(config.uiConfig.properties)
-        assertEquals(4, config.uiConfig.properties.size)
+        assertEquals(5, config.uiConfig.properties.size)
     }
 
     @Test
@@ -139,6 +139,41 @@ object CustomPackageTest {
         assertFalse(widget.hidden)
         assertEquals("", widget.mode)
         assertEquals(1, widget.start)
+    }
+
+    @Test
+    fun testCredential() {
+        assertTrue(config.uiConfig.properties.containsKey("credential_guid"))
+        val credential = config.uiConfig.properties["credential_guid"]
+        assertNotNull(credential)
+        assertTrue(credential is Config.CredentialInput)
+        assertTrue(credential.required)
+        val widget = credential.ui
+        assertEquals("Credential", widget.label)
+        assertEquals("credential", widget.widget)
+        assertEquals("Select a credential to use for this connection.", widget.help)
+        assertEquals(8, widget.grid)
+        assertFalse(widget.hidden)
+        assertEquals("csa-connectors-gcs", widget.credentialType)
+    }
+
+    @Test
+    fun testConnectorCredential() {
+        assertNotNull(config.credentialConfig)
+        assertEquals(9, config.credentialConfig?.properties?.size)
+        val basic = config.credentialConfig?.properties?.get("basic")
+        assertTrue(basic is Config.NestedInput)
+        assertEquals("Basic", basic.ui.label)
+        assertEquals("nested", basic.ui.widget)
+        assertEquals(3, basic.properties.size)
+        val extra = basic.properties["extra"]
+        assertTrue(extra is Config.NestedInput)
+        assertEquals("Role and Warehouse", extra.ui.label)
+        assertEquals(2, extra.properties.size)
+        val role = extra.properties["role"]
+        assertTrue(role is Config.SQLExecutor)
+        assertEquals("show grants", role.ui.query)
+        assertEquals(3, config.credentialConfig?.anyOf?.size)
     }
 
     // TODO: Test generated workflow template contents
