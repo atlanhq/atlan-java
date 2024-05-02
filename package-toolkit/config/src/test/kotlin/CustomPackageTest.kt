@@ -157,6 +157,8 @@ object CustomPackageTest {
         assertEquals("csa-connectors-gcs", widget.credentialType)
     }
 
+    // TODO: Test generated credential / connector config
+    
     // TODO: Test generated workflow template contents
     // TODO: Test generated package JSON contents
 }
