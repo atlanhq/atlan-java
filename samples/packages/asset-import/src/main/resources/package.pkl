@@ -181,7 +181,7 @@ uiConfig {
         ["glossaries_s3_bucket"] = new TextInput {
           title = "S3 bucket"
           required = false
-          helpText = "Enter the S3 bucket from which to retrieve the S3 object. IF empty, will use the bucket of Atlan's own back-end storage."
+          helpText = "Enter the S3 bucket from which to retrieve the S3 object. If empty, will use the bucket of Atlan's own back-end storage."
           placeholderText = "bucket-name"
           width = 4
         }
@@ -281,7 +281,7 @@ uiConfig {
         ["data_products_s3_bucket"] = new TextInput {
           title = "S3 bucket"
           required = false
-          helpText = "Enter the S3 bucket from which to retrieve the S3 object. IF empty, will use the bucket of Atlan's own back-end storage."
+          helpText = "Enter the S3 bucket from which to retrieve the S3 object. If empty, will use the bucket of Atlan's own back-end storage."
           placeholderText = "bucket-name"
           width = 4
         }
