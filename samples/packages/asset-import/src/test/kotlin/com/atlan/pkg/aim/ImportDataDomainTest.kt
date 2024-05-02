@@ -113,12 +113,7 @@ class ImportDataDomainTest : PackageTest() {
         setup(
             AssetImportCfg(
                 assetsFile = null,
-                assetsUpsertSemantic = null,
-                assetsAttrToOverwrite = null,
                 assetsFailOnErrors = true,
-                glossariesFile = null,
-                glossariesUpsertSemantic = null,
-                glossariesAttrToOverwrite = null,
                 glossariesFailOnErrors = true,
                 dataProductsFile = Paths.get(testDirectory, testFile).toString(),
                 dataProductsUpsertSemantic = "upsert",
