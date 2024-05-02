@@ -157,8 +157,25 @@ object CustomPackageTest {
         assertEquals("csa-connectors-gcs", widget.credentialType)
     }
 
-    // TODO: Test generated credential / connector config
-    
+    @Test
+    fun testConnectorCredential() {
+        assertNotNull(config.credentialConfig)
+        assertEquals(9, config.credentialConfig?.properties?.size)
+        val basic = config.credentialConfig?.properties?.get("basic")
+        assertTrue(basic is Config.NestedInput)
+        assertEquals("Basic", basic.ui.label)
+        assertEquals("nested", basic.ui.widget)
+        assertEquals(3, basic.properties.size)
+        val extra = basic.properties["extra"]
+        assertTrue(extra is Config.NestedInput)
+        assertEquals("Role and Warehouse", extra.ui.label)
+        assertEquals(2, extra.properties.size)
+        val role = extra.properties["role"]
+        assertTrue(role is Config.SQLExecutor)
+        assertEquals("show grants", role.ui.query)
+        assertEquals(3, config.credentialConfig?.anyOf?.size)
+    }
+
     // TODO: Test generated workflow template contents
     // TODO: Test generated package JSON contents
 }
