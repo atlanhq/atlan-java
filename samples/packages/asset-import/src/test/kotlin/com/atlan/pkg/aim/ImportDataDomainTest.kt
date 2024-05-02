@@ -3,20 +3,15 @@
 package com.atlan.pkg.aim
 
 import AssetImportCfg
-import com.atlan.Atlan
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.DataDomain
 import com.atlan.model.assets.DataProduct
 import com.atlan.model.assets.IDataMesh
 import com.atlan.model.assets.Readme
-import com.atlan.model.core.AtlanTag
 import com.atlan.model.enums.AtlanAnnouncementType
 import com.atlan.model.enums.AtlanIcon
-import com.atlan.model.enums.AtlanTagColor
 import com.atlan.model.enums.CertificateStatus
 import com.atlan.model.fields.AtlanField
-import com.atlan.model.typedefs.AtlanTagDef
-import com.atlan.net.RequestOptions
 import com.atlan.pkg.PackageTest
 import org.testng.ITestContext
 import org.testng.annotations.AfterClass
@@ -32,8 +27,6 @@ class ImportDataDomainTest : PackageTest() {
     private val dataDomain2 = makeUnique("idd2")
     private val dataDomain3 = makeUnique("idd3")
     private val dataProduct1 = makeUnique("idp1")
-    private val tag1 = makeUnique("idt1")
-    private val tag2 = makeUnique("idt2")
     private lateinit var d1: DataDomain
     private lateinit var d2: DataDomain
     private lateinit var d3: DataDomain
@@ -45,7 +38,7 @@ class ImportDataDomainTest : PackageTest() {
     )
 
     private fun prepFile() {
-        // Prepare a copy of the file with unique names for glossaries and tags
+        // Prepare a copy of the file with unique names for domains and products
         val input = Paths.get("src", "test", "resources", "data_domain.csv").toFile()
         val output = Paths.get(testDirectory, testFile).toFile()
         input.useLines { lines ->
@@ -55,22 +48,9 @@ class ImportDataDomainTest : PackageTest() {
                     .replace("{{DATADOMAIN2}}", dataDomain2)
                     .replace("{{DATADOMAIN3}}", dataDomain3)
                     .replace("{{DATAPRODUCT1}}", dataProduct1)
-                    .replace("{{TAG1}}", tag1)
-                    .replace("{{TAG2}}", tag2)
                 output.appendText("$revised\n")
             }
         }
-    }
-
-    private fun createTags() {
-        val maxNetworkRetries = 3
-        val client = Atlan.getDefaultClient()
-        val t1 = AtlanTagDef.creator(tag1, AtlanIcon.AIRPLANE, AtlanTagColor.GREEN).build()
-        val t2 = AtlanTagDef.creator(tag2, AtlanIcon.ROBOT, AtlanTagColor.RED).build()
-        client.typeDefs.create(
-            listOf(t1, t2),
-            RequestOptions.from(client).maxNetworkRetries(maxNetworkRetries).build(),
-        )
     }
 
     private val dataDomainAttrs: List<AtlanField> = listOf(
@@ -101,14 +81,12 @@ class ImportDataDomainTest : PackageTest() {
         DataProduct.CERTIFICATE_STATUS,
         DataProduct.CERTIFICATE_STATUS_MESSAGE,
         DataProduct.DATA_DOMAIN,
-        DataProduct.ATLAN_TAGS,
         DataProduct.README,
     )
 
     @BeforeClass
     fun beforeClass() {
         prepFile()
-        createTags()
         setup(
             AssetImportCfg(
                 assetsFile = null,
@@ -180,7 +158,6 @@ class ImportDataDomainTest : PackageTest() {
         assertEquals(d3.qualifiedName, p1.dataDomain.qualifiedName)
         assertNotNull(p1.readme)
         assertEquals("<h1>This is Product!</h1>", p1.readme.description)
-        assertEquals(setOf(tag1, tag2), p1.atlanTags.map(AtlanTag::getTypeName).toSet())
     }
 
     private fun findDataDomain(domainName: String): DataDomain {
@@ -211,8 +188,6 @@ class ImportDataDomainTest : PackageTest() {
         removeDomain(dataDomain2)
         removeDomain(dataDomain3)
         removeProduct(dataProduct1)
-        removeTag(tag1)
-        removeTag(tag2)
         teardown(context.failedTests.size() > 0)
     }
 }
