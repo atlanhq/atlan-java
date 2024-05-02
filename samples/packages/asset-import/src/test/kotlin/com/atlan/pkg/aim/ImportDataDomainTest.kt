@@ -4,8 +4,11 @@ package com.atlan.pkg.aim
 
 import AssetImportCfg
 import com.atlan.Atlan
+import com.atlan.model.assets.Asset
 import com.atlan.model.assets.DataDomain
 import com.atlan.model.assets.DataProduct
+import com.atlan.model.assets.IDataMesh
+import com.atlan.model.assets.Readme
 import com.atlan.model.enums.AtlanAnnouncementType
 import com.atlan.model.enums.AtlanIcon
 import com.atlan.model.enums.AtlanTagColor
@@ -30,7 +33,9 @@ class ImportDataDomainTest : PackageTest() {
     private val dataProduct1 = makeUnique("idp1")
     private val tag1 = makeUnique("idt1")
     private val tag2 = makeUnique("idt2")
-
+    private lateinit var d1: DataDomain
+    private lateinit var d2: DataDomain
+    private lateinit var d3: DataDomain
     private val testFile = "input.csv"
 
     private val files = listOf(
@@ -122,11 +127,13 @@ class ImportDataDomainTest : PackageTest() {
             ),
         )
         Importer.main(arrayOf(testDirectory))
+        d1 = findDataDomain(dataDomain1)
+        d2 = findDataDomain(dataDomain2)
+        d3 = findDataDomain(dataDomain3)
     }
 
     @Test
     fun domain1Created() {
-        val d1 = findDataDomain(dataDomain1)
         assertEquals(dataDomain1, d1.name)
         assertEquals(AtlanIcon.FILE_CLOUD, d1.assetIcon)
         assertEquals("#3940E1", d1.assetThemeHex)
@@ -141,8 +148,10 @@ class ImportDataDomainTest : PackageTest() {
         assertEquals(AtlanAnnouncementType.WARNING, d1.announcementType)
         assertEquals("Careful", d1.announcementTitle)
         assertEquals("This is only a test.", d1.announcementMessage)
+    }
 
-        val d2 = findDataDomain(dataDomain2)
+    @Test
+    fun domain2Created() {
         assertEquals(dataDomain2, d2.name)
         assertEquals("Test subdomain", d2.userDescription)
         assertEquals(setOf("ernest"), d2.ownerUsers)
@@ -153,8 +162,10 @@ class ImportDataDomainTest : PackageTest() {
         assertEquals(d1.qualifiedName, d2.superDomainQualifiedName)
         assertEquals(CertificateStatus.DRAFT, d2.certificateStatus)
         assertEquals("With a message!", d2.certificateStatusMessage)
+    }
 
-        val d3 = findDataDomain(dataDomain3)
+    @Test
+    fun domain3Created() {
         assertEquals(dataDomain3, d3.name)
         assertEquals("Test sub sub domain", d3.userDescription)
         assertEquals(setOf("ernest"), d3.ownerUsers)
@@ -163,7 +174,10 @@ class ImportDataDomainTest : PackageTest() {
         assertEquals(d3.qualifiedName, DataDomain.generateQualifiedName(IDataMesh.generateSlugForName(dataDomain3), d2.qualifiedName))
         assertEquals(d3.parentDomainQualifiedName, d2.qualifiedName)
         assertEquals(d1.qualifiedName, d3.superDomainQualifiedName)
+    }
 
+    @Test
+    fun product1Created() {
         val p1 = findDataProductWithRetry(dataProduct1)
         assertEquals(dataProduct1, p1.name)
         assertEquals("Test data product", p1.userDescription)
