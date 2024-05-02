@@ -9,6 +9,7 @@ import com.atlan.model.assets.DataDomain
 import com.atlan.model.assets.DataProduct
 import com.atlan.model.assets.IDataMesh
 import com.atlan.model.assets.Readme
+import com.atlan.model.core.AtlanTag
 import com.atlan.model.enums.AtlanAnnouncementType
 import com.atlan.model.enums.AtlanIcon
 import com.atlan.model.enums.AtlanTagColor
@@ -54,10 +55,8 @@ class ImportDataDomainTest : PackageTest() {
                     .replace("{{DATADOMAIN2}}", dataDomain2)
                     .replace("{{DATADOMAIN3}}", dataDomain3)
                     .replace("{{DATAPRODUCT1}}", dataProduct1)
-//                    .replace("{{TAG1}}", tag1)
-//                    .replace("{{TAG2}}", tag1)
-                    .replace("{{TAG1}}", "")
-                    .replace("{{TAG2}}", "")
+                    .replace("{{TAG1}}", tag1)
+                    .replace("{{TAG2}}", tag2)
                 output.appendText("$revised\n")
             }
         }
@@ -69,7 +68,7 @@ class ImportDataDomainTest : PackageTest() {
         val t1 = AtlanTagDef.creator(tag1, AtlanIcon.AIRPLANE, AtlanTagColor.GREEN).build()
         val t2 = AtlanTagDef.creator(tag2, AtlanIcon.ROBOT, AtlanTagColor.RED).build()
         client.typeDefs.create(
-            listOf(t1),
+            listOf(t1, t2),
             RequestOptions.from(client).maxNetworkRetries(maxNetworkRetries).build(),
         )
     }
@@ -109,7 +108,7 @@ class ImportDataDomainTest : PackageTest() {
     @BeforeClass
     fun beforeClass() {
         prepFile()
-//        createTags()
+        createTags()
         setup(
             AssetImportCfg(
                 assetsFile = null,
@@ -181,7 +180,7 @@ class ImportDataDomainTest : PackageTest() {
         assertEquals(d3.qualifiedName, p1.dataDomain.qualifiedName)
         assertNotNull(p1.readme)
         assertEquals("<h1>This is Product!</h1>", p1.readme.description)
-//        assertEquals(setOf(tag1, tag2), p1.atlanTags.map(AtlanTag::getTypeName).toSet())
+        assertEquals(setOf(tag1, tag2), p1.atlanTags.map(AtlanTag::getTypeName).toSet())
     }
 
     private fun findDataDomain(domainName: String): DataDomain {
@@ -212,8 +211,8 @@ class ImportDataDomainTest : PackageTest() {
         removeDomain(dataDomain2)
         removeDomain(dataDomain3)
         removeProduct(dataProduct1)
-//        removeTag(tag1)
-//        removeTag(tag2)
+        removeTag(tag1)
+        removeTag(tag2)
         teardown(context.failedTests.size() > 0)
     }
 }
