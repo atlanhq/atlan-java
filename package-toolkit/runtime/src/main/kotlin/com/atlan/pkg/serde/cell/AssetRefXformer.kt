@@ -4,6 +4,8 @@ package com.atlan.pkg.serde.cell
 
 import com.atlan.Atlan
 import com.atlan.model.assets.Asset
+import com.atlan.model.assets.DataDomain
+import com.atlan.model.assets.DataProduct
 import com.atlan.model.assets.Glossary
 import com.atlan.model.assets.GlossaryCategory
 import com.atlan.model.assets.GlossaryTerm
@@ -43,6 +45,7 @@ object AssetRefXformer {
             is Glossary -> GlossaryXformer.encode(asset)
             is GlossaryCategory -> GlossaryCategoryXformer.encode(asset)
             is GlossaryTerm -> GlossaryTermXformer.encode(asset)
+            is DataDomain -> DataDomainXformer.encode(asset)
             else -> {
                 var qualifiedName = asset.qualifiedName
                 if (asset.qualifiedName.isNullOrEmpty() && asset.uniqueAttributes != null) {
@@ -72,6 +75,7 @@ object AssetRefXformer {
             -> GlossaryCategoryXformer.decode(assetRef, fieldName)
             GlossaryCategory.ANCHOR.atlanFieldName -> GlossaryXformer.decode(assetRef, fieldName)
             "assignedTerms", in GlossaryTermXformer.TERM_TO_TERM_FIELDS -> GlossaryTermXformer.decode(assetRef, fieldName)
+            DataDomain.PARENT_DOMAIN.atlanFieldName, DataProduct.DATA_DOMAIN.atlanFieldName -> DataDomainXformer.decode(assetRef, fieldName)
             else -> {
                 val tokens = assetRef.split(TYPE_QN_DELIMITER)
                 val typeName = tokens[0]

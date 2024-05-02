@@ -43,4 +43,17 @@ data class AssetImportCfg(
     @JsonProperty("glossaries_fail_on_errors") val glossariesFailOnErrors: Boolean? = null,
     @JsonProperty("glossaries_field_separator") val glossariesFieldSeparator: String? = null,
     @JsonProperty("glossaries_batch_size") val glossariesBatchSize: Number? = null,
+    @JsonProperty("data_products_import_type") val dataProductsImportType: String? = null,
+    @JsonProperty("data_products_file") val dataProductsFile: String? = null,
+    @JsonProperty("data_products_s3_region") val dataProductsS3Region: String? = null,
+    @JsonProperty("data_products_s3_bucket") val dataProductsS3Bucket: String? = null,
+    @JsonProperty("data_products_s3_object_key") val dataProductsS3ObjectKey: String? = null,
+    @JsonProperty("data_products_upsert_semantic") val dataProductsUpsertSemantic: String? = null,
+    @JsonProperty("data_products_config") val dataProductsConfig: String? = null,
+    @JsonDeserialize(using = WidgetSerde.MultiSelectDeserializer::class)
+    @JsonSerialize(using = WidgetSerde.MultiSelectSerializer::class)
+    @JsonProperty("data_products_attr_to_overwrite") val dataProductsAttrToOverwrite: List<String>? = null,
+    @JsonProperty("data_products_fail_on_errors") val dataProductsFailOnErrors: Boolean? = null,
+    @JsonProperty("data_products_field_separator") val dataProductsFieldSeparator: String? = null,
+    @JsonProperty("data_products_batch_size") val dataProductsBatchSize: Number? = null,
 ) : CustomConfig()
