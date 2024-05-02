@@ -251,8 +251,8 @@ uiConfig {
         }
       }
     }
-    ["Data Products"] {
-      description = "Data Products to import"
+    ["Data products"] {
+      description = "Data products to import"
       inputs {
         ["data_products_import_type"] = new Radio {
           title = "Import data products"
@@ -265,7 +265,7 @@ uiConfig {
           default = "UPLOAD"
         }
         ["data_products_file"] = new FileUploader {
-          title = "Data Products file"
+          title = "Data products file"
           fileTypes { "text/csv" }
           required = false
           helpText = "Select the file containing domains and data products to import, produced by one of the Asset Export packages."
