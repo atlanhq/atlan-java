@@ -86,7 +86,7 @@ object DataDomainCache : AssetCache() {
             .includesOnResults(includesOnResults)
             .where(DataDomain.PARENT_DOMAIN_QUALIFIED_NAME.hasAnyValue())
             .sort(DataDomain.PARENT_DOMAIN_QUALIFIED_NAME.order(SortOrder.Asc))
-            .stream(false)
+            .stream(true)
             .forEach { dataDomain ->
                 addByGuid(dataDomain.guid, dataDomain)
             }

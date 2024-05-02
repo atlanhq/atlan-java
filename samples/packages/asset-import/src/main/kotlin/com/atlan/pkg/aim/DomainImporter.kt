@@ -50,7 +50,7 @@ class DomainImporter(
 
     // Maximum depth of any domain in the CSV -- will be updated on first pass through the CSV
     // file by includeRow() method
-    private val maxCategoryDepth = AtomicInteger(1)
+    private val maxDomainDepth = AtomicInteger(1)
 
     private val cache = DataDomainCache
 
@@ -77,7 +77,7 @@ class DomainImporter(
 
         logger.info { "Loading domains in multiple passes, by level..." }
         var combinedResults: ImportResults? = null
-        while (levelToProcess < maxCategoryDepth.get()) {
+        while (levelToProcess < maxDomainDepth.get()) {
             levelToProcess += 1
             logger.info { "--- Loading level $levelToProcess domains... ---" }
             val results = super.import(colsToSkip)
@@ -107,13 +107,13 @@ class DomainImporter(
             row[parentIdx].split(DATA_DOMAIN_DELIMITER).size + 1
         }
         // Consider whether we need to update the maximum depth of categories we need to load
-        val currentMax = maxCategoryDepth.get()
+        val currentMax = maxDomainDepth.get()
         val maxDepth = max(domainLevel, currentMax)
         if (maxDepth > currentMax) {
-            maxCategoryDepth.set(maxDepth)
+            maxDomainDepth.set(maxDepth)
         }
         if (domainLevel != levelToProcess) {
-            // If this category is a different level than we are currently processing,
+            // If this data domain is a different level than we are currently processing,
             // short-circuit
             return false
         }

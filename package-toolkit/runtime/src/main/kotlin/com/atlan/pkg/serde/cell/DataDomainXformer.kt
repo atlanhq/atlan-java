@@ -35,11 +35,11 @@ object DataDomainXformer {
     }
 
     /**
-     * Decodes (deserializes) a string form into a category reference object.
+     * Decodes (deserializes) a string form into a data domain reference object.
      *
      * @param assetRef the string form to be decoded
      * @param fieldName the name of the field containing the string-encoded value
-     * @return the category reference represented by the string
+     * @return the data domain reference represented by the string
      */
     fun decode(
         assetRef: String,
