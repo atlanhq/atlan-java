@@ -111,6 +111,10 @@ public enum AtlanConnectorType implements AtlanEnum {
     MICROSTRATEGY("microstrategy", AtlanConnectionCategory.BI),
     AWS_GREENGRASS("aws-greengrass", AtlanConnectionCategory.DATABASE),
     AWS_SITE_WISE("aws-sitewise", AtlanConnectionCategory.DATABASE),
+    NETEZZA("netezza", AtlanConnectionCategory.WAREHOUSE),
+    AZURE_SERVICE_BUS("azureservicebus", AtlanConnectionCategory.EVENT_BUS),
+    COGNITE("cognite", AtlanConnectionCategory.SAAS),
+    SYNDIGO("syndigo", AtlanConnectionCategory.SAAS),
     ;
 
     @JsonValue
