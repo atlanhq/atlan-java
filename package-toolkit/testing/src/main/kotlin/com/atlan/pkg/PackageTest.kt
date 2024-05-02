@@ -7,6 +7,8 @@ import com.atlan.AtlanClient
 import com.atlan.exception.ConflictException
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Connection
+import com.atlan.model.assets.DataDomain
+import com.atlan.model.assets.DataProduct
 import com.atlan.model.assets.Glossary
 import com.atlan.model.assets.GlossaryTerm
 import com.atlan.model.enums.AtlanConnectorType
@@ -300,6 +302,34 @@ abstract class PackageTest {
 
         private fun getFile(filename: String, relativeTo: String): File {
             return if (relativeTo.isBlank()) File(filename) else File("$relativeTo${File.separator}$filename")
+        }
+
+        /**
+         * Remove the provided domain, if it exists
+         *
+         * @param name of the domain
+         */
+        fun removeDomain(name: String) {
+            val domainGuids = DataDomain.select()
+                .where(DataDomain.NAME.eq(name))
+                .stream()
+                .map { it.guid }
+                .toList()
+            if (domainGuids.isNotEmpty()) client.assets.delete(domainGuids, AtlanDeleteType.HARD)
+        }
+
+        /**
+         * Remove the provided products, if it exists
+         *
+         * @param name of the domain
+         */
+        fun removeProduct(name: String) {
+            val domainGuids = DataProduct.select()
+                .where(DataProduct.NAME.eq(name))
+                .stream()
+                .map { it.guid }
+                .toList()
+            if (domainGuids.isNotEmpty()) client.assets.delete(domainGuids, AtlanDeleteType.HARD)
         }
     }
 
