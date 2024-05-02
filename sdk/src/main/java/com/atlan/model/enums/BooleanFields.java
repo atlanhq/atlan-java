@@ -50,6 +50,8 @@ public enum BooleanFields implements AtlanSearchableField {
     GCS_BUCKET_VERSIONING_ENABLED("gcsBucketVersioningEnabled"),
     /** Whether the requester pays header was sent when this asset was created (true) or not (false). */
     GCS_REQUESTER_PAYS("gcsRequesterPays"),
+    /** Whether this asset has contract (true) or not (false). */
+    HAS_CONTRACT("hasContract"),
     /** Whether this datasource has extracts (true) or not (false). */
     HAS_EXTRACTS("hasExtracts"),
     /** Whether this asset has lineage (true) or not (false). */

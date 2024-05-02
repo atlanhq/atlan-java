@@ -301,6 +301,12 @@ public interface IGlossary {
     AtlanConnectorType getConnectorType();
 
     /** TBC */
+    IDataContract getDataContractLatest();
+
+    /** TBC */
+    IDataContract getDataContractLatestCertified();
+
+    /** TBC */
     String getDbtQualifiedName();
 
     /** TBC */
@@ -314,6 +320,9 @@ public interface IGlossary {
 
     /** TBC */
     AtlasGlossaryType getGlossaryType();
+
+    /** TBC */
+    Boolean getHasContract();
 
     /** TBC */
     Boolean getHasLineage();

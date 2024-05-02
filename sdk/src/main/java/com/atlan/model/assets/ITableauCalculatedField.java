@@ -314,6 +314,12 @@ public interface ITableauCalculatedField {
     /** Data category of this field. */
     String getDataCategory();
 
+    /** Latest version of the data contract (in any status) for this asset. */
+    IDataContract getDataContractLatest();
+
+    /** Latest certified version of the data contract for this asset. */
+    IDataContract getDataContractLatestCertified();
+
     /** Datasource in which this calculated field exists. */
     ITableauDatasource getDatasource();
 
@@ -334,6 +340,9 @@ public interface ITableauCalculatedField {
 
     /** Formula for this calculated field. */
     String getFormula();
+
+    /** Whether this asset has contract (true) or not (false). */
+    Boolean getHasContract();
 
     /** Whether this asset has lineage (true) or not (false). */
     Boolean getHasLineage();
@@ -416,7 +425,7 @@ public interface ITableauCalculatedField {
     /** Unique name of the project in which this calculated field exists. */
     String getProjectQualifiedName();
 
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    /** TBC */
     String getQualifiedName();
 
     /** README that is linked to this asset. */

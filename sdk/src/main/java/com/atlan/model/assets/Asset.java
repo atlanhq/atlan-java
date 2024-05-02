@@ -414,6 +414,14 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @JsonProperty("connectorName")
     AtlanConnectorType connectorType;
 
+    /** Latest version of the data contract (in any status) for this asset. */
+    @Attribute
+    IDataContract dataContractLatest;
+
+    /** Latest certified version of the data contract for this asset. */
+    @Attribute
+    IDataContract dataContractLatestCertified;
+
     /** Unique name of this asset in dbt. */
     @Attribute
     String dbtQualifiedName;
@@ -430,6 +438,10 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Attribute
     @Singular
     SortedSet<IFile> files;
+
+    /** Whether this asset has contract (true) or not (false). */
+    @Attribute
+    Boolean hasContract;
 
     /** Whether this asset has lineage (true) or not (false). */
     @Attribute
@@ -518,7 +530,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Attribute
     Double popularityScore;
 
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    /** TBC */
     @Attribute
     String qualifiedName;
 

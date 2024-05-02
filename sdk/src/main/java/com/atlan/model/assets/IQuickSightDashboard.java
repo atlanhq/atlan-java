@@ -283,6 +283,12 @@ public interface IQuickSightDashboard {
     /** Type of the connector through which this asset is accessible. */
     AtlanConnectorType getConnectorType();
 
+    /** Latest version of the data contract (in any status) for this asset. */
+    IDataContract getDataContractLatest();
+
+    /** Latest certified version of the data contract for this asset. */
+    IDataContract getDataContractLatestCertified();
+
     /** Unique name of this asset in dbt. */
     String getDbtQualifiedName();
 
@@ -294,6 +300,9 @@ public interface IQuickSightDashboard {
 
     /** TBC */
     SortedSet<IFile> getFiles();
+
+    /** Whether this asset has contract (true) or not (false). */
+    Boolean getHasContract();
 
     /** Whether this asset has lineage (true) or not (false). */
     Boolean getHasLineage();
@@ -370,7 +379,7 @@ public interface IQuickSightDashboard {
     /** Popularity score for this asset. */
     Double getPopularityScore();
 
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    /** TBC */
     String getQualifiedName();
 
     /** TBC */

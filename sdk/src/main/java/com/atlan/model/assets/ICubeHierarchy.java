@@ -305,6 +305,12 @@ public interface ICubeHierarchy {
     /** Unique name of the cube in which this asset exists, or empty if it is itself a cube. */
     String getCubeQualifiedName();
 
+    /** Latest version of the data contract (in any status) for this asset. */
+    IDataContract getDataContractLatest();
+
+    /** Latest certified version of the data contract for this asset. */
+    IDataContract getDataContractLatestCertified();
+
     /** Unique name of this asset in dbt. */
     String getDbtQualifiedName();
 
@@ -316,6 +322,9 @@ public interface ICubeHierarchy {
 
     /** TBC */
     SortedSet<IFile> getFiles();
+
+    /** Whether this asset has contract (true) or not (false). */
+    Boolean getHasContract();
 
     /** Whether this asset has lineage (true) or not (false). */
     Boolean getHasLineage();
@@ -392,7 +401,7 @@ public interface ICubeHierarchy {
     /** Popularity score for this asset. */
     Double getPopularityScore();
 
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    /** TBC */
     String getQualifiedName();
 
     /** README that is linked to this asset. */

@@ -313,6 +313,12 @@ public interface IAsset {
     /** Type of the connector through which this asset is accessible. */
     KeywordField CONNECTOR_TYPE = new KeywordField("connectorName", "connectorName");
 
+    /** Latest version of the data contract (in any status) for this asset. */
+    RelationField DATA_CONTRACT_LATEST = new RelationField("dataContractLatest");
+
+    /** Latest certified version of the data contract for this asset. */
+    RelationField DATA_CONTRACT_LATEST_CERTIFIED = new RelationField("dataContractLatestCertified");
+
     /** Unique name of this asset in dbt. */
     KeywordTextField DBT_QUALIFIED_NAME =
             new KeywordTextField("dbtQualifiedName", "dbtQualifiedName", "dbtQualifiedName.text");
@@ -325,6 +331,9 @@ public interface IAsset {
 
     /** TBC */
     RelationField FILES = new RelationField("files");
+
+    /** Whether this asset has contract (true) or not (false). */
+    BooleanField HAS_CONTRACT = new BooleanField("hasContract", "hasContract");
 
     /** Whether this asset has lineage (true) or not (false). */
     BooleanField HAS_LINEAGE = new BooleanField("__hasLineage", "__hasLineage");
@@ -737,6 +746,12 @@ public interface IAsset {
     /** Type of the connector through which this asset is accessible. */
     AtlanConnectorType getConnectorType();
 
+    /** Latest version of the data contract (in any status) for this asset. */
+    IDataContract getDataContractLatest();
+
+    /** Latest certified version of the data contract for this asset. */
+    IDataContract getDataContractLatestCertified();
+
     /** Unique name of this asset in dbt. */
     String getDbtQualifiedName();
 
@@ -748,6 +763,9 @@ public interface IAsset {
 
     /** TBC */
     SortedSet<IFile> getFiles();
+
+    /** Whether this asset has contract (true) or not (false). */
+    Boolean getHasContract();
 
     /** Whether this asset has lineage (true) or not (false). */
     Boolean getHasLineage();
@@ -806,7 +824,7 @@ public interface IAsset {
     /** Popularity score for this asset. */
     Double getPopularityScore();
 
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    /** TBC */
     String getQualifiedName();
 
     /** README that is linked to this asset. */

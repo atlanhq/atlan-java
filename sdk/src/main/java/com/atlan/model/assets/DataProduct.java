@@ -576,10 +576,10 @@ public class DataProduct extends Asset implements IDataProduct, IDataMesh, ICata
                         DataProductAssetsDSL.builder(assetSelection).build().toJson(client))
                 .dataProductAssetsPlaybookFilter("{\"condition\":\"AND\",\"isGroupLocked\":false,\"rules\":[]}");
     }
+
     /**
      * Builds the minimal object necessary for creating a DataProduct.
      *
-     * @param client connectivity to the Atlan tenant where the DataProduct is intended to be created
      * @param name of the DataProduct
      * @param domainQualifiedName unique name of the DataDomain in which this product exists
      * @param assetSelection a string containing a query that defines which assets to include in the data product

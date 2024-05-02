@@ -47,6 +47,13 @@
     final String deleteHandler;
 
     /**
+     * Depth of this asset within lineage.
+     * Note: this will only available in assets retrieved via lineage, and will vary even for
+     * the same asset depending on the starting point of the lineage requested.
+     */
+    final Integer depth;
+
+    /**
      * The names of the Atlan tags that exist on the asset. This is not always returned, even by
      * full retrieval operations. It is better to depend on the detailed values in the Atlan tags
      * property.

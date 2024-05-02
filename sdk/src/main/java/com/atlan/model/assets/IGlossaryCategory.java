@@ -307,6 +307,12 @@ public interface IGlossaryCategory {
     AtlanConnectorType getConnectorType();
 
     /** TBC */
+    IDataContract getDataContractLatest();
+
+    /** TBC */
+    IDataContract getDataContractLatestCertified();
+
+    /** TBC */
     String getDbtQualifiedName();
 
     /** TBC */
@@ -317,6 +323,9 @@ public interface IGlossaryCategory {
 
     /** TBC */
     SortedSet<IFile> getFiles();
+
+    /** TBC */
+    Boolean getHasContract();
 
     /** TBC */
     Boolean getHasLineage();

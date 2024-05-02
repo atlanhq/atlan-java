@@ -304,6 +304,12 @@ public interface IPowerBIWorkspace {
     /** Dashboards that exist within this workspace. */
     SortedSet<IPowerBIDashboard> getDashboards();
 
+    /** Latest version of the data contract (in any status) for this asset. */
+    IDataContract getDataContractLatest();
+
+    /** Latest certified version of the data contract for this asset. */
+    IDataContract getDataContractLatestCertified();
+
     /** Number of dataflows in this workspace. */
     Long getDataflowCount();
 
@@ -327,6 +333,9 @@ public interface IPowerBIWorkspace {
 
     /** TBC */
     SortedSet<IFile> getFiles();
+
+    /** Whether this asset has contract (true) or not (false). */
+    Boolean getHasContract();
 
     /** Whether this asset has lineage (true) or not (false). */
     Boolean getHasLineage();
@@ -415,7 +424,7 @@ public interface IPowerBIWorkspace {
     /** Unique name of the Power BI table in which this asset exists. */
     String getPowerBITableQualifiedName();
 
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    /** TBC */
     String getQualifiedName();
 
     /** README that is linked to this asset. */

@@ -574,6 +574,12 @@ public interface IColumn {
     /** Type of the connector through which this asset is accessible. */
     AtlanConnectorType getConnectorType();
 
+    /** Latest version of the data contract (in any status) for this asset. */
+    IDataContract getDataContractLatest();
+
+    /** Latest certified version of the data contract for this asset. */
+    IDataContract getDataContractLatestCertified();
+
     /** TBC */
     SortedSet<IMetric> getDataQualityMetricDimensions();
 
@@ -621,6 +627,9 @@ public interface IColumn {
 
     /** Columns that use this column as a foreign key. */
     SortedSet<IColumn> getForeignKeyTo();
+
+    /** Whether this asset has contract (true) or not (false). */
+    Boolean getHasContract();
 
     /** Whether this asset has lineage (true) or not (false). */
     Boolean getHasLineage();
@@ -772,7 +781,7 @@ public interface IColumn {
     /** Total number of digits allowed, when the dataType is numeric. */
     Integer getPrecision();
 
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    /** TBC */
     String getQualifiedName();
 
     /** Queries that access this column. */

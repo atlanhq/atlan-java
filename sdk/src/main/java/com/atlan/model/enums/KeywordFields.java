@@ -288,6 +288,10 @@ public enum KeywordFields implements AtlanSearchableField {
     AZURE_LOCATION("azureLocation"),
     /** Resource identifier of this asset in Azure. */
     AZURE_RESOURCE_ID("azureResourceId"),
+    /** Simple name of the AzureServiceBus Namespace in which this asset exists. */
+    AZURE_SERVICE_BUS_NAMESPACE_NAME("azureServiceBusNamespaceName.keyword"),
+    /** Unique name of the AzureServiceBus Namespace in which this asset exists. */
+    AZURE_SERVICE_BUS_NAMESPACE_QUALIFIED_NAME("azureServiceBusNamespaceQualifiedName"),
     /** Tags that have been applied to this asset in Azure. */
     AZURE_TAGS("azureTags"),
     /** List of conditions that determine the colors to diplay for various values. */
@@ -398,6 +402,10 @@ public enum KeywordFields implements AtlanSearchableField {
     DATASOURCE_QUALIFIED_NAME("datasourceQualifiedName"),
     /** Data category of this field. */
     DATA_CATEGORY("dataCategory"),
+    /** Unique identifier of the asset associated with this data contract. */
+    DATA_CONTRACT_ASSET_GUID("dataContractAssetGuid"),
+    /** Actual content of the contract in JSON string format. Any changes to this string should create a new instance (with new sequential version number). */
+    DATA_CONTRACT_JSON("dataContractJson"),
     /** Search DSL used to define which assets are part of this data product. */
     DATA_PRODUCT_ASSETS_DSL("dataProductAssetsDSL"),
     /** Playbook filter to define which assets are part of this data product. */

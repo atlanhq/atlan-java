@@ -46,7 +46,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @SuppressWarnings("cast")
 public class ADLSObject extends Asset
-        implements IADLSObject, IADLS, IAzure, IObjectStore, ICloud, IAsset, IReferenceable, ICatalog {
+        implements IADLSObject, IADLS, IObjectStore, IAzure, ICatalog, IAsset, IReferenceable, ICloud {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "ADLSObject";
