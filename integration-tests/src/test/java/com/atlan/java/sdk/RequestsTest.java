@@ -285,7 +285,12 @@ public class RequestsTest extends AtlanLiveTest {
             dependsOnGroups = {"request.create.*", "request.read.*", "request.update.*"},
             alwaysRun = true)
     void purgeToken() throws AtlanException {
-        deleteToken(token.getId());
+        if (token != null) {
+            deleteToken(token.getId());
+        } else {
+            ApiToken local = Atlan.getDefaultClient().apiTokens.get(API_TOKEN_NAME);
+            RequestsTest.deleteToken(local.getId());
+        }
     }
 
     @Test(
