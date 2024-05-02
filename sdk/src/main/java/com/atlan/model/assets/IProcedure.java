@@ -281,6 +281,12 @@ public interface IProcedure {
     /** Type of the connector through which this asset is accessible. */
     AtlanConnectorType getConnectorType();
 
+    /** Latest version of the data contract (in any status) for this asset. */
+    IDataContract getDataContractLatest();
+
+    /** Latest certified version of the data contract for this asset. */
+    IDataContract getDataContractLatestCertified();
+
     /** Simple name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
     String getDatabaseName();
 
@@ -310,6 +316,9 @@ public interface IProcedure {
 
     /** TBC */
     SortedSet<IFile> getFiles();
+
+    /** Whether this asset has contract (true) or not (false). */
+    Boolean getHasContract();
 
     /** Whether this asset has lineage (true) or not (false). */
     Boolean getHasLineage();
@@ -392,7 +401,7 @@ public interface IProcedure {
     /** Popularity score for this asset. */
     Double getPopularityScore();
 
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    /** TBC */
     String getQualifiedName();
 
     /** Number of times this asset has been queried. */

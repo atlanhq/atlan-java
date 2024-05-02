@@ -309,6 +309,12 @@ public interface ILineageProcess {
     AtlanConnectorType getConnectorType();
 
     /** TBC */
+    IDataContract getDataContractLatest();
+
+    /** TBC */
+    IDataContract getDataContractLatestCertified();
+
+    /** TBC */
     String getDbtQualifiedName();
 
     /** TBC */
@@ -319,6 +325,9 @@ public interface ILineageProcess {
 
     /** TBC */
     SortedSet<IFile> getFiles();
+
+    /** TBC */
+    Boolean getHasContract();
 
     /** TBC */
     Boolean getHasLineage();

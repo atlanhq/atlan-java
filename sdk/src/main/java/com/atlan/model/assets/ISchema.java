@@ -322,6 +322,12 @@ public interface ISchema {
     /** Type of the connector through which this asset is accessible. */
     AtlanConnectorType getConnectorType();
 
+    /** Latest version of the data contract (in any status) for this asset. */
+    IDataContract getDataContractLatest();
+
+    /** Latest certified version of the data contract for this asset. */
+    IDataContract getDataContractLatestCertified();
+
     /** Database in which this schema exists. */
     IDatabase getDatabase();
 
@@ -354,6 +360,9 @@ public interface ISchema {
 
     /** Functions that exist within this schema. */
     SortedSet<IFunction> getFunctions();
+
+    /** Whether this asset has contract (true) or not (false). */
+    Boolean getHasContract();
 
     /** Whether this asset has lineage (true) or not (false). */
     Boolean getHasLineage();
@@ -445,7 +454,7 @@ public interface ISchema {
     /** Stored procedures that exist within this schema. */
     SortedSet<IProcedure> getProcedures();
 
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    /** TBC */
     String getQualifiedName();
 
     /** Number of times this asset has been queried. */

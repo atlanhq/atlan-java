@@ -334,6 +334,12 @@ public interface IAtlanQuery {
     AtlanConnectorType getConnectorType();
 
     /** TBC */
+    IDataContract getDataContractLatest();
+
+    /** TBC */
+    IDataContract getDataContractLatestCertified();
+
+    /** TBC */
     String getDatabaseName();
 
     /** TBC */
@@ -365,6 +371,9 @@ public interface IAtlanQuery {
 
     /** TBC */
     SortedSet<IFile> getFiles();
+
+    /** TBC */
+    Boolean getHasContract();
 
     /** TBC */
     Boolean getHasLineage();

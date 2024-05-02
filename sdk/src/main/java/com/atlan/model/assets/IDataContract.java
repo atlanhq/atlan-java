@@ -8,6 +8,8 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
@@ -22,7 +24,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a data contract in Atlan.
+ * Data contract for an asset.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -31,8 +33,26 @@ public interface IDataContract {
 
     public static final String TYPE_NAME = "DataContract";
 
-    /** Data product in which this data contract exists. */
-    RelationField DATA_PRODUCT = new RelationField("dataProduct");
+    /** Asset this contract controls. */
+    RelationField DATA_CONTRACT_ASSET_CERTIFIED = new RelationField("dataContractAssetCertified");
+
+    /** Unique identifier of the asset associated with this data contract. */
+    KeywordField DATA_CONTRACT_ASSET_GUID = new KeywordField("dataContractAssetGuid", "dataContractAssetGuid");
+
+    /** Asset this contract controls or will control. */
+    RelationField DATA_CONTRACT_ASSET_LATEST = new RelationField("dataContractAssetLatest");
+
+    /** Actual content of the contract in JSON string format. Any changes to this string should create a new instance (with new sequential version number). */
+    KeywordField DATA_CONTRACT_JSON = new KeywordField("dataContractJson", "dataContractJson");
+
+    /** Data contract instance that holds the next version of this contract. */
+    RelationField DATA_CONTRACT_NEXT_VERSION = new RelationField("dataContractNextVersion");
+
+    /** Data contract instance that holds the previous version of this contract. */
+    RelationField DATA_CONTRACT_PREVIOUS_VERSION = new RelationField("dataContractPreviousVersion");
+
+    /** Version of the contract. */
+    NumericField DATA_CONTRACT_VERSION = new NumericField("dataContractVersion", "dataContractVersion");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -181,6 +201,9 @@ public interface IDataContract {
     /** Unique identifier of this asset in dbt. */
     String getAssetDbtUniqueId();
 
+    /** Name of the DBT workflow in Atlan that last updated the asset. */
+    String getAssetDbtWorkflowLastUpdated();
+
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();
 
@@ -241,6 +264,9 @@ public interface IDataContract {
     /** List of tags attached to this asset. */
     SortedSet<String> getAssetTags();
 
+    /** Color (in hexadecimal RGB) to use to represent this asset. */
+    String getAssetThemeHex();
+
     /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
@@ -265,8 +291,32 @@ public interface IDataContract {
     /** Type of the connector through which this asset is accessible. */
     AtlanConnectorType getConnectorType();
 
-    /** Data product in which this data contract exists. */
-    IDataProduct getDataProduct();
+    /** Asset this contract controls. */
+    IAsset getDataContractAssetCertified();
+
+    /** Unique identifier of the asset associated with this data contract. */
+    String getDataContractAssetGuid();
+
+    /** Asset this contract controls or will control. */
+    IAsset getDataContractAssetLatest();
+
+    /** Actual content of the contract in JSON string format. Any changes to this string should create a new instance (with new sequential version number). */
+    String getDataContractJson();
+
+    /** Latest version of the data contract (in any status) for this asset. */
+    IDataContract getDataContractLatest();
+
+    /** Latest certified version of the data contract for this asset. */
+    IDataContract getDataContractLatestCertified();
+
+    /** Data contract instance that holds the next version of this contract. */
+    IDataContract getDataContractNextVersion();
+
+    /** Data contract instance that holds the previous version of this contract. */
+    IDataContract getDataContractPreviousVersion();
+
+    /** Version of the contract. */
+    Long getDataContractVersion();
 
     /** Unique name of this asset in dbt. */
     String getDbtQualifiedName();
@@ -280,14 +330,23 @@ public interface IDataContract {
     /** TBC */
     SortedSet<IFile> getFiles();
 
+    /** Whether this asset has contract (true) or not (false). */
+    Boolean getHasContract();
+
     /** Whether this asset has lineage (true) or not (false). */
     Boolean getHasLineage();
+
+    /** Data products for which this asset is an input port. */
+    SortedSet<IDataProduct> getInputPortDataProducts();
 
     /** Tasks to which this asset provides input. */
     SortedSet<IAirflowTask> getInputToAirflowTasks();
 
     /** Processes to which this asset provides input. */
     SortedSet<ILineageProcess> getInputToProcesses();
+
+    /** TBC */
+    SortedSet<ISparkJob> getInputToSparkJobs();
 
     /** TBC */
     Boolean getIsAIGenerated();
@@ -300,9 +359,6 @@ public interface IDataContract {
 
     /** TBC */
     Boolean getIsPartial();
-
-    /** Whether this asset is published (true) or still a work in progress (false). */
-    Boolean getIsPublished();
 
     /** Time (epoch) of the last operation that inserted, updated, or deleted rows, in milliseconds. */
     Long getLastRowChangedAt();
@@ -325,15 +381,6 @@ public interface IDataContract {
     /** Monitors that observe this asset. */
     SortedSet<IMCMonitor> getMcMonitors();
 
-    /** Abbreviation for this asset. */
-    String getMeshAbbreviation();
-
-    /** URL for an image used as the cover for this asset. */
-    String getMeshCoverImageUrl();
-
-    /** Unique business key for this asset. */
-    String getMeshSlug();
-
     /** TBC */
     SortedSet<IMetric> getMetrics();
 
@@ -346,19 +393,22 @@ public interface IDataContract {
     /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
+    /** TBC */
+    SortedSet<ISparkJob> getOutputFromSparkJobs();
+
+    /** Data products for which this asset is an output port. */
+    SortedSet<IDataProduct> getOutputPortDataProducts();
+
     /** List of groups who own this asset. */
     SortedSet<String> getOwnerGroups();
 
     /** List of users who own this asset. */
     SortedSet<String> getOwnerUsers();
 
-    /** Unique name of the parent domain in which this asset exists. */
-    String getParentDomainQualifiedName();
-
     /** Popularity score for this asset. */
     Double getPopularityScore();
 
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    /** TBC */
     String getQualifiedName();
 
     /** README that is linked to this asset. */
@@ -450,9 +500,6 @@ public interface IDataContract {
 
     /** Subtype of this asset. */
     String getSubType();
-
-    /** Unique name of the top-level domain in which this asset exists. */
-    String getSuperDomainQualifiedName();
 
     /** Name of the Atlan workspace in which this asset exists. */
     String getTenantId();

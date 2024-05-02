@@ -122,6 +122,8 @@ public enum NumericFields implements AtlanSearchableField {
     DATAFLOW_COUNT("dataflowCount"),
     /** Number of datasets in this workspace. */
     DATASET_COUNT("datasetCount"),
+    /** Version of the contract. */
+    DATA_CONTRACT_VERSION("dataContractVersion"),
     /** Timestamp when the score of this data product was last updated. */
     DATA_PRODUCT_SCORE_UPDATED_AT("dataProductScoreUpdatedAt"),
     /** Score of this data product. */
