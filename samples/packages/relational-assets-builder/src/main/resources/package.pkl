@@ -12,6 +12,7 @@ iconUrl = "http://assets.atlan.com/assets/ph-database-light.svg"
 docsUrl = "https://solutions.atlan.com/relational-assets-builder/"
 implementationLanguage = "Kotlin"
 containerImage = "ghcr.io/atlanhq/\(name):\(BuildInfo.VERSION)"
+containerImagePullPolicy = if (BuildInfo.VERSION.endsWith("-SNAPSHOT")) "Always" else "IfNotPresent"
 containerCommand {
   "/dumb-init"
   "--"

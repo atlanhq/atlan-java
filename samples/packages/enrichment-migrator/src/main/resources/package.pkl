@@ -12,6 +12,7 @@ iconUrl = "http://assets.atlan.com/assets/ph-flow-arrow-light.svg"
 docsUrl = "https://solutions.atlan.com/enrichment-migrator/"
 implementationLanguage = "Kotlin"
 containerImage = "ghcr.io/atlanhq/\(name):\(BuildInfo.VERSION)"
+containerImagePullPolicy = if (BuildInfo.VERSION.endsWith("-SNAPSHOT")) "Always" else "IfNotPresent"
 containerCommand {
   "/dumb-init"
   "--"

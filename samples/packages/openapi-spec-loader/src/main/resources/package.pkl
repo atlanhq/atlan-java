@@ -13,6 +13,7 @@ iconUrl = "http://assets.atlan.com/assets/apispec.png"
 docsUrl = "https://solutions.atlan.com/openapi-spec-loader/"
 implementationLanguage = "Kotlin"
 containerImage = "ghcr.io/atlanhq/\(name):\(BuildInfo.VERSION)"
+containerImagePullPolicy = if (BuildInfo.VERSION.endsWith("-SNAPSHOT")) "Always" else "IfNotPresent"
 containerCommand {
   "/dumb-init"
   "--"
