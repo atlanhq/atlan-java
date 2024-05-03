@@ -12,6 +12,7 @@ iconUrl = "http://assets.atlan.com/assets/ph-tree-structure-light.svg"
 docsUrl = "https://solutions.atlan.com/lineage-builder/"
 implementationLanguage = "Kotlin"
 containerImage = "ghcr.io/atlanhq/\(name):\(BuildInfo.VERSION)"
+containerImagePullPolicy = if (BuildInfo.VERSION.endsWith("-SNAPSHOT")) "Always" else "IfNotPresent"
 containerCommand {
   "/dumb-init"
   "--"

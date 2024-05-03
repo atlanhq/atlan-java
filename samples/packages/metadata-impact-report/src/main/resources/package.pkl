@@ -12,6 +12,7 @@ iconUrl = "http://assets.atlan.com/assets/ph-projector-screen-chart-light.svg"
 docsUrl = "https://solutions.atlan.com/metadata-impact-report/"
 implementationLanguage = "Kotlin"
 containerImage = "ghcr.io/atlanhq/\(name):\(BuildInfo.VERSION)"
+containerImagePullPolicy = if (BuildInfo.VERSION.endsWith("-SNAPSHOT")) "Always" else "IfNotPresent"
 containerCommand {
   "/dumb-init"
   "--"
