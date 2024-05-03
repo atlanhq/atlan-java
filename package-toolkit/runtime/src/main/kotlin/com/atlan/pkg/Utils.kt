@@ -61,24 +61,20 @@ object Utils {
         val classpath = System.getProperty("java.class.path")
         var count = 1
         classpath.split(File.pathSeparator).forEach { p ->
-            val cp = if (p.endsWith("/*")) Paths.get(p.substringBefore("/*")) else Paths.get(p)
+            val cp = if (p.endsWith("*")) Paths.get(p.substringBefore("*")) else Paths.get(p)
             if (cp.isDirectory()) {
-                logger.debug { "Classpath ($count) $p (contains):" }
+                logger.debug { "Classpath ($count) $cp (contains):" }
                 cp.toFile().listFiles()?.forEach {
                     logger.debug { " ... ${it.name}" }
                 }
             } else {
-                logger.debug { "Classpath ($count) $p (file)" }
+                logger.debug { "Classpath ($count) $cp (file)" }
             }
             count++
         }
         logger.debug { "System class loader:" }
         val systemCL = ClassLoader.getSystemClassLoader()
         systemCL.definedPackages.forEach {
-            logger.debug { " ... $it" }
-        }
-        logger.debug { "Executing class loader:" }
-        Utils.javaClass.classLoader.definedPackages.forEach {
             logger.debug { " ... $it" }
         }
     }
