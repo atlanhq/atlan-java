@@ -70,6 +70,7 @@ class AssetExporter(
             .whereNot(FluentSearch.assetTypes(listOf(AuthPolicy.TYPE_NAME, Procedure.TYPE_NAME, AtlanQuery.TYPE_NAME)))
         if (ctx.assetsExportScope == "ENRICHED_ONLY") {
             builder
+                .whereSome(Asset.DISPLAY_NAME.hasAnyValue())
                 .whereSome(Asset.CERTIFICATE_STATUS.hasAnyValue())
                 .whereSome(Asset.USER_DESCRIPTION.hasAnyValue())
                 .whereSome(Asset.ANNOUNCEMENT_TYPE.hasAnyValue())
