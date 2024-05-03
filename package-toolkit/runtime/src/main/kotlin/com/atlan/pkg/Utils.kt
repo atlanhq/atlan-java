@@ -15,8 +15,10 @@ import mu.KotlinLogging
 import org.simplejavamail.email.EmailBuilder
 import org.simplejavamail.mailer.MailerBuilder
 import java.io.File
+import java.nio.file.Paths
 import java.util.concurrent.ThreadLocalRandom
 import java.util.concurrent.atomic.AtomicLong
+import kotlin.io.path.isDirectory
 import kotlin.math.round
 import kotlin.system.exitProcess
 
@@ -38,11 +40,46 @@ object Utils {
      */
     inline fun <reified T : CustomConfig> setPackageOps(): T {
         System.getProperty("logDirectory") ?: System.setProperty("logDirectory", "tmp")
+        logDiagnostics()
         logger.info { "Looking for configuration in environment variables..." }
         val config = parseConfigFromEnv<T>()
         setClient(config.runtime.userId ?: "")
         setWorkflowOpts(config.runtime)
         return config
+    }
+
+    /**
+     * Output details about the running container to the logs (debug-level) to be able to
+     * assist in case any deeper troubleshooting needs to be done.
+     */
+    fun logDiagnostics() {
+        logger.debug { "SDK version: ${Atlan.VERSION}" }
+        logger.debug { "Java properties:" }
+        System.getProperties().forEach { (k, v) ->
+            logger.debug { " ... $k = $v" }
+        }
+        logger.debug { "Environment variables:" }
+        System.getenv().forEach { (k, _) ->
+            logger.debug { " ... $k" }
+        }
+        val classpath = System.getProperty("java.class.path")
+        logger.debug { "Class path: $classpath" }
+        classpath.split(File.pathSeparator).forEach { p ->
+            val cp = Paths.get(p)
+            if (cp.isDirectory()) {
+                logger.debug { " ... $p (contains):" }
+                cp.toFile().listFiles()?.forEach {
+                    logger.debug { " ...... ${it.name}" }
+                }
+            } else {
+                logger.debug { " ... $p (file)" }
+            }
+        }
+        logger.debug { "Class loaders and their classes:" }
+        val systemCL = ClassLoader.getSystemClassLoader()
+        systemCL.definedPackages.forEach {
+            logger.debug { " ... $it" }
+        }
     }
 
     /**
