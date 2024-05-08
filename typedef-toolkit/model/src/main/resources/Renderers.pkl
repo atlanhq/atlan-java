@@ -85,7 +85,7 @@ class AssetTypes extends TypeScriptRenderer {
                     id: '\(assetType.name)',
                     label: '\(assetType?.label ?? assetType.name)',
                     fullLabel: '\(assetType?.label ?? assetType.name)',
-                    image: '\(assetType?.image ?? assetType.name)',
+                    image: '\(assetType?.icon.name ?? assetType.name)',
                     source: '\(supertype.name)',
                     categoryType: '\(supertype.name)',
                     relationships: [\(children)],
@@ -126,13 +126,32 @@ const function childRelationshipNames(fromAsset: Model.EntityDef, customTypes: M
 class Attributes extends TypeScriptRenderer {
   model = super.model
   assetType: String
-  fixed asset = model.customTypes.getOrNull(assetType)
+  fixed asset: Model.CustomAssetType? = model.customTypes.getOrNull(assetType)
   fixed entityDef = new Model.EntityDef {
     name = assetType
     description = asset.description
     superTypes { model.shared.supertypeDefinition.name }
     attributes = asset.attributes
   }
+  fixed breadcrumb: Map<String, Model.Breadcrumb> = model.shared.ui.breadcrumb?.toMap() ?? Map()
+  fixed bcDepth: Int = breadcrumb.keys.toList().indexOfOrNull(assetType) ?? 0
+  fixed bcKeys: List<String> = if (bcDepth > 0) breadcrumb.keys.toList().sublist(0, bcDepth) else List()
+
+  fixed minimalAttributes: Set<String> = new Listing {
+    when (asset?.parentQualifiedName != null) {
+        asset.parentQualifiedName
+    }
+    for (attributeDef: Model.AttributeDef in entityDef.attributeDefs ?? List()) {
+      when (attributeDef.childCount) {
+          attributeDef.name
+      }
+      // Include breadcrumb attributes
+      for (typeName in bcKeys) {
+        let (bcDetails = breadcrumb.getOrNull(typeName)) bcDetails?.q
+        let (bcDetails = breadcrumb.getOrNull(typeName)) bcDetails?.n
+      }
+    }
+  }.toSet()
 
   function renderTypeScript(): String =
     new Listing {
@@ -147,15 +166,10 @@ class Attributes extends TypeScriptRenderer {
         // attributes for asset cards, preview
         export const \(entityDef.name)MinimalAttributes = [
         """
-      for (attributeDef in entityDef.attributeDefs ?? List()) {
-        // TODO: Need to include supertype attributes necesary at this asset type's level
-        //  - so this shouldn't really be driven by the presence of a label at all (parentQualifiedName
-        //    will also be necessary attributes, even though they won't appear labeled in the UI)
-        when (attributeDef.label != null || attributeDef.labelPlural != null) {
-            """
-                '\(attributeDef.name)',
-            """
-        }
+      for (attr in minimalAttributes) {
+          """
+              '\(attr)',
+          """
       }
         """
         ] as const satisfies ReadonlyArray<EntityAttributeKeyFomTypeName<'\(entityDef.name)'>>
@@ -163,9 +177,9 @@ class Attributes extends TypeScriptRenderer {
         // additional attributes, for asset profile
         export const \(entityDef.name)AdditionalAttributes = [
         """
-      for (attributeDef in entityDef.attributeDefs ?? List()) {
-        when (attributeDef.label == null && attributeDef.labelPlural == null) {
-          // TODO: output only those attributeDefs that are additional, and still needed
+      for (attributeDef: Model.AttributeDef in entityDef.attributeDefs ?? List()) {
+        when (attributeDef.label != null && !minimalAttributes.contains(attributeDef.name)) {
+          // Include any other attributes with labels as additional
             """
                 '\(attributeDef.name)',
             """
@@ -202,6 +216,49 @@ class Attributes extends TypeScriptRenderer {
                     (typeof \(entityDef.name)MinimalAttributes)[number],
                     (typeof \(entityDef.name)RelationAttributes)[number]
                   >
+        """
+    }.join("\n")
+
+}
+
+/// Renders the TypeScript code snippet for projection.ts file referencing the attribute projections
+class Projection extends TypeScriptRenderer {
+  model = super.model
+  assetType: String
+  fixed customTypes = model.customTypes
+
+  function renderTypeScript(): String =
+    new Listing {
+      """
+      import { PolicyAttributes } from '~/constant/_projection'
+      import {
+          CalculationViewMinimalAttributes,
+          CalculationViewAdditionalAttributes,
+      } from '~/constant/source/sql/common/attributes/calculationView'
+      ...
+      // *** COPY / PASTE START ***
+      """
+      for (typeName, _ in customTypes) {
+        """
+        import { \(typeName)Attributes } from '~/constant/source/\(typeName.decapitalize())/attributes/\(typeName.decapitalize())'
+        """
+      }
+        """
+        // *** END COPY / PASTE ***
+
+        ...
+
+        export const AssetAttributes = [
+        // *** COPY / PASTE START ***
+        """
+      for (typeName, _ in customTypes) {
+          """
+              ...\(typeName)Attributes,
+          """
+      }
+        """
+        // *** END COPY / PASTE ***
+        ]
         """
     }.join("\n")
 
@@ -269,10 +326,12 @@ class Methods extends TypeScriptRenderer {
     }.join("\n")
 }
 
-// TODO: add renderer for getAssetTypes.ts file
 /// Renders the TypeScript code for the getAssetTypes.ts file.
 class GetAssetTypes extends TypeScriptRenderer {
   model = super.model
+
+  fixed assetTypes = model.customEntityDefs
+  fixed relationships = model.customRelationshipDefs
 
   function renderTypeScript(): String =
     new Listing {
@@ -296,7 +355,10 @@ class GetAssetTypes extends TypeScriptRenderer {
         """
       for (assetType, _ in model.customTypes ?? Map()) {
           """
-          import { \(assetType)MinimalAttributes } from '../attributes/\(assetType.decapitalize())'
+          import {
+              \(assetType)MinimalAttributes,
+              \(assetType)AdditionalAttributes,
+          } from '../attributes/\(assetType.decapitalize())'
           """
       }
         """
@@ -308,7 +370,298 @@ class GetAssetTypes extends TypeScriptRenderer {
             isCompact,
             t,
         }) => [
-
+        """
+      for (idx, assetType: Model.EntityDef in assetTypes) {
+        let (type: Model.CustomAssetType = model.customTypes?.getOrNull(assetType.name)!!)
+        """
+            {
+                id: '\(assetType.name)',
+                label: t('\(type.label)'),
+                fullLabel: t('\(type.label)'),
+                image: '\(type.icon.name)',
+                categoryType: '\(model.shared.supertypeDefinition.name)',
+                relationships: [
+        """
+        for (relationship: Model.RelationshipDef in relationships) {
+          when (relationship.endDef1.type == assetType.name && relationship.endDef1.isContainer) {
+            """
+                        '\(relationship.endDef1.name)',
+            """
+          }
+          when (relationship.endDef2.type == assetType.name && relationship.endDef2.isContainer) {
+              """
+                          '\(relationship.endDef2.name)',
+              """
+          }
+        }
+        """
+                ],
+                projections: {
+                    required: \(assetType.name)MinimalAttributes,
+                    additional: \(assetType.name)AdditionalAttributes,
+                }
+                priorityOrder: \(idx + 1),
+                discovery: {
+                    assetCard: {
+                        header: {
+                            blocks: [
+                                {
+                                    component: CompositeBlocks.Row,
+                                    children: getVisibleItems([
+                                        {
+                                            component: AtomicBlocks.Profiling,
+                                            visible: !isCompact,
+                                        },
+                                        {
+                                            component: AtomicBlocks.AnnouncementPopover,
+                                        },
+                                        {
+                                            component: AtomicBlocks.LineageLink,
+                                        },
+                                        {
+                                            component: AtomicBlocks.StarredByMe,
+                                            hideStar,
+                                            visible: !hideStar,
+                                        },
+                                    ]),
+                                    emits: [],
+                                    props: {
+                                        attrsToBindForComponent: {
+                                            class: 'flex items-center pl-3 ml-auto gap-x-1',
+                                        },
+                                    },
+                                },
+                            ],
+                        },
+                        body: {
+                            blocks: [
+                                {
+                                    component: AtomicBlocks.AssetDescription,
+                                    searchQueries,
+                                    visible: displayPreferences.includes(
+                                        DisplayPreference.DESCRIPTION
+                                    ),
+                                },
+                            ],
+                        },
+                        footer: {
+                            blocks: [
+                                { component: AtomicBlocks.LastEditedOrCreated },
+        """
+        for (attr in assetType.attributeDefs) {
+          when (attr.childCount) {
+            """
+                                    {
+                                        component: AtomicBlocks.ItemsCount,
+                                        countAttributePath: 'attributes.\(attr.name)',
+                                        singularLabel: t('\(attr.label)'),
+                                        pluralLabel: t('\(attr.labelPlural)'),
+                                    },
+            """
+          }
+        }
+        """
+                            ],
+                        },
+                    },
+                    filters: [], // TODO: asset type-specific filters
+                    profile: {
+                        tabs: [
+                            getOverviewTab({
+                                t,
+                                summary: {
+                                    blocks: [
+        """
+        for (relationship: Model.RelationshipDef in relationships) {
+          when (relationship.endDef1.type == assetType.name && relationship.endDef2.isContainer) {
+            let (relatedType: Model.CustomAssetType = model.customTypes.getOrNull(relationship.endDef2.type)!!)
+              """
+                                              {
+                                                  component: SummaryBlocks.ParentAssetDrawer,
+                                                  label: t('\(relatedType.label)'),
+                                                  parentAssetPath: 'attributes.\(model.customTypes.getOrNull(assetType.name)?.parentQualifiedName)',
+                                              },
+              """
+          }
+          when (relationship.endDef2.type == assetType.name && relationship.endDef1.isContainer) {
+            let (relatedType: Model.CustomAssetType = model.customTypes.getOrNull(relationship.endDef1.type)!!)
+              """
+                                              {
+                                                  component: SummaryBlocks.ParentAssetDrawer,
+                                                  label: t('\(relatedType.label)'),
+                                                  parentAssetPath: 'attributes.\(model.customTypes.getOrNull(assetType.name)?.parentQualifiedName)',
+                                              },
+              """
+          }
+        }
+        for (attr in assetType.attributeDefs) {
+          when (attr.childCount) {
+              """
+                                              {
+                                                  component: SummaryBlocks.KeyValue,
+                                                  key: t('\(attr.labelPlural.capitalize())'),
+                                                  value: 'attributes.\(attr.name)',
+                                                  isCount: true,
+                                              },
+              """
+          }
+        }
+        """
+                                        {
+                                            component: SummaryBlocks.ConnectionDrawer,
+                                        },
+                                    ],
+                                    showAIDescription: true,
+                                },
+                            }),
+        """
+        for (relationship: Model.RelationshipDef in relationships) {
+          when (relationship.endDef1.type == assetType.name && relationship.endDef1.isContainer) {
+            let (relatedType: Model.CustomAssetType = model.customTypes.getOrNull(relationship.endDef2.type)!!)
+              """
+                                  {
+                                      ...getRelatedAssetsTab({
+                                          t,
+                                          additional: {
+                                              facets: ({ asset }) => ({
+                                                  typeNames: ['\(relationship.endDef2.type)'],
+                                                  \(relatedType.parentQualifiedName):
+                                                      asset.attributes.qualifiedName,
+                                              }),
+                                          },
+                                      }),
+                                      label: t('\(relatedType.labelPlural)'),
+                                      tooltip: t('\(relatedType.labelPlural)'),
+                                      scrubbed: false,
+                                  },
+              """
+          }
+          when (relationship.endDef2.type == assetType.name && relationship.endDef2.isContainer) {
+            let (relatedType: Model.CustomAssetType = model.customTypes.getOrNull(relationship.endDef1.type)!!)
+              """
+                                  {
+                                      ...getRelatedAssetsTab({
+                                          t,
+                                          additional: {
+                                              facets: ({ asset }) => ({
+                                                  typeNames: ['\(relationship.endDef1.type)'],
+                                                  \(relatedType.parentQualifiedName):
+                                                      asset.attributes.qualifiedName,
+                                              }),
+                                          },
+                                      }),
+                                      label: t('\(relatedType.labelPlural)'),
+                                      tooltip: t('\(relatedType.labelPlural)'),
+                                      scrubbed: false,
+                                  },
+              """
+          }
+        }
+        """
+                        ],
+                    },
+                    preview: {
+                        tabs: [
+                            getPreviewOverviewTab({
+                                t,
+                                blocks: [
+        """
+        for (attr in assetType.attributeDefs) {
+          when (attr.childCount) {
+              """
+                                          {
+                                              component: AtomicBlocks.TabSwitcherTextBlock,
+                                              text: 'attributes.\(attr.name)',
+                                              label: t('\(attr.labelPlural.capitalize())'),
+                                              tabName: 'Relations',
+                                          },
+              """
+          }
+        }
+        """
+                                ],
+                            }),
+        """
+        for (relationship: Model.RelationshipDef in relationships) {
+          when (relationship.endDef1.type == assetType.name && relationship.endDef1.isContainer) {
+            let (relatedType: Model.CustomAssetType = model.customTypes.getOrNull(relationship.endDef2.type)!!)
+              """
+                                  {
+                                      ...getPreviewRelationsTab({
+                                          t,
+                                          additional: {
+                                              facets: ({ asset }) => ({
+                                                  typeNames: ['\(relationship.endDef2.type)'],
+                                                  \(relatedType.parentQualifiedName):
+                                                      asset.attributes.qualifiedName,
+                                              }),
+                                          },
+                                      }),
+                                      label: t('\(relatedType.labelPlural)'),
+                                      icon: '\(relatedType.icon.name)',
+                                      activeIcon: '\(relatedType.icon.nameActive)',
+                                  },
+              """
+          }
+          when (relationship.endDef2.type == assetType.name && relationship.endDef2.isContainer) {
+            let (relatedType: Model.CustomAssetType = model.customTypes.getOrNull(relationship.endDef1.type)!!)
+              """
+                                  {
+                                      ...getPreviewRelationsTab({
+                                          t,
+                                          additional: {
+                                              facets: ({ asset }) => ({
+                                                  typeNames: ['\(relationship.endDef1.type)'],
+                                                  \(relatedType.parentQualifiedName):
+                                                      asset.attributes.qualifiedName,
+                                              }),
+                                          },
+                                      }),
+                                      label: t('\(relatedType.labelPlural)'),
+                                      icon: '\(relatedType.icon.name)',
+                                      activeIcon: '\(relatedType.icon.nameActive)',
+                                  },
+              """
+          }
+        }
+        """
+                            getPreviewLineageTab({ t }),
+                            getPreviewActivityTab({ t }),
+                            getPreviewResourcesTab({ t }),
+                            getPreviewRequestsTab({ t }),
+                            getPreviewPropertiesTab({
+                                t,
+                                blocks: [
+                                    { component: AtomicBlocks.SourceUpdated },
+                                    { component: AtomicBlocks.SourceCreated },
+                                    { component: SummaryBlocks.ConnectionDrawer },
+                                    {
+                                        component: AtomicBlocks.CopyAttribute,
+                                        attributePath: 'guid',
+                                        label: t('Unique identifier'),
+                                        successMessage: t('Identifier copied!'),
+                                    },
+                                    {
+                                        component: AtomicBlocks.CopyAttribute,
+                                        attributePath: 'attributes.qualifiedName',
+                                        label: t('Qualified name'),
+                                        successMessage: t('Qualified name copied'),
+                                    },
+                                    { component: AtomicBlocks.Divider },
+                                    { component: AtomicBlocks.LastUpdatedByInAtlan },
+                                    { component: AtomicBlocks.LastUpdatedInAtlan },
+                                    { component: AtomicBlocks.LastSyncedInAtlan },
+                                    { component: AtomicBlocks.CreatedInAtlan },
+                                    { component: AtomicBlocks.CreatedByInAtlan },
+                                ],
+                            }),
+                        ],
+                    },
+                },
+            }
+        """
+      }
+        """
         ]
         """
     }.join("\n")
@@ -327,15 +680,16 @@ class HierarchyFilters extends TypeScriptRenderer {
         export const hierarchyFilters: hierarchyFiltersInterface[] = [
         """
       for (filter in model.shared.ui?.hierarchyFilters ?? List()) {
+        let (type: Model.CustomAssetType = model.customTypes.getOrNull(filter.typeName)!!)
           """
-                    {
-                        typeName: '\(filter.typeName)',
-                        name: '\(filter.label)',
-                        parent: '\(filter.parent)',
-                        attribute: '\(filter.attribute)',
-                        level: \(filter.level),
-                        image: '\(filter.image)',
-                    },
+              {
+                  typeName: '\(filter.typeName)',
+                  name: '\(type.label)',
+                  parent: '\(filter.parent)',
+                  attribute: '\(filter.attribute)',
+                  level: \(filter.level),
+                  image: '\(type.icon.name)',
+              },
           """
       }
         """
@@ -364,7 +718,39 @@ class IndexL1 extends TypeScriptRenderer {
   function renderTypeScript(): String =
     new Listing {
         """
+        // *** COPY / PASTE START ***
         export * as \(model.shared.supertypeDefinition.name.decapitalize()) from './\(model.shared.supertypeDefinition.name.decapitalize())'
+        // *** END COPY / PASTE ***
+
+        import { assetTypeList as atlanNativeAssetTypes } from './atlanNative/assetTypes'
+        import { assetTypeInterface } from '~/types/sourceConfigs/assetType.interface'
+        import { TAGS_ASSET_TYPENAMES } from '~/constant/governance/classification'
+
+        // Utils
+        import { autoIncrementGroupOrder } from '~/utils/sourceConfig/groupOrder'
+        import { getAssetTypes } from './bi/preset/getAssetTypes'
+        // An array of all sources, including SQL, BI, SaaS, objectStore, API, ELT, and eventStore.
+        export const SourceList = [
+            ...Object.values(queryableSql).map((component) => component.default),
+            ...Object.values(nonQueryableSql).map((component) => component.default),
+        ...
+        // *** COPY / PASTE START ***
+            ...Object.values(\(model.shared.supertypeDefinition.name.decapitalize())).map((component) => component.default),
+        // *** END COPY / PASTE ***
+            api.default,
+        ]
+
+        ...
+
+        export const SuperTypeNameEnum = {
+            SQL: 'SQL',
+            BI: 'BI',
+            SaaS: 'SaaS',
+        ...
+        // *** COPY / PASTE START ***
+            \(model.shared.supertypeDefinition.name): '\(model.shared.supertypeDefinition.name)',
+        // *** END COPY / PASTE ***
+        }
         """
     }.join("\n")
 }
@@ -373,30 +759,25 @@ class IndexL1 extends TypeScriptRenderer {
 class Localizations extends TypeScriptRenderer {
   model = super.model
 
+  // TODO: any others once we've implemented further extensibility
+  fixed labels: Set<String> = new Listing {
+    for (entityDef: Model.EntityDef in model.customEntityDefs ?? List()) {
+      when (entityDef.label != null) { entityDef.label }
+      when (entityDef.labelPlural != null) { entityDef.labelPlural }
+      for (attrDef: Model.AttributeDef in entityDef.attributeDefs) {
+        when (attrDef.label != null) { attrDef.label }
+        when (attrDef.labelPlural != null) { attrDef.labelPlural }
+      }
+    }
+  }.toSet()
+
   function renderTypeScript(): String =
     new Listing {
-      for (entityDef: Model.EntityDef in model.customEntityDefs ?? List()) {
+      for (label in labels) {
         """
-        "\(entityDef.label ?? entityDef.name)": "\(entityDef.label ?? entityDef.name)"
-        """
-        for (attrDef: Model.AttributeDef in entityDef.attributeDefs) {
-          """
-          "\(attrDef.label ?? attrDef.name)": "\(attrDef.label ?? attrDef.name)"
-          """
-          when (attrDef.labelPlural != null) {
-            """
-            "\(attrDef.labelPlural)": "\(attrDef.labelPlural)"
-            """
-          }
-        }
-      }
-      for (_, filter in model.shared.ui?.filters ?? Map()) {
-        """
-        "\(filter.label)": "\(filter.label)"
+        "\(label)": "\(label)"
         """
       }
-      // TODO: there could be duplicates across the labels above, so we should deduplicate them
-      // TODO: others once we've implemented the getAssetTypes class
     }.join("\n")
 }
 
@@ -406,17 +787,52 @@ class IconMap extends TypeScriptRenderer {
 
   function renderTypeScript(): String =
     new Listing {
-      // TODO: iterate through images to output icon entries
-        /*"""
-        // Towards the top, with other similar lines...
-        import \(iconName) from '~/assets/images/icons/\(svgName)'
+      """
+      import { defineAsyncComponent } from 'vue'
 
-        // Skip towards the bottom...
-        export default { // This line should already exist
-            \(iconName),
-            ...
-        } // This line should already exist
-        """*/
+      // source list
+      import Snowflake from '~/assets/images/source/svg/Snowflake.svg'
+      ...
+      // *** COPY / PASTE START ***
+      """
+      for (_, details: Model.CustomAssetType in model.customTypes ?? Map()) {
+          """
+          import \(details.icon.name) from '\(details.icon.path)',
+          """
+        when (details.icon.activeVariant) {
+            """
+            import \(details.icon.nameActive) from '\(details.icon.pathActive)',
+            """
+        }
+      }
+      """
+      // *** END COPY / PASTE ***
+      // Don't remove below comment used by plop
+      // INSERT NEW ICON IMPORT HERE
+      import Rule from '~/assets/images/icons/rule.svg'
+      ...
+
+      export default {
+          // Don't remove below comment used by plop
+          // INSERT RETURN HERE
+          ...
+          // *** COPY / PASTE START ***
+      """
+      for (_, details: Model.CustomAssetType in model.customTypes ?? Map()) {
+        """
+            \(details.icon.name),
+        """
+        when (details.icon.activeVariant) {
+            """
+                \(details.icon.nameActive),
+            """
+        }
+      }
+      """
+          // *** END COPY / PASTE ***
+          ...
+      }
+      """
     }.join("\n")
 }
 
@@ -438,7 +854,7 @@ class ParentAssetInline extends TypeScriptRenderer {
               <AssetItemFilterTooltip
                   v-if="is\(superTypeName)Asset(asset) && \(details.n)(asset) && !isCompact"
                   type="\(typeName)"
-                  icon="\(type.image)"
+                  icon="\(type.icon.name)"
                   :title="\(details.n)(asset)"
                   :hideSearch="page !== 'assets'"
                   :showDrawerIcon="page !== 'assets'"

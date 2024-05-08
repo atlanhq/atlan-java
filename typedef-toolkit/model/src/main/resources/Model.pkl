@@ -132,11 +132,17 @@ class CustomAssetType {
   /// in the subtype.
   hidden attributes: Mapping<String, AttributeDef>?
 
-  /// Label for this type as it should appear in the UI.
+  /// Label for this type as it should appear in the UI (when singular).
   hidden label: String?
 
-  /// Image to represent the custom asset in the UI.
-  hidden image: String?
+  /// Label for this type as it should appear in the UI (when plural).
+  hidden labelPlural: String? = if (label != null) "\(label)s" else null
+
+  /// Icon to represent the custom asset in the UI.
+  hidden icon: Icon?
+
+  /// Name of the attribute containing the unique name of this asset's parent asset (denormalized).
+  hidden parentQualifiedName: String?
 
   /// (Optional) [Enumerations][EnumDef] that are specific to the custom asset.
   hidden enums: Mapping<String, EnumDef>?
@@ -194,11 +200,14 @@ open class TypeDef {
 class EntityDef extends TypeDef {
   name: String(PascalCase)
 
-  /// Label for this type as it should appear in the UI.
+  /// Label for this type as it should appear in the UI (when singular).
   hidden label: String?
 
-  /// Image to represent the asset in the UI.
-  hidden image: String?
+  /// Label for this type as it should appear in the UI (when plural).
+  hidden labelPlural: String? = if (label != null) "\(label)s" else null
+
+  /// Icon to represent the asset in the UI.
+  hidden icon: Icon?
 
   /// Category is set automatically and fixed (should not be changed).
   fixed category = "ENTITY"
@@ -242,7 +251,10 @@ open class AttributeDef {
   hidden label: String?
 
   /// Label for this attribute as it should appear in the UI (when plural).
-  hidden labelPlural: String?
+  hidden labelPlural: String? = if (label != null) "\(label)s" else null
+
+  /// Whether this attribute captures a count of children assets (true) or not (default, false).
+  hidden childCount: Boolean = false
 
   /// Explanation of the attribute (what data it holds, how it is used).
   description: String
@@ -546,13 +558,34 @@ class ImageDetails {
   svg: String(endsWith(".svg"))
 }
 
+/// Details for an icon.
+class Icon {
+  /// Name of the icon.
+  name: String
+
+  /// (Generated) Name of the active version of the icon (if any).
+  nameActive: String = if (activeVariant) "\(name)Active" else name
+
+  /// Filename for the SVG of the icon. (File itself should be placed under ~/assets/images/icons/.)
+  svg: String(endsWith(".svg"))
+
+  /// Filename for the SVG of the active version of the icon. (File itself should be placed under ~/assets/images/icons/.)
+  svgActive: String(endsWith(".svg")) = svg
+
+  /// Whether there is an active variant of this icon (true) or not (false).
+  fixed activeVariant: Boolean = svgActive != svg
+
+  /// (Generated) Path for the icon file.
+  fixed path = "~/assets/images/icons/\(svg)"
+
+  /// (Generated) Path for the active version of the icon file (if any).
+  fixed pathActive = "~/assets/images/icons/\(svgActive)"
+}
+
 /// Details for a single level of the hierarchy to filter by in overall discovery.
 class FilterUI {
   /// (Generated) Name of the asset type that is selected at this level of the filter hierarchy.
   typeName: String
-
-  /// Label to show in the UI when describing this level of the filter.
-  label: String
 
   /// (Generated) Name of the parent level in the filter hierarchy.
   parent: String
@@ -562,16 +595,13 @@ class FilterUI {
 
   /// (Generated) Level of the filter in the hierarchy.
   level: Int32
-
-  /// Name of the image to use to repersent this level of the filter, which must already exist in the iconMap.
-  image: String
 }
 
 /// Configuration of the user interface specific to one asset type.
 class TypeUI {
 
-  /// Name of the image to use to repersent this level of the filter, which must already exist in the iconMap.
-  image: String
+  /// Icon to use to repersent this level of the filter, which must already exist in the iconMap.
+  icon: Icon
   searchCard: SearchCardUI?
   profileTabs: ProfileTabUI?
   sidebarTabs: SidebarTabUI?
@@ -639,8 +669,16 @@ const function getOutputs(m): Mapping<String, FileOutput> = new Mapping {
   ["frontend/src/locales/en.json-snippet"] = new FileOutput {
     renderer = new Renderers.Localizations { model = m }
   }
-  // TODO: render placeholders for each of the custom icons?
-  // ["frontend/src/assets/images/icons/...svg"]
+  for (_, asset: CustomAssetType in m.customTypes) {
+    ["frontend/src/assets/images/icons/\(asset.icon.svg)-PLACEHOLDER"] = new FileOutput {
+      text = "REPLACE WITH ACTUAL SVG FILE"
+    }
+    when (asset.icon.activeVariant) {
+      ["frontend/src/assets/images/icons/\(asset.icon.svgActive)-PLACEHOLDER"] = new FileOutput {
+        text = "REPLACE WITH ACTUAL SVG FILE"
+      }
+    }
+  }
   ["frontend/src/components/common/icon/iconMap.ts-snippet"] = new FileOutput {
     renderer = new Renderers.IconMap { model = m }
   }
@@ -654,6 +692,9 @@ const function getOutputs(m): Mapping<String, FileOutput> = new Mapping {
     }
     ["frontend/src/constant/source/\(m.shared.supertypeDefinition.name.decapitalize())/common/hierarchyFilters.ts"] = new FileOutput {
       renderer = new Renderers.HierarchyFilters { model = m }
+    }
+    ["frontend/src/constant/projection.ts-snippet"] = new FileOutput {
+      renderer = new Renderers.Projection { model = m }
     }
     for (typeName, asset in m.customTypes) {
       ["frontend/src/api/schemas/metastore/atlas/entityDefs/\(m.shared.supertypeDefinition.name)/\(typeName).json"] = getCustomTypeJson(typeName, asset, m.shared.supertypeDefinition.name)
@@ -699,7 +740,8 @@ const function getCustomTypeJson(typeName: String, asset: CustomAssetType, super
 const function customTypeToEntityDef(customType: CustomAssetType, typeName: String, supertypeName: String): EntityDef = new EntityDef {
   name = typeName
   label = customType.label
-  image = customType.image
+  labelPlural = customType.labelPlural
+  icon = customType.icon
   description = customType.description
   superTypes = new {
     supertypeName
