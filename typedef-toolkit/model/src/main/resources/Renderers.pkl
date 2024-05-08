@@ -240,7 +240,7 @@ class Projection extends TypeScriptRenderer {
       """
       for (typeName, _ in customTypes) {
         """
-        import { \(typeName)Attributes } from '~/constant/source/\(typeName.decapitalize())/attributes/\(typeName.decapitalize())'"
+        import { \(typeName)Attributes } from '~/constant/source/\(typeName.decapitalize())/attributes/\(typeName.decapitalize())'
         """
       }
         """
