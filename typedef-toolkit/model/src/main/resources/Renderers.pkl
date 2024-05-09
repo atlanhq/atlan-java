@@ -240,7 +240,7 @@ class Projection extends TypeScriptRenderer {
       """
       for (typeName, _ in customTypes) {
         """
-        import { \(typeName)Attributes } from '~/constant/source/\(typeName.decapitalize())/attributes/\(typeName.decapitalize())'
+        import { \(typeName)Attributes } from '~/constant/source/\(model.shared.supertypeDefinition.name.decapitalize())/attributes/\(typeName.decapitalize())'
         """
       }
         """
@@ -399,7 +399,7 @@ class GetAssetTypes extends TypeScriptRenderer {
                 projections: {
                     required: \(assetType.name)MinimalAttributes,
                     additional: \(assetType.name)AdditionalAttributes,
-                }
+                },
                 priorityOrder: \(idx + 1),
                 discovery: {
                     assetCard: {
@@ -658,7 +658,7 @@ class GetAssetTypes extends TypeScriptRenderer {
                         ],
                     },
                 },
-            }
+            },
         """
       }
         """
@@ -719,7 +719,7 @@ class IndexL1 extends TypeScriptRenderer {
     new Listing {
         """
         // *** COPY / PASTE START ***
-        export * as \(model.shared.supertypeDefinition.name.decapitalize()) from './\(model.shared.supertypeDefinition.name.decapitalize())'
+        import * as \(model.shared.supertypeDefinition.name.decapitalize()) from './\(model.shared.supertypeDefinition.name.decapitalize())'
         // *** END COPY / PASTE ***
 
         import { assetTypeList as atlanNativeAssetTypes } from './atlanNative/assetTypes'
@@ -846,30 +846,50 @@ class ParentAssetInline extends TypeScriptRenderer {
       """
       <template>
           <div class="flex items-center gap-x-1.5 gap-y-1">
-          <!-- *** COPY / PASTE START *** -->
+              <!-- connector name -->
+              <AssetItemFilterTooltip
+                  v-if="
+                      connectionName(asset) &&
+                      preference?.display?.includes('connection')
+                  "
+                  type="Connection"
+                  icon="Connection"
+                  :title="connectionName(asset)"
+                  :hideSearch="page !== 'assets'"
+                  :showDrawerIcon="page !== 'assets'"
+                  :isButtonHidden="isAssetPartial"
+                  :showCaret="false"
+                  @guidToFetch="
+                      handleOpenDrawer(
+                          'connectionQualifiedName',
+                          connectionQualifiedName(asset)
+                      )
+                  "
+              />
+              <!-- *** COPY / PASTE START *** -->
       """
       for (typeName, details in model.shared.ui?.breadcrumb ?? Map()) {
         let (type = model.customTypes?.getOrNull(typeName)!!)
           """
-              <AssetItemFilterTooltip
-                  v-if="is\(superTypeName)Asset(asset) && \(details.n)(asset) && !isCompact"
-                  type="\(typeName)"
-                  icon="\(type.icon.name)"
-                  :title="\(details.n)(asset)"
-                  :hideSearch="page !== 'assets'"
-                  :showDrawerIcon="page !== 'assets'"
-                  :isButtonHidden="isAssetPartial"
-                  :showCaret="
-                      !page.startsWith('excel') && !page.startsWith('gsheets')
-                  "
-                  @guidToFetch="
-                      handleOpenDrawer('\(details.q)', \(details.q)(asset))
-                  "
-              />
+                  <AssetItemFilterTooltip
+                      v-if="is\(superTypeName)Asset(asset) && \(details.n)(asset) && !isCompact"
+                      type="\(typeName)"
+                      icon="\(type.icon.name)"
+                      :title="\(details.n)(asset)"
+                      :hideSearch="page !== 'assets'"
+                      :showDrawerIcon="page !== 'assets'"
+                      :isButtonHidden="isAssetPartial"
+                      :showCaret="
+                          !page.startsWith('excel') && !page.startsWith('gsheets')
+                      "
+                      @guidToFetch="
+                          handleOpenDrawer('\(details.q)', \(details.q)(asset))
+                      "
+                  />
           """
       }
       """
-          <!-- *** END COPY / PASTE *** -->
+              <!-- *** END COPY / PASTE *** -->
           </div>
       </template>
 
