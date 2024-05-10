@@ -47,31 +47,49 @@ object CanonicalExampleTest {
         assertEquals(1, model.shared.supertypeDefinition.superTypes.size)
         assertEquals("Catalog", model.shared.supertypeDefinition.superTypes[0])
         assertNotNull(model.shared.supertypeDefinition.attributeDefs)
-        assertEquals(1, model.shared.supertypeDefinition.attributeDefs!!.size)
-        assertEquals("customSourceId", model.shared.supertypeDefinition.attributeDefs!![0].name)
-        assertEquals("Unique identifier for the Custom asset from the source system.", model.shared.supertypeDefinition.attributeDefs!![0].description)
-        assertEquals("string", model.shared.supertypeDefinition.attributeDefs!![0].typeName)
+        assertEquals(3, model.shared.supertypeDefinition.attributeDefs.size)
+        assertEquals("customSourceId", model.shared.supertypeDefinition.attributeDefs[0].name)
+        assertEquals("Unique identifier for the Custom asset from the source system.", model.shared.supertypeDefinition.attributeDefs[0].description)
+        assertEquals("string", model.shared.supertypeDefinition.attributeDefs[0].typeName)
+        assertEquals("customDatasetName", model.shared.supertypeDefinition.attributeDefs[1].name)
+        assertEquals("Simple name of the dataset in which this asset exists, or empty if it is itself a dataset.", model.shared.supertypeDefinition.attributeDefs[1].description)
+        assertEquals("string", model.shared.supertypeDefinition.attributeDefs[1].typeName)
+        assertEquals("customDatasetQualifiedName", model.shared.supertypeDefinition.attributeDefs[2].name)
+        assertEquals("Unique name of the dataset in which this asset exists, or empty if it is itself a dataset.", model.shared.supertypeDefinition.attributeDefs[2].description)
+        assertEquals("string", model.shared.supertypeDefinition.attributeDefs[2].typeName)
     }
 
     @Test
     fun testCustomTypes() {
         assertNotNull(model.customTypes)
-        assertEquals(2, model.customTypes!!.size)
-        assertEquals(2, model.customEntityDefs!!.size)
+        assertEquals(3, model.customTypes!!.size)
+        assertEquals(3, model.customEntityDefs!!.size)
+    }
+
+    @Test
+    fun testDatasetType() {
+        val dataset = model.customEntityDefs!![0]
+        assertNotNull(dataset)
+        assertEquals("CustomDataset", dataset.name)
+        assertEquals("Instances of CustomDataset in Atlan.", dataset.description)
+        assertEquals(1, dataset.superTypes.size)
+        assertEquals("Custom", dataset.superTypes[0])
+        assertTrue(dataset.attributeDefs.isEmpty())
     }
 
     @Test
     fun testTableType() {
-        val table = model.customEntityDefs!![0]
+        val table = model.customEntityDefs!![1]
         assertNotNull(table)
         assertEquals("CustomTable", table.name)
         assertEquals("Instances of CustomTable in Atlan.", table.description)
-        assertEquals(1, table.superTypes.size)
+        assertEquals(2, table.superTypes.size)
         assertEquals("Custom", table.superTypes[0])
-        assertEquals(1, table.attributeDefs?.size)
-        assertEquals("customRatings", table.attributeDefs!![0].name)
+        assertEquals("Table", table.superTypes[1])
+        assertEquals(1, table.attributeDefs.size)
+        assertEquals("customRatings", table.attributeDefs[0].name)
         assertEquals("Ratings for the CustomTable asset from the source system.", table.attributeDefs!![0].description)
-        assertEquals("array<CustomRatings>", table.attributeDefs!![0].typeName)
+        assertEquals("array<CustomRatings>", table.attributeDefs[0].typeName)
     }
 
     @Test
@@ -86,27 +104,28 @@ object CanonicalExampleTest {
         assertNotNull(ratings)
         assertEquals("CustomRatings", ratings.name)
         assertEquals("Ratings for an asset from the source system.", ratings.description)
-        assertEquals(2, ratings.attributeDefs?.size)
-        assertEquals("customRatingFrom", ratings.attributeDefs!![0].name)
-        assertEquals("Username of the user who left the rating.", ratings.attributeDefs!![0].description)
-        assertEquals("string", ratings.attributeDefs!![0].typeName)
-        assertEquals("customRatingOf", ratings.attributeDefs!![1].name)
-        assertEquals("Numeric score for the rating left by the user.", ratings.attributeDefs!![1].description)
-        assertEquals("long", ratings.attributeDefs!![1].typeName)
+        assertEquals(2, ratings.attributeDefs.size)
+        assertEquals("customRatingFrom", ratings.attributeDefs[0].name)
+        assertEquals("Username of the user who left the rating.", ratings.attributeDefs[0].description)
+        assertEquals("string", ratings.attributeDefs[0].typeName)
+        assertEquals("customRatingOf", ratings.attributeDefs[1].name)
+        assertEquals("Numeric score for the rating left by the user.", ratings.attributeDefs[1].description)
+        assertEquals("long", ratings.attributeDefs[1].typeName)
     }
 
     @Test
     fun testFieldType() {
-        val field = model.customEntityDefs!![1]
+        val field = model.customEntityDefs!![2]
         assertNotNull(field)
         assertEquals("CustomField", field.name)
         assertEquals("Instances of CustomField in Atlan.", field.description)
-        assertEquals(1, field.superTypes.size)
+        assertEquals(2, field.superTypes.size)
         assertEquals("Custom", field.superTypes[0])
-        assertEquals(1, field.attributeDefs?.size)
-        assertEquals("customTemperature", field.attributeDefs!![0].name)
-        assertEquals("Temperature of the CustomTable asset.", field.attributeDefs!![0].description)
-        assertEquals("CustomTemperatureType", field.attributeDefs!![0].typeName)
+        assertEquals("Column", field.superTypes[1])
+        assertEquals(1, field.attributeDefs.size)
+        assertEquals("customTemperature", field.attributeDefs[0].name)
+        assertEquals("Temperature of the CustomTable asset.", field.attributeDefs[0].description)
+        assertEquals("CustomTemperatureType", field.attributeDefs[0].typeName)
     }
 
     @Test
@@ -133,25 +152,41 @@ object CanonicalExampleTest {
     @Test
     fun testCustomRelationships() {
         assertNotNull(model.customRelationshipDefs)
-        assertEquals(1, model.customRelationshipDefs!!.size)
+        assertEquals(2, model.customRelationshipDefs!!.size)
     }
 
     @Test
     fun testFieldRelationship() {
-        val relationship = model.customRelationshipDefs!![0]
-        assertNotNull(relationship)
-        assertEquals("custom_table_custom_fields", relationship.name)
-        assertEquals("Containment relationship between CustomTable and CustomField.", relationship.description)
-        assertEquals("CustomTable", relationship.endDef1.type)
-        assertEquals("CustomField", relationship.endDef2.type)
-        assertEquals("customFields", relationship.endDef1.name)
-        assertEquals("customTable", relationship.endDef2.name)
-        assertEquals("CustomField assets contained within this CustomTable.", relationship.endDef1.description)
-        assertEquals("CustomTable asset containing this CustomField.", relationship.endDef2.description)
-        assertTrue(relationship.endDef1.isContainer)
-        assertFalse(relationship.endDef2.isContainer)
-        assertEquals(Model.Cardinality.SET, relationship.endDef1.cardinality)
-        assertEquals(Model.Cardinality.SINGLE, relationship.endDef2.cardinality)
-        assertEquals(Model.PropagationType.NONE, relationship.propagateTags)
+        val r1 = model.customRelationshipDefs!![0]
+        assertNotNull(r1)
+        assertEquals("custom_dataset_custom_tables", r1.name)
+        assertEquals("Containment relationship between CustomDataset and CustomTable.", r1.description)
+        assertEquals("CustomDataset", r1.endDef1.type)
+        assertEquals("CustomTable", r1.endDef2.type)
+        assertEquals("customTables", r1.endDef1.name)
+        assertEquals("customDataset", r1.endDef2.name)
+        assertEquals("CustomTable assets contained within this CustomDataset.", r1.endDef1.description)
+        assertEquals("CustomDataset asset containing this CustomTable.", r1.endDef2.description)
+        assertTrue(r1.endDef1.isContainer)
+        assertFalse(r1.endDef2.isContainer)
+        assertEquals(Model.Cardinality.SET, r1.endDef1.cardinality)
+        assertEquals(Model.Cardinality.SINGLE, r1.endDef2.cardinality)
+        assertEquals(Model.PropagationType.NONE, r1.propagateTags)
+
+        val r2 = model.customRelationshipDefs!![1]
+        assertNotNull(r2)
+        assertEquals("custom_table_custom_fields", r2.name)
+        assertEquals("Containment relationship between CustomTable and CustomField.", r2.description)
+        assertEquals("CustomTable", r2.endDef1.type)
+        assertEquals("CustomField", r2.endDef2.type)
+        assertEquals("customFields", r2.endDef1.name)
+        assertEquals("customTable", r2.endDef2.name)
+        assertEquals("CustomField assets contained within this CustomTable.", r2.endDef1.description)
+        assertEquals("CustomTable asset containing this CustomField.", r2.endDef2.description)
+        assertTrue(r2.endDef1.isContainer)
+        assertFalse(r2.endDef2.isContainer)
+        assertEquals(Model.Cardinality.SET, r2.endDef1.cardinality)
+        assertEquals(Model.Cardinality.SINGLE, r2.endDef2.cardinality)
+        assertEquals(Model.PropagationType.NONE, r2.propagateTags)
     }
 }
