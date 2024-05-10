@@ -119,6 +119,12 @@ public interface ICatalog {
             case Column.TYPE_NAME:
                 ref = Column.refByQualifiedName(qualifiedName);
                 break;
+            case CosmosMongoDBCollection.TYPE_NAME:
+                ref = CosmosMongoDBCollection.refByQualifiedName(qualifiedName);
+                break;
+            case CosmosMongoDBDatabase.TYPE_NAME:
+                ref = CosmosMongoDBDatabase.refByQualifiedName(qualifiedName);
+                break;
             case Cube.TYPE_NAME:
                 ref = Cube.refByQualifiedName(qualifiedName);
                 break;
