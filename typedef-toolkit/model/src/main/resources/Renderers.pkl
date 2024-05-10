@@ -127,6 +127,7 @@ class Attributes extends TypeScriptRenderer {
   model = super.model
   assetType: String
   fixed asset: Model.CustomAssetType? = model.customTypes.getOrNull(assetType)
+  fixed relationships = model.customRelationshipDefs
   fixed entityDef = new Model.EntityDef {
     name = assetType
     description = asset.description
@@ -185,6 +186,19 @@ class Attributes extends TypeScriptRenderer {
             """
         }
       }
+      // Also include any relationship attributes referring to parents (for ParentAssetDrawer)
+      for (relationship: Model.RelationshipDef in relationships) {
+        when (relationship.endDef1.type == assetType && relationship.endDef2.isContainer) {
+            """
+                '\(relationship.endDef1.name)',
+            """
+        }
+        when (relationship.endDef2.type == assetType && relationship.endDef1.isContainer) {
+            """
+                '\(relationship.endDef2.name)',
+            """
+        }
+      }
         """
         ] as const satisfies ReadonlyArray<
             EntityAttributeKeyFomTypeName<'\(entityDef.name)'>
@@ -216,6 +230,62 @@ class Attributes extends TypeScriptRenderer {
                     (typeof \(entityDef.name)MinimalAttributes)[number],
                     (typeof \(entityDef.name)RelationAttributes)[number]
                   >
+        """
+    }.join("\n")
+
+}
+
+/// Renders the TypeScript code snippet for useBody.ts file to cover parent-child navigation
+class UseBody extends TypeScriptRenderer {
+  model = super.model
+  fixed customTypes = model.customTypes
+
+  function renderTypeScript(): String =
+    new Listing {
+        """
+        ...
+        export function applyFilters({
+            facets,
+            base,
+            connectorName,
+            state,
+        }: {
+            facets: Record<string, any>
+            base: Bodybuilder
+            connectorName?: string
+            state: Ref<string>
+        }) {
+            const authStore = useAuthStore()
+
+            // filters
+            Object.keys(facets ?? {})?.forEach((mkey) => {
+                const filterObject = facets[mkey]
+                switch (mkey) {
+                    ...
+                    // *** COPY / PASTE START ***
+        """
+      for (_, type: Model.CustomAssetType in customTypes) {
+        when (type.parentQualifiedName != null) {
+            """
+                        case '\(type.parentQualifiedName)':
+            """
+        }
+      }
+        """
+                    // *** END COPY / PASTE ***
+                    case 'cubeQualifiedName':
+                    case 'cubeDimensionQualifiedName':
+                    case 'cubeParentFieldQualifiedName':
+                    case 'cubeHierarchyQualifiedName': {
+                        if (filterObject) {
+                            base.filter('term', mkey, filterObject)
+                        }
+                        break
+                    }
+                    ...
+                }
+            })
+        }
         """
     }.join("\n")
 
@@ -479,7 +549,7 @@ class GetAssetTypes extends TypeScriptRenderer {
                                               {
                                                   component: SummaryBlocks.ParentAssetDrawer,
                                                   label: t('\(relatedType.label)'),
-                                                  parentAssetPath: 'attributes.\(model.customTypes.getOrNull(assetType.name)?.parentQualifiedName)',
+                                                  parentAssetPath: 'attributes.\(relationship.endDef1.name)',
                                               },
               """
           }
@@ -489,7 +559,7 @@ class GetAssetTypes extends TypeScriptRenderer {
                                               {
                                                   component: SummaryBlocks.ParentAssetDrawer,
                                                   label: t('\(relatedType.label)'),
-                                                  parentAssetPath: 'attributes.\(model.customTypes.getOrNull(assetType.name)?.parentQualifiedName)',
+                                                  parentAssetPath: 'attributes.\(relationship.endDef2.name)',
                                               },
               """
           }
