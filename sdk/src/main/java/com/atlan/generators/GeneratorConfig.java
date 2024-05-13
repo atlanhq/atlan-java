@@ -319,7 +319,9 @@ public class GeneratorConfig {
                 .forceNonAbstractAsset("KafkaTopic")
                 .forceNonAbstractAsset("KafkaConsumerGroup")
                 .forceNonAbstractAsset("Table")
-                .forceNonAbstractAsset("Database");
+                .forceNonAbstractAsset("Database")
+                .forceNonAbstractAsset("MongoDBDatabase")
+                .forceNonAbstractAsset("MongoDBCollection");
     }
 
     /**

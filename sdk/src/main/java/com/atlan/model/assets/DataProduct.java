@@ -492,14 +492,14 @@ public class DataProduct extends Asset implements IDataProduct, IDataMesh, ICata
      * Builds the minimal object necessary for creating a DataProduct.
      *
      * @param name of the DataProduct
-     * @param domain in which to create the DataProduct
+     * @param domainQualifiedName unique name of the DataDomain in which this product exists
      * @param assetSelection a query that defines which assets to include in the data product
      * @return the minimal request necessary to create the DataProduct, as a builder
      * @throws InvalidRequestException if the domain provided is without a qualifiedName
      */
-    public static DataProductBuilder<?, ?> creator(String name, DataDomain domain, FluentSearch assetSelection)
+    public static DataProductBuilder<?, ?> creator(String name, String domainQualifiedName, FluentSearch assetSelection)
             throws InvalidRequestException {
-        return creator(Atlan.getDefaultClient(), name, domain, assetSelection);
+        return creator(Atlan.getDefaultClient(), name, domainQualifiedName, assetSelection);
     }
 
     /**
@@ -507,49 +507,29 @@ public class DataProduct extends Asset implements IDataProduct, IDataMesh, ICata
      *
      * @param client connectivity to the Atlan tenant where the DataProduct is intended to be created
      * @param name of the DataProduct
-     * @param domain in which to create the DataProduct
+     * @param domainQualifiedName unique name of the DataDomain in which this product exists
      * @param assetSelection a query that defines which assets to include in the data product
      * @return the minimal request necessary to create the DataProduct, as a builder
      * @throws InvalidRequestException if the domain provided is without a qualifiedName
      */
     public static DataProductBuilder<?, ?> creator(
-            AtlanClient client, String name, DataDomain domain, FluentSearch assetSelection)
+            AtlanClient client, String name, String domainQualifiedName, FluentSearch assetSelection)
             throws InvalidRequestException {
-        return creator(client, name, domain, IndexSearchDSL.of(assetSelection.toUnfilteredQuery()));
+        return creator(client, name, domainQualifiedName, IndexSearchDSL.of(assetSelection.toUnfilteredQuery()));
     }
 
     /**
      * Builds the minimal object necessary for creating a DataProduct.
      *
      * @param name of the DataProduct
-     * @param domain in which to create the DataProduct
-     * @param assetSelection a query that defines which assets to include in the data product
-     * @return the minimal request necessary to create the DataProduct, as a builder
-     * @throws InvalidRequestException if the domain provided is without a qualifiedName
-     */
-    public static DataProductBuilder<?, ?> creator(String name, DataDomain domain, IndexSearchDSL assetSelection)
-            throws InvalidRequestException {
-        return creator(Atlan.getDefaultClient(), name, domain, assetSelection);
-    }
-
-    /**
-     * Builds the minimal object necessary for creating a DataProduct.
-     *
-     * @param client connectivity to the Atlan tenant where the DataProduct is intended to be created
-     * @param name of the DataProduct
-     * @param domain in which to create the DataProduct
+     * @param domainQualifiedName unique name of the DataDomain in which this product exists
      * @param assetSelection a query that defines which assets to include in the data product
      * @return the minimal request necessary to create the DataProduct, as a builder
      * @throws InvalidRequestException if the domain provided is without a qualifiedName
      */
     public static DataProductBuilder<?, ?> creator(
-            AtlanClient client, String name, DataDomain domain, IndexSearchDSL assetSelection)
-            throws InvalidRequestException {
-        if (domain.getQualifiedName() == null || domain.getQualifiedName().isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, "DataDomain", "qualifiedName");
-        }
-        return creator(client, name, domain.getQualifiedName(), assetSelection).dataDomain(domain.trimToReference());
+            String name, String domainQualifiedName, IndexSearchDSL assetSelection) throws InvalidRequestException {
+        return creator(Atlan.getDefaultClient(), name, domainQualifiedName, assetSelection);
     }
 
     /**
@@ -563,10 +543,9 @@ public class DataProduct extends Asset implements IDataProduct, IDataMesh, ICata
      */
     public static DataProductBuilder<?, ?> creator(
             AtlanClient client, String name, String domainQualifiedName, IndexSearchDSL assetSelection) {
-        String slug = IDataMesh.generateSlugForName(name);
         return DataProduct._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
-                .qualifiedName(generateQualifiedName(domainQualifiedName, slug))
+                .qualifiedName(domainQualifiedName + "/product/" + name)
                 .name(name)
                 .dataProductStatus(DataProductStatus.ACTIVE)
                 .parentDomainQualifiedName(domainQualifiedName)
@@ -574,7 +553,8 @@ public class DataProduct extends Asset implements IDataProduct, IDataMesh, ICata
                 .dataDomain(DataDomain.refByQualifiedName(domainQualifiedName))
                 .dataProductAssetsDSL(
                         DataProductAssetsDSL.builder(assetSelection).build().toJson(client))
-                .dataProductAssetsPlaybookFilter("{\"condition\":\"AND\",\"isGroupLocked\":false,\"rules\":[]}");
+                .dataProductAssetsPlaybookFilter("{\"condition\":\"AND\",\"isGroupLocked\":false,\"rules\":[]}")
+                .daapStatus(DataProductStatus.ACTIVE);
     }
 
     /**
@@ -586,28 +566,17 @@ public class DataProduct extends Asset implements IDataProduct, IDataMesh, ICata
      * @return the minimal request necessary to create the DataProduct, as a builder
      */
     public static DataProductBuilder<?, ?> creator(String name, String domainQualifiedName, String assetSelection) {
-        String slug = IDataMesh.generateSlugForName(name);
         return DataProduct._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
-                .qualifiedName(generateQualifiedName(domainQualifiedName, slug))
+                .qualifiedName(domainQualifiedName + "/product/" + name)
                 .name(name)
                 .dataProductStatus(DataProductStatus.ACTIVE)
                 .parentDomainQualifiedName(domainQualifiedName)
                 .superDomainQualifiedName(StringUtils.getSuperDomainQualifiedName(domainQualifiedName))
                 .dataDomain(DataDomain.refByQualifiedName(domainQualifiedName))
                 .dataProductAssetsDSL(assetSelection)
-                .dataProductAssetsPlaybookFilter("{\"condition\":\"AND\",\"isGroupLocked\":false,\"rules\":[]}");
-    }
-
-    /**
-     * Generate a unique DataProduct name.
-     *
-     * @param domainQualifiedName unique name of the DataDomain in which this product exists
-     * @param slug unique URL for the DataProduct
-     * @return a unique name for the DataProduct
-     */
-    public static String generateQualifiedName(String domainQualifiedName, String slug) {
-        return domainQualifiedName + "/product/" + slug;
+                .dataProductAssetsPlaybookFilter("{\"condition\":\"AND\",\"isGroupLocked\":false,\"rules\":[]}")
+                .daapStatus(DataProductStatus.ACTIVE);
     }
 
     /**

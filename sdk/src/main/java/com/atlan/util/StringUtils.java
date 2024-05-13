@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
 public final class StringUtils {
     private static final Pattern whitespacePattern = Pattern.compile("\\s");
     private static final Pattern connectionQNPrefix = Pattern.compile("(default/[a-z0-9-]+/[0-9]{10})/.*");
-    private static final Pattern domainQNPrefix = Pattern.compile("(default/domain/[a-zA-Z0-9-]+)/.*");
+    private static final Pattern domainQNPrefix = Pattern.compile("(default/domain/[a-zA-Z0-9-]+/super)/.*");
     private static final Pattern uuidPattern =
             Pattern.compile("^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$");
 

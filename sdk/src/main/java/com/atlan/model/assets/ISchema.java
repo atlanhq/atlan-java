@@ -454,7 +454,7 @@ public interface ISchema {
     /** Stored procedures that exist within this schema. */
     SortedSet<IProcedure> getProcedures();
 
-    /** TBC */
+    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
     String getQualifiedName();
 
     /** Number of times this asset has been queried. */

@@ -14,7 +14,6 @@ import com.atlan.pkg.serde.csv.ImportResults
 import mu.KotlinLogging
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.math.max
-import kotlin.text.Regex
 
 /**
  * Import data domains (only) into Atlan from a provided CSV file.
@@ -125,16 +124,7 @@ class DomainImporter(
         val name = deserializer.getValue(DataDomain.NAME.atlanFieldName) as String
         val parentDomain = deserializer.getValue(DataDomain.PARENT_DOMAIN.atlanFieldName)?.let { it as DataDomain }
         val parentQualifiedName = parentDomain?.qualifiedName
-        var builder = DataDomain.creator(name, parentQualifiedName)
-        if (parentQualifiedName != null) {
-            val regex = Regex("^[^/]+[/][^/]+[/][^/]+")
-            val match = regex.find(parentQualifiedName)
-            val superDomainQualifiedName = match?.groups?.first()?.value
-            if (superDomainQualifiedName != null) {
-                builder = builder.superDomainQualifiedName(superDomainQualifiedName)
-            }
-        }
-        return builder
+        return DataDomain.creator(name, parentQualifiedName)
     }
 
     /**
