@@ -62,7 +62,7 @@ object DataDomainCache : AssetCache() {
                     getIdentity(asset.parentDomain.guid)
                 }
                 return if (parentIdentity.isNullOrBlank()) {
-                    "${asset.name}"
+                    asset.name
                 } else {
                     "$parentIdentity${DataDomainXformer.DATA_DOMAIN_DELIMITER}${asset.name}"
                 }
@@ -73,7 +73,7 @@ object DataDomainCache : AssetCache() {
 
     /** {@inheritDoc} */
     override fun preload() {
-        logger.info { "Caching all data domain, up-front..." }
+        logger.info { "Caching all data domains, up-front..." }
         DataDomain.select()
             .includesOnResults(includesOnResults)
             .sort(DataDomain.PARENT_DOMAIN_QUALIFIED_NAME.order(SortOrder.Desc))
