@@ -122,9 +122,29 @@ class DomainImporter(
     /** {@inheritDoc} */
     override fun getBuilder(deserializer: RowDeserializer): Asset.AssetBuilder<*, *> {
         val name = deserializer.getValue(DataDomain.NAME.atlanFieldName) as String
-        val parentDomain = deserializer.getValue(DataDomain.PARENT_DOMAIN.atlanFieldName)?.let { it as DataDomain }
-        val parentQualifiedName = parentDomain?.qualifiedName
-        return DataDomain.creator(name, parentQualifiedName)
+        val parentDomainMinimal = deserializer.getValue(DataDomain.PARENT_DOMAIN.atlanFieldName)?.let { it as DataDomain }
+        val parentQualifiedName = if (parentDomainMinimal != null) DataDomainCache.getByGuid(parentDomainMinimal.guid)?.qualifiedName else null
+        val qualifiedName = generateQualifiedName(deserializer)
+        val candidateDD = DataDomain.creator(name, parentQualifiedName)
+        return if (qualifiedName != getCacheId(deserializer)) {
+            return candidateDD.qualifiedName(qualifiedName)
+        } else {
+            candidateDD
+        }
+    }
+
+    /**
+     * Determine the qualifiedName for the glossary, term or category, irrespective of whether it is
+     * present in the input file or not. Since these qualifiedNames are generated, and the object may
+     * have been created in a previous pass (and cached), we can resolve to its known qualifiedName
+     * here based on the information in the row of the input file.
+     *
+     * @param deserializer a row of deserialized values
+     * @return the qualifiedName, calculated from the deserialized values
+     */
+    private fun generateQualifiedName(deserializer: RowDeserializer): String {
+        val cacheId = getCacheId(deserializer)
+        return cache.getByIdentity(cacheId)?.qualifiedName ?: cacheId
     }
 
     /**
@@ -133,7 +153,7 @@ class DomainImporter(
      * @param deserializer a row of deserialized values
      * @return the cache identity for the row
      */
-    fun getCacheId(deserializer: RowDeserializer): String {
+    private fun getCacheId(deserializer: RowDeserializer): String {
         val domainName = deserializer.getValue(DataDomain.NAME.atlanFieldName)
         val parentDomain = deserializer.getValue(DataDomain.PARENT_DOMAIN.atlanFieldName)?.let { it as DataDomain }
         return if (parentDomain != null) {

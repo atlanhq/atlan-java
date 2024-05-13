@@ -12,6 +12,7 @@ import com.atlan.pkg.cache.DataDomainCache
  */
 object DataDomainXformer {
 
+    const val DATA_PRODUCT_DELIMITER = "@@@"
     const val DATA_DOMAIN_DELIMITER = "@"
 
     /**
@@ -47,11 +48,8 @@ object DataDomainXformer {
     ): Asset {
         return when (fieldName) {
             DataDomain.PARENT_DOMAIN.atlanFieldName, DataProduct.DATA_DOMAIN.atlanFieldName -> {
-                val dataDomain = DataDomainCache.getByIdentity(assetRef)
-                if (dataDomain == null) {
-                    throw NoSuchElementException("Parent domain $assetRef not found.")
-                }
-                DataDomain.refByQualifiedName(dataDomain.qualifiedName)
+                DataDomainCache.getByIdentity(assetRef)?.trimToReference()
+                    ?: throw NoSuchElementException("Domain $assetRef not found.")
             }
             else -> AssetRefXformer.decode(assetRef, fieldName)
         }
