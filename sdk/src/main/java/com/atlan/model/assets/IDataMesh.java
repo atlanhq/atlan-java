@@ -14,7 +14,6 @@ import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
 import com.atlan.serde.AssetDeserializer;
 import com.atlan.serde.AssetSerializer;
-import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.List;
@@ -39,16 +38,6 @@ public interface IDataMesh {
     /** Unique name of the top-level domain in which this asset exists. */
     KeywordTextField SUPER_DOMAIN_QUALIFIED_NAME = new KeywordTextField(
             "superDomainQualifiedName", "superDomainQualifiedName", "superDomainQualifiedName.text");
-
-    /**
-     * Generate a slug from the provided name.
-     *
-     * @param name name of the data mesh asset
-     * @return a URL-embeddable slug for the asset
-     */
-    public static String generateSlugForName(String name) {
-        return StringUtils.getLowerCamelCaseAggressive(name);
-    }
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -386,7 +375,7 @@ public interface IDataMesh {
     /** Popularity score for this asset. */
     Double getPopularityScore();
 
-    /** TBC */
+    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
     String getQualifiedName();
 
     /** README that is linked to this asset. */
