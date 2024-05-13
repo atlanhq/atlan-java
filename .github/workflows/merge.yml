@@ -40,7 +40,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: typedef-toolkit-config
-          path: typedef-toolkit/config/build/libs/typedef-toolkit-config-*-jar-with-dependencies.jar
+          path: typedef-toolkit/model/build/libs/typedef-toolkit-model-*-jar-with-dependencies.jar
       - uses: actions/upload-artifact@v4
         with:
           name: package-toolkit-runtime
