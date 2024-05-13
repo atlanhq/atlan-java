@@ -47,7 +47,7 @@ class ProductImporter(
         val name = deserializer.getValue(DataProduct.NAME.atlanFieldName) as String
         val dataDomainMinimal = deserializer.getValue(DataProduct.DATA_DOMAIN.atlanFieldName)?.let { it as DataDomain }
         val dataDomain = if (dataDomainMinimal != null) DataDomainCache.getByGuid(dataDomainMinimal.guid) as DataDomain else null
-        val dataProductAssetsDSL = deserializer.getValue(DataProduct.DATA_PRODUCT_ASSETS_DSL.atlanFieldName) as String
+        val dataProductAssetsDSL = deserializer.getValue(DataProduct.DATA_PRODUCT_ASSETS_DSL.atlanFieldName) as String?
         val qualifiedName = generateQualifiedName(deserializer, dataDomain)
         val candidateDP = DataProduct.creator(name, dataDomain?.qualifiedName, dataProductAssetsDSL)
         return if (qualifiedName != getCacheId(deserializer, dataDomain)) {
