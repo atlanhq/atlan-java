@@ -59,9 +59,8 @@ public class CosmosMongoDBDatabaseTest {
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
                             .build())
-            .mongoDBCollection(CosmosMongoDBCollection.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .mongoDBCollection(
-                    CosmosMongoDBCollection.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .mongoDBCollection(MongoDBCollection.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .mongoDBCollection(MongoDBCollection.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .mongoDBDatabaseCollectionCount(123)
             .noSQLSchemaDefinition("String0")
             .inputToAirflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))

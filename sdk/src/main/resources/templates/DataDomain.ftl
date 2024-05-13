@@ -7,22 +7,7 @@
      * @throws InvalidRequestException will never throw but required given signature of called method
      */
     public static DataDomainBuilder<?, ?> creator(String name) throws InvalidRequestException {
-        return creator(name, (DataDomain) null);
-    }
-
-    /**
-     * Builds the minimal object necessary for creating a DataDomain.
-     *
-     * @param name of the DataDomain
-     * @param parent (optional) parent data domain in which to create this subdomain
-     * @return the minimal request necessary to create the DataDomain, as a builder
-     * @throws InvalidRequestException if the parent domain provided is without a qualifiedName
-     */
-    public static DataDomainBuilder<?, ?> creator(String name, DataDomain parent) throws InvalidRequestException {
-        if (parent != null) {
-            return creator(name, parent.getQualifiedName()).parentDomain(parent.trimToReference());
-        }
-        return creator(name, (String) null);
+        return creator(name, null);
     }
 
     /**
@@ -33,29 +18,16 @@
      * @return the minimal request necessary to create the DataDomain, as a builder
      */
     public static DataDomainBuilder<?, ?> creator(String name, String parentDomainQualifiedName) throws InvalidRequestException {
-        String slug = IDataMesh.generateSlugForName(name);
         DataDomainBuilder<?, ?> builder = DataDomain._internal()
             .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
-            .qualifiedName(generateQualifiedName(slug, parentDomainQualifiedName))
+            .qualifiedName(name)
             .name(name);
         if (parentDomainQualifiedName != null) {
             builder.parentDomain(DataDomain.refByQualifiedName(parentDomainQualifiedName))
-                .parentDomainQualifiedName(parentDomainQualifiedName);
+                .parentDomainQualifiedName(parentDomainQualifiedName)
+                .superDomainQualifiedName(StringUtils.getSuperDomainQualifiedName(parentDomainQualifiedName));
         }
         return builder;
-    }
-
-    /**
-     * Generate a unique DataDomain name.
-     *
-     * @param slug unique URL for the DataDomain
-     * @param parentDomainQualifiedName (optional) unique name of the parent domain, if this is a subdomain
-     * @return a unique name for the DataDomain
-     */
-    public static String generateQualifiedName(String slug, String parentDomainQualifiedName) {
-        return (parentDomainQualifiedName != null && !parentDomainQualifiedName.isEmpty())
-            ? parentDomainQualifiedName + "/domain/" + slug
-            : "default/domain/" + slug;
     }
 
     /**

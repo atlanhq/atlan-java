@@ -6,7 +6,6 @@ import AssetImportCfg
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.DataDomain
 import com.atlan.model.assets.DataProduct
-import com.atlan.model.assets.IDataMesh
 import com.atlan.model.assets.Readme
 import com.atlan.model.enums.AtlanAnnouncementType
 import com.atlan.model.enums.AtlanIcon
@@ -113,7 +112,7 @@ class ImportDataDomainTest : PackageTest() {
         assertEquals("Test domain for asset import", d1.userDescription)
         assertEquals(setOf("ernest"), d1.ownerUsers)
         assertEquals(setOf("admins"), d1.ownerGroups)
-        assertEquals(d1.qualifiedName, DataDomain.generateQualifiedName(IDataMesh.generateSlugForName(dataDomain1), null))
+        assertNotNull(d1.qualifiedName)
         assertNotNull(d1.readme)
         assertEquals("<h1>This is Domain!</h1>", d1.readme.description)
         assertEquals(CertificateStatus.VERIFIED, d1.certificateStatus)
@@ -129,7 +128,7 @@ class ImportDataDomainTest : PackageTest() {
         assertEquals(setOf("ernest"), d2.ownerUsers)
         assertEquals(setOf("admins"), d2.ownerGroups)
         assertEquals(d1.guid, d2.parentDomain.guid)
-        assertEquals(d2.qualifiedName, DataDomain.generateQualifiedName(IDataMesh.generateSlugForName(dataDomain2), d1.qualifiedName))
+        assertNotNull(d2.qualifiedName)
         assertEquals(d2.parentDomainQualifiedName, d1.qualifiedName)
         assertEquals(d1.qualifiedName, d2.superDomainQualifiedName)
         assertEquals(CertificateStatus.DRAFT, d2.certificateStatus)
@@ -143,7 +142,7 @@ class ImportDataDomainTest : PackageTest() {
         assertEquals(setOf("ernest"), d3.ownerUsers)
         assertEquals(setOf("admins"), d3.ownerGroups)
         assertEquals(d2.guid, d3.parentDomain.guid)
-        assertEquals(d3.qualifiedName, DataDomain.generateQualifiedName(IDataMesh.generateSlugForName(dataDomain3), d2.qualifiedName))
+        assertNotNull(d3.qualifiedName)
         assertEquals(d3.parentDomainQualifiedName, d2.qualifiedName)
         assertEquals(d1.qualifiedName, d3.superDomainQualifiedName)
     }
