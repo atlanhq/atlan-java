@@ -59,7 +59,8 @@ public class FluentLineage {
     AtlanLineageDirection direction = AtlanLineageDirection.DOWNSTREAM;
 
     /** Number of results to retrieve per underlying API request. */
-    Integer pageSize;
+    @Builder.Default
+    Integer pageSize = 1000;
 
     /** Number of degrees of separation (hops) across which lineage should be fetched. */
     Integer depth;
