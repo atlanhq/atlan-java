@@ -75,6 +75,10 @@ jobs:
           path: jars/cube-assets-builder-*.jar
       - uses: actions/upload-artifact@v4
         with:
+          name: custom-metadata-extender
+          path: jars/custom-metadata-extender-*.jar
+      - uses: actions/upload-artifact@v4
+        with:
           name: duplicate-detector
           path: jars/duplicate-detector-*.jar
       - uses: actions/upload-artifact@v4
@@ -202,6 +206,7 @@ jobs:
           - asset-export-basic
           - asset-import
           - cube-assets-builder
+          - custom-metadata-extender
           - duplicate-detector
           - enrichment-migrator
           - lineage-builder
