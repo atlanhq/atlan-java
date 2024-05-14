@@ -1,0 +1,62 @@
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2024 Atlan Pte. Ltd. */
+amends "modulepath:/Config.pkl"
+import "pkl:semver"
+import "modulepath:/BuildInfo.pkl"
+
+packageId = "@csa/custom-metadata-extender"
+packageName = "Custom Metadata Extender"
+version = semver.Version(BuildInfo.VERSION)
+description = "Extend existing custom metadata to additional connections and/or glossaries."
+iconUrl = "http://assets.atlan.com/assets/ph-circles-three-plus-light.svg"
+docsUrl = "https://solutions.atlan.com/custom-metadata-extender/"
+implementationLanguage = "Kotlin"
+containerImage = "ghcr.io/atlanhq/\(name):\(BuildInfo.VERSION)"
+containerImagePullPolicy = if (BuildInfo.VERSION.endsWith("-SNAPSHOT")) "Always" else "IfNotPresent"
+containerCommand {
+  "/dumb-init"
+  "--"
+  "java"
+  "CustomMetadataExtender"
+}
+outputs {
+  files {
+    ["debug-logs"] = "/tmp/debug.log"
+  }
+}
+keywords {
+  "kotlin"
+  "utility"
+}
+preview = true
+
+uiConfig {
+  tasks {
+    ["Configuration"] {
+      description = "Configuration"
+      inputs {
+        ["custom_metadata"] = new TextInput {
+          title = "Custom metadata"
+          required = true
+          helpText = "Enter the name of the custom metadata that should be extended to other connections or glossaries."
+          width = 8
+          placeholderText = "Data Quality"
+        }
+        ["connection_qualified_name"] = new ConnectionSelector {
+          title = "Connection"
+          required = false
+          helpText = "Select the additional connection(s) whose assets should be able to use the custom metadata."
+          width = 8
+          multiSelect = true
+        }
+        ["glossaries"] = new TextInput {
+          title = "Glossaries"
+          required = false
+          helpText = "Enter the names of glossaries (comma-separated) whose assets should be able to use the custom metadata."
+          width = 8
+          placeholderText = "First Glossary,Second Glossary"
+        }
+      }
+    }
+  }
+}
