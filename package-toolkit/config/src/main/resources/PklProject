@@ -5,7 +5,7 @@ import "BuildInfo.pkl"
 
 package {
   name = "config"
-  baseUri = "package://developer.atlan.com/toolkits/custom-package"
+  baseUri = "package://developer.atlan.com/toolkits/custom-package/\(name)"
   version = BuildInfo.VERSION
   packageZipUrl = "https://developer.atlan.com/toolkits/custom-package/\(name)@\(version).zip"
   sourceCode = "https://github.com/atlanhq/atlan-java"
