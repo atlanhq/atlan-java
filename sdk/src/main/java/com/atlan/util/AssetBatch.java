@@ -549,22 +549,20 @@ public class AssetBatch {
                 resolvedGuids.putAll(response.getGuidAssignments());
             }
             if (sent != null) {
-                if (caseInsensitive) {
-                    for (Asset one : sent) {
-                        String guid = one.getGuid();
-                        if (guid != null
-                                && (response.getGuidAssignments() == null
-                                        || !response.getGuidAssignments().containsKey(guid))) {
-                            // Ensure any assets that were sent with GUIDs that were used as-is
-                            // are added to the resolved GUIDs map
-                            resolvedGuids.put(guid, guid);
-                        }
-                        if (caseInsensitive) {
-                            String typeName = one.getTypeName();
-                            String qualifiedName = one.getQualifiedName();
-                            AssetIdentity id = new AssetIdentity(typeName, qualifiedName, true);
-                            resolvedQualifiedNames.put(id, qualifiedName);
-                        }
+                for (Asset one : sent) {
+                    String guid = one.getGuid();
+                    if (guid != null
+                            && (response.getGuidAssignments() == null
+                                    || !response.getGuidAssignments().containsKey(guid))) {
+                        // Ensure any assets that were sent with GUIDs that were used as-is
+                        // are added to the resolved GUIDs map
+                        resolvedGuids.put(guid, guid);
+                    }
+                    if (caseInsensitive) {
+                        String typeName = one.getTypeName();
+                        String qualifiedName = one.getQualifiedName();
+                        AssetIdentity id = new AssetIdentity(typeName, qualifiedName, true);
+                        resolvedQualifiedNames.put(id, qualifiedName);
                     }
                 }
             }
