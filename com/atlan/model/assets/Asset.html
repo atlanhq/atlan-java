@@ -1150,7 +1150,7 @@ implements <a href="IAsset.html" title="interface in com.atlan.model.assets">IAs
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMeanings()">getMeanings</a></span>()</code></th>
 <td class="colLast">
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">see <a href="#assignedTerms"><code>assignedTerms</code></a> instead</div>
+<div class="deprecationComment">see <code>assignedTerms</code> instead</div>
 </div>
 </td>
 </tr>
@@ -2774,7 +2774,7 @@ public static&nbsp;<a href="Asset.html" title="class in com.atlan.model.assets">
 <pre class="methodSignature">public static&nbsp;<a href="../core/AssetDeletionResponse.html" title="class in com.atlan.model.core">AssetDeletionResponse</a>&nbsp;delete&#8203;(java.lang.String&nbsp;guid)
                                     throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
 <div class="block">Soft-deletes an asset by its GUID. This operation can be reversed by updating the asset and changing
- its <a href="#status"><code>status</code></a> to <code>ACTIVE</code>.</div>
+ its <code>status</code> to <code>ACTIVE</code>.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>guid</code> - of the asset to soft-delete</dd>
@@ -2795,7 +2795,7 @@ public static&nbsp;<a href="Asset.html" title="class in com.atlan.model.assets">
                                            java.lang.String&nbsp;guid)
                                     throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
 <div class="block">Soft-deletes an asset by its GUID. This operation can be reversed by updating the asset and changing
- its <a href="#status"><code>status</code></a> to <code>ACTIVE</code>.</div>
+ its <code>status</code> to <code>ACTIVE</code>.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>client</code> - connectivity to the Atlan tenant from which to delete the asset</dd>
@@ -5631,7 +5631,7 @@ public&nbsp;java.util.SortedSet&lt;java.lang.String&gt;&nbsp;getAtlanTagNames()<
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="IReferenceable.html#getAtlanTagNames()">getAtlanTagNames</a></code>&nbsp;in interface&nbsp;<code><a href="IReferenceable.html" title="interface in com.atlan.model.assets">IReferenceable</a></code></dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="#atlanTags"><code>atlanTags</code></a></dd>
+<dd><code>atlanTags</code></dd>
 </dl>
 </li>
 </ul>
@@ -5672,7 +5672,7 @@ public&nbsp;java.util.SortedSet&lt;java.lang.String&gt;&nbsp;getAtlanTagNames()<
 <pre class="methodSignature">@Deprecated
 public&nbsp;java.util.SortedSet&lt;<a href="Meaning.html" title="class in com.atlan.model.assets">Meaning</a>&gt;&nbsp;getMeanings()</pre>
 <div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">see <a href="#assignedTerms"><code>assignedTerms</code></a> instead</div>
+<div class="deprecationComment">see <code>assignedTerms</code> instead</div>
 </div>
 <div class="block">Details of terms that have been linked to this asset. This is not set by all API endpoints, so cannot
  be relied upon in general, even when there are terms assigned to an asset.</div>

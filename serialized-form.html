@@ -369,7 +369,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
  Note that these are the internal names of the groups, typically in all lowercase and without spaces.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="com/atlan/model/admin/AtlanGroup.html#name"><code>AtlanGroup.name</code></a></dd>
+<dd><code>AtlanGroup.name</code></dd>
 </dl>
 </li>
 <li class="blockListLast">
@@ -378,7 +378,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">All users' names to whom the policy will apply.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="com/atlan/model/admin/AtlanUser.html#username"><code>AtlanUser.username</code></a></dd>
+<dd><code>AtlanUser.username</code></dd>
 </dl>
 </li>
 </ul>
@@ -2551,7 +2551,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <h4>columns</h4>
 <pre>java.util.List&lt;<a href="com/atlan/model/admin/QueryResponse.ColumnDetails.html" title="class in com.atlan.model.admin">QueryResponse.ColumnDetails</a>&gt; columns</pre>
 <div class="block">Columns that are present in each row of the results. The order of the elements
- of this list will match the order of the inner list of values for the <a href="com/atlan/model/admin/QueryResponse.html#rows"><code>QueryResponse.rows</code></a>.</div>
+ of this list will match the order of the inner list of values for the <code>QueryResponse.rows</code>.</div>
 </li>
 <li class="blockList">
 <h4>details</h4>
@@ -4712,7 +4712,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
  property.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="com/atlan/model/assets/Asset.html#atlanTags"><code>Asset.atlanTags</code></a></dd>
+<dd><code>Asset.atlanTags</code></dd>
 </dl>
 </li>
 <li class="blockList">
@@ -4898,7 +4898,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <h4>meanings</h4>
 <pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/Meaning.html" title="class in com.atlan.model.assets">Meaning</a>&gt; meanings</pre>
 <div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">see <a href="com/atlan/model/assets/Asset.html#assignedTerms"><code>Asset.assignedTerms</code></a> instead</div>
+<div class="deprecationComment">see <code>Asset.assignedTerms</code> instead</div>
 </div>
 <div class="block">Details of terms that have been linked to this asset. This is not set by all API endpoints, so cannot
  be relied upon in general, even when there are terms assigned to an asset.</div>
@@ -26140,7 +26140,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <pre>java.util.List&lt;<a href="com/atlan/model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt; partialUpdatedAssets</pre>
 <div class="block">List of assets that were partially updated.
  This will only be populated by certain API calls, and actually duplicates the details you'll find
- in <a href="com/atlan/model/core/MutatedAssets.html#PARTIAL_UPDATE"><code>MutatedAssets.PARTIAL_UPDATE</code></a> for those same API calls.</div>
+ in <code>MutatedAssets.PARTIAL_UPDATE</code> for those same API calls.</div>
 </li>
 </ul>
 </li>
@@ -26818,13 +26818,13 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <h4>attributeValue</h4>
 <pre>java.lang.String attributeValue</pre>
-<div class="block">Value that <a href="com/atlan/model/lineage/EntityFilter.html#attributeName"><code>EntityFilter.attributeName</code></a>'s value should be compared against.</div>
+<div class="block">Value that <code>EntityFilter.attributeName</code>'s value should be compared against.</div>
 </li>
 <li class="blockListLast">
 <h4>operator</h4>
 <pre><a href="com/atlan/model/enums/AtlanComparisonOperator.html" title="enum in com.atlan.model.enums">AtlanComparisonOperator</a> operator</pre>
-<div class="block">Comparison that should be used when checking <a href="com/atlan/model/lineage/EntityFilter.html#attributeName"><code>EntityFilter.attributeName</code></a>'s value against
- the provided <a href="com/atlan/model/lineage/EntityFilter.html#attributeValue"><code>EntityFilter.attributeValue</code></a>.</div>
+<div class="block">Comparison that should be used when checking <code>EntityFilter.attributeName</code>'s value against
+ the provided <code>EntityFilter.attributeValue</code>.</div>
 </li>
 </ul>
 </li>
@@ -26876,13 +26876,13 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <h4>operator</h4>
 <pre><a href="com/atlan/model/enums/AtlanComparisonOperator.html" title="enum in com.atlan.model.enums">AtlanComparisonOperator</a> operator</pre>
-<div class="block">Comparison that should be used when checking <a href="com/atlan/model/lineage/LineageFilter.html#field"><code>LineageFilter.field</code></a>'s value against
- the provided <a href="com/atlan/model/lineage/LineageFilter.html#value"><code>LineageFilter.value</code></a>.</div>
+<div class="block">Comparison that should be used when checking <code>LineageFilter.field</code>'s value against
+ the provided <code>LineageFilter.value</code>.</div>
 </li>
 <li class="blockListLast">
 <h4>value</h4>
 <pre>java.lang.String value</pre>
-<div class="block">Value that <a href="com/atlan/model/lineage/LineageFilter.html#field"><code>LineageFilter.field</code></a>'s value should be compared against.</div>
+<div class="block">Value that <code>LineageFilter.field</code>'s value should be compared against.</div>
 </li>
 </ul>
 </li>
@@ -27028,7 +27028,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <h4>allowDeletedProcess</h4>
 <pre>java.lang.Boolean allowDeletedProcess</pre>
 <div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
-<div class="block">When true, will include deleted processes if <a href="com/atlan/model/lineage/LineageRequest.html#hideProcess"><code>LineageRequest.hideProcess</code></a> is set to false. Otherwise,
+<div class="block">When true, will include deleted processes if <code>LineageRequest.hideProcess</code> is set to false. Otherwise,
  will not return deleted processes.</div>
 </li>
 <li class="blockList">
@@ -29174,7 +29174,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
  <ul>
    <li>This can either be a primitive Atlan type or the name of a custom metadata enumeration (options).</li>
    <li>The primitive Atlan types' values are defined in the <a href="com/atlan/model/enums/AtlanCustomAttributePrimitiveType.html" title="enum in com.atlan.model.enums"><code>AtlanCustomAttributePrimitiveType</code></a> enumeration.</li>
-   <li>Note: there are a number of custom types there as well (<code>users</code>, <code>groups</code>, <code>url</code>, and <code>SQL</code>). The <code>typeName</code> for all of these custom types is <code>STRING</code>, and the more detailed type only appears in the <a href="com/atlan/model/typedefs/AttributeDef.html#options"><code>AttributeDef.options</code></a>.</li>
+   <li>Note: there are a number of custom types there as well (<code>users</code>, <code>groups</code>, <code>url</code>, and <code>SQL</code>). The <code>typeName</code> for all of these custom types is <code>STRING</code>, and the more detailed type only appears in the <code>AttributeDef.options</code>.</li>
    <li>For fields that can be multivalued, use <code>array&lt;type&gt;</code> for the typeName.</li>
  </ul></div>
 </li>
@@ -29219,35 +29219,35 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <pre>java.util.Set&lt;java.lang.String&gt; applicableAssetTypes</pre>
 <div class="block">Asset type names to which to restrict the attribute.
  Only assets of one of these types will have this attribute available.
- To further restrict the assets for this custom metadata by connection, see <a href="com/atlan/model/typedefs/AttributeDefOptions.html#applicableConnections"><code>AttributeDefOptions.applicableConnections</code></a>.</div>
+ To further restrict the assets for this custom metadata by connection, see <code>AttributeDefOptions.applicableConnections</code>.</div>
 </li>
 <li class="blockList">
 <h4>applicableConnections</h4>
 <pre>java.util.Set&lt;java.lang.String&gt; applicableConnections</pre>
 <div class="block">Qualified names of connections to which to restrict the attribute.
  Only assets within one of these connections will have this attribute available.
- To further restrict the types of assets within the connections, see <a href="com/atlan/model/typedefs/AttributeDefOptions.html#applicableAssetTypes"><code>AttributeDefOptions.applicableAssetTypes</code></a>.</div>
+ To further restrict the types of assets within the connections, see <code>AttributeDefOptions.applicableAssetTypes</code>.</div>
 </li>
 <li class="blockList">
 <h4>applicableEntityTypes</h4>
 <pre>java.util.Set&lt;java.lang.String&gt; applicableEntityTypes</pre>
 <div class="block">Set of entities on which this attribute can be applied.
  Note: generally this should be left as-is. Any overrides should instead be applied through
- one or more of <a href="com/atlan/model/typedefs/AttributeDefOptions.html#applicableAssetTypes"><code>AttributeDefOptions.applicableAssetTypes</code></a>, <a href="com/atlan/model/typedefs/AttributeDefOptions.html#applicableGlossaryTypes"><code>AttributeDefOptions.applicableGlossaryTypes</code></a>, or <a href="com/atlan/model/typedefs/AttributeDefOptions.html#applicableOtherAssetTypes"><code>AttributeDefOptions.applicableOtherAssetTypes</code></a>.</div>
+ one or more of <code>AttributeDefOptions.applicableAssetTypes</code>, <code>AttributeDefOptions.applicableGlossaryTypes</code>, or <code>AttributeDefOptions.applicableOtherAssetTypes</code>.</div>
 </li>
 <li class="blockList">
 <h4>applicableGlossaries</h4>
 <pre>java.util.Set&lt;java.lang.String&gt; applicableGlossaries</pre>
 <div class="block">Qualified names of glossaries to which to restrict the attribute.
  Only glossary assets within one of these glossaries will have this attribute available.
- To further restrict the types of assets within the glossaries, see <a href="com/atlan/model/typedefs/AttributeDefOptions.html#applicableGlossaryTypes"><code>AttributeDefOptions.applicableGlossaryTypes</code></a>.</div>
+ To further restrict the types of assets within the glossaries, see <code>AttributeDefOptions.applicableGlossaryTypes</code>.</div>
 </li>
 <li class="blockList">
 <h4>applicableGlossaryTypes</h4>
 <pre>java.util.Set&lt;java.lang.String&gt; applicableGlossaryTypes</pre>
 <div class="block">Glossary type names to which to restrict the attribute.
  Only glossary assets of one of these types will have this attribute available.
- To further restrict the glossary content for this custom metadata by glossary, see <a href="com/atlan/model/typedefs/AttributeDefOptions.html#applicableGlossaries"><code>AttributeDefOptions.applicableGlossaries</code></a>.</div>
+ To further restrict the glossary content for this custom metadata by glossary, see <code>AttributeDefOptions.applicableGlossaries</code>.</div>
 </li>
 <li class="blockList">
 <h4>applicableOtherAssetTypes</h4>
@@ -29270,7 +29270,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <h4>customApplicableEntityTypes</h4>
 <pre>java.util.Set&lt;java.lang.String&gt; customApplicableEntityTypes</pre>
 <div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">see <a href="com/atlan/model/typedefs/AttributeDefOptions.html#applicableAssetTypes"><code>AttributeDefOptions.applicableAssetTypes</code></a>, <a href="com/atlan/model/typedefs/AttributeDefOptions.html#applicableGlossaryTypes"><code>AttributeDefOptions.applicableGlossaryTypes</code></a>, <a href="com/atlan/model/typedefs/AttributeDefOptions.html#applicableOtherAssetTypes"><code>AttributeDefOptions.applicableOtherAssetTypes</code></a> instead</div>
+<div class="deprecationComment">see <code>AttributeDefOptions.applicableAssetTypes</code>, <code>AttributeDefOptions.applicableGlossaryTypes</code>, <code>AttributeDefOptions.applicableOtherAssetTypes</code> instead</div>
 </div>
 <div class="block">Set of entities on which this attribute should appear.
  Note: this is only used when customMetadataVersion is less than v2.</div>

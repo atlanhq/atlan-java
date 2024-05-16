@@ -358,7 +358,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCustomApplicableEntityTypes()">getCustomApplicableEntityTypes</a></span>()</code></th>
 <td class="colLast">
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">see <a href="#applicableAssetTypes"><code>applicableAssetTypes</code></a>, <a href="#applicableGlossaryTypes"><code>applicableGlossaryTypes</code></a>, <a href="#applicableOtherAssetTypes"><code>applicableOtherAssetTypes</code></a> instead</div>
+<div class="deprecationComment">see <code>applicableAssetTypes</code>, <code>applicableGlossaryTypes</code>, <code>applicableOtherAssetTypes</code> instead</div>
 </div>
 </td>
 </tr>
@@ -657,7 +657,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <pre class="methodSignature">public&nbsp;java.util.Set&lt;java.lang.String&gt;&nbsp;getApplicableEntityTypes()</pre>
 <div class="block">Set of entities on which this attribute can be applied.
  Note: generally this should be left as-is. Any overrides should instead be applied through
- one or more of <a href="#applicableAssetTypes"><code>applicableAssetTypes</code></a>, <a href="#applicableGlossaryTypes"><code>applicableGlossaryTypes</code></a>, or <a href="#applicableOtherAssetTypes"><code>applicableOtherAssetTypes</code></a>.</div>
+ one or more of <code>applicableAssetTypes</code>, <code>applicableGlossaryTypes</code>, or <code>applicableOtherAssetTypes</code>.</div>
 </li>
 </ul>
 <a id="getCustomApplicableEntityTypes()">
@@ -669,7 +669,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <pre class="methodSignature">@Deprecated
 public&nbsp;java.util.Set&lt;java.lang.String&gt;&nbsp;getCustomApplicableEntityTypes()</pre>
 <div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">see <a href="#applicableAssetTypes"><code>applicableAssetTypes</code></a>, <a href="#applicableGlossaryTypes"><code>applicableGlossaryTypes</code></a>, <a href="#applicableOtherAssetTypes"><code>applicableOtherAssetTypes</code></a> instead</div>
+<div class="deprecationComment">see <code>applicableAssetTypes</code>, <code>applicableGlossaryTypes</code>, <code>applicableOtherAssetTypes</code> instead</div>
 </div>
 <div class="block">Set of entities on which this attribute should appear.
  Note: this is only used when customMetadataVersion is less than v2.</div>
@@ -684,7 +684,7 @@ public&nbsp;java.util.Set&lt;java.lang.String&gt;&nbsp;getCustomApplicableEntity
 <pre class="methodSignature">public&nbsp;java.util.Set&lt;java.lang.String&gt;&nbsp;getApplicableConnections()</pre>
 <div class="block">Qualified names of connections to which to restrict the attribute.
  Only assets within one of these connections will have this attribute available.
- To further restrict the types of assets within the connections, see <a href="#applicableAssetTypes"><code>applicableAssetTypes</code></a>.</div>
+ To further restrict the types of assets within the connections, see <code>applicableAssetTypes</code>.</div>
 </li>
 </ul>
 <a id="getApplicableGlossaries()">
@@ -696,7 +696,7 @@ public&nbsp;java.util.Set&lt;java.lang.String&gt;&nbsp;getCustomApplicableEntity
 <pre class="methodSignature">public&nbsp;java.util.Set&lt;java.lang.String&gt;&nbsp;getApplicableGlossaries()</pre>
 <div class="block">Qualified names of glossaries to which to restrict the attribute.
  Only glossary assets within one of these glossaries will have this attribute available.
- To further restrict the types of assets within the glossaries, see <a href="#applicableGlossaryTypes"><code>applicableGlossaryTypes</code></a>.</div>
+ To further restrict the types of assets within the glossaries, see <code>applicableGlossaryTypes</code>.</div>
 </li>
 </ul>
 <a id="getApplicableAssetTypes()">
@@ -708,7 +708,7 @@ public&nbsp;java.util.Set&lt;java.lang.String&gt;&nbsp;getCustomApplicableEntity
 <pre class="methodSignature">public&nbsp;java.util.Set&lt;java.lang.String&gt;&nbsp;getApplicableAssetTypes()</pre>
 <div class="block">Asset type names to which to restrict the attribute.
  Only assets of one of these types will have this attribute available.
- To further restrict the assets for this custom metadata by connection, see <a href="#applicableConnections"><code>applicableConnections</code></a>.</div>
+ To further restrict the assets for this custom metadata by connection, see <code>applicableConnections</code>.</div>
 </li>
 </ul>
 <a id="getApplicableGlossaryTypes()">
@@ -720,7 +720,7 @@ public&nbsp;java.util.Set&lt;java.lang.String&gt;&nbsp;getCustomApplicableEntity
 <pre class="methodSignature">public&nbsp;java.util.Set&lt;java.lang.String&gt;&nbsp;getApplicableGlossaryTypes()</pre>
 <div class="block">Glossary type names to which to restrict the attribute.
  Only glossary assets of one of these types will have this attribute available.
- To further restrict the glossary content for this custom metadata by glossary, see <a href="#applicableGlossaries"><code>applicableGlossaries</code></a>.</div>
+ To further restrict the glossary content for this custom metadata by glossary, see <code>applicableGlossaries</code>.</div>
 </li>
 </ul>
 <a id="getApplicableOtherAssetTypes()">
