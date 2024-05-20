@@ -4,10 +4,12 @@ package com.atlan.pkg.rab
 
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Connection
+import com.atlan.model.assets.IAsset.CONNECTOR_TYPE
 import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.cache.ConnectionCache
 import com.atlan.pkg.serde.RowDeserializer
+import com.atlan.util.AssetBatch.AssetCreationHandling
 import mu.KotlinLogging
 
 /**
@@ -20,7 +22,7 @@ import mu.KotlinLogging
  *
  * @param preprocessed details of the preprocessed CSV file
  * @param attrsToOverwrite list of fields that should be overwritten in Atlan, if their value is empty in the CSV
- * @param updateOnly if true, only update an asset (first check it exists), if false allow upserts (create if it does not exist)
+ * @param creationHandling what to do with assets that do not exist (create full, partial, or ignore)
  * @param batchSize maximum number of records to save per API request
  * @param trackBatches if true, minimal details about every asset created or updated is tracked (if false, only counts of each are tracked)
  * @param fieldSeparator character to use to separate fields (for example ',' or ';')
@@ -28,14 +30,19 @@ import mu.KotlinLogging
 class ConnectionImporter(
     private val preprocessed: Importer.PreprocessedCsv,
     private val attrsToOverwrite: List<AtlanField>,
-    private val updateOnly: Boolean,
+    private val creationHandling: AssetCreationHandling,
     private val batchSize: Int,
     trackBatches: Boolean,
     fieldSeparator: Char,
 ) : AssetImporter(
     preprocessed.preprocessedFile,
     attrsToOverwrite,
-    updateOnly,
+    // Only allow full or updates to connections, as partial connections would be hidden
+    // and impossible to delete via utilities like the Connection Delete workflow
+    when (creationHandling) {
+        AssetCreationHandling.FULL, AssetCreationHandling.PARTIAL -> AssetCreationHandling.FULL
+        else -> creationHandling
+    },
     batchSize,
     Connection.TYPE_NAME,
     KotlinLogging.logger {},
