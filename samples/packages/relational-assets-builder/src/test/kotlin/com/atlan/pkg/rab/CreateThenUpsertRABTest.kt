@@ -440,7 +440,15 @@ class CreateThenUpsertRABTest : PackageTest() {
         )
         Importer.main(arrayOf())
         // Allow Elastic index and deletion to become consistent
-        Thread.sleep(10000)
+        Thread.sleep(15000)
+        val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
+        val request = Column.select()
+            .where(Column.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
+            .where(Column.TABLE_NAME.eq("TEST_TBL"))
+            .where(Column.DISPLAY_NAME.startsWith("Revised column"))
+            .includesOnResults(columnAttrs)
+            .toRequest()
+        retrySearchUntil(request, 2)
     }
 
     @Test(groups = ["update"], dependsOnGroups = ["runUpdate"])
