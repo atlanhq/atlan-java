@@ -7,7 +7,11 @@ import com.atlan.exception.AtlanException
 import com.atlan.exception.NotFoundException
 import com.atlan.model.assets.Connection
 import com.atlan.model.enums.AssetCreationHandling
-import com.atlan.pkg.s3.S3Sync
+import com.atlan.pkg.Utils.getInputFile
+import com.atlan.pkg.objectstore.ADLSSync
+import com.atlan.pkg.objectstore.GCSSync
+import com.atlan.pkg.objectstore.ObjectStorageSyncer
+import com.atlan.pkg.objectstore.S3Sync
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import jakarta.activation.FileDataSource
 import jakarta.mail.Message
@@ -453,28 +457,54 @@ object Utils {
 
     /**
      * Return the (container-)local input file name whenever a user is given the
-     * choice of how to provide an input file (either by uploading directly or through S3).
-     * If using the S3 details, the object will be downloaded from S3 and placed into local
+     * choice of how to provide an input file (either by uploading directly or through an object store).
+     * If using the object store details, the object will be downloaded from the object store and placed into local
      * storage as part of this method.
      *
      * @param uploadResult filename from a direct upload
+     * @param outputDirectory local directory where any object storage-downloaded file should be placed
      * @param s3Region name of the S3 region for an S3 download
      * @param s3Bucket name of the S3 bucket for an S3 download
      * @param s3ObjectKey full path to the S3 object within the bucket
-     * @param outputDirectory local directory where any S3-downloaded file should be placed
-     * @param preferUpload if true, take the directly-uploaded file; otherwise use the S3 details to download the file
+     * @param gcsProjectId project ID for GCP
+     * @param gcsBucket name of the GCS bucket for a GCS download
+     * @param gcsObjectKey full path to the GCS object within the bucket
+     * @param gcsCredentials location of JSON file containing GCS credentials
+     * @param adlsAccountName name of the Azure account
+     * @param adlsContainerName fname of the ADLS container for an ADLS download
+     * @param adlsObjectKey full path to the ADLS object within the container
+     * @param adlsSasToken shared access secret (SAS) token for ADLS
+     * @param preferUpload if true, take the directly-uploaded file; otherwise use the object store details to download the file
      * @return the name of the file that is on local container storage from which we can read information
      */
-    fun getInputFile(uploadResult: String, s3Region: String, s3Bucket: String, s3ObjectKey: String, outputDirectory: String, preferUpload: Boolean = true): String {
+    fun getInputFile(
+        uploadResult: String,
+        outputDirectory: String,
+        s3Region: String = "",
+        s3Bucket: String = "",
+        s3ObjectKey: String = "",
+        gcsProjectId: String = "",
+        gcsBucket: String = "",
+        gcsObjectKey: String = "",
+        gcsCredentials: String = "",
+        adlsAccountName: String = "",
+        adlsContainerName: String = "",
+        adlsObjectKey: String = "",
+        adlsSasToken: String = "",
+        preferUpload: Boolean = true,
+    ): String {
         return if (preferUpload) {
             uploadResult
         } else {
             if (s3ObjectKey.isNotBlank()) {
                 val sync = S3Sync(s3Bucket, s3Region, logger)
-                val filename = File(s3ObjectKey).name
-                val path = "$outputDirectory${File.separator}$filename"
-                sync.downloadFromS3(s3ObjectKey, path)
-                path
+                getInputFile(sync, s3ObjectKey, outputDirectory)
+            } else if (gcsObjectKey.isNotBlank()) {
+                val sync = GCSSync(gcsProjectId, gcsBucket, logger, gcsCredentials)
+                getInputFile(sync, gcsObjectKey, outputDirectory)
+            } else if (adlsObjectKey.isNotBlank()) {
+                val sync = ADLSSync(adlsAccountName, adlsContainerName, logger, adlsSasToken)
+                getInputFile(sync, adlsObjectKey, outputDirectory)
             } else {
                 ""
             }
@@ -482,33 +512,88 @@ object Utils {
     }
 
     /**
+     * Given an object storage syncer, download the specified file to the local outputDirectory.
+     *
+     * @param syncer object storage syncer
+     * @param remote object key in object storage
+     * @param outputDirectory local directory into which to download the file
+     */
+    private fun getInputFile(syncer: ObjectStorageSyncer, remote: String, outputDirectory: String): String {
+        val filename = File(remote).name
+        val path = "$outputDirectory${File.separator}$filename"
+        syncer.downloadFrom(remote, path)
+        return path
+    }
+
+    /**
      * Return the (container-)local input file names whenever a user is given the
-     * choice of how to provide an input file (either by uploading directly or through S3).
-     * If using the S3 details, the objects will be downloaded from S3 and placed into local
+     * choice of how to provide an input file (either by uploading directly or through object storage).
+     * If using the object store details, the objects will be downloaded from object storage and placed into local
      * storage as part of this method.
      *
      * @param uploadResult filename from a direct upload
+     * @param outputDirectory local directory where any object store-downloaded files should be placed
      * @param s3Region name of the S3 region for an S3 download
      * @param s3Bucket name of the S3 bucket for an S3 download
      * @param s3ObjectKey full path to the S3 object within the bucket (if it ends with a /, all objects in that prefix will be downloaded)
-     * @param outputDirectory local directory where any S3-downloaded files should be placed
-     * @param preferUpload if true, take the directly-uploaded file; otherwise use the S3 details to download the file(s)
+     * @param gcsProjectId project ID for GCP
+     * @param gcsBucket name of the GCS bucket for a GCS download
+     * @param gcsObjectKey full path to the GCS object within the bucket
+     * @param gcsCredentials location of JSON file containing GCS credentials
+     * @param adlsAccountName name of the Azure account
+     * @param adlsContainerName fname of the ADLS container for an ADLS download
+     * @param adlsObjectKey full path to the ADLS object within the container
+     * @param adlsSasToken shared access secret (SAS) token for ADLS
+     * @param preferUpload if true, take the directly-uploaded file; otherwise use the object store details to download the file(s)
      * @return the name(s) of the file(s) that are on local container storage from which we can read information
      */
-    fun getInputFiles(uploadResult: String, s3Region: String, s3Bucket: String, s3ObjectKey: String, outputDirectory: String, preferUpload: Boolean = true): List<String> {
+    fun getInputFiles(
+        uploadResult: String,
+        outputDirectory: String,
+        s3Region: String = "",
+        s3Bucket: String = "",
+        s3ObjectKey: String = "",
+        gcsProjectId: String = "",
+        gcsBucket: String = "",
+        gcsObjectKey: String = "",
+        gcsCredentials: String = "",
+        adlsAccountName: String = "",
+        adlsContainerName: String = "",
+        adlsObjectKey: String = "",
+        adlsSasToken: String = "",
+        preferUpload: Boolean = true,
+    ): List<String> {
         return if (preferUpload) {
             listOf(uploadResult)
         } else {
-            if (s3ObjectKey.isNotBlank()) {
+            if (s3ObjectKey.isNotBlank() && s3ObjectKey.endsWith("/")) {
                 val sync = S3Sync(s3Bucket, s3Region, logger)
-                if (s3ObjectKey.endsWith("/")) {
-                    sync.copyFromS3(s3ObjectKey, outputDirectory)
-                } else {
-                    val filename = File(s3ObjectKey).name
-                    val path = "$outputDirectory${File.separator}$filename"
-                    sync.downloadFromS3(s3ObjectKey, path)
-                    listOf(path)
-                }
+                sync.copyFrom(s3ObjectKey, outputDirectory)
+            } else if (gcsObjectKey.isNotBlank() && gcsObjectKey.endsWith("/")) {
+                val sync = GCSSync(gcsProjectId, gcsBucket, logger, gcsCredentials)
+                sync.copyFrom(gcsObjectKey, outputDirectory)
+            } else if (adlsObjectKey.isNotBlank() && adlsObjectKey.endsWith("/")) {
+                val sync = ADLSSync(adlsAccountName, adlsContainerName, logger, adlsSasToken)
+                sync.copyFrom(adlsObjectKey, outputDirectory)
+            } else if (s3ObjectKey.isNotBlank() || gcsObjectKey.isNotBlank() || adlsObjectKey.isNotBlank()) {
+                listOf(
+                    getInputFile(
+                        uploadResult,
+                        outputDirectory,
+                        s3Region,
+                        s3Bucket,
+                        s3ObjectKey,
+                        gcsProjectId,
+                        gcsBucket,
+                        gcsObjectKey,
+                        gcsCredentials,
+                        adlsAccountName,
+                        adlsContainerName,
+                        adlsObjectKey,
+                        adlsSasToken,
+                        false,
+                    ),
+                )
             } else {
                 emptyList()
             }

@@ -52,11 +52,11 @@ object Loader {
 
         val lineageInput = Utils.getInputFile(
             lineageFilename,
-            lineageS3Region,
-            lineageS3Bucket,
-            lineageS3ObjectKey,
             outputDirectory,
-            lineageUpload,
+            s3Region = lineageS3Region,
+            s3Bucket = lineageS3Bucket,
+            s3ObjectKey = lineageS3ObjectKey,
+            preferUpload = lineageUpload,
         )
         if (lineageInput.isNotBlank()) {
             FieldSerde.FAIL_ON_ERRORS.set(lineageFailOnErrors)

@@ -41,7 +41,9 @@ uiConfig {
           helpText = "Select how you want to provide the file containing relational asset to be imported."
           possibleValues {
             ["UPLOAD"] = "Direct upload"
-            ["S3"] = "S3 object"
+            ["S3"] = "S3"
+            ["GCS"] = "GCS"
+            ["ADLS"] = "ADLS"
           }
           default = "UPLOAD"
         }
@@ -71,6 +73,61 @@ uiConfig {
           required = false
           helpText = "Enter the S3 object key, including the name of the object and its prefix (path) in the S3 bucket."
           placeholderText = "some/where/file.csv"
+          width = 8
+        }
+        ["assets_gcs_project"] = new TextInput {
+          title = "Project ID"
+          required = false
+          helpText = "Enter the ID of the GCP project."
+          placeholderText = ""
+          width = 4
+        }
+        ["assets_gcs_bucket"] = new TextInput {
+          title = "GCS bucket"
+          required = false
+          helpText = "Enter the GCS bucket from which to retrieve the GCS object."
+          placeholderText = "bucket-name"
+          width = 4
+        }
+        ["assets_gcs_object_key"] = new TextInput {
+          title = "GCS object key"
+          required = false
+          helpText = "Enter the GCS object key, including the name of the object and its prefix (path) in the GCS bucket."
+          placeholderText = "some/where/file.csv"
+          width = 8
+        }
+        ["assets_gcs_credential_json"] = new TextInput {
+          title = "Service account JSON"
+          required = false
+          helpText = "Enter the JSON for your service account credentials."
+          placeholderText = "{\"type\":\"service_account\",\"project_id\":\"gcs-connector-399418\", ..."
+          width = 8
+        }
+        ["assets_adls_account"] = new TextInput {
+          title = "Account name"
+          required = false
+          helpText = "Enter the name of your ADLS storage account."
+          placeholderText = ""
+          width = 4
+        }
+        ["assets_adls_container"] = new TextInput {
+          title = "ADLS container"
+          required = false
+          helpText = "Enter the ADLS container from which to retrieve the ADLS object."
+          placeholderText = "container-name"
+          width = 4
+        }
+        ["assets_adls_object_key"] = new TextInput {
+          title = "ADLS object key"
+          required = false
+          helpText = "Enter the ADLS object key, including the name of the object and its prefix (path) in the ADLS container."
+          placeholderText = "some/where/file.csv"
+          width = 8
+        }
+        ["assets_adls_sas_token"] = new PasswordInput {
+          title = "Shared access secret (SAS) token"
+          required = false
+          helpText = "Enter the JSON for your service account credentials."
           width = 8
         }
         ["assets_upsert_semantic"] = new Radio {
@@ -152,6 +209,24 @@ uiConfig {
         "assets_s3_region"
         "assets_s3_bucket"
         "assets_s3_object_key"
+      }
+    }
+    new UIRule {
+      whenInputs { ["assets_import_type"] = "GCS" }
+      required {
+        "assets_gcs_project"
+        "assets_gcs_bucket"
+        "assets_gcs_object_key"
+        "assets_gcs_credential_json"
+      }
+    }
+    new UIRule {
+      whenInputs { ["assets_import_type"] = "ADLS" }
+      required {
+        "assets_adls_account"
+        "assets_adls_container"
+        "assets_adls_object_key"
+        "assets_adls_sas_token"
       }
     }
     new UIRule {
