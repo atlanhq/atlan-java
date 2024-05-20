@@ -14,7 +14,7 @@ import com.atlan.pkg.cab.AssetImporter.Companion.getQualifiedNameDetails
 import com.atlan.pkg.cache.ConnectionCache
 import com.atlan.pkg.cache.LinkCache
 import com.atlan.pkg.cache.TermCache
-import com.atlan.pkg.s3.S3Sync
+import com.atlan.pkg.objectstore.S3Sync
 import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.csv.CSVImporter
 import com.atlan.pkg.util.AssetRemover
@@ -80,11 +80,11 @@ object Importer {
         // to allow subsequent out-of-order parallel processing
         val assetsInput = Utils.getInputFile(
             assetsFilename,
-            assetsS3Region,
-            assetsS3Bucket,
-            assetsS3ObjectKey,
             outputDirectory,
-            assetsUpload,
+            s3Region = assetsS3Region,
+            s3Bucket = assetsS3Bucket,
+            s3ObjectKey = assetsS3ObjectKey,
+            preferUpload = assetsUpload,
         )
         val preprocessedDetails = preprocessCSV(assetsInput, fieldSeparator)
 
@@ -185,7 +185,7 @@ object Importer {
                 } else if (skipS3) {
                     ""
                 } else {
-                    s3.copyLatestFromS3(previousFileLocation, PREVIOUS_FILE_PROCESSED_EXT, outputDirectory)
+                    s3.copyLatestFrom(previousFileLocation, PREVIOUS_FILE_PROCESSED_EXT, outputDirectory)
                 }
                 if (lastCubesFile.isNotBlank()) {
                     // If there was a previous file, calculate the delta to see what we need
@@ -227,7 +227,7 @@ object Importer {
         val sortedTime = DateTimeFormatter.ofPattern("yyyyMMdd-HHmmssSSS")
             .withZone(ZoneId.of("UTC"))
             .format(Instant.now())
-        s3.uploadToS3(
+        s3.uploadTo(
             localFile,
             "$previousFileLocation/$sortedTime$s3Extension",
         )

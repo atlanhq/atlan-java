@@ -79,11 +79,11 @@ object Importer {
         // Glossaries...
         val glossariesInput = Utils.getInputFile(
             glossariesFilename,
-            glossariesS3Region,
-            glossariesS3Bucket,
-            glossariesS3ObjectKey,
             outputDirectory,
-            glossariesUpload,
+            s3Region = glossariesS3Region,
+            s3Bucket = glossariesS3Bucket,
+            s3ObjectKey = glossariesS3ObjectKey,
+            preferUpload = glossariesUpload,
         )
         val resultsGTC = if (glossariesInput.isNotBlank()) {
             FieldSerde.FAIL_ON_ERRORS.set(glossariesFailOnErrors)
@@ -106,11 +106,11 @@ object Importer {
 
         val assetsInput = Utils.getInputFile(
             assetsFilename,
-            assetsS3Region,
-            assetsS3Bucket,
-            assetsS3ObjectKey,
             outputDirectory,
-            assetsUpload,
+            s3Region = assetsS3Region,
+            s3Bucket = assetsS3Bucket,
+            s3ObjectKey = assetsS3ObjectKey,
+            preferUpload = assetsUpload,
         )
         val resultsAssets = if (assetsInput.isNotBlank()) {
             FieldSerde.FAIL_ON_ERRORS.set(assetsFailOnErrors)
@@ -135,11 +135,11 @@ object Importer {
         // Data products...
         val dataProductsInput = Utils.getInputFile(
             dataProductsFilename,
-            dataProductsS3Region,
-            dataProductsS3Bucket,
-            dataProductsS3ObjectKey,
             outputDirectory,
-            dataProductsUpload,
+            s3Region = dataProductsS3Region,
+            s3Bucket = dataProductsS3Bucket,
+            s3ObjectKey = dataProductsS3ObjectKey,
+            preferUpload = dataProductsUpload,
         )
         val resultsDDP = if (dataProductsInput.isNotBlank()) {
             FieldSerde.FAIL_ON_ERRORS.set(dataProductsFailOnErrors)

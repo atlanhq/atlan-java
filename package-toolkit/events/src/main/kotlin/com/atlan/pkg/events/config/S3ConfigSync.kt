@@ -4,7 +4,7 @@ package com.atlan.pkg.events.config
 
 import com.atlan.pkg.CustomConfig
 import com.atlan.pkg.Utils
-import com.atlan.pkg.s3.S3Sync
+import com.atlan.pkg.objectstore.S3Sync
 import mu.KotlinLogging
 import java.io.File
 
@@ -36,7 +36,7 @@ class S3ConfigSync {
      */
     inline fun <reified T : CustomConfig> sync(): T? {
         val s3Sync = S3Sync(bucketName, region, logger)
-        val synced = s3Sync.copyFromS3(configPrefix, localPath)
+        val synced = s3Sync.copyFrom(configPrefix, localPath)
         return if (synced.isNotEmpty()) {
             Utils.parseConfig(File(CONFIG_FILE).readText(), File(RUNTIME_FILE).readText())
         } else {
