@@ -6,6 +6,7 @@ import com.atlan.Atlan
 import com.atlan.exception.AtlanException
 import com.atlan.exception.NotFoundException
 import com.atlan.model.assets.Connection
+import com.atlan.model.enums.AssetCreationHandling
 import com.atlan.pkg.s3.S3Sync
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import jakarta.activation.FileDataSource
@@ -373,6 +374,21 @@ object Utils {
             }
         } else {
             ""
+        }
+    }
+
+    /**
+     * Calculate the creation handling semantic from a string semantic.
+     *
+     * @param semantic string input for the semantic from the workflow setup
+     * @param default default semantic to use if no value was specified
+     * @return enumerated semantic
+     */
+    fun getCreationHandling(semantic: String?, default: AssetCreationHandling): AssetCreationHandling {
+        return if (semantic == null) {
+            default
+        } else {
+            AssetCreationHandling.fromValue(semantic)
         }
     }
 

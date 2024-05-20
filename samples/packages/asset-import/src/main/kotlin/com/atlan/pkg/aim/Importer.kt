@@ -3,12 +3,12 @@
 package com.atlan.pkg.aim
 
 import AssetImportCfg
+import com.atlan.model.enums.AssetCreationHandling
 import com.atlan.pkg.Utils
 import com.atlan.pkg.cache.LinkCache
 import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.csv.CSVImporter.Companion.attributesToClear
 import com.atlan.pkg.serde.csv.ImportResults
-import com.atlan.util.AssetBatch.AssetCreationHandling
 import mu.KotlinLogging
 import kotlin.system.exitProcess
 
@@ -57,7 +57,7 @@ object Importer {
             attributesToClear(Utils.getOrDefault(config.glossariesAttrToOverwrite, listOf()).toMutableList(), "glossaries", logger)
         val dataProductAttrsToOverwrite =
             attributesToClear(Utils.getOrDefault(config.dataProductsAttrToOverwrite, listOf()).toMutableList(), "dataProducts", logger)
-        val assetsUpdateSemantic = Utils.getOrDefault(config.assetsUpsertSemantic, "update")
+        val assetsUpdateSemantic = Utils.getCreationHandling(config.assetsUpsertSemantic, AssetCreationHandling.NONE)
         val assetsCaseSensitive = Utils.getOrDefault(config.assetsCaseSensitive, true)
         val assetsTableViewAgnostic = Utils.getOrDefault(config.assetsTableViewAgnostic, false)
         val glossariesUpdateOnly = Utils.getOrDefault(config.glossariesUpsertSemantic, "update") == "update"
@@ -115,18 +115,13 @@ object Importer {
         val resultsAssets = if (assetsInput.isNotBlank()) {
             FieldSerde.FAIL_ON_ERRORS.set(assetsFailOnErrors)
             logger.info { "=== Importing assets... ===" }
-            val creationHandling = when (assetsUpdateSemantic) {
-                "upsert" -> AssetCreationHandling.FULL
-                "partial" -> AssetCreationHandling.PARTIAL
-                else -> AssetCreationHandling.NONE
-            }
             val assetImporter = AssetImporter(
                 assetsInput,
                 assetAttrsToOverwrite,
-                creationHandling == AssetCreationHandling.NONE,
+                assetsUpdateSemantic == AssetCreationHandling.NONE,
                 assetsBatchSize,
                 assetsCaseSensitive,
-                creationHandling,
+                assetsUpdateSemantic,
                 assetsTableViewAgnostic,
                 assetsFailOnErrors,
                 trackBatches,

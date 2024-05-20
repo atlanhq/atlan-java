@@ -11,6 +11,7 @@ import com.atlan.model.assets.MaterializedView
 import com.atlan.model.assets.Schema
 import com.atlan.model.assets.Table
 import com.atlan.model.assets.View
+import com.atlan.model.enums.AssetCreationHandling
 import com.atlan.pkg.Utils
 import com.atlan.pkg.cache.ConnectionCache
 import com.atlan.pkg.cache.LinkCache
@@ -53,7 +54,7 @@ object Importer {
         val assetAttrsToOverwrite =
             CSVImporter.attributesToClear(Utils.getOrDefault(config.assetsAttrToOverwrite, listOf()).toMutableList(), "assets", logger)
         val assetsFailOnErrors = Utils.getOrDefault(config.assetsFailOnErrors, true)
-        val assetsUpdateOnly = Utils.getOrDefault(config.assetsUpsertSemantic, "update") == "update"
+        val assetsSemantic = Utils.getCreationHandling(config.assetsUpsertSemantic, AssetCreationHandling.FULL)
         val trackBatches = Utils.getOrDefault(config.trackBatches, true)
 
         val assetsFileProvided = (assetsUpload && assetsFilename.isNotBlank()) || (!assetsUpload && assetsS3ObjectKey.isNotBlank())
@@ -95,7 +96,7 @@ object Importer {
         val connectionImporter = ConnectionImporter(
             preprocessedDetails,
             assetAttrsToOverwrite,
-            assetsUpdateOnly,
+            assetsSemantic,
             1,
             true,
             fieldSeparator,
@@ -106,7 +107,7 @@ object Importer {
         val databaseImporter = DatabaseImporter(
             preprocessedDetails,
             assetAttrsToOverwrite,
-            assetsUpdateOnly,
+            assetsSemantic,
             batchSize,
             connectionImporter,
             trackBatches,
@@ -118,7 +119,7 @@ object Importer {
         val schemaImporter = SchemaImporter(
             preprocessedDetails,
             assetAttrsToOverwrite,
-            assetsUpdateOnly,
+            assetsSemantic,
             batchSize,
             connectionImporter,
             trackBatches,
@@ -130,7 +131,7 @@ object Importer {
         val tableImporter = TableImporter(
             preprocessedDetails,
             assetAttrsToOverwrite,
-            assetsUpdateOnly,
+            assetsSemantic,
             batchSize,
             connectionImporter,
             trackBatches,
@@ -142,7 +143,7 @@ object Importer {
         val viewImporter = ViewImporter(
             preprocessedDetails,
             assetAttrsToOverwrite,
-            assetsUpdateOnly,
+            assetsSemantic,
             batchSize,
             connectionImporter,
             trackBatches,
@@ -154,7 +155,7 @@ object Importer {
         val materializedViewImporter = MaterializedViewImporter(
             preprocessedDetails,
             assetAttrsToOverwrite,
-            assetsUpdateOnly,
+            assetsSemantic,
             batchSize,
             connectionImporter,
             trackBatches,
@@ -166,7 +167,7 @@ object Importer {
         val columnImporter = ColumnImporter(
             preprocessedDetails,
             assetAttrsToOverwrite,
-            assetsUpdateOnly,
+            assetsSemantic,
             batchSize,
             connectionImporter,
             trackBatches,

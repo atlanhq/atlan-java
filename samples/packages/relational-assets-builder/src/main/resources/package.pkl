@@ -77,11 +77,12 @@ uiConfig {
           title = "Input handling"
           required = false
           possibleValues {
-            ["upsert"] = "Create and update"
+            ["upsert"] = "Create (full) and update"
+            ["partial"] = "Create (partial) and update"
             ["update"] = "Update only"
           }
           default = "upsert"
-          helpText = "Whether to allow the creation of new assets from the input CSV, or ensure assets are only updated if they already exist in Atlan."
+          helpText = "Whether to allow the creation of new (full or partial) assets from the input CSV, or ensure assets are only updated if they already exist in Atlan."
         }
         ["assets_config_type"] = new Radio {
           title = "Options"

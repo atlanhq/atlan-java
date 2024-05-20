@@ -8,6 +8,7 @@ import com.atlan.model.assets.Cube
 import com.atlan.model.assets.CubeDimension
 import com.atlan.model.assets.CubeField
 import com.atlan.model.assets.CubeHierarchy
+import com.atlan.model.enums.AssetCreationHandling
 import com.atlan.pkg.Utils
 import com.atlan.pkg.cab.AssetImporter.Companion.getQualifiedNameDetails
 import com.atlan.pkg.cache.ConnectionCache
@@ -66,7 +67,7 @@ object Importer {
         val assetAttrsToOverwrite =
             CSVImporter.attributesToClear(Utils.getOrDefault(config.assetsAttrToOverwrite, listOf()).toMutableList(), "assets", logger)
         val assetsFailOnErrors = Utils.getOrDefault(config.assetsFailOnErrors, true)
-        val assetsUpdateOnly = Utils.getOrDefault(config.assetsUpsertSemantic, "update") == "update"
+        val assetsSemantic = Utils.getCreationHandling(config.assetsUpsertSemantic, AssetCreationHandling.FULL)
         val trackBatches = Utils.getOrDefault(config.trackBatches, true)
 
         val assetsFileProvided = (assetsUpload && assetsFilename.isNotBlank()) || (!assetsUpload && assetsS3ObjectKey.isNotBlank())
@@ -108,7 +109,7 @@ object Importer {
         val connectionImporter = ConnectionImporter(
             preprocessedDetails,
             assetAttrsToOverwrite,
-            assetsUpdateOnly,
+            assetsSemantic,
             1,
             true,
             fieldSeparator,
@@ -119,7 +120,7 @@ object Importer {
         val cubeImporter = CubeImporter(
             preprocessedDetails,
             assetAttrsToOverwrite,
-            assetsUpdateOnly,
+            assetsSemantic,
             batchSize,
             connectionImporter,
             true,
@@ -131,7 +132,7 @@ object Importer {
         val dimensionImporter = DimensionImporter(
             preprocessedDetails,
             assetAttrsToOverwrite,
-            assetsUpdateOnly,
+            assetsSemantic,
             batchSize,
             connectionImporter,
             trackBatches,
@@ -143,7 +144,7 @@ object Importer {
         val hierarchyImporter = HierarchyImporter(
             preprocessedDetails,
             assetAttrsToOverwrite,
-            assetsUpdateOnly,
+            assetsSemantic,
             batchSize,
             connectionImporter,
             trackBatches,
@@ -155,7 +156,7 @@ object Importer {
         val fieldImporter = FieldImporter(
             preprocessedDetails,
             assetAttrsToOverwrite,
-            assetsUpdateOnly,
+            assetsSemantic,
             batchSize,
             connectionImporter,
             trackBatches,
