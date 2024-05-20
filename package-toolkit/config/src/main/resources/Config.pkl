@@ -409,6 +409,8 @@ typealias CodeLanguage = "Java"|"Kotlin"|"Python"|"Other"
 /// (Generated) Unique name to use for file-based objects for the package.
 hidden fixed name = packageId.replaceAll("@", "").replaceAll("/", "-")
 
+const function getPythonPkgName(m): String = getLowerSnakeCase(getPascalCase(m.packageName))
+
 /// Set up multiple outputs for the module, one for each configuration file.
 /// - `m` the package config to generate outputs for
 const function getOutputs(m): Mapping<String, FileOutput> = new Mapping {
@@ -420,7 +422,13 @@ const function getOutputs(m): Mapping<String, FileOutput> = new Mapping {
     ["src/main/kotlin/\(getClassName(m.packageName)).kt"] = Renderers.getConfigClassKt(m, getClassName(m.packageName))
   }
   when (m.implementationLanguage == "Python") {
-    ["\(getLowerSnakeCase(getPascalCase(m.packageName))).py"] = Renderers.getConfigClassPy(m)
+    ["\(getPythonPkgName(m))/\(getPythonPkgName(m))_cfg.py"] = Renderers.getConfigClassPy(m)
+    ["\(getPythonPkgName(m))/__init__.py"] = Renderers.getBlankFile()
+    ["\(getPythonPkgName(m))/logging.conf"] = Renderers.getLoggingConfPy()
+    ["requirements.txt"] = Renderers.getRequirementsPy()
+    ["requirements-dev.txt"] = Renderers.getRequirementsDevPy()
+    ["version.txt"] = Renderers.getVersionPy(m)
+    ["Dockerfile"] = Renderers.getDockerfilePy(getPythonPkgName(m))
   }
   when (m.credentialConfig != null) {
     ["build/package/connectors/configmaps/\(m.credentialConfig.name).yaml"] = Renderers.getCredentialConfigMap(m)
