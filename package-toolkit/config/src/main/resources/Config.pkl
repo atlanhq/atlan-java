@@ -424,6 +424,7 @@ const function getOutputs(m): Mapping<String, FileOutput> = new Mapping {
   when (m.implementationLanguage == "Python") {
     ["\(getPythonPkgName(m))/\(getPythonPkgName(m))_cfg.py"] = Renderers.getConfigClassPy(m)
     ["\(getPythonPkgName(m))/__init__.py"] = Renderers.getBlankFile()
+    ["\(getPythonPkgName(m))/main.py.example"] = Renderers.getMainPy(getPythonPkgName(m))
     ["\(getPythonPkgName(m))/logging.conf"] = Renderers.getLoggingConfPy()
     ["requirements.txt"] = Renderers.getRequirementsPy()
     ["requirements-dev.txt"] = Renderers.getRequirementsDevPy()
