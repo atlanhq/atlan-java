@@ -9,6 +9,7 @@ import com.atlan.model.assets.CubeDimension
 import com.atlan.model.assets.CubeField
 import com.atlan.model.assets.CubeHierarchy
 import com.atlan.model.assets.IMultiDimensionalDataset
+import com.atlan.model.enums.AssetCreationHandling
 import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.cab.Importer.QN_DELIMITER
 import com.atlan.pkg.serde.csv.CSVImporter
@@ -28,7 +29,7 @@ import mu.KLogger
  *
  * @param filename name of the file to import
  * @param attrsToOverwrite list of fields that should be overwritten in Atlan, if their value is empty in the CSV
- * @param updateOnly if true, only update an asset (first check it exists), if false allow upserts (create if it does not exist)
+ * @param creationHandling what to do with assets that do not exist (create full, partial, or ignore)
  * @param batchSize maximum number of records to save per API request
  * @param trackBatches if true, minimal details about every asset created or updated is tracked (if false, only counts of each are tracked)
  * @param fieldSeparator character to use to separate fields (for example ',' or ';')
@@ -36,7 +37,7 @@ import mu.KLogger
 abstract class AssetImporter(
     private val filename: String,
     private val attrsToOverwrite: List<AtlanField>,
-    private val updateOnly: Boolean,
+    private val creationHandling: AssetCreationHandling,
     private val batchSize: Int,
     typeNameFilter: String,
     logger: KLogger,

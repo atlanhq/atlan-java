@@ -4,13 +4,13 @@ package com.atlan.pkg.serde.csv
 
 import com.atlan.cache.ReflectionCache
 import com.atlan.model.assets.Asset
+import com.atlan.model.enums.AssetCreationHandling
 import com.atlan.model.fields.AtlanField
 import com.atlan.model.fields.SearchableField
 import com.atlan.pkg.serde.RowDeserialization
 import com.atlan.pkg.serde.RowDeserializer
 import com.atlan.serde.Serde
 import com.atlan.util.AssetBatch
-import com.atlan.util.AssetBatch.AssetCreationHandling
 import mu.KLogger
 import java.lang.reflect.InvocationTargetException
 import kotlin.system.exitProcess

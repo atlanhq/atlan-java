@@ -3,11 +3,11 @@
 package com.atlan.pkg.aim
 
 import com.atlan.model.assets.Asset
+import com.atlan.model.enums.AssetCreationHandling
 import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.RowDeserializer
 import com.atlan.pkg.serde.csv.CSVImporter
-import com.atlan.util.AssetBatch.AssetCreationHandling
 import mu.KotlinLogging
 
 /**

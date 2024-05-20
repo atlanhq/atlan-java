@@ -8,6 +8,7 @@ import com.atlan.exception.NotFoundException
 import com.atlan.model.assets.Glossary
 import com.atlan.model.assets.GlossaryCategory
 import com.atlan.model.assets.GlossaryTerm
+import com.atlan.model.enums.AssetCreationHandling
 import com.atlan.model.enums.AtlanAnnouncementType
 import com.atlan.model.enums.AtlanIcon
 import com.atlan.model.enums.CertificateStatus
@@ -236,7 +237,7 @@ object Reporter {
                     false,
                     false,
                     false,
-                    AssetBatch.AssetCreationHandling.FULL,
+                    AssetCreationHandling.FULL,
                     false,
                 )
             } else {

@@ -11,13 +11,13 @@ import com.atlan.model.assets.MaterializedView
 import com.atlan.model.assets.Schema
 import com.atlan.model.assets.Table
 import com.atlan.model.assets.View
+import com.atlan.model.enums.AssetCreationHandling
 import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.serde.csv.CSVImporter
 import com.atlan.pkg.serde.csv.ImportResults
 import com.atlan.pkg.util.AssetResolver
 import com.atlan.pkg.util.AssetResolver.ConnectionIdentity
 import com.atlan.pkg.util.AssetResolver.QualifiedNameDetails
-import com.atlan.util.AssetBatch.AssetCreationHandling
 import mu.KLogger
 
 /**

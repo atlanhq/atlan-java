@@ -6,6 +6,7 @@ import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.core.AssetMutationResponse;
+import com.atlan.model.enums.AssetCreationHandling;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -52,7 +53,7 @@ public class ParallelBatch {
 
     /** When allowing assets to be created, how to handle those creations (full assets or partial assets). */
     @Builder.Default
-    private AssetBatch.AssetCreationHandling creationHandling = AssetBatch.AssetCreationHandling.FULL;
+    private AssetCreationHandling creationHandling = AssetCreationHandling.FULL;
 
     /** Whether tables and views should be treated interchangeably (an asset in the batch marked as a table will attempt to match a view if not found as a table, and vice versa). */
     @Builder.Default
@@ -182,7 +183,7 @@ public class ParallelBatch {
                 updateOnly,
                 track,
                 caseSensitive,
-                AssetBatch.AssetCreationHandling.FULL);
+                AssetCreationHandling.FULL);
     }
 
     /**
@@ -207,7 +208,7 @@ public class ParallelBatch {
             boolean updateOnly,
             boolean track,
             boolean caseSensitive,
-            AssetBatch.AssetCreationHandling creationHandling) {
+            AssetCreationHandling creationHandling) {
         this(
                 client,
                 maxSize,
@@ -244,7 +245,7 @@ public class ParallelBatch {
             boolean updateOnly,
             boolean track,
             boolean caseSensitive,
-            AssetBatch.AssetCreationHandling creationHandling,
+            AssetCreationHandling creationHandling,
             boolean tableViewAgnostic) {
         this.client = client;
         this.maxSize = maxSize;

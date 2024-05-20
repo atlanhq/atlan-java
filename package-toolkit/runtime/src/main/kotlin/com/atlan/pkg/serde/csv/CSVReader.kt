@@ -6,11 +6,11 @@ import com.atlan.Atlan
 import com.atlan.cache.ReflectionCache
 import com.atlan.exception.AtlanException
 import com.atlan.model.assets.Asset
+import com.atlan.model.enums.AssetCreationHandling
 import com.atlan.model.enums.AtlanDeleteType
 import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.Utils
 import com.atlan.pkg.serde.cell.AssetRefXformer
-import com.atlan.util.AssetBatch.AssetCreationHandling
 import com.atlan.util.AssetBatch.CustomMetadataHandling
 import com.atlan.util.ParallelBatch
 import de.siegmar.fastcsv.reader.CsvReader

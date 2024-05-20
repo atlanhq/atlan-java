@@ -4,9 +4,9 @@ package com.atlan.pkg.rab
 
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.MaterializedView
+import com.atlan.model.enums.AssetCreationHandling
 import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.serde.RowDeserializer
-import com.atlan.util.AssetBatch.AssetCreationHandling
 import mu.KotlinLogging
 
 /**

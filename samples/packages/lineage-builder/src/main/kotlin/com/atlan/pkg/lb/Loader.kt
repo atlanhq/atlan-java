@@ -7,11 +7,11 @@ import LineageBuilderCfg
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Connection
 import com.atlan.model.assets.LineageProcess
+import com.atlan.model.enums.AssetCreationHandling
 import com.atlan.pkg.Utils
 import com.atlan.pkg.aim.Importer
 import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.csv.CSVXformer.Companion.getHeader
-import com.atlan.util.AssetBatch.AssetCreationHandling
 import mu.KotlinLogging
 import java.io.File
 import kotlin.system.exitProcess
@@ -41,7 +41,7 @@ object Loader {
         val lineageS3Bucket = Utils.getOrDefault(config.lineageS3Bucket, defaultBucket)
         val lineageS3ObjectKey = Utils.getOrDefault(config.lineageS3ObjectKey, "")
         val lineageFailOnErrors = Utils.getOrDefault(config.lineageFailOnErrors, true)
-        val lineageAssetSemantic = Utils.getOrDefault(config.lineageUpsertSemantic, "partial")
+        val lineageAssetSemantic = Utils.getCreationHandling(config.lineageUpsertSemantic, AssetCreationHandling.PARTIAL)
         val lineageCaseSensitive = Utils.getOrDefault(config.lineageCaseSensitive, true)
 
         val lineageFileProvided = (lineageUpload && lineageFilename.isNotBlank()) || (!lineageUpload && lineageS3ObjectKey.isNotBlank())
@@ -62,14 +62,9 @@ object Loader {
             FieldSerde.FAIL_ON_ERRORS.set(lineageFailOnErrors)
             val connectionMap = preloadConnectionMap()
 
-            val creationHandling = when (lineageAssetSemantic) {
-                "update" -> AssetCreationHandling.NONE
-                "partial" -> AssetCreationHandling.PARTIAL
-                else -> AssetCreationHandling.FULL
-            }
             val ctx = Context(
                 connectionMap = connectionMap,
-                assetSemantic = creationHandling,
+                assetSemantic = lineageAssetSemantic,
             )
 
             // 1. Transform the assets, so we can load the prior to creating any lineage relationships
@@ -86,7 +81,7 @@ object Loader {
             // 2. Create the assets
             val importConfig = AssetImportCfg(
                 assetsFile = assetsFile,
-                assetsUpsertSemantic = lineageAssetSemantic,
+                assetsUpsertSemantic = lineageAssetSemantic.value,
                 assetsFailOnErrors = lineageFailOnErrors,
                 assetsCaseSensitive = lineageCaseSensitive,
                 assetsBatchSize = batchSize,

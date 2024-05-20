@@ -15,6 +15,7 @@ import com.atlan.model.assets.Table;
 import com.atlan.model.assets.View;
 import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.core.ConnectionCreationResponse;
+import com.atlan.model.enums.AssetCreationHandling;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.search.FluentSearch;
 import com.atlan.serde.Serde;
@@ -41,12 +42,6 @@ public class AssetBatch {
         IGNORE,
         OVERWRITE,
         MERGE,
-    }
-
-    public enum AssetCreationHandling {
-        FULL,
-        PARTIAL,
-        NONE,
     }
 
     /** Connectivity to an Atlan tenant. */

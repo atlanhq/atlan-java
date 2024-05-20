@@ -4,6 +4,7 @@ package com.atlan.pkg.cab
 
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.CubeField
+import com.atlan.model.enums.AssetCreationHandling
 import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.serde.RowDeserializer
 import com.atlan.pkg.serde.csv.ImportResults
@@ -21,7 +22,7 @@ import kotlin.math.max
  *
  * @param preprocessed details of the preprocessed CSV file
  * @param attrsToOverwrite list of fields that should be overwritten in Atlan, if their value is empty in the CSV
- * @param updateOnly if true, only update an asset (first check it exists), if false allow upserts (create if it does not exist)
+ * @param creationHandling what to do with assets that do not exist (create full, partial, or ignore)
  * @param batchSize maximum number of records to save per API request
  * @param connectionImporter that was used to import connections
  * @param trackBatches if true, minimal details about every asset created or updated is tracked (if false, only counts of each are tracked)
@@ -30,7 +31,7 @@ import kotlin.math.max
 class FieldImporter(
     private val preprocessed: Importer.PreprocessedCsv,
     private val attrsToOverwrite: List<AtlanField>,
-    private val updateOnly: Boolean,
+    private val creationHandling: AssetCreationHandling,
     private val batchSize: Int,
     private val connectionImporter: ConnectionImporter,
     trackBatches: Boolean,
@@ -38,7 +39,7 @@ class FieldImporter(
 ) : AssetImporter(
     preprocessed.preprocessedFile,
     attrsToOverwrite,
-    updateOnly,
+    creationHandling,
     batchSize,
     CubeField.TYPE_NAME,
     KotlinLogging.logger {},

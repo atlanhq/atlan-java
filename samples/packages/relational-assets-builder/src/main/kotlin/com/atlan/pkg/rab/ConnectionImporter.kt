@@ -4,12 +4,11 @@ package com.atlan.pkg.rab
 
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Connection
-import com.atlan.model.assets.IAsset.CONNECTOR_TYPE
+import com.atlan.model.enums.AssetCreationHandling
 import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.cache.ConnectionCache
 import com.atlan.pkg.serde.RowDeserializer
-import com.atlan.util.AssetBatch.AssetCreationHandling
 import mu.KotlinLogging
 
 /**

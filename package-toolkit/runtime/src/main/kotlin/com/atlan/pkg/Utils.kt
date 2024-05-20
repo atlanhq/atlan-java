@@ -6,8 +6,8 @@ import com.atlan.Atlan
 import com.atlan.exception.AtlanException
 import com.atlan.exception.NotFoundException
 import com.atlan.model.assets.Connection
+import com.atlan.model.enums.AssetCreationHandling
 import com.atlan.pkg.s3.S3Sync
-import com.atlan.util.AssetBatch.AssetCreationHandling
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import jakarta.activation.FileDataSource
 import jakarta.mail.Message
@@ -385,11 +385,10 @@ object Utils {
      * @return enumerated semantic
      */
     fun getCreationHandling(semantic: String?, default: AssetCreationHandling): AssetCreationHandling {
-        if (semantic == null) return default
-        return when (semantic.lowercase()) {
-            "upsert" -> AssetCreationHandling.FULL
-            "partial" -> AssetCreationHandling.PARTIAL
-            else -> AssetCreationHandling.NONE
+        return if (semantic == null) {
+            default
+        } else {
+            AssetCreationHandling.fromValue(semantic)
         }
     }
 
