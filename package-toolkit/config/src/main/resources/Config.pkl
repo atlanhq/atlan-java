@@ -420,7 +420,7 @@ const function getOutputs(m): Mapping<String, FileOutput> = new Mapping {
     ["src/main/kotlin/\(getClassName(m.packageName)).kt"] = Renderers.getConfigClassKt(m, getClassName(m.packageName))
   }
   when (m.implementationLanguage == "Python") {
-    ["\(getClassName(m.packageName)).py"] = Renderers.getConfigClassPy(m)
+    ["\(getLowerSnakeCase(getPascalCase(m.packageName))).py"] = Renderers.getConfigClassPy(m)
   }
   when (m.credentialConfig != null) {
     ["build/package/connectors/configmaps/\(m.credentialConfig.name).yaml"] = Renderers.getCredentialConfigMap(m)
@@ -439,6 +439,11 @@ output = getModuleOutput(this)
 /// Turn the provided name into a PascalCase name.
 const function getPascalCase(name: String): String =
   name.split(Regex("[\\W_]+")).map((word) -> word.capitalize()).join("")
+
+/// Turn the provided name into a lower_snake_case_name.
+const function getLowerSnakeCase(text: String): String = getSnakeCase(text).toLowerCase()
+local const function getSnakeCase(text: String): String =
+  text.replaceAll("_", "").replaceAll(Regex("([A-Z]+)([A-Z][a-z])"), "$1_$2").replaceAll(Regex("([a-z])([A-Z])"), "$1_$2")
 
 const function getClassName(name: String): String = "\(getPascalCase(name))Cfg"
 
