@@ -226,6 +226,110 @@ const function getLowerCamelCase(s: String): String =
       "\(acc)\(word.capitalize())"
   )
 
+/// Render an empty file.
+const function getBlankFile(): FileOutput = new FileOutput {
+  text = ""
+}
+
+/// Render a baseline version file for a Python custom package.
+const function getVersionPy(m: Config): FileOutput = new FileOutput {
+  text = """
+    \(m.version)
+    """
+}
+
+/// Render the logging configuration for a Python custom package.
+const function getLoggingConfPy(): FileOutput = new FileOutput {
+  text = """
+    [loggers]
+    keys=root,pyatlan,urllib3
+
+    [handlers]
+    keys=consoleHandler,fileHandler,jsonHandler
+
+    [formatters]
+    keys=simpleFormatter,jsonFormatter
+
+    [logger_root]
+    level=INFO
+    handlers=consoleHandler,fileHandler
+
+    [logger_pyatlan]
+    level=DEBUG
+    handlers=fileHandler,jsonHandler
+    qualname=pyatlan
+    propagate=0
+
+    [logger_urllib3]
+    level=DEBUG
+    handlers=fileHandler,jsonHandler
+    qualname=urllib3
+    propagate=0
+
+    [handler_consoleHandler]
+    class=StreamHandler
+    formatter=simpleFormatter
+    args=(sys.stdout,)
+
+    [handler_fileHandler]
+    class=FileHandler
+    level=DEBUG
+    formatter=simpleFormatter
+    args=('/tmp/debug.log',)
+
+    [handler_jsonHandler]
+    class=FileHandler
+    level=DEBUG
+    formatter=jsonFormatter
+    args=('/tmp/pyatlan.json',)
+
+    [formatter_simpleFormatter]
+    format=%(asctime)s - %(name)s - %(levelname)s - %(message)s
+
+    [formatter_jsonFormatter]
+    format=%(asctime)s - %(name)s - %(levelname)s - %(message)s
+    class=pyatlan.utils.JsonFormatter
+    """
+}
+
+/// Render the baseline requirements.txt for a Python custom package.
+const function getRequirementsPy(): FileOutput = new FileOutput {
+  text = """
+    pyatlan
+    """
+}
+
+/// Render the baseline requirements-dev.txt for a Python custom package.
+const function getRequirementsDevPy(): FileOutput = new FileOutput {
+  text = """
+    pytest
+    pytest-order
+    nanoid
+    """
+}
+
+/// Render the baseline Dockerfile for a Python custom package.
+const function getDockerfilePy(pkgName: String): FileOutput = new FileOutput {
+  text = """
+    FROM python:3.9-bookworm
+
+    LABEL org.opencontainers.image.vendor="Atlan Pte. Ltd." \\
+          org.opencontainers.image.source="https://github.com/atlanhq/atlan-python" \\
+          org.opencontainers.image.description="Atlan image for \(pkgName) custom package." \\
+          org.opencontainers.image.licenses=Apache-2
+
+    COPY requirements.txt requirements.txt
+    ADD \(pkgName) /app/\(pkgName)
+
+    RUN wget -O /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v1.2.5/dumb-init_1.2.5_x86_64 \\
+            && chmod +x /usr/local/bin/dumb-init
+            && pip3 install -r requirements.txt
+
+    WORKDIR /app
+    ENTRYPOINT ["/usr/local/bin/dumb-init", "--"]
+    """
+}
+
 /// Render the Python class file that strongly-types the configuration handover.
 const function getConfigClassPy(m: Config): FileOutput = new FileOutput {
   text = new Listing {
