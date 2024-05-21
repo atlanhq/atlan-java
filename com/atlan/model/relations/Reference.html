@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":9,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":9,"i23":10,"i24":10};
+var data = {"i0":9,"i1":9,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":9,"i23":10,"i24":10,"i25":9,"i26":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -407,6 +407,22 @@ implements java.lang.Comparable&lt;<a href="Reference.html" title="class in com.
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 </tr>
+<tr id="i25" class="rowColor">
+<td class="colFirst"><code>protected static void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#validateRelationship(java.lang.String,java.util.Map)">validateRelationship</a></span>&#8203;(java.lang.String&nbsp;typeName,
+                    java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;parameters)</code></th>
+<td class="colLast">
+<div class="block">Validate that the required parameters are present to set up a relationship.</div>
+</td>
+</tr>
+<tr id="i26" class="altColor">
+<td class="colFirst"><code>protected static void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#validateRequired(java.lang.String,java.util.Map)">validateRequired</a></span>&#8203;(java.lang.String&nbsp;typeName,
+                java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;parameters)</code></th>
+<td class="colLast">
+<div class="block">Validate that the required parameters are present to carry out an operation.</div>
+</td>
+</tr>
 </table>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.com.atlan.model.core.AtlanObject">
@@ -497,6 +513,44 @@ implements java.lang.Comparable&lt;<a href="Reference.html" title="class in com.
 <dd><code>qualifiedName</code> - of the asset to reference</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>a reference to another asset</dd>
+</dl>
+</li>
+</ul>
+<a id="validateRequired(java.lang.String,java.util.Map)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>validateRequired</h4>
+<pre class="methodSignature">protected static&nbsp;void&nbsp;validateRequired&#8203;(java.lang.String&nbsp;typeName,
+                                       java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;parameters)
+                                throws <a href="../../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></pre>
+<div class="block">Validate that the required parameters are present to carry out an operation.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>typeName</code> - type of asset being validated</dd>
+<dd><code>parameters</code> - mapping of required parameters, keyed by parameter name with the value of that parameter</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></code> - if any of the parameters have a null or empty value</dd>
+</dl>
+</li>
+</ul>
+<a id="validateRelationship(java.lang.String,java.util.Map)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>validateRelationship</h4>
+<pre class="methodSignature">protected static&nbsp;void&nbsp;validateRelationship&#8203;(java.lang.String&nbsp;typeName,
+                                           java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;parameters)
+                                    throws <a href="../../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></pre>
+<div class="block">Validate that the required parameters are present to set up a relationship.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>typeName</code> - type of asset to which the relationship is being created</dd>
+<dd><code>parameters</code> - mapping of required parameters, keyed by parameter name with the value of that parameter</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></code> - if any of the parameters have a null or empty value</dd>
 </dl>
 </li>
 </ul>

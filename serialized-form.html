@@ -6524,6 +6524,859 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </li>
 </ul>
 </li>
+<li class="blockList"><a id="com.atlan.model.assets.CognosDashboard">
+<!--   -->
+</a>
+<h3>Class <a href="com/atlan/model/assets/CognosDashboard.html" title="class in com.atlan.model.assets">com.atlan.model.assets.CognosDashboard</a> extends <a href="com/atlan/model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>cognosDefaultScreenTip</h4>
+<pre>java.lang.String cognosDefaultScreenTip</pre>
+<div class="block">Tooltip text present for the Cognos asset</div>
+</li>
+<li class="blockList">
+<h4>cognosFolder</h4>
+<pre><a href="com/atlan/model/assets/ICognosFolder.html" title="interface in com.atlan.model.assets">ICognosFolder</a> cognosFolder</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>cognosId</h4>
+<pre>java.lang.String cognosId</pre>
+<div class="block">ID of the asset in Cognos</div>
+</li>
+<li class="blockList">
+<h4>cognosIsDisabled</h4>
+<pre>java.lang.Boolean cognosIsDisabled</pre>
+<div class="block">Whether the Cognos asset is diabled</div>
+</li>
+<li class="blockList">
+<h4>cognosIsHidden</h4>
+<pre>java.lang.Boolean cognosIsHidden</pre>
+<div class="block">Whether the Cognos asset is hidden from the ui</div>
+</li>
+<li class="blockList">
+<h4>cognosParentName</h4>
+<pre>java.lang.String cognosParentName</pre>
+<div class="block">Name of the parent asset in Cognos</div>
+</li>
+<li class="blockList">
+<h4>cognosParentQualifiedName</h4>
+<pre>java.lang.String cognosParentQualifiedName</pre>
+<div class="block">Qualified name of the parent asset in Cognos</div>
+</li>
+<li class="blockList">
+<h4>cognosPath</h4>
+<pre>java.lang.String cognosPath</pre>
+<div class="block">Path of the asset in Cognos. E.g. /content/folder[@name='Folder Name']</div>
+</li>
+<li class="blockList">
+<h4>cognosType</h4>
+<pre>java.lang.String cognosType</pre>
+<div class="block">Cognos type of the Cognos asset. E.g. report, dashboard, package, etc.</div>
+</li>
+<li class="blockList">
+<h4>cognosVersion</h4>
+<pre>java.lang.String cognosVersion</pre>
+<div class="block">Version of the Cognos asset</div>
+</li>
+<li class="blockList">
+<h4>inputToAirflowTasks</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; inputToAirflowTasks</pre>
+<div class="block">Tasks to which this asset provides input.</div>
+</li>
+<li class="blockList">
+<h4>inputToProcesses</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; inputToProcesses</pre>
+<div class="block">Processes to which this asset provides input.</div>
+</li>
+<li class="blockList">
+<h4>inputToSparkJobs</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt; inputToSparkJobs</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>outputFromAirflowTasks</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; outputFromAirflowTasks</pre>
+<div class="block">Tasks from which this asset is output.</div>
+</li>
+<li class="blockList">
+<h4>outputFromProcesses</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; outputFromProcesses</pre>
+<div class="block">Processes from which this asset is produced as output.</div>
+</li>
+<li class="blockList">
+<h4>outputFromSparkJobs</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt; outputFromSparkJobs</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockListLast">
+<h4>typeName</h4>
+<pre>java.lang.String typeName</pre>
+<div class="block">Fixed typeName for CognosDashboards.</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList"><a id="com.atlan.model.assets.CognosDatasource">
+<!--   -->
+</a>
+<h3>Class <a href="com/atlan/model/assets/CognosDatasource.html" title="class in com.atlan.model.assets">com.atlan.model.assets.CognosDatasource</a> extends <a href="com/atlan/model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>cognosDatasourceConnectionString</h4>
+<pre>java.lang.String cognosDatasourceConnectionString</pre>
+<div class="block">Connection string of a cognos datasource</div>
+</li>
+<li class="blockList">
+<h4>cognosDefaultScreenTip</h4>
+<pre>java.lang.String cognosDefaultScreenTip</pre>
+<div class="block">Tooltip text present for the Cognos asset</div>
+</li>
+<li class="blockList">
+<h4>cognosId</h4>
+<pre>java.lang.String cognosId</pre>
+<div class="block">ID of the asset in Cognos</div>
+</li>
+<li class="blockList">
+<h4>cognosIsDisabled</h4>
+<pre>java.lang.Boolean cognosIsDisabled</pre>
+<div class="block">Whether the Cognos asset is diabled</div>
+</li>
+<li class="blockList">
+<h4>cognosIsHidden</h4>
+<pre>java.lang.Boolean cognosIsHidden</pre>
+<div class="block">Whether the Cognos asset is hidden from the ui</div>
+</li>
+<li class="blockList">
+<h4>cognosParentName</h4>
+<pre>java.lang.String cognosParentName</pre>
+<div class="block">Name of the parent asset in Cognos</div>
+</li>
+<li class="blockList">
+<h4>cognosParentQualifiedName</h4>
+<pre>java.lang.String cognosParentQualifiedName</pre>
+<div class="block">Qualified name of the parent asset in Cognos</div>
+</li>
+<li class="blockList">
+<h4>cognosPath</h4>
+<pre>java.lang.String cognosPath</pre>
+<div class="block">Path of the asset in Cognos. E.g. /content/folder[@name='Folder Name']</div>
+</li>
+<li class="blockList">
+<h4>cognosType</h4>
+<pre>java.lang.String cognosType</pre>
+<div class="block">Cognos type of the Cognos asset. E.g. report, dashboard, package, etc.</div>
+</li>
+<li class="blockList">
+<h4>cognosVersion</h4>
+<pre>java.lang.String cognosVersion</pre>
+<div class="block">Version of the Cognos asset</div>
+</li>
+<li class="blockList">
+<h4>inputToAirflowTasks</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; inputToAirflowTasks</pre>
+<div class="block">Tasks to which this asset provides input.</div>
+</li>
+<li class="blockList">
+<h4>inputToProcesses</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; inputToProcesses</pre>
+<div class="block">Processes to which this asset provides input.</div>
+</li>
+<li class="blockList">
+<h4>inputToSparkJobs</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt; inputToSparkJobs</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>outputFromAirflowTasks</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; outputFromAirflowTasks</pre>
+<div class="block">Tasks from which this asset is output.</div>
+</li>
+<li class="blockList">
+<h4>outputFromProcesses</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; outputFromProcesses</pre>
+<div class="block">Processes from which this asset is produced as output.</div>
+</li>
+<li class="blockList">
+<h4>outputFromSparkJobs</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt; outputFromSparkJobs</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockListLast">
+<h4>typeName</h4>
+<pre>java.lang.String typeName</pre>
+<div class="block">Fixed typeName for CognosDatasources.</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList"><a id="com.atlan.model.assets.CognosExploration">
+<!--   -->
+</a>
+<h3>Class <a href="com/atlan/model/assets/CognosExploration.html" title="class in com.atlan.model.assets">com.atlan.model.assets.CognosExploration</a> extends <a href="com/atlan/model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>cognosDefaultScreenTip</h4>
+<pre>java.lang.String cognosDefaultScreenTip</pre>
+<div class="block">Tooltip text present for the Cognos asset</div>
+</li>
+<li class="blockList">
+<h4>cognosFolder</h4>
+<pre><a href="com/atlan/model/assets/ICognosFolder.html" title="interface in com.atlan.model.assets">ICognosFolder</a> cognosFolder</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>cognosId</h4>
+<pre>java.lang.String cognosId</pre>
+<div class="block">ID of the asset in Cognos</div>
+</li>
+<li class="blockList">
+<h4>cognosIsDisabled</h4>
+<pre>java.lang.Boolean cognosIsDisabled</pre>
+<div class="block">Whether the Cognos asset is diabled</div>
+</li>
+<li class="blockList">
+<h4>cognosIsHidden</h4>
+<pre>java.lang.Boolean cognosIsHidden</pre>
+<div class="block">Whether the Cognos asset is hidden from the ui</div>
+</li>
+<li class="blockList">
+<h4>cognosParentName</h4>
+<pre>java.lang.String cognosParentName</pre>
+<div class="block">Name of the parent asset in Cognos</div>
+</li>
+<li class="blockList">
+<h4>cognosParentQualifiedName</h4>
+<pre>java.lang.String cognosParentQualifiedName</pre>
+<div class="block">Qualified name of the parent asset in Cognos</div>
+</li>
+<li class="blockList">
+<h4>cognosPath</h4>
+<pre>java.lang.String cognosPath</pre>
+<div class="block">Path of the asset in Cognos. E.g. /content/folder[@name='Folder Name']</div>
+</li>
+<li class="blockList">
+<h4>cognosType</h4>
+<pre>java.lang.String cognosType</pre>
+<div class="block">Cognos type of the Cognos asset. E.g. report, dashboard, package, etc.</div>
+</li>
+<li class="blockList">
+<h4>cognosVersion</h4>
+<pre>java.lang.String cognosVersion</pre>
+<div class="block">Version of the Cognos asset</div>
+</li>
+<li class="blockList">
+<h4>inputToAirflowTasks</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; inputToAirflowTasks</pre>
+<div class="block">Tasks to which this asset provides input.</div>
+</li>
+<li class="blockList">
+<h4>inputToProcesses</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; inputToProcesses</pre>
+<div class="block">Processes to which this asset provides input.</div>
+</li>
+<li class="blockList">
+<h4>inputToSparkJobs</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt; inputToSparkJobs</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>outputFromAirflowTasks</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; outputFromAirflowTasks</pre>
+<div class="block">Tasks from which this asset is output.</div>
+</li>
+<li class="blockList">
+<h4>outputFromProcesses</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; outputFromProcesses</pre>
+<div class="block">Processes from which this asset is produced as output.</div>
+</li>
+<li class="blockList">
+<h4>outputFromSparkJobs</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt; outputFromSparkJobs</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockListLast">
+<h4>typeName</h4>
+<pre>java.lang.String typeName</pre>
+<div class="block">Fixed typeName for CognosExplorations.</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList"><a id="com.atlan.model.assets.CognosFile">
+<!--   -->
+</a>
+<h3>Class <a href="com/atlan/model/assets/CognosFile.html" title="class in com.atlan.model.assets">com.atlan.model.assets.CognosFile</a> extends <a href="com/atlan/model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>cognosDefaultScreenTip</h4>
+<pre>java.lang.String cognosDefaultScreenTip</pre>
+<div class="block">Tooltip text present for the Cognos asset</div>
+</li>
+<li class="blockList">
+<h4>cognosFolder</h4>
+<pre><a href="com/atlan/model/assets/ICognosFolder.html" title="interface in com.atlan.model.assets">ICognosFolder</a> cognosFolder</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>cognosId</h4>
+<pre>java.lang.String cognosId</pre>
+<div class="block">ID of the asset in Cognos</div>
+</li>
+<li class="blockList">
+<h4>cognosIsDisabled</h4>
+<pre>java.lang.Boolean cognosIsDisabled</pre>
+<div class="block">Whether the Cognos asset is diabled</div>
+</li>
+<li class="blockList">
+<h4>cognosIsHidden</h4>
+<pre>java.lang.Boolean cognosIsHidden</pre>
+<div class="block">Whether the Cognos asset is hidden from the ui</div>
+</li>
+<li class="blockList">
+<h4>cognosParentName</h4>
+<pre>java.lang.String cognosParentName</pre>
+<div class="block">Name of the parent asset in Cognos</div>
+</li>
+<li class="blockList">
+<h4>cognosParentQualifiedName</h4>
+<pre>java.lang.String cognosParentQualifiedName</pre>
+<div class="block">Qualified name of the parent asset in Cognos</div>
+</li>
+<li class="blockList">
+<h4>cognosPath</h4>
+<pre>java.lang.String cognosPath</pre>
+<div class="block">Path of the asset in Cognos. E.g. /content/folder[@name='Folder Name']</div>
+</li>
+<li class="blockList">
+<h4>cognosType</h4>
+<pre>java.lang.String cognosType</pre>
+<div class="block">Cognos type of the Cognos asset. E.g. report, dashboard, package, etc.</div>
+</li>
+<li class="blockList">
+<h4>cognosVersion</h4>
+<pre>java.lang.String cognosVersion</pre>
+<div class="block">Version of the Cognos asset</div>
+</li>
+<li class="blockList">
+<h4>inputToAirflowTasks</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; inputToAirflowTasks</pre>
+<div class="block">Tasks to which this asset provides input.</div>
+</li>
+<li class="blockList">
+<h4>inputToProcesses</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; inputToProcesses</pre>
+<div class="block">Processes to which this asset provides input.</div>
+</li>
+<li class="blockList">
+<h4>inputToSparkJobs</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt; inputToSparkJobs</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>outputFromAirflowTasks</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; outputFromAirflowTasks</pre>
+<div class="block">Tasks from which this asset is output.</div>
+</li>
+<li class="blockList">
+<h4>outputFromProcesses</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; outputFromProcesses</pre>
+<div class="block">Processes from which this asset is produced as output.</div>
+</li>
+<li class="blockList">
+<h4>outputFromSparkJobs</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt; outputFromSparkJobs</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockListLast">
+<h4>typeName</h4>
+<pre>java.lang.String typeName</pre>
+<div class="block">Fixed typeName for CognosFiles.</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList"><a id="com.atlan.model.assets.CognosFolder">
+<!--   -->
+</a>
+<h3>Class <a href="com/atlan/model/assets/CognosFolder.html" title="class in com.atlan.model.assets">com.atlan.model.assets.CognosFolder</a> extends <a href="com/atlan/model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>cognosDashboards</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ICognosDashboard.html" title="interface in com.atlan.model.assets">ICognosDashboard</a>&gt; cognosDashboards</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>cognosDefaultScreenTip</h4>
+<pre>java.lang.String cognosDefaultScreenTip</pre>
+<div class="block">Tooltip text present for the Cognos asset</div>
+</li>
+<li class="blockList">
+<h4>cognosExplorations</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ICognosExploration.html" title="interface in com.atlan.model.assets">ICognosExploration</a>&gt; cognosExplorations</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>cognosFiles</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ICognosFile.html" title="interface in com.atlan.model.assets">ICognosFile</a>&gt; cognosFiles</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>cognosFolder</h4>
+<pre><a href="com/atlan/model/assets/ICognosFolder.html" title="interface in com.atlan.model.assets">ICognosFolder</a> cognosFolder</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>cognosFolderChildObjectsCount</h4>
+<pre>java.lang.Integer cognosFolderChildObjectsCount</pre>
+<div class="block">Number of children in the folder (excluding subfolders).</div>
+</li>
+<li class="blockList">
+<h4>cognosFolderSubFolderCount</h4>
+<pre>java.lang.Integer cognosFolderSubFolderCount</pre>
+<div class="block">Number of sub-folders in the folder.</div>
+</li>
+<li class="blockList">
+<h4>cognosId</h4>
+<pre>java.lang.String cognosId</pre>
+<div class="block">ID of the asset in Cognos</div>
+</li>
+<li class="blockList">
+<h4>cognosIsDisabled</h4>
+<pre>java.lang.Boolean cognosIsDisabled</pre>
+<div class="block">Whether the Cognos asset is diabled</div>
+</li>
+<li class="blockList">
+<h4>cognosIsHidden</h4>
+<pre>java.lang.Boolean cognosIsHidden</pre>
+<div class="block">Whether the Cognos asset is hidden from the ui</div>
+</li>
+<li class="blockList">
+<h4>cognosModules</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ICognosModule.html" title="interface in com.atlan.model.assets">ICognosModule</a>&gt; cognosModules</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>cognosPackages</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ICognosPackage.html" title="interface in com.atlan.model.assets">ICognosPackage</a>&gt; cognosPackages</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>cognosParentName</h4>
+<pre>java.lang.String cognosParentName</pre>
+<div class="block">Name of the parent asset in Cognos</div>
+</li>
+<li class="blockList">
+<h4>cognosParentQualifiedName</h4>
+<pre>java.lang.String cognosParentQualifiedName</pre>
+<div class="block">Qualified name of the parent asset in Cognos</div>
+</li>
+<li class="blockList">
+<h4>cognosPath</h4>
+<pre>java.lang.String cognosPath</pre>
+<div class="block">Path of the asset in Cognos. E.g. /content/folder[@name='Folder Name']</div>
+</li>
+<li class="blockList">
+<h4>cognosReports</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ICognosReport.html" title="interface in com.atlan.model.assets">ICognosReport</a>&gt; cognosReports</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>cognosSubFolders</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ICognosFolder.html" title="interface in com.atlan.model.assets">ICognosFolder</a>&gt; cognosSubFolders</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>cognosType</h4>
+<pre>java.lang.String cognosType</pre>
+<div class="block">Cognos type of the Cognos asset. E.g. report, dashboard, package, etc.</div>
+</li>
+<li class="blockList">
+<h4>cognosVersion</h4>
+<pre>java.lang.String cognosVersion</pre>
+<div class="block">Version of the Cognos asset</div>
+</li>
+<li class="blockList">
+<h4>inputToAirflowTasks</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; inputToAirflowTasks</pre>
+<div class="block">Tasks to which this asset provides input.</div>
+</li>
+<li class="blockList">
+<h4>inputToProcesses</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; inputToProcesses</pre>
+<div class="block">Processes to which this asset provides input.</div>
+</li>
+<li class="blockList">
+<h4>inputToSparkJobs</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt; inputToSparkJobs</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>outputFromAirflowTasks</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; outputFromAirflowTasks</pre>
+<div class="block">Tasks from which this asset is output.</div>
+</li>
+<li class="blockList">
+<h4>outputFromProcesses</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; outputFromProcesses</pre>
+<div class="block">Processes from which this asset is produced as output.</div>
+</li>
+<li class="blockList">
+<h4>outputFromSparkJobs</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt; outputFromSparkJobs</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockListLast">
+<h4>typeName</h4>
+<pre>java.lang.String typeName</pre>
+<div class="block">Fixed typeName for CognosFolders.</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList"><a id="com.atlan.model.assets.CognosModule">
+<!--   -->
+</a>
+<h3>Class <a href="com/atlan/model/assets/CognosModule.html" title="class in com.atlan.model.assets">com.atlan.model.assets.CognosModule</a> extends <a href="com/atlan/model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>cognosDefaultScreenTip</h4>
+<pre>java.lang.String cognosDefaultScreenTip</pre>
+<div class="block">Tooltip text present for the Cognos asset</div>
+</li>
+<li class="blockList">
+<h4>cognosFolder</h4>
+<pre><a href="com/atlan/model/assets/ICognosFolder.html" title="interface in com.atlan.model.assets">ICognosFolder</a> cognosFolder</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>cognosId</h4>
+<pre>java.lang.String cognosId</pre>
+<div class="block">ID of the asset in Cognos</div>
+</li>
+<li class="blockList">
+<h4>cognosIsDisabled</h4>
+<pre>java.lang.Boolean cognosIsDisabled</pre>
+<div class="block">Whether the Cognos asset is diabled</div>
+</li>
+<li class="blockList">
+<h4>cognosIsHidden</h4>
+<pre>java.lang.Boolean cognosIsHidden</pre>
+<div class="block">Whether the Cognos asset is hidden from the ui</div>
+</li>
+<li class="blockList">
+<h4>cognosParentName</h4>
+<pre>java.lang.String cognosParentName</pre>
+<div class="block">Name of the parent asset in Cognos</div>
+</li>
+<li class="blockList">
+<h4>cognosParentQualifiedName</h4>
+<pre>java.lang.String cognosParentQualifiedName</pre>
+<div class="block">Qualified name of the parent asset in Cognos</div>
+</li>
+<li class="blockList">
+<h4>cognosPath</h4>
+<pre>java.lang.String cognosPath</pre>
+<div class="block">Path of the asset in Cognos. E.g. /content/folder[@name='Folder Name']</div>
+</li>
+<li class="blockList">
+<h4>cognosType</h4>
+<pre>java.lang.String cognosType</pre>
+<div class="block">Cognos type of the Cognos asset. E.g. report, dashboard, package, etc.</div>
+</li>
+<li class="blockList">
+<h4>cognosVersion</h4>
+<pre>java.lang.String cognosVersion</pre>
+<div class="block">Version of the Cognos asset</div>
+</li>
+<li class="blockList">
+<h4>inputToAirflowTasks</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; inputToAirflowTasks</pre>
+<div class="block">Tasks to which this asset provides input.</div>
+</li>
+<li class="blockList">
+<h4>inputToProcesses</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; inputToProcesses</pre>
+<div class="block">Processes to which this asset provides input.</div>
+</li>
+<li class="blockList">
+<h4>inputToSparkJobs</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt; inputToSparkJobs</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>outputFromAirflowTasks</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; outputFromAirflowTasks</pre>
+<div class="block">Tasks from which this asset is output.</div>
+</li>
+<li class="blockList">
+<h4>outputFromProcesses</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; outputFromProcesses</pre>
+<div class="block">Processes from which this asset is produced as output.</div>
+</li>
+<li class="blockList">
+<h4>outputFromSparkJobs</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt; outputFromSparkJobs</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockListLast">
+<h4>typeName</h4>
+<pre>java.lang.String typeName</pre>
+<div class="block">Fixed typeName for CognosModules.</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList"><a id="com.atlan.model.assets.CognosPackage">
+<!--   -->
+</a>
+<h3>Class <a href="com/atlan/model/assets/CognosPackage.html" title="class in com.atlan.model.assets">com.atlan.model.assets.CognosPackage</a> extends <a href="com/atlan/model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>cognosDefaultScreenTip</h4>
+<pre>java.lang.String cognosDefaultScreenTip</pre>
+<div class="block">Tooltip text present for the Cognos asset</div>
+</li>
+<li class="blockList">
+<h4>cognosFolder</h4>
+<pre><a href="com/atlan/model/assets/ICognosFolder.html" title="interface in com.atlan.model.assets">ICognosFolder</a> cognosFolder</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>cognosId</h4>
+<pre>java.lang.String cognosId</pre>
+<div class="block">ID of the asset in Cognos</div>
+</li>
+<li class="blockList">
+<h4>cognosIsDisabled</h4>
+<pre>java.lang.Boolean cognosIsDisabled</pre>
+<div class="block">Whether the Cognos asset is diabled</div>
+</li>
+<li class="blockList">
+<h4>cognosIsHidden</h4>
+<pre>java.lang.Boolean cognosIsHidden</pre>
+<div class="block">Whether the Cognos asset is hidden from the ui</div>
+</li>
+<li class="blockList">
+<h4>cognosParentName</h4>
+<pre>java.lang.String cognosParentName</pre>
+<div class="block">Name of the parent asset in Cognos</div>
+</li>
+<li class="blockList">
+<h4>cognosParentQualifiedName</h4>
+<pre>java.lang.String cognosParentQualifiedName</pre>
+<div class="block">Qualified name of the parent asset in Cognos</div>
+</li>
+<li class="blockList">
+<h4>cognosPath</h4>
+<pre>java.lang.String cognosPath</pre>
+<div class="block">Path of the asset in Cognos. E.g. /content/folder[@name='Folder Name']</div>
+</li>
+<li class="blockList">
+<h4>cognosType</h4>
+<pre>java.lang.String cognosType</pre>
+<div class="block">Cognos type of the Cognos asset. E.g. report, dashboard, package, etc.</div>
+</li>
+<li class="blockList">
+<h4>cognosVersion</h4>
+<pre>java.lang.String cognosVersion</pre>
+<div class="block">Version of the Cognos asset</div>
+</li>
+<li class="blockList">
+<h4>inputToAirflowTasks</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; inputToAirflowTasks</pre>
+<div class="block">Tasks to which this asset provides input.</div>
+</li>
+<li class="blockList">
+<h4>inputToProcesses</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; inputToProcesses</pre>
+<div class="block">Processes to which this asset provides input.</div>
+</li>
+<li class="blockList">
+<h4>inputToSparkJobs</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt; inputToSparkJobs</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>outputFromAirflowTasks</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; outputFromAirflowTasks</pre>
+<div class="block">Tasks from which this asset is output.</div>
+</li>
+<li class="blockList">
+<h4>outputFromProcesses</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; outputFromProcesses</pre>
+<div class="block">Processes from which this asset is produced as output.</div>
+</li>
+<li class="blockList">
+<h4>outputFromSparkJobs</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt; outputFromSparkJobs</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockListLast">
+<h4>typeName</h4>
+<pre>java.lang.String typeName</pre>
+<div class="block">Fixed typeName for CognosPackages.</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList"><a id="com.atlan.model.assets.CognosReport">
+<!--   -->
+</a>
+<h3>Class <a href="com/atlan/model/assets/CognosReport.html" title="class in com.atlan.model.assets">com.atlan.model.assets.CognosReport</a> extends <a href="com/atlan/model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>cognosDefaultScreenTip</h4>
+<pre>java.lang.String cognosDefaultScreenTip</pre>
+<div class="block">Tooltip text present for the Cognos asset</div>
+</li>
+<li class="blockList">
+<h4>cognosFolder</h4>
+<pre><a href="com/atlan/model/assets/ICognosFolder.html" title="interface in com.atlan.model.assets">ICognosFolder</a> cognosFolder</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>cognosId</h4>
+<pre>java.lang.String cognosId</pre>
+<div class="block">ID of the asset in Cognos</div>
+</li>
+<li class="blockList">
+<h4>cognosIsDisabled</h4>
+<pre>java.lang.Boolean cognosIsDisabled</pre>
+<div class="block">Whether the Cognos asset is diabled</div>
+</li>
+<li class="blockList">
+<h4>cognosIsHidden</h4>
+<pre>java.lang.Boolean cognosIsHidden</pre>
+<div class="block">Whether the Cognos asset is hidden from the ui</div>
+</li>
+<li class="blockList">
+<h4>cognosParentName</h4>
+<pre>java.lang.String cognosParentName</pre>
+<div class="block">Name of the parent asset in Cognos</div>
+</li>
+<li class="blockList">
+<h4>cognosParentQualifiedName</h4>
+<pre>java.lang.String cognosParentQualifiedName</pre>
+<div class="block">Qualified name of the parent asset in Cognos</div>
+</li>
+<li class="blockList">
+<h4>cognosPath</h4>
+<pre>java.lang.String cognosPath</pre>
+<div class="block">Path of the asset in Cognos. E.g. /content/folder[@name='Folder Name']</div>
+</li>
+<li class="blockList">
+<h4>cognosType</h4>
+<pre>java.lang.String cognosType</pre>
+<div class="block">Cognos type of the Cognos asset. E.g. report, dashboard, package, etc.</div>
+</li>
+<li class="blockList">
+<h4>cognosVersion</h4>
+<pre>java.lang.String cognosVersion</pre>
+<div class="block">Version of the Cognos asset</div>
+</li>
+<li class="blockList">
+<h4>inputToAirflowTasks</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; inputToAirflowTasks</pre>
+<div class="block">Tasks to which this asset provides input.</div>
+</li>
+<li class="blockList">
+<h4>inputToProcesses</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; inputToProcesses</pre>
+<div class="block">Processes to which this asset provides input.</div>
+</li>
+<li class="blockList">
+<h4>inputToSparkJobs</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt; inputToSparkJobs</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>outputFromAirflowTasks</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; outputFromAirflowTasks</pre>
+<div class="block">Tasks from which this asset is output.</div>
+</li>
+<li class="blockList">
+<h4>outputFromProcesses</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; outputFromProcesses</pre>
+<div class="block">Processes from which this asset is produced as output.</div>
+</li>
+<li class="blockList">
+<h4>outputFromSparkJobs</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt; outputFromSparkJobs</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockListLast">
+<h4>typeName</h4>
+<pre>java.lang.String typeName</pre>
+<div class="block">Fixed typeName for CognosReports.</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="blockList"><a id="com.atlan.model.assets.Column">
 <!--   -->
 </a>
@@ -8478,6 +9331,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Unique name of the parent domain in which this asset exists.</div>
 </li>
 <li class="blockList">
+<h4>stakeholders</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/IStakeholder.html" title="interface in com.atlan.model.assets">IStakeholder</a>&gt; stakeholders</pre>
+<div class="block">Stakeholder assigned to the Domain</div>
+</li>
+<li class="blockList">
 <h4>subDomains</h4>
 <pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/IDataDomain.html" title="interface in com.atlan.model.assets">IDataDomain</a>&gt; subDomains</pre>
 <div class="block">Sub-data domains that exist within this data domain.</div>
@@ -8527,6 +9385,16 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <h4>daapVisibility</h4>
 <pre><a href="com/atlan/model/enums/DataProductVisibility.html" title="enum in com.atlan.model.enums">DataProductVisibility</a> daapVisibility</pre>
 <div class="block">Visibility of a data product.</div>
+</li>
+<li class="blockList">
+<h4>daapVisibilityGroups</h4>
+<pre>java.util.SortedSet&lt;java.lang.String&gt; daapVisibilityGroups</pre>
+<div class="block">list of groups for product visibility control</div>
+</li>
+<li class="blockList">
+<h4>daapVisibilityUsers</h4>
+<pre>java.util.SortedSet&lt;java.lang.String&gt; daapVisibilityUsers</pre>
+<div class="block">list of users for product visibility control</div>
 </li>
 <li class="blockList">
 <h4>dataDomain</h4>
@@ -23776,6 +24644,143 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <h4>typeName</h4>
 <pre>java.lang.String typeName</pre>
 <div class="block">Fixed typeName for SparkJobs.</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList"><a id="com.atlan.model.assets.Stakeholder">
+<!--   -->
+</a>
+<h3>Class <a href="com/atlan/model/assets/Stakeholder.html" title="class in com.atlan.model.assets">com.atlan.model.assets.Stakeholder</a> extends <a href="com/atlan/model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>channelLink</h4>
+<pre>java.lang.String channelLink</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>defaultNavigation</h4>
+<pre>java.lang.String defaultNavigation</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>denyAssetFilters</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/enums/AssetFilterGroup.html" title="enum in com.atlan.model.enums">AssetFilterGroup</a>&gt; denyAssetFilters</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>denyAssetTabs</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/enums/AssetSidebarTab.html" title="enum in com.atlan.model.enums">AssetSidebarTab</a>&gt; denyAssetTabs</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>denyAssetTypes</h4>
+<pre>java.util.SortedSet&lt;java.lang.String&gt; denyAssetTypes</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>denyCustomMetadataGuids</h4>
+<pre>java.util.SortedSet&lt;java.lang.String&gt; denyCustomMetadataGuids</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>denyNavigationPages</h4>
+<pre>java.util.SortedSet&lt;java.lang.String&gt; denyNavigationPages</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>displayPreferences</h4>
+<pre>java.util.SortedSet&lt;java.lang.String&gt; displayPreferences</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>isAccessControlEnabled</h4>
+<pre>java.lang.Boolean isAccessControlEnabled</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>personaGroups</h4>
+<pre>java.util.SortedSet&lt;java.lang.String&gt; personaGroups</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>personaUsers</h4>
+<pre>java.util.SortedSet&lt;java.lang.String&gt; personaUsers</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>policies</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/IAuthPolicy.html" title="interface in com.atlan.model.assets">IAuthPolicy</a>&gt; policies</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>roleId</h4>
+<pre>java.lang.String roleId</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>stakeholderDataDomain</h4>
+<pre><a href="com/atlan/model/assets/IDataDomain.html" title="interface in com.atlan.model.assets">IDataDomain</a> stakeholderDataDomain</pre>
+<div class="block">Domain assigned to the Stakeholder</div>
+</li>
+<li class="blockList">
+<h4>stakeholderDomainQualifiedName</h4>
+<pre>java.lang.String stakeholderDomainQualifiedName</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>stakeholderTitle</h4>
+<pre><a href="com/atlan/model/assets/IStakeholderTitle.html" title="interface in com.atlan.model.assets">IStakeholderTitle</a> stakeholderTitle</pre>
+<div class="block">Stakeholder-title assigned for this Stakeholder-Persona</div>
+</li>
+<li class="blockList">
+<h4>stakeholderTitleGuid</h4>
+<pre>java.lang.String stakeholderTitleGuid</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockListLast">
+<h4>typeName</h4>
+<pre>java.lang.String typeName</pre>
+<div class="block">Fixed typeName for Stakeholders.</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList"><a id="com.atlan.model.assets.StakeholderTitle">
+<!--   -->
+</a>
+<h3>Class <a href="com/atlan/model/assets/StakeholderTitle.html" title="class in com.atlan.model.assets">com.atlan.model.assets.StakeholderTitle</a> extends <a href="com/atlan/model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>stakeholders</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/IStakeholder.html" title="interface in com.atlan.model.assets">IStakeholder</a>&gt; stakeholders</pre>
+<div class="block">Stakeholder-Personas created for this Stakeholder-title</div>
+</li>
+<li class="blockList">
+<h4>stakeholderTitleDomainQualifiedNames</h4>
+<pre>java.util.SortedSet&lt;java.lang.String&gt; stakeholderTitleDomainQualifiedNames</pre>
+<div class="block">qualified name array representing the Domains for which this StakeholderTitle is applicable</div>
+</li>
+<li class="blockListLast">
+<h4>typeName</h4>
+<pre>java.lang.String typeName</pre>
+<div class="block">Fixed typeName for StakeholderTitles.</div>
 </li>
 </ul>
 </li>
