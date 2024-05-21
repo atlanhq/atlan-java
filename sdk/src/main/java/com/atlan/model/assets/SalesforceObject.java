@@ -19,8 +19,8 @@ import com.atlan.model.search.FluentSearch;
 import com.atlan.util.QueryFactory;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.SortedSet;
 import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
@@ -460,12 +460,13 @@ public class SalesforceObject extends Asset
      */
     public static SalesforceObjectBuilder<?, ?> creator(String name, SalesforceOrganization organization)
             throws InvalidRequestException {
-        if (organization.getQualifiedName() == null
-                || organization.getQualifiedName().isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, "SalesforceOrganization", "qualifiedName");
-        }
-        return creator(name, organization.getQualifiedName()).organization(organization.trimToReference());
+        validateRelationship(
+                SalesforceOrganization.TYPE_NAME,
+                Map.of(
+                        "connectionQualifiedName", organization.getConnectionQualifiedName(),
+                        "qualifiedName", organization.getQualifiedName()));
+        return creator(name, organization.getConnectionQualifiedName(), organization.getQualifiedName())
+                .organization(organization.trimToReference());
     }
 
     /**
@@ -477,6 +478,19 @@ public class SalesforceObject extends Asset
      */
     public static SalesforceObjectBuilder<?, ?> creator(String name, String organizationQualifiedName) {
         String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(organizationQualifiedName);
+        return creator(name, connectionQualifiedName, organizationQualifiedName);
+    }
+
+    /**
+     * Builds the minimal object necessary to create a SalesforceObject asset.
+     *
+     * @param name of the object
+     * @param connectionQualifiedName unique name of the connection in which to create the SalesforceObject
+     * @param organizationQualifiedName unique name of the SalesforceOrganization in which to create the SalesforceObject
+     * @return the minimal object necessary to create the asset, as a builder
+     */
+    public static SalesforceObjectBuilder<?, ?> creator(
+            String name, String connectionQualifiedName, String organizationQualifiedName) {
         return SalesforceObject._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(generateQualifiedName(name, organizationQualifiedName))
@@ -521,17 +535,11 @@ public class SalesforceObject extends Asset
      */
     @Override
     public SalesforceObjectBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        List<String> missing = new ArrayList<>();
-        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
-            missing.add("qualifiedName");
-        }
-        if (this.getName() == null || this.getName().length() == 0) {
-            missing.add("name");
-        }
-        if (!missing.isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, TYPE_NAME, String.join(",", missing));
-        }
+        validateRequired(
+                TYPE_NAME,
+                Map.of(
+                        "qualifiedName", this.getQualifiedName(),
+                        "name", this.getName()));
         return updater(this.getQualifiedName(), this.getName());
     }
 

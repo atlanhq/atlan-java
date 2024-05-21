@@ -21,8 +21,8 @@ import com.atlan.model.structs.GoogleTag;
 import com.atlan.util.QueryFactory;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.SortedSet;
 import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
@@ -546,11 +546,14 @@ public class GCSObject extends Asset
      * @throws InvalidRequestException if the bucket provided is without a qualifiedName
      */
     public static GCSObjectBuilder<?, ?> creator(String name, GCSBucket bucket) throws InvalidRequestException {
-        if (bucket.getQualifiedName() == null || bucket.getQualifiedName().isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, "GCSBucket", "qualifiedName");
-        }
-        return creator(name, bucket.getQualifiedName()).gcsBucket(bucket.trimToReference());
+        validateRelationship(
+                GCSBucket.TYPE_NAME,
+                Map.of(
+                        "connectionQualifiedName", bucket.getConnectionQualifiedName(),
+                        "name", bucket.getName(),
+                        "qualifiedName", bucket.getQualifiedName()));
+        return creator(name, bucket.getConnectionQualifiedName(), bucket.getName(), bucket.getQualifiedName())
+                .gcsBucket(bucket.trimToReference());
     }
 
     /**
@@ -563,6 +566,20 @@ public class GCSObject extends Asset
     public static GCSObjectBuilder<?, ?> creator(String name, String bucketQualifiedName) {
         String connectionQualifiedName = StringUtils.getConnectionQualifiedName(bucketQualifiedName);
         String bucketName = StringUtils.getNameFromQualifiedName(bucketQualifiedName);
+        return creator(name, connectionQualifiedName, bucketName, bucketQualifiedName);
+    }
+
+    /**
+     * Builds the minimal object necessary to create a GCSObject.
+     *
+     * @param name of the GCSObject
+     * @param connectionQualifiedName unique name of the connection in which the GCSObject should be created
+     * @param bucketName simple name of the GCSBucket in which the GCSObject should be created
+     * @param bucketQualifiedName unique name of the GCSBucket in which the GCSObject should be created
+     * @return the minimal object necessary to create the GCSObject, as a builder
+     */
+    public static GCSObjectBuilder<?, ?> creator(
+            String name, String connectionQualifiedName, String bucketName, String bucketQualifiedName) {
         return GCSObject._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(generateQualifiedName(name, bucketQualifiedName))
@@ -608,17 +625,11 @@ public class GCSObject extends Asset
      */
     @Override
     public GCSObjectBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        List<String> missing = new ArrayList<>();
-        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
-            missing.add("qualifiedName");
-        }
-        if (this.getName() == null || this.getName().length() == 0) {
-            missing.add("name");
-        }
-        if (!missing.isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "GCSObject", String.join(",", missing));
-        }
+        validateRequired(
+                TYPE_NAME,
+                Map.of(
+                        "qualifiedName", this.getQualifiedName(),
+                        "name", this.getName()));
         return updater(this.getQualifiedName(), this.getName());
     }
 

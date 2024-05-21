@@ -2,11 +2,15 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.relations;
 
+import com.atlan.exception.ErrorCode;
+import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.core.AtlanObject;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.search.AuditDetail;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -65,6 +69,45 @@ public class Reference extends AtlanObject implements Comparable<Reference>, Aud
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
+    }
+
+    /**
+     * Validate that the required parameters are present to carry out an operation.
+     *
+     * @param typeName type of asset being validated
+     * @param parameters mapping of required parameters, keyed by parameter name with the value of that parameter
+     * @throws InvalidRequestException if any of the parameters have a null or empty value
+     */
+    protected static void validateRequired(String typeName, Map<String, String> parameters)
+            throws InvalidRequestException {
+        validate(ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, typeName, parameters);
+    }
+
+    /**
+     * Validate that the required parameters are present to set up a relationship.
+     *
+     * @param typeName type of asset to which the relationship is being created
+     * @param parameters mapping of required parameters, keyed by parameter name with the value of that parameter
+     * @throws InvalidRequestException if any of the parameters have a null or empty value
+     */
+    protected static void validateRelationship(String typeName, Map<String, String> parameters)
+            throws InvalidRequestException {
+        validate(ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, typeName, parameters);
+    }
+
+    private static void validate(ErrorCode code, String typeName, Map<String, String> parameters)
+            throws InvalidRequestException {
+        if (parameters != null && !parameters.isEmpty()) {
+            List<String> missing = new ArrayList<>();
+            for (Map.Entry<String, String> entry : parameters.entrySet()) {
+                if (entry.getValue() == null || entry.getValue().isEmpty()) {
+                    missing.add(entry.getKey());
+                }
+            }
+            if (!missing.isEmpty()) {
+                throw new InvalidRequestException(code, typeName, String.join(",", missing));
+            }
+        }
     }
 
     /** Semantic for how this relationship should be saved, if used in an asset request on which .save() is called. */

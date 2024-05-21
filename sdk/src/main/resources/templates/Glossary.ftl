@@ -53,17 +53,10 @@
      */
     @Override
     public GlossaryBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        List<String> missing = new ArrayList<>();
-        if (this.getGuid() == null || this.getGuid().length() == 0) {
-            missing.add("guid");
-        }
-        if (this.getName() == null || this.getName().length() == 0) {
-            missing.add("name");
-        }
-        if (!missing.isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "Glossary", String.join(",", missing));
-        }
+        validateRequired(TYPE_NAME, Map.of(
+            "guid", this.getGuid(),
+            "name", this.getName()
+        ));
         return updater(this.getGuid(), this.getName());
     }
 

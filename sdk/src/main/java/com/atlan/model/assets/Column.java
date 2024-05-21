@@ -22,7 +22,6 @@ import com.atlan.util.QueryFactory;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
@@ -812,10 +811,29 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
      * @throws InvalidRequestException if the table provided is without a qualifiedName
      */
     public static ColumnBuilder<?, ?> creator(String name, Table table, int order) throws InvalidRequestException {
-        if (table.getQualifiedName() == null || table.getQualifiedName().isEmpty()) {
-            throw new InvalidRequestException(ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, "Table", "qualifiedName");
-        }
-        return creator(name, table.getTypeName(), table.getQualifiedName(), order)
+        validateRelationship(
+                Table.TYPE_NAME,
+                Map.of(
+                        "connectionQualifiedName", table.getConnectionQualifiedName(),
+                        "databaseName", table.getDatabaseName(),
+                        "databaseQualifiedName", table.getDatabaseQualifiedName(),
+                        "schemaName", table.getSchemaName(),
+                        "schemaQualifiedName", table.getSchemaQualifiedName(),
+                        "name", table.getName(),
+                        "qualifiedName", table.getQualifiedName()));
+        return creator(
+                        name,
+                        table.getConnectionQualifiedName(),
+                        table.getDatabaseName(),
+                        table.getDatabaseQualifiedName(),
+                        table.getSchemaName(),
+                        table.getSchemaQualifiedName(),
+                        table.getName(),
+                        table.getQualifiedName(),
+                        Table.TYPE_NAME,
+                        null,
+                        null,
+                        order)
                 .table(table.trimToReference());
     }
 
@@ -831,11 +849,31 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
      */
     public static ColumnBuilder<?, ?> creator(String name, TablePartition partition, int order)
             throws InvalidRequestException {
-        if (partition.getQualifiedName() == null || partition.getQualifiedName().isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, "TablePartition", "qualifiedName");
-        }
-        return creator(name, partition.getTypeName(), partition.getQualifiedName(), order)
+        validateRelationship(
+                TablePartition.TYPE_NAME,
+                Map.of(
+                        "connectionQualifiedName", partition.getConnectionQualifiedName(),
+                        "databaseName", partition.getDatabaseName(),
+                        "databaseQualifiedName", partition.getDatabaseQualifiedName(),
+                        "schemaName", partition.getSchemaName(),
+                        "schemaQualifiedName", partition.getSchemaQualifiedName(),
+                        "name", partition.getName(),
+                        "qualifiedName", partition.getQualifiedName(),
+                        "tableName", partition.getTableName(),
+                        "tableQualifiedName", partition.getTableQualifiedName()));
+        return creator(
+                        name,
+                        partition.getConnectionQualifiedName(),
+                        partition.getDatabaseName(),
+                        partition.getDatabaseQualifiedName(),
+                        partition.getSchemaName(),
+                        partition.getSchemaQualifiedName(),
+                        partition.getName(),
+                        partition.getQualifiedName(),
+                        TablePartition.TYPE_NAME,
+                        partition.getTableName(),
+                        partition.getTableQualifiedName(),
+                        order)
                 .tablePartition(partition.trimToReference());
     }
 
@@ -850,10 +888,30 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
      * @throws InvalidRequestException if the view provided is without a qualifiedName
      */
     public static ColumnBuilder<?, ?> creator(String name, View view, int order) throws InvalidRequestException {
-        if (view.getQualifiedName() == null || view.getQualifiedName().isEmpty()) {
-            throw new InvalidRequestException(ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, "View", "qualifiedName");
-        }
-        return creator(name, view.getTypeName(), view.getQualifiedName(), order).view(view.trimToReference());
+        validateRelationship(
+                View.TYPE_NAME,
+                Map.of(
+                        "connectionQualifiedName", view.getConnectionQualifiedName(),
+                        "databaseName", view.getDatabaseName(),
+                        "databaseQualifiedName", view.getDatabaseQualifiedName(),
+                        "schemaName", view.getSchemaName(),
+                        "schemaQualifiedName", view.getSchemaQualifiedName(),
+                        "name", view.getName(),
+                        "qualifiedName", view.getQualifiedName()));
+        return creator(
+                        name,
+                        view.getConnectionQualifiedName(),
+                        view.getDatabaseName(),
+                        view.getDatabaseQualifiedName(),
+                        view.getSchemaName(),
+                        view.getSchemaQualifiedName(),
+                        view.getName(),
+                        view.getQualifiedName(),
+                        View.TYPE_NAME,
+                        null,
+                        null,
+                        order)
+                .view(view.trimToReference());
     }
 
     /**
@@ -868,11 +926,29 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
      */
     public static ColumnBuilder<?, ?> creator(String name, MaterializedView view, int order)
             throws InvalidRequestException {
-        if (view.getQualifiedName() == null || view.getQualifiedName().isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, "MaterializedView", "qualifiedName");
-        }
-        return creator(name, view.getTypeName(), view.getQualifiedName(), order)
+        validateRelationship(
+                MaterializedView.TYPE_NAME,
+                Map.of(
+                        "connectionQualifiedName", view.getConnectionQualifiedName(),
+                        "databaseName", view.getDatabaseName(),
+                        "databaseQualifiedName", view.getDatabaseQualifiedName(),
+                        "schemaName", view.getSchemaName(),
+                        "schemaQualifiedName", view.getSchemaQualifiedName(),
+                        "name", view.getName(),
+                        "qualifiedName", view.getQualifiedName()));
+        return creator(
+                        name,
+                        view.getConnectionQualifiedName(),
+                        view.getDatabaseName(),
+                        view.getDatabaseQualifiedName(),
+                        view.getSchemaName(),
+                        view.getSchemaQualifiedName(),
+                        view.getName(),
+                        view.getQualifiedName(),
+                        MaterializedView.TYPE_NAME,
+                        null,
+                        null,
+                        order)
                 .materializedView(view.trimToReference());
     }
 
@@ -886,8 +962,6 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
      * @return the minimal request necessary to create the Column, as a builder
      */
     public static ColumnBuilder<?, ?> creator(String name, String parentType, String parentQualifiedName, int order) {
-        String[] tokens = parentQualifiedName.split("/");
-        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(tokens);
         String parentName = StringUtils.getNameFromQualifiedName(parentQualifiedName);
         String tableName = null;
         String tableQualifiedName = null;
@@ -903,6 +977,52 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
         String databaseQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(schemaQualifiedName);
         String databaseName = StringUtils.getNameFromQualifiedName(databaseQualifiedName);
         String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(databaseQualifiedName);
+        return creator(
+                name,
+                connectionQualifiedName,
+                databaseName,
+                databaseQualifiedName,
+                schemaName,
+                schemaQualifiedName,
+                parentName,
+                parentQualifiedName,
+                parentType,
+                tableName,
+                tableQualifiedName,
+                order);
+    }
+
+    /**
+     * Builds the minimal object necessary to create a Column.
+     *
+     * @param name of the Column
+     * @param connectionQualifiedName unique name of the connection in which the Column should be created
+     * @param databaseName simple name of the database in which the Column should be created
+     * @param databaseQualifiedName unique name of the database in which the Column should be created
+     * @param schemaName simple name of the schema in which the Column should be created
+     * @param schemaQualifiedName unique name of the schema in which the Column should be created
+     * @param parentName simple name of the table / view / materialized view in which the Column should be created
+     * @param parentQualifiedName unique name of the table / view / materialized view in which this Column exists
+     * @param parentType type of parent (table, view, materialized view), should be a TYPE_NAME static string
+     * @param tableName simple name of the table if the parentType is TablePartition
+     * @param tableQualifiedName unique name of the table if the parentType is TablePartition
+     * @param order the order the Column appears within its parent (the Column's position)
+     * @return the minimal request necessary to create the Column, as a builder
+     */
+    public static ColumnBuilder<?, ?> creator(
+            String name,
+            String connectionQualifiedName,
+            String databaseName,
+            String databaseQualifiedName,
+            String schemaName,
+            String schemaQualifiedName,
+            String parentName,
+            String parentQualifiedName,
+            String parentType,
+            String tableName,
+            String tableQualifiedName,
+            int order) {
+        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(parentQualifiedName);
         ColumnBuilder<?, ?> builder = Column._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .name(name)
@@ -973,17 +1093,11 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
      */
     @Override
     public ColumnBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        List<String> missing = new ArrayList<>();
-        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
-            missing.add("qualifiedName");
-        }
-        if (this.getName() == null || this.getName().length() == 0) {
-            missing.add("name");
-        }
-        if (!missing.isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "Column", String.join(",", missing));
-        }
+        validateRequired(
+                TYPE_NAME,
+                Map.of(
+                        "qualifiedName", this.getQualifiedName(),
+                        "name", this.getName()));
         return updater(this.getQualifiedName(), this.getName());
     }
 

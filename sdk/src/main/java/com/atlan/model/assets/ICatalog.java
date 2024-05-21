@@ -116,6 +116,30 @@ public interface ICatalog {
             case CogniteTimeSeries.TYPE_NAME:
                 ref = CogniteTimeSeries.refByQualifiedName(qualifiedName);
                 break;
+            case CognosDashboard.TYPE_NAME:
+                ref = CognosDashboard.refByQualifiedName(qualifiedName);
+                break;
+            case CognosDatasource.TYPE_NAME:
+                ref = CognosDatasource.refByQualifiedName(qualifiedName);
+                break;
+            case CognosExploration.TYPE_NAME:
+                ref = CognosExploration.refByQualifiedName(qualifiedName);
+                break;
+            case CognosFile.TYPE_NAME:
+                ref = CognosFile.refByQualifiedName(qualifiedName);
+                break;
+            case CognosFolder.TYPE_NAME:
+                ref = CognosFolder.refByQualifiedName(qualifiedName);
+                break;
+            case CognosModule.TYPE_NAME:
+                ref = CognosModule.refByQualifiedName(qualifiedName);
+                break;
+            case CognosPackage.TYPE_NAME:
+                ref = CognosPackage.refByQualifiedName(qualifiedName);
+                break;
+            case CognosReport.TYPE_NAME:
+                ref = CognosReport.refByQualifiedName(qualifiedName);
+                break;
             case Column.TYPE_NAME:
                 ref = Column.refByQualifiedName(qualifiedName);
                 break;

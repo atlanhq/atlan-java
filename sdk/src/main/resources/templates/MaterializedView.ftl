@@ -9,11 +9,21 @@
      * @throws InvalidRequestException if the schema provided is without a qualifiedName
      */
     public static MaterializedViewBuilder<?, ?> creator(String name, Schema schema) throws InvalidRequestException {
-        if (schema.getQualifiedName() == null || schema.getQualifiedName().isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, "Schema", "qualifiedName");
-        }
-        return creator(name, schema.getQualifiedName()).schema(schema.trimToReference());
+        validateRelationship(Schema.TYPE_NAME, Map.of(
+            "connectionQualifiedName", schema.getConnectionQualifiedName(),
+            "databaseName", schema.getDatabaseName(),
+            "databaseQualifiedName", schema.getDatabaseQualifiedName(),
+            "name", schema.getName(),
+            "qualifiedName", schema.getQualifiedName()
+        ));
+        return creator(
+            name,
+            schema.getConnectionQualifiedName(),
+            schema.getDatabaseName(),
+            schema.getDatabaseQualifiedName(),
+            schema.getName(),
+            schema.getQualifiedName()
+        ).schema(schema.trimToReference());
     }
 
     /**
@@ -24,23 +34,44 @@
      * @return the minimal request necessary to create the materialized view, as a builder
      */
     public static MaterializedViewBuilder<?, ?> creator(String name, String schemaQualifiedName) {
-        String[] tokens = schemaQualifiedName.split("/");
-        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(tokens);
         String schemaName = StringUtils.getNameFromQualifiedName(schemaQualifiedName);
         String databaseQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(schemaQualifiedName);
         String databaseName = StringUtils.getNameFromQualifiedName(databaseQualifiedName);
         String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(databaseQualifiedName);
+        return creator(name, connectionQualifiedName, databaseName, databaseQualifiedName, schemaName, schemaQualifiedName);
+    }
+
+    /**
+     * Builds the minimal object necessary to create a materialized view.
+     *
+     * @param name of the materialized view
+     * @param connectionQualifiedName unique name of the connection in which to create the MaterializedView
+     * @param databaseName simple name of the database in which to create the MaterializedView
+     * @param databaseQualifiedName unique name of the database in which to create the MaterializedView
+     * @param schemaName simple name of the database in which to create the MaterializedView
+     * @param schemaQualifiedName unique name of the schema in which to create the MaterializedView
+     * @return the minimal request necessary to create the materialized view, as a builder
+     */
+    public static MaterializedViewBuilder<?, ?> creator(
+        String name,
+        String connectionQualifiedName,
+        String databaseName,
+        String databaseQualifiedName,
+        String schemaName,
+        String schemaQualifiedName
+    ) {
+        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         return MaterializedView._internal()
-                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
-                .name(name)
-                .qualifiedName(generateQualifiedName(name, schemaQualifiedName))
-                .connectorType(connectorType)
-                .schemaName(schemaName)
-                .schemaQualifiedName(schemaQualifiedName)
-                .schema(Schema.refByQualifiedName(schemaQualifiedName))
-                .databaseName(databaseName)
-                .databaseQualifiedName(databaseQualifiedName)
-                .connectionQualifiedName(connectionQualifiedName);
+            .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+            .name(name)
+            .qualifiedName(generateQualifiedName(name, schemaQualifiedName))
+            .connectorType(connectorType)
+            .schemaName(schemaName)
+            .schemaQualifiedName(schemaQualifiedName)
+            .schema(Schema.refByQualifiedName(schemaQualifiedName))
+            .databaseName(databaseName)
+            .databaseQualifiedName(databaseQualifiedName)
+            .connectionQualifiedName(connectionQualifiedName);
     }
 
     /**
@@ -77,17 +108,10 @@
      */
     @Override
     public MaterializedViewBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        List<String> missing = new ArrayList<>();
-        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
-            missing.add("qualifiedName");
-        }
-        if (this.getName() == null || this.getName().length() == 0) {
-            missing.add("name");
-        }
-        if (!missing.isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "MaterializedView", String.join(",", missing));
-        }
+        validateRequired(TYPE_NAME, Map.of(
+            "qualifiedName", this.getQualifiedName(),
+            "name", this.getName()
+        ));
         return updater(this.getQualifiedName(), this.getName());
     }
 </#macro>

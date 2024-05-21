@@ -9,11 +9,15 @@
      * @throws InvalidRequestException if the container provided is without a qualifiedName
      */
     public static ADLSContainerBuilder<?, ?> creator(String name, ADLSAccount account) throws InvalidRequestException {
-        if (account.getQualifiedName() == null || account.getQualifiedName().isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, "ADLSAccount", "qualifiedName");
-        }
-        return creator(name, account.getQualifiedName()).adlsAccount(account.trimToReference());
+        validateRelationship(ADLSAccount.TYPE_NAME, Map.of(
+            "connectionQualifiedName", account.getConnectionQualifiedName(),
+            "qualifiedName", account.getQualifiedName()
+        ));
+        return creator(
+            name,
+            account.getConnectionQualifiedName(),
+            account.getQualifiedName()
+        ).adlsAccount(account.trimToReference());
     }
 
     /**
@@ -25,14 +29,26 @@
      */
     public static ADLSContainerBuilder<?, ?> creator(String name, String accountQualifiedName) {
         String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(accountQualifiedName);
+        return creator(name, connectionQualifiedName, accountQualifiedName);
+    }
+
+    /**
+     * Builds the minimal object necessary to create a ADLSContainer.
+     *
+     * @param name of the ADLSContainer
+     * @param connectionQualifiedName unique name o fthe connection in which the ADLSContainer exists
+     * @param accountQualifiedName unique name of the account through which the ADLSContainer is accessible
+     * @return the minimal object necessary to create the ADLSContainer, as a builder
+     */
+    public static ADLSContainerBuilder<?, ?> creator(String name, String connectionQualifiedName, String accountQualifiedName) {
         return ADLSContainer._internal()
-                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
-                .qualifiedName(generateQualifiedName(name, accountQualifiedName))
-                .name(name)
-                .adlsAccount(ADLSAccount.refByQualifiedName(accountQualifiedName))
-                .adlsAccountQualifiedName(accountQualifiedName)
-                .connectionQualifiedName(connectionQualifiedName)
-                .connectorType(AtlanConnectorType.ADLS);
+            .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+            .qualifiedName(generateQualifiedName(name, accountQualifiedName))
+            .name(name)
+            .adlsAccount(ADLSAccount.refByQualifiedName(accountQualifiedName))
+            .adlsAccountQualifiedName(accountQualifiedName)
+            .connectionQualifiedName(connectionQualifiedName)
+            .connectorType(AtlanConnectorType.ADLS);
     }
 
     /**
@@ -69,17 +85,10 @@
      */
     @Override
     public ADLSContainerBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        List<String> missing = new ArrayList<>();
-        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
-            missing.add("qualifiedName");
-        }
-        if (this.getName() == null || this.getName().length() == 0) {
-            missing.add("name");
-        }
-        if (!missing.isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "ADLSContainer", String.join(",", missing));
-        }
+        validateRequired(TYPE_NAME, Map.of(
+            "qualifiedName", this.getQualifiedName(),
+            "name", this.getName()
+        ));
         return updater(this.getQualifiedName(), this.getName());
     }
 </#macro>

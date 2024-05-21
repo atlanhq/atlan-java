@@ -396,6 +396,8 @@ public class DataDomainTest {
             .dataProduct(DataProduct.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .dataProduct(DataProduct.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .parentDomain(DataDomain.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .stakeholder(Stakeholder.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .stakeholder(Stakeholder.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .subDomain(DataDomain.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .subDomain(DataDomain.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .build();

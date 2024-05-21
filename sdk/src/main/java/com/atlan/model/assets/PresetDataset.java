@@ -19,8 +19,8 @@ import com.atlan.model.search.FluentSearch;
 import com.atlan.util.QueryFactory;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.SortedSet;
 import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
@@ -453,12 +453,18 @@ public class PresetDataset extends Asset implements IPresetDataset, IPreset, IBI
      */
     public static PresetDatasetBuilder<?, ?> creator(String name, PresetDashboard collection)
             throws InvalidRequestException {
-        if (collection.getQualifiedName() == null
-                || collection.getQualifiedName().isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, "PresetDashboard", "qualifiedName");
-        }
-        return creator(name, collection.getQualifiedName()).presetDashboard(collection.trimToReference());
+        validateRelationship(
+                PresetDashboard.TYPE_NAME,
+                Map.of(
+                        "connectionQualifiedName", collection.getConnectionQualifiedName(),
+                        "presetWorkspaceQualifiedName", collection.getPresetWorkspaceQualifiedName(),
+                        "qualifiedName", collection.getQualifiedName()));
+        return creator(
+                        name,
+                        collection.getConnectionQualifiedName(),
+                        collection.getPresetWorkspaceQualifiedName(),
+                        collection.getQualifiedName())
+                .presetDashboard(collection.trimToReference());
     }
 
     /**
@@ -469,10 +475,26 @@ public class PresetDataset extends Asset implements IPresetDataset, IPreset, IBI
      * @return the minimal object necessary to create the dataset, as a builder
      */
     public static PresetDatasetBuilder<?, ?> creator(String name, String collectionQualifiedName) {
-        String[] tokens = collectionQualifiedName.split("/");
-        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(tokens);
         String workspaceQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(collectionQualifiedName);
         String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(workspaceQualifiedName);
+        return creator(name, connectionQualifiedName, workspaceQualifiedName, collectionQualifiedName);
+    }
+
+    /**
+     * Builds the minimal object necessary to create a Preset dataset.
+     *
+     * @param name of the dataset
+     * @param connectionQualifiedName unique name of the connection in which to create the PresetDataset
+     * @param workspaceQualifiedName unique name of the PresetWorkspace in which to create the PresetDataset
+     * @param collectionQualifiedName unique name of the PresetDashboard in which to create the PresetDataset
+     * @return the minimal object necessary to create the dataset, as a builder
+     */
+    public static PresetDatasetBuilder<?, ?> creator(
+            String name,
+            String connectionQualifiedName,
+            String workspaceQualifiedName,
+            String collectionQualifiedName) {
+        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         return PresetDataset._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .name(name)
@@ -507,17 +529,11 @@ public class PresetDataset extends Asset implements IPresetDataset, IPreset, IBI
      */
     @Override
     public PresetDatasetBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        List<String> missing = new ArrayList<>();
-        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
-            missing.add("qualifiedName");
-        }
-        if (this.getName() == null || this.getName().length() == 0) {
-            missing.add("name");
-        }
-        if (!missing.isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "PresetDataset", String.join(",", missing));
-        }
+        validateRequired(
+                TYPE_NAME,
+                Map.of(
+                        "qualifiedName", this.getQualifiedName(),
+                        "name", this.getName()));
         return updater(this.getQualifiedName(), this.getName());
     }
 

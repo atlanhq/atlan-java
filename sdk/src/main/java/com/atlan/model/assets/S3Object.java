@@ -20,8 +20,8 @@ import com.atlan.model.structs.AwsTag;
 import com.atlan.util.QueryFactory;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.SortedSet;
 import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
@@ -510,17 +510,11 @@ public class S3Object extends Asset
      */
     public static S3ObjectBuilder<?, ?> creatorWithPrefix(String name, S3Bucket bucket, String prefix)
             throws InvalidRequestException {
-        List<String> missing = new ArrayList<>();
-        if (bucket.getQualifiedName() == null || bucket.getQualifiedName().isEmpty()) {
-            missing.add("qualifiedName");
-        }
-        if (bucket.getName() == null || bucket.getName().isEmpty()) {
-            missing.add("name");
-        }
-        if (!missing.isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, "S3Bucket", String.join(",", missing));
-        }
+        validateRelationship(
+                S3Bucket.TYPE_NAME,
+                Map.of(
+                        "qualifiedName", bucket.getQualifiedName(),
+                        "name", bucket.getName()));
         return creatorWithPrefix(name, bucket.getQualifiedName(), bucket.getName(), prefix)
                 .bucket(bucket.trimToReference());
     }
@@ -538,17 +532,11 @@ public class S3Object extends Asset
      */
     public static S3ObjectBuilder<?, ?> creator(String name, S3Bucket bucket, String awsArn)
             throws InvalidRequestException {
-        List<String> missing = new ArrayList<>();
-        if (bucket.getQualifiedName() == null || bucket.getQualifiedName().isEmpty()) {
-            missing.add("qualifiedName");
-        }
-        if (bucket.getName() == null || bucket.getName().isEmpty()) {
-            missing.add("name");
-        }
-        if (!missing.isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, "S3Bucket", String.join(",", missing));
-        }
+        validateRelationship(
+                S3Bucket.TYPE_NAME,
+                Map.of(
+                        "qualifiedName", bucket.getQualifiedName(),
+                        "name", bucket.getName()));
         return creator(name, bucket.getQualifiedName(), bucket.getName(), awsArn)
                 .bucket(bucket.trimToReference());
     }
@@ -627,17 +615,11 @@ public class S3Object extends Asset
      */
     @Override
     public S3ObjectBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        List<String> missing = new ArrayList<>();
-        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
-            missing.add("qualifiedName");
-        }
-        if (this.getName() == null || this.getName().length() == 0) {
-            missing.add("name");
-        }
-        if (!missing.isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "S3Object", String.join(",", missing));
-        }
+        validateRequired(
+                TYPE_NAME,
+                Map.of(
+                        "qualifiedName", this.getQualifiedName(),
+                        "name", this.getName()));
         return updater(this.getQualifiedName(), this.getName());
     }
 

@@ -19,7 +19,6 @@ import com.atlan.model.search.FluentSearch;
 import com.atlan.util.QueryFactory;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
@@ -476,10 +475,7 @@ public class APIPath extends Asset implements IAPIPath, IAPI, ICatalog, IAsset, 
      * @throws InvalidRequestException if the apiSpec provided is without a qualifiedName
      */
     public static APIPathBuilder<?, ?> creator(String name, APISpec apiSpec) throws InvalidRequestException {
-        if (apiSpec.getQualifiedName() == null || apiSpec.getQualifiedName().isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, "APISpec", "qualifiedName");
-        }
+        validateRelationship(APISpec.TYPE_NAME, Map.of("qualifiedName", apiSpec.getQualifiedName()));
         return creator(name, apiSpec.getQualifiedName()).apiSpec(apiSpec.trimToReference());
     }
 
@@ -526,17 +522,11 @@ public class APIPath extends Asset implements IAPIPath, IAPI, ICatalog, IAsset, 
      */
     @Override
     public APIPathBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        List<String> missing = new ArrayList<>();
-        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
-            missing.add("qualifiedName");
-        }
-        if (this.getName() == null || this.getName().length() == 0) {
-            missing.add("name");
-        }
-        if (!missing.isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "APIPath", String.join(",", missing));
-        }
+        validateRequired(
+                TYPE_NAME,
+                Map.of(
+                        "qualifiedName", this.getQualifiedName(),
+                        "name", this.getName()));
         return updater(this.getQualifiedName(), this.getName());
     }
 
