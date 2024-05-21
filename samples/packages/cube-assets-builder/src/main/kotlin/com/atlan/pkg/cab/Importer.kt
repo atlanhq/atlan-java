@@ -7,6 +7,7 @@ import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Cube
 import com.atlan.model.assets.CubeDimension
 import com.atlan.model.assets.CubeField
+import com.atlan.model.assets.CubeField.getHierarchyQualifiedName
 import com.atlan.model.assets.CubeHierarchy
 import com.atlan.model.enums.AssetCreationHandling
 import com.atlan.pkg.Utils
@@ -178,14 +179,14 @@ object Importer {
                 val previousFileDirect = Utils.getOrDefault(config.previousFileDirect, "")
                 val skipS3 = Utils.getOrDefault(config.skipS3, false)
                 val cubeName = preprocessedDetails.cubeName
-                val s3 = S3Sync(defaultBucket, defaultRegion, logger)
                 val previousFileLocation = "$PREVIOUS_FILES_PREFIX/$cubeQN"
+                val s3 = if (!skipS3) S3Sync(defaultBucket, defaultRegion, logger) else null
                 val lastCubesFile = if (previousFileDirect.isNotBlank()) {
                     transformPreviousRaw(previousFileDirect, cubeName, fieldSeparator)
                 } else if (skipS3) {
                     ""
                 } else {
-                    s3.copyLatestFrom(previousFileLocation, PREVIOUS_FILE_PROCESSED_EXT, outputDirectory)
+                    s3!!.copyLatestFrom(previousFileLocation, PREVIOUS_FILE_PROCESSED_EXT, outputDirectory)
                 }
                 if (lastCubesFile.isNotBlank()) {
                     // If there was a previous file, calculate the delta to see what we need
@@ -207,7 +208,7 @@ object Importer {
                 }
                 // Copy processed files to specified location in S3 for future comparison purposes
                 if (!skipS3) {
-                    uploadToS3(s3, preprocessedDetails.preprocessedFile, cubeQN, PREVIOUS_FILE_PROCESSED_EXT)
+                    uploadToS3(s3!!, preprocessedDetails.preprocessedFile, cubeQN, PREVIOUS_FILE_PROCESSED_EXT)
                 }
             }
         }
