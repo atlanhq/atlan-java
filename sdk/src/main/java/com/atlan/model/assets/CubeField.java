@@ -19,9 +19,9 @@ import com.atlan.model.search.FluentSearch;
 import com.atlan.util.QueryFactory;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.SortedSet;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
@@ -477,11 +477,28 @@ public class CubeField extends Asset implements ICubeField, IMultiDimensionalDat
      * @throws InvalidRequestException if the hierarchy provided is without a qualifiedName
      */
     public static CubeFieldBuilder<?, ?> creator(String name, CubeHierarchy hierarchy) throws InvalidRequestException {
-        if (hierarchy.getQualifiedName() == null || hierarchy.getQualifiedName().isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, "CubeHierarchy", "qualifiedName");
-        }
-        return creator(name, hierarchy.getQualifiedName()).cubeHierarchy(hierarchy.trimToReference());
+        validateRelationship(
+                CubeHierarchy.TYPE_NAME,
+                Map.of(
+                        "connectionQualifiedName", hierarchy.getConnectionQualifiedName(),
+                        "cubeName", hierarchy.getCubeName(),
+                        "cubeQualifiedName", hierarchy.getCubeQualifiedName(),
+                        "cubeDimensionName", hierarchy.getCubeDimensionName(),
+                        "cubeDimensionQualifiedName", hierarchy.getCubeDimensionQualifiedName(),
+                        "name", hierarchy.getName(),
+                        "qualifiedName", hierarchy.getQualifiedName()));
+        return creator(
+                        name,
+                        hierarchy.getConnectionQualifiedName(),
+                        hierarchy.getCubeName(),
+                        hierarchy.getCubeQualifiedName(),
+                        hierarchy.getCubeDimensionName(),
+                        hierarchy.getCubeDimensionQualifiedName(),
+                        hierarchy.getName(),
+                        hierarchy.getQualifiedName(),
+                        null,
+                        null)
+                .cubeHierarchy(hierarchy.trimToReference());
     }
 
     /**
@@ -493,12 +510,30 @@ public class CubeField extends Asset implements ICubeField, IMultiDimensionalDat
      * @throws InvalidRequestException if the parent field provided is without a qualifiedName
      */
     public static CubeFieldBuilder<?, ?> creator(String name, CubeField parentField) throws InvalidRequestException {
-        if (parentField.getQualifiedName() == null
-                || parentField.getQualifiedName().isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, "CubeField", "qualifiedName");
-        }
-        return creator(name, parentField.getQualifiedName()).cubeParentField(parentField.trimToReference());
+        validateRelationship(
+                CubeField.TYPE_NAME,
+                Map.of(
+                        "connectionQualifiedName", parentField.getConnectionQualifiedName(),
+                        "cubeName", parentField.getCubeName(),
+                        "cubeQualifiedName", parentField.getCubeQualifiedName(),
+                        "cubeDimensionName", parentField.getCubeDimensionName(),
+                        "cubeDimensionQualifiedName", parentField.getCubeDimensionQualifiedName(),
+                        "cubeHierarchyName", parentField.getCubeHierarchyName(),
+                        "cubeHierarchyQualifiedName", parentField.getCubeHierarchyQualifiedName(),
+                        "name", parentField.getName(),
+                        "qualifiedName", parentField.getQualifiedName()));
+        return creator(
+                        name,
+                        parentField.getConnectionQualifiedName(),
+                        parentField.getCubeName(),
+                        parentField.getCubeQualifiedName(),
+                        parentField.getCubeDimensionName(),
+                        parentField.getCubeDimensionQualifiedName(),
+                        parentField.getCubeHierarchyName(),
+                        parentField.getCubeHierarchyQualifiedName(),
+                        parentField.getName(),
+                        parentField.getQualifiedName())
+                .cubeParentField(parentField.trimToReference());
     }
 
     /**
@@ -509,15 +544,13 @@ public class CubeField extends Asset implements ICubeField, IMultiDimensionalDat
      * @return the minimal request necessary to create the CubeField, as a builder
      */
     public static CubeFieldBuilder<?, ?> creator(String name, String parentQualifiedName) {
-        CubeFieldBuilder<?, ?> builder =
-                CubeField._internal().name(name).qualifiedName(generateQualifiedName(name, parentQualifiedName));
+        String parentFieldName = null;
+        String parentFieldQualifiedName = null;
         String hierarchyQualifiedName = getHierarchyQualifiedName(parentQualifiedName);
         if (!hierarchyQualifiedName.equals(parentQualifiedName)) {
+            parentFieldQualifiedName = parentQualifiedName;
             String parentSlug = StringUtils.getNameFromQualifiedName(parentQualifiedName);
-            String parentName = IMultiDimensionalDataset.getNameFromSlug(parentSlug);
-            builder.cubeParentField(CubeField.refByQualifiedName(parentQualifiedName))
-                    .cubeParentFieldName(parentName)
-                    .cubeParentFieldQualifiedName(parentQualifiedName);
+            parentFieldName = IMultiDimensionalDataset.getNameFromSlug(parentSlug);
         }
         String hierarchySlug = StringUtils.getNameFromQualifiedName(hierarchyQualifiedName);
         String hierarchyName = IMultiDimensionalDataset.getNameFromSlug(hierarchySlug);
@@ -528,6 +561,54 @@ public class CubeField extends Asset implements ICubeField, IMultiDimensionalDat
         String cubeSlug = StringUtils.getNameFromQualifiedName(cubeQualifiedName);
         String cubeName = IMultiDimensionalDataset.getNameFromSlug(cubeSlug);
         String connectionQualifiedName = StringUtils.getConnectionQualifiedName(cubeQualifiedName);
+        return creator(
+                name,
+                connectionQualifiedName,
+                cubeName,
+                cubeQualifiedName,
+                dimensionName,
+                dimensionQualifiedName,
+                hierarchyName,
+                hierarchyQualifiedName,
+                parentFieldName,
+                parentFieldQualifiedName);
+    }
+
+    /**
+     * Builds the minimal object necessary to create a CubeField.
+     *
+     * @param name of the CubeField
+     * @param connectionQualifiedName unique name of the connection in which the CubeField should be created
+     * @param cubeName simple name of the Cube in which the CubeField should be created
+     * @param cubeQualifiedName unique name of the Cube in which the CubeField should be created
+     * @param dimensionName simple name of the CubeDimension in which the CubeField should be created
+     * @param dimensionQualifiedName unique name of the CubeDimension in which the CubeField should be created
+     * @param hierarchyName simple name of the CubeHierarchy in which the CubeField should be created
+     * @param hierarchyQualifiedName unique name of the CubeHierarchy in which the CubeField should be created
+     * @param parentFieldName simple name of the CubeField in which the CubeField should be nested
+     * @param parentFieldQualifiedName unique name of the CubeField in which the CubeField should be nested
+     * @return the minimal request necessary to create the CubeField, as a builder
+     */
+    public static CubeFieldBuilder<?, ?> creator(
+            String name,
+            String connectionQualifiedName,
+            String cubeName,
+            String cubeQualifiedName,
+            String dimensionName,
+            String dimensionQualifiedName,
+            String hierarchyName,
+            String hierarchyQualifiedName,
+            String parentFieldName,
+            String parentFieldQualifiedName) {
+        CubeFieldBuilder<?, ?> builder = CubeField._internal().name(name);
+        if (parentFieldName != null && parentFieldQualifiedName != null) {
+            builder.cubeParentField(CubeField.refByQualifiedName(parentFieldQualifiedName))
+                    .cubeParentFieldName(parentFieldName)
+                    .cubeParentFieldQualifiedName(parentFieldQualifiedName)
+                    .qualifiedName(generateQualifiedName(name, parentFieldQualifiedName));
+        } else {
+            builder.qualifiedName(generateQualifiedName(name, hierarchyQualifiedName));
+        }
         AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         return builder.guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .cubeName(cubeName)
@@ -589,17 +670,11 @@ public class CubeField extends Asset implements ICubeField, IMultiDimensionalDat
      */
     @Override
     public CubeFieldBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        List<String> missing = new ArrayList<>();
-        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
-            missing.add("qualifiedName");
-        }
-        if (this.getName() == null || this.getName().length() == 0) {
-            missing.add("name");
-        }
-        if (!missing.isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, TYPE_NAME, String.join(",", missing));
-        }
+        validateRequired(
+                TYPE_NAME,
+                Map.of(
+                        "qualifiedName", this.getQualifiedName(),
+                        "name", this.getName()));
         return updater(this.getQualifiedName(), this.getName());
     }
 

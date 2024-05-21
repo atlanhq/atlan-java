@@ -23,6 +23,20 @@
     }
 
     /**
+     * Builds the minimal object necessary to create a connection, using "All Admins" as the default
+     * set of connection admins.
+     *
+     * @param name of the connection
+     * @param connectorType type of the connection's connector (this determines what logo appears for the assets)
+     * @return the minimal object necessary to create the connection, as a builder
+     * @throws AtlanException on any error related to the request, such as an inability to retrieve the existing admins in the system
+     */
+    public static ConnectionBuilder<?, ?> creator(String name, AtlanConnectorType connectorType) throws AtlanException {
+        AtlanClient client = Atlan.getDefaultClient();
+        return creator(client, name, connectorType, List.of(client.getRoleCache().getIdForName("$admin")), null, null);
+    }
+
+    /**
      * Builds the minimal object necessary to create a connection.
      * Note: at least one of {@code #adminRoles}, {@code #adminGroups}, or {@code #adminUsers} must be
      * provided or an InvalidRequestException will be thrown.
@@ -297,17 +311,10 @@
      */
     @Override
     public ConnectionBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        List<String> missing = new ArrayList<>();
-        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
-            missing.add("qualifiedName");
-        }
-        if (this.getName() == null || this.getName().length() == 0) {
-            missing.add("name");
-        }
-        if (!missing.isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "Connection", String.join(",", missing));
-        }
+        validateRequired(TYPE_NAME, Map.of(
+            "qualifiedName", this.getQualifiedName(),
+            "name", this.getName()
+        ));
         return updater(this.getQualifiedName(), this.getName());
     }
 

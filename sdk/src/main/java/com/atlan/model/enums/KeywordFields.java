@@ -328,6 +328,22 @@ public enum KeywordFields implements AtlanSearchableField {
     CLIENT_ID("clientId"),
     /** Code that ran within the process. */
     CODE("code"),
+    /** Connection string of a cognos datasource */
+    COGNOS_DATASOURCE_CONNECTION_STRING("cognosDatasourceConnectionString"),
+    /** Tooltip text present for the Cognos asset */
+    COGNOS_DEFAULT_SCREEN_TIP("cognosDefaultScreenTip"),
+    /** ID of the asset in Cognos */
+    COGNOS_ID("cognosId"),
+    /** Name of the parent asset in Cognos */
+    COGNOS_PARENT_NAME("cognosParentName.keyword"),
+    /** Qualified name of the parent asset in Cognos */
+    COGNOS_PARENT_QUALIFIED_NAME("cognosParentQualifiedName"),
+    /** Path of the asset in Cognos. E.g. /content/folder[@name='Folder Name'] */
+    COGNOS_PATH("cognosPath"),
+    /** Cognos type of the Cognos asset. E.g. report, dashboard, package, etc. */
+    COGNOS_TYPE("cognosType"),
+    /** Version of the Cognos asset */
+    COGNOS_VERSION("cognosVersion"),
     /** Unique name of the collection in which this query exists. */
     COLLECTION_QUALIFIED_NAME("collectionQualifiedName"),
     /** List of values in a histogram that represents the contents of this column. */
@@ -386,6 +402,10 @@ public enum KeywordFields implements AtlanSearchableField {
     DAAP_STATUS("daapStatus"),
     /** Visibility of a data product. */
     DAAP_VISIBILITY("daapVisibility"),
+    /** list of groups for product visibility control */
+    DAAP_VISIBILITY_GROUPS("daapVisibilityGroups"),
+    /** list of users for product visibility control */
+    DAAP_VISIBILITY_USERS("daapVisibilityUsers"),
     /** Unique name of the dashboard in which this tile is pinned. */
     DASHBOARD_QUALIFIED_NAME("dashboardQualifiedName"),
     /** Type of dashboard in Salesforce. */
@@ -1270,6 +1290,12 @@ public enum KeywordFields implements AtlanSearchableField {
     SQL("sql"),
     /** Name of the SQL table used to declare the Explore. */
     SQL_TABLE_NAME("sqlTableName"),
+    /** TBC */
+    STAKEHOLDER_DOMAIN_QUALIFIED_NAME("stakeholderDomainQualifiedName"),
+    /** qualified name array representing the Domains for which this StakeholderTitle is applicable */
+    STAKEHOLDER_TITLE_DOMAIN_QUALIFIED_NAMES("stakeholderTitleDomainQualifiedNames"),
+    /** TBC */
+    STAKEHOLDER_TITLE_GUID("stakeholderTitleGuid"),
     /** Staleness of this materialized view. */
     STALENESS("staleness"),
     /** Users who have starred this asset. */

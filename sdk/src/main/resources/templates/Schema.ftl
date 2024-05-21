@@ -9,11 +9,17 @@
      * @throws InvalidRequestException if the database provided is without a qualifiedName
      */
     public static SchemaBuilder<?, ?> creator(String name, Database database) throws InvalidRequestException {
-        if (database.getQualifiedName() == null || database.getQualifiedName().isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, "Database", "qualifiedName");
-        }
-        return creator(name, database.getQualifiedName()).database(database.trimToReference());
+        validateRelationship(Database.TYPE_NAME, Map.of(
+            "connectionQualifiedName", database.getConnectionQualifiedName(),
+            "name", database.getName(),
+            "qualifiedName", database.getQualifiedName()
+        ));
+        return creator(
+            name,
+            database.getConnectionQualifiedName(),
+            database.getName(),
+            database.getQualifiedName()
+        ).database(database.trimToReference());
     }
 
     /**
@@ -24,19 +30,31 @@
      * @return the minimal request necessary to create the schema, as a builder
      */
     public static SchemaBuilder<?, ?> creator(String name, String databaseQualifiedName) {
-        String[] tokens = databaseQualifiedName.split("/");
-        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(tokens);
         String databaseName = StringUtils.getNameFromQualifiedName(databaseQualifiedName);
         String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(databaseQualifiedName);
+        return creator(name, connectionQualifiedName, databaseName, databaseQualifiedName);
+    }
+
+    /**
+     * Builds the minimal object necessary to create a schema.
+     *
+     * @param name of the schema
+     * @param connectionQualifiedName unique name of the connection in which to create the Schema
+     * @param databaseName simple name of the database in which to create the Schema
+     * @param databaseQualifiedName unique name of the database in which to create the Schema
+     * @return the minimal request necessary to create the schema, as a builder
+     */
+    public static SchemaBuilder<?, ?> creator(String name, String connectionQualifiedName, String databaseName, String databaseQualifiedName) {
+        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         return Schema._internal()
-                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
-                .name(name)
-                .qualifiedName(generateQualifiedName(name, databaseQualifiedName))
-                .connectorType(connectorType)
-                .databaseName(databaseName)
-                .databaseQualifiedName(databaseQualifiedName)
-                .database(Database.refByQualifiedName(databaseQualifiedName))
-                .connectionQualifiedName(connectionQualifiedName);
+            .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+            .name(name)
+            .qualifiedName(generateQualifiedName(name, databaseQualifiedName))
+            .connectorType(connectorType)
+            .databaseName(databaseName)
+            .databaseQualifiedName(databaseQualifiedName)
+            .database(Database.refByQualifiedName(databaseQualifiedName))
+            .connectionQualifiedName(connectionQualifiedName);
     }
 
     /**
@@ -73,17 +91,10 @@
      */
     @Override
     public SchemaBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        List<String> missing = new ArrayList<>();
-        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
-            missing.add("qualifiedName");
-        }
-        if (this.getName() == null || this.getName().length() == 0) {
-            missing.add("name");
-        }
-        if (!missing.isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "Schema", String.join(",", missing));
-        }
+        validateRequired(TYPE_NAME, Map.of(
+            "qualifiedName", this.getQualifiedName(),
+            "name", this.getName()
+        ));
         return updater(this.getQualifiedName(), this.getName());
     }
 </#macro>

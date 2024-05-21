@@ -476,19 +476,13 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
      */
     @Override
     public GlossaryCategoryBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        List<String> missing = new ArrayList<>();
-        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
-            missing.add("qualifiedName");
-        }
-        if (this.getName() == null || this.getName().length() == 0) {
-            missing.add("name");
-        }
+        validateRequired(
+                TYPE_NAME,
+                Map.of(
+                        "qualifiedName", this.getQualifiedName(),
+                        "name", this.getName()));
         if (this.getAnchor() == null || !this.getAnchor().isValidReferenceByGuid()) {
-            missing.add("anchor.guid");
-        }
-        if (!missing.isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "GlossaryCategory", String.join(",", missing));
+            throw new InvalidRequestException(ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, TYPE_NAME, "anchor.guid");
         }
         return updater(this.getQualifiedName(), this.getName(), this.getAnchor().getGuid());
     }

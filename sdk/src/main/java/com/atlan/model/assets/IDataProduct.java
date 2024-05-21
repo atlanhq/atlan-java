@@ -49,6 +49,12 @@ public interface IDataProduct {
     /** Visibility of a data product. */
     KeywordField DAAP_VISIBILITY = new KeywordField("daapVisibility", "daapVisibility");
 
+    /** list of groups for product visibility control */
+    KeywordField DAAP_VISIBILITY_GROUPS = new KeywordField("daapVisibilityGroups", "daapVisibilityGroups");
+
+    /** list of users for product visibility control */
+    KeywordField DAAP_VISIBILITY_USERS = new KeywordField("daapVisibilityUsers", "daapVisibilityUsers");
+
     /** Data domain in which this data product exists. */
     RelationField DATA_DOMAIN = new RelationField("dataDomain");
 
@@ -332,6 +338,12 @@ public interface IDataProduct {
 
     /** Visibility of a data product. */
     DataProductVisibility getDaapVisibility();
+
+    /** list of groups for product visibility control */
+    SortedSet<String> getDaapVisibilityGroups();
+
+    /** list of users for product visibility control */
+    SortedSet<String> getDaapVisibilityUsers();
 
     /** Latest version of the data contract (in any status) for this asset. */
     IDataContract getDataContractLatest();

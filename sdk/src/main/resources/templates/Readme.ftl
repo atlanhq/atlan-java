@@ -9,17 +9,10 @@
      * @throws InvalidRequestException if any of the required details are missing from the provided asset
      */
     public static ReadmeBuilder<?, ?> creator(Asset asset, String content) throws InvalidRequestException {
-        List<String> missing = new ArrayList<>();
-        if (asset.getGuid() == null || asset.getGuid().isEmpty() || !StringUtils.isUUID(asset.getGuid())) {
-            missing.add("guid");
-        }
-        if (asset.getName() == null || asset.getName().isEmpty()) {
-            missing.add("name");
-        }
-        if (!missing.isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, "Asset", String.join(",", missing));
-        }
+        validateRelationship(asset.getTypeName(), Map.of(
+            "guid", asset.getGuid(),
+            "name", asset.getName()
+        ));
         return creator(asset.trimToReference(), asset.getName(), content);
     }
 
@@ -63,21 +56,11 @@
      */
     @Override
     public ReadmeBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        List<String> missing = new ArrayList<>();
-        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
-            missing.add("qualifiedName");
-        }
-        if (this.getName() == null || this.getName().length() == 0) {
-            missing.add("name");
-        }
-        if (!missing.isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "Readme", String.join(",", missing));
-        }
-        return Readme._internal()
-                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
-                .qualifiedName(this.getQualifiedName())
-                .name(this.getName());
+        validateRequired(TYPE_NAME, Map.of(
+            "qualifiedName", this.getQualifiedName(),
+            "name", this.getName()
+        ));
+        return updater(this.getQualifiedName(), this.getName());
     }
 
     /**

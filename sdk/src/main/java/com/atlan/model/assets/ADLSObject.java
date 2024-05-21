@@ -25,7 +25,6 @@ import com.atlan.model.structs.AzureTag;
 import com.atlan.util.QueryFactory;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
@@ -523,11 +522,18 @@ public class ADLSObject extends Asset
      * @throws InvalidRequestException if the container provided is without a qualifiedName
      */
     public static ADLSObjectBuilder<?, ?> creator(String name, ADLSContainer container) throws InvalidRequestException {
-        if (container.getQualifiedName() == null || container.getQualifiedName().isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, "ADLSContainer", "qualifiedName");
-        }
-        return creator(name, container.getQualifiedName()).adlsContainer(container.trimToReference());
+        validateRelationship(
+                ADLSContainer.TYPE_NAME,
+                Map.of(
+                        "connectionQualifiedName", container.getConnectionQualifiedName(),
+                        "accountQualifiedName", container.getAdlsAccountQualifiedName(),
+                        "qualifiedName", container.getQualifiedName()));
+        return creator(
+                        name,
+                        container.getConnectionQualifiedName(),
+                        container.getAdlsAccountQualifiedName(),
+                        container.getQualifiedName())
+                .adlsContainer(container.trimToReference());
     }
 
     /**
@@ -540,6 +546,20 @@ public class ADLSObject extends Asset
     public static ADLSObjectBuilder<?, ?> creator(String name, String containerQualifiedName) {
         String accountQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(containerQualifiedName);
         String connectionQualifiedName = StringUtils.getConnectionQualifiedName(containerQualifiedName);
+        return creator(name, connectionQualifiedName, accountQualifiedName, containerQualifiedName);
+    }
+
+    /**
+     * Builds the minimal object necessary to create a ADLSObject.
+     *
+     * @param name of the ADLSObject
+     * @param connectionQualifiedName unique name of the connection in which the ADLSObject should be created
+     * @param accountQualifiedName unique name of the account in which the ADLSObject should be created
+     * @param containerQualifiedName unique name of the container through which the ADLSObject is accessible
+     * @return the minimal object necessary to create the ADLSObject, as a builder
+     */
+    public static ADLSObjectBuilder<?, ?> creator(
+            String name, String connectionQualifiedName, String accountQualifiedName, String containerQualifiedName) {
         return ADLSObject._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(generateQualifiedName(name, containerQualifiedName))
@@ -584,17 +604,11 @@ public class ADLSObject extends Asset
      */
     @Override
     public ADLSObjectBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        List<String> missing = new ArrayList<>();
-        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
-            missing.add("qualifiedName");
-        }
-        if (this.getName() == null || this.getName().length() == 0) {
-            missing.add("name");
-        }
-        if (!missing.isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "ADLSObject", String.join(",", missing));
-        }
+        validateRequired(
+                TYPE_NAME,
+                Map.of(
+                        "qualifiedName", this.getQualifiedName(),
+                        "name", this.getName()));
         return updater(this.getQualifiedName(), this.getName());
     }
 

@@ -9,10 +9,9 @@
      * @throws InvalidRequestException if the AirflowDag provided is without a qualifiedName
      */
     public static AirflowTaskBuilder<?, ?> creator(String name, AirflowDag airflowDag) throws InvalidRequestException {
-        if (airflowDag.getQualifiedName() == null || airflowDag.getQualifiedName().isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, "AirflowDag", "qualifiedName");
-        }
+        validateRelationship(AirflowDag.TYPE_NAME, Map.of(
+            "qualifiedName", airflowDag.getQualifiedName()
+        ));
         return creator(name, airflowDag.getQualifiedName()).airflowDag(airflowDag.trimToReference());
     }
 
@@ -62,17 +61,10 @@
      */
     @Override
     public AirflowTaskBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        List<String> missing = new ArrayList<>();
-        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
-            missing.add("qualifiedName");
-        }
-        if (this.getName() == null || this.getName().length() == 0) {
-            missing.add("name");
-        }
-        if (!missing.isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, TYPE_NAME, String.join(",", missing));
-        }
+        validateRequired(TYPE_NAME, Map.of(
+            "qualifiedName", this.getQualifiedName(),
+            "name", this.getName()
+        ));
         return updater(this.getQualifiedName(), this.getName());
     }
 </#macro>

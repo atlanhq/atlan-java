@@ -20,7 +20,6 @@ import com.atlan.util.QueryFactory;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
@@ -562,10 +561,22 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
      * @throws InvalidRequestException if the schema provided is without a qualifiedName
      */
     public static ViewBuilder<?, ?> creator(String name, Schema schema) throws InvalidRequestException {
-        if (schema.getQualifiedName() == null || schema.getQualifiedName().isEmpty()) {
-            throw new InvalidRequestException(ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, "Schema", "qualifiedName");
-        }
-        return creator(name, schema.getQualifiedName()).schema(schema.trimToReference());
+        validateRelationship(
+                Schema.TYPE_NAME,
+                Map.of(
+                        "connectionQualifiedName", schema.getConnectionQualifiedName(),
+                        "databaseName", schema.getDatabaseName(),
+                        "databaseQualifiedName", schema.getDatabaseQualifiedName(),
+                        "name", schema.getName(),
+                        "qualifiedName", schema.getQualifiedName()));
+        return creator(
+                        name,
+                        schema.getConnectionQualifiedName(),
+                        schema.getDatabaseName(),
+                        schema.getDatabaseQualifiedName(),
+                        schema.getName(),
+                        schema.getQualifiedName())
+                .schema(schema.trimToReference());
     }
 
     /**
@@ -576,12 +587,33 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
      * @return the minimal request necessary to create the view, as a builder
      */
     public static ViewBuilder<?, ?> creator(String name, String schemaQualifiedName) {
-        String[] tokens = schemaQualifiedName.split("/");
-        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(tokens);
         String schemaName = StringUtils.getNameFromQualifiedName(schemaQualifiedName);
         String databaseQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(schemaQualifiedName);
         String databaseName = StringUtils.getNameFromQualifiedName(databaseQualifiedName);
         String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(databaseQualifiedName);
+        return creator(
+                name, connectionQualifiedName, databaseName, databaseQualifiedName, schemaName, schemaQualifiedName);
+    }
+
+    /**
+     * Builds the minimal object necessary to create a view.
+     *
+     * @param name of the view
+     * @param connectionQualifiedName unique name of the connection in which to create the View
+     * @param databaseName simple name of the Database in which to create the View
+     * @param databaseQualifiedName unique name of the Database in which to create the View
+     * @param schemaName simple name of the Schema in which to create the View
+     * @param schemaQualifiedName unique name of the Schema in which to create the View
+     * @return the minimal request necessary to create the view, as a builder
+     */
+    public static ViewBuilder<?, ?> creator(
+            String name,
+            String connectionQualifiedName,
+            String databaseName,
+            String databaseQualifiedName,
+            String schemaName,
+            String schemaQualifiedName) {
+        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         return View._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .name(name)
@@ -629,17 +661,11 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
      */
     @Override
     public ViewBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        List<String> missing = new ArrayList<>();
-        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
-            missing.add("qualifiedName");
-        }
-        if (this.getName() == null || this.getName().length() == 0) {
-            missing.add("name");
-        }
-        if (!missing.isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "View", String.join(",", missing));
-        }
+        validateRequired(
+                TYPE_NAME,
+                Map.of(
+                        "qualifiedName", this.getQualifiedName(),
+                        "name", this.getName()));
         return updater(this.getQualifiedName(), this.getName());
     }
 

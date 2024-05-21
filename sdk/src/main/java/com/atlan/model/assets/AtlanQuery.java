@@ -607,25 +607,13 @@ public class AtlanQuery extends Asset implements IAtlanQuery, ISQL, ICatalog, IA
      */
     @Override
     public AtlanQueryBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        List<String> missing = new ArrayList<>();
-        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
-            missing.add("qualifiedName");
-        }
-        if (this.getName() == null || this.getName().length() == 0) {
-            missing.add("name");
-        }
-        if (this.getCollectionQualifiedName() == null
-                || this.getCollectionQualifiedName().length() == 0) {
-            missing.add("collectionQualifiedName");
-        }
-        if (this.getParentQualifiedName() == null
-                || this.getParentQualifiedName().length() == 0) {
-            missing.add("parentQualifiedName");
-        }
-        if (!missing.isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, TYPE_NAME, String.join(",", missing));
-        }
+        validateRequired(
+                TYPE_NAME,
+                Map.of(
+                        "qualifiedName", this.getQualifiedName(),
+                        "name", this.getName(),
+                        "collectionQualifiedName", this.getCollectionQualifiedName(),
+                        "parentQualifiedName", this.getParentQualifiedName()));
         return updater(
                 this.getQualifiedName(),
                 this.getName(),

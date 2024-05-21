@@ -108,6 +108,8 @@ public enum TextFields implements AtlanSearchableField {
     CALCULATION_VIEW_NAME("calculationViewName"),
     /** Status of this asset's certification. */
     CERTIFICATE_STATUS("certificateStatus.text"),
+    /** Name of the parent asset in Cognos */
+    COGNOS_PARENT_NAME("cognosParentName"),
     /** Unique name of the collection in which this query exists. */
     COLLECTION_QUALIFIED_NAME("collectionQualifiedName.text"),
     /** Simple name of the connection through which this asset is accessible. */

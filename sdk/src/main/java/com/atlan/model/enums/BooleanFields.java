@@ -38,6 +38,10 @@ public enum BooleanFields implements AtlanSearchableField {
     ASSET_DBT_JOB_LAST_RUN_NOTIFICATIONS_SENT("assetDbtJobLastRunNotificationsSent"),
     /** TBC */
     AUTH_SERVICE_IS_ENABLED("authServiceIsEnabled"),
+    /** Whether the Cognos asset is diabled */
+    COGNOS_IS_DISABLED("cognosIsDisabled"),
+    /** Whether the Cognos asset is hidden from the ui */
+    COGNOS_IS_HIDDEN("cognosIsHidden"),
     /** Whether the function is stored or executed externally (true) or internally (false). */
     FUNCTION_IS_EXTERNAL("functionIsExternal"),
     /** Whether the function must re-compute if there are no underlying changes in the values (false) or not (true). */

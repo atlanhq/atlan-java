@@ -379,7 +379,7 @@ public class AuthPolicyTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
-            .accessControl(Persona.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .accessControl(Stakeholder.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .isPolicyEnabled(true)
             .policyAction(PersonaMetadataAction.CREATE)
             .policyAction(PersonaMetadataAction.READ)

@@ -60,6 +60,10 @@ public enum NumericFields implements AtlanSearchableField {
     CALCULATION_VIEW_VERSION_ID("calculationViewVersionId"),
     /** Time (epoch) at which the certification was last updated, in milliseconds. */
     CERTIFICATE_UPDATED_AT("certificateUpdatedAt"),
+    /** Number of children in the folder (excluding subfolders). */
+    COGNOS_FOLDER_CHILD_OBJECTS_COUNT("cognosFolderChildObjectsCount"),
+    /** Number of sub-folders in the folder. */
+    COGNOS_FOLDER_SUB_FOLDER_COUNT("cognosFolderSubFolderCount"),
     /** Average value in this column. */
     COLUMN_AVERAGE("columnAverage"),
     /** Average length of values in a string column. */

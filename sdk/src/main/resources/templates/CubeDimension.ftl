@@ -11,10 +11,17 @@ import com.atlan.model.assets.Connection;
      * @throws InvalidRequestException if the cube provided is without a qualifiedName
      */
     public static CubeDimensionBuilder<?, ?> creator(String name, Cube cube) throws InvalidRequestException {
-        if (cube.getQualifiedName() == null || cube.getQualifiedName().isEmpty()) {
-            throw new InvalidRequestException(ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, "Cube", "qualifiedName");
-        }
-        return creator(name, cube.getQualifiedName()).cube(cube.trimToReference());
+        validateRelationship(Cube.TYPE_NAME, Map.of(
+            "connectionQualifiedName", cube.getConnectionQualifiedName(),
+            "name", cube.getName(),
+            "qualifiedName", cube.getQualifiedName()
+        ));
+        return creator(
+            name,
+            cube.getConnectionQualifiedName(),
+            cube.getCubeName(),
+            cube.getQualifiedName()
+        ).cube(cube.trimToReference());
     }
 
     /**
@@ -28,16 +35,29 @@ import com.atlan.model.assets.Connection;
         String cubeSlug = StringUtils.getNameFromQualifiedName(cubeQualifiedName);
         String cubeName = IMultiDimensionalDataset.getNameFromSlug(cubeSlug);
         String connectionQualifiedName = StringUtils.getConnectionQualifiedName(cubeQualifiedName);
+        return creator(name, connectionQualifiedName, cubeName, cubeQualifiedName);
+    }
+
+    /**
+     * Builds the minimal object necessary to create a CubeDimension.
+     *
+     * @param name of the CubeDimension
+     * @param connectionQualifiedName unique name of the connection in which to create this CubeDimension
+     * @param cubeName simple name of the cube in which to create this CubeDimension
+     * @param cubeQualifiedName unique name of the cube in which to create this CubeDimension
+     * @return the minimal request necessary to create the CubeDimension, as a builder
+     */
+    public static CubeDimensionBuilder<?, ?> creator(String name, String connectionQualifiedName, String cubeName, String cubeQualifiedName) {
         AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         return CubeDimension._internal()
-                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
-                .name(name)
-                .qualifiedName(generateQualifiedName(name, cubeQualifiedName))
-                .cubeName(cubeName)
-                .cubeQualifiedName(cubeQualifiedName)
-                .cube(Cube.refByQualifiedName(cubeQualifiedName))
-                .connectorType(connectorType)
-                .connectionQualifiedName(connectionQualifiedName);
+            .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+            .name(name)
+            .qualifiedName(generateQualifiedName(name, cubeQualifiedName))
+            .cubeName(cubeName)
+            .cubeQualifiedName(cubeQualifiedName)
+            .cube(Cube.refByQualifiedName(cubeQualifiedName))
+            .connectorType(connectorType)
+            .connectionQualifiedName(connectionQualifiedName);
     }
 
     /**
@@ -74,17 +94,10 @@ import com.atlan.model.assets.Connection;
      */
     @Override
     public CubeDimensionBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        List<String> missing = new ArrayList<>();
-        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
-            missing.add("qualifiedName");
-        }
-        if (this.getName() == null || this.getName().length() == 0) {
-            missing.add("name");
-        }
-        if (!missing.isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, TYPE_NAME, String.join(",", missing));
-        }
+        validateRequired(TYPE_NAME, Map.of(
+            "qualifiedName", this.getQualifiedName(),
+            "name", this.getName()
+        ));
         return updater(this.getQualifiedName(), this.getName());
     }
 </#macro>

@@ -7,13 +7,19 @@
      * @return the minimal object necessary to create the asset, as a builder
      * @throws InvalidRequestException if the provided object does not have a qualifiedName
      */
-    public static SalesforceFieldBuilder<?, ?> creator(
-            String name, SalesforceObject object) throws InvalidRequestException {
-        if (object.getQualifiedName() == null || object.getQualifiedName().isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, "SalesforceObject", "qualifiedName");
-        }
-        return creator(name, object.getQualifiedName()).object(object.trimToReference());
+    public static SalesforceFieldBuilder<?, ?> creator(String name, SalesforceObject object)
+            throws InvalidRequestException {
+        validateRelationship(SalesforceObject.TYPE_NAME, Map.of(
+            "connectionQualifiedName", object.getConnectionQualifiedName(),
+            "organizationQualifiedName", object.getOrganizationQualifiedName(),
+            "qualifiedName", object.getQualifiedName()
+        ));
+        return creator(
+            name,
+            object.getConnectionQualifiedName(),
+            object.getOrganizationQualifiedName(),
+            object.getQualifiedName()
+        ).object(object.trimToReference());
     }
 
     /**
@@ -23,19 +29,31 @@
      * @param objectQualifiedName unique name of the object through which the asset is accessible
      * @return the minimal object necessary to create the asset, as a builder
      */
-    public static SalesforceFieldBuilder<?, ?> creator(
-            String name, String objectQualifiedName) {
+    public static SalesforceFieldBuilder<?, ?> creator(String name, String objectQualifiedName) {
         String organizationQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(objectQualifiedName);
         String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(organizationQualifiedName);
+        return creator(name, connectionQualifiedName, organizationQualifiedName, objectQualifiedName);
+    }
+
+    /**
+     * Builds the minimal object necessary to create a SalesforceField asset.
+     *
+     * @param name of the field
+     * @param connectionQualifiedName unique name of the connection in which to create the SalesforceField
+     * @param organizationQualifiedName unique name of the SalesforceOrganization in which to create the SalesforceField
+     * @param objectQualifiedName unique name of the object through which the asset is accessible
+     * @return the minimal object necessary to create the asset, as a builder
+     */
+    public static SalesforceFieldBuilder<?, ?> creator(String name, String connectionQualifiedName, String organizationQualifiedName, String objectQualifiedName) {
         return SalesforceField._internal()
-                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
-                .qualifiedName(generateQualifiedName(name, objectQualifiedName))
-                .name(name)
-                .connectionQualifiedName(connectionQualifiedName)
-                .connectorType(AtlanConnectorType.SALESFORCE)
-                .organizationQualifiedName(organizationQualifiedName)
-                .object(SalesforceObject.refByQualifiedName(objectQualifiedName))
-                .objectQualifiedName(objectQualifiedName);
+            .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+            .qualifiedName(generateQualifiedName(name, objectQualifiedName))
+            .name(name)
+            .connectionQualifiedName(connectionQualifiedName)
+            .connectorType(AtlanConnectorType.SALESFORCE)
+            .organizationQualifiedName(organizationQualifiedName)
+            .object(SalesforceObject.refByQualifiedName(objectQualifiedName))
+            .objectQualifiedName(objectQualifiedName);
     }
 
     /**
@@ -72,17 +90,10 @@
      */
     @Override
     public SalesforceFieldBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        List<String> missing = new ArrayList<>();
-        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
-            missing.add("qualifiedName");
-        }
-        if (this.getName() == null || this.getName().length() == 0) {
-            missing.add("name");
-        }
-        if (!missing.isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, TYPE_NAME, String.join(",", missing));
-        }
+        validateRequired(TYPE_NAME, Map.of(
+            "qualifiedName", this.getQualifiedName(),
+            "name", this.getName()
+        ));
         return updater(this.getQualifiedName(), this.getName());
     }
 </#macro>

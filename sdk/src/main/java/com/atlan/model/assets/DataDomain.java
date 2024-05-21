@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.SortedSet;
 import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
@@ -91,6 +92,11 @@ public class DataDomain extends Asset implements IDataDomain, IDataMesh, ICatalo
     /** Unique name of the parent domain in which this asset exists. */
     @Attribute
     String parentDomainQualifiedName;
+
+    /** Stakeholder assigned to the Domain */
+    @Attribute
+    @Singular
+    SortedSet<IStakeholder> stakeholders;
 
     /** Sub-data domains that exist within this data domain. */
     @Attribute
@@ -488,17 +494,11 @@ public class DataDomain extends Asset implements IDataDomain, IDataMesh, ICatalo
      */
     @Override
     public DataDomainBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        List<String> missing = new ArrayList<>();
-        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
-            missing.add("qualifiedName");
-        }
-        if (this.getName() == null || this.getName().length() == 0) {
-            missing.add("name");
-        }
-        if (!missing.isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "DataDomain", String.join(",", missing));
-        }
+        validateRequired(
+                TYPE_NAME,
+                Map.of(
+                        "qualifiedName", this.getQualifiedName(),
+                        "name", this.getName()));
         return updater(this.getQualifiedName(), this.getName());
     }
 

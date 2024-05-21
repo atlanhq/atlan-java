@@ -19,8 +19,8 @@ import com.atlan.model.search.FluentSearch;
 import com.atlan.util.QueryFactory;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.SortedSet;
 import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
@@ -458,11 +458,22 @@ public class CubeHierarchy extends Asset
      */
     public static CubeHierarchyBuilder<?, ?> creator(String name, CubeDimension dimension)
             throws InvalidRequestException {
-        if (dimension.getQualifiedName() == null || dimension.getQualifiedName().isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, "CubeDimension", "qualifiedName");
-        }
-        return creator(name, dimension.getQualifiedName()).cubeDimension(dimension.trimToReference());
+        validateRelationship(
+                CubeDimension.TYPE_NAME,
+                Map.of(
+                        "connectionQualifiedName", dimension.getConnectionQualifiedName(),
+                        "cubeName", dimension.getCubeName(),
+                        "cubeQualifiedName", dimension.getCubeQualifiedName(),
+                        "name", dimension.getName(),
+                        "qualifiedName", dimension.getQualifiedName()));
+        return creator(
+                        name,
+                        dimension.getConnectionQualifiedName(),
+                        dimension.getCubeName(),
+                        dimension.getCubeQualifiedName(),
+                        dimension.getName(),
+                        dimension.getQualifiedName())
+                .cubeDimension(dimension.trimToReference());
     }
 
     /**
@@ -479,6 +490,29 @@ public class CubeHierarchy extends Asset
         String cubeSlug = StringUtils.getNameFromQualifiedName(cubeQualifiedName);
         String cubeName = IMultiDimensionalDataset.getNameFromSlug(cubeSlug);
         String connectionQualifiedName = StringUtils.getConnectionQualifiedName(cubeQualifiedName);
+        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
+        return creator(
+                name, connectionQualifiedName, cubeName, cubeQualifiedName, dimensionName, dimensionQualifiedName);
+    }
+
+    /**
+     * Builds the minimal object necessary to create a CubeHierarchy.
+     *
+     * @param name of the CubeHierarchy
+     * @param connectionQualifiedName unique name of the connection in which the CubeHierarchy should be created
+     * @param cubeName simple name of the Cube in which the CubeHierarchy should be created
+     * @param cubeQualifiedName unique name of the Cube in which the CubeHierarchy should be created
+     * @param dimensionName simple name of the CubeDimension in which the CubeHierarchy should be created
+     * @param dimensionQualifiedName unique name of the CubeDimension in which the CubeHierarchy should be created
+     * @return the minimal request necessary to create the CubeHierarchy, as a builder
+     */
+    public static CubeHierarchyBuilder<?, ?> creator(
+            String name,
+            String connectionQualifiedName,
+            String cubeName,
+            String cubeQualifiedName,
+            String dimensionName,
+            String dimensionQualifiedName) {
         AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         return CubeHierarchy._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
@@ -527,17 +561,11 @@ public class CubeHierarchy extends Asset
      */
     @Override
     public CubeHierarchyBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        List<String> missing = new ArrayList<>();
-        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
-            missing.add("qualifiedName");
-        }
-        if (this.getName() == null || this.getName().length() == 0) {
-            missing.add("name");
-        }
-        if (!missing.isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, TYPE_NAME, String.join(",", missing));
-        }
+        validateRequired(
+                TYPE_NAME,
+                Map.of(
+                        "qualifiedName", this.getQualifiedName(),
+                        "name", this.getName()));
         return updater(this.getQualifiedName(), this.getName());
     }
 

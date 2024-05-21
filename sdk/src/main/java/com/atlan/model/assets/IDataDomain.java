@@ -37,6 +37,9 @@ public interface IDataDomain {
     /** Parent data domain in which this sub-data domain exists. */
     RelationField PARENT_DOMAIN = new RelationField("parentDomain");
 
+    /** Stakeholder assigned to the Domain */
+    RelationField STAKEHOLDERS = new RelationField("stakeholders");
+
     /** Sub-data domains that exist within this data domain. */
     RelationField SUB_DOMAINS = new RelationField("subDomains");
 
@@ -462,6 +465,9 @@ public interface IDataDomain {
 
     /** Name of the user who last updated this asset, in the source system. */
     String getSourceUpdatedBy();
+
+    /** Stakeholder assigned to the Domain */
+    SortedSet<IStakeholder> getStakeholders();
 
     /** Users who have starred this asset. */
     SortedSet<String> getStarredBy();
