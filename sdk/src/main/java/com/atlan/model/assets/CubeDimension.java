@@ -463,7 +463,7 @@ public class CubeDimension extends Asset
                         "connectionQualifiedName", cube.getConnectionQualifiedName(),
                         "name", cube.getName(),
                         "qualifiedName", cube.getQualifiedName()));
-        return creator(name, cube.getConnectionQualifiedName(), cube.getCubeName(), cube.getQualifiedName())
+        return creator(name, cube.getConnectionQualifiedName(), cube.getName(), cube.getQualifiedName())
                 .cube(cube.trimToReference());
     }
 

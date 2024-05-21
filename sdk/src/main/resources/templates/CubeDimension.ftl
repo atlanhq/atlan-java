@@ -19,7 +19,7 @@ import com.atlan.model.assets.Connection;
         return creator(
             name,
             cube.getConnectionQualifiedName(),
-            cube.getCubeName(),
+            cube.getName(),
             cube.getQualifiedName()
         ).cube(cube.trimToReference());
     }
