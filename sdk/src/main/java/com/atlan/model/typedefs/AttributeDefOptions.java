@@ -237,8 +237,26 @@ public class AttributeDefOptions extends AtlanObject {
      */
     public static AttributeDefOptions of(AtlanCustomAttributePrimitiveType type, String optionsName)
             throws AtlanException {
-        AttributeDefOptionsBuilder<?, ?> builder = AttributeDefOptions.builder()
-                .primitiveType(type)
+        return of(type, optionsName, null);
+    }
+
+    /**
+     * Instantiate a new set of attribute options from the provided parameters.
+     * @param type primitive type of the attribute
+     * @param optionsName name of the options (enumeration) if the primitive type is an enumeration (can be null otherwise)
+     * @param options starting point of options on which to extend
+     * @return the attribute options
+     * @throws AtlanException on any API issues looking up existing connections and glossaries
+     */
+    public static AttributeDefOptions of(AtlanCustomAttributePrimitiveType type, String optionsName, AttributeDefOptions options)
+        throws AtlanException {
+        AttributeDefOptionsBuilder<?, ?> builder;
+        if (options != null) {
+            // If we are provided options, use those as the starting point
+            builder = options.toBuilder();
+        } else {
+            // Otherwise set defaults to allow the attribute to be available on all assets
+            builder = AttributeDefOptions.builder()
                 .applicableConnections(Connection.getAllQualifiedNames())
                 .applicableAssetTypes(ALL_ASSET_TYPES)
                 .applicableGlossaries(Glossary.getAllQualifiedNames())
@@ -246,6 +264,8 @@ public class AttributeDefOptions extends AtlanObject {
                 .applicableDomains(Set.of("*/super"))
                 .applicableDomainTypes(ALL_DOMAIN_TYPES)
                 .applicableOtherAssetTypes(ALL_OTHER_TYPES);
+        }
+        builder.primitiveType(type);
         switch (type) {
             case USERS:
             case GROUPS:
