@@ -208,8 +208,7 @@ public class AttributeDef extends AtlanObject implements Comparable<AttributeDef
                             .multiValueSelect(true)
                             .build());
         } else {
-            builder.typeName(baseType)
-                    .options(AttributeDefOptions.of(type, optionsName, otherOptions));
+            builder.typeName(baseType).options(AttributeDefOptions.of(type, optionsName, otherOptions));
         }
         if (addEnumValues) {
             builder.enumValues(client.getEnumCache().getByName(optionsName).getValidValues());

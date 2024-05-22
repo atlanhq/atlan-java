@@ -248,8 +248,9 @@ public class AttributeDefOptions extends AtlanObject {
      * @return the attribute options
      * @throws AtlanException on any API issues looking up existing connections and glossaries
      */
-    public static AttributeDefOptions of(AtlanCustomAttributePrimitiveType type, String optionsName, AttributeDefOptions options)
-        throws AtlanException {
+    public static AttributeDefOptions of(
+            AtlanCustomAttributePrimitiveType type, String optionsName, AttributeDefOptions options)
+            throws AtlanException {
         AttributeDefOptionsBuilder<?, ?> builder;
         if (options != null) {
             // If we are provided options, use those as the starting point
@@ -257,13 +258,13 @@ public class AttributeDefOptions extends AtlanObject {
         } else {
             // Otherwise set defaults to allow the attribute to be available on all assets
             builder = AttributeDefOptions.builder()
-                .applicableConnections(Connection.getAllQualifiedNames())
-                .applicableAssetTypes(ALL_ASSET_TYPES)
-                .applicableGlossaries(Glossary.getAllQualifiedNames())
-                .applicableGlossaryTypes(ALL_GLOSSARY_TYPES)
-                .applicableDomains(Set.of("*/super"))
-                .applicableDomainTypes(ALL_DOMAIN_TYPES)
-                .applicableOtherAssetTypes(ALL_OTHER_TYPES);
+                    .applicableConnections(Connection.getAllQualifiedNames())
+                    .applicableAssetTypes(ALL_ASSET_TYPES)
+                    .applicableGlossaries(Glossary.getAllQualifiedNames())
+                    .applicableGlossaryTypes(ALL_GLOSSARY_TYPES)
+                    .applicableDomains(Set.of("*/super"))
+                    .applicableDomainTypes(ALL_DOMAIN_TYPES)
+                    .applicableOtherAssetTypes(ALL_OTHER_TYPES);
         }
         builder.primitiveType(type);
         switch (type) {
