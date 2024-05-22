@@ -447,11 +447,17 @@ public class AttributeDefOptions extends AtlanObject {
         if (options.applicableGlossaries != null) {
             this.applicableGlossaries = options.applicableGlossaries;
         }
+        if (options.applicableDomains != null) {
+            this.applicableDomains = options.applicableDomains;
+        }
         if (options.applicableAssetTypes != null) {
             this.applicableAssetTypes = options.applicableAssetTypes;
         }
         if (options.applicableGlossaryTypes != null) {
             this.applicableGlossaryTypes = options.applicableGlossaryTypes;
+        }
+        if (options.applicableDomainTypes != null) {
+            this.applicableDomainTypes = options.applicableDomainTypes;
         }
         if (options.applicableOtherAssetTypes != null) {
             this.applicableOtherAssetTypes = options.applicableOtherAssetTypes;
