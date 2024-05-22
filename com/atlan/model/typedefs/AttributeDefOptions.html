@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":9,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":42,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":9,"i33":10,"i34":10};
+var data = {"i0":10,"i1":9,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":42,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":9,"i33":9,"i34":10,"i35":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -493,11 +493,20 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 </td>
 </tr>
 <tr id="i33" class="rowColor">
+<td class="colFirst"><code>static <a href="AttributeDefOptions.html" title="class in com.atlan.model.typedefs">AttributeDefOptions</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#of(com.atlan.model.enums.AtlanCustomAttributePrimitiveType,java.lang.String,com.atlan.model.typedefs.AttributeDefOptions)">of</a></span>&#8203;(<a href="../enums/AtlanCustomAttributePrimitiveType.html" title="enum in com.atlan.model.enums">AtlanCustomAttributePrimitiveType</a>&nbsp;type,
+  java.lang.String&nbsp;optionsName,
+  <a href="AttributeDefOptions.html" title="class in com.atlan.model.typedefs">AttributeDefOptions</a>&nbsp;options)</code></th>
+<td class="colLast">
+<div class="block">Instantiate a new set of attribute options from the provided parameters.</div>
+</td>
+</tr>
+<tr id="i34" class="altColor">
 <td class="colFirst"><code><a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="class in com.atlan.model.typedefs">AttributeDefOptions.AttributeDefOptionsBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toBuilder()">toBuilder</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i34" class="altColor">
+<tr id="i35" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 </tr>
@@ -611,6 +620,29 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>type</code> - primitive type of the attribute</dd>
 <dd><code>optionsName</code> - name of the options (enumeration) if the primitive type is an enumeration (can be null otherwise)</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the attribute options</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API issues looking up existing connections and glossaries</dd>
+</dl>
+</li>
+</ul>
+<a id="of(com.atlan.model.enums.AtlanCustomAttributePrimitiveType,java.lang.String,com.atlan.model.typedefs.AttributeDefOptions)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>of</h4>
+<pre class="methodSignature">public static&nbsp;<a href="AttributeDefOptions.html" title="class in com.atlan.model.typedefs">AttributeDefOptions</a>&nbsp;of&#8203;(<a href="../enums/AtlanCustomAttributePrimitiveType.html" title="enum in com.atlan.model.enums">AtlanCustomAttributePrimitiveType</a>&nbsp;type,
+                                     java.lang.String&nbsp;optionsName,
+                                     <a href="AttributeDefOptions.html" title="class in com.atlan.model.typedefs">AttributeDefOptions</a>&nbsp;options)
+                              throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Instantiate a new set of attribute options from the provided parameters.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>type</code> - primitive type of the attribute</dd>
+<dd><code>optionsName</code> - name of the options (enumeration) if the primitive type is an enumeration (can be null otherwise)</dd>
+<dd><code>options</code> - starting point of options on which to extend</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the attribute options</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
