@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":9,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":42,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":9,"i31":10,"i32":10};
+var data = {"i0":10,"i1":9,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":42,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":9,"i33":10,"i34":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -205,10 +205,15 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static java.util.Set&lt;java.lang.String&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ALL_GLOSSARY_TYPES">ALL_GLOSSARY_TYPES</a></span></code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ALL_DOMAIN_TYPES">ALL_DOMAIN_TYPES</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code>static java.util.Set&lt;java.lang.String&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ALL_GLOSSARY_TYPES">ALL_GLOSSARY_TYPES</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>static java.util.Set&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ALL_OTHER_TYPES">ALL_OTHER_TYPES</a></span></code></th>
 <td class="colLast">&nbsp;</td>
@@ -313,47 +318,61 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>java.util.Set&lt;java.lang.String&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getApplicableDomains()">getApplicableDomains</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Qualified names of domains to which to restrict the attribute.</div>
+</td>
+</tr>
+<tr id="i9" class="rowColor">
+<td class="colFirst"><code>java.util.Set&lt;java.lang.String&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getApplicableDomainTypes()">getApplicableDomainTypes</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Data product type names to which to restrict the attribute.</div>
+</td>
+</tr>
+<tr id="i10" class="altColor">
+<td class="colFirst"><code>java.util.Set&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getApplicableEntityTypes()">getApplicableEntityTypes</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Set of entities on which this attribute can be applied.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>java.util.Set&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getApplicableGlossaries()">getApplicableGlossaries</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Qualified names of glossaries to which to restrict the attribute.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>java.util.Set&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getApplicableGlossaryTypes()">getApplicableGlossaryTypes</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Glossary type names to which to restrict the attribute.</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>java.util.Set&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getApplicableOtherAssetTypes()">getApplicableOtherAssetTypes</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Any other asset type names to which to restrict the attribute.</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getArchivedAt()">getArchivedAt</a></span>()</code></th>
 <td class="colLast">
 <div class="block">When the attribute was deleted.</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getArchivedBy()">getArchivedBy</a></span>()</code></th>
 <td class="colLast">
 <div class="block">User who deleted the attribute.</div>
 </td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>java.util.Set&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCustomApplicableEntityTypes()">getCustomApplicableEntityTypes</a></span>()</code></th>
 <td class="colLast">
@@ -362,110 +381,110 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 </div>
 </td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCustomMetadataVersion()">getCustomMetadataVersion</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Indicates the version of the custom metadata structure.</div>
 </td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i18" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCustomType()">getCustomType</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Used for Atlan-specific types like <code>users</code>, <code>groups</code>, <code>url</code>, and <code>SQL</code>.</div>
 </td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDescription()">getDescription</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Optional description of the attribute.</div>
 </td>
 </tr>
-<tr id="i18" class="altColor">
+<tr id="i20" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getEnumType()">getEnumType</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Name of the enumeration (options), when the attribute is an enumeration.</div>
 </td>
 </tr>
-<tr id="i19" class="rowColor">
+<tr id="i21" class="rowColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getHasTimePrecision()">getHasTimePrecision</a></span>()</code></th>
 <td class="colLast">
 <div class="block">If true for a date attribute, then time-level precision is also available in the UI (otherwise only date-level)</div>
 </td>
 </tr>
-<tr id="i20" class="altColor">
+<tr id="i22" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIsAppendOnPartialUpdate()">getIsAppendOnPartialUpdate</a></span>()</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i21" class="rowColor">
+<tr id="i23" class="rowColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIsArchived()">getIsArchived</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Whether the attribute has been deleted (true) or is still active (false).</div>
 </td>
 </tr>
-<tr id="i22" class="altColor">
+<tr id="i24" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIsDeprecated()">getIsDeprecated</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Whether the attribute is deprecated ("true") or not (null or "false").</div>
 </td>
 </tr>
-<tr id="i23" class="rowColor">
+<tr id="i25" class="rowColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIsEnum()">getIsEnum</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Whether the attribute is an enumeration (true) or not (false).</div>
 </td>
 </tr>
-<tr id="i24" class="altColor">
+<tr id="i26" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIsSoftReference()">getIsSoftReference</a></span>()</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i25" class="rowColor">
+<tr id="i27" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMaxStrLength()">getMaxStrLength</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Maximum length allowed for a string value.</div>
 </td>
 </tr>
-<tr id="i26" class="altColor">
+<tr id="i28" class="altColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMultiValueSelect()">getMultiValueSelect</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Whether this attribute can have multiple values (true) or only a single value (false).</div>
 </td>
 </tr>
-<tr id="i27" class="rowColor">
+<tr id="i29" class="rowColor">
 <td class="colFirst"><code><a href="../enums/AtlanCustomAttributePrimitiveType.html" title="enum in com.atlan.model.enums">AtlanCustomAttributePrimitiveType</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPrimitiveType()">getPrimitiveType</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Primitive type of the attribute.</div>
 </td>
 </tr>
-<tr id="i28" class="altColor">
+<tr id="i30" class="altColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getShowInOverview()">getShowInOverview</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Whether users will see this attribute in the overview tab of the sidebar (true) or not (false).</div>
 </td>
 </tr>
-<tr id="i29" class="rowColor">
+<tr id="i31" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i30" class="altColor">
+<tr id="i32" class="altColor">
 <td class="colFirst"><code>static <a href="AttributeDefOptions.html" title="class in com.atlan.model.typedefs">AttributeDefOptions</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#of(com.atlan.model.enums.AtlanCustomAttributePrimitiveType,java.lang.String)">of</a></span>&#8203;(<a href="../enums/AtlanCustomAttributePrimitiveType.html" title="enum in com.atlan.model.enums">AtlanCustomAttributePrimitiveType</a>&nbsp;type,
   java.lang.String&nbsp;optionsName)</code></th>
@@ -473,12 +492,12 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <div class="block">Instantiate a new set of attribute options from the provided parameters.</div>
 </td>
 </tr>
-<tr id="i31" class="rowColor">
+<tr id="i33" class="rowColor">
 <td class="colFirst"><code><a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="class in com.atlan.model.typedefs">AttributeDefOptions.AttributeDefOptionsBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toBuilder()">toBuilder</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i32" class="altColor">
+<tr id="i34" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 </tr>
@@ -529,6 +548,15 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <li class="blockList">
 <h4>ALL_GLOSSARY_TYPES</h4>
 <pre>public static final&nbsp;java.util.Set&lt;java.lang.String&gt; ALL_GLOSSARY_TYPES</pre>
+</li>
+</ul>
+<a id="ALL_DOMAIN_TYPES">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>ALL_DOMAIN_TYPES</h4>
+<pre>public static final&nbsp;java.util.Set&lt;java.lang.String&gt; ALL_DOMAIN_TYPES</pre>
 </li>
 </ul>
 <a id="ALL_OTHER_TYPES">
@@ -699,6 +727,18 @@ public&nbsp;java.util.Set&lt;java.lang.String&gt;&nbsp;getCustomApplicableEntity
  To further restrict the types of assets within the glossaries, see <code>applicableGlossaryTypes</code>.</div>
 </li>
 </ul>
+<a id="getApplicableDomains()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getApplicableDomains</h4>
+<pre class="methodSignature">public&nbsp;java.util.Set&lt;java.lang.String&gt;&nbsp;getApplicableDomains()</pre>
+<div class="block">Qualified names of domains to which to restrict the attribute.
+ Only domains and data products within one of these domains will have this attribute available.
+ To further restrict the types of assets within the domains, see <code>applicableDomainTypes</code>.</div>
+</li>
+</ul>
 <a id="getApplicableAssetTypes()">
 <!--   -->
 </a>
@@ -721,6 +761,18 @@ public&nbsp;java.util.Set&lt;java.lang.String&gt;&nbsp;getCustomApplicableEntity
 <div class="block">Glossary type names to which to restrict the attribute.
  Only glossary assets of one of these types will have this attribute available.
  To further restrict the glossary content for this custom metadata by glossary, see <code>applicableGlossaries</code>.</div>
+</li>
+</ul>
+<a id="getApplicableDomainTypes()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getApplicableDomainTypes</h4>
+<pre class="methodSignature">public&nbsp;java.util.Set&lt;java.lang.String&gt;&nbsp;getApplicableDomainTypes()</pre>
+<div class="block">Data product type names to which to restrict the attribute.
+ These cover asset types in data products and data domains.
+ Only assets of one of these types will have this attribute available.</div>
 </li>
 </ul>
 <a id="getApplicableOtherAssetTypes()">

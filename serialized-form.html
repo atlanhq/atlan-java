@@ -30234,6 +30234,20 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
  To further restrict the types of assets within the connections, see <code>AttributeDefOptions.applicableAssetTypes</code>.</div>
 </li>
 <li class="blockList">
+<h4>applicableDomains</h4>
+<pre>java.util.Set&lt;java.lang.String&gt; applicableDomains</pre>
+<div class="block">Qualified names of domains to which to restrict the attribute.
+ Only domains and data products within one of these domains will have this attribute available.
+ To further restrict the types of assets within the domains, see <code>AttributeDefOptions.applicableDomainTypes</code>.</div>
+</li>
+<li class="blockList">
+<h4>applicableDomainTypes</h4>
+<pre>java.util.Set&lt;java.lang.String&gt; applicableDomainTypes</pre>
+<div class="block">Data product type names to which to restrict the attribute.
+ These cover asset types in data products and data domains.
+ Only assets of one of these types will have this attribute available.</div>
+</li>
+<li class="blockList">
 <h4>applicableEntityTypes</h4>
 <pre>java.util.Set&lt;java.lang.String&gt; applicableEntityTypes</pre>
 <div class="block">Set of entities on which this attribute can be applied.
