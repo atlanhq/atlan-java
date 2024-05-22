@@ -12,7 +12,10 @@ public enum PersonaDomainAction implements AtlanEnum, AtlanPolicyAction {
     UPDATE_SUBDOMAIN("persona-domain-sub-domain-update"),
     CREATE_PRODUCTS("persona-domain-product-create"),
     UPDATE_PRODUCTS("persona-domain-product-update"),
-    DELETE_PRODUCTS("persona-domain-product-delete");
+    DELETE_PRODUCTS("persona-domain-product-delete"),
+    UPDATE_DOMAIN_CUSTOM_METADATA("persona-domain-business-update-metadata"),
+    UPDATE_SUBDOMAIN_CUSTOM_METADATA("persona-domain-sub-domain-business-update-metadata"),
+    UPDATE_PRODUCT_CUSTOM_METADATA("persona-domain-product-business-update-metadata");
 
     @JsonValue
     @Getter(onMethod_ = {@Override})
