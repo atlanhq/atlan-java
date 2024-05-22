@@ -452,12 +452,25 @@ object Utils {
      * @param guid of the asset for which to produce a link
      */
     fun getAssetLink(guid: String): String {
+        return getLink(guid, "assets")
+    }
+
+    /**
+     * Return a URL that will link directly to a data product or data domain in Atlan.
+     *
+     * @param guid of the asset for which to produce a link
+     */
+    fun getProductLink(guid: String): String {
+        return getLink(guid, "products")
+    }
+
+    private fun getLink(guid: String, prefix: String): String {
         val base = if (Atlan.getDefaultClient().isInternal || Atlan.getBaseUrl() == null) {
             "https://${getEnvVar("DOMAIN", "atlan.com")}"
         } else {
             Atlan.getBaseUrl()
         }
-        return "$base/assets/$guid/overview"
+        return "$base/$prefix/$guid/overview"
     }
 
     /**
