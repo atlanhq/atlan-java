@@ -76,8 +76,6 @@ public class AttributeDefOptions extends AtlanObject {
             CubeField.TYPE_NAME,
             CubeHierarchy.TYPE_NAME,
             DataContract.TYPE_NAME,
-            DataDomain.TYPE_NAME,
-            DataProduct.TYPE_NAME,
             DataStudioAsset.TYPE_NAME,
             Database.TYPE_NAME,
             DbtColumnProcess.TYPE_NAME,
@@ -227,6 +225,7 @@ public class AttributeDefOptions extends AtlanObject {
             View.TYPE_NAME);
     public static final Set<String> ALL_GLOSSARY_TYPES =
             Set.of(Glossary.TYPE_NAME, GlossaryTerm.TYPE_NAME, GlossaryCategory.TYPE_NAME);
+    public static final Set<String> ALL_DOMAIN_TYPES = Set.of(DataDomain.TYPE_NAME, DataProduct.TYPE_NAME);
     public static final Set<String> ALL_OTHER_TYPES = Set.of(File.TYPE_NAME);
 
     /**
@@ -244,6 +243,8 @@ public class AttributeDefOptions extends AtlanObject {
                 .applicableAssetTypes(ALL_ASSET_TYPES)
                 .applicableGlossaries(Glossary.getAllQualifiedNames())
                 .applicableGlossaryTypes(ALL_GLOSSARY_TYPES)
+                .applicableDomains(Set.of("*/super"))
+                .applicableDomainTypes(ALL_DOMAIN_TYPES)
                 .applicableOtherAssetTypes(ALL_OTHER_TYPES);
         switch (type) {
             case USERS:
@@ -310,6 +311,16 @@ public class AttributeDefOptions extends AtlanObject {
     Set<String> applicableGlossaries;
 
     /**
+     * Qualified names of domains to which to restrict the attribute.
+     * Only domains and data products within one of these domains will have this attribute available.
+     * To further restrict the types of assets within the domains, see {@link #applicableDomainTypes}.
+     */
+    @Singular
+    @JsonSerialize(using = SetToStringSerializer.class)
+    @JsonDeserialize(using = StringToSetDeserializer.class)
+    Set<String> applicableDomains;
+
+    /**
      * Asset type names to which to restrict the attribute.
      * Only assets of one of these types will have this attribute available.
      * To further restrict the assets for this custom metadata by connection, see {@link #applicableConnections}.
@@ -330,6 +341,17 @@ public class AttributeDefOptions extends AtlanObject {
     @JsonDeserialize(using = StringToSetDeserializer.class)
     @JsonProperty("glossaryTypeList")
     Set<String> applicableGlossaryTypes;
+
+    /**
+     * Data product type names to which to restrict the attribute.
+     * These cover asset types in data products and data domains.
+     * Only assets of one of these types will have this attribute available.
+     */
+    @Singular
+    @JsonSerialize(using = SetToStringSerializer.class)
+    @JsonDeserialize(using = StringToSetDeserializer.class)
+    @JsonProperty("domainTypesList")
+    Set<String> applicableDomainTypes;
 
     /**
      * Any other asset type names to which to restrict the attribute.
