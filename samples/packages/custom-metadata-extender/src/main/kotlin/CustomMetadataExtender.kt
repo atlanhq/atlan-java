@@ -32,8 +32,8 @@ object CustomMetadataExtender {
             exitProcess(3)
         }
 
-        if (connectionQNs.isEmpty() && glossaryNames.isEmpty()) {
-            logger.error { "Missing required parameter - you must provide AT LEAST some additional connections or additional glossaries." }
+        if (connectionQNs.isEmpty() && glossaryNames.isEmpty() && (domains == "NONE" || (domains == "SOME" && domainName.isEmpty()))) {
+            logger.error { "Missing required parameter - you must provide AT LEAST some additional connections, additional glossaries, or an additional domain." }
             exitProcess(4)
         }
 
