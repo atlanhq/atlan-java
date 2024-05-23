@@ -498,9 +498,7 @@ object Utils {
             uploadResult
         } else {
             logger.info { "Cloud details: $cloudDetails" }
-            val files = Paths.get("/tmp/credentials").listDirectoryEntries()
-            logger.info { "Files: ${files.map { it.name }.toList()}" }
-            val contents = Paths.get("/tmp/credentials/$cloudDetails.json").readText()
+            val contents = Paths.get("/tmp/credentials/success/result-0.json").readText()
             logger.info { "Content: $contents" }
             // val defaultRegion = getEnvVar("AWS_S3_REGION")
             // val defaultBucket = getEnvVar("AWS_S3_BUCKET_NAME")
