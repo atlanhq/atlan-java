@@ -968,7 +968,7 @@ local class ConnectorConfigMap extends ConfigMap {
     ["helpdeskLink"] = config.helpdesk
     ["logo"] = config.logo
     ["connector"] = config.source.value
-    ["defautConnectorType"] = config.connectorType
+    ["defaultConnectorType"] = config.connectorType
     ["jdbcCredentialTemplate"] = config.jdbcCredential
     ["restCredentialTemplate"] = config.restCredential
     ["odbcCredentialTemplate"] = config.odbcCredential
