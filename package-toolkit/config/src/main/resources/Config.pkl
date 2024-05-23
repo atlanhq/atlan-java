@@ -310,14 +310,17 @@ class CredentialConfig {
   /// ```
   hidden commonInputs: Mapping<String(lower_snake_case), UIElement>?
 
+  /// Label to use above the radio button of options
+  hidden optionsTitle: String = "Authentication"
+
   /// Options for configuring the connector.
   hidden options: Mapping<String, NestedInput>
 
   /// (Generated) Details of all properties.
   fixed properties: Map<String, UIElement> = new Mapping<String, UIElement> {
     when (commonInputs != null) { ...commonInputs }
-    ["auth_type"] = new Radio {
-      title = "Authentication"
+    ["auth-type"] = new Radio {
+      title = optionsTitle
       possibleValues = new Mapping {
         for (k, v in options) {
           [k] = v.title
@@ -351,7 +354,7 @@ class CredentialConfig {
     new Listing {
       for (k, _ in options) {
         new UIRule {
-          whenInputs { ["auth_type"] = k }
+          whenInputs { ["auth-type"] = k }
           required { k }
         }
       }
