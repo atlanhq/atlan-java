@@ -56,7 +56,29 @@ uiConfig {
           width = 8
           placeholderText = "First Glossary,Second Glossary"
         }
+        ["domains"] = new Radio {
+          title = "Domains"
+          possibleValues {
+            ["ALL"] = "All domains"
+            ["SOME"] = "Specific domains"
+            ["NONE"] = "No domains"
+          }
+          default = "ALL"
+        }
+        ["domains_specific"] = new TextInput {
+          title = "Specific domain"
+          required = false
+          helpText = "Enter the name of the domain whose assets should be able to use the custom metadata."
+          width = 8
+          placeholderText = "Finance"
+        }
       }
+    }
+  }
+  rules {
+    new UIRule {
+      whenInputs { ["domains"] = "SOME" }
+      required { "domains_specific" }
     }
   }
 }
