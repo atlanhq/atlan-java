@@ -44,13 +44,9 @@ object Importer {
     fun import(config: RelationalAssetsBuilderCfg, outputDirectory: String = "tmp") {
         val batchSize = Utils.getOrDefault(config.assetsBatchSize, 20).toInt()
         val fieldSeparator = Utils.getOrDefault(config.assetsFieldSeparator, ",")[0]
-        val defaultRegion = Utils.getEnvVar("AWS_S3_REGION")
-        val defaultBucket = Utils.getEnvVar("AWS_S3_BUCKET_NAME")
-        val assetsUpload = Utils.getOrDefault(config.assetsImportType, "UPLOAD") == "UPLOAD"
+        val assetsUpload = Utils.getOrDefault(config.importType, "DIRECT") == "DIRECT"
         val assetsFilename = Utils.getOrDefault(config.assetsFile, "")
-        val assetsS3ObjectKey = Utils.getOrDefault(config.assetsS3ObjectKey, "")
-        val assetsGcsObjectKey = Utils.getOrDefault(config.assetsGcsObjectKey, "")
-        val assetsAdlsObjectKey = Utils.getOrDefault(config.assetsAdlsObjectKey, "")
+        val assetsCloudDetails = Utils.getOrDefault(config.cloudSource, "")
         val assetAttrsToOverwrite =
             CSVImporter.attributesToClear(Utils.getOrDefault(config.assetsAttrToOverwrite, listOf()).toMutableList(), "assets", logger)
         val assetsFailOnErrors = Utils.getOrDefault(config.assetsFailOnErrors, true)
@@ -59,10 +55,9 @@ object Importer {
 
         val assetsFileProvided = (
             assetsUpload && assetsFilename.isNotBlank()
-            ) ||
-            (!assetsUpload && assetsS3ObjectKey.isNotBlank()) ||
-            (!assetsUpload && assetsGcsObjectKey.isNotBlank()) ||
-            (!assetsUpload && assetsAdlsObjectKey.isNotBlank())
+            ) || (
+            !assetsUpload && assetsCloudDetails.isNotBlank()
+            )
         if (!assetsFileProvided) {
             logger.error { "No input file was provided for assets." }
             exitProcess(1)
@@ -72,19 +67,9 @@ object Importer {
         // to allow subsequent out-of-order parallel processing
         val assetsInput = Utils.getInputFile(
             assetsFilename,
+            assetsCloudDetails,
             outputDirectory,
-            s3Region = Utils.getOrDefault(config.assetsS3Region, defaultRegion),
-            s3Bucket = Utils.getOrDefault(config.assetsS3Bucket, defaultBucket),
-            s3ObjectKey = assetsS3ObjectKey,
-            gcsProjectId = Utils.getOrDefault(config.assetsGcsProject, ""),
-            gcsBucket = Utils.getOrDefault(config.assetsGcsBucket, ""),
-            gcsObjectKey = assetsGcsObjectKey,
-            gcsCredentials = Utils.getOrDefault(config.assetsGcsCredentialJson, ""),
-            adlsAccountName = Utils.getOrDefault(config.assetsAdlsAccount, ""),
-            adlsContainerName = Utils.getOrDefault(config.assetsAdlsContainer, ""),
-            adlsObjectKey = assetsAdlsObjectKey,
-            adlsSasToken = Utils.getOrDefault(config.assetsAdlsSasToken, ""),
-            preferUpload = assetsUpload,
+            assetsUpload,
         )
         val preprocessedDetails = preprocessCSV(assetsInput, fieldSeparator)
 

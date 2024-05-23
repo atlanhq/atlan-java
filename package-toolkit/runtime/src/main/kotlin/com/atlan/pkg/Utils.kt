@@ -24,6 +24,7 @@ import java.nio.file.Paths
 import java.util.concurrent.ThreadLocalRandom
 import java.util.concurrent.atomic.AtomicLong
 import kotlin.io.path.isDirectory
+import kotlin.io.path.readText
 import kotlin.math.round
 import kotlin.system.exitProcess
 
@@ -471,6 +472,36 @@ object Utils {
             Atlan.getBaseUrl()
         }
         return "$base/$prefix/$guid/overview"
+    }
+
+    /**
+     * Return the (container-)local input file name whenever a user is given the
+     * choice of how to provide an input file (either by uploading directly or through an object store).
+     * If using the object store details, the object will be downloaded from the object store and placed into local
+     * storage as part of this method.
+     *
+     * @param uploadResult filename from a direct upload
+     * @param cloudDetails filename containing details about the cloud storage to use
+     * @param outputDirectory local directory where any object storage-downloaded file should be placed
+     * @param preferUpload if true, take the directly-uploaded file; otherwise use the object store details to download the file
+     * @return the name of the file that is on local container storage from which we can read information
+     */
+    fun getInputFile(
+        uploadResult: String,
+        cloudDetails: String,
+        outputDirectory: String,
+        preferUpload: Boolean = true,
+    ): String {
+        return if (preferUpload) {
+            uploadResult
+        } else {
+            logger.info { "Cloud details: $cloudDetails" }
+            val contents = Paths.get(cloudDetails).readText()
+            logger.info { "Content: $contents" }
+            // val defaultRegion = getEnvVar("AWS_S3_REGION")
+            // val defaultBucket = getEnvVar("AWS_S3_BUCKET_NAME")
+            "$cloudDetails to $outputDirectory"
+        }
     }
 
     /**

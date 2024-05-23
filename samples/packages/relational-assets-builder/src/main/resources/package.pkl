@@ -3,6 +3,7 @@
 amends "modulepath:/Config.pkl"
 import "pkl:semver"
 import "modulepath:/BuildInfo.pkl"
+import "modulepath:/Connectors.pkl"
 
 packageId = "@csa/relational-assets-builder"
 packageName = "Relational Assets Builder"
@@ -32,20 +33,16 @@ preview = true
 
 uiConfig {
   tasks {
-    ["Assets"] {
-      description = "Assets to import"
+    ["Source"] {
+      description = "Input file"
       inputs {
-        ["assets_import_type"] = new Radio {
-          title = "Import assets from"
-          required = true
-          helpText = "Select how you want to provide the file containing relational asset to be imported."
+        ["import_type"] = new Radio {
+          title = "Import file from"
           possibleValues {
-            ["UPLOAD"] = "Direct upload"
-            ["S3"] = "S3"
-            ["GCS"] = "GCS"
-            ["ADLS"] = "ADLS"
+            ["DIRECT"] = "Direct file upload"
+            ["CLOUD"] = "Object storage"
           }
-          default = "UPLOAD"
+          default = "DIRECT"
         }
         ["assets_file"] = new FileUploader {
           title = "Assets file"
@@ -54,82 +51,17 @@ uiConfig {
           helpText = "Select the file containing the relational assets to import."
           placeholderText = "Select assets CSV file"
         }
-        ["assets_s3_region"] = new TextInput {
-          title = "S3 region"
-          required = false
-          helpText = "Enter the S3 region from which to retrieve the S3 object. If empty, will use the region of Atlan's own back-end storage."
-          placeholderText = "ap-south-1"
-          width = 4
+        ["cloud_source"] = new CredentialInput {
+          title = "Assets file"
+          required = true
+          credType = "csa-connectors-objectstore"
+          helpText = "Select how you want to provide the file containing relational assets to be imported."
         }
-        ["assets_s3_bucket"] = new TextInput {
-          title = "S3 bucket"
-          required = false
-          helpText = "Enter the S3 bucket from which to retrieve the S3 object. If empty, will use the bucket of Atlan's own back-end storage."
-          placeholderText = "bucket-name"
-          width = 4
-        }
-        ["assets_s3_object_key"] = new TextInput {
-          title = "S3 object key"
-          required = false
-          helpText = "Enter the S3 object key, including the name of the object and its prefix (path) in the S3 bucket."
-          placeholderText = "some/where/file.csv"
-          width = 8
-        }
-        ["assets_gcs_project"] = new TextInput {
-          title = "Project ID"
-          required = false
-          helpText = "Enter the ID of the GCP project."
-          placeholderText = ""
-          width = 4
-        }
-        ["assets_gcs_bucket"] = new TextInput {
-          title = "GCS bucket"
-          required = false
-          helpText = "Enter the GCS bucket from which to retrieve the GCS object."
-          placeholderText = "bucket-name"
-          width = 4
-        }
-        ["assets_gcs_object_key"] = new TextInput {
-          title = "GCS object key"
-          required = false
-          helpText = "Enter the GCS object key, including the name of the object and its prefix (path) in the GCS bucket."
-          placeholderText = "some/where/file.csv"
-          width = 8
-        }
-        ["assets_gcs_credential_json"] = new TextInput {
-          title = "Service account JSON"
-          required = false
-          helpText = "Enter the JSON for your service account credentials."
-          placeholderText = "{\"type\":\"service_account\",\"project_id\":\"gcs-connector-399418\", ..."
-          width = 8
-        }
-        ["assets_adls_account"] = new TextInput {
-          title = "Account name"
-          required = false
-          helpText = "Enter the name of your ADLS storage account."
-          placeholderText = ""
-          width = 4
-        }
-        ["assets_adls_container"] = new TextInput {
-          title = "ADLS container"
-          required = false
-          helpText = "Enter the ADLS container from which to retrieve the ADLS object."
-          placeholderText = "container-name"
-          width = 4
-        }
-        ["assets_adls_object_key"] = new TextInput {
-          title = "ADLS object key"
-          required = false
-          helpText = "Enter the ADLS object key, including the name of the object and its prefix (path) in the ADLS container."
-          placeholderText = "some/where/file.csv"
-          width = 8
-        }
-        ["assets_adls_sas_token"] = new PasswordInput {
-          title = "Shared access secret (SAS) token"
-          required = false
-          helpText = "Enter the JSON for your service account credentials."
-          width = 8
-        }
+      }
+    }
+    ["Options"] {
+      description = "Configuration options"
+      inputs {
         ["assets_upsert_semantic"] = new Radio {
           title = "Input handling"
           required = false
@@ -140,16 +72,6 @@ uiConfig {
           }
           default = "upsert"
           helpText = "Whether to allow the creation of new (full or partial) assets from the input CSV, or ensure assets are only updated if they already exist in Atlan."
-        }
-        ["assets_config_type"] = new Radio {
-          title = "Options"
-          required = true
-          possibleValues {
-            ["default"] = "Default"
-            ["advanced"] = "Advanced"
-          }
-          default = "default"
-          helpText = "Options to optimize how assets are imported."
         }
         ["assets_attr_to_overwrite"] = new DropDown {
           title = "Remove attributes, if empty"
@@ -200,42 +122,132 @@ uiConfig {
   }
   rules {
     new UIRule {
-      whenInputs { ["assets_import_type"] = "UPLOAD" }
+      whenInputs { ["import_type"] = "DIRECT" }
       required { "assets_file" }
     }
     new UIRule {
-      whenInputs { ["assets_import_type"] = "S3" }
-      required {
-        "assets_s3_region"
-        "assets_s3_bucket"
-        "assets_s3_object_key"
+      whenInputs { ["import_type"] = "CLOUD" }
+      required { "cloud_source" }
+    }
+  }
+}
+
+credentialConfig {
+  name = "csa-connectors-objectstore"
+  source = Connectors.S3
+  icon = "http://assets.atlan.com/assets/ph-shapes-light.svg"
+  helpdesk = "https://solutions.atlan.com"
+  logo = "http://assets.atlan.com/assets/ph-shapes-light.svg"
+  connectorType = "rest"
+  commonInputs {
+    ["object_store_bucket"] = new TextInput {
+      title = "Bucket or container"
+      required = false
+      helpText = "Enter the bucket or container from which to retrieve the object store object(s)."
+      placeholderText = "bucket-name"
+      width = 4
+    }
+    ["object_store_prefix"] = new TextInput {
+      title = "Prefix (path)"
+      required = false
+      helpText = "Enter the prefix (path) within the bucket from which to retrieve the object(s)."
+      placeholderText = "path/to/files"
+      width = 4
+    }
+    ["object_store_key"] = new TextInput {
+      title = "Object key (filename)"
+      required = false
+      helpText = "Enter the object key (filename), including its extension, within the bucket and prefix."
+      placeholderText = "file.csv"
+      width = 4
+    }
+  }
+  optionsTitle = "Cloud object store"
+  options {
+    ["s3"] = new NestedInput {
+      title = "S3"
+      helpText = "Details for accessing information from Amazon S3."
+      inputs {
+        ["username"] = new TextInput {
+          title = "AWS access key"
+          required = false
+          helpText = "Enter your AWS access key."
+          placeholderText = ""
+          width = 4
+        }
+        ["password"] = new PasswordInput {
+          title = "AWS secret key"
+          required = false
+          helpText = "Enter your AWS secret key."
+          width = 4
+        }
+        ["extra"] = new NestedInput {
+          title = "S3 details"
+          inputs {
+            ["region"] = new TextInput {
+              title = "Region"
+              required = false
+              helpText = "Enter your AWS region."
+              placeholderText = "us-west-1"
+              width = 4
+            }
+          }
+        }
       }
     }
-    new UIRule {
-      whenInputs { ["assets_import_type"] = "GCS" }
-      required {
-        "assets_gcs_project"
-        "assets_gcs_bucket"
-        "assets_gcs_object_key"
-        "assets_gcs_credential_json"
+    ["gcs"] = new NestedInput {
+      title = "GCS"
+      helpText = "Details for accessing information from Google Cloud Storage (GCS)."
+      inputs {
+        ["username"] = new TextInput {
+          title = "Project ID"
+          required = false
+          helpText = "Enter the ID of the GCP project."
+          placeholderText = ""
+          width = 4
+        }
+        ["password"] = new TextInput {
+          title = "Service account JSON"
+          required = false
+          helpText = "Enter the JSON for your service account credentials."
+          placeholderText = "{\"type\":\"service_account\",\"project_id\":\"gcs-connector-399418\", ..."
+          width = 8
+        }
       }
     }
-    new UIRule {
-      whenInputs { ["assets_import_type"] = "ADLS" }
-      required {
-        "assets_adls_account"
-        "assets_adls_container"
-        "assets_adls_object_key"
-        "assets_adls_sas_token"
-      }
-    }
-    new UIRule {
-      whenInputs { ["assets_config_type"] = "advanced" }
-      required {
-        "assets_attr_to_overwrite"
-        "assets_fail_on_errors"
-        "assets_field_separator"
-        "assets_batch_size"
+    ["adls"] = new NestedInput {
+      title = "ADLS"
+      helpText = "Details for access information from Azure Data Lake Storage (ADLS)."
+      inputs {
+        ["username"] = new TextInput {
+          title = "Azure client ID"
+          required = false
+          helpText = "Enter the unique application (client) ID assigned to your app by Azure AD when the app was registered."
+          width = 4
+        }
+        ["password"] = new TextInput {
+          title = "Azure client secret"
+          required = false
+          helpText = "Enter your client secret."
+          width = 4
+        }
+        ["extra"] = new NestedInput {
+          title = "ADLS details"
+          inputs {
+            ["azure_tenant_id"] = new TextInput {
+              title = "Azure tenant ID"
+              required = false
+              helpText = "Enter the unique identifier of the Azure Active Directory instance."
+              width = 4
+            }
+            ["storage_account_name"] = new TextInput {
+              title = "Storage account name"
+              required = false
+              helpText = "Enter the name of your storage account."
+              width = 4
+            }
+          }
+        }
       }
     }
   }
