@@ -24,6 +24,8 @@ import java.nio.file.Paths
 import java.util.concurrent.ThreadLocalRandom
 import java.util.concurrent.atomic.AtomicLong
 import kotlin.io.path.isDirectory
+import kotlin.io.path.listDirectoryEntries
+import kotlin.io.path.name
 import kotlin.io.path.readText
 import kotlin.math.round
 import kotlin.system.exitProcess
@@ -496,7 +498,9 @@ object Utils {
             uploadResult
         } else {
             logger.info { "Cloud details: $cloudDetails" }
-            val contents = Paths.get(cloudDetails).readText()
+            val files = Paths.get("/tmp/credentials").listDirectoryEntries()
+            logger.info { "Files: ${files.map { it.name }.toList()}" }
+            val contents = Paths.get("/tmp/credentials/$cloudDetails.json").readText()
             logger.info { "Content: $contents" }
             // val defaultRegion = getEnvVar("AWS_S3_REGION")
             // val defaultBucket = getEnvVar("AWS_S3_BUCKET_NAME")
