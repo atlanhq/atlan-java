@@ -669,7 +669,7 @@ class Radio extends UIElementWithEnum {
   hidden possibleValues: Mapping<String, String>
 
   /// Default value to select in the radio button (its key).
-  default: String(possibleValues.keys.contains(this))
+  default: String?(if (this != null) possibleValues.keys.contains(this) else true)
 
   /// (Generated) Internal configuration for the UI's rendering.
   fixed ui {

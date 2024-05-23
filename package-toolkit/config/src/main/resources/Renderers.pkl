@@ -57,7 +57,7 @@ const function getWorkflowTemplate(m: Config): FileOutput = new FileOutput {
       initContainers = if (credVariable != null) new Listing {
         new WorkflowContainer {
           name = "fetch-credentials"
-          image = "ghcr.io/atlanhq/rest-master:165b7e5"
+          image = "ghcr.io/atlanhq/rest-master:2f14f7c"
           command = List("python3", "main.py")
           env = new Listing {
             new NameValuePair {
