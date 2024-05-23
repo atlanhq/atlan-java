@@ -4,6 +4,7 @@ val jarName = "package-toolkit-runtime"
 
 plugins {
     id("com.atlan.kotlin")
+    id("org.pkl-lang")
     alias(libs.plugins.shadow)
     `maven-publish`
     signing
@@ -18,6 +19,7 @@ dependencies {
             because("version 1.0.0 pulled from elasticsearch-java has CWE-20 (CVE-2023-4043)")
         }
     }
+    api(libs.pkl.config)
     api(libs.jackson.kotlin)
     api(libs.fastcsv)
     api(libs.bundles.poi)
@@ -193,6 +195,25 @@ tasks {
             attributes(Pair("Multi-Release", "true"))
         }
     }
+
+    assemble {
+        dependsOn("genPklConnectors")
+    }
+}
+
+pkl {
+    evaluators {
+        register("genPklConnectors") {
+            sourceModules.add("src/main/resources/csa-connectors-objectstore.pkl")
+            modulePath.from(file("../config/src/main/resources"))
+            outputFormat.set("yaml")
+            multipleFileOutputDir.set(layout.projectDirectory.dir("build"))
+        }
+    }
+}
+
+tasks.getByName("genPklConnectors") {
+    dependsOn(":package-toolkit:config:generateBuildInfo")
 }
 
 java {

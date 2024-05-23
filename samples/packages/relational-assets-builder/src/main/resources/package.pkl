@@ -3,7 +3,6 @@
 amends "modulepath:/Config.pkl"
 import "pkl:semver"
 import "modulepath:/BuildInfo.pkl"
-import "modulepath:/Connectors.pkl"
 
 packageId = "@csa/relational-assets-builder"
 packageName = "Relational Assets Builder"
@@ -128,127 +127,6 @@ uiConfig {
     new UIRule {
       whenInputs { ["import_type"] = "CLOUD" }
       required { "cloud_source" }
-    }
-  }
-}
-
-credentialConfig {
-  name = "csa-connectors-objectstore"
-  source = Connectors.S3
-  icon = "http://assets.atlan.com/assets/ph-shapes-light.svg"
-  helpdesk = "https://solutions.atlan.com"
-  logo = "http://assets.atlan.com/assets/ph-shapes-light.svg"
-  connectorType = "rest"
-  commonInputs {
-    ["object_store_bucket"] = new TextInput {
-      title = "Bucket or container"
-      required = false
-      helpText = "Enter the bucket or container from which to retrieve the object store object(s)."
-      placeholderText = "bucket-name"
-      width = 4
-    }
-    ["object_store_prefix"] = new TextInput {
-      title = "Prefix (path)"
-      required = false
-      helpText = "Enter the prefix (path) within the bucket from which to retrieve the object(s)."
-      placeholderText = "path/to/files"
-      width = 4
-    }
-    ["object_store_key"] = new TextInput {
-      title = "Object key (filename)"
-      required = false
-      helpText = "Enter the object key (filename), including its extension, within the bucket and prefix."
-      placeholderText = "file.csv"
-      width = 4
-    }
-  }
-  optionsTitle = "Cloud object store"
-  options {
-    ["s3"] = new NestedInput {
-      title = "S3"
-      helpText = "Details for accessing information from Amazon S3."
-      inputs {
-        ["username"] = new TextInput {
-          title = "AWS access key"
-          required = false
-          helpText = "Enter your AWS access key."
-          placeholderText = ""
-          width = 4
-        }
-        ["password"] = new PasswordInput {
-          title = "AWS secret key"
-          required = false
-          helpText = "Enter your AWS secret key."
-          width = 4
-        }
-        ["extra"] = new NestedInput {
-          title = "S3 details"
-          inputs {
-            ["region"] = new TextInput {
-              title = "Region"
-              required = false
-              helpText = "Enter your AWS region."
-              placeholderText = "us-west-1"
-              width = 4
-            }
-          }
-        }
-      }
-    }
-    ["gcs"] = new NestedInput {
-      title = "GCS"
-      helpText = "Details for accessing information from Google Cloud Storage (GCS)."
-      inputs {
-        ["username"] = new TextInput {
-          title = "Project ID"
-          required = false
-          helpText = "Enter the ID of the GCP project."
-          placeholderText = ""
-          width = 4
-        }
-        ["password"] = new TextInput {
-          title = "Service account JSON"
-          required = false
-          helpText = "Enter the JSON for your service account credentials."
-          placeholderText = "{\"type\":\"service_account\",\"project_id\":\"gcs-connector-399418\", ..."
-          width = 8
-        }
-      }
-    }
-    ["adls"] = new NestedInput {
-      title = "ADLS"
-      helpText = "Details for access information from Azure Data Lake Storage (ADLS)."
-      inputs {
-        ["username"] = new TextInput {
-          title = "Azure client ID"
-          required = false
-          helpText = "Enter the unique application (client) ID assigned to your app by Azure AD when the app was registered."
-          width = 4
-        }
-        ["password"] = new TextInput {
-          title = "Azure client secret"
-          required = false
-          helpText = "Enter your client secret."
-          width = 4
-        }
-        ["extra"] = new NestedInput {
-          title = "ADLS details"
-          inputs {
-            ["azure_tenant_id"] = new TextInput {
-              title = "Azure tenant ID"
-              required = false
-              helpText = "Enter the unique identifier of the Azure Active Directory instance."
-              width = 4
-            }
-            ["storage_account_name"] = new TextInput {
-              title = "Storage account name"
-              required = false
-              helpText = "Enter the name of your storage account."
-              width = 4
-            }
-          }
-        }
-      }
     }
   }
 }

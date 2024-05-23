@@ -12,6 +12,29 @@ local qualifiedName = "QualifiedName"
 local supertypeName = "MultiDimensionalDataset"
 local attrName = "Name"
 
+local cube = new Icon {
+  name = "CubeGray"
+  nameActive = "Cube"
+  svg = "cube-light-gray.svg"
+  svgActive = "cube-light.svg"
+}
+local cubeDimension = new Icon {
+  name = "CubeDimensionGray"
+  nameActive = "CubeDimension"
+  svg = "square-half-light-gray.svg"
+  svgActive = "square-half-light.svg"
+}
+local schema = new Icon {
+  name = "SchemaGray"
+  nameActive = "Schema"
+  svg = "schema-gray.svg"
+  svgActive = "schema.svg"
+}
+local pivotTable = new Icon {
+  name = "PivotTable"
+  svg = "pivot-table.svg"
+}
+
 shared {
   supertypeDefinition {
     name = supertypeName
@@ -19,6 +42,7 @@ shared {
     superTypes { "Catalog" }
     attributes {
       ["\(a)\(attrName)"] {
+        label = "Cube"
         description = "Simple name of the cube in which this asset exists, or empty if it is itself a cube."
         type = "string"
         indexAs = "both"
@@ -29,6 +53,7 @@ shared {
         indexAs = "keyword"
       }
       ["\(a)\(dimension)\(attrName)"] {
+        label = "Dimension"
         description = "Simple name of the cube dimension in which this asset exists, or empty if it is itself a dimension."
         type = "string"
         indexAs = "both"
@@ -39,6 +64,7 @@ shared {
         indexAs = "keyword"
       }
       ["\(a)\(hierarchy)\(attrName)"] {
+        label = "Hierarchy"
         description = "Simple name of the dimension hierarchy in which this asset exists, or empty if it is itself a hierarchy."
         type = "string"
         indexAs = "both"
@@ -50,24 +76,58 @@ shared {
       }
     }
   }
+  ui {
+    svgName = "MultiDimensional.svg"
+    filters {
+      [t] {
+        attribute = "\(a)\(qualifiedName)"
+      }
+      ["\(t)\(dimension)"] {
+        attribute = "\(a)\(dimension)\(qualifiedName)"
+      }
+    }
+    breadcrumb {
+      [t] {
+        q = "\(a)\(qualifiedName)"
+        n = "\(a)\(attrName)"
+      }
+      ["\(t)\(dimension)"] {
+        q = "\(a)\(dimension)\(qualifiedName)"
+        n = "\(a)\(dimension)\(attrName)"
+      }
+      ["\(t)\(hierarchy)"] {
+        q = "\(a)\(hierarchy)\(qualifiedName)"
+        n = "\(a)\(hierarchy)\(attrName)"
+      }
+    }
+  }
 }
 
 customTypes {
   [t] {
+    label = t
+    icon = cube
     description = "Instance of a cube in Atlan."
     attributes {
       ["\(a)\(dimension)Count"] {
+        label = dimension.decapitalize()
         description = "Number of dimensions in the cube."
         type = "long"
+        childCount = true
       }
     }
   }
   ["\(t)\(dimension)"] {
+    label = dimension
+    icon = cubeDimension
     description = "Instance of a cube dimension in Atlan."
+    parentQualifiedName = "\(a)\(qualifiedName)"
     attributes {
       ["\(a)\(hierarchy)Count"] {
+        label = hierarchy.decapitalize()
         description = "Number of hierarchies in the cube dimension."
         type = "long"
+        childCount = true
       }
     }
     relationships {
@@ -88,11 +148,17 @@ customTypes {
     }
   }
   ["\(t)\(hierarchy)"] {
+    label = hierarchy
+    labelPlural = "Hierarchies"
+    icon = schema
     description = "Instance of a cube hierarchy in Atlan."
+    parentQualifiedName = "\(a)\(dimension)\(qualifiedName)"
     attributes {
       ["\(a)\(field)Count"] {
+        label = field.decapitalize()
         description = "Number of total fields in the cube hierarchy."
         type = "long"
+        childCount = true
       }
     }
     relationships {
@@ -113,9 +179,13 @@ customTypes {
     }
   }
   ["\(t)\(field)"] {
+    label = field
+    icon = pivotTable
     description = "Instance of a cube field in Atlan."
+    parentQualifiedName = "\(a)\(hierarchy)\(qualifiedName)"
     attributes {
       ["\(a)Parent\(field)Name"] {
+        label = "Parent field"
         description = "Name of the parent field in which this field is nested."
         type = "string"
         indexAs = "both"
@@ -126,17 +196,21 @@ customTypes {
         indexAs = "keyword"
       }
       ["\(a)\(field)Level"] {
+        label = "Level"
         description = "Level of the field in the cube hierarchy."
         type = "long"
       }
       ["\(a)\(field)MeasureExpression"] {
+        label = "Measure expression"
         description = "Expression used to calculate this measure."
         type = "string"
         indexAs = "both"
       }
       ["\(a)Sub\(field)Count"] {
+        label = "sub\(field.decapitalize())"
         description = "Number of sub-fields that are direct children of this field."
         type = "long"
+        childCount = true
       }
     }
     relationships {

@@ -7,12 +7,13 @@ import com.atlan.exception.AtlanException
 import com.atlan.exception.NotFoundException
 import com.atlan.model.assets.Connection
 import com.atlan.model.enums.AssetCreationHandling
-import com.atlan.pkg.Utils.getInputFile
+import com.atlan.pkg.model.Credential
 import com.atlan.pkg.objectstore.ADLSSync
 import com.atlan.pkg.objectstore.GCSSync
 import com.atlan.pkg.objectstore.ObjectStorageSyncer
 import com.atlan.pkg.objectstore.S3Sync
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
 import jakarta.activation.FileDataSource
 import jakarta.mail.Message
 import mu.KLogger
@@ -24,7 +25,6 @@ import java.nio.file.Paths
 import java.util.concurrent.ThreadLocalRandom
 import java.util.concurrent.atomic.AtomicLong
 import kotlin.io.path.isDirectory
-import kotlin.io.path.name
 import kotlin.io.path.readText
 import kotlin.math.round
 import kotlin.system.exitProcess
@@ -499,6 +499,8 @@ object Utils {
             logger.info { "Cloud details: $cloudDetails" }
             val contents = Paths.get("tmp", "credentials", "success", "result-0.json").readText()
             logger.info { "Content: $contents" }
+            val cred = MAPPER.readValue<Credential>(contents)
+            logger.info { "Parsed: $cred" }
             // val defaultRegion = getEnvVar("AWS_S3_REGION")
             // val defaultBucket = getEnvVar("AWS_S3_BUCKET_NAME")
             "$cloudDetails to $outputDirectory"

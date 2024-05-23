@@ -1,0 +1,169 @@
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2024 Atlan Pte. Ltd. */
+amends "../../../../config/build/resources/main/Credential.pkl"
+import "../../../../config/build/resources/main/Config.pkl"
+
+// TODO: should generate strongly-typed class(es?) to retrieve these details, too (i.e. knowing what maps to username vs password, etc)
+name = "csa-connectors-objectstore"
+source = "Object Store"
+icon = "http://assets.atlan.com/assets/ph-shapes-light.svg"
+helpdesk = "https://solutions.atlan.com"
+logo = "http://assets.atlan.com/assets/ph-shapes-light.svg"
+connectorType = "rest"
+optionsTitle = "Cloud object store"
+options {
+  ["s3"] {
+    title = "S3"
+    helpText = "Details for accessing information from Amazon S3."
+    inputs {
+      ["username"] = new Config.TextInput {
+        title = "AWS access key"
+        required = false
+        helpText = "Enter your AWS access key."
+        placeholderText = ""
+        width = 4
+      }
+      ["password"] = new Config.PasswordInput {
+        title = "AWS secret key"
+        required = false
+        helpText = "Enter your AWS secret key."
+        width = 4
+      }
+      ["extra"] = new Config.NestedInput {
+        title = "S3 details"
+        inputs {
+          ["region"] = new Config.TextInput {
+            title = "Region"
+            required = false
+            helpText = "Enter your AWS region."
+            placeholderText = "us-west-1"
+            width = 4
+          }
+          ["s3_bucket"] = new Config.TextInput {
+            title = "Bucket"
+            required = false
+            helpText = "Enter the bucket from which to retrieve the object store object(s)."
+            placeholderText = "bucket-name"
+            width = 4
+          }
+          ["s3_prefix"] = new Config.TextInput {
+            title = "Prefix (path)"
+            required = false
+            helpText = "Enter the prefix (path) within the bucket from which to retrieve the object(s)."
+            placeholderText = "path/to/files"
+            width = 4
+          }
+          ["s3_key"] = new Config.TextInput {
+            title = "Object key (filename)"
+            required = false
+            helpText = "Enter the object key (filename), including its extension, within the bucket and prefix."
+            placeholderText = "file.csv"
+            width = 4
+          }
+        }
+      }
+    }
+  }
+  ["gcs"] {
+    title = "GCS"
+    helpText = "Details for accessing information from Google Cloud Storage (GCS)."
+    inputs {
+      ["username"] = new Config.TextInput {
+        title = "Project ID"
+        required = false
+        helpText = "Enter the ID of the GCP project."
+        placeholderText = ""
+        width = 4
+      }
+      ["password"] = new Config.TextInput {
+        title = "Service account JSON"
+        required = false
+        helpText = "Enter the JSON for your service account credentials."
+        placeholderText = "{\"type\":\"service_account\",\"project_id\":\"gcs-connector-399418\", ..."
+        width = 8
+      }
+      ["extra"] = new Config.NestedInput {
+        title = "GCS details"
+        inputs {
+          ["gcs_bucket"] = new Config.TextInput {
+            title = "Bucket"
+            required = false
+            helpText = "Enter the bucket from which to retrieve the object store object(s)."
+            placeholderText = "bucket-name"
+            width = 4
+          }
+          ["gcs_prefix"] = new Config.TextInput {
+            title = "Prefix (path)"
+            required = false
+            helpText = "Enter the prefix (path) within the bucket from which to retrieve the object(s)."
+            placeholderText = "path/to/files"
+            width = 4
+          }
+          ["gcs_key"] = new Config.TextInput {
+            title = "Object key (filename)"
+            required = false
+            helpText = "Enter the object key (filename), including its extension, within the bucket and prefix."
+            placeholderText = "file.csv"
+            width = 4
+          }
+        }
+      }
+    }
+  }
+  ["adls"] {
+    title = "ADLS"
+    helpText = "Details for access information from Azure Data Lake Storage (ADLS)."
+    inputs {
+      ["username"] = new Config.TextInput {
+        title = "Azure client ID"
+        required = false
+        helpText = "Enter the unique application (client) ID assigned to your app by Azure AD when the app was registered."
+        width = 4
+      }
+      ["password"] = new Config.TextInput {
+        title = "Azure client secret"
+        required = false
+        helpText = "Enter your client secret."
+        width = 4
+      }
+      ["extra"] = new Config.NestedInput {
+        title = "ADLS details"
+        inputs {
+          ["azure_tenant_id"] = new Config.TextInput {
+            title = "Azure tenant ID"
+            required = false
+            helpText = "Enter the unique identifier of the Azure Active Directory instance."
+            width = 4
+          }
+          ["storage_account_name"] = new Config.TextInput {
+            title = "Storage account name"
+            required = false
+            helpText = "Enter the name of your storage account."
+            width = 4
+          }
+          ["adls_container"] = new Config.TextInput {
+            title = "Container"
+            required = false
+            helpText = "Enter the container from which to retrieve the object store object(s)."
+            placeholderText = "container-name"
+            width = 4
+          }
+          ["adls_prefix"] = new Config.TextInput {
+            title = "Directory"
+            required = false
+            helpText = "Enter the directory (path) within the container from which to retrieve the object(s)."
+            placeholderText = "path/to/files"
+            width = 4
+          }
+          ["adls_key"] = new Config.TextInput {
+            title = "Object key (filename)"
+            required = false
+            helpText = "Enter the object key (filename), including its extension, within the container and prefix."
+            placeholderText = "file.csv"
+            width = 4
+          }
+        }
+      }
+    }
+  }
+}

@@ -26,7 +26,7 @@ class GCSSync(
 ) : ObjectStorageSyncer {
     private val storage = if (credentials != null) {
         StorageOptions.newBuilder().setProjectId(projectId)
-            .setCredentials(GoogleCredentials.fromStream(FileInputStream(credentials)))
+            .setCredentials(GoogleCredentials.fromStream(credentials.byteInputStream()))
             .build().service
     } else {
         StorageOptions.newBuilder().setProjectId(projectId).build().service
