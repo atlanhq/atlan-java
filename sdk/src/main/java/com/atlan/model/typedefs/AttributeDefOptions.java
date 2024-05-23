@@ -227,6 +227,7 @@ public class AttributeDefOptions extends AtlanObject {
             Set.of(Glossary.TYPE_NAME, GlossaryTerm.TYPE_NAME, GlossaryCategory.TYPE_NAME);
     public static final Set<String> ALL_DOMAIN_TYPES = Set.of(DataDomain.TYPE_NAME, DataProduct.TYPE_NAME);
     public static final Set<String> ALL_OTHER_TYPES = Set.of(File.TYPE_NAME);
+    public static final Set<String> ALL_DOMAINS = Set.of("*/super");
 
     /**
      * Instantiate a new set of attribute options from the provided parameters.
@@ -262,7 +263,7 @@ public class AttributeDefOptions extends AtlanObject {
                     .applicableAssetTypes(ALL_ASSET_TYPES)
                     .applicableGlossaries(Glossary.getAllQualifiedNames())
                     .applicableGlossaryTypes(ALL_GLOSSARY_TYPES)
-                    .applicableDomains(Set.of("*/super"))
+                    .applicableDomains(ALL_DOMAINS)
                     .applicableDomainTypes(ALL_DOMAIN_TYPES)
                     .applicableOtherAssetTypes(ALL_OTHER_TYPES);
         }

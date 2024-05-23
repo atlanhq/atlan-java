@@ -19,4 +19,6 @@ data class CustomMetadataExtenderCfg(
     @JsonSerialize(using = WidgetSerde.MultiSelectSerializer::class)
     @JsonProperty("connection_qualified_name") val connectionQualifiedName: List<String>? = null,
     @JsonProperty("glossaries") val glossaries: String? = null,
+    @JsonProperty("domains") val domains: String? = null,
+    @JsonProperty("domains_specific") val domainsSpecific: String? = null,
 ) : CustomConfig()
