@@ -2,7 +2,6 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.model
 
-import com.atlan.model.assets.Connection
 import com.fasterxml.jackson.annotation.JsonAutoDetect
 
 /**
@@ -42,7 +41,7 @@ data class Credential(
     val connectorConfigName: String,
     val connectorType: String,
     val description: String?,
-    val connection: Connection?,
+    val connection: Any?,
     val id: String,
     val name: String,
     val isActive: Boolean,

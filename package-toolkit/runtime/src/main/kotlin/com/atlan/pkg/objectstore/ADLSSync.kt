@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.objectstore
 
+import com.azure.identity.ClientSecretCredentialBuilder
 import com.azure.storage.file.datalake.DataLakeServiceClientBuilder
 import com.azure.storage.file.datalake.models.ListPathsOptions
 import mu.KLogger
@@ -13,17 +14,26 @@ import java.io.File
  * @param accountName name of the Azure account
  * @param containerName name of the container in ADLS to use for syncing
  * @param logger through which to record any problems
- * @param sasToken shared access signature (SAS) token
+ * @param tenantId unique identifier (GUID) of the tenant
+ * @param clientId unique identifier (GUID) of the client
+ * @param clientSecret value of the secret for the client (note this is not the GUID of the client secret)
  */
 class ADLSSync(
     private val accountName: String,
     private val containerName: String,
     private val logger: KLogger,
-    private val sasToken: String,
+    private val tenantId: String,
+    private val clientId: String,
+    private val clientSecret: String,
 ) : ObjectStorageSyncer {
+    private val credential = ClientSecretCredentialBuilder()
+        .tenantId(tenantId)
+        .clientId(clientId)
+        .clientSecret(clientSecret)
+        .build()
     private val adlsClient = DataLakeServiceClientBuilder()
         .endpoint("https://$accountName.dfs.core.windows.net")
-        .sasToken(sasToken)
+        .credential(credential)
         .buildClient()
 
     /** {@inheritDoc} */

@@ -26,6 +26,7 @@ dependencies {
     api(libs.awssdk.s3)
     api(platform(libs.gcs.bom))
     api(libs.gcs)
+    api(libs.azure.identity)
     api(libs.adls)
     implementation(libs.sqlite)
     implementation(libs.simple.java.mail)
