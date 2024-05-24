@@ -7,6 +7,7 @@ module com.atlan.pkg.Renderers
 
 import "Config.pkl"
 import "Connectors.pkl"
+import "Credential.pkl"
 
 /// Render the configmap YAML file.
 const function getConfigMap(m: Config): FileOutput = new FileOutput {
@@ -18,10 +19,10 @@ const function getConfigMap(m: Config): FileOutput = new FileOutput {
 }
 
 /// Render the connector-specific credential configmap YAML file.
-const function getCredentialConfigMap(m: Config): FileOutput = new FileOutput {
+const function getCredentialConfigMap(m: Credential): FileOutput = new FileOutput {
   value = new ConnectorConfigMap {
     name = m.name
-    config = m.credentialConfig!!
+    config = m
   }
   renderer = new YamlRenderer {}
 }
@@ -956,18 +957,18 @@ local class WorkflowContainer {
 /// Used to render the configmap for a new connector type.
 local class ConnectorConfigMap extends ConfigMap {
   fixed metadata: Mapping<String, Any> = new Mapping {
-    ["name"] = config.name
+    ["name"] = name
     ["labels"] = new Mapping<String, String> {
       ["workflows.argoproj.io/configmap-type"] = "Parameter"
       ["orchestration.atlan.com/version"] = "1"
-      ["orchestration.atlan.com/source"] = config.source.value
+      ["orchestration.atlan.com/source"] = config.source
     }
   }
   fixed data: Mapping<String, String> = new Mapping {
     ["icon"] = config.icon
     ["helpdeskLink"] = config.helpdesk
     ["logo"] = config.logo
-    ["connector"] = config.source.value
+    ["connector"] = config.source
     ["defaultConnectorType"] = config.connectorType
     ["jdbcCredentialTemplate"] = config.jdbcCredential
     ["restCredentialTemplate"] = config.restCredential
@@ -980,7 +981,7 @@ local class ConnectorConfigMap extends ConfigMap {
     ["config"] = new JsonRenderer {}.renderValue(config)
   }
   hidden name: String
-  hidden config: Config.CredentialConfig
+  hidden config: Credential
 }
 
 const function resolvePropertyToVar(key: String, property: Config.UIElement): NameValuePair = new NameValuePair {

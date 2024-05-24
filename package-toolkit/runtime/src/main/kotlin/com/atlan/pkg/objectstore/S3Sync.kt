@@ -3,6 +3,8 @@
 package com.atlan.pkg.objectstore
 
 import mu.KLogger
+import software.amazon.awssdk.auth.credentials.AwsBasicCredentials
+import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider
 import software.amazon.awssdk.regions.Region
 import software.amazon.awssdk.services.s3.S3Client
 import software.amazon.awssdk.services.s3.model.GetObjectRequest
@@ -16,14 +18,32 @@ import java.io.File
  * @param bucketName name of the bucket in S3 to use for syncing
  * @param region AWS region through which to sync S3
  * @param logger through which to record any problems
+ * @param accessKey (optional) AWS access key, if using as the form of authentication
+ * @param secretKey (optional) AWS secret key, if using as the form of authentication
  */
 class S3Sync(
     private val bucketName: String,
     private val region: String,
     private val logger: KLogger,
+    private val accessKey: String = "",
+    private val secretKey: String = "",
 ) : ObjectStorageSyncer {
 
-    private val s3Client = S3Client.builder().region(Region.of(region)).build()
+    private val credential = if (accessKey.isNotBlank()) {
+        AwsBasicCredentials.create(accessKey, secretKey)
+    } else {
+        null
+    }
+    private val s3Client = if (credential != null) {
+        S3Client.builder()
+            .credentialsProvider(StaticCredentialsProvider.create(credential))
+            .region(Region.of(region))
+            .build()
+    } else {
+        S3Client.builder()
+            .region(Region.of(region))
+            .build()
+    }
 
     /** {@inheritDoc} */
     override fun copyFrom(prefix: String, localDirectory: String): List<String> {

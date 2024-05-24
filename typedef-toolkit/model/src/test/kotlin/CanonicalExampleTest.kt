@@ -88,7 +88,7 @@ object CanonicalExampleTest {
         assertEquals("Table", table.superTypes[1])
         assertEquals(1, table.attributeDefs.size)
         assertEquals("customRatings", table.attributeDefs[0].name)
-        assertEquals("Ratings for the CustomTable asset from the source system.", table.attributeDefs!![0].description)
+        assertEquals("Ratings for the CustomTable asset from the source system.", table.attributeDefs[0].description)
         assertEquals("array<CustomRatings>", table.attributeDefs[0].typeName)
     }
 

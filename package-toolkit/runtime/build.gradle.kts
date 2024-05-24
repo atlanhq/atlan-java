@@ -4,6 +4,7 @@ val jarName = "package-toolkit-runtime"
 
 plugins {
     id("com.atlan.kotlin")
+    id("org.pkl-lang")
     alias(libs.plugins.shadow)
     `maven-publish`
     signing
@@ -18,12 +19,14 @@ dependencies {
             because("version 1.0.0 pulled from elasticsearch-java has CWE-20 (CVE-2023-4043)")
         }
     }
+    api(libs.pkl.config)
     api(libs.jackson.kotlin)
     api(libs.fastcsv)
     api(libs.bundles.poi)
     api(libs.awssdk.s3)
     api(platform(libs.gcs.bom))
     api(libs.gcs)
+    api(libs.azure.identity)
     api(libs.adls)
     implementation(libs.sqlite)
     implementation(libs.simple.java.mail)
@@ -83,6 +86,7 @@ tasks {
             include(dependency("commons-logging:commons-logging:.*"))
             include(dependency("commons-codec:commons-codec:.*"))
             // GCS
+            include(dependency("com.google.cloud:google-cloud-storage:.*"))
             include(dependency("com.google.guava:guava:.*"))
             include(dependency("com.google.guava:failureaccess:.*"))
             include(dependency("com.google.guava:listenablefuture:.*"))
@@ -144,6 +148,10 @@ tasks {
             include(dependency("com.google.re2j:re2j:.*"))
             include(dependency("io.grpc:grpc-rls:.*"))
             // ADLS
+            include(dependency("com.azure:azure-identity:.*"))
+            include(dependency("com.microsoft.azure:msal4j:.*"))
+            include(dependency("com.microsoft.azure:msal4j-persistence-extension:.*"))
+            include(dependency("net.java.dev.jna:jna-platform:.*"))
             include(dependency("com.azure:azure-core-http-netty:.*"))
             include(dependency("com.azure:azure-core:.*"))
             include(dependency("com.azure:azure-json:.*"))
@@ -193,6 +201,25 @@ tasks {
             attributes(Pair("Multi-Release", "true"))
         }
     }
+
+    assemble {
+        dependsOn("genPklConnectors")
+    }
+}
+
+pkl {
+    evaluators {
+        register("genPklConnectors") {
+            sourceModules.add("src/main/resources/csa-connectors-objectstore.pkl")
+            modulePath.from(file("../config/src/main/resources"))
+            outputFormat.set("yaml")
+            multipleFileOutputDir.set(layout.projectDirectory.dir("build"))
+        }
+    }
+}
+
+tasks.getByName("genPklConnectors") {
+    dependsOn(":package-toolkit:config:generateBuildInfo")
 }
 
 java {

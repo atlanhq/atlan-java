@@ -7,12 +7,16 @@ import com.atlan.exception.AtlanException
 import com.atlan.exception.NotFoundException
 import com.atlan.model.assets.Connection
 import com.atlan.model.enums.AssetCreationHandling
-import com.atlan.pkg.Utils.getInputFile
+import com.atlan.pkg.model.Credential
+import com.atlan.pkg.objectstore.ADLSCredential
 import com.atlan.pkg.objectstore.ADLSSync
+import com.atlan.pkg.objectstore.GCSCredential
 import com.atlan.pkg.objectstore.GCSSync
 import com.atlan.pkg.objectstore.ObjectStorageSyncer
+import com.atlan.pkg.objectstore.S3Credential
 import com.atlan.pkg.objectstore.S3Sync
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
 import jakarta.activation.FileDataSource
 import jakarta.mail.Message
 import mu.KLogger
@@ -24,7 +28,6 @@ import java.nio.file.Paths
 import java.util.concurrent.ThreadLocalRandom
 import java.util.concurrent.atomic.AtomicLong
 import kotlin.io.path.isDirectory
-import kotlin.io.path.name
 import kotlin.io.path.readText
 import kotlin.math.round
 import kotlin.system.exitProcess
@@ -496,12 +499,29 @@ object Utils {
         return if (preferUpload) {
             uploadResult
         } else {
-            logger.info { "Cloud details: $cloudDetails" }
-            val contents = Paths.get("tmp", "credentials", "success", "result-0.json").readText()
-            logger.info { "Content: $contents" }
-            // val defaultRegion = getEnvVar("AWS_S3_REGION")
-            // val defaultBucket = getEnvVar("AWS_S3_BUCKET_NAME")
-            "$cloudDetails to $outputDirectory"
+            val contents = Paths.get("/tmp", "credentials", "success", "result-0.json").readText()
+            val cred = MAPPER.readValue<Credential>(contents)
+            when (cred.authType) {
+                "s3" -> {
+                    val s3 = S3Credential(cred)
+                    val sync = S3Sync(s3.bucket, s3.region, logger, s3.accessKey, s3.secretKey)
+                    getInputFile(sync, "${s3.objectPrefix}/${s3.objectKey}", outputDirectory)
+                }
+                "gcs" -> {
+                    val gcs = GCSCredential(cred)
+                    val sync = GCSSync(gcs.projectId, gcs.bucket, logger, gcs.serviceAccountJson)
+                    getInputFile(sync, "${gcs.objectPrefix}/${gcs.objectKey}", outputDirectory)
+                }
+                "adls" -> {
+                    val adls = ADLSCredential(cred)
+                    val sync = ADLSSync(adls.storageAccount, adls.containerName, logger, adls.tenantId, adls.clientId, adls.clientSecret)
+                    getInputFile(sync, "${adls.objectPrefix}/${adls.objectKey}", outputDirectory)
+                }
+                else -> {
+                    logger.warn { "Unknown source ${cred.authType} -- skipping." }
+                    ""
+                }
+            }
         }
     }
 
@@ -553,7 +573,7 @@ object Utils {
                 val sync = GCSSync(gcsProjectId, gcsBucket, logger, gcsCredentials)
                 getInputFile(sync, gcsObjectKey, outputDirectory)
             } else if (adlsObjectKey.isNotBlank()) {
-                val sync = ADLSSync(adlsAccountName, adlsContainerName, logger, adlsSasToken)
+                val sync = ADLSSync(adlsAccountName, adlsContainerName, logger, "", "", "")
                 getInputFile(sync, adlsObjectKey, outputDirectory)
             } else {
                 ""
@@ -623,7 +643,7 @@ object Utils {
                 val sync = GCSSync(gcsProjectId, gcsBucket, logger, gcsCredentials)
                 sync.copyFrom(gcsObjectKey, outputDirectory)
             } else if (adlsObjectKey.isNotBlank() && adlsObjectKey.endsWith("/")) {
-                val sync = ADLSSync(adlsAccountName, adlsContainerName, logger, adlsSasToken)
+                val sync = ADLSSync(adlsAccountName, adlsContainerName, logger, "", "", "")
                 sync.copyFrom(adlsObjectKey, outputDirectory)
             } else if (s3ObjectKey.isNotBlank() || gcsObjectKey.isNotBlank() || adlsObjectKey.isNotBlank()) {
                 listOf(
