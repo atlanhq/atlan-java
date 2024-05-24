@@ -184,10 +184,10 @@ jobs:
         with:
           name: package-toolkit-runtime
           path: ./containers/base/assembly
-      - uses: actions/download-artifact@v4
-        with:
-          name: package-toolkit-events
-          path: ./containers/base/assembly
+      # - uses: actions/download-artifact@v4
+      #   with:
+      #     name: package-toolkit-events
+      #     path: ./containers/base/assembly
       - name: Build and publish container image
         if: ${{ github.ref == 'refs/heads/main'}}
         uses: docker/build-push-action@v4
