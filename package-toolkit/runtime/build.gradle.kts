@@ -86,6 +86,7 @@ tasks {
             include(dependency("commons-logging:commons-logging:.*"))
             include(dependency("commons-codec:commons-codec:.*"))
             // GCS
+            include(dependency("com.google.cloud:google-cloud-storage:.*"))
             include(dependency("com.google.guava:guava:.*"))
             include(dependency("com.google.guava:failureaccess:.*"))
             include(dependency("com.google.guava:listenablefuture:.*"))
@@ -147,6 +148,10 @@ tasks {
             include(dependency("com.google.re2j:re2j:.*"))
             include(dependency("io.grpc:grpc-rls:.*"))
             // ADLS
+            include(dependency("com.azure:azure-identity:.*"))
+            include(dependency("com.microsoft.azure:msal4j:.*"))
+            include(dependency("com.microsoft.azure:msal4j-persistence-extension:.*"))
+            include(dependency("net.java.dev.jna:jna-platform:.*"))
             include(dependency("com.azure:azure-core-http-netty:.*"))
             include(dependency("com.azure:azure-core:.*"))
             include(dependency("com.azure:azure-json:.*"))
