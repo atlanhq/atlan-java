@@ -3,7 +3,6 @@
 amends "../../../../config/build/resources/main/Credential.pkl"
 import "../../../../config/build/resources/main/Config.pkl"
 
-// TODO: should generate strongly-typed class(es?) to retrieve these details, too (i.e. knowing what maps to username vs password, etc)
 name = "csa-connectors-objectstore"
 source = "Object Store"
 icon = "http://assets.atlan.com/assets/ph-shapes-light.svg"
@@ -20,7 +19,6 @@ options {
         title = "AWS access key"
         required = false
         helpText = "Enter your AWS access key."
-        placeholderText = ""
         width = 4
       }
       ["password"] = new Config.PasswordInput {
@@ -72,14 +70,12 @@ options {
         title = "Project ID"
         required = false
         helpText = "Enter the ID of the GCP project."
-        placeholderText = ""
         width = 4
       }
       ["password"] = new Config.TextInput {
         title = "Service account JSON"
         required = false
         helpText = "Enter the JSON for your service account credentials."
-        placeholderText = "{\"type\":\"service_account\",\"project_id\":\"gcs-connector-399418\", ..."
         width = 8
       }
       ["extra"] = new Config.NestedInput {
