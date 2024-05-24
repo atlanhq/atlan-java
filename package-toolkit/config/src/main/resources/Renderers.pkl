@@ -59,8 +59,23 @@ const function getWorkflowTemplate(m: Config): FileOutput = new FileOutput {
         new WorkflowContainer {
           name = "fetch-credentials"
           image = "ghcr.io/atlanhq/rest-master:2f14f7c"
-          command = List("python3", "main.py")
+          command = new Listing {
+            "/bin/sh"
+            "-c"
+            """
+            if [ -z "$CLOUD_SOURCE" ]; then exit 0; fi
+            python3 main.py GET http://heracles-service.heracles.svc.cluster.local/credentials/$CLOUD_SOURCE/use --raw-input '{}' --raw-input-file-pattern '' --raw-input-file-sort '' --raw-input-multiline f --execution-script "if state == ExecutionState.API_FAIL and (response.status_code >= 500 or response.status_code in {400}):\\n  LOGGER.debug('Heracles is unavailable. Performing retry with back-off')\\n  failure_handler = FailureHandler.RETRY\\nif state == ExecutionState.OUTPUT_PROCESS:\\n  output = json.loads(output)\\nif state == ExecutionState.API_POST:\\n  stop = True" --raw-input-paginate '0' --auth-type oauth2 --auth-oauth2-type client_credentials --auth-oauth2-impersonate-user "$IMPERSONATE_USER" --auth-oauth2-client-credentials-client-id CLIENT_ID --auth-oauth2-client-credentials-secret CLIENT_SECRET --auth-oauth2-client-credentials-token-url TOKEN_URL --output-chunk-size '0' --output-file-prefix /tmp/credentials --pagination-wait-time '0' --max-retries '10'
+            """
+          }.toList()
           env = new Listing {
+            new NameValuePair {
+              name = "IMPERSONATE_USER"
+              value = "{{=sprig.ternary(sprig.dig('labels', 'workflows', 'argoproj', 'io/creator', '', workflow), '', 'true' == inputs.parameters['impersonate'])}}"
+            }
+            new NameValuePair {
+              name = credVariable.toUpperCase()
+              value = "{{inputs.parameters.\(credVariable)}}"
+            }
             new NameValuePair {
               name = "OAUTHLIB_INSECURE_TRANSPORT"
               value = "1"
@@ -82,42 +97,6 @@ const function getWorkflowTemplate(m: Config): FileOutput = new FileOutput {
             }
           }.toList()
           mirrorVolumeMounts = true
-          args = new Listing {
-            "GET"
-            "http://heracles-service.heracles.svc.cluster.local/credentials/{{inputs.parameters.\(credVariable)}}/use"
-            "--raw-input"
-            "{}"
-            "--raw-input-file-pattern"
-            ""
-            "--raw-input-file-sort"
-            ""
-            "--raw-input-multiline"
-            "f"
-            "--execution-script"
-            "{{inputs.parameters.execution-script}}"
-            "--raw-input-paginate"
-            "0"
-            "--auth-type"
-            "oauth2"
-            "--auth-oauth2-type"
-            "client_credentials"
-            "--auth-oauth2-impersonate-user"
-            "{{=sprig.ternary(sprig.dig('labels', 'workflows', 'argoproj', 'io/creator', '', workflow), '', 'true' == inputs.parameters['impersonate'])}}"
-            "--auth-oauth2-client-credentials-client-id"
-            "CLIENT_ID"
-            "--auth-oauth2-client-credentials-secret"
-            "CLIENT_SECRET"
-            "--auth-oauth2-client-credentials-token-url"
-            "TOKEN_URL"
-            "--output-chunk-size"
-            "0"
-            "--output-file-prefix"
-            "/tmp/credentials"
-            "--pagination-wait-time"
-            "0"
-            "--max-retries"
-            "10"
-          }.toList()
         }
       } else null
     }
@@ -771,20 +750,6 @@ local class WorkflowInputs {
           configMapName = "atlan-defaults"
           configMapKey = "cloud"
           default = "aws"
-        }
-      }
-      when (credentialInjection) {
-        new NameValuePair {
-          name = "execution-script"
-          value = """
-            if state == ExecutionState.API_FAIL and (response.status_code >= 500 or response.status_code in {400}):
-              LOGGER.debug('Heracles is unavailable. Performing retry with back-off')
-              failure_handler = FailureHandler.RETRY
-            if state == ExecutionState.OUTPUT_PROCESS:
-              output = json.loads(output)
-            if state == ExecutionState.API_POST:
-              stop = True
-            """
         }
       }
     }
