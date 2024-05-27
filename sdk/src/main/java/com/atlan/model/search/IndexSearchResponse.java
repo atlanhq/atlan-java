@@ -72,20 +72,21 @@ public class IndexSearchResponse extends ApiResource implements Iterable<Asset> 
      */
     @JsonIgnore
     public IndexSearchResponse getNextPage() throws AtlanException {
+        if (getAssets() == null) {
+            // If there are no assets, return this no-asset page (we're at the end of paging).
+            return this;
+        }
         IndexSearchDSL dsl = getQuery();
 
         // Check for a timestamp condition to determine if this query is being streamed
         Query query = dsl.getQuery();
-        boolean streamed = false;
         List<Query> rewrittenFilters = new ArrayList<>();
+        boolean streamed = presortedByTimestamp(dsl.getSort());
         if (query.isBool()) {
             BoolQuery original = query.bool();
             List<Query> filters = original.filter();
             for (Query candidate : filters) {
-                if (isPagingTimestampQuery(candidate)) {
-                    // Skip the paging parameter from the rewrite
-                    streamed = true;
-                } else {
+                if (!isPagingTimestampQuery(candidate)) {
                     rewrittenFilters.add(candidate);
                 }
             }
@@ -93,7 +94,7 @@ public class IndexSearchResponse extends ApiResource implements Iterable<Asset> 
         int page = dsl.getSize() == null ? IndexSearchDSL.DEFAULT_PAGE_SIZE : dsl.getSize();
         long firstRecord = -2L;
         long lastRecord;
-        if (getAssets() != null && getAssets().size() > 1) {
+        if (getAssets().size() > 1) {
             firstRecord = getAssets().get(0).getCreateTime();
             lastRecord = getAssets().get(getAssets().size() - 1).getCreateTime();
         } else {
@@ -132,7 +133,9 @@ public class IndexSearchResponse extends ApiResource implements Iterable<Asset> 
         return candidate.isRange()
                 && candidate.range().field().equals(Asset.CREATE_TIME.getInternalFieldName())
                 && candidate.range().gte() != null
-                && candidate.range().gte().to(Long.class) > 0;
+                && candidate.range().gte().to(Long.class) > 0
+                && candidate.range().lt() == null
+                && candidate.range().lte() == null;
     }
 
     private Query getPagingTimestampQuery(long lastTimestamp) {
@@ -424,6 +427,7 @@ public class IndexSearchResponse extends ApiResource implements Iterable<Asset> 
     private static class IndexSearchResponseIterator implements Iterator<Asset> {
 
         private IndexSearchResponse response;
+        // TODO: Consider optimizing memory using UUID.fromString() to store UUIDs rather than Strings
         private final Set<String> processedGuids;
         private int i;
 
@@ -447,33 +451,40 @@ public class IndexSearchResponse extends ApiResource implements Iterable<Asset> 
         /** {@inheritDoc} */
         @Override
         public boolean hasNext() {
-            if (response.getAssets() != null && response.getAssets().size() > i) {
-                return true;
-            } else {
-                try {
-                    response = response.getNextPage();
-                    i = 0;
-                    return response.getAssets() != null && response.getAssets().size() > i;
-                } catch (AtlanException e) {
-                    throw new RuntimeException("Unable to iterate through all pages of search results.", e);
+            if (response.getAssets() == null) {
+                // If there are no assets in this page, then there are no more assets
+                // so exit straightaway
+                return false;
+            }
+            if (response.getAssets().size() > i) {
+                Asset candidate = response.getAssets().get(i);
+                if (candidate != null && !processedGuids.contains(candidate.getGuid())) {
+                    return true;
+                } else {
+                    for (int j = i; j < response.getAssets().size(); j++) {
+                        candidate = response.getAssets().get(j);
+                        if (candidate != null && !processedGuids.contains(candidate.getGuid())) {
+                            i = j;
+                            return true;
+                        }
+                    }
                 }
+            }
+            try {
+                response = response.getNextPage();
+                i = 0;
+                return response.getAssets() != null && response.getAssets().size() > i;
+            } catch (AtlanException e) {
+                throw new RuntimeException("Unable to iterate through all pages of search results.", e);
             }
         }
 
         /** {@inheritDoc} */
         @Override
         public Asset next() {
-            // TODO: Consider optimizing memory using UUID.fromString() to store UUIDs rather than Strings
             Asset candidate = response.getAssets().get(i++);
-            if (candidate != null) {
-                if (!processedGuids.contains(candidate.getGuid())) {
-                    processedGuids.add(candidate.getGuid());
-                    return candidate;
-                } else if (hasNext()) {
-                    return next();
-                }
-            }
-            return null;
+            processedGuids.add(candidate.getGuid());
+            return candidate;
         }
     }
 }
