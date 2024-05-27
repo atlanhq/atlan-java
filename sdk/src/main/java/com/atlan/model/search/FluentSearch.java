@@ -117,11 +117,15 @@ public class FluentSearch extends CompoundQuery {
         if (client == null) {
             throw new InvalidRequestException(ErrorCode.NO_ATLAN_CLIENT);
         }
-        IndexSearchRequest request = toRequest();
         if (parallel) {
-            return request.search(client).parallelStream();
+            return toRequest().search(client).parallelStream();
         } else {
-            return request.search(client).stream();
+            if (!IndexSearchResponse.presortedByTimestamp(sorts)) {
+                // Pre-sort by creation time (ascending) for mass-sequential iteration,
+                // if not already sorted by creation time first
+                sorts = IndexSearchResponse.sortByTimestampFirst(sorts);
+            }
+            return toRequest().search(client).stream();
         }
     }
 

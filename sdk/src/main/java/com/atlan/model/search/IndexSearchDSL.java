@@ -21,6 +21,7 @@ import lombok.extern.jackson.Jacksonized;
 @SuppressWarnings("cast")
 public class IndexSearchDSL extends AtlanObject {
     private static final long serialVersionUID = 2L;
+    public static final int DEFAULT_PAGE_SIZE = 300;
 
     /**
      * Build a search using the provided query and default options.
@@ -49,10 +50,10 @@ public class IndexSearchDSL extends AtlanObject {
     Integer from = 0;
 
     /**
-     * Number of results to return per page. Defaults to 20 results per page if not overridden.
+     * Number of results to return per page. Defaults to 300 results per page if not overridden.
      */
     @Builder.Default
-    Integer size = 20;
+    Integer size = DEFAULT_PAGE_SIZE;
 
     /**
      * When true, specify the precise number of results in the response, otherwise estimate and max-out at 10,000.
