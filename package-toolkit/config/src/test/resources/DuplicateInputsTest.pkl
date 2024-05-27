@@ -1,0 +1,62 @@
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2024 Atlan Pte. Ltd. */
+amends "modulepath:/Config.pkl"
+
+import "pkl:semver"
+import "modulepath:/Connectors.pkl"
+
+packageId = "@csa/openapi-spec-loader"
+packageName = "OpenAPI Spec Loader"
+version = semver.Version("1.0.0")
+description = "Loads API specs and paths from an OpenAPI (v3) definition."
+iconUrl = "http://assets.atlan.com/assets/apispec.png"
+docsUrl = "https://developer.atlan.com/samples/loaders/openapi/"
+implementationLanguage = "Kotlin"
+containerImage = "ghcr.io/atlanhq/atlan-kotlin-samples:\(version)"
+containerCommand {
+  "/dumb-init"
+  "--"
+  "java"
+  "OpenAPISpecLoaderKt"
+}
+outputs {
+  files {
+    ["debug-logs"] = "/tmp/debug.log"
+  }
+}
+keywords {
+  "kotlin"
+  "crawler"
+  "openapi"
+}
+preview = true
+connectorType = Connectors.API
+
+uiConfig {
+  tasks {
+    ["One"] {
+      inputs {
+        ["something"] = new TextInput {
+          title = "Specification URL"
+          required = true
+          helpText = "Full URL to the JSON form of the OpenAPI specification."
+          placeholderText = "https://petstore3.swagger.io/api/v3/openapi.json"
+        }
+      }
+    }
+    ["Two"] {
+      inputs {
+        ["something"] = new Radio {
+          title = "Connection"
+          required = true
+          possibleValues {
+            ["CREATE"] = "Create"
+            ["REUSE"] = "Reuse"
+          }
+          default = "REUSE"
+          helpText = "Whether to create a new connection to hold these API assets, or reuse an existing connection."
+        }
+      }
+    }
+  }
+}
