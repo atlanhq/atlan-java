@@ -72,20 +72,21 @@ public class IndexSearchResponse extends ApiResource implements Iterable<Asset> 
      */
     @JsonIgnore
     public IndexSearchResponse getNextPage() throws AtlanException {
+        if (getAssets() == null) {
+            // If there are no assets, return this no-asset page (we're at the end of paging).
+            return this;
+        }
         IndexSearchDSL dsl = getQuery();
 
         // Check for a timestamp condition to determine if this query is being streamed
         Query query = dsl.getQuery();
-        boolean streamed = false;
         List<Query> rewrittenFilters = new ArrayList<>();
+        boolean streamed = presortedByTimestamp(dsl.getSort());
         if (query.isBool()) {
             BoolQuery original = query.bool();
             List<Query> filters = original.filter();
             for (Query candidate : filters) {
-                if (isPagingTimestampQuery(candidate)) {
-                    // Skip the paging parameter from the rewrite
-                    streamed = true;
-                } else {
+                if (!isPagingTimestampQuery(candidate)) {
                     rewrittenFilters.add(candidate);
                 }
             }
@@ -93,7 +94,7 @@ public class IndexSearchResponse extends ApiResource implements Iterable<Asset> 
         int page = dsl.getSize() == null ? IndexSearchDSL.DEFAULT_PAGE_SIZE : dsl.getSize();
         long firstRecord = -2L;
         long lastRecord;
-        if (getAssets() != null && getAssets().size() > 1) {
+        if (getAssets().size() > 1) {
             firstRecord = getAssets().get(0).getCreateTime();
             lastRecord = getAssets().get(getAssets().size() - 1).getCreateTime();
         } else {
@@ -132,7 +133,9 @@ public class IndexSearchResponse extends ApiResource implements Iterable<Asset> 
         return candidate.isRange()
                 && candidate.range().field().equals(Asset.CREATE_TIME.getInternalFieldName())
                 && candidate.range().gte() != null
-                && candidate.range().gte().to(Long.class) > 0;
+                && candidate.range().gte().to(Long.class) > 0
+                && candidate.range().lt() == null
+                && candidate.range().lte() == null;
     }
 
     private Query getPagingTimestampQuery(long lastTimestamp) {
@@ -186,6 +189,18 @@ public class IndexSearchResponse extends ApiResource implements Iterable<Asset> 
         return new IndexSearchResponseIterator(this);
     }
 
+    /**
+     * Returns an iterator over the elements of the index search, lazily paged,
+     * but in such a way that they can be iterated through in bulk (> 100,000's of results).
+     * Note: this will reorder the results and will NOT retain the sort ordering you have specified (if any).
+     * (Uses offset-limited sequential paging, to avoid large offsets that effectively need to re-retrieve many
+     * large numbers of previous pages' results.)
+     * @return iterator through the assets in the search results
+     */
+    public Iterator<Asset> biterator() {
+        return new IndexSearchResponseBulkIterator(this);
+    }
+
     /** {@inheritDoc} */
     @Override
     public Spliterator<Asset> spliterator() {
@@ -193,8 +208,8 @@ public class IndexSearchResponse extends ApiResource implements Iterable<Asset> 
         try {
             pageSize = getQuery().getSize();
         } catch (LogicException e) {
-            log.warn("Unable to parse page size from query, falling back to 50.", e);
-            pageSize = 50;
+            log.warn("Unable to parse page size from query, falling back to {}.", IndexSearchDSL.DEFAULT_PAGE_SIZE, e);
+            pageSize = IndexSearchDSL.DEFAULT_PAGE_SIZE;
         }
         IndexSearchResponseSpliterator spliterator =
                 new IndexSearchResponseSpliterator(this, 0, this.getApproximateCount(), pageSize);
@@ -205,22 +220,46 @@ public class IndexSearchResponse extends ApiResource implements Iterable<Asset> 
 
     /**
      * Stream the results (lazily) for processing without needing to manually manage paging.
+     * Note: if the number of results exceeds the predefined threshold (~300,000 assets)
+     * this will be automatically converted into a bulkStream().
+     *
      * @return a lazily-loaded stream of results from the search
      */
     public Stream<Asset> stream() {
-        return StreamSupport.stream(Spliterators.spliterator(iterator(), approximateCount, CHARACTERISTICS), false);
+        if (approximateCount > MASS_EXTRACT_THRESHOLD) {
+            log.debug(
+                    "Results size exceeds threshold ({}), rewriting stream as a bulk stream (ignoring original sorting).",
+                    MASS_EXTRACT_THRESHOLD);
+            return bulkStream();
+        } else {
+            return StreamSupport.stream(Spliterators.spliterator(iterator(), approximateCount, CHARACTERISTICS), false);
+        }
+    }
+
+    /**
+     * Stream a large number of results (lazily) for processing without needing to manually manage paging.
+     * Note: this will reorder the results in order to iterate through a large number (more than ~300,000) results,
+     * so any sort ordering you have specified may be ignored.
+     *
+     * @return a lazily-loaded stream of results from the search
+     */
+    public Stream<Asset> bulkStream() {
+        return StreamSupport.stream(Spliterators.spliterator(biterator(), approximateCount, CHARACTERISTICS), false);
     }
 
     /**
      * Stream the results in parallel across all pages (may do more than limited to in a request).
+     * Note: if the number of results exceeds the predefined threshold (~300,000 assets)
+     * this will be automatically converted into a bulkStream().
+     *
      * @return a lazily-loaded stream of results from the search
      */
     public Stream<Asset> parallelStream() {
         if (approximateCount > MASS_EXTRACT_THRESHOLD) {
             log.debug(
-                    "Results size exceeds threshold ({}), ignoring request for parallelized streaming and falling back to offset-limited sequential paging.",
+                    "Results size exceeds threshold ({}), ignoring request for parallelized streaming and falling back to bulk streaming.",
                     MASS_EXTRACT_THRESHOLD);
-            return stream();
+            return bulkStream();
         } else {
             return StreamSupport.stream(this::spliterator, CHARACTERISTICS, true);
         }
@@ -424,23 +463,10 @@ public class IndexSearchResponse extends ApiResource implements Iterable<Asset> 
     private static class IndexSearchResponseIterator implements Iterator<Asset> {
 
         private IndexSearchResponse response;
-        private final Set<String> processedGuids;
         private int i;
 
         public IndexSearchResponseIterator(IndexSearchResponse response) {
-            try {
-                IndexSearchDSL dsl = response.getQuery();
-                if (presortedByTimestamp(dsl.getSort())) {
-                    // If the results are already sorted in ascending order by timestamp, proceed
-                    this.response = response;
-                } else {
-                    // Otherwise, re-fetch the first page sorted first by timestamp
-                    this.response = response.getFirstPageTimestampOrdered();
-                }
-            } catch (AtlanException e) {
-                throw new RuntimeException("Unable to rewrite original query in preparation for iteration.", e);
-            }
-            this.processedGuids = new HashSet<>();
+            this.response = response;
             this.i = 0;
         }
 
@@ -463,17 +489,76 @@ public class IndexSearchResponse extends ApiResource implements Iterable<Asset> 
         /** {@inheritDoc} */
         @Override
         public Asset next() {
-            // TODO: Consider optimizing memory using UUID.fromString() to store UUIDs rather than Strings
-            Asset candidate = response.getAssets().get(i++);
-            if (candidate != null) {
-                if (!processedGuids.contains(candidate.getGuid())) {
-                    processedGuids.add(candidate.getGuid());
-                    return candidate;
-                } else if (hasNext()) {
-                    return next();
+            return response.getAssets().get(i++);
+        }
+    }
+
+    /**
+     * Allow results to be iterated through without managing paging retrievals, and
+     * without overwhelming system resources, even when iterating through 100,000's or more
+     * results.
+     */
+    private static class IndexSearchResponseBulkIterator implements Iterator<Asset> {
+
+        private IndexSearchResponse response;
+        // TODO: Consider optimizing memory using UUID.fromString() to store UUIDs rather than Strings
+        private final Set<String> processedGuids;
+        private int i;
+
+        public IndexSearchResponseBulkIterator(IndexSearchResponse response) {
+            try {
+                IndexSearchDSL dsl = response.getQuery();
+                if (presortedByTimestamp(dsl.getSort())) {
+                    // If the results are already sorted in ascending order by timestamp, proceed
+                    this.response = response;
+                } else {
+                    // Otherwise, re-fetch the first page sorted first by timestamp
+                    this.response = response.getFirstPageTimestampOrdered();
+                }
+            } catch (AtlanException e) {
+                throw new RuntimeException("Unable to rewrite original query in preparation for iteration.", e);
+            }
+            this.processedGuids = new HashSet<>();
+            this.i = 0;
+        }
+
+        /** {@inheritDoc} */
+        @Override
+        public boolean hasNext() {
+            if (response.getAssets() == null) {
+                // If there are no assets in this page, then there are no more assets
+                // so exit straightaway
+                return false;
+            }
+            if (response.getAssets().size() > i) {
+                Asset candidate = response.getAssets().get(i);
+                if (candidate != null && !processedGuids.contains(candidate.getGuid())) {
+                    return true;
+                } else {
+                    for (int j = i; j < response.getAssets().size(); j++) {
+                        candidate = response.getAssets().get(j);
+                        if (candidate != null && !processedGuids.contains(candidate.getGuid())) {
+                            i = j;
+                            return true;
+                        }
+                    }
                 }
             }
-            return null;
+            try {
+                response = response.getNextPage();
+                i = 0;
+                return response.getAssets() != null && response.getAssets().size() > i;
+            } catch (AtlanException e) {
+                throw new RuntimeException("Unable to iterate through all pages of search results.", e);
+            }
+        }
+
+        /** {@inheritDoc} */
+        @Override
+        public Asset next() {
+            Asset candidate = response.getAssets().get(i++);
+            processedGuids.add(candidate.getGuid());
+            return candidate;
         }
     }
 }

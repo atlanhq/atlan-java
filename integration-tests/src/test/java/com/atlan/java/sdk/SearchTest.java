@@ -13,6 +13,7 @@ import com.atlan.model.assets.GlossaryCategory;
 import com.atlan.model.assets.GlossaryTerm;
 import com.atlan.model.assets.IReferenceable;
 import com.atlan.model.core.AssetMutationResponse;
+import com.atlan.model.search.FluentSearch;
 import com.atlan.model.search.IndexSearchDSL;
 import com.atlan.model.search.IndexSearchRequest;
 import com.atlan.model.search.IndexSearchResponse;
@@ -295,6 +296,28 @@ public class SearchTest extends AtlanLiveTest {
                 .collect(Collectors.toSet());
         assertNotNull(guids);
         assertEquals(guids.size(), 3);
+    }
+
+    @Test(
+            groups = {"search.search.streams"},
+            dependsOnGroups = {"search.search.consistent"})
+    void streamVariations() throws AtlanException {
+        FluentSearch request = GlossaryTerm.select()
+                .where(GlossaryTerm.ANCHOR.eq(glossary.getQualifiedName()))
+                .where(GlossaryTerm.CREATE_TIME.lte(term5.getCreateTime()))
+                .pageSize(2)
+                .build();
+        Set<String> guidsDirect = request.stream().map(Asset::getGuid).collect(Collectors.toSet());
+        assertNotNull(guidsDirect);
+        assertEquals(guidsDirect.size(), 5);
+        Set<String> guidsBulk = request.bulkStream().map(Asset::getGuid).collect(Collectors.toSet());
+        assertNotNull(guidsBulk);
+        assertEquals(guidsBulk.size(), 5);
+        Set<String> guidsParallel = request.parallelStream().map(Asset::getGuid).collect(Collectors.toSet());
+        assertNotNull(guidsParallel);
+        assertEquals(guidsParallel.size(), 5);
+        assertEquals(guidsDirect, guidsBulk);
+        assertEquals(guidsBulk, guidsParallel);
     }
 
     @Test(

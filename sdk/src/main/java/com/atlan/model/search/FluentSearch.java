@@ -108,6 +108,8 @@ public class FluentSearch extends CompoundQuery {
 
     /**
      * Run the fluent search to retrieve assets that match the supplied criteria.
+     * Note: if the number of results exceeds the predefined threshold (~300,000 assets)
+     * this will be automatically converted into a bulkStream().
      *
      * @param parallel if true, returns a parallel stream
      * @return a stream of assets that match the specified criteria, lazily-fetched
@@ -127,6 +129,35 @@ public class FluentSearch extends CompoundQuery {
             }
             return toRequest().search(client).stream();
         }
+    }
+
+    /**
+     * Run the fluent search to retrieve assets that match the supplied criteria, using a
+     * parallel stream (multiple pages are retrieved in parallel for improved throughput).
+     * Note: if the number of results exceeds the predefined threshold (~300,000 assets)
+     * this will be automatically converted into a bulkStream().
+     *
+     * @return a stream of assets that match the specified criteria, lazily-fetched
+     * @throws AtlanException on any issues interacting with the Atlan APIs
+     */
+    public Stream<Asset> parallelStream() throws AtlanException {
+        return stream(true);
+    }
+
+    /**
+     * Run the fluent search to retrieve assets that match the supplied criteria, using a
+     * stream specifically meant for streaming large numbers of results (> 100,000's).
+     * Note: this will apply its own sorting algorithm, so any sort order you have specified
+     * may be ignored.
+     *
+     * @return a stream of assets that match the specified criteria, lazily-fetched
+     * @throws AtlanException on any issues interacting with the Atlan APIs
+     */
+    public Stream<Asset> bulkStream() throws AtlanException {
+        if (!IndexSearchResponse.presortedByTimestamp(sorts)) {
+            sorts = IndexSearchResponse.sortByTimestampFirst(sorts);
+        }
+        return toRequest().search(client).bulkStream();
     }
 
     /**
