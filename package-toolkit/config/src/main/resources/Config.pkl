@@ -125,11 +125,13 @@ class UIConfig {
   /// ```
   hidden tasks: Mapping<String, UIStep>
 
-  // TODO: Ideally should validate no duplicate property names across steps (throw error if any found)
   /// (Generated) Details of all inputs across all steps for the UI.
-  fixed properties: Map<String, UIElement> = tasks.fold(Map(), (acc: Map<String, UIElement>, _, step) ->
-    acc + (resolveInputs(step.inputs).toMap())
-  )
+  fixed properties: Map<String, UIElement> = new Mapping {
+    for (_, step in tasks) {
+      // Note: using spread syntax to error on any duplicates across steps
+      ...?step.inputs
+    }
+  }.toMap()
 
   /// Listing of rules to control which [inputs][UIElement] appear based on values selected in other inputs.
   ///
