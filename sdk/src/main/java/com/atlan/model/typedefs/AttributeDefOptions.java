@@ -215,6 +215,7 @@ public class AttributeDefOptions extends AtlanObject {
             TableauWorkbook.TYPE_NAME,
             TableauWorksheet.TYPE_NAME,
             TagAttachment.TYPE_NAME,
+            Task.TYPE_NAME,
             ThoughtspotAnswer.TYPE_NAME,
             ThoughtspotColumn.TYPE_NAME,
             ThoughtspotDashlet.TYPE_NAME,
@@ -222,7 +223,9 @@ public class AttributeDefOptions extends AtlanObject {
             ThoughtspotTable.TYPE_NAME,
             ThoughtspotView.TYPE_NAME,
             ThoughtspotWorksheet.TYPE_NAME,
-            View.TYPE_NAME);
+            View.TYPE_NAME,
+            Workflow.TYPE_NAME,
+            WorkflowRun.TYPE_NAME);
     public static final Set<String> ALL_GLOSSARY_TYPES =
             Set.of(Glossary.TYPE_NAME, GlossaryTerm.TYPE_NAME, GlossaryCategory.TYPE_NAME);
     public static final Set<String> ALL_DOMAIN_TYPES = Set.of(DataDomain.TYPE_NAME, DataProduct.TYPE_NAME);

@@ -781,7 +781,7 @@ public interface IColumn {
     /** Total number of digits allowed, when the dataType is numeric. */
     Integer getPrecision();
 
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    /** TBC */
     String getQualifiedName();
 
     /** Queries that access this column. */
