@@ -65,6 +65,19 @@ object CategoryCache : AssetCache() {
      * @param glossaryName name of the glossary for which to bulk-cache categories
      */
     fun traverseAndCacheHierarchy(glossaryName: String): List<GlossaryCategory> {
+        return this.traverseAndCacheHierarchy(glossaryName, emptyList())
+    }
+
+    /**
+     * It is likely to be more efficient (for any sizeable import) to retrieve and traverse
+     * the entire hierarchy at the same time rather than recursively look things up
+     * step-by-step. (Bigger initial hit, but bulk-retrieves rather than category-by-category
+     * retrieves.)
+     *
+     * @param glossaryName name of the glossary for which to bulk-cache categories
+     * @param attributes (checked) to retrieve for each category in the hierarchy
+     */
+    fun traverseAndCacheHierarchy(glossaryName: String, attributes: List<AtlanField>): List<GlossaryCategory> {
         val categories = mutableListOf<GlossaryCategory>()
         logger.info { "Caching entire hierarchy for $glossaryName, up-front..." }
         val glossary = GlossaryCache.getByIdentity(glossaryName)
@@ -72,7 +85,7 @@ object CategoryCache : AssetCache() {
             // Initial hit may be high, but for any sizeable import will be faster
             // to retrieve the entire hierarchy than recursively look it up step-by-step
             try {
-                val hierarchy = glossary.getHierarchy(includesOnResults)
+                val hierarchy = glossary.getHierarchy(includesOnResults + attributes)
                 hierarchy.breadthFirst().forEach { category ->
                     val parent = category.parentCategory
                     category as GlossaryCategory

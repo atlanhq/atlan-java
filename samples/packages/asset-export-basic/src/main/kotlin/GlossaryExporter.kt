@@ -58,7 +58,7 @@ class GlossaryExporter(
             // Then extract all categories, per glossary, up-front (caching them
             // as we go, for later reference)
             glossaries.parallelStream().forEach {
-                val categories = CategoryCache.traverseAndCacheHierarchy(it.name)
+                val categories = CategoryCache.traverseAndCacheHierarchy(it.name, getAttributesToExtract())
                 if (categories.isNotEmpty()) {
                     logger.info { "Appending ${categories.size} categories from ${it.name}..." }
                     csv.appendAssets(
