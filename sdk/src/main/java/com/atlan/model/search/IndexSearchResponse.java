@@ -214,7 +214,7 @@ public class IndexSearchResponse extends ApiResource implements Iterable<Asset> 
 
     /**
      * Returns an iterator over the elements of the index search, lazily paged,
-     * but in such a way that they can be iterated through in bulk (> 100,000's of results).
+     * but in such a way that they can be iterated through in bulk (100,000's of results or more).
      * Note: this will reorder the results and will NOT retain the sort ordering you have specified (if any).
      * (Uses offset-limited sequential paging, to avoid large offsets that effectively need to re-retrieve many
      * large numbers of previous pages' results.)
