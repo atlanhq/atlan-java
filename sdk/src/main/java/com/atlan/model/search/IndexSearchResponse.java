@@ -72,6 +72,29 @@ public class IndexSearchResponse extends ApiResource implements Iterable<Asset> 
      */
     @JsonIgnore
     public IndexSearchResponse getNextPage() throws AtlanException {
+        IndexSearchDSL dsl = getQuery();
+        int from = dsl.getFrom() == null ? 0 : dsl.getFrom();
+        int page = dsl.getSize() == null ? IndexSearchDSL.DEFAULT_PAGE_SIZE : dsl.getSize();
+        dsl = dsl.toBuilder().from(from + page).build();
+
+        IndexSearchRequest.IndexSearchRequestBuilder<?, ?> next = IndexSearchRequest.builder(dsl);
+        if (searchParameters.getAttributes() != null) {
+            next = next.attributes(searchParameters.getAttributes());
+        }
+        if (searchParameters.getRelationAttributes() != null) {
+            next = next.relationAttributes(searchParameters.getRelationAttributes());
+        }
+        return next.build().search(client);
+    }
+
+    /**
+     * Retrieve the next page of results from this response, using bulk-oriented paging.
+     *
+     * @return next page of results from this response
+     * @throws AtlanException on any API interaction problem
+     */
+    @JsonIgnore
+    protected IndexSearchResponse getNextBulkPage() throws AtlanException {
         if (getAssets() == null) {
             // If there are no assets, return this no-asset page (we're at the end of paging).
             return this;
@@ -545,7 +568,7 @@ public class IndexSearchResponse extends ApiResource implements Iterable<Asset> 
                 }
             }
             try {
-                response = response.getNextPage();
+                response = response.getNextBulkPage();
                 i = 0;
                 return response.getAssets() != null && response.getAssets().size() > i;
             } catch (AtlanException e) {
