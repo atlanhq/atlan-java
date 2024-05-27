@@ -78,7 +78,6 @@ class CreateThenUpsertRABTest : PackageTest() {
                 }
             }
         }
-        output.copyTo(input, true)
     }
 
     private fun createTags() {
@@ -433,7 +432,7 @@ class CreateThenUpsertRABTest : PackageTest() {
         modifyFile()
         setup(
             RelationalAssetsBuilderCfg(
-                assetsFile = Paths.get(testDirectory, testFile).toString(),
+                assetsFile = Paths.get(testDirectory, revisedFile).toString(),
                 assetsUpsertSemantic = "upsert",
                 assetsFailOnErrors = true,
             ),
