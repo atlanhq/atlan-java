@@ -122,11 +122,6 @@ public class FluentSearch extends CompoundQuery {
         if (parallel) {
             return toRequest().search(client).parallelStream();
         } else {
-            if (!IndexSearchResponse.presortedByTimestamp(sorts)) {
-                // Pre-sort by creation time (ascending) for mass-sequential iteration,
-                // if not already sorted by creation time first
-                sorts = IndexSearchResponse.sortByTimestampFirst(sorts);
-            }
             return toRequest().search(client).stream();
         }
     }
