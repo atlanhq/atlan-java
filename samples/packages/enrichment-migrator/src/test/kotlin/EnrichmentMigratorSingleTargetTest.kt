@@ -97,7 +97,7 @@ class EnrichmentMigratorSingleTargetTest : PackageTest() {
             ),
         )
         EnrichmentMigrator.main(arrayOf(testDirectory))
-        Thread.sleep(5000)
+        Thread.sleep(15000)
     }
 
     @Test

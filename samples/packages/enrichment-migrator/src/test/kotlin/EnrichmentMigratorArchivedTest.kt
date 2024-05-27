@@ -80,7 +80,7 @@ class EnrichmentMigratorArchivedTest : PackageTest() {
             ),
         )
         EnrichmentMigrator.main(arrayOf(testDirectory))
-        Thread.sleep(10000)
+        Thread.sleep(15000)
     }
 
     @Test
