@@ -27,8 +27,8 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10};
-var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":9,"i15":10,"i16":9,"i17":10,"i18":10,"i19":10};
+var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -237,7 +237,7 @@ implements java.lang.Iterable&lt;<a href="../assets/Asset.html" title="class in 
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colSecond" scope="col">Method</th>
@@ -334,24 +334,40 @@ implements java.lang.Iterable&lt;<a href="../assets/Asset.html" title="class in 
 </td>
 </tr>
 <tr id="i14" class="altColor">
+<td class="colFirst"><code>static boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#presortedByTimestamp(java.util.List)">presortedByTimestamp</a></span>&#8203;(java.util.List&lt;co.elastic.clients.elasticsearch._types.SortOptions&gt;&nbsp;sort)</code></th>
+<td class="colLast">
+<div class="block">Indicates whether the sort options prioritize creation-time in ascending order as the first
+ sorting key (true) or anything else (false).</div>
+</td>
+</tr>
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setClient(com.atlan.AtlanClient)">setClient</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)</code></th>
 <td class="colLast">
 <div class="block">Connectivity to the Atlan tenant where the search was run.</div>
 </td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i16" class="altColor">
+<td class="colFirst"><code>static java.util.List&lt;co.elastic.clients.elasticsearch._types.SortOptions&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sortByTimestampFirst(java.util.List)">sortByTimestampFirst</a></span>&#8203;(java.util.List&lt;co.elastic.clients.elasticsearch._types.SortOptions&gt;&nbsp;sort)</code></th>
+<td class="colLast">
+<div class="block">Rewrites the sorting options to ensure that sorting by creation time, ascending, is the top
+ priority.</div>
+</td>
+</tr>
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>java.util.Spliterator&lt;<a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#spliterator()">spliterator</a></span>()</code></th>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i18" class="altColor">
 <td class="colFirst"><code>java.util.stream.Stream&lt;<a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#stream()">stream</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Stream the results (lazily) for processing without needing to manually manage paging.</div>
 </td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 </tr>
@@ -525,6 +541,41 @@ implements java.lang.Iterable&lt;<a href="../assets/Asset.html" title="class in 
 <dd>original query as DSL</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../exception/LogicException.html" title="class in com.atlan.exception">LogicException</a></code> - if the query could not be parsed</dd>
+</dl>
+</li>
+</ul>
+<a id="presortedByTimestamp(java.util.List)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>presortedByTimestamp</h4>
+<pre class="methodSignature">public static&nbsp;boolean&nbsp;presortedByTimestamp&#8203;(java.util.List&lt;co.elastic.clients.elasticsearch._types.SortOptions&gt;&nbsp;sort)</pre>
+<div class="block">Indicates whether the sort options prioritize creation-time in ascending order as the first
+ sorting key (true) or anything else (false).</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>sort</code> - list of sorting options</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>true if the sorting options have creation time, ascending as the first option</dd>
+</dl>
+</li>
+</ul>
+<a id="sortByTimestampFirst(java.util.List)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>sortByTimestampFirst</h4>
+<pre class="methodSignature">public static&nbsp;java.util.List&lt;co.elastic.clients.elasticsearch._types.SortOptions&gt;&nbsp;sortByTimestampFirst&#8203;(java.util.List&lt;co.elastic.clients.elasticsearch._types.SortOptions&gt;&nbsp;sort)</pre>
+<div class="block">Rewrites the sorting options to ensure that sorting by creation time, ascending, is the top
+ priority. Adds this condition if it does not already exist, or moves it up to the top sorting
+ priority if it does already exist in the list.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>sort</code> - list of sorting options</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>rewritten sorting options, making sorting by creation time in ascending order the top priority</dd>
 </dl>
 </li>
 </ul>
