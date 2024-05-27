@@ -437,7 +437,7 @@ class CreateThenUpsertRABTest : PackageTest() {
                 assetsFailOnErrors = true,
             ),
         )
-        Importer.main(arrayOf())
+        Importer.main(arrayOf(testDirectory))
         // Allow Elastic index and deletion to become consistent
         Thread.sleep(15000)
         val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
