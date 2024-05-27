@@ -141,7 +141,7 @@ public class FluentSearch extends CompoundQuery {
 
     /**
      * Run the fluent search to retrieve assets that match the supplied criteria, using a
-     * stream specifically meant for streaming large numbers of results (> 100,000's).
+     * stream specifically meant for streaming large numbers of results (100,000's or more).
      * Note: this will apply its own sorting algorithm, so any sort order you have specified
      * may be ignored.
      *
