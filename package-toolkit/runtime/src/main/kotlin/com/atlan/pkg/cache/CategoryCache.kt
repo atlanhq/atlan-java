@@ -67,6 +67,7 @@ object CategoryCache : AssetCache() {
     fun traverseAndCacheHierarchy(glossaryName: String): List<GlossaryCategory> {
         return this.traverseAndCacheHierarchy(glossaryName, emptyList())
     }
+
     /**
      * It is likely to be more efficient (for any sizeable import) to retrieve and traverse
      * the entire hierarchy at the same time rather than recursively look things up
