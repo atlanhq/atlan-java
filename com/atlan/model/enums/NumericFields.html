@@ -1653,52 +1653,80 @@ implements <a href="AtlanSearchableField.html" title="interface in com.atlan.mod
 </td>
 </tr>
 <tr class="altColor">
+<th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#TASK_EXPIRES_AT">TASK_EXPIRES_AT</a></span></code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
+<div class="block">Time (epoch) at which the task expires .</div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#THOUGHTSPOT_COLUMN_COUNT">THOUGHTSPOT_COLUMN_COUNT</a></span></code></th>
 <td class="colLast">
 <div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Number of Columns.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#THOUGHTSPOT_JOIN_COUNT">THOUGHTSPOT_JOIN_COUNT</a></span></code></th>
 <td class="colLast">
 <div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Total number of data table joins executed for analysis.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#TILE_COUNT">TILE_COUNT</a></span></code></th>
 <td class="colLast">
 <div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Number of tiles in this table.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#TIMESTAMP">TIMESTAMP</a></span></code></th>
 <td class="colLast">
 <div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Time (in milliseconds) when the asset was created.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#VECTOR_EMBEDDINGS_UPDATED_AT">VECTOR_EMBEDDINGS_UPDATED_AT</a></span></code></th>
 <td class="colLast">
 <div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#VIEW_COUNT">VIEW_COUNT</a></span></code></th>
 <td class="colLast">
 <div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Number of views in this schema.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#VIEW_SCORE">VIEW_SCORE</a></span></code></th>
 <td class="colLast">
 <div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">View score for this asset.</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#WORKFLOW_DELETED_AT">WORKFLOW_DELETED_AT</a></span></code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
+<div class="block">Deletion time of this workflow.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#WORKFLOW_RUN_DELETED_AT">WORKFLOW_RUN_DELETED_AT</a></span></code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
+<div class="block">Deletion time of this workflow run.</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#WORKFLOW_RUN_EXPIRES_AT">WORKFLOW_RUN_EXPIRES_AT</a></span></code></th>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
+<div class="block">Time at which this run will expire.</div>
 </td>
 </tr>
 </table>
@@ -4106,6 +4134,17 @@ the order they are declared.</div>
 <div class="block">Number of tables in this schema.</div>
 </li>
 </ul>
+<a id="TASK_EXPIRES_AT">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>TASK_EXPIRES_AT</h4>
+<pre>public static final&nbsp;<a href="NumericFields.html" title="enum in com.atlan.model.enums">NumericFields</a> TASK_EXPIRES_AT</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
+<div class="block">Time (epoch) at which the task expires .</div>
+</li>
+</ul>
 <a id="THOUGHTSPOT_COLUMN_COUNT">
 <!--   -->
 </a>
@@ -4175,12 +4214,45 @@ the order they are declared.</div>
 <a id="VIEW_SCORE">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>VIEW_SCORE</h4>
 <pre>public static final&nbsp;<a href="NumericFields.html" title="enum in com.atlan.model.enums">NumericFields</a> VIEW_SCORE</pre>
 <div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">View score for this asset.</div>
+</li>
+</ul>
+<a id="WORKFLOW_DELETED_AT">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>WORKFLOW_DELETED_AT</h4>
+<pre>public static final&nbsp;<a href="NumericFields.html" title="enum in com.atlan.model.enums">NumericFields</a> WORKFLOW_DELETED_AT</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
+<div class="block">Deletion time of this workflow.</div>
+</li>
+</ul>
+<a id="WORKFLOW_RUN_DELETED_AT">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>WORKFLOW_RUN_DELETED_AT</h4>
+<pre>public static final&nbsp;<a href="NumericFields.html" title="enum in com.atlan.model.enums">NumericFields</a> WORKFLOW_RUN_DELETED_AT</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
+<div class="block">Deletion time of this workflow run.</div>
+</li>
+</ul>
+<a id="WORKFLOW_RUN_EXPIRES_AT">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>WORKFLOW_RUN_EXPIRES_AT</h4>
+<pre>public static final&nbsp;<a href="NumericFields.html" title="enum in com.atlan.model.enums">NumericFields</a> WORKFLOW_RUN_EXPIRES_AT</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
+<div class="block">Time at which this run will expire.</div>
 </li>
 </ul>
 </li>

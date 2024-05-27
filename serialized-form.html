@@ -4941,7 +4941,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <h4>qualifiedName</h4>
 <pre>java.lang.String qualifiedName</pre>
-<div class="block">Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type.</div>
+<div class="block">TBC</div>
 </li>
 <li class="blockList">
 <h4>readme</h4>
@@ -26319,6 +26319,82 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </li>
 </ul>
 </li>
+<li class="blockList"><a id="com.atlan.model.assets.Task">
+<!--   -->
+</a>
+<h3>Class <a href="com/atlan/model/assets/Task.html" title="class in com.atlan.model.assets">com.atlan.model.assets.Task</a> extends <a href="com/atlan/model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>taskActions</h4>
+<pre>java.util.List&lt;<a href="com/atlan/model/structs/Action.html" title="class in com.atlan.model.structs">Action</a>&gt; taskActions</pre>
+<div class="block">List of actions associated with this task.</div>
+</li>
+<li class="blockList">
+<h4>taskExecutionAction</h4>
+<pre>java.lang.String taskExecutionAction</pre>
+<div class="block">action executed by the recipient</div>
+</li>
+<li class="blockList">
+<h4>taskExecutionComment</h4>
+<pre>java.lang.String taskExecutionComment</pre>
+<div class="block">comment for the action executed by user</div>
+</li>
+<li class="blockList">
+<h4>taskExpiresAt</h4>
+<pre>java.lang.Long taskExpiresAt</pre>
+<div class="block">Time (epoch) at which the task expires .</div>
+</li>
+<li class="blockList">
+<h4>taskIsRead</h4>
+<pre>java.lang.Boolean taskIsRead</pre>
+<div class="block">flag to make task read/unread</div>
+</li>
+<li class="blockList">
+<h4>taskProposals</h4>
+<pre>java.lang.String taskProposals</pre>
+<div class="block">contains the payload that is proposed to the task</div>
+</li>
+<li class="blockList">
+<h4>taskRecipient</h4>
+<pre>java.lang.String taskRecipient</pre>
+<div class="block">recipient of the task</div>
+</li>
+<li class="blockList">
+<h4>taskRelatedAssetGuid</h4>
+<pre>java.lang.String taskRelatedAssetGuid</pre>
+<div class="block">assetId to preview</div>
+</li>
+<li class="blockList">
+<h4>taskRequestor</h4>
+<pre>java.lang.String taskRequestor</pre>
+<div class="block">requestor of the task</div>
+</li>
+<li class="blockList">
+<h4>taskRequestorComment</h4>
+<pre>java.lang.String taskRequestorComment</pre>
+<div class="block">comment of requestor for the task</div>
+</li>
+<li class="blockList">
+<h4>taskType</h4>
+<pre>java.lang.String taskType</pre>
+<div class="block">type of task</div>
+</li>
+<li class="blockListLast">
+<h4>typeName</h4>
+<pre>java.lang.String typeName</pre>
+<div class="block">Fixed typeName for Tasks.</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="blockList"><a id="com.atlan.model.assets.ThoughtspotAnswer">
 <!--   -->
 </a>
@@ -27097,6 +27173,138 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <h4>viewQualifiedName</h4>
 <pre>java.lang.String viewQualifiedName</pre>
 <div class="block">Unique name of the view in which this SQL asset exists, or empty if it does not exist within a view.</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList"><a id="com.atlan.model.assets.Workflow">
+<!--   -->
+</a>
+<h3>Class <a href="com/atlan/model/assets/Workflow.html" title="class in com.atlan.model.assets">com.atlan.model.assets.Workflow</a> extends <a href="com/atlan/model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>typeName</h4>
+<pre>java.lang.String typeName</pre>
+<div class="block">Fixed typeName for Workflows.</div>
+</li>
+<li class="blockList">
+<h4>workflowConfig</h4>
+<pre>java.lang.String workflowConfig</pre>
+<div class="block">Details of the workflow.</div>
+</li>
+<li class="blockList">
+<h4>workflowCreatedBy</h4>
+<pre>java.lang.String workflowCreatedBy</pre>
+<div class="block">Username of the user who created this workflow.</div>
+</li>
+<li class="blockList">
+<h4>workflowDeletedAt</h4>
+<pre>java.lang.Long workflowDeletedAt</pre>
+<div class="block">Deletion time of this workflow.</div>
+</li>
+<li class="blockList">
+<h4>workflowRunExpiresIn</h4>
+<pre>java.lang.String workflowRunExpiresIn</pre>
+<div class="block">Time duration after which a run of this workflow will expire.</div>
+</li>
+<li class="blockList">
+<h4>workflowStatus</h4>
+<pre><a href="com/atlan/model/enums/WorkflowStatus.html" title="enum in com.atlan.model.enums">WorkflowStatus</a> workflowStatus</pre>
+<div class="block">Status of the workflow.</div>
+</li>
+<li class="blockList">
+<h4>workflowTemplateGuid</h4>
+<pre>java.lang.String workflowTemplateGuid</pre>
+<div class="block">GUID of the workflow template from which this workflow was created.</div>
+</li>
+<li class="blockList">
+<h4>workflowType</h4>
+<pre><a href="com/atlan/model/enums/WorkflowType.html" title="enum in com.atlan.model.enums">WorkflowType</a> workflowType</pre>
+<div class="block">Type of the workflow.</div>
+</li>
+<li class="blockListLast">
+<h4>workflowUpdatedBy</h4>
+<pre>java.lang.String workflowUpdatedBy</pre>
+<div class="block">Username of the user who updated this workflow.</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList"><a id="com.atlan.model.assets.WorkflowRun">
+<!--   -->
+</a>
+<h3>Class <a href="com/atlan/model/assets/WorkflowRun.html" title="class in com.atlan.model.assets">com.atlan.model.assets.WorkflowRun</a> extends <a href="com/atlan/model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>typeName</h4>
+<pre>java.lang.String typeName</pre>
+<div class="block">Fixed typeName for WorkflowRuns.</div>
+</li>
+<li class="blockList">
+<h4>workflowRunComment</h4>
+<pre>java.lang.String workflowRunComment</pre>
+<div class="block">The comment added by the requester</div>
+</li>
+<li class="blockList">
+<h4>workflowRunConfig</h4>
+<pre>java.lang.String workflowRunConfig</pre>
+<div class="block">Details of the approval workflow run.</div>
+</li>
+<li class="blockList">
+<h4>workflowRunCreatedBy</h4>
+<pre>java.lang.String workflowRunCreatedBy</pre>
+<div class="block">Username of the user who created this workflow run.</div>
+</li>
+<li class="blockList">
+<h4>workflowRunDeletedAt</h4>
+<pre>java.lang.Long workflowRunDeletedAt</pre>
+<div class="block">Deletion time of this workflow run.</div>
+</li>
+<li class="blockList">
+<h4>workflowRunExpiresAt</h4>
+<pre>java.lang.Long workflowRunExpiresAt</pre>
+<div class="block">Time at which this run will expire.</div>
+</li>
+<li class="blockList">
+<h4>workflowRunOnAssetGuid</h4>
+<pre>java.lang.String workflowRunOnAssetGuid</pre>
+<div class="block">The asset for which this run was created.</div>
+</li>
+<li class="blockList">
+<h4>workflowRunStatus</h4>
+<pre><a href="com/atlan/model/enums/WorkflowRunStatus.html" title="enum in com.atlan.model.enums">WorkflowRunStatus</a> workflowRunStatus</pre>
+<div class="block">Status of the run.</div>
+</li>
+<li class="blockList">
+<h4>workflowRunType</h4>
+<pre><a href="com/atlan/model/enums/WorkflowRunType.html" title="enum in com.atlan.model.enums">WorkflowRunType</a> workflowRunType</pre>
+<div class="block">Type of the workflow from which this run was created.</div>
+</li>
+<li class="blockList">
+<h4>workflowRunUpdatedBy</h4>
+<pre>java.lang.String workflowRunUpdatedBy</pre>
+<div class="block">Username of the user who updated this workflow run.</div>
+</li>
+<li class="blockListLast">
+<h4>workflowRunWorkflowGuid</h4>
+<pre>java.lang.String workflowRunWorkflowGuid</pre>
+<div class="block">GUID of the workflow from which this run was created.</div>
 </li>
 </ul>
 </li>
@@ -29071,6 +29279,47 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <section>
 <h2 title="Package">Package&nbsp;com.atlan.model.structs</h2>
 <ul class="blockList">
+<li class="blockList"><a id="com.atlan.model.structs.Action">
+<!--   -->
+</a>
+<h3>Class <a href="com/atlan/model/structs/Action.html" title="class in com.atlan.model.structs">com.atlan.model.structs.Action</a> extends <a href="com/atlan/model/structs/AtlanStruct.html" title="class in com.atlan.model.structs">AtlanStruct</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>taskActionDisplayText</h4>
+<pre>java.lang.String taskActionDisplayText</pre>
+<div class="block">Display text for the UI component</div>
+</li>
+<li class="blockList">
+<h4>taskActionFulfillmentMethod</h4>
+<pre>java.lang.String taskActionFulfillmentMethod</pre>
+<div class="block">method to call to take action</div>
+</li>
+<li class="blockList">
+<h4>taskActionFulfillmentPayload</h4>
+<pre>java.lang.String taskActionFulfillmentPayload</pre>
+<div class="block">payload to send to the fulfillment endpoint</div>
+</li>
+<li class="blockList">
+<h4>taskActionFulfillmentUrl</h4>
+<pre>java.lang.String taskActionFulfillmentUrl</pre>
+<div class="block">url to call to take action</div>
+</li>
+<li class="blockListLast">
+<h4>typeName</h4>
+<pre>java.lang.String typeName</pre>
+<div class="block">Fixed typeName for Action.</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="blockList"><a id="com.atlan.model.structs.AtlanStruct">
 <!--   -->
 </a>
