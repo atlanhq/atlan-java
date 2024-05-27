@@ -36,7 +36,7 @@ public class AttributeDefOptions extends AtlanObject {
 
     public static final Set<String> ALL_ASSET_TYPES = Set.of(
 <#list assetTypes as assetType>
-<#if assetType != "File" && !(assetType?starts_with("Glossary"))>
+<#if assetType != "File" && !(assetType?starts_with("Glossary")) && assetType != "DataDomain" && assetType != "DataProduct">
             ${assetType}.TYPE_NAME<#sep>,</#sep>
 </#if>
 </#list>
@@ -46,9 +46,11 @@ public class AttributeDefOptions extends AtlanObject {
         GlossaryTerm.TYPE_NAME,
         GlossaryCategory.TYPE_NAME
     );
+    public static final Set<String> ALL_DOMAIN_TYPES = Set.of(DataDomain.TYPE_NAME, DataProduct.TYPE_NAME);
     public static final Set<String> ALL_OTHER_TYPES = Set.of(
         File.TYPE_NAME
     );
+    public static final Set<String> ALL_DOMAINS = Set.of("*/super");
 
     /**
      * Instantiate a new set of attribute options from the provided parameters.
@@ -57,14 +59,36 @@ public class AttributeDefOptions extends AtlanObject {
      * @return the attribute options
      * @throws AtlanException on any API issues looking up existing connections and glossaries
      */
-    public static AttributeDefOptions of(AtlanCustomAttributePrimitiveType type, String optionsName) throws AtlanException {
-        AttributeDefOptionsBuilder<?, ?> builder = AttributeDefOptions.builder()
-                    .primitiveType(type)
+    public static AttributeDefOptions of(AtlanCustomAttributePrimitiveType type, String optionsName)
+            throws AtlanException {
+        return of(type, optionsName, null);
+    }
+
+    /**
+     * Instantiate a new set of attribute options from the provided parameters.
+     * @param type primitive type of the attribute
+     * @param optionsName name of the options (enumeration) if the primitive type is an enumeration (can be null otherwise)
+     * @param options starting point of options on which to extend
+     * @return the attribute options
+     * @throws AtlanException on any API issues looking up existing connections and glossaries
+     */
+    public static AttributeDefOptions of(AtlanCustomAttributePrimitiveType type, String optionsName, AttributeDefOptions options) throws AtlanException {
+        AttributeDefOptionsBuilder<?, ?> builder;
+        if (options != null) {
+            // If we are provided options, use those as the starting point
+            builder = options.toBuilder();
+        } else {
+            // Otherwise set defaults to allow the attribute to be available on all assets
+            builder = AttributeDefOptions.builder()
                     .applicableConnections(Connection.getAllQualifiedNames())
                     .applicableAssetTypes(ALL_ASSET_TYPES)
                     .applicableGlossaries(Glossary.getAllQualifiedNames())
                     .applicableGlossaryTypes(ALL_GLOSSARY_TYPES)
+                    .applicableDomains(ALL_DOMAINS)
+                    .applicableDomainTypes(ALL_DOMAIN_TYPES)
                     .applicableOtherAssetTypes(ALL_OTHER_TYPES);
+        }
+        builder.primitiveType(type);
         switch (type) {
             case USERS:
             case GROUPS:
@@ -130,6 +154,16 @@ public class AttributeDefOptions extends AtlanObject {
     Set<String> applicableGlossaries;
 
     /**
+     * Qualified names of domains to which to restrict the attribute.
+     * Only domains and data products within one of these domains will have this attribute available.
+     * To further restrict the types of assets within the domains, see {@link #applicableDomainTypes}.
+     */
+    @Singular
+    @JsonSerialize(using = SetToStringSerializer.class)
+    @JsonDeserialize(using = StringToSetDeserializer.class)
+    Set<String> applicableDomains;
+
+    /**
      * Asset type names to which to restrict the attribute.
      * Only assets of one of these types will have this attribute available.
      * To further restrict the assets for this custom metadata by connection, see {@link #applicableConnections}.
@@ -150,6 +184,17 @@ public class AttributeDefOptions extends AtlanObject {
     @JsonDeserialize(using = StringToSetDeserializer.class)
     @JsonProperty("glossaryTypeList")
     Set<String> applicableGlossaryTypes;
+
+    /**
+     * Data product type names to which to restrict the attribute.
+     * These cover asset types in data products and data domains.
+     * Only assets of one of these types will have this attribute available.
+     */
+    @Singular
+    @JsonSerialize(using = SetToStringSerializer.class)
+    @JsonDeserialize(using = StringToSetDeserializer.class)
+    @JsonProperty("domainTypesList")
+    Set<String> applicableDomainTypes;
 
     /**
      * Any other asset type names to which to restrict the attribute.
@@ -245,11 +290,17 @@ public class AttributeDefOptions extends AtlanObject {
         if (options.applicableGlossaries != null) {
             this.applicableGlossaries = options.applicableGlossaries;
         }
+        if (options.applicableDomains != null) {
+            this.applicableDomains = options.applicableDomains;
+        }
         if (options.applicableAssetTypes != null) {
             this.applicableAssetTypes = options.applicableAssetTypes;
         }
         if (options.applicableGlossaryTypes != null) {
             this.applicableGlossaryTypes = options.applicableGlossaryTypes;
+        }
+        if (options.applicableDomainTypes != null) {
+            this.applicableDomainTypes = options.applicableDomainTypes;
         }
         if (options.applicableOtherAssetTypes != null) {
             this.applicableOtherAssetTypes = options.applicableOtherAssetTypes;

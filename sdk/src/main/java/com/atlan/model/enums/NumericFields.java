@@ -436,6 +436,8 @@ public enum NumericFields implements AtlanSearchableField {
     START_TIME("startTime"),
     /** Number of tables in this schema. */
     TABLE_COUNT("tableCount"),
+    /** Time (epoch) at which the task expires . */
+    TASK_EXPIRES_AT("taskExpiresAt"),
     /** Number of Columns. */
     THOUGHTSPOT_COLUMN_COUNT("thoughtspotColumnCount"),
     /** Total number of data table joins executed for analysis. */
@@ -450,6 +452,12 @@ public enum NumericFields implements AtlanSearchableField {
     VIEW_COUNT("viewsCount"),
     /** View score for this asset. */
     VIEW_SCORE("viewScore"),
+    /** Deletion time of this workflow. */
+    WORKFLOW_DELETED_AT("workflowDeletedAt"),
+    /** Deletion time of this workflow run. */
+    WORKFLOW_RUN_DELETED_AT("workflowRunDeletedAt"),
+    /** Time at which this run will expire. */
+    WORKFLOW_RUN_EXPIRES_AT("workflowRunExpiresAt"),
     ;
 
     @Getter(onMethod_ = {@Override})

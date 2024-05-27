@@ -1346,6 +1346,24 @@ public enum KeywordFields implements AtlanSearchableField {
     TAG_SERVICE("tagService"),
     /** TBC */
     TARGET_SERVER_NAME("targetServerName"),
+    /** List of actions associated with this task. */
+    TASK_ACTIONS("taskActions"),
+    /** action executed by the recipient */
+    TASK_EXECUTION_ACTION("taskExecutionAction"),
+    /** comment for the action executed by user */
+    TASK_EXECUTION_COMMENT("taskExecutionComment"),
+    /** contains the payload that is proposed to the task */
+    TASK_PROPOSALS("taskProposals"),
+    /** recipient of the task */
+    TASK_RECIPIENT("taskRecipient"),
+    /** assetId to preview */
+    TASK_RELATED_ASSET_GUID("taskRelatedAssetGuid"),
+    /** requestor of the task */
+    TASK_REQUESTOR("taskRequestor"),
+    /** comment of requestor for the task */
+    TASK_REQUESTOR_COMMENT("taskRequestorComment"),
+    /** type of task */
+    TASK_TYPE("taskType"),
     /** Name of the Atlan workspace in which this asset exists. */
     TENANT_ID("tenantId"),
     /** TBC */
@@ -1412,6 +1430,36 @@ public enum KeywordFields implements AtlanSearchableField {
     WEB_URL("webUrl"),
     /** Unique name of the workbook in which this dashboard exists. */
     WORKBOOK_QUALIFIED_NAME("workbookQualifiedName"),
+    /** Details of the workflow. */
+    WORKFLOW_CONFIG("workflowConfig"),
+    /** Username of the user who created this workflow. */
+    WORKFLOW_CREATED_BY("workflowCreatedBy"),
+    /** The comment added by the requester */
+    WORKFLOW_RUN_COMMENT("workflowRunComment"),
+    /** Details of the approval workflow run. */
+    WORKFLOW_RUN_CONFIG("workflowRunConfig"),
+    /** Username of the user who created this workflow run. */
+    WORKFLOW_RUN_CREATED_BY("workflowRunCreatedBy"),
+    /** Time duration after which a run of this workflow will expire. */
+    WORKFLOW_RUN_EXPIRES_IN("workflowRunExpiresIn"),
+    /** The asset for which this run was created. */
+    WORKFLOW_RUN_ON_ASSET_GUID("workflowRunOnAssetGuid"),
+    /** Status of the run. */
+    WORKFLOW_RUN_STATUS("workflowRunStatus"),
+    /** Type of the workflow from which this run was created. */
+    WORKFLOW_RUN_TYPE("workflowRunType"),
+    /** Username of the user who updated this workflow run. */
+    WORKFLOW_RUN_UPDATED_BY("workflowRunUpdatedBy"),
+    /** GUID of the workflow from which this run was created. */
+    WORKFLOW_RUN_WORKFLOW_GUID("workflowRunWorkflowGuid"),
+    /** Status of the workflow. */
+    WORKFLOW_STATUS("workflowStatus"),
+    /** GUID of the workflow template from which this workflow was created. */
+    WORKFLOW_TEMPLATE_GUID("workflowTemplateGuid"),
+    /** Type of the workflow. */
+    WORKFLOW_TYPE("workflowType"),
+    /** Username of the user who updated this workflow. */
+    WORKFLOW_UPDATED_BY("workflowUpdatedBy"),
     /** Unique name of the workspace in which this dataset exists. */
     WORKSPACE_QUALIFIED_NAME("workspaceQualifiedName"),
     ;

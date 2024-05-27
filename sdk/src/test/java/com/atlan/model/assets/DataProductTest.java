@@ -410,10 +410,10 @@ public class DataProductTest {
             .dataProductSensitivity(DataProductSensitivity.PUBLIC)
             .dataProductStatus(DataProductStatus.ACTIVE)
             .dataProductVisibility(DataProductVisibility.PRIVATE)
-            .inputPort(TagAttachment.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .inputPort(TagAttachment.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .outputPort(TagAttachment.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .outputPort(TagAttachment.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .inputPort(Task.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .inputPort(Task.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .outputPort(Task.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .outputPort(Task.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .build();
 
     private static final int hash = full.hashCode();
