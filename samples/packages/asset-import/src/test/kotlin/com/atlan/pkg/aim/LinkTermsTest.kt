@@ -222,7 +222,7 @@ class LinkTermsTest : PackageTest() {
                 assetsTableViewAgnostic = true,
             ),
         )
-        Importer.main(arrayOf())
+        Importer.main(arrayOf(testDirectory))
         // Allow Elastic index and deletion to become consistent
         Thread.sleep(10000)
     }

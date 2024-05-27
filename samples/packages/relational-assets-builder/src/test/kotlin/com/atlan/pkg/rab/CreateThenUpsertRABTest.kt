@@ -78,7 +78,6 @@ class CreateThenUpsertRABTest : PackageTest() {
                 }
             }
         }
-        output.copyTo(input, true)
     }
 
     private fun createTags() {
@@ -433,12 +432,12 @@ class CreateThenUpsertRABTest : PackageTest() {
         modifyFile()
         setup(
             RelationalAssetsBuilderCfg(
-                assetsFile = Paths.get(testDirectory, testFile).toString(),
+                assetsFile = Paths.get(testDirectory, revisedFile).toString(),
                 assetsUpsertSemantic = "upsert",
                 assetsFailOnErrors = true,
             ),
         )
-        Importer.main(arrayOf())
+        Importer.main(arrayOf(testDirectory))
         // Allow Elastic index and deletion to become consistent
         Thread.sleep(15000)
         val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!

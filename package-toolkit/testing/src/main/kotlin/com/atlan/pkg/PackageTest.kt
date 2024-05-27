@@ -156,6 +156,7 @@ abstract class PackageTest {
             response = request.search()
             count++
         }
+        assertFalse(response.approximateCount < expectedSize)
         return response
     }
 
