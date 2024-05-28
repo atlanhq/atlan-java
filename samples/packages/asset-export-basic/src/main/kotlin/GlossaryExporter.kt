@@ -110,7 +110,7 @@ class GlossaryExporter(
             GlossaryTerm.VALID_VALUES_FOR,
             GlossaryTerm.CLASSIFIES,
         )
-        for (cmField in CustomMetadataFields.all) {
+        for (cmField in ctx.cmFields) {
             attributeList.add(cmField)
         }
         return attributeList

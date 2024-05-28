@@ -86,7 +86,6 @@ class EnrichmentMigratorSingleTargetTest : PackageTest() {
         createConnections()
         createCustomMetadata()
         createAssets()
-        Thread.sleep(15000)
         setup(
             EnrichmentMigratorCfg(
                 sourceConnection = listOf(Connection.findByName(c1, AtlanConnectorType.MSSQL)?.get(0)?.qualifiedName!!),
